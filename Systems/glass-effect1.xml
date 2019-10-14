@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<system name="glass-effect1">
+
+    <channel name="rain">
+
+        <fcs_function name="glass-effects/airspeed-clamped-sqrt">
+            <function>
+                <sqrt>
+                    <quotient>
+                        <min>
+                            <property>/velocities/airspeed-kt</property>
+                            <value>40</value>
+                        </min>
+                        <value>40</value>
+                    </quotient>
+                </sqrt>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="glass-effects/splashx">
+            <function>
+                <difference>
+                    <value>-0.1</value>
+                    <product>
+                        <value>2.0</value>
+                        <property>/fdm/jsbsim/glass-effects/airspeed-clamped-sqrt</property>
+                    </product>
+                </difference>
+            </function>
+            <output>/environment/aircraft-effects/splash-vector-x</output>
+        </fcs_function>
+
+        <fcs_function name="glass-effects/splashy">
+            <function>
+               <value>0.0</value>
+            </function>
+            <output>/environment/aircraft-effects/splash-vector-y</output>
+        </fcs_function>
+
+        <fcs_function name="glass-effects/splashz">
+            <function>
+                <difference>
+                    <value>1.0</value>
+                    <product>
+                        <value>1.35</value>
+                        <property>/fdm/jsbsim/glass-effects/airspeed-clamped-sqrt</property>
+                    </product>
+                </difference>
+            </function>
+            <output>/environment/aircraft-effects/splash-vector-z</output>
+        </fcs_function>
+
+    </channel>
+
+</system>

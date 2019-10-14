@@ -1,0 +1,10 @@
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name type="string">British Airways (last used for A320-100s)</name>
+				<texture>Liveries/A320/CFM-100/BAW-last.png</texture>
+			</livery>
+		</model>
+	</sim>
+</PropertyList>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+AUTOPUSH
+Waypoint model.
+
+Copyright (c) 2018 Autopush authors:
+ Michael Danilov <mike.d.ft402 -eh- gmail.com>
+ Joshua Davidson http://github.com/Octal450
+ Merspieler http://gitlab.com/merspieler
+Distribute under the terms of GPLv2.
+
+-->
+<PropertyList>
+
+	<path>waypoint.ac</path>
+
+	<animation>
+		<enable-hot>false</enable-hot>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>WingtipL</object-name>
+		<object-name>WingtipR</object-name>
+		<condition>
+			<property>/sim/model/autopush/route/show-wingtip</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>WingtipL</object-name>
+		<property>/sim/model/autopush/route/wingspan-m</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<z-factor>0.0</z-factor>
+		<z-min>1.0</z-min>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>WingtipR</object-name>
+		<property>/sim/model/autopush/route/wingspan-m</property>
+		<factor>-0.5</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<z-factor>0.0</z-factor>
+		<z-min>1.0</z-min>
+	</animation>
+
+	<animation>
+		<type>scale</type>
+		<!-- Object names must be here, because we need to scale each separately, not the the whole thing at once. -->
+		<object-name>Waypoint</object-name>
+		<object-name>WingtipL</object-name>
+		<object-name>WingtipR</object-name>
+		<property>/sim/model/autopush/stopping-distance-m</property>
+		<z-factor>0.0</z-factor>
+		<z-min>1.0</z-min>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<condition>
+			<property>/sim/model/autopush/route/invalid</property>
+		</condition>
+		<diffuse>
+			<red>1.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>1.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</emission>
+	</animation>
+
+</PropertyList>

@@ -1,0 +1,5 @@
+Distance between lines:
+147.948
+
+Distance from Line to Amber Boxes:
+0.327

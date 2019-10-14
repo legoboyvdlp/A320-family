@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-mismatch</name>
+	<layout>vbox</layout>
+	<color>
+		<red>0.5</red>
+		<green>0</green>
+		<blue>0</blue>
+		<alpha>0.95</alpha>
+	</color>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Something Happened!</label>
+		</text>
+	</group>
+	
+	<hrule>
+		<color>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+			<alpha>0.95</alpha>
+		</color>
+	</hrule>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>Something happened and an internal error has occurred. The aircraft has been disabled.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>The error code and cause are listed below. Please include this information if contacting IDG.</label>
+		</text>
+		
+		<hrule>
+			<color>
+				<red>1.0</red>
+				<green>1.0</green>
+				<blue>1.0</blue>
+				<alpha>0.95</alpha>
+			</color>
+		</hrule>
+		
+		<group>
+			<layout>hbox</layout>
+			<halign>left</halign>
+			
+			<text>
+				<label>Error Code:</label>
+			</text>
+		
+			<text>
+				<border>1</border>
+				<label>99999</label>
+				<property>/systems/acconfig/mismatch-code</property>
+				<live>1</live>
+			</text>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			<halign>left</halign>
+			
+			<text>
+				<label>Reason:</label>
+			</text>
+		
+			<text>
+				<border>1</border>
+				<label>9999999999999999999999999999999999</label>
+				<property>/systems/acconfig/mismatch-reason</property>
+				<live>1</live>
+			</text>
+		</group>
+	</group>
+	
+	<hrule>
+		<color>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+			<alpha>0.95</alpha>
+		</color>
+	</hrule>
+
+	<group>
+		<layout>hbox</layout>
+		<button>
+			<color>
+				<red>0.6</red>
+				<green>0</green>
+				<blue>0</blue>
+				<alpha>0.95</alpha>
+			</color>
+			<halign>center</halign>
+			<legend>FlightGear Forums</legend>
+			<pref-width>550</pref-width>
+			<binding>
+				<command>open-browser</command>
+				<path>http://forum.flightgear.org</path>
+			</binding>
+		</button>
+	</group>
+	
+</PropertyList>

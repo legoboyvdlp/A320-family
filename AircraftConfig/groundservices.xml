@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>ground-services</name>
+	<layout>vbox</layout>
+	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Ground Services</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+		
+	<hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+
+		<checkbox>
+			<label>Enable De-icing Truck</label>
+			<halign>left</halign>
+			<property>/services/deicing_truck/enable</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+
+		<button>
+			<legend>De-ice Aircraft</legend>
+			<halign>center</halign>
+			<padding>5</padding>
+			<enable>
+				<property>/services/deicing_truck/enable</property>
+			</enable>
+			<binding>
+				<command>property-assign</command>
+				<property>/services/deicing_truck/de-ice</property>
+				<value>1</value>
+			</binding>
+		</button>
+		
+		<checkbox>
+			<label>Enable Fuel Truck</label>
+			<halign>left</halign>
+			<enable>
+				<not><property>/services/fuel-truck/connect</property></not>
+			</enable>
+			<property>/services/fuel-truck/enable</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+		<checkbox>
+			<label>Connect Fuel Truck</label>
+			<halign>left</halign>
+			<enable>
+				<property>/services/fuel-truck/enable</property>
+			</enable>
+			<property>/services/fuel-truck/connect</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+		<checkbox>
+			<label>Enable Catering Truck</label>
+			<halign>left</halign>
+			<property>/services/catering/enable</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+
+		<button>
+			<legend>Toggle Catering</legend>
+			<halign>center</halign>
+			<padding>5</padding>
+			<enable>
+				<property>/services/catering/enable</property>
+			</enable>
+			<binding>
+				<condition>
+					<less-than>
+						<property>/services/catering/position-norm</property>
+						<value>0.1</value>
+					</less-than>
+				</condition><command>property-interpolate</command>
+				<property>/services/catering/position-norm</property>
+				<value>0.68</value>
+				<time>5</time>
+			</binding>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>/services/catering/position-norm</property>
+						<value>0.1</value>
+					</greater-than-equals>
+				</condition><command>property-interpolate</command>
+				<property>/services/catering/position-norm</property>
+				<value>0.0</value>
+				<time>5</time>
+			</binding>
+		</button>
+		
+		<checkbox>
+			<label>Enable Baggage Ramp</label>
+			<halign>left</halign>
+			<property>/services/baggage/enable</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Stairways</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<checkbox>
+			<label>Front Left</label>
+			<halign>left</halign>
+			<property>/services/stairs/l1</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+		<checkbox>
+			<label>Rear Left</label>
+			<halign>left</halign>
+			<property>/services/stairs/l4</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+		<checkbox>
+			<label>Stairway Cover</label>
+			<halign>left</halign>
+			<property>/services/stairs/cover</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+	</group>
+	
+</PropertyList>

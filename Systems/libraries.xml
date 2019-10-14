@@ -1,0 +1,1168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<filter>
+		<name>Groundspeed Meters Per Second</name>
+		<type>gain</type>
+		<gain>0.5144444444444</gain>
+		<input>/velocities/groundspeed-kt</input>
+		<output>/velocities/groundspeed-mps</output>
+		<min>0</min>
+		<max>1000</max>
+	</filter>
+	
+	<predict-simple>
+		<name>Groundspeed Meters Per Second Ahead</name>
+		<debug>false</debug>
+		<input>/velocities/groundspeed-mps</input>
+		<output>/velocities/groundspeed-mps-ahead</output>
+		<seconds>1.5</seconds>
+		<filter-gain>0.0</filter-gain>
+	</predict-simple>
+
+	<filter>
+		<name>Gear AGL Altitude FT</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<dif>
+					<property>/position/altitude-agl-ft</property>
+					<value>14.201</value>
+				</dif>
+			</expression>
+		</input>
+		<output>/position/gear-agl-ft</output>
+	</filter>
+	
+	<filter>
+		<name>Gear AGL Altitude M</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<product>
+					<property>/position/gear-agl-ft</property>
+					<value>0.3048</value>
+				</product>
+			</expression>
+		</input>
+		<output>/position/gear-agl-m</output>
+	</filter>
+
+	<predict-simple>
+		<name>Gear AGL Altitude</name>
+		<debug>false</debug>
+		<input>/position/gear-agl-ft</input>
+		<output>/position/gear-agl-ft-2-sec</output>
+		<seconds>2.0</seconds>
+		<filter-gain>0.0</filter-gain>
+	</predict-simple>
+	
+	<filter>
+		<name>FF 1</name>
+		<type>exponential</type>
+		<input>/engines/engine[0]/fuel-flow_pph</input>
+		<output>/engines/engine[0]/fuel-flow_actual</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>FF 2</name>
+		<type>exponential</type>
+		<input>/engines/engine[1]/fuel-flow_pph</input>
+		<output>/engines/engine[1]/fuel-flow_actual</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>OIL PSI 1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/n2-actual</property>
+					<entry><ind>11</ind><dep> 2</dep></entry>
+					<entry><ind>58</ind><dep>48</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[0]/oil-psi-actual</output>
+	</filter>
+
+	<filter>
+		<name>OIL PSI 2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/n2-actual</property>
+					<entry><ind>11</ind><dep> 2</dep></entry>
+					<entry><ind>58</ind><dep>48</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[1]/oil-psi-actual</output>
+	</filter>
+
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter/indicated-altitude-ft-pfd</output>
+	</filter>
+
+	<filter>
+		<name>V/S PFD</name>
+		<type>noise-spike</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs>
+							<property>/it-autoflight/internal/vert-speed-fpm</property>
+						</abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/it-autoflight/internal/vert-speed-fpm-pfd</output>
+		<max-rate-of-change>50</max-rate-of-change>
+		<min>0</min>
+		<max>99</max>
+	</filter>
+
+	<filter>
+		<name>Throttle L</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>/controls/engines/engine[0]/reverser</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<property>/controls/engines/engine[0]/throttle</property>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>/controls/engines/engine[0]/reverser</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<value>0</value>
+		</input>
+		<output>
+			<property>/controls/engines/engine[0]/throttle-lever</property>
+			<property>/controls/engines/engine[0]/throttle-pos</property>
+		</output>
+	</filter>
+
+	<filter>
+		<name>Throttle R</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>/controls/engines/engine[1]/reverser</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<property>/controls/engines/engine[1]/throttle</property>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>/controls/engines/engine[1]/reverser</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<value>0</value>
+		</input>
+		<output>
+			<property>/controls/engines/engine[1]/throttle-lever</property>
+			<property>/controls/engines/engine[1]/throttle-pos</property>
+		</output>
+	</filter>
+
+	<filter>
+		<name>Target Pressurize Altitude CMD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+					<entry><ind>    0</ind><dep>   0</dep></entry>
+					<entry><ind> 1000</ind><dep> 500</dep></entry>
+					<entry><ind> 5000</ind><dep>1100</dep></entry>
+					<entry><ind>20000</ind><dep>5200</dep></entry>
+					<entry><ind>30000</ind><dep>6700</dep></entry>
+					<entry><ind>30000</ind><dep>7900</dep></entry>
+					<entry><ind>40500</ind><dep>8000</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/pressurization/targetalt-cmd</output>
+	</filter>
+	
+	<filter>
+		<name>Target Pressurize Altitude</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<or>
+					<equals>
+						<property>/gear/gear[1]/wow</property>
+						<value>1</value>
+					</equals>
+					<less-than>
+						<property>/systems/pressurization/targetalt-cmd</property>
+						<property>/systems/pressurization/cabinalt-norm</property>
+					</less-than>
+				</or>
+			</condition>
+			<property>/systems/pressurization/cabinalt-norm</property>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/gear/gear[1]/wow</property>
+					<value>1</value>
+				</not>
+			</condition>
+			<property>/systems/pressurization/targetalt-cmd</property>
+		</input>
+		<output>/systems/pressurization/targetalt</output>
+	</filter>
+	
+	<filter>
+		<name>Cabin PSI target</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/pressurization/cabinalt-norm</property>
+					<entry><ind>-1000</ind><dep>16.50000</dep></entry>
+					<entry><ind>    0</ind><dep>14.70000</dep></entry>
+					<entry><ind>    0</ind><dep>14.70000</dep></entry>
+					<entry><ind> 1000</ind><dep>14.20000</dep></entry>
+					<entry><ind> 2000</ind><dep>13.60000</dep></entry>
+					<entry><ind> 3000</ind><dep>13.20000</dep></entry>
+					<entry><ind> 4000</ind><dep>12.70000</dep></entry>
+					<entry><ind> 5000</ind><dep>12.20000</dep></entry>
+					<entry><ind> 6000</ind><dep>11.70000</dep></entry>
+					<entry><ind> 7000</ind><dep>11.30000</dep></entry>
+					<entry><ind> 8000</ind><dep>10.90000</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/pressurization/cabinpsi-target</output>
+	</filter>
+	
+	<filter>
+		<name>VS-target</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<equals>
+					<property>/gear/gear[1]/wow</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<property>/systems/pressurization/ambientpsi</property>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/gear/gear[1]/wow</property>
+					<value>1</value>
+				</not>
+			</condition>
+			<property>/systems/pressurization/cabinpsi-target</property>
+		</input>
+		<output>/systems/pressurization/cabinpsi</output>
+	</filter>
+
+	<filter>
+		<name>Ambient PSI (ICAO std)</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+					<entry><ind>-1000</ind><dep>16.50000</dep></entry>
+					<entry><ind>    0</ind><dep>14.70000</dep></entry>
+					<entry><ind> 1000</ind><dep>14.20000</dep></entry>
+					<entry><ind> 2000</ind><dep>13.60000</dep></entry>
+					<entry><ind> 3000</ind><dep>13.20000</dep></entry>
+					<entry><ind> 4000</ind><dep>12.70000</dep></entry>
+					<entry><ind> 5000</ind><dep>12.20000</dep></entry>
+					<entry><ind> 6000</ind><dep>11.70000</dep></entry>
+					<entry><ind> 7000</ind><dep>11.30000</dep></entry>
+					<entry><ind> 8000</ind><dep>10.90000</dep></entry>
+					<entry><ind> 9000</ind><dep>10.50000</dep></entry>
+					<entry><ind>10000</ind><dep>10.10000</dep></entry>
+					<entry><ind>11000</ind><dep> 9.70000</dep></entry>
+					<entry><ind>12000</ind><dep> 9.30000</dep></entry>
+					<entry><ind>13000</ind><dep> 9.00000</dep></entry>
+					<entry><ind>14000</ind><dep> 8.60000</dep></entry>
+					<entry><ind>15000</ind><dep> 8.30000</dep></entry>
+					<entry><ind>16000</ind><dep> 8.00000</dep></entry>
+					<entry><ind>17000</ind><dep> 7.60000</dep></entry>
+					<entry><ind>18000</ind><dep> 7.30000</dep></entry>
+					<entry><ind>19000</ind><dep> 7.00000</dep></entry>
+					<entry><ind>20000</ind><dep> 6.80000</dep></entry>
+					<entry><ind>22000</ind><dep> 6.20000</dep></entry>
+					<entry><ind>24000</ind><dep> 5.70000</dep></entry>
+					<entry><ind>26000</ind><dep> 5.20000</dep></entry>
+					<entry><ind>28000</ind><dep> 4.70000</dep></entry>
+					<entry><ind>30000</ind><dep> 4.40000</dep></entry>
+					<entry><ind>32000</ind><dep> 4.00000</dep></entry>
+					<entry><ind>34000</ind><dep> 3.60000</dep></entry>
+					<entry><ind>36000</ind><dep> 3.30000</dep></entry>
+					<entry><ind>38000</ind><dep> 3.00000</dep></entry>
+					<entry><ind>39000</ind><dep> 2.90000</dep></entry>
+					<entry><ind>40000</ind><dep> 2.70000</dep></entry>
+					<entry><ind>41000</ind><dep> 2.60000</dep></entry>
+					<entry><ind>42000</ind><dep> 2.50000</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/pressurization/ambientpsi</output>
+	</filter>
+
+	<filter>
+		<name>Outflow Valve</name>
+		<type>noise-spike</type>
+		<input>
+			<property>/systems/pressurization/outflowpos</property>
+		</input>
+		<output>/systems/pressurization/outflowpos-norm</output>
+		<max-rate-of-change>1</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>Outflow logic</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<equals>
+					<property>/systems/pressurization/auto</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<property>/systems/pressurization/outflowpos-man</property>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>/systems/pressurization/auto</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<property>/systems/pressurization/outflowpos-norm-cmd</property>
+		</input>
+		<output>/systems/pressurization/outflowpos-norm</output>   
+	</filter>
+	
+	<filter>
+		<name>Cabin VS</name>
+		<type>noise-spike</type>
+		<input>
+			<property>/systems/pressurization/vs</property>
+		</input>
+		<output>/systems/pressurization/vs-norm</output>
+		<max-rate-of-change>500</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>Cabin Differential</name>
+		<type>noise-spike</type>
+		<input>
+			<property>/systems/pressurization/deltap</property>
+		</input>
+		<output>/systems/pressurization/deltap-norm</output>
+		<max-rate-of-change>1</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>Cabin Alt</name>
+		<type>noise-spike</type>
+		<input>
+			<property>/systems/pressurization/cabinalt</property>
+		</input>
+		<output>/systems/pressurization/cabinalt-norm</output>
+		<max-rate-of-change>40500</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>VS-target-cmd</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/it-autoflight/internal/vert-speed-fpm</property>
+					<entry><ind>-50000</ind><dep> -750</dep></entry>
+					<entry><ind> -2000</ind><dep> -750</dep></entry>
+					<entry><ind> -1000</ind><dep> -250</dep></entry>
+					<entry><ind>     0</ind><dep>    0</dep></entry>
+					<entry><ind>  1000</ind><dep>  810</dep></entry>
+					<entry><ind>  2000</ind><dep> 1640</dep></entry>
+					<entry><ind>  3000</ind><dep> 2100</dep></entry>
+					<entry><ind>  4000</ind><dep> 2440</dep></entry>
+					<entry><ind>  5000</ind><dep> 3000</dep></entry>
+					<entry><ind> 10000</ind><dep> 5000</dep></entry>
+					<entry><ind> 50000</ind><dep>50000</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/pressurization/targetvs-cmd</output>
+	</filter>
+	
+	<filter>
+		<name>VS-target-cmd-man</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/pressurization/outflowpos-man</property>
+					<entry><ind>0.0</ind><dep>-1000</dep></entry>
+					<entry><ind>0.5</ind><dep>    0</dep></entry>
+					<entry><ind>1.0</ind><dep> 2500</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/pressurization/manvs-cmd</output>
+	</filter>
+	
+	<filter>
+		<name>VS-target</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<equals>
+					<property>/gear/gear[1]/wow</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/gear/gear[1]/wow</property>
+					<value>1</value>
+				</not>
+			</condition>
+			<property>/systems/pressurization/targetvs-cmd</property>
+		</input>
+		<output>/systems/pressurization/targetvs</output>   
+	</filter>
+	
+	<filter>
+		<name>Icing Severity</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/icing/severity</property>
+					<entry><ind>0</ind><dep>-0.00000166</dep></entry>
+					<entry><ind>1</ind><dep> 0.00000277</dep></entry>
+					<entry><ind>2</ind><dep> 0.00000277</dep></entry>
+					<entry><ind>3</ind><dep> 0.00000554</dep></entry>
+					<entry><ind>4</ind><dep> 0.00001108</dep></entry>
+					<entry><ind>5</ind><dep> 0.00002216</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/icing/factor</output>
+	</filter>
+	
+	<filter>
+		<name>TAS</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/instrumentation/airspeed-indicator/true-speed-kt</input>
+		<output>/velocities/TAS</output>
+	</filter>
+	
+	<filter>
+		<name>LBtoKG</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<product>
+				<property>/fdm/jsbsim/inertia/weight-lbs</property>
+				<value>0.45359237</value>
+			</product>
+		</input>
+		<output>/fdm/jsbsim/inertia/weight-kg</output>
+	</filter>
+	
+	<filter>
+		<name>optalt</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>fdm/jsbsim/inertia/weight-kg</property> <!-- from FCOM vol 3 page 613 -->
+					<entry><ind>160000</ind><dep>40500</dep></entry>
+					<entry><ind>165000</ind><dep>40000</dep></entry>
+					<entry><ind>170000</ind><dep>39500</dep></entry>
+					<entry><ind>175000</ind><dep>39000</dep></entry>
+					<entry><ind>180000</ind><dep>38000</dep></entry>
+					<entry><ind>185000</ind><dep>37800</dep></entry>
+					<entry><ind>190000</ind><dep>37500</dep></entry>
+					<entry><ind>195000</ind><dep>36800</dep></entry>
+					<entry><ind>200000</ind><dep>36400</dep></entry>
+					<entry><ind>205000</ind><dep>35800</dep></entry>
+					<entry><ind>210000</ind><dep>35200</dep></entry>
+					<entry><ind>215000</ind><dep>34800</dep></entry>
+					<entry><ind>220000</ind><dep>34100</dep></entry>
+					<entry><ind>225000</ind><dep>33500</dep></entry>
+					<entry><ind>230000</ind><dep>33100</dep></entry>
+					<entry><ind>235000</ind><dep>32700</dep></entry>
+					<entry><ind>240000</ind><dep>32400</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/FMGC/internal/optalt</output>
+	</filter>
+	
+	<filter>
+		<name>Ambient Temp (ICAO std)</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+					<entry><ind>-1000</ind><dep> 21.5</dep></entry>
+					<entry><ind>    0</ind><dep> 15.0</dep></entry>
+					<entry><ind> 1000</ind><dep>  8.5</dep></entry>
+					<entry><ind> 2000</ind><dep>  2.0</dep></entry>
+					<entry><ind> 3000</ind><dep>-4.50</dep></entry>
+					<entry><ind> 4000</ind><dep>-11.0</dep></entry>
+					<entry><ind> 5000</ind><dep>-17.5</dep></entry>
+					<entry><ind> 6000</ind><dep>-24.0</dep></entry>
+					<entry><ind> 7000</ind><dep>-30.5</dep></entry>
+					<entry><ind> 8000</ind><dep>-37.0</dep></entry>
+					<entry><ind> 9000</ind><dep>-43.0</dep></entry>
+					<entry><ind>10000</ind><dep>-50.0</dep></entry>
+					<entry><ind>11000</ind><dep>-56.5</dep></entry>
+					<entry><ind>12000</ind><dep>-56.5</dep></entry>
+					<entry><ind>13000</ind><dep>-56.5</dep></entry>
+					<entry><ind>14000</ind><dep>-56.5</dep></entry>
+					<entry><ind>15000</ind><dep>-56.5</dep></entry>
+					<entry><ind>16000</ind><dep>-56.5</dep></entry>
+					<entry><ind>17000</ind><dep>-56.5</dep></entry>
+					<entry><ind>18000</ind><dep>-56.5</dep></entry>
+					<entry><ind>19000</ind><dep>-56.5</dep></entry>
+					<entry><ind>20000</ind><dep>-56.5</dep></entry>
+					<entry><ind>22000</ind><dep>-54.5</dep></entry>
+					<entry><ind>24000</ind><dep>-52.5</dep></entry>
+					<entry><ind>26000</ind><dep>-50.5</dep></entry>
+					<entry><ind>28000</ind><dep>-48.5</dep></entry>
+					<entry><ind>30000</ind><dep>-46.5</dep></entry>
+					<entry><ind>32000</ind><dep>-44.5</dep></entry>
+					<entry><ind>34000</ind><dep>-38.9</dep></entry>
+					<entry><ind>36000</ind><dep>-33.3</dep></entry>
+					<entry><ind>38000</ind><dep>-27.7</dep></entry>
+					<entry><ind>39000</ind><dep>-24.9</dep></entry>
+					<entry><ind>40000</ind><dep>-22.1</dep></entry>
+					<entry><ind>41000</ind><dep>-19.3</dep></entry>
+					<entry><ind>42000</ind><dep>-16.5</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/FMGC/internal/ISAtemp</output>
+	</filter>
+	
+	<filter>
+		<name>Difference to ISA Temp (Actual - ISA)</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<difference>
+				<property>/environment/temperature-degc</property>
+				<property>/FMGC/internal/ISAtemp</property>
+			</difference>
+		</input>
+		<output>/FMGC/internal/difftoISA</output>
+	</filter>
+	
+	<filter>
+		<name>Force Auto Coordination Off</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<enable>
+			<condition>
+				<property>/controls/flight/aileron-drives-tiller</property>
+			</condition>
+		</enable>
+		<input>0</input>
+		<output>/controls/flight/auto-coordination</output>
+	</filter>
+	
+	<!-- Braking -->
+	
+	<filter>
+		<name>Left Press</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/controls/gear/brake-left</property>
+					<entry><ind>0.0</ind><dep>   0</dep></entry>
+					<entry><ind>0.3</ind><dep>1000</dep></entry>
+					<entry><ind>0.6</ind><dep>2000</dep></entry>
+					<entry><ind>1.0</ind><dep>3000</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/hydraulic/brakes/pressure-left-psi</output>
+	</filter>
+	
+	<filter>
+		<name>Right Press</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/controls/gear/brake-right</property>
+					<entry><ind>0.0</ind><dep>   0</dep></entry>
+					<entry><ind>0.3</ind><dep>1000</dep></entry>
+					<entry><ind>0.6</ind><dep>2000</dep></entry>
+					<entry><ind>1.0</ind><dep>3000</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/hydraulic/brakes/pressure-right-psi</output>
+	</filter>
+	
+	<filter>
+		<name>Left Door</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/gear/gear[1]/position-norm</property>
+					<entry><ind>0.00</ind><dep>0</dep></entry>
+					<entry><ind>0.19</ind><dep>1</dep></entry>
+					<entry><ind>0.81</ind><dep>1</dep></entry>
+					<entry><ind>1.00</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/hydraulic/gear/door-left</output>
+	</filter>
+	
+	<filter>
+		<name>Left Door Conversion to Degrees</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/hydraulic/gear/door-left</property>
+					<entry><ind>0</ind><dep>   0</dep></entry>
+					<entry><ind>1</ind><dep>-100</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/door-left</output>
+	</filter>
+	
+	<filter>
+		<name>Right Door</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/gear/gear[2]/position-norm</property>
+					<entry><ind>0.00</ind><dep>0</dep></entry>
+					<entry><ind>0.19</ind><dep>1</dep></entry>
+					<entry><ind>0.81</ind><dep>1</dep></entry>
+					<entry><ind>1.00</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/hydraulic/gear/door-right</output>
+	</filter>
+	
+	<filter>
+		<name>Right Door Conversion to Degrees</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/hydraulic/gear/door-right</property>
+					<entry><ind>0</ind><dep>  0</dep></entry>
+					<entry><ind>1</ind><dep>100</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/door-right</output>
+	</filter>
+	
+	<filter>
+		<name>Nose Door</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/gear/gear[0]/position-norm</property>
+					<entry><ind>0.00</ind><dep>0</dep></entry>
+					<entry><ind>0.19</ind><dep>1</dep></entry>
+					<entry><ind>0.81</ind><dep>1</dep></entry>
+					<entry><ind>1.00</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/systems/hydraulic/gear/door-nose</output>
+	</filter>
+	
+	<filter>
+		<name>NLG Left Door Conversion to Degrees</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/hydraulic/gear/door-nose</property>
+					<entry><ind>0</ind><dep> 0</dep></entry>
+					<entry><ind>1</ind><dep>95</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/door-nose-left</output>
+	</filter>
+	
+	<filter>
+		<name>NLG Right Door Conversion to Degrees</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/hydraulic/gear/door-nose</property>
+					<entry><ind>0</ind><dep>  0</dep></entry>
+					<entry><ind>1</ind><dep>-95</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/door-nose-right</output>
+	</filter>
+	
+	<filter>
+		<name>Autobrake Decel Error</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<dif>
+					<property>/velocities/groundspeed-mps</property>
+					<property>/velocities/groundspeed-mps-ahead</property>
+				</dif>
+			</expression>
+		</input>
+		<output>/controls/autobrake/decel-error</output>
+	</filter>
+	
+	<pi-simple-controller>
+		<name>IT-CONTROLLER: AUTOBRAKE DECEL</name>
+		<debug>false</debug>
+		<enable>
+			<condition>
+				<equals>
+					<property>/controls/autobrake/active</property>
+					<value>1</value>
+				</equals>
+			</condition>
+		</enable>
+		<input>
+			<property>/controls/autobrake/decel-error</property>
+		</input>
+		<reference>
+			<property>/controls/autobrake/decel-rate</property>
+		</reference>
+		<output>
+			<property>/controls/autobrake/brake-left</property>
+			<property>/controls/autobrake/brake-right</property>
+		</output>
+		<config>
+			<Kp>0.45</Kp>
+			<Ki>0.25</Ki>
+			<min>0.0</min>
+			<max>1.0</max>
+		</config>
+	</pi-simple-controller>
+	
+	<filter>
+		<name>DDRMI: Heading</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
+			</condition>
+		</enable>
+		<input>/orientation/heading-magnetic-deg</input>
+		<output>/instrumentation/ddrmi/heading</output>
+	</filter>
+	
+	<filter>
+		<name>DDRMI: VOR 1 Error</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<property>/instrumentation/nav[2]/heading-deg</property>
+			<offset>
+				<property>/orientation/heading-deg</property>
+				<scale>-1.0</scale>
+			</offset>
+		</input>
+		<output>/instrumentation/ddrmi/vor-1-error</output>
+		<period>
+			<min>-180</min>
+			<max>180</max>
+		</period>
+	</filter>
+	
+	<filter>
+		<name>DDRMI: Needle 1</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+					<equals>
+						<property>/instrumentation/ddrmi/vor-adf-1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/instrumentation/nav[2]/in-range</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<property>/instrumentation/ddrmi/vor-1-error</property>
+			<scale>-1.0</scale>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+					<equals>
+						<property>/instrumentation/ddrmi/vor-adf-1</property>
+						<value>-1</value>
+					</equals>
+					<equals>
+						<property>/instrumentation/adf[0]/in-range</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<property>/instrumentation/adf[0]/indicated-bearing-deg</property>
+			<scale>-1.0</scale>
+		</input>
+		<input>-90</input>
+		<output>/instrumentation/ddrmi/needle-1</output>
+	</filter>
+	
+	<filter>
+		<name>DDRMI: VOR 2 Error</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<property>/instrumentation/nav[3]/heading-deg</property>
+			<offset>
+				<property>/orientation/heading-deg</property>
+				<scale>-1.0</scale>
+			</offset>
+		</input>
+		<output>/instrumentation/ddrmi/vor-2-error</output>
+		<period>
+			<min>-180</min>
+			<max>180</max>
+		</period>
+	</filter>
+	
+	<filter>
+		<name>DDRMI: Needle 2</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+					<equals>
+						<property>/instrumentation/ddrmi/vor-adf-2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/instrumentation/nav[3]/in-range</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<property>/instrumentation/ddrmi/vor-2-error</property>
+			<scale>-1.0</scale>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+					<equals>
+						<property>/instrumentation/ddrmi/vor-adf-2</property>
+						<value>-1</value>
+					</equals>
+					<equals>
+						<property>/instrumentation/adf[1]/in-range</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<property>/instrumentation/adf[1]/indicated-bearing-deg</property>
+			<scale>-1.0</scale>
+		</input>
+		<input>-90</input>
+		<output>/instrumentation/ddrmi/needle-2</output>
+	</filter>
+	
+	<filter>
+		<name>DDRMI: FLAG 1</name>
+		<debug>false</debug>
+		<type>exponential</type>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+					<or>
+						<and>
+							<equals>
+								<property>/instrumentation/ddrmi/vor-adf-1</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/instrumentation/nav[2]/in-range</property>
+								<value>1</value>
+							</equals>
+						</and>
+						<and>
+							<equals>
+								<property>/instrumentation/ddrmi/vor-adf-1</property>
+								<value>-1</value>
+							</equals>
+							<equals>
+								<property>/instrumentation/adf[0]/in-range</property>
+								<value>1</value>
+							</equals>
+						</and>
+					</or>
+				</and>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>1</input>
+		<output>/instrumentation/ddrmi/flag-1</output>
+		<filter-time>0.64</filter-time>
+	</filter>
+	
+	<filter>
+		<name>DDRMI: FLAG 2</name>
+		<debug>false</debug>
+		<type>exponential</type>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+					<or>
+						<and>
+							<equals>
+								<property>/instrumentation/ddrmi/vor-adf-2</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/instrumentation/nav[3]/in-range</property>
+								<value>1</value>
+							</equals>
+						</and>
+						<and>
+							<equals>
+								<property>/instrumentation/ddrmi/vor-adf-2</property>
+								<value>-1</value>
+							</equals>
+							<equals>
+								<property>/instrumentation/adf[1]/in-range</property>
+								<value>1</value>
+							</equals>
+						</and>
+					</or>
+				</and>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>1</input>
+		<output>/instrumentation/ddrmi/flag-2</output>
+		<filter-time>0.64</filter-time>
+	</filter>
+</PropertyList>

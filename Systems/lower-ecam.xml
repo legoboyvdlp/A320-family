@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+	
+	<filter>
+		<name>APU N Output</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/apu/rpm</property>
+					<entry><ind>  0</ind><dep>-127</dep></entry>
+					<entry><ind>100</ind><dep>  53</dep></entry>
+					<entry><ind>110</ind><dep>  70</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/APU-N</output>
+	</filter>
+	
+	<filter>
+		<name>APU EGT Output</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/apu/egt</property>
+					<entry><ind>  0</ind><dep>-115</dep></entry>
+					<entry><ind> 275</ind><dep>-115</dep></entry>
+					<entry><ind> 300</ind><dep>-108</dep></entry>
+					<entry><ind> 700</ind><dep> -19</dep></entry>
+					<entry><ind>1000</ind><dep>  67</dep></entry>
+					<entry><ind>1100</ind><dep>  86</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/APU-EGT</output>
+	</filter>
+	
+	<filter>
+		<name>Oil QT Output 1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/oil-qt-actual</property>
+					<entry><ind> 0</ind><dep>-90</dep></entry>
+					<entry><ind>25</ind><dep> 90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/Oil-QT[0]</output>
+	</filter>
+	
+	<filter>
+		<name>Oil QT Output 2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/oil-qt-actual</property>
+					<entry><ind> 0</ind><dep>-90</dep></entry>
+					<entry><ind>25</ind><dep> 90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/Oil-QT[1]</output>
+	</filter>
+	
+	<filter>
+		<name>Oil PSI Output 1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/oil-psi-actual</property>
+					<entry><ind>  0</ind><dep>-90</dep></entry>
+					<entry><ind> 50</ind><dep>  0</dep></entry>
+					<entry><ind>100</ind><dep> 90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/Oil-PSI[0]</output>
+	</filter>
+	
+	<filter>
+		<name>Oil PSIOutput 2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/oil-psi-actual</property>
+					<entry><ind>  0</ind><dep>-90</dep></entry>
+					<entry><ind> 50</ind><dep>  0</dep></entry>
+					<entry><ind>100</ind><dep> 90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/Oil-PSI[1]</output>
+	</filter>
+	
+	<filter>
+		<name>Aileron L Indication</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/hydraulics/aileron-l/final-deg</property>
+					<entry><ind>-25</ind><dep>-0.83</dep></entry>
+					<entry><ind>  0</ind><dep> 0.00</dep></entry>
+					<entry><ind> 25</ind><dep> 0.73</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/aileron-ind-left</output>
+	</filter>
+	
+	<filter>
+		<name>Aileron R Indication</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/hydraulics/aileron-r/final-deg</property>
+					<entry><ind>-25</ind><dep> 0.73</dep></entry>
+					<entry><ind>  0</ind><dep> 0.00</dep></entry>
+					<entry><ind> 25</ind><dep>-0.83</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/aileron-ind-right</output>
+	</filter>
+	
+	<filter>
+		<name>Elevator L Indication</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
+					<entry><ind>-30</ind><dep>-1.03</dep></entry>
+					<entry><ind>  0</ind><dep> 0.00</dep></entry>
+					<entry><ind> 17</ind><dep> 0.63</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/elevator-ind-left</output>
+	</filter>
+	
+	<filter>
+		<name>Elevator R Indication</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
+					<entry><ind>-30</ind><dep>-1.03</dep></entry>
+					<entry><ind>  0</ind><dep> 0.00</dep></entry>
+					<entry><ind> 17</ind><dep> 0.63</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/elevator-ind-right</output>
+	</filter>
+	
+	<filter>
+		<name>Elevator Trim Deg</name>
+		<type>gain</type>
+		<gain>-1.0</gain>
+		<input>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</input>
+		<output>/ECAM/Lower/elevator-trim-deg</output>
+	</filter>
+
+</PropertyList>

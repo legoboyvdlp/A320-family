@@ -1,0 +1,17 @@
+<PropertyList>
+  <sim>
+    <model>
+      <livery>
+        <name type="string">Drukair (Royal Bhutan Airlines)</name>
+        <texture>Liveries/A320/CFM/DRK.png</texture>
+      </livery>
+    </model>
+  </sim>
+  
+	<options>
+		<EIS2 type="bool">1</EIS2>
+	</options>
+  
+	<sharklet type="bool">1</sharklet>
+</PropertyList>
+ 

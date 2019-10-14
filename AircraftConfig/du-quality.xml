@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-du-quality</name>
+	<layout>vbox</layout>
+	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>DU Quality</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.writeSettings();
+				canvas_pfd.rateApply();
+				canvas_nd.rateApply();
+				canvas_ecam.u_rateApply();
+				canvas_ecam.l_rateApply();
+				canvas_iesi.rateApply();
+				</script>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+		
+	<hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>Here you can adjust the quality of the Display Units. 1 = Best Quality, 5 = Best Performance</label>
+		</text>
+		
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>Both PFDs:</label>
+			</text>
+			
+			<slider>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>250</pref-width>
+				<property>/systems/acconfig/options/pfd-rate</property>
+				<min>1</min>
+				<max>5</max>
+				<step>0.5</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			
+			<text>
+				<row>0</row>
+				<col>2</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>999</label>
+				<property>/systems/acconfig/options/pfd-rate</property>
+				<live>1</live>
+			</text>
+			
+			<text>
+				<row>1</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>Both NDs:</label>
+			</text>
+			
+			<slider>
+				<row>1</row>
+				<col>1</col>
+				<pref-width>250</pref-width>
+				<property>/systems/acconfig/options/nd-rate</property>
+				<min>1</min>
+				<max>5</max>
+				<step>0.5</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			
+			<text>
+				<row>1</row>
+				<col>2</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>999</label>
+				<property>/systems/acconfig/options/nd-rate</property>
+				<live>1</live>
+			</text>
+			
+			<text>
+				<row>2</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>Upper ECAM:</label>
+			</text>
+			
+			<slider>
+				<row>2</row>
+				<col>1</col>
+				<pref-width>250</pref-width>
+				<property>/systems/acconfig/options/uecam-rate</property>
+				<min>1</min>
+				<max>5</max>
+				<step>0.5</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			
+			<text>
+				<row>2</row>
+				<col>2</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>999</label>
+				<property>/systems/acconfig/options/uecam-rate</property>
+				<live>1</live>
+			</text>
+			
+			<text>
+				<row>3</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>Lower ECAM:</label>
+			</text>
+			
+			<slider>
+				<row>3</row>
+				<col>1</col>
+				<pref-width>250</pref-width>
+				<property>/systems/acconfig/options/lecam-rate</property>
+				<min>1</min>
+				<max>5</max>
+				<step>0.5</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			
+			<text>
+				<row>3</row>
+				<col>2</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>999</label>
+				<property>/systems/acconfig/options/lecam-rate</property>
+				<live>1</live>
+			</text>
+			
+			<text>
+				<row>4</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>IESI:</label>
+			</text>
+			
+			<slider>
+				<row>4</row>
+				<col>1</col>
+				<pref-width>250</pref-width>
+				<property>/systems/acconfig/options/iesi-rate</property>
+				<min>1</min>
+				<max>5</max>
+				<step>0.5</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			
+			<text>
+				<row>4</row>
+				<col>2</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>999</label>
+				<property>/systems/acconfig/options/iesi-rate</property>
+				<live>1</live>
+			</text>
+			
+		</group>
+	
+	</group>
+	
+	<hrule/>
+
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<halign>center</halign>
+			<legend>Apply/Save</legend>
+			<pref-width>100</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.writeSettings();
+				canvas_pfd.rateApply();
+				canvas_nd.rateApply();
+				canvas_ecam.u_rateApply();
+				canvas_ecam.l_rateApply();
+				canvas_iesi.rateApply();
+				</script>
+			</binding>
+		</button>
+		<button>
+			<halign>center</halign>
+			<legend>Apply/Save/Go Away</legend>
+			<pref-width>200</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.writeSettings();
+				canvas_pfd.rateApply();
+				canvas_nd.rateApply();
+				canvas_ecam.u_rateApply();
+				canvas_ecam.l_rateApply();
+				canvas_iesi.rateApply();
+				</script>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+</PropertyList>

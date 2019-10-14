@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>All Nippon Airways</name>
+				<texture>Liveries/A320/PW-NEO/ANA.png</texture>
+			</livery>
+			<eng>
+				<texture>Liveries/A320/PW-NEO/ANA-eng.png</texture>
+			</eng>
+		</model>
+	</sim>
+</PropertyList>
+ 

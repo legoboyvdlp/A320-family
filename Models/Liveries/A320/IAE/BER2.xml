@@ -1,0 +1,16 @@
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name type="string">Air Berlin (old)</name>
+				<texture>Liveries/A320/IAE/BER2.png</texture>
+			</livery> 
+		</model>
+	</sim>
+	
+	<options>
+		<EIS2 type="bool">1</EIS2>
+	</options>
+	
+	<sharklet type="bool">0</sharklet>
+</PropertyList>

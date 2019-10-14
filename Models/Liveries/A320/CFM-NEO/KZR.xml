@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Deutsche Lufthansa AG livery for Airbus Industries A320neo mady by D-SVEN. Have fun! -->
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Air Astana (P4-KBH)</name>
+				<texture>Liveries/A320/CFM-NEO/KZR.png</texture>
+			</livery>
+		</model>
+	</sim>
+</PropertyList>
+ 
+ 

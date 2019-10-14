@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/IESI.ac</path>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi.screen</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>canvas_iesi.showIESI();</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<!--animation>
+		<type>material</type>
+		<object-name>pfd1.screen</object-name>
+		<emission>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/DU/iesi</factor-prop>
+		</emission>
+	</animation-->
+
+</PropertyList>

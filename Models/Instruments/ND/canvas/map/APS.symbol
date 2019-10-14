@@ -1,0 +1,19 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'APS';
+var parents = [SVGSymbol];
+var __self__ = caller(0)[0];
+DotSym.makeinstance( name, __self__ );
+
+var svg_path = "Nasal/canvas/map/Images/boeingAirplane.svg";
+var element_id = "airplane";
+
+# Rotate with the main aircraft.
+# Will have to be adapted if intended for use with other aircraft
+# (but one could simply copy the layer for that).
+var draw = func {
+	var rot = getprop("/orientation/heading-deg");
+	rot -= me.layer.map.getHdg();
+	me.element.setRotation(rot*D2R);
+};
+

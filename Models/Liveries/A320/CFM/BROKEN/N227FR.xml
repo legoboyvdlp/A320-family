@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Frontier Airlines (Grizwald the Bear (2014))</name>
+				<texture>Liveries/A320/CFM/N227FR.png</texture>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<EIS2 type="bool">1</EIS2>
+	</options>
+	
+	<sharklet type="bool">1</sharklet>
+</PropertyList>
+

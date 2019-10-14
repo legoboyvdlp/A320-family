@@ -1,0 +1,46 @@
+# See: http://wiki.flightgear.org/MapStructure
+
+# Class things:
+var name = 'RTE';
+var parents = [LineSymbol];
+var __self__ = caller(0)[0];
+LineSymbol.makeinstance( name, __self__ );
+
+SymbolLayer.get(name).df_style = { # style to use by default
+	line_width: 5,
+	color: [1,0,1]
+};
+
+var getLineStyle = func(property, df_val){
+	var type = nil;
+	if(typeof(me.model) == 'hash'){
+		type = me.model.type;
+	}
+	if(type != nil and type != 'active'){
+		var base_prop = property;
+		property = property~'_'~type;
+		me.getStyle(property, me.getStyle(base_prop, df_val));
+	} else {
+		me.getStyle(property, df_val);
+	}
+};
+
+var setRouteStyle = func{
+	var df_style = SymbolLayer.get(name).df_style;
+	var dash = me.getLineStyle('line_dash', []);
+	var color = me.getLineStyle('color', df_style.color);
+	var line_width = me.getLineStyle('line_width', df_style.line_width);
+	me.element.setColor(color)
+	.setStrokeLineWidth(line_width);
+	if(typeof(dash) == 'vector')
+		me.element.setStrokeDashArray(dash);
+};
+
+var init = func {
+	me.setRouteStyle();
+};
+
+#var draw = func {
+#    me.setRouteStyle();
+#};
+

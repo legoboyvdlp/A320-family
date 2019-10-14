@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>LATAM</name>
+				<texture>Liveries/A320/PW-NEO/LATAM.png</texture>
+			</livery>
+			<eng>
+				<texture>Liveries/A320/PW-NEO/LATAM-eng.png</texture>
+			</eng>
+		</model>
+	</sim>
+</PropertyList>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-update</name>
+	<layout>vbox</layout>
+	<color>
+		<red>0.5</red>
+		<green>0</green>
+		<blue>0</blue>
+		<alpha>0.95</alpha>
+	</color>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Out of Date!</label>
+		</text>
+	</group>
+	
+	<hrule>
+		<color>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+			<alpha>0.95</alpha>
+		</color>
+	</hrule>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>Attention: Your A320-family is out of date! This means you are missing out on bugfixes, and new features!</label>
+		</text>
+		
+		<group>
+			<layout>table</layout>
+			<halign>left</halign>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>Latest available revision:</label>
+			</text>
+			
+			<text>
+				<row>0</row>
+				<col>1</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>99999</label>
+				<property>/systems/acconfig/new-revision</property>
+				<live>1</live>
+			</text>
+			
+			<text>
+				<row>1</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>Current installed revision:</label>
+			</text>
+			
+			<text>
+				<row>1</row>
+				<col>1</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>99999</label>
+				<property>/systems/acconfig/revision</property>
+				<live>1</live>
+			</text>
+			
+		</group>
+		
+		<text>
+			<halign>left</halign>
+			<label>You can continue for now, but it is highly recommended to download the latest version by the button below.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>You will need to restart FlightGear, and install the latest .zip file.</label>
+		</text>
+		
+		<hrule>
+			<color>
+				<red>1.0</red>
+				<green>1.0</green>
+				<blue>1.0</blue>
+				<alpha>0.95</alpha>
+			</color>
+		</hrule>
+		
+		<text>
+			<halign>left</halign>
+			<label>GIT users: Please press Remind Me Later, and run a "git pull" command. (or pull using GIT GUI)</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>Make sure you have cloned from either of the following: (git remote -v to check)</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>HTTP: http://www.github.com/legoboyvdlp/A320-family.git or SSH: git@github.com:legoboyvdlp/A320-family.git</label>
+		</text>
+	</group>
+	
+	<hrule>
+		<color>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+			<alpha>0.95</alpha>
+		</color>
+	</hrule>
+
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<color>
+				<red>0</red>
+				<green>0.5</green>
+				<blue>0</blue>
+				<alpha>0.95</alpha>
+			</color>
+			<halign>center</halign>
+			<legend>Download Update</legend>
+			<pref-width>220</pref-width>
+			<binding>
+				<command>open-browser</command>
+				<path>https://www.github.com/legoboyvdlp/A320-family/archive/master.zip</path>
+			</binding>
+			<binding>
+				<command>exit</command>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+		<button>
+			<color>
+				<red>0.6</red>
+				<green>0</green>
+				<blue>0</blue>
+				<alpha>0.95</alpha>
+			</color>
+			<halign>center</halign>
+			<legend>Remind Me Later</legend>
+			<pref-width>220</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+				if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+					if (getprop("/systems/acconfig/options/welcome-skip") != 1) {
+						acconfig.welcome_dlg.open();
+					}
+				} else {
+					acconfig.error_mismatch.open();
+				}
+				</script>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+</PropertyList>

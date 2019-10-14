@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+	<path>Aircraft/Generic/Effects/Thruster/thrust_flame.ac</path>
+	<nopreview/>
+	<animation>
+		<type>scale</type>
+		<property>systems/failures/engine-right-fire</property>
+		<x-min>0.2</x-min>
+		<y-min>0.3</y-min>
+		<z-min>0.3</z-min>
+		<y-max>0.8</y-max>
+		<z-max>0.8</z-max>
+		<x-factor>0.4</x-factor>
+		<y-factor>0.7</y-factor>
+		<z-factor>0.7</z-factor>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Bounding_box</object-name>
+		<condition>
+				<property>systems/failures/engine-right-fire</property>
+		</condition>
+	</animation>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/flame</inherits-from>
+		<object-name>Bounding_box</object-name>
+	</effect>
+
+</PropertyList>

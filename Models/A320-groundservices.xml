@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+##############################################
+# Copyright (c) Joshua Davidson (Octal450) #
+##############################################
+# modified ground services (D-ECHO)
+-->
+
+<PropertyList>
+	<name>A320-groundservices</name>
+	
+	<!-- Fuel Truck -->
+	
+	<model>
+		<name>fuel-truck</name>
+		<path>Aircraft/A320-family/Models/Services/Fuel-Truck/Fuel_Truck_Short_VolvoFM.ac</path>
+		<condition>
+			<equals>
+				<property>services/fuel-truck/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>26.11094</x-m>
+			<y-m>-29.16832</y-m>
+			<z-m>0.95</z-m>
+			<heading-deg>170</heading-deg>
+		</offsets>
+	</model>
+	
+	<animation>
+		<type>select</type>
+		<object-name>fuel_pipe</object-name>
+		<condition>
+			<equals>
+				<property>services/fuel-truck/connect</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>fuel_pipe_disconnected</object-name>
+		<condition>
+			<equals>
+				<property>services/fuel-truck/connect</property>
+				<value>0</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<!-- De-icing Truck -->
+	
+	<model>
+		<name>de-ice-truck</name>
+		<path>Aircraft/A320-family/Models/Services/De-Icing/volvo_deicing_truck.xml</path>
+		<condition>
+			<equals>
+				<property>services/deicing_truck/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>-3</x-m>
+			<y-m>9.5</y-m>
+			<z-m>-4</z-m>
+			<heading-deg>160</heading-deg>
+		</offsets>
+	</model>
+	
+	<!-- Catering Truck - 1st door -->
+	
+	<model>
+		<name>cater-truck</name>
+		<path>Aircraft/A320-family/Models/Services/Catering/L_T_VolvoFM-4_5m-set.xml</path>
+		<condition>
+			<equals>
+				<property>services/catering/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>6.84</x-m>
+			<y-m>6.62</y-m>
+			<z-m>-4.1</z-m>
+			<heading-deg>93.412</heading-deg>
+		</offsets>
+	</model>
+	
+	<!-- Baggage Truck -->
+	
+	<model>
+		<name>baggage-truck</name>
+		<path>Aircraft/A320-family/Models/Services/Baggage/cargo_ramp.ac</path>
+		<condition>
+			<equals>
+				<property>services/baggage/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>9.52482</x-m>
+			<y-m>0</y-m>
+			<z-m>0.5</z-m>            
+		</offsets>
+	</model>
+	
+	<!-- External Power -->
+	
+	<model>
+		<name>ext-pwr</name>
+		<path>Aircraft/A320-family/Models/Services/External-Power/ext-pwr-box.ac</path>
+		<condition>
+			<equals>
+				<property>controls/electrical/ground-cart</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>5</x-m>
+			<y-m>2</y-m>
+			<z-m>0.5</z-m>
+		</offsets>
+	</model>
+	
+	<!-- Chocks -->
+	
+	<model>
+		<name>chock_nose</name>
+		<path>Aircraft/A320-family/Models/Services/Chocks/chock_nose.ac</path>
+		<condition>
+			<equals>
+				<property>services/chokes/nose</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>23.5</x-m>
+			<z-m>1.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>chock_left</name>
+		<path>Aircraft/A320-family/Models/Services/Chocks/chock_left.ac</path>
+		<condition>
+			<equals>
+				<property>services/chokes/left</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>15.5</x-m>
+			<y-m>1.05</y-m>
+			<z-m>1.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>chock_right</name>
+		<path>Aircraft/A320-family/Models/Services/Chocks/chock_right.ac</path>
+		<condition>
+			<equals>
+				<property>services/chokes/right</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>15.5</x-m>
+			<y-m>-1.05</y-m>
+			<z-m>1.25</z-m>
+		</offsets>
+	</model>
+	<!-- Stairways -->
+	
+
+	<model>
+		<path>Aircraft/A320-family/Models/Services/Stairs/stairs.xml</path>
+		<name>l1</name>
+		<offsets>
+			<x-m>7.32829</x-m>
+			<y-m>-0.10833</y-m>
+			<z-m>-0.6</z-m>
+			<heading-deg>-4.037</heading-deg>
+		</offsets>
+		<condition>
+			<property>services/stairs/l1</property>
+		</condition>
+	</model>
+
+	<model>
+		<path>Aircraft/A320-family/Models/Services/Stairs/stairs.xml</path>
+		<name>l4</name>
+		<offsets>
+			<x-m>31.68355</x-m>
+			<y-m>0.04962</y-m>
+			<z-m>-0.6</z-m>
+			<heading-deg>6.705</heading-deg>
+		</offsets>
+		<condition>
+			<property>services/stairs/l4</property>
+		</condition>
+	</model>
+
+	
+</PropertyList>

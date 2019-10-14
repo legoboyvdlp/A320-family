@@ -1,0 +1,152 @@
+# See: http://wiki.flightgear.org/MapStructure
+# This layer is currently being restructured to better support 1) styling, 2) LOD and 3) caching of instanced symbols
+# The corresponding APIs in MapStructure.nas and api.nas should probably be extended acccordingly
+#
+# We can look into adapting the other layers once we have a single use-case that works properly - including styling, LOD and caching -
+# at that point, the framework should have evolved sufficiently. 
+#
+# It would probably be a good idea to incrementally port some other layers and provide the corresponding helpers/APIs, to reduce the amount
+# of specialized/identical code in the .symbol files.
+#  
+
+
+# Class things:
+var name = 'DME';
+var parents = [DotSym];
+var __self__ = caller(0)[0];
+DotSym.makeinstance( name, __self__ );
+
+var element_type = "group"; # we want a group, becomes "me.element"
+
+var timer = nil;
+
+###
+# symbols (canvas groups) managed by this file
+#
+var icon_dme = nil;
+
+var scale_animation = 1;
+
+var animate = func {
+	if (me.scale_animation >= 1)
+		me.scale_animation -= .5;
+	else
+		me.scale_animation += .5;
+	me.element.setScale( me.scale_animation );
+}
+
+
+var del = func {
+ # me.timer.stop();
+}
+
+# CachedElement
+# StyleAttribute
+# Styleable
+# RangeAwareElement
+
+
+
+# var DMEIcon = StyleableElement.new( [{color:IconColor}, ] );
+
+###
+# FIXME: these should probably be part of MapStructure itself
+# TODO: Need to come up with a StyleableElement class for this sort of stuff
+var apply_styling = func {
+	# add all styleable groups here
+
+	# no need to do this whenever draw is called - typically, attributes won't change at all - so this is kinda redundant
+	var current_color = me.icon_dme.getColor();
+	var required_color = nil;
+
+	if (typeof(me.map.controller["is_tuned"]) == 'func' and me.map.controller.is_tuned(me.model.frequency/100))
+	#TODO: once we support caching/instancing, we cannot just change the symbol like this - we need to use a different symbol from the cache instead
+	# which is why these things need to be done ONCE during init to set up a cache entry for each symbol variation to come up with a  corresponding raster image
+	# TODO: API-wise it would make sense to maintain a vector of required keys, so that the style hash can be validated in the ctor of the layer
+	# to ensure that all mandatory fields are supplied 
+		required_color = canvas._getColor( me.layer.style.color_tuned);
+		else
+		required_color = canvas._getColor( me.layer.style.color_default);
+
+	if (current_color != required_color) {
+		# print("Setting color!");
+		# TODO: this is where we would select another cached symbol
+		me.icon_dme.setColor( required_color );
+	}
+	# else print("Not changing color (unnecessary)");
+
+	# debug.dump(me.layer.style);
+}
+
+
+###
+# NOTE: This is only applied during initialization
+# TODO: expose via addLayer/style param
+# TODO: also needs to be aware of current range, so that proper LOD handling can be implemented
+var apply_scale = func {
+	# add all symbols here that need scaling
+	me.icon_dme.setScale( me.layer.style.scale_factor );
+}
+
+###
+# draw routines must be called here to create a lookup table
+# with different symbols, based on styling (colors etc)
+# because we can no longer change instanced symbols later on 
+# as they will be shared, so we need one cache entry for each 
+# variation in style 
+var init_cache = func {
+
+}
+
+##
+# init is done separately to prepare support for caching (instanced symbols)
+#
+var init = func {
+	# debug.dump(me.layer.style);
+	var draw_func = me.getOption('draw_dme');
+	if(typeof(draw_func) == 'func'){
+		me.icon_dme = draw_func(me);
+	} else {
+		me.icon_dme = me.element.createChild("path")
+		.moveTo(-15,0)
+		.line(-12.5,-7.5)
+		.line(7.5,-12.5)
+		.line(12.5,7.5)
+		.lineTo(7.5,-12.5)
+		.line(12.5,-7.5)
+		.line(7.5,12.5)
+		.line(-12.5,7.5)
+		.lineTo(15,0)
+		.lineTo(7.5,12.5)
+		.vert(14.5)
+		.horiz(-14.5)
+		.vert(-14.5)
+		.close()
+		.setStrokeLineWidth( me.layer.style.line_width );
+	}
+
+	# finally scale the symbol as requested, this is done last so that people can override this when creating the layer
+	me.apply_scale();
+	if(me.getOption('draw_text', 0)){
+		me.dme_text = me.element.createChild("text")
+		.setDrawMode( canvas.Text.TEXT )
+		.setText(me.model.id)
+		.setFont("LiberationFonts/LiberationSans-Regular.ttf")
+		.setFontSize(28)
+		.setColor(me.getStyle('text_color', [1,1,1]))
+		.setTranslation(me.getStyle('translation', [45,25]));
+	}
+	if (me.layer.style.animation_test) {
+		me.timer = maketimer(0.33, func me.animate() );
+		me.timer.start();
+	}
+	me.draw();
+}
+
+##
+# this method is REQUIRED
+# check if the current station is tuned or not - and style the symbol accordingly (color)
+var draw = func {
+	me.apply_styling();
+};
+

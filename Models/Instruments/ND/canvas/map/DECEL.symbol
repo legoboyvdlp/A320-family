@@ -1,0 +1,32 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'DECEL';
+var parents = [canvas.DotSym];
+var __self__ = caller(0)[0];
+canvas.DotSym.makeinstance( name, __self__ );
+
+#canvas.SymbolLayer.get(name).df_style = {
+#    radius: 13,
+#};
+
+var element_type = "group";
+
+var init = func {
+    var svg_path = me.getStyle('svg_path');
+    if(svg_path == nil)
+        svg_path = get_local_path('res/airbus_decel.svg');
+    me.decel_grp = me.element.createChild("group","decel");
+    canvas.parsesvg(me.decel_grp, svg_path);
+    me.decel_grp.set('z-index', 5);
+}
+
+var draw = func{
+    if(me.decel_grp != nil){
+        var spd_ctrl = getprop(me.options.spd_ctrl);
+        var spd_managed = (spd_ctrl == me.options.managed_val);
+        if(spd_managed)
+            me.decel_grp.setColor(me.style.managed_color);
+        else
+            me.decel_grp.setColor(me.style.selected_color);
+    }
+}

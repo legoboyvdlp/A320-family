@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/a320.mlg.right.ac</path>
+
+	<model>
+		<name>Main Tires</name>
+		<path>Aircraft/A320-family/Models/LandingGears/a320.mlg.tires.xml</path>
+		<overlay>
+			<params>
+				<gear>gear/gear[2]/rollspeed-ms</gear>
+			</params>
+		</overlay>
+	</model>
+
+	<!--model>
+		<name>Starboard tire smoke</name>
+		<path>Aircraft/Generic/Effects/tyre-smoke-stbd.xml</path>
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.572</z-m>
+		</offsets>
+	</model-->
+
+	<!-- Gear compression -->
+	<animation>
+		<name>Compression lower scissor</name>
+		<type>rotate</type>
+		<object-name>LINKS.02</object-name>
+		<property>gear/gear[2]/compression-norm</property>
+		<interpolation>
+			<entry><ind>0.000</ind><dep>0.000</dep></entry>
+			<entry><ind>0.050</ind><dep>-5.374</dep></entry>
+			<entry><ind>0.100</ind><dep>-18.466</dep></entry>
+			<entry><ind>0.150</ind><dep>-4.218</dep></entry>
+			<entry><ind>0.200</ind><dep>2.544</dep></entry>
+			<entry><ind>0.250</ind><dep>7.801</dep></entry>
+			<entry><ind>0.300</ind><dep>12.284</dep></entry>
+			<entry><ind>0.350</ind><dep>16.280</dep></entry>
+			<entry><ind>0.400</ind><dep>19.934</dep></entry>
+			<entry><ind>0.450</ind><dep>23.333</dep></entry>
+			<entry><ind>0.500</ind><dep>26.534</dep></entry>
+			<entry><ind>0.550</ind><dep>29.577</dep></entry>
+			<entry><ind>0.600</ind><dep>32.491</dep></entry>
+			<entry><ind>0.650</ind><dep>35.297</dep></entry>
+			<entry><ind>0.700</ind><dep>38.013</dep></entry>
+			<entry><ind>0.750</ind><dep>40.653</dep></entry>
+			<entry><ind>0.800</ind><dep>43.227</dep></entry>
+			<entry><ind>0.850</ind><dep>45.746</dep></entry>
+			<entry><ind>0.900</ind><dep>48.217</dep></entry>
+			<entry><ind>0.950</ind><dep>50.647</dep></entry>
+			<entry><ind>1.000</ind><dep>53.043</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>-0.158</x-m>
+			<y-m>0</y-m>
+			<z-m>0.024</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<name>Compression upper scissor</name>
+		<type>rotate</type>
+		<object-name>LINKS.01</object-name>
+		<property>gear/gear[2]/compression-norm</property>
+		<interpolation>
+			<entry><ind>0.000</ind><dep>0.000</dep></entry>
+			<entry><ind>0.050</ind><dep>-5.374</dep></entry>
+			<entry><ind>0.100</ind><dep>-18.466</dep></entry>
+			<entry><ind>0.150</ind><dep>-4.218</dep></entry>
+			<entry><ind>0.200</ind><dep>2.544</dep></entry>
+			<entry><ind>0.250</ind><dep>7.801</dep></entry>
+			<entry><ind>0.300</ind><dep>12.284</dep></entry>
+			<entry><ind>0.350</ind><dep>16.280</dep></entry>
+			<entry><ind>0.400</ind><dep>19.934</dep></entry>
+			<entry><ind>0.450</ind><dep>23.333</dep></entry>
+			<entry><ind>0.500</ind><dep>26.534</dep></entry>
+			<entry><ind>0.550</ind><dep>29.577</dep></entry>
+			<entry><ind>0.600</ind><dep>32.491</dep></entry>
+			<entry><ind>0.650</ind><dep>35.297</dep></entry>
+			<entry><ind>0.700</ind><dep>38.013</dep></entry>
+			<entry><ind>0.750</ind><dep>40.653</dep></entry>
+			<entry><ind>0.800</ind><dep>43.227</dep></entry>
+			<entry><ind>0.850</ind><dep>45.746</dep></entry>
+			<entry><ind>0.900</ind><dep>48.217</dep></entry>
+			<entry><ind>0.950</ind><dep>50.647</dep></entry>
+			<entry><ind>1.000</ind><dep>53.043</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>-0.26</x-m>
+			<y-m>0</y-m>
+			<z-m>0.643</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<name>Compression</name>
+		<type>translate</type>
+		<object-name>OLEO</object-name>
+		<object-name>ACTUTATOR</object-name>
+		<object-name>Main Tires</object-name>
+		<object-name>Compression lower scissor</object-name>
+		<property>gear/gear[2]/compression-ft</property>
+		<factor>0.305</factor>
+		<axis>
+			<x1-m>0</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>0</z1-m>
+			<x2-m>-0.165</x2-m>
+			<y2-m>0</y2-m>
+			<z2-m>1.196</z2-m>
+		</axis>
+	</animation>
+
+	<!-- Gear retraction sequence -->
+	<animation>
+		<name>Retraction</name>
+		<type>rotate</type>
+		<object-name>AXLE</object-name>
+		<object-name>ACTUTATOR</object-name>
+		<object-name>D_STRUCT.L</object-name>
+		<object-name>D_STRUCT.U</object-name>
+		<object-name>FITTING</object-name>
+		<object-name>OLEO</object-name>
+		<object-name>LINKS.01</object-name>
+		<object-name>LINKS.02</object-name>
+		<object-name>Main Tires</object-name>
+		<property>gear/gear[2]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>80.5</dep></entry>
+			<entry><ind>0.2</ind><dep>80.5</dep></entry>
+			<entry><ind>0.8</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.2681111</x1-m>
+			<y1-m>0.0129338</y1-m>
+			<z1-m>2.8588708</z1-m>
+			<x2-m>-1.1054902</x2-m>
+			<y2-m>-0.0075</y2-m>
+			<z2-m>2.7435568</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Drag_Structs.Lower</name>
+		<type>rotate</type>
+		<object-name>D_STRUCT.L</object-name>
+		<object-name>D_STRUCT.U</object-name>
+		<property>gear/gear[2]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>45.0</dep></entry>
+			<entry><ind>0.2</ind><dep>45.0</dep></entry>
+			<entry><ind>0.8</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.2671443</x1-m>
+			<y1-m>-0.1992673</y1-m>
+			<z1-m>1.2244419</z1-m>
+			<x2-m>-0.3569210</x2-m>
+			<y2-m>-0.1076174</y2-m>
+			<z2-m>1.2222185</z2-m>
+		</axis>
+	</animation>
+	<animation>
+		<name>Drag_Structs.Upper</name>
+		<type>rotate</type>
+		<object-name>D_STRUCT.U</object-name>
+		<property>gear/gear[2]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>180.0</dep></entry>
+			<entry><ind>0.2</ind><dep>180.0</dep></entry>
+			<entry><ind>0.8</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.024</x1-m>
+			<y1-m>-0.693</y1-m>
+			<z1-m>1.965</z1-m>
+			<x2-m>-0.884</x2-m>
+			<y2-m>-0.836</y2-m>
+			<z2-m>1.968</z2-m>
+		</axis>
+	</animation>
+
+</PropertyList>

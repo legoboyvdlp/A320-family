@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>announcements</name>
+	<layout>vbox</layout>
+	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Announcements</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+		
+	<group>
+		<layout>hbox</layout>
+
+		<group>
+			<layout>vbox</layout>
+
+			<checkbox>
+				<label>Welcome (F/A)</label>
+				<halign>left</halign>
+				<property>/sim/sounde/welcomefa</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Welcome (Capt)</label>
+				<halign>left</halign>
+				<property>/sim/sounde/welcomecapt</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Doors Departure</label>
+				<halign>left</halign>
+				<property>/sim/sounde/doors</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>SafetyBrief</label>
+				<halign>left</halign>
+				<property>/sim/sounde/safety</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Prepare for Takeoff</label>
+				<halign>left</halign>
+				<property>/sim/sounde/prepareto</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Seatbelt Turned Off</label>
+				<halign>left</halign>
+				<property>/sim/sounde/seatbelt-10k</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			</group>
+			
+		</group>
+	
+</PropertyList>

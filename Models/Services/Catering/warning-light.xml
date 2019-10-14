@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+<path>warning-light.ac</path>
+
+<!-- Rembrandt -->
+<effect>
+	<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>Light</object-name>
+</effect>
+
+<animation>
+	<type>rotate</type>
+	<object-name>Light</object-name>
+	<property>sim/time/elapsed-sec</property>
+	<factor>-270.0</factor>
+	<center>
+		<x-m>0</x-m>
+		<y-m>0</y-m>
+		<z-m>0</z-m>
+	</center>
+	<axis>
+		<x>0</x>
+		<y>0</y>
+		<z>1</z>
+	</axis>
+</animation>
+
+<animation>
+	<type>noshadow</type>
+	<object-name>Light</object-name>
+</animation>
+
+<animation>
+	<type>alpha-test</type>
+	<alpha-factor>0.01</alpha-factor>
+</animation>
+
+</PropertyList>
+ 

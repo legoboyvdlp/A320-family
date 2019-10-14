@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.00</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.05</ind> <dep>0.90</dep></entry>
+			<entry><ind>0.15</ind> <dep>0.50</dep></entry>
+			<entry><ind>0.19</ind> <dep>0.00</dep></entry>
+        </table>
+      
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a1strt</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.00</ind> <dep>0.50</dep></entry>
+			<entry><ind>0.05</ind> <dep>0.70</dep></entry>
+			<entry><ind>0.19</ind> <dep>1.50</dep></entry>
+        </table>
+      
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a1strtp</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.00</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.05</ind> <dep>0.90</dep></entry>
+			<entry><ind>0.15</ind> <dep>0.50</dep></entry>
+			<entry><ind>0.19</ind> <dep>0.00</dep></entry>
+        </table>
+      
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b1strt</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.00</ind> <dep>0.50</dep></entry>
+			<entry><ind>0.05</ind> <dep>0.70</dep></entry>
+			<entry><ind>0.19</ind> <dep>1.50</dep></entry>
+        </table>
+      
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b1strtp</prop>
+  </output>
+</filter>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+	ENGINE VOLUME
+-->
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.06</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.19</ind> <dep>0.40</dep></entry>
+			<entry><ind>0.45</ind> <dep>0.15</dep></entry>
+			<entry><ind>0.55</ind> <dep>0.00</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a11</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.06</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.19</ind> <dep>0.40</dep></entry>
+			<entry><ind>0.45</ind> <dep>0.15</dep></entry>
+			<entry><ind>0.55</ind> <dep>0.00</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b11</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.32</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.65</ind> <dep>0.30</dep></entry>
+			<entry><ind>0.90</ind> <dep>0.25</dep></entry>
+			<entry><ind>0.99</ind> <dep>0.08</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a12</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.32</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.65</ind> <dep>0.30</dep></entry>
+			<entry><ind>0.90</ind> <dep>0.25</dep></entry>
+			<entry><ind>0.99</ind> <dep>0.08</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b12</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.65</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.70</ind> <dep>0.10</dep></entry>
+			<entry><ind>1.02</ind> <dep>0.80</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a13</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.65</ind> <dep>0.00</dep></entry>
+			<entry><ind>0.70</ind> <dep>0.10</dep></entry>
+			<entry><ind>1.02</ind> <dep>0.80</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b13</prop>
+  </output>
+</filter>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+	ENGINE PITCH
+-->
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.15</ind> <dep>0.50</dep></entry>
+			<entry><ind>0.19</ind> <dep>1.00</dep></entry>
+			<entry><ind>0.50</ind> <dep>1.30</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a11p</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.15</ind> <dep>0.50</dep></entry>
+			<entry><ind>0.19</ind> <dep>1.00</dep></entry>
+			<entry><ind>0.50</ind> <dep>1.30</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b11p</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.19</ind> <dep>0.70</dep></entry>
+			<entry><ind>0.99</ind> <dep>1.80</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a12p</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.19</ind> <dep>0.70</dep></entry>
+			<entry><ind>0.99</ind> <dep>1.80</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b12p</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[0]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.70</ind> <dep>0.80</dep></entry>
+			<entry><ind>1.02</ind> <dep>1.28</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/a13p</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/engines/engine[1]/n1-actual</property><value>0.01</value>  </product>
+			<entry><ind>0.70</ind> <dep>0.80</dep></entry>
+			<entry><ind>1.02</ind> <dep>1.28</dep></entry>
+        </table>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>/sim/sound/b13p</prop>
+  </output>
+</filter>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/sim/current-view/z-offset-m</property><value>1</value>  </product>
+            <entry><ind>-5.0</ind> <dep>0.11</dep></entry>
+			<entry><ind>0.00</ind> <dep>1.00</dep></entry>
+			<entry><ind>15.0</ind> <dep>0.11</dep></entry>
+        </table>
+		<property>sim/current-view/internal</property>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>sim/sound/other/flaps</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/sim/current-view/z-offset-m</property><value>1</value>  </product>
+            <entry><ind>-8.0</ind> <dep>0.10</dep></entry>
+			<entry><ind>0.00</ind> <dep>1.00</dep></entry>
+			<entry><ind>22.0</ind> <dep>0.10</dep></entry>
+        </table>
+		<property>sim/current-view/internal</property>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>sim/sound/other/gear</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/position/altitude-agl-ft</property><value>1</value>  </product>
+			<entry><ind>300</ind>  <dep>1.00</dep></entry>
+			<entry><ind>301</ind>  <dep>0.00</dep></entry>
+        </table>
+		<property>sim/current-view/internal</property>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>sim/sound/other/callout</prop>
+  </output>
+</filter>
+
+<filter>
+  <type>gain</type>
+  <gain>1</gain>
+  <input>
+    <expression>
+      <product>
+        <table>
+          <product><property>/sim/current-view/z-offset-m</property><value>1</value>  </product>
+            <entry><ind>-11</ind>  <dep>0.00</dep></entry>
+			<entry><ind>-12</ind>  <dep>1.00</dep></entry>
+        </table>
+		<property>sim/current-view/internal</property>
+      </product>
+    </expression> 
+  </input>
+  <output>
+    <prop>sim/sound/other/callout2</prop>
+  </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+        <expression>
+            <product>
+                <table>
+                    <product><property>/velocities/groundspeed-kt</property><value>1</value>  </product>
+                    <entry><ind>0.00</ind> <dep>0.0001</dep></entry>
+                    <entry><ind>10</ind>   <dep>0.001</dep></entry>
+                    <entry><ind>100</ind>  <dep>0.01</dep></entry>
+                    <entry><ind>250</ind>  <dep>0.10</dep></entry>
+                    <entry><ind>550</ind>  <dep>0.30</dep></entry>
+                </table>
+                <property>sim/current-view/internal</property>
+            </product>
+        </expression> 
+    </input>
+    <output>
+        <prop>sim/sound/other/cockpit-wind</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<or>
+				<property>sim/sound/wingview-aft</property>
+				<property>sim/sound/wingview-fwd</property>
+			</or>
+		</condition>
+        <expression>
+            <product>
+                <table>
+                    <product><property>/velocities/groundspeed-kt</property><value>1</value>  </product>
+                    <entry><ind>0.00</ind> <dep>0.0001</dep></entry>
+                    <entry><ind>10</ind>   <dep>0.001</dep></entry>
+                    <entry><ind>100</ind>  <dep>0.01</dep></entry>
+                    <entry><ind>250</ind>  <dep>0.10</dep></entry>
+                    <entry><ind>550</ind>  <dep>0.30</dep></entry>
+                </table>
+            </product>
+        </expression> 
+    </input>
+	<input>
+		<condition>
+			<and>
+				<not>
+					<property>sim/sound/wingview-aft</property>
+				</not>
+				<not>
+					<property>sim/sound/wingview-fwd</property>
+				</not>
+			</and>
+		</condition>
+		<value>0</value>
+	</input>
+    <output>
+        <prop>sim/sound/other/wind</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+    <expression>
+        <product>
+            <table>
+                <product><property>/velocities/groundspeed-kt</property><value>1</value>  </product>
+                <entry><ind>0.00</ind> <dep>0.50</dep></entry>
+                <entry><ind>550</ind>  <dep>1.00</dep></entry>
+            </table>
+            <property>sim/sound/internal-custom</property>
+        </product>
+    </expression> 
+    </input>
+    <output>
+        <prop>sim/sound/other/windp</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<property>sim/current-view/internal</property>
+		</condition>
+		<expression>
+			<table>
+				<product>
+					<property>/velocities/groundspeed-kt</property>
+					<value>1</value>  
+				</product>
+				<entry><ind>010</ind>  <dep>0.00</dep></entry>
+				<entry><ind>110</ind>  <dep>0.50</dep></entry>
+				<entry><ind>140</ind>  <dep>1.00</dep></entry>
+			</table>
+		</expression> 
+    </input>
+	<input>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
+		<value>0</value>
+	</input>
+    <output>
+		<prop>sim/sound/other/cockpit-roll</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<or>
+				<property>sim/sound/wingview-aft</property>
+				<property>sim/sound/wingview-fwd</property>
+			</or>
+		</condition>
+		<expression>
+			<table>
+				<product>
+					<property>/velocities/groundspeed-kt</property>
+					<value>1</value>  
+				</product>
+				<entry><ind>010</ind>  <dep>0.00</dep></entry>
+				<entry><ind>110</ind>  <dep>0.50</dep></entry>
+				<entry><ind>140</ind>  <dep>1.00</dep></entry>
+			</table>
+		</expression> 
+    </input>
+	<input>
+		<condition>
+			<and>
+				<not>
+					<property>sim/sound/wingview-aft</property>
+				</not>
+				<not>
+					<property>sim/sound/wingview-fwd</property>
+				</not>
+			</and>
+		</condition>
+		<value>0</value>
+	</input>
+    <output>
+		<prop>sim/sound/other/roll</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<or>
+				<property>sim/sound/wingview-aft</property>
+				<property>sim/sound/wingview-fwd</property>
+			</or>
+		</condition>
+		<value>1</value>
+    </input>
+	<input>
+		<condition>
+			<and>
+				<not>
+					<property>sim/sound/wingview-aft</property>
+				</not>
+				<not>
+					<property>sim/sound/wingview-fwd</property>
+				</not>
+			</and>
+		</condition>
+		<value>0</value>
+	</input>
+    <output>
+		<prop>sim/sound/other/flaps</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<property>sim/sound/internal-custom</property>
+		</condition>
+		<expression>
+			<table>
+				<product>
+					<property>/velocities/groundspeed-kt</property>
+					<value>1</value>  
+				</product>
+				<entry><ind>010</ind>  <dep>0.50</dep></entry>
+				<entry><ind>140</ind>  <dep>1.00</dep></entry>
+			</table>
+		</expression> 
+    </input>
+	<input>
+		<condition>
+			<not><property>sim/sound/internal-custom</property></not>
+		</condition>
+		<value>0</value>
+	</input>
+    <output>
+		<prop>sim/sound/other/rollp</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<property>sim/sound/internal-custom</property>
+		</condition>
+		<expression>
+			<product>
+				<property>/systems/pneumatic/pack-psi</property>
+				<value>0.025</value>
+			</product>
+		</expression> 
+    </input>
+	<input>
+		<condition>
+			<not><property>sim/sound/internal-custom</property></not>
+		</condition>
+		<value>0</value>
+	</input>
+    <output>
+		<prop>sim/sound/other/air-con</prop>
+    </output>
+</filter>
+
+<!-- wing view properties -->
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<equals>
+				<property>/sim/current-view/view-number</property>
+				<value>13</value>
+			</equals>
+		</condition>
+		<value>1</value>
+    </input>
+	<input>
+		<condition>
+			<not>
+				<equals>
+					<property>/sim/current-view/view-number</property>
+					<value>13</value>
+				</equals>
+			</not>
+		</condition>
+		<value>0</value>
+    </input>
+    <output>
+		<prop>sim/sound/wingview-fwd</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+   <input>
+		<condition>
+			<or>
+				<equals>
+					<property>/sim/current-view/view-number</property>
+					<value>14</value>
+				</equals>
+				<equals>
+					<property>/sim/current-view/view-number</property>
+					<value>15</value>
+				</equals>
+			</or>
+		</condition>
+		<value>1</value>
+    </input>
+   <input>
+		<condition>
+			<and>
+				<not>
+					<equals>
+						<property>/sim/current-view/view-number</property>
+						<value>14</value>
+					</equals>
+				</not>
+				<not>
+					<equals>
+						<property>/sim/current-view/view-number</property>
+						<value>15</value>
+					</equals>
+				</not>
+			</and>
+		</condition>
+		<value>0</value>
+    </input>
+    <output>
+		<prop>sim/sound/wingview-aft</prop>
+    </output>
+</filter>
+
+<filter>
+    <type>gain</type>
+    <gain>1</gain>
+    <input>
+		<condition>
+			<or>
+				<equals>
+					<property>sim/current-view/internal</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/sim/current-view/view-number</property>
+					<value>13</value>
+				</equals>
+				<equals>
+					<property>/sim/current-view/view-number</property>
+					<value>14</value>
+				</equals>
+				<equals>
+					<property>/sim/current-view/view-number</property>
+					<value>15</value>
+				</equals>
+			</or>
+		</condition>
+		<value>1</value>
+    </input>
+	<input>
+		<condition>
+			<and>
+				<not><property>sim/current-view/internal</property></not>
+				<not>
+					<equals>
+						<property>/sim/current-view/view-number</property>
+						<value>105</value>
+					</equals>
+				</not>
+				<not>
+					<equals>
+						<property>/sim/current-view/view-number</property>
+						<value>106</value>
+					</equals>
+				</not>
+				<not>
+					<equals>
+						<property>/sim/current-view/view-number</property>
+						<value>107</value>
+					</equals>
+				</not>
+			</and>
+		</condition>
+		<value>0</value>
+    </input>
+    <output>
+		<prop>sim/sound/internal-custom</prop>
+    </output>
+</filter>
+</PropertyList>

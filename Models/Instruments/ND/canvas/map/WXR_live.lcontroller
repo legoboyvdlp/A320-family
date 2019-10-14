@@ -1,0 +1,72 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'WXR_live';
+var parents = [canvas.SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+
+canvas.SymbolLayer.Controller.add(name, __self__);
+canvas.SymbolLayer.add(name, {
+	parents: [canvas.MultiSymbolLayer],
+	type: name, # Symbol type
+	df_controller: __self__, # controller to use by default -- this one
+	df_options: { # default configuration options
+		viewport_radius: 670
+	}
+});
+
+var wxr_tree = "/instrumentation/wxr";
+
+var new = func(layer) {
+	var m = {
+		parents: [__self__],
+		layer: layer,
+		map: layer.map,
+		listeners: [],
+	};
+	layer.searcher._equals = func(l,r) l.equals(r);
+	m.addVisibilityListener();
+	var aircraft_dir = split('/', getprop("/sim/aircraft-dir"))[-1];
+	var saved_conf = getprop("/sim/fg-home") ~ "/Export/wxr_api.xml"; 
+	var df_conf = getprop("/sim/fg-root") ~ "/Aircraft/" ~ aircraft_dir ~  
+		"/Models/Instruments/ND/canvas/wxr_api.xml";
+	if(io.stat(saved_conf) != nil)
+		io.read_properties(saved_conf, wxr_tree);
+	else 
+		io.read_properties(df_conf, wxr_tree);
+	return m;
+};
+var del = func() {
+	#print(name~".lcontroller.del()");
+	foreach (var l; me.listeners)
+		removelistener(l);
+};
+
+var searchCmd  = func {
+	if(me.map.getRange() == nil) return [];
+	var api_key = getprop(wxr_tree~"/api-key");
+	if(!api_key or api_key == '' or api_key == 'YOUR API KEY')
+		return [];
+	var lat = getprop(wxr_tree~"/center/latitude-deg");
+	var lon = getprop(wxr_tree~"/center/longitude-deg");
+	
+	if(lat == nil or lon == nil) {
+		var pos = geo.aircraft_position();
+		lat = pos.lat();
+		lon = pos.lon();
+	}
+	
+	var result = geo.Coord.new();
+	result.set_latlon(lat, lon);
+	result.rangeNm = me.map.getRange();
+	result.key = api_key;
+	result.res = getprop(wxr_tree~"/resolution");
+	result.ltype = getprop(wxr_tree~"/layer-type");
+	result.smooth = getprop(wxr_tree~"/smooth");
+	result.fetchRad = getprop(wxr_tree~"/fetch-radius");
+	result.equals = func(r){
+		me.ltype == r.ltype and me.fetchRad == r.fetchRad and 
+		me.lat == r.lat and me.lon == r.lon
+	};
+	
+	return [result];
+};

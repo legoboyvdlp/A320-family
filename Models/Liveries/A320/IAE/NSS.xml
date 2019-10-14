@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Nesma Airlines</name>
+				<texture>Liveries/A320/IAE/NSS.png</texture>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<EIS2 type="bool">0</EIS2>
+	</options>
+	
+	<sharklet type="bool">0</sharklet>
+</PropertyList>

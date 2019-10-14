@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- Airbus A3XX FBW System -->
+<!-- I didn't see an easy way to do this controller in JSBsim, so I keep it here -->
+
+<PropertyList>
+
+	<pi-simple-controller>
+		<name>FBW PITCH G PI</name>
+		<debug>false</debug>
+		<input>/fdm/jsbsim/fbw/pitch/g-error</input>
+		<reference>0</reference>
+		<output>/fdm/jsbsim/fbw/pitch/g-pi</output>
+		<config>
+			<Kp>
+				<expression>
+					<table>
+						<property>/fdm/jsbsim/velocities/vc-kts</property>
+						<entry><ind>140</ind><dep>-1.0</dep></entry>
+						<entry><ind>350</ind><dep>-0.5</dep></entry>
+					</table>
+				</expression>
+			</Kp>
+			<Ki>
+				<condition>
+					<and>
+						<equals>
+							<property>/fdm/jsbsim/position/wow</property>
+							<value>0</value>
+						</equals>
+						<or>
+							<equals>
+								<property>/it-fbw/law</property>
+								<value>0</value>
+							</equals>
+							<equals>
+								<property>/it-fbw/law</property>
+								<value>1</value>
+							</equals>
+						</or>
+					</and>
+				</condition>
+				<expression>
+					<table>
+						<property>/fdm/jsbsim/velocities/vc-kts</property>
+						<entry><ind>140</ind><dep>-1.0</dep></entry>
+						<entry><ind>350</ind><dep>-0.5</dep></entry>
+					</table>
+				</expression>
+			</Ki>
+			<Ki>0.0</Ki>
+			<min>
+				<condition>
+					<less-than>
+						<property>/fdm/jsbsim/fbw/pitch/e-i</property>
+						<value>0</value>
+					</less-than>
+				</condition>
+				<property>/fdm/jsbsim/fbw/pitch/e-i</property>
+			</min>
+			<min>0.0</min>
+			<max>
+				<condition>
+					<greater-than>
+						<property>/fdm/jsbsim/fbw/pitch/e-i</property>
+						<value>0</value>
+					</greater-than>
+				</condition>
+				<property>/fdm/jsbsim/fbw/pitch/e-i</property>
+			</max>
+			<max>0.0</max>
+		</config>
+	</pi-simple-controller>
+
+</PropertyList>

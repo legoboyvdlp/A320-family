@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/a320.interior.ac</path>
+
+	<!-- ANIMATIONS -->
+	<!-- Lighting -->
+	<animation>
+		<name>Cabin illumination</name>
+		<type>material</type>
+		<object-name>Cabin</object-name>
+		<object-name>CabinDiv1</object-name>
+		<object-name>CabinDiv2</object-name>
+		<object-name>CabinDiv3</object-name>
+		<object-name>Floor</object-name>
+		<object-name>OverheadBins</object-name>
+		<object-name>Seats</object-name>
+		<emission>
+			<red>0.2</red>
+			<green>0.2</green>
+			<blue>0.2</blue>
+			<!--factor-prop>tbd</factor-prop-->
+		</emission>
+	</animation>
+
+   <!-- Door animations placed in fuselage.xml (th) -->
+	<!-- PAX doors -->
+<!--
+	<animation>
+		<name>PAX left-front door pick</name>
+		<type>pick</type>
+		<object-name>DoorL1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 systems.triggerDoor(systems.doorl1, "doorl1", "PAX left-front (main)");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>PAX left-front door x translate</name>
+		<type>translate</type>
+		<object-name>DoorL1</object-name>
+		<property>sim/model/door-positions/doorl1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<name>PAX left-front door y translate</name>
+		<type>translate</type>
+		<object-name>DoorL1</object-name>
+		<property>sim/model/door-positions/doorl1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-0.2</dep></entry>
+			<entry><ind>1</ind><dep>-0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>PAX right-front door pick</name>
+		<type>pick</type>
+		<object-name>DoorR1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 systems.triggerDoor(systems.doorr1, "doorr1", "PAX right-front");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>PAX right-front door x translate</name>
+		<type>translate</type>
+		<object-name>DoorR1</object-name>
+		<property>sim/model/door-positions/doorr1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<name>PAX right-front door y translate</name>
+		<type>translate</type>
+		<object-name>DoorR1</object-name>
+		<property>sim/model/door-positions/doorr1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.2</dep></entry>
+			<entry><ind>1</ind><dep>0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>PAX left-back door pick</name>
+		<type>pick</type>
+		<object-name>DoorL4</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 systems.triggerDoor(systems.doorl4, "doorl4", "PAX left-back");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>PAX left-back door x translate</name>
+		<type>translate</type>
+		<object-name>DoorL4</object-name>
+		<property>sim/model/door-positions/doorl4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<name>PAX left-back door y translate</name>
+		<type>translate</type>
+		<object-name>DoorL4</object-name>
+		<property>sim/model/door-positions/doorl4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-0.2</dep></entry>
+			<entry><ind>1</ind><dep>-0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>PAX right-back door pick</name>
+		<type>pick</type>
+		<object-name>DoorR4</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 systems.triggerDoor(systems.doorr4, "doorr4", "PAX right-back");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>PAX right-back door x translate</name>
+		<type>translate</type>
+		<object-name>DoorR4</object-name>
+		<property>sim/model/door-positions/doorr4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<name>PAX right-back door y translate</name>
+		<type>translate</type>
+		<object-name>DoorR4</object-name>
+		<property>sim/model/door-positions/doorr4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.2</dep></entry>
+			<entry><ind>1</ind><dep>0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+-->
+	<!-- Animation for the doors of the main gears. -->
+<!--
+	<animation>
+		<name>Main_Gear_Doors.Left</name>
+		<type>rotate</type>
+		<object-name>GearLDoor</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>84.0</dep></entry>
+			<entry><ind>0.8</ind><dep>84.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<center>
+			<y-m>-0.4646725</y-m>
+			<z-m>-2.3824937</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Main_Gear_Doors.Right</name>
+		<type>rotate</type>
+		<object-name>GearRDoor</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>84.0</dep></entry>
+			<entry><ind>0.8</ind><dep>84.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<center>
+			<y-m>0.4646725</y-m>
+			<z-m>-2.3824937</z-m>
+		</center>
+		<axis>
+			<x>-1</x>
+		</axis>
+	</animation>
+-->
+	<!-- Animation for the doors of the nose gear. -->
+<!--
+	<animation>
+		<name>Nose_Gear_Doors.Left.01</name>
+		<type>rotate</type>
+		<object-name>GearNFwdDoorL</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>90.0</dep></entry>
+			<entry><ind>0.8</ind><dep>90.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			
+			<x1-m>7.599</x1-m>
+			<y1-m>-0.5</y1-m>
+			<z1-m>-2.0649564</z1-m>
+			
+			<x2-m>5.394</x2-m>
+			<y2-m>-0.5</y2-m>
+			<z2-m>-1.9179121</z2-m>
+			
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Nose_Gear_Doors.Left.02</name>
+		<type>rotate</type>
+		<object-name>GearNAftDoorL</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>45.0</dep></entry>
+		</interpolation>
+		<axis>
+			
+			<x1-m>8.077</x1-m>
+			<y1-m>-0.5</y1-m>
+			<z1-m>-2.0790732</z1-m>
+			
+			<x2-m>7.599</x2-m>
+			<y2-m>-0.5</y2-m>
+			<z2-m>-2.0649564</z2-m>
+			
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Nose_Gear_Doors.Right.01</name>
+		<type>rotate</type>
+		<object-name>GearNFwdDoorR</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>90.0</dep></entry>
+			<entry><ind>0.8</ind><dep>90.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			
+			<x1-m>5.394</x1-m>
+			<y1-m>0.5</y1-m>
+			<z1-m>-1.9179121</z1-m>
+			
+			<x2-m>7.599</x2-m>
+			<y2-m>0.5</y2-m>
+			<z2-m>-2.0649564</z2-m>
+			
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Nose_Gear_Doors.Right.02</name>
+		<type>rotate</type>
+		<object-name>GearNAftDoorR</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>45.0</dep></entry>
+		</interpolation>
+		<axis>
+			
+			<x1-m>7.599</x1-m>
+			<y1-m>0.5</y1-m>
+			<z1-m>-2.0649564</z1-m>
+			
+			<x2-m>8.077</x2-m>
+			<y2-m>0.5</y2-m>
+			<z2-m>-2.0790732</z2-m>
+			
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Nose_Gear_Doors.Center</name>
+		<type>rotate</type>
+		<object-name>GearNDoorC</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>92.0</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>7.83</x-m>
+			<z-m>-1.8306008</z-m>
+		</center>
+		<axis>
+			<y>-1</y>
+		</axis>
+	</animation>
+-->
+</PropertyList>

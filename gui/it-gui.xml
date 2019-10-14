@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- IT-GUI -->
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+	
+	<style n="0">
+		<colors n="0">
+			<background n="0">
+				<alpha>0.95</alpha>
+				<blue>0.05</blue>
+				<green>0.05</green>
+				<red>0.05</red>
+			</background>
+			<button n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</button>
+			<checkbox-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.05</blue>
+				<green>0.05</green>
+				<red>0.05</red>
+			</checkbox-foreground>
+			<checkbox-highlight n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</checkbox-highlight>
+			<checkbox-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</checkbox-misc>
+			<combo-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</combo-editfield>
+			<dial-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</dial-misc>
+			<hrule n="0">
+				<alpha>0.95</alpha>
+				<blue>1.0</blue>
+				<green>0.0</green>
+				<red>1.0</red>
+			</hrule>
+			<input n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</input>
+			<input-legend n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</input-legend>
+			<input-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</input-misc>
+			<radio-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</radio-foreground>
+			<select-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</select-editfield>
+			<slider n="0">
+				<alpha>1.0</alpha>
+				<blue>0.4</blue>
+				<green>0.4</green>
+				<red>0.4</red>
+			</slider>
+			<textbox-editable n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</textbox-editable>
+			<vrule n="0">
+				<alpha>0.95</alpha>
+				<blue>1.0</blue>
+				<green>0.0</green>
+				<red>1.0</red>
+			</vrule>
+		</colors>
+	</style>
+	
+	<style n="1">
+		<colors n="0">
+			<background n="0">
+				<alpha>0.95</alpha>
+				<blue>0.05</blue>
+				<green>0.05</green>
+				<red>0.05</red>
+			</background>
+			<button n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</button>
+			<checkbox-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.05</blue>
+				<green>0.05</green>
+				<red>0.05</red>
+			</checkbox-foreground>
+			<checkbox-highlight n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</checkbox-highlight>
+			<checkbox-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</checkbox-misc>
+			<combo-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</combo-editfield>
+			<dial-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</dial-misc>
+			<hrule n="0">
+				<alpha>0.95</alpha>
+				<blue>1.0</blue>
+				<green>0.0</green>
+				<red>1.0</red>
+			</hrule>
+			<input n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</input>
+			<input-legend n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</input-legend>
+			<input-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</input-misc>
+			<radio-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</radio-foreground>
+			<select-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</select-editfield>
+			<slider n="0">
+				<alpha>1.0</alpha>
+				<blue>0.4</blue>
+				<green>0.4</green>
+				<red>0.4</red>
+			</slider>
+			<textbox-editable n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</textbox-editable>
+			<vrule n="0">
+				<alpha>0.95</alpha>
+				<blue>1.0</blue>
+				<green>0.0</green>
+				<red>1.0</red>
+			</vrule>
+		</colors>
+	</style>
+
+</PropertyList>

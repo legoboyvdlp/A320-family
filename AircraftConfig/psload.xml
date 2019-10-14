@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-panelstateload</name>
+	<layout>vbox</layout>
+
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Please wait...</label>
+        </text>
+    </group>
+	
+    <hrule/>
+	
+		<group>
+			<layout>vbox</layout>
+			
+			<text>
+				<halign>left</halign>
+				<label>Loading Panel State, this may take a few moments...</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>Please be patient, and don't touch anything during this process!</label>
+			</text>
+			<text>
+				<border>1</border>
+				<label>9</label>
+				<valign>center</valign>
+				<property>/systems/acconfig/spin</property>
+				<live>1</live>
+			</text>
+			
+		</group>
+	
+</PropertyList>

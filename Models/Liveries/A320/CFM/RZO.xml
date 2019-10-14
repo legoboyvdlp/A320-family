@@ -1,0 +1,16 @@
+<PropertyList>
+  <sim>
+    <model>
+      <livery>
+        <name type="string">Sata Internacional</name>
+            <texture>Liveries/A320/CFM/RZO.png</texture>
+      </livery>    
+    </model>
+  </sim>
+  
+	<options>
+		<EIS2 type="bool">1</EIS2>
+	</options>
+  
+	<sharklet type="bool">0</sharklet>
+</PropertyList>

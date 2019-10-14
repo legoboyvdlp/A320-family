@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/greennav.ac</path>
+
+	<!-- ANIMATIONS -->
+	<!-- On/off -->
+	<animation>
+		<name>On/off</name>
+		<type>select</type>
+		<object-name>Light</object-name>
+		<condition>
+			<equals>
+				<property>/sim/model/lights/nav-lights</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+
+	<!-- Billboard animation -->
+	<animation>
+		<name>Billboard</name>
+		<type>billboard</type>
+		<object-name>Light</object-name>
+	</animation>
+
+</PropertyList>

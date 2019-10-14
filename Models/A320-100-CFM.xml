@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+	<name>A320-100</name>
+	<path>empty.ac</path> <!-- Livery system on MP multimodel -->
+
+	<offsets>
+		<x-m>-18.8499</x-m>
+		<z-m>1.7005004</z-m>
+	</offsets>
+
+	<model>
+		<name>Fuselage</name>
+		<path>Aircraft/A320-family/Models/Fuselages/A320-100/fuselage.xml</path>
+	</model>
+	
+	<!-- Separate Flightdeck to fit the modified nose -->
+	<model>
+		<name>Flightdeck</name>
+		<path>Aircraft/A320-family/Models/FlightDeck/a320.flightdeck.xml</path>
+		<offsets>
+			<x-m>4.81794</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Interior</name>
+		<path>Aircraft/A320-family/Models/Interior/a320.interior.xml</path>
+	</model>
+
+	<model>
+		<name>Nose Gear</name>
+		<path>Aircraft/A320-family/Models/LandingGears/a320.nlg.xml</path>
+		<offsets>
+			<x-m>7.83</x-m>
+			<z-m>-1.9306008</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Main Gears.Left</name>
+		<path>Aircraft/A320-family/Models/LandingGears/a320.mlg.left.xml</path>
+		<offsets>
+			<x-m>20.3180764</x-m>
+			<y-m>-3.795</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Main Gears.Right</name>
+		<path>Aircraft/A320-family/Models/LandingGears/a320.mlg.right.xml</path>
+		<offsets>
+			<x-m>20.3180764</x-m>
+			<y-m>3.795</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>Aircraft/A320-family/Models/Wings/a320.wings.cfm.xml</path>
+		<offsets>
+			<x-m>15.280</x-m>
+			<z-m>-1.06019</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Horizontal Stabilizer</name>
+		<path>Aircraft/A320-family/Models/Fuselages/A320-100/hstab.xml</path>
+		<offsets>
+			<x-m>34.1512207</x-m>
+			<pitch-deg>0.0</pitch-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Vertical Stabilizer</name>
+		<path>Aircraft/A320-family/Models/Fuselages/A320-100/vstab.xml</path>
+		<offsets>
+			<x-m>32.2535728</x-m>
+		</offsets>
+	</model>
+	
+	<!-- Lights -->
+	
+	<model>
+		<name>Left nav light</name>
+		<path>Aircraft/A320-family/Models/Lights/rednav.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>-16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Left nav light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/rednav.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>-16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Right nav light</name>
+		<path>Aircraft/A320-family/Models/Lights/greennav.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Right nav light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/greennav.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Tail nav light</name>
+		<path>Aircraft/A320-family/Models/Lights/tailnav.xml</path>
+		<offsets>
+			<x-m>40.00461</x-m>
+			<y-m>0.0495674</y-m>
+			<z-m>1.2301</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Tail nav light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/tailnav.xml</path>
+		<offsets>
+			<x-m>40.00461</x-m>
+			<y-m>0.0495674</y-m>
+			<z-m>1.2301</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Left strobe light</name>
+		<path>Aircraft/A320-family/Models/Lights/strobe.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>-16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Left strobe light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/left-strobe.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>-16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Right strobe light</name>
+		<path>Aircraft/A320-family/Models/Lights/strobe.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Right strobe light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/right-strobe.xml</path>
+		<offsets>
+			<x-m>22.93</x-m>
+			<y-m>16.5</y-m>
+			<z-m>0.25</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Tail strobe light</name>
+		<path>Aircraft/A320-family/Models/Lights/tailstrobe.xml</path>
+		<offsets>
+			<x-m>40.00461</x-m>
+			<y-m>-0.0495674</y-m>
+			<z-m>1.2301</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Tail strobe light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/tail-strobe.xml</path>
+		<offsets>
+			<x-m>40.00461</x-m>
+			<y-m>-0.0495674</y-m>
+			<z-m>1.2301</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Top beacon light</name>
+		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
+		<offsets>
+			<x-m>16.7</x-m>
+			<y-m>0</y-m>
+			<z-m>1.977</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Bottom beacon light</name>
+		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
+		<offsets>
+			<x-m>18.2</x-m>
+			<y-m>0</y-m>
+			<z-m>-2.5</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Top beacon light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/beacon.xml</path>
+		<offsets>
+			<x-m>16.7</x-m>
+			<y-m>0</y-m>
+			<z-m>1.977</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Bottom beacon light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/beacon.xml</path>
+		<offsets>
+			<x-m>18.2</x-m>
+			<y-m>0</y-m>
+			<z-m>-2.5</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Port landing light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightL.xml</path>
+		<offsets>
+			<x-m>15.9</x-m>
+			<y-m>-3.16</y-m>
+			<z-m>-1.25</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Nosegear landing light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/taxilight.xml</path>
+		<offsets>
+			<x-m>7.6</x-m>
+			<y-m>-0.1018315</y-m>
+			<z-m>-2.5</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Second Nosegear landing light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/taxilight.xml</path>
+		<offsets>
+			<x-m>7.6</x-m>
+			<y-m>0.1018315</y-m>
+			<z-m>-2.5</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Left Turnoff ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/turnoffL.xml</path>
+		<offsets>
+			<x-m>7.7</x-m>
+			<y-m>-0.1518315</y-m>
+			<z-m>-2.9</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Right Turnoff ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/turnoffR.xml</path>
+		<offsets>
+			<x-m>7.7</x-m>
+			<y-m>0.1518315</y-m>
+			<z-m>-2.9</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Starboard landing light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightR.xml</path>
+		<offsets>
+			<x-m>15.9</x-m>
+			<y-m>3.16</y-m>
+			<z-m>-1.25</z-m>
+		</offsets>
+	</model>
+
+	<!-- Other non-aircraft models -->
+	<model>
+		<name>Pushback</name>
+		<path>Aircraft/A320-family/Models/Services/Pushback/Douglas.xml</path>
+		<offsets>
+			<x-m>6.0</x-m>
+			<y-m>0</y-m>
+			<z-m>-4.24</z-m>
+		</offsets>
+	</model>
+	
+	<!-- LIVERY SELECT -->
+	<!-- Animation -->
+	<animation>
+		<type>material</type>
+		<!-- Fuselage -->
+		<object-name>Fuselage</object-name>
+		<object-name>Vstab</object-name>
+		<!-- Wings -->
+		<object-name>WingletL</object-name>
+		<object-name>WingletR</object-name>
+		<!-- Engines -->
+		<object-name>Intake</object-name>
+		<object-name>Nacelle</object-name>
+		<object-name>Reverser</object-name>
+		<!-- Fuselage -->
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture</texture-prop>
+		<texture>a320.png</texture>
+	</animation>
+
+	<!-- Nasal code -->
+	<nasal>
+		<load>
+			var livery_update = aircraft.livery_update.new("Aircraft/A320-family/Models/Liveries/A320/CFM-100");
+		</load>
+		<unload>
+			livery_update.stop();
+		</unload>
+	</nasal>
+	
+	<!-- Ground Services -->    
+	<model>
+		<name>ground_services</name>
+		<path>Aircraft/A320-family/Models/A320-groundservices.xml</path>
+	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Top beacon light</object-name>
+		<object-name>Bottom beacon light</object-name>
+		<object-name>Left nav light</object-name>
+		<object-name>Right nav light</object-name>
+		<object-name>Left strobe light</object-name>
+		<object-name>Right strobe light</object-name>
+		<object-name>Tail strobe light</object-name>
+		<object-name>Tail nav light</object-name>
+		<condition>
+			<not>
+				<property>sim/rendering/shaders/skydome</property>
+			</not>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>Top beacon light ALS</object-name>
+		<object-name>Bottom beacon light ALS</object-name>
+		<object-name>Left nav light ALS</object-name>
+		<object-name>Right nav light ALS</object-name>
+		<object-name>Left strobe light ALS</object-name>
+		<object-name>Right strobe light ALS</object-name>
+		<object-name>Port landing light ALS</object-name>
+		<object-name>Nosegear landing light ALS</object-name>
+		<object-name>Starboard landing light ALS</object-name>
+		<object-name>Tail strobe light ALS</object-name>
+		<object-name>Tail nav light ALS</object-name>
+		<condition>
+				<property>sim/rendering/shaders/skydome</property>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>Nosegear landing light ALS</object-name>
+		<condition>
+			<and>
+				<not>
+					<property>sim/model/lights/nose-ldglight</property>
+					<value>0</value>
+				</not>
+				<greater-than>
+					<property>gear/gear/position-norm</property>
+					<value>0.1</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+</PropertyList>

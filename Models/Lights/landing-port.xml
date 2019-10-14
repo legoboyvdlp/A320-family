@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/strobe.ac</path>
+	<offsets>
+		<heading-deg>4</heading-deg>
+		<pitch-deg>-6.5</pitch-deg>
+	</offsets>
+	<!-- EXTRA MODELS -->
+	<!-- 3d light cone -->
+	<model>
+		<name>Cone</name>
+		<path>Aircraft/A320-family/Models/Lights/light-cone.xml</path>
+	</model>
+
+	<!-- ANIMATIONS -->
+	<!-- On/off -->
+	<animation>
+		<name>On/off</name>
+		<type>select</type>
+		<object-name>Light</object-name>
+		<object-name>Cone</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac1</property>
+					<value>110</value>
+				</greater-than-equals>
+				<property>controls/lighting/landing-lights[2]</property>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<name>Cone on/off</name>
+		<type>select</type>
+		<object-name>Cone</object-name>
+		<condition>
+			<property>controls/lighting/cones</property>
+		</condition>
+	</animation>
+
+	<!-- Rotate and scale the light -->
+	<animation>
+		<name>Rotate light</name>
+		<type>rotate</type>
+		<object-name>Light</object-name>
+		<offset-deg>90</offset-deg>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+	</animation>
+	<animation>
+		<name>Scale light</name>
+		<type>scale</type>
+		<object-name>Light</object-name>
+		<x-offset>0.5</x-offset>
+		<y-offset>0.5</y-offset>
+		<z-offset>0.5</z-offset>
+	</animation>
+
+</PropertyList>

@@ -1,0 +1,2069 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+
+	<path>res/ohpanel.ac</path>
+
+	<!-- ANIMATIONS -->
+	<!-- Dome lighting -->
+<!--
+	<animation>
+		<name>Dome illumination</name>
+		<type>material</type>
+		<object-name>ACFlowKnb</object-name>
+		<object-name>AftCabinACKnb</object-name>
+		<object-name>AftCabinCall</object-name>
+		<object-name>AftCargoHtKnb</object-name>
+		<object-name>AftCargoSmkDis</object-name>
+		<object-name>AnnunciatorLtSwtch</object-name>
+		<object-name>BeaconLtSwtch</object-name>
+		<object-name>CVRErase</object-name>
+		<object-name>CVRTest</object-name>
+		<object-name>CargoSmkTest</object-name>
+		<object-name>CockpitACKnb</object-name>
+		<object-name>DomeLtSwtch</object-name>
+		<object-name>EmerExtLtSwtch</object-name>
+		<object-name>EmerGenInd</object-name>
+		<object-name>EvacCapt-Purs</object-name>
+		<object-name>EvacHornOff</object-name>
+		<object-name>FwdCabinACKnb</object-name>
+		<object-name>FwdCabinCall</object-name>
+		<object-name>FwdCargoHtKnb</object-name>
+		<object-name>FwdCargoSmkDis</object-name>
+		<object-name>GroundCall</object-name>
+		<object-name>IR1Ind</object-name>
+		<object-name>IR1ModeKnb</object-name>
+		<object-name>IR2Ind</object-name>
+		<object-name>IR2ModeKnb</object-name>
+		<object-name>IR3Ind</object-name>
+		<object-name>IR3ModeKnb</object-name>
+		<object-name>IRDisplayDataKnb</object-name>
+		<object-name>IRDisplaySelectKnb</object-name>
+		<object-name>LandingLtLSwtch</object-name>
+		<object-name>LandingLtRSwtch</object-name>
+		<object-name>LdgElevKnb</object-name>
+		<object-name>LeftRainTest</object-name>
+		<object-name>LeftWiperKnb</object-name>
+		<object-name>Markings</object-name>
+		<object-name>NavLogoLtSwtch</object-name>
+		<object-name>NoSmokingSwtch</object-name>
+		<object-name>NoseLtSwtch</object-name>
+		<object-name>OHPMarkLtKnb</object-name>
+		<object-name>OxyMaskDeploy</object-name>
+		<object-name>Panel</object-name>
+		<object-name>PassOxyInd</object-name>
+		<object-name>PressVSCtl</object-name>
+		<object-name>RightRainTest</object-name>
+		<object-name>RightWiperKnb</object-name>
+		<object-name>SeatBeltSwtch</object-name>
+		<object-name>StbyCompassLtSwtch</object-name>
+		<object-name>StrobeLtSwtch</object-name>
+		<object-name>SwitchSockets</object-name>
+		<object-name>TurnoffLtSwtch</object-name>
+		<object-name>WingLtSwtch</object-name>
+		<object-name>XbleedKnb</object-name>
+		<object-name>Radio panel</object-name>
+		<emission>
+			<red>0.5</red>
+			<green>0.5</green>
+			<blue>0.5</blue>
+			<factor-prop>controls/lighting/dome-norm</factor-prop>
+		</emission>
+	</animation>
+-->
+	<animation>
+		<type>material</type>
+		<object-name>adirs-coords</object-name>
+		<object-name>battery-lvl</object-name>
+		<emission>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+		</emission>
+		<diffuse>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+		</diffuse>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>adirs-coords</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electrical/outputs/efis</property>
+				<value>9</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>battery-lvl</object-name>
+		<condition>
+			<property>controls/electric/battery-switch</property>
+		</condition>
+	</animation>
+
+	<!-- Panel lighting -->
+	<animation>
+		<name>Panel lighting</name>
+		<type>material</type>
+		<object-name>Markings</object-name>
+		<object-name>StrobeLtSwtch.mark</object-name>
+		<object-name>BeaconLtSwtch.mark</object-name>
+		<object-name>WingLtSwtch.mark</object-name>
+		<object-name>NavLogoLtSwtch.mark</object-name>
+		<object-name>TurnoffLtSwtch.mark</object-name>
+		<object-name>LandingLtLSwtch.mark</object-name>
+		<object-name>LandingLtRSwtch.mark</object-name>
+		<object-name>NoseLtSwtch.mark</object-name>
+		<object-name>OHPMarkLtKnb.mark</object-name>
+		<emission>
+			<red>1</red>
+			<green>0.824</green>
+			<blue>0.518</blue>
+			<factor-prop>controls/lighting/overhead-panel-norm</factor-prop>
+		</emission>
+	</animation>
+
+	<!-- Call -->
+
+	<animation>
+		<name>Ground Call pick</name>
+		<type>pick</type>
+		<object-name>GroundCall</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					utils.clickSound(4);
+					var gs = getprop('velocities/groundspeed-kt');
+					var on_ground = getprop('gear/gear[2]/wow');
+					var dlg = gui.Dialog.new("sim/gui/dialogs/ground-call/dialog", "Aircraft/A320neo/Systems/call-ground.xml");
+					if(1.5 > gs and on_ground) dlg.open();
+				</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>Cabin Call pick</name>
+		<type>pick</type>
+		<object-name>FwdCabinACKnb</object-name>
+		<object-name>FwdCabinCall</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					utils.clickSound(4);
+					var dlg = gui.Dialog.new("sim/gui/dialogs/cabin-call/dialog", 
+					"Aircraft/A320neo/Systems/call-cabin.xml");
+					dlg.open();
+				</script>
+			</binding>
+		</action>
+	</animation>
+
+	<!-- GPWS -->
+	<animation>
+		<name>GPWS system pick</name>
+		<type>pick</type>
+		<object-name>GPWSBtn1</object-name>
+		<object-name>GPWSBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>GPWS system fault</name>
+		<type>textranslate</type>
+		<object-name>GPWSBtn1</object-name>
+		<property>instrumentation/mk-viii/serviceable</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<name>GPWS system off</name>
+		<type>textranslate</type>
+		<object-name>GPWSBtn2</object-name>
+		<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>GPWS glideslope pick</name>
+		<type>pick</type>
+		<object-name>GPWSGSBtn1</object-name>
+		<object-name>GPWSGSBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>GPWS glideslope off</name>
+		<type>textranslate</type>
+		<object-name>GPWSGSBtn2</object-name>
+		<property>instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>GPWS flaps pick</name>
+		<type>pick</type>
+		<object-name>GPWSFlpBtn1</object-name>
+		<object-name>GPWSFlpBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-override</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>GPWS flaps off</name>
+		<type>textranslate</type>
+		<object-name>GPWSFlpBtn2</object-name>
+		<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-override</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>GPWS flaps pick</name>
+		<type>pick</type>
+		<object-name>GPWSFlp3Btn1</object-name>
+		<object-name>GPWSFlp3Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap3-override</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>GPWS flaps off</name>
+		<type>textranslate</type>
+		<object-name>GPWSFlp3Btn2</object-name>
+		<property>instrumentation/mk-viii/inputs/discretes/momentary-flap3-override</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Fire controls -->
+	<animation>
+		<name>Engine 1 fire pick</name>
+		<type>pick</type>
+		<object-name>Eng1Fire</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/engines/engine[0]/fire-bottle-discharge</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 1 fire emit</name>
+		<type>material</type>
+		<object-name>Eng1Fire</object-name>
+		<emission>
+			<red>0.9</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>controls/engines/engine[0]/fire-bottle-discharge</factor-prop>
+		</emission>
+	</animation>
+
+	<animation>
+		<name>APU fire pick</name>
+		<type>pick</type>
+		<object-name>APUFire</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/APU/fire-switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>APU fire emit</name>
+		<type>material</type>
+		<object-name>APUFire</object-name>
+		<emission>
+			<red>0.9</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>controls/APU/fire-switch</factor-prop>
+		</emission>
+	</animation>
+
+	<animation>
+		<name>Engine 2 fire pick</name>
+		<type>pick</type>
+		<object-name>Eng2Fire</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/engines/engine[1]/fire-bottle-discharge</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 2 fire emit</name>
+		<type>material</type>
+		<object-name>Eng2Fire</object-name>
+		<emission>
+			<red>0.9</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>controls/engines/engine[1]/fire-bottle-discharge</factor-prop>
+		</emission>
+	</animation>
+
+	<!-- Fuel -->
+	<animation>
+		<name>Left fuel tank pump 1 pick</name>
+		<type>pick</type>
+		<object-name>LFuelTank1Btn1</object-name>
+		<object-name>LFuelTank1Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<!-- property>consumables/fuel/tank[0]/selected</property -->
+				<property>controls/fuel/tank[2]/boost-pump[0]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Left fuel tank pump 1 off</name>
+		<type>textranslate</type>
+		<object-name>LFuelTank1Btn2</object-name>
+		<!--property>consumables/fuel/tank[0]/selected</property-->
+		<property>controls/fuel/tank[2]/boost-pump[0]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<name>Left fuel tank pump 2 pick</name>
+		<type>pick</type>
+		<object-name>LFuelTank2Btn1</object-name>
+		<object-name>LFuelTank2Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<!--property>consumables/fuel/tank[1]/selected</property-->
+				<property>controls/fuel/tank[2]/boost-pump[1]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Left fuel tank pump 2 off</name>
+		<type>textranslate</type>
+		<object-name>LFuelTank2Btn2</object-name>
+		<!--property>consumables/fuel/tank[1]/selected</property-->
+		<property>controls/fuel/tank[2]/boost-pump[1]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Center fuel tank pumps 1 pick</name>
+		<type>pick</type>
+		<object-name>CFuelTank1Btn1</object-name>
+		<object-name>CFuelTank1Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<!--property>consumables/fuel/tank[3]/selected</property-->
+				<property>controls/fuel/tank[3]/boost-pump[0]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Center fuel tank pumps 1 off</name>
+		<type>textranslate</type>
+		<object-name>CFuelTank1Btn2</object-name>
+		<!--property>consumables/fuel/tank[3]/selected</property-->
+		<property>controls/fuel/tank[3]/boost-pump[0]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<name>Center fuel tank pumps 2 pick</name>
+		<type>pick</type>
+		<object-name>CFuelTank2Btn1</object-name>
+		<object-name>CFuelTank2Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<!--property>consumables/fuel/tank[3]/selected</property-->
+				<property>controls/fuel/tank[3]/boost-pump[1]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Center fuel tank pumps 2 off</name>
+		<type>textranslate</type>
+		<object-name>CFuelTank2Btn2</object-name>
+		<!--property>consumables/fuel/tank[3]/selected</property-->
+		<property>controls/fuel/tank[3]/boost-pump[1]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>X-Feed Valve</name>
+		<type>pick</type>
+		<object-name>FuelXfeedBtn1</object-name>
+		<object-name>FuelXfeedBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/fuel/x-feed</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>X-Feed Valve off</name>
+		<type>textranslate</type>
+		<object-name>FuelXfeedBtn2</object-name>
+
+		<property>controls/fuel/x-feed</property>
+		<!-- interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation-->
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Right fuel tank pump 1 pick</name>
+		<type>pick</type>
+		<object-name>RFuelTank1Btn1</object-name>
+		<object-name>RFuelTank1Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<!--property>consumables/fuel/tank[4]/selected</property-->
+				<property>controls/fuel/tank[4]/boost-pump[0]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Right fuel tank pump 1 off</name>
+		<type>textranslate</type>
+		<object-name>RFuelTank1Btn2</object-name>
+		<!--property>consumables/fuel/tank[4]/selected</property-->
+		<property>controls/fuel/tank[4]/boost-pump[0]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<name>Right fuel tank pump 2 pick</name>
+		<type>pick</type>
+		<object-name>RFuelTank2Btn1</object-name>
+		<object-name>RFuelTank2Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<!--property>consumables/fuel/tank[5]/selected</property-->
+				<property>controls/fuel/tank[4]/boost-pump[1]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Right fuel tank pump 2 off</name>
+		<type>textranslate</type>
+		<object-name>RFuelTank2Btn2</object-name>
+		<!--property>consumables/fuel/tank[5]/selected</property-->
+		<property>controls/fuel/tank[4]/boost-pump[1]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Fuel Jettison -->
+
+	<animation>
+		<name>Fuel Jettison Arm</name>
+		<type>pick</type>
+		<object-name>fueldumpARM1</object-name>
+		<object-name>fueldumpARM2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/fuel-dump/arm</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Fuel Jettison Arm animation</name>
+		<type>textranslate</type>
+		<object-name>fueldumpARM2</object-name>
+		<property>controls/fuel-dump/arm</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Fuel Jettison Active</name>
+		<type>pick</type>
+		<object-name>fueldumpACT1</object-name>
+		<object-name>fueldumpACT2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/fuel-dump/active</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Fuel Jettison Arm animation</name>
+		<type>textranslate</type>
+		<object-name>fueldumpACT2</object-name>
+		<property>controls/fuel-dump/active</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Electrical -->
+	<animation>
+		<name>Battery pick</name>
+		<type>pick</type>
+		<object-name>BatteryBtn1</object-name>
+		<object-name>BatteryBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electric/battery-switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Battery off</name>
+		<type>textranslate</type>
+		<object-name>BatteryBtn2</object-name>
+		<property>controls/electric/battery-switch</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Generator 1 pick</name>
+		<type>pick</type>
+		<object-name>Gen1Btn1</object-name>
+		<object-name>Gen1Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electric/engine[0]/generator</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Generator 1 off</name>
+		<type>textranslate</type>
+		<object-name>Gen1Btn2</object-name>
+		<property>controls/electric/engine[0]/generator</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>APU generator pick</name>
+		<type>pick</type>
+		<object-name>APUGenBtn1</object-name>
+		<object-name>APUGenBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electric/APU-generator</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>APU generator off</name>
+		<type>textranslate</type>
+		<object-name>APUGenBtn2</object-name>
+		<property>controls/electric/APU-generator</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>External power pick</name>
+		<type>pick</type>
+		<object-name>ExtPwrBtn1</object-name>
+		<object-name>ExtPwrBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electric/external-power</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>External power on</name>
+		<type>textranslate</type>
+		<object-name>ExtPwrBtn2</object-name>
+		<property>controls/electric/external-power</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Generator 2 pick</name>
+		<type>pick</type>
+		<object-name>Gen2Btn1</object-name>
+		<object-name>Gen2Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electric/engine[1]/generator</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Generator 2 off</name>
+		<type>textranslate</type>
+		<object-name>Gen2Btn2</object-name>
+		<property>controls/electric/engine[1]/generator</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Air conditioning -->
+	<animation>
+		<name>AC pack flow pick</name>
+		<type>pick</type>
+		<object-name>ACFlowKnb</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/pressurization/outflow-valve</property>
+				<step>0.5</step>
+				<max>1</max>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/pressurization/outflow-valve</property>
+				<step>-0.5</step>
+				<min>0</min>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>AC pack flow rotate</name>
+		<type>rotate</type>
+		<object-name>ACFlowKnb</object-name>
+		<property>controls/pressurization/outflow-valve</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>55</dep></entry>
+			<entry><ind>0.5</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-55</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>0</x-m>
+			<y-m>-0.1289</y-m>
+			<z-m>-0.10197</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>AC pack 1 pick</name>
+		<type>pick</type>
+		<object-name>ACPack1Btn1</object-name>
+		<object-name>ACPack1Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/pressurization/pack[0]/pack-on</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>AC pack 1 on</name>
+		<type>textranslate</type>
+		<object-name>ACPack1Btn2</object-name>
+		<property>controls/pressurization/pack[0]/pack-on</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Engine 1 bleed pick</name>
+		<type>pick</type>
+		<object-name>Eng1BleedBtn1</object-name>
+		<object-name>Eng1BleedBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/pneumatic/engine[0]/bleed</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 1 bleed on</name>
+		<type>textranslate</type>
+		<object-name>Eng1BleedBtn2</object-name>
+		<property>controls/pneumatic/engine[0]/bleed</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>APU bleed pick</name>
+		<type>pick</type>
+		<object-name>APUBleedBtn1</object-name>
+		<object-name>APUBleedBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/pneumatic/APU-bleed</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>APU bleed on</name>
+		<type>textranslate</type>
+		<object-name>APUBleedBtn2</object-name>
+		<property>controls/pneumatic/APU-bleed</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Engine 2 bleed pick</name>
+		<type>pick</type>
+		<object-name>Eng2BleedBtn1</object-name>
+		<object-name>Eng2BleedBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/pneumatic/engine[1]/bleed</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 2 bleed on</name>
+		<type>textranslate</type>
+		<object-name>Eng2BleedBtn2</object-name>
+		<property>controls/pneumatic/engine[1]/bleed</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>AC pack 2 pick</name>
+		<type>pick</type>
+		<object-name>ACPack2Btn1</object-name>
+		<object-name>ACPack2Btn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/pressurization/pack[1]/pack-on</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>AC pack 2 on</name>
+		<type>textranslate</type>
+		<object-name>ACPack2Btn2</object-name>
+		<property>controls/pressurization/pack[1]/pack-on</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Anti-ice -->
+	<animation>
+		<name>Wing anti-ice pick</name>
+		<type>pick</type>
+		<object-name>WingAntiIceBtn1</object-name>
+		<object-name>WingAntiIceBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/anti-ice/wing-heat</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Wing anti-ice on</name>
+		<type>textranslate</type>
+		<object-name>WingAntiIceBtn2</object-name>
+		<property>controls/anti-ice/wing-heat</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Engine 1 anti-ice pick</name>
+		<type>pick</type>
+		<object-name>Eng1AntiIceBtn1</object-name>
+		<object-name>Eng1AntiIceBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/anti-ice/engine[0]/inlet-heat</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 1 anti-ice on</name>
+		<type>textranslate</type>
+		<object-name>Eng1AntiIceBtn2</object-name>
+		<property>controls/anti-ice/engine[0]/inlet-heat</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Engine 2 anti-ice pick</name>
+		<type>pick</type>
+		<object-name>Eng2AntiIceBtn1</object-name>
+		<object-name>Eng2AntiIceBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/anti-ice/engine[1]/inlet-heat</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 2 anti-ice on</name>
+		<type>textranslate</type>
+		<object-name>Eng2AntiIceBtn2</object-name>
+		<property>controls/anti-ice/engine[1]/inlet-heat</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Probe/window heat pick</name>
+		<type>pick</type>
+		<object-name>PrbWinHeatBtn1</object-name>
+		<object-name>PrbWinHeatBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/anti-ice/pitot-heat</property>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/anti-ice/window-heat</property>
+				<property>controls/anti-ice/pitot-heat</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Probe/window heat on</name>
+		<type>textranslate</type>
+		<object-name>PrbWinHeatBtn2</object-name>
+		<property>controls/anti-ice/pitot-heat</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Exterior lights -->
+	<animation>
+		<name>Strobe lights pick</name>
+		<type>pick</type>
+		<object-name>StrobeLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/strobe</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+				<binding>
+					<command>nasal</command>
+					<script>utils.clickSound(6)</script>
+				</binding>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Strobe lights rotate</name>
+		<type>rotate</type>
+		<object-name>StrobeLtSwtch</object-name>
+		<property>controls/lighting/strobe</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.265</z-m>
+		</center>
+	</animation>
+
+	<!-- th.. -->
+	<animation>
+		<name>Turnoff lights pick</name>
+		<type>pick</type>
+		<object-name>TurnoffLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/turn-off-lights</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Turnoff lights rotate</name>
+		<type>rotate</type>
+		<object-name>TurnoffLtSwtch</object-name>
+		<property>controls/lighting/turn-off-lights</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+	<!-- ..th -->
+
+	<animation>
+		<name>Beacon lights pick</name>
+		<type>pick</type>
+		<object-name>BeaconLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/beacon</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Beacon lights rotate</name>
+		<type>rotate</type>
+		<object-name>BeaconLtSwtch</object-name>
+		<property>controls/lighting/beacon</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.265</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>Wing lights pick</name>
+		<type>pick</type>
+		<object-name>WingLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/wing-lights</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Wing lights rotate</name>
+		<type>rotate</type>
+		<object-name>WingLtSwtch</object-name>
+		<property>controls/lighting/wing-lights</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.265</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>Nav/logo lights pick</name>
+		<type>pick</type>
+		<object-name>NavLogoLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/nav-lights-switch</property>
+				<value type="int">0</value>
+				<value type="int">1</value>
+				<value type="int">2</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(8)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Nav/logo lights rotate</name>
+		<type>rotate</type>
+		<object-name>NavLogoLtSwtch</object-name>
+		<property>controls/lighting/nav-lights-switch</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+			<entry><ind>2</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.265</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>Left landing light pick</name>
+		<type>pick</type>
+		<object-name>LandingLtLSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/landing-lights[0]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Left landing light rotate</name>
+		<type>rotate</type>
+		<object-name>LandingLtLSwtch</object-name>
+		<property>controls/lighting/landing-lights[0]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>Right landing light pick</name>
+		<type>pick</type>
+		<object-name>LandingLtRSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/landing-lights[2]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Right landing light rotate</name>
+		<type>rotate</type>
+		<object-name>LandingLtRSwtch</object-name>
+		<property>controls/lighting/landing-lights[2]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>Nose landing light pick</name>
+		<type>pick</type>
+		<object-name>NoseLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/lighting/landing-lights[1]</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(7)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Nose landing light rotate</name>
+		<type>rotate</type>
+		<object-name>NoseLtSwtch</object-name>
+		<property>controls/lighting/landing-lights[1]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+
+	<!-- APU -->
+	<animation>
+		<name>APU master switch pick</name>
+		<type>pick</type>
+		<object-name>APUMasterBtn1</object-name>
+		<object-name>APUMasterBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/APU/master-switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>APU master switch fault</name>
+		<type>textranslate</type>
+		<object-name>APUMasterBtn1</object-name>
+		<property>engines/apu/serviceable</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.5</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<name>APU master switch on</name>
+		<type>textranslate</type>
+		<object-name>APUMasterBtn2</object-name>
+		<property>controls/APU/master-switch</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>APU starter pick</name>
+		<type>pick</type>
+		<object-name>APUStartBtn1</object-name>
+		<object-name>APUStartBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/APU/starter</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>APU starter on</name>
+		<type>textranslate</type>
+		<object-name>APUStartBtn2</object-name>
+		<property>controls/APU/starter</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Interior lights -->
+	<animation>
+		<name>Overhead panel marking light pick</name>
+		<type>pick</type>
+		<object-name>OHPMarkLtKnb</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/overhead-panel-norm</property>
+				<step>0.05</step>
+				<max>1</max>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/overhead-panel-norm</property>
+				<step>-0.05</step>
+				<min>0.05</min>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Overhead panel light rotate</name>
+		<type>rotate</type>
+		<object-name>OHPMarkLtKnb</object-name>
+		<property>controls/lighting/overhead-panel-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>129</dep></entry>
+			<entry><ind>1</ind><dep>-129</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0.0405</y-m>
+			<z-m>-0.26</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>Dome lights pick</name>
+		<type>pick</type>
+		<object-name>DomeLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/dome-norm</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Dome lights rotate</name>
+		<type>rotate</type>
+		<object-name>DomeLtSwtch</object-name>
+		<property>controls/lighting/dome-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>0.5</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.2597</z-m>
+		</center>
+	</animation>
+
+	<!-- Passenger signs -->
+	<animation>
+		<name>Seatbelt sign pick</name>
+		<type>pick</type>
+		<object-name>SeatBeltSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/switches/seatbelt-sign</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Seatbelt sign rotate</name>
+		<type>rotate</type>
+		<object-name>SeatBeltSwtch</object-name>
+		<property>controls/switches/seatbelt-sign</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<name>No smoking sign pick</name>
+		<type>pick</type>
+		<object-name>NoSmokingSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/switches/no-smoking-sign</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>No smoking sign rotate</name>
+		<type>rotate</type>
+		<object-name>NoSmokingSwtch</object-name>
+		<property>controls/switches/no-smoking-sign</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+
+	<!-- Engine controls -->
+	<animation>
+		<name>Engine 1 manual starter pick</name>
+		<type>pick</type>
+		<object-name>Eng1ManStartBtn1</object-name>
+		<object-name>Eng1ManStartBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/engines/engine[0]/starter-switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 1 manual starter on</name>
+		<type>textranslate</type>
+		<object-name>Eng1ManStartBtn2</object-name>
+		<property>controls/engines/engine[0]/starter-switch</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Engine 2 manual starter pick</name>
+		<type>pick</type>
+		<object-name>Eng2ManStartBtn1</object-name>
+		<object-name>Eng2ManStartBtn2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/engines/engine[1]/starter-switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 2 manual starter on</name>
+		<type>textranslate</type>
+		<object-name>Eng2ManStartBtn2</object-name>
+		<property>controls/engines/engine[1]/starter-switch</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Hydraulics Control Panel -->
+
+	<animation>
+		<name>Engine 1 Hydraulic Pump</name>
+		<type>pick</type>
+		<object-name>e1-pump-fault</object-name>
+		<object-name>e1-pump</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>hydraulics/control/eng1-pump</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>Engine 2 Hydraulic Pump</name>
+		<type>pick</type>
+		<object-name>e2-pump-fault</object-name>
+		<object-name>e2-pump</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>hydraulics/control/eng2-pump</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>Electric Hydraulic Pump</name>
+		<type>pick</type>
+		<object-name>elec-pump-fault</object-name>
+		<object-name>elec-pump</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>hydraulics/control/elec-pump</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>Backup Electric Hydraulic Pump</name>
+		<type>pick</type>
+		<object-name>y-elec-pump-fault</object-name>
+		<object-name>y-elec-pump</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>hydraulics/control/y-elec-pump</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>Unlock Ram Air Turbine</name>
+		<type>pick</type>
+		<object-name>rat-fault</object-name>
+		<object-name>rat</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>hydraulics/control/rat-unlck</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>Hydraulic Power Transfer Unit (PTU)</name>
+		<type>pick</type>
+		<object-name>ptu</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>hydraulics/control/ptu</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>utils.clickSound(6)</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>e1-pump</object-name>
+		<property>hydraulics/control/eng1-pump</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>e2-pump</object-name>
+		<property>hydraulics/control/eng2-pump</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>elec-pump</object-name>
+		<property>hydraulics/control/elec-pump</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>y-elec-pump</object-name>
+		<property>hydraulics/control/y-elec-pump</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>rat</object-name>
+		<property>hydraulics/control/rat-unlck</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>ptu</object-name>
+		<property>hydraulics/control/ptu</property>
+		<factor>0.5</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<!-- Texts -->
+
+	<text>
+		<name>adirs-coords</name>
+		<offsets>
+			<x-m>0.005</x-m>
+			<y-m>-0.246</y-m>
+			<z-m>0.245</z-m>
+			<pitch-deg>62</pitch-deg>
+			<roll-deg>90</roll-deg>
+			<heading-deg>32</heading-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>/instrumentation/oh-panel/pos-string</property>
+		<font type="string">Helvetica.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.0095</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+
+	<text>
+		<name>battery-lvl</name>
+		<offsets>
+			<x-m>-0.008</x-m>
+			<y-m>-0.057</y-m>
+			<z-m>0.0155</z-m>
+			<pitch-deg>62</pitch-deg>
+			<roll-deg>88</roll-deg>
+			<heading-deg>32</heading-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%2.1f</format>
+		<property>/systems/electrical/suppliers/battery</property>
+		<font type="string">led.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.007</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+
+	<text>
+		<name>battery-lvl</name>
+		<offsets>
+			<x-m>-0.008</x-m>
+			<y-m>0.035</y-m>
+			<z-m>0.0155</z-m>
+			<pitch-deg>62</pitch-deg>
+			<roll-deg>90</roll-deg>
+			<heading-deg>32</heading-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%2.1f</format>
+		<property>/systems/electrical/suppliers/battery</property>
+		<font type="string">led.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.007</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+
+</PropertyList>

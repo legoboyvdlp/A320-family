@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config</name>
+	<layout>vbox</layout>
+	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Aircraft Configuration V1.5.1</label>
+		</text>
+		<empty><stretch>1</stretch></empty>
+		<button>
+			<row>0</row>
+			<col>0</col>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>?</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.help_dlg.open();
+				</script>
+			</binding>
+		</button>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+		
+	<group>
+		<layout>hbox</layout>
+
+		<group>
+			<layout>vbox</layout>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<button>
+					<halign>center</halign>
+					<legend>Welcome</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>nasal</command>
+						<script>
+						acconfig.welcome_dlg.open();
+						</script>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>Select Livery</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>nasal</command>
+						<script>
+						aircraft.livery.dialog.toggle();
+						</script>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>DU Quality</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>nasal</command>
+						<script>
+						acconfig.du_quality.open();
+						</script>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>About Aircraft</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>nasal</command>
+						<script>
+						acconfig.about_dlg.open();
+						</script>
+					</binding>
+				</button>
+			</group>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<group>
+					<layout>hbox</layout>
+
+					<hrule>
+						<stretch type="bool">true</stretch>
+					</hrule>
+					<text>
+						<label>Load Panel State</label>
+					</text>
+					<hrule>
+						<stretch type="bool">true</stretch>
+					</hrule>
+				</group>
+				
+				<group>
+					<layout>vbox</layout>
+					
+					<button>
+						<halign>center</halign>
+						<legend>Cold and Dark</legend>
+						<pref-width>140</pref-width>
+						<enable>
+							<and>
+								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<property>/gear/gear[0]/wow</property>
+								<property>/gear/gear[1]/wow</property>
+								<property>/gear/gear[2]/wow</property>
+							</and>
+						</enable>
+						<binding>
+							<command>nasal</command>
+							<script>acconfig.colddark();</script>
+						</binding>
+						<binding>
+							<command>dialog-close</command>
+						</binding>
+					</button>
+					<button>
+						<halign>center</halign>
+						<legend>Ready to Start Eng</legend>
+						<pref-width>140</pref-width>
+						<enable>
+							<and>
+								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<property>/gear/gear[0]/wow</property>
+								<property>/gear/gear[1]/wow</property>
+								<property>/gear/gear[2]/wow</property>
+							</and>
+						</enable>
+						<binding>
+							<command>nasal</command>
+							<script>acconfig.beforestart();</script>
+						</binding>
+						<binding>
+							<command>dialog-close</command>
+						</binding>
+					</button>
+					<button>
+						<halign>center</halign>
+						<legend>Ready for Taxi</legend>
+						<pref-width>140</pref-width>
+						<enable>
+							<and>
+								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<property>/gear/gear[0]/wow</property>
+								<property>/gear/gear[1]/wow</property>
+								<property>/gear/gear[2]/wow</property>
+							</and>
+						</enable>
+						<binding>
+							<command>nasal</command>
+							<script>acconfig.taxi();</script>
+						</binding>
+						<binding>
+							<command>dialog-close</command>
+						</binding>
+					</button>
+					<button>
+						<halign>center</halign>
+						<legend>Ready for Takeoff</legend>
+						<pref-width>140</pref-width>
+						<enable>
+							<and>
+								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<property>/gear/gear[0]/wow</property>
+								<property>/gear/gear[1]/wow</property>
+								<property>/gear/gear[2]/wow</property>
+							</and>
+						</enable>
+						<binding>
+							<command>nasal</command>
+							<script>acconfig.takeoff();</script>
+						</binding>
+						<binding>
+							<command>dialog-close</command>
+						</binding>
+					</button>
+				</group>
+			</group>
+		</group>
+		
+		<vrule/>
+		
+		<group>
+			<layout>vbox</layout>
+
+			<button>
+				<legend>Ground Services</legend>
+				<halign>center</halign>
+				<padding>5</padding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.groundservices_dlg.open();
+					</script>
+				</binding>
+			</button>
+			
+			<checkbox>
+				<label>Nose Gear Chock</label>
+				<halign>left</halign>
+				<enable>
+					<and>
+						<property>/gear/gear[0]/wow</property>
+						<property>/gear/gear[1]/wow</property>
+						<property>/gear/gear[2]/wow</property>
+					</and>
+				</enable>
+				<property>/services/chokes/nose</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Main Left Gear Chock</label>
+				<halign>left</halign>
+				<enable>
+					<and>
+						<property>/gear/gear[0]/wow</property>
+						<property>/gear/gear[1]/wow</property>
+						<property>/gear/gear[2]/wow</property>
+					</and>
+				</enable>
+				<property>/services/chokes/left</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Main Right Gear Chock</label>
+				<halign>left</halign>
+				<enable>
+					<and>
+						<property>/gear/gear[0]/wow</property>
+						<property>/gear/gear[1]/wow</property>
+						<property>/gear/gear[2]/wow</property>
+					</and>
+				</enable>
+				<property>/services/chokes/right</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Enable External Power Box</label>
+				<halign>left</halign>
+				<property>/controls/electrical/ground-cart</property>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/electrical/switches/ext-pwr</property>
+					<value>0</value>
+				</binding>
+				<enable>
+					<and>
+						<equals>
+							<property>/controls/gear/brake-parking</property>
+							<value>1</value>
+						</equals>
+						<less-than>
+							<property>/velocities/groundspeed-kt</property>
+							<value>2</value>
+						</less-than>
+					</and>
+				</enable>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Enable External Air</label>
+				<halign>left</halign>
+				<property>/controls/pneumatic/switches/groundair</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/controls/pneumatic/switches/groundair</property>
+				</binding>
+				<enable>
+					<and>
+						<equals>
+							<property>/controls/gear/brake-parking</property>
+							<value>1</value>
+						</equals>
+						<less-than>
+							<property>/velocities/groundspeed-kt</property>
+							<value>2</value>
+						</less-than>
+					</and>
+				</enable>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Yellow HYD Hand Pump</label>
+				<halign>left</halign>
+				<property>/controls/hydraulic/hand-pump-yellow</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/controls/hydraulic/hand-pump-yellow</property>
+				</binding>
+				<enable>
+					<and>
+						<equals>
+							<property>/controls/gear/brake-parking</property>
+							<value>1</value>
+						</equals>
+						<less-than>
+							<property>/velocities/groundspeed-kt</property>
+							<value>2</value>
+						</less-than>
+						<less-than>
+							<property>/systems/electrical/bus/ac-2</property>
+							<value>115</value>
+						</less-than>
+						<equals>
+							<property>/controls/electrical/switches/ext-pwr</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<hrule/>
+			
+			<checkbox>
+				<label>Keyboard Mode (See Aircraft Help)</label>
+				<halign>left</halign>
+				<property>/options/system/keyboard-mode</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/keyboard-mode</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>ADIRS Aligns Instantly</label>
+				<halign>left</halign>
+				<property>/controls/adirs/skip</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/controls/adirs/skip</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<group>
+				<layout>hbox</layout>
+			
+				<button>
+					<legend>FBW Settings</legend>
+					<halign>center</halign>
+					<padding>5</padding>
+					<binding>
+						<command>nasal</command>
+						<script>
+						acconfig.fbw_dlg.open();
+						</script>
+					</binding>
+				</button>
+				
+				<button>
+					<legend>System Failures</legend>
+					<halign>center</halign>
+					<padding>5</padding>
+					<binding>
+						<command>nasal</command>
+						<script>
+						acconfig.fail_dlg.open();
+						</script>
+					</binding>
+				</button>
+				
+			</group>
+			
+		</group>
+		
+	</group>
+	
+</PropertyList>

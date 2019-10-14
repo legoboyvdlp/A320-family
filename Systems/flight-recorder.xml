@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Flight Recorder -->
+
+<PropertyList>
+	<replay-config type="int">0</replay-config>
+	
+	<config n="0">
+		<name>A3XX Flight Recorder</name>
+		
+		<!-- Include Generic Stuff -->
+		<signals include="Aircraft/Generic/flightrecorder/components/position.xml" />
+		<signals include="Aircraft/Generic/flightrecorder/components/controls.xml" />
+		<signals include="Aircraft/Generic/flightrecorder/components/surfaces.xml"/>
+		<signals include="Aircraft/Generic/flightrecorder/components/engine-jet.xml">
+			<count type="int">2</count>
+		</signals>
+		<signals include="Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
+			<count type="int">3</count>
+		</signals>
+		<signals include="Aircraft/Generic/flightrecorder/components/tanks.xml">
+			<count type="int">5</count>
+		</signals>
+		
+		<!-- Now Custom Stuff -->
+		<signals>
+			<signal>
+				<type>float</type>
+				<property>/velocities/groundspeed-kt</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/position/gear-agl-ft</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[0]/reverser-pos-norm</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[1]/reverser-pos-norm</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/fcs/slat-pos-norm</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[3]/n1</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[4]/n1</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[0]/n1-actual</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[1]/n1-actual</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[0]/n2-actual</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/engines/engine[1]/n2-actual</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/aileron-l/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/aileron-r/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/rudder/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-l1/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-l2/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-l3/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-l4/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+			</signal>
+		</signals>
+	</config>
+
+</PropertyList>

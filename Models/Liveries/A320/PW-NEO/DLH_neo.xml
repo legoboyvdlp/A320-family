@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Deutsche Lufthansa AG livery for Airbus Industries A320neo mady by D-SVEN. Have fun! -->
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Lufthansa D-AINB</name>
+				<texture>Liveries/A320/PW-NEO/DLH_neo.png</texture>
+			</livery>
+			<eng>
+				<texture>Liveries/A320/PW-NEO/DLH_neo-eng.png</texture>
+			</eng>
+		</model>
+	</sim>
+</PropertyList>
+ 
+ 

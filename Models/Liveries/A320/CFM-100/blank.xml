@@ -1,0 +1,10 @@
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name type="string">Blank Livery</name>
+				<texture>Liveries/A320/CFM-100/blank.png</texture>
+			</livery>
+		</model>
+	</sim>
+</PropertyList>

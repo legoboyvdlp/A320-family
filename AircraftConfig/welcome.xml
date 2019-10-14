@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-welcome</name>
+	<layout>vbox</layout>
+
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Welcome!</label>
+        </text>
+		<empty><stretch>1</stretch></empty>
+		<button>
+			<row>0</row>
+			<col>0</col>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>?</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.help_dlg.open();
+				</script>
+			</binding>
+		</button>
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+	
+    <hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>center</halign>
+			<label>Welcome to the A320-family!</label>
+		</text>
+		<text>
+			<halign>center</halign>
+			<label>This is a complex simulation of these amazing Airbus Aircraft.</label>
+		</text>
+		<text>
+			<halign>center</halign>
+			<label>Use the Aircraft Config to select livery, manage panel states, and more!</label>
+		</text>
+		
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>hbox</layout>
+	
+		<checkbox>
+			<label>Do not show this screen at FlightGear startup</label>
+			<halign>center</halign>
+			<property>/systems/acconfig/options/welcome-skip</property>
+			<binding>
+				<command>property-toggle</command>
+				<property>/systems/acconfig/options/welcome-skip</property>
+			</binding>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.writeSettings();
+				</script>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		
+	</group>
+	
+	<hrule/>
+
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<halign>center</halign>
+			<legend>Open A/C Config</legend>
+			<pref-width>210</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+				acconfig.main_dlg.open();
+				</script>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+		<button>
+			<halign>center</halign>
+			<legend>Go Away</legend>
+			<pref-width>210</pref-width>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+</PropertyList>

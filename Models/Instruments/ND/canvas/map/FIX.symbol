@@ -1,0 +1,60 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'FIX';
+var parents = [DotSym];
+var __self__ = caller(0)[0];
+DotSym.makeinstance( name, __self__ );
+
+SymbolLayer.get(name).df_style = {
+	line_width: 3,
+	scale_factor: 1,
+	font: "LiberationFonts/LiberationSans-Regular.ttf",
+	font_color: [0,0,0],
+	font_size: 28,
+	color: [0, 0.6, 0.85],
+	show_labels: 1,
+};
+
+
+var element_type = "group"; # we want a group, becomes "me.element"
+
+##
+# used during initialization to populate the symbol cache with a FIX symbol
+#
+var drawFIX = func(group) {
+	group.createChild("path")
+		.moveTo(-15,15)
+		.lineTo(0,-15)
+		.lineTo(15,15)
+		.close()
+		.setStrokeLineWidth(line_width)
+		.setColor(color);
+}
+var _name = name;
+
+var init = func {
+	# initialize the cached fix symbol
+	var draw_fn = me.getOption('draw_function');
+	if(typeof(draw_fn) != 'func')
+		draw_fn = drawFIX;
+	debug.dump(name);
+	var cache = StyleableCacheable.new(
+		name:_name,
+		draw_func: draw_fn,
+		cache: SymbolCache32x32,
+		draw_mode: SymbolCache.DRAW_CENTERED,
+		relevant_keys: ["line_width", "color"]
+	);
+	cache.render(me.element, me.style).setScale(me.style.scale_factor);
+
+	var txt_offset = me.getStyle('text_offset', [17, 35]);
+	var txt_color = me.getStyle('text_color', [0,0.6,0.85]);
+	# non-cached stuff:
+	if (me.style.show_labels){
+		me.text_fix = me.newText(me.model.id).
+		setScale(me.style.scale_factor).
+		setTranslation(txt_offset).
+		setColor(txt_color);
+	}
+}
+var draw = func {me.callback('draw');};

@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- IT-AUTOFLIGHT -->
+
+<PropertyList>
+	
+	<!-- Roll Axis -->
+	
+	<filter>
+		<name>IT-CONTROLLER: HDG/LNAV ROLL</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<entry><ind>140</ind><dep>1.8</dep></entry>
+					<entry><ind>360</ind><dep>2.8</dep></entry>
+				</table>
+			</expression>
+		</gain>
+		<enable>
+			<condition>
+				<and>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/lat</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/lat</property>
+							<value>1</value>
+						</equals>
+					</or>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd2</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</and>
+			</condition>
+		</enable>
+		<input>/it-autoflight/internal/heading-error-deg</input>
+		<reference>0</reference>
+		<output>/it-autoflight/internal/target-roll-deg</output>
+		<min>
+			<property>/it-autoflight/internal/bank-limit</property>
+			<scale>-1.0</scale>
+		</min>
+		<max>/it-autoflight/internal/bank-limit</max>
+	</filter>
+	
+	<filter>
+		<name>IT-CONTROLLER: VORLOC ROLL</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>2.8</gain>
+		<enable>
+			<condition>
+				<and>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>2</value>
+					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd2</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</and>
+			</condition>
+		</enable>
+		<input>/it-autoflight/internal/nav-heading-error-deg</input>
+		<reference>0</reference>
+		<output>/it-autoflight/internal/target-roll-deg</output>
+		<min>
+			<property>/it-autoflight/internal/bank-limit</property>
+			<scale>-1.0</scale>
+		</min>
+		<max>/it-autoflight/internal/bank-limit</max>
+	</filter>
+	
+	<filter>
+		<name>ROLL DEG SYNC</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<and>
+					<not-equals>
+						<property>/it-autoflight/output/ap1</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/ap2</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/fd1</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/fd2</property>
+						<value>1</value>
+					</not-equals>
+				</and>
+			</condition>
+		</enable>
+		<input>/orientation/roll-deg</input>
+		<output>/it-autoflight/internal/target-roll-deg</output>
+		<min>
+			<property>/it-autoflight/internal/bank-limit</property>
+			<scale>-1.0</scale>
+		</min>
+		<max>/it-autoflight/internal/bank-limit</max>
+	</filter>
+	
+	<filter>
+		<name>IT-CONTROLLER: TARGET ROLL CMD</name>
+		<debug>false</debug>
+		<type>noise-spike</type>
+		<input>
+			<condition>
+				<or>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>4</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>5</value>
+					</equals>
+				</or>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>/it-autoflight/internal/target-roll-deg</input>
+		<output>/it-autoflight/internal/target-roll</output>
+		<max-rate-of-change>
+			<condition>
+				<and>
+					<not-equals>
+						<property>/it-autoflight/output/ap1</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/ap2</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/fd1</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/fd2</property>
+						<value>1</value>
+					</not-equals>
+				</and>
+			</condition>
+			<value>50</value>
+		</max-rate-of-change>
+		<max-rate-of-change>
+			<condition>
+				<and>
+					<not-equals>
+						<property>/it-autoflight/output/ap1</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/ap2</property>
+						<value>1</value>
+					</not-equals>
+				</and>
+			</condition>
+			<value>15</value>
+		</max-rate-of-change>
+		<max-rate-of-change>6</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>System Command: Roll Rate</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>-0.1</gain>
+		<input>/orientation/roll-deg</input>
+		<reference>/it-autoflight/internal/target-roll</reference>
+		<output>/fdm/jsbsim/fbw/fmgc/roll-cmd</output> <!-- Inputs to the FBW Roll -->
+		<min>-0.32</min>
+		<max>0.32</max>
+	</filter>
+	
+	<!-- Yaw Axis -->
+	
+	<pi-simple-controller>
+		<name>RUDDER VORLOC TRK</name>
+		<debug>false</debug>
+		<enable>
+			<condition>
+				<equals>
+					<property>/it-autoflight/output/lat</property>
+					<value>4</value>
+				</equals>
+			</condition>
+		</enable>
+		<input>/it-autoflight/internal/nav-heading-error-deg</input>
+		<reference>0</reference>
+		<output>/it-autoflight/internal/rudder-cmd</output>
+		<config>
+			<Kp>
+				<condition>
+					<and>
+						<equals>
+							<property>/gear/gear[1]/wow</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/gear/gear[2]/wow</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<value>-0.05</value>
+			</Kp>
+			<Kp>-0.02</Kp>
+			<Ki>0</Ki>
+		</config>
+		<min>-0.15</min>
+		<max>0.15</max>
+	</pi-simple-controller>
+	
+	<filter>
+		<name>IT-CONTROLLER: RUDDER CMD</name>
+		<debug>false</debug>
+		<type>noise-spike</type>
+		<input>
+			<condition>
+				<and>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+					</or>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>4</value>
+					</equals>
+				</and>
+			</condition>
+			<property>/it-autoflight/internal/rudder-cmd</property>
+		</input>
+		<input>0</input>
+		<output>/fdm/jsbsim/fbw/fmgc/yaw-cmd</output> <!-- Inputs to the FBW Yaw -->
+		<max-rate-of-change>1.2</max-rate-of-change>
+	</filter>
+
+</PropertyList>

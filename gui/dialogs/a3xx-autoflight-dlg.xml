@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- IT-AUTOFLIGHT Autopilot Control Dialog -->
+
+<PropertyList>
+
+	<name>autopilot</name>
+	<layout>vbox</layout>
+	<pref-width>260</pref-width>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>IT-AUTOFLIGHT System (A3XX)</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<legend>A/THR</legend>
+			<pref-width>43</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.ATHR();</script>
+			</binding>
+		</button>
+		<button>
+			<legend>AP1</legend>
+			<pref-width>43</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.AP1();</script>
+			</binding>
+		</button>
+		<button>
+			<legend>AP2</legend>
+			<pref-width>43</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.AP2();</script>
+			</binding>
+		</button>
+		<button>
+			<legend>FD1</legend>
+			<pref-width>43</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.FD1();</script>
+			</binding>
+		</button>
+		<button>
+			<legend>FD2</legend>
+			<pref-width>43</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.FD2();</script>
+			</binding>
+		</button>
+	</group>
+	
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<legend>A/THR DISC</legend>
+			<pref-width>119</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.ATDisc();</script>
+			</binding>
+		</button>
+		<button>
+			<legend>AP DISC</legend>
+			<pref-width>119</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.APPanel.APDisc();</script>
+			</binding>
+		</button>
+	</group>
+
+	<group>
+		<layout>vbox</layout>
+		
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Flight Modes</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			<text>
+				<border>1</border>
+				<label>99999</label>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/ap-mode</property>
+				<live>1</live>
+			</text>
+			<vrule/>
+			<text>
+				<border>1</border>
+				<label>99999</label>
+				<visible>
+					<and>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/fd1</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/fd2</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/ap1</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/ap2</property>
+								<value>1</value>
+							</equals>
+						</or>
+						<not-equals>
+							<property>modes/pfd/fma/pitch-mode</property>
+							<value>LAND</value>
+						</not-equals>
+						<not-equals>
+							<property>modes/pfd/fma/pitch-mode</property>
+							<value>FLARE</value>
+						</not-equals>
+						<not-equals>
+							<property>modes/pfd/fma/pitch-mode</property>
+							<value>ROLLOUT</value>
+						</not-equals>
+					</and>
+				</visible>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/roll-mode</property>
+				<live>1</live>
+			</text>
+			<vrule/>
+			<text>
+				<border>1</border>
+				<label>99999999</label>
+				<visible>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/fd1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd2</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</visible>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/pitch-mode</property>
+				<live>1</live>
+			</text>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			<text>
+				<label>  A/THR</label>
+				<visible>
+					<equals>
+						<property>/it-autoflight/output/athr</property>
+						<value>1</value>
+					</equals>
+				</visible>
+			</text>
+			<vrule/>
+			<text>
+				<border>1</border>
+				<label>999</label>
+				<visible>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/fd1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd2</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</visible>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/roll-mode-armed</property>
+				<live>1</live>
+			</text>
+			<vrule/>
+			<text>
+				<border>1</border>
+				<label>999</label>
+				<visible>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/fd1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd2</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</visible>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/pitch-mode2-armed</property>
+				<live>1</live>
+			</text>
+			<text>
+				<border>1</border>
+				<label>999</label>
+				<visible>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/fd1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/fd2</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap1</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/ap2</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</visible>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/pitch-mode-armed</property>
+				<live>1</live>
+			</text>
+			<vrule/>
+			<text>
+				<border>1</border>
+				<label>999999</label>
+				<valign>center</valign>
+				<property>/modes/pfd/fma/fd-mode</property>
+				<live>1</live>
+			</text>
+		</group>
+
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Thrust Mode</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<button>
+				<legend>Push</legend>
+				<pref-width>65</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDPush();</script>
+				</binding>
+			</button>
+			
+			<button>
+				<legend>Pull</legend>
+				<pref-width>65</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDPull();</script>
+				</binding>
+			</button>
+			
+			<button>
+				<legend>Speed/Mach</legend>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.IASMach();</script>
+				</binding>
+			</button>
+			
+		</group>
+
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>SPD:  </label>
+			</text>
+			
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;&lt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-10);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-1);</script>
+				</binding>
+			</button>
+
+			<input>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>50</pref-width>
+				<property>/it-autoflight/input/spd-kts</property>
+				<live type="bool">true</live>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+			</input>
+			
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(1);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>5</col>
+				<halign>left</halign>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;&gt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(10);</script>
+				</binding>
+			</button>
+			
+		</group>
+		
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>Mach:</label>
+			</text>
+			
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;&lt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-10);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-1);</script>
+				</binding>
+			</button>
+
+			<input>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>50</pref-width>
+				<property>/it-autoflight/input/spd-mach</property>
+				<live type="bool">true</live>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+			</input>
+			
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(1);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>5</col>
+				<halign>left</halign>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;&gt;</legend>
+				<enable>
+					<and>
+						<equals>
+							<property>/it-autoflight/input/kts-mach</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/input/spd-managed</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(10);</script>
+				</binding>
+			</button>
+			
+		</group>
+
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Lateral Mode</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<button>
+				<legend>Push</legend>
+				<pref-width>75</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGPush();</script>
+				</binding>
+			</button>
+			
+			<button>
+				<legend>Pull</legend>
+				<pref-width>75</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGPull();</script>
+				</binding>
+			</button>
+			
+			<button>
+				<legend>LOC</legend>
+				<pref-width>75</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.LOCButton();</script>
+				</binding>
+			</button>
+		</group>
+		
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>HDG:</label>
+			</text>
+			
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;&lt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/custom/show-hdg</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(-10);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/custom/show-hdg</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(-1);</script>
+				</binding>
+			</button>
+
+			<input>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>40</pref-width>
+				<property>/it-autoflight/input/hdg</property>
+				<live type="bool">true</live>
+				<enable>
+					<equals>
+						<property>/it-autoflight/custom/show-hdg</property>
+						<value>1</value>
+					</equals>
+				</enable>
+			</input>
+			
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/custom/show-hdg</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(1);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>5</col>
+				<halign>left</halign>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;&gt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/custom/show-hdg</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(10);</script>
+				</binding>
+			</button>
+		</group>
+
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Vertical Mode</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<button>
+				<legend>ALT Push</legend>
+				<pref-width>75</pref-width>
+				<enable>
+					<property>/systems/unused/unused-button</property>
+				</enable>
+				<binding>
+					<command>property-assign</command>
+					<property>/it-autoflight/input/vert</property>
+					<value>8</value>
+				</binding>
+			</button>
+			
+			<button>
+				<legend>ALT Pull</legend>
+				<pref-width>75</pref-width>
+				<binding>
+					<command>property-assign</command>
+					<property>/it-autoflight/input/vert</property>
+					<value>4</value>
+				</binding>
+			</button>
+			
+			<button>
+				<pref-width>75</pref-width>
+				<legend>EXPED</legend>
+				<enable>
+					<property>/systems/unused/unused-button</property>
+				</enable>
+				<binding>
+					<command>property-assign</command>
+					<property>/systems/unused/unused-button</property>
+					<value>0</value>
+				</binding>
+			</button>
+			
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<button>
+				<legend>V/S Push</legend>
+				<pref-width>75</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSPush();</script>
+				</binding>
+			</button>
+			
+			<button>
+				<legend>V/S Pull</legend>
+				<pref-width>75</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSPull();</script>
+				</binding>
+			</button>
+			
+			<button>
+				<pref-width>75</pref-width>
+				<legend>APPR</legend>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.APPRButton();</script>
+				</binding>
+			</button>
+		</group>
+		
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>ALT: </label>
+			</text>
+			
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;&lt;</legend>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(-10);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(-2);</script>
+				</binding>
+			</button>
+
+			<input>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>55</pref-width>
+				<property>/it-autoflight/input/alt</property>
+				<live type="bool">true</live>
+			</input>
+			
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(2);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>5</col>
+				<halign>left</halign>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;&gt;</legend>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(10);</script>
+				</binding>
+			</button>
+		</group>
+
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>V/S: </label>
+			</text>
+			
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;&lt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-10);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-1);</script>
+				</binding>
+			</button>
+
+			<input>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>55</pref-width>
+				<property>/it-autoflight/input/vs</property>
+				<live type="bool">true</live>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>1</value>
+					</equals>
+				</enable>
+			</input>
+			
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(1);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>5</col>
+				<halign>left</halign>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;&gt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>1</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(10);</script>
+				</binding>
+			</button>
+		</group>
+		
+		<group>
+			<layout>table</layout>
+			
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>FPA:</label>
+			</text>
+			
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;&lt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>5</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-10);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>5</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-1);</script>
+				</binding>
+			</button>
+
+			<input>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>55</pref-width>
+				<property>/it-autoflight/input/fpa</property>
+				<live type="bool">true</live>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>5</value>
+					</equals>
+				</enable>
+			</input>
+			
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>5</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(1);</script>
+				</binding>
+			</button>
+			<button>
+				<row>0</row>
+				<col>5</col>
+				<halign>left</halign>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;&gt;</legend>
+				<enable>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>5</value>
+					</equals>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(10);</script>
+				</binding>
+			</button>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Other Mode</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+		
+			<text>
+				<label>HDG VS</label>
+				<visible>
+					<equals>
+						<property>/it-autoflight/custom/trk-fpa</property>
+						<value>0</value>
+					</equals>
+				</visible>
+			</text>
+			
+			<button>
+				<legend>HDG VS/TRK FPA</legend>
+				<pref-width>120</pref-width>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.APPanel.TRKFPA();</script>
+				</binding>
+			</button>
+			
+			<text>
+				<label>TRK FPA</label>
+				<visible>
+					<equals>
+						<property>/it-autoflight/custom/trk-fpa</property>
+						<value>1</value>
+					</equals>
+				</visible>
+			</text>
+		</group>
+		
+	</group>
+
+</PropertyList>

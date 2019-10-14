@@ -1,0 +1,352 @@
+<?xml version="1.0"?>
+
+<!--
+ AUTOPUSH
+Pushback dialog.
+ Copyright (c) 2018 Autopush authors:
+ Michael Danilov <mike.d.ft402 -eh- gmail.com>
+ Joshua Davidson http://github.com/Octal450
+ Merspieler http://gitlab.com/merspieler
+Distribute under the terms of GPLv2.
+ -->
+
+<PropertyList>
+
+	<name>autopush</name>
+	<layout>vbox</layout>
+
+	<group>
+
+		<layout>hbox</layout>
+
+		<text>
+			<label>Pushback</label>
+		</text>
+
+		<empty>
+			<stretch>true</stretch>
+		</empty>
+
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+
+	</group>
+
+	<hrule/>
+
+	<group>
+
+		<stretch>true</stretch>
+		<layout>vbox</layout>
+		<halign>center</halign>
+		<valign>top</valign>
+
+		<checkbox>
+			<halign>left</halign>
+			<label>Connect</label>
+			<property>/sim/model/autopush/enabled</property>
+			<live>true</live>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</checkbox>
+
+		<group>
+			<layout>table</layout>
+
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>Steering:</label>
+				<halign>left</halign>
+			</text>
+
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<binding>
+					<command>property-adjust</command>
+					<property>/sim/model/autopush/steer-cmd-norm</property>
+					<min>-1.0</min>
+					<max>1.0</max>
+					<step>-0.02</step>
+					<wrap>false</wrap>
+				</binding>
+			</button>
+
+			<slider>
+				<row>0</row>
+				<col>2</col>
+				<min>-1.0</min>
+				<max>1.0</max>
+				<step>0.1</step>
+				<property>/sim/model/autopush/steer-cmd-norm</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+
+			<button>
+				<row>0</row>
+				<col>3</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<binding>
+					<command>property-adjust</command>
+					<property>/sim/model/autopush/steer-cmd-norm</property>
+					<min>-1.0</min>
+					<max>1.0</max>
+					<step>0.02</step>
+					<wrap>false</wrap>
+				</binding>
+			</button>
+
+			<button>
+				<row>0</row>
+				<col>4</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Center</legend>
+				<binding>
+					<command>property-assign</command>
+					<property>/sim/model/autopush/steer-cmd-norm</property>
+					<value>0</value>
+				</binding>
+			</button>
+
+			<text>
+				<row>1</row>
+				<col>0</col>
+				<label>Speed:</label>
+				<halign>left</halign>
+			</text>
+
+			<button>
+				<row>1</row>
+				<col>1</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&lt;</legend>
+				<binding>
+					<command>property-adjust</command>
+					<property>/sim/model/autopush/target-speed-km_h</property>
+					<min>-25</min>
+					<max>25</max>
+					<step>-1</step>
+					<wrap>false</wrap>
+				</binding>
+			</button>
+
+			<slider>
+				<row>1</row>
+				<col>2</col>
+				<min>-25</min>
+				<max>25</max>
+				<property>/sim/model/autopush/target-speed-km_h</property>
+				<step>1.0</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+
+			<button>
+				<row>1</row>
+				<col>3</col>
+				<pref-width>25</pref-width>
+				<pref-height>25</pref-height>
+				<legend>&gt;</legend>
+				<binding>
+					<command>property-adjust</command>
+					<property>/sim/model/autopush/target-speed-km_h</property>
+					<min>-25</min>
+					<max>25</max>
+					<step>1</step>
+					<wrap>false</wrap>
+				</binding>
+			</button>
+
+			<button>
+				<row>1</row>
+				<col>4</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Stop</legend>
+				<binding>
+					<command>property-assign</command>
+					<property>/sim/model/autopush/target-speed-km_h</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_driver.pause();</script>
+				</binding>
+			</button>
+
+			<text>
+				<row>1</row>
+				<col>5</col>
+				<pref-width>16</pref-width>
+				<property>/sim/model/autopush/target-speed-km_h</property>
+				<format>%3.0f</format>
+				<live>true</live>
+				<halign>right</halign>
+			</text>
+
+			<text>
+				<row>1</row>
+				<col>6</col>
+				<label> km/h</label>
+				<halign>left</halign>
+			</text>
+
+		</group>
+
+		<hrule/>
+
+		<group>
+			<layout>table</layout>
+
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>Auto push:</label>
+				<halign>left</halign>
+			</text>
+
+			<button>
+				<row>0</row>
+				<col>1</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Start</legend>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_driver.start();</script>
+				</binding>
+			</button>
+
+			<button>
+				<row>0</row>
+				<col>2</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Pause</legend>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_driver.pause();</script>
+				</binding>
+			</button>
+
+			<text>
+				<row>1</row>
+				<col>0</col>
+				<label>Route:</label>
+				<halign>left</halign>
+			</text>
+
+			<button>
+				<row>1</row>
+				<col>1</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Enter</legend>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_route.enter();</script>
+				</binding>
+			</button>
+
+			<button>
+				<row>1</row>
+				<col>2</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Done</legend>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_route.done();</script>
+				</binding>
+			</button>
+
+			<checkbox>
+				<row>1</row>
+				<col>3</col>
+				<halign>left</halign>
+				<label>Always Show</label>
+				<live>true</live>
+				<property>/sim/model/autopush/route/show</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>acconfig.writeSettings();</script>
+				</binding>
+			</checkbox>
+
+			<text>
+				<row>2</row>
+				<col>0</col>
+				<label>Last point:</label>
+				<halign>left</halign>
+			</text>
+
+			<button>
+				<row>2</row>
+				<col>1</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Sharp</legend>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_route.toggle_sharp();</script>
+				</binding>
+			</button>
+
+			<button>
+				<row>2</row>
+				<col>2</col>
+				<pref-width>50</pref-width>
+				<pref-height>25</pref-height>
+				<legend>Delete</legend>
+				<binding>
+					<command>nasal</command>
+					<script>autopush_route.delete_last();</script>
+				</binding>
+			</button>
+
+			<checkbox>
+				<row>2</row>
+				<col>3</col>
+				<halign>left</halign>
+				<label>Show Wingtip</label>
+				<live>true</live>
+				<property>/sim/model/autopush/route/show-wingtip</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>acconfig.writeSettings();</script>
+				</binding>
+			</checkbox>
+
+		</group>
+
+	</group>
+
+</PropertyList>

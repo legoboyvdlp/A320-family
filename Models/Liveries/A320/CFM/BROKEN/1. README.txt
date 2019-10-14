@@ -1,0 +1,1 @@
+This folder contains liveries which are broken when the new 3D nose was implemented.

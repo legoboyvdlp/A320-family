@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+AUTOPUSH
+
+Copyright (c) 2018 Autopush authors:
+ Michael Danilov <mike.d.ft402 -eh- gmail.com>
+ Joshua Davidson http://github.com/Octal450
+ Merspieler http://github.com/merspieler
+Original code (c) FlightGear
+Distribute under the terms of GPLv2.
+
+-->
+<PropertyList>
+  <path>Models/Airport/Pushback/Goldhofert.ac</path>
+
+  <!-- Trucks models and artworks courtesy of XPGoodWay Team
+(http://www.xpgoodwayteam.org/site_xpushback/) -->
+
+  <model>
+    <path>Models/Airport/Pushback/Goldhofert-warning-light.xml</path>
+    <offsets>
+      <x-m>-2.908</x-m>
+      <y-m>0.260</y-m>
+      <z-m>1.326</z-m>
+      <heading-deg>0</heading-deg>
+    </offsets>
+  </model>
+
+  <model>
+    <path>Models/Airport/Pushback/Goldhofert-warning-light.xml</path>
+    <offsets>
+      <x-m>-1.781</x-m>
+      <y-m>0.260</y-m>
+      <z-m>1.326</z-m>
+      <heading-deg>90</heading-deg>
+    </offsets>
+  </model>
+
+ <animation>
+   <type>spin</type>
+   <object-name>wheelfl</object-name>
+   <object-name>wheelfr</object-name>
+   <!-- SETTING The aircraft's front wheel rollspeed in m/s. -->
+   <property>gear/gear[0]/rollspeed-ms</property>
+   <factor>-16.3</factor>
+   <center>
+     <x-m>-2.8976</x-m>
+     <y-m>0</y-m>
+     <z-m>0.5809</z-m>
+   </center>
+   <axis>
+     <x>0</x>
+     <y>1</y>
+     <z>0</z>
+   </axis>
+ </animation>
+
+ <animation>
+   <type>spin</type>
+   <object-name>wheelrl</object-name>
+   <object-name>wheelrr</object-name>
+   <!-- SETTING The aircraft's front wheel rollspeed in m/s. -->
+   <property>gear/gear[0]/rollspeed-ms</property>
+   <factor>-16.3</factor>
+   <center>
+     <x-m>2.0501</x-m>
+     <y-m>0</y-m>
+     <z-m>0.5735</z-m>
+   </center>
+   <axis>
+     <x>0</x>
+     <y>1</y>
+     <z>0</z>
+   </axis>
+ </animation>
+
+ <animation>
+   <type>select</type>
+   <condition>
+     <!-- SETTING Whether connected: /sim/model/autopush/connected -->
+     <property>sim/model/autopush/connected</property>
+   </condition>
+ </animation>
+
+ <animation>
+   <type>rotate</type>
+   <property>sim/model/autopush/yaw</property>
+   <!-- SETTING The value of /sim/model/autopush/yaw-mult. -->
+   <factor>60.0</factor>
+   <center>
+     <x-m>0</x-m>
+     <y-m>0</y-m>
+     <z-m>0</z-m>
+   </center>
+   <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>-1</z>
+   </axis>
+ </animation>
+
+ <animation>
+   <type>translate</type>
+   <!-- SETTING Gear compression. -->
+   <property>gear/gear[0]/compression-ft</property>
+   <factor>0.3048</factor>
+   <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>1</z>
+   </axis>
+ </animation>
+
+ <animation>
+   <type>rotate</type>
+   <!-- SETTING Aircraft pitch. -->
+   <property>orientation/pitch-deg</property>
+   <!-- SETTING Average ground pitch. -->
+   <offset-deg>-7.0</offset-deg>
+   <center>
+     <x-m>0</x-m>
+     <y-m>0</y-m>
+     <z-m>0</z-m>
+   </center>
+   <axis>
+     <x>0</x>
+     <y>1</y>
+     <z>0</z>
+   </axis>
+ </animation>
+</PropertyList>

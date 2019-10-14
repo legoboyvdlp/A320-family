@@ -1,0 +1,105 @@
+# See: http://wiki.flightgear.org/MapStructure
+
+var name = 'RWY-profile';
+var parents = [SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+SymbolLayer.Controller.add(name, __self__);
+SymbolLayer.add(name, {
+	parents: [MultiSymbolLayer],
+	type: name, # Symbol type
+	df_controller: __self__, # controller to use by default -- this one
+	df_options: { # default configuration options
+		disable_position: 1,
+		dep_rwy: '/autopilot/route-manager/departure/runway',
+		dest_rwy: '/autopilot/route-manager/destination/runway',
+		dep_arpt: '/autopilot/route-manager/departure/airport',
+		dest_arpt: '/autopilot/route-manager/destination/airport'
+	}
+});
+
+var new = func(layer) {
+	var m = {
+		parents: [__self__],
+		layer: layer,
+		map: layer.map,
+		listeners: [],
+	};
+	layer.searcher._equals = func(l,r) {l.equals(r)}; # TODO: create model objects instead?
+	#append(m.listeners, setlistener(layer.options.active_node, func m.layer.update() ));
+	#m.addVisibilityListener();
+	var driver = opt_member(m.layer.options, 'route_driver');
+	if(driver == nil){
+		driver = A3XXRouteDriver.new();
+	}
+	var driver_listeners = driver.getListeners();
+	foreach(var listener; driver_listeners){
+		append(m.listeners, setlistener(listener, func m.layer.update()));
+	}
+	m.route_driver = driver;
+	return m;
+};
+
+var del = func() {
+	foreach (var l; me.listeners)
+	removelistener(l);
+};
+
+var FPRunwayModel = {
+	new: func(apt, rwy){
+		var m = {
+			parents: [FPRunwayModel],
+			id: rwy.id,
+			lat: rwy.lat,
+			lon: rwy.lon,
+			length: rwy.length,
+			width: rwy.width,
+			heading: rwy.heading,
+			airport_id: apt.id
+		};
+		return m;
+	},
+	latlon: func(){
+		return [
+			me.lat,
+			me.lon
+		];
+	},
+	equals: func(o){me.id == o.id and me.airport_id == o.airport_id}
+};
+
+var searchCmd = func {
+	#var desApt = airportinfo(getprop(me.layer.options.dest_arpt));
+	#var depApt = airportinfo(getprop(me.layer.options.dep_arpt));
+	#if(desApt == nil and depApt == nil)
+	#	return [];
+	var res = [];
+	var desRwy = nil;
+	var depRwy = nil;
+
+	var driver = me.route_driver;
+	if(!driver.shouldUpdate()) return res;
+	driver.update();
+	var fpcount = driver.getNumberOfFlightPlans();
+	for(var i = 0; i < fpcount; i += 1){
+		if(!driver.shouldUpdate()) continue;
+		var fp = driver.getFlightPlan(i);
+		var depApt = fp.departure;
+		if(depApt != nil){
+			var depRwy = fp.departure_runway;
+			if(depRwy != nil){
+				var model = FPRunwayModel.new(depApt, depRwy);
+				append(res, model);
+			}
+		}
+		var desApt = fp.destination;
+		if(desApt != nil){
+			var desRwy = fp.destination_runway;
+			if(desRwy != nil){
+				var model = FPRunwayModel.new(desApt, desRwy);
+				append(res, model);
+			}
+		}
+	}
+
+	return res;
+};

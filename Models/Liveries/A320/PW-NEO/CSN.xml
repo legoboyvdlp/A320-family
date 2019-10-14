@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>China Southren</name>
+				<texture>Liveries/A320/PW-NEO/CSN.png</texture>
+			</livery>
+			<eng>
+				<texture>Liveries/A320/PW-NEO/CSN-eng.png</texture>
+			</eng>
+		</model>
+	</sim>
+</PropertyList>
+ 

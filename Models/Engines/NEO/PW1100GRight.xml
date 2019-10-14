@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/PW_PurePower_1100G.ac</path>
+	
+	<offsets>
+		<heading-deg>-1</heading-deg>
+		<pitch-deg>2.2</pitch-deg>
+	</offsets>
+
+	<params>
+		<n1>engines/engine[4]/n1</n1>
+		<on-fire>systems/failures/engine-right-fire</on-fire>
+		<contrail>engines/engine[1]/contrail</contrail>
+		<reverser-pos-norm>sim/multiplay/generic/float[3]</reverser-pos-norm>
+	</params>
+
+	<animation>
+		<type>translate</type>
+		<object-name>ReverserPW1100G</object-name>
+		<property alias="../../params/reverser-pos-norm" />
+		<factor>0.25</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<model>
+		<path>Aircraft/A320-family/Models/Engines/NEO/res/a320.pylon.cfmleapx.right.ac</path>
+	</model>
+
+	<model>
+		<name>Contrail</name>
+		<path>Aircraft/A320-family/Models/Effects/contrail-eng2.xml</path>
+		<overlay>
+			<params>
+				<contrail alias="../../../../params/contrail" />
+			</params>
+		</overlay>
+		<offsets>
+			<x-m>5.137</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Engine fire</name>
+		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<offsets>
+			<x-m>3.316</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+		<condition>
+			<property alias="../../../params/on-fire" />
+		</condition>
+	</model>
+
+	<animation>
+		<name>Fan Animation</name>
+		<type>spin</type>
+		<object-name>Cone</object-name>
+		<object-name>Fan</object-name>
+		<factor>-67</factor>
+		<property alias="../../params/n1" />
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!--effect>
+        <inherits-from>Aircraft/A320-family/Models/Effects/enginePW1100R</inherits-from>
+        <object-name>NacellePW1100G</object-name>
+        <object-name>ReverserPW1100G</object-name>
+        <object-name>SpoilersPW1100G</object-name>
+	</effect-->
+
+</PropertyList>

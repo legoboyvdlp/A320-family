@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<!-- Volvo Deicing Truck - Test Version   -->
+	<!-- 2011.11.14 - V0.85a by Oliver Thurau -->
+	<!-- Automatic act. based on SP-distance  -->
+	<!-- and MP-distance of Aircrafts.        -->
+	
+	<!-- Modified for Boeing 787-8 by Omega95 -->
+
+	<path>volvo_deicing_truck.ac</path>
+		
+	<nasal>
+		<load>
+			
+		</load>
+<!--			#activate lift move
+				if (act_time == 100){
+					door.move(1);
+					print ("activate lift");
+				}
+				
+				#activate de-icing move
+				if (act_time == 85){
+					door3.move(1);
+					print ("activate de-icing move");
+				}
+				
+				#deactivate de-icing move
+				if (act_time == 73){
+					door3.move(0);
+					print ("deactivate de-icing move");
+				}
+				
+				#deactivate crane move
+				if (act_time == 58){
+					door.move(0);
+					print ("deactivate lift");
+				} -->
+	</nasal>
+
+	
+	<animation>
+		<name>Lights_all</name>
+		<object-name>Lights_front</object-name>
+		<object-name>Lights_rear</object-name>
+		<object-name>Lights_side</object-name>
+	</animation>
+	
+	<animation>
+		<name>Lights_deicing</name>
+		<object-name>arm_light_01on</object-name>
+		<object-name>arm_light_02on</object-name>
+	</animation>
+	
+	<animation>
+		<name>lift_all</name>
+		<object-name>lift_02</object-name>
+		<object-name>lift_03</object-name>
+		<object-name>lift_04</object-name>
+		<object-name>lift_05</object-name>
+		<object-name>lift_06</object-name>
+		<object-name>lift_07</object-name>
+		<object-name>lift_08</object-name>		
+		<object-name>lift_arm_01</object-name>
+		<object-name>lift_arm_02</object-name>
+		<object-name>lift_arm_03</object-name>
+		<object-name>lift_arm_04</object-name>
+		<object-name>lift_arm_05</object-name>
+		<object-name>lift_05_siren</object-name>
+		<object-name>Lights_deicing</object-name>
+		<object-name>deicing_water</object-name>
+	</animation>
+	
+	<animation>
+		<name>lift_cabin_all</name>
+		<object-name>lift_03</object-name>
+		<object-name>lift_04</object-name>
+		<object-name>lift_05</object-name>
+		<object-name>lift_06</object-name>
+		<object-name>lift_07</object-name>
+		<object-name>lift_08</object-name>
+		<object-name>lift_arm_01</object-name>
+		<object-name>lift_arm_02</object-name>
+		<object-name>lift_arm_03</object-name>
+		<object-name>lift_arm_04</object-name>
+		<object-name>lift_arm_05</object-name>
+		<object-name>lift_05_siren</object-name>
+		<object-name>Lights_deicing</object-name>
+		<object-name>deicing_water</object-name>
+	</animation>
+	
+	<animation>
+		<name>lift_cabin_turn</name>
+		<object-name>lift_05</object-name>
+		<object-name>lift_06</object-name>
+		<object-name>lift_07</object-name>
+		<object-name>lift_08</object-name>
+		<object-name>lift_arm_01</object-name>
+		<object-name>lift_arm_02</object-name>
+		<object-name>lift_arm_03</object-name>
+		<object-name>lift_arm_04</object-name>
+		<object-name>lift_arm_05</object-name>
+		<object-name>lift_05_siren</object-name>
+		<object-name>Lights_deicing</object-name>
+		<object-name>deicing_water</object-name>
+	</animation>
+	
+	<animation>
+		<name>lift_arm_all_02</name>
+		<object-name>lift_arm_03</object-name>
+		<object-name>lift_arm_04</object-name>
+		<object-name>lift_arm_05</object-name>
+		<object-name>arm_light_02on</object-name>
+		<object-name>deicing_water</object-name>
+	</animation>
+	
+	<animation>
+		<name>lift_arm_all_01</name>
+		<object-name>lift_arm_02</object-name>
+		<object-name>lift_arm_all_02</object-name>
+	</animation>
+
+
+	<animation>
+		<name>lift_all_01</name>
+		<object-name>lift_all</object-name>
+		<object-name>lift_01</object-name>
+		<object-name>lift_09</object-name>
+	</animation>
+	
+	<animation>
+		<name>lift_nozle</name>
+		<object-name>deicing_water</object-name>
+		<object-name>lift_arm_05</object-name>
+		<object-name>arm_light_02on</object-name>
+	</animation>
+	
+<!-- De-Icing Lift animations -->
+	<animation>
+		<type>translate</type>
+		<object-name>lift_arm_all_01</object-name>
+		<property>services/deicing_truck/crane/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 0.5 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep>  1.50 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m> -3.224 </x1-m>
+			<y1-m>  0.433 </y1-m>
+			<z1-m>  3.785 </z1-m>
+			<x2-m> -0.805 </x2-m>
+			<y2-m>  0.433 </y2-m>
+			<z2-m>  3.785 </z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>lift_arm_all_02</object-name>
+		<property>services/deicing_truck/crane/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 0.5 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep>  1.50 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m> -3.224 </x1-m>
+			<y1-m>  0.433 </y1-m>
+			<z1-m>  3.785 </z1-m>
+			<x2-m> -0.805 </x2-m>
+			<y2-m>  0.433 </y2-m>
+			<z2-m>  3.785 </z2-m>
+		</axis>
+	</animation>	
+	
+	
+	<animation>
+		<type>translate</type>
+		<object-name>lift_all</object-name>
+		<property>services/deicing_truck/crane/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep> -3.00 </dep></entry>
+			</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>lift_all_01</object-name>
+		<property>services/deicing_truck/crane/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep> 40.00 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m>  3.800 </x1-m>
+			<y1-m> -0.240 </y1-m>
+			<z1-m>  3.429 </z1-m>
+			<x2-m>  3.800 </x2-m>
+			<y2-m>  0.240 </y2-m>
+			<z2-m>  3.429 </z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>lift_cabin_all</object-name>
+		<property>services/deicing_truck/crane/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep>-40.00 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m> -2.541 </x1-m>
+			<y1-m> -0.240 </y1-m>
+			<z1-m>  3.429 </z1-m>
+			<x2-m> -2.541 </x2-m>
+			<y2-m>  0.240 </y2-m>
+			<z2-m>  3.429 </z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>lift_cabin_turn</object-name>
+		<property>services/deicing_truck/crane/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 0.2 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep>-180.00 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m> -2.916 </x1-m>
+			<y1-m>  0.000 </y1-m>
+			<z1-m>  3.600 </z1-m>
+			<x2-m> -2.916 </x2-m>
+			<y2-m>  0.000 </y2-m>
+			<z2-m>  3.400 </z2-m>
+		</axis>
+	</animation>
+	
+<!-- De-Icing Movements -->
+
+<!-- De-Icing Nozle Movements up / down -->
+	<animation>
+		<type>rotate</type>
+		<object-name>lift_nozle</object-name>
+		<property>services/deicing_truck/deicing/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
+				<entry><ind> 0.1 </ind><dep> 20.00 </dep></entry>
+				<entry><ind> 0.2 </ind><dep>  5.00 </dep></entry>
+				<entry><ind> 0.3 </ind><dep> -2.00 </dep></entry>
+				<entry><ind> 0.4 </ind><dep> 20.00 </dep></entry>
+				<entry><ind> 0.5 </ind><dep> 15.00 </dep></entry>
+				<entry><ind> 0.6 </ind><dep>  5.00 </dep></entry>
+				<entry><ind> 0.7 </ind><dep> 15.00 </dep></entry>
+				<entry><ind> 0.8 </ind><dep> 10.00 </dep></entry>
+				<entry><ind> 0.9 </ind><dep> -5.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep> 25.00 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m>  0.096 </x1-m>
+			<y1-m>  0.414 </y1-m>
+			<z1-m>  3.692 </z1-m>
+			<x2-m>  0.096 </x2-m>
+			<y2-m>  0.452 </y2-m>
+			<z2-m>  3.692 </z2-m>
+		</axis>
+	</animation>
+
+<!-- De-Icing arm Movements left / right -->	
+	<animation>
+		<type>rotate</type>
+		<object-name>lift_cabin_turn</object-name>
+		<property>services/deicing_truck/deicing/position-norm</property>
+		<factor>1</factor>
+			<interpolation>
+				<entry><ind> 0.0 </ind><dep>   0.00 </dep></entry>
+				<entry><ind> 0.5 </ind><dep>  40.00 </dep></entry>
+				<entry><ind> 1.0 </ind><dep> -20.00 </dep></entry>
+			</interpolation>
+		<axis>
+			<x1-m> -2.916 </x1-m>
+			<y1-m>  0.000 </y1-m>
+			<z1-m>  3.600 </z1-m>
+			<x2-m> -2.916 </x2-m>
+			<y2-m>  0.000 </y2-m>
+			<z2-m>  3.400 </z2-m>
+		</axis>
+	</animation>
+
+
+<!-- Particle Effects                                                          -->
+<!-- Anti-ice - water spray 20 meters - daytime switched - moved by door value -->
+
+<particlesystem>
+	<name>deicing_water</name>
+	
+	<texture>volvo_deicing_truck_water.png</texture>
+	<emissive>false</emissive>
+	<lighting>true</lighting>
+       
+	<offsets>
+		<x-m>0.647</x-m>
+		<y-m>0.433</y-m>
+		<z-m>3.642</z-m>
+	</offsets>
+
+	<condition>
+		<equals>
+			<property>services/deicing_truck/crane/position-norm</property>
+			<value>1.00</value>
+		</equals>
+	</condition>
+	
+	<attach>local</attach>
+           
+	<placer>
+		<type>point</type>
+	</placer>
+           
+	<shooter>
+		<theta-min-deg>85</theta-min-deg>
+		<theta-max-deg>90</theta-max-deg>
+		<phi-min-deg>0</phi-min-deg>
+		<phi-max-deg>2</phi-max-deg>
+		<speed-mps>
+			<value>170</value>
+			<spread>100</spread>
+		</speed-mps>
+		<rotation-speed>
+			<x-max-deg-sec>15</x-max-deg-sec>
+			<x-min-deg-sec>-15</x-min-deg-sec>
+			<y-max-deg-sec>15</y-max-deg-sec>
+			<y-min-deg-sec>-15</y-min-deg-sec>
+			<z-max-deg-sec>15</z-max-deg-sec>
+			<z-min-deg-sec>-15</z-min-deg-sec>
+		</rotation-speed>
+	</shooter>
+       
+	<counter>
+		<particles-per-sec>
+			<!--<value>120</value>-->
+			<value>90</value>
+			<spread>120</spread>
+		</particles-per-sec>
+	</counter>
+           
+	<align>billboard</align>
+           
+	<particle>
+		<start>
+			<color>
+				<red><value>0.9</value></red>
+				<green><value>0.9</value></green>
+				<blue><value>0.9</value></blue>
+				<alpha><value>0.2</value></alpha>
+			</color>
+			<size>
+				<value>0.35</value>
+			</size>
+		</start>
+
+		<end>
+			<color>
+				<red><value>1.0</value></red>
+				<green><value>1.0</value></green>
+				<blue><value>1.0</value></blue>
+				<alpha><value>0.0</value></alpha>
+			</color>
+			<size>
+				<value>5</value>
+				<spread>2.2</spread>
+			</size>
+		</end>
+		
+		<life-sec>
+			<value>3</value>
+		</life-sec>
+		
+		<mass-kg>1.1</mass-kg>
+		<radius-m>0.22</radius-m>
+	</particle>
+		
+	<program>
+		<fluid>air</fluid>
+		<gravity>true</gravity>
+		<wind>true</wind>
+	</program>
+           
+</particlesystem>
+
+<!-- Lights night illumination -->
+<animation>
+	<type>material</type> 
+	<object-name>Lights_all</object-name>
+	<condition>		
+		<greater-than>		
+			<property>sim/time/sun-angle-rad</property>
+			<value>1.45</value>
+		</greater-than>
+	</condition>
+	<emission>	
+		<red>0.7</red>	
+		<green>0.7</green>	
+		<blue>0.5</blue>
+	</emission>
+</animation>
+
+<!-- Lights_deicing lamp glass illumination -->
+<animation>
+	<type>material</type> 
+	<object-name>Lights_deicing</object-name>
+	<condition>
+		<and>
+		<greater-than>		
+			<property>sim/time/sun-angle-rad</property>
+			<value>1.57</value>
+		</greater-than>
+		<greater-than>		
+			<property>services/deicing_truck/crane/position-norm</property>
+			<value>0.30</value>
+		</greater-than>
+		</and>
+	</condition>
+	<emission>	
+		<red>0.8</red>	
+		<green>0.8</green>	
+		<blue>0.8</blue>
+	</emission>
+</animation>
+
+<!-- Siren lamp glass illumination if truck active -->
+<animation>
+	<type>material</type> 
+	<object-name>lift_05_siren</object-name>
+		<condition>
+			<or>
+			<greater-than>		
+				<property>services/deicing_truck/crane/position-norm</property>
+				<value>0.1</value>
+			</greater-than>
+			<greater-than>		
+				<property>services/deicing_truck/truck/position-norm</property>
+				<value>0.1</value>
+			</greater-than>
+			</or>
+		</condition>
+	<emission>	
+		<red>0.7</red>	
+		<green>0.7</green>	
+		<blue>0.7</blue>
+	</emission>
+</animation>
+
+<!-- dont show the light model during day-->
+<animation>
+	<type>select</type> 
+	<object-name>Lights_all</object-name>
+	<object-name>Lights_deicing</object-name>
+	<condition>		
+		<greater-than>		
+			<property>sim/time/sun-angle-rad</property>
+			<value>1.45</value>
+		</greater-than>
+	</condition>
+</animation>
+
+<!-- Sounds
+<fx>
+	<door>
+		<name>arm-move</name>
+		<mode>in-transit</mode>
+		<path>Sounds/gear.wav</path>
+		
+			<property>services/deicing_truck/crane/position-norm</property>
+		
+		<volume>
+			<property>services/deicing_truck/crane/position-norm</property>
+			<factor>1.5</factor>
+		</volume>
+		<reference-dist>100</reference-dist>
+		<max-dist>500</max-dist>
+	</door>
+</fx>
+-->
+
+	<animation>
+		<type>range</type>
+		<min-m>0</min-m>
+		<max-m>5500</max-m>
+	</animation>
+
+</PropertyList>

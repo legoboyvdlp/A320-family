@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Lufthansa (HD)</name>
+				<texture>Liveries/A320/CFM-NEO/DLH.png</texture>
+			</livery>
+		</model>
+	</sim>
+</PropertyList>
+

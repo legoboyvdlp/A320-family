@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+    <particlesystem>
+        <name>tyre-smoke-l</name>
+        <texture>tiresmoke.png</texture>
+        <emissive>false</emissive>
+        <lighting>false</lighting>
+
+        <offsets>
+            <x-m>0</x-m>
+            <y-m>0</y-m>
+            <z-m>0</z-m>
+        </offsets>
+
+        <condition>
+                <property>gear/gear[1]/tyre-smoke</property>
+                <value>1</value>
+        </condition>
+
+        <attach>world</attach>
+
+        <placer>
+            <type>point</type>
+        </placer>
+
+        <shooter>
+            <theta-min-deg>45</theta-min-deg>
+            <theta-max-deg>85</theta-max-deg>
+            <phi-min-deg>-60</phi-min-deg>
+            <phi-max-deg>60</phi-max-deg>
+            <speed-mps>
+                <value>50</value>
+                <spread>5</spread>
+            </speed-mps>
+            <rotation-speed>
+                <x-max-deg-sec>15</x-max-deg-sec>
+                <x-min-deg-sec>-15</x-min-deg-sec>
+                <y-max-deg-sec>15</y-max-deg-sec>
+                <y-min-deg-sec>-15</y-min-deg-sec>
+                <z-max-deg-sec>15</z-max-deg-sec>
+                <z-min-deg-sec>-15</z-min-deg-sec>
+            </rotation-speed>
+        </shooter>
+
+        <counter>
+            <particles-per-sec>
+				<property>velocities/speed-down-fps</property>
+				<factor>1</factor>
+                <spread>50</spread>
+            </particles-per-sec>
+        </counter>
+
+        <align>billboard</align>
+
+        <particle>
+            <start>
+                <color>
+                    <red>
+                        <value>0.8</value>
+                    </red>
+                    <green>
+                        <value>0.8</value>
+                    </green>
+                    <blue>
+                        <value>0.8</value>
+                    </blue>
+                    <alpha>
+                        <value>0.5</value>
+                    </alpha>
+                </color>
+                <size>
+                    <value>1.5</value>
+                </size>
+            </start>
+            <end>
+                <color>
+                    <red>
+                        <value>0.7</value>
+                    </red>
+                    <green>
+                        <value>0.7</value>
+                    </green>
+                    <blue>
+                        <value>0.7</value>
+                    </blue>
+                    <alpha>
+                        <value>0.005</value>
+                    </alpha>
+                </color>
+                <size>
+                    <value>10</value>
+                </size>
+            </end>
+            <life-sec>
+                <value>2</value>
+            </life-sec>
+            <mass-kg>0.025</mass-kg>
+            <radius-m>0.175</radius-m>
+        </particle>
+
+        <program>
+            <fluid>air</fluid>
+            <gravity>false</gravity>
+            <wind>true</wind>
+        </program>
+
+    </particlesystem>
+
+</PropertyList>

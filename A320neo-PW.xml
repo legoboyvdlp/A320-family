@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSim.xsl"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<fdm_config name="A320-family" version="2.0" release="BETA"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
+
+	<fileheader>
+		<author>Joshua Davidson (Octal450)</author>
+		<version>Pre V1.0</version>
+		<description>A32X FDE</description>
+	</fileheader>
+	
+	<metrics file="Systems/a320-metrics"/>
+	<mass_balance file="Systems/a320-mass-balance"/>
+	<ground_reactions file="Systems/a320-ground-reactions"/>
+	
+	<propulsion>
+		<engine file="pw1127g_1">
+			<location unit="M">
+				<x> 14.3962788 </x>
+				<y> -5.755 </y>
+				<z> -1.04768 </z>
+			</location>
+			<orient unit="DEG">
+				<roll> 0.0 </roll>
+				<pitch> 2.2 </pitch>
+				<yaw> 1 </yaw>
+			</orient>
+			<feed>3</feed>
+			<thruster file="direct">
+				<location unit="M">
+					<x> 14.3962788 </x>
+					<y> -5.755 </y>
+					<z> -1.04768 </z>
+				</location>
+				<orient unit="DEG">
+					<roll> 0.0 </roll>
+					<pitch> 2.2 </pitch>
+					<yaw> 1 </yaw>
+				</orient>
+			</thruster>
+		</engine>
+		
+		<engine file="pw1127g_2">
+			<location unit="M">
+				<x> 14.3962788 </x>
+				<y> 5.755 </y>
+				<z> -1.04768 </z>
+			</location>
+			<orient unit="DEG">
+				<roll> 0.0 </roll>
+				<pitch> 2.2 </pitch>
+				<yaw> -1 </yaw>
+			</orient>
+			<feed>4</feed>
+			<thruster file="direct">
+				<location unit="M">
+					<x> 14.3962788 </x>
+					<y> 5.755 </y>
+					<z> -1.04768 </z>
+				</location>
+				<orient unit="DEG">
+					<roll> 0.0 </roll>
+					<pitch> 2.2 </pitch>
+					<yaw> -1 </yaw>
+				</orient>
+			</thruster>
+		</engine>
+		
+		<tank type="FUEL">    <!-- Left Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> -5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 13914 </capacity>
+			<contents unit="LBS"> 6000 </contents>
+			<standpipe unit="LBS">31</standpipe>
+			<priority>1</priority>
+			<type>JET-A1</type>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">    <!-- Center Tank -->
+			<location unit="M">
+				<x> 18.9731 </x>
+				<y> 0 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 14281 </capacity>
+			<contents unit="LBS"> 0 </contents> 
+			<standpipe unit="LBS">43</standpipe>
+			<priority>1</priority>
+			<type>JET-A1</type>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">    <!-- Right Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> 5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 13914 </capacity>
+			<contents unit="LBS"> 6000 </contents>
+			<standpipe unit="LBS">31</standpipe>
+			<priority>1</priority>
+			<type>JET-A1</type>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">    <!-- Engine 1 Pipes -->
+			<location unit="M">
+				<x> 18.8231 </x>
+				<y> 0 </y>
+				<z> 0.19249 </z>
+			</location>
+			<capacity unit="LBS">10</capacity>
+			<contents unit="LBS">0</contents>
+			<priority>1</priority>
+			<type>JET-A1</type>
+		</tank>
+		<tank type="FUEL">    <!-- Engine 2 Pipes -->
+			<location unit="M">
+				<x> 18.8231 </x>
+				<y> 0 </y>
+				<z> 0.19249 </z>
+			</location>
+			<capacity unit="LBS">10</capacity>
+			<contents unit="LBS">0</contents>
+			<priority>1</priority>
+			<type>JET-A1</type>
+		</tank>
+	</propulsion>
+	
+	<system file="fuel"/>
+	<system file="glass-effect1"/>
+	<system file="a320-fcs"/>
+	<system file="a320-spoiler"/>
+	<system file="a320-lights"/>
+	<system file="a320-engine-fire"/>
+	
+	<flight_control name="none"/>
+	
+	<aerodynamics file="Systems/a320-aerodynamics.xml"/>
+	<external_reactions file="Systems/a320-external-reactions"/>
+
+</fdm_config>

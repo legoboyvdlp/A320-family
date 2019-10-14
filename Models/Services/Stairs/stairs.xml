@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<name>Mobile Stairs</name>
+	<path>stairs.ac</path>
+
+<!-- LIVERY SELECT -->
+	<!-- Animation -->
+	<animation>
+		<type>material</type>
+		<object-name>paint</object-name>
+		<object-name>cover</object-name>
+		<property-base>/services/stairs</property-base>
+		<texture-prop>paint-end</texture-prop>
+	</animation>
+
+<animation>
+	<type>select</type>
+	<object-name>cover</object-name>
+	<object-name>cover-under</object-name>
+	<object-name>cover-rods</object-name>
+	<condition>
+		<property>services/stairs/cover</property>
+	</condition>
+</animation>
+		
+</PropertyList>

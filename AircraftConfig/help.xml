@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-help</name>
+	<layout>vbox</layout>
+
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Help</label>
+        </text>
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+	
+    <hrule/>
+	
+		<group>
+			<layout>vbox</layout>
+			
+			<text>
+				<halign>left</halign>
+				<label>Information:</label>
+			</text>
+			
+			<text>
+				<halign>left</halign>
+				<label>IDG A32X Pre V1.0</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Keyboard Mode: Maps flight controls to number pad, and number rows, instead of view shortucts.</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Key Commands:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>1 - Show Captains View</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>2 - Show First Officers View</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>3 - Show Overhead View</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>4 - Show Forward Pedestal View</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>5 - Show Aft Pedestal View</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>6 - Show FCU Panel View</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>F1 - Disengage/Decrease Reverse Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>F2 - Engage/Increase Reverse Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>DEL - Toggle Reverse Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>E - Set Idle Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>F - Set TOGA Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + B - Cycle Spoilers</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>SHIFT + B - Toggle Parking Brake</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + D - Disconnect Autothrottle</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>SHIFT + D - Disconnect Autopilot</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + F - Set MCT/FLX Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>SHIFT + F - Set CL Thrust</label>
+			</text>
+			
+		</group>
+	
+	
+</PropertyList>

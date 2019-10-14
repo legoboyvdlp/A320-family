@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+	<name>Aircraft/A320-family/Models/Effects/NEOreflect</name>
+	<inherits-from>Effects/reflect</inherits-from>
+
+	<parameters>
+		<texture n="5">
+			<type>cubemap</type>
+			<!-- use this form for a 6 image cube map -->
+			<images>
+				<positive-x>Aircraft/Generic/Effects/CubeMaps/real.blue-sky/fair-sky_px.png</positive-x>
+				<negative-x>Aircraft/Generic/Effects/CubeMaps/real.blue-sky/fair-sky_nx.png</negative-x>
+				<positive-y>Aircraft/Generic/Effects/CubeMaps/real.blue-sky/fair-sky_py.png</positive-y>
+				<negative-y>Aircraft/Generic/Effects/CubeMaps/real.blue-sky/fair-sky_ny.png</negative-y>
+				<positive-z>Aircraft/Generic/Effects/CubeMaps/real.blue-sky/fair-sky_pz.png</positive-z>
+				<negative-z>Aircraft/Generic/Effects/CubeMaps/real.blue-sky/fair-sky_nz.png</negative-z>
+			</images>
+		</texture>
+		<rainbowiness type="float">0.1</rainbowiness>
+		<fresneliness>0.1</fresneliness>
+		<refl_correction>0.1</refl_correction>
+		<ambient_correction>0.1</ambient_correction>
+		<reflect_map>0</reflect_map>
+	</parameters>
+
+</PropertyList>

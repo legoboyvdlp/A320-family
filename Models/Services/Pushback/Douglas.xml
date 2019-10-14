@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+	<!-- Trucks models and artworks courtesy of XPGoodWay Team
+	(http://www.xpgoodwayteam.org/site_xpushback/) -->
+	
+	<path>Douglas.ac</path>
+
+	<!-- switch to night/day textures -->
+	<animation>
+		<type>textranslate</type>
+		<property>sim/time/sun-angle-rad</property>
+		<step>1.60</step>
+		<factor>0.318471338</factor>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<condition>		
+			<greater-than>		
+				<property>sim/time/sun-angle-rad</property>
+				<value>1.60</value>
+			</greater-than>
+		</condition>
+		<emission>	
+			<red>1</red>	
+			<green>1</green>	
+			<blue>1</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<condition>		
+			<less-than-equals>		
+				<property>sim/time/sun-angle-rad</property>
+				<value>1.60</value>
+			</less-than-equals>
+		</condition>
+		<emission>	
+			<red>0</red>	
+			<green>0</green>	
+			<blue>0</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<condition>
+			<property>sim/model/autopush/enabled</property>
+			<property>gear/gear[0]/wow</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<property>fdm/jsbsim/fcs/pushback-steer-deg</property>
+		<factor>-1</factor>
+		<center>
+			<x-m>1.53665</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+
+	<!-- compensate for gear compression -->
+	<animation>
+		<type>translate</type>
+		<property>gear/gear[0]/compression-ft</property>
+		<factor>0.3048</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<!-- compensate for pitch of aircraft, keep pushback level -->
+	<animation>
+		<type>rotate</type>
+		<property>orientation/pitch-deg</property>
+		<factor>-1</factor>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+</PropertyList>

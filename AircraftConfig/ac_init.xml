@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-init</name>
+	<layout>vbox</layout>
+    <pref-width>260</pref-width>
+
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Please wait...</label>
+        </text>
+    </group>
+	
+    <hrule/>
+	
+		<group>
+			<layout>vbox</layout>
+			
+			<text>
+				<halign>left</halign>
+				<label>Initializing...</label>
+			</text>
+			<text>
+				<border>1</border>
+				<label>9</label>
+				<valign>center</valign>
+				<property>/systems/acconfig/spin</property>
+				<live>1</live>
+			</text>
+			
+		</group>
+	
+</PropertyList>

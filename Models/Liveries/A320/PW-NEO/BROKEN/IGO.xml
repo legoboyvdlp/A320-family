@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>IndiGo</name>
+				<texture>Liveries/A320/PW-NEO/IGO.png</texture>
+			</livery>
+			<eng>
+				<texture>Liveries/A320/PW-NEO/IGO-eng.png</texture>
+			</eng>
+		</model>
+	</sim>
+</PropertyList>

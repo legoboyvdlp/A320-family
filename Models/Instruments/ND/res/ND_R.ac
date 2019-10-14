@@ -1,0 +1,23 @@
+AC3Db
+MATERIAL "buttonlights" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 0  trans 0
+OBJECT world
+kids 1
+OBJECT poly
+name "ND_R.screen"
+loc 0.00180348 -0.00140045 0.000124912
+texture "screen.png"
+crease 30.000000
+numvert 4
+0 0.0804743 -0.0774588
+0 -0.0742105 -0.0774588
+0 -0.0742105 0.077209
+0 0.0804743 0.077209
+numsurf 1
+SURF 0x0
+mat 0
+refs 4
+0 1.00067 0.999407
+3 4.45843e-005 0.999407
+2 4.45843e-005 0.000756443
+1 1.00067 0.000756443
+kids 0

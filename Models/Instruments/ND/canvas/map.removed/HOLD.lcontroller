@@ -1,0 +1,112 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'HOLD';
+var parents = [canvas.SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+
+canvas.SymbolLayer.Controller.add(name, __self__);
+canvas.SymbolLayer.add(name, {
+    parents: [MultiSymbolLayer],
+    type: name, # Symbol type
+    df_controller: __self__, # controller to use by default -- this one
+});
+var new = func(layer) {
+    var m = {
+        parents: [__self__],
+        layer: layer,
+        map: layer.map,
+        listeners: [],
+    };
+    #debug.dump(layer.parents);
+    layer.searcher._equals = func(a,b) a.id == b.id;
+    #append(m.listeners, setlistener(layer.options.fplan_active, func m.layer.update() ));
+    #m.addVisibilityListener();
+    var driver = opt_member(m.layer.options, 'route_driver');
+    if(driver == nil){
+        driver = RouteDriver.new();
+    }
+#    var driver_listeners = driver.getListeners();
+#    foreach(var listener; driver_listeners){
+#        append(m.listeners, setlistener(listener, func m.layer.update()));
+#    }
+    m.route_driver = driver;
+ 
+    return m;
+};
+
+var del = func() {
+    foreach (var l; me.listeners)
+        removelistener(l);
+};
+ 
+var searchCmd = func {
+    var driver = me.route_driver;
+    if(!driver.shouldUpdate()) return [];
+    driver.update();
+    var results = [];
+    var planCount = driver.getNumberOfFlightPlans();
+    var cur_fp = flightplan();
+    var cur_wp = cur_fp.getWP();
+    var next_wp = nil;
+    if (cur_wp != nil)
+        next_wp = cur_fp.getWP(cur_wp.index + 1);
+    var range = me.map.getRange();
+    if (range == nil) range = 0;
+    for(var idx = 0; idx < planCount; idx += 1){
+        var patterns = me.route_driver.getHoldPatterns(idx);
+        if (typeof(patterns) == 'vector') {
+            foreach (var pattern; patterns) {
+                var wp = pattern['wp'];
+                if (wp == nil) continue;
+                var wp_id = wp.id;
+                var wp_idx = wp.index;
+                var node = pattern['node'];
+                if (node == nil) continue;
+                var pointsNode = node.getNode('points');
+                var pointNode = nil;
+                if(pointsNode != nil)
+                    pointNode = pointsNode.getNode('point', 0);
+                if (pointNode == nil) continue;
+                var r = pattern['crs'];
+                var d = pattern['dist'];
+                var t = pattern['turn'];
+                if (r == nil or d == nil or t == nil) continue;
+                var active = node.getValue('active') == 1;
+                var fpId = pattern['fpId'];
+                var type = 'hold_symbol';
+                var sfx = '-inactive';
+                if (fpId == 'active' or fpId == 'temporary') {
+                    if (range <= 160) {
+                        if ((cur_wp != nil and cur_wp.index == wp_idx) or 
+                            (next_wp != nil and next_wp.index == wp_idx)) {
+                            type = 'pattern';
+                            sfx = '';
+                        }
+                    }
+                }
+                var lat = wp.wp_lat;
+                var lon = wp.wp_lon;
+                var model = {
+                    parents: [geo.Coord],
+                    id: wp_id~r~d~t~sfx,
+                    pos: {lat: lat, lon: lon},
+                    type: type,
+                    latlon: func(){ 
+                        return [
+                            me.pos.lat,
+                            me.pos.lon
+                        ];
+                    },
+                    radial: r,
+                    dist: d,
+                    turn: t,
+                    fpId: fpId,
+                    equals: func(o){me.id == o.id}
+                };
+                append(results, model);
+            }
+        }
+    }
+        
+    return results;
+}

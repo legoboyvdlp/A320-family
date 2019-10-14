@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+ <path>left-strobe.ac</path>
+ <nopreview/>
+
+
+ 
+<effect>
+   <inherits-from>Aircraft/A320-family/Models/lights/ALS/left-strobe</inherits-from>
+   <object-name>left-strobeals</object-name>
+ </effect>
+ 
+
+ 
+ <animation>
+  <type>scale</type>
+  <x-offset>0.75</x-offset>
+  <y-offset>0.75</y-offset>
+  <z-offset>0.75</z-offset>
+ </animation>
+ 
+
+ 
+<animation>
+  <type>dist-scale</type>
+  <object-name>left-strobeals</object-name>
+  <interpolation>
+   <entry>
+    <ind>0</ind>
+    <dep>1</dep>
+   </entry>
+   <entry>
+    <ind>300</ind>
+    <dep>4</dep>
+   </entry>
+   <entry>
+    <ind>1500</ind>
+    <dep>8</dep>
+   </entry>
+  </interpolation>
+ </animation>
+ 
+
+
+</PropertyList>

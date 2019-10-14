@@ -1,0 +1,37 @@
+AC3Db
+MATERIAL "DefaultWhite" rgb 1 1 1  amb 1 1 1  emis 0 0 0   spec 0.5 0.5 0.5  shi 64  trans 0
+MATERIAL "ac3dmat1" rgb 1 1 1 amb 0.2 0.2 0.2 emis 1 1 1 spec 0 0 0 shi 10 trans 0
+OBJECT world
+kids 1
+OBJECT poly
+name "Light"
+data 4
+Mesh
+texture "warning-light.png"
+texrep 1 1
+crease 45.000000
+numvert 8
+0 -0.5 -0.5
+0 -0.5 0.5
+0 0.5 0.5
+0 0.5 -0.5
+0.5 0 -0.5
+0.5 0 0.5
+0 0 0.5
+0 0 -0.5
+numsurf 2
+SURF 0x00
+mat 1
+refs 4
+1 0.0567888170481 0.43821194768
+0 0.0567888170481 0.0527887605131
+3 0.442211985588 0.0527888350189
+2 0.442211985588 0.43821194768
+SURF 0x20
+mat 1
+refs 4
+5 0.442211985588 0.43821194768
+6 0.249500453472 0.43821194768
+7 0.249500393867 0.052788797766
+4 0.442211985588 0.0527887605131
+kids 0

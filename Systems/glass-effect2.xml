@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+    <filter>
+        <name>splashX</name>
+        <type>gain</type>
+        <input>
+            <property>/fdm/jsbsim/glass-effects/splashx</property>
+        </input>
+        <output>
+            <property>/environment/aircraft-effects/splash-vector-x</property>
+        </output>
+    </filter>
+
+    <filter>
+        <name>splashY</name>
+        <type>gain</type>
+        <input>
+            <value>0.0</value>
+        </input>
+        <output>
+            <property>/environment/aircraft-effects/splash-vector-y</property>
+        </output>
+    </filter>
+
+    <filter>
+        <name>splashZ</name>
+        <type>gain</type>
+        <input>
+            <property>/fdm/jsbsim/glass-effects/splashz</property>
+        </input>
+        <output>
+            <property>/environment/aircraft-effects/splash-vector-z</property>
+        </output>
+    </filter>
+
+</PropertyList>

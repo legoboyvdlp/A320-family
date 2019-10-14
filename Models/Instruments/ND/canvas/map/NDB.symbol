@@ -1,0 +1,7 @@
+# See: http://wiki.flightgear.org/MapStructure
+DotSym.makeinstance('NDB', {
+	parents: [SVGSymbol],
+	svg_path: "/gui/dialogs/images/ndb_symbol.svg",
+	#cacheable: 1,
+});
+

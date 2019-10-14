@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/strobe.ac</path>
+
+	<!-- ANIMATIONS -->
+	<!-- On/off -->
+	<animation>
+		<name>On/off</name>
+		<type>select</type>
+		<object-name>Light</object-name>
+		<condition>
+			<property>sim/model/lights/tailstrobe/state</property>
+		</condition>
+	</animation>
+
+	<!-- Billboard animation -->
+	<animation>
+		<name>Billboard</name>
+		<type>billboard</type>
+		<object-name>Light</object-name>
+	</animation>
+
+</PropertyList>

@@ -1,0 +1,114 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'WXR_live';
+var parents = [DotSym];
+var __self__ = caller(0)[0];
+DotSym.makeinstance( name, __self__ );
+
+var element_type = "group";
+
+var getWXRImageFilePath = func(){
+	var home = getprop('sim/fg-home');
+	var aircraft = getprop('sim/aircraft');
+	var idx = me.layer.getCanvas()._node.getIndex();
+	return home ~ '/Export/' ~ aircraft ~ '-wxr-'~me.ltype~'-'~idx~'.png';
+};
+
+var getWXRAPIUrl = func(lat, lon){
+	var res = me.res;
+	if(me.ltype == "radar"){
+		return "http://api.wunderground.com/api/"~me.key~
+				"/radar/image.png?centerlat="~lat~"&centerlon="~lon~
+				"&radius="~me.fetchRad~"&width="~res~"&height="~res~
+				"&smooth="~me.smooth;
+	} else {
+		return nil;
+	}
+};
+
+var fetchWXRMap = func(size){
+	if(me.fetching) return;
+	var pos = geo.aircraft_position();
+	var lat = pos.lat();
+	var lon = pos.lon();
+	var url = me.getWXRAPIUrl(lat, lon);
+	var filePath = me.getWXRImageFilePath();
+	if(url == nil) {
+		print(me.name~': No URL!');
+		return;
+	}
+	me.fetching = 1;
+	http.save(url, filePath)
+		.fail(func(){
+			print(me.name~': Download failed!');
+			me.wxlayer.hide();
+		})
+		.done(func(){
+			var sz = size * 2;
+			var transl = -size;
+			me.wxlayer.hide();
+			me.wxlayer.setFile(filePath)
+					  .setSize(sz, sz)
+					  .setTranslation(transl, transl);
+			me.wxlayer.show();
+			me.last_request = getprop("/sim/time/elapsed-sec");
+		})
+		.always(func(){
+			setprop("/instrumentation/wxr/center/latitude-deg", lat);
+			setprop("/instrumentation/wxr/center/longitude-deg", lon);
+			me.fetching = 0;
+			print("[WXR] Live Layer Request: "~url); # Debugging
+		});
+};
+
+var init = func {
+	#print('WXR init');
+	me.fetching = 0;
+	me.key = me.model.key; # API Key from Wunderground API Subscription
+	me.res = me.model.res; # Resolution of image to fetch (default 2048)
+	me.ltype = me.model.ltype; # Layer Type - radar, satellite
+	me.smooth = me.model.smooth; # If we should fetch a smoothened image or the original
+	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
+	me.range = me.model.rangeNm; # Range of Navigation Display
+	me.viewport_radius = me.getOption('viewport_radius', 670);
+	
+	me.wxlayer = me.element.createChild("image").set("z-index", -100).hide();
+	
+	me.last_request = -210;
+	me.update_interval = 240;
+	
+	var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
+	me.fetchWXRMap(r_scaled);
+};
+
+var draw = func {
+	var range = me.layer.map.getRange(); # Range of Navigation Display
+	var update_size = (range != me.range);
+	me.range = range;
+	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
+	#var r_scaled = (me.fetchRad*670)/me.range;
+	var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
+	var hdg = me.layer.map.getHdg();
+	var rot = 0 - hdg;
+	if(rot < 0) rot = 360 + rot; 
+	me.element.setRotation(rot*D2R);
+	if(update_size){
+		print('WXR draw range:'~ me.range);
+		print('Update size: '~r_scaled~'x2 = '~(r_scaled*2));
+		me.wxlayer.hide();
+		me.wxlayer.setSize(2*r_scaled, 2*r_scaled)
+				  .setTranslation(-r_scaled, -r_scaled);
+		me.wxlayer.show();
+	}
+
+	if(getprop("/sim/time/elapsed-sec") - me.last_request > me.update_interval) {
+		#print('Fetching WXR map...');
+		me.key = me.model.key; # API Key from Wunderground API Subscription
+		me.res = me.model.res; # Resolution of image to fetch (default 2048)
+		me.ltype = me.model.ltype; # Layer Type - radar, satellite
+		me.smooth = me.model.smooth; # If we should fetch a smoothened image or the original
+
+		me.fetchWXRMap(r_scaled);
+	}
+};
+

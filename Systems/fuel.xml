@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<!-- A3XX Fuel System -->
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<system name="fuel">
+
+	<channel name="Fuel to Engine 1 Pipes">
+		<switch name="fuel/from-tank0-to-tank3">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				/systems/fuel/only-use-ctr-tank == 0
+				/systems/fuel/tank[0]/feed == 1
+				propulsion/tank[0]/contents-lbs gt 0
+				propulsion/tank[3]/contents-lbs lt 9
+			</test>
+		</switch>
+
+		<switch name="fuel/from-tank1-to-tank3">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				/systems/fuel/tank[1]/feed == 1
+				propulsion/tank[1]/contents-lbs gt 0
+				propulsion/tank[3]/contents-lbs lt 9
+			</test>
+		</switch>
+
+		<switch name="fuel/from-tank2-to-tank3">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				/systems/fuel/x-feed == 1
+				/systems/fuel/only-use-ctr-tank == 0
+				/systems/fuel/tank[2]/feed == 1
+				propulsion/tank[0]/contents-lbs eq 0
+				propulsion/tank[2]/contents-lbs gt 0
+				propulsion/tank[3]/contents-lbs lt 9
+			</test>
+		</switch>
+	</channel>
+
+	<channel name="Fuel to Engine 2 Pipes">
+		<switch name="fuel/from-tank2-to-tank4">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				/systems/fuel/only-use-ctr-tank == 0
+				/systems/fuel/tank[2]/feed == 1
+				propulsion/tank[2]/contents-lbs gt 0
+				propulsion/tank[4]/contents-lbs lt 9
+			</test>
+		</switch>
+
+		<switch name="fuel/from-tank1-to-tank4">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				/systems/fuel/tank[1]/feed == 1
+				propulsion/tank[1]/contents-lbs gt 0
+				propulsion/tank[4]/contents-lbs lt 9
+			</test>
+		</switch>
+
+		<switch name="fuel/from-tank0-to-tank4">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				/systems/fuel/x-feed == 1
+				/systems/fuel/only-use-ctr-tank == 0
+				/systems/fuel/tank[0]/feed == 1
+				propulsion/tank[2]/contents-lbs eq 0
+				propulsion/tank[0]/contents-lbs gt 0
+				propulsion/tank[4]/contents-lbs lt 9
+			</test>
+		</switch>
+	</channel>
+
+	<channel name="Engine 1 Pipes">
+		<summer name="tank0 tank1 tank 2 to tank3">
+			<input>fuel/from-tank0-to-tank3</input>
+			<input>fuel/from-tank1-to-tank3</input>
+			<input>fuel/from-tank2-to-tank3</input>
+			<output>propulsion/tank[3]/external-flow-rate-pps</output>
+		</summer>
+	</channel>
+
+	<channel name="Engine 2 Pipes">
+		<summer name="tank0 tank1 tank 2 to tank4">
+			<input>fuel/from-tank2-to-tank4</input>
+			<input>fuel/from-tank1-to-tank4</input>
+			<input>fuel/from-tank0-to-tank4</input>
+			<output>propulsion/tank[4]/external-flow-rate-pps</output>
+		</summer>
+	</channel>
+
+	<channel name="Total PPS">
+		<summer name="fuel/tank0-flow-rate">
+			<input>-fuel/from-tank0-to-tank3</input>
+			<input>-fuel/from-tank0-to-tank4</input>
+			<output>propulsion/tank[0]/external-flow-rate-pps</output>
+		</summer>
+
+		<summer name="fuel/tank1-flow-rate">
+			<input>-fuel/from-tank1-to-tank3</input>
+			<input>-fuel/from-tank1-to-tank4</input>
+			<output>propulsion/tank[1]/external-flow-rate-pps</output>
+		</summer>
+
+		<summer name="fuel/tank2-flow-rate">
+			<input>-fuel/from-tank2-to-tank4</input>
+			<input>-fuel/from-tank2-to-tank3</input>
+			<output>propulsion/tank[2]/external-flow-rate-pps</output>
+		</summer>
+	</channel>
+
+</system>

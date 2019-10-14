@@ -1,0 +1,37 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'DECEL';
+var parents = [canvas.SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+
+canvas.SymbolLayer.Controller.add(name, __self__);
+canvas.SymbolLayer.add(name, {
+    parents: [MultiSymbolLayer],
+    type: name, # Symbol type
+    df_controller: __self__, # controller to use by default -- this one
+    df_options : { # default configuration options
+        decel_node: "/autopilot/route-manager/vnav/decel/"
+    }
+});
+var new = func(layer) {
+    var m = {
+        parents: [__self__],
+        layer: layer,
+        map: layer.map,
+        listeners: [],
+    };
+    layer.searcher._equals = func(a,b) a.getName() == b.getName();
+    return m;
+};
+var del = func() {
+    foreach (var l; me.listeners)
+        removelistener(l);
+};
+ 
+var searchCmd = func {
+    var results = [];
+    var symNode = props.globals.getNode(me.layer.options.decel_node);
+    if (symNode != nil and symNode.getValue('longitude-deg') != nil)
+        append(results, symNode);
+    return results;
+}

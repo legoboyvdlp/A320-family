@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/vstab.ac</path>
+
+	<!--effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/NEOreflect</inherits-from>
+		<object-name>Vstab</object-name>
+		<object-name>Rudder</object-name>
+	</effect-->
+
+	<!-- Animation for the rudder -->
+	<animation>
+		<name>Rudder</name>
+		<type>rotate</type>
+		<object-name>Rudder</object-name>
+		<property>sim/multiplay/generic/float[8]</property>
+		<factor>1</factor>
+		<axis>
+			<x1-m>4.013</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>1.899</z1-m>
+			<x2-m>6.546</x2-m>
+			<y2-m>0</y2-m>
+			<z2-m>7.895</z2-m>
+		</axis>
+	</animation>
+
+	<!-- Animation for the logo light
+	<animation>
+		<name>Logo light illumination</name>
+		<type>material</type>
+		<object-name>Vstab</object-name>
+		<object-name>Rudder</object-name>
+		<condition>
+			<equals>
+				<property>/sim/model/lights/logo-lights</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<emission>
+			<red>0.25</red>
+			<green>0.25</green>
+			<blue>0.25</blue>
+		</emission>
+	</animation> -->
+	
+	<effect>
+        <inherits-from>Aircraft/A320-family/Models/Effects/logo</inherits-from>
+		<object-name>Vstab</object-name>
+		<object-name>Rudder</object-name>
+	</effect>
+
+</PropertyList>

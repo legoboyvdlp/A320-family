@@ -1,0 +1,17 @@
+<PropertyList>
+  <sim>
+    <model>
+      <livery>
+        <name type="string">Jetstar Airways</name>
+        <texture>Liveries/A320/IAE/JST.png</texture>
+        <texture2>FanDisk.png</texture2>
+      </livery>         
+    </model>
+  </sim>
+  
+	<options>
+		<EIS2 type="bool">1</EIS2>
+	</options>
+  
+	<sharklet type="bool">0</sharklet>
+</PropertyList>

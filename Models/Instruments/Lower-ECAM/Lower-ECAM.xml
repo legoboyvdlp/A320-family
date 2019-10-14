@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/Lower-ECAM.ac</path>
+	
+	<animation>
+		<type>scale</type>
+		<x-offset>1.05</x-offset>
+		<y-offset>1.05</y-offset>
+		<z-offset>1.05</z-offset>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>lecam.screen</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>canvas_ecam.showLowerECAM();</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>lecam.screen</object-name>
+		<emission>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/DU/du4</factor-prop>
+		</emission>
+	</animation>
+
+</PropertyList>

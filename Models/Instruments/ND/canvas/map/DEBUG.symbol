@@ -1,0 +1,29 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'DEBUG';
+var parents = [canvas.DotSym];
+var __self__ = caller(0)[0];
+canvas.DotSym.makeinstance( name, __self__ );
+
+var element_type = "group";
+
+var init = func {
+    me.text_wps = me.element.createChild("text", "dbg-text-" ~ me.model.id)
+    .setDrawMode( canvas.Text.TEXT )
+    .setText(me.model.id)
+    .setFont("LiberationFonts/LiberationSans-Regular.ttf")
+    .setFontSize(28)
+    .setTranslation(25,15)
+    .setColor(1,0,0);
+    me.text_alt = nil;
+    me.sym = me.element.createChild("path").
+    setStrokeLineWidth(4).
+    moveTo(-16,0).
+    arcSmallCW(16,16,0,32,0).
+    arcSmallCW(16,16,0,-32,0).
+    setColor(1,0,0);
+}
+
+var draw = func{
+
+}

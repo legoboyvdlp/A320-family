@@ -1,0 +1,100 @@
+# See: http://wiki.flightgear.org/MapStructure
+# TODO: this layer doesn't make sense to support for AI/MP traffic, because we don't currently have access to flightplan/routing info
+# that also applies to other layers like WPT or even navaid layers that handle station tuning based on local radio settings
+#
+# Class things:
+var name = 'RTE';
+var parents = [SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+SymbolLayer.Controller.add(name, __self__);
+SymbolLayer.add(name, {
+	parents: [MultiSymbolLayer],
+	type: name, # Symbol type
+	df_controller: __self__, # controller to use by default -- this one
+	df_options: { # default configuration options
+		active_node: "/autopilot/route-manager/active",
+		current_wp_node: "/autopilot/route-manager/current-wp",
+		wp_num: "/autopilot/route-manager/route/num",
+		display_inactive_rte: 0
+	}
+});
+var new = func(layer) {
+	var m = {
+		parents: [__self__],
+		layer: layer,
+		map: layer.map,
+		listeners: [],
+	};
+	layer.searcher._equals = func(l,r) 0; # TODO: create model objects instead?
+	append(m.listeners, setlistener(layer.options.active_node, func m.layer.update() ), setlistener(layer.options.wp_num, func m.layer.update() ));
+	m.addVisibilityListener();
+	var driver = opt_member(m.layer.options, 'route_driver');
+	if(driver == nil){
+		driver = A3XXRouteDriver.new();
+	}
+	var driver_listeners = driver.getListeners();
+	foreach(var listener; driver_listeners){
+		append(m.listeners, setlistener(listener, func m.layer.update()));
+	}
+	m.route_driver = driver;
+	return m;
+};
+var del = func() {
+	foreach (var l; me.listeners)
+		removelistener(l);
+};
+
+var last_result = [];
+
+var searchCmd = func {
+	# FIXME: do we return the active route even if it isn't active?
+	printlog(_MP_dbg_lvl, "Running query: ", name);
+	var plans = [];
+	var driver = me.route_driver;
+	if(!driver.shouldUpdate()) return me.last_result;
+	driver.update();
+	# http://wiki.flightgear.org/Nasal_Flightplan
+	var planCount = driver.getNumberOfFlightPlans();
+	for(var idx = 0; idx < planCount; idx += 1){
+		#var fp = driver.getFlightPlan(idx);
+		var fpSize = driver.getPlanSize(idx);
+		if(fpSize < 2) continue;
+		var type = driver.getFlightPlanType(idx);
+		if(type == nil) type = 'active';
+		if (!getprop(me.layer.options.active_node) and 
+			type == 'active' and 
+			!me.layer.options.display_inactive_rte) fpSize = 0;
+		var coords = [];
+		var discontinuity = 0;
+		for (var i=0; i<fpSize; i += 1) {
+			var leg = driver.getWP(idx, i);
+			if(leg == nil) continue;
+			var path = nil;
+			if(discontinuity)
+				path = [{},{lon:leg.wp_lon, lat:leg.wp_lat}];
+			else
+				path = leg.path();
+			if(i == (fpSize - 1) and !discontinuity){# WORKAROUND FOR FG BUG
+				var ltype = leg.wp_type;
+				var path_l = size(path);
+				if(ltype != 'runway' and path_l >= 2)
+					path = subvec(path, 0, 1) ~ subvec(path, path_l - 1, 1);
+			}
+			coords ~= path;
+			discontinuity = driver.hasDiscontinuity(idx, leg);
+		}
+		append(plans, {
+			id: type,
+			#name: type,
+			type: type,
+			path: coords,
+			#size: fpSize,
+			equals: func(o){
+				me.id == o.id# and me.size == o.size
+			}
+		});
+	}
+	me.last_result = plans;
+	return plans;
+};
+

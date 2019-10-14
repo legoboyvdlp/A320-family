@@ -1,0 +1,124 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'HOLD';
+var parents = [canvas.DotSym];
+var __self__ = caller(0)[0];
+canvas.DotSym.makeinstance( name, __self__ );
+
+#canvas.SymbolLayer.get(name).df_style = {
+#    radius: 13,
+#};
+
+var element_type = "group";
+
+var draw_pattern = func(dist, turn, from_point = -1){
+    var pattern = me.element.createChild("path", 'hold-pattern');
+    pattern.set("z-index",4);
+    var w = (dist * 2) / math.pi;
+    var h = dist * 70;
+    var r = w / 2;
+    var perp1 = 70;
+    var perp2 = -70;
+    if (turn == 'L') {
+        perp1 = -70;
+        perp2 = 70;
+    }
+    if (turn == 'R')
+        pattern.arcSmallCW(r,r,0,70 * w,0);
+    else
+        pattern.arcSmallCCW(r,r,0,-70 * w,0);
+    pattern.line(0,h);
+    if (turn == 'R')
+        pattern.arcSmallCW(r,r,0,-70 * w,0);
+    else
+        pattern.arcSmallCCW(r,r,0,70 * w,0);
+    pattern.line(0,-h).
+    setStrokeLineWidth(5).
+    setColor(me.active_color);
+    return pattern;
+};
+
+var draw_hold_sym = func(turn){
+    var hold_symbol = me.element.createChild("group", 'hold-symbol');
+    var svg = get_local_path("res/airbus_hold"~turn~".svg");
+    canvas.parsesvg(hold_symbol, svg);
+    hold_symbol.setTranslation(-32,-64).set('z-index', 4);
+    return hold_symbol;
+}
+
+var init = func {
+    var type = me.model.type;
+    var dist = me.model.dist;
+    var turn = me.model.turn;
+    me.active_color = me.getStyle('active_color',
+                                  me.getOption('active_route_color',
+                                               [0.4,0.7,0.4]));
+    me.inactive_color = me.getStyle('inactive_color',
+                                    me.getOption('inactive_route_color',
+                                                 [0.95,0.95,0.21]));
+    if(type == 'pattern'){
+        me.hold_pattern = me.draw_pattern(dist, turn);
+        me.hold_symbol = nil;
+    } else {
+        #print('CREATING HOLD SYM');
+        me.hold_pattern = nil;
+        me.hold_symbol = me.draw_hold_sym(turn);
+    }
+}
+
+var draw = func{
+    var type = me.model.type;
+    var map = me.layer.map;
+    var pos = map.getPos();
+    #print('DRAW HOLD '~ type);
+    if(type == 'pattern'){
+        var dist = me.model.dist;
+        var turn = me.model.turn;
+        if(me.hold_symbol != nil){
+            me.hold_symbol.hide();
+        }
+        if(me.hold_pattern == nil)
+            me.hold_pattern = me.draw_pattern(dist, turn);
+        if(me.hold_pattern == nil) return;
+        var radial = me.model.radial;
+        if(radial != nil){
+            var hdg = pos[2];
+            if(hdg == nil) hdg = 0;
+            radial -= hdg;
+            if(radial < 0) radial = 360 + radial;
+            me.element.setRotation(radial*D2R);
+        }
+        var rng = pos[3];
+        #print("CANVAS: Map RNG: " ~ rng);
+        if(rng == nil) rng = 10;
+        rng =  10 / rng;
+        #print("CANVAS: Hold Scale: " ~ rng);
+        me.element.setScale(rng,rng);
+        me.hold_pattern.setStrokeLineWidth(5 * (1/rng));
+        var lat_ctrl = getprop(me.getOption('lat_ctrl'));
+        var lnav = (lat_ctrl == me.getOption('lat_ctrl_managed','fmgc'));
+        var fp_actv = getprop(me.getOption('fplan_active'));
+        var fpId = me.model.fpId;
+        #print('HOLD ' ~ lnav ~ ',' ~ fp_actv);
+        var is_tmpy = (fpId == 'temporary');
+        if(!lnav or !fp_actv or is_tmpy)
+            me.hold_pattern.setStrokeDashArray([32, 16]);
+        else
+            me.hold_pattern.setStrokeDashArray([1,0]);
+        if(!fp_actv or is_tmpy)
+            me.hold_pattern.setColor(me.inactive_color);
+        else
+            me.hold_pattern.setColor(me.active_color);
+    } else {
+        var turn = me.model.turn;
+        if(me.hold_pattern != nil){
+            me.hold_pattern.hide();
+        }
+        if(me.hold_symbol == nil)
+            me.hold_symbol = me.draw_hold_sym(turn);
+
+        me.hold_symbol.show();
+        me.element.setScale(1,1);
+        me.element.setRotation(0);
+    }
+}

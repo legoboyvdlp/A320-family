@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+AUTOPUSH
+Cursor model.
+
+Copyright (c) 2018 Autopush authors:
+ Michael Danilov <mike.d.ft402 -eh- gmail.com>
+ Joshua Davidson http://github.com/Octal450
+ Merspieler http://gitlab.com/merspieler
+Distribute under the terms of GPLv2.
+
+-->
+<PropertyList>
+
+	<path>cursor_reverse.ac</path>
+
+	<animation>
+		<enable-hot>false</enable-hot>
+	</animation>
+
+	<animation>
+		<type>scale</type>
+		<property>/sim/model/autopush/stopping-distance-m</property>
+		<z-factor>0.0</z-factor>
+		<z-min>1.0</z-min>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<condition>
+			<property>/sim/model/autopush/route/invalid</property>
+		</condition>
+		<diffuse>
+			<red>1.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>1.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</emission>
+	</animation>
+
+</PropertyList>

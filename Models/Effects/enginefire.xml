@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<particlesystem>
+		<texture>res/fire.png</texture>
+		<emissive>true</emissive>
+		<lighting>false</lighting>
+		<offsets>
+			<roll-deg>90</roll-deg>
+		</offsets>
+		<attach>world</attach>
+		<placer>
+			<type>point</type>
+		</placer>
+		<shooter>
+			<theta-min-deg>65</theta-min-deg>
+			<theta-max-deg>115</theta-max-deg>
+			<phi-min-deg>0</phi-min-deg>
+			<phi-max-deg>0</phi-max-deg>
+			<speed>
+				<value>25</value>
+				<spread>15</spread>
+			</speed>
+			<rotation-speed>
+				<x-min-deg-sec>0</x-min-deg-sec>
+				<y-min-deg-sec>0</y-min-deg-sec>
+				<z-min-deg-sec>0</z-min-deg-sec>
+				<x-max-deg-sec>0</x-max-deg-sec>
+				<y-max-deg-sec>0</y-max-deg-sec>
+				<z-max-deg-sec>0</z-max-deg-sec>
+			</rotation-speed>
+		</shooter>
+		<counter>
+			<particles-per-sec>
+				<value>25</value>
+				<spread>15</spread>
+			</particles-per-sec>
+		</counter>
+		<align>billboard</align>
+		<particle>
+			<start>
+				<color>
+					<red>
+						<value>0.6</value>
+					</red>
+					<green>
+						<value>0.6</value>
+					</green>
+					<blue>
+						<value>0.6</value>
+					</blue>
+					<alpha>
+						<value>0.4</value>
+					</alpha>
+				</color>
+				<size>
+					<value>1.2</value>
+				</size>
+			</start>
+			<end>
+				<color>
+					<red>
+						<value>0</value>
+					</red>
+					<green>
+						<value>0</value>
+					</green>
+					<blue>
+						<value>0</value>
+					</blue>
+					<alpha>
+						<value>0</value>
+					</alpha>
+				</color>
+				<size>
+					<value>4.0</value>
+				</size>
+			</end>
+			<life-sec>
+				<value>2.0</value>
+			</life-sec>
+			<mass-kg>1.3</mass-kg>
+			<radius-m>0.03</radius-m>
+		</particle>
+	</particlesystem>
+
+</PropertyList>
+

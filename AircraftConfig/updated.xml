@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-updated</name>
+	<layout>vbox</layout>
+	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Hello!</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>IDG Aircraft Config has detected that your aircraft was installed for the first time, or updated successfully!</label>
+		</text>
+		
+		<group>
+			<layout>hbox</layout>
+			<halign>left</halign>
+			
+			<text>
+				<halign>left</halign>
+				<label>You have been upgraded to revision:</label>
+			</text>
+			
+			<text>
+				<halign>left</halign>
+				<border>1</border>
+				<label>99999</label>
+				<property>/systems/acconfig/revision</property>
+				<live>1</live>
+			</text>
+			
+		</group>
+		
+		<text>
+			<halign>left</halign>
+			<label>Some aircraft settings may have been returned to their defaults.</label>
+		</text>
+		
+		<text>
+			<halign>left</halign>
+			<label>This screen will only appear after a fresh install, or update. Thank you for choosing IDG!</label>
+		</text>
+	</group>
+	
+	<hrule/>
+
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<halign>center</halign>
+			<legend>Continue</legend>
+			<pref-width>350</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+				if (getprop("/systems/acconfig/options/welcome-skip") != 1) {
+					acconfig.welcome_dlg.open();
+				}
+				</script>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+</PropertyList>

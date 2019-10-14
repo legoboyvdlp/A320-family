@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- Sven Seipp, Oct 2017 -->
+
+<PropertyList>
+	<checklist>
+		<title>BEFORE START</title>
+		<item>
+			<name>COCKPIT PREP</name>
+			<value>COMPLETED(BOTH)</value>
+		</item>
+		<item>
+			<name>PINS AND COVERS</name>
+			<value>REMOVED</value>
+		</item>
+		<item>
+			<name>SIGNS</name>
+			<value>ON/AUTO</value>
+			<marker>
+				<x-m>4.6733</x-m>
+				<y-m>0.0300</y-m>
+				<z-m>0.8825</z-m>
+				<scale>2.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>ADIRS</name>
+			<value>NAV</value>
+			<marker>
+				<x-m>5.1067</x-m>
+				<y-m>-0.2625</y-m>
+				<z-m>1.0325</z-m>
+				<scale>4.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>FUEL QUANTITY</name>
+			<value>____KG/LB</value>
+			<marker>
+				<x-m>4.5067</x-m>
+				<y-m>-0.1458</y-m>
+				<z-m>0.3317</z-m>
+				<scale>1.4333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>TO DATA</name>
+			<value>____SET(BOTH)</value>
+			<marker>
+				<x-m>4.4683</x-m>
+				<y-m>-0.1975</y-m>
+				<z-m>-0.0592</z-m>
+				<scale>1.0000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>BARO REF</name>
+			<value>____SET(BOTH)</value>
+			<marker>
+				<x-m>4.5000</x-m>
+				<y-m>-0.2592</y-m>
+				<z-m>0.4783</z-m>
+				<scale>1.5333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>WINDOWS and DOORS</name>      
+			<value>CLOSED(BOTH)</value>
+			<marker>
+				<x-m>4.4658</x-m>
+				<y-m>-0.0100</y-m>
+				<z-m>-0.0583</z-m>
+				<scale>0.9667</scale>
+			</marker>
+		</item>
+		<item>
+			<name>BEACON</name>
+			<value>ON</value>
+			<marker>
+				<x-m>4.7067</x-m>
+				<y-m>-0.1225</y-m>
+				<z-m>0.8958</z-m>
+				<scale>1.9333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>THR LEVERS</name>
+			<value>IDLE</value>
+			<marker>
+				<x-m>4.7200</x-m>
+				<y-m>-0.0533</y-m>
+				<z-m>-0.0292</z-m>
+				<scale>1.3667</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>5.0500</x-m>
+				<y-m>-0.0325</y-m>
+				<z-m>-0.0567</z-m>
+				<scale>3.3667</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>AFTER START</title>
+		<item>
+			<name>ANTI-ICE</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>4.7650</x-m>
+				<y-m>-0.1208</y-m>
+				<z-m>0.9042</z-m>
+				<scale>4.4500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>ECAM STATUS</name>
+			<value>CHECKED</value>
+			<marker>
+				<x-m>4.6650</x-m>
+				<y-m>-0.2308</y-m>
+				<z-m>0.3975</z-m>
+				<scale>1.7500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PITCH TRIM</name>
+			<value>____SET</value>
+			<marker>
+				<x-m>4.6850</x-m>
+				<y-m>-0.1075</y-m>
+				<z-m>-0.0142</z-m>
+				<scale>3.0333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>RUDDER TRIM</name>
+			<value>ZERO</value>
+			<marker>
+				<x-m>4.9583</x-m>
+				<y-m>-0.0142</y-m>
+				<z-m>-0.1042</z-m>
+				<scale>3.0333</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>TAXI/BEFORE TAKEOFF</title>
+		<item>
+			<name>FLIGHT CONTROLS</name>
+			<value>CHECKED(BOTH)</value>
+			<marker>
+				<x-m>4.4625</x-m>
+				<y-m>0.0342</y-m>
+				<z-m>-0.0617</z-m>
+				<scale>1.0000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>FLT INST</name>
+			<value>CHECKED(BOTH)</value>
+		</item>
+		<item>
+			<name>BRIEFING</name>
+			<value>CONFIRMED</value>
+		</item>
+		<item>
+			<name>FLAPS SETTING</name>
+			<value>CONF__(BOTH)</value>
+			<marker>
+				<x-m>4.8950</x-m>
+				<y-m>0.0683</y-m>
+				<z-m>-0.0892</z-m>
+				<scale>2.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>V1. VR. V2/FLX TEMP</name>
+			<value>CONF__(BOTH)</value>
+			<marker>
+				<x-m>4.4683</x-m>
+				<y-m>-0.1975</y-m>
+				<z-m>-0.0592</z-m>
+				<scale>1.0000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>ATC</name>
+			<value>SET</value>
+		</item>
+		<item>
+			<name>ECAM MEMO</name>
+			<value>TO NO BLUE</value>
+			<marker>
+				<x-m>4.6650</x-m>
+				<y-m>-0.2308</y-m>
+				<z-m>0.3975</z-m>
+				<scale>1.7500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>CABIN CREW</name>
+			<value>ADVISED</value>
+		</item>
+		<item>
+			<name>ENG MODE SEL</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>4.8617</x-m>
+				<y-m>-0.0333</y-m>
+				<z-m>-0.0708</z-m>
+				<scale>2.0000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PACKS</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>4.8175</x-m>
+				<y-m>-0.1317</y-m>
+				<z-m>0.9492</z-m>
+				<scale>1.6667</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>AFTER TAKEOFF/CLIMB</title>
+		<item>
+			<name>LDG GEAR</name>
+			<value>UP</value>
+			<marker>
+				<x-m>4.3483</x-m>
+				<y-m>0.1142</y-m>
+				<z-m>0.1300</z-m>
+				<scale>3.4833</scale>
+			</marker>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>RETRACTED</value>
+			<marker>
+				<x-m>4.8950</x-m>
+				<y-m>0.0683</y-m>
+				<z-m>-0.0892</z-m>
+				<scale>2.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PACKS</name>
+			<value>ON</value>
+			<marker>
+				<x-m>4.8175</x-m>
+				<y-m>-0.1317</y-m>
+				<z-m>0.9492</z-m>
+				<scale>1.6667</scale>
+			</marker>
+		</item>
+		<item>
+			<name>BARO REF</name>
+			<value>SET(BOTH)</value>
+			<marker>
+				<x-m>4.5000</x-m>
+				<y-m>-0.2592</y-m>
+				<z-m>0.4783</z-m>
+				<scale>1.5333</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>APPROACH</title>
+		<item>
+			<name>BRIEFING</name>
+			<value>CONFIRMED</value>
+		</item>
+		<item>
+			<name>ECAM STATUS</name>
+			<value>CHECKED</value>
+			<marker>
+				<x-m>4.6650</x-m>
+				<y-m>-0.2308</y-m>
+				<z-m>0.3975</z-m>
+				<scale>1.7500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>SEAT BELTS</name>
+			<value>ON</value>
+			<marker>
+				<x-m>4.6733</x-m>
+				<y-m>0.0300</y-m>
+				<z-m>0.8825</z-m>
+				<scale>2.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>BARO REF</name>
+			<value>____SET(BOTH)</value>
+			<marker>
+				<x-m>4.5000</x-m>
+				<y-m>-0.2592</y-m>
+				<z-m>0.4783</z-m>
+				<scale>1.5333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>MDA/DH</name>
+			<value>____SET(BOTH)</value>
+			<marker>
+				<x-m>4.5000</x-m>
+				<y-m>-0.2592</y-m>
+				<z-m>0.4783</z-m>
+				<scale>1.5333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>ENG MODE SEL</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>4.8617</x-m>
+				<y-m>-0.0333</y-m>
+				<z-m>-0.0708</z-m>
+				<scale>2.0000</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>LANDING</title>
+		<item>
+			<name>CABIN CREW</name>
+			<value>ADVISED</value>
+		</item>
+		<item>
+			<name>A/THR</name>
+			<value>SPEED/OFF</value>
+			<marker>
+				<x-m>4.2525</x-m>
+				<y-m>-0.6108</y-m>
+				<z-m>0.2933</z-m>
+				<scale>2.1167</scale>
+			</marker>
+		</item>
+		<item>
+			<name>ECAM MEMO</name>
+			<value>LDG NO BLUE</value>
+			<marker>
+				<x-m>4.6650</x-m>
+				<y-m>-0.2308</y-m>
+				<z-m>0.3975</z-m>
+				<scale>1.7500</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>AFTER LANDING</title>
+		<item>
+			<name>FLAPS</name>
+			<value>RETRACTED</value>
+			<marker>
+				<x-m>4.8950</x-m>
+				<y-m>0.0683</y-m>
+				<z-m>-0.0892</z-m>
+				<scale>2.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>SPOILERS</name>
+			<value>DISARMED</value>
+			<marker>
+				<x-m>4.9083</x-m>
+				<y-m>-0.0967</y-m>
+				<z-m>-0.0833</z-m>
+				<scale>2.3000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>APU</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>4.6817</x-m>
+				<y-m>0.0000</y-m>
+				<z-m>0.9017</z-m>
+				<scale>2.6167</scale>
+			</marker>
+		</item>
+		<item>
+			<name>TCAS</name>
+			<value>OFF/STBY</value>
+		</item>
+		<item>
+			<name>RADAR</name>
+			<value>OFF</value>
+		</item>
+		<item>
+			<name>PREDICTIVE WINDSHEAR SYSTEM</name>
+			<value>OFF</value>
+		</item>
+	</checklist>
+	<checklist>
+		<title>PARKING</title>
+		<item>
+			<name>APU BLEED</name>
+			<value>ON</value>
+			<marker>
+				<x-m>4.7958</x-m>
+				<y-m>-0.0091</y-m>
+				<z-m>0.9375</z-m>
+				<scale>1.6333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>ENGINES</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>4.8592</x-m>
+				<y-m>-0.0633</y-m>
+				<z-m>0.0000</z-m>
+				<scale>3.0000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>SEAT BELTS</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>4.6692</x-m>
+				<y-m>0.0275</y-m>
+				<z-m>0.8917</z-m>
+				<scale>1.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>EXT LT</name>
+			<value>AS RQRD</value>
+		</item>
+		<item>
+			<name>FUEL PUMPS</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>5.0000</x-m>
+				<y-m>-0.0300</y-m>
+				<z-m>1.0017</z-m>
+				<scale>2.6833</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PARK BRK AND CHOCKS</name>
+			<value>AS RQRD</value>
+			<marker>
+				<x-m>5.0500</x-m>
+				<y-m>-0.0325</y-m>
+				<z-m>-0.0567</z-m>
+				<scale>3.3667</scale>
+			</marker>
+		</item>
+	</checklist>
+	<checklist>
+		<title>SECURING THE AIRCRAFT</title>
+		<item>
+			<name>ADIRS</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>5.1067</x-m>
+				<y-m>-0.2625</y-m>
+				<z-m>1.0325</z-m>
+				<scale>4.5500</scale>
+			</marker>
+		</item>
+		<item>
+			<name>OXYGEN</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>4.7958</x-m>
+				<y-m>-0.2041</y-m>
+				<z-m>0.9242</z-m>
+				<scale>1.6333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>APU BLEED</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>4.7958</x-m>
+				<y-m>-0.0091</y-m>
+				<z-m>0.9375</z-m>
+				<scale>1.6333</scale>
+			</marker>
+		</item>
+		<item>
+			<name>EMER EXIT LT</name>
+			<value>OFF</value>
+		</item>
+		<item>
+			<name>SIGNS</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>4.6958</x-m>
+				<y-m>0.0275</y-m>
+				<z-m>0.8775</z-m>
+				<scale>1.4000</scale>
+			</marker>
+		</item>
+		<item>
+			<name>APU AND BAT</name>
+			<value>OFF</value>
+			<marker>
+				<x-m>4.7175</x-m>
+				<y-m>-0.0225</y-m>
+				<z-m>0.8958</z-m>
+				<scale>1.4000</scale>
+			</marker>
+		</item>
+	</checklist>
+</PropertyList>

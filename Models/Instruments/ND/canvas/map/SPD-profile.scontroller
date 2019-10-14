@@ -1,0 +1,12 @@
+# Class things:
+var name = 'SPD-profile';
+var parents = [canvas.Symbol.Controller];
+var __self__ = caller(0)[0];
+canvas.Symbol.Controller.add(name, __self__);
+canvas.Symbol.registry[name].df_controller = __self__;
+var new = func(model) ; # this controller doesn't need an instance
+var LayerController = canvas.SymbolLayer.Controller.registry[name];
+var isActive = func(model) {return 1};#LayerController.a_instance.isActive(model);
+var query_range = func()
+        die(name~".scontroller.query_range /MUST/ be provided by implementation");
+#var model = props.globals.getNode('/position');

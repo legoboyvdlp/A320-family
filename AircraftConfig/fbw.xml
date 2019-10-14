@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+	<name>aircraft-config-fbw</name>
+	<layout>vbox</layout>
+
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>FBW Settings</label>
+        </text>
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+	
+    <hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<checkbox>
+			<label>Define Custom FBW Mode</label>
+			<halign>left</halign>
+			<property>/it-fbw/override</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<live>true</live>
+		</checkbox>
+		<button>
+			<halign>center</halign>
+			<legend>Use NORMAL Law</legend>
+			<pref-width>140</pref-width>
+			<enable>
+				<property>/it-fbw/override</property>
+			</enable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/it-fbw/degrade-law", 0);
+				setprop("/it-fbw/law", 0);
+				gui.popupTip("Fly By Wire switched to NORMAL law!");
+				</script>
+			</binding>
+		</button>
+		<button>
+			<halign>center</halign>
+			<legend>Use ALTERNATE Law</legend>
+			<pref-width>140</pref-width>
+			<enable>
+				<property>/it-fbw/override</property>
+			</enable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/it-fbw/degrade-law", 1);
+				setprop("/it-fbw/law", 1);
+				gui.popupTip("Fly By Wire switched to ALTERNATE law!");
+				</script>
+			</binding>
+		</button>
+		<button>
+			<halign>center</halign>
+			<legend>Use DIRECT Law</legend>
+			<pref-width>140</pref-width>
+			<enable>
+				<property>/it-fbw/override</property>
+			</enable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/it-fbw/degrade-law", 2);
+				setprop("/it-fbw/law", 2);
+				gui.popupTip("Fly By Wire switched to DIRECT law!");
+				</script>
+			</binding>
+		</button>
+		<button>
+			<halign>center</halign>
+			<legend>Use BACKUP Law</legend>
+			<pref-width>140</pref-width>
+			<enable>
+				<property>/it-fbw/override</property>
+			</enable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/it-fbw/degrade-law", 3);
+				setprop("/it-fbw/law", 3);
+				gui.popupTip("Fly By Wire switched to MECHANICAL BACKUP law!");
+				</script>
+			</binding>
+		</button>
+		
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Roll</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>L:</label>
+				</text>
+				<slider>
+					<pref-height>150</pref-height>
+					<vertical>true</vertical>
+					<property>/fdm/jsbsim/hydraulics/aileron-l/final-deg</property>
+					<min>-25</min>
+					<max>25</max>
+					<step>0.0025</step>
+					<live>true</live>
+				</slider>
+			</group>
+				
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>R:</label>
+				</text>
+				<slider>
+					<pref-height>150</pref-height>
+					<vertical>true</vertical>
+					<property>/fdm/jsbsim/hydraulics/aileron-r/final-deg</property>
+					<min>-25</min>
+					<max>25</max>
+					<step>0.0025</step>
+					<live>true</live>
+				</slider>
+			</group>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Pitch</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>L:</label>
+				</text>
+				<slider>
+					<pref-height>150</pref-height>
+					<vertical>true</vertical>
+					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
+					<min>-30</min>
+					<max>17</max>
+					<step>0.003</step>
+					<live>true</live>
+				</slider>
+			</group>
+				
+			<group>
+				<layout>vbox</layout>
+		
+				<text>
+					<label>Trim:</label>
+				</text>
+				<slider>
+					<pref-height>150</pref-height>
+					<vertical>true</vertical>
+					<property>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</property>
+					<min>-12.5</min>
+					<max>4</max>
+					<step>0.00125</step>
+					<live>true</live>
+				</slider>
+			</group>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>R:</label>
+				</text>
+				<slider>
+					<pref-height>150</pref-height>
+					<vertical>true</vertical>
+					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
+					<min>-30</min>
+					<max>17</max>
+					<step>0.003</step>
+					<live>true</live>
+				</slider>
+			</group>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+			<text>
+				<label>Rudder</label>
+			</text>
+			<hrule>
+				<stretch type="bool">true</stretch>
+			</hrule>
+		</group>
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<slider>
+					<pref-width>150</pref-width>
+					<property>/fdm/jsbsim/hydraulics/rudder/final-deg</property>
+					<min>-25</min>
+					<max>25</max>
+					<step>0.0025</step>
+					<live>true</live>
+				</slider>
+			</group>
+		</group>
+	</group>
+	
+</PropertyList>

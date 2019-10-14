@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Blank Livery</name>
+				<texture>Liveries/A320/CFM-NEO/blank.png</texture>
+			</livery>
+		</model>
+	</sim>
+</PropertyList>
+ 
+ 

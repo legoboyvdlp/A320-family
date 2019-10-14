@@ -1,0 +1,71 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'DEBUG';
+var parents = [canvas.SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+
+canvas.SymbolLayer.Controller.add(name, __self__);
+canvas.SymbolLayer.add(name, {
+    parents: [canvas.MultiSymbolLayer],
+    type: name, # Symbol type
+    df_controller: __self__, # controller to use by default -- this one
+    df_options: {
+        update_t : 'autopilot/route-manager/debug/update_t',
+        listen: ['update_t']
+    },
+    df_style: {
+        default_color: [1,0,0],
+    }
+});
+
+var new = func(layer) {
+    var m = {
+        parents: [__self__],
+        layer: layer,
+        map: layer.map,
+        listeners: [],
+    };
+    layer.searcher._equals = func(a,b) a.equals(b);
+
+    return m;
+};
+
+var del = func() {
+    foreach (var l; me.listeners)
+        removelistener(l);
+};
+
+var searchCmd = func {
+    var result = [];
+    #return result;
+    var node = me['node'];
+    if (node == nil) {
+        node = props.globals.getNode('autopilot/route-manager/debug/', 1);
+        me.node = node;
+    }
+    var points = me.node.getNode('points', 1).getChildren();
+    #var count = getprop('autopilot/route-manager/debug/num') or 0;
+    var count = size(points);
+    #print('Map DEBUG: querying '~ count ~' results.');
+    for(var idx = 0; idx < count; idx += 1){
+        var point = points[idx];
+        #var id = getprop('autopilot/route-manager/debug/point['~idx~']/id');
+        #var lat = getprop('autopilot/route-manager/debug/point['~idx~']/lat');
+        #var lon = getprop('autopilot/route-manager/debug/point['~idx~']/lon');
+        var id = point.getValue('id');
+        var lat = point.getValue('lat');
+        var lon = point.getValue('lon');
+        if (id == nil or id == '') continue;
+        #print('Map DEBUG: found '~ id ~' debug point.');
+        var model = {
+            id: id,
+            lat: lat,
+            lon: lon,
+            equals: func(o){
+                me.id == o.id and me.lat == o.lat and me.lon == o.lon
+            }
+        };
+        append(result, model);
+    }
+    return result;
+}

@@ -1,0 +1,16 @@
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name type="string">Batik Air</name>
+				<texture>Liveries/A320/CFM/BTK.png</texture>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<EIS2 type="bool">1</EIS2>
+	</options>
+	
+	<sharklet type="bool">1</sharklet>
+</PropertyList>
