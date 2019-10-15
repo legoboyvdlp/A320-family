@@ -1906,7 +1906,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/hydraulic/eng1-pump</property>
+				<property>controls/hydraulic/switches/green-edp</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1922,11 +1922,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/hydraulic/eng1-pump-fault</property>
+						<property>systems/hydraulic/lights/green-edp-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/hydraulic/eng1-pump</property>
+						<property>controls/hydraulic/switches/green-edp</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1944,7 +1944,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/hydraulic/eng1-pump</property>
+					<property>controls/hydraulic/switches/green-edp</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1982,7 +1982,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/hydraulic/rat-man</property>
+				<property>controls/hydraulic/switches/rat-man</property>
 			</binding>
 			<binding>
 				<condition>
@@ -2074,7 +2074,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/hydraulic/elec-pump-blue</property>
+				<property>controls/hydraulic/switches/blue-elec</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2090,11 +2090,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/hydraulic/elec-pump-b-fault</property>
+						<property>systems/hydraulic/lights/blue-elec-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/hydraulic/elec-pump-blue</property>
+						<property>controls/hydraulic/switches/blue-elec</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2112,7 +2112,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/hydraulic/elec-pump-blue</property>
+					<property>controls/hydraulic/switches/blue-elec</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2141,7 +2141,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/hydraulic/ptu</property>
+				<property>controls/hydraulic/switches/ptu</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2157,11 +2157,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/hydraulic/ptu-fault</property>
+						<property>systems/hydraulic/lights/ptu-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/hydraulic/ptu</property>
+						<property>controls/hydraulic/switches/ptu</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2179,7 +2179,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/hydraulic/ptu</property>
+					<property>controls/hydraulic/switches/ptu</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2208,7 +2208,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/hydraulic/eng2-pump</property>
+				<property>controls/hydraulic/switches/yellow-edp</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2224,11 +2224,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/hydraulic/eng2-pump-fault</property>
+						<property>systems/hydraulic/lights/yellow-edp-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/hydraulic/eng2-pump</property>
+						<property>controls/hydraulic/switches/yellow-edp</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2246,7 +2246,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/hydraulic/eng2-pump</property>
+					<property>controls/hydraulic/switches/yellow-edp</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2275,7 +2275,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/hydraulic/elec-pump-yellow</property>
+				<property>controls/hydraulic/switches/yellow-elec</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2291,11 +2291,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/hydraulic/elec-pump-y-fault</property>
+						<property>systems/hydraulic/lights/yellow-elec-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/hydraulic/elec-pump-yellow</property>
+						<property>controls/hydraulic/switches/yellow-elec</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2313,7 +2313,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/hydraulic/elec-pump-yellow</property>
+					<property>controls/hydraulic/switches/yellow-elec</property>
 					<value>1</value>
 				</equals>
 				<equals>

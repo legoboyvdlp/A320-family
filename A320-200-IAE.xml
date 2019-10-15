@@ -133,11 +133,12 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 		</tank>
 	</propulsion>
 	
-	<system file="a320-electrical"/>
 	<system file="fuel"/>
 	<system file="glass-effect1"/>
 	<system file="a320-fcs"/>
 	<system file="a320-spoiler"/>
+	<system file="a320-electrical"/>
+	<system file="a320-hydraulic"/>
 	<system file="a320-lights"/>
 	<system file="a320-engine-fire"/>
 	

@@ -2446,9 +2446,9 @@ var canvas_lowerECAM_hyd = {
 		green_psi = g_psi.getValue();
 		yellow_psi = y_psi.getValue();
 
-		me["Press-Green"].setText(sprintf("%s", green_psi));
-		me["Press-Blue"].setText(sprintf("%s", blue_psi));
-		me["Press-Yellow"].setText(sprintf("%s", yellow_psi));
+		me["Press-Green"].setText(sprintf("%s", math.round(green_psi, 50)));
+		me["Press-Blue"].setText(sprintf("%s", math.round(blue_psi, 50)));
+		me["Press-Yellow"].setText(sprintf("%s", math.round(yellow_psi, 50)));
 
 		if (blue_psi >= 1500) {
 			me["Blue-Line"].setColor(0.0509,0.7529,0.2941);

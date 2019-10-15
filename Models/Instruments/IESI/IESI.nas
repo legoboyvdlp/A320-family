@@ -80,7 +80,7 @@ var canvas_IESI_base = {
 		dcess = systems.ELEC.Bus.dcEss.getValue();
 		dchot1 = systems.ELEC.Bus.dcHot1.getValue();
 		
-		if (dcess >= 25 or dchot1 >= 25) {
+		if (dcess >= 25 or (dchot1 >= 25 and airspeed.getValue() >= 50)) {
 			IESI.page.show();
 			IESI.update();
 			
@@ -97,7 +97,7 @@ var canvas_IESI_base = {
 			iesi_init.setBoolValue(0);
 		}
 		
-		if (dcess >= 25 or dchot1 >= 25) {
+		if (dcess >= 25 or (dchot1 >= 25 and airspeed.getValue() >= 50)) {
 			IESI.page.show();
 			IESI.update();
 		} else {

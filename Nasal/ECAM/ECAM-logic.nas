@@ -799,19 +799,19 @@ var messages_priority_3 = func {
 	if (getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !dualFail.active and phaseVar != 4 and phaseVar != 8 and emerconfig.clearFlag == 0) {
 		emerconfig.active = 1;
 		
-		if (getprop("/systems/hydraulic/rat-position") != 0 and emerconfigMinRat.clearFlag == 0) {
+		if (getprop("/systems/hydraulic/sources/rat/position") != 0 and emerconfigMinRat.clearFlag == 0) {
 			emerconfigMinRat.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigMinRat);
 		}
 		
-		if (!getprop("/systems/electrical/some-electric-thingie/generator-1-reset") and !getprop("/systems/electrical/some-electric-thingie/generator-2-reset") and emerconfigGen.clearFlag == 0) {
+		if (!(getprop("/systems/electrical/some-electric-thingie/generator-1-reset") and getprop("/systems/electrical/some-electric-thingie/generator-2-reset")) and emerconfigGen.clearFlag == 0) {
 			emerconfigGen.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigGen);
 		}
 		
-		if (!getprop("/systems/electrical/some-electric-thingie/generator-1-reset-bustie") and !getprop("/systems/electrical/some-electric-thingie/generator-2-reset-bustie") and emerconfigGen2.clearFlag == 0) {
+		if (!(getprop("/systems/electrical/some-electric-thingie/generator-1-reset-bustie") and getprop("/systems/electrical/some-electric-thingie/generator-2-reset-bustie")) and emerconfigGen2.clearFlag == 0) {
 			emerconfigGen2.active = 1;
 			if (getprop("/controls/electrical/switches/bus-tie")) {
 				emerconfigBusTie.active = 1;
@@ -1124,7 +1124,7 @@ var messages_right_memo = func {
 		ptu.active = 0;
 	}
 	
-	if (getprop("/systems/hydraulic/rat-position") != 0) {
+	if (getprop("/systems/hydraulic/sources/rat/position") != 0) {
 		rat.active = 1;
 	} else {
 		rat.active = 0;
@@ -1136,7 +1136,7 @@ var messages_right_memo = func {
 		rat.colour = "g";
 	}
 	
-	if (getprop("/systems/electrical/relay/emer-glc/contact-pos") == 1 and getprop("/systems/hydraulics/rat-position") != 0 and getprop("/gear/gear[1]/wow") == 0) {
+	if (getprop("/systems/electrical/relay/emer-glc/contact-pos") == 1 and getprop("/systems/hydraulic/sources/rat/position") != 0 and getprop("/gear/gear[1]/wow") == 0) {
 		emer_gen.active = 1;
 	} else {
 		emer_gen.active = 0;

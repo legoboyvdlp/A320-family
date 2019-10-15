@@ -1,0 +1,488 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp), Joshua Davidson (Octal450) -->
+
+<system name="A320: Hydraulic">	
+	
+	<property value="500">/systems/hydraulic/sys-incr-rate</property> <!-- 2 seconds per 1000 psi -->
+	<property value="0">/systems/hydraulic/sources/ptu/green-yellow</property>
+	<property value="0">/systems/hydraulic/sources/ptu/yellow-green</property>
+	<channel name="SYS Leak Logic" execrate="8">
+		
+		<!-- Blue -->
+		<switch name="/systems/hydraulic/blue-qty-cmd">
+			<default value="/systems/hydraulic/blue-qty-input"/>
+			<test value="0">
+				/systems/failures/hydraulic/blue-leak eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/blue-qty-decr-rate">
+			<default value="100"/> <!-- Instant -->
+			<test value="0.25">
+				/systems/failures/hydraulic/blue-leak eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/hydraulic/blue-qty">
+			<input>/systems/hydraulic/blue-qty-cmd</input>
+			<rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">/systems/hydraulic/blue-qty-decr-rate</rate_limit>
+		</actuator>
+		
+		<!-- Green -->
+		<switch name="/systems/hydraulic/green-qty-cmd">
+			<default value="/systems/hydraulic/green-qty-input"/>
+			<test value="0">
+				/systems/failures/hydraulic/green-leak eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/green-qty-decr-rate">
+			<default value="100"/> <!-- Instant -->
+			<test value="0.25">
+				/systems/failures/hydraulic/green-leak eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/hydraulic/green-qty">
+			<input>/systems/hydraulic/green-qty-cmd</input>
+			<rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">/systems/hydraulic/green-qty-decr-rate</rate_limit>
+		</actuator>
+		
+		<!-- Yellow -->
+		<switch name="/systems/hydraulic/yellow-qty-cmd">
+			<default value="/systems/hydraulic/yellow-qty-input"/>
+			<test value="0">
+				/systems/failures/hydraulic/yellow-leak eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/yellow-qty-decr-rate">
+			<default value="100"/> <!-- Instant -->
+			<test value="0.25">
+				/systems/failures/hydraulic/yellow-leak eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/hydraulic/yellow-qty">
+			<input>/systems/hydraulic/yellow-qty-cmd</input>
+			<rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">/systems/hydraulic/yellow-qty-decr-rate</rate_limit>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Main Hydraulic" execrate="8">
+		
+		<!-- Common -->
+		<switch name="/systems/hydraulic/sys-decr-rate">
+			<default value="150"/> <!-- 1 second per 150 psi -->
+			<test value="500"> <!-- 2 seconds per 1000 psi for ACCONFIG -->
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+		</switch>
+		
+		<!-- RAT Blue -->
+		<kinematic name="/systems/hydraulic/sources/rat/position">
+			<input>/systems/electrical/some-electric-thingie/rat-deploy</input>
+			<traverse>
+				<setting>
+					<position>0.0</position>
+					<time>0.0</time>
+				</setting>
+				<setting>
+					<position>1.0</position>
+					<time>2.5</time>
+				</setting>
+			</traverse>
+		</kinematic>
+		
+		<fcs_function name="/systems/hydraulic/sources/rat/source-psi">
+			<function>
+				<table>
+					<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar>
+					<tableData>
+						99   0
+						100  2500
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/hydraulic/sources/rat/output-psi">
+			<default value="/systems/hydraulic/sources/rat/source-psi"/>
+		</switch>
+		
+		<!-- Elec Blue -->
+		<switch name="/systems/hydraulic/sources/blue-elec/pump-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/hydraulic/switches/blue-elec-ovrd eq 1
+				/controls/hydraulic/switches/blue-elec eq 1
+				position/wow eq 1
+			</test>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/controls/hydraulic/switches/blue-elec-ovrd eq 1
+					/controls/hydraulic/switches/blue-elec eq 1
+				</test>
+				<test logic="OR">
+					/engines/engine[0]/state eq 3
+					/engines/engine[1]/state eq 3
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/relay/apu-glc/contact-pos eq 1
+				/systems/hydraulic/sources/blue-elec/pump-operate-apu-timer ne 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/sources/blue-elec/pump-operate-apu">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW eq 0
+				/systems/electrical/bus/ac-1 ge 110
+				<test logic="OR">
+					/engines/engine[0]/state ne 3
+					/engines/engine[1]/state ne 3
+				</test>
+				/systems/electrical/relay/apu-glc/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/hydraulic/sources/blue-elec/pump-operate-apu-timer">
+            <description>Timer for the ECAM system</description>
+            <input>/systems/hydraulic/sources/blue-elec/pump-operate-apu</input>
+            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">0.0083333</rate_limit> <!-- 120 seconds -->
+        </actuator>
+		
+		<fcs_function name="/systems/hydraulic/sources/blue-elec/source-psi">
+			<function>
+				<ifthen>
+					<nq>
+						<property>/systems/failures/hydraulic/blue-elec</property>
+						<value>1</value>
+					</nq>
+					<table>
+						<independentVar lookup="row">/systems/hydraulic/sources/blue-elec/pump-operate</independentVar>
+						<tableData>
+							 0    0
+							 1  3000
+						</tableData>
+					</table>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/hydraulic/sources/blue-elec/output-psi">
+			<default value="0"/>
+			<test value="/systems/hydraulic/sources/blue-elec/source-psi">
+				/systems/failures/hydraulic/blue-elec eq 0
+			</test>
+		</switch>
+		
+		<!-- EDP Green -->
+		<fcs_function name="/systems/hydraulic/sources/green-edp/source-psi">
+			<function>
+				<ifthen>
+					<nq>
+						<property>/systems/failures/hydraulic/green-edp</property>
+						<value>1</value>
+					</nq>
+					<table>
+						<independentVar lookup="row">/engines/engine[0]/n2-actual</independentVar>
+						<tableData>
+							40    0
+							45  3000
+						</tableData>
+					</table>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/hydraulic/sources/green-edp/output-psi">
+			<default value="0"/>
+			<test value="/systems/hydraulic/sources/green-edp/source-psi">
+				/controls/hydraulic/switches/green-edp eq 1
+			</test>
+		</switch>
+		
+		<!-- Elec Yellow -->
+		<switch name="/systems/hydraulic/sources/yellow-elec/pump-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/hydraulic/switches/yellow-elec eq 1
+				<test logic="OR"> <!-- TODO: via 3XX CB 122VU -->
+					/systems/electrical/sources/ext/output-volt ge 110
+					/systems/electrical/bus/ac-2 ge 110
+				</test>
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/hydraulic/sources/yellow-elec/source-psi">
+			<function>
+				<ifthen>
+					<nq>
+						<property>/systems/failures/hydraulic/yellow-elec</property>
+						<value>1</value>
+					</nq>
+					<table>
+						<independentVar lookup="row">/systems/hydraulic/sources/yellow-elec/pump-operate</independentVar>
+						<tableData>
+							 0    0
+							 1  3000
+						</tableData>
+					</table>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/hydraulic/sources/yellow-elec/output-psi">
+			<default value="0"/>
+			<test value="/systems/hydraulic/sources/yellow-elec/source-psi">
+				/systems/failures/hydraulic/yellow-elec eq 0
+			</test>
+		</switch>
+		
+		<!-- EDP Yellow -->
+		<fcs_function name="/systems/hydraulic/sources/yellow-edp/source-psi">
+			<function>
+				<ifthen>
+					<nq>
+						<property>/systems/failures/hydraulic/yellow-edp</property>
+						<value>1</value>
+					</nq>
+					<table>
+						<independentVar lookup="row">/engines/engine[1]/n2-actual</independentVar>
+						<tableData>
+							40    0
+							45 3000
+						</tableData>
+					</table>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/hydraulic/sources/yellow-edp/output-psi">
+			<default value="0"/>
+			<test value="/systems/hydraulic/sources/yellow-edp/source-psi">
+				/controls/hydraulic/switches/yellow-edp eq 1
+			</test>
+		</switch>
+		
+		<!-- Blue PSI -->
+		<fcs_function name="/systems/hydraulic/blue-psi-cmd">
+			<function>
+				<ifthen>
+					<ge>
+						<property>/systems/hydraulic/blue-qty</property>
+						<value>1.0</value>
+					</ge>
+					<max>
+						<property>/systems/hydraulic/sources/blue-elec/output-psi</property>
+						<property>/systems/hydraulic/sources/rat/output-psi</property>
+					</max>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/hydraulic/blue-psi">
+			<input>/systems/hydraulic/blue-psi-cmd</input>
+			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
+			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
+		</actuator>
+		
+		<!-- Green PSI -->
+		<fcs_function name="/systems/hydraulic/green-psi-cmd-pump">
+			<function>
+				<ifthen>
+					<ge>
+						<property>/systems/hydraulic/green-qty</property>
+						<value>1.0</value>
+					</ge>
+					<property>/systems/hydraulic/sources/green-edp/output-psi</property>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/hydraulic/green-psi-cmd">
+			<function>
+				<ifthen>
+					<ge>
+						<property>/systems/hydraulic/green-qty</property>
+						<value>1.0</value>
+					</ge>
+					<max>
+						<property>/systems/hydraulic/green-psi-cmd-pump</property>
+						<property>/systems/hydraulic/sources/ptu/yellow-green</property>
+					</max>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/hydraulic/green-psi">
+			<input>/systems/hydraulic/green-psi-cmd</input>
+			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
+			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
+		</actuator>
+		
+		<!-- Yellow PSI -->
+		<fcs_function name="/systems/hydraulic/yellow-psi-cmd-pump">
+			<function>
+				<ifthen>
+					<ge>
+						<property>/systems/hydraulic/yellow-qty</property>
+						<value>1.0</value>
+					</ge>
+					<max>
+						<property>/systems/hydraulic/sources/yellow-edp/output-psi</property>
+						<property>/systems/hydraulic/sources/yellow-elec/output-psi</property>
+					</max>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/hydraulic/yellow-psi-cmd">
+			<function>
+				<ifthen>
+					<ge>
+						<property>/systems/hydraulic/yellow-qty</property>
+						<value>1.0</value>
+					</ge>
+					<max>
+						<property>/systems/hydraulic/yellow-psi-cmd-pump</property>
+						<property>/systems/hydraulic/sources/ptu/green-yellow</property>
+					</max>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/hydraulic/yellow-psi">
+			<input>/systems/hydraulic/yellow-psi-cmd</input>
+			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
+			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
+		</actuator>
+		
+		<!-- PTU -->
+		<fcs_function name="/systems/hydraulic/yellow-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/hydraulic/yellow-psi</property>
+					<property>/systems/hydraulic/green-psi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/hydraulic/sources/ptu/ptu-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/yellow-psi-diff gt 500
+				/systems/hydraulic/yellow-psi-diff lt -500
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/sources/ptu/green-yellow">
+			<default value="0"/>
+			<test logic="AND" value="/systems/hydraulic/green-psi">
+				/controls/hydraulic/switches/ptu eq 1
+				/systems/hydraulic/sources/ptu/ptu-active eq 1
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/hydraulic/ptu ne 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
+			<default value="0"/>
+			<test logic="AND" value="/systems/hydraulic/yellow-psi">
+				/controls/hydraulic/switches/ptu eq 1
+				/systems/hydraulic/sources/ptu/ptu-active eq 1
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/hydraulic/ptu ne 1
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="Lights" execrate="8">
+	
+		<switch name="/systems/hydraulic/lights/blue-elec-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/sources/blue-elec/output-psi le 1450
+					<test logic="OR">
+						/engines/engine[0]/state eq 3
+						/engines/engine[1]/state eq 3
+					</test>
+				</test>
+				/systems/hydraulic/blue-qty lt 2.4
+			</test>
+		</switch>
+	
+		<switch name="/systems/hydraulic/lights/green-edp-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/sources/green-edp/output-psi le 1750
+					/engines/engine[0]/state eq 3
+				</test>
+				<test>
+					/systems/hydraulic/green-qty lt 3.5
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/lights/yellow-edp-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/sources/yellow-edp/output-psi le 1750
+					/engines/engine[1]/state eq 3
+				</test>
+				<test>
+					/systems/hydraulic/yellow-qty lt 3.5
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/lights/yellow-elec-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/sources/yellow-elec/output-psi le 1450
+					/systems/hydraulic/sources/yellow-edp/output-psi le 1750
+					<test logic="AND">
+						/systems/hydraulic/sources/ptu/green-yellow le 1750
+						/systems/hydraulic/sources/ptu/yellow-green le 1750
+					</test>
+				</test>
+				<test>
+					/systems/hydraulic/yellow-qty lt 3.5
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/lights/ptu-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/yellow-qty lt 3.5
+				/systems/hydraulic/green-qty lt 3.5
+			</test>
+		</switch>
+	</channel>
+	
+</system>

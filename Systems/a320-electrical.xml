@@ -327,12 +327,14 @@
 				/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 				/instrumentation/airspeed-indicator/indicated-speed-kt ge 50
 				/systems/electrical/bus/dc-bat eq 0
+				/sim/time/elapsed-sec gt 10
 			</test>
 			<test logic="AND" value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
 				/controls/electrical/switches/bat-1 eq 1
 				/controls/electrical/switches/bat-2 eq 1
 				/systems/electrical/bus/dc-bat eq 0
+				/sim/time/elapsed-sec gt 10
 			</test>
 		</switch>
 		
@@ -374,24 +376,10 @@
 				/controls/electrical/switches/emer-elec-man-on eq 0
 			</test>
 			<test logic="OR" value="1">
-				/controls/hydraulic/rat-man eq 1
+				/controls/hydraulic/switches/rat-man eq 1
 				/controls/electrical/switches/emer-elec-man-on eq 1 
 			</test>
 		</switch>
-		
-		<kinematic name="/systems/hydraulic/rat-position">
-			<input>/systems/electrical/some-electric-thingie/rat-deploy</input>
-			<traverse>
-				<setting>
-					<position>0.0</position>
-					<time>0.0</time>
-				</setting>
-				<setting>
-					<position>1.0</position>
-					<time>2.5</time>
-				</setting>
-			</traverse>
-		</kinematic>
 		
 		<switch name="/systems/electrical/some-electric-thingie/emer-gen-operate">
 			<default value="0"/>
@@ -416,7 +404,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/some-electric-thingie/emer-gen-operate eq 1
-				/systems/hydraulic/rat-position eq 1
+				/systems/hydraulic/sources/rat/position eq 1
 			</test>
 			<test logic="AND" value="1">
 				/controls/electrical/switches/emer-gen-test eq 1
