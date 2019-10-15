@@ -30,9 +30,6 @@ var leftdoor = 0;
 var rightdoor = 0;
 var nosedoor = 0;
 var gearlvr = 0;
-var askidsw = 0;
-var brakemode = 0;
-var accum = 0;
 var elapsedtime = 0;
 var tr1_v = 0;
 var tr1_a = 0;
@@ -72,7 +69,7 @@ var aileron_ind_right = props.globals.getNode("/ECAM/Lower/aileron-ind-right", 1
 var elevator_ind_left = props.globals.getNode("/ECAM/Lower/elevator-ind-left", 1);
 var elevator_ind_right = props.globals.getNode("/ECAM/Lower/elevator-ind-right", 1);
 var elevator_trim_deg = props.globals.getNode("/ECAM/Lower/elevator-trim-deg", 1);
-var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/final-deg", 1);
+var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulic/rudder/final-deg", 1);
 var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1);
 var gw = props.globals.getNode("/FMGC/internal/gw", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
@@ -164,23 +161,37 @@ var tr2_fault = props.globals.getNode("/systems/failures/electrical/tr-2", 1);
 var essTrVolt = props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output", 1);
 var essTrAmp = props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output-amp", 1);
 
+# Hydraulic
+var blue_psi = 0;
+var green_psi = 0;
+var yellow_psi = 0;
+var y_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/yellow-resv-lo-air-press", 1);
+var b_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/blue-resv-lo-air-press", 1);
+var g_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/green-resv-lo-air-press", 1);
+var elec_pump_y_ovht = props.globals.getNode("/systems/hydraulic/elec-pump-yellow-ovht", 1);
+var elec_pump_b_ovht = props.globals.getNode("/systems/hydraulic/elec-pump-blue-ovht", 1);
+var rat_deployed = props.globals.getNode("/controls/hydraulic/rat-deployed", 1);
+var y_resv_ovht = props.globals.getNode("/systems/hydraulic/yellow-resv-ovht", 1);
+var b_resv_ovht = props.globals.getNode("/systems/hydraulic/blue-resv-ovht", 1);
+var g_resv_ovht = props.globals.getNode("/systems/hydraulic/green-resv-ovht", 1);
+var askidsw = 0;
+var brakemode = 0;
+var accum = 0;
+
 var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
 var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
 var switch_cart = props.globals.getNode("/controls/electrical/ground-cart", 1);
 var total_psi = props.globals.getNode("/systems/pneumatic/total-psi", 1);
-var b_psi = props.globals.getNode("/systems/hydraulic/blue-psi", 1);
-var g_psi = props.globals.getNode("/systems/hydraulic/green-psi", 1);
-var y_psi = props.globals.getNode("/systems/hydraulic/yellow-psi", 1);
-var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l1/final-deg", 1);
-var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l2/final-deg", 1);
-var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l3/final-deg", 1);
-var spoiler_L4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l4/final-deg", 1);
-var spoiler_L5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l5/final-deg", 1);
-var spoiler_R1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r1/final-deg", 1);
-var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r2/final-deg", 1);
-var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r3/final-deg", 1);
-var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
-var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
+var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l1/final-deg", 1);
+var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l2/final-deg", 1);
+var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l3/final-deg", 1);
+var spoiler_L4 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l4/final-deg", 1);
+var spoiler_L5 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l5/final-deg", 1);
+var spoiler_R1 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r1/final-deg", 1);
+var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r2/final-deg", 1);
+var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r3/final-deg", 1);
+var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r4/final-deg", 1);
+var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r5/final-deg", 1);
 var spoiler_L1_fail = props.globals.getNode("/systems/failures/spoiler-l1", 1);
 var spoiler_L2_fail = props.globals.getNode("/systems/failures/spoiler-l2", 1);
 var spoiler_L3_fail = props.globals.getNode("/systems/failures/spoiler-l3", 1);
@@ -217,25 +228,6 @@ var tank1pump1 = props.globals.getNode("controls/fuel/tank1pump1", 1);
 var tank1pump2 = props.globals.getNode("controls/fuel/tank1pump2", 1);
 var tank2pump1 = props.globals.getNode("controls/fuel/tank2pump1", 1);
 var tank2pump2 = props.globals.getNode("controls/fuel/tank2pump2", 1);
-var ptu = props.globals.getNode("/controls/hydraulic/ptu", 1);
-var ptu_fault = props.globals.getNode("/systems/hydraulic/ptu-fault", 1);
-var ptu_active = props.globals.getNode("/systems/hydraulic/ptu-active", 1);
-var ptu_supplies = props.globals.getNode("/systems/hydraulic/ptu-supplies", 1);
-var eng1_pump = props.globals.getNode("/controls/hydraulic/eng1-pump", 1);
-var eng2_pump = props.globals.getNode("/controls/hydraulic/eng2-pump", 1);
-var elec_pump_blue = props.globals.getNode("/controls/hydraulic/elec-pump-blue", 1);
-var elec_pump_yellow = props.globals.getNode("/controls/hydraulic/elec-pump-yellow", 1);
-var y_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/yellow-resv-lo-air-press", 1);
-var b_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/blue-resv-lo-air-press", 1);
-var g_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/green-resv-lo-air-press", 1);
-var elec_pump_y_ovht = props.globals.getNode("/systems/hydraulic/elec-pump-yellow-ovht", 1);
-var elec_pump_b_ovht = props.globals.getNode("/systems/hydraulic/elec-pump-blue-ovht", 1);
-var rat_deployed = props.globals.getNode("/controls/hydraulic/rat-deployed", 1);
-var y_resv_ovht = props.globals.getNode("/systems/hydraulic/yellow-resv-ovht", 1);
-var b_resv_ovht = props.globals.getNode("/systems/hydraulic/blue-resv-ovht", 1);
-var g_resv_ovht = props.globals.getNode("/systems/hydraulic/green-resv-ovht", 1);
-var y_fire_valve = props.globals.getNode("/systems/hydraulic/yellow-fire-valve", 1);
-var g_fire_valve = props.globals.getNode("/systems/hydraulic/green-fire-valve", 1);
 var autobreak_mode = props.globals.getNode("/controls/autobrake/mode", 1);
 var gear1_pos = props.globals.getNode("gear/gear[0]/position-norm", 1);
 var gear2_pos = props.globals.getNode("gear/gear[1]/position-norm", 1);
@@ -244,9 +236,6 @@ var gear_door_L = props.globals.getNode("/systems/hydraulic/gear/door-left", 1);
 var gear_door_R = props.globals.getNode("/systems/hydraulic/gear/door-right", 1);
 var gear_door_N = props.globals.getNode("/systems/hydraulic/gear/door-nose", 1);
 var gear_down = props.globals.getNode("/controls/gear/gear-down", 1);
-var askid = props.globals.getNode("/systems/hydraulic/brakes/askidnwssw", 1);
-var brk_mode = props.globals.getNode("/systems/hydraulic/brakes/mode", 1);
-var accu_press = props.globals.getNode("/systems/hydraulic/brakes/accumulator-pressure-psi", 1);
 var press_vs_norm = props.globals.getNode("/systems/pressurization/vs-norm", 1);
 var cabinalt = props.globals.getNode("/systems/pressurization/cabinalt-norm", 1);
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
@@ -1847,9 +1836,9 @@ var canvas_lowerECAM_fctl = {
 		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6"];
 	},
 	update: func() {
-		blue_psi = b_psi.getValue();
-		green_psi = g_psi.getValue();
-		yellow_psi = y_psi.getValue();
+		blue_psi = systems.HYD.Psi.blue.getValue();
+		green_psi = systems.HYD.Psi.green.getValue();
+		yellow_psi = systems.HYD.Psi.yellow.getValue();
 
 		# Pitch Trim
 		me["PT"].setText(sprintf("%2.1f", math.round(elevator_trim_deg.getValue(), 0.1)));
@@ -2442,9 +2431,9 @@ var canvas_lowerECAM_hyd = {
 		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label"];
 	},
 	update: func() {
-		blue_psi = b_psi.getValue();
-		green_psi = g_psi.getValue();
-		yellow_psi = y_psi.getValue();
+		blue_psi = systems.HYD.Psi.blue.getValue();
+		green_psi = systems.HYD.Psi.green.getValue();
+		yellow_psi = systems.HYD.Psi.yellow.getValue();
 
 		me["Press-Green"].setText(sprintf("%s", math.round(green_psi, 50)));
 		me["Press-Blue"].setText(sprintf("%s", math.round(blue_psi, 50)));
@@ -2491,12 +2480,12 @@ var canvas_lowerECAM_hyd = {
 			me["Press-Green"].setColor(0.7333,0.3803,0);
 			me["Green-label"].setColor(0.7333,0.3803,0);
 		}
-
-		if (ptu.getValue() == 1 and ptu_fault.getValue() == 0) {
+		
+		if (systems.HYD.Switch.ptu.getValue() and !systems.HYD.Fail.ptuFault.getValue()) {
 			me["PTU-connection"].setColor(0.0509,0.7529,0.2941);
 
-			if (ptu_active.getValue() == 1) {
-				if (ptu_supplies.getValue() == "yellow") {
+			if (systems.HYD.Ptu.active.getValue()) {
+				if (systems.HYD.Ptu.diff.getValue() < 0) {
 					me["PTU-Supply-Line"].show();
 					me["PTU-supply-yellow"].show();
 					me["PTU-supply-green"].hide();
@@ -2535,7 +2524,7 @@ var canvas_lowerECAM_hyd = {
 			me["Pump-Yellow-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (eng1_pump.getValue() == 1) {
+		if (systems.HYD.Switch.greenEDP.getValue()) {
 			me["Pump-Green-off"].hide();
 			if (green_psi >= 1500) {
 				me["Pump-Green-on"].show();
@@ -2555,7 +2544,7 @@ var canvas_lowerECAM_hyd = {
 			me["Pump-Green"].setColor(0.7333,0.3803,0);
 		}
 
-		if (eng2_pump.getValue() == 1) {
+		if (systems.HYD.Switch.yellowEDP.getValue()) {
 			me["Pump-Yellow-off"].hide();
 			if (yellow_psi >= 1500) {
 				me["Pump-Yellow-on"].show();
@@ -2576,7 +2565,7 @@ var canvas_lowerECAM_hyd = {
 			me["Pump-Yellow"].setColor(0.7333,0.3803,0);
 		}
 
-		if (elec_pump_blue.getValue() == 1) {
+		if (systems.HYD.Switch.blueElec.getValue()) {
 			me["Pump-Blue-off"].hide();
 			if (blue_psi >= 1500) {
 				me["Pump-Blue-on"].show();
@@ -2596,7 +2585,7 @@ var canvas_lowerECAM_hyd = {
 			me["Pump-Blue"].setColor(0.7333,0.3803,0);
 		}
 
-		if (elec_pump_yellow.getValue() == 0) {
+		if (!systems.HYD.Switch.yellowElec.getValue()) {
 			me["ELEC-Yellow-on"].hide();
 			me["ELEC-Yellow-off"].show();
 		} else {
@@ -2639,7 +2628,7 @@ var canvas_lowerECAM_hyd = {
 			me["ELEC-OVHT-Blue"].hide();
 		}
 
-		if (rat_deployed.getValue() == 1) {
+		if (systems.HYD.Rat.position.getValue() == 1) {
 			me["RAT-stowed"].hide();
 			me["RAT-not-stowed"].show();
 		} else {
@@ -2665,19 +2654,19 @@ var canvas_lowerECAM_hyd = {
 			me["OVHT-Blue"].hide();
 		}
 
-		if (ac1.getValue() > 110) {
+		if (systems.ELEC.Bus.ac1.getValue() > 110) {
 			me["ELEC-Blue-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["ELEC-Blue-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac2.getValue() > 110) {
+		if (systems.ELEC.Bus.ac2.getValue() > 110) {
 			me["ELEC-Yellow-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (y_fire_valve.getValue() == 1) {
+		if (systems.HYD.Valve.yellowFire.getValue() != 0) {
 			me["Fire-Valve-Yellow"].setColor(0.7333,0.3803,0);
 			me["Fire-Valve-Yellow"].setRotation(90 * D2R);
 		} else {
@@ -2685,7 +2674,7 @@ var canvas_lowerECAM_hyd = {
 			me["Fire-Valve-Yellow"].setRotation(0);
 		}
 
-		if (g_fire_valve.getValue() == 1) {
+		if (systems.HYD.Valve.greenFire.getValue() != 0) {
 			me["Fire-Valve-Green"].setColor(0.7333,0.3803,0);
 			me["Fire-Valve-Green"].setRotation(90 * D2R);
 		} else {
@@ -2711,9 +2700,9 @@ var canvas_lowerECAM_wheel = {
 		"braketemp2","braketemp3","braketemp4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
 	},
 	update: func() {
-		blue_psi = b_psi.getValue();
-		green_psi = g_psi.getValue();
-		yellow_psi = y_psi.getValue();
+		blue_psi = systems.HYD.Psi.blue.getValue();
+		green_psi = systems.HYD.Psi.green.getValue();
+		yellow_psi = systems.HYD.Psi.yellow.getValue();
 		autobrakemode = autobreak_mode.getValue();
 		nosegear = gear1_pos.getValue();
 		leftgear = gear2_pos.getValue();
@@ -2722,9 +2711,9 @@ var canvas_lowerECAM_wheel = {
 		rightdoor = gear_door_R.getValue();
 		nosedoor = gear_door_N.getValue();
 		gearlvr = gear_down.getValue();
-		askidsw = askid.getValue();
-		brakemode = brk_mode.getValue();
-		accum = accu_press.getValue();
+		askidsw = systems.HYD.Brakes.askidSw.getBoolValue();
+		brakemode = systems.HYD.Brakes.mode.getBoolValue();
+		accum = systems.HYD.Brakes.accumPressPsi.getBoolValue();
 
 		# L/G CTL
 		if ((leftgear == 0 or nosegear == 0 or rightgear == 0 and gearlvr == 0) or (leftgear == 1 or nosegear == 1 or rightgear == 1 and gearlvr == 1)) {

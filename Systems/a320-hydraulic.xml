@@ -101,13 +101,20 @@
 		
 		<fcs_function name="/systems/hydraulic/sources/rat/source-psi">
 			<function>
-				<table>
-					<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar>
-					<tableData>
-						99   0
-						100  2500
-					</tableData>
-				</table>
+				<ifthen>
+					<eq>
+						<property>/systems/hydraulic/sources/rat/position</property>
+						<value>1</value>
+					</eq>
+					<table>
+						<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar>
+						<tableData>
+							99   0
+							100  2500
+						</tableData>
+					</table>
+					<value>0</value>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -207,10 +214,16 @@
 			</function>
 		</fcs_function>
 		
+		<actuator name="/systems/hydraulic/sources/green-edp/fire-valve">
+			<input>/controls/engines/engine[0]/fire-btn</input>
+			<rate_limit>0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
 		<switch name="/systems/hydraulic/sources/green-edp/output-psi">
 			<default value="0"/>
 			<test value="/systems/hydraulic/sources/green-edp/source-psi">
 				/controls/hydraulic/switches/green-edp eq 1
+				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
@@ -272,10 +285,16 @@
 			</function>
 		</fcs_function>
 		
+		<actuator name="/systems/hydraulic/sources/yellow-edp/fire-valve">
+			<input>/controls/engines/engine[1]/fire-btn</input>
+			<rate_limit>0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
 		<switch name="/systems/hydraulic/sources/yellow-edp/output-psi">
 			<default value="0"/>
 			<test value="/systems/hydraulic/sources/yellow-edp/source-psi">
 				/controls/hydraulic/switches/yellow-edp eq 1
+				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
@@ -338,6 +357,11 @@
 			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
 		</actuator>
 		
+		<pure_gain name="/systems/hydraulic/green-psi-ptu">
+			<input>/systems/hydraulic/green-psi</input>
+			<gain>0.9</gain>
+		</pure_gain>
+		
 		<!-- Yellow PSI -->
 		<fcs_function name="/systems/hydraulic/yellow-psi-cmd-pump">
 			<function>
@@ -377,6 +401,11 @@
 			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
 		</actuator>
 		
+		<pure_gain name="/systems/hydraulic/yellow-psi-ptu">
+			<input>/systems/hydraulic/yellow-psi</input>
+			<gain>0.9</gain>
+		</pure_gain>
+		
 		<!-- PTU -->
 		<fcs_function name="/systems/hydraulic/yellow-psi-diff">
 			<function>
@@ -388,30 +417,46 @@
 		</fcs_function>
 		
 		<switch name="/systems/hydraulic/sources/ptu/ptu-active">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/hydraulic/yellow-psi-diff gt 500
-				/systems/hydraulic/yellow-psi-diff lt -500
+			<test logic="AND" value="0">
+				/systems/hydraulic/yellow-psi-diff gt -250
+				/systems/hydraulic/yellow-psi-diff lt 250
+				/systems/hydraulic/sources/ptu/ptu-active eq 1
+			</test>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/hydraulic/yellow-psi-diff ge 250
+					/systems/hydraulic/yellow-psi-diff le -250
+				</test>
+				/systems/hydraulic/sources/ptu/ptu-active eq 1
+			</test>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/hydraulic/yellow-psi-diff gt 500
+					/systems/hydraulic/yellow-psi-diff lt -500
+				</test>
+				/systems/hydraulic/sources/ptu/ptu-active eq 0
 			</test>
 		</switch>
 		
 		<switch name="/systems/hydraulic/sources/ptu/green-yellow">
 			<default value="0"/>
-			<test logic="AND" value="/systems/hydraulic/green-psi">
+			<test logic="AND" value="/systems/hydraulic/green-psi-ptu">
 				/controls/hydraulic/switches/ptu eq 1
 				/systems/hydraulic/sources/ptu/ptu-active eq 1
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/hydraulic/ptu ne 1
+				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
 		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
 			<default value="0"/>
-			<test logic="AND" value="/systems/hydraulic/yellow-psi">
+			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
 				/controls/hydraulic/switches/ptu eq 1
 				/systems/hydraulic/sources/ptu/ptu-active eq 1
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/hydraulic/ptu ne 1
+				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
