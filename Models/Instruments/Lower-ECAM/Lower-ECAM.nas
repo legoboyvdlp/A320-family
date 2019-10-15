@@ -69,7 +69,7 @@ var aileron_ind_right = props.globals.getNode("/ECAM/Lower/aileron-ind-right", 1
 var elevator_ind_left = props.globals.getNode("/ECAM/Lower/elevator-ind-left", 1);
 var elevator_ind_right = props.globals.getNode("/ECAM/Lower/elevator-ind-right", 1);
 var elevator_trim_deg = props.globals.getNode("/ECAM/Lower/elevator-trim-deg", 1);
-var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulic/rudder/final-deg", 1);
+var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/final-deg", 1);
 var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1);
 var gw = props.globals.getNode("/FMGC/internal/gw", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
@@ -182,16 +182,16 @@ var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
 var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
 var switch_cart = props.globals.getNode("/controls/electrical/ground-cart", 1);
 var total_psi = props.globals.getNode("/systems/pneumatic/total-psi", 1);
-var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l1/final-deg", 1);
-var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l2/final-deg", 1);
-var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l3/final-deg", 1);
-var spoiler_L4 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l4/final-deg", 1);
-var spoiler_L5 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-l5/final-deg", 1);
-var spoiler_R1 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r1/final-deg", 1);
-var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r2/final-deg", 1);
-var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r3/final-deg", 1);
-var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r4/final-deg", 1);
-var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulic/spoiler-r5/final-deg", 1);
+var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l1/final-deg", 1);
+var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l2/final-deg", 1);
+var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l3/final-deg", 1);
+var spoiler_L4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l4/final-deg", 1);
+var spoiler_L5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l5/final-deg", 1);
+var spoiler_R1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r1/final-deg", 1);
+var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r2/final-deg", 1);
+var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r3/final-deg", 1);
+var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
+var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
 var spoiler_L1_fail = props.globals.getNode("/systems/failures/spoiler-l1", 1);
 var spoiler_L2_fail = props.globals.getNode("/systems/failures/spoiler-l2", 1);
 var spoiler_L3_fail = props.globals.getNode("/systems/failures/spoiler-l3", 1);
@@ -1319,8 +1319,8 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-Emergen-ESSTR-off"].hide();
 			me["EMERGEN-Label-off"].hide();
 			
-			me["EmergenVolt"].setText(sprintf("s", math.round(emerGenVolts.getValue())));
-			me["EmergenHz"].setText(sprintf("s", math.round(emerGenHz.getValue())));
+			me["EmergenVolt"].setText(sprintf("%s", math.round(emerGenVolts.getValue())));
+			me["EmergenHz"].setText(sprintf("%s", math.round(emerGenHz.getValue())));
 			
 			if (emerGenVolts.getValue() > 120 or emerGenVolts.getValue() < 110 or emerGenHz.getValue() > 410 or emerGenHz.getValue() < 390) {
 				me["Emergen-Label"].setColor(0.7333,0.3803,0);
@@ -1682,11 +1682,14 @@ var canvas_lowerECAM_elec = {
 			}
 		}
 
-		if (switch_ac_ess_feed.getValue() == 1) {
+		if (getprop("/systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
+			me["ELEC-Line-AC1-ACESS"].show();
+			me["ELEC-Line-AC2-ACESS"].hide();
+		} elsif (getprop("/systems/electrical/relay/ac-ess-feed-2/contact-pos") == 1) {
 			me["ELEC-Line-AC1-ACESS"].hide();
 			me["ELEC-Line-AC2-ACESS"].show();
 		} else {
-			me["ELEC-Line-AC1-ACESS"].show();
+			me["ELEC-Line-AC1-ACESS"].hide();
 			me["ELEC-Line-AC2-ACESS"].hide();
 		}
 

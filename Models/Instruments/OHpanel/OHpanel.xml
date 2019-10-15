@@ -1969,16 +1969,10 @@
 							<property>controls/OH/protectors/ratman</property>
 							<value>1</value>
 						</equals>
-						<or>
-							<greater-than-equals>
-								<property>systems/electrical/bus/dc-bat</property>
-								<value>25</value>
-							</greater-than-equals>
-							<greater-than-equals>
-								<property>systems/electrical/bus/dc-ess</property>
-								<value>25</value>
-							</greater-than-equals>
-						</or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-hot-2</property>
+							<value>25</value>
+						</greater-than-equals>
 					</and>
 				</condition>
 				<command>property-toggle</command>
@@ -3710,16 +3704,10 @@
 							<property>controls/OH/protectors/elecratman</property>
 							<value>1</value>
 						</equals>
-						<or>
-							<greater-than-equals>
-								<property>systems/electrical/bus/dc-bat</property>
-								<value>25</value>
-							</greater-than-equals>
-							<greater-than-equals>
-								<property>systems/electrical/bus/dc-ess</property>
-								<value>25</value>
-							</greater-than-equals>
-						</or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc-hot-1</property>
+							<value>25</value>
+						</greater-than-equals>
 					</and>
 				</condition>
 				<command>property-assign</command>

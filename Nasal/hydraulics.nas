@@ -58,8 +58,8 @@ var HYD = {
 		yellowElec: props.globals.getNode("/controls/hydraulic/switches/yellow-elec"),
 	},
 	Valve: {
-		yellowFire: props.globals.getNode("/systems/hydraulics/sources/yellow-edp/fire-valve"),
-		greenFire: props.globals.getNode("/systems/hydraulics/sources/green-edp/fire-valve"),
+		yellowFire: props.globals.getNode("/systems/hydraulic/sources/yellow-edp/fire-valve"),
+		greenFire: props.globals.getNode("/systems/hydraulic/sources/green-edp/fire-valve"),
 	},
 	init: func() {
 		me.resetFail();
