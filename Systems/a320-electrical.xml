@@ -1053,6 +1053,26 @@
 		</switch>
 		
 		<!-- DC Bat Bus -->
+		<switch name="/systems/electrical/bus/dc-bat-src">
+			<description>Tell which source is being used for priority purpose</description>
+			<default value="0"/> <!-- OFF -->
+			<test value="1"> <!-- DC1 -->
+                /systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
+                /systems/electrical/bus/dc-1-src ne 2
+			</test>
+			<test value="2"> <!-- DC2 -->
+                /systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
+                /systems/electrical/bus/dc-2-src ne 2
+			</test>
+			<test value="3"> <!-- BAT -->
+				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+				<test logic="OR">
+					/controls/electrical/switches/bat-1 eq 1
+					/controls/electrical/switches/bat-2 eq 1
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/bus/dc-bat">
             <default value="0"/>
             <test logic="AND" value="/systems/electrical/relay/dc-bus-tie-dc-1/output-tie">
@@ -1062,6 +1082,18 @@
             <test logic="AND" value="/systems/electrical/relay/dc-bus-tie-dc-2/output-tie">
                 /systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
                 /systems/electrical/bus/dc-2-src ne 2
+            </test>
+            <test logic="AND" value="/systems/electrical/sources/bat-1/volt">
+				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+				/controls/electrical/switches/bat-1 eq 1
+				/systems/electrical/bus/dc-bat-src eq 3
+				/systems/electrical/sources/bat-1/volt ge 25
+            </test>
+            <test logic="AND" value="/systems/electrical/sources/bat-2/volt">
+				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+				/controls/electrical/switches/bat-2 eq 1
+				/systems/electrical/bus/dc-bat-src eq 3
+				/systems/electrical/sources/bat-2/volt ge 25
             </test>
         </switch>
 		

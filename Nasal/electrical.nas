@@ -184,8 +184,8 @@ var ELEC = {
 		} else if (battery1_amps > 0 and battery1_sw and !batt1_fail) {
 			if (battery1_time + 5 < getprop("/sim/time/elapsed-sec")) {
 				battery1_percent_calc = battery1_percent - 0.25; # Roughly 90 percent every 30 mins
-				if (battery1_percent_calc < 0) {
-					battery1_percent_calc = 0;
+				if (battery1_percent_calc < 5) {
+					battery1_percent_calc = 5;
 				}
 				me.Source.Bat1.limiter.setBoolValue(1);
 				me.Source.Bat1.percent.setValue(battery1_percent_calc);
@@ -212,8 +212,8 @@ var ELEC = {
 		} else if (battery2_amps > 0 and battery2_sw and !batt1_fail) {
 			if (battery2_time + 5 < getprop("/sim/time/elapsed-sec")) {
 				battery2_percent_calc = battery2_percent - 0.25; # Roughly 90 percent every 30 mins
-				if (battery2_percent_calc < 0) {
-					battery2_percent_calc = 0;
+				if (battery2_percent_calc < 5) {
+					battery2_percent_calc = 5;
 				}
 				me.Source.Bat2.limiter.setBoolValue(1);
 				me.Source.Bat2.percent.setValue(battery2_percent_calc);

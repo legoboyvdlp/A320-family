@@ -34,9 +34,7 @@
 		<object-name>APUStartBtn1A</object-name>
 		<object-name>APUStartBtn2O</object-name>
 		<object-name>BatteryBtn11F</object-name>
-		<object-name>BatteryBtn12O</object-name>
 		<object-name>BatteryBtn21F</object-name>
-		<object-name>BatteryBtn22O</object-name>
 		<object-name>BusTieBtn2O</object-name>
 		<object-name>DitchBtn2O</object-name>
 		<object-name>ELAC1Btn1F</object-name>
@@ -2948,16 +2946,22 @@
 		<type>select</type>
 		<object-name>BatteryBtn12O</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/electrical/switches/bat-1</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>controls/electrical/switches/bat-1</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<greater-than>
+					<property>systems/electrical/bus/dc-bat</property>
+					<value>25</value>
+				</greater-than>
+			</and>
 		</condition>
 	</animation>
 
@@ -3009,16 +3013,22 @@
 		<type>select</type>
 		<object-name>BatteryBtn22O</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/electrical/switches/bat-2</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>controls/electrical/switches/bat-2</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<greater-than>
+					<property>systems/electrical/bus/dc-bat</property>
+					<value>25</value>
+				</greater-than>
+			</and>
 		</condition>
 	</animation>
 	
