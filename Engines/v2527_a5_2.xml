@@ -4,13 +4,18 @@
 
 <turbine_engine name="V2527_A5">
 	
+	<!-- data measured from https://www.youtube.com/watch?v=gPRQcYNRV_U -->
 	<milthrust>     26600 </milthrust>
 	<tsfc>          0.445 </tsfc>
 	<bleed>          0.03 </bleed>
+	<ignitionn1>	  4.8 </ignitionn1>
+	<ignitionn2>	 23.9</ignitionn2>
 	<idlen1>         22.4 </idlen1>
 	<idlen2>         60.9 </idlen2>
 	<n1spinup>        0.2 </n1spinup>
 	<n2spinup>        1.0 </n2spinup>
+	<n1startrate>   0.365 </n1startrate>
+	<n2startrate>   0.724 </n2startrate>
 	<maxn1>         103.8 </maxn1>
 	<maxn2>         101.4 </maxn2>
 	<augmented>         0 </augmented>

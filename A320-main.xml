@@ -674,7 +674,15 @@
 			<nws-switch type="double">1</nws-switch>
 		</gear>
 		<hydraulic>
-			<rat-man type="bool">0</rat-man>
+			<switches>
+				<blue-elec type="bool">0</blue-elec>
+				<blue-elec-ovrd type="bool">0</blue-elec-ovrd>
+				<green-edp type="bool">0</green-edp>
+				<ptu type="bool">0</ptu>
+				<rat-man type="bool">0</rat-man>
+				<yellow-edp type="bool">0</yellow-edp>
+				<yellow-elec type="bool">0</yellow-elec>
+			</switches>
 		</hydraulic>
 		<lighting>
 			<DU>
@@ -877,6 +885,17 @@
 				<tr-1 type="bool">0</tr-1>
 				<tr-2 type="bool">0</tr-2>
 			</electrical>
+			<hydraulic>
+				<blue-edp type="bool">0</blue-edp>
+				<blue-elec type="bool">0</blue-elec>
+				<blue-leak type="bool">0</blue-leak>
+				<green-edp type="bool">0</green-edp>
+				<green-leak type="bool">0</green-leak>
+				<ptu type="bool">0</ptu>
+				<yellow-edp type="bool">0</yellow-edp>
+				<yellow-elec type="bool">0</yellow-elec>
+				<yellow-leak type="bool">0</yellow-leak>
+			</hydraulic>
 			<rudder type="bool">0</rudder>
 			<spoiler-l1 type="bool">0</spoiler-l1>
 			<spoiler-l2 type="bool">0</spoiler-l2>
