@@ -902,6 +902,56 @@
 			</test>
 		</switch>
 		
+		<!-- DC Bus Tie Relays -->
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/relay/tr-contactor-1/contact-pos eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/bus/dc-bat-src ne 3
+				<test logic="OR">
+					/systems/electrical/relay/tr-contactor-1/contact-pos eq 0
+					/systems/electrical/relay/tr-contactor-2/contact-pos eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/output">
+			<default value="0"/>
+			<test logic="AND" value="/systems/electrical/bus/dc-bat">
+				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 0
+				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 0
+				/systems/electrical/relay/tr-contactor-2/contact-pos eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/bus/dc-bat-src ne 3
+				<test logic="OR">
+					/systems/electrical/relay/tr-contactor-1/contact-pos eq 0
+					/systems/electrical/relay/tr-contactor-2/contact-pos eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/output">
+			<default value="0"/>
+			<test logic="AND" value="/systems/electrical/bus/dc-bat">
+				/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
+			</test>
+		</switch>
+		
 		<!-- DC ESS Relays -->
 		<switch name="/systems/electrical/relay/dc-ess-feed-tr/contact-pos"> <!-- TODO: supply via 4PE CB on 106VU, contactor via 5PE on 106VU -->
 			<default value="0"/>
@@ -958,56 +1008,6 @@
 			<default value="0"/>
 			<test value="/systems/electrical/bus/dc-ess">
 				/systems/electrical/relay/dc-ess-shed-switch/contact-pos eq 1
-			</test>
-		</switch>
-		
-		<!-- DC Bus Tie Relays -->
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/bus/ac-1 ge 110
-				/systems/electrical/bus/dc-1 ge 25
-				/systems/electrical/relay/tr-contactor-1/contact-pos eq 1
-			</test>
-			<test logic="AND" value="1">
-				/systems/electrical/bus/dc-bat ge 25
-				/systems/electrical/bus/dc-bat-src ne 3
-				<test logic="OR">
-					/systems/electrical/relay/tr-contactor-1/contact-pos eq 0
-					/systems/electrical/relay/tr-contactor-2/contact-pos eq 0
-				</test>
-			</test>
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/output">
-			<default value="0"/>
-			<test logic="AND" value="/systems/electrical/bus/dc-bat">
-				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
-			</test>
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 0
-				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 0
-				/systems/electrical/relay/tr-contactor-2/contact-pos eq 1
-				/systems/electrical/bus/dc-2 ge 25
-			</test>
-			<test logic="AND" value="1">
-				/systems/electrical/bus/dc-bat ge 25
-				/systems/electrical/bus/dc-bat-src ne 3
-				<test logic="OR">
-					/systems/electrical/relay/tr-contactor-1/contact-pos eq 0
-					/systems/electrical/relay/tr-contactor-2/contact-pos eq 0
-				</test>
-			</test>
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/output">
-			<default value="0"/>
-			<test logic="AND" value="/systems/electrical/bus/dc-bat">
-				/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
 			</test>
 		</switch>
 		

@@ -55,7 +55,7 @@
 					<script>mcdu.lskbutton("1", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -71,7 +71,7 @@
 					<script>mcdu.lskbutton("2", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -87,7 +87,7 @@
 					<script>mcdu.lskbutton("3", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -103,7 +103,7 @@
 					<script>mcdu.lskbutton("4", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -119,7 +119,7 @@
 					<script>mcdu.lskbutton("5", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -135,7 +135,7 @@
 					<script>mcdu.lskbutton("6", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -190,7 +190,7 @@
 					<script>mcdu.rskbutton("1", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -206,7 +206,7 @@
 					<script>mcdu.rskbutton("2", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -222,7 +222,7 @@
 					<script>mcdu.rskbutton("3", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -238,7 +238,7 @@
 					<script>mcdu.rskbutton("4", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -254,7 +254,7 @@
 					<script>mcdu.rskbutton("5", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -270,7 +270,7 @@
 					<script>mcdu.rskbutton("6", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -309,7 +309,7 @@
 				<script>mcdu.pagebutton("perf", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -325,7 +325,7 @@
 				<script>mcdu.pagebutton("init", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -341,7 +341,7 @@
 				<script>mcdu.pagebutton("data", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -375,7 +375,7 @@
 				<script>mcdu.pagebutton("f-pln", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -391,7 +391,7 @@
 				<script>mcdu.pagebutton("radnav", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -407,7 +407,7 @@
 				<script>mcdu.pagebutton("fuel-pred", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -435,7 +435,7 @@
 				<script>mcdu.pagebutton("mcdu", 0);</script>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 				</condition>
@@ -479,7 +479,7 @@
 						<script>mcdu.arrowbutton("left", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -497,7 +497,7 @@
 						<script>mcdu.arrowbutton("right", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -523,7 +523,7 @@
 						<script>mcdu.arrowbutton("up", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -541,7 +541,7 @@
 						<script>mcdu.arrowbutton("down", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -563,7 +563,7 @@
 						<script>mcdu.button("1", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -581,7 +581,7 @@
 						<script>mcdu.button("4", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -599,7 +599,7 @@
 						<script>mcdu.button("7", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -617,7 +617,7 @@
 						<script>mcdu.button("DOT", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -635,7 +635,7 @@
 						<script>mcdu.button("2", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -653,7 +653,7 @@
 						<script>mcdu.button("5", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -671,7 +671,7 @@
 						<script>mcdu.button("8", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -689,7 +689,7 @@
 						<script>mcdu.button("0", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -707,7 +707,7 @@
 						<script>mcdu.button("3", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -725,7 +725,7 @@
 						<script>mcdu.button("6", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -743,7 +743,7 @@
 						<script>mcdu.button("9", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -761,7 +761,7 @@
 						<script>mcdu.button("PLUSMINUS", 0);</script>
 						<condition>
 							<greater-than-equals>
-								<property>systems/electrical/bus/ac1</property>
+								<property>systems/electrical/bus/ac-1</property>
 								<value>110</value>
 							</greater-than-equals>
 						</condition>
@@ -784,7 +784,7 @@
 					<script>mcdu.button("A", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -802,7 +802,7 @@
 					<script>mcdu.button("F", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -820,7 +820,7 @@
 					<script>mcdu.button("K", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -838,7 +838,7 @@
 					<script>mcdu.button("P", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -856,7 +856,7 @@
 					<script>mcdu.button("U", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -874,7 +874,7 @@
 					<script>mcdu.button("Z", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -892,7 +892,7 @@
 					<script>mcdu.button("B", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -910,7 +910,7 @@
 					<script>mcdu.button("G", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -928,7 +928,7 @@
 					<script>mcdu.button("L", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -946,7 +946,7 @@
 					<script>mcdu.button("Q", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -964,7 +964,7 @@
 					<script>mcdu.button("V", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -982,7 +982,7 @@
 					<script>mcdu.button("SLASH", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1000,7 +1000,7 @@
 					<script>mcdu.button("C", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1018,7 +1018,7 @@
 					<script>mcdu.button("H", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1036,7 +1036,7 @@
 					<script>mcdu.button("M", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1054,7 +1054,7 @@
 					<script>mcdu.button("R", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1072,7 +1072,7 @@
 					<script>mcdu.button("W", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1090,7 +1090,7 @@
 					<script>mcdu.button("SP", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1108,7 +1108,7 @@
 					<script>mcdu.button("D", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1126,7 +1126,7 @@
 					<script>mcdu.button("I", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1144,7 +1144,7 @@
 					<script>mcdu.button("N", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1162,7 +1162,7 @@
 					<script>mcdu.button("S", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1180,7 +1180,7 @@
 					<script>mcdu.button("X", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1198,7 +1198,7 @@
 					<script>mcdu.button("OVFY", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1216,7 +1216,7 @@
 					<script>mcdu.button("E", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1234,7 +1234,7 @@
 					<script>mcdu.button("J", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1252,7 +1252,7 @@
 					<script>mcdu.button("O", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1270,7 +1270,7 @@
 					<script>mcdu.button("T", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1288,7 +1288,7 @@
 					<script>mcdu.button("Y", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
@@ -1306,7 +1306,7 @@
 					<script>mcdu.button("CLR", 0);</script>
 					<condition>
 						<greater-than-equals>
-							<property>systems/electrical/bus/ac1</property>
+							<property>systems/electrical/bus/ac-1</property>
 							<value>110</value>
 						</greater-than-equals>
 					</condition>

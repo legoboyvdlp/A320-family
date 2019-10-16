@@ -27,11 +27,11 @@
 			<and>
 				<or>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac1</property>
+						<property>systems/electrical/bus/ac-1</property>
 						<value>110</value>
 					</greater-than-equals>
 					<greater-than-equals>
-						<property>systems/electrical/bus/ac2</property>
+						<property>systems/electrical/bus/ac-2</property>
 						<value>110</value>
 					</greater-than-equals>
 				</or>

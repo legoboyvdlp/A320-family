@@ -28,7 +28,7 @@
 		<condition>
 			<and>
 				<greater-than-equals>
-					<property>systems/electrical/bus/ac2</property>
+					<property>systems/electrical/bus/ac-2</property>
 					<value>110</value>
 				</greater-than-equals>
 				<property>controls/lighting/landing-lights[2]</property>
