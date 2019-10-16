@@ -326,14 +326,14 @@
 			<test logic="AND" value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 				/instrumentation/airspeed-indicator/indicated-speed-kt ge 50
-				/systems/electrical/bus/dc-bat eq 0
+				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				/sim/time/elapsed-sec gt 10
 			</test>
 			<test logic="AND" value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
 				/controls/electrical/switches/bat-1 eq 1
 				/controls/electrical/switches/bat-2 eq 1
-				/systems/electrical/bus/dc-bat eq 0
+				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				/sim/time/elapsed-sec gt 10
 			</test>
 		</switch>
@@ -902,46 +902,12 @@
 			</test>
 		</switch>
 		
-		<!-- DC Bus Tie Relays -->
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/bus/ac-1 ge 110
-				/systems/electrical/bus/dc-1 ge 25
-				/systems/electrical/relay/tr-contactor-1/contact-pos eq 1
-			</test> <!-- TODO: add actual bus tie bit -->
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/output">
-			<default value="0"/>
-			<test logic="AND" value="/systems/electrical/bus/dc-bat">
-				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
-			</test>
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 0
-				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 0
-				/systems/electrical/relay/tr-contactor-2/contact-pos eq 1
-				/systems/electrical/bus/dc-2 ge 25
-			</test> <!-- TODO: add actual bus tie bit -->
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/output">
-			<default value="0"/>
-			<test logic="AND" value="/systems/electrical/bus/dc-bat">
-				/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
-			</test>
-		</switch>
-		
 		<!-- DC ESS Relays -->
 		<switch name="/systems/electrical/relay/dc-ess-feed-tr/contact-pos"> <!-- TODO: supply via 4PE CB on 106VU, contactor via 5PE on 106VU -->
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/electrical/sources/tr-1/output-volt lt 25
-				/systems/electrical/sources/tr-2/output-volt lt 25
+				/systems/electrical/relay/tr-contactor-1/output lt 25
+				/systems/electrical/relay/tr-contactor-2/output lt 25
 				/systems/electrical/relay/emer-glc/output ge 110
 			</test>
 		</switch>
@@ -979,6 +945,7 @@
 			</test>
 		</switch>
 		
+		<!-- DC Ess Shedding -->
 		<switch name="/systems/electrical/relay/dc-ess-shed-switch/contact-pos">
 			<default value="1"/>
 			<test logic="OR" value="0"> <!-- TODO: confirm these conditions are for galley, NOT ESS -->
@@ -991,6 +958,56 @@
 			<default value="0"/>
 			<test value="/systems/electrical/bus/dc-ess">
 				/systems/electrical/relay/dc-ess-shed-switch/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<!-- DC Bus Tie Relays -->
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/relay/tr-contactor-1/contact-pos eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/bus/dc-bat-src ne 3
+				<test logic="OR">
+					/systems/electrical/relay/tr-contactor-1/contact-pos eq 0
+					/systems/electrical/relay/tr-contactor-2/contact-pos eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-1/output">
+			<default value="0"/>
+			<test logic="AND" value="/systems/electrical/bus/dc-bat">
+				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 0
+				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 0
+				/systems/electrical/relay/tr-contactor-2/contact-pos eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/bus/dc-bat-src ne 3
+				<test logic="OR">
+					/systems/electrical/relay/tr-contactor-1/contact-pos eq 0
+					/systems/electrical/relay/tr-contactor-2/contact-pos eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-bus-tie-dc-2/output">
+			<default value="0"/>
+			<test logic="AND" value="/systems/electrical/bus/dc-bat">
+				/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
 			</test>
 		</switch>
 		
@@ -1070,6 +1087,7 @@
 					/controls/electrical/switches/bat-1 eq 1
 					/controls/electrical/switches/bat-2 eq 1
 				</test>
+				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 			</test>
 		</switch>
 		
@@ -1088,12 +1106,14 @@
 				/controls/electrical/switches/bat-1 eq 1
 				/systems/electrical/bus/dc-bat-src eq 3
 				/systems/electrical/sources/bat-1/volt ge 25
+				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
             </test>
             <test logic="AND" value="/systems/electrical/sources/bat-2/volt">
 				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
 				/controls/electrical/switches/bat-2 eq 1
 				/systems/electrical/bus/dc-bat-src eq 3
 				/systems/electrical/sources/bat-2/volt ge 25
+				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
             </test>
         </switch>
 		

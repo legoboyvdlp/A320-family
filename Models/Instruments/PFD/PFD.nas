@@ -1168,9 +1168,6 @@ var canvas_PFD_1_test = {
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else if ((du2_test_time.getValue() + 1 >= et) and cpt_du_xfr.getValue() != 0) {
-			print(du2_test_time.getValue());
-			print(elapsedtime.getValue());
-			print(cpt_du_xfr.getValue());
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else {
