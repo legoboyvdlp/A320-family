@@ -319,6 +319,9 @@
 		<!-- Static Inverter -->
 		<switch name="/systems/electrical/sources/si-1/inverter-active">
 			<default value="0"/>
+			<test value="0">
+				/systems/failures/electrical/stat-inv eq 1
+			</test>
 			<test logic="AND" value="1">
 				/systems/electrical/some-electric-thingie/emer-gen-operate eq 1
 				/systems/electrical/sources/emer-gen/coupled ne 1
@@ -704,10 +707,17 @@
 		
 		<fcs_function name="/systems/electrical/bus/ac-1">
 			<function>
-				<max>
-					<property>/systems/electrical/relay/gen-1-glc/output</property>
-					<property>/systems/electrical/relay/ac-bus-ac-bus-tie-1/output</property>
-				</max>
+				<ifthen>
+					<eq>
+						<property>/systems/failures/electrical/ac-1-bus</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<max>
+						<property>/systems/electrical/relay/gen-1-glc/output</property>
+						<property>/systems/electrical/relay/ac-bus-ac-bus-tie-1/output</property>
+					</max>
+				</ifthen>
 			</function>
 		</fcs_function>
 	
@@ -725,10 +735,17 @@
 		
 		<fcs_function name="/systems/electrical/bus/ac-2">
 			<function>
-				<max>
-					<property>/systems/electrical/relay/gen-2-glc/output</property>
-					<property>/systems/electrical/relay/ac-bus-ac-bus-tie-2/output</property>
-				</max>
+				<ifthen>
+					<eq>
+						<property>/systems/failures/electrical/ac-2-bus</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<max>
+						<property>/systems/electrical/relay/gen-2-glc/output</property>
+						<property>/systems/electrical/relay/ac-bus-ac-bus-tie-2/output</property>
+					</max>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -754,12 +771,19 @@
 		
 		<fcs_function name="/systems/electrical/bus/ac-ess">
 			<function>
-				<max>
-					<property>/systems/electrical/relay/ac-ess-feed-1/output</property>
-					<property>/systems/electrical/relay/ac-ess-feed-2/output</property>
-					<property>/systems/electrical/relay/ac-ess-feed-emer-gen/output</property>
-					<property>/systems/electrical/relay/ac-ess-feed-inverter/output</property>
-				</max>
+				<ifthen>
+					<eq>
+						<property>/systems/failures/electrical/ac-ess-bus</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<max>
+						<property>/systems/electrical/relay/ac-ess-feed-1/output</property>
+						<property>/systems/electrical/relay/ac-ess-feed-2/output</property>
+						<property>/systems/electrical/relay/ac-ess-feed-emer-gen/output</property>
+						<property>/systems/electrical/relay/ac-ess-feed-inverter/output</property>
+					</max>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -838,9 +862,16 @@
 			</function>
 		</fcs_function>
 		
+		<switch name="/systems/electrical/sources/ess-tr/working">
+			<default value="0"/>
+			<test value="0.24347826086956523">
+				/systems/failures/electrical/ess-tr eq 0
+			</test>
+		</switch>
+		
 		<pure_gain name="/systems/electrical/sources/ess-tr/output-volt">
 			<input>/systems/electrical/bus/ac-ess</input> <!-- TODO: via 2PU1 CB -->
-			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+			<gain>/systems/electrical/sources/ess-tr/working</gain> <!-- AC to DC converter -->
 		</pure_gain>
 		
 		<fcs_function name="/systems/electrical/sources/ess-tr/output-amp"> <!-- TODO: make it depend on current draw -->
@@ -955,10 +986,13 @@
 		<!-- DC ESS Relays -->
 		<switch name="/systems/electrical/relay/dc-ess-feed-tr/contact-pos"> <!-- TODO: supply via 4PE CB on 106VU, contactor via 5PE on 106VU -->
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/electrical/relay/tr-contactor-1/output lt 25
-				/systems/electrical/relay/tr-contactor-2/output lt 25
-				/systems/electrical/relay/emer-glc/output ge 110
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/relay/tr-contactor-1/output lt 25
+					/systems/electrical/relay/tr-contactor-2/output lt 25
+					/systems/electrical/relay/emer-glc/output ge 110
+				</test>
+				/systems/electrical/sources/ess-tr/output-volt ge 110
 			</test>
 		</switch>
 		
@@ -1025,10 +1059,17 @@
 		
 		<fcs_function name="/systems/electrical/bus/dc-1">
 			<function>
-				<max>
-					<property>/systems/electrical/relay/tr-contactor-1/output</property>
-					<property>/systems/electrical/relay/dc-bus-tie-dc-1/output</property>
-				</max>
+				<ifthen>
+					<eq>
+						<property>/systems/failures/electrical/dc-1-bus</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<max>
+						<property>/systems/electrical/relay/tr-contactor-1/output</property>
+						<property>/systems/electrical/relay/dc-bus-tie-dc-1/output</property>
+					</max>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -1046,10 +1087,17 @@
 		
 		<fcs_function name="/systems/electrical/bus/dc-2">
 			<function>
-				<max>
-					<property>/systems/electrical/relay/tr-contactor-2/output</property>
-					<property>/systems/electrical/relay/dc-bus-tie-dc-2/output</property>
-				</max>
+				<ifthen>
+					<eq>
+						<property>/systems/failures/electrical/dc-2-bus</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<max>
+						<property>/systems/electrical/relay/tr-contactor-2/output</property>
+						<property>/systems/electrical/relay/dc-bus-tie-dc-2/output</property>
+					</max>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -1093,6 +1141,9 @@
 		
 		<switch name="/systems/electrical/bus/dc-bat">
             <default value="0"/>
+			<test value="0">
+				/systems/failures/electrical/dc-bat-bus eq 1
+			</test>
             <test logic="AND" value="/systems/electrical/relay/dc-bus-tie-dc-1/output-tie">
                 /systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
                 /systems/electrical/bus/dc-1-src ne 2
@@ -1120,10 +1171,17 @@
 		<!-- DC ESS Bus -->
 		<fcs_function name="/systems/electrical/bus/dc-ess">
 			<function>
-				<max>
-					<property>/systems/electrical/relay/dc-ess-feed-bat/output</property>
-					<property>/systems/electrical/relay/dc-ess-feed-tr/output</property>
-				</max>
+				<ifthen>
+					<eq>
+						<property>/systems/failures/electrical/dc-ess-bus</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<max>
+						<property>/systems/electrical/relay/dc-ess-feed-bat/output</property>
+						<property>/systems/electrical/relay/dc-ess-feed-tr/output</property>
+					</max>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -1209,6 +1267,33 @@
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
         </actuator>
+		
+		<!-- Output to Generics to keep FG things working, temporary, until we know what gets power by what bus -->
+		<switch name="/systems/electrical/generic-pwr">
+			<description>This makes the FG stuff work because we killed the generic electrical</description>
+			<default value="0"/>
+			<test value="/systems/electrical/bus/dc-1">
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+			<test value="/systems/electrical/bus/dc-2">
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<output>/systems/electrical/outputs/adf</output>
+			<output>/systems/electrical/outputs/dme</output>
+			<output>/systems/electrical/outputs/efis</output>
+			<output>/systems/electrical/outputs/fcp-power</output>
+			<output>/systems/electrical/outputs/fuel-pump[0]</output>
+			<output>/systems/electrical/outputs/fuel-pump[1]</output>
+			<output>/systems/electrical/outputs/fuel-pump[2]</output>
+			<output>/systems/electrical/outputs/gps</output>
+			<output>/systems/electrical/outputs/mk-viii</output>
+			<output>/systems/electrical/outputs/nav[0]</output>
+			<output>/systems/electrical/outputs/nav[1]</output>
+			<output>/systems/electrical/outputs/nav[2]</output>
+			<output>/systems/electrical/outputs/nav[3]</output>
+			<output>/systems/electrical/outputs/tacan</output>
+			<output>/systems/electrical/outputs/turn-coordinator</output>
+		</switch>
 	</channel>
 	
 	<!-- Notes -->
