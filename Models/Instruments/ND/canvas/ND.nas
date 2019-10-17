@@ -14,18 +14,25 @@ var ND_2_test = nil;
 var elapsedtime = 0;
 
 # Fetch nodes:
-var du1_test = props.globals.getNode("/instrumentation/du/du1-test");
-var du1_test_time = props.globals.getNode("/instrumentation/du/du1-test-time");
-var du1_test_amount = props.globals.getNode("/instrumentation/du/du1-test-amount");
-var du2_test = props.globals.getNode("/instrumentation/du/du2-test");
-var du2_test_time = props.globals.getNode("/instrumentation/du/du2-test-time");
-var du2_test_amount = props.globals.getNode("/instrumentation/du/du2-test-amount");
-var du5_test = props.globals.getNode("/instrumentation/du/du5-test");
-var du5_test_time = props.globals.getNode("/instrumentation/du/du5-test-time");
-var du5_test_amount = props.globals.getNode("/instrumentation/du/du5-test-amount");
-var du6_test = props.globals.getNode("/instrumentation/du/du6-test");
-var du6_test_time = props.globals.getNode("/instrumentation/du/du6-test-time");
-var du6_test_amount = props.globals.getNode("/instrumentation/du/du6-test-amount");
+var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
+var du1_off_time = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
+var du1_off_time_2 = props.globals.initNode("/instrumentation/du/du1-off-time-2", 0.0, "DOUBLE");
+var du1_test_amount = props.globals.initNode("/instrumentation/du/du1-test-amount", 0.0, "DOUBLE");
+var du2_test = props.globals.initNode("/instrumentation/du/du2-test", 0, "BOOL");
+var du2_test_time = props.globals.initNode("/instrumentation/du/du2-test-time", 0.0, "DOUBLE");
+var du2_off_time = props.globals.initNode("/instrumentation/du/du2-off-time", 0.0, "DOUBLE");
+var du2_off_time_2 = props.globals.initNode("/instrumentation/du/du2-off-time-2", 0.0, "DOUBLE");
+var du2_test_amount = props.globals.initNode("/instrumentation/du/du2-test-amount", 0.0, "DOUBLE");
+var du5_test = props.globals.initNode("/instrumentation/du/du5-test", 0, "BOOL");
+var du5_test_time = props.globals.initNode("/instrumentation/du/du5-test-time", 0.0, "DOUBLE");
+var du5_off_time = props.globals.initNode("/instrumentation/du/du5-off-time", 0.0, "DOUBLE");
+var du5_off_time_2 = props.globals.initNode("/instrumentation/du/du5-off-time-2", 0.0, "DOUBLE");
+var du5_test_amount = props.globals.initNode("/instrumentation/du/du5-test-amount", 0.0, "DOUBLE");
+var du6_test = props.globals.initNode("/instrumentation/du/du6-test", 0, "BOOL");
+var du6_test_time = props.globals.initNode("/instrumentation/du/du6-test-time", 0.0, "DOUBLE");
+var du6_off_time = props.globals.initNode("/instrumentation/du/du6-off-time", 0.0, "DOUBLE");
+var du6_off_time_2 = props.globals.initNode("/instrumentation/du/du6-off-time-2", 0.0, "DOUBLE");
+var du6_test_amount = props.globals.initNode("/instrumentation/du/du6-test-amount", 0.0, "DOUBLE");
 var cpt_du_xfr = props.globals.getNode("/modes/cpt-du-xfr");
 var fo_du_xfr = props.globals.getNode("/modes/fo-du-xfr");
 var wow0 = props.globals.getNode("/gear/gear[0]/wow");
@@ -87,6 +94,10 @@ var canvas_nd_base = {
 	update: func() {
 		elapsedtime = getprop("/sim/time/elapsed-sec");
 		if (getprop("/systems/electrical/bus/ac-ess-shed") >= 110) {
+			if (du2_off_time.getValue() != 0) {
+				du2_off_time_2.setValue(elapsedtime - du2_off_time.getValue());
+				du2_off_time.setValue(0);
+			}
 			if (wow0.getValue() == 1) {
 				if (getprop("/systems/acconfig/autoconfig-running") != 1 and du2_test.getValue() != 1) {
 					du2_test.setValue(1);
@@ -102,10 +113,17 @@ var canvas_nd_base = {
 				du2_test_amount.setValue(0);
 				du2_test_time.setValue(-100);
 			}
-		} else {
+		} elsif (du2_test.getValue() != 0) {
 			du2_test.setValue(0);
+			du2_off_time.setValue(elapsedtime);
+			du2_off_time_2.setValue(0);
 		}
+		
 		if (getprop("/systems/electrical/bus/ac-2") >= 110) {
+			if (du5_off_time.getValue() != 0) {
+				du5_off_time_2.setValue(elapsedtime - du5_off_time.getValue());
+				du5_off_time.setValue(0);
+			}
 			if (wow0.getValue() == 1) {
 				if (getprop("/systems/acconfig/autoconfig-running") != 1 and du5_test.getValue() != 1) {
 					du5_test.setValue(1);
@@ -121,16 +139,18 @@ var canvas_nd_base = {
 				du5_test_amount.setValue(0);
 				du5_test_time.setValue(-100);
 			}
-		} else {
+		} elsif (du5_test.getValue() != 0) {
 			du5_test.setValue(0);
+			du5_off_time.setValue(elapsedtime);
+			du5_off_time_2.setValue(0);
 		}
 		
 		if (getprop("/systems/electrical/bus/ac-ess-shed") >= 110 and getprop("/controls/lighting/DU/du2") > 0) {
-			if (du2_test_time.getValue() + du2_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() != 1) {
+			if (du2_test_time.getValue() + du2_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() != 1 and du2_off_time_2.getValue() > 0.5) {
 				ND_1.page.hide();
 				ND_1_test.page.show();
 				ND_1_test.update();
-			} else if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() == 1) {
+			} else if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() == 1 and du1_off_time_2.getValue() > 0.5) {
 				ND_1.page.hide();
 				ND_1_test.page.show();
 				ND_1_test.update();
@@ -144,11 +164,11 @@ var canvas_nd_base = {
 			ND_1.page.hide();
 		}
 		if (getprop("/systems/electrical/bus/ac-2") >= 110 and getprop("/controls/lighting/DU/du5") > 0) {
-			if (du5_test_time.getValue() + du5_test_amount.getValue() >= elapsedtime and fo_du_xfr.getValue() != 1) {
+			if (du5_test_time.getValue() + du5_test_amount.getValue() >= elapsedtime and fo_du_xfr.getValue() != 1 and du5_off_time_2.getValue() > 0.5) {
 				ND_2.page.hide();
 				ND_2_test.page.show();
 				ND_2_test.update();
-			} else if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime and fo_du_xfr.getValue() == 1) {
+			} else if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime and fo_du_xfr.getValue() == 1 and du6_off_time_2.getValue() > 0.5) {
 				ND_2.page.hide();
 				ND_2_test.page.show();
 				ND_2_test.update();

@@ -27,6 +27,8 @@ var N1_thr_2 = props.globals.initNode("/ECAM/Upper/N1thr[1]", 0, "DOUBLE");
 var N1_lim = props.globals.initNode("/ECAM/Upper/N1ylim", 0, "DOUBLE");
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
 var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
+var du3_off_time = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
+var du3_off_time_2 = props.globals.initNode("/instrumentation/du/du3-off-time-2", 0.0, "DOUBLE");
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 
 # Fetch nodes:
@@ -137,6 +139,10 @@ var canvas_upperECAM_base = {
 		elapsedtime = et.getValue();
 		
 		if (acess.getValue() >= 110) {
+			if (du3_off_time.getValue() != 0) {
+				du3_off_time_2.setValue(elapsedtime - du3_off_time.getValue());
+				du3_off_time.setValue(0);
+			}
 			if (wow0.getValue() == 1) {
 				if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
 					du3_test.setValue(1);
@@ -152,13 +158,15 @@ var canvas_upperECAM_base = {
 				du3_test_amount.setValue(0);
 				du3_test_time.setValue(-100);
 			}
-		} else {
+		} elsif (du3_test.getValue() != 0) {
 			du3_test.setValue(0);
+			du3_off_time.setValue(elapsedtime);
+			du3_off_time_2.setValue(0);
 		}
 		
 		cur_eng_option = eng_option.getValue();
 		if (acess.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
-			if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime) {
+			if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime and du3_off_time_2.getValue() > 0.5) {
 				upperECAM_cfm_eis2.page.hide();
 				upperECAM_iae_eis2.page.hide();
 				upperECAM_test.page.show();

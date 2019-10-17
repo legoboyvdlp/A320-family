@@ -246,6 +246,8 @@ var gen1_load = props.globals.initNode("/systems/electrical/extra/gen1-load", 0,
 var gen2_load = props.globals.initNode("/systems/electrical/extra/gen2-load", 0, "DOUBLE");
 var du4_test = props.globals.initNode("/instrumentation/du/du4-test", 0, "BOOL");
 var du4_test_time = props.globals.initNode("/instrumentation/du/du4-test-time", 0, "DOUBLE");
+var du4_off_time = props.globals.initNode("/instrumentation/du/du4-off-time", 0, "DOUBLE");
+var du4_off_time_2 = props.globals.initNode("/instrumentation/du/du4-off-time-2", 0, "DOUBLE");
 var du4_test_amount = props.globals.initNode("/instrumentation/du/du4-test-amount", 0, "DOUBLE");
 
 var canvas_lowerECAM_base = {
@@ -271,6 +273,10 @@ var canvas_lowerECAM_base = {
 	update: func() {
 		elapsedtime = elapsed_sec.getValue();
 		if (ac2.getValue() >= 110) {
+			if (du4_off_time.getValue() != 0) {
+				du4_off_time_2.setValue(elapsedtime - du4_off_time.getValue());
+				du4_off_time.setValue(0);
+			}
 			if (gear0_wow.getValue() == 1) {
 				if (autoconfig_running.getValue() != 1 and du4_test.getValue() != 1) {
 					du4_test.setValue(1);
@@ -286,12 +292,14 @@ var canvas_lowerECAM_base = {
 				du4_test_amount.setValue(0);
 				du4_test_time.setValue(-100);
 			}
-		} else if (ac1_src.getValue() == "XX" or ac2_src.getValue() == "XX") {
+		} elsif (du4_test.getValue() != 0) {
 			du4_test.setValue(0);
+			du4_off_time.setValue(elapsedtime);
+			du4_off_time_2.setValue(0);
 		}
 		
 		if (ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
-			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime) {
+			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime and du4_off_time_2.getValue() > 0.5) {
 				lowerECAM_apu.page.hide();
 				lowerECAM_bleed.page.hide();
 				lowerECAM_cond.page.hide();
