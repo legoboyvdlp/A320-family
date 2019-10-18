@@ -1,6 +1,6 @@
-# IDG Contributing Guidelines
+# A320-family Contributing Guidelines
 
-These examples will show the IDG Guidelines for contributing. Please follow this at all times, or your contribution will not be merged.
+These examples will show the Guidelines for contributing. Please follow this at all times, or your contribution will not be merged.
 
 ## Basic Guidelines:
 - Use Tabs to indent code, DO NOT USE SPACE.
@@ -44,4 +44,4 @@ var someOtherThing = func {
 ```
 
 ## Forks, Branches, and Merging
-We do not add contributors outside of IDG, so please fork the repository, and commit your changes there. Branches are optional. When you are ready for IDG to look over you work, submit a pull request, following our pull request template, and an IDG Developer will look over it. If there is an issue that needs to be resolved before merging, the IDG Developer will leave a comment on the pull request.
+Please fork the repository, and commit your changes there. Branches are optional. When you are ready for us to look over you work, submit a pull request, following our pull request template, and a main Developer will look over it. If there is an issue that needs to be resolved before merging, the Developer will leave a comment on the pull request.
