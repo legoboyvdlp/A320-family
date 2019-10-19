@@ -249,7 +249,7 @@ var ECAM = {
 				setprop("/ECAM/warning-phase", 3);
 			} else if (phase == 3 and speed >= 80) {
 				setprop("/ECAM/warning-phase", 4);
-			} else if (phase == 4 and getprop("/fdm/jsbsim/position/wow") == 0) { # Liftoff
+			} else if ((phase >= 2 and phase <= 4) and getprop("/fdm/jsbsim/position/wow") == 0) { # Liftoff
 				setprop("/ECAM/warning-phase", 5);
 			} else if (phase == 5 and getprop("/position/gear-agl-ft") >= 1500) {
 				setprop("/ECAM/warning-phase", 6);

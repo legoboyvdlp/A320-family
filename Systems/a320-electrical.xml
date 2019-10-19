@@ -519,6 +519,7 @@
 		<switch name="/systems/electrical/relay/apu-glc/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/controls/APU/master eq 1
 				/controls/electrical/switches/apu eq 1
 				/systems/electrical/sources/apu/output-volt ge 110
 				/systems/electrical/sources/apu/output-volt lt 130
@@ -992,7 +993,7 @@
 					/systems/electrical/relay/tr-contactor-2/output lt 25
 					/systems/electrical/relay/emer-glc/output ge 110
 				</test>
-				/systems/electrical/sources/ess-tr/output-volt ge 110
+				/systems/electrical/sources/ess-tr/output-volt ge 25
 			</test>
 		</switch>
 		

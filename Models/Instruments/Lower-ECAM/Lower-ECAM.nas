@@ -1701,7 +1701,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-AC2-ACESS"].hide();
 		}
 
-		if (tr1_fault.getValue() != 1) {
+		if (getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") == 1) {
 			if (ac1.getValue() < 110) {
 				me["ELEC-Line-AC1-TR1"].setColorFill(0.7333,0.3803,0);
 			} else {
@@ -1714,7 +1714,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-TR1-DC1"].hide();
 		}
 
-		if (tr2_fault.getValue() != 1) {
+		if (getprop("/systems/electrical/relay/tr-contactor-2/contact-pos") == 1) {
 			if (ac2.getValue() < 110) {
 				me["ELEC-Line-AC2-TR2"].setColorFill(0.7333,0.3803,0);
 			} else {
