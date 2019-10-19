@@ -230,7 +230,7 @@
 						<property>/gear/gear[2]/wow</property>
 					</and>
 				</enable>
-				<property>/services/chokes/nose</property>
+				<property>/services/chocks/nose</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -247,7 +247,7 @@
 						<property>/gear/gear[2]/wow</property>
 					</and>
 				</enable>
-				<property>/services/chokes/left</property>
+				<property>/services/chocks/left</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -264,7 +264,7 @@
 						<property>/gear/gear[2]/wow</property>
 					</and>
 				</enable>
-				<property>/services/chokes/right</property>
+				<property>/services/chocks/right</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -282,10 +282,12 @@
 				</binding>
 				<enable>
 					<and>
-						<equals>
+						<or>
 							<property>/controls/gear/brake-parking</property>
-							<value>1</value>
-						</equals>
+							<property>/services/chocks/nose</property>
+							<property>/services/chocks/left</property>
+							<property>/services/chocks/right</property>
+						</or>
 						<less-than>
 							<property>/velocities/groundspeed-kt</property>
 							<value>2</value>
@@ -308,10 +310,12 @@
 				</binding>
 				<enable>
 					<and>
-						<equals>
+						<or>
 							<property>/controls/gear/brake-parking</property>
-							<value>1</value>
-						</equals>
+							<property>/services/chocks/nose</property>
+							<property>/services/chocks/left</property>
+							<property>/services/chocks/right</property>
+						</or>
 						<less-than>
 							<property>/velocities/groundspeed-kt</property>
 							<value>2</value>
@@ -334,10 +338,12 @@
 				</binding>
 				<enable>
 					<and>
-						<equals>
+						<or>
 							<property>/controls/gear/brake-parking</property>
-							<value>1</value>
-						</equals>
+							<property>/services/chocks/nose</property>
+							<property>/services/chocks/left</property>
+							<property>/services/chocks/right</property>
+						</or>
 						<less-than>
 							<property>/velocities/groundspeed-kt</property>
 							<value>2</value>
