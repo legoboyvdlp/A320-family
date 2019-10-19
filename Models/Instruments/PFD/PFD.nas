@@ -136,23 +136,15 @@ var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0
 var speed_pred = props.globals.initNode("/instrumentation/pfd/speed-lookahead", 0.0, "DOUBLE");
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
-var du1_off_time = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
-var du1_off_time_2 = props.globals.initNode("/instrumentation/du/du1-off-time-2", 0.0, "DOUBLE");
 var du1_test_amount = props.globals.initNode("/instrumentation/du/du1-test-amount", 0.0, "DOUBLE");
 var du2_test = props.globals.initNode("/instrumentation/du/du2-test", 0, "BOOL");
 var du2_test_time = props.globals.initNode("/instrumentation/du/du2-test-time", 0.0, "DOUBLE");
-var du2_off_time = props.globals.initNode("/instrumentation/du/du2-off-time", 0.0, "DOUBLE");
-var du2_off_time_2 = props.globals.initNode("/instrumentation/du/du2-off-time-2", 0.0, "DOUBLE");
 var du2_test_amount = props.globals.initNode("/instrumentation/du/du2-test-amount", 0.0, "DOUBLE");
 var du5_test = props.globals.initNode("/instrumentation/du/du5-test", 0, "BOOL");
 var du5_test_time = props.globals.initNode("/instrumentation/du/du5-test-time", 0.0, "DOUBLE");
-var du5_off_time = props.globals.initNode("/instrumentation/du/du5-off-time", 0.0, "DOUBLE");
-var du5_off_time_2 = props.globals.initNode("/instrumentation/du/du5-off-time-2", 0.0, "DOUBLE");
 var du5_test_amount = props.globals.initNode("/instrumentation/du/du5-test-amount", 0.0, "DOUBLE");
 var du6_test = props.globals.initNode("/instrumentation/du/du6-test", 0, "BOOL");
 var du6_test_time = props.globals.initNode("/instrumentation/du/du6-test-time", 0.0, "DOUBLE");
-var du6_off_time = props.globals.initNode("/instrumentation/du/du6-off-time", 0.0, "DOUBLE");
-var du6_off_time_2 = props.globals.initNode("/instrumentation/du/du6-off-time-2", 0.0, "DOUBLE");
 var du6_test_amount = props.globals.initNode("/instrumentation/du/du6-test-amount", 0.0, "DOUBLE");
 
 var canvas_PFD_base = {
@@ -210,10 +202,6 @@ var canvas_PFD_base = {
 	update: func() {
 		elapsedtime_act = elapsedtime.getValue();
 		if (acess.getValue() >= 110) {
-			if (du1_off_time.getValue() != 0) {
-				du1_off_time_2.setValue(elapsedtime_act - du1_off_time.getValue());
-				du1_off_time.setValue(0);
-			}
 			if (wow0.getValue() == 1) {
 				if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
 					du1_test.setValue(1);
@@ -229,17 +217,11 @@ var canvas_PFD_base = {
 				du1_test_amount.setValue(0);
 				du1_test_time.setValue(-100);
 			}
-		} elsif (du1_test.getValue() != 0) {
+		} else {
 			du1_test.setValue(0);
-			du1_off_time.setValue(elapsedtime_act);
-			du1_off_time_2.setValue(0);
 		}
 		
 		if (ac2.getValue() >= 110) {
-			if (du6_off_time.getValue() != 0) {
-				du6_off_time_2.setValue(elapsedtime_act - du6_off_time.getValue());
-				du6_off_time.setValue(0);
-			}
 			if (wow0.getValue() == 1) {
 				if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
 					du6_test.setValue(1);
@@ -255,22 +237,20 @@ var canvas_PFD_base = {
 				du6_test_amount.setValue(0);
 				du6_test_time.setValue(-100);
 			}
-		} elsif (du6_test.getValue() != 0) {
+		} else {
 			du6_test.setValue(0);
-			du6_off_time.setValue(elapsedtime_act);
-			du6_off_time_2.setValue(0);
 		}
 		
 		if (acconfig_mismatch.getValue() == "0x000") {
 			PFD_1_mismatch.page.hide();
 			PFD_2_mismatch.page.hide();
 			if (acess.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
-				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1 and du1_off_time_2.getValue() > 0.5) {
+				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1) {
 					PFD_1_test.update();
 					updateL = 0;
 					PFD_1.page.hide();
 					PFD_1_test.page.show();
-				} else if (du2_test_time.getValue() + du2_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() == 1 and du2_off_time_2.getValue() > 0.5) {
+				} else if (du2_test_time.getValue() + du2_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() == 1) {
 					PFD_1_test.update();
 					updateL = 0;
 					PFD_1.page.hide();
@@ -288,12 +268,12 @@ var canvas_PFD_base = {
 				PFD_1.page.hide();
 			}
 			if (ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
-				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1 and du6_off_time_2.getValue() > 0.5) {
+				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1) {
 					PFD_2_test.update();
 					updateR = 0;
 					PFD_2.page.hide();
 					PFD_2_test.page.show();
-				} else if (du5_test_time.getValue() + du5_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() == 1 and du5_off_time_2.getValue() > 0.5) {
+				} else if (du5_test_time.getValue() + du5_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() == 1) {
 					PFD_2_test.update();
 					updateR = 0;
 					PFD_2.page.hide();
