@@ -1,4 +1,4 @@
-# IDG Tablet
+# Tablet
 # Joshua Davidson (Octal450)
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)

@@ -1,4 +1,4 @@
-# IDG Distance Zooming
+# Distance Zooming
 # Copyright (c) 2019 Joshua Davidson (Octal450)
 # Based on PropertyRule file by onox
 
