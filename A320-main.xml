@@ -37,6 +37,11 @@
 				<driver>
 					<F_V type="float">5.5</F_V>
 					<K_psi type="float">0.03</K_psi>
+					<F_V type="float">8.0</F_V>
+					<K_psi type="float">0.03</K_psi>
+					<F_psi type="float">1.0</F_psi>
+					<K_psidot type="float">0.03</K_psidot>
+					<F_psidot type="float">1.0</F_psidot>
 				</driver>
 				<route>
 					<show type="bool"/>
