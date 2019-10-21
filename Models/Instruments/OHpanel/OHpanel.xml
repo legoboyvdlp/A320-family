@@ -6449,7 +6449,7 @@
 	
 	<animation>
 		<type>material</type>
-		<object-name>firebtn1</object-name>
+		<object-name>Eng1FireBtn</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
@@ -6693,7 +6693,7 @@
 	
 	<animation>
 		<type>material</type>
-		<object-name>firebtnapu</object-name>
+		<object-name>APUFireBtn</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
@@ -6835,7 +6835,7 @@
 	
 	<animation>
 		<type>material</type>
-		<object-name>firebtn2</object-name>
+		<object-name>Eng2FireBtn</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
