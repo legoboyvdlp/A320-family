@@ -400,7 +400,7 @@
 						<not>
 							<equals>
 								<property>systems/radio/rmp[0]/vhf3-standby</property>
-								<value type="int">0</value>
+								<value>0</value>
 							</equals>
 						</not>
 					</and>
@@ -427,7 +427,7 @@
 						<not>
 							<equals>
 								<property>systems/radio/rmp[0]/vhf3-standby</property>
-								<value type="int">0</value>
+								<value>0</value>
 							</equals>
 						</not>
 					</and>
@@ -454,7 +454,7 @@
 						<not>
 							<equals>
 								<property>systems/radio/rmp[0]/vhf3-standby</property>
-								<value type="int">0</value>
+								<value>0</value>
 							</equals>
 						</not>
 					</and>
@@ -663,6 +663,12 @@
 							<property>systems/radio/rmp[0]/sel_chan</property>
 							<value type="string">vhf3</value>
 						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
 					</and>
 				</condition>
 				<command>property-assign</command>
@@ -684,6 +690,12 @@
 							<property>systems/radio/rmp[0]/sel_chan</property>
 							<value type="string">vhf3</value>
 						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
 					</and>
 				</condition>
 				<command>property-adjust</command>
@@ -705,6 +717,12 @@
 							<property>systems/radio/rmp[0]/sel_chan</property>
 							<value type="string">vhf3</value>
 						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
 					</and>
 				</condition>
 				<command>property-assign</command>
