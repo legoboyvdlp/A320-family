@@ -360,15 +360,6 @@
 						</binding>
 					</item>
 					<item>
-						<label>Adjust Sound Volumes</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-							acconfig.sound_config_dlg.open();
-							</script>
-						</binding>
-					</item>
-					<item>
 						<label>Skip ADIRS</label>
 						<binding>
 							<command>property-assign</command>
