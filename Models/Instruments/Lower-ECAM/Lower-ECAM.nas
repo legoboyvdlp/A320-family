@@ -1831,8 +1831,8 @@ var canvas_lowerECAM_eng = {
 		me["OilPSI2-needle"].setRotation((oil_psi2.getValue() + 90) * D2R);
 
 		# Fuel Used
-		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue())));
-		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue())));
+		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
 		
 		me.updateBottomStatus();
 	},
@@ -2241,14 +2241,14 @@ var canvas_lowerECAM_fuel = {
 	update: func() {
 
 		# if (getprop("engines/engine[0]/n1-actual") < getprop("/controls/engines/idle-limit")) {
-		if (eng1_n1.getValue() < 19.7) {
+		if (eng1_n1.getValue() <= 18.9) {
 			me["ENG1idFFlow"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ENG1idFFlow"].setColor(0.8078,0.8039,0.8078);
 		}
 
 		# if (getprop("engines/engine[1]/n1-actual") < getprop("/controls/engines/idle-limit")) {
-		if (eng2_n1.getValue() < 19.7) {
+		if (eng2_n1.getValue() <= 18.9) {
 			me["ENG2idFFlow"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ENG2idFFlow"].setColor(0.8078,0.8039,0.8078);
@@ -2259,7 +2259,7 @@ var canvas_lowerECAM_fuel = {
 
 		if (fadec1.getValue() == 1 and fadec2.getValue() == 1) {
 			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
-			me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((fuel_flow1.getValue() + fuel_flow2.getValue()) / 60, 1)));
+			me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((fuel_flow1.getValue() + fuel_flow2.getValue()) / 60, 10)));
 		} else {
 			me["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
 			me["FUEL-Flow-per-min"].setText("XX");
@@ -2378,9 +2378,9 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# Fuel Used
-		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue())));
-		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue())));
-		me["FUEL-used-both"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue()+fuel_used_lbs2.getValue())));
+		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+		me["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
 
 		# Fuel Temp
 		me["FUEL-Left-Outer-temp"].setText(sprintf("%s", math.round(fuel_left_outer_temp.getValue())));
@@ -2391,12 +2391,12 @@ var canvas_lowerECAM_fuel = {
 		# Fuel Quantity
 		# TODO add LO indication
 		if (fuel_left_quantity.getValue() >= 3170) {
-			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1520)));
+			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1520, 10)));
 			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", 1520));
 			me["FUEL-Left-Transfer"].hide();
 		} else if (fuel_left_quantity.getValue() >= 1650) {
 			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", 1650));
-			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1650)));
+			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1650, 10)));
 			me["FUEL-Left-Transfer"].setColor(0.7333,0.3803,0);
 			me["FUEL-Left-Transfer"].show();
 		} else {
@@ -2406,16 +2406,16 @@ var canvas_lowerECAM_fuel = {
 		}
 		me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(fuel_center_quantity.getValue())));
 		if (fuel_right_quantity.getValue() >= 3170) {
-			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1520)));
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1520, 10)));
 			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", 1520));
 			me["FUEL-Right-Transfer"].hide();
 		} else if (fuel_right_quantity.getValue() >= 1650) {
 			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", 1650));
-			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1650)));
+			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1650, 10)));
 			me["FUEL-Right-Transfer"].show();
 			me["FUEL-Right-Transfer"].setColor(0.7333,0.3803,0);
 		} else {
-			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue())));
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue(), 10)));
 			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", 0));
 			me["FUEL-Right-Transfer"].hide();
 		}	
