@@ -111,6 +111,11 @@ var switch_pack1 = props.globals.getNode("/controls/pneumatic/switches/pack1", 1
 var switch_pack2 = props.globals.getNode("/controls/pneumatic/switches/pack2", 1);
 var oil_qt1_actual = props.globals.getNode("/engines/engine[0]/oil-qt-actual", 1);
 var oil_qt2_actual = props.globals.getNode("/engines/engine[1]/oil-qt-actual", 1);
+var fuel_used_lbs1 = props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs", 1);
+var fuel_used_lbs2 = props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs", 1);
+var fuel_left_quantity = props.globals.getNode("/consumables/fuel/tank[0]/level-lbs", 1);
+var fuel_center_quantity = props.globals.getNode("/consumables/fuel/tank[1]/level-lbs", 1);
+var fuel_right_quantity = props.globals.getNode("/consumables/fuel/tank[2]/level-lbs", 1);
 var doorL1_pos = props.globals.getNode("sim/model/door-positions/doorl1/position-norm", 1);
 var doorR1_pos = props.globals.getNode("sim/model/door-positions/doorr1/position-norm", 1);
 var doorL4_pos = props.globals.getNode("sim/model/door-positions/doorl4/position-norm", 1);
@@ -219,6 +224,10 @@ var fadec1 = props.globals.getNode("/systems/fadec/powered1", 1);
 var fadec2 = props.globals.getNode("/systems/fadec/powered2", 1);
 var fuel_flow1 = props.globals.getNode("/engines/engine[0]/fuel-flow_actual", 1);
 var fuel_flow2 = props.globals.getNode("/engines/engine[1]/fuel-flow_actual", 1);
+var fuel_left_outer_temp = props.globals.getNode("/consumables/fuel/tank[0]/temperature_degC", 1);
+var fuel_left_inner_temp = props.globals.getNode("/consumables/fuel/tank[0]/temperature_degC", 1);
+var fuel_right_outer_temp = props.globals.getNode("/consumables/fuel/tank[1]/temperature_degC", 1);
+var fuel_right_inner_temp = props.globals.getNode("/consumables/fuel/tank[1]/temperature_degC", 1);
 var cutoff_switch1 = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
 var cutoff_switch2 = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
 var fuel_xfeed = props.globals.getNode("/controls/fuel/x-feed", 1);
@@ -1786,7 +1795,7 @@ var canvas_lowerECAM_eng = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2"];
+		return ["TAT","SAT","GW","UTCh","UTCm","OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2","FUEL-used-1","FUEL-used-2"];
 	},
 	update: func() {
 		# Oil Quantity
@@ -1821,6 +1830,10 @@ var canvas_lowerECAM_eng = {
 		me["OilPSI1-needle"].setRotation((oil_psi1.getValue() + 90) * D2R);
 		me["OilPSI2-needle"].setRotation((oil_psi2.getValue() + 90) * D2R);
 
+		# Fuel Used
+		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+		
 		me.updateBottomStatus();
 	},
 };
@@ -2219,23 +2232,23 @@ var canvas_lowerECAM_fuel = {
 		return m;
 	},
 	getKeys: func() {
-		return["TAT","SAT","GW","UTCh","UTCm","FUEL-Pump-Left-1","FUEL-Pump-Left-2","FUEL-Pump-Center-1","FUEL-Pump-Center-2","FUEL-Pump-Right-1","FUEL-Pump-Right-2","FUEL-Left-blocked","FUEL-Right-blocked","FUEL-Center-blocked","FUEL-Left-Tranfser",
-		"FUEL-Right-Tranfse","FUEL-Left-Outer-Inacc","FUEL-Left-Inner-Inacc","FUEL-Center-Inacc","FUEL-Right-Inner-Inacc","FUEL-Right-Outer-Inacc","FUEL-Left-Outer-quantity","FUEL-Left-Inner-quantity","FUEL-Center-quantity","FUEL-Right-Inner-quantity",
+		return["TAT","SAT","GW","UTCh","UTCm","FUEL-Pump-Left-1","FUEL-Pump-Left-2","FUEL-Pump-Center-1","FUEL-Pump-Center-2","FUEL-Pump-Right-1","FUEL-Pump-Right-2","FUEL-Left-blocked","FUEL-Right-blocked","FUEL-Center-blocked","FUEL-Left-Transfer",
+		"FUEL-Right-Transfer","FUEL-Left-Outer-Inacc","FUEL-Left-Inner-Inacc","FUEL-Center-Inacc","FUEL-Right-Inner-Inacc","FUEL-Right-Outer-Inacc","FUEL-Left-Outer-quantity","FUEL-Left-Inner-quantity","FUEL-Center-quantity","FUEL-Right-Inner-quantity",
 		"FUEL-Right-Outer-quantity","FUEL-On-Board","FUEL-Flow-per-min","FUEL-APU-arrow","FUEL-APU-label","FUEL-used-1","FUEL-used-both","FUEL-used-2","FUEL-ENG-Master-1","FUEL-ENG-Master-2","FUEL-XFEED","FUEL-XFEED-pipes","FUEL-Left-Outer-temp",
 		"FUEL-Left-Inner-temp","FUEL-Right-Inner-temp","FUEL-Right-Outer-temp","FUEL-Pump-Left-1-Closed","FUEL-Pump-Left-1-Open","FUEL-Pump-Left-2-Closed","FUEL-Pump-Left-2-Open","FUEL-Pump-Center-1-Open","FUEL-Pump-Center-1-Closed","FUEL-Pump-Center-2-Closed",
-		"FUEL-Pump-Center-2-Open","FUEL-Pump-Right-1-Closed","FUEL-Pump-Right-1-Open","FUEL-Pump-Right-2-Closed","FUEL-Pump-Right-2-Open","FUEL-ENG-1-label","FUEL-ENG-2-label","FUEL-ENG-1-pipe","FUEL-ENG-2-pipe","FUEL-Right-Tranfser","ENG1idFFlow","ENG2idFFlow"];
+		"FUEL-Pump-Center-2-Open","FUEL-Pump-Right-1-Closed","FUEL-Pump-Right-1-Open","FUEL-Pump-Right-2-Closed","FUEL-Pump-Right-2-Open","FUEL-ENG-1-label","FUEL-ENG-2-label","FUEL-ENG-1-pipe","FUEL-ENG-2-pipe","ENG1idFFlow","ENG2idFFlow","FUEL-used-1","FUEL-used-2","FUEL-used-both"];
 	},
 	update: func() {
 
 		# if (getprop("engines/engine[0]/n1-actual") < getprop("/controls/engines/idle-limit")) {
-		if (eng1_n1.getValue() < 19.7) {
+		if (eng1_n1.getValue() <= 18.9) {
 			me["ENG1idFFlow"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ENG1idFFlow"].setColor(0.8078,0.8039,0.8078);
 		}
 
 		# if (getprop("engines/engine[1]/n1-actual") < getprop("/controls/engines/idle-limit")) {
-		if (eng2_n1.getValue() < 19.7) {
+		if (eng2_n1.getValue() <= 18.9) {
 			me["ENG2idFFlow"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ENG2idFFlow"].setColor(0.8078,0.8039,0.8078);
@@ -2246,14 +2259,14 @@ var canvas_lowerECAM_fuel = {
 
 		if (fadec1.getValue() == 1 and fadec2.getValue() == 1) {
 			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
-			me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((fuel_flow1.getValue() + fuel_flow2.getValue()) / 60, 1)));
+			me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((fuel_flow1.getValue() + fuel_flow2.getValue()) / 60, 10)));
 		} else {
 			me["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
 			me["FUEL-Flow-per-min"].setText("XX");
 		}
 
 		# this is now bound to the ENG master switch
-		# TODO use the valve prop and add amber if diffrence between eng master and valve
+		# TODO use the valve prop and add amber if difference between eng master and valve
 		# TODO add transition state
 		# TODO fix amber/green at the same time when closed
 		if (cutoff_switch1.getValue() == 0) {
@@ -2267,7 +2280,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# this is now bound to the ENG master switch
-		# TODO use the valve prop and add amber if diffrence between eng master and valve
+		# TODO use the valve prop and add amber if difference between eng master and valve
 		# TODO add transition state
 		# TODO fix amber/green at the same time when closed
 		if (cutoff_switch2.getValue() == 0) {
@@ -2364,6 +2377,49 @@ var canvas_lowerECAM_fuel = {
 			me["FUEL-Pump-Right-2"].setColor(0.7333,0.3803,0);
 		}
 
+		# Fuel Used
+		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+		me["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+
+		# Fuel Temp
+		me["FUEL-Left-Outer-temp"].setText(sprintf("%s", math.round(fuel_left_outer_temp.getValue())));
+		me["FUEL-Left-Inner-temp"].setText(sprintf("%s", math.round(fuel_left_inner_temp.getValue())));
+		me["FUEL-Right-Outer-temp"].setText(sprintf("%s", math.round(fuel_right_outer_temp.getValue())));
+		me["FUEL-Right-Inner-temp"].setText(sprintf("%s", math.round(fuel_right_inner_temp.getValue())));
+
+		# Fuel Quantity
+		# TODO add LO indication
+		if (fuel_left_quantity.getValue() >= 3170) {
+			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1520, 10)));
+			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", 1520));
+			me["FUEL-Left-Transfer"].hide();
+		} else if (fuel_left_quantity.getValue() >= 1650) {
+			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", 1650));
+			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1650, 10)));
+			me["FUEL-Left-Transfer"].setColor(0.7333,0.3803,0);
+			me["FUEL-Left-Transfer"].show();
+		} else {
+			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue())));
+			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", 0));
+			me["FUEL-Left-Transfer"].hide();
+		}
+		me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(fuel_center_quantity.getValue())));
+		if (fuel_right_quantity.getValue() >= 3170) {
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1520, 10)));
+			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", 1520));
+			me["FUEL-Right-Transfer"].hide();
+		} else if (fuel_right_quantity.getValue() >= 1650) {
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", 1650));
+			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1650, 10)));
+			me["FUEL-Right-Transfer"].show();
+			me["FUEL-Right-Transfer"].setColor(0.7333,0.3803,0);
+		} else {
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue(), 10)));
+			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", 0));
+			me["FUEL-Right-Transfer"].hide();
+		}	
+
 		# Hide not yet implemented features
 		# TODO add them
 		me["FUEL-Left-blocked"].hide();
@@ -2374,13 +2430,6 @@ var canvas_lowerECAM_fuel = {
 		me["FUEL-Right-Outer-Inacc"].hide();
 		me["FUEL-Right-Inner-Inacc"].hide();
 		me["FUEL-Center-Inacc"].hide();
-		me["FUEL-Left-Tranfser"].hide();
-		me["FUEL-Right-Tranfser"].hide();
-		me["FUEL-Left-Outer-temp"].hide();
-		me["FUEL-Left-Inner-temp"].hide();
-		me["FUEL-Right-Outer-temp"].hide();
-		me["FUEL-Right-Inner-temp"].hide();
-
 		me.updateBottomStatus();
 	},
 };
