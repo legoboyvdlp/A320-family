@@ -7,7 +7,7 @@
 	<path>res/ohpanel.ac</path>
 
 	<!-- ANIMATIONS -->
-	
+
 	<!-- No button lights without power! -->
 	<animation>
 		<type>select</type>
@@ -73,7 +73,7 @@
 			</greater-than-equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>AftCargoIsoBtn1F</object-name>
@@ -168,7 +168,7 @@
 			</greater-than-equals>
 		</condition>
 	</animation>
-	
+
 	<!-- These are not simulated yet, so they only illuminate when the test is on. Remove each light/button once you add its select animation. -JD -->
 	<animation>
 		<type>select</type>
@@ -192,7 +192,7 @@
 			</equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>material</type>
 		<object-name>Battery-volt</object-name>
@@ -208,7 +208,7 @@
 			<blue>1</blue>
 		</diffuse>
 	</animation>
-	
+
 	<!-- Ventilation -->
 	<animation>
 		<type>select</type>
@@ -226,7 +226,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Cargo Smoke -->
 	<animation>
 		<type>select</type>
@@ -244,7 +244,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>AftCargoSmkBtn1S</object-name>
@@ -261,7 +261,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FwdCargoSmkBtn2D</object-name>
@@ -282,7 +282,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>AftCargoSmkBtn2D</object-name>
@@ -303,7 +303,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Cargo Smoke Test</name>
 		<type>pick</type>
@@ -341,7 +341,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>FwdCargoDischBtn</object-name>
@@ -389,7 +389,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>AftCargoDischBtn</object-name>
@@ -437,7 +437,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>FwdCargoDischGuard</object-name>
@@ -459,7 +459,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>AftCargoDischGuard</object-name>
@@ -481,7 +481,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>FwdCargoDischGuard</object-name>
@@ -496,7 +496,7 @@
 			<z2-m>-0.11153</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>AftCargoDischGuard</object-name>
@@ -511,7 +511,7 @@
 			<z2-m>-0.11153</z2-m>
 		</axis>
 	</animation>
-	
+
 	<!-- IRS 1 -->
 	<animation>
 		<type>pick</type>
@@ -549,7 +549,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>IR1ModeKnb</object-name>
@@ -568,7 +568,7 @@
 			<z2-m>0.17819</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>IR1Btn1F</object-name>
@@ -601,7 +601,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- IRS 2 -->
 	<animation>
 		<type>pick</type>
@@ -639,7 +639,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>IR2ModeKnb</object-name>
@@ -658,7 +658,7 @@
 			<z2-m>0.17819</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>IR2Btn1F</object-name>
@@ -729,7 +729,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>IR3ModeKnb</object-name>
@@ -748,7 +748,7 @@
 			<z2-m>0.17819</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>IR3Btn1F</object-name>
@@ -781,7 +781,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- On Bat Light -->
 	<animation>
 		<type>select</type>
@@ -801,7 +801,7 @@
 	</animation>
 
 	<!-- ADR 1 -->
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ADR1Btn1</object-name>
@@ -827,7 +827,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ADR1Btn1F</object-name>
@@ -862,7 +862,7 @@
 	</animation>
 
 	<!-- ADR 2 -->
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ADR2Btn1</object-name>
@@ -888,7 +888,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ADR2Btn1F</object-name>
@@ -921,9 +921,9 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- ADR 3 -->
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ADR3Btn1</object-name>
@@ -949,7 +949,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ADR3Btn1F</object-name>
@@ -1009,7 +1009,7 @@
 			<factor-prop>controls/lighting/overhead-panel-norm</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -1035,7 +1035,7 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -1047,7 +1047,7 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -1112,7 +1112,7 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>Panel</object-name>
@@ -1155,7 +1155,7 @@
 		<object-name>Eng2ManStartProt</object-name>
 		<object-name>EmerCallProt</object-name>
 	</effect>
-	
+
 	<!-- ELAC 1 -->
 	<animation>
 		<type>pick</type>
@@ -1182,7 +1182,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ELAC1Btn1F</object-name>
@@ -1201,7 +1201,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ELAC1Btn2O</object-name>
@@ -1218,7 +1218,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- SEC 1 -->
 	<animation>
 		<type>pick</type>
@@ -1245,7 +1245,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>SEC1Btn1F</object-name>
@@ -1268,7 +1268,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>SEC1Btn2O</object-name>
@@ -1285,7 +1285,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- FAC 1 -->
 	<animation>
 		<type>pick</type>
@@ -1312,7 +1312,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FAC1Btn1F</object-name>
@@ -1335,7 +1335,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FAC1Btn2O</object-name>
@@ -1352,7 +1352,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- ELAC 2 -->
 	<animation>
 		<type>pick</type>
@@ -1379,7 +1379,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ELAC2Btn1F</object-name>
@@ -1402,7 +1402,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ELAC2Btn2O</object-name>
@@ -1419,7 +1419,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- SEC 3 -->
 	<animation>
 		<type>pick</type>
@@ -1446,7 +1446,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>SEC2Btn1F</object-name>
@@ -1469,7 +1469,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>SEC2Btn2O</object-name>
@@ -1486,7 +1486,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- SEC 3 -->
 	<animation>
 		<type>pick</type>
@@ -1513,7 +1513,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>SEC3Btn1F</object-name>
@@ -1536,7 +1536,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>SEC3Btn2O</object-name>
@@ -1553,7 +1553,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- FAC 2 -->
 	<animation>
 		<type>pick</type>
@@ -1580,7 +1580,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FAC2Btn1F</object-name>
@@ -1603,7 +1603,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FAC2Btn2O</object-name>
@@ -1620,7 +1620,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- GPWS -->
 	<!--animation>
 		<name>GPWS terrain system pick</name>
@@ -1648,7 +1648,7 @@
 			</binding>
 		</action>
 	</animation-->
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSTerrBtn1F</object-name>
@@ -1671,7 +1671,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSTerrBtn2O</object-name>
@@ -1688,7 +1688,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>GPWS system pick</name>
 		<type>pick</type>
@@ -1715,7 +1715,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSBtn1F</object-name>
@@ -1738,7 +1738,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSBtn2O</object-name>
@@ -1781,7 +1781,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSGSBtn2O</object-name>
@@ -1824,7 +1824,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSFlpBtn2O</object-name>
@@ -1841,7 +1841,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>GPWS flaps pick</name>
 		<type>pick</type>
@@ -1867,7 +1867,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GPWSFlp3Btn2O</object-name>
@@ -1884,7 +1884,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Hydraulic -->
 	<animation>
 		<name>Green Eng Pump pick</name>
@@ -1912,7 +1912,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GreenEngPump1F</object-name>
@@ -1952,7 +1952,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>RAT MAN pick</name>
 		<type>pick</type>
@@ -2011,7 +2011,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RATManGuard</object-name>
@@ -2032,7 +2032,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>RATManGuard</object-name>
@@ -2047,7 +2047,7 @@
 			<z2-m>0.14462</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<name>Blue Elec Pump pick</name>
 		<type>pick</type>
@@ -2074,7 +2074,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>BlueElecPump1F</object-name>
@@ -2114,7 +2114,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>PTU pick</name>
 		<type>pick</type>
@@ -2141,7 +2141,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>PTU1F</object-name>
@@ -2181,7 +2181,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Yellow Eng Pump pick</name>
 		<type>pick</type>
@@ -2208,7 +2208,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>YellowEngPump1F</object-name>
@@ -2248,7 +2248,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Yellow Eng Pump pick</name>
 		<type>pick</type>
@@ -2275,7 +2275,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>YellowElecPump1F</object-name>
@@ -2315,9 +2315,9 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Fuel -->
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>FuelXfeedBtn1</object-name>
@@ -2343,7 +2343,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FuelXfeedBtn1O</object-name>
@@ -2376,7 +2376,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>LFuelTank1Btn1</object-name>
@@ -2402,7 +2402,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>LFuelTank1Btn1F</object-name>
@@ -2441,7 +2441,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>LFuelTank2Btn1</object-name>
@@ -2467,7 +2467,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>LFuelTank2Btn1F</object-name>
@@ -2506,7 +2506,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>CFuelTank1Btn1</object-name>
@@ -2532,7 +2532,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>CFuelTank1Btn1F</object-name>
@@ -2571,7 +2571,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!--animation>
 		<type>pick</type>
 		<object-name>FuelModeBtn</object-name>
@@ -2596,7 +2596,7 @@
 			</binding>
 		</action>
 	</animation-->
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FuelModeBtn1F</object-name>
@@ -2635,7 +2635,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>CFuelTank2Btn1</object-name>
@@ -2661,7 +2661,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>CFuelTank2Btn1F</object-name>
@@ -2700,7 +2700,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RFuelTank1Btn1</object-name>
@@ -2726,7 +2726,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>RFuelTank1Btn1F</object-name>
@@ -2765,7 +2765,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RFuelTank2Btn1</object-name>
@@ -2791,7 +2791,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>RFuelTank2Btn1F</object-name>
@@ -2830,7 +2830,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Electrical -->
 	<animation>
 		<name>Galley pick</name>
@@ -2857,7 +2857,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>GalleyPwrBtn1F</object-name>
@@ -2897,7 +2897,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Battery1 pick</name>
 		<type>pick</type>
@@ -2918,7 +2918,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>BatteryBtn11F</object-name>
@@ -2985,7 +2985,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>BatteryBtn21F</object-name>
@@ -3008,7 +3008,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>BatteryBtn22O</object-name>
@@ -3031,7 +3031,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>IDG 1 pick</name>
 		<type>pick</type>
@@ -3065,7 +3065,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>IDG1Btn1F</object-name>
@@ -3082,7 +3082,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Generator 1 pick</name>
 		<type>pick</type>
@@ -3115,7 +3115,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Gen1Btn1F</object-name>
@@ -3132,7 +3132,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Gen1Btn2O</object-name>
@@ -3149,7 +3149,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>AC ESS FEED pick</name>
 		<type>pick</type>
@@ -3181,7 +3181,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ACESSFeedBtn1F</object-name>
@@ -3248,7 +3248,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUGenBtn1F</object-name>
@@ -3271,7 +3271,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUGenBtn2O</object-name>
@@ -3288,7 +3288,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Bus Tie pick</name>
 		<type>pick</type>
@@ -3319,7 +3319,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>BusTieBtn2O</object-name>
@@ -3363,7 +3363,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ExtPwrBtn1A</object-name>
@@ -3460,7 +3460,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Gen2Btn2O</object-name>
@@ -3477,7 +3477,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>IDG 2 pick</name>
 		<type>pick</type>
@@ -3511,7 +3511,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>IDG2Btn1F</object-name>
@@ -3528,7 +3528,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Emer Gen Test pick</name>
 		<type>pick</type>
@@ -3588,7 +3588,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>EmerGenTestGuard</object-name>
@@ -3609,7 +3609,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>EmerGenTestGuard</object-name>
@@ -3624,7 +3624,7 @@
 			<z2-m>-0.028926</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<name>Gen 1 Line Contactor pick</name>
 		<type>pick</type>
@@ -3647,7 +3647,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Gen1LineBtn2O</object-name>
@@ -3670,7 +3670,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>EmerGenInd1F</object-name>
@@ -3699,7 +3699,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>ELEC RAT MAN pick</name>
 		<type>pick</type>
@@ -3759,7 +3759,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>EmerManOnGuard</object-name>
@@ -3780,7 +3780,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>EmerManOnGuard</object-name>
@@ -3795,7 +3795,7 @@
 			<z2-m>-0.02796</z2-m>
 		</axis>
 	</animation>
-	
+
 	<!-- Pneumatic -->
 	<animation>
 		<name>AC pack flow pick</name>
@@ -3855,7 +3855,7 @@
 			<z-m>-0.10197</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Cockpit Temp pick</name>
 		<type>pick</type>
@@ -3905,7 +3905,7 @@
 			<z-m>-0.10202</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>FWD Temp pick</name>
 		<type>pick</type>
@@ -3955,7 +3955,7 @@
 			<z-m>-0.10202</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>AFT Temp pick</name>
 		<type>pick</type>
@@ -4005,7 +4005,7 @@
 			<z-m>-0.10202</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>X-Bleed pick</name>
 		<type>pick</type>
@@ -4097,7 +4097,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ACPack1Btn1F</object-name>
@@ -4164,7 +4164,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1BleedBtn1F</object-name>
@@ -4237,7 +4237,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUBleedBtn1F</object-name>
@@ -4304,7 +4304,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2BleedBtn1F</object-name>
@@ -4344,7 +4344,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Hot Air pick</name>
 		<type>pick</type>
@@ -4370,7 +4370,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>HotAirBtn1F</object-name>
@@ -4443,7 +4443,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ACPack2Btn1F</object-name>
@@ -4483,7 +4483,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>RAM Air Turb switch pick</name>
 		<type>pick</type>
@@ -4537,7 +4537,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RamAirBtn</object-name>
@@ -4552,7 +4552,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>RamAirBtnProt</object-name>
@@ -4567,7 +4567,7 @@
 			<z2-m>-0.15269</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>RamAirBtn2O</object-name>
@@ -4584,7 +4584,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Cabin Pressurization -->
 	<animation>
 		<type>pick</type>
@@ -4670,7 +4670,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>Man VS rotate</name>
 		<type>rotate</type>
@@ -4692,7 +4692,7 @@
 			<z-m>-0.2186</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>CabinPressModeBtn</object-name>
@@ -4717,7 +4717,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>CabinPressModeBtn1F</object-name>
@@ -4751,7 +4751,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>DitchBtn1</object-name>
@@ -4805,7 +4805,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>DitchBtn1</object-name>
@@ -4821,7 +4821,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>DitchProt</object-name>
@@ -4892,7 +4892,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>Strobe lights rotate</name>
 		<type>rotate</type>
@@ -5047,7 +5047,7 @@
 			<z-m>-0.265</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Turnoff light pick</name>
 		<type>pick</type>
@@ -5081,7 +5081,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>turnoff light rotate</name>
 		<type>rotate</type>
@@ -5102,7 +5102,7 @@
 			<z-m>-0.3037</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>landing light pick</name>
 		<type>pick</type>
@@ -5138,7 +5138,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>landing light pick</name>
 		<type>pick</type>
@@ -5174,7 +5174,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>landing light rotate</name>
 		<type>rotate</type>
@@ -5195,7 +5195,7 @@
 			<z-m>-0.3037</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>landing light rotate</name>
 		<type>rotate</type>
@@ -5276,7 +5276,7 @@
 
 	<!-- Anti-ice -->
 	<!-- Eng and Wing -->
-	
+
 	<animation>
 		<name>Wing Anti-ice Pick</name>
 		<type>pick</type>
@@ -5303,7 +5303,7 @@
 			</binding>
 		</action>
 	</animation>
-		
+
 	<animation>
 		<type>select</type>
 		<object-name>WingAntiIceBtn1F</object-name>
@@ -5320,7 +5320,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>WingAntiIceBtn2O</object-name>
@@ -5337,7 +5337,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Left Engine Anti-ice Pick</name>
 		<type>pick</type>
@@ -5364,7 +5364,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1AntiIceBtn1F</object-name>
@@ -5381,7 +5381,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1AntiIceBtn2O</object-name>
@@ -5398,7 +5398,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Right Engine Anti-ice Pick</name>
 		<type>pick</type>
@@ -5425,7 +5425,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2AntiIceBtn1F</object-name>
@@ -5442,7 +5442,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2AntiIceBtn2O</object-name>
@@ -5459,10 +5459,10 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Window Heat and Probe Button -->
 	<!-- 0.5 is auto, 1 is on -->
-	
+
 	<animation>
 		<name>Window Probe Heat Toggle</name>
 		<type>pick</type>
@@ -5490,7 +5490,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>PrbWinHeatBtn2O</object-name>
@@ -5507,7 +5507,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Cabin Fans -->
 	<animation>
 		<name>Cabin Fans Toggle</name>
@@ -5533,7 +5533,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>CabinFansBtn2O</object-name>
@@ -5550,7 +5550,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- APU -->
 	<animation>
 		<name>APU master switch pick</name>
@@ -5584,7 +5584,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUMasterBtn1F</object-name>
@@ -5598,7 +5598,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUMasterBtn2O</object-name>
@@ -5652,7 +5652,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUStartBtn1A</object-name>
@@ -5669,7 +5669,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUStartBtn2O</object-name>
@@ -5692,7 +5692,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Manual Start -->
 	<animation>
 		<type>pick</type>
@@ -5741,7 +5741,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1ManStartBtn1</object-name>
@@ -5766,7 +5766,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>Eng1ManStartProt</object-name>
@@ -5781,7 +5781,7 @@
 			<z2-m>-0.20418</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1ManStartBtn2O</object-name>
@@ -5798,7 +5798,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng2ManStartBtn1</object-name>
@@ -5846,7 +5846,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng2ManStartBtn1</object-name>
@@ -5871,7 +5871,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>Eng2ManStartProt</object-name>
@@ -5886,7 +5886,7 @@
 			<z2-m>-0.20418</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2ManStartBtn2O</object-name>
@@ -5903,7 +5903,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Interior lights -->
 	<animation>
 		<name>Overhead panel light pick</name>
@@ -5988,7 +5988,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>Dome lights rotate</name>
 		<type>rotate</type>
@@ -6010,7 +6010,7 @@
 			<z-m>-0.2597</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Annun lights pick</name>
 		<type>pick</type>
@@ -6091,7 +6091,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<name>Seatbelt sign rotate</name>
 		<type>rotate</type>
@@ -6172,7 +6172,7 @@
 			<z-m>-0.3037</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Emer Lights pick</name>
 		<type>pick</type>
@@ -6228,7 +6228,7 @@
 			<z-m>-0.3037</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>EmerExtLtBtn2O</object-name>
@@ -6245,7 +6245,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Texts -->
 	<text>
 		<name>Battery-volt</name>
@@ -6272,7 +6272,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>Battery-volt-test</name>
 		<offsets>
@@ -6324,7 +6324,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>Battery-volt-test</name>
 		<offsets>
@@ -6350,7 +6350,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Battery-volt</object-name>
@@ -6361,7 +6361,7 @@
 			</equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Battery-volt-test</object-name>
@@ -6372,7 +6372,7 @@
 			</equals>
 		</condition>
 	</animation>
-	
+
 	<!-- Fire Buttons -->
 	<!-- Engine 1 -->
 	<animation>
@@ -6396,7 +6396,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1FireCover</object-name>
@@ -6419,7 +6419,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>Eng1FireCover</object-name>
@@ -6434,19 +6434,30 @@
 			<z2-m>0.23523</z2-m>
 		</axis>
 	</animation>
-	
-    <animation>
-        <type>translate</type>
-		<object-name>Eng1FireBtn</object-name>
-        <property>controls/engines/engine[0]/fire-btn</property>
-        <factor>0.025</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-    </animation>
-	
+
+		<animation>
+				<type>translate</type>
+				<object-name>Eng1FireBtn</object-name>
+				<property>controls/engines/engine[0]/fire-btn</property>
+				<factor>0.025</factor>
+				<axis>
+						<x>1</x>
+						<y>0</y>
+						<z>0</z>
+				</axis>
+		</animation>
+
+		<animation>
+			<type>select</type>
+			<object-name>Eng1FireBtn</object-name>
+			<condition>
+				<or>
+					<property>systems/fire/engine1/warning-active</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+			</condition>
+		</animation>
+
 	<animation>
 		<type>material</type>
 		<object-name>Eng1FireBtn</object-name>
@@ -6454,10 +6465,9 @@
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
-			<factor-prop>systems/fire/engine1/warning-active</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
@@ -6473,7 +6483,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1FireAgt2Btn1S</object-name>
@@ -6489,7 +6499,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
@@ -6511,7 +6521,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
@@ -6532,7 +6542,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng1FireAgt2Btn2D</object-name>
@@ -6553,7 +6563,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Test -->
 	<animation>
 		<type>pick</type>
@@ -6575,7 +6585,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng2FireTst</object-name>
@@ -6596,7 +6606,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>APUFireTst</object-name>
@@ -6617,7 +6627,7 @@
 			</mod-up>
 		</action>
 	</animation>
-	
+
 	<!-- APU -->
 	<animation>
 		<type>pick</type>
@@ -6640,7 +6650,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>APUFireCover</object-name>
@@ -6663,7 +6673,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>APUFireCover</object-name>
@@ -6678,19 +6688,30 @@
 			<z2-m>0.25182</z2-m>
 		</axis>
 	</animation>
-	
-    <animation>
-        <type>translate</type>
+
+		<animation>
+				<type>translate</type>
 		<object-name>APUFireBtn</object-name>
-        <property>controls/APU/fire-btn</property>
-        <factor>0.025</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-    </animation>
-	
+				<property>controls/APU/fire-btn</property>
+				<factor>0.025</factor>
+				<axis>
+						<x>1</x>
+						<y>0</y>
+						<z>0</z>
+				</axis>
+		</animation>
+
+		<animation>
+			<type>select</type>
+			<object-name>APUFireBtn</object-name>
+			<condition>
+				<or>
+					<property>/systems/fire/apu/warning-active</property>
+					<property>/controls/switches/annun-test</property>
+				</or>
+			</condition>
+		</animation>
+
 	<animation>
 		<type>material</type>
 		<object-name>APUFireBtn</object-name>
@@ -6698,10 +6719,10 @@
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
-			<factor-prop>systems/fire/apu/warning-active</factor-prop>
 		</emission>
 	</animation>
-	
+
+
 	<animation>
 		<type>pick</type>
 		<object-name>APUFireAgtBtn1S</object-name>
@@ -6717,7 +6738,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUFireAgtBtn1S</object-name>
@@ -6738,7 +6759,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>APUFireAgtBtn2D</object-name>
@@ -6759,7 +6780,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Engine 2 -->
 	<animation>
 		<type>pick</type>
@@ -6782,7 +6803,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng2FireCover</object-name>
@@ -6805,7 +6826,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>Eng2FireCover</object-name>
@@ -6820,19 +6841,30 @@
 			<z2-m>0.23523</z2-m>
 		</axis>
 	</animation>
-	
-    <animation>
-        <type>translate</type>
+
+		<animation>
+				<type>translate</type>
 		<object-name>Eng2FireBtn</object-name>
-        <property>controls/engines/engine[1]/fire-btn</property>
-        <factor>0.025</factor>
-        <axis>
-            <x>1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-    </animation>
-	
+				<property>controls/engines/engine[1]/fire-btn</property>
+				<factor>0.025</factor>
+				<axis>
+						<x>1</x>
+						<y>0</y>
+						<z>0</z>
+				</axis>
+		</animation>
+
+		<animation>
+			<type>select</type>
+			<object-name>Eng2FireBtn</object-name>
+			<condition>
+				<or>
+					<property>systems/fire/engine2/warning-active</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+			</condition>
+		</animation>
+
 	<animation>
 		<type>material</type>
 		<object-name>Eng2FireBtn</object-name>
@@ -6840,10 +6872,9 @@
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
-			<factor-prop>systems/fire/engine2/warning-active</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -6859,7 +6890,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
@@ -6875,7 +6906,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -6897,7 +6928,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2FireAgt1Btn2D</object-name>
@@ -6918,7 +6949,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Eng2FireAgt2Btn2D</object-name>
@@ -6939,7 +6970,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Sounds -->
 	<animation>
 		<type>pick</type>
@@ -6959,7 +6990,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>GroundCall</object-name>
@@ -6978,7 +7009,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>FwdCabinCall</object-name>
@@ -6997,7 +7028,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>LeftRainTest</object-name>
@@ -7020,7 +7051,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RightRainTest</object-name>
@@ -7043,7 +7074,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<!--animation>
 		<type>rotate</type>
 		<object-name>LeftWiperKnb</object-name>
@@ -7063,7 +7094,7 @@
 			<z2-m>-0.26721</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>LeftWiperKnb</object-name>
@@ -7080,7 +7111,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>RightWiperKnb</object-name>
@@ -7100,7 +7131,7 @@
 			<z2-m>-0.26721</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RightWiperKnb</object-name>
@@ -7117,7 +7148,7 @@
 			</binding>
 		</action>
 	</animation-->
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>PassOxyInd</object-name>
@@ -7141,7 +7172,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>PassOxyInd1S</object-name>
@@ -7158,7 +7189,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>CrewOxyBtn</object-name>
@@ -7182,7 +7213,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>CrewOxyBtn2O</object-name>
@@ -7199,7 +7230,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>MaskManOnBtn</object-name>
@@ -7245,7 +7276,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>MaskManOnGuard</object-name>
@@ -7266,7 +7297,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>MaskManOnGuard</object-name>
@@ -7281,5 +7312,5 @@
 			<z2-m>-0.15783</z2-m>
 		</axis>
 	</animation>
-	
+
 </PropertyList>
