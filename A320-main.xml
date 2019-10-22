@@ -424,18 +424,24 @@
 	<consumables>
 		<fuel>
 			<tank n="0">
-				<name>Left Wing</name>
+				<name>Outer Left Wing</name>
 			</tank>
 			<tank n="1">
-				<name>Center</name>
+				<name>Inner Left Wing</name>
 			</tank>
 			<tank n="2">
-				<name>Right Wing</name>
+				<name>Center</name>
 			</tank>
 			<tank n="3">
-				<name>Engine 1 Pipes</name>
+				<name>Inner Right Wing</name>
 			</tank>
 			<tank n="4">
+				<name>Outer Right Wing</name>
+			</tank>
+			<tank n="5">
+				<name>Engine 1 Pipes</name>
+			</tank>
+			<tank n="6">
 				<name>Engine 2 Pipes</name>
 			</tank>
 		</fuel>

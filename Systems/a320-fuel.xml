@@ -1,0 +1,187 @@
+<!-- Airbus A320 Fuel -->
+
+<!-- Copyright (c) 2019 Jonathan Redpath -->
+
+<system name="A320: Fuel:">
+	
+	<channel name="Fuel Pumps and Valves">
+		<!-- Pumps -->
+		<switch name="/systems/fuel/pumps/wing-pump-left-1-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/fuel/pump-left-1 eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/electrical/sources/idg-1/pmg-volt ge 110
+						/controls/electrical/switches/gen-1-line-contactor eq 1
+					</test>
+					/systems/electrical/bus/ac-1 ge 110
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/pumps/wing-pump-left-2-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/fuel/pump-left-2 eq 1
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/pumps/wing-pump-right-1-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/fuel/pump-right-1 eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/electrical/sources/idg-1/pmg-volt ge 110
+						/controls/electrical/switches/gen-1-line-contactor eq 1
+					</test>
+					/systems/electrical/bus/ac-1 ge 110
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/pumps/wing-pump-right-2-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/fuel/pump-right-2 eq 1
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/pumps/center-pump-1-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/fuel/pump-center-1 eq 1
+				<test logic="OR">
+					/controls/switches/fuel/center-mode eq 0
+					<test logic="AND">
+						fcs/slat-pos-deg lt 16
+						/systems/fuel/pumps/center-control-low-level ne 1
+						propulsion/tank[1]/contents-lbs lt 11420 
+					</test>
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/pumps/center-pump-2-operate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/fuel/pump-center-3 eq 1
+				<test logic="OR">
+					/controls/switches/fuel/center-mode eq 0
+					<test logic="AND">
+						fcs/slat-pos-deg lt 16
+						/systems/fuel/pumps/center-control-low-level ne 1
+						propulsion/tank[3]/contents-lbs lt 11420 
+					</test>
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fuel/pumps/center-control-low-level">
+            <description>Timer for the Fuel Center pumps</description>
+            <input>/systems/fuel/quantity/center-low</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.00333</rate_limit> <!-- 300 seconds -->
+        </actuator>
+		
+		<!-- Valves -->
+		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-1-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/valves/intercell-transfer-valve-1-cmd eq 1
+				/systems/fuel/refuel/refuelling eq 0
+			</test>
+			<test value="1">
+				/systems/fuel/quantity/left-wing-inner-low eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-1-power">
+			<default value="0"/>
+			<test value="0.333">
+				/systems/electrical/bus/dc-ess-shed ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fuel/valves/outer-inner-transfer-valve-1">
+			<input>/systems/fuel/valves/outer-inner-transfer-valve-1-cmd</input>
+			<rate_limit><property>/systems/fuel/valves/outer-inner-transfer-valve-1-power</property></rate_limit>
+		</actuator>
+		
+		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-2-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/valves/intercell-transfer-valve-2-cmd eq 1
+				/systems/fuel/refuel/refuelling eq 0
+			</test>
+			<test value="1">
+				/systems/fuel/quantity/right-wing-inner-low eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-2-power">
+			<default value="0"/>
+			<test value="0.333">
+				/systems/electrical/bus/dc-ess-shed ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fuel/valves/outer-inner-transfer-valve-2">
+			<input>/systems/fuel/valves/outer-inner-transfer-valve-2-cmd</input>
+			<rate_limit><property>/systems/fuel/valves/outer-inner-transfer-valve-2-power</property></rate_limit>
+		</actuator>
+		
+		<!-- Engine LP Valves -->
+		<switch name="/systems/fuel/valves/engine-1-lp-valve-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/fire-btn eq 0
+				/controls/engines/engine[0]/cutoff-switch eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/valves/engine-1-lp-valve-power">
+			<default value="0"/>
+			<test logic="OR" value="1.0">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fuel/valves/engine-1-lp-valve">
+			<input>/systems/fuel/valves/engine-1-lp-valve-cmd</input>
+			<rate_limit><property>/systems/fuel/valves/engine-1-lp-valve-power</property></rate_limit>
+		</actuator>
+		
+		<switch name="/systems/fuel/valves/engine-2-lp-valve-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[1]/fire-btn eq 0
+				/controls/engines/engine[1]/cutoff-switch eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/valves/engine-2-lp-valve-power">
+			<default value="0"/>
+			<test logic="OR" value="1.0">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fuel/valves/engine-2-lp-valve">
+			<input>/systems/fuel/valves/engine-2-lp-valve-cmd</input>
+			<rate_limit><property>/systems/fuel/valves/engine-2-lp-valve-power</property></rate_limit>
+		</actuator>
+	</channel>
+	
+	<channel name="Flow Rates">
+	
+	</channel>
+
+</system>
