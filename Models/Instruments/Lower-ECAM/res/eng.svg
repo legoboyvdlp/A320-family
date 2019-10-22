@@ -654,4 +654,28 @@
      d="m 628.98193,436.8605 42.77869,0"
      style="fill:#001104;fill-opacity:0.32941176;stroke:#0dc04b;stroke-width:6;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      inkscape:transform-center-x="70.6625" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="264.69138"
+     y="181.87299"
+     id="FUEL-used-1"
+     inkscape:label="#text5832"><tspan
+       sodipodi:role="line"
+       id="tspan5830-5-2"
+       x="264.69138"
+       y="181.87299"
+       style="font-size:30.00000191px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="682.74243"
+     y="181.74864"
+     id="FUEL-used-2"
+     inkscape:label="#text5832"><tspan
+       sodipodi:role="line"
+       id="tspan5830"
+       x="682.74243"
+       y="181.74864"
+       style="font-size:30.00000191px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
 </svg>
