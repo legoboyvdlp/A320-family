@@ -140,7 +140,7 @@ var warnings				  = std.Vector.new([
 	var essBusOnBatLGCB       = warning.new(msg: "-LGCIU1 C/B (C09)..PULL",   colour: "c"),
 	var essBusOnBatManOn2     = warning.new(msg: "-EMER ELEC PWR...MAN ON",   colour: "c"),
 	
-	# ESS Bus on Bat
+	# Emer Config
 	var emerconfig            = warning.new(msg: "ELEC EMER CONFIG",          colour: "r", aural: 0, light: 0, hasSubmsg: 1),
 	var emerconfigMinRat      = warning.new(msg: "MIN RAT SPD......140 KT",   colour: "c"),
 	var emerconfigGen         = warning.new(msg: "-GEN 1+2....OFF THEN ON",   colour: "c"),
@@ -160,6 +160,10 @@ var warnings				  = std.Vector.new([
 	var emerconfigAltn        = warning.new(msg: "F/CTL ALTN LAW",            colour: "a"),
 	var emerconfigProt        = warning.new(msg: "     (PROT LOST)",          colour: "a"),
 	var emerconfigMaxSpeed    = warning.new(msg: " MAX SPEED........320 KT",  colour: "c"),
+	
+	# DC EMER CONFIG
+	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 0, hasSubmsg: 1),
+	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",   colour: "c"),
 	
 	# APU shutdown
 	var apuEmerShutdown       = warning.new(msg: "APU EMER SHUT DOWN",        colour: "a", aural: 1, light: 1, hasSubmsg: 1),
