@@ -926,6 +926,16 @@ var messages_priority_3 = func {
 }
 
 var messages_priority_2 = func {
+	# DC EMER CONFIG
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25) {
+		dcEmerconfig.active = 1;
+		dcEmerconfigManOn.active = 1;
+	} else {
+		ECAM_controller.warningReset(dcEmerconfig);
+		ECAM_controller.warningReset(dcEmerconfigManOn);
+	}
+	
+	# APU EMER SHUT DOWN
 	if (apuEmerShutdown.clearFlag == 0 and systems.apuEmerShutdown.getBoolValue() and !getprop("/systems/fire/apu/warning-active") and (getprop("/ECAM/warning-phase") == 6 or getprop("/ECAM/warning-phase") >= 9 or getprop("/ECAM/warning-phase") <= 2)) {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {

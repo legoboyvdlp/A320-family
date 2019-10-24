@@ -1108,14 +1108,14 @@
   <path
      style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1"
      d="m 888.74997,513.99998 15.75,-7.5 16.5,-8.25 v 17.25 15.30854 c 0,0 -1.69343,-0.68362 -19.69533,-10.2091 -11.05467,-5.84944 -12.55467,-6.59944 -12.55467,-6.59944 z"
-     id="FUEL-Right-Tranfser"
+     id="FUEL-Right-Transfer"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cccccsc"
      inkscape:label="#path5824-0" />
   <path
      style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1"
      d="m 129.75,512.19144 -15.75,-7.5 -16.500003,-8.25 v 17.25 15.30854 c 0,0 1.69343,-0.68362 19.695333,-10.2091 C 128.25,512.94144 129.75,512.19144 129.75,512.19144 Z"
-     id="FUEL-Left-Tranfser"
+     id="FUEL-Left-Transfer"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cccccsc"
      inkscape:label="#path5824-0" />
