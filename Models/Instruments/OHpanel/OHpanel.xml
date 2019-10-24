@@ -6376,16 +6376,6 @@
 	<!-- Fire Buttons -->
 	<!-- Engine 1 -->
 
-<animation>
-	<type>material</type>
-	<object-name>firebtn1</object-name>
-	<emission>
-		<red>1.0</red>
-		<green>1.0</green>
-		<blue>1.0</blue>
-	</emission>
-</animation>
-
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1FireBtn</object-name>
