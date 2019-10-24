@@ -15,14 +15,19 @@ var _F_V = nil;
 var _R_turn_min = nil;
 var _D_stop = nil;
 var _K_psi = nil;
+var _F_psi = nil;
+var _K_psidot = nil;
+var _F_psidot = nil;
 var _debug = nil;
+var _psi = nil;
+var _time = nil;
 
 var _route = nil;
 var _route_reverse = nil;
 var _push = nil;
 var _sign = nil;
 
-var _to_wp = 1;
+var _to_wp = 0;
 var _is_last_wp = 0;
 var _is_reverse_wp = 0;
 
@@ -45,12 +50,17 @@ var _loop = func() {
 		stop();
 		return;
 	}
-	var psi = getprop("/orientation/heading-deg") + _push * 180.0;
 	var (A, D) = courseAndDistance(_route[_to_wp]);
 	D *= NM2M;
 	var (psi_leg, D_leg) = courseAndDistance(_route[_to_wp - 1], _route[_to_wp]);
 	var deltapsi = geo.normdeg180(A - psi_leg);
-	var deltaA = geo.normdeg180(A - psi);
+	var psi = getprop("/orientation/heading-deg") + _push * 180.0;
+	var deltaA = math.min(math.max(_K_psi * geo.normdeg180(A - psi), -_F_psi), _F_psi);
+	var time = getprop("/sim/time/elapsed-sec");
+	var dt = time - _time;
+	var minus_psidot = (dt > 0.002) * math.min(math.max(_K_psidot * (_psi - psi) / dt, -_F_psidot), _F_psidot);
+	_psi = psi;
+	_time = time;
 	# TODO Either use _K_V and total remaining distance or turn radius to calculate speed.
 	# TODO Make slider input override speed.
 	var V = _F_V;
@@ -69,12 +79,11 @@ var _loop = func() {
 			_advance_wp();
 		}
 	}
-
+	var steering = math.min(math.max(_sign * (deltaA + minus_psidot), -1.0), 1.0);
 	if (_debug > 1) {
-		print("autopush_driver to_wp " ~ _to_wp ~ ", psi_target " ~ geo.normdeg(A) ~ ", deltapsi " ~ deltapsi ~ ", deltapsi_steer " ~ _sign * deltaA);
+		print("autopush_driver to_wp " ~ _to_wp ~ ", A " ~ geo.normdeg(A) ~ ", deltaA " ~ deltaA ~ ", minus_psidot " ~ minus_psidot);
 	}
 	setprop("/sim/model/autopush/target-speed-km_h", _sign * V);
-	steering = math.min(math.max(_sign * _K_psi * deltaA, -1.0), 1.0);
 	setprop("/sim/model/autopush/steer-cmd-norm", steering);
 }
 
@@ -100,7 +109,7 @@ var start = func() {
 	if ((_route == nil) or size(_route) < 2) {
 		gui.popupTip("Pushback route empty or invalid");
 		return;
-	}else{
+	} else {
 		autopush_route.done();
 	}
 	_K_V = getprop("/sim/model/autopush/driver/K_V");
@@ -108,12 +117,18 @@ var start = func() {
 	_R_turn_min = getprop("/sim/model/autopush/min-turn-radius-m");
 	_D_stop = getprop("/sim/model/autopush/stopping-distance-m");
 	_K_psi = getprop("/sim/model/autopush/driver/K_psi");
+	_F_psi = getprop("/sim/model/autopush/driver/F_psi");
+	_K_psidot = getprop("/sim/model/autopush/driver/K_psidot");
+	_F_psidot = getprop("/sim/model/autopush/driver/F_psidot");
 	_debug = getprop("/sim/model/autopush/debug") or 0;
-	if (_to_wp == 1) {
+	if (!_to_wp) {
 		var (psi_park, D_park) = courseAndDistance(_route[0], _route[1]);
 		_push = (abs(geo.normdeg180(getprop("/orientation/heading-deg") - psi_park)) > 90.0);
 		_sign = 1.0 - 2.0 * _push;
+		_advance_wp();
+		_psi = 0.0;
 	}
+	_time = getprop("/sim/time/elapsed-sec");
 	_timer.start();
 	var endsign = _sign;
 	for (ii = _to_wp; ii < size(_route_reverse); ii += 1) {
@@ -123,9 +138,9 @@ var start = func() {
 	}
 	var (psi_twy, D_twy) = courseAndDistance(_route[size(_route) - 2], _route[size(_route) - 1]);
 	if (endsign < 0.0) {
-		screen.log.write("(pushback): Push back facing " ~ int(geo.normdeg(psi_twy + 180.0 - magvar())) ~ ".");
+		screen.log.write("(pushback): Push back facing " ~ math.round(geo.normdeg(psi_twy + 180.0 - magvar()), 1.0) ~ ".");
 	} else {
-		screen.log.write("(pushback): Tow facing " ~ int(geo.normdeg(psi_twy - magvar())) ~ ".");
+		screen.log.write("(pushback): Tow facing " ~ math.round(geo.normdeg(psi_twy - magvar()), 1.0) ~ ".");
 	}
 }
 
@@ -136,7 +151,5 @@ var pause = func() {
 
 var stop = func() {
 	pause();
-	_to_wp = 1;
-	_is_last_wp = 0;
-	_is_reverse_wp = 0;
+	_to_wp = 0;
 }

@@ -15,34 +15,7 @@
 		</hud>
 
 		<model>
-			<autopush>
-				<connected type="bool">0</connected>
-				<position-norm type="double">0</position-norm>
-				<enabled type="int"/>
-				<available type="int">1</available>
-				<chocks alias="/services/chocks/nose"/>
-				<steer-cmd-norm alias="/fdm/jsbsim/hydraulics/tiller/autopush-cmd"/>
-				<yaw alias="/fdm/jsbsim/fcs/steer-deg"/>
-				<yaw-mult type="float">1.0</yaw-mult>
-				<target-speed-km_h type="float">0.0</target-speed-km_h>
-				<K_p type="float">0.5</K_p>
-				<F_p type="float">0.15</F_p>
-				<K_i type="float">0.25</K_i>
-				<F_i type="float">0.1</F_i>
-				<K_d type="float">0.0</K_d>
-				<F_d type="float">0.0</F_d>
-				<pitch-deg type="float">0.0</pitch-deg>
-				<min-turn-radius-m type="float">15</min-turn-radius-m>
-				<stopping-distance-m type="float">5.0</stopping-distance-m>
-				<driver>
-					<F_V type="float">5.5</F_V>
-					<K_psi type="float">0.03</K_psi>
-				</driver>
-				<route>
-					<show type="bool"/>
-				</route>
-				<debug type="bool">false</debug>
-			</autopush>
+			<autopush include="AircraftConfig/autopush-config.xml"/>
 			<icing>
 				<iceable>
 					<name>Wing</name>
