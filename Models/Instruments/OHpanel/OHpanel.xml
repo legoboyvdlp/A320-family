@@ -6375,6 +6375,17 @@
 
 	<!-- Fire Buttons -->
 	<!-- Engine 1 -->
+
+<animation>
+	<type>material</type>
+	<object-name>firebtn1</object-name>
+	<emission>
+		<red>1.0</red>
+		<green>1.0</green>
+		<blue>1.0</blue>
+	</emission>
+</animation>
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1FireBtn</object-name>
@@ -6449,7 +6460,7 @@
 
 		<animation>
 			<type>select</type>
-			<object-name>Eng1FireBtn</object-name>
+			<object-name>firebtn1</object-name>
 			<condition>
 				<or>
 					<property>systems/fire/engine1/warning-active</property>
@@ -6460,7 +6471,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>Eng1FireBtn</object-name>
+		<object-name>firebtn1</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
@@ -6703,7 +6714,7 @@
 
 		<animation>
 			<type>select</type>
-			<object-name>APUFireBtn</object-name>
+			<object-name>firebtnapu</object-name>
 			<condition>
 				<or>
 					<property>/systems/fire/apu/warning-active</property>
@@ -6714,14 +6725,13 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>APUFireBtn</object-name>
+		<object-name>firebtnapu</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
 		</emission>
 	</animation>
-
 
 	<animation>
 		<type>pick</type>
@@ -6856,7 +6866,7 @@
 
 		<animation>
 			<type>select</type>
-			<object-name>Eng2FireBtn</object-name>
+			<object-name>firebtn2</object-name>
 			<condition>
 				<or>
 					<property>systems/fire/engine2/warning-active</property>
@@ -6867,7 +6877,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>Eng2FireBtn</object-name>
+		<object-name>firebtn2</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
