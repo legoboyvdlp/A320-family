@@ -6376,6 +6376,7 @@
 	<!-- Fire Buttons -->
 	<!-- Engine 1 -->
 
+
 	<animation>
 		<type>pick</type>
 		<object-name>Eng1FireBtn</object-name>
@@ -6448,20 +6449,15 @@
 				</axis>
 		</animation>
 
-		<animation>
-			<type>select</type>
-			<object-name>firebtn1</object-name>
-			<condition>
-				<or>
-					<property>systems/fire/engine1/warning-active</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-			</condition>
-		</animation>
-
 	<animation>
 		<type>material</type>
-		<object-name>firebtn1</object-name>
+		<object-name>Eng1FireBtn</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/engine1/warning-active</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
@@ -6702,20 +6698,15 @@
 				</axis>
 		</animation>
 
-		<animation>
-			<type>select</type>
-			<object-name>firebtnapu</object-name>
-			<condition>
-				<or>
-					<property>/systems/fire/apu/warning-active</property>
-					<property>/controls/switches/annun-test</property>
-				</or>
-			</condition>
-		</animation>
-
 	<animation>
 		<type>material</type>
-		<object-name>firebtnapu</object-name>
+		<object-name>APUFireBtn</object-name>
+		<condition>
+			<or>
+				<property>/systems/fire/apu/warning-active</property>
+				<property>/controls/switches/annun-test</property>
+			</or>
+		</condition>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
@@ -6855,25 +6846,20 @@
 		</animation>
 
 		<animation>
-			<type>select</type>
-			<object-name>firebtn2</object-name>
+			<type>material</type>
+			<object-name>Eng2FireBtn</object-name>
 			<condition>
 				<or>
 					<property>systems/fire/engine2/warning-active</property>
 					<property>controls/switches/annun-test</property>
 				</or>
 			</condition>
+			<emission>
+				<red>1.0</red>
+				<green>1.0</green>
+				<blue>1.0</blue>
+			</emission>
 		</animation>
-
-	<animation>
-		<type>material</type>
-		<object-name>firebtn2</object-name>
-		<emission>
-			<red>1.0</red>
-			<green>1.0</green>
-			<blue>1.0</blue>
-		</emission>
-	</animation>
 
 	<animation>
 		<type>pick</type>
