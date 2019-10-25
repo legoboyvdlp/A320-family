@@ -6528,4 +6528,16 @@
 		</emission>
 	</animation>
 
+<!-- headset show/hide -->
+	<animation>
+		<type>select</type>
+		<object-name>HeadsetFo</object-name>
+		<object-name>HeadsetCpt</object-name>
+		<condition>
+			<not>
+				<property>/controls/audio/headset-toggle</property>
+			</not>
+		</condition>
+	</animation>
+
 </PropertyList>
