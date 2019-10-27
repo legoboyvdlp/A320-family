@@ -560,3 +560,31 @@ var LowerECAM = {
 		setprop("/ECAM/Lower/light/clr", 1);
 	}
 };
+
+# Autoflight Warnings
+var doAthrWarn = func(type) {
+	if (type == "none") { 
+		return; 
+	} elsif (type == "soft") {
+		setprop("/ECAM/athr-off-time", getprop("/sim/time/elapsed-sec"));
+		setprop("/it-autoflight/output/athr-warning", 1);
+	} else {
+		libraries.LowerECAM.clrLight();
+		setprop("/it-autoflight/output/athr-warning", 2);
+	}
+	setprop("/ECAM/warnings/master-caution-light", 1);
+}
+
+var doApWarn = func(type) {
+	if (type == "none") {
+		return;
+	} elsif (type == "soft") {
+		setprop("/ECAM/ap-off-time", getprop("/sim/time/elapsed-sec"));
+		setprop("/it-autoflight/output/ap-warning", 1);
+		setprop("/ECAM/warnings/master-warning-light", 1);
+	} else {
+		setprop("/it-autoflight/output/ap-warning", 2);
+		# master warning handled by warning system in this case
+		libraries.LowerECAM.clrLight();
+	}
+}

@@ -207,7 +207,7 @@ var update_loop = func {
 	
 	if (getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") > getprop("/it-fbw/speeds/vmo-mmo") + 6 and (law == 0 or law == 1)) {
 		if (getprop("/it-autoflight/input/ap1") == 1 or getprop("/it-autoflight/input/ap2") == 1) {
-			libraries.apOff("hard", 0);
+			fcu.apOff("hard", 0);
 		}
 		if (getprop("/it-fbw/protections/overspeed") != 1) {
 			setprop("/it-fbw/protections/overspeed", 1);
@@ -274,7 +274,7 @@ var fbw_loop = func {
 	
 	if (getprop("/it-fbw/law") != 0) {
 		if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
-			libraries.apOff("hard", 0);
+			fcu.apOff("hard", 0);
 		}
 	}
 }

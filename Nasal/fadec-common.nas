@@ -200,9 +200,9 @@ var atoff_request = func {
 	state2 = getprop("/systems/thrust/state2");
 	if ((state1 == "IDLE") and (state2 == "IDLE") and (getprop("/systems/thrust/alpha-floor") == 0) and (getprop("/systems/thrust/toga-lk") == 0)) {
 		if (getprop("/it-autoflight/input/athr") == 1 and getprop("/position/gear-agl-ft") > 50) {
-			libraries.athrOff("soft");
+			fcu.athrOff("soft");
 		} elsif (getprop("/position/gear-agl-ft") < 50) {
-			libraries.athrOff("none");
+			fcu.athrOff("none");
 		}
 	}
 }
@@ -343,9 +343,103 @@ var thrust_flash = maketimer(0.5, func {
 	}
 });
 
+var lockThr = func() {
+	state1 = getprop("/systems/thrust/state1");
+	state2 = getprop("/systems/thrust/state2");
+	if ((state1 == "CL" and state2 == "CL" and getprop("/systems/thrust/eng-out") == 0) or (state1 == "MCT" and state2 == "MCT" and getprop("/systems/thrust/eng-out") == 1)) {
+		setprop("/systems/thrust/thr-lock-time", getprop("/sim/time/elapsed-sec"));
+		setprop("/systems/thrust/thr-locked", 1);
+		lockTimer.start();
+	}
+}
+
+var checkLockThr = func() {
+	if (getprop("/systems/thrust/thr-lock-time") + 5 > getprop("/sim/time/elapsed-sec")) { return; }
+	
+	if (fmgc.Output.athr.getBoolValue()) {
+		lockTimer.stop();
+		setprop("/systems/thrust/thr-locked", 0);
+		setprop("/systems/thrust/thr-locked-alert", 0);
+		setprop("/systems/thrust/thr-lock-time", 0);
+		setprop("/systems/thrust/thr-locked-flash", 0);
+		return;
+	}
+	
+	if (getprop("/systems/thrust/thr-locked") == 0) {
+		lockTimer.stop();
+		setprop("/systems/thrust/thr-locked", 0);
+		setprop("/systems/thrust/thr-locked-alert", 0);
+		setprop("/systems/thrust/thr-lock-time", 0);
+		setprop("/systems/thrust/thr-locked-flash", 0);
+		return;
+	}
+	
+	state1 = getprop("/systems/thrust/state1");
+	state2 = getprop("/systems/thrust/state2");
+	
+	if ((state1 != "CL" and state2 != "CL" and getprop("/systems/thrust/eng-out") == 0) or (state1 != "MCT" and state2 != "MCT" and getprop("/systems/thrust/eng-out") == 1)) {
+		lockTimer.stop();
+		setprop("/systems/thrust/thr-locked", 0);
+		setprop("/systems/thrust/thr-locked-alert", 0);
+		setprop("/systems/thrust/thr-lock-time", 0);
+		setprop("/systems/thrust/thr-locked-flash", 0);
+	} elsif ((state1 == "CL" and state2 == "CL" and getprop("/systems/thrust/eng-out") == 0) or (state1 == "MCT" and state2 == "MCT" and getprop("/systems/thrust/eng-out") == 1)) {
+		setprop("/systems/thrust/thr-locked-alert", 1);
+		setprop("/systems/thrust/thr-lock-time", getprop("/sim/time/elapsed-sec"));
+		setprop("/systems/thrust/thr-locked-flash", 1);
+		lockTimer.stop();
+		lockTimer2.start();
+	}
+}
+
+var checkLockThr2 = func() {
+	if (fmgc.Output.athr.getBoolValue()) {
+		lockTimer2.stop();
+		setprop("/systems/thrust/thr-locked", 0);
+		setprop("/systems/thrust/thr-locked-alert", 0);
+		setprop("/systems/thrust/thr-lock-time", 0);
+		setprop("/systems/thrust/thr-locked-flash", 0);
+		return;
+	}
+	
+	if (getprop("/systems/thrust/thr-locked") == 0) {
+		lockTimer2.stop();
+		setprop("/systems/thrust/thr-locked", 0);
+		setprop("/systems/thrust/thr-locked-alert", 0);
+		setprop("/systems/thrust/thr-lock-time", 0);
+		setprop("/systems/thrust/thr-locked-flash", 0);
+		return;
+	}
+	
+	if (getprop("/systems/thrust/thr-lock-time") + 5 < getprop("/sim/time/elapsed-sec")) { 
+		setprop("/systems/thrust/thr-locked-flash", 0);
+		settimer(func() {
+			setprop("/systems/thrust/thr-locked-flash", 1);
+			setprop("/systems/thrust/thr-lock-time", getprop("/sim/time/elapsed-sec"));
+			ecam.athr_lock.noRepeat = 0;
+			ecam.athr_lock.noRepeat2 = 0;
+		}, 0.2);
+	}
+	
+	state1 = getprop("/systems/thrust/state1");
+	state2 = getprop("/systems/thrust/state2");
+	
+	
+	if ((state1 != "CL" and state2 != "CL" and getprop("/systems/thrust/eng-out") == 0) or (state1 != "MCT" and state2 != "MCT" and getprop("/systems/thrust/eng-out") == 1)) {
+		lockTimer2.stop();
+		setprop("/systems/thrust/thr-locked", 0);
+		setprop("/systems/thrust/thr-locked-alert", 0);
+		setprop("/systems/thrust/thr-lock-time", 0);
+		setprop("/systems/thrust/thr-locked-flash", 0);
+	}
+}
+
 setlistener("/systems/thrust/thr-locked", func {
 	if (getprop("/systems/thrust/thr-locked") == 1) {
 		setprop("/systems/thrust/thr-lock-cmd[0]", getprop("/controls/engines/engine[0]/throttle-output"));
 		setprop("/systems/thrust/thr-lock-cmd[1]", getprop("/controls/engines/engine[1]/throttle-output"));
 	}
 }, 0, 0);
+
+var lockTimer = maketimer(0.1, checkLockThr);
+var lockTimer2 = maketimer(0.1, checkLockThr2);

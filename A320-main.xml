@@ -1181,7 +1181,7 @@
 				<desc>Autothrottle Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.ATDisc();</script>
+					<script>fcu.FCUController.ATDisc();</script>
 				</binding>
 			</key>
 			<key n="6">
@@ -1420,7 +1420,7 @@
 				<desc>Autopilot Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.APDisc();</script>
+					<script>fcu.FCUController.APDisc();</script>
 				</binding>
 			</key>
 			<key n="70">
@@ -1610,6 +1610,9 @@
 		<fbw>
 			<file>Aircraft/A320-family/Nasal/it-fbw.nas</file>
 		</fbw>
+		<fcu>
+			<file>Aircraft/A320-family/Nasal/FMGC/fcu.nas</file>
+		</fcu>
 		<fmgc>
 			<file>Aircraft/A320-family/Nasal/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC-b.nas</file>

@@ -227,18 +227,18 @@ var ELEC = {
 		# Autopilot Disconnection routines
 		if (me.Bus.dcEssShed.getValue() < 25) {
 			if (getprop("/it-autoflight/output/ap1") == 1) {
-				libraries.apOff("hard", 1);
+				fcu.apOff("hard", 1);
 				if (getprop("/it-autoflight/output/ap2") == 0) {
-					libraries.athrOff("hard"); # TODO - athr master FMGC logic
+					fcu.athrOff("hard"); # TODO - athr master FMGC logic
 				}
 			}
 		}
 		
 		if (me.Bus.dc2.getValue() < 25) {
 			if (getprop("/it-autoflight/output/ap2") == 1) {
-				libraries.apOff("hard", 2);
+				fcu.apOff("hard", 2);
 				if (getprop("/it-autoflight/output/ap1") == 0) {
-					libraries.athrOff("hard"); # TODO - athr master FMGC logic
+					fcu.athrOff("hard"); # TODO - athr master FMGC logic
 				}
 			}
 		}

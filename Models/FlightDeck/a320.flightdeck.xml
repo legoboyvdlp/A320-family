@@ -2262,7 +2262,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.FD1();
+					fcu.FCUController.FD1();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -2364,7 +2364,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.FD2();
+					fcu.FCUController.FD2();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -3775,7 +3775,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.IASMach();</script>
+				<script>fcu.FCUController.IASMach();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3795,14 +3795,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDPush();</script>
+				<script>fcu.FCUController.SPDPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDPull();</script>
+				<script>fcu.FCUController.SPDPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3814,7 +3814,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDPull();</script>
+				<script>fcu.FCUController.SPDPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3829,14 +3829,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(1);</script>
+				<script>fcu.FCUController.SPDAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(10);</script>
+				<script>fcu.FCUController.SPDAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3855,14 +3855,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(-1);</script>
+				<script>fcu.FCUController.SPDAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(-10);</script>
+				<script>fcu.FCUController.SPDAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3886,14 +3886,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGPush();</script>
+				<script>fcu.FCUController.HDGPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGPull();</script>
+				<script>fcu.FCUController.HDGPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3905,7 +3905,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGPull();</script>
+				<script>fcu.FCUController.HDGPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3920,14 +3920,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(1);</script>
+				<script>fcu.FCUController.HDGAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(10);</script>
+				<script>fcu.FCUController.HDGAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3946,14 +3946,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(-1);</script>
+				<script>fcu.FCUController.HDGAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(-10);</script>
+				<script>fcu.FCUController.HDGAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3974,7 +3974,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.LOCButton();</script>
+				<script>fcu.FCUController.LOCButton();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4027,7 +4027,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.TRKFPA();</script>
+				<script>fcu.FCUController.TRKFPA();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4045,7 +4045,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.AP1();
+					fcu.FCUController.AP1();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -4077,7 +4077,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.AP2();
+					fcu.FCUController.AP2();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -4109,7 +4109,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.ATHR();
+					fcu.FCUController.ATHR();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -4143,14 +4143,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTPush();</script>
+				<script>fcu.FCUController.ALTPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTPull();</script>
+				<script>fcu.FCUController.ALTPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4162,7 +4162,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTPull();</script>
+				<script>fcu.FCUController.ALTPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4177,14 +4177,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(1);</script>
+				<script>fcu.FCUController.ALTAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(10);</script>
+				<script>fcu.FCUController.ALTAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4203,14 +4203,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(-1);</script>
+				<script>fcu.FCUController.ALTAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(-10);</script>
+				<script>fcu.FCUController.ALTAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4251,14 +4251,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSPush();</script>
+				<script>fcu.FCUController.VSPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSPull();</script>
+				<script>fcu.FCUController.VSPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4270,7 +4270,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSPull();</script>
+				<script>fcu.FCUController.VSPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4285,14 +4285,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(1);</script>
+				<script>fcu.FCUController.VSAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(10);</script>
+				<script>fcu.FCUController.VSAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4311,14 +4311,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(-1);</script>
+				<script>fcu.FCUController.VSAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(-10);</script>
+				<script>fcu.FCUController.VSAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4339,7 +4339,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.APPRButton();</script>
+				<script>fcu.FCUController.APPRButton();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
