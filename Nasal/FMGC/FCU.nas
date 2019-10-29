@@ -38,13 +38,20 @@ var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
 var FCU = {
 	elecSupply: "",
 	failed: 0,
+	condition: 100,
 	new: func(elecNode) {
         var f = { parents:[FCU] };
 		f.elecSupply = elecNode;
         return f;
     },
 	loop: func() {
-		me.failed = me.elecSupply.getValue() < 25 ? 1 : 0;
+		me.failed = (me.elecSupply.getValue() < 25 or me.condition == 0) ? 1 : 0;
+	},
+	setFail: func() {
+		me.condition = 0;
+	},
+	restore: func() {
+		me.condition = 100;
 	},
 };
 
@@ -52,11 +59,15 @@ var FCUController = {
 	FCU1: nil,
 	FCU2: nil,
 	FCUworking: 0,
+	_init: 0,
 	init: func() {
 		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEssShed);
 		me.FCU2 = FCU.new(systems.ELEC.Bus.dc2);
+		me._init = 1;
 	},
 	loop: func() {
+		if (me._init == 0) { return; }
+		
 		# Update FCU Power
 		me.FCU1.loop();
 		me.FCU2.loop();
@@ -67,7 +78,11 @@ var FCUController = {
 			me.FCUworking = 0;
 		}
 	},
-	
+	resetFail: func() {
+		if (me._init == 0) { return; }
+		me.FCU1.restore();
+		me.FCU2.restore();
+	},
 	AP1: func() {
 		if (me.FCUworking) {
 			if (!ap1.getBoolValue()) {
