@@ -1436,9 +1436,17 @@
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
-				<command>nasal</command>
-				<script>libraries.ECAM.toConfig();</script>
+				<command>property-assign</command>
+				<property>/ECAM/to-config-test</property>
+				<value>1</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/ECAM/to-config-test</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 

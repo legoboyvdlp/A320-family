@@ -52,9 +52,6 @@ var ECAM = {
 	init: func() {
 		setprop("/ECAM/engine-start-time", 0);
 		setprop("/ECAM/engine-start-time-switch", 0);
-		setprop("/ECAM/to-memo-enable", 1);
-		setprop("/ECAM/to-config", 0);
-		setprop("/ECAM/ldg-memo-enable", 0);
 		setprop("/systems/gear/landing-gear-warning-light", 0);
 		setprop("/ECAM/Lower/page", "door");
 		setprop("/ECAM/Lower/man-select", 0);
@@ -132,7 +129,12 @@ var ECAM = {
 		wow = getprop("/gear/gear[0]/wow");
 		eng = getprop("/options/eng");
 		
-		if (stateL == 3 and stateR == 3 and wow == 1) {
+		if (stateL != 3 or stateR != 3) {
+			if (getprop("/ECAM/engine-start-time-switch") != 0) {
+				setprop("/ECAM/engine-start-time-switch", 0);
+				setprop("/ECAM/engine-start-time", 0);
+			}
+		} else if (stateL == 3 and stateR == 3 and wow == 1) {
 			if (getprop("/ECAM/engine-start-time-switch") != 1) {
 				setprop("/ECAM/engine-start-time", getprop("/sim/time/elapsed-sec"));
 				setprop("/ECAM/engine-start-time-switch", 1);
@@ -143,26 +145,8 @@ var ECAM = {
 			}
 		}
 		
-		if (getprop("/ECAM/warning-phase") >= 3) {
-			setprop("/ECAM/to-memo-enable", 0);
-		} else {
-			setprop("/ECAM/to-memo-enable", 1);
-		}
-		
-		if (getprop("/position/gear-agl-ft") <= 2000 and (getprop("/FMGC/status/phase") == 3 or getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5) and wow == 0) {
-			setprop("/ECAM/ldg-memo-enable", 1);
-		} else if (getprop("/ECAM/left-msg") == "LDG-MEMO" and speed <= 80 and wow == 1) {
-			setprop("/ECAM/ldg-memo-enable", 0);
-		} else if (getprop("/ECAM/left-msg") != "LDG-MEMO") {
-			setprop("/ECAM/ldg-memo-enable", 0);
-		}
-		
-		if (stateL == 3 and stateR == 3 and getprop("/ECAM/engine-start-time") + 120 < getprop("/sim/time/elapsed-sec") and getprop("/ECAM/to-memo-enable") == 1 and wow == 1) {
-			setprop("/ECAM/left-msg", "TO-MEMO");
-		} elsif (getprop("/ECAM/ldg-memo-enable") == 1) {
-			setprop("/ECAM/left-msg", "LDG-MEMO");
-		} elsif (getprop("/ECAM/show-left-msg") == 1) {
-			setprop("/ECAM/left-msg", "MSG"); # messages should have priority over memos - how?
+		if (getprop("/ECAM/show-left-msg") == 1) {
+			setprop("/ECAM/left-msg", "MSG");
 		} else {
 			setprop("/ECAM/left-msg", "NONE");
 		}
@@ -171,29 +155,6 @@ var ECAM = {
 			setprop("/ECAM/right-msg", "MSG");
 		} else {
 			setprop("/ECAM/right-msg", "NONE");
-		}
-		
-		if (getprop("/controls/autobrake/mode") == 3 and getprop("/controls/lighting/no-smoking-sign") == 1 and getprop("/controls/lighting/seatbelt-sign") == 1 and getprop("/controls/flight/speedbrake-arm") == 1 and getprop("/controls/flight/flap-pos") > 0 
-		and getprop("/controls/flight/flap-pos") < 5) {
-			# Do nothing
-		} else {
-			setprop("/ECAM/to-config", 0);
-		}
-		
-		if (eng == "IAE") {
-			eprlim = getprop("/controls/engines/epr-limit");
-			if (abs(getprop("/engines/engine[0]/epr-actual") - eprlim) <= 0.005 or abs(getprop("/engines/engine[0]/epr-actual") - eprlim) <= 0.005) {
-				toPowerSet = 1;
-			} else {
-				toPowerSet = 0;
-			}
-		} else {
-			n1lim = getprop("/controls/engines/n1-limit");
-			if (abs(getprop("/engines/engine[0]/n1-actual") - n1lim) <= 0.1 or abs(getprop("/engines/engine[0]/n1-actual") - n1lim) <= 0.1) {
-				toPowerSet = 1;
-			} else {
-				toPowerSet = 0;
-			}
 		}
 		
 		# AP / ATHR warnings
@@ -232,61 +193,7 @@ var ECAM = {
 			setprop("/it-autoflight/output/athr-warning", 0);
 		}
 		
-		
-		# Warning Phases
-		if (getprop("/systems/electrical/bus/ac-1") < 110 and getprop("/systems/electrical/bus/ac-2") < 110 and getprop("/systems/electrical/bus/ac-ess") < 110) { # Reset warning phases
-			if (getprop("/ECAM/warning-phase") != 1) {
-				setprop("/ECAM/warning-phase", 1);
-			}
-		} else {
-			phase = getprop("/ECAM/warning-phase");
-			mode = getprop("/modes/pfd/fma/pitch-mode");
-			modeI = getprop("/it-autoflight/mode/vert");
-			
-			if (phase == 1 and (stateL == 3 or stateR == 3)) {
-				setprop("/ECAM/warning-phase", 2);
-			} else if (phase == 2 and toPowerSet) {
-				setprop("/ECAM/warning-phase", 3);
-			} else if (phase == 3 and speed >= 80) {
-				setprop("/ECAM/warning-phase", 4);
-			} else if ((phase >= 2 and phase <= 4) and getprop("/fdm/jsbsim/position/wow") == 0) { # Liftoff
-				setprop("/ECAM/warning-phase", 5);
-			} else if (phase == 5 and getprop("/position/gear-agl-ft") >= 1500) {
-				setprop("/ECAM/warning-phase", 6);
-			} else if (phase == 6 and getprop("/position/gear-agl-ft") < 800) {
-				if (mode == "OP CLB" or mode == "CLB" or (modeI == "V/S" and getprop("/it-autoflight/input/vs") >= 100) or (modeI == "FPA" and getprop("/it-autoflight/input/fpa") >= 0.1)) {
-					# Do not do this if we are climbing, not in FCOM, but prevents terrain  from causing early mode change. If this ends up using baro alt, not radio, then delete this if
-				} else {
-					setprop("/ECAM/warning-phase", 7);
-				}
-			} else if (phase == 7 and getprop("/fdm/jsbsim/position/wow") == 1) { # Touchdown
-				setprop("/ECAM/warning-phase", 8);
-			} else if (phase == 8 and speed < 80) {
-				setprop("/ECAM/warning-phase", 9);
-			} else if (phase == 9 and (stateL == 0 or stateR == 0)) {
-				setprop("/ECAM/warning-phase", 10);
-				setprop("/ECAM/warning-phase-10-time", getprop("/sim/time/elapsed-sec"));
-			} else if (phase == 10 and getprop("/ECAM/warning-phase-10-time") + 300 < getprop("/sim/time/elapsed-sec")) { # After 5 mins, reset to phase 1
-				setprop("/ECAM/warning-phase", 1);
-			}
-		}
-		
 		LowerECAM.loop();
-	},
-	toConfig: func() {
-		stateL = getprop("/engines/engine[0]/state");
-		stateR = getprop("/engines/engine[1]/state");
-		wow = getprop("/gear/gear[0]/wow");
-		
-		if ((getprop("/ECAM/warning-phase") == 2 or getprop("/ECAM/warning-phase") == 9) and wow == 1 and (stateL == 3 or stateR == 3) and getprop("/ECAM/left-msg") != "TO-MEMO") {
-			setprop("/ECAM/to-memo-enable", 1);
-			setprop("/ECAM/engine-start-time", getprop("/ECAM/engine-start-time") - 120);
-		}
-		
-		if (getprop("/controls/autobrake/mode") == 3 and getprop("/controls/switches/no-smoking-sign") == 1 and getprop("/controls/switches/seatbelt-sign") == 1 and getprop("/controls/flight/speedbrake-arm") == 1 and getprop("/controls/flight/flap-pos") > 0 
-		and getprop("/controls/flight/flap-pos") < 5) {
-			setprop("/ECAM/to-config", 1);
-		}
 	},
 };
 
@@ -477,7 +384,7 @@ var LowerECAM = {
 				} else if (warnPhase == 6) {
 					flapLever = getprop("/controls/flight/flap-lever");
 					gearLever = getprop("/controls/gear/gear-down");
-					agl = getprop("/position/gear-agl-ft");
+					agl = pts.Position.gearAglFt.getValue();
 					
 					if (CRZCounting and (toPowerSet or flapLever > 0) and !CRZCondition) {
 						if (CRZTime + 60 < elapsedSec) {

@@ -179,7 +179,7 @@ var masterFMGC = maketimer(0.2, func {
 	modeI = getprop("/it-autoflight/mode/vert");
 	gs = getprop("/velocities/groundspeed-kt");
 	alt = getprop("/instrumentation/altimeter/indicated-altitude-ft");
-	aglalt = getprop("/position/gear-agl-ft");
+	aglalt = pts.Position.gearAglFt.getValue();
 	cruiseft = getprop("/FMGC/internal/cruise-ft");
 	cruiseft_b = getprop("/FMGC/internal/cruise-ft") - 200;
 	newcruise = getprop("/it-autoflight/internal/alt");
@@ -288,7 +288,7 @@ var masterFMGC = maketimer(0.2, func {
 	if (gear0 == 1 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA") and flaps < 5) {
 		setprop("/FMGC/status/to-state", 1);
 	}
-	if (getprop("/position/gear-agl-ft") >= 55) {
+	if (pts.Position.gearAglFt.getValue() >= 55) {
 		setprop("/FMGC/status/to-state", 0);
 	}
 });

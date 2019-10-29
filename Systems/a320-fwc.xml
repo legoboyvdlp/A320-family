@@ -1,0 +1,31 @@
+<!-- Airbus A320 FWC -->
+
+<!-- Copyright (c) 2019 Jonathan Redpath -->
+
+<system name="A320: FWC">
+
+	<channel name="FWC">
+		
+		<actuator name="/ECAM/phases/timer/eng1idle-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/phases/timer/eng1idle</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/phases/timer/eng2idle-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/phases/timer/eng2idle</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/phases/timer/eng1or2-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/phases/timer/eng1or2</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
+        </actuator>
+	</channel>
+
+</system>

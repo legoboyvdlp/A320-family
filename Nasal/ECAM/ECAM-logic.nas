@@ -23,10 +23,12 @@ var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
 var cutoff2    = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
 var engOpt     = props.globals.getNode("/options/eng", 1);
+
 # local variables
 var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
+var gear_agl_cur = nil;
 
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
@@ -935,6 +937,30 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcEmerconfigManOn);
 	}
 	
+	if (fcu.FCUController.FCU1.failed and fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and systems.ELEC.Bus.dcEss.getValue() >= 25) {
+		fcuFault.active = 1;
+		fcuFaultBaro.active = 1;
+	} else {
+		ECAM_controller.warningReset(fcuFault);
+		ECAM_controller.warningReset(fcuFaultBaro);
+	}
+	
+	if (fcu.FCUController.FCU1.failed and !fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25) {
+		fcuFault1.active = 1;
+		fcuFault1Baro.active = 1;
+	} else {
+		ECAM_controller.warningReset(fcuFault1);
+		ECAM_controller.warningReset(fcuFault1Baro);
+	}
+	
+	if (fcu.FCUController.FCU2.failed and !fcu.FCUController.FCU1.failed and systems.ELEC.Bus.dc2.getValue() >= 25) {
+		fcuFault2.active = 1;
+		fcuFault2Baro.active = 1;
+	} else {
+		ECAM_controller.warningReset(fcuFault2);
+		ECAM_controller.warningReset(fcuFault2Baro);
+	}
+	
 	# APU EMER SHUT DOWN
 	if (apuEmerShutdown.clearFlag == 0 and systems.apuEmerShutdown.getBoolValue() and !getprop("/systems/fire/apu/warning-active") and (getprop("/ECAM/warning-phase") == 6 or getprop("/ECAM/warning-phase") >= 9 or getprop("/ECAM/warning-phase") <= 2)) {
 		apuEmerShutdown.active = 1;
@@ -1019,6 +1045,171 @@ var messages_priority_2 = func {
 
 var messages_priority_1 = func {}
 var messages_priority_0 = func {}
+
+var messages_config_memo = func {
+	if (getprop("/controls/flight/flap-lever") == 0 or getprop("/controls/flight/flap-lever") == 4 or getprop("/controls/flight/speedbrake") != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+		setprop("/ECAM/to-config-normal", 0);
+	} else {
+		setprop("/ECAM/to-config-normal", 1);
+	}
+	
+	if (getprop("/ECAM/to-config-test") and (getprop("/ECAM/warning-phase") == 2 or getprop("/ECAM/warning-phase") == 9)) {
+		setprop("/ECAM/to-config-set", 1);
+	} else {
+		setprop("/ECAM/to-config-set", 0);
+	}
+	
+	if (!getprop("/ECAM/to-config-normal") or getprop("/ECAM/warning-phase") == 6) {
+		setprop("/ECAM/to-config-reset", 1);
+	} else {
+		setprop("/ECAM/to-config-reset", 0);
+	}
+	
+	if (getprop("/controls/autobrake/mode") == 3) {
+		toMemoLine1.msg = "T.O AUTO BRK MAX";
+		toMemoLine1.colour = "g";
+	} else {
+		toMemoLine1.msg = "T.O AUTO BRK.....MAX";
+		toMemoLine1.colour = "c";
+	}
+	
+	if (getprop("/controls/switches/seatbelt-sign") and getprop("/controls/switches/no-smoking-sign")) {
+		toMemoLine2.msg = "    SIGNS ON";
+		toMemoLine2.colour = "g";
+	} else {
+		toMemoLine2.msg = "    SIGNS.........ON";
+		toMemoLine2.colour = "c";
+	}
+	
+	if (getprop("/controls/flight/speedbrake-arm")) {
+		toMemoLine3.msg = "    SPLRS ARM";
+		toMemoLine3.colour = "g";
+	} else {
+		toMemoLine3.msg = "    SPLRS........ARM";
+		toMemoLine3.colour = "c";
+	}
+	
+	if (getprop("/controls/flight/flap-pos") > 0 and getprop("/controls/flight/flap-pos") < 5) {
+		toMemoLine4.msg = "    FLAPS T.O";
+		toMemoLine4.colour = "g";
+	} else {
+		toMemoLine4.msg = "    FLAPS........T.O";
+		toMemoLine4.colour = "c";
+	}
+	
+	if (getprop("/ECAM/to-config-flipflop") and getprop("/ECAM/to-config-normal")) {
+		toMemoLine5.msg = "    T.O CONFIG NORMAL";
+		toMemoLine5.colour = "g";
+	} else {
+		toMemoLine5.msg = "    T.O CONFIG..TEST";
+		toMemoLine5.colour = "c";
+	}
+	
+	if (getprop("/ECAM/to-config-test") and (getprop("/ECAM/warning-phase") == 2 or getprop("/ECAM/warning-phase") == 9)) {
+		setprop("/ECAM/to-memo-set", 1);
+	} else {
+		setprop("/ECAM/to-memo-set", 0);
+	}
+	
+	if (getprop("/ECAM/warning-phase") == 1 or getprop("/ECAM/warning-phase") == 3 or getprop("/ECAM/warning-phase") == 6 or getprop("/ECAM/warning-phase") == 10) {
+		setprop("/ECAM/to-memo-reset", 1);
+	} else {
+		setprop("/ECAM/to-memo-reset", 0);
+	}
+	
+	if ((getprop("/ECAM/warning-phase") == 2 and getprop("/ECAM/engine-start-time") != 0 and getprop("/ECAM/engine-start-time") + 120 < getprop("/sim/time/elapsed-sec")) or getprop("/ECAM/to-memo-flipflop")) {
+		toMemoLine1.active = 1;
+		toMemoLine2.active = 1;
+		toMemoLine3.active = 1;
+		toMemoLine4.active = 1;
+		toMemoLine5.active = 1;
+	} else {
+		ECAM_controller.warningReset(toMemoLine1);
+		ECAM_controller.warningReset(toMemoLine2);
+		ECAM_controller.warningReset(toMemoLine3);
+		ECAM_controller.warningReset(toMemoLine4);
+		ECAM_controller.warningReset(toMemoLine5);
+	}
+	
+	if (getprop("/fdm/jsbsim/gear/gear-pos-norm") == 1) {
+		ldgMemoLine1.msg = "LDG LDG GEAR DN";
+		ldgMemoLine1.colour = "g";
+	} else {
+		ldgMemoLine1.msg = "LDG LDG GEAR......DN";
+		ldgMemoLine1.colour = "c";
+	}
+	
+	if (getprop("/controls/switches/seatbelt-sign") and getprop("/controls/switches/no-smoking-sign")) {
+		ldgMemoLine2.msg = "    SIGNS ON";
+		ldgMemoLine2.colour = "g";
+	} else {
+		ldgMemoLine2.msg = "    SIGNS.........ON";
+		ldgMemoLine2.colour = "c";
+	}
+	
+	if (getprop("/controls/flight/speedbrake-arm")) {
+		ldgMemoLine3.msg = "    SPLRS ARM";
+		ldgMemoLine3.colour = "g";
+	} else {
+		ldgMemoLine3.msg = "    SPLRS........ARM";
+		ldgMemoLine3.colour = "c";
+	}
+	
+	if (getprop("/it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
+		if (getprop("/controls/flight/flap-pos") == 4) {
+			ldgMemoLine4.msg = "    FLAPS CONF 3";
+			ldgMemoLine4.colour = "g";
+		} else {
+			ldgMemoLine4.msg = "    FLAPS.....CONF 3";
+			ldgMemoLine4.colour = "c";
+		}
+	} else {
+		if (getprop("/controls/flight/flap-pos") == 5) {
+			ldgMemoLine4.msg = "    FLAPS FULL";
+			ldgMemoLine4.colour = "g";
+		} else {
+			ldgMemoLine4.msg = "    FLAPS.......FULL";
+			ldgMemoLine4.colour = "c";
+		}
+	}
+	
+	gear_agl_cur = pts.Position.gearAglFt.getValue();
+	if (gear_agl_cur < 2000) {
+		setprop("/ECAM/ldg-memo-set", 1);
+	} else {
+		setprop("/ECAM/ldg-memo-set", 0);
+	}
+	
+	if (gear_agl_cur > 2200) {
+		setprop("/ECAM/ldg-memo-reset", 1);
+	} else {
+		setprop("/ECAM/ldg-memo-reset", 0);
+	}
+	
+	if (gear_agl_cur > 2200) {
+		setprop("/ECAM/ldg-memo-2200-set", 1);
+	} else {
+		setprop("/ECAM/ldg-memo-2200-set", 0);
+	}
+	
+	if (getprop("/ECAM/warning-phase") >= 6 and getprop("/ECAM/warning-phase") <= 8) {
+		setprop("/ECAM/ldg-memo-2200-reset", 1);
+	} else {
+		setprop("/ECAM/ldg-memo-2200-reset", 0);
+	}
+	
+	if ((getprop("/ECAM/warning-phase") == 6 and getprop("/ECAM/ldg-memo-flipflop") and getprop("/ECAM/ldg-memo-2200-flipflop")) or getprop("/ECAM/warning-phase") == 7 or getprop("/ECAM/warning-phase") == 8) {
+		ldgMemoLine1.active = 1;
+		ldgMemoLine2.active = 1;
+		ldgMemoLine3.active = 1;
+		ldgMemoLine4.active = 1;
+	} else {
+		ECAM_controller.warningReset(ldgMemoLine1);
+		ECAM_controller.warningReset(ldgMemoLine2);
+		ECAM_controller.warningReset(ldgMemoLine3);
+		ECAM_controller.warningReset(ldgMemoLine4);
+	}
+}
 
 var messages_memo = func {
 	phaseVar = phaseNode.getValue();

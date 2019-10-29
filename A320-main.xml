@@ -1580,6 +1580,9 @@
 	</aircraft>
 	
 	<nasal>
+		<pts>
+			<file>Aircraft/A320-family/Nasal/property-tree-setup.nas</file>
+		</pts>
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
@@ -1611,7 +1614,7 @@
 			<file>Aircraft/A320-family/Nasal/it-fbw.nas</file>
 		</fbw>
 		<fcu>
-			<file>Aircraft/A320-family/Nasal/FMGC/fcu.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
 		</fcu>
 		<fmgc>
 			<file>Aircraft/A320-family/Nasal/FMGC.nas</file>
@@ -1650,6 +1653,7 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
 		<icing>
 			<file>Aircraft/A320-family/Nasal/icing.nas</file>

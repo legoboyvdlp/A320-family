@@ -199,9 +199,9 @@ var atoff_request = func {
 	state1 = getprop("/systems/thrust/state1");
 	state2 = getprop("/systems/thrust/state2");
 	if ((state1 == "IDLE") and (state2 == "IDLE") and (getprop("/systems/thrust/alpha-floor") == 0) and (getprop("/systems/thrust/toga-lk") == 0)) {
-		if (getprop("/it-autoflight/input/athr") == 1 and getprop("/position/gear-agl-ft") > 50) {
+		if (getprop("/it-autoflight/input/athr") == 1 and pts.Position.gearAglFt.getValue() > 50) {
 			fcu.athrOff("soft");
-		} elsif (getprop("/position/gear-agl-ft") < 50) {
+		} elsif (pts.Position.gearAglFt.getValue() < 50) {
 			fcu.athrOff("none");
 		}
 	}
@@ -280,7 +280,7 @@ var thrust_loop = maketimer(0.04, func {
 	togaLock = alphaProt - 1;
 	if (getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0 and getprop("/it-fbw/law") == 0 and (getprop("/systems/thrust/eng-out") == 0 or (getprop("/systems/thrust/eng-out") == 1 and flaps == 0)) and getprop("/systems/fadec/n1mode1") == 0 
 	and getprop("/systems/fadec/n1mode2") == 0) {
-		if (alpha > alphaProt and getprop("/position/gear-agl-ft") >= 100) {
+		if (alpha > alphaProt and pts.Position.gearAglFt.getValue() >= 100) {
 			setprop("/systems/thrust/alpha-floor", 1);
 			setprop("/systems/thrust/toga-lk", 0);
 			setprop("/it-autoflight/input/athr", 1);

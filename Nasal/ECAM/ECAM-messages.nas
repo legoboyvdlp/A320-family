@@ -165,6 +165,14 @@ var warnings				  = std.Vector.new([
 	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 0, hasSubmsg: 1),
 	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",   colour: "c"),
 	
+	# FCU fault
+	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var fcuFaultBaro          = warning.new(msg: " -PFD BARO REF: STD ONLY",  colour: "c"),
+	var fcuFault1             = warning.new(msg: "AUTO FLT FCU 1 FAULT",      colour: "a", hasSubmsg: 1),
+	var fcuFault1Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
+	var fcuFault2             = warning.new(msg: "AUTO FLT FCU 2 FAULT",      colour: "a", hasSubmsg: 1),
+	var fcuFault2Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
+	
 	# APU shutdown
 	var apuEmerShutdown       = warning.new(msg: "APU EMER SHUT DOWN",        colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var apuEmerShutdownMast   = warning.new(msg: " -MASTER SW..........OFF",  colour: "c"),
@@ -181,6 +189,19 @@ var warnings				  = std.Vector.new([
 	var apuLoopBFault         = warning.new(msg: "APU FIRE LOOP B FAULT",     colour: "a"),
 	var crgFwdFireDetFault    = warning.new(msg: "FWD CRG DET FAULT",         colour: "a"), 
 	var crgAftFireDetFault    = warning.new(msg: "AFT CRG DET FAULT",         colour: "a"), 
+]);
+
+var configmemos               = std.Vector.new([
+	var toMemoLine1           = warning.new(msg: "T.O AUTO BRK.....MAX",      colour: "c", isMemo: 1),
+	var toMemoLine2           = warning.new(msg: "    SIGNS.........ON",      colour: "c", isMemo: 1),
+	var toMemoLine3           = warning.new(msg: "    SPLRS........ARM",      colour: "c", isMemo: 1),
+	var toMemoLine4           = warning.new(msg: "    FLAPS........T.O",      colour: "c", isMemo: 1),
+	var toMemoLine5           = warning.new(msg: "    T.O CONFIG..TEST",      colour: "c", isMemo: 1),
+	
+	var ldgMemoLine1          = warning.new(msg: "LDG LDG GEAR......DN",      colour: "c", isMemo: 1),
+	var ldgMemoLine2          = warning.new(msg: "    SIGNS.........ON",      colour: "c", isMemo: 1),
+	var ldgMemoLine3          = warning.new(msg: "    SPLRS........ARM",      colour: "c", isMemo: 1),
+	var ldgMemoLine4          = warning.new(msg: "    FLAPS.......FULL",      colour: "c", isMemo: 1),
 ]);
 
 var leftmemos                 = std.Vector.new([
