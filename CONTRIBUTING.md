@@ -45,3 +45,12 @@ var someOtherThing = func {
 
 ## Forks, Branches, and Merging
 Please fork the repository, and commit your changes there. Branches are optional. When you are ready for us to look over you work, submit a pull request, following our pull request template, and a main Developer will look over it. If there is an issue that needs to be resolved before merging, the Developer will leave a comment on the pull request.
+
+## Liveries
+<!-- TODO remove this when new model is added -->
+NOTE: Please don't make new liveries until the new model is added, thank you.
+<!-- End TODO -->
+
+Liveries have to be submitted on the official [livery site](http://liveries.flightgear.org/).  
+Since we want to limit the ammount of liveries we ship with the aircraft we will only include a few. These are picked my the main developers.  
+Please DO NOT ask if your livery gets included.
