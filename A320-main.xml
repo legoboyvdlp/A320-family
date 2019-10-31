@@ -136,6 +136,9 @@
 			<autopilot n="11">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
 			</autopilot>
+			<autopilot n="12">
+				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
+			</autopilot>
 		</systems>
 		
 		<sound>

@@ -3,14 +3,14 @@
 <system name="A320: Lights">
 
 	<channel name="Lights">
-		<switch name="/controls/lighting/reading-light">
+		<switch name="/controls/lighting/reading-light-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-flood-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/panel-light">
+		<switch name="/controls/lighting/panel-light-tied">
 			<default value="0" />
 			<test logic="OR" value="/controls/lighting/main-flood-knb">
 				/systems/electrical/bus/dc-ess gt 25
@@ -18,35 +18,35 @@
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/pedestal-light">
+		<switch name="/controls/lighting/pedestal-light-tied">
 			<default value="0" />
 			<test value="/controls/lighting/ped-flood-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/fcu-panel-norm">
+		<switch name="/controls/lighting/fcu-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/fcu-panel-knb">
 				/systems/electrical/bus/ac-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/main-panel-norm">
+		<switch name="/controls/lighting/main-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-panel-knb">
 				/systems/electrical/bus/ac-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/overhead-panel-norm">
+		<switch name="/controls/lighting/overhead-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/overhead-panel-knb">
 				/systems/electrical/bus/ac-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/annunciator-lights">
+		<switch name="/controls/lighting/annunciator-lights-tied">
 			<default value="0" />
 			<test logic="OR" value="1"> <!-- TODO: add static inverter as a source, also dc-2 switching -->
 				/systems/electrical/bus/ac-1 gt 110
