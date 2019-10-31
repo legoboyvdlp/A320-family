@@ -162,8 +162,58 @@ var warnings				  = std.Vector.new([
 	var emerconfigMaxSpeed    = warning.new(msg: " MAX SPEED........320 KT",  colour: "c"),
 	
 	# DC EMER CONFIG
-	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 0, hasSubmsg: 1),
-	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",   colour: "c"),
+	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
+	
+	# DC BUS 1 OR 2 FAULT
+	var dcBus12Fault          = warning.new(msg: "ELEC DC BUS 1+2 FAULT",     colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var dcBus12FaultBlower    = warning.new(msg: " -BLOWER............OVRD",  colour: "c"),
+	var dcBus12FaultExtract   = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
+	var dcBus12FaultBaroRef   = warning.new(msg: " -BARO REF.........CHECK",  colour: "c"),
+	var dcBus12FaultIcing     = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
+	var dcBus12FaultBrking    = warning.new(msg: " MAX BRK........1000 PSI",  colour: "c"),
+	
+	# AC ESS BUS FAULT
+	var AcBusEssFault         = warning.new(msg: "ELEC AC ESS BUS FAULT",     colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var AcBusEssFaultFeed     = warning.new(msg: " -AC ESS FEED.......ALTN",  colour: "c"),
+	var AcBusEssFaultAtc      = warning.new(msg: " -ATC..............SYS 2",  colour: "c"),
+	
+	# AC BUS 1 FAULT
+	var AcBus1Fault           = warning.new(msg: "ELEC AC BUS 1 FAULT",       colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var AcBus1FaultBlower     = warning.new(msg: " -BLOWER............OVRD",  colour: "c"),
+	
+	# DC ESS BUS FAULT
+	var DcEssBusFault         = warning.new(msg: "ELEC DC ESS BUS FAULT",     colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var DcEssBusFaultRadio    = warning.new(msg: " -VHF 2 OR 3.........USE",  colour: "c"),
+	var DcEssBusFaultRadio2   = warning.new(msg: " -AUDIO SWTG......SELECT",  colour: "c"),
+	var DcEssBusFaultBaro     = warning.new(msg: " -BARO REF.........CHECK",  colour: "c"),
+	var DcEssBusFaultGPWS     = warning.new(msg: " -GPWS...............OFF",  colour: "c"),
+	
+	# AC BUS 2 FAULT
+	var AcBus2Fault           = warning.new(msg: "ELEC AC BUS 2 FAULT",       colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var AcBus2FaultExtract    = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
+	
+	# DC BUS 1 FAULT
+	var dcBus1Fault           = warning.new(msg: "ELEC DC BUS 1 FAULT",       colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var dcBus1FaultBlower     = warning.new(msg: " -BLOWER............OVRD",  colour: "c"),
+	var dcBus1FaultExtract    = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
+	
+	# DC BUS 2 FAULT
+	var dcBus2Fault           = warning.new(msg: "ELEC DC BUS 2 FAULT",       colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var dcBus2FaultAirData    = warning.new(msg: " -AIR DATA SWTG......F/O",  colour: "c"),
+	var dcBus2FaultBaro       = warning.new(msg: " -BARO REF.........CHECK",  colour: "c"),
+	
+	# DC BAT BUS FAULT
+	var dcBusBatFault         = warning.new(msg: "ELEC DC BAT BUS FAULT",     colour: "a", aural: 1, light: 1),
+	
+	# DC ESS BUS SHED
+	var dcBusEssShed          = warning.new(msg: "ELEC DC ESS BUS SHED",      colour: "a", aural: 1, light: 1),
+	var dcBusEssShedExtract   = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
+	var dcBusEssShedIcing     = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
+	
+	# AC ESS BUS SHED
+	var acBusEssShed          = warning.new(msg: "ELEC DC ESS BUS SHED",      colour: "a", aural: 1, light: 1),
+	var acBusEssShedAtc       = warning.new(msg: " -ATC..............SYS 2",  colour: "c"),
 	
 	# FCU fault
 	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
@@ -189,6 +239,11 @@ var warnings				  = std.Vector.new([
 	var apuLoopBFault         = warning.new(msg: "APU FIRE LOOP B FAULT",     colour: "a"),
 	var crgFwdFireDetFault    = warning.new(msg: "FWD CRG DET FAULT",         colour: "a"), 
 	var crgAftFireDetFault    = warning.new(msg: "AFT CRG DET FAULT",         colour: "a"), 
+	
+	# Recall
+	var recallNormal          = warning.new(msg: "                    ", colour: "g", hasSubmsg: 1),
+	var recallNormal1         = warning.new(msg: "                    ", colour: "g", hasSubmsg: 1),
+	var recallNormal2         = warning.new(msg: "               NORMAL", colour: "g", hasSubmsg: 1),
 ]);
 
 var configmemos               = std.Vector.new([
@@ -216,7 +271,7 @@ var leftmemos                 = std.Vector.new([
 	var fob_3T                = warning.new(msg: "FOB BELOW 3T"         ),
 	var gpws_flap_mode_off    = warning.new(msg: "GPWS FLAP MODE OFF"   ),
 	var atc_datalink_stby     = warning.new(msg: "ATC DATALINK STBY"    ), # Not yet implemented
-	var company_datalink_stby = warning.new(msg: "COMPANY DATALINK STBY")  # Not yet implemented
+	var company_datalink_stby = warning.new(msg: "COMPANY DATALINK STBY"),  # Not yet implemented
 ]);
 
 # Right E/WD

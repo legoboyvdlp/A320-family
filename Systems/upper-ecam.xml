@@ -531,6 +531,17 @@
 	</flipflop>
 	
 	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/flipflop/recall-set</property>
+		</S>
+		<R>
+			<property>/ECAM/flipflop/recall-reset</property>
+		</R>
+		<output>/ECAM/flipflop/recall-output</output>
+	</flipflop>
+	
+	<flipflop>
 		<type>monostable</type>
 		<time>
 			<value>2.0</value>
@@ -574,6 +585,20 @@
 			<property>/ECAM/phases/monostable/phase-7</property>
 		</S>
 		<output>/ECAM/phases/monostable/phase-7-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>5.0</value>
+		</time>
+		<S>
+			<property>/ECAM/buttons/recall-status-normal</property>
+		</S>
+		<R>
+			<property>/ECAM/buttons/clear-btn</property>
+		</R>
+		<output>/ECAM/buttons/recall-status-normal-output</output>
 	</flipflop>
 	
 	<!-- falling edge detector - take inverse of following -->

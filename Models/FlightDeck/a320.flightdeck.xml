@@ -1670,8 +1670,19 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAM_controller.recall();</script>
+				<script>
+					ecam.ECAM_controller.recall();
+					ecam.FWC.Btn.recall.setValue(1);
+				</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>nasal</command>
+					<script>
+						ecam.FWC.Btn.recall.setValue(0);
+					</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -1690,8 +1701,19 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("clr");</script>
+				<script>
+					libraries.LowerECAM.button("clr");
+					ecam.FWC.Btn.clr.setValue(1);
+				</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>nasal</command>
+					<script>
+						ecam.FWC.Btn.clr.setValue(0);
+					</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 

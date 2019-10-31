@@ -695,6 +695,42 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/relay/galley-bus-1-shed-switch/contact-pos">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/controls/electrical/switches/galley eq 1
+				<test logic="AND">
+					/systems/electrical/relay/gen-1-glc/output ne 0
+					/systems/electrical/relay/gen-2-glc/output ne 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/galley-bus-1-shed-switch/output">
+			<default value="0"/>
+			<test value="/systems/electrical/bus/ac-1">
+				/systems/electrical/relay/galley-bus-1-shed-switch/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/controls/electrical/switches/galley eq 1
+				<test logic="AND">
+					/systems/electrical/relay/gen-1-glc/output ne 0
+					/systems/electrical/relay/gen-2-glc/output ne 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/galley-bus-2-shed-switch/output">
+			<default value="0"/>
+			<test value="/systems/electrical/bus/ac-2">
+				/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos eq 1
+			</test>
+		</switch>
+		
 		<!-- AC Bus 1 -->
 		<switch name="/systems/electrical/bus/ac-1-src">
 			<description>Tell which source is being used for priority purpose</description>
@@ -1047,6 +1083,29 @@
 			</test>
 		</switch>
 		
+		<!-- DC Service Bus -->
+		<switch name="/systems/electrical/relay/dc-svc-bus-contactor-tr/contact-pos"> <!-- TODO: via 1PX CB on 124VU -->
+			<default value="0"/>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-svc-bus-contactor-tr/output">
+			<default value="0"/>
+			<test value="/systems/electrical/relay/tr-contactor-2/output">
+				/systems/electrical/relay/dc-svc-bus-contactor-tr/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-svc-bus-contactor-bus-2/contact-pos"> <!-- TODO: via 7PN CB on 124VU -->
+			<default value="1"/>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-svc-bus-contactor-bus-2/output">
+			<default value="0"/>
+			<test value="/systems/electrical/bus/dc-2">
+				/systems/electrical/relay/dc-svc-bus-contactor-bus-2/contact-pos eq 1
+			</test>
+		</switch>
+		
 		<!-- DC Bus 1 -->
 		<switch name="/systems/electrical/bus/dc-1-src">
 			<description>Tell which source is being used for priority purpose</description>
@@ -1100,6 +1159,15 @@
 						<property>/systems/electrical/relay/dc-bus-tie-dc-2/output</property>
 					</max>
 				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/electrical/bus/dc-service-bus">
+			<function>
+				<max>
+					<property>/systems/electrical/relay/dc-svc-bus-contactor-tr/output</property>
+					<property>/systems/electrical/relay/dc-svc-bus-contactor-bus-2/output</property>
+				</max>
 			</function>
 		</fcs_function>
 		
@@ -1391,6 +1459,5 @@
 		</switch>
 	
 	</channel>
-
-	<!-- TODO: TR should have a fault which should include failure OR loss of input power. It remains latched at fault and can only be reset on ground. -->
+	
 </system>

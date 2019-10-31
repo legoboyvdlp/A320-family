@@ -10,10 +10,12 @@ var Controls = {
 		Engine1: {
 			cutoffSw: props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"),
 			firePb: props.globals.getNode("/controls/engines/engine[0]/fire-btn"),
+			throttle: props.globals.getNode("/controls/engines/engine[0]/throttle"),
 		},
 		Engine2: {
 			cutoffSw: props.globals.getNode("/controls/engines/engine[1]/cutoff-switch"),
 			firePb: props.globals.getNode("/controls/engines/engine[1]/fire-btn"),
+			throttle: props.globals.getNode("/controls/engines/engine[1]/throttle"),
 		},
 	},
 };
@@ -54,8 +56,17 @@ var Position = {
 };
 
 var Sim = {
+	Replay: {
+		replayActive: props.globals.getNode("/sim/replay/replay-state"),
+	},
 	Time: {
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
+	},
+};
+
+var PTSSystems = {
+	Thrust: {
+		flex: props.globals.getNode("/systems/thrust/lim-flex"),
 	},
 };
 

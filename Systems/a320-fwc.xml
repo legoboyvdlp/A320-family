@@ -4,7 +4,7 @@
 
 <system name="A320: FWC">
 
-	<channel name="FWC">
+	<channel name="FWC" execrate="8">
 		
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
             <description>Timer for the ECAM system</description>
@@ -25,6 +25,20 @@
             <input>/ECAM/phases/timer/eng1or2</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/phases/timer/to-inhibit-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/phases/timer/to-inhibit</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/phases/timer/ldg-inhibit-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/phases/timer/ldg-inhibit</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
         </actuator>
 	</channel>
 

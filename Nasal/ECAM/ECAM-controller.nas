@@ -146,6 +146,7 @@ var status = {
 };
 
 var ECAM_controller = {
+	_recallCounter: 0,
 	init: func() {
 		ECAMloopTimer.start();
 		me.reset();
@@ -295,11 +296,24 @@ var ECAM_controller = {
 		}
 	},
 	recall: func() {
+		me._recallCounter = 0;
 		foreach (var w; warnings.vector) {
 			if (w.clearFlag == 1) {
 				w.noRepeat = 0;
 				w.clearFlag = 0;
+				me._recallCounter += 1;
 			}
+		}
+		
+		if (me._recallCounter == 0) {
+			FWC.Btn.recallStsNormal.setValue(1);
+			settimer(func() {
+				if (FWC.Btn.recallStsNormal.getValue() == 1) { # catch unexpected error, trying something new here
+					FWC.Btn.recallStsNormal.setValue(0);
+				} else {
+					die("Exception in ECAM-controller.nas, line 316");
+				}
+			}, 0.1);
 		}
 	},
 	warningReset: func(warning) {

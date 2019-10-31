@@ -21,6 +21,12 @@ var n1lim = nil;
 var gear_agl_cur = nil;
 
 var FWC = {
+	Btn: {
+		clr: props.globals.initNode("/ECAM/buttons/clear-btn", 0, "BOOL"),
+		recall: props.globals.initNode("/ECAM/buttons/recall-btn", 0, "BOOL"),
+		recallStsNormal: props.globals.initNode("/ECAM/buttons/recall-status-normal", 0, "BOOL"),
+		recallStsNormalOutput: props.globals.initNode("/ECAM/buttons/recall-status-normal-output", 0, "BOOL"),
+	},
 	Monostable: {
 		phase1: props.globals.initNode("/ECAM/phases/monostable/phase-1-300", 0, "BOOL"),
 		phase5: props.globals.initNode("/ECAM/phases/monostable/phase-5", 0, "BOOL"),
@@ -43,20 +49,29 @@ var FWC = {
 		phase10Set: props.globals.initNode("/ECAM/phases/flipflop/phase-10-set", 0, "BOOL"),
 		phase10Reset: props.globals.initNode("/ECAM/phases/flipflop/phase-10-reset", 0, "BOOL"),
 		phase10Output: props.globals.initNode("/ECAM/phases/flipflop/phase-10-output", 0, "BOOL"),
+		recallSet: props.globals.initNode("/ECAM/flipflop/recall-set", 0, "BOOL"),
+		recallReset: props.globals.initNode("/ECAM/flipflop/recall-reset", 0, "BOOL"),
+		recallOutput: props.globals.initNode("/ECAM/flipflop/recall-output", 0, "BOOL"),
 	},
 	Timer: {
 		eng1idle: props.globals.initNode("/ECAM/phases/timer/eng1idle", 0, "INT"),
 		eng2idle: props.globals.initNode("/ECAM/phases/timer/eng2idle", 0, "INT"),
 		eng1or2: props.globals.initNode("/ECAM/phases/timer/eng1or2", 0, "INT"),
+		toInhibit: props.globals.initNode("/ECAM/phases/timer/to-inhibit", 0, "INT"),
+		ldgInhibit: props.globals.initNode("/ECAM/phases/timer/ldg-inhibit", 0, "INT"),
 		eng1idleOutput: props.globals.getNode("/ECAM/phases/timer/eng1idle-output"),
 		eng2idleOutput: props.globals.getNode("/ECAM/phases/timer/eng2idle-output"),
 		eng1or2Output: props.globals.initNode("/ECAM/phases/timer/eng1or2-output", 0, "INT"),
+		toInhibitOutput: props.globals.getNode("/ECAM/phases/timer/to-inhibit-output"),
+		ldgInhibitOutput: props.globals.getNode("/ECAM/phases/timer/ldg-inhibit-output"),
 	},
 	speed80: props.globals.initNode("/ECAM/phases/speed-gt-80", 0, "BOOL"),
 	toPower: props.globals.initNode("/ECAM/phases/to-power-set", 0, "BOOL"),
 };
 
 var phaseLoop = func() {
+	if (pts.Sim.Replay.replayActive.getBoolValue()) { return; }
+	
 	gear_agl = pts.Position.gearAglFt.getValue();
 	gear_comp = pts.Gear.compression[1].getValue();
 	myPhase = pts.ECAM.fwcWarningPhase.getValue();
@@ -115,14 +130,14 @@ var phaseLoop = func() {
 	
 	if (eng == "IAE") {
 		eprlim = getprop("/controls/engines/epr-limit");
-		if ((!getprop("/controls/engines/engine[0]/reverser") and !getprop("/controls/engines/engine[1]/reverser")) and (abs(eng1epr - eprlim) <= 0.005 or abs(eng2epr - eprlim) <= 0.005)) {
+		if ((!getprop("/controls/engines/engine[0]/reverser") and !getprop("/controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
 		}
 	} else {
 		n1lim = getprop("/controls/engines/n1-limit");
-		if ((!getprop("/controls/engines/engine[0]/reverser") and !getprop("/controls/engines/engine[1]/reverser")) and (abs(eng1n1 - n1lim) <= 0.1 or abs(eng2n1 - n1lim) <= 0.1)) {
+		if ((!getprop("/controls/engines/engine[0]/reverser") and !getprop("/controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
@@ -229,13 +244,42 @@ var phaseLoop = func() {
 	if ((gnd and twoEngOff and myPhase == 9) and FWC.Monostable.phase1Output.getBoolValue()) {
 		setPhase(10);
 	}
+	
+	# FWC Inhibiting
+	myPhase = pts.ECAM.fwcWarningPhase.getValue();
+	if (myPhase >= 3 and myPhase <= 5 and !FWC.Flipflop.recallOutput.getValue()) {
+		FWC.Timer.toInhibit.setValue(1);
+	} else {
+		FWC.Timer.toInhibit.setValue(0);
+	}
+	
+	if (myPhase == 7 or myPhase == 8 and !FWC.Flipflop.recallOutput.getValue()) {
+		FWC.Timer.ldgInhibit.setValue(1);
+	} else {
+		FWC.Timer.ldgInhibit.setValue(0);
+	}
 }
 
 var _lastPhase = nil;
 var setPhase = func(newPhase) {
 	if (newPhase >= 1 and newPhase <= 10 and _lastPhase != newPhase) {
 		pts.ECAM.fwcWarningPhase.setValue(newPhase);
-		print("Phase " ~ newPhase);
+		FWC.Flipflop.recallReset.setValue(1);
+		settimer(func() {
+			if (FWC.Flipflop.recallReset.getValue() == 1) { # catch unexpected error, trying something new here
+				FWC.Flipflop.recallReset.setValue(0);
+			} else {
+				die("Exception in ECAM-phases.nas, line 271");
+			}
+		}, 0.1);
 		_lastPhase = newPhase;
 	}
+}
+
+setlistener("/ECAM/buttons/recall-btn", func() {
+	FWC.Flipflop.recallSet.setValue(FWC.Btn.recall.getBoolValue());
+}, 0, 0);
+
+var clrBtn = func(btn) {
+	FWC.Btn.clr.setValue(btn);
 }

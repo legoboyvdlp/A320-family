@@ -2844,7 +2844,7 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-service-bus</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
