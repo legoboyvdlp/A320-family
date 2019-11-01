@@ -182,18 +182,18 @@ var ECAM_controller = {
 			rightLines[n].setValue("");
 		}
 		
-		if (getprop("/systems/acconfig/autoconfig-running")) { return; }
-		
 		# write to ECAM
 		var counter = 0;
 		
-		foreach (var w; warnings.vector) {
-			if (counter >= 9) { break; }
-			if (w.active == 1) {
-				w.write();
-				w.warnlight();
-				w.sound();
-				counter += 1;
+		if (!getprop("/systems/acconfig/autoconfig-running")) {
+			foreach (var w; warnings.vector) {
+				if (counter >= 9) { break; }
+				if (w.active == 1) {
+					w.write();
+					w.warnlight();
+					w.sound();
+					counter += 1;
+				}
 			}
 		}
 			

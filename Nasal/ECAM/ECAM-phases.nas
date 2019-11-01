@@ -85,6 +85,8 @@ var phaseLoop = func() {
 	master1 = pts.Controls.Engines.Engine1.cutoffSw.getBoolValue();
 	master2 = pts.Controls.Engines.Engine2.cutoffSw.getBoolValue();
 	
+	FWC.Flipflop.recallReset.setValue(0);
+		
 	# Various things
 	if (gear_agl < 5) {
 		FWC.Flipflop.gearSet.setBoolValue(1);
@@ -265,13 +267,6 @@ var setPhase = func(newPhase) {
 	if (newPhase >= 1 and newPhase <= 10 and _lastPhase != newPhase) {
 		pts.ECAM.fwcWarningPhase.setValue(newPhase);
 		FWC.Flipflop.recallReset.setValue(1);
-		settimer(func() {
-			if (FWC.Flipflop.recallReset.getValue() == 1) { # catch unexpected error, trying something new here
-				FWC.Flipflop.recallReset.setValue(0);
-			} else {
-				die("Exception in ECAM-phases.nas, line 271");
-			}
-		}, 0.1);
 		_lastPhase = newPhase;
 	}
 }

@@ -312,14 +312,7 @@ canvas.Element.setVisible = func(vis) {
 	me._lastVisible = vis;
 	me.setBool("visible", vis);
 };
-canvas.Element._lastX = nil;
-canvas.Element._lastY = nil;
-canvas.Element.setScale = func(x, y) {
-	if (x == me._lastX and y == me._lastY) {return me;}
-	me._lastX = x;
-	me._lastY = y;
-	me.setScale(x, y);
-};
+
 
 # In air, flaps 1 is slats only. On ground, it is slats and flaps.
 
