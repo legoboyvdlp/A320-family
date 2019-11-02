@@ -70,31 +70,33 @@ var warning = {
 		}
 	},
 	warnlight: func() {
-		if (me.light > 1 or me.noRepeat == 1 or (me.active == 0 and me.wasActive == 0)) {return;}
-		if (me.active == 1) {
-			lights[me.light].setBoolValue(1);
-			me.noRepeat = 1;
-		} elsif (me.wasActive) {
-			print("Yesssssss");
+		if (me.light > 1) { return; }
+		if (me.active == 0 and me.wasActive == 1) {
 			lights[me.light].setBoolValue(0);
 			me.wasActive = 0;
 		}
+		
+		if (me.noRepeat == 1 or me.active == 0) { return; }
+		
+		lights[me.light].setBoolValue(1);
+		me.noRepeat = 1;
 	},
 	sound: func() {
-        if (me.aural > 2 or me.noRepeat2 == 1 or (me.active == 0 and me.wasActive == 0)) {return;}
-		if (me.active == 1) {
-			if (me.aural != 0) {
-				aural[me.aural].setBoolValue(0); 
-			}
-			me.noRepeat2 = 1;
-			settimer(func() {
-				aural[me.aural].setBoolValue(1);
-			}, 0.15);
-		} elsif (me.wasActive) {
-			print("Noooooooo");
+		if (me.aural > 2) { return; }
+		if (me.active == 0 and me.wasActive == 1) {
 			aural[me.aural].setBoolValue(0); 
 			me.wasActive = 0;
 		}
+		
+        if (me.noRepeat2 == 1 or me.active == 0) { return; }
+		
+		if (me.aural != 0) {
+			aural[me.aural].setBoolValue(0); 
+		}
+		me.noRepeat2 = 1;
+		settimer(func() {
+			aural[me.aural].setBoolValue(1);
+		}, 0.15);
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
@@ -207,6 +209,9 @@ var ECAM_controller = {
 					w.warnlight();
 					w.sound();
 					counter += 1;
+				} elsif (w.wasActive == 1) {
+					w.warnlight();
+					w.sound();
 				}
 			}
 		}

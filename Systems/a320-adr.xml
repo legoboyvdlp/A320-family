@@ -729,6 +729,36 @@
 			<gain>1</gain>
 		</pure_gain>
 		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-1-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-capt</input>
+			<gain>1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-capt</input>
+			<gain>1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-3-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-3-capt</input>
+			<gain>1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-1-fo">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-fo</input>
+			<gain>1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-fo</input>
+			<gain>1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-3-fo">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-3-fo</input>
+			<gain>1</gain>
+		</pure_gain>
+		
 		<pure_gain name="/systems/navigation/adr/output/cas-1">
 			<input>/systems/navigation/adr/computation/cas-1</input>
 			<gain>1</gain>
