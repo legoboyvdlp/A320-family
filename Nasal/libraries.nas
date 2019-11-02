@@ -326,8 +326,8 @@ controls.flapsDown = func(step) {
 	if (step == 1) {
 		if (getprop("/controls/flight/flap-lever") == 0) {
 			if (getprop("/velocities/airspeed-kt") <= 100) {
-				setprop("/controls/flight/flaps", 0.290);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/flaps", 0.2857);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 2);
 				setprop("/controls/flight/flap-txt", "1+F");
@@ -335,7 +335,7 @@ controls.flapsDown = func(step) {
 				return;
 			} else {
 				setprop("/controls/flight/flaps", 0.000);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 1);
 				setprop("/controls/flight/flap-txt", "1");
@@ -343,16 +343,16 @@ controls.flapsDown = func(step) {
 				return;
 			}
 		} else if (getprop("/controls/flight/flap-lever") == 1) {
-			setprop("/controls/flight/flaps", 0.596);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.4286);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 2);
 			setprop("/controls/flight/flap-pos", 3);
 			setprop("/controls/flight/flap-txt", "2");
 			flaptimer.stop();
 			return;
 		} else if (getprop("/controls/flight/flap-lever") == 2) {
-			setprop("/controls/flight/flaps", 0.645);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.5714);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 3);
 			setprop("/controls/flight/flap-pos", 4);
 			setprop("/controls/flight/flap-txt", "3");
@@ -369,16 +369,16 @@ controls.flapsDown = func(step) {
 		}
 	} else if (step == -1) {
 		if (getprop("/controls/flight/flap-lever") == 4) {
-			setprop("/controls/flight/flaps", 0.645);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.5714);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 3);
 			setprop("/controls/flight/flap-pos", 4);
 			setprop("/controls/flight/flap-txt", "3");
 			flaptimer.stop();
 			return;
 		} else if (getprop("/controls/flight/flap-lever") == 3) {
-			setprop("/controls/flight/flaps", 0.596);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.4286);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 2);
 			setprop("/controls/flight/flap-pos", 3);
 			setprop("/controls/flight/flap-txt", "2");
@@ -386,8 +386,8 @@ controls.flapsDown = func(step) {
 			return;
 		} else if (getprop("/controls/flight/flap-lever") == 2) {
 			if (getprop("/velocities/airspeed-kt") <= 100) {
-				setprop("/controls/flight/flaps", 0.290);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/flaps", 0.2857);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 2);
 				setprop("/controls/flight/flap-txt", "1+F");
@@ -395,7 +395,7 @@ controls.flapsDown = func(step) {
 				return;
 			} else {
 				setprop("/controls/flight/flaps", 0.000);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 1);
 				setprop("/controls/flight/flap-txt", "1");
