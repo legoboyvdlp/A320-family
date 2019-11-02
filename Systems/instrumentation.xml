@@ -26,9 +26,59 @@
 	<altimeter>
 		<name>altimeter</name>
 		<number>0</number>
-		<static-pressure>/systems/static/pressure-inhg</static-pressure>
-		<quantum>0</quantum>
-		<tau>0</tau>
+		<static-pressure>/systems/static[0]/pressure-inhg</static-pressure>
+		<quantum>1</quantum>
+		<tau>0.1</tau>
+		<encode-mode-c>1</encode-mode-c>
+		<encode-mode-s>1</encode-mode-s>
+	</altimeter>
+	
+	<altimeter>
+		<name>altimeter</name>
+		<number>1</number>
+		<static-pressure>/systems/static[1]/pressure-inhg</static-pressure>
+		<quantum>1</quantum>
+		<tau>0.1</tau>
+		<encode-mode-c>1</encode-mode-c>
+		<encode-mode-s>1</encode-mode-s>
+	</altimeter>
+	
+	<altimeter>
+		<name>altimeter</name>
+		<number>2</number>
+		<static-pressure>/systems/static[2]/pressure-inhg</static-pressure>
+		<quantum>1</quantum>
+		<tau>0.1</tau>
+		<encode-mode-c>1</encode-mode-c>
+		<encode-mode-s>1</encode-mode-s>
+	</altimeter>
+	
+	<altimeter>
+		<name>altimeter</name>
+		<number>3</number>
+		<static-pressure>/systems/static[0]/pressure-inhg</static-pressure>
+		<quantum>1</quantum>
+		<tau>0.1</tau>
+		<encode-mode-c>1</encode-mode-c>
+		<encode-mode-s>1</encode-mode-s>
+	</altimeter>
+	
+	<altimeter>
+		<name>altimeter</name>
+		<number>4</number>
+		<static-pressure>/systems/static[1]/pressure-inhg</static-pressure>
+		<quantum>1</quantum>
+		<tau>0.1</tau>
+		<encode-mode-c>1</encode-mode-c>
+		<encode-mode-s>1</encode-mode-s>
+	</altimeter>
+	
+	<altimeter>
+		<name>altimeter</name>
+		<number>5</number>
+		<static-pressure>/systems/static[2]/pressure-inhg</static-pressure>
+		<quantum>1</quantum>
+		<tau>0.1</tau>
 		<encode-mode-c>1</encode-mode-c>
 		<encode-mode-s>1</encode-mode-s>
 	</altimeter>

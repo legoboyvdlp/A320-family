@@ -139,6 +139,7 @@
 			<autopilot n="12">
 				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
 			</autopilot>
+			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
 		<sound>
@@ -922,6 +923,22 @@
 			<green-psi>0</green-psi>
 			<yellow-psi>0</yellow-psi>
 		</hydraulic>
+		
+		<pitot n="1">
+            <serviceable>1</serviceable>
+		</pitot>
+		
+		<pitot n="2">
+            <serviceable>1</serviceable>
+		</pitot>
+		
+		<static n="1">
+            <serviceable>1</serviceable>
+		</static>
+		
+		<static n="2">
+            <serviceable>1</serviceable>
+		</static>
 	</systems>
 	
 	<options n="0">
@@ -936,6 +953,26 @@
 	</options>
 	
 	<instrumentation n="0">
+		<altimeter n="1">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="2">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="3">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="4">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="5">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
 		<chrono n="0">
 			<started type="bool">0</started>
 			<paused type="bool">0</paused>
@@ -1605,6 +1642,7 @@
 			<file>Aircraft/A320-family/Nasal/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/engines-common.nas</file>
 			<file>Aircraft/A320-family/Nasal/ADIRS.nas</file>
+			<file>Aircraft/A320-family/Nasal/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/ground_services.nas</file>

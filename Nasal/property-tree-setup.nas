@@ -47,6 +47,13 @@ var Instrumentation = {
 	},
 };
 
+var JSBSIM = {
+	FCS: {
+		flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
+		slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
+	},
+};
+
 var Options = {
 	eng: props.globals.getNode("/options/eng"),
 };

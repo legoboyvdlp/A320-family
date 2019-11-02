@@ -18,7 +18,7 @@ var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
-var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL")];
+var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL")];
 var warningFlash = props.globals.initNode("/ECAM/warnings/master-warning-flash", 0, "BOOL");
 
 var lineIndex = 0;
@@ -46,6 +46,7 @@ var warning = {
 		t.sdPage = sdPage;
 		t.isMemo = isMemo;
 		t.hasCalled = 0;
+		t.wasActive = 0;
 		
 		return t
 	},
@@ -68,19 +69,29 @@ var warning = {
 		}
 	},
 	warnlight: func() {
-		if (me.light > 1 or me.noRepeat == 1 or me.active == 0) {return;}
-		lights[me.light].setBoolValue(1);
-		me.noRepeat = 1;
+		if (me.light > 1 or me.noRepeat == 1 or (me.active == 0 and me.wasActive == 0)) {return;}
+		if (me.active == 1) {
+			lights[me.light].setBoolValue(1);
+			me.noRepeat = 1;
+		} elsif (me.wasActive) {
+			lights[me.light].setBoolValue(0);
+			me.wasActive = 0;
+		}
 	},
 	sound: func() {
-        if (me.aural > 1 or me.noRepeat2 == 1 or me.active == 0) {return;}
-		if (me.aural != 0) {
+        if (me.aural > 2 or me.noRepeat2 == 1 or (me.active == 0 and me.wasActive == 0)) {return;}
+		if (me.active == 1) {
+			if (me.aural != 0) {
+				aural[me.aural].setBoolValue(0); 
+			}
+			me.noRepeat2 = 1;
+			settimer(func() {
+				aural[me.aural].setBoolValue(1);
+			}, 0.15);
+		} elsif (me.wasActive) {
 			aural[me.aural].setBoolValue(0); 
+			me.wasActive = 0;
 		}
-        me.noRepeat2 = 1;
-		settimer(func() {
-			aural[me.aural].setBoolValue(1);
-		}, 0.15);
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
@@ -320,6 +331,9 @@ var ECAM_controller = {
 		warning.active = 0;
 		warning.noRepeat = 0;
 		warning.noRepeat2 = 0;
+		if (warning.aural == 2) {
+			aural[2].setValue(0);
+		}
 	},
 };
 

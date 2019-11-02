@@ -22,6 +22,7 @@ var apu_bleedSw   = props.globals.getNode("/controls/pneumatic/switches/bleedapu
 var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
 var cutoff2    = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
+var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
 # local variables
@@ -29,11 +30,53 @@ var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
 var gear_agl_cur = nil;
-
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
 	
-	# FCTL
+	# Stall
+	# todo - altn law and emer cancel flipflops page 2440
+	if (phaseVar >= 5 and phaseVar <= 7 and (getprop("/fdm/jsbsim/fcs/slat-pos-deg") <= 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 15 or getprop("/systems/navigation/adr/output/aoa-2") > 15 or getprop("/systems/navigation/adr/output/aoa-3") > 15)) or (getprop("/fdm/jsbsim/fcs/slat-pos-deg") > 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 23 or getprop("/systems/navigation/adr/output/aoa-2") > 23 or getprop("/systems/navigation/adr/output/aoa-3") > 23))) {
+		stall.active = 1;
+	} else {
+		ECAM_controller.warningReset(stall);
+	}
+	
+	if (stall.active) {
+		stallVoice.setValue(1);
+	} else {
+		stallVoice.setValue(0);
+	}
+	
+	if ((phaseVar == 1 or (phaseVar >= 5 and phaseVar <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
+		overspeed.active = 1;
+		if (getprop("/systems/navigation/adr/computation/overspeed-vmo") or getprop("/systems/navigation/adr/computation/overspeed-mmo")) {
+			overspeedVMO.active = 1;
+		} else {
+			ECAM_controller.warningReset(overspeedVMO);
+		}
+		
+		if (getprop("/systems/navigation/adr/computation/overspeed-vle")) {
+			overspeedGear.active = 1;
+		} else {
+			ECAM_controller.warningReset(overspeedGear);
+		}
+		
+		if (getprop("/systems/navigation/adr/computation/overspeed-vfe")) {
+			overspeedFlap.active = 1;
+			overspeedFlap.msg = "-VFE................" ~ (systems.ADIRSnew.overspeedVFE.getValue() - 4);
+		} else {
+			ECAM_controller.warningReset(overspeedGear);
+			overspeedFlap.msg = "-VFE................XXX";
+		}
+	} else {
+		ECAM_controller.warningReset(overspeed);
+		ECAM_controller.warningReset(overspeedVMO);
+		ECAM_controller.warningReset(overspeedGear);
+		ECAM_controller.warningReset(overspeedFlap);
+		overspeedFlap.msg = "-VFE................XXX";
+	}
+	
+	# FCTL FLAPS NOT ZERO
 	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("/controls/flight/flap-lever") != 0 and getprop("/instrumentation/altimeter/indicated-altitude-ft") > 22000) {
 		flap_not_zero.active = 1;
 	} else {

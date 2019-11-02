@@ -10,7 +10,13 @@
 # Left E/WD
 
 var warnings				  = std.Vector.new([
+	var stall                 = warning.new(msg: "", aural: 2),
 	var flap_not_zero         = warning.new(msg: "F/CTL FLAP LVR NOT ZERO",   colour: "r", aural: 0, light: 0),
+	
+	var overspeed          = warning.new(msg: "OVER SPEED",                colour: "r", aural: 0, light: 0, hasSubmsg: 1),
+	var overspeedVMO       = warning.new(msg: "-VMO/MMO.......350 /.82",   colour: "r"),
+	var overspeedGear      = warning.new(msg: "-VLE...........280 /.67",   colour: "r"),
+	var overspeedFlap      = warning.new(msg: "-VFE................XXX",   colour: "r"),
 	
 	# DUAL ENG FAIL
 	var dualFail              = warning.new(msg: "ENG DUAL FAILURE",          colour: "r", aural: 0, light: 0, hasSubmsg: 1),
