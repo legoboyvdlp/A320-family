@@ -65,7 +65,7 @@ var messages_priority_3 = func {
 			overspeedFlap.active = 1;
 			overspeedFlap.msg = "-VFE................" ~ (systems.ADIRSnew.overspeedVFE.getValue() - 4);
 		} else {
-			ECAM_controller.warningReset(overspeedGear);
+			ECAM_controller.warningReset(overspeedFlap);
 			overspeedFlap.msg = "-VFE................XXX";
 		}
 	} else {
