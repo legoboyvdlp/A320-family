@@ -52,6 +52,7 @@ var warning = {
 	},
 	write: func() {
 		if (me.active == 0) { return; }
+		me.wasActive = 1;
 		lineIndex = 0;
 		while (lineIndex < 7 and lines[lineIndex].getValue() != "") {
 			lineIndex = lineIndex + 1; # go to next line until empty line
@@ -74,6 +75,7 @@ var warning = {
 			lights[me.light].setBoolValue(1);
 			me.noRepeat = 1;
 		} elsif (me.wasActive) {
+			print("Yesssssss");
 			lights[me.light].setBoolValue(0);
 			me.wasActive = 0;
 		}
@@ -89,6 +91,7 @@ var warning = {
 				aural[me.aural].setBoolValue(1);
 			}, 0.15);
 		} elsif (me.wasActive) {
+			print("Noooooooo");
 			aural[me.aural].setBoolValue(0); 
 			me.wasActive = 0;
 		}
