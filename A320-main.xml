@@ -688,6 +688,36 @@
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<taxi-light-switch type="float">0</taxi-light-switch>
 		</lighting>
+		<navigation>
+			<adirscp>
+				<switches>
+					<adr-1 type="bool">0</adr-1>
+					<adr-2 type="bool">0</adr-2>
+					<adr-3 type="bool">0</adr-3>
+					<ir-1 type="bool">0</ir-1>
+					<ir-2 type="bool">0</ir-2>
+					<ir-3 type="bool">0</ir-3>
+					<ir-1-mode type="int">0</ir-1-mode>
+					<ir-2-mode type="int">0</ir-2-mode>
+					<ir-3-mode type="int">0</ir-3-mode>
+				</switches>
+				<lights>
+					<adr-1-fault type="bool">0</adr-1-fault>
+					<adr-2-fault type="bool">0</adr-2-fault>
+					<adr-3-fault type="bool">0</adr-3-fault>
+					<adr-1-off type="bool">1</adr-1-off>
+					<adr-2-off type="bool">1</adr-2-off>
+					<adr-3-off type="bool">1</adr-3-off>
+					<ir-1-fault type="bool">0</ir-1-fault>
+					<ir-2-fault type="bool">0</ir-2-fault>
+					<ir-3-fault type="bool">0</ir-3-fault>
+					<ir-1-off type="bool">0</ir-1-off>
+					<ir-2-off type="bool">0</ir-2-off>
+					<ir-3-off type="bool">0</ir-3-off>
+					<on-bat type="bool">0</on-bat>
+				</lights>
+			</adirscp>
+		</navigation>
 		<OH>
 			<protectors>
 				<ditching type="bool">0</ditching>
@@ -939,6 +969,14 @@
 		<static n="2">
             <serviceable>1</serviceable>
 		</static>
+		
+		<navigation>
+			<adr>
+				<operating-1 type="bool">0</operating-1>
+				<operating-2 type="bool">0</operating-2>
+				<operating-3 type="bool">0</operating-3>
+			</adr>
+		</navigation>
 	</systems>
 	
 	<options n="0">
@@ -1061,6 +1099,10 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
+		<marker-beacon n="0">
+			<serviceable type="bool">true</serviceable>
+		</marker-beacon>
+		
 		<nav n="0">
 			<frequencies>
 				<selected-mhz type="double">111.15</selected-mhz>
@@ -1162,6 +1204,34 @@
 				<file-prefix>Aircraft/A320-family/Sounds/GPWS/</file-prefix>
 			</voice>
 		</mk-viii>
+		
+		<radar-altimeter n="0">
+			<antenna>
+				<x-offset-m type="double">-1</x-offset-m>
+				<y-offset-m type="double">0</y-offset-m>
+ 				<z-offset-m type="double">2.52</z-offset-m>
+ 			</antenna>
+			<az-step-deg type="int">10</az-step-deg>
+			<az-limit-deg type="int">30</az-limit-deg>
+			<elev-step-deg type="int">10</elev-step-deg>
+			<elev-limit type="int">30</elev-limit>
+			<max-range-m type="int">1219</max-range-m>
+			<serviceable type="bool">true</serviceable>
+		</radar-altimeter>
+		
+		<radar-altimeter n="1">
+			<antenna>
+				<x-offset-m type="double">-1</x-offset-m>
+				<y-offset-m type="double">0</y-offset-m>
+ 				<z-offset-m type="double">2.52</z-offset-m>
+ 			</antenna>
+			<az-step-deg type="int">10</az-step-deg>
+			<az-limit-deg type="int">30</az-limit-deg>
+			<elev-step-deg type="int">10</elev-step-deg>
+			<elev-limit type="int">30</elev-limit>
+			<max-range-m type="int">1219</max-range-m>
+			<serviceable type="bool">true</serviceable>
+		</radar-altimeter>
 	</instrumentation>
 	
 	<modes>

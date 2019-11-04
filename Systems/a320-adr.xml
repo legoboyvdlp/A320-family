@@ -5,6 +5,49 @@
 <system name="A320: ADR">
 
     <channel name="ADR Inputs">
+		
+		<fcs_function name="aero/alpha-deg-corrected">
+			<function>
+				<product>
+					<property>aero/alpha-deg</property>
+					<table>
+						<independentVar lookup="row">/velocities/groundspeed-mps</independentVar>
+						<tableData>
+							0  0.0
+							2  0.0
+							3  1.0
+						</tableData>
+					</table>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<sensor name="/systems/navigation/probes/aoa-1">
+			<input>aero/alpha-deg-corrected</input>
+			<quantization name="/systems/navigation/adr/output/aoa-1">
+				<bits>12</bits>
+				<min>-180</min>
+				<max>180</max>
+			</quantization>
+		</sensor>
+		
+		<sensor name="/systems/navigation/probes/aoa-2">
+			<input>aero/alpha-deg-corrected</input>
+			<quantization name="/systems/navigation/adr/output/aoa-2">
+				<bits>12</bits>
+				<min>-180</min>
+				<max>180</max>
+			</quantization>
+		</sensor>
+		
+		<sensor name="/systems/navigation/probes/aoa-3">
+			<input>aero/alpha-deg-corrected</input>
+			<quantization name="/systems/navigation/adr/output/aoa-3">
+				<bits>12</bits>
+				<min>-180</min>
+				<max>180</max>
+			</quantization>
+		</sensor>
        
 		<sensor name="/systems/navigation/probes/pitot-1">
 			<input>/systems/pitot[0]/measured-total-pressure-inhg</input>
@@ -95,33 +138,6 @@
 				<bits>11</bits>
 				<min>-256</min>
 				<max>256</max>
-			</quantization>
-		</sensor>
-		
-		<sensor name="/systems/navigation/probes/aoa-1">
-			<input>aero/alpha-deg</input>
-			<quantization name="/systems/navigation/adr/output/aoa-1">
-				<bits>12</bits>
-				<min>-180</min>
-				<max>180</max>
-			</quantization>
-		</sensor>
-		
-		<sensor name="/systems/navigation/probes/aoa-2">
-			<input>aero/alpha-deg</input>
-			<quantization name="/systems/navigation/adr/output/aoa-2">
-				<bits>12</bits>
-				<min>-180</min>
-				<max>180</max>
-			</quantization>
-		</sensor>
-		
-		<sensor name="/systems/navigation/probes/aoa-3">
-			<input>aero/alpha-deg</input>
-			<quantization name="/systems/navigation/adr/output/aoa-3">
-				<bits>12</bits>
-				<min>-180</min>
-				<max>180</max>
 			</quantization>
 		</sensor>
 		
@@ -237,37 +253,78 @@
 			</quantization>
 		</sensor>
 		
+		<fcs_function name="/systems/navigation/adr/computation/cas-1-product">
+			<function>
+				<product>
+					<value>5</value>
+					<difference>
+						<pow>
+							<sum>
+								<quotient>
+									<difference>
+										<property>/systems/navigation/probes/pitot-1</property> <!-- impact pressure -->
+										<property>/systems/navigation/probes/static-1</property>
+									</difference>
+									<value>29.9212553</value> <!-- use standard outside pressure -->
+								</quotient>
+								<value>1</value>
+							</sum>
+							<quotient>
+								<value>2</value>
+								<value>7</value>
+							</quotient>
+						</pow>
+						<value>1</value>
+					</difference>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>9999999999999999</max>
+			</clipto>
+		</fcs_function>
+		
 		<fcs_function name="/systems/navigation/adr/computation/cas-1-compute"> <!-- same as mach but with sea level pressure and multiplied by speed of sound at sea level -->
 			<function>
 				<product>
 					<value>661.47</value>
 					<pow>
-						<product>
-							<value>5</value>
-							<difference>
-								<pow>
-									<sum>
-										<quotient>
-											<difference>
-												<property>/systems/navigation/probes/pitot-1</property> <!-- impact pressure -->
-												<property>/systems/navigation/probes/static-1</property>
-											</difference>
-											<value>29.9212553</value> <!-- use standard outside pressure -->
-										</quotient>
-										<value>1</value>
-									</sum>
-									<quotient>
-										<value>2</value>
-										<value>7</value>
-									</quotient>
-								</pow>
-								<value>1</value>
-							</difference>
-						</product>
+						<property>/systems/navigation/adr/computation/cas-1-product</property>
 						<value>0.5</value>
 					</pow>
 				</product>
 			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/navigation/adr/computation/cas-2-product">
+			<function>
+				<product>
+					<value>5</value>
+					<difference>
+						<pow>
+							<sum>
+								<quotient>
+									<difference>
+										<property>/systems/navigation/probes/pitot-2</property> <!-- impact pressure -->
+										<property>/systems/navigation/probes/static-2</property>
+									</difference>
+									<value>29.9212553</value> <!-- use standard outside pressure -->
+								</quotient>
+								<value>1</value>
+							</sum>
+							<quotient>
+								<value>2</value>
+								<value>7</value>
+							</quotient>
+						</pow>
+						<value>1</value>
+					</difference>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>9999999999999999</max>
+			</clipto>
 		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/adr/computation/cas-2-compute">
@@ -275,60 +332,50 @@
 				<product>
 					<value>661.47</value>
 					<pow>
-						<product>
-							<value>5</value>
-							<difference>
-								<pow>
-									<sum>
-										<quotient>
-											<difference>
-												<property>/systems/navigation/probes/pitot-2</property>
-												<property>/systems/navigation/probes/static-2</property>
-											</difference>
-											<value>29.9212553</value>
-										</quotient>
-										<value>1</value>
-									</sum>
-									<quotient>
-										<value>2</value>
-										<value>7</value>
-									</quotient>
-								</pow>
-								<value>1</value>
-							</difference>
-						</product>
+						<property>/systems/navigation/adr/computation/cas-2-product</property>
 						<value>0.5</value>
 					</pow>
 				</product>
 			</function>
 		</fcs_function>
+		
+		<fcs_function name="/systems/navigation/adr/computation/cas-3-product">
+			<function>
+				<product>
+					<value>5</value>
+					<difference>
+						<pow>
+							<sum>
+								<quotient>
+									<difference>
+										<property>/systems/navigation/probes/pitot-3</property> <!-- impact pressure -->
+										<property>/systems/navigation/probes/static-3</property>
+									</difference>
+									<value>29.9212553</value> <!-- use standard outside pressure -->
+								</quotient>
+								<value>1</value>
+							</sum>
+							<quotient>
+								<value>2</value>
+								<value>7</value>
+							</quotient>
+						</pow>
+						<value>1</value>
+					</difference>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>9999999999999999</max>
+			</clipto>
+		</fcs_function>
+		
 		<fcs_function name="/systems/navigation/adr/computation/cas-3-compute">
 			<function>
 				<product>
 					<value>661.47</value>
 					<pow>
-						<product>
-							<value>5</value>
-							<difference>
-								<pow>
-									<sum>
-										<quotient>
-											<difference>
-												<property>/systems/navigation/probes/pitot-3</property> <!-- impact pressure -->
-												<property>/systems/navigation/probes/static-3</property>
-											</difference>
-											<value>29.9212553</value> <!-- use standard outside pressure -->
-										</quotient>
-										<value>1</value>
-									</sum>
-									<quotient>
-										<value>2</value>
-										<value>7</value>
-									</quotient>
-								</pow>
-								<value>1</value>
-							</difference>
-						</product>
+						<property>/systems/navigation/adr/computation/cas-3-product</property>
 						<value>0.5</value>
 					</pow>
 				</product>
@@ -680,151 +727,7 @@
 			</function>
 		</fcs_function>
 		
-	</channel>
-	
-	<channel name="ADR Output"> <!-- todo - need lowpass? -->
-	
-		<pure_gain name="/systems/navigation/adr/output/aoa-1">
-			<input>/systems/navigation/probes/aoa-1</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/aoa-2">
-			<input>/systems/navigation/probes/aoa-2</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/aoa-3">
-			<input>/systems/navigation/probes/aoa-3</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-1-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-1-capt</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-2-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-2-capt</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-3-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-3-capt</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-1-fo">
-			<input>/systems/navigation/adr/computation/baro-alt-1-fo</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-2-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-2-fo</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-3-fo">
-			<input>/systems/navigation/adr/computation/baro-alt-3-fo</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-1-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-capt</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-capt</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-3-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-corrected-3-capt</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-1-fo">
-			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-fo</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
-			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-fo</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-3-fo">
-			<input>/systems/navigation/adr/computation/baro-alt-corrected-3-fo</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/cas-1">
-			<input>/systems/navigation/adr/computation/cas-1</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/cas-2">
-			<input>/systems/navigation/adr/computation/cas-2</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/cas-3">
-			<input>/systems/navigation/adr/computation/cas-3</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/mach-1">
-			<input>/systems/navigation/adr/computation/mach-1</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/mach-2">
-			<input>/systems/navigation/adr/computation/mach-2</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/mach-3">
-			<input>/systems/navigation/adr/computation/mach-3</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/sat-1">
-			<input>/systems/navigation/adr/computation/sat-1</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/sat-2">
-			<input>/systems/navigation/adr/computation/sat-2</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/tas-1">
-			<input>/systems/navigation/adr/computation/tas-1</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/tas-2">
-			<input>/systems/navigation/adr/computation/tas-2</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/tas-3">
-			<input>/systems/navigation/adr/computation/tas-3</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/tat-1">
-			<input>/systems/navigation/probes/tat-1/tat</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<pure_gain name="/systems/navigation/adr/output/tat-2">
-			<input>/systems/navigation/probes/tat-2/tat</input>
-			<gain>1</gain>
-		</pure_gain>
-		
-		<fcs_function name="/systems/navigation/adr/output/overspeed">
+		<fcs_function name="/systems/navigation/adr/computation/overspeed">
 			<function>
 				<max>
 					<property>/systems/navigation/adr/computation/overspeed-vmo</property>
@@ -834,6 +737,183 @@
 				</max>
 			</function>
 		</fcs_function>
+		
+	</channel>
+	
+	<channel name="ADR Output"> <!-- todo - need lowpass? -->
+	
+		<pure_gain name="/systems/navigation/adr/output/aoa-1">
+			<input>/systems/navigation/probes/aoa-1</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/aoa-2">
+			<input>/systems/navigation/probes/aoa-2</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/aoa-3">
+			<input>/systems/navigation/probes/aoa-3</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-1-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-1-capt</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-2-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-2-capt</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-3-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-3-capt</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-1-fo">
+			<input>/systems/navigation/adr/computation/baro-alt-1-fo</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-2-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-2-fo</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-3-fo">
+			<input>/systems/navigation/adr/computation/baro-alt-3-fo</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-1-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-capt</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-capt</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-3-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-3-capt</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-1-fo">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-fo</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-fo</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-3-fo">
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-3-fo</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/cas-1">
+			<input>/systems/navigation/adr/computation/cas-1</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/cas-2">
+			<input>/systems/navigation/adr/computation/cas-2</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/cas-3">
+			<input>/systems/navigation/adr/computation/cas-3</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/mach-1">
+			<input>/systems/navigation/adr/computation/mach-1</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/mach-2">
+			<input>/systems/navigation/adr/computation/mach-2</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/mach-3">
+			<input>/systems/navigation/adr/computation/mach-3</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/sat-1">
+			<input>/systems/navigation/adr/computation/sat-1</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/sat-2">
+			<input>/systems/navigation/adr/computation/sat-2</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/tas-1">
+			<input>/systems/navigation/adr/computation/tas-1</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/tas-2">
+			<input>/systems/navigation/adr/computation/tas-2</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/tas-3">
+			<input>/systems/navigation/adr/computation/tas-3</input>
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/tat-1">
+			<input>/systems/navigation/probes/tat-1/tat</input>
+			<gain>/systems/navigation/adr/operating-1</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/tat-2">
+			<input>/systems/navigation/probes/tat-2/tat</input>
+			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<fcs_function name="/systems/navigation/adr/any-adr-on">
+			<function>
+				<max>
+					<property>/systems/navigation/adr/operating-1</property>
+					<property>/systems/navigation/adr/operating-2</property>
+					<property>/systems/navigation/adr/operating-3</property>
+				</max>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="/systems/navigation/adr/output/overspeed">
+			<input>/systems/navigation/adr/computation/overspeed</input>
+			<gain>/systems/navigation/adr/any-adr-on</gain>
+		</pure_gain>
+		
+		<pure_gain name="/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected">
+			<input>/instrumentation/radar-altimeter[0]/radar-altitude-ft</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>5000</max>
+			</clipto>
+		</pure_gain>
+		
+		<pure_gain name="/instrumentation/radar-altimeter[1]/radar-altitude-ft">
+			<input>/instrumentation/radar-altimeter[1]/radar-altitude-ft</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>5000</max>
+			</clipto>
+		</pure_gain>
 	</channel>
 
 </system>

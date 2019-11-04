@@ -9,18 +9,22 @@
 	<adf>
 		<name>adf</name>
 		<number>0</number>
+		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</adf>
 	
 	<adf>
 		<name>adf</name>
 		<number>1</number>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</adf>
 	
 	<airspeed-indicator>
-		<name>airspeed-indicator</name>
+		<name>airspeed-indicator</name> <!-- standby, measure directly, not via ADR -->
 		<number>0</number>
-		<total-pressure>/systems/pitot/total-pressure-inhg</total-pressure>
-		<static-pressure>/systems/static/pressure-inhg</static-pressure>
+		<total-pressure>/systems/pitot[2]/measured-total-pressure-inhg</total-pressure>
+		<static-pressure>/systems/static[2]/pressure-inhg</static-pressure>
 	</airspeed-indicator>
 	
 	<altimeter>
@@ -83,6 +87,13 @@
 		<encode-mode-s>1</encode-mode-s>
 	</altimeter>
 	
+	<altimeter>
+		<name>altimeter</name> <!-- standby, measure directly, not via ADR -->
+		<number>6</number>
+		<static-pressure>/systems/static[2]/pressure-inhg</static-pressure>
+		<tau>0.1</tau>
+	</altimeter>
+	
 	<attitude-indicator>
 		<name>attitude-indicator</name>
 		<number>0</number>
@@ -115,21 +126,29 @@
 	<dme>
 		<name>dme</name>
 		<number>0</number>
+		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
 	<dme>
 		<name>dme</name>
 		<number>1</number>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
-	<dme>
+	<dme> <!-- fake extra dme units for the ILS -->
 		<name>dme</name>
 		<number>2</number>
+		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
 	<dme>
 		<name>dme</name>
 		<number>3</number>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
 	<altimeter>
@@ -161,24 +180,39 @@
 		<number>0</number>
 	</magnetic-compass>
 	
-	<nav-radio>
+	<marker-beacon> <!-- part of VOR1 unit -->
+		<name>marker-beacon</name>
+		<number>0</number>
+		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
+	</marker-beacon>
+	
+	<nav-radio> <!-- VOR unit -->
 		<name>nav</name>
 		<number>0</number>
+		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
 	<nav-radio>
 		<name>nav</name>
 		<number>1</number>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
-	<nav-radio>
+	<nav-radio> <!-- ILS unit -->
 		<name>nav</name>
 		<number>2</number>
+		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
 	<nav-radio>
 		<name>nav</name>
 		<number>3</number>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
 	<slip-skid-ball>
@@ -218,12 +252,30 @@
 		<intruder-use-own-alt>1</intruder-use-own-alt>
 		<intruder-inhibit-alt-ft>380</intruder-inhibit-alt-ft>
 		<intruder-minimum-own-alt-ft>1700</intruder-minimum-own-alt-ft> uncomment for 2019.3 -->
+		<power-supply>/systems/electrical/bus/ac-1</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</tcas>
 	
 	<radar>
 		<name>wxradar</name>
 		<number>0</number>
 	</radar>
+	
+	<radar-altimeter>
+		<name>radar-altimeter</name>
+		<number>0</number>
+		<update-interval-sec>0.0666</update-interval-sec>
+		<power-supply>/systems/electrical/bus/ac-1</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
+	</radar-altimeter>
+	
+	<radar-altimeter>
+		<name>radar-altimeter</name>
+		<number>1</number>
+		<update-interval-sec>0.0666</update-interval-sec>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>
+	</radar-altimeter>
 	
 	<tacan>
 		<name>tacan</name>

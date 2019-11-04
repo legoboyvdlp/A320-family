@@ -1348,8 +1348,8 @@
 			<test value="/systems/electrical/bus/dc-2">
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
-			<output>/systems/electrical/outputs/adf</output>
-			<output>/systems/electrical/outputs/dme</output>
+			<!--<output>/systems/electrical/outputs/adf</output>
+			<output>/systems/electrical/outputs/dme</output>-->
 			<output>/systems/electrical/outputs/efis</output>
 			<output>/systems/electrical/outputs/fcp-power</output>
 			<output>/systems/electrical/outputs/fuel-pump[0]</output>
@@ -1357,10 +1357,10 @@
 			<output>/systems/electrical/outputs/fuel-pump[2]</output>
 			<output>/systems/electrical/outputs/gps</output>
 			<output>/systems/electrical/outputs/mk-viii</output>
-			<output>/systems/electrical/outputs/nav[0]</output>
+			<!--<output>/systems/electrical/outputs/nav[0]</output>
 			<output>/systems/electrical/outputs/nav[1]</output>
 			<output>/systems/electrical/outputs/nav[2]</output>
-			<output>/systems/electrical/outputs/nav[3]</output>
+			<output>/systems/electrical/outputs/nav[3]</output>-->
 			<output>/systems/electrical/outputs/tacan</output>
 			<output>/systems/electrical/outputs/turn-coordinator</output>
 		</switch>
@@ -1368,9 +1368,7 @@
 	
 	<!-- Notes -->
 	<!-- Priority: eng, ext, apu but EXT ON lt stays on even when not feeding a/c -->
-	<!-- Ground service bus connected directly to input-volt -->
 	<!-- TR 2 fail leads to loss of gnd FLT bus -->
-	<!-- TODO: Galley: During single generator is off, if GALY AND CAB pb is off (TODO: Do we have this?) is off -->
 	
 	<channel name="Overhead Lights" execrate="8">
 	
