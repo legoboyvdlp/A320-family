@@ -596,7 +596,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[0]/align</property>
+					<property>controls/navigation/adirscp/lights/ir-1-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -692,7 +692,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[1]/align</property>
+					<property>controls/navigation/adirscp/lights/ir-2-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -788,7 +788,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[2]/align</property>
+					<property>controls/navigation/adirscp/lights/ir-3-off</property>
 					<value>1</value>
 				</equals>
 				<equals>

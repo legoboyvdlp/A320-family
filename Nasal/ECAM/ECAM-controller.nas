@@ -163,6 +163,7 @@ var status = {
 
 var ECAM_controller = {
 	_recallCounter: 0,
+	_noneActive: 0,
 	init: func() {
 		ECAMloopTimer.start();
 		me.reset();
@@ -315,6 +316,7 @@ var ECAM_controller = {
 		}
 	},
 	recall: func() {
+		me._noneActive = 1;
 		me._recallCounter = 0;
 		foreach (var w; warnings.vector) {
 			if (w.clearFlag == 1) {
@@ -322,9 +324,13 @@ var ECAM_controller = {
 				w.clearFlag = 0;
 				me._recallCounter += 1;
 			}
+			
+			if (w.active == 1) {
+				me._noneActive = 0;
+			}
 		}
 		
-		if (me._recallCounter == 0) {
+		if (me._recallCounter == 0 and me._noneActive) {
 			FWC.Btn.recallStsNormal.setValue(1);
 			settimer(func() {
 				if (FWC.Btn.recallStsNormal.getValue() == 1) { # catch unexpected error, trying something new here

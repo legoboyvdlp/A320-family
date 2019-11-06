@@ -9,6 +9,9 @@ var guiModes = ['OFF', 'STANDBY', 'TEST', 'GROUND', 'ON', 'ALTITUDE'];
 var guiNode = props.globals.getNode("/sim/gui/dialogs/radios/transponder-mode", 1);
 var forLoopFlag = 0;
 
+var altimeter = props.globals.initNode("/instrumentation/transponder/altimeter-input-src", 0, "INT");
+var airspeed = props.globals.initNode("/instrumentation/transponder/airspeed-input-src", 0, "INT");
+
 var Transponder = {
 	mode: 0,
 	code: "2000",
@@ -97,6 +100,8 @@ var Transponder = {
 			return;
 		}
 		me.activeADIRS = newADIRS;
+		altimeter.setValue(newADIRS);
+		airspeed.setValue(newADIRS);
 	},
 	modeSwitch: func(newMode) {
 		me.mode = newMode;
@@ -196,6 +201,8 @@ var transponderPanel = {
 		# update newly selected transponder
 		Transponders.vector[me.atcSel - 1].modeSwitch(me.modeSel);
 		me.atcFailLight(Transponders.vector[me.atcSel - 1].failed);
+		
+		me.updateAirData();
 	},
 	modeSwitch: func(newMode) {
 		if (newMode < 0 or newMode > 5) {
@@ -223,11 +230,27 @@ var transponderPanel = {
 		me.codeDisp = me.code;
 		me.codeProp.setValue(sprintf("%s", me.codeDisp));
 		Transponders.vector[me.atcSel - 1].setCode(me.code);
-	}
+	},
+	updateAirData: func() {
+		if (me.atcSel == 1) {
+			if (systems.SwitchingPanel.Switches.airData.getValue() == -1) {
+				Transponders.vector[0].switchADIRS(3);
+			} else {
+				Transponders.vector[0].switchADIRS(1);
+			}
+		} else {
+			if (systems.SwitchingPanel.Switches.airData.getValue() == 1) {
+				Transponders.vector[1].switchADIRS(3);
+			} else {
+				Transponders.vector[1].switchADIRS(2);
+			}
+		}
+	},
 };
 
 var init = func() {
 	transponderPanel.atcSwitch(1);
+	transponderPanel.updateAirData();
 	transponderTimer.start();
 }
 

@@ -7,7 +7,7 @@ var _NUMADIRU = 3;
 
 var _selfTestTime = nil;
 
-var ADR = {
+var ADIRU = {
 	# local vars
 	_voltageMain: 0,
 	_voltageBackup: 0,
@@ -15,6 +15,7 @@ var ADR = {
 	_noPowerTime: 0,
 	_timeVar: 0,
 	
+	num: 0,
 	outputOn: 0, # 0 = disc, 1 = normal
 	mode: 0, # 0 = off, 1 = nav, 2 = att
 	energised: 0, # 0 = off, 1 = on
@@ -23,13 +24,13 @@ var ADR = {
 	output: [],
 	
 	# methods
-    new: func() {
-		var adr = { parents:[ADR] };
-		return adr;
+    new: func(n) {
+		var adiru = { parents:[ADIRU] };
+		adiru.num = n;
+		return adiru;
     },
 	updateEnergised: func(mode) {
 		me.energised = mode != 0 ? 1 : 0;
-		print("ADR energised status " ~ me.energised);
 	},
 	updatePower: func(elec) {
 		me._voltageMain = elec.getValue() or 0;
@@ -44,6 +45,25 @@ var ADR = {
 		ADIRSnew._selfTest = 1;
 		_selfTestTime = pts.Sim.Time.elapsedSec.getValue();
 		
+		ADIRSnew.Lights.adrOff[me.num].setValue(1);
+		ADIRSnew.Lights.adrFault[me.num].setValue(1);
+		settimer(func() {
+			ADIRSnew.Lights.adrOff[me.num].setValue(0);
+			ADIRSnew.Lights.adrFault[me.num].setValue(0);
+		}, 0.1);
+		settimer(func() {
+			ADIRSnew.Lights.adrOff[me.num].setValue(1);
+			ADIRSnew.Lights.adrFault[me.num].setValue(1);
+			ADIRSnew.Lights.irFault[me.num].setValue(1);
+			ADIRSnew.Lights.irOff[me.num].setValue(1);
+		}, 1.0);
+		settimer(func() {
+			ADIRSnew.Lights.adrOff[me.num].setValue(0);
+			ADIRSnew.Lights.adrFault[me.num].setValue(0);
+			ADIRSnew.Lights.irFault[me.num].setValue(0);
+			ADIRSnew.Lights.irOff[me.num].setValue(0);
+		}, 1.1);
+		
 		ADIRSnew.selfTest();
 	},
 	setOperative: func(newOperative) { 
@@ -52,14 +72,13 @@ var ADR = {
 			if (newOperative) {
 				me.selfTest();
 			}
-			print("Set operative to " ~ me.operative);
 		}
 	},
 	update: func() {
 		me._timeVar = pts.Sim.Time.elapsedSec.getValue();
 		if (me.energised and !me._voltageMain and me._voltageLimitedTime and me._noPowerTime == 0) {
 			me._noPowerTime = me._timeVar;
-			print("ADR lost power at time " ~ me._noPowerTime);
+			print("ADIRU lost power at time " ~ me._noPowerTime);
 		}
 		
 		if (me.energised and me.mode) {
@@ -91,85 +110,32 @@ var ADR = {
 	},
 };
 
-var IR = {
-	# local vars 
-	_voltageMain: 0,
-	_voltageBackup: 0,
-	_voltageLimitedTime: 0,
-	_noPowerTime: 0,
-	_timeVar: 0,
-	
-	outputOn: 0, # 0 = disc, 1 = normal
-	mode: 0, # 0 = off, 1 = nav, 2 = att
-	energised: 0, # 0 = off, 1 = on
-	operative: 0, # 0 = off,
-	input: [],
-	output: [],
-	
-	# methods
-    new: func() {
-		var ir = { parents:[IR] };
-		return ir;
-    },
-	updateEnergised: func(mode) {
-		me.energised = mode != 0 ? 1 : 0;
-	},
-	updatePower: func(elec) {
-		me._voltageMain = elec.getValue() or 0;
-		return me._voltageMain;
-	},
-	updateBackupPower: func(elec, isLimited) {
-		me._voltageBackup = elec.getValue() or 0;
-		me._voltageLimitedTime = isLimited;
-		return me._voltageBackup;
-	},
-	update: func() {
-		me._timeVar = pts.Sim.Time.elapsedSec.getValue();
-		if (me.energised and !me._voltageMain and me._voltageLimitedTime and me._noPowerTime == 0) {
-			me._noPowerTime = me._timeVar;
-		}
-		
-		if (me._voltageMain or me._timeVar < me._noPowerTime + 300) {
-			me.operative = (me.outputOn and me.energised and me.mode) ? 1 : 0;
-		} else {
-			me.operative = 0;
-		}
-	},
-};
-
 var ADIRSControlPanel = {
 	adrSw: func(n) { 
 		if (n < 0 or n > _NUMADIRU) { return; }
 		ADIRSnew._adrSwitchState = ADIRSnew.Switches.adrSw[n].getValue();
-		print("Switching adr unit " ~ n ~ " to " ~ !ADIRSnew._adrSwitchState);
 		ADIRSnew.Switches.adrSw[n].setValue(!ADIRSnew._adrSwitchState);
-		if (ADIRSnew.ADRunits[n] != nil) { 
-			ADIRSnew.ADRunits[n].outputOn = !ADIRSnew._adrSwitchState;
+		if (ADIRSnew.ADIRunits[n] != nil) { 
+			ADIRSnew.ADIRunits[n].outputOn = !ADIRSnew._adrSwitchState;
 		}
 		ADIRSnew.Lights.adrOff[n].setValue(ADIRSnew._adrSwitchState);
 	},
 	irSw: func(n) { 
 		if (n < 0 or n > _NUMADIRU) { return; }
 		ADIRSnew._irSwitchState = ADIRSnew.Switches.irSw[n].getValue();
-		print("Switching ir unit " ~ n ~ " to " ~ !ADIRSnew._irSwitchState);
 		ADIRSnew.Switches.irSw[n].setValue(!ADIRSnew._irSwitchState);
 		if (ADIRSnew.IRunits[n] != nil) { 
 			ADIRSnew.IRunits[n].outputOn = !ADIRSnew._irSwitchState;
 		}
+		ADIRSnew.Lights.irOff[n].setValue(ADIRSnew._adrSwitchState);
 	},
 	irModeSw: func(n, mode) {
 		if (n < 0 or n > _NUMADIRU) { return; }
 		if (mode < 0 or mode > 2) { return; }
 		me._irModeSwitchState = ADIRSnew.Switches.irModeSw[n].getValue();
-		print("Switching adirs " ~ n ~ " to mode " ~ mode);
-		if (ADIRSnew.ADRunits[n] != nil) { 
-			ADIRSnew.ADRunits[n].mode = mode;
-			ADIRSnew.ADRunits[n].updateEnergised(mode);
-			ADIRSnew.Switches.irModeSw[n].setValue(mode);
-		}
-		if (ADIRSnew.IRunits[n] != nil) { 
-			ADIRSnew.IRunits[n].mode = mode;
-			ADIRSnew.IRunits[n].updateEnergised(mode);
+		if (ADIRSnew.ADIRunits[n] != nil) { 
+			ADIRSnew.ADIRunits[n].mode = mode;
+			ADIRSnew.ADIRunits[n].updateEnergised(mode);
 			ADIRSnew.Switches.irModeSw[n].setValue(mode);
 		}
 	}
@@ -181,15 +147,16 @@ var ADIRSnew = {
 	_irSwitchState: 0,
 	_irModeSwitchState: 0,
 	_hasPower: 0,
-	_oldOperative: [0, 0, 0],
+	_cacheOperative: [0, 0, 0],
+	_cacheOutputOn: [0, 0, 0],
 	_flapPos: nil,
 	_slatPos: nil,
 	_selfTest: 0,
 	_init: 0,
 	
 	# ADIRS Units
-	ADRunits: [nil, nil, nil],
-	IRunits: [nil, nil, nil],
+	ADIRunits: [nil, nil, nil],
+	#IRunits: [nil, nil, nil],
 	
 	# Electrical
 	mainSupply: [systems.ELEC.Bus.acEss, systems.ELEC.Bus.ac2, systems.ELEC.Bus.ac1],
@@ -219,8 +186,8 @@ var ADIRSnew = {
 	init: func() {
 		if (!me._init) {
 			for (i = 0; i < _NUMADIRU; i = i + 1) {
-				print("Creating new ADR unit " ~ i);
-				me.ADRunits[i] = ADR.new();
+				print("Creating new ADIRU " ~ i);
+				me.ADIRunits[i] = ADIRU.new(i);
 				me._init = 1;
 			}
 		}
@@ -251,18 +218,19 @@ var ADIRSnew = {
 		if (me._init) {
 			for (i = 0; i < _NUMADIRU; i = i + 1) {
 				# update ADR units power
-				me._hasPower = me.ADRunits[i].updatePower(me.mainSupply[i]);
+				me._hasPower = me.ADIRunits[i].updatePower(me.mainSupply[i]);
 				if (me._hasPower == 0) {
-					 me.ADRunits[i].updateBackupPower(me.backupSupply[i][0],me.backupSupply[i][1])
+					 me.ADIRunits[i].updateBackupPower(me.backupSupply[i][0],me.backupSupply[i][1])
 				}
 				
 				# Update ADR units
-				me.ADRunits[i].update();
+				me.ADIRunits[i].update();
 				
-				if (me.ADRunits[i].operative != me._oldOperative[i]) {
-					me._oldOperative[i] = me.ADRunits[i].operative;
-					if (me.ADRunits[i].outputOn) {
-						me.Operating.adr[i].setValue(me.ADRunits[i].operative);
+				if (me.ADIRunits[i].operative != me._cacheOperative[i] or me.ADIRunits[i].outputOn != me._cacheOutputOn[i]) {
+					me._cacheOperative[i] = me.ADIRunits[i].operative;
+					me._cacheOutputOn[i] = me.ADIRunits[i].outputOn;
+					if (me.ADIRunits[i].outputOn) {
+						me.Operating.adr[i].setValue(me.ADIRunits[i].operative);
 					} else {
 						me.Operating.adr[i].setValue(0);
 					}

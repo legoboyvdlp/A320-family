@@ -717,6 +717,10 @@
 					<on-bat type="bool">0</on-bat>
 				</lights>
 			</adirscp>
+			<switching>
+				<att-hdg type="int">0</att-hdg>
+				<air-data type="int">0</air-data>
+			</switching>
 		</navigation>
 		<OH>
 			<protectors>
@@ -1172,6 +1176,11 @@
 				<volume> 0.8 </volume> <!-- Volume at reference distance -->
 			</speaker>
 		</tcas>
+		
+		<transponder>
+			<airspeed-input-src type="int">0</airspeed-input-src>
+			<altimeter-input-src type="int">0</altimeter-input-src>
+		</transponder>
 		
 		<!-- See http://wiki.flightgear.org/index.php/GPWS -->
 		<mk-viii n="0">
@@ -1713,6 +1722,7 @@
 			<file>Aircraft/A320-family/Nasal/engines-common.nas</file>
 			<file>Aircraft/A320-family/Nasal/ADIRS.nas</file>
 			<file>Aircraft/A320-family/Nasal/ADIRS/ADR.nas</file>
+			<file>Aircraft/A320-family/Nasal/ADIRS/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/ground_services.nas</file>
@@ -1790,6 +1800,9 @@
 		<atc>
 			<file>Aircraft/A320-family/Nasal/atc.nas</file>
 		</atc>
+		<dmc>
+			<file>Aircraft/A320-family/Nasal/DMC.nas</file>
+		</dmc>
 	</nasal>
 
 </PropertyList>

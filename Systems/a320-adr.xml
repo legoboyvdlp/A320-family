@@ -409,91 +409,121 @@
 			</quantization>
 		</sensor>
 		
+		<fcs_function name="/systems/navigation/adr/computation/mach-1-product">
+			<function>
+				<product>
+					<value>5</value>  <!-- 2 / specific heat ratio - 1 -->
+					<difference>
+						<pow>
+							<sum>
+								<quotient>
+									<difference>
+										<property>/systems/navigation/probes/pitot-1</property>  <!-- dynamic pressure -->
+										<property>/systems/navigation/probes/static-1</property>
+									</difference>
+									<property>/systems/navigation/probes/static-1</property> <!-- static pressure -->
+								</quotient>
+								<value>1</value>
+							</sum>
+							<quotient>
+								<value>2</value>
+								<value>7</value>
+							</quotient>
+						</pow>
+						<value>1</value>
+					</difference>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>999999999999</max>
+			</clipto>
+		</fcs_function>
+		
 		<fcs_function name="/systems/navigation/adr/computation/mach-1-compute">
 			<function>
 				<pow>
-					<product>
-						<value>5</value>  <!-- 2 / specific heat ratio - 1 -->
-						<difference>
-							<pow>
-								<sum>
-									<quotient>
-										<difference>
-											<property>/systems/navigation/probes/pitot-1</property>  <!-- dynamic pressure -->
-											<property>/systems/navigation/probes/static-1</property>
-										</difference>
-										<property>/systems/navigation/probes/static-1</property> <!-- static pressure -->
-									</quotient>
-									<value>1</value>
-								</sum>
-								<quotient>
-									<value>2</value>
-									<value>7</value>
-								</quotient>
-							</pow>
-							<value>1</value>
-						</difference>
-					</product>
+					<property>/systems/navigation/adr/computation/mach-1-product</property>
 					<value>0.5</value>
 				</pow>
 			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/navigation/adr/computation/mach-2-product">
+			<function>
+				<product>
+					<value>5</value>  <!-- 2 / specific heat ratio - 1 -->
+					<difference>
+						<pow>
+							<sum>
+								<quotient>
+									<difference>
+										<property>/systems/navigation/probes/pitot-2</property>  <!-- dynamic pressure -->
+										<property>/systems/navigation/probes/static-2</property>
+									</difference>
+									<property>/systems/navigation/probes/static-2</property> <!-- static pressure -->
+								</quotient>
+								<value>1</value>
+							</sum>
+							<quotient>
+								<value>2</value>
+								<value>7</value>
+							</quotient>
+						</pow>
+						<value>1</value>
+					</difference>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>999999999999</max>
+			</clipto>
 		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/adr/computation/mach-2-compute">
 			<function>
 				<pow>
-					<product>
-						<value>5</value>
-						<difference>
-							<pow>
-								<sum>
-									<quotient>
-										<difference>
-											<property>/systems/navigation/probes/pitot-2</property>
-											<property>/systems/navigation/probes/static-2</property>
-										</difference>
-										<property>/systems/navigation/probes/static-2</property>
-									</quotient>
-									<value>1</value>
-								</sum>
-								<quotient>
-									<value>2</value>
-									<value>7</value>
-								</quotient>
-							</pow>
-							<value>1</value>
-						</difference>
-					</product>
+					<property>/systems/navigation/adr/computation/mach-2-product</property>
 					<value>0.5</value>
 				</pow>
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/systems/navigation/adr/computation/mach-3-product">
+			<function>
+				<product>
+					<value>5</value>  <!-- 2 / specific heat ratio - 1 -->
+					<difference>
+						<pow>
+							<sum>
+								<quotient>
+									<difference>
+										<property>/systems/navigation/probes/pitot-3</property>  <!-- dynamic pressure -->
+										<property>/systems/navigation/probes/static-3</property>
+									</difference>
+									<property>/systems/navigation/probes/static-3</property> <!-- static pressure -->
+								</quotient>
+								<value>1</value>
+							</sum>
+							<quotient>
+								<value>2</value>
+								<value>7</value>
+							</quotient>
+						</pow>
+						<value>1</value>
+					</difference>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>999999999999</max>
+			</clipto>
+		</fcs_function>
+		
 		<fcs_function name="/systems/navigation/adr/computation/mach-3-compute">
 			<function>
 				<pow>
-					<product>
-						<value>5</value>
-						<difference>
-							<pow>
-								<sum>
-									<quotient>
-										<difference>
-											<property>/systems/navigation/probes/pitot-3</property>
-											<property>/systems/navigation/probes/static-3</property>
-										</difference>
-										<property>/systems/navigation/probes/static-3</property>
-									</quotient>
-									<value>1</value>
-								</sum>
-								<quotient>
-									<value>2</value>
-									<value>7</value>
-								</quotient>
-							</pow>
-							<value>1</value>
-						</difference>
-					</product>
+					<property>/systems/navigation/adr/computation/mach-3-product</property>
 					<value>0.5</value>
 				</pow>
 			</function>
@@ -914,6 +944,31 @@
 				<max>5000</max>
 			</clipto>
 		</pure_gain>
+		
+		<switch name="/instrumentation/transponder/altimeter-input">
+			<test logic="AND" value="/systems/navigation/adr/output/baro-alt-corrected-1-capt">
+				/instrumentation/transponder/altimeter-input-src eq 1
+			</test>
+			<test logic="AND" value="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+				/instrumentation/transponder/altimeter-input-src eq 2
+			</test>
+			<test logic="AND" value="/systems/navigation/adr/output/baro-alt-corrected-3-capt">
+				/instrumentation/transponder/altimeter-input-src eq 3
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/transponder/airspeed-input">
+			<test logic="AND" value="/systems/navigation/adr/output/cas-1">
+				/instrumentation/transponder/airspeed-input-src eq 1
+			</test>
+			<test logic="AND" value="/systems/navigation/adr/output/cas-2">
+				/instrumentation/transponder/airspeed-input-src eq 2
+			</test>
+			<test logic="AND" value="/systems/navigation/adr/output/cas-3">
+				/instrumentation/transponder/airspeed-input-src eq 3
+			</test>
+		</switch>
+		
 	</channel>
 
 </system>

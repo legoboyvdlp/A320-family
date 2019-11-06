@@ -45,6 +45,11 @@ var Instrumentation = {
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
 	},
+	TCAS: {
+		Inputs: {
+			mode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
+		},
+	},
 };
 
 var JSBSIM = {

@@ -6070,7 +6070,66 @@
 			</binding>
 		</action>
     </animation>
-
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ecam_air_data</object-name>
+		<object-name>ecam_air_data.mark</object-name>
+		<factor>30</factor>
+		<property>/controls/navigation/switching/air-data</property>
+		<axis>
+			<x1-m>-0.428673</x1-m>
+			<y1-m>-0.022557</y1-m>
+			<z1-m>-0.051784</z1-m>
+			<x2-m>-0.430086</x2-m>
+			<y2-m>-0.022557</y2-m>
+			<z2-m>-0.060321</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>ecam_air_data</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.SwitchingPanel.Switches.airData.getValue() != 1) {
+						systems.SwitchingPanel.doAirData(systems.SwitchingPanel.Switches.airData.getValue() + 1);
+					} else {
+						systems.SwitchingPanel.doAirData(-1);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>2</button>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.SwitchingPanel.Switches.airData.getValue() != -1) {
+						systems.SwitchingPanel.doAirData(systems.SwitchingPanel.Switches.airData.getValue() - 1);
+					} else {
+						systems.SwitchingPanel.doAirData(1);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
 	<!-- Z Colors/Effects -->
 	<animation>
 		<type>material</type>

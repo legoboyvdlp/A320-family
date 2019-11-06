@@ -224,6 +224,8 @@
 		<name>transponder</name>
 		<number>0</number>
 		<mode>2</mode>
+		<encoder-path>/instrumentation/transponder/altimeter-input</encoder-path>
+		<airspeed-path>/instrumentation/transponder/airspeed-input</airspeed-path>
 		<mode-c-altitude>/instrumentation/encoder/mode-c-alt-ft</mode-c-altitude>
 		<mode-s-altitude>/instrumentation/encoder/mode-s-alt-ft</mode-s-altitude>
 	</transponder>
@@ -252,8 +254,6 @@
 		<intruder-use-own-alt>1</intruder-use-own-alt>
 		<intruder-inhibit-alt-ft>380</intruder-inhibit-alt-ft>
 		<intruder-minimum-own-alt-ft>1700</intruder-minimum-own-alt-ft> uncomment for 2019.3 -->
-		<power-supply>/systems/electrical/bus/ac-1</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</tcas>
 	
 	<radar>
