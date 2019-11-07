@@ -1542,7 +1542,7 @@ var messages_right_memo = func {
 		auto_brk_max.active = 0;
 	}
 	
-	if (getprop("/systems/fuel/x-feed") == 1 and getprop("controls/fuel/x-feed") == 1) {
+	if (getprop("/systems/fuel/valves/crossfeed-valve") == 1 and getprop("/controls/fuel/switches/crossfeed") == 1) {
 		fuelx.active = 1;
 	} else {
 		fuelx.active = 0;

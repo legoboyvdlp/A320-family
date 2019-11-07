@@ -29,7 +29,7 @@
 		<switch name="fuel/from-tank2-to-tank3">
 			<default value="0"/>
 			<test logic="AND" value="9">
-				/systems/fuel/x-feed == 1
+				/systems/fuel/valves/crossfeed-valve == 1
 				/systems/fuel/only-use-ctr-tank == 0
 				/systems/fuel/tank[2]/feed == 1
 				propulsion/tank[0]/contents-lbs eq 0
@@ -62,7 +62,7 @@
 		<switch name="fuel/from-tank0-to-tank4">
 			<default value="0"/>
 			<test logic="AND" value="9">
-				/systems/fuel/x-feed == 1
+				/systems/fuel/valves/crossfeed-valve == 1
 				/systems/fuel/only-use-ctr-tank == 0
 				/systems/fuel/tank[0]/feed == 1
 				propulsion/tank[2]/contents-lbs eq 0

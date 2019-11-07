@@ -640,6 +640,18 @@
 			<speedbrake-arm>0</speedbrake-arm>
 			<slats>0</slats>
 		</flight>
+		<fuel>
+			<switches>
+				<center-mode type="bool">1</center-mode>
+				<crossfeed type="bool">0</crossfeed>
+				<pump-left-1 type="bool">0</pump-left-1>
+				<pump-left-2 type="bool">0</pump-left-2>
+				<pump-center-1 type="bool">0</pump-center-1>
+				<pump-center-2 type="bool">0</pump-center-2>
+				<pump-right-1 type="bool">0</pump-right-1>
+				<pump-right-2 type="bool">0</pump-right-2>
+			</switches>
+		</fuel>
 		<gear>
 			<brake-parking type="bool">0</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
@@ -921,7 +933,10 @@
 			<tank n="2">
 				<feed type="bool">0</feed>
 			</tank>
-			<x-feed type="bool">0</x-feed>
+			<ctr-pump-cmd-on-eng-start type="bool">0</ctr-pump-cmd-on-eng-start>
+			<refuel>
+				<refuelling type="bool">0</refuelling>
+			</refuel>
 		</fuel>
 		<hydraulic n="0">
 			<blue-psi>0</blue-psi>

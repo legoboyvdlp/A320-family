@@ -29,11 +29,13 @@ var Engines = {
 		epractual: props.globals.getNode("/engines/engine[0]/epr-actual"),
 		n1actual: props.globals.getNode("/engines/engine[0]/n1-actual"),
 		n2actual: props.globals.getNode("/engines/engine[0]/n2-actual"),
+		state: props.globals.getNode("/engines/engine[0]/state"),
 	},
 	Engine2: {
 		epractual: props.globals.getNode("/engines/engine[1]/epr-actual"),
 		n1actual: props.globals.getNode("/engines/engine[1]/n1-actual"),
 		n2actual: props.globals.getNode("/engines/engine[1]/n2-actual"),
+		state: props.globals.getNode("/engines/engine[1]/state"),
 	},
 };
 

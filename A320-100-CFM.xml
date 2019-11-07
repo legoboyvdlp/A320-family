@@ -29,7 +29,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<pitch> 2.2 </pitch>
 				<yaw> 1 </yaw>
 			</orient>
-			<feed>3</feed>
+			<feed>4</feed>
 			<thruster file="direct">
 				<location unit="M">
 					<x> 14.3962788 </x>
@@ -55,7 +55,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<pitch> 2.2 </pitch>
 				<yaw> -1 </yaw>
 			</orient>
-			<feed>4</feed>
+			<feed>5</feed>
 			<thruster file="direct">
 				<location unit="M">
 					<x> 14.3962788 </x>
@@ -92,6 +92,20 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS"> 12212.50 </capacity>
 			<contents unit="LBS">  6000.00 </contents>
 			<unusable-volume unit="LTR"> 11.70 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.67</density>
+			<temperature>50</temperature>
+		</tank>
+		
+		<tank type="FUEL">    <!-- Center Tank -->
+			<location unit="M">
+				<x> 18.9731 </x>
+				<y> 0 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 14550.50 </capacity>
+			<contents unit="LBS"> 40.88 </contents>
+			<unusable-volume unit="LTR"> 23.20 </unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.67</density>
 			<temperature>50</temperature>
