@@ -452,4 +452,177 @@
 		</R>
 		<output>/systems/electrical/some-electric-thingie/generator-2-reset</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/to-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/to-config-reset</property>
+		</R>
+		<output>/ECAM/to-config-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/to-memo-set</property>
+		</S>
+		<R>
+			<property>/ECAM/to-memo-reset</property>
+		</R>
+		<output>/ECAM/to-memo-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/ldg-memo-set</property>
+		</S>
+		<R>
+			<property>/ECAM/ldg-memo-reset</property>
+		</R>
+		<output>/ECAM/ldg-memo-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/ldg-memo-2200-set</property>
+		</S>
+		<R>
+			<property>/ECAM/ldg-memo-2200-reset</property>
+		</R>
+		<output>/ECAM/ldg-memo-2200-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/phases/flipflop/gear-set</property>
+		</S>
+		<R>
+			<property>/ECAM/phases/flipflop/gear-reset</property>
+		</R>
+		<output>/ECAM/phases/flipflop/gear-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/phases/flipflop/phase-2-set</property>
+		</S>
+		<R>
+			<property>/ECAM/phases/flipflop/phase-2-reset</property>
+		</R>
+		<output>/ECAM/phases/flipflop/phase-2-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/phases/flipflop/phase-10-set</property>
+		</S>
+		<R>
+			<property>/ECAM/phases/flipflop/phase-10-reset</property>
+		</R>
+		<output>/ECAM/phases/flipflop/phase-10-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/flipflop/recall-set</property>
+		</S>
+		<R>
+			<property>/ECAM/flipflop/recall-reset</property>
+		</R>
+		<output>/ECAM/flipflop/recall-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>2.0</value>
+		</time>
+		<S>
+			<not>
+				<property>/ECAM/phases/speed-gt-80</property>
+			</not>
+		</S>
+		<output>/ECAM/phases/monostable-80kt</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>300.0</value>
+		</time>
+		<S>
+			<property>/ECAM/phases/monostable/phase-1-300</property>
+		</S>
+		<output>/ECAM/phases/monostable/phase-1-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>120.0</value>
+		</time>
+		<S>
+			<property>/ECAM/phases/monostable/phase-5</property>
+		</S>
+		<output>/ECAM/phases/monostable/phase-5-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>180.0</value>
+		</time>
+		<S>
+			<property>/ECAM/phases/monostable/phase-7</property>
+		</S>
+		<output>/ECAM/phases/monostable/phase-7-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>5.0</value>
+		</time>
+		<S>
+			<property>/ECAM/buttons/recall-status-normal</property>
+		</S>
+		<R>
+			<property>/ECAM/buttons/clear-btn</property>
+		</R>
+		<output>/ECAM/buttons/recall-status-normal-output</output>
+	</flipflop>
+	
+	<!-- falling edge detector - take inverse of following -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>3.0</value>
+		</time>
+		<S>
+			<property>/ECAM/phases/monostable/phase-9</property>
+		</S>
+		<output>/ECAM/phases/monostable/phase-9-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/phases/to-power-set</property>
+		</S>
+		<output>/ECAM/phases/monostable/to-power-set-output</output>
+	</flipflop>
 </PropertyList>

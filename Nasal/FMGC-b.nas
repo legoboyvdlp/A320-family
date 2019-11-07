@@ -369,7 +369,7 @@ var ITAF = {
 			if (abs(Control.aileron.getValue()) >= 0.2 or abs(Control.elevator.getValue()) >= 0.2 or abs(Control.rudder.getValue()) >= 0.2) {
 				me.ap1Master(0);
 				me.ap2Master(0);
-				libraries.apOff("hard", 0);
+				fcu.apOff("hard", 0);
 			}
 		}
 	},

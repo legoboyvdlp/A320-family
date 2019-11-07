@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<path>res/fd_complete.ac</path>
-	
+
 	<animation>
 		<type>translate</type>
 		<property>systems/shake/shaking</property>
@@ -18,7 +18,7 @@
 			<z2-m> 0.8</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>hud</object-name>
@@ -67,7 +67,7 @@
 			<pitch-deg>69.547</pitch-deg>
 		</offsets>
 	</model-->
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/OHpanel/OHpanel.xml</path>
 		<offsets>
@@ -77,7 +77,7 @@
 			<pitch-deg>69.547</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/OHpanel/OHpanelEPR.xml</path>
 		<condition>
@@ -93,7 +93,7 @@
 			<pitch-deg>69.547</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/OHpanel/SteepAppr.xml</path>
 		<condition>
@@ -234,7 +234,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
+
 	<model>
 		<name>PFD2</name>
 		<path>Aircraft/A320-family/Models/Instruments/PFD/PFD2.xml</path>
@@ -245,7 +245,7 @@
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>PFD2</object-name>
@@ -269,7 +269,7 @@
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>ND1</object-name>
@@ -281,7 +281,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
+
 	<model>
 		<name>ND2</name>
 		<path>Aircraft/A320-family/Models/Instruments/ND/ND_R.xml</path>
@@ -292,7 +292,7 @@
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>ND2</object-name>
@@ -306,7 +306,7 @@
 	</animation>
 
 	<!-- Upper ECAM -->
-	
+
 	<model>
 		<name>UECAM</name>
 		<path>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.xml</path>
@@ -329,13 +329,13 @@
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<!-- Standby Indicator -->
 	<model>
 		<name>IESI</name>
 		<path>Aircraft/A320-family/Models/Instruments/IESI/IESI.xml</path>
 	</model>
-	
+
 	<!-- No button lights without power! -->
 	<animation>
 		<type>select</type>
@@ -444,7 +444,7 @@
 			</greater-than-equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>atc-code</object-name>
@@ -457,7 +457,7 @@
 			</not>
 		</condition>
 	</animation>
-	
+
 	<!-- Not Yet Implemented Lights -->
 	<!-- Remove from this animation once you simulate -->
 	<animation>
@@ -477,8 +477,6 @@
 		<object-name>ecam_sts_led</object-name>
 		<object-name>engine_fault_1</object-name>
 		<object-name>engine_fault_2</object-name>
-		<object-name>engine_fire_1</object-name>
-		<object-name>engine_fire_2</object-name>
 		<object-name>exped_led</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>qnh-test</object-name>
@@ -495,7 +493,7 @@
 			</equals>
 		</condition>
 	</animation>
-	
+
 	<!-- Aft Pedestal -->
 	<animation>
 		<type>pick</type>
@@ -563,7 +561,7 @@
 			<object-name>RudderTrim.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>RudderTrimReset</object-name>
@@ -584,7 +582,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<text>
 		<name>rudder-trim</name>
 		<offsets>
@@ -610,7 +608,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>rudder-trim-test</name>
 		<offsets>
@@ -636,7 +634,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>rudder-trim</object-name>
@@ -647,7 +645,7 @@
 			</not-equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>ParkBrk</object-name>
@@ -657,7 +655,7 @@
 			<object-name>ParkBrk.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ParkBrk</object-name>
@@ -670,7 +668,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<!-- Autobrakes -->
 	<animation>
 		<type>select</type>
@@ -694,7 +692,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>dec_med_on</object-name>
@@ -717,7 +715,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>dec_max_on</object-name>
@@ -740,7 +738,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>abs_low_on</object-name>
@@ -757,7 +755,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>abs_med_on</object-name>
@@ -774,7 +772,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>abs_max_on</object-name>
@@ -791,7 +789,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>abs_low</object-name>
@@ -818,7 +816,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>abs_med</object-name>
@@ -845,7 +843,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>abs_max</object-name>
@@ -872,7 +870,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>land_sw</object-name>
@@ -892,7 +890,7 @@
 			<z-m>0.253933</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>land_sw</object-name>
@@ -953,7 +951,7 @@
 			<object-name>pfd_brt_cpt.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>pfd_nd_xfr_sw</object-name>
@@ -971,7 +969,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>brightness_nd_2_cpt</object-name>
@@ -1012,8 +1010,8 @@
 			<object-name>brightness_nd_cpt.axis</object-name>
 		</axis>
 	</animation>
-	
-	<!-- Dimmer Panel Right -->	
+
+	<!-- Dimmer Panel Right -->
 	<animation>
 		<type>pick</type>
 		<object-name>brightness_nd_2_fo</object-name>
@@ -1054,7 +1052,7 @@
 			<object-name>brightness_nd_fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>pfd_nd_xfr_sw2</object-name>
@@ -1072,7 +1070,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>pfd_brt_fo</object-name>
@@ -1113,7 +1111,7 @@
 			<object-name>pfd_brt_fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- ECAM Controls -->
 	<animation>
 		<type>pick</type>
@@ -1155,7 +1153,7 @@
 			<object-name>ecam_brt_upper.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_brt_lower</object-name>
@@ -1196,7 +1194,7 @@
 			<object-name>ecam_brt_lower.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_sts</object-name>
@@ -1215,7 +1213,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_apu</object-name>
@@ -1234,7 +1232,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_bleed</object-name>
@@ -1253,7 +1251,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_press</object-name>
@@ -1272,7 +1270,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_elec</object-name>
@@ -1291,7 +1289,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_hyd</object-name>
@@ -1310,7 +1308,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_fuel</object-name>
@@ -1329,7 +1327,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_eng</object-name>
@@ -1348,7 +1346,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_cond</object-name>
@@ -1367,7 +1365,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_door</object-name>
@@ -1386,7 +1384,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_wheel</object-name>
@@ -1405,7 +1403,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_fctl</object-name>
@@ -1424,7 +1422,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_to_config</object-name>
@@ -1438,9 +1436,17 @@
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
-				<command>nasal</command>
-				<script>libraries.ECAM.toConfig();</script>
+				<command>property-assign</command>
+				<property>/ECAM/to-config-test</property>
+				<value>1</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/ECAM/to-config-test</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -1631,7 +1637,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ecam_clr_l_led</object-name>
@@ -1664,11 +1670,22 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAM_controller.recall();</script>
+				<script>
+					ecam.ECAM_controller.recall();
+					ecam.FWC.Btn.recall.setValue(1);
+				</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>nasal</command>
+					<script>
+						ecam.FWC.Btn.recall.setValue(0);
+					</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_clr_l</object-name>
@@ -1684,11 +1701,22 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("clr");</script>
+				<script>
+					libraries.LowerECAM.button("clr");
+					ecam.FWC.Btn.clr.setValue(1);
+				</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>nasal</command>
+					<script>
+						ecam.FWC.Btn.clr.setValue(0);
+					</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
-	
+
 	<!-- Engine Cutoff/Mode Selector -->
 	<animation>
 		<type>pick</type>
@@ -1702,7 +1730,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>Lcutoff</object-name>
@@ -1715,7 +1743,7 @@
 			<object-name>Lcutoff.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>Rcutoff</object-name>
@@ -1728,7 +1756,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>Rcutoff</object-name>
@@ -1741,7 +1769,7 @@
 			<object-name>Rcutoff.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>eng_mode</object-name>
@@ -1771,7 +1799,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>eng_mode</object-name>
@@ -1786,7 +1814,7 @@
 			<object-name>eng_mode.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- FCU QNH and PFD Controls/Lights -->
 	<animation>
 		<type>pick</type>
@@ -1922,7 +1950,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>qnh_cpt_sw</object-name>
@@ -1941,7 +1969,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_cpt_knb</object-name>
@@ -1951,7 +1979,7 @@
 			<object-name>qnh_cpt_knb.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_fo_knb</object-name>
@@ -1961,7 +1989,7 @@
 			<object-name>qnh_fo_knb.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_cpt_sw</object-name>
@@ -1974,7 +2002,7 @@
 			<object-name>qnh_cpt_sw.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_fo_sw</object-name>
@@ -1987,7 +2015,7 @@
 			<object-name>qnh_fo_sw.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<text>
 		<name>qnh-inhg</name>
 		<offsets>
@@ -2143,7 +2171,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>qnh-test</name>
 		<offsets>
@@ -2169,7 +2197,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>qnh-test</name>
 		<offsets>
@@ -2195,7 +2223,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>qnh-inhg</object-name>
@@ -2254,7 +2282,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>fd1</object-name>
@@ -2264,7 +2292,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.FD1();
+					fcu.FCUController.FD1();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -2286,7 +2314,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ils</object-name>
@@ -2321,7 +2349,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ils2</object-name>
@@ -2356,7 +2384,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>fd2</object-name>
@@ -2366,7 +2394,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.FD2();
+					fcu.FCUController.FD2();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -2388,7 +2416,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- FCU ND Controls -->
 	<animation>
 		<type>pick</type>
@@ -2431,7 +2459,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>cstr.001</object-name>
@@ -2473,7 +2501,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>wpt</object-name>
@@ -2515,7 +2543,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>wpt.001</object-name>
@@ -2557,7 +2585,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vord</object-name>
@@ -2599,7 +2627,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vord.001</object-name>
@@ -2641,7 +2669,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ndb</object-name>
@@ -2683,7 +2711,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ndb.001</object-name>
@@ -2725,7 +2753,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>arpt</object-name>
@@ -2767,7 +2795,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>arpt.001</object-name>
@@ -2809,7 +2837,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>nd_mode</object-name>
@@ -2847,7 +2875,7 @@
 			<object-name>nd_mode.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>nd_mode_fo</object-name>
@@ -2885,7 +2913,7 @@
 			<object-name>nd_mode_fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>nd_range</object-name>
@@ -2924,7 +2952,7 @@
 			<object-name>nd_range.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>nd_range_fo</object-name>
@@ -2963,7 +2991,7 @@
 			<object-name>nd_range_fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vor-adf-1</object-name>
@@ -3003,7 +3031,7 @@
 			<object-name>vor-adf-1.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vor-adf-1-right</object-name>
@@ -3043,7 +3071,7 @@
 			<object-name>vor-adf-1-right.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vor-adf-2</object-name>
@@ -3083,7 +3111,7 @@
 			<object-name>vor-adf-2.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vor-adf-2-right</object-name>
@@ -3123,7 +3151,7 @@
 			<object-name>vor-adf-2-right.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- FCU AP Controls/Lights -->
 	<animation>
 		<type>select</type>
@@ -3141,7 +3169,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>mach.ind</object-name>
@@ -3158,7 +3186,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>spd-text</object-name>
@@ -3179,7 +3207,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>mach-text</object-name>
@@ -3200,7 +3228,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>spd.fmgc</object-name>
@@ -3211,7 +3239,7 @@
 			</equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>spd.dash</object-name>
@@ -3228,7 +3256,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>hdg.ind</object-name>
@@ -3246,7 +3274,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>trk.ind</object-name>
@@ -3264,7 +3292,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>hdg-text</object-name>
@@ -3281,7 +3309,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>lat.fmgc</object-name>
@@ -3298,7 +3326,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>lat.dash</object-name>
@@ -3319,7 +3347,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>lvlch.ind</object-name>
@@ -3336,7 +3364,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>alt-text</object-name>
@@ -3347,7 +3375,7 @@
 			</not-equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>vs.dash</object-name>
@@ -3364,7 +3392,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>vs.ind</object-name>
@@ -3382,7 +3410,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>fpa.ind</object-name>
@@ -3400,7 +3428,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>vs-text</object-name>
@@ -3417,7 +3445,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>fpa-text</object-name>
@@ -3434,7 +3462,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>vs.dash</object-name>
@@ -3455,7 +3483,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<text>
 		<name>spd-text</name>
 		<offsets>
@@ -3507,7 +3535,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>spd-text-test</name>
 		<offsets>
@@ -3559,7 +3587,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>hdg-text-test</name>
 		<offsets>
@@ -3590,7 +3618,7 @@
 		<name>alt-text</name>
 		<offsets>
 			<x-m>-0.377</x-m>
-			<y-m>0.0432</y-m> 
+			<y-m>0.0432</y-m>
 			<z-m>0.50254</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -3611,12 +3639,12 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>alt-text-test</name>
 		<offsets>
 			<x-m>-0.377</x-m>
-			<y-m>0.0432</y-m> 
+			<y-m>0.0432</y-m>
 			<z-m>0.50254</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -3689,7 +3717,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<text>
 		<name>vs-text-test</name>
 		<offsets>
@@ -3715,7 +3743,7 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>hdg-sel</object-name>
@@ -3725,7 +3753,7 @@
 			<object-name>hdg-sel.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>spd-sel</object-name>
@@ -3735,7 +3763,7 @@
 			<object-name>spd-sel.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>alt-sel</object-name>
@@ -3745,7 +3773,7 @@
 			<object-name>alt-sel.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>vs-sel</object-name>
@@ -3755,7 +3783,7 @@
 			<object-name>vs-sel.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>alt-sel-mode</object-name>
@@ -3768,7 +3796,7 @@
 			<object-name>alt-sel.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>spd-mach</object-name>
@@ -3777,7 +3805,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.IASMach();</script>
+				<script>fcu.FCUController.IASMach();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3785,7 +3813,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>spd-sel</object-name>
@@ -3797,14 +3825,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDPush();</script>
+				<script>fcu.FCUController.SPDPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDPull();</script>
+				<script>fcu.FCUController.SPDPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3816,7 +3844,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDPull();</script>
+				<script>fcu.FCUController.SPDPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3831,14 +3859,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(1);</script>
+				<script>fcu.FCUController.SPDAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(10);</script>
+				<script>fcu.FCUController.SPDAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3857,14 +3885,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(-1);</script>
+				<script>fcu.FCUController.SPDAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.SPDAdjust(-10);</script>
+				<script>fcu.FCUController.SPDAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3876,7 +3904,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>hdg-sel</object-name>
@@ -3888,14 +3916,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGPush();</script>
+				<script>fcu.FCUController.HDGPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGPull();</script>
+				<script>fcu.FCUController.HDGPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3907,7 +3935,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGPull();</script>
+				<script>fcu.FCUController.HDGPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3922,14 +3950,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(1);</script>
+				<script>fcu.FCUController.HDGAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(10);</script>
+				<script>fcu.FCUController.HDGAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3948,14 +3976,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(-1);</script>
+				<script>fcu.FCUController.HDGAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.HDGAdjust(-10);</script>
+				<script>fcu.FCUController.HDGAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3967,7 +3995,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>loc</object-name>
@@ -3976,7 +4004,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.LOCButton();</script>
+				<script>fcu.FCUController.LOCButton();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4020,7 +4048,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>hdg-vs</object-name>
@@ -4029,7 +4057,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.TRKFPA();</script>
+				<script>fcu.FCUController.TRKFPA();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4037,7 +4065,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ap1</object-name>
@@ -4047,7 +4075,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.AP1();
+					fcu.FCUController.AP1();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -4069,7 +4097,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ap2</object-name>
@@ -4079,7 +4107,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.AP2();
+					fcu.FCUController.AP2();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -4101,7 +4129,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>a-thr</object-name>
@@ -4111,7 +4139,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					libraries.APPanel.ATHR();
+					fcu.FCUController.ATHR();
 					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
@@ -4133,7 +4161,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>alt-sel</object-name>
@@ -4145,14 +4173,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTPush();</script>
+				<script>fcu.FCUController.ALTPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTPull();</script>
+				<script>fcu.FCUController.ALTPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4164,7 +4192,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTPull();</script>
+				<script>fcu.FCUController.ALTPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4179,14 +4207,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(1);</script>
+				<script>fcu.FCUController.ALTAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(10);</script>
+				<script>fcu.FCUController.ALTAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4205,14 +4233,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(-1);</script>
+				<script>fcu.FCUController.ALTAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.ALTAdjust(-10);</script>
+				<script>fcu.FCUController.ALTAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4224,7 +4252,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>alt-sel-mode</object-name>
@@ -4241,7 +4269,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>vs-sel</object-name>
@@ -4253,14 +4281,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSPush();</script>
+				<script>fcu.FCUController.VSPush();</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSPull();</script>
+				<script>fcu.FCUController.VSPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4272,7 +4300,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSPull();</script>
+				<script>fcu.FCUController.VSPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4287,14 +4315,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(1);</script>
+				<script>fcu.FCUController.VSAdjust(1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(10);</script>
+				<script>fcu.FCUController.VSAdjust(10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4313,14 +4341,14 @@
 					<not><property>devices/status/keyboard/shift</property></not>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(-1);</script>
+				<script>fcu.FCUController.VSAdjust(-1);</script>
 			</binding>
 			<binding>
 				<condition>
 					<property>devices/status/keyboard/shift</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.APPanel.VSAdjust(-10);</script>
+				<script>fcu.FCUController.VSAdjust(-10);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4332,7 +4360,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>appr</object-name>
@@ -4341,7 +4369,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.APPRButton();</script>
+				<script>fcu.FCUController.APPRButton();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4373,7 +4401,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Flap Lever -->
 	<animation>
 		<type>pick</type>
@@ -4402,7 +4430,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>FlapsLever</object-name>
@@ -4413,7 +4441,7 @@
 			<entry><ind>2</ind><dep>28</dep></entry>
 			<entry><ind>3</ind><dep>42</dep></entry>
 			<entry><ind>4</ind><dep>56</dep></entry>
-		</interpolation> 
+		</interpolation>
 		<center>
 			<x-m>-0.0020</x-m>
 			<y-m>0</y-m>
@@ -4423,7 +4451,7 @@
 			<object-name>FlapsLever.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- Foot Rest -->
 	<animation>
 		<name>Footrest captain pick</name>
@@ -4452,7 +4480,7 @@
          <object-name>footrest_cpt.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<name>Footrest captain pick 2</name>
 		<type>pick</type>
@@ -4508,7 +4536,7 @@
          <object-name>footrest_fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<name>Footrest first officer pick 2</name>
 		<type>pick</type>
@@ -4536,7 +4564,7 @@
          <object-name>footrest_fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- Landing Gear Lever -->
 	<animation>
 		<type>rotate</type>
@@ -4584,7 +4612,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Landing Gear Lights -->
 	<animation>
 		<type>select</type>
@@ -4608,7 +4636,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>lgear_down</object-name>
@@ -4648,7 +4676,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ngear_down</object-name>
@@ -4665,7 +4693,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>rgear_unlk</object-name>
@@ -4688,7 +4716,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>rgear_down</object-name>
@@ -4705,7 +4733,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<!-- Lighting -->
 	<animation>
 		<type>pick</type>
@@ -4746,7 +4774,7 @@
 			<object-name>flood_lt_main.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>flood_lt_ped</object-name>
@@ -4786,7 +4814,7 @@
 			<object-name>flood_lt_ped.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>integ_lt</object-name>
@@ -4826,7 +4854,7 @@
 			<object-name>integ_lt.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>fcu_integ_knb</object-name>
@@ -4948,7 +4976,7 @@
 			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting (dome)</name>
 		<type>material</type>
@@ -5049,7 +5077,7 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>FCU Panel lighting</name>
 		<type>material</type>
@@ -5082,7 +5110,7 @@
 			<factor-prop>controls/lighting/fcu-panel-norm</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>FCU Panel lighting (dome)</name>
 		<type>material</type>
@@ -5115,7 +5143,7 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<!-- Master Warning and Caution -->
 	<animation>
 		<type>select</type>
@@ -5133,7 +5161,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>master_caution_on</object-name>
@@ -5150,7 +5178,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>master_warning</object-name>
@@ -5199,7 +5227,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>master_caution</object-name>
@@ -5261,7 +5289,7 @@
 			<factor-prop>controls/lighting/overhead-panel-norm</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>Overhead Panel-2 lighting (dome)</name>
 		<type>material</type>
@@ -5314,7 +5342,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>trim_2_lts</object-name>
@@ -5325,7 +5353,7 @@
 			<object-name>trim.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>trim_1</object-name>
@@ -5335,7 +5363,7 @@
 			<object-name>trim.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- Rudder Pedals -->
 	<animation>
 		<type>translate</type>
@@ -5398,7 +5426,7 @@
 			<z-m>-0.42417</z-m>
 		</center>
 	</animation>
-	
+
 	<!-- Spoiler Lever -->
 	<animation>
 		<type>pick</type>
@@ -5485,7 +5513,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>SpdBrk</object-name>
@@ -5497,7 +5525,7 @@
 			<z>1</z>
 		</axis>
 	</animation>
-	
+
 	<!-- Sidestick Left -->
 	<animation>
 		<type>rotate</type>
@@ -5684,7 +5712,7 @@
 			<object-name>sidestick_2.x.axis</object-name>
 		</axis>
 	</animation-->
-	
+
 	<!-- Tiller -->
 	<animation>
 		<type>pick</type>
@@ -5745,7 +5773,7 @@
 			<object-name>tillerFo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- Throttles -->
 	<animation>
 		<name>Engine 1 throttle lever pick</name>
@@ -5794,7 +5822,7 @@
 			<entry><ind>0.94999</ind><dep>43</dep></entry>
 			<entry><ind>0.95000</ind><dep>45</dep></entry>
 			<entry><ind>1.00000</ind><dep>45</dep></entry>
-		</interpolation> 
+		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -5804,7 +5832,7 @@
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
 		<property>fdm/jsbsim/fcs/reverse-lever[0]</property>
-		<factor>-3.5</factor> 
+		<factor>-3.5</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -5817,7 +5845,7 @@
 		<interpolation>
 			<entry><ind>0.00</ind><dep>  0</dep></entry>
 			<entry><ind>0.50</ind><dep>-20</dep></entry>
-		</interpolation> 
+		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -5869,7 +5897,7 @@
 			<entry><ind>0.94999</ind><dep>43</dep></entry>
 			<entry><ind>0.95000</ind><dep>45</dep></entry>
 			<entry><ind>1.00000</ind><dep>45</dep></entry>
-		</interpolation> 
+		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -5879,7 +5907,7 @@
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
 		<property>fdm/jsbsim/fcs/reverse-lever[1]</property>
-		<factor>-3.5</factor> 
+		<factor>-3.5</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -5892,12 +5920,12 @@
 		<interpolation>
 			<entry><ind>0.00</ind><dep> 0</dep></entry>
 			<entry><ind>0.50</ind><dep>-20</dep></entry>
-		</interpolation> 
+		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<name>Reverse Thrust left lever</name>
 		<type>rotate</type>
@@ -5919,7 +5947,7 @@
 			<object-name>rev_r.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<!-- Tray Tables -->
 	<animation>
 		<type>translate</type>
@@ -5940,7 +5968,7 @@
 			<z2-m>-0.04488</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>tray1-cpt</object-name>
@@ -5954,7 +5982,7 @@
 			<object-name>tray1-cpt.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>tray2-cpt</object-name>
@@ -5967,7 +5995,7 @@
 			<object-name>tray2-cpt.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>tray0-fo</object-name>
@@ -5987,7 +6015,7 @@
 			<z2-m>-0.04488</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>tray1-fo</object-name>
@@ -6001,7 +6029,7 @@
 			<object-name>tray1-fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>tray2-fo</object-name>
@@ -6014,7 +6042,7 @@
 			<object-name>tray2-fo.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	 <animation>
         <type>pick</type>
 		<object-name>tray0-cpt</object-name>
@@ -6028,7 +6056,7 @@
 			</binding>
 		</action>
     </animation>
-	
+
 	<animation>
         <type>pick</type>
 		<object-name>tray0-fo</object-name>
@@ -6042,7 +6070,7 @@
 			</binding>
 		</action>
     </animation>
-	
+
 	<!-- Z Colors/Effects -->
 	<animation>
 		<type>material</type>
@@ -6085,7 +6113,7 @@
 			<blue>0.08</blue>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -6176,79 +6204,79 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood</inherits-from>
 		<object-name>main_panel</object-name>
 		<object-name>gear_lever_body</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/gear-lever</inherits-from>
 		<object-name>gear_lever</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood-brightness</inherits-from>
 		<object-name>brightness_panel_left_glare</object-name>
 		<object-name>brightness_panel_right_glare</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood</inherits-from>
 		<object-name>pedestal_low</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-glare</inherits-from>
 		<object-name>pedestal_low_glare</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/thr-quad-flood</inherits-from>
 		<object-name>thr_quad</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/rudder-trim</inherits-from>
 		<object-name>RudderTrim</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/park-brk</inherits-from>
 		<object-name>ParkBrk</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/gravity-gear</inherits-from>
 		<object-name>gravity_gear</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood-glare</inherits-from>
 		<object-name>main_panel_signboard</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood-glare-right</inherits-from>
 		<object-name>gear_labels</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-footrest</inherits-from>
 		<object-name>ped_footrest</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-flap</inherits-from>
 		<object-name>FlapsLever</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-spdbrk</inherits-from>
 		<object-name>SpdBrk</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/iesi</inherits-from>
 		<object-name>iesi</object-name>
@@ -6259,19 +6287,19 @@
 		<object-name>iesi_btn_plus</object-name>
 		<object-name>iesi_btn_rst</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
 		<object-name>clock</object-name>
 		<object-name>clock.001</object-name>
 		<object-name>clock_body</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock-glare</inherits-from>
 		<object-name>clock_glare</object-name>
 	</effect>
-	
+
 	<!-- move any objects requiring lightmap to another effect file -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
@@ -6516,7 +6544,7 @@
 		<object-name>WindowOpenerFo</object-name>
 		<object-name>WX</object-name>
 	</effect>
-   
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -6528,6 +6556,18 @@
 			<blue>0.8</blue>
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
+	</animation>
+
+<!-- headset show/hide -->
+	<animation>
+		<type>select</type>
+		<object-name>HeadsetFo</object-name>
+		<object-name>HeadsetCpt</object-name>
+		<condition>
+			<not>
+				<property>/controls/audio/headset-toggle</property>
+			</not>
+		</condition>
 	</animation>
 
 </PropertyList>

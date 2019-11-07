@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+
+    <!-- this is really annoying - we compute all the properties in JSBSim, but they end up being tied -->
+    <!-- and can't be fed to the effects system directly, so we copy them via property rule -->
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/reading-light-tied</input>
+        <output>/controls/lighting/reading-light</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/panel-light-tied</input>
+        <output>/controls/lighting/panel-light</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/pedestal-light-tied</input>
+        <output>/controls/lighting/pedestal-light</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/fcu-panel-norm-tied</input>
+        <output>/controls/lighting/fcu-panel-norm</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/main-panel-norm-tied</input>
+        <output>/controls/lighting/main-panel-norm</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/overhead-panel-norm-tied</input>
+        <output>/controls/lighting/overhead-panel-norm</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/lighting/annunciator-lights-tied</input>
+        <output>/controls/lighting/annunciator-lights</output>
+    </filter>
+	
+</PropertyList>

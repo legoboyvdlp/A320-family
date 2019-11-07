@@ -241,6 +241,11 @@
 
 	<!-- Knob -->
 	<!-- TODO add bindings for VOR, LS and ADF -->
+	<!-- We use a little hack to get 8.33MHz spacing working:
+		First we assign our current STBY freq we want to adjust to the default instrument.
+		Then we change the channel there.
+		Finally we assign the value back to out own prop.
+	-->
 	<animation>
 		<type>pick</type>
 		<object-name>radio_rot1</object-name>
@@ -266,14 +271,51 @@
 						</equals>
 					</and>
 				</condition>
-				<command>property-adjust</command>
+				<command>property-assign</command>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 				<property>systems/radio/rmp[0]/vhf1-standby</property>
-				<step>0.025</step>
-				<min>0.0</min>
-				<max>1.0</max>
-				<resolution>0.025</resolution>
-				<wrap>true</wrap>
-				<mask>decimal</mask>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/comm[0]/frequencies/standby-channel</property>
+				<step>1</step>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>systems/radio/rmp[0]/vhf1-standby</property>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 			</binding>
 
 			<binding>
@@ -293,14 +335,51 @@
 						</equals>
 					</and>
 				</condition>
-				<command>property-adjust</command>
+				<command>property-assign</command>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 				<property>systems/radio/rmp[0]/vhf2-standby</property>
-				<step>0.025</step>
-				<min>0.0</min>
-				<max>1.0</max>
-				<resolution>0.025</resolution>
-				<wrap>true</wrap>
-				<mask>decimal</mask>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf2</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/comm[0]/frequencies/standby-channel</property>
+				<step>1</step>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf2</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>systems/radio/rmp[0]/vhf2-standby</property>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 			</binding>
 
 			<binding>
@@ -326,14 +405,63 @@
 						</not>
 					</and>
 				</condition>
-				<command>property-adjust</command>
+				<command>property-assign</command>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 				<property>systems/radio/rmp[0]/vhf3-standby</property>
-				<step>0.025</step>
-				<resolution>0.025</resolution>
-				<min>0.0</min>
-				<max>1.0</max>
-				<wrap>true</wrap>
-				<mask>decimal</mask>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf3</value>
+						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/comm[0]/frequencies/standby-channel</property>
+				<step>1</step>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf3</value>
+						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>systems/radio/rmp[0]/vhf3-standby</property>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 			</binding>
 
 			<binding>
@@ -409,14 +537,51 @@
 						</equals>
 					</and>
 				</condition>
-				<command>property-adjust</command>
+				<command>property-assign</command>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 				<property>systems/radio/rmp[0]/vhf1-standby</property>
-				<step>-0.025</step>
-				<min>0.0</min>
-				<max>1.0</max>
-				<resolution>0.025</resolution>
-				<wrap>true</wrap>
-				<mask>decimal</mask>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/comm[0]/frequencies/standby-channel</property>
+				<step>-1</step>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>systems/radio/rmp[0]/vhf1-standby</property>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 			</binding>
 
 			<binding>
@@ -436,14 +601,51 @@
 						</equals>
 					</and>
 				</condition>
-				<command>property-adjust</command>
+				<command>property-assign</command>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 				<property>systems/radio/rmp[0]/vhf2-standby</property>
-				<step>-0.025</step>
-				<min>0.0</min>
-				<max>1.0</max>
-				<resolution>0.025</resolution>
-				<wrap>true</wrap>
-				<mask>decimal</mask>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf2</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/comm[0]/frequencies/standby-channel</property>
+				<step>-1</step>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf2</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>systems/radio/rmp[0]/vhf2-standby</property>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 			</binding>
 
 			<binding>
@@ -469,14 +671,63 @@
 						</not>
 					</and>
 				</condition>
-				<command>property-adjust</command>
+				<command>property-assign</command>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 				<property>systems/radio/rmp[0]/vhf3-standby</property>
-				<step>-0.025</step>
-				<min>0.0</min>
-				<max>1.0</max>
-				<resolution>0.025</resolution>
-				<wrap>true</wrap>
-				<mask>decimal</mask>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf3</value>
+						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/comm[0]/frequencies/standby-channel</property>
+				<step>-1</step>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vhf3</value>
+						</equals>
+						<not>
+							<equals>
+								<property>systems/radio/rmp[0]/vhf3-standby</property>
+								<value>0</value>
+							</equals>
+						</not>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>systems/radio/rmp[0]/vhf3-standby</property>
+				<property>instrumentation/comm[0]/frequencies/standby-mhz</property>
 			</binding>
 
 			<binding>

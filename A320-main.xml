@@ -15,34 +15,7 @@
 		</hud>
 
 		<model>
-			<autopush>
-				<connected type="bool">0</connected>
-				<position-norm type="double">0</position-norm>
-				<enabled type="int"/>
-				<available type="int">1</available>
-				<chocks alias="/services/chocks/nose"/>
-				<steer-cmd-norm alias="/fdm/jsbsim/hydraulics/tiller/autopush-cmd"/>
-				<yaw alias="/fdm/jsbsim/fcs/steer-deg"/>
-				<yaw-mult type="float">1.0</yaw-mult>
-				<target-speed-km_h type="float">0.0</target-speed-km_h>
-				<K_p type="float">0.5</K_p>
-				<F_p type="float">0.15</F_p>
-				<K_i type="float">0.25</K_i>
-				<F_i type="float">0.1</F_i>
-				<K_d type="float">0.0</K_d>
-				<F_d type="float">0.0</F_d>
-				<pitch-deg type="float">0.0</pitch-deg>
-				<min-turn-radius-m type="float">15</min-turn-radius-m>
-				<stopping-distance-m type="float">5.0</stopping-distance-m>
-				<driver>
-					<F_V type="float">5.5</F_V>
-					<K_psi type="float">0.03</K_psi>
-				</driver>
-				<route>
-					<show type="bool"/>
-				</route>
-				<debug type="bool">false</debug>
-			</autopush>
+			<autopush include="AircraftConfig/autopush-config.xml"/>
 			<icing>
 				<iceable>
 					<name>Wing</name>
@@ -162,6 +135,9 @@
 			<!-- 10 is sound -->
 			<autopilot n="11">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
+			</autopilot>
+			<autopilot n="12">
+				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
 			</autopilot>
 		</systems>
 		
@@ -1214,7 +1190,7 @@
 				<desc>Autothrottle Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.ATDisc();</script>
+					<script>fcu.FCUController.ATDisc();</script>
 				</binding>
 			</key>
 			<key n="6">
@@ -1453,7 +1429,7 @@
 				<desc>Autopilot Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.APDisc();</script>
+					<script>fcu.FCUController.APDisc();</script>
 				</binding>
 			</key>
 			<key n="70">
@@ -1613,6 +1589,9 @@
 	</aircraft>
 	
 	<nasal>
+		<pts>
+			<file>Aircraft/A320-family/Nasal/property-tree-setup.nas</file>
+		</pts>
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
@@ -1643,6 +1622,9 @@
 		<fbw>
 			<file>Aircraft/A320-family/Nasal/it-fbw.nas</file>
 		</fbw>
+		<fcu>
+			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
+		</fcu>
 		<fmgc>
 			<file>Aircraft/A320-family/Nasal/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC-b.nas</file>
@@ -1680,6 +1662,7 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
 		<icing>
 			<file>Aircraft/A320-family/Nasal/icing.nas</file>

@@ -506,7 +506,10 @@ var takeoff = func {
 				libraries.flaptimer.start();
 				setprop("/controls/flight/elevator-trim", -0.07);
 				systems.arm_autobrake(3);
-				libraries.ECAM.toConfig();
+				setprop("/ECAM/to-config-test", 1);
+				settimer(func {
+					setprop("/ECAM/to-config-test", 0);
+				}, 1);
 			}
 		});
 	}

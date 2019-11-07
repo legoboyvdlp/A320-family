@@ -19,7 +19,7 @@ canvas.SymbolLayer.add(name, {
             .close()
             .setStrokeLineWidth(3)
             .setColor(1,1,1)
-            .setScale(1);
+            .setScale(1,1);
         },
         vor_symbol: 'Nasal/canvas/map/Airbus/Images/airbus_vor.svg',
         airport_symbol: 'Nasal/canvas/map/Airbus/Images/airbus_airport.svg',

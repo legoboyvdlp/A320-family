@@ -30,7 +30,7 @@ var hasCleared = 0;
 var statusFlag = 0;
 
 var warning = {
-	new: func(msg,colour = "g",aural = 9,light = 9,hasSubmsg = 0,lastSubmsg = 0, sdPage = "nil") {
+	new: func(msg,colour = "g",aural = 9,light = 9,hasSubmsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
 		var t = {parents:[warning]};
 		
 		t.msg = msg;
@@ -44,6 +44,7 @@ var warning = {
 		t.noRepeat2 = 0;
 		t.clearFlag = 0;
 		t.sdPage = sdPage;
+		t.isMemo = isMemo;
 		t.hasCalled = 0;
 		
 		return t
@@ -145,17 +146,22 @@ var status = {
 };
 
 var ECAM_controller = {
+	_recallCounter: 0,
 	init: func() {
 		ECAMloopTimer.start();
 		me.reset();
 	},
 	loop: func() {
-		# check active messages
 		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !getprop("/systems/acconfig/acconfig-running")) {
+			# update FWC phases
+			phaseLoop();
+			
+			# check active messages
 			messages_priority_3();
 			messages_priority_2();
 			messages_priority_1();
 			messages_priority_0();
+			messages_config_memo();
 			messages_memo();
 			messages_right_memo();
 		} else {
@@ -179,13 +185,21 @@ var ECAM_controller = {
 		# write to ECAM
 		var counter = 0;
 		
-		foreach (var w; warnings.vector) {
-			if (counter >= 9) { break; }
-			if (w.active == 1) {
-				w.write();
-				w.warnlight();
-				w.sound();
-				counter += 1;
+		if (!getprop("/systems/acconfig/autoconfig-running")) {
+			foreach (var w; warnings.vector) {
+				if (counter >= 9) { break; }
+				if (w.active == 1) {
+					w.write();
+					w.warnlight();
+					w.sound();
+					counter += 1;
+				}
+			}
+		}
+			
+		if (lines[0].getValue() == "" and flash == 0) { # disable left memos if a warning exists. Warnings are processed first, so this stops leftmemos if line1 is not empty
+			foreach (var c; configmemos.vector) {
+				c.write();
 			}
 		}
 		
@@ -220,6 +234,12 @@ var ECAM_controller = {
 			}
 		}
 		
+		foreach (var l; configmemos.vector) {
+			if (l.active == 1) {
+				l.active = 0;
+			}
+		}
+		
 		foreach (var l; leftmemos.vector) {
 			if (l.active == 1) {
 				l.active = 0;
@@ -251,7 +271,7 @@ var ECAM_controller = {
 		if (leftOverflow.getBoolValue()) {
 			foreach (var w; warnings.vector) {
 				if (counter >= 8) { break; }
-				if (w.active == 1 and w.clearFlag != 1) {
+				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
 					counter += 1;
 					if (w.hasSubmsg == 1) { continue; }
 					w.clearFlag = 1;
@@ -261,7 +281,7 @@ var ECAM_controller = {
 			}
 		} else {
 			foreach (var w; warnings.vector) {
-				if (w.active == 1 and w.clearFlag != 1 and w.hasSubmsg == 1) {
+				if (w.active == 1 and w.clearFlag != 1 and w.hasSubmsg == 1 and w.isMemo != 1) {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
@@ -276,11 +296,24 @@ var ECAM_controller = {
 		}
 	},
 	recall: func() {
+		me._recallCounter = 0;
 		foreach (var w; warnings.vector) {
 			if (w.clearFlag == 1) {
 				w.noRepeat = 0;
 				w.clearFlag = 0;
+				me._recallCounter += 1;
 			}
+		}
+		
+		if (me._recallCounter == 0) {
+			FWC.Btn.recallStsNormal.setValue(1);
+			settimer(func() {
+				if (FWC.Btn.recallStsNormal.getValue() == 1) { # catch unexpected error, trying something new here
+					FWC.Btn.recallStsNormal.setValue(0);
+				} else {
+					die("Exception in ECAM-controller.nas, line 316");
+				}
+			}, 0.1);
 		}
 	},
 	warningReset: func(warning) {
