@@ -66,11 +66,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fuel/left-inner-full eq 1
-				propulsion/tank[1]/contents-lbs lt 11420
+				propulsion/tank[1]/contents-lbs lt 12270
 				propulsion/tank[1]/contents-lbs ge 10300
 			</test>
 			<test value="1">
-				propulsion/tank[1]/contents-lbs eq 11420
+				propulsion/tank[1]/contents-lbs eq 12270
 			</test>
 		</switch>
 		
@@ -78,11 +78,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fuel/right-inner-full eq 1
-				propulsion/tank[3]/contents-lbs lt 11420
+				propulsion/tank[3]/contents-lbs lt 12270
 				propulsion/tank[3]/contents-lbs ge 10300
 			</test>
 			<test value="1">
-				propulsion/tank[3]/contents-lbs eq 11420
+				propulsion/tank[3]/contents-lbs eq 12270
 			</test>
 		</switch>
 		
@@ -172,9 +172,12 @@
 				/systems/fuel/valves/outer-inner-transfer-valve-1-cmd eq 1
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
-			<test logic="OR" value="1">
-				/systems/fuel/quantity/left-wing-inner-low eq 1
-				/systems/fuel/quantity/right-wing-inner-low eq 1
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/fuel/quantity/left-wing-inner-low eq 1
+					/systems/fuel/quantity/right-wing-inner-low eq 1
+				</test>
+				/systems/fuel/refuel/refuelling eq 0
 			</test>
 		</switch>
 		
@@ -196,9 +199,12 @@
 				/systems/fuel/valves/outer-inner-transfer-valve-2-cmd eq 1
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
-			<test logic="OR" value="1">
-				/systems/fuel/quantity/left-wing-inner-low eq 1
-				/systems/fuel/quantity/right-wing-inner-low eq 1
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/fuel/quantity/left-wing-inner-low eq 1
+					/systems/fuel/quantity/right-wing-inner-low eq 1
+				</test>
+				/systems/fuel/refuel/refuelling eq 0
 			</test>
 		</switch>
 		
@@ -425,8 +431,81 @@
 					/systems/fuel/feed-center-1 eq 0
 				</test>
 				/systems/fuel/feed-left-inner eq 1
-				propulsion/tank[1]/contents-lbs gt 31.24
+				propulsion/tank[1]/contents-lbs gt 22.68
 				propulsion/tank[5]/contents-lbs lt 9
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/internal/left-outer-wing-tank-refuel">
+			<default value="0"/>
+			<test logic="AND" value="16.615">
+				/systems/fuel/refuel/refuelling eq 1
+				/systems/fuel/refuel/left-valve eq 1
+				/systems/fuel/refuel/center-valve eq 0
+			</test>
+			<test logic="AND" value="11.076">
+				/systems/fuel/refuel/refuelling eq 1
+				/systems/fuel/refuel/left-valve eq 1
+				/systems/fuel/refuel/center-valve eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/internal/left-inner-wing-tank-refuel">
+			<default value="0"/>
+			<test logic="AND" value="/systems/fuel/internal/left-outer-wing-tank-refuel">
+				/systems/fuel/refuel/refuelling eq 1
+				propulsion/tank[0]/contents-lbs ge 1523
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/internal/center-tank-refuel">
+			<default value="0"/>
+			<test logic="AND" value="33.230">
+				/systems/fuel/refuel/refuelling eq 1
+				/systems/fuel/refuel/right-valve eq 0
+				/systems/fuel/refuel/center-valve eq 1
+			</test>
+			<test logic="AND" value="16.615">
+				/systems/fuel/refuel/refuelling eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fuel/refuel/left-valve eq 1
+						/systems/fuel/refuel/right-valve eq 0
+					</test>
+					<test logic="AND">
+						/systems/fuel/refuel/left-valve eq 0
+						/systems/fuel/refuel/right-valve eq 1
+					</test>
+				</test>
+				/systems/fuel/refuel/center-valve eq 1
+			</test>
+			<test logic="AND" value="11.076">
+				/systems/fuel/refuel/refuelling eq 1
+				/systems/fuel/refuel/left-valve eq 1
+				/systems/fuel/refuel/right-valve eq 1
+				/systems/fuel/refuel/center-valve eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/internal/right-outer-wing-tank-refuel">
+			<default value="0"/>
+			<test logic="AND" value="16.615">
+				/systems/fuel/refuel/refuelling eq 1
+				/systems/fuel/refuel/right-valve eq 1
+				/systems/fuel/refuel/center-valve eq 0
+			</test>
+			<test logic="AND" value="11.076">
+				/systems/fuel/refuel/refuelling eq 1
+				/systems/fuel/refuel/right-valve eq 1
+				/systems/fuel/refuel/center-valve eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/internal/right-inner-wing-tank-refuel">
+			<default value="0"/>
+			<test logic="AND" value="/systems/fuel/internal/right-outer-wing-tank-refuel">
+				/systems/fuel/refuel/refuelling eq 1
+				propulsion/tank[4]/contents-lbs ge 1523
 			</test>
 		</switch>
 		
@@ -440,7 +519,7 @@
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
 				</test>
-				propulsion/tank[3]/contents-lbs gt 31.24
+				propulsion/tank[3]/contents-lbs gt 22.68
 				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -454,7 +533,7 @@
 					/systems/fuel/feed-center-2 eq 0
 				</test>
 				/systems/fuel/valves/crossfeed-valve eq 1
-				propulsion/tank[3]/contents-lbs gt 31.24
+				propulsion/tank[3]/contents-lbs gt 22.68
 				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -468,7 +547,7 @@
 					/systems/fuel/feed-center-1 eq 0
 				</test>
 				/systems/fuel/feed-left-inner eq 1
-				propulsion/tank[1]/contents-lbs gt 31.24
+				propulsion/tank[1]/contents-lbs gt 22.68
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -483,7 +562,7 @@
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
 				</test>
-				propulsion/tank[3]/contents-lbs gt 31.24
+				propulsion/tank[3]/contents-lbs gt 22.68
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -496,7 +575,7 @@
 					/systems/fuel/feed-center-2 eq 0
 				</test>
 				/systems/fuel/feed-right-inner eq 1
-				propulsion/tank[3]/contents-lbs gt 31.24
+				propulsion/tank[3]/contents-lbs gt 22.68
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -518,18 +597,21 @@
 		</switch>
 		
 		<summer name="/systems/fuel/internal/left-outer-flow-rate">
+			<input>/systems/fuel/internal/left-outer-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/left-wing-outer-to-inner-tank</input>
 			<output>propulsion/tank[0]/external-flow-rate-pps</output>
 		</summer>
 		
 		<summer name="/systems/fuel/internal/left-inner-flow-rate">
 			<input>/systems/fuel/internal/left-wing-outer-to-inner-tank</input>
+			<input>/systems/fuel/internal/left-inner-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/left-wing-tank-eng-1</input>
 			<input>-/systems/fuel/internal/left-wing-tank-eng-2</input>
 			<output>propulsion/tank[1]/external-flow-rate-pps</output>
 		</summer>
 		
 		<summer name="/systems/fuel/internal/center-flow-rate">
+			<input>/systems/fuel/internal/center-tank-refuel</input>
 			<input>-/systems/fuel/internal/center-tank-eng-1</input>
 			<input>-/systems/fuel/internal/center-tank-eng-2</input>
 			<output>propulsion/tank[2]/external-flow-rate-pps</output>
@@ -537,12 +619,14 @@
 		
 		<summer name="/systems/fuel/internal/right-inner-flow-rate">
 			<input>/systems/fuel/internal/right-wing-outer-to-inner-tank</input>
+			<input>/systems/fuel/internal/right-inner-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/right-wing-tank-eng-1</input>
 			<input>-/systems/fuel/internal/right-wing-tank-eng-2</input>
 			<output>propulsion/tank[3]/external-flow-rate-pps</output>
 		</summer>
 		
 		<summer name="/systems/fuel/internal/right-outer-flow-rate">
+			<input>/systems/fuel/internal/right-outer-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/right-wing-outer-to-inner-tank</input>
 			<output>propulsion/tank[4]/external-flow-rate-pps</output>
 		</summer>

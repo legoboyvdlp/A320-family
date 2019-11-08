@@ -76,11 +76,11 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<y> -5.1104 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 1552.00 </capacity>
-			<contents unit="LBS"> 1552.00 </contents>
-			<unusable-volume unit="LTR"> 17.75 </unusable-volume>
+			<capacity unit="LBS"> 1523.00 </capacity>
+			<contents unit="LBS"> 1523.00 </contents>
+			<unusable-volume unit="LTR"> 4.0 </unusable-volume>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
 		<tank type="FUEL">    <!-- Inner Left Wing Tank -->
@@ -89,11 +89,11 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<y> -5.1104 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 12147.00 </capacity>
+			<capacity unit="LBS"> 12155.90 </capacity>
 			<contents unit="LBS">  6000.00 </contents>
-			<unusable-volume unit="LTR"> 11.70 </unusable-volume>
+			<unusable-volume unit="LTR"> 28.0 </unusable-volume>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
 		<tank type="FUEL">    <!-- Center Tank -->
@@ -102,11 +102,11 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<y> 0 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 14601.44 </capacity>
-			<contents unit="LBS"> 40.88 </contents>
+			<capacity unit="LBS"> 14620.00 </capacity>
+			<contents unit="LBS"> 42 </contents>
 			<unusable-volume unit="LTR"> 23.20 </unusable-volume>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
 		<tank type="FUEL">    <!-- Inner Right Wing Tank -->
@@ -115,11 +115,11 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<y> 5.1104 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 12147.00 </capacity>
+			<capacity unit="LBS"> 12155.90 </capacity>
 			<contents unit="LBS">  6000.00 </contents>
-			<unusable-volume unit="LTR"> 11.70 </unusable-volume>
+			<unusable-volume unit="LTR"> 28.0 </unusable-volume>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
 		<tank type="FUEL">    <!-- Outer Right Wing Tank -->
@@ -128,11 +128,11 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<y> 5.1104 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 1552.00 </capacity>
-			<contents unit="LBS"> 1552.00 </contents>
-			<unusable-volume unit="LTR"> 17.75 </unusable-volume>
+			<capacity unit="LBS"> 1523.00 </capacity>
+			<contents unit="LBS"> 1523.00 </contents>
+			<unusable-volume unit="LTR"> 4.0 </unusable-volume>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
 		<tank type="FUEL">    <!-- Engine 1 Pipes -->
@@ -144,7 +144,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 		</tank>
 		<tank type="FUEL">    <!-- Engine 2 Pipes -->
 			<location unit="M">
@@ -155,7 +155,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>
 			<priority>1</priority>
-			<density unit="LBS/GAL">6.67</density>
+			<density unit="LBS/GAL">6.71</density>
 		</tank>
 	</propulsion>
 	
