@@ -1384,43 +1384,49 @@ var messages_config_memo = func {
 
 var messages_memo = func {
 	phaseVar = phaseNode.getValue();
-	if (getprop("/services/fuel-truck/enable") == 1) {
+	if (getprop("/services/fuel-truck/enable") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		refuelg.active = 1;
 	} else {
 		refuelg.active = 0;
 	}
 	
-	if (getprop("/controls/flight/speedbrake-arm") == 1) {
+	if (getprop("/controls/flight/speedbrake-arm") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		gnd_splrs.active = 1;
 	} else {
 		gnd_splrs.active = 0;
 	}
 	
-	if (getprop("/controls/lighting/seatbelt-sign") == 1) {
+	if (getprop("/controls/lighting/seatbelt-sign") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		seatbelts.active = 1;
 	} else {
 		seatbelts.active = 0;
 	}
 	
-	if (getprop("/controls/lighting/no-smoking-sign") == 1) { # should go off after takeoff assuming switch is in auto due to old logic from the days when smoking was allowed!
+	if (getprop("/controls/lighting/no-smoking-sign") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # should go off after takeoff assuming switch is in auto due to old logic from the days when smoking was allowed!
 		nosmoke.active = 1;
 	} else {
 		nosmoke.active = 0;
 	}
 
-	if (getprop("/controls/lighting/strobe") == 0 and getprop("/gear/gear[1]/wow") == 0) { # todo: use gear branch properties
+	if (getprop("/controls/lighting/strobe") == 0 and getprop("/gear/gear[1]/wow") == 0 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # todo: use gear branch properties
 		strobe_lt_off.active = 1;
 	} else {
 		strobe_lt_off.active = 0;
 	}
+	
+	if (systems.FUEL.Valves.transfer1.getValue() == 1 or systems.FUEL.Valves.transfer2.getValue() == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+		outr_tk_fuel_xfrd.active = 1;
+	} else {
+		outr_tk_fuel_xfrd.active = 0;
+	}
 
-	if (getprop("/consumables/fuel/total-fuel-lbs") < 6000) { # assuming US short ton 2000lb
+	if (getprop("/consumables/fuel/total-fuel-lbs") < 6000 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # assuming US short ton 2000lb
 		fob_3T.active = 1;
 	} else {
 		fob_3T.active = 0;
 	}
 	
-	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1) {
+	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		gpws_flap_mode_off.active = 1;
 	} else {
 		gpws_flap_mode_off.active = 0;
@@ -1591,7 +1597,7 @@ var messages_right_memo = func {
 		auto_brk_max.active = 0;
 	}
 	
-	if (getprop("/systems/fuel/x-feed") == 1 and getprop("controls/fuel/x-feed") == 1) {
+	if (getprop("/systems/fuel/valves/crossfeed-valve") != 0 and getprop("/controls/fuel/switches/crossfeed") == 1) {
 		fuelx.active = 1;
 	} else {
 		fuelx.active = 0;
@@ -1609,7 +1615,7 @@ var messages_right_memo = func {
 		gpws_flap3.active = 0;
 	}
 	
-	if (phaseVar >= 2 and phaseVar <= 9 and getprop("/systems/fuel/only-use-ctr-tank") == 1 and getprop("/systems/electrical/bus/ac-1") >= 115 and getprop("/systems/electrical/bus/ac-2") >= 115) {
+	if (phaseVar >= 2 and phaseVar <= 9 and systems.ELEC.Bus.ac1.getValue() >= 110 and systems.ELEC.Bus.ac2.getValue() >= 110 and (getprop("/systems/fuel/feed-center-1") or getprop("/systems/fuel/feed-center-2"))) {
 		ctr_tk_feedg.active = 1;
 	} else {
 		ctr_tk_feedg.active = 0;

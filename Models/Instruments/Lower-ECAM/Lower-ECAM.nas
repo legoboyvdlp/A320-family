@@ -111,11 +111,8 @@ var switch_pack1 = props.globals.getNode("/controls/pneumatic/switches/pack1", 1
 var switch_pack2 = props.globals.getNode("/controls/pneumatic/switches/pack2", 1);
 var oil_qt1_actual = props.globals.getNode("/engines/engine[0]/oil-qt-actual", 1);
 var oil_qt2_actual = props.globals.getNode("/engines/engine[1]/oil-qt-actual", 1);
-var fuel_used_lbs1 = props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs", 1);
-var fuel_used_lbs2 = props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs", 1);
-var fuel_left_quantity = props.globals.getNode("/consumables/fuel/tank[0]/level-lbs", 1);
-var fuel_center_quantity = props.globals.getNode("/consumables/fuel/tank[1]/level-lbs", 1);
-var fuel_right_quantity = props.globals.getNode("/consumables/fuel/tank[2]/level-lbs", 1);
+var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
+var fuel_used_lbs2 = props.globals.getNode("/systems/fuel/fuel-used-2", 1);
 var doorL1_pos = props.globals.getNode("sim/model/door-positions/doorl1/position-norm", 1);
 var doorR1_pos = props.globals.getNode("sim/model/door-positions/doorr1/position-norm", 1);
 var doorL4_pos = props.globals.getNode("sim/model/door-positions/doorl4/position-norm", 1);
@@ -2241,17 +2238,21 @@ var canvas_lowerECAM_fuel = {
 	update: func() {
 
 		# if (getprop("engines/engine[0]/n1-actual") < getprop("/controls/engines/idle-limit")) {
-		if (eng1_n1.getValue() <= 18.9) {
+		if (eng1_n1.getValue() <= 18.8) {
 			me["ENG1idFFlow"].setColor(0.7333,0.3803,0);
+			me["FUEL-ENG-1-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ENG1idFFlow"].setColor(0.8078,0.8039,0.8078);
+			me["FUEL-ENG-1-label"].setColor(0.8078,0.8039,0.8078);
 		}
 
 		# if (getprop("engines/engine[1]/n1-actual") < getprop("/controls/engines/idle-limit")) {
-		if (eng2_n1.getValue() <= 18.9) {
+		if (eng2_n1.getValue() <= 18.5) {
 			me["ENG2idFFlow"].setColor(0.7333,0.3803,0);
+			me["FUEL-ENG-2-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ENG2idFFlow"].setColor(0.8078,0.8039,0.8078);
+			me["FUEL-ENG-2-label"].setColor(0.8078,0.8039,0.8078);
 		}
 
 		# TODO add FOB half-boxed amber if some fuel is blocked
@@ -2265,31 +2266,31 @@ var canvas_lowerECAM_fuel = {
 			me["FUEL-Flow-per-min"].setText("XX");
 		}
 
-		# this is now bound to the ENG master switch
 		# TODO use the valve prop and add amber if difference between eng master and valve
 		# TODO add transition state
-		# TODO fix amber/green at the same time when closed
-		if (cutoff_switch1.getValue() == 0) {
+		if (systems.FUEL.Valves.lpValve1.getValue() == 1) {
 			me["FUEL-ENG-Master-1"].setRotation(0);
 			me["FUEL-ENG-Master-1"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-ENG-Master-1"].setColorFill(0.0509,0.7529,0.2941);
 			me["FUEL-ENG-1-pipe"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-ENG-Master-1"].setRotation(90 * D2R);
 			me["FUEL-ENG-Master-1"].setColor(0.7333,0.3803,0);
+			me["FUEL-ENG-Master-1"].setColorFill(0.7333,0.3803,0);
 			me["FUEL-ENG-1-pipe"].setColor(0.7333,0.3803,0);
 		}
 
-		# this is now bound to the ENG master switch
 		# TODO use the valve prop and add amber if difference between eng master and valve
 		# TODO add transition state
-		# TODO fix amber/green at the same time when closed
-		if (cutoff_switch2.getValue() == 0) {
+		if (systems.FUEL.Valves.lpValve2.getValue() == 1) {
 			me["FUEL-ENG-Master-2"].setRotation(0);
 			me["FUEL-ENG-Master-2"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-ENG-Master-2"].setColorFill(0.0509,0.7529,0.2941);
 			me["FUEL-ENG-2-pipe"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-ENG-Master-2"].setRotation(90 * D2R);
 			me["FUEL-ENG-Master-2"].setColor(0.7333,0.3803,0);
+			me["FUEL-ENG-Master-2"].setColorFill(0.7333,0.3803,0);
 			me["FUEL-ENG-2-pipe"].setColor(0.7333,0.3803,0);
 		}
 
@@ -2297,7 +2298,7 @@ var canvas_lowerECAM_fuel = {
 		# TODO use the valve prop
 		# TODO add amber when disagree between switch and btn
 		# TODO add transition state
-		if (fuel_xfeed.getValue() == 1) {
+		if (systems.FUEL.Valves.crossfeed.getValue() == 1) {
 			me["FUEL-XFEED"].setRotation(0);
 			me["FUEL-XFEED-pipes"].show();
 		} else {
@@ -2306,75 +2307,81 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add LO indication
-		# TODO fix amber/green at the same time when closed
-		if (tank0pump1.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpLeft1.getValue() == 1) {
 			me["FUEL-Pump-Left-1-Open"].show();
 			me["FUEL-Pump-Left-1-Closed"].hide();
 			me["FUEL-Pump-Left-1"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Pump-Left-1"].setColorFill(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-Pump-Left-1-Open"].hide();
 			me["FUEL-Pump-Left-1-Closed"].show();
 			me["FUEL-Pump-Left-1"].setColor(0.7333,0.3803,0);
+			me["FUEL-Pump-Left-1"].setColorFill(0.7333,0.3803,0);
 		}
 
 		# TODO add LO indication
-		# TODO fix amber/green at the same time when closed
-		if (tank0pump2.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpLeft2.getValue() == 1) {
 			me["FUEL-Pump-Left-2-Open"].show();
 			me["FUEL-Pump-Left-2-Closed"].hide();
 			me["FUEL-Pump-Left-2"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Pump-Left-2"].setColorFill(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-Pump-Left-2-Open"].hide();
 			me["FUEL-Pump-Left-2-Closed"].show();
 			me["FUEL-Pump-Left-2"].setColor(0.7333,0.3803,0);
+			me["FUEL-Pump-Left-2"].setColorFill(0.7333,0.3803,0);
 		}
 
-		# TODO fix amber/green at the same time when closed
 		# TODO add functionality to match FCOM 1.28.20 "Amber: Transfer valve is open, whereas commanded closed in automatic or manual mode" 
-		if (tank1pump1.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpCenter1.getValue() == 1) {
 			me["FUEL-Pump-Center-1-Open"].show();
 			me["FUEL-Pump-Center-1-Closed"].hide();
 			me["FUEL-Pump-Center-1"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Pump-Center-1"].setColorFill(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-Pump-Center-1-Open"].hide();
 			me["FUEL-Pump-Center-1-Closed"].show();
 			me["FUEL-Pump-Center-1"].setColor(0.7333,0.3803,0);
+			me["FUEL-Pump-Center-1"].setColorFill(0.7333,0.3803,0);
 		}
 
 		# TODO add LO indication
-		# TODO fix amber/green at the same time when closed
-		if (tank1pump2.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpCenter2.getValue() == 1) {
 			me["FUEL-Pump-Center-2-Open"].show();
 			me["FUEL-Pump-Center-2-Closed"].hide();
 			me["FUEL-Pump-Center-2"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Pump-Center-2"].setColorFill(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-Pump-Center-2-Open"].hide();
 			me["FUEL-Pump-Center-2-Closed"].show();
 			me["FUEL-Pump-Center-2"].setColor(0.7333,0.3803,0);
+			me["FUEL-Pump-Center-2"].setColorFill(0.7333,0.3803,0);
 		}
 
 		# TODO add LO indication
-		# TODO fix amber/green at the same time when closed
-		if (tank2pump1.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpRight1.getValue() == 1) {
 			me["FUEL-Pump-Right-1-Open"].show();
 			me["FUEL-Pump-Right-1-Closed"].hide();
 			me["FUEL-Pump-Right-1"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Pump-Right-1"].setColorFill(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-Pump-Right-1-Open"].hide();
 			me["FUEL-Pump-Right-1-Closed"].show();
 			me["FUEL-Pump-Right-1"].setColor(0.7333,0.3803,0);
+			me["FUEL-Pump-Right-1"].setColorFill(0.7333,0.3803,0);
 		}
 
 		# TODO add LO indication
-		# TODO fix amber/green at the same time when closed
-		if (tank2pump2.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpRight2.getValue() == 1) {
 			me["FUEL-Pump-Right-2-Open"].show();
 			me["FUEL-Pump-Right-2-Closed"].hide();
 			me["FUEL-Pump-Right-2"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Pump-Right-2"].setColorFill(0.0509,0.7529,0.2941);
 		} else {
 			me["FUEL-Pump-Right-2-Open"].hide();
 			me["FUEL-Pump-Right-2-Closed"].show();
 			me["FUEL-Pump-Right-2"].setColor(0.7333,0.3803,0);
+			me["FUEL-Pump-Right-2"].setColorFill(0.7333,0.3803,0);
 		}
 
 		# Fuel Used
@@ -2390,41 +2397,44 @@ var canvas_lowerECAM_fuel = {
 
 		# Fuel Quantity
 		# TODO add LO indication
-		if (fuel_left_quantity.getValue() >= 3170) {
-			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1520, 10)));
-			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", 1520));
+		me["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue(), 10)));
+		me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue(), 10)));
+		me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue(), 10)));
+		me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue(), 10)));
+		me["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue(), 10)));
+		
+		if (systems.FUEL.Valves.transfer1.getValue() == 0) {
 			me["FUEL-Left-Transfer"].hide();
-		} else if (fuel_left_quantity.getValue() >= 1650) {
-			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", 1650));
-			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue() - 1650, 10)));
-			me["FUEL-Left-Transfer"].setColor(0.7333,0.3803,0);
+		} else {
+			if (systems.FUEL.Valves.transfer1.getValue() == 1) {
+				me["FUEL-Left-Transfer"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["FUEL-Left-Transfer"].setColor(0.7333,0.3803,0);
+			}
 			me["FUEL-Left-Transfer"].show();
-		} else {
-			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(fuel_left_quantity.getValue())));
-			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s", 0));
-			me["FUEL-Left-Transfer"].hide();
 		}
-		me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(fuel_center_quantity.getValue())));
-		if (fuel_right_quantity.getValue() >= 3170) {
-			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1520, 10)));
-			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", 1520));
+		
+		if (systems.FUEL.Valves.transfer2.getValue() == 0) {
 			me["FUEL-Right-Transfer"].hide();
-		} else if (fuel_right_quantity.getValue() >= 1650) {
-			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", 1650));
-			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue() - 1650, 10)));
-			me["FUEL-Right-Transfer"].show();
-			me["FUEL-Right-Transfer"].setColor(0.7333,0.3803,0);
 		} else {
-			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(fuel_right_quantity.getValue(), 10)));
-			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s", 0));
-			me["FUEL-Right-Transfer"].hide();
-		}	
+			if (systems.FUEL.Valves.transfer2.getValue() == 1) {
+				me["FUEL-Right-Transfer"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["FUEL-Right-Transfer"].setColor(0.7333,0.3803,0);
+			}
+			me["FUEL-Right-Transfer"].show();
+		}
+		
+		if (!systems.FUEL.Switches.pumpCenter1.getValue() and !systems.FUEL.Switches.pumpCenter2.getValue()) {
+			me["FUEL-Center-blocked"].show();
+		} else {
+			me["FUEL-Center-blocked"].hide();
+		}
 
 		# Hide not yet implemented features
 		# TODO add them
 		me["FUEL-Left-blocked"].hide();
 		me["FUEL-Right-blocked"].hide();
-		me["FUEL-Center-blocked"].hide();
 		me["FUEL-Left-Outer-Inacc"].hide();
 		me["FUEL-Left-Inner-Inacc"].hide();
 		me["FUEL-Right-Outer-Inacc"].hide();

@@ -2355,7 +2355,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/x-feed</property>
+				<property>controls/fuel/switches/crossfeed</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2370,7 +2370,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>systems/fuel/x-feed</property>
+					<property>systems/fuel/valves/crossfeed-valve</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -2386,7 +2386,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/x-feed</property>
+					<property>controls/fuel/switches/crossfeed</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -2409,12 +2409,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-1</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/tank0pump1</property>
+				<property>controls/fuel/switches/pump-left-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2434,7 +2434,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/tank0pump1</property>
+						<property>controls/fuel/switches/pump-left-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2451,7 +2451,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/tank0pump1</property>
+					<property>controls/fuel/switches/pump-left-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2474,12 +2474,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-1</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/tank0pump2</property>
+				<property>controls/fuel/switches/pump-left-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2499,7 +2499,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/tank0pump2</property>
+						<property>controls/fuel/switches/pump-left-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2516,7 +2516,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/tank0pump2</property>
+					<property>controls/fuel/switches/pump-left-2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2539,12 +2539,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-1</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/tank1pump1</property>
+				<property>controls/fuel/switches/pump-center-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2564,7 +2564,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/tank1pump1</property>
+						<property>controls/fuel/switches/pump-center-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2581,7 +2581,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/tank1pump1</property>
+					<property>controls/fuel/switches/pump-center-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2592,7 +2592,7 @@
 		</condition>
 	</animation>
 
-	<!--animation>
+	<animation>
 		<type>pick</type>
 		<object-name>FuelModeBtn</object-name>
 		<object-name>FuelModeBtn1F</object-name>
@@ -2608,14 +2608,14 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/mode</property>
+				<property>controls/fuel/switches/center-mode</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("/sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
-	</animation-->
+	</animation>
 
 	<animation>
 		<type>select</type>
@@ -2628,7 +2628,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/mode</property>
+						<property>controls/fuel/switches/center-mode</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2645,7 +2645,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/mode</property>
+					<property>controls/fuel/switches/center-mode</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2668,12 +2668,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/tank1pump2</property>
+				<property>controls/fuel/switches/pump-center-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2693,7 +2693,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/tank1pump2</property>
+						<property>controls/fuel/switches/pump-center-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2710,7 +2710,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/tank1pump2</property>
+					<property>controls/fuel/switches/pump-center-2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2733,12 +2733,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/tank2pump1</property>
+				<property>controls/fuel/switches/pump-right-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2758,7 +2758,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/tank2pump1</property>
+						<property>controls/fuel/switches/pump-right-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2775,7 +2775,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/tank2pump1</property>
+					<property>controls/fuel/switches/pump-right-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -2798,12 +2798,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fuel/tank2pump2</property>
+				<property>controls/fuel/switches/pump-right-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -2823,7 +2823,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fuel/tank2pump2</property>
+						<property>controls/fuel/switches/pump-right-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -2840,7 +2840,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fuel/tank2pump2</property>
+					<property>controls/fuel/switches/pump-right-2</property>
 					<value>0</value>
 				</equals>
 				<equals>

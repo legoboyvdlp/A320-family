@@ -29,7 +29,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<pitch> 2.2 </pitch>
 				<yaw> 1 </yaw>
 			</orient>
-			<feed>3</feed>
+			<feed>4</feed>
 			<thruster file="direct">
 				<location unit="M">
 					<x> 14.3962788 </x>
@@ -55,7 +55,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 				<pitch> 2.2 </pitch>
 				<yaw> -1 </yaw>
 			</orient>
-			<feed>4</feed>
+			<feed>5</feed>
 			<thruster file="direct">
 				<location unit="M">
 					<x> 14.3962788 </x>
@@ -70,43 +70,70 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			</thruster>
 		</engine>
 		
-		<tank type="FUEL">    <!-- Left Wing Tank -->
+		<tank type="FUEL">    <!-- Outer Left Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>
 				<y> -5.1104 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 13914 </capacity>
-			<contents unit="LBS"> 6000 </contents>
-			<standpipe unit="LBS">31</standpipe>
+			<capacity unit="LBS"> 1552.00 </capacity>
+			<contents unit="LBS"> 1552.00 </contents>
+			<unusable-volume unit="LTR"> 17.75 </unusable-volume>
 			<priority>1</priority>
-			<type>JET-A1</type>
+			<density unit="LBS/GAL">6.67</density>
 			<temperature>50</temperature>
 		</tank>
+		<tank type="FUEL">    <!-- Inner Left Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> -5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 12212.50 </capacity>
+			<contents unit="LBS">  6000.00 </contents>
+			<unusable-volume unit="LTR"> 11.70 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.67</density>
+			<temperature>50</temperature>
+		</tank>
+		
 		<tank type="FUEL">    <!-- Center Tank -->
 			<location unit="M">
 				<x> 18.9731 </x>
 				<y> 0 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 14281 </capacity>
-			<contents unit="LBS"> 0 </contents> 
-			<standpipe unit="LBS">43</standpipe>
+			<capacity unit="LBS"> 14550.50 </capacity>
+			<contents unit="LBS"> 40.88 </contents>
+			<unusable-volume unit="LTR"> 23.20 </unusable-volume>
 			<priority>1</priority>
-			<type>JET-A1</type>
+			<density unit="LBS/GAL">6.67</density>
 			<temperature>50</temperature>
 		</tank>
-		<tank type="FUEL">    <!-- Right Wing Tank -->
+		<tank type="FUEL">    <!-- Inner Right Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>
 				<y> 5.1104 </y>
 				<z> -0.61182 </z>
 			</location>
-			<capacity unit="LBS"> 13914 </capacity>
-			<contents unit="LBS"> 6000 </contents>
-			<standpipe unit="LBS">31</standpipe>
+			<capacity unit="LBS"> 12212.50 </capacity>
+			<contents unit="LBS">  6000.00 </contents>
+			<unusable-volume unit="LTR"> 11.70 </unusable-volume>
 			<priority>1</priority>
-			<type>JET-A1</type>
+			<density unit="LBS/GAL">6.67</density>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">    <!-- Outer Right Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> 5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 1552.00 </capacity>
+			<contents unit="LBS"> 1552.00 </contents>
+			<unusable-volume unit="LTR"> 17.75 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.67</density>
 			<temperature>50</temperature>
 		</tank>
 		<tank type="FUEL">    <!-- Engine 1 Pipes -->
@@ -118,7 +145,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>
 			<priority>1</priority>
-			<type>JET-A1</type>
+			<density unit="LBS/GAL">6.67</density>
 		</tank>
 		<tank type="FUEL">    <!-- Engine 2 Pipes -->
 			<location unit="M">
@@ -129,13 +156,14 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>
 			<priority>1</priority>
-			<type>JET-A1</type>
+			<density unit="LBS/GAL">6.67</density>
 		</tank>
 	</propulsion>
 	
 	<system file="fuel"/>
 	<system file="glass-effect1"/>
 	<system file="a320-fcs"/>
+	<system file="a320-100-fuel"/>
 	<system file="a320-fwc"/>
 	<system file="a320-spoiler"/>
 	<system file="a320-electrical"/>

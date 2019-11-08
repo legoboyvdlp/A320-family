@@ -392,18 +392,24 @@
 	<consumables>
 		<fuel>
 			<tank n="0">
-				<name>Left Wing</name>
+				<name>Outer Left Wing</name>
 			</tank>
 			<tank n="1">
-				<name>Center</name>
+				<name>Inner Left Wing</name>
 			</tank>
 			<tank n="2">
-				<name>Right Wing</name>
+				<name>Center</name>
 			</tank>
 			<tank n="3">
-				<name>Engine 1 Pipes</name>
+				<name>Inner Right Wing</name>
 			</tank>
 			<tank n="4">
+				<name>Outer Right Wing</name>
+			</tank>
+			<tank n="5">
+				<name>Engine 1 Pipes</name>
+			</tank>
+			<tank n="6">
 				<name>Engine 2 Pipes</name>
 			</tank>
 		</fuel>
@@ -635,6 +641,18 @@
 			<speedbrake-arm>0</speedbrake-arm>
 			<slats>0</slats>
 		</flight>
+		<fuel>
+			<switches>
+				<center-mode type="bool">1</center-mode>
+				<crossfeed type="bool">0</crossfeed>
+				<pump-left-1 type="bool">0</pump-left-1>
+				<pump-left-2 type="bool">0</pump-left-2>
+				<pump-center-1 type="bool">0</pump-center-1>
+				<pump-center-2 type="bool">0</pump-center-2>
+				<pump-right-1 type="bool">0</pump-right-1>
+				<pump-right-2 type="bool">0</pump-right-2>
+			</switches>
+		</fuel>
 		<gear>
 			<brake-parking type="bool">0</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
@@ -950,7 +968,12 @@
 			<tank n="2">
 				<feed type="bool">0</feed>
 			</tank>
-			<x-feed type="bool">0</x-feed>
+			<ctr-pump-cmd-on-eng-start type="bool">0</ctr-pump-cmd-on-eng-start>
+			<refuel>
+				<refuelling type="bool">0</refuelling>
+			</refuel>
+			<fuel-used-1 type="double">0</fuel-used-1>
+			<fuel-used-2 type="double">0</fuel-used-2>
 		</fuel>
 		<hydraulic n="0">
 			<blue-psi>0</blue-psi>
