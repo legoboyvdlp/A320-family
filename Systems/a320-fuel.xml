@@ -171,8 +171,9 @@
 				/systems/fuel/valves/outer-inner-transfer-valve-1-cmd eq 1
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
-			<test value="1">
+			<test logic="OR" value="1">
 				/systems/fuel/quantity/left-wing-inner-low eq 1
+				/systems/fuel/quantity/right-wing-inner-low eq 1
 			</test>
 		</switch>
 		
@@ -194,7 +195,8 @@
 				/systems/fuel/valves/outer-inner-transfer-valve-2-cmd eq 1
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
-			<test value="1">
+			<test logic="OR" value="1">
+				/systems/fuel/quantity/left-wing-inner-low eq 1
 				/systems/fuel/quantity/right-wing-inner-low eq 1
 			</test>
 		</switch>
@@ -527,8 +529,8 @@
 		</summer>
 		
 		<summer name="/systems/fuel/internal/center-flow-rate">
-			<input>-/systems/fuel/internal/center-tank-left</input>
-			<input>-/systems/fuel/internal/center-tank-right</input>
+			<input>-/systems/fuel/internal/center-tank-eng-1</input>
+			<input>-/systems/fuel/internal/center-tank-eng-2</input>
 			<output>propulsion/tank[2]/external-flow-rate-pps</output>
 		</summer>
 		

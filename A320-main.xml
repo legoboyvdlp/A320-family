@@ -937,6 +937,8 @@
 			<refuel>
 				<refuelling type="bool">0</refuelling>
 			</refuel>
+			<fuel-used-1 type="double">0</fuel-used-1>
+			<fuel-used-2 type="double">0</fuel-used-2>
 		</fuel>
 		<hydraulic n="0">
 			<blue-psi>0</blue-psi>

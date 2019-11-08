@@ -49,6 +49,17 @@ var Instrumentation = {
 	},
 };
 
+var JSBSim = {
+	Propulsion: {
+		Engine1: {
+			fuelUsed: props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"),
+		},
+		Engine2: {
+			fuelUsed: props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs"),
+		},
+	},
+};
+
 var Options = {
 	eng: props.globals.getNode("/options/eng"),
 };

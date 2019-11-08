@@ -4,6 +4,8 @@
 # Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var FUEL = {
+	offset1: 0,
+	offset2: 0,
 	timeEngStart: 0,
 	cmdCtrOn: props.globals.getNode("/systems/fuel/ctr-pump-cmd-on-eng-start"),
 	
@@ -32,6 +34,8 @@ var FUEL = {
 		center: props.globals.getNode("/consumables/fuel/tank[2]/level-lbs"),
 		rightInner: props.globals.getNode("/consumables/fuel/tank[3]/level-lbs"),
 		rightOuter: props.globals.getNode("/consumables/fuel/tank[4]/level-lbs"),
+		usedLeft: props.globals.getNode("/systems/fuel/fuel-used-1"),
+		usedRight: props.globals.getNode("/systems/fuel/fuel-used-2"),
 	},
 	resetFail: func() {
 	
@@ -40,8 +44,13 @@ var FUEL = {
 	
 	},
 	loop: func() {
-	
+		systems.FUEL.Quantity.usedLeft.setValue(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue() + me.offset1);
+		systems.FUEL.Quantity.usedRight.setValue(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue() + me.offset2);
 	},
+	setOffset: func() {
+		me.offset1 = me.offset1 -(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue());
+		me.offset2 = me.offset2 -(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue());
+	}
 };
 
 setlistener("/engines/engine[0]/state", func() {
