@@ -93,10 +93,10 @@
 				<test logic="OR">
 					/controls/fuel/switches/center-mode eq 0
 					<test logic="OR">
+						/systems/fuel/pumps/center-control-low-level ne 1
 						/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
 						<test logic="AND">
 							fcs/slat-pos-deg lt 16
-							/systems/fuel/pumps/center-control-low-level ne 1
 							/systems/fuel/left-inner-full ne 1
 						</test>
 					</test>
@@ -112,6 +112,7 @@
 				<test logic="OR">
 					/controls/fuel/switches/center-mode eq 0
 					<test logic="OR">
+						/systems/fuel/pumps/center-control-low-level ne 1
 						/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
 						<test logic="AND">
 							fcs/slat-pos-deg lt 16

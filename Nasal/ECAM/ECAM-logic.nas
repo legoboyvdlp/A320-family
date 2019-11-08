@@ -1566,7 +1566,7 @@ var messages_right_memo = func {
 		gpws_flap3.active = 0;
 	}
 	
-	if (phaseVar >= 2 and phaseVar <= 9 and systems.electrical.Bus.ac1.getValue() >= 110 and systems.electrical.Bus.ac2.getValue() >= 110 and (getprop("/systems/fuel/feed-center-1") or getprop("/systems/fuel/feed-center-2"))) {
+	if (phaseVar >= 2 and phaseVar <= 9 and systems.ELEC.Bus.ac1.getValue() >= 110 and systems.ELEC.Bus.ac2.getValue() >= 110 and (getprop("/systems/fuel/feed-center-1") or getprop("/systems/fuel/feed-center-2"))) {
 		ctr_tk_feedg.active = 1;
 	} else {
 		ctr_tk_feedg.active = 0;
