@@ -427,7 +427,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/fuel/internal/center-tank-left">
+		<switch name="/systems/fuel/internal/center-tank-eng-1">
 			<default value="0"/>
 			<test logic="AND" value="9">
 				<test logic="OR">
@@ -470,7 +470,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/fuel/internal/center-tank-right">
+		<switch name="/systems/fuel/internal/center-tank-eng-2">
 			<default value="0"/>
 			<test logic="AND" value="9">
 				<test logic="OR">
@@ -521,21 +521,19 @@
 		
 		<summer name="/systems/fuel/internal/left-inner-flow-rate">
 			<input>/systems/fuel/internal/left-wing-outer-to-inner-tank</input>
-			<input>/systems/fuel/internal/center-tank-left</input>
 			<input>-/systems/fuel/internal/left-wing-tank-eng-1</input>
 			<input>-/systems/fuel/internal/left-wing-tank-eng-2</input>
 			<output>propulsion/tank[1]/external-flow-rate-pps</output>
 		</summer>
 		
 		<summer name="/systems/fuel/internal/center-flow-rate">
-			<input>-/systems/fuel/internal/center-tank-eng-1</input>
-			<input>-/systems/fuel/internal/center-tank-eng-2</input>
+			<input>-/systems/fuel/internal/center-tank-left</input>
+			<input>-/systems/fuel/internal/center-tank-right</input>
 			<output>propulsion/tank[2]/external-flow-rate-pps</output>
 		</summer>
 		
 		<summer name="/systems/fuel/internal/right-inner-flow-rate">
 			<input>/systems/fuel/internal/right-wing-outer-to-inner-tank</input>
-			<input>/systems/fuel/internal/center-tank-right</input>
 			<input>-/systems/fuel/internal/right-wing-tank-eng-1</input>
 			<input>-/systems/fuel/internal/right-wing-tank-eng-2</input>
 			<output>propulsion/tank[3]/external-flow-rate-pps</output>
@@ -549,12 +547,14 @@
 		<summer name="/systems/fuel/internal/eng-1-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-eng-1</input>
 			<input>/systems/fuel/internal/right-wing-tank-eng-1</input>
+			<input>/systems/fuel/internal/center-tank-eng-2</input>
 			<output>propulsion/tank[5]/external-flow-rate-pps</output>
 		</summer>
 		
 		<summer name="/systems/fuel/internal/eng-2-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-eng-2</input>
 			<input>/systems/fuel/internal/right-wing-tank-eng-2</input>
+			<input>/systems/fuel/internal/center-tank-eng-2</input>
 			<output>propulsion/tank[6]/external-flow-rate-pps</output>
 		</summer>
 	</channel>

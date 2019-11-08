@@ -2268,7 +2268,7 @@ var canvas_lowerECAM_fuel = {
 		# TODO use the valve prop and add amber if difference between eng master and valve
 		# TODO add transition state
 		# TODO fix amber/green at the same time when closed
-		if (systems.FUEL.Valves.lpValve1.getValue() == 0) {
+		if (systems.FUEL.Valves.lpValve1.getValue() == 1) {
 			me["FUEL-ENG-Master-1"].setRotation(0);
 			me["FUEL-ENG-Master-1"].setColor(0.0509,0.7529,0.2941);
 			me["FUEL-ENG-1-pipe"].setColor(0.0509,0.7529,0.2941);
@@ -2281,7 +2281,7 @@ var canvas_lowerECAM_fuel = {
 		# TODO use the valve prop and add amber if difference between eng master and valve
 		# TODO add transition state
 		# TODO fix amber/green at the same time when closed
-		if (systems.FUEL.Valves.lpValve2.getValue() == 0) {
+		if (systems.FUEL.Valves.lpValve2.getValue() == 1) {
 			me["FUEL-ENG-Master-2"].setRotation(0);
 			me["FUEL-ENG-Master-2"].setColor(0.0509,0.7529,0.2941);
 			me["FUEL-ENG-2-pipe"].setColor(0.0509,0.7529,0.2941);
