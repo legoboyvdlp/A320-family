@@ -837,7 +837,7 @@
 			<gain>/systems/navigation/adr/operating-1</gain>
 		</pure_gain>
 		
-		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+		<pure_gain name="/systems/navigation/adr/output/baro-alt-corrected-2-fo">
 			<input>/systems/navigation/adr/computation/baro-alt-corrected-2-fo</input>
 			<gain>/systems/navigation/adr/operating-2</gain>
 		</pure_gain>

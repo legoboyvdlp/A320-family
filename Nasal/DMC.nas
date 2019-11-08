@@ -10,14 +10,16 @@ var DMC = {
 	activeADIRS: -9,
 	
 	airspeeds: [props.globals.getNode("/systems/navigation/adr/output/cas-1", 1), props.globals.getNode("/systems/navigation/adr/output/cas-2", 1), props.globals.getNode("/systems/navigation/adr/output/cas-3", 1)],
+	altitudes: [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-capt", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-capt", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-capt", 1)],
 	machs: [props.globals.getNode("/systems/navigation/adr/output/mach-1", 1), props.globals.getNode("/systems/navigation/adr/output/mach-2", 1), props.globals.getNode("/systems/navigation/adr/output/mach-3", 1)],
+	altitudesPfd: [props.globals.getNode("/instrumentation/altimeter[0]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[1]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[2]/indicated-altitude-ft-pfd", 1)],
 	
-	outputs: [nil, nil, nil], # airspeed, altitude, mach
+	outputs: [nil, nil, nil, nil], # airspeed, altitude, mach, pfd altitude
 	
 	new: func(num) {
 		var d = { parents:[DMC] };
 		d.activeADIRS = num;
-		d.outputs = [nil, nil, nil];
+		d.outputs = [nil, nil, nil, nil];
 		return d;
 	},
 	changeActiveADIRS: func(newADIRS) {
@@ -26,12 +28,15 @@ var DMC = {
 	},
 	setOutputs: func(ADIRS) {
 		me.outputs[0] = me.airspeeds[ADIRS];
+		me.outputs[1] = me.altitudes[ADIRS];
 		me.outputs[2] = me.machs[ADIRS];
+		me.outputs[3] = me.altitudesPfd[ADIRS];
 	},
 	setOutputsNil: func() {
 		me.outputs[0] = nil;
 		me.outputs[1] = nil;
 		me.outputs[2] = nil;
+		me.outputs[3] = nil;
 	},
 	update: func() {
 		if (systems.ADIRSnew.ADIRunits[me.activeADIRS].operative and systems.ADIRSnew.ADIRunits[me.activeADIRS].outputOn) {
@@ -59,6 +64,11 @@ var DMController = {
 	init: func() {
 		if (!me._init) {
 			me.DMCs = [DMC.new(0), DMC.new(1), DMC.new(2)];
+			
+			# update DMC2 to correct properties for first officer PFD
+			me.DMCs[1].altitudes = [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-fo", 1)];
+			me.DMCs[1].altitudesPfd = [props.globals.getNode("/instrumentation/altimeter[3]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[4]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[5]/indicated-altitude-ft-pfd", 1)];
+	 
 			me._init = 1;
 		}
 	},
