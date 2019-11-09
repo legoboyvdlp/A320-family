@@ -696,10 +696,11 @@ var r2Pedal = func {
 
 if (getprop("/controls/flight/auto-coordination") == 1) {
 	setprop("/controls/flight/auto-coordination", 0);
-	setprop("/controls/flight/aileron-drives-tiller", 1);
-} else {
-	setprop("/controls/flight/aileron-drives-tiller", 0);
-}
+	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
+	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
+} 
+
+setprop("/controls/flight/aileron-drives-tiller", 0);
 
 var APPanel = {
 	APDisc: func() {
