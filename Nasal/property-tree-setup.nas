@@ -5,6 +5,12 @@
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
 
+var Consumables = {
+	Fuel: {
+		totalFuelLbs: props.globals.getNode("/consumables/fuel/total-fuel-lbs"),
+	},
+};
+
 var Controls = {
 	Engines: {
 		Engine1: {
@@ -69,6 +75,7 @@ var Position = {
 };
 
 var Sim = {
+	aero: props.globals.getNode("/sim/aero"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
 	},

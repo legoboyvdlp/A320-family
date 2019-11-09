@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+
+<!-- A3XX Aircraft Config Dialog -->
+
+<PropertyList>
+
+    <name>fuel-dlg</name>
+    <layout>vbox</layout>
+    
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Ground Services: Fuel</label>
+        </text>
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+        
+    <hrule/>
+    
+    <group>
+        <layout>vbox</layout>
+        
+        <checkbox>
+            <label>Enable Fuel Truck</label>
+            <halign>left</halign>
+            <enable>
+                <not><property>/services/fuel-truck/connect</property></not>
+            </enable>
+            <property>/services/fuel-truck/enable</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+        
+        <checkbox>
+            <label>Connect Fuel Truck</label>
+            <halign>left</halign>
+            <enable>
+                <property>/services/fuel-truck/enable</property>
+            </enable>
+            <property>/services/fuel-truck/connect</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+        
+        <hrule />
+        
+        <group>
+            <layout>table</layout>
+            <text>
+                <label>Total Fuel Quantity (Lbs):</label>
+                <halign>right</halign>
+                <padding>2</padding>
+                <row>0</row>
+                <col>0</col>
+            </text>
+            
+            <text>
+                <label>Requested Fuel Quantity (Lbs):</label>
+                <halign>right</halign>
+                <padding>2</padding>
+                <row>1</row>
+                <col>0</col>
+            </text>
+            
+            <text>
+                <label>New Total Fuel Quantity (Lbs):</label>
+                <halign>right</halign>
+                <padding>2</padding>
+                <row>2</row>
+                <col>0</col>
+            </text>
+            
+            <text>
+                <row>0</row>
+                <col>1</col>
+                <halign>left</halign>
+                <padding>2</padding>
+                <property>/consumables/fuel/total-fuel-lbs</property>
+                <live>true</live>
+                <format>%.1f</format>
+            </text>
+            
+            <input>
+                <row>1</row>
+                <col>1</col>
+                <halign>left</halign>
+                <padding>1</padding>
+                <property>/services/fuel-truck/request-lbs</property>
+                <live>true</live>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+            </input>
+            
+            <text>
+                <row>2</row>
+                <col>1</col>
+                <halign>left</halign>
+                <padding>2</padding>
+                <property>/services/fuel-truck/request-total-lbs</property>
+                <live>true</live>
+                <format>%.1f</format>
+            </text>
+        </group>
+        
+        <hrule />
+		
+		<group>
+			<layout>hbox</layout>
+			
+			<button>
+                <legend>Refuel</legend>
+                <padding>2</padding>
+                <pref-width>80</pref-width>
+                <pref-height>24</pref-height>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if ((getprop("/services/fuel-truck/enable") == 1) and (getprop("/services/fuel-truck/connect") == 1)) {
+							systems.fuelSvc.refuel();
+                            screen.log.write("Refueling process started.", 0, 0.584, 1);
+                        } else
+                            screen.log.write("Please Enable and Connect the Fuel Truck First!", 1, 0, 0);
+                    </script>
+                </binding>
+            </button>
+			
+			<button>
+                <legend>Stop</legend>
+                <padding>2</padding>
+                <pref-width>80</pref-width>
+                <pref-height>24</pref-height>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+						systems.fuelSvc.stop();
+						screen.log.write("Refueling process stopped.", 0, 0.584, 1);
+                    </script>
+                </binding>
+            </button>
+		</group>
+    </group>
+    
+</PropertyList>

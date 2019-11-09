@@ -61,16 +61,34 @@
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
+			
+		<fcs_function name="/systems/fuel/internal/left-inner-tank-underfull-level">
+			<function>
+				<difference>
+					<property>/consumables/fuel/tank[1]/capacity-gal_us</property>
+					<value>106.197</value>
+				</difference>
+			</function>
+		</fcs_function>
+			
+		<fcs_function name="/systems/fuel/internal/right-inner-tank-underfull-level">
+			<function>
+				<difference>
+					<property>/consumables/fuel/tank[3]/capacity-gal_us</property>
+					<value>106.197</value>
+				</difference>
+			</function>
+		</fcs_function>
 		
 		<switch name="/systems/fuel/left-inner-full">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fuel/left-inner-full eq 1
-				propulsion/tank[1]/contents-lbs lt 12270
-				propulsion/tank[1]/contents-lbs ge 10300
+				/consumables/fuel/tank[1]/level-norm lt 0.999
+				/consumables/fuel/tank[1]/level-gal_us ge /systems/fuel/internal/left-inner-tank-underfull-level
 			</test>
 			<test value="1">
-				propulsion/tank[1]/contents-lbs eq 12270
+				/consumables/fuel/tank[1]/level-norm gt 0.999
 			</test>
 		</switch>
 		
@@ -78,11 +96,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fuel/right-inner-full eq 1
-				propulsion/tank[3]/contents-lbs lt 12270
-				propulsion/tank[3]/contents-lbs ge 10300
+				/consumables/fuel/tank[3]/level-norm lt 0.999
+				/consumables/fuel/tank[3]/level-gal_us ge /systems/fuel/internal/right-inner-tank-underfull-level
 			</test>
 			<test value="1">
-				propulsion/tank[3]/contents-lbs eq 12270
+				/consumables/fuel/tank[3]/level-norm gt 0.999
 			</test>
 		</switch>
 		
@@ -92,12 +110,14 @@
 				/controls/fuel/switches/pump-center-1 eq 1
 				<test logic="OR">
 					/controls/fuel/switches/center-mode eq 0
-					<test logic="OR">
+					<test logic="AND">
 						/systems/fuel/pumps/center-control-low-level ne 1
-						/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
-						<test logic="AND">
-							fcs/slat-pos-deg lt 16
-							/systems/fuel/left-inner-full ne 1
+						<test logic="OR">
+							/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
+							<test logic="AND">
+								fcs/slat-pos-deg lt 16
+								/systems/fuel/left-inner-full ne 1
+							</test>
 						</test>
 					</test>
 				</test>
@@ -111,13 +131,14 @@
 				/controls/fuel/switches/pump-center-2 eq 1
 				<test logic="OR">
 					/controls/fuel/switches/center-mode eq 0
-					<test logic="OR">
+					<test logic="AND">
 						/systems/fuel/pumps/center-control-low-level ne 1
-						/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
-						<test logic="AND">
-							fcs/slat-pos-deg lt 16
-							/systems/fuel/pumps/center-control-low-level ne 1
-							/systems/fuel/right-inner-full ne 1
+						<test logic="OR">
+							/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
+							<test logic="AND">
+								fcs/slat-pos-deg lt 16
+								/systems/fuel/left-inner-full ne 1
+							</test>
 						</test>
 					</test>
 				</test>
@@ -393,6 +414,13 @@
 				/systems/fuel/pumps/wing-pump-left-1-operate eq 1
 				/systems/fuel/pumps/wing-pump-left-2-operate eq 1
 			</test>
+			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed -->
+				/systems/fuel/valves/crossfeed-valve eq 1
+				<test logic="OR">
+					/systems/fuel/pumps/wing-pump-right-1-operate eq 1
+					/systems/fuel/pumps/wing-pump-right-2-operate eq 1
+				</test>
+			</test>
 			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 -->
 				/accelerations/pilot-gdamped ge 0.5
 			</test>
@@ -403,6 +431,13 @@
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/wing-pump-right-1-operate eq 1
 				/systems/fuel/pumps/wing-pump-right-2-operate eq 1
+			</test>
+			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed -->
+				/systems/fuel/valves/crossfeed-valve eq 1
+				<test logic="OR">
+					/systems/fuel/pumps/wing-pump-left-1-operate eq 1
+					/systems/fuel/pumps/wing-pump-left-2-operate eq 1
+				</test>
 			</test>
 			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 -->
 				/accelerations/pilot-gdamped ge 0.5
@@ -423,19 +458,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/fuel/internal/left-wing-tank-eng-1">
-			<default value="0"/>
-			<test logic="AND" value="9">
-				<test logic="OR">
-					/systems/fuel/quantity/center-low eq 1
-					/systems/fuel/feed-center-1 eq 0
-				</test>
-				/systems/fuel/feed-left-inner eq 1
-				propulsion/tank[1]/contents-lbs gt 22.68
-				propulsion/tank[5]/contents-lbs lt 9
-			</test>
-		</switch>
-		
+		<!-- Refuel system -->
 		<switch name="/systems/fuel/internal/left-outer-wing-tank-refuel">
 			<default value="0"/>
 			<test logic="AND" value="16.615">
@@ -454,7 +477,7 @@
 			<default value="0"/>
 			<test logic="AND" value="/systems/fuel/internal/left-outer-wing-tank-refuel">
 				/systems/fuel/refuel/refuelling eq 1
-				propulsion/tank[0]/contents-lbs ge 1523
+				propulsion/tank[0]/pct-full ge 99.9
 			</test>
 		</switch>
 		
@@ -505,7 +528,21 @@
 			<default value="0"/>
 			<test logic="AND" value="/systems/fuel/internal/right-outer-wing-tank-refuel">
 				/systems/fuel/refuel/refuelling eq 1
-				propulsion/tank[4]/contents-lbs ge 1523
+				propulsion/tank[4]/pct-full ge 99.9
+			</test>
+		</switch>
+		
+		<!-- Feed system -->
+		<switch name="/systems/fuel/internal/left-wing-tank-eng-1">
+			<default value="0"/>
+			<test logic="AND" value="9">
+				<test logic="OR">
+					/systems/fuel/quantity/center-low eq 1
+					/systems/fuel/feed-center-1 eq 0
+				</test>
+				/systems/fuel/feed-left-inner eq 1
+				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
+				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 		</switch>
 		
@@ -519,7 +556,7 @@
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
 				</test>
-				propulsion/tank[3]/contents-lbs gt 22.68
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
 				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -533,7 +570,7 @@
 					/systems/fuel/feed-center-2 eq 0
 				</test>
 				/systems/fuel/valves/crossfeed-valve eq 1
-				propulsion/tank[3]/contents-lbs gt 22.68
+				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
 				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -547,7 +584,7 @@
 					/systems/fuel/feed-center-1 eq 0
 				</test>
 				/systems/fuel/feed-left-inner eq 1
-				propulsion/tank[1]/contents-lbs gt 22.68
+				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -562,7 +599,7 @@
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
 				</test>
-				propulsion/tank[3]/contents-lbs gt 22.68
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -575,7 +612,7 @@
 					/systems/fuel/feed-center-2 eq 0
 				</test>
 				/systems/fuel/feed-right-inner eq 1
-				propulsion/tank[3]/contents-lbs gt 22.68
+				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>
@@ -585,6 +622,8 @@
 			<test logic="AND" value="9">
 				/systems/fuel/valves/outer-inner-transfer-valve-1 eq 1
 				/accelerations/pilot-gdamped ge 0.5
+				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
+				/consumables/fuel/tank[1]/level-norm lt 0.999
 			</test>
 		</switch>
 		
@@ -593,6 +632,8 @@
 			<test logic="AND" value="9">
 				/systems/fuel/valves/outer-inner-transfer-valve-2 eq 1
 				/accelerations/pilot-gdamped ge 0.5
+				/consumables/fuel/tank[4]/level-gal_us gt /consumables/fuel/tank[4]/unusable-gal_us
+				/consumables/fuel/tank[3]/level-norm lt 0.999
 			</test>
 		</switch>
 		
