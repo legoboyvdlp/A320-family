@@ -56,31 +56,21 @@
 			</binding>
 		</button>
 		
-		<checkbox>
-			<label>Enable Fuel Truck</label>
-			<halign>left</halign>
-			<enable>
-				<not><property>/services/fuel-truck/connect</property></not>
-			</enable>
-			<property>/services/fuel-truck/enable</property>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-			<live>true</live>
-		</checkbox>
+		<hrule />
 		
-		<checkbox>
-			<label>Connect Fuel Truck</label>
-			<halign>left</halign>
-			<enable>
-				<property>/services/fuel-truck/enable</property>
-			</enable>
-			<property>/services/fuel-truck/connect</property>
+		<button>
+			<legend>Fuel Truck</legend>
+			<halign>center</halign>
+			<padding>5</padding>
 			<binding>
-				<command>dialog-apply</command>
+				<command>nasal</command>
+				<script>
+				acconfig.fuel_dlg.open();
+				</script>
 			</binding>
-			<live>true</live>
-		</checkbox>
+		</button>
+		
+		<hrule />
 		
 		<checkbox>
 			<label>Enable Catering Truck</label>

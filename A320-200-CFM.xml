@@ -79,7 +79,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS"> 1523.00 </capacity>
 			<contents unit="LBS"> 1523.00 </contents>
 			<unusable-volume unit="LTR"> 4.0 </unusable-volume>
-			<priority>1</priority>
+			<priority>0</priority>
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
@@ -92,7 +92,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS"> 12591.95 </capacity>
 			<contents unit="LBS">  6000.00 </contents>
 			<unusable-volume unit="LTR"> 28.0 </unusable-volume>
-			<priority>1</priority>
+			<priority>0</priority>
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
@@ -105,7 +105,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS"> 14623.00 </capacity>
 			<contents unit="LBS"> 42 </contents>
 			<unusable-volume unit="LTR"> 23.20 </unusable-volume>
-			<priority>1</priority>
+			<priority>0</priority>
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
@@ -118,7 +118,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS"> 12591.95 </capacity>
 			<contents unit="LBS">  6000.00 </contents>
 			<unusable-volume unit="LTR"> 28.0 </unusable-volume>
-			<priority>1</priority>
+			<priority>0</priority>
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
@@ -131,7 +131,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<capacity unit="LBS"> 1523.00 </capacity>
 			<contents unit="LBS"> 1523.00 </contents>
 			<unusable-volume unit="LTR"> 4.0 </unusable-volume>
-			<priority>1</priority>
+			<priority>0</priority>
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
@@ -159,7 +159,6 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 		</tank>
 	</propulsion>
 	
-	<system file="fuel"/>
 	<system file="glass-effect1"/>
 	<system file="a320-fcs"/>
 	<system file="a320-fuel"/>

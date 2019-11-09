@@ -802,6 +802,13 @@
 			<left type="bool">0</left>
 			<right type="bool">0</right>
 		</chocks>
+		<fuel-truck>
+			<connect type="bool">0</connect>
+			<enable type="bool">0</enable>
+			<operate type="bool">0</operate>
+			<request-lbs type="double">0</request-lbs>
+			<request-total-lbs type="double">0</request-total-lbs>
+		</fuel-truck>
 	</services>
 	
 	<systems>
@@ -1634,6 +1641,7 @@
 			<file>Aircraft/A320-family/Nasal/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/ground_services.nas</file>
+			<file>Aircraft/A320-family/Nasal/payload.nas</file>
 			<file>Aircraft/A320-family/Nasal/effects.nas</file>
 		</systems>
 		<fadec>
