@@ -414,6 +414,13 @@
 				/systems/fuel/pumps/wing-pump-left-1-operate eq 1
 				/systems/fuel/pumps/wing-pump-left-2-operate eq 1
 			</test>
+			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed -->
+				/systems/fuel/valves/crossfeed-valve eq 1
+				<test logic="OR">
+					/systems/fuel/pumps/wing-pump-right-1-operate eq 1
+					/systems/fuel/pumps/wing-pump-right-2-operate eq 1
+				</test>
+			</test>
 			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 -->
 				/accelerations/pilot-gdamped ge 0.5
 			</test>
@@ -424,6 +431,13 @@
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/wing-pump-right-1-operate eq 1
 				/systems/fuel/pumps/wing-pump-right-2-operate eq 1
+			</test>
+			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed -->
+				/systems/fuel/valves/crossfeed-valve eq 1
+				<test logic="OR">
+					/systems/fuel/pumps/wing-pump-left-1-operate eq 1
+					/systems/fuel/pumps/wing-pump-left-2-operate eq 1
+				</test>
 			</test>
 			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 -->
 				/accelerations/pilot-gdamped ge 0.5

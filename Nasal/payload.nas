@@ -12,11 +12,11 @@ var fuelSvc = {
 	
 	newRequest: func() {
 		if (pts.Sim.aero.getValue() == "A320-200-CFM") {
-			me.Nodes.requestTotalLbs.setValue(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 42872));
+			me.Nodes.requestTotalLbs.setValue(math.max(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 42872), 0));
 		} elsif (pts.Sim.aero.getValue() == "A320-200-IAE" or pts.Sim.aero.getValue() == "A320-100-CFM") {
-			me.Nodes.requestTotalLbs.setValue(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 42214));
+			me.Nodes.requestTotalLbs.setValue(math.max(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 42214), 0));
 		} elsif (pts.Sim.aero.getValue() == "A320neo-CFM" or pts.Sim.aero.getValue() == "A320neo-PW") {
-			me.Nodes.requestTotalLbs.setValue(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 41977));
+			me.Nodes.requestTotalLbs.setValue(math.max(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 41977), 0));
 		}
 	},
 	
