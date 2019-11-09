@@ -387,6 +387,26 @@
 			</checkbox>
 			
 			<checkbox>
+				<label>Weight in KG</label>
+				<halign>left</halign>
+				<property>/options/system/weight-kgs</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/weight-kgs</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+
+			<checkbox>
 				<label>ADIRS Aligns Instantly</label>
 				<halign>left</halign>
 				<property>/controls/adirs/skip</property>
