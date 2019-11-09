@@ -10,6 +10,9 @@ var elapsedtime = 0;
 var leftmsg = "XX";
 var rightmsg = "XX";
 
+# Conversion factor pounds to kilogram
+LBS2KGS = 0.4535924;
+
 # Create Nodes:
 var fuel_1 = props.globals.initNode("/engines/engine[0]/fuel-flow_actual", 0);
 var fuel_2 = props.globals.initNode("/engines/engine[1]/fuel-flow_actual", 0);
@@ -30,6 +33,7 @@ var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 
 # Fetch nodes:
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var et = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var acess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
@@ -230,7 +234,14 @@ var canvas_upperECAM_base = {
 		}
 		
 		# FOB
-		me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue(), 10)));
+		if (acconfig_weight_kgs == 1)
+		{
+			me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue() * LBS2KGS, 10)));
+			me["FOB-weight-unit"].setText("KG");
+		} else {
+			me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue(), 10)));
+			me["FOB-weight-unit"].setText("LBS");
+		}
 		
 		# Left ECAM Messages
 		line1c = ECAM_line1c.getValue();
@@ -595,7 +606,8 @@ var canvas_upperECAM_cfm_eis2 = {
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B",
-		"TO_Config_B","LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3"];
+		"TO_Config_B","LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3",
+		"FOB-weight-unit","FFlow-weight-unit"];
 	},
 	update: func() {
 		# N1
@@ -778,8 +790,15 @@ var canvas_upperECAM_cfm_eis2 = {
 		}
 		
 		# FF
-		me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
-		me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue() * LBS2KGS, 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue() * LBS2KGS, 10)));
+			me["FFlow-weight-unit"].setText("KG/H");
+		} else {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+			me["FFlow-weight-unit"].setText("LBS/H");
+		}
 		
 		if (ff_1 == 1) {
 			me["FF1"].show();
@@ -1093,8 +1112,17 @@ var canvas_upperECAM_iae_eis2 = {
 		}
 		
 		# FF
-		me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
-		me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue() * LBS2KGS, 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue() * LBS2KGS, 10)));
+			me["FFlow1-weight-unit"].setText("KG/H");
+			me["FFlow2-weight-unit"].setText("KG/H");
+		} else {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+			me["FFlow1-weight-unit"].setText("LBS/H");
+			me["FFlow2-weight-unit"].setText("LBS/H");
+		}
 		
 		if (ff_1 == 1) {
 			me["FF1"].show();
