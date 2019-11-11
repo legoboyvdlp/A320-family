@@ -194,6 +194,7 @@
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
 			<test logic="AND" value="1">
+				/systems/fuel/valves/outer-inner-transfer-valve-1-power eq 1
 				<test logic="OR">
 					/systems/fuel/quantity/left-wing-inner-low eq 1
 					/systems/fuel/quantity/right-wing-inner-low eq 1
@@ -204,8 +205,9 @@
 		
 		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-1-power">
 			<default value="0"/>
-			<test value="0.333">
+			<test logic="OR" value="0.333">
 				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
 		
@@ -221,6 +223,7 @@
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
 			<test logic="AND" value="1">
+				/systems/fuel/valves/outer-inner-transfer-valve-2-power eq 1
 				<test logic="OR">
 					/systems/fuel/quantity/left-wing-inner-low eq 1
 					/systems/fuel/quantity/right-wing-inner-low eq 1
@@ -231,8 +234,9 @@
 		
 		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-2-power">
 			<default value="0"/>
-			<test value="0.333">
+			<test logic="OR" value="0.333">
 				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
 		
@@ -623,7 +627,7 @@
 				/systems/fuel/valves/outer-inner-transfer-valve-1 eq 1
 				/accelerations/pilot-gdamped ge 0.5
 				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
-				/consumables/fuel/tank[1]/level-norm lt 0.999
+				/consumables/fuel/tank[1]/level-norm lt 0.9999
 			</test>
 		</switch>
 		
@@ -633,7 +637,7 @@
 				/systems/fuel/valves/outer-inner-transfer-valve-2 eq 1
 				/accelerations/pilot-gdamped ge 0.5
 				/consumables/fuel/tank[4]/level-gal_us gt /consumables/fuel/tank[4]/unusable-gal_us
-				/consumables/fuel/tank[3]/level-norm lt 0.999
+				/consumables/fuel/tank[3]/level-norm lt 0.9999
 			</test>
 		</switch>
 		
