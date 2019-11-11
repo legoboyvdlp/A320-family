@@ -44,6 +44,7 @@ var fuelSvc = {
 	
 	stop: func() {
 		systems.FUEL.refuelling.setBoolValue(0);
+		me.Nodes.requestLbs.setValue(0);
 		systems.FUEL.Valves.refuelLeft.setBoolValue(0);
 		systems.FUEL.Valves.refuelCenter.setBoolValue(0);
 		systems.FUEL.Valves.refuelRight.setBoolValue(0);
@@ -80,7 +81,8 @@ var fuelTimer = maketimer(0.25, func() {
 		systems.FUEL.Valves.refuelRight.setBoolValue(0);
 	}
 	
-	if (abs(pts.Consumables.Fuel.totalFuelLbs.getValue() - fuelSvc.Nodes.requestTotalLbs.getValue()) < 5) {
+	if (fuelSvc.Nodes.requestTotalLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue() <= 0) {
+		screen.log.write("Refuelling complete.", 0, 0.584, 1);
 		fuelSvc.stop();
 		fuelTimer.stop();
 	}
