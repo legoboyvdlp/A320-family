@@ -44,7 +44,7 @@ var fuelSvc = {
 	
 	stop: func() {
 		systems.FUEL.refuelling.setBoolValue(0);
-		me.Nodes.requestLbs.setValue(0);
+		# me.Nodes.requestLbs.setValue(0);
 		systems.FUEL.Valves.refuelLeft.setBoolValue(0);
 		systems.FUEL.Valves.refuelCenter.setBoolValue(0);
 		systems.FUEL.Valves.refuelRight.setBoolValue(0);
@@ -69,16 +69,40 @@ setlistener("/services/fuel-truck/connect", func() {
 }, 0, 0);
 
 var fuelTimer = maketimer(0.25, func() {
-	if (systems.FUEL.Quantity.leftInnerPct.getValue() >= 0.999) {
+	if (Dialogs.valve_l.getValue() == 0.5) {
+		if (systems.FUEL.Quantity.leftInnerPct.getValue() >= 0.999) {
+			systems.FUEL.Valves.refuelLeft.setBoolValue(0);
+		} else {
+			systems.FUEL.Valves.refuelLeft.setBoolValue(1);
+		}
+	} elsif (Dialogs.valve_l.getValue() == 1.0) {
+		systems.FUEL.Valves.refuelLeft.setBoolValue(1);
+	} else {
 		systems.FUEL.Valves.refuelLeft.setBoolValue(0);
 	}
 	
-	if (systems.FUEL.Quantity.centerPct.getValue() >= 0.999) {
-		systems.FUEL.Valves.refuelCenter.setBoolValue(0);
+	if (Dialogs.valve_r.getValue() == 0.5) {
+		if (systems.FUEL.Quantity.rightInnerPct.getValue() >= 0.999) {
+			systems.FUEL.Valves.refuelRight.setBoolValue(0);
+		} else {
+			systems.FUEL.Valves.refuelRight.setBoolValue(1);
+		}
+	} elsif (Dialogs.valve_r.getValue() == 1.0) {
+		systems.FUEL.Valves.refuelRight.setBoolValue(1);
+	} else {
+		systems.FUEL.Valves.refuelRight.setBoolValue(0);
 	}
 	
-	if (systems.FUEL.Quantity.rightInnerPct.getValue() >= 0.999) {
-		systems.FUEL.Valves.refuelRight.setBoolValue(0);
+	if (Dialogs.valve_c.getValue() == 0.5) {
+		if (systems.FUEL.Quantity.centerPct.getValue() >= 0.999) {
+			systems.FUEL.Valves.refuelCenter.setBoolValue(0);
+		} else {
+			systems.FUEL.Valves.refuelCenter.setBoolValue(1);
+		}
+	} elsif (Dialogs.valve_c.getValue() == 1.0) {
+		systems.FUEL.Valves.refuelCenter.setBoolValue(1);
+	} else {
+		systems.FUEL.Valves.refuelCenter.setBoolValue(0);
 	}
 	
 	if (fuelSvc.Nodes.requestTotalLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue() <= 0) {

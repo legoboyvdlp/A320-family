@@ -5,41 +5,52 @@
 
 # Distribute under the terms of GPLv2.
 
-# TODO check max fuel
-max_fuel = 30;
+if (pts.Sim.aero.getValue() == "A320-200-CFM") {
+	max_fuel = 42.8;
+} elsif (pts.Sim.aero.getValue() == "A320-200-IAE" or pts.Sim.aero.getValue() == "A320-100-CFM") {
+	max_fuel = 42.2;
+} elsif (pts.Sim.aero.getValue() == "A320neo-CFM" or pts.Sim.aero.getValue() == "A320neo-PW") {
+	max_fuel = 42.0;
+}
 
 # Get nodes
-valve_l_guard = props.globals.getNode("/controls/fuel/refuel/valve-l-guard", 1);
-valve_c_guard = props.globals.getNode("/controls/fuel/refuel/valve-c-guard", 1);
-valve_r_guard = props.globals.getNode("/controls/fuel/refuel/valve-r-guard", 1);
-mode_guard = props.globals.getNode("/controls/fuel/refuel/mode-guard", 1);
-valve_l = props.globals.getNode("/controls/fuel/refuel/valve-l", 1);
-valve_c = props.globals.getNode("/controls/fuel/refuel/valve-c", 1);
-valve_r = props.globals.getNode("/controls/fuel/refuel/valve-r", 1);
-mode = props.globals.getNode("/controls/fuel/refuel/mode", 1);
-power = props.globals.getNode("/controls/fuel/refuel/power", 1);
-test = props.globals.getNode("/controls/fuel/refuel/test", 1);
-amount = props.globals.getNode("/controls/fuel/refuel/amount", 1);
-dc_hot_1 = props.globals.getNode("/systems/electrical/bus/dc-hot-1");
-dc_2 = props.globals.getNode("/systems/electrical/bus/dc-2");
+var valve_l_guard = props.globals.getNode("/controls/fuel/refuel/valve-l-guard", 1);
+var valve_c_guard = props.globals.getNode("/controls/fuel/refuel/valve-c-guard", 1);
+var valve_r_guard = props.globals.getNode("/controls/fuel/refuel/valve-r-guard", 1);
+var mode_guard = props.globals.getNode("/controls/fuel/refuel/mode-guard", 1);
+var valve_l = props.globals.getNode("/controls/fuel/refuel/valve-l", 1);
+var valve_c = props.globals.getNode("/controls/fuel/refuel/valve-c", 1);
+var valve_r = props.globals.getNode("/controls/fuel/refuel/valve-r", 1);
+var power = props.globals.getNode("/controls/fuel/refuel/power", 1);
+var test = props.globals.getNode("/controls/fuel/refuel/test", 1);
+var amount = props.globals.getNode("/controls/fuel/refuel/amount", 1);
 
 var refuelClass = {
+	_fuelLeftAmount: nil,
+	_fuelCenterAmount: nil,
+	_fuelRightAmount: nil,
+	_fuelTotalAmount: nil,
+	_fuelPreselectAmount: nil,
 	new: func() {
 		var m = {parents:[refuelClass]};
 		m._title = "Refuel Panel";
 		m._gfd = nil;
 		m._canvas = nil;
-		m._timer = maketimer(1.0, m, refuelClass._timerf);
+		m._timer = maketimer(0.1, m, refuelClass._timerf);
+		m._timerUp = maketimer(0.1, m, refuelClass._fuelAdjustUp);
+		m._timerDn = maketimer(0.1, m, refuelClass._fuelAdjustDn);
 		return m;
 	},
 	close: func() {
 		me._timer.stop();
+		me._timerUp.stop();
+		me._timerDn.stop();
 
 		me._gfd.del();
 		me._gfd = nil;
 	},
 	openDialog: func() {
-		me._gfd = canvas.Window.new([500,424], "dialog");
+		me._gfd = canvas.Window.new([320,375], "dialog");
 		me._gfd._onClose = func() {refuelDialog._onClose();}
 
 		me._gfd.set("title", me._title);
@@ -49,6 +60,8 @@ var refuelClass = {
 		me._svg = me._root.createChild("group");
 		canvas.parsesvg(me._svg, "Aircraft/A320-family/gui/dialogs/refuel.svg");
 
+		amount.setValue(math.round((pts.Consumables.Fuel.totalFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
+		
 		me._HI_LVL_L = me._svg.getElementById("HI-LVL-L");
 		me._HI_LVL_C = me._svg.getElementById("HI-LVL-C");
 		me._HI_LVL_R = me._svg.getElementById("HI-LVL-R");
@@ -148,7 +161,7 @@ var refuelClass = {
 			me._Valve_R_guard_closed.show();
 		}
 
-		if (mode.getValue() == 1) {
+		if (systems.FUEL.refuelling.getValue() == 1) {
 			me._Mode_guard_open.show();
 			me._Mode_guard_closed.hide();
 		} else {
@@ -220,21 +233,19 @@ var refuelClass = {
 			me._Valve_R_norm.hide();
 			me._Valve_R_shut.show();
 		}
-
-		if (mode.getValue() == 1) {
+		
+		if (systems.FUEL.refuelling.getValue()) {
 			me._Mode_refuel.show();
 			me._Mode_off.hide();
 			me._Mode_defuel.hide();
-		} else if (mode.getValue() == 0.5) {
+		} else {
 			me._Mode_refuel.hide();
 			me._Mode_off.show();
 			me._Mode_defuel.hide();
-		} else {
-			me._Mode_refuel.hide();
-			me._Mode_off.hide();
-			me._Mode_defuel.show();
 		}
 
+		me._Mode_defuel.hide();
+			
 		# Listeners
 		# Guards
 		me._Valve_L_guard_open.addEventListener("click", func() {
@@ -387,7 +398,8 @@ var refuelClass = {
 				me._Mode_refuel.show();
 				me._Mode_off.hide();
 				me._Mode_defuel.hide();
-				mode.setValue(1);
+				systems.fuelSvc.refuel();
+				
 			}
 		});
 
@@ -396,17 +408,17 @@ var refuelClass = {
 				me._Mode_refuel.hide();
 				me._Mode_off.show();
 				me._Mode_defuel.hide();
-				mode.setValue(0.5);
+				systems.fuelSvc.stop();
 			}
 		});
 
 		me._Mode_defuel_hb.addEventListener("click", func() {
-			if (mode_guard.getValue() == 1) {
-				me._Mode_refuel.hide();
-				me._Mode_off.hide();
-				me._Mode_defuel.show();
-				mode.setValue(0);
-			}
+			#if (mode_guard.getValue() == 1) {
+			#	me._Mode_refuel.hide();
+			#	me._Mode_off.hide();
+			#	me._Mode_defuel.show();
+			#	mode.setValue(0);
+			#}
 		});
 
 		# TODO make it spring loaded
@@ -437,24 +449,21 @@ var refuelClass = {
 			power.setBoolValue(0);
 		});
 
-		# TODO keep decreasing when hold
-		me._Pre_dec_hb.addEventListener("click", func() {
-			target = amount.getValue();
-			if (target > 0) {
-				amount.setValue(target - 0.1);
-			}
+		me._Pre_dec_hb.addEventListener("mousedown", func() {
+			me._timerDn.start();
 		});
 
-		# TODO keep increasing when hold
-		me._Pre_inc_hb.addEventListener("click", func() {
-			target = amount.getValue();
-			if (target < max_fuel) {
-				amount.setValue(target + 0.1);
-			}
+		me._Pre_inc_hb.addEventListener("mousedown", func() {
+			me._timerUp.start();
+		});
+		
+		me._Pre_dec_hb.addEventListener("mouseup", func() {
+			me._timerDn.stop();
 		});
 
-
-
+		me._Pre_inc_hb.addEventListener("mouseup", func() {
+			me._timerUp.stop();
+		});
 
 		me._timerf();
 		me._timer.start();
@@ -463,19 +472,51 @@ var refuelClass = {
 		# Check power
 		# TODO cut off power when turned on with BATT POWER switch:
 		# The electrical supply is automatically cut off:
-		# ‐ After 10 min, if no refuel operation is selected, or
-		# ‐ At the end of refueling.
-		if (dc_hot_1.getValue() >= 25 and power.getValue() == 1 or dc_2.getValue() >= 25) {
+		#  After 10 min, if no refuel operation is selected, or
+		#  At the end of refueling.
+		if ((systems.ELEC.Bus.dcHot1.getValue() >= 25 and power.getValue() == 1) or systems.ELEC.Bus.dc2.getValue() >= 25) {
 			me._FQI_actual.show();
 			me._FQI_pre.show();
 			me._FQI_L.show();
 			me._FQI_C.show();
 			me._FQI_R.show();
 
-			# TODO hook up fuel sensors
-
-			me._FQI_pre.setText(sprintf("%2.1f", amount.getValue()));
-
+			me._fuelPreselectAmount = amount.getValue();
+			me._fuelLeftAmount = (systems.FUEL.Quantity.leftOuter.getValue() + systems.FUEL.Quantity.leftInner.getValue()) / 1000;
+			me._fuelCenterAmount = systems.FUEL.Quantity.center.getValue() / 1000;
+			me._fuelRightAmount = (systems.FUEL.Quantity.rightOuter.getValue() + systems.FUEL.Quantity.rightInner.getValue()) / 1000;
+			me._fuelTotalAmount = pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000;
+			
+			if (me._fuelPreselectAmount >= 10.0) {
+				me._FQI_pre.setText(sprintf("%2.1f", me._fuelPreselectAmount));
+			} else {
+				me._FQI_pre.setText(sprintf("%2.12", me._fuelPreselectAmount));
+			}
+			
+			if (me._fuelLeftAmount >= 10.0) {
+				me._FQI_L.setText(sprintf("%2.1f", me._fuelLeftAmount));
+			} else {
+				me._FQI_L.setText(sprintf("%2.2f", me._fuelLeftAmount));
+			}
+			
+			if (me._fuelCenterAmount >= 10.0) {
+				me._FQI_C.setText(sprintf("%2.1f", me._fuelCenterAmount));
+			} else {
+				me._FQI_C.setText(sprintf("%2.2f", me._fuelCenterAmount));
+			}
+			
+			if (me._fuelRightAmount >= 10.0) {
+				me._FQI_R.setText(sprintf("%2.1f", me._fuelRightAmount));
+			} else {
+				me._FQI_R.setText(sprintf("%2.2f", me._fuelRightAmount));
+			}
+			
+			if (me._fuelTotalAmount >= 10.0) {
+				me._FQI_actual.setText(sprintf("%2.1f", pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000));
+			} else {
+				me._FQI_actual.setText(sprintf("%2.2f", pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000));
+			}
+			
 			# HI LVL indicator color: #0184f6
 			# DEFUEL indicator color: #ffe23f
 		} else {
@@ -488,6 +529,22 @@ var refuelClass = {
 			me._HI_LVL_L.setColor(0.2353, 0.2117, 0.2117);
 			me._HI_LVL_C.setColor(0.2353, 0.2117, 0.2117);
 			me._HI_LVL_R.setColor(0.2353, 0.2117, 0.2117);
+		}
+	},
+	_fuelAdjustDn: func() {
+		target = amount.getValue();
+		if (target > 0) {
+			amount.setValue(target - 0.1);
+			me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+			systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
+		}
+	},
+	_fuelAdjustUp: func() {
+		target = amount.getValue();
+		if (target < max_fuel) {
+			amount.setValue(target + 0.1);
+			me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+			systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
 	_onClose: func() {
