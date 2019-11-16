@@ -320,6 +320,15 @@
 						</binding>
 					</item>
 					<item>
+						<label>Refuel Panel</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.refuelDialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
 						<label>Pushback</label>
 						<binding>
 							<command>dialog-show</command>
@@ -651,6 +660,19 @@
 				<pump-right-1 type="bool">0</pump-right-1>
 				<pump-right-2 type="bool">0</pump-right-2>
 			</switches>
+			<refuel>
+				<valve-l-guard type="bool">0</valve-l-guard>
+				<valve-c-guard type="bool">0</valve-c-guard>
+				<valve-r-guard type="bool">0</valve-r-guard>
+				<mode-guard type="bool">0</mode-guard>
+				<valve-l type="double">0.5</valve-l>
+				<valve-c type="double">0.5</valve-c>
+				<valve-r type="double">0.5</valve-r>
+				<mode type="double">0.5</mode>
+				<power type="bool">0</power>
+				<test type="double">0.5</test>
+				<amount type="double">12.0</amount>
+			</refuel>
 		</fuel>
 		<gear>
 			<brake-parking type="bool">0</brake-parking>
@@ -1716,6 +1738,9 @@
 		<atc>
 			<file>Aircraft/A320-family/Nasal/atc.nas</file>
 		</atc>
+		<Dialogs>
+			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
+		</Dialogs>
 	</nasal>
 
 </PropertyList>

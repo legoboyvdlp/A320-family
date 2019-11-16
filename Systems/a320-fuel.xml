@@ -623,6 +623,13 @@
 		
 		<switch name="/systems/fuel/internal/left-wing-outer-to-inner-tank">
 			<default value="0"/>
+			<test logic="AND" value="/systems/fuel/internal/left-outer-wing-tank-refuel">
+				/systems/fuel/valves/outer-inner-transfer-valve-1 eq 1
+				/accelerations/pilot-gdamped ge 0.5
+				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
+				/consumables/fuel/tank[1]/level-norm lt 0.9999
+				/systems/fuel/refuel/refuelling eq 1
+			</test>
 			<test logic="AND" value="9">
 				/systems/fuel/valves/outer-inner-transfer-valve-1 eq 1
 				/accelerations/pilot-gdamped ge 0.5
@@ -633,6 +640,13 @@
 		
 		<switch name="/systems/fuel/internal/right-wing-outer-to-inner-tank">
 			<default value="0"/>
+			<test logic="AND" value="/systems/fuel/internal/right-outer-wing-tank-refuel">
+				/systems/fuel/valves/outer-inner-transfer-valve-2 eq 1
+				/accelerations/pilot-gdamped ge 0.5
+				/consumables/fuel/tank[4]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
+				/consumables/fuel/tank[3]/level-norm lt 0.9999
+				/systems/fuel/refuel/refuelling eq 1
+			</test>
 			<test logic="AND" value="9">
 				/systems/fuel/valves/outer-inner-transfer-valve-2 eq 1
 				/accelerations/pilot-gdamped ge 0.5
