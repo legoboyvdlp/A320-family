@@ -421,20 +421,32 @@ var refuelClass = {
 			#}
 		});
 
-		# TODO make it spring loaded
-		me._Test_hi_lvl_hb.addEventListener("click", func() {
+		me._Test_hi_lvl_hb.addEventListener("mousedown", func() {
 			me._Test_hi_lvl.show();
 			me._Test_off.hide();
 			me._Test_lts.hide();
 			test.setValue(1);
 		});
 
-		# TODO make it spring loaded
-		me._Test_lts_hb.addEventListener("click", func() {
+		me._Test_hi_lvl_hb.addEventListener("mouseup", func() {
+			me._Test_hi_lvl.hide();
+			me._Test_off.show();
+			me._Test_lts.hide();
+			test.setValue(0.5);
+		});
+
+		me._Test_lts_hb.addEventListener("mousedown", func() {
 			me._Test_hi_lvl.hide();
 			me._Test_off.hide();
 			me._Test_lts.show();
 			test.setValue(0);
+		});
+
+		me._Test_lts_hb.addEventListener("mouseup", func() {
+			me._Test_hi_lvl.hide();
+			me._Test_off.show();
+			me._Test_lts.hide();
+			test.setValue(0.5);
 		});
 
 		me._Power_on_hb.addEventListener("click", func() {
