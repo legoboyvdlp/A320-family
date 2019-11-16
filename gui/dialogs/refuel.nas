@@ -502,7 +502,7 @@ var refuelClass = {
 			if (me._fuelPreselectAmount >= 10.0) {
 				me._FQI_pre.setText(sprintf("%2.1f", me._fuelPreselectAmount));
 			} else {
-				me._FQI_pre.setText(sprintf("%2.12", me._fuelPreselectAmount));
+				me._FQI_pre.setText(sprintf("%2.2f", me._fuelPreselectAmount));
 			}
 			
 			if (me._fuelLeftAmount >= 10.0) {
@@ -530,6 +530,25 @@ var refuelClass = {
 			}
 			
 			# HI LVL indicator color: #0184f6
+			
+			if (systems.FUEL.Quantity.leftInnerPct.getValue() >= 0.999) {
+				me._HI_LVL_L.setColorFill(0.0039, 0.5176, 0.9647);
+			} else {
+				me._HI_LVL_L.setColorFill(0.2353, 0.2117, 0.2117);
+			}
+			
+			if (systems.FUEL.Quantity.centerPct.getValue() >= 0.999) {
+				me._HI_LVL_C.setColorFill(0.0039, 0.5176, 0.9647);
+			} else {
+				me._HI_LVL_C.setColorFill(0.2353, 0.2117, 0.2117);
+			}
+			
+			if (systems.FUEL.Quantity.rightInnerPct.getValue() >= 0.999) {
+				me._HI_LVL_R.setColorFill(0.0039, 0.5176, 0.9647);
+			} else {
+				me._HI_LVL_R.setColorFill(0.2353, 0.2117, 0.2117);
+			}
+			
 			# DEFUEL indicator color: #ffe23f
 		} else {
 			me._FQI_actual.hide();
@@ -547,7 +566,11 @@ var refuelClass = {
 		target = amount.getValue();
 		if (target > 0) {
 			amount.setValue(target - 0.1);
-			me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+			if (target - 0.1 >= 10.0) {
+				me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+			} else {
+				me._FQI_pre.setText(sprintf("%2.2f", target - 0.1));
+			}
 			systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
@@ -555,7 +578,11 @@ var refuelClass = {
 		target = amount.getValue();
 		if (target < max_fuel) {
 			amount.setValue(target + 0.1);
-			me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+			if (target + 0.1 >= 10.0) {
+				me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+			} else {
+				me._FQI_pre.setText(sprintf("%2.2f", target + 0.1));
+			}
 			systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
