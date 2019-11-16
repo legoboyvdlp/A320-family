@@ -1639,46 +1639,46 @@
 	
 	<nasal>
 		<pts>
-			<file>Aircraft/A320-family/Nasal/property-tree-setup.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/property-tree-setup.nas</file>
 		</pts>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/efis.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM.nas</file>
-			<file>Aircraft/A320-family/Nasal/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/light-manager.nas</file>
-			<file>Aircraft/A320-family/Nasal/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/libraries.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/buttons.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/efis.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
 		<systems>
-			<file>Aircraft/A320-family/Nasal/electrical.nas</file>
-			<file>Aircraft/A320-family/Nasal/pneumatics.nas</file>
-			<file>Aircraft/A320-family/Nasal/hydraulics.nas</file>
-			<file>Aircraft/A320-family/Nasal/fuel.nas</file>
-			<file>Aircraft/A320-family/Nasal/engines-common.nas</file>
-			<file>Aircraft/A320-family/Nasal/ADIRS.nas</file>
-			<file>Aircraft/A320-family/Nasal/fire.nas</file>
-			<file>Aircraft/A320-family/Nasal/brakes.nas</file>
-			<file>Aircraft/A320-family/Nasal/ground_services.nas</file>
-			<file>Aircraft/A320-family/Nasal/payload.nas</file>
-			<file>Aircraft/A320-family/Nasal/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ADIRS.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 		</systems>
 		<fadec>
-			<file>Aircraft/A320-family/Nasal/fadec-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
 		<fbw>
-			<file>Aircraft/A320-family/Nasal/it-fbw.nas</file>
+			<file>Aircraft/A320-family/Nasal/FBW/it-fbw.nas</file>
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
 		</fcu>
 		<fmgc>
-			<file>Aircraft/A320-family/Nasal/FMGC.nas</file>
-			<file>Aircraft/A320-family/Nasal/FMGC-b.nas</file>
-			<file>Aircraft/A320-family/Nasal/FMGC-c.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
 		</fmgc>
 		<mcdu>
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
@@ -1715,28 +1715,28 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
 		<icing>
-			<file>Aircraft/A320-family/Nasal/icing.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
 		</icing>
 		<autopush>
-			<file>Aircraft/A320-family/Nasal/autopush.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>
 		<autopush_driver>
-			<file>Aircraft/A320-family/Nasal/autopush_driver.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/autopush_driver.nas</file>
 		</autopush_driver>
 		<dynarr>
-			<file>Aircraft/A320-family/Nasal/dynarr.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/dynarr.nas</file>
 		</dynarr>
 		<autopush_route>
-			<file>Aircraft/A320-family/Nasal/autopush_route.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/autopush_route.nas</file>
 		</autopush_route>
 		<rmp>
-			<file>Aircraft/A320-family/Nasal/rmp.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>
 		</rmp>
 		<acp>
-			<file>Aircraft/A320-family/Nasal/acp.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/acp.nas</file>
 		</acp>
 		<atc>
-			<file>Aircraft/A320-family/Nasal/atc.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
