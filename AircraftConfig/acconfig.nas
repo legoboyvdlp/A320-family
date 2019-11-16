@@ -342,12 +342,12 @@ var beforestart = func {
 }
 var beforestart_b = func {
 	# Continue with engine start prep.
-	setprop("/controls/fuel/tank0pump1", 1);
-	setprop("/controls/fuel/tank0pump2", 1);
-	setprop("/controls/fuel/tank1pump1", 1);
-	setprop("/controls/fuel/tank1pump2", 1);
-	setprop("/controls/fuel/tank2pump1", 1);
-	setprop("/controls/fuel/tank2pump2", 1);
+	systems.FUEL.Switches.pumpLeft1.setValue(1);
+	systems.FUEL.Switches.pumpLeft2.setValue(1);
+	systems.FUEL.Switches.pumpCenter1.setValue(1);
+	systems.FUEL.Switches.pumpCenter2.setValue(1);
+	systems.FUEL.Switches.pumpRight1.setValue(1);
+	systems.FUEL.Switches.pumpRight2.setValue(1);
 	setprop("/controls/electrical/switches/apu", 1);
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
@@ -424,12 +424,12 @@ var taxi = func {
 }
 var taxi_b = func {
 	# Continue with engine start prep, and start engines.
-	setprop("/controls/fuel/tank0pump1", 1);
-	setprop("/controls/fuel/tank0pump2", 1);
-	setprop("/controls/fuel/tank1pump1", 1);
-	setprop("/controls/fuel/tank1pump2", 1);
-	setprop("/controls/fuel/tank2pump1", 1);
-	setprop("/controls/fuel/tank2pump2", 1);
+	systems.FUEL.Switches.pumpLeft1.setValue(1);
+	systems.FUEL.Switches.pumpLeft2.setValue(1);
+	systems.FUEL.Switches.pumpCenter1.setValue(1);
+	systems.FUEL.Switches.pumpCenter2.setValue(1);
+	systems.FUEL.Switches.pumpRight1.setValue(1);
+	systems.FUEL.Switches.pumpRight2.setValue(1);
 	setprop("/controls/electrical/switches/apu", 1);
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
