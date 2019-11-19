@@ -205,8 +205,9 @@ var SystemDisplay = {
 			me.manShownPage = 0;
 			ECAMControlPanel.lightOff(me.page);
 		}
-		me.failShownPage = 1;
+		ECAMControlPanel.lightOn(page);
 		me.page = page;
+		me.failShownPage = 1;
 	},
 	manCall: func(page) {
 		ECAMControlPanel.lightOff(me.page);

@@ -81,7 +81,7 @@ var warning = {
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
-		#libraries.LowerECAM.failCall(me.sdPage);
+		libraries.SystemDisplay.failCall(me.sdPage);
 		me.hasCalled = 1;
 	}
 };
