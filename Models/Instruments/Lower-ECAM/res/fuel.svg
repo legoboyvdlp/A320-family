@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="fuel.svg">
   <metadata
      id="metadata375">
@@ -49,9 +49,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="false"
-     inkscape:zoom="2.0852713"
-     inkscape:cx="56"
-     inkscape:cy="255"
+     inkscape:zoom="0.68"
+     inkscape:cx="817.73616"
+     inkscape:cy="1022.6281"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -413,8 +413,9 @@
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12171543"
      x="768.26727"
      y="57.18037"
-     id="text5073-0"
-     transform="scale(0.95537765,1.0467065)"><tspan
+     id="FUEL-ENG-2-label"
+     transform="scale(0.95537765,1.0467065)"
+     inkscape:label="#text5073-0"><tspan
        sodipodi:role="line"
        id="tspan5093"
        x="768.26727"

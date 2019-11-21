@@ -15,14 +15,24 @@ var _user_point_modes = dynarr.dynarr.new(4); # Modes: 0 = Bezier node, 1 = Bezi
 var _route = [];
 var _route_hdg = [];
 var _route_reverse = [];
-var _view_index = nil;
+var _top_view_index = nil;
+var _top_view_heading_offset_deg = 180.0;
+var _reset_view_index = nil;
+var _view_z_offset = nil;
+var _view_pitch_offset_deg = nil;
+var _view_heading_offset_deg = nil;
 var _user_point_models = [];
 var _waypoint_models = [];
 var _N = 0;
 var _show = 0;
-var _view_changed_or_external = 0;
 var _R_turn_min = 0;
 var _invalid = 0;
+
+# Make top-down view point north in old FG.
+var __fg_version = num(string.replace(getprop("/sim/version/flightgear"),".",""));
+if (__fg_version < 201920) {
+	_top_view_heading_offset_deg = 94.5;
+}
 
 
 var _add = func(pos) {
@@ -77,11 +87,11 @@ var _stop = func(fail = 0) {
 		_listener = nil;
 		if (!fail) {
 			settimer(func() {
-				_reset_view();
+				_finalize_top_view();
 				gui.popupTip("Done");
 			}, 1.0);
 		} else {
-			_reset_view();
+			_finalize_top_view();
 		}
 	}
 }
@@ -129,31 +139,36 @@ var _clear_waypoint_models = func() {
 	setsize(_waypoint_models, 0);
 }
 
-var _set_view = func() {
-	if (!getprop("/sim/current-view/internal")){
-		_view_changed_or_external = 1;
+var top_view = func() {
+	if (_view_listener != nil) {
 		return;
 	}
-	_view_index = getprop("/sim/current-view/view-number");
-	# While "Chase View Without Yaw" would have looked better, only "Model View" resets its z-offset back to normal by itself.
-	setprop("/sim/current-view/view-number", view.indexof("Model View"));
+	_top_view_index = view.indexof("Chase View Without Yaw");
+	_reset_view_index = getprop("/sim/current-view/view-number");
+	setprop("/sim/current-view/view-number", _top_view_index);
+	_view_pitch_offset_deg = getprop("/sim/current-view/pitch-offset-deg");
+	_view_heading_offset_deg = getprop("/sim/current-view/heading-offset-deg");
+	_view_z_offset = getprop("/sim/current-view/z-offset-m");
 	setprop("/sim/current-view/z-offset-m", -500.0);
+	setprop("/sim/current-view/heading-offset-deg", _top_view_heading_offset_deg);
 	setprop("/sim/current-view/pitch-offset-deg", 90.0);
-	setprop("/sim/current-view/heading-offset-deg", 0.0);
-	_view_changed_or_external = 0;
 	_view_listener = setlistener("/sim/current-view/name", func {
-		_view_changed_or_external = 1;
-	});
+		_finalize_top_view();
+	}, 0, 0);
 }
 
-var _reset_view = func() {
-	if (!_view_changed_or_external) {
-		setprop("/sim/current-view/view-number", _view_index);
+var _finalize_top_view = func() {
+	if (_view_listener == nil) {
+		return;
 	}
-	if (_view_listener != nil) {
-		removelistener(_view_listener);
-		_view_listener = nil;
-	}
+	removelistener(_view_listener);
+	_view_listener = nil;
+	# Go back to the view to restore settings, in case user has switched away.
+	setprop("/sim/current-view/view-number", _top_view_index);
+	setprop("/sim/current-view/z-offset-m", _view_z_offset);
+	setprop("/sim/current-view/heading-offset-deg", _view_heading_offset_deg);
+	setprop("/sim/current-view/pitch-offset-deg", _view_pitch_offset_deg);
+	setprop("/sim/current-view/view-number", _reset_view_index);
 	if (!_show) {
 		_clear_user_point_models();
 		_clear_waypoint_models();
@@ -238,20 +253,24 @@ var _calculate_bezier = func(user_points) {
 			len += user_points[i].distance_to(user_points[i + 1]);
 		}
 
-		var step = _R_turn_min / len;
+		if (len < _R_turn_min) {
+			route.add(geo.Coord.new(user_points[PNumber - 1]))
+		} else {
+			var step = _R_turn_min / len;
 
-		for (var i = step; i < 1 - step; i+= step) {
-			# start iterating from 1 cause we don't need to iterate over Pn
-			for (var j = 1; j < PNumber; j += 1) {
-				for (var k = 0; k < PNumber - j; k += 1) {
-					pointList[j][k] = geo.Coord.new(pointList[j - 1][k]);
-					var dist = pointList[j - 1][k].distance_to(pointList[j - 1][k + 1]);
-					var course = pointList[j - 1][k].course_to(pointList[j - 1][k + 1]);
-					pointList[j][k].apply_course_distance(course, dist * i);
+			for (var i = step; i < 1 - step; i+= step) {
+				# start iterating from 1 cause we don't need to iterate over Pn
+				for (var j = 1; j < PNumber; j += 1) {
+					for (var k = 0; k < PNumber - j; k += 1) {
+						pointList[j][k] = geo.Coord.new(pointList[j - 1][k]);
+						var dist = pointList[j - 1][k].distance_to(pointList[j - 1][k + 1]);
+						var course = pointList[j - 1][k].course_to(pointList[j - 1][k + 1]);
+						pointList[j][k].apply_course_distance(course, dist * i);
+					}
 				}
+				pointList[PNumber - 1][0].set_alt(geo.elevation(pointList[PNumber - 1][0].lat(),pointList[PNumber - 1][0].lon()));
+				route.add(geo.Coord.new(pointList[PNumber - 1][0]));
 			}
-			pointList[PNumber - 1][0].set_alt(geo.elevation(pointList[PNumber - 1][0].lat(),pointList[PNumber - 1][0].lon()));
-			route.add(geo.Coord.new(pointList[PNumber - 1][0]));
 		}
 	}
 
@@ -317,21 +336,21 @@ var _check_turn_radius = func() {
 setlistener("/sim/model/autopush/route/show", func(p) {
 	var show = p.getValue();
 	if (_listener == nil) {
-		if (show > _show) {
+		if (show) {
 			_place_user_point_models();
 			_place_waypoint_models();
-		} else if (show < _show) {
+		} else {
 			_clear_user_point_models();
 			_clear_waypoint_models();
 		}
 	}
 	_show = show;
-});
+}, 1, 0);
 
 
 var enter = func() {
 	clear();
-	_set_view();
+	top_view();
 	_R_turn_min = getprop("/sim/model/autopush/min-turn-radius-m");
 	var wp = geo.aircraft_position();
 	var H = geo.elevation(wp.lat(), wp.lon());

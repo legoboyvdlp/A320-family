@@ -6,6 +6,19 @@
 
 	<path>res/Audio.ac</path>
 
+	<!-- Headset show/hide on Audio Control Panel(click on body) -->
+<animation>
+	<type>pick</type>
+	<object-name>audio_body</object-name>
+	<action>
+		<button>0</button>
+		<binding>
+			<command>property-toggle</command>
+			<property>/controls/audio/headset-toggle</property>
+		</binding>
+	</action>
+</animation>
+
 	<!-- INT/RAD switch -->
 	<animation>
 		<type>pick</type>
@@ -1083,7 +1096,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>audio_vhf2_led</object-name>
@@ -1106,7 +1119,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>audio_vhf3_led</object-name>
@@ -1129,7 +1142,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -1149,7 +1162,7 @@
 		<object-name>audio_glare</object-name>
 		<object-name>audio_int_rad</object-name>
 	</effect>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>audio_hf1_led</object-name>
@@ -1172,7 +1185,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>audio_hf2_led</object-name>
@@ -1195,7 +1208,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>audio_mech_led</object-name>

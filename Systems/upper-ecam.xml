@@ -399,57 +399,5 @@
 		<input>0</input>
 		<output>/ECAM/Upper/N1ylim</output>
 	</filter>
-
-
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>/systems/electrical/some-electric-thingie/emer-elec-config-generator-1-bustie</property>
-		</S>
-		<R>
-			<not>
-				<property>/systems/electrical/some-electric-thingie/emer-elec-config</property>
-			</not>
-		</R>
-		<output>/systems/electrical/some-electric-thingie/generator-1-reset-bustie</output>
-	</flipflop>
 	
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>/systems/electrical/some-electric-thingie/emer-elec-config-generator-2-bustie</property>
-		</S>
-		<R>
-			<not>
-				<property>/systems/electrical/some-electric-thingie/emer-elec-config</property>
-			</not>
-		</R>
-		<output>/systems/electrical/some-electric-thingie/generator-2-reset-bustie</output>
-	</flipflop>
-	
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>/systems/electrical/some-electric-thingie/emer-elec-config-generator-1</property>
-		</S>
-		<R>
-			<not>
-				<property>/systems/electrical/some-electric-thingie/emer-elec-config</property>
-			</not>
-		</R>
-		<output>/systems/electrical/some-electric-thingie/generator-1-reset</output>
-	</flipflop>
-	
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>/systems/electrical/some-electric-thingie/emer-elec-config-generator-2</property>
-		</S>
-		<R>
-			<not>
-				<property>/systems/electrical/some-electric-thingie/emer-elec-config</property>
-			</not>
-		</R>
-		<output>/systems/electrical/some-electric-thingie/generator-2-reset</output>
-	</flipflop>
 </PropertyList>

@@ -1,9 +1,6 @@
 # A3XX Electronic Centralised Aircraft Monitoring System
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
-var leftmsgEnable = props.globals.initNode("/ECAM/show-left-msg", 1, "BOOL");
-var rightmsgEnable = props.globals.initNode("/ECAM/show-right-msg", 1, "BOOL");
-
 var lines = [props.globals.getNode("/ECAM/msg/line1", 1), props.globals.getNode("/ECAM/msg/line2", 1), props.globals.getNode("/ECAM/msg/line3", 1), props.globals.getNode("/ECAM/msg/line4", 1), props.globals.getNode("/ECAM/msg/line5", 1), props.globals.getNode("/ECAM/msg/line6", 1), props.globals.getNode("/ECAM/msg/line7", 1), props.globals.getNode("/ECAM/msg/line8", 1)];
 var linesCol = [props.globals.getNode("/ECAM/msg/linec1", 1), props.globals.getNode("/ECAM/msg/linec2", 1), props.globals.getNode("/ECAM/msg/linec3", 1), props.globals.getNode("/ECAM/msg/linec4", 1), props.globals.getNode("/ECAM/msg/linec5", 1), props.globals.getNode("/ECAM/msg/linec6", 1), props.globals.getNode("/ECAM/msg/linec7", 1), props.globals.getNode("/ECAM/msg/linec8", 1)];
 var rightLines = [props.globals.getNode("/ECAM/rightmsg/line1", 1), props.globals.getNode("/ECAM/rightmsg/line2", 1), props.globals.getNode("/ECAM/rightmsg/line3", 1), props.globals.getNode("/ECAM/rightmsg/line4", 1), props.globals.getNode("/ECAM/rightmsg/line5", 1), props.globals.getNode("/ECAM/rightmsg/line6", 1), props.globals.getNode("/ECAM/rightmsg/line7", 1), props.globals.getNode("/ECAM/rightmsg/line8", 1)];
@@ -30,7 +27,7 @@ var hasCleared = 0;
 var statusFlag = 0;
 
 var warning = {
-	new: func(msg,colour = "g",aural = 9,light = 9,hasSubmsg = 0,lastSubmsg = 0, sdPage = "nil") {
+	new: func(msg,colour = "g",aural = 9,light = 9,hasSubmsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
 		var t = {parents:[warning]};
 		
 		t.msg = msg;
@@ -44,6 +41,7 @@ var warning = {
 		t.noRepeat2 = 0;
 		t.clearFlag = 0;
 		t.sdPage = sdPage;
+		t.isMemo = isMemo;
 		t.hasCalled = 0;
 		
 		return t
@@ -83,7 +81,7 @@ var warning = {
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
-		#libraries.LowerECAM.failCall(me.sdPage);
+		libraries.SystemDisplay.failCall(me.sdPage);
 		me.hasCalled = 1;
 	}
 };
@@ -145,17 +143,22 @@ var status = {
 };
 
 var ECAM_controller = {
+	_recallCounter: 0,
 	init: func() {
 		ECAMloopTimer.start();
 		me.reset();
 	},
 	loop: func() {
-		# check active messages
 		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !getprop("/systems/acconfig/acconfig-running")) {
+			# update FWC phases
+			phaseLoop();
+			
+			# check active messages
 			messages_priority_3();
 			messages_priority_2();
 			messages_priority_1();
 			messages_priority_0();
+			messages_config_memo();
 			messages_memo();
 			messages_right_memo();
 		} else {
@@ -179,13 +182,21 @@ var ECAM_controller = {
 		# write to ECAM
 		var counter = 0;
 		
-		foreach (var w; warnings.vector) {
-			if (counter >= 9) { break; }
-			if (w.active == 1) {
-				w.write();
-				w.warnlight();
-				w.sound();
-				counter += 1;
+		if (!getprop("/systems/acconfig/autoconfig-running")) {
+			foreach (var w; warnings.vector) {
+				if (counter >= 9) { break; }
+				if (w.active == 1) {
+					w.write();
+					w.warnlight();
+					w.sound();
+					counter += 1;
+				}
+			}
+		}
+			
+		if (lines[0].getValue() == "" and flash == 0) { # disable left memos if a warning exists. Warnings are processed first, so this stops leftmemos if line1 is not empty
+			foreach (var c; configmemos.vector) {
+				c.write();
 			}
 		}
 		
@@ -220,6 +231,12 @@ var ECAM_controller = {
 			}
 		}
 		
+		foreach (var l; configmemos.vector) {
+			if (l.active == 1) {
+				l.active = 0;
+			}
+		}
+		
 		foreach (var l; leftmemos.vector) {
 			if (l.active == 1) {
 				l.active = 0;
@@ -251,36 +268,51 @@ var ECAM_controller = {
 		if (leftOverflow.getBoolValue()) {
 			foreach (var w; warnings.vector) {
 				if (counter >= 8) { break; }
-				if (w.active == 1 and w.clearFlag != 1) {
+				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
 					counter += 1;
 					if (w.hasSubmsg == 1) { continue; }
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
+					libraries.ECAMControlPanel.lightOff("clr");
 				}
 			}
 		} else {
 			foreach (var w; warnings.vector) {
-				if (w.active == 1 and w.clearFlag != 1 and w.hasSubmsg == 1) {
+				if (w.active == 1 and w.clearFlag != 1 and w.hasSubmsg == 1 and w.isMemo != 1) {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
+					libraries.ECAMControlPanel.lightOff("clr");
 					break;
 				}
 			}
 		}
 		
 		if (statusFlag == 1) {
-			libraries.LowerECAM.failCall("sts");
+			libraries.SystemDisplay.manCall("sts");
 			statusFlag = 0;
 		}
 	},
 	recall: func() {
+		me._recallCounter = 0;
 		foreach (var w; warnings.vector) {
 			if (w.clearFlag == 1) {
 				w.noRepeat = 0;
 				w.clearFlag = 0;
+				me._recallCounter += 1;
 			}
+		}
+		
+		if (me._recallCounter == 0) {
+			FWC.Btn.recallStsNormal.setValue(1);
+			settimer(func() {
+				if (FWC.Btn.recallStsNormal.getValue() == 1) { # catch unexpected error, trying something new here
+					FWC.Btn.recallStsNormal.setValue(0);
+				} else {
+					die("Exception in ECAM-controller.nas, line 316");
+				}
+			}, 0.1);
 		}
 	},
 	warningReset: func(warning) {

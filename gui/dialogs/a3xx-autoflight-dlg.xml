@@ -38,7 +38,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.ATHR();</script>
+				<script>fcu.FCUController.ATHR();</script>
 			</binding>
 		</button>
 		<button>
@@ -46,7 +46,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.AP1();</script>
+				<script>fcu.FCUController.AP1();</script>
 			</binding>
 		</button>
 		<button>
@@ -54,7 +54,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.AP2();</script>
+				<script>fcu.FCUController.AP2();</script>
 			</binding>
 		</button>
 		<button>
@@ -62,7 +62,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.FD1();</script>
+				<script>fcu.FCUController.FD1();</script>
 			</binding>
 		</button>
 		<button>
@@ -70,7 +70,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.FD2();</script>
+				<script>fcu.FCUController.FD2();</script>
 			</binding>
 		</button>
 	</group>
@@ -83,7 +83,7 @@
 			<pref-width>119</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.ATDisc();</script>
+				<script>fcu.FCUController.ATDisc();</script>
 			</binding>
 		</button>
 		<button>
@@ -91,7 +91,7 @@
 			<pref-width>119</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.APPanel.APDisc();</script>
+				<script>fcu.FCUController.APDisc();</script>
 			</binding>
 		</button>
 	</group>
@@ -320,7 +320,7 @@
 				<pref-width>65</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDPush();</script>
+					<script>fcu.FCUController.SPDPush();</script>
 				</binding>
 			</button>
 			
@@ -329,7 +329,7 @@
 				<pref-width>65</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDPull();</script>
+					<script>fcu.FCUController.SPDPull();</script>
 				</binding>
 			</button>
 			
@@ -337,7 +337,7 @@
 				<legend>Speed/Mach</legend>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.IASMach();</script>
+					<script>fcu.FCUController.IASMach();</script>
 				</binding>
 			</button>
 			
@@ -372,7 +372,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(-10);</script>
+					<script>fcu.FCUController.SPDAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -395,7 +395,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(-1);</script>
+					<script>fcu.FCUController.SPDAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -439,7 +439,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(1);</script>
+					<script>fcu.FCUController.SPDAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -463,7 +463,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(10);</script>
+					<script>fcu.FCUController.SPDAdjust(10);</script>
 				</binding>
 			</button>
 			
@@ -498,7 +498,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(-10);</script>
+					<script>fcu.FCUController.SPDAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -521,7 +521,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(-1);</script>
+					<script>fcu.FCUController.SPDAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -565,7 +565,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(1);</script>
+					<script>fcu.FCUController.SPDAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -589,7 +589,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.SPDAdjust(10);</script>
+					<script>fcu.FCUController.SPDAdjust(10);</script>
 				</binding>
 			</button>
 			
@@ -617,7 +617,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.HDGPush();</script>
+					<script>fcu.FCUController.HDGPush();</script>
 				</binding>
 			</button>
 			
@@ -626,7 +626,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.HDGPull();</script>
+					<script>fcu.FCUController.HDGPull();</script>
 				</binding>
 			</button>
 			
@@ -635,7 +635,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.LOCButton();</script>
+					<script>fcu.FCUController.LOCButton();</script>
 				</binding>
 			</button>
 		</group>
@@ -663,7 +663,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.HDGAdjust(-10);</script>
+					<script>fcu.FCUController.HDGAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -680,7 +680,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.HDGAdjust(-1);</script>
+					<script>fcu.FCUController.HDGAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -712,7 +712,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.HDGAdjust(1);</script>
+					<script>fcu.FCUController.HDGAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -730,7 +730,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.HDGAdjust(10);</script>
+					<script>fcu.FCUController.HDGAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -798,7 +798,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSPush();</script>
+					<script>fcu.FCUController.VSPush();</script>
 				</binding>
 			</button>
 			
@@ -807,7 +807,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSPull();</script>
+					<script>fcu.FCUController.VSPull();</script>
 				</binding>
 			</button>
 			
@@ -816,7 +816,7 @@
 				<legend>APPR</legend>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.APPRButton();</script>
+					<script>fcu.FCUController.APPRButton();</script>
 				</binding>
 			</button>
 		</group>
@@ -838,7 +838,7 @@
 				<legend>&lt;&lt;</legend>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.ALTAdjust(-10);</script>
+					<script>fcu.FCUController.ALTAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -849,7 +849,7 @@
 				<legend>&lt;</legend>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.ALTAdjust(-2);</script>
+					<script>fcu.FCUController.ALTAdjust(-2);</script>
 				</binding>
 			</button>
 
@@ -869,7 +869,7 @@
 				<legend>&gt;</legend>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.ALTAdjust(2);</script>
+					<script>fcu.FCUController.ALTAdjust(2);</script>
 				</binding>
 			</button>
 			<button>
@@ -881,7 +881,7 @@
 				<legend>&gt;&gt;</legend>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.ALTAdjust(10);</script>
+					<script>fcu.FCUController.ALTAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -909,7 +909,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(-10);</script>
+					<script>fcu.FCUController.VSAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -926,7 +926,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(-1);</script>
+					<script>fcu.FCUController.VSAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -958,7 +958,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(1);</script>
+					<script>fcu.FCUController.VSAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -976,7 +976,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(10);</script>
+					<script>fcu.FCUController.VSAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -1004,7 +1004,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(-10);</script>
+					<script>fcu.FCUController.VSAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -1021,7 +1021,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(-1);</script>
+					<script>fcu.FCUController.VSAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -1053,7 +1053,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(1);</script>
+					<script>fcu.FCUController.VSAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -1071,7 +1071,7 @@
 				</enable>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.VSAdjust(10);</script>
+					<script>fcu.FCUController.VSAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -1108,7 +1108,7 @@
 				<pref-width>120</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.APPanel.TRKFPA();</script>
+					<script>fcu.FCUController.TRKFPA();</script>
 				</binding>
 			</button>
 			

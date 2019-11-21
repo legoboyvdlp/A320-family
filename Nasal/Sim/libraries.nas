@@ -195,6 +195,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 
 var systemsInit = func {
 	fbw.fctlInit();
+	light_manager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.HYD.init();
@@ -218,6 +219,7 @@ var systemsInit = func {
 	acp.init();
 	ecam.ECAM_controller.init();
 	atc.init();
+	fcu.FCUController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
@@ -234,6 +236,7 @@ var systemsLoop = maketimer(0.1, func {
 	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
+	fcu.FCUController.loop();
 	
 	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/nose") == 0 and getprop("/services/chocks/left") == 0 and getprop("/services/chocks/right") == 0))) {
 		setprop("/controls/electrical/ground-cart", 0);
@@ -264,10 +267,10 @@ var systemsLoop = maketimer(0.1, func {
 		setprop("/engines/ready", 0);
 	}
 	
-	if ((getprop("/engines/engine[0]/state") == 2 or getprop("/engines/engine[0]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[3]/contents-lbs") < 1) {
+	if ((getprop("/engines/engine[0]/state") == 2 or getprop("/engines/engine[0]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[5]/contents-lbs") < 1) {
 		systems.cutoff_one();
 	}
-	if ((getprop("/engines/engine[1]/state") == 2 or getprop("/engines/engine[1]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[4]/contents-lbs") < 1) {
+	if ((getprop("/engines/engine[1]/state") == 2 or getprop("/engines/engine[1]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[6]/contents-lbs") < 1) {
 		systems.cutoff_two();
 	}
 	
@@ -311,6 +314,7 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
+
 # In air, flaps 1 is slats only. On ground, it is slats and flaps.
 
 setprop("/controls/flight/flap-lever", 0);
@@ -321,8 +325,8 @@ controls.flapsDown = func(step) {
 	if (step == 1) {
 		if (getprop("/controls/flight/flap-lever") == 0) {
 			if (getprop("/velocities/airspeed-kt") <= 100) {
-				setprop("/controls/flight/flaps", 0.290);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/flaps", 0.2857);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 2);
 				setprop("/controls/flight/flap-txt", "1+F");
@@ -330,7 +334,7 @@ controls.flapsDown = func(step) {
 				return;
 			} else {
 				setprop("/controls/flight/flaps", 0.000);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 1);
 				setprop("/controls/flight/flap-txt", "1");
@@ -338,16 +342,16 @@ controls.flapsDown = func(step) {
 				return;
 			}
 		} else if (getprop("/controls/flight/flap-lever") == 1) {
-			setprop("/controls/flight/flaps", 0.596);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.4286);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 2);
 			setprop("/controls/flight/flap-pos", 3);
 			setprop("/controls/flight/flap-txt", "2");
 			flaptimer.stop();
 			return;
 		} else if (getprop("/controls/flight/flap-lever") == 2) {
-			setprop("/controls/flight/flaps", 0.645);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.5714);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 3);
 			setprop("/controls/flight/flap-pos", 4);
 			setprop("/controls/flight/flap-txt", "3");
@@ -364,16 +368,16 @@ controls.flapsDown = func(step) {
 		}
 	} else if (step == -1) {
 		if (getprop("/controls/flight/flap-lever") == 4) {
-			setprop("/controls/flight/flaps", 0.645);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.5714);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 3);
 			setprop("/controls/flight/flap-pos", 4);
 			setprop("/controls/flight/flap-txt", "3");
 			flaptimer.stop();
 			return;
 		} else if (getprop("/controls/flight/flap-lever") == 3) {
-			setprop("/controls/flight/flaps", 0.596);
-			setprop("/controls/flight/slats", 0.814);
+			setprop("/controls/flight/flaps", 0.4286);
+			setprop("/controls/flight/slats", 0.8148);
 			setprop("/controls/flight/flap-lever", 2);
 			setprop("/controls/flight/flap-pos", 3);
 			setprop("/controls/flight/flap-txt", "2");
@@ -381,8 +385,8 @@ controls.flapsDown = func(step) {
 			return;
 		} else if (getprop("/controls/flight/flap-lever") == 2) {
 			if (getprop("/velocities/airspeed-kt") <= 100) {
-				setprop("/controls/flight/flaps", 0.290);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/flaps", 0.2857);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 2);
 				setprop("/controls/flight/flap-txt", "1+F");
@@ -390,7 +394,7 @@ controls.flapsDown = func(step) {
 				return;
 			} else {
 				setprop("/controls/flight/flaps", 0.000);
-				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/slats", 0.6666);
 				setprop("/controls/flight/flap-lever", 1);
 				setprop("/controls/flight/flap-pos", 1);
 				setprop("/controls/flight/flap-txt", "1");
@@ -693,9 +697,19 @@ var r2Pedal = func {
 
 if (getprop("/controls/flight/auto-coordination") == 1) {
 	setprop("/controls/flight/auto-coordination", 0);
-	setprop("/controls/flight/aileron-drives-tiller", 1);
-} else {
-	setprop("/controls/flight/aileron-drives-tiller", 0);
-}
+	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
+	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
+} 
+
+setprop("/controls/flight/aileron-drives-tiller", 0);
+
+var APPanel = {
+	APDisc: func() {
+		fcu.FCUController.APDisc();
+	},
+	ATDisc: func() {
+		fcu.FCUController.ATDisc();
+	},
+};
 
 setprop("/systems/acconfig/libraries-loaded", 1);

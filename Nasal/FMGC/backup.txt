@@ -1,0 +1,24 @@
+var FMGComputer = {
+	isMaster: 0,
+	electricPower: "",
+	new: func() {
+         var f = { parents:[FMGComputer] };
+         return f;
+    },
+	setMaster: func() {
+		me.isMaster = 1;
+	),
+	setSlave: func() {
+		me.isMaster = 0;
+	),
+};
+
+
+hdgTrack: 0,
+	spdMach: 0,
+	ap1: ,
+	ap2: 0,
+	athr: 0,
+	appr: 0,
+	exped: 0,
+	loc: 0,

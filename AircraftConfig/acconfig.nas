@@ -113,6 +113,7 @@ var about_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/about/dialog", "Aircraf
 var update_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/update/dialog", "Aircraft/A320-family/AircraftConfig/update.xml");
 var updated_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/updated/dialog", "Aircraft/A320-family/AircraftConfig/updated.xml");
 var error_mismatch = gui.Dialog.new("sim/gui/dialogs/acconfig/error/mismatch/dialog", "Aircraft/A320-family/AircraftConfig/error-mismatch.xml");
+var fuel_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/fuel/dialog", "Aircraft/A320-family/AircraftConfig/fuel.xml");
 var groundservices_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/groundsrvc/dialog", "Aircraft/A320-family/AircraftConfig/groundservices.xml");
 var du_quality = gui.Dialog.new("sim/gui/dialogs/acconfig/du-quality/dialog", "Aircraft/A320-family/AircraftConfig/du-quality.xml");
 var rendering_dlg = gui.Dialog.new("sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
@@ -133,9 +134,9 @@ setlistener("/systems/acconfig/new-revision", func {
 });
 
 var mismatch_chk = func {
-	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201910) {
+	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201912) {
 		setprop("/systems/acconfig/mismatch-code", "0x121");
-		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.1.0.");
+		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.1.2.");
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
@@ -341,12 +342,12 @@ var beforestart = func {
 }
 var beforestart_b = func {
 	# Continue with engine start prep.
-	setprop("/controls/fuel/tank0pump1", 1);
-	setprop("/controls/fuel/tank0pump2", 1);
-	setprop("/controls/fuel/tank1pump1", 1);
-	setprop("/controls/fuel/tank1pump2", 1);
-	setprop("/controls/fuel/tank2pump1", 1);
-	setprop("/controls/fuel/tank2pump2", 1);
+	systems.FUEL.Switches.pumpLeft1.setValue(1);
+	systems.FUEL.Switches.pumpLeft2.setValue(1);
+	systems.FUEL.Switches.pumpCenter1.setValue(1);
+	systems.FUEL.Switches.pumpCenter2.setValue(1);
+	systems.FUEL.Switches.pumpRight1.setValue(1);
+	systems.FUEL.Switches.pumpRight2.setValue(1);
 	setprop("/controls/electrical/switches/apu", 1);
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
@@ -423,12 +424,12 @@ var taxi = func {
 }
 var taxi_b = func {
 	# Continue with engine start prep, and start engines.
-	setprop("/controls/fuel/tank0pump1", 1);
-	setprop("/controls/fuel/tank0pump2", 1);
-	setprop("/controls/fuel/tank1pump1", 1);
-	setprop("/controls/fuel/tank1pump2", 1);
-	setprop("/controls/fuel/tank2pump1", 1);
-	setprop("/controls/fuel/tank2pump2", 1);
+	systems.FUEL.Switches.pumpLeft1.setValue(1);
+	systems.FUEL.Switches.pumpLeft2.setValue(1);
+	systems.FUEL.Switches.pumpCenter1.setValue(1);
+	systems.FUEL.Switches.pumpCenter2.setValue(1);
+	systems.FUEL.Switches.pumpRight1.setValue(1);
+	systems.FUEL.Switches.pumpRight2.setValue(1);
 	setprop("/controls/electrical/switches/apu", 1);
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
@@ -506,7 +507,10 @@ var takeoff = func {
 				libraries.flaptimer.start();
 				setprop("/controls/flight/elevator-trim", -0.07);
 				systems.arm_autobrake(3);
-				libraries.ECAM.toConfig();
+				setprop("/ECAM/to-config-test", 1);
+				settimer(func {
+					setprop("/ECAM/to-config-test", 0);
+				}, 1);
 			}
 		});
 	}

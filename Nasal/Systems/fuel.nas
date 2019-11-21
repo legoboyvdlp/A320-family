@@ -3,35 +3,82 @@
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)
 
-var xfeed_sw = getprop("/controls/fuel/x-feed");
-var tank0pump1_sw = 0;
-var tank0pump2_sw = 0;
-var tank1pump1_sw = 0;
-var tank1pump2_sw = 0;
-var tank2pump1_sw = 0;
-var tank2pump2_sw = 0;
-var mode_sw = 0;
-var xfeed = 0;
-var ac1 = 0;
-var ac2 = 0;
-var gravityfeedL = 0;
-var gravityfeedR = 0;
-var gload = 0;
-var gravityfeedL_output = 0;
-var gravityfeedR_output = 0;
-var tank0 = 0;
-var tank1 = 0;
-var tank2 = 0;
-var gravityfeedL = 0;
-var gravityfeedR = 0;
-var tank0pump1_fail = 0;
-var tank0pump2_fail = 0;
-var tank1pump1_fail = 0;
-var tank1pump2_fail = 0;
-var tank2pump1_fail = 0;
-var tank2pump2_fail = 0;
-
 var FUEL = {
+	offset1: 0,
+	offset2: 0,
+	timeEngStart: 0,
+	cmdCtrOn: props.globals.getNode("/systems/fuel/ctr-pump-cmd-on-eng-start"),
+	refuelling: props.globals.getNode("/systems/fuel/refuel/refuelling"),
+	
+	Fail: {
+	},
+	Switches: {
+		centerTkMode: props.globals.getNode("/controls/fuel/switches/center-mode"),
+		crossfeed: props.globals.getNode("/controls/fuel/switches/crossfeed"),
+		pumpLeft1: props.globals.getNode("/controls/fuel/switches/pump-left-1"),
+		pumpLeft2: props.globals.getNode("/controls/fuel/switches/pump-left-2"),
+		pumpCenter1: props.globals.getNode("/controls/fuel/switches/pump-center-1"),
+		pumpCenter2: props.globals.getNode("/controls/fuel/switches/pump-center-2"),
+		pumpRight1: props.globals.getNode("/controls/fuel/switches/pump-right-1"),
+		pumpRight2: props.globals.getNode("/controls/fuel/switches/pump-right-2"),
+	},
+	Valves: {
+		crossfeed: props.globals.getNode("/systems/fuel/valves/crossfeed-valve"),
+		lpValve1: props.globals.getNode("/systems/fuel/valves/engine-1-lp-valve"),
+		lpValve2: props.globals.getNode("/systems/fuel/valves/engine-2-lp-valve"),
+		transfer1: props.globals.getNode("/systems/fuel/valves/outer-inner-transfer-valve-1"),
+		transfer2: props.globals.getNode("/systems/fuel/valves/outer-inner-transfer-valve-2"),
+		refuelLeft: props.globals.getNode("/systems/fuel/refuel/left-valve"),
+		refuelCenter: props.globals.getNode("/systems/fuel/refuel/center-valve"),
+		refuelRight: props.globals.getNode("/systems/fuel/refuel/right-valve"),
+	},
+	Quantity: {
+		leftOuter: props.globals.getNode("/consumables/fuel/tank[0]/level-lbs"),
+		leftOuterPct: props.globals.getNode("/consumables/fuel/tank[0]/level-norm"),
+		leftInner: props.globals.getNode("/consumables/fuel/tank[1]/level-lbs"),
+		leftInnerPct: props.globals.getNode("/consumables/fuel/tank[1]/level-norm"),
+		center: props.globals.getNode("/consumables/fuel/tank[2]/level-lbs"),
+		centerPct: props.globals.getNode("/consumables/fuel/tank[2]/level-norm"),
+		rightInner: props.globals.getNode("/consumables/fuel/tank[3]/level-lbs"),
+		rightInnerPct: props.globals.getNode("/consumables/fuel/tank[3]/level-norm"),
+		rightOuter: props.globals.getNode("/consumables/fuel/tank[4]/level-lbs"),
+		rightOuterPct: props.globals.getNode("/consumables/fuel/tank[4]/level-norm"),
+		usedLeft: props.globals.getNode("/systems/fuel/fuel-used-1"),
+		usedRight: props.globals.getNode("/systems/fuel/fuel-used-2"),
+	},
+	resetFail: func() {
+	
+	},
+	init: func() {
+	
+	},
+	loop: func() {
+		systems.FUEL.Quantity.usedLeft.setValue(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue() + me.offset1);
+		systems.FUEL.Quantity.usedRight.setValue(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue() + me.offset2);
+	},
+	setOffset: func() {
+		me.offset1 = me.offset1 -(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue());
+		me.offset2 = me.offset2 -(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue());
+	}
+};
+
+setlistener("/engines/engine[0]/state", func() {
+	if (pts.Engines.Engine1.state.getValue() == 3) {
+		FUEL.timeEngStart = pts.Sim.Time.elapsedSec.getValue();
+		FUEL.cmdCtrOn.setValue(1);
+		ctrTkTimer.start();
+	}
+}, 0, 0);
+
+setlistener("/engines/engine[1]/state", func() {
+	if (pts.Engines.Engine2.state.getValue() == 3) {
+		FUEL.timeEngStart = pts.Sim.Time.elapsedSec.getValue();
+		FUEL.cmdCtrOn.setValue(1);
+		ctrTkTimer.start();
+	}
+}, 0, 0);
+
+var FUELx = {
 	init: func() {
 		setprop("/systems/fuel/gravityfeedL", 0);
 		setprop("/systems/fuel/gravityfeedR", 0);
@@ -45,7 +92,7 @@ var FUEL = {
 		setprop("/controls/fuel/tank2pump1", 0);
 		setprop("/controls/fuel/tank2pump2", 0);
 		setprop("/controls/fuel/mode", 1);
-		setprop("/systems/fuel/x-feed", 0);
+		setprop("/systems/fuel/valves/crossfeed-valve", 0);
 		setprop("/systems/fuel/tank[0]/feed", 0);
 		setprop("/systems/fuel/tank[1]/feed", 0);
 		setprop("/systems/fuel/tank[2]/feed", 0);
@@ -67,7 +114,7 @@ var FUEL = {
 		tank2pump1_sw = getprop("/controls/fuel/tank2pump1");
 		tank2pump2_sw = getprop("/controls/fuel/tank2pump2");
 		mode_sw = getprop("/controls/fuel/mode");
-		xfeed = getprop("/systems/fuel/x-feed");
+		xfeed = getprop("/systems/fuel/valves/crossfeed-valve");
 		ac1 = getprop("/systems/electrical/bus/ac-1");
 		ac2 = getprop("/systems/electrical/bus/ac-2");
 		gravityfeedL = getprop("/systems/fuel/gravityfeedL");
@@ -124,9 +171,9 @@ var FUEL = {
 		}
 		
 		if ((ac1 >= 110 or ac2 >= 110) and xfeed_sw) {
-			setprop("/systems/fuel/x-feed", 1);
+			setprop("/systems/fuel/valves/crossfeed-valve", 1);
 		} else {
-			setprop("/systems/fuel/x-feed", 0);
+			setprop("/systems/fuel/valves/crossfeed-valve", 0);
 		}
 		
 		tank0 = getprop("/systems/fuel/tank[0]/feed");
@@ -192,3 +239,10 @@ var FUEL = {
 		}
 	},
 };
+
+var ctrTkTimer = maketimer(0.5, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > (FUEL.timeEngStart + 120)) {
+		FUEL.cmdCtrOn.setValue(0);
+		ctrTkTimer.stop()
+	}
+});
