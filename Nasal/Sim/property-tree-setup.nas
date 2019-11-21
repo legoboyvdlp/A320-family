@@ -5,6 +5,11 @@
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
 
+var APU = {
+	masterSw: props.globals.getNode("/controls/APU/master"),
+	rpm: props.globals.getNode("/systems/apu/rpm"),
+};
+
 var Consumables = {
 	Fuel: {
 		totalFuelLbs: props.globals.getNode("/consumables/fuel/total-fuel-lbs"),
@@ -13,6 +18,7 @@ var Consumables = {
 
 var Controls = {
 	Engines: {
+		startSw: props.globals.getNode("/controls/engines/engine-start-switch"),
 		Engine1: {
 			cutoffSw: props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"),
 			firePb: props.globals.getNode("/controls/engines/engine[0]/fire-btn"),
@@ -23,6 +29,9 @@ var Controls = {
 			firePb: props.globals.getNode("/controls/engines/engine[1]/fire-btn"),
 			throttle: props.globals.getNode("/controls/engines/engine[1]/throttle"),
 		},
+	},
+	Gear: {
+		gearDown: props.globals.getNode("/controls/gear/gear-down"),
 	},
 };
 
@@ -47,6 +56,7 @@ var Engines = {
 
 var Gear = {
 	compression: [props.globals.getNode("/gear/gear[0]/compression-norm"),props.globals.getNode("/gear/gear[1]/compression-norm"),props.globals.getNode("/gear/gear[2]/compression-norm")],
+	wow: [props.globals.getNode("/gear/gear[0]/wow"),props.globals.getNode("/gear/gear[1]/wow"),props.globals.getNode("/gear/gear[2]/wow")],
 };
 
 var Instrumentation = {
@@ -68,6 +78,10 @@ var JSBSIM = {
 };
 
 var JSBSim = {
+	FBW: {
+		aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
+		elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
+	},
 	Propulsion: {
 		Engine1: {
 			fuelUsed: props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"),

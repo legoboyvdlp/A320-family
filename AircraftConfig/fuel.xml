@@ -6,6 +6,15 @@
 
 <PropertyList>
 
+	<nasal>
+		
+		<close>
+			<![CDATA[
+				systems.FUEL.Nodes.requestLbs.setValue(0);
+			]]>
+		</close>
+	</nasal>
+
     <name>fuel-dlg</name>
     <layout>vbox</layout>
     
@@ -132,11 +141,22 @@
                 <binding>
                     <command>nasal</command>
                     <script>
-                        if ((getprop("/services/fuel-truck/enable") == 1) and (getprop("/services/fuel-truck/connect") == 1)) {
-							systems.fuelSvc.refuel();
-                            screen.log.write("Refueling process started.", 0, 0.584, 1);
-                        } else
-                            screen.log.write("Please Enable and Connect the Fuel Truck First!", 1, 0, 0);
+						<![CDATA[ 
+							if (systems.fuelSvc.Nodes.requestLbs.getValue() > 0) {
+								if ((getprop("/services/fuel-truck/enable") == 1) and getprop("/services/fuel-truck/connect") == 1) {
+									if (systems.fuelSvc.Nodes.requestTotalLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue() > 0) {
+										systems.fuelSvc.refuel();
+										screen.log.write("Refueling process started.", 0, 0.584, 1);
+									} else {
+											screen.log.write("Refuelling complete.", 0, 0.584, 1);
+									}
+								} else {
+									screen.log.write("Please Enable and Connect the Fuel Truck First!", 1, 0, 0);
+								}
+							} else {
+								screen.log.write("Refuelling quantity incorrect.", 0, 0.584, 1);
+							}
+						]]>
                     </script>
                 </binding>
             </button>

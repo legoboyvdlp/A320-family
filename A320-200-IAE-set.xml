@@ -197,7 +197,7 @@
 	
 	<nasal>
 		<specific>
-			<file>Aircraft/A320-family/Nasal/a320livery-iae.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/a320livery-iae.nas</file>
 		</specific>
 	</nasal>
 

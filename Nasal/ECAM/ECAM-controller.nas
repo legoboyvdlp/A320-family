@@ -1,9 +1,6 @@
 # A3XX Electronic Centralised Aircraft Monitoring System
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
-var leftmsgEnable = props.globals.initNode("/ECAM/show-left-msg", 1, "BOOL");
-var rightmsgEnable = props.globals.initNode("/ECAM/show-right-msg", 1, "BOOL");
-
 var lines = [props.globals.getNode("/ECAM/msg/line1", 1), props.globals.getNode("/ECAM/msg/line2", 1), props.globals.getNode("/ECAM/msg/line3", 1), props.globals.getNode("/ECAM/msg/line4", 1), props.globals.getNode("/ECAM/msg/line5", 1), props.globals.getNode("/ECAM/msg/line6", 1), props.globals.getNode("/ECAM/msg/line7", 1), props.globals.getNode("/ECAM/msg/line8", 1)];
 var linesCol = [props.globals.getNode("/ECAM/msg/linec1", 1), props.globals.getNode("/ECAM/msg/linec2", 1), props.globals.getNode("/ECAM/msg/linec3", 1), props.globals.getNode("/ECAM/msg/linec4", 1), props.globals.getNode("/ECAM/msg/linec5", 1), props.globals.getNode("/ECAM/msg/linec6", 1), props.globals.getNode("/ECAM/msg/linec7", 1), props.globals.getNode("/ECAM/msg/linec8", 1)];
 var rightLines = [props.globals.getNode("/ECAM/rightmsg/line1", 1), props.globals.getNode("/ECAM/rightmsg/line2", 1), props.globals.getNode("/ECAM/rightmsg/line3", 1), props.globals.getNode("/ECAM/rightmsg/line4", 1), props.globals.getNode("/ECAM/rightmsg/line5", 1), props.globals.getNode("/ECAM/rightmsg/line6", 1), props.globals.getNode("/ECAM/rightmsg/line7", 1), props.globals.getNode("/ECAM/rightmsg/line8", 1)];
@@ -100,7 +97,7 @@ var warning = {
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
-		#libraries.LowerECAM.failCall(me.sdPage);
+		libraries.SystemDisplay.failCall(me.sdPage);
 		me.hasCalled = 1;
 	}
 };
@@ -297,6 +294,7 @@ var ECAM_controller = {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
+					libraries.ECAMControlPanel.lightOff("clr");
 				}
 			}
 		} else {
@@ -305,13 +303,14 @@ var ECAM_controller = {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
+					libraries.ECAMControlPanel.lightOff("clr");
 					break;
 				}
 			}
 		}
 		
 		if (statusFlag == 1) {
-			libraries.LowerECAM.failCall("sts");
+			libraries.SystemDisplay.manCall("sts");
 			statusFlag = 0;
 		}
 	},
