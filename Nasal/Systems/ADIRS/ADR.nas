@@ -78,7 +78,6 @@ var ADIRU = {
 		me._timeVar = pts.Sim.Time.elapsedSec.getValue();
 		if (me.energised and !me._voltageMain and me._voltageLimitedTime and me._noPowerTime == 0) {
 			me._noPowerTime = me._timeVar;
-			print("ADIRU lost power at time " ~ me._noPowerTime);
 		}
 		
 		if (me.energised and me.mode) {
@@ -186,7 +185,6 @@ var ADIRSnew = {
 	init: func() {
 		if (!me._init) {
 			for (i = 0; i < _NUMADIRU; i = i + 1) {
-				print("Creating new ADIRU " ~ i);
 				me.ADIRunits[i] = ADIRU.new(i);
 				me._init = 1;
 			}
@@ -245,7 +243,6 @@ var ADIRSnew = {
 		}
 	},
 	selfTest: func() {
-		print("Doing self test");
 		ADIRSnew.Lights.onBat.setBoolValue(1);
 		selfTestLoop.start();
 	},
@@ -254,7 +251,6 @@ var ADIRSnew = {
 
 selfTestLoop = maketimer(0.2, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > _selfTestTime + 5) {
-		print("Self test done");
 		ADIRSnew.Lights.onBat.setBoolValue(0);
 		selfTestLoop.stop();
 		ADIRSnew._selfTest = 0;

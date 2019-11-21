@@ -1088,7 +1088,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
 	
-	if (phaseVar != 3 and phaseVar != 4 and phaseVar != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
+	if (getprop("/instrumentation/tcas/serviceable") == 0 and phaseVar != 3 and phaseVar != 4 and phaseVar != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(tcasFault);

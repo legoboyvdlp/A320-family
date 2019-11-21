@@ -124,11 +124,11 @@ var warnings				  = std.Vector.new([
 	
 	# Autopilot
 	var ap_offw				  = warning.new(msg: "AUTO FLT AP OFF",			  colour: "r", light: 0),
-	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1),
+	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var athr_offw_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
-	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1),
+	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var athr_lock_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
-	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1),
+	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var athr_lim_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
 	
 	# Cargo smoke
