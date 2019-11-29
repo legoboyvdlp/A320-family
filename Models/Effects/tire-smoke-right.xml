@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 
 <!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
@@ -17,8 +17,10 @@
         </offsets>
 
         <condition>
-                <property>gear/gear[2]/tyre-smoke</property>
-                <value>1</value>
+				<equals>
+					<property>gear/brake-smoke</property>
+					<value>1</value>
+				</equals>
         </condition>
 
         <attach>world</attach>
@@ -48,9 +50,9 @@
 
         <counter>
             <particles-per-sec>
-				<property>velocities/speed-down-fps</property>
-				<factor>1</factor>
-                <spread>50</spread>
+				<property>gear/brake-thermal-energy</property>
+				<factor>20</factor>
+                <spread>70</spread>
             </particles-per-sec>
         </counter>
 

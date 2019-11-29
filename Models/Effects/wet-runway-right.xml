@@ -5,7 +5,7 @@
 <PropertyList>
 
     <particlesystem>
-        <name>tyre-smoke-n</name>
+        <name>tyre-smoke-r</name>
         <texture>tiresmoke.png</texture>
         <emissive>false</emissive>
         <lighting>false</lighting>
@@ -26,7 +26,7 @@
        			<property>velocities/groundspeed-kt</property>
        			<value>60</value>
        		</greater-than>
-                	<property>gear/gear[0]/wow</property>
+                	<property>gear/gear[2]/wow</property>
                 	<value>1</value>
 		</and>
         </condition>
@@ -105,10 +105,10 @@
                 </size>
             </end>
             <life-sec>
-                <value>1</value>
+                <value>0.8</value>
             </life-sec>
-            <mass-kg>0.001</mass-kg>
-            <radius-m>0.25</radius-m>
+            <mass-kg>0.0005</mass-kg>
+            <radius-m>0.4</radius-m>
         </particle>
 
         <program>
