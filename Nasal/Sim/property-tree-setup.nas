@@ -30,6 +30,9 @@ var Controls = {
 			throttle: props.globals.getNode("/controls/engines/engine[1]/throttle"),
 		},
 	},
+	Flight: {
+		aileron: props.globals.getNode("/controls/flight/aileron"),
+	},
 	Gear: {
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
 	},
@@ -51,6 +54,12 @@ var Engines = {
 		n1actual: props.globals.getNode("/engines/engine[1]/n1-actual"),
 		n2actual: props.globals.getNode("/engines/engine[1]/n2-actual"),
 		state: props.globals.getNode("/engines/engine[1]/state"),
+	},
+};
+
+var FMGC = {
+	CasCompare: {
+		rejectAll: props.globals.getNode("/systems/fmgc/cas-compare/cas-reject-all"),
 	},
 };
 
@@ -108,6 +117,12 @@ var Sim = {
 	Time: {
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
 	},
+};
+
+var Orientation = {
+	pitch: props.globals.getNode("/orientation/pitch-deg"),
+	roll: props.globals.getNode("/orientation/roll-deg"),
+	yaw: props.globals.getNode("/orientation/yaw-deg"),
 };
 
 var PTSSystems = {

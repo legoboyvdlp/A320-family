@@ -10,7 +10,7 @@ var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
 
-var fac1Node   = props.globals.getNode("/controls/fctl/fac1", 1);
+var fac1Node   = props.globals.getNode("/controls/fctl/switches/fac1", 1);
 var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
@@ -1622,7 +1622,7 @@ var messages_right_memo = func {
 }
 
 # Listeners
-setlistener("/controls/fctl/fac1", func() {
+setlistener("/controls/fctl/switches/fac1", func() {
 	if (dualFail.active == 0 and emerconfig.active == 0) { return; }
 	
 	if (fac1Node.getBoolValue() and dualFail.active == 1) {

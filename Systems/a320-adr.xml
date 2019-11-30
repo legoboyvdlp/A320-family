@@ -887,6 +887,11 @@
 			<gain>/systems/navigation/adr/operating-2</gain>
 		</pure_gain>
 		
+		<pure_gain name="/systems/navigation/adr/output/sat-3">
+			<input>/systems/navigation/adr/computation/sat-1</input> <!-- ADIRU 3 sources from TAT 1 -->
+			<gain>/systems/navigation/adr/operating-3</gain>
+		</pure_gain>
+		
 		<pure_gain name="/systems/navigation/adr/output/tas-1">
 			<input>/systems/navigation/adr/computation/tas-1</input>
 			<gain>/systems/navigation/adr/operating-1</gain>
@@ -910,6 +915,11 @@
 		<pure_gain name="/systems/navigation/adr/output/tat-2">
 			<input>/systems/navigation/probes/tat-2/tat</input>
 			<gain>/systems/navigation/adr/operating-2</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/tat-3">
+			<input>/systems/navigation/probes/tat-1/tat</input> <!-- ADIRU 3 sources from TAT 1 -->
+			<gain>/systems/navigation/adr/operating-3</gain>
 		</pure_gain>
 		
 		<fcs_function name="/systems/navigation/adr/any-adr-on">
@@ -969,6 +979,37 @@
 			</test>
 		</switch>
 		
+		<switch name="/it-autoflight/internal/current-mach-input">
+			<test logic="AND" value="/systems/navigation/adr/output/mach-1">
+				/FMGC/active-fmgc-channel eq 1
+				/systems/fmgc/cas-compare/cas-reject-1 eq 0
+			</test>
+			<test logic="AND" value="/systems/navigation/adr/output/mach-2">
+				/FMGC/active-fmgc-channel eq 2
+				/systems/fmgc/cas-compare/cas-reject-2 eq 0
+			</test>
+			<test logic="OR" value="/systems/navigation/adr/output/mach-3">
+				/systems/fmgc/cas-compare/cas-reject-1 eq 1
+				/systems/fmgc/cas-compare/cas-reject-2 eq 1
+				/systems/fmgc/cas-compare/cas-reject-3 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/it-autoflight/internal/current-speed-input">
+			<test logic="AND" value="/systems/navigation/adr/output/cas-1">
+				/FMGC/active-fmgc-channel eq 1
+				/systems/fmgc/cas-compare/cas-reject-1 eq 0
+			</test>
+			<test logic="AND" value="/systems/navigation/adr/output/cas-2">
+				/FMGC/active-fmgc-channel eq 2
+				/systems/fmgc/cas-compare/cas-reject-2 eq 0
+			</test>
+			<test logic="OR" value="/systems/navigation/adr/output/cas-3">
+				/systems/fmgc/cas-compare/cas-reject-1 eq 1
+				/systems/fmgc/cas-compare/cas-reject-2 eq 1
+				/systems/fmgc/cas-compare/cas-reject-3 eq 0
+			</test>
+		</switch>
 	</channel>
 
 </system>

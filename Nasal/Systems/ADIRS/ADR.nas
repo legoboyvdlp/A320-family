@@ -249,6 +249,12 @@ var ADIRSnew = {
 	
 };
 
+setlistener("/systems/fmgc/cas-compare/cas-reject-all", func() {
+	if (pts.FMGC.CasCompare.rejectAll.getBoolValue()) {
+		fcu.athrOff("hard");
+	}
+}, 0, 0);
+
 selfTestLoop = maketimer(0.2, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > _selfTestTime + 5) {
 		ADIRSnew.Lights.onBat.setBoolValue(0);

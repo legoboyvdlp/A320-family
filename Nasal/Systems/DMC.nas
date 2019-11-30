@@ -13,13 +13,14 @@ var DMC = {
 	altitudes: [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-capt", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-capt", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-capt", 1)],
 	machs: [props.globals.getNode("/systems/navigation/adr/output/mach-1", 1), props.globals.getNode("/systems/navigation/adr/output/mach-2", 1), props.globals.getNode("/systems/navigation/adr/output/mach-3", 1)],
 	altitudesPfd: [props.globals.getNode("/instrumentation/altimeter[0]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[1]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[2]/indicated-altitude-ft-pfd", 1)],
-	
-	outputs: [nil, nil, nil, nil], # airspeed, altitude, mach, pfd altitude
+	sats: [props.globals.getNode("/systems/navigation/adr/output/sat-1", 1), props.globals.getNode("/systems/navigation/adr/output/sat-2", 1), props.globals.getNode("/systems/navigation/adr/output/sat-3", 1)],
+	tats: [props.globals.getNode("/systems/navigation/adr/output/tat-1", 1), props.globals.getNode("/systems/navigation/adr/output/tat-2", 1), props.globals.getNode("/systems/navigation/adr/output/tat-3", 1)],
+	outputs: [nil, nil, nil, nil, nil, nil], # airspeed, altitude, mach, pfd altitude, sat, tat
 	
 	new: func(num) {
 		var d = { parents:[DMC] };
 		d.activeADIRS = num;
-		d.outputs = [nil, nil, nil, nil];
+		d.outputs = [nil, nil, nil, nil, nil, nil];
 		return d;
 	},
 	changeActiveADIRS: func(newADIRS) {
@@ -31,12 +32,16 @@ var DMC = {
 		me.outputs[1] = me.altitudes[ADIRS];
 		me.outputs[2] = me.machs[ADIRS];
 		me.outputs[3] = me.altitudesPfd[ADIRS];
+		me.outputs[4] = me.sats[ADIRS];
+		me.outputs[5] = me.tats[ADIRS];
 	},
 	setOutputsNil: func() {
 		me.outputs[0] = nil;
 		me.outputs[1] = nil;
 		me.outputs[2] = nil;
 		me.outputs[3] = nil;
+		me.outputs[4] = nil;
+		me.outputs[5] = nil;
 	},
 	update: func() {
 		if (systems.ADIRSnew.ADIRunits[me.activeADIRS].operative and systems.ADIRSnew.ADIRunits[me.activeADIRS].outputOn) {

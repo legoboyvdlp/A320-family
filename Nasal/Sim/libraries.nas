@@ -194,7 +194,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 #######################
 
 var systemsInit = func {
-	fbw.fctlInit();
+	fbw.FBW.init();
 	light_manager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();

@@ -506,13 +506,19 @@
 
 	<it-fbw n="0">
 		<alpha-hld type="bool">0</alpha-hld>
+		<degrade-law type="int">0</degrade-law>
 		<law type="int">0</law>
-		<roll-lim type="double">33</roll-lim>
+		<roll-lim type="string">33</roll-lim>
 		<roll-back type="bool">0</roll-back>
+		<override type="bool">0</override>
 		<protections n="0">
 			<overspeed type="bool">0</overspeed>
 			<overspeed-roll-back type="bool">0</overspeed-roll-back>
 		</protections>
+		<spd-hld type="bool">0</spd-hld>
+		<speeds>
+			<vmo-mmo type="int">350</vmo-mmo>
+		</speeds>
 	</it-fbw>
 
 	<apu>
@@ -521,6 +527,7 @@
 	</apu>
 	
 	<FMGC n="0">
+		<active-fmgc-channel type="int">0</active-fmgc-channel>
 		<internal>
 			<cost-index type="int">0</cost-index>
 		</internal>
@@ -640,6 +647,26 @@
 				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
 		</engines>
+		<fctl>
+			<lights>
+				<elac1-fault type="bool">0</elac1-fault>
+				<elac2-fault type="bool">0</elac2-fault>
+				<sec1-fault type="bool">0</sec1-fault>
+				<sec2-fault type="bool">0</sec2-fault>
+				<sec3-fault type="bool">0</sec3-fault>
+				<fac1-fault type="bool">0</fac1-fault>
+				<fac2-fault type="bool">0</fac2-fault>
+			</lights>
+			<switches>
+				<elac1 type="bool">0</elac1>
+				<elac2 type="bool">0</elac2>
+				<sec1 type="bool">0</sec1>
+				<sec2 type="bool">0</sec2>
+				<sec3 type="bool">0</sec3>
+				<fac1 type="bool">0</fac1>
+				<fac2 type="bool">0</fac2>
+			</switches>
+		</fctl>
 		<fire>
 			<apu-test-btn type="bool">0</apu-test-btn>
 			<test-btn-1 type="bool">0</test-btn-1>
@@ -937,6 +964,15 @@
 				<tr-1 type="bool">0</tr-1>
 				<tr-2 type="bool">0</tr-2>
 			</electrical>
+			<fctl>
+				<elac1 type="bool">0</elac1>
+				<elac2 type="bool">0</elac2>
+				<sec1 type="bool">0</sec1>
+				<sec2 type="bool">0</sec2>
+				<sec3 type="bool">0</sec3>
+				<fac1 type="bool">0</fac1>
+				<fac2 type="bool">0</fac2>
+			</fctl>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>
@@ -966,6 +1002,11 @@
 			<cargo-aft-fire type="bool">0</cargo-aft-fire>
 		</failures>
 		<fctl n="0">
+			<elac1 type="bool">0</elac1>
+			<elac2 type="bool">0</elac2>
+			<sec1 type="bool">0</sec1>
+			<sec2 type="bool">0</sec2>
+			<sec3 type="bool">0</sec3>
 			<fac1 type="bool">0</fac1>
 			<fac2 type="bool">0</fac2>
 		</fctl>

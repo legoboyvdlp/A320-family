@@ -1194,7 +1194,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/elac1</property>
+				<property>controls/fctl/switches/elac1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1228,7 +1228,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/elac1</property>
+					<property>controls/fctl/switches/elac1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1257,7 +1257,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/sec1</property>
+				<property>controls/fctl/switches/sec1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1277,7 +1277,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/sec1</property>
+						<property>controls/fctl/switches/sec1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1295,7 +1295,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/sec1</property>
+					<property>controls/fctl/switches/sec1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1324,7 +1324,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/fac1</property>
+				<property>controls/fctl/switches/fac1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1344,7 +1344,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/fac1</property>
+						<property>controls/fctl/switches/fac1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1362,7 +1362,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/fac1</property>
+					<property>controls/fctl/switches/fac1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1391,7 +1391,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/elac2</property>
+				<property>controls/fctl/switches/elac2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1411,7 +1411,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/elac2</property>
+						<property>controls/fctl/switches/elac2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1429,7 +1429,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/elac2</property>
+					<property>controls/fctl/switches/elac2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1458,7 +1458,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/sec2</property>
+				<property>controls/fctl/switches/sec2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1478,7 +1478,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/sec2</property>
+						<property>controls/fctl/switches/sec2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1496,7 +1496,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/sec2</property>
+					<property>controls/fctl/switches/sec2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1525,7 +1525,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/sec3</property>
+				<property>controls/fctl/switches/sec3</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1545,7 +1545,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/sec3</property>
+						<property>controls/fctl/switches/sec3</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1563,7 +1563,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/sec3</property>
+					<property>controls/fctl/switches/sec3</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1592,7 +1592,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/fac2</property>
+				<property>controls/fctl/switches/fac2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1612,7 +1612,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/fac2</property>
+						<property>controls/fctl/switches/fac2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1630,7 +1630,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/fac2</property>
+					<property>controls/fctl/switches/fac2</property>
 					<value>0</value>
 				</equals>
 				<equals>
