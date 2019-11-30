@@ -57,7 +57,7 @@
 			<checkbox>
 				<label>ELAC1</label>
 				<halign>left</halign>
-				<property>/systems/failures/elac1</property>
+				<property>/systems/failures/fctl/elac1</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -67,7 +67,7 @@
 			<checkbox>
 				<label>ELAC2</label>
 				<halign>left</halign>
-				<property>/systems/failures/elac2</property>
+				<property>/systems/failures/fctl/elac2</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -77,7 +77,7 @@
 			<checkbox>
 				<label>SEC1</label>
 				<halign>left</halign>
-				<property>/systems/failures/sec1</property>
+				<property>/systems/failures/fctl/sec1</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -87,7 +87,7 @@
 			<checkbox>
 				<label>SEC2</label>
 				<halign>left</halign>
-				<property>/systems/failures/sec2</property>
+				<property>/systems/failures/fctl/sec2</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -97,17 +97,7 @@
 			<checkbox>
 				<label>SEC3</label>
 				<halign>left</halign>
-				<property>/systems/failures/sec3</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
-			
-			<checkbox>
-				<label>FAC2</label>
-				<halign>left</halign>
-				<property>/systems/failures/fac2</property>
+				<property>/systems/failures/fctl/sec3</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -117,7 +107,17 @@
 			<checkbox>
 				<label>FAC1</label>
 				<halign>left</halign>
-				<property>/systems/failures/fac1</property>
+				<property>/systems/failures/fctl/fac1</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>FAC2</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/fac2</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>

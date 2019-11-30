@@ -30,6 +30,9 @@ var Controls = {
 			throttle: props.globals.getNode("/controls/engines/engine[1]/throttle"),
 		},
 	},
+	Flight: {
+		aileron: props.globals.getNode("/controls/flight/aileron"),
+	},
 	Gear: {
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
 	},
@@ -54,6 +57,12 @@ var Engines = {
 	},
 };
 
+var FMGC = {
+	CasCompare: {
+		rejectAll: props.globals.getNode("/systems/fmgc/cas-compare/cas-reject-all"),
+	},
+};
+
 var Gear = {
 	compression: [props.globals.getNode("/gear/gear[0]/compression-norm"),props.globals.getNode("/gear/gear[1]/compression-norm"),props.globals.getNode("/gear/gear[2]/compression-norm")],
 	wow: [props.globals.getNode("/gear/gear[0]/wow"),props.globals.getNode("/gear/gear[1]/wow"),props.globals.getNode("/gear/gear[2]/wow")],
@@ -62,6 +71,18 @@ var Gear = {
 var Instrumentation = {
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
+	},
+	TCAS: {
+		Inputs: {
+			mode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
+		},
+	},
+};
+
+var JSBSIM = {
+	FCS: {
+		flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
+		slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
 	},
 };
 
@@ -96,6 +117,12 @@ var Sim = {
 	Time: {
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
 	},
+};
+
+var Orientation = {
+	pitch: props.globals.getNode("/orientation/pitch-deg"),
+	roll: props.globals.getNode("/orientation/roll-deg"),
+	yaw: props.globals.getNode("/orientation/yaw-deg"),
 };
 
 var PTSSystems = {

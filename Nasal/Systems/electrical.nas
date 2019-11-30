@@ -24,6 +24,7 @@ var ELEC = {
 		dc1: props.globals.getNode("/systems/electrical/bus/dc-1"),
 		dc2: props.globals.getNode("/systems/electrical/bus/dc-2"),
 		dcHot1: props.globals.getNode("/systems/electrical/bus/dc-hot-1"),
+		dcHot2: props.globals.getNode("/systems/electrical/bus/dc-hot-2"),
 	},
 	Fail: {
 		acEssBusFault: props.globals.getNode("/systems/failures/electrical/ac-ess-bus"),
