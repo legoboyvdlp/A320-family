@@ -992,9 +992,9 @@ var canvas_lowerECAM_crz = {
 		me["Oil2"].setText(sprintf("%2.1f", oil_qt2_actual.getValue()));
 
 		# Fuel Used
-		me["Fused1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-		me["Fused2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
-		me["Fused"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+		me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+		me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+		me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
 
 		me.updateBottomStatus();
 	},
