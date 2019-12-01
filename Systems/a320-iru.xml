@@ -1,0 +1,20 @@
+<!-- Airbus A320 IRU -->
+
+<!-- Copyright (c) 2019 Jonathan Redpath -->
+
+<system name="A320: IRU">
+
+    <channel name="IRU Accelerometers">
+		<accelerometer name="systems/navigation/acc-z">
+		
+		</accelerometer>
+			<orientation unit="DEG">
+    			<pitch> 0.0 </pitch>
+    			<roll>  0.0 </roll>
+    			<yaw> 	0.0 </yaw>
+  			</orientation>
+  			<axis>Z</axis>
+  			<lag>0.0</lag>
+	</channel>
+
+</system>

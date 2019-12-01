@@ -11,11 +11,11 @@
 				<product>
 					<property>aero/alpha-deg</property>
 					<table>
-						<independentVar lookup="row">/velocities/groundspeed-mps</independentVar>
+						<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
 						<tableData>
 							0  0.0
-							2  0.0
-							3  1.0
+							5  0.0
+							6  1.0
 						</tableData>
 					</table>
 				</product>
