@@ -5,84 +5,178 @@
 
 # If All ELACs Fail, Alternate Law
 
-setprop("/it-fbw/roll-back", 0);
-setprop("/it-fbw/spd-hold", 0);
-setprop("/it-fbw/protections/overspeed", 0);
-setprop("/it-fbw/protections/overspeed-roll-back", 0);
-setprop("/it-fbw/speeds/vmo-mmo", 350);
 var mmoIAS = 0;
 
-var fctlInit = func {
-	setprop("/controls/fctl/elac1", 1);
-	setprop("/controls/fctl/elac2", 1);
-	setprop("/controls/fctl/sec1", 1);
-	setprop("/controls/fctl/sec2", 1);
-	setprop("/controls/fctl/sec3", 1);
-	setprop("/controls/fctl/fac1", 1);
-	setprop("/controls/fctl/fac2", 1);
-	setprop("/systems/fctl/elac1", 0);
-	setprop("/systems/fctl/elac2", 0);
-	setprop("/systems/fctl/sec1", 0);
-	setprop("/systems/fctl/sec2", 0);
-	setprop("/systems/fctl/sec3", 0);
-	setprop("/systems/fctl/fac1", 0);
-	setprop("/systems/fctl/fac2", 0);
-	setprop("/it-fbw/degrade-law", 0);
-	setprop("/it-fbw/override", 0);
-	setprop("/it-fbw/law", 0);
-	updatet.start();
-	fbwt.start();
-}
+var elac1_sw = 0;
+var elac2_sw = 0;
+var sec1_sw = 0;
+var sec2_sw = 0;
+var sec3_sw = 0;
+var fac1_sw = 0;
+var fac2_sw = 0;
+	
+var elac1_fail = 0;
+var elac2_fail = 0;
+var sec1_fail = 0;
+var sec2_fail = 0;
+var sec3_fail = 0;
+var fac1_fail = 0;
+var fac2_fail = 0;
+
+var ac_ess = 0;
+var dc_ess = 0;
+var dc_ess_shed = 0;
+var ac1 = 0;
+var ac2 = 0;
+var dc1 = 0;
+var dc2 = 0;
+var dcHot1 = 0;
+var dcHot2 = 0;
+var blue = 0;
+var green = 0;
+var yellow = 0;
+var ail = 0;
+var roll = 0;
+var rollback = 0;
+var battery1_sw = 0;
+var battery2_sw = 0;
+
+var law = 0;
+
+var FBW = {
+	degradeLaw: props.globals.getNode("/it-fbw/degrade-law"),
+	activeLaw: props.globals.getNode("/it-fbw/law"),
+	override: props.globals.getNode("/it-fbw/override"),
+	rollBack: props.globals.getNode("/it-fbw/roll-back"),
+	rollLim: props.globals.getNode("/it-fbw/roll-lim"),
+	Computers: {
+		elac1: props.globals.getNode("/systems/fctl/elac1"),
+		elac2: props.globals.getNode("/systems/fctl/elac2"),
+		sec1: props.globals.getNode("/systems/fctl/sec1"),
+		sec2: props.globals.getNode("/systems/fctl/sec2"),
+		sec3: props.globals.getNode("/systems/fctl/sec3"),
+		fac1: props.globals.getNode("/systems/fctl/fac1"),
+		fac2: props.globals.getNode("/systems/fctl/fac2"),
+	},
+	Failures: {
+		elac1: props.globals.getNode("/systems/failures/fctl/elac1"),
+		elac2: props.globals.getNode("/systems/failures/fctl/elac2"),
+		sec1: props.globals.getNode("/systems/failures/fctl/sec1"),
+		sec2: props.globals.getNode("/systems/failures/fctl/sec2"),
+		sec3: props.globals.getNode("/systems/failures/fctl/sec3"),
+		fac1: props.globals.getNode("/systems/failures/fctl/fac1"),
+		fac2: props.globals.getNode("/systems/failures/fctl/fac2"),
+	},
+	Lights: {
+		elac1: props.globals.getNode("/controls/fctl/lights/elac1-fault"),
+		elac2: props.globals.getNode("/controls/fctl/lights/elac2-fault"),
+		sec1: props.globals.getNode("/controls/fctl/lights/sec1-fault"),
+		sec2: props.globals.getNode("/controls/fctl/lights/sec2-fault"),
+		sec2: props.globals.getNode("/controls/fctl/lights/sec3-fault"),
+		fac1: props.globals.getNode("/controls/fctl/lights/fac1-fault"),
+		fac2: props.globals.getNode("/controls/fctl/lights/fac2-fault"),
+	},
+	Protections: {
+		overspeedRoll: props.globals.getNode("/it-fbw/protections/overspeed-roll-back"),
+	},
+	Switches: {
+		elac1Sw: props.globals.getNode("/controls/fctl/switches/elac1"),
+		elac2Sw: props.globals.getNode("/controls/fctl/switches/elac2"),
+		sec1Sw: props.globals.getNode("/controls/fctl/switches/sec1"),
+		sec2Sw: props.globals.getNode("/controls/fctl/switches/sec2"),
+		sec3Sw: props.globals.getNode("/controls/fctl/switches/sec3"),
+		fac1Sw: props.globals.getNode("/controls/fctl/switches/fac1"),
+		fac2Sw: props.globals.getNode("/controls/fctl/switches/fac2"),
+	},
+	init: func() {
+		if (updatet.isRunning) {
+			updatet.stop();
+		}
+		if (fbwt.isRunning) {
+			fbwt.stop();
+		}
+		
+		me.resetFail();
+		
+		me.Switches.elac1Sw.setBoolValue(1);
+		me.Switches.elac2Sw.setBoolValue(1);
+		me.Switches.sec1Sw.setBoolValue(1);
+		me.Switches.sec2Sw.setBoolValue(1);
+		me.Switches.sec3Sw.setBoolValue(1);
+		me.Switches.fac1Sw.setBoolValue(1);
+		me.Switches.fac2Sw.setBoolValue(1);
+		me.Computers.elac1.setBoolValue(0);
+		me.Computers.elac2.setBoolValue(0);
+		me.Computers.sec1.setBoolValue(0);
+		me.Computers.sec2.setBoolValue(0);
+		me.Computers.sec3.setBoolValue(0);
+		me.Computers.fac1.setBoolValue(0);
+		me.Computers.fac2.setBoolValue(0);
+		me.degradeLaw.setValue(0);
+		me.activeLaw.setValue(0);
+		me.override.setValue(0);
+		
+		if (!updatet.isRunning) {
+			updatet.start();
+		}
+		if (!fbwt.isRunning) {
+			fbwt.start();
+		}
+	},
+	resetFail: func() {
+		me.Failures.elac1.setBoolValue(0);
+		me.Failures.elac2.setBoolValue(0);
+		me.Failures.sec1.setBoolValue(0);
+		me.Failures.sec2.setBoolValue(0);
+		me.Failures.sec3.setBoolValue(0);
+		me.Failures.fac1.setBoolValue(0);
+		me.Failures.fac2.setBoolValue(0);
+	},
+};
 
 var update_loop = func {
-	var elac1_sw = getprop("/controls/fctl/elac1");
-	var elac2_sw = getprop("/controls/fctl/elac2");
-	var sec1_sw = getprop("/controls/fctl/sec1");
-	var sec2_sw = getprop("/controls/fctl/sec2");
-	var sec3_sw = getprop("/controls/fctl/sec3");
-	var fac1_sw = getprop("/controls/fctl/fac1");
-	var fac2_sw = getprop("/controls/fctl/fac2");
+	elac1_sw = FBW.Switches.elac1Sw.getValue();
+	elac2_sw = FBW.Switches.elac2Sw.getValue();
+	sec1_sw = FBW.Switches.sec1Sw.getValue();
+	sec2_sw = FBW.Switches.sec2Sw.getValue();
+	sec3_sw = FBW.Switches.sec3Sw.getValue();
+	fac1_sw = FBW.Switches.fac1Sw.getValue();
+	fac2_sw = FBW.Switches.fac2Sw.getValue();
 	
-	var elac1_fail = getprop("/systems/failures/elac1");
-	var elac2_fail = getprop("/systems/failures/elac2");
-	var sec1_fail = getprop("/systems/failures/sec1");
-	var sec2_fail = getprop("/systems/failures/sec2");
-	var sec3_fail = getprop("/systems/failures/sec3");
-	var fac1_fail = getprop("/systems/failures/fac1");
-	var fac2_fail = getprop("/systems/failures/fac2");
+	elac1_fail = FBW.Failures.elac1.getValue();
+	elac2_fail = FBW.Failures.elac2.getValue();
+	sec1_fail = FBW.Failures.sec1.getValue();
+	sec2_fail = FBW.Failures.sec2.getValue();
+	sec3_fail = FBW.Failures.sec3.getValue();
+	fac1_fail = FBW.Failures.fac1.getValue();
+	fac2_fail = FBW.Failures.fac2.getValue();
 	
-	var ac_ess = props.globals.getNode("/systems/electrical/bus/ac-ess").getValue();
-	var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess").getValue();
-	var dc_ess_shed = props.globals.getNode("/systems/electrical/bus/dc-ess-shed").getValue();
-	var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1").getValue();
-	var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2").getValue();
-	var dc1 = props.globals.getNode("/systems/electrical/bus/dc-1").getValue();
-	var dc2 = props.globals.getNode("/systems/electrical/bus/dc-2").getValue();
-	var battery1_sw = props.globals.getNode("/controls/electrical/switches/bat-1").getValue();
-	var battery2_sw = props.globals.getNode("/controls/electrical/switches/bat-2").getValue();
-	var elac1_test = getprop("/systems/electrical/elac1-test");
-	var elac2_test = getprop("/systems/electrical/elac2-test");
+	ac_ess = systems.ELEC.Bus.acEss.getValue();
+	dc_ess = systems.ELEC.Bus.dcEss.getValue();
+	dc_ess_shed = systems.ELEC.Bus.dcEssShed.getValue();
+	ac1 = systems.ELEC.Bus.ac1.getValue();
+	ac2 = systems.ELEC.Bus.ac2.getValue();
+	dc1 = systems.ELEC.Bus.dc1.getValue();
+	dc2 = systems.ELEC.Bus.dc2.getValue();
+	dcHot1 = systems.ELEC.Bus.dcHot1.getValue();
+	dcHot2 = systems.ELEC.Bus.dcHot2.getValue();
+	battery1_sw = systems.ELEC.Switch.bat1.getValue();
+	battery2_sw = systems.ELEC.Switch.bat2.getValue();
 	
-	if (elac1_sw and !elac1_fail and (dc_ess >= 25 or battery1_sw) and !elac1_test) {
-		setprop("/systems/fctl/elac1", 1);
-		setprop("/systems/failures/elac1-fault", 0);
-	} else if (elac1_sw and (elac1_fail or (dc_ess < 25 and !battery1_sw)) and !elac1_test) {
-		setprop("/systems/failures/elac1-fault", 1);
-		setprop("/systems/fctl/elac1", 0);
-	} else if (!elac1_test) {
-		setprop("/systems/failures/elac1-fault", 0);
-		setprop("/systems/fctl/elac1", 1);
+	if (elac1_sw and !elac1_fail and (dc_ess >= 25 or dcHot1 >= 25)) {
+		FBW.Computers.elac1.setValue(1);
+		FBW.Lights.elac1.setValue(0);
+	} else if (elac1_sw and (elac1_fail or (dc_ess < 25 and dcHot1 < 25))) {
+		FBW.Computers.elac1.setValue(0);
+		FBW.Lights.elac1.setValue(1);
 	}
 	
-	if (elac2_sw and !elac2_fail and (dc2 >= 25 or battery2_sw) and !elac2_test) {
-		setprop("/systems/fctl/elac2", 1);
-		setprop("/systems/failures/elac2-fault", 0);
-	} else if (elac2_sw and (elac2_fail or (dc2 < 25 and !battery2_sw)) and !elac2_test) {
-		setprop("/systems/failures/elac2-fault", 1);
-		setprop("/systems/fctl/elac2", 0);
-	} else if (!elac2_test) {
-		setprop("/systems/failures/elac2-fault", 0);
-		setprop("/systems/fctl/elac2", 1);
+	if (elac2_sw and !elac2_fail and (dc2 >= 25 or dcHot2 >= 25)) {
+		FBW.Computers.elac2.setValue(1);
+		FBW.Lights.elac2.setValue(0);
+	} else if (elac1_sw and (elac2_fail or (dc2 < 25 and dcHot2 < 25))) {
+		FBW.Computers.elac2.setValue(0);
+		FBW.Lights.elac2.setValue(1);
 	}
 	
 	if (sec1_sw and !sec1_fail and ac_ess >= 110) {
@@ -165,37 +259,40 @@ var update_loop = func {
 	var sec3 = getprop("/systems/fctl/sec3");
 	var fac1 = getprop("/systems/fctl/fac1");
 	var fac2 = getprop("/systems/fctl/fac2");
-	var law = getprop("/it-fbw/law");
+	law = FBW.activeLaw.getValue();
 	
 	# Degrade logic, all failures which degrade FBW need to go here. -JD
+	blue = systems.HYD.Psi.blue.getValue();
+	green = systems.HYD.Psi.green.getValue();
+	yellow = systems.HYD.Psi.yellow.getValue();
 	if (getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0) {
 		if (!elac1 and !elac2) {
 			if (law == 0) {
-				setprop("/it-fbw/degrade-law", 1);
+				FBW.degradeLaw.setValue(1);
 			}
 		}
-		if (ac_ess >= 110 and getprop("/systems/hydraulic/blue-psi") >= 1500 and getprop("/systems/hydraulic/green-psi") < 1500 and getprop("/systems/hydraulic/yellow-psi") < 1500) {
+		if (ac_ess >= 110 and blue >= 1500 and green < 1500 and yellow < 1500) {
 			if (law == 0 or law == 1) {
-				setprop("/it-fbw/degrade-law", 2);
+				FBW.degradeLaw.setValue(2);
 			}
 		}
-		if (ac_ess < 110 or (getprop("/systems/hydraulic/blue-psi") < 1500 and getprop("/systems/hydraulic/green-psi") < 1500 and getprop("/systems/hydraulic/yellow-psi") < 1500)) {
-			setprop("/it-fbw/degrade-law", 3);
+		if (ac_ess < 110 or (blue < 1500 and green < 1500 and yellow < 1500)) {
+			FBW.degradeLaw.setValue(3);
 		}
 	}
 	
 	if (getprop("/controls/gear/gear-down") == 1 and getprop("/it-autoflight/output/ap1") == 0 and getprop("/it-autoflight/output/ap2") == 0) {
 		if (law == 1) {
-			setprop("/it-fbw/degrade-law", 2);
+			FBW.degradeLaw.setValue(2);
 		}
 	}
 	
 	# degrade loop runs faster; reset this variable
-	var law = getprop("/it-fbw/law");
+	law = FBW.activeLaw.getValue();
 	
 	# Mech Backup can always return to direct, if it can.
-	if (law == 3 and ac_ess >= 110 and (getprop("/systems/hydraulic/green-psi") >= 1500 or getprop("/systems/hydraulic/blue-psi") >= 1500 or getprop("/systems/hydraulic/yellow-psi") >= 1500)) {
-		setprop("/it-fbw/degrade-law", 2);
+	if (law == 3 and ac_ess >= 110 and (green >= 1500 or blue >= 1500 or yellow >= 1500)) {
+		FBW.degradeLaw.setValue(2);
 	}
 	
 	mmoIAS = (getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") / getprop("/instrumentation/airspeed-indicator/indicated-mach")) * 0.82;
@@ -220,59 +317,60 @@ var update_loop = func {
 }
 	
 var fbw_loop = func {
-	var ail = getprop("/controls/flight/aileron");
+	ail = pts.Controls.Flight.aileron.getValue();
+	roll = pts.Orientation.roll.getValue();
+	rollback = FBW.rollBack.getValue();
 	
-	if (ail > 0.4 and getprop("/orientation/roll-deg") >= -33.5) {
-		setprop("/it-fbw/roll-lim", "67");
-		if (getprop("/it-fbw/roll-back") == 1 and getprop("/orientation/roll-deg") <= 33.5 and getprop("/orientation/roll-deg") >= -33.5) {
-			setprop("/it-fbw/roll-back", 0);
+	if (ail > 0.4 and roll >= -33.5) {
+		FBW.rollLim.setValue("67");
+		if (rollback == 1 and roll <= 33.5 and roll >= -33.5) {
+			FBW.rollBack.setValue(0);
+		} elsif (rollback == 0 and (roll > 33.5 or roll < -33.5)) {
+			FBW.rollBack.setValue(1);
 		}
-		if (getprop("/it-fbw/roll-back") == 0 and (getprop("/orientation/roll-deg") > 33.5 or getprop("/orientation/roll-deg") < -33.5)) {
-			setprop("/it-fbw/roll-back", 1);
-		}
-	} else if (ail < -0.4 and getprop("/orientation/roll-deg") <= 33.5) {
-		setprop("/it-fbw/roll-lim", "67");
-		if (getprop("/it-fbw/roll-back") == 1 and getprop("/orientation/roll-deg") <= 33.5 and getprop("/orientation/roll-deg") >= -33.5) {
-			setprop("/it-fbw/roll-back", 0);
-		}
-		if (getprop("/it-fbw/roll-back") == 0 and (getprop("/orientation/roll-deg") > 33.5 or getprop("/orientation/roll-deg") < -33.5)) {
-			setprop("/it-fbw/roll-back", 1);
+	} else if (ail < -0.4 and roll <= 33.5) {
+		FBW.rollLim.setValue("67");
+		if (rollback == 1 and roll <= 33.5 and roll >= -33.5) {
+			FBW.rollBack.setValue(0);
+		} elsif (rollback == 0 and (roll > 33.5 or roll < -33.5)) {
+			FBW.rollBack.setValue(1);
 		}
 	} else if (ail < 0.04 and ail > -0.04) {
-		setprop("/it-fbw/roll-lim", "33");
-		if (getprop("/it-fbw/roll-back") == 1 and getprop("/orientation/roll-deg") <= 33.5 and getprop("/orientation/roll-deg") >= -33.5) {
-			setprop("/it-fbw/roll-back", 0);
+		FBW.rollLim.setValue("33");
+		if (rollback == 1 and roll <= 33.5 and roll >= -33.5) {
+			FBW.rollBack.setValue(0);
 		}
 	}
 	
 	if (ail > 0.04 or ail < -0.04) {
-		setprop("/it-fbw/protections/overspeed-roll-back", 0);
+		FBW.Protections.overspeedRoll.setValue(0);
 	} else if (ail < 0.04 and ail > -0.04) {
-		setprop("/it-fbw/protections/overspeed-roll-back", 1);
+		FBW.Protections.overspeedRoll.setValue(1);
 	}
 
 	if (getprop("/it-fbw/override") == 0) {
-		var degrade = getprop("/it-fbw/degrade-law");
+		var active = FBW.activeLaw.getValue();
+		var degrade = FBW.degradeLaw.getValue();
 		if (degrade == 0) {
-			if (getprop("/it-fbw/law") != 0) {
-				setprop("/it-fbw/law", 0);
+			if (active != 0) {
+				FBW.activeLaw.setValue(0);
 			}
 		} else if (degrade == 1) {
-			if (getprop("/it-fbw/law") != 1) {
-				setprop("/it-fbw/law", 1);
+			if (active != 1) {
+				FBW.activeLaw.setValue(1);
 			}
 		} else if (degrade == 2) {
-			if (getprop("/it-fbw/law") != 2) {
-				setprop("/it-fbw/law", 2);
+			if (active != 2) {
+				FBW.activeLaw.setValue(2);
 			}
 		} else if (degrade == 3) {
-			if (getprop("/it-fbw/law") != 3) {
-				setprop("/it-fbw/law", 3);
+			if (active != 3) {
+				FBW.activeLaw.setValue(3);
 			}
 		}
 	}
 	
-	if (getprop("/it-fbw/law") != 0) {
+	if (FBW.activeLaw.getValue() != 0) {
 		if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
 			fcu.apOff("hard", 0);
 		}

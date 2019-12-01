@@ -58,6 +58,7 @@ var FCU = {
 var FCUController = {
 	FCU1: nil,
 	FCU2: nil,
+	activeFMGC: props.globals.getNode("/FMGC/active-fmgc-channel"),
 	FCUworking: 0,
 	_init: 0,
 	init: func() {
@@ -77,7 +78,19 @@ var FCUController = {
 		} else {
 			me.FCUworking = 0;
 		}
+		
+		notification = nil;
+		foreach (var update_item; me.update_items) {
+			update_item.update(notification);
+		}
 	},
+	update_items: [
+		props.UpdateManager.FromPropertyHashList(["/it-autoflight/output/fd1","/it-autoflight/output/fd2", "/it-autoflight/output/ap1", "/it-autoflight/output/ap2"], 1, func(notification)
+			{
+				updateActiveFMGC();
+			}
+		),
+	],
 	resetFail: func() {
 		if (me._init == 0) { return; }
 		me.FCU1.restore();
@@ -103,7 +116,7 @@ var FCUController = {
 	},
 	ATHR: func() {
 		if (me.FCUworking) {
-			if (!athr.getBoolValue()) {
+			if (!athr.getBoolValue() and !pts.FMGC.CasCompare.rejectAll.getBoolValue()) {
 				athrInput.setValue(1);
 			} else {
 				athrOff("hard");
@@ -440,6 +453,21 @@ var FCUController = {
 		}
 	},
 };
+
+# Master / slave principle of operation depending on the autopilot / flight director engagement
+var updateActiveFMGC = func {
+	if (ap1.getBoolValue()) {
+		FCUController.activeFMGC.setValue(1);
+	} elsif (ap2.getBoolValue()) {
+		FCUController.activeFMGC.setValue(2);
+	} elsif (fd1.getBoolValue()) {
+		FCUController.activeFMGC.setValue(1);
+	} elsif (fd2.getBoolValue()) {
+		FCUController.activeFMGC.setValue(2);
+	} else {
+		FCUController.activeFMGC.setValue(1);
+	}
+}
 
 # Autopilot Disconnection
 var apOff = func(type, side) {

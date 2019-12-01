@@ -121,13 +121,121 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter/indicated-altitude-ft</property></abs>
+						<abs><property>/instrumentation/altimeter[0]/indicated-altitude-ft</property></abs>
 						<value>100</value>
 					</div>
 				</floor>
 			</expression>
 		</input>
-		<output>/instrumentation/altimeter/indicated-altitude-ft-pfd</output>
+		<output>/instrumentation/altimeter[0]/indicated-altitude-ft-pfd</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter[1]/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter[1]/indicated-altitude-ft-pfd</output>
+	</filter>
+
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter[2]/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter[2]/indicated-altitude-ft-pfd</output>
+	</filter>
+
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter[3]/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter[3]/indicated-altitude-ft-pfd</output>
+	</filter>
+
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter[4]/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter[4]/indicated-altitude-ft-pfd</output>
+	</filter>
+
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter[5]/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter[5]/indicated-altitude-ft-pfd</output>
+	</filter>
+
+	<filter>
+		<name>Altitude PFD</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<input>
+			<expression>
+				<floor>
+					<div>
+						<abs><property>/instrumentation/altimeter[6]/indicated-altitude-ft</property></abs>
+						<value>100</value>
+					</div>
+				</floor>
+			</expression>
+		</input>
+		<output>/instrumentation/altimeter[6]/indicated-altitude-ft-pfd</output>
 	</filter>
 
 	<filter>
