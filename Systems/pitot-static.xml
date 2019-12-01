@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <pitot>
+    <name>pitot</name>
+    <number>0</number>
+  </pitot>
+  
+  <pitot>
+    <name>pitot</name>
+    <number>1</number>
+  </pitot>
+  
+  <pitot>
+    <name>pitot</name>
+    <number>2</number>
+  </pitot>
+
+  <static>
+    <name>static</name>
+    <number>0</number>
+    <tau>0.7</tau>
+	<type>1</type>
+    <error-factor>0.43</error-factor>
+  </static>
+
+  <static>
+    <name>static</name>
+    <number>1</number>
+    <tau>0.7</tau>
+	<type>1</type>
+    <error-factor>0.42</error-factor>
+  </static>
+
+  <static>
+    <name>static</name>
+    <number>2</number>
+    <tau>0.7</tau>
+	<type>1</type>
+    <error-factor>0.45</error-factor>
+  </static>
+
+  <vacuum> <!-- todo get property based on elec -->
+    <name>vacuum</name>
+    <number>0</number>
+    <rpm>/engines/engine[0]/rpm</rpm>
+    <scale>1.0</scale>
+  </vacuum>
+
+  <vacuum>
+    <name>vacuum</name>
+    <number>1</number>
+    <rpm>/engines/engine[1]/rpm</rpm>
+    <scale>1.0</scale>
+  </vacuum>
+
+</PropertyList>

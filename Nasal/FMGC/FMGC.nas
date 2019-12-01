@@ -264,24 +264,24 @@ var masterFMGC = maketimer(0.2, func {
 		reset_FMGC();
 	}
 	
+	if (getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") != 1024) {
+		setprop("/FMGC/internal/maxspeed", getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") - 4);
+	} else {
+		setprop("/FMGC/internal/maxspeed", getprop("/it-fbw/speeds/vmo-mmo"));
+	}
+	
 	flap = getprop("/controls/flight/flap-pos");
 	if (flap == 0) { # 0
-		setprop("/FMGC/internal/maxspeed", getprop("/it-fbw/speeds/vmo-mmo"));
 		setprop("/FMGC/internal/minspeed", 202);
 	} else if (flap == 1) { # 1
-		setprop("/FMGC/internal/maxspeed", 230);
 		setprop("/FMGC/internal/minspeed", 184);
 	} else if (flap == 2) { # 1+F
-		setprop("/FMGC/internal/maxspeed", 215);
 		setprop("/FMGC/internal/minspeed", 171);
 	} else if (flap == 3) { # 2
-		setprop("/FMGC/internal/maxspeed", 200);
 		setprop("/FMGC/internal/minspeed", 156);
 	} else if (flap == 4) { # 3
-		setprop("/FMGC/internal/maxspeed", 185);
 		setprop("/FMGC/internal/minspeed", 147);
 	} else if (flap == 5) { # FULL
-		setprop("/FMGC/internal/maxspeed", 177);
 		setprop("/FMGC/internal/minspeed", 131);
 	}
 	

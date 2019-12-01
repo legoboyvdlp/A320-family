@@ -194,13 +194,14 @@ var triggerDoor = func(door, doorName, doorDesc) {
 #######################
 
 var systemsInit = func {
-	fbw.fctlInit();
+	fbw.FBW.init();
 	light_manager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
+	systems.ADIRSnew.init();
 	systems.eng_init();
 	systems.fire_init();
 	systems.autobrake_init();
@@ -220,6 +221,7 @@ var systemsInit = func {
 	ecam.ECAM_controller.init();
 	atc.init();
 	fcu.FCUController.init();
+	dmc.DMController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
@@ -232,11 +234,13 @@ var systemsLoop = maketimer(0.1, func {
 	systems.HYD.loop();
 	systems.FUEL.loop();
 	systems.ADIRS.loop();
+	systems.ADIRSnew.loop();
 	libraries.ECAM.loop();
 	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop();
+	dmc.DMController.loop();
 	
 	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/nose") == 0 and getprop("/services/chocks/left") == 0 and getprop("/services/chocks/right") == 0))) {
 		setprop("/controls/electrical/ground-cart", 0);

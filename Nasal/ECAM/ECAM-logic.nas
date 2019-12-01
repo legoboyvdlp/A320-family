@@ -10,7 +10,7 @@ var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
 
-var fac1Node   = props.globals.getNode("/controls/fctl/fac1", 1);
+var fac1Node   = props.globals.getNode("/controls/fctl/switches/fac1", 1);
 var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
@@ -21,6 +21,7 @@ var apu_bleedSw   = props.globals.getNode("/controls/pneumatic/switches/bleedapu
 var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
 var cutoff2    = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
+var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
 # local variables
@@ -28,11 +29,53 @@ var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
 var gear_agl_cur = nil;
-
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
 	
-	# FCTL
+	# Stall
+	# todo - altn law and emer cancel flipflops page 2440
+	if (phaseVar >= 5 and phaseVar <= 7 and (getprop("/fdm/jsbsim/fcs/slat-pos-deg") <= 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 15 or getprop("/systems/navigation/adr/output/aoa-2") > 15 or getprop("/systems/navigation/adr/output/aoa-3") > 15)) or (getprop("/fdm/jsbsim/fcs/slat-pos-deg") > 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 23 or getprop("/systems/navigation/adr/output/aoa-2") > 23 or getprop("/systems/navigation/adr/output/aoa-3") > 23))) {
+		stall.active = 1;
+	} else {
+		ECAM_controller.warningReset(stall);
+	}
+	
+	if (stall.active) {
+		stallVoice.setValue(1);
+	} else {
+		stallVoice.setValue(0);
+	}
+	
+	if ((phaseVar == 1 or (phaseVar >= 5 and phaseVar <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
+		overspeed.active = 1;
+		if (getprop("/systems/navigation/adr/computation/overspeed-vmo") or getprop("/systems/navigation/adr/computation/overspeed-mmo")) {
+			overspeedVMO.active = 1;
+		} else {
+			ECAM_controller.warningReset(overspeedVMO);
+		}
+		
+		if (getprop("/systems/navigation/adr/computation/overspeed-vle")) {
+			overspeedGear.active = 1;
+		} else {
+			ECAM_controller.warningReset(overspeedGear);
+		}
+		
+		if (getprop("/systems/navigation/adr/computation/overspeed-vfe")) {
+			overspeedFlap.active = 1;
+			overspeedFlap.msg = "-VFE................" ~ (systems.ADIRSnew.overspeedVFE.getValue() - 4);
+		} else {
+			ECAM_controller.warningReset(overspeedFlap);
+			overspeedFlap.msg = "-VFE................XXX";
+		}
+	} else {
+		ECAM_controller.warningReset(overspeed);
+		ECAM_controller.warningReset(overspeedVMO);
+		ECAM_controller.warningReset(overspeedGear);
+		ECAM_controller.warningReset(overspeedFlap);
+		overspeedFlap.msg = "-VFE................XXX";
+	}
+	
+	# FCTL FLAPS NOT ZERO
 	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("/controls/flight/flap-lever") != 0 and getprop("/instrumentation/altimeter/indicated-altitude-ft") > 22000) {
 		flap_not_zero.active = 1;
 	} else {
@@ -929,7 +972,7 @@ var messages_priority_3 = func {
 var messages_priority_2 = func {
 	phaseVar = phaseNode.getValue();
 	# DC EMER CONFIG
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar != 4 and phaseVar != 8 and dcEmerconfig.clearFlag == 0) {
 		dcEmerconfig.active = 1;
 		dcEmerconfigManOn.active = 1;
 	} else {
@@ -937,7 +980,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcEmerconfigManOn);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar != 4 and phaseVar != 8 and dcBus12Fault.clearFlag == 0) {
 		dcBus12Fault.active = 1;
 		dcBus12FaultBlower.active = 1;
 		dcBus12FaultExtract.active = 1;
@@ -953,7 +996,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBus12FaultBrking);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.acEss.getValue() < 110 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.acEss.getValue() < 110 and phaseVar != 4 and phaseVar != 8 and AcBusEssFault.clearFlag == 0) {
 		AcBusEssFault.active = 1;
 		if (!systems.ELEC.Switch.acEssFeed.getBoolValue()) {
 			AcBusEssFaultFeed.active = 1;
@@ -967,7 +1010,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(AcBusEssFaultAtc);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac1.getValue() < 110 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac1.getValue() < 110 and phaseVar != 4 and phaseVar != 8 and AcBus1Fault.clearFlag == 0) {
 		AcBus1Fault.active = 1;
 		AcBus1FaultBlower.active = 1;
 	} else {
@@ -975,7 +1018,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(AcBus1FaultBlower);
 	}
 	
-	if (!dcEmerconfig.active and systems.ELEC.Bus.dcEss.getValue() < 25 and phaseVar != 4 and phaseVar != 8) {
+	if (!dcEmerconfig.active and systems.ELEC.Bus.dcEss.getValue() < 25 and phaseVar != 4 and phaseVar != 8 and DcEssBusFault.clearFlag == 0) {
 		DcEssBusFault.active = 1;
 		DcEssBusFaultRadio.active = 1;
 		DcEssBusFaultRadio2.active = 1;
@@ -989,7 +1032,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(DcEssBusFaultGPWS);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac2.getValue() < 110 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac2.getValue() < 110 and phaseVar != 4 and phaseVar != 8 and AcBus2Fault.clearFlag == 0) {
 		AcBus2Fault.active = 1;
 		AcBus2FaultExtract.active = 1;
 	} else {
@@ -997,7 +1040,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(AcBus2FaultExtract);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() >= 25 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() >= 25 and phaseVar != 4 and phaseVar != 8 and dcBus1Fault.clearFlag == 0) {
 		dcBus1Fault.active = 1;
 		dcBus1FaultBlower.active = 1;
 		dcBus1FaultExtract.active = 1;
@@ -1007,7 +1050,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBus1FaultExtract);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() >= 25 and systems.ELEC.Bus.dc2.getValue() <= 25 and phaseVar != 4 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() >= 25 and systems.ELEC.Bus.dc2.getValue() <= 25 and phaseVar != 4 and phaseVar != 8 and dcBus2Fault.clearFlag == 0) {
 		dcBus2Fault.active = 1;
 		dcBus2FaultAirData.active = 1;
 		dcBus2FaultBaro.active = 1;
@@ -1017,13 +1060,13 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBus2FaultBaro);
 	}
 	
-	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dcBat.getValue() < 25 and phaseVar != 4 and phaseVar != 5 and phaseVar != 7 and phaseVar != 8) {
+	if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dcBat.getValue() < 25 and phaseVar != 4 and phaseVar != 5 and phaseVar != 7 and phaseVar != 8 and dcBusBatFault.clearFlag == 0) {
 		dcBusBatFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(dcBusBatFault);
 	}
 	
-	if (!(getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("/systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar != 4 and phaseVar != 8) {
+	if (!(getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("/systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar != 4 and phaseVar != 8 and dcBusEssShed.clearFlag == 0) {
 		dcBusEssShed.active = 1;
 		dcBusEssShedExtract.active = 1;
 		dcBusEssShedIcing.active = 1;
@@ -1033,7 +1076,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBusEssShedIcing);
 	}
 	
-	if (!(getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("/systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar != 4 and phaseVar != 8) {
+	if (!(getprop("/systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("/systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar != 4 and phaseVar != 8 and acBusEssShed.clearFlag == 0) {
 		acBusEssShed.active = 1;
 		if (!getprop("/systems/electrical/some-electric-thingie/emer-elec-config")) {
 			acBusEssShedAtc.active = 1;
@@ -1045,7 +1088,13 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
 	
-	if (fcu.FCUController.FCU1.failed and fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and systems.ELEC.Bus.dcEss.getValue() >= 25) {
+	if (getprop("/instrumentation/tcas/serviceable") == 0 and phaseVar != 3 and phaseVar != 4 and phaseVar != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
+		tcasFault.active = 1;
+	} else {
+		ECAM_controller.warningReset(tcasFault);
+	}
+	
+	if (fcu.FCUController.FCU1.failed and fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and fcuFault.clearFlag == 0) {
 		fcuFault.active = 1;
 		fcuFaultBaro.active = 1;
 	} else {
@@ -1053,7 +1102,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fcuFaultBaro);
 	}
 	
-	if (fcu.FCUController.FCU1.failed and !fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25) {
+	if (fcu.FCUController.FCU1.failed and !fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and fcuFault1.clearFlag == 0) {
 		fcuFault1.active = 1;
 		fcuFault1Baro.active = 1;
 	} else {
@@ -1061,7 +1110,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fcuFault1Baro);
 	}
 	
-	if (fcu.FCUController.FCU2.failed and !fcu.FCUController.FCU1.failed and systems.ELEC.Bus.dc2.getValue() >= 25) {
+	if (fcu.FCUController.FCU2.failed and !fcu.FCUController.FCU1.failed and systems.ELEC.Bus.dc2.getValue() >= 25 and fcuFault2.clearFlag == 0) {
 		fcuFault2.active = 1;
 		fcuFault2Baro.active = 1;
 	} else {
@@ -1573,7 +1622,7 @@ var messages_right_memo = func {
 }
 
 # Listeners
-setlistener("/controls/fctl/fac1", func() {
+setlistener("/controls/fctl/switches/fac1", func() {
 	if (dualFail.active == 0 and emerconfig.active == 0) { return; }
 	
 	if (fac1Node.getBoolValue() and dualFail.active == 1) {

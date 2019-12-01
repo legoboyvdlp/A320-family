@@ -1,0 +1,161 @@
+<!-- Airbus A320 FMGC -->
+
+<!-- Copyright (c) 2019 Jonathan Redpath -->
+
+<system name="A320: FMGC">
+
+	<channel name="FMGC" execrate="8">
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
+			<function>
+				<abs>
+					<difference>
+						<property>/systems/navigation/adr/output/cas-1</property>
+						<property>/systems/navigation/adr/output/cas-3</property>
+					</difference>
+				</abs>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-2-to-3">
+			<function>
+				<abs>
+					<difference>
+						<property>/systems/navigation/adr/output/cas-2</property>
+						<property>/systems/navigation/adr/output/cas-3</property>
+					</difference>
+				</abs>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-2-to-1">
+			<function>
+				<abs>
+					<difference>
+						<property>/systems/navigation/adr/output/cas-2</property>
+						<property>/systems/navigation/adr/output/cas-1</property>
+					</difference>
+				</abs>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-all">
+			<function>
+				<ifthen>
+					<and>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+							<value>5</value> <!-- todo - find proper value -->
+						</gt>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+							<value>5</value>
+						</gt>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+							<value>5</value>
+						</gt>
+					</and>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-1"> <!-- 2 and 3 are the same but 1 is different -->
+			<function>
+				<ifthen>
+					<and>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+							<value>5</value> <!-- todo - find proper value -->
+						</gt>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+							<value>5</value>
+						</gt>
+						<lt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+							<value>5</value>
+						</lt>
+					</and>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-2"> <!-- 1 and 3 are the same but 2 is different -->
+			<function>
+				<ifthen>
+					<and>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+							<value>5</value> <!-- todo - find proper value -->
+						</gt>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+							<value>5</value>
+						</gt>
+						<lt>
+							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+							<value>5</value>
+						</lt>
+					</and>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-3"> <!-- 1 and 2 are the same but 3 is different -->
+			<function>
+				<ifthen>
+					<and>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+							<value>5</value> <!-- todo - find proper value -->
+						</gt>
+						<gt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+							<value>5</value>
+						</gt>
+						<lt>
+							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+							<value>5</value>
+						</lt>
+					</and>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/active-airspeed-src-1">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/fmgc/cas-compare/cas-reject-1</property>
+						<value>1</value>
+					</eq>
+					<value>3</value>
+					<value>1</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/active-airspeed-src-2">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/fmgc/cas-compare/cas-reject-2</property>
+						<value>1</value>
+					</eq>
+					<value>3</value>
+					<value>2</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+	</channel>
+
+</system>
