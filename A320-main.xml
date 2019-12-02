@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
@@ -1825,6 +1825,8 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 		</systems>
