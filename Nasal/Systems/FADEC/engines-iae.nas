@@ -208,7 +208,7 @@ var auto_start_one = func {
 }
 
 var eng_one_auto_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n1-actual") >= 4.8) {
+	if (getprop("/engines/engine[0]/n1-actual") >= 4.7) {
 		eng_one_auto_start.stop();
 		setprop("/engines/engine[0]/state", 2);
 		setprop("/controls/engines/engine[0]/cutoff", 0);
@@ -271,7 +271,7 @@ var auto_start_two = func {
 }
 
 var eng_two_auto_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n1-actual") >= 4.8) {
+	if (getprop("/engines/engine[1]/n1-actual") >= 4.7) {
 		eng_two_auto_start.stop();
 		setprop("/engines/engine[1]/state", 2);
 		setprop("/controls/engines/engine[1]/cutoff", 0);
