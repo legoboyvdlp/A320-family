@@ -274,6 +274,9 @@
 							</script>
 						</binding>
 					</item>
+				</menu>
+				<menu n="103">
+					<label>Instruments</label>
 					<item>
 						<label>Left MCDU</label>
 						<binding>
@@ -292,8 +295,35 @@
 							</script>
 						</binding>
 					</item>
+					<item>
+						<label>RMP 1</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.rmp1Dialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
+						<label>RMP 2</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.rmp2Dialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
+						<label>RMP 3</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.rmp3Dialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
 				</menu>
-				<menu n="103">
+				<menu n="104">
 					<label>Utilities</label>
 					<item>
 						<label>Select Livery</label>
@@ -1907,6 +1937,7 @@
 		</dmc>
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
+			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
 		</Dialogs>
 	</nasal>
 
