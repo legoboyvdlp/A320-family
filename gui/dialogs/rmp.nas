@@ -1,26 +1,17 @@
-# A320 Refeul panel
+# A320 RM panel
 # merspieler
 
 # Copyright (c) 2019 merspieler
 
 # Distribute under the terms of GPLv2.
 
-# Get nodes
-
 var rmpClass = {
-	_fuelLeftAmount: nil,
-	_fuelCenterAmount: nil,
-	_fuelRightAmount: nil,
-	_fuelTotalAmount: nil,
-	_fuelPreselectAmount: nil,
 	new: func(instance) {
 		var m = {parents:[rmpClass]};
 		m._title = "RMP " ~ instance;
 		m._gfd = nil;
 		m._canvas = nil;
 		m._timer = maketimer(0.1, m, rmpClass._timerf);
-		m._timerUp = maketimer(0.1, m, rmpClass._fuelAdjustUp);
-		m._timerDn = maketimer(0.1, m, rmpClass._fuelAdjustDn);
 		m._instance = instance;
 
 		# Get nodes for this rmp
@@ -232,30 +223,6 @@ var rmpClass = {
 			me._LS_ind.setColorFill(0.125, 0.125, 0.125);
 			me._ADF_ind.setColorFill(0.125, 0.125, 0.125);
 			me._BFO_ind.setColorFill(0.125, 0.125, 0.125);
-		}
-	},
-	_fuelAdjustDn: func() {
-		target = amount.getValue();
-		if (target > 0) {
-			amount.setValue(target - 0.1);
-			if (target - 0.1 >= 10.0) {
-				me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
-			} else {
-				me._FQI_pre.setText(sprintf("%2.2f", target - 0.1));
-			}
-			systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
-		}
-	},
-	_fuelAdjustUp: func() {
-		target = amount.getValue();
-		if (target < max_fuel) {
-			amount.setValue(target + 0.1);
-			if (target + 0.1 >= 10.0) {
-				me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
-			} else {
-				me._FQI_pre.setText(sprintf("%2.2f", target + 0.1));
-			}
-			systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
 	_onClose: func() {
