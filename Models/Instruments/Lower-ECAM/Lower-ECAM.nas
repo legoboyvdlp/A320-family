@@ -548,8 +548,22 @@ var canvas_lowerECAM_base = {
 		}
 	},
 	updateBottomStatus: func() {
-		me["TAT"].setText(sprintf("%2.0f", temperature_degc.getValue()));
-		me["SAT"].setText(sprintf("%2.0f", temperature_degc.getValue()));
+		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
+			me["SAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			me["SAT"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setColor(0.7333,0.3803,0);
+		}
+		
+		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
+			me["TAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			me["TAT"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setColor(0.7333,0.3803,0);
+		}
+		
 		me["UTCh"].setText(sprintf("%02d", hour.getValue()));
 		me["UTCm"].setText(sprintf("%02d", minute.getValue()));
 		if (acconfig_weight_kgs.getValue() == 1) {
@@ -989,8 +1003,14 @@ var canvas_lowerECAM_crz = {
 
 		if (acconfig_weight_kgs.getValue() == 1) {
 			me["Fused-weight-unit"].setText("KG");
+			me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
+			me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
+			me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10) + math.round(fuel_used_lbs2.getValue(), 10))));
 		} else {
 			me["Fused-weight-unit"].setText("LBS");
+			me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+			me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+			me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
 		}
 
 		me.updateBottomStatus();

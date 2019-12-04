@@ -1,9 +1,6 @@
 # A3XX Electronic Centralised Aircraft Monitoring System
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
-var leftmsgEnable = props.globals.initNode("/ECAM/show-left-msg", 1, "BOOL");
-var rightmsgEnable = props.globals.initNode("/ECAM/show-right-msg", 1, "BOOL");
-
 var lines = [props.globals.getNode("/ECAM/msg/line1", 1), props.globals.getNode("/ECAM/msg/line2", 1), props.globals.getNode("/ECAM/msg/line3", 1), props.globals.getNode("/ECAM/msg/line4", 1), props.globals.getNode("/ECAM/msg/line5", 1), props.globals.getNode("/ECAM/msg/line6", 1), props.globals.getNode("/ECAM/msg/line7", 1), props.globals.getNode("/ECAM/msg/line8", 1)];
 var linesCol = [props.globals.getNode("/ECAM/msg/linec1", 1), props.globals.getNode("/ECAM/msg/linec2", 1), props.globals.getNode("/ECAM/msg/linec3", 1), props.globals.getNode("/ECAM/msg/linec4", 1), props.globals.getNode("/ECAM/msg/linec5", 1), props.globals.getNode("/ECAM/msg/linec6", 1), props.globals.getNode("/ECAM/msg/linec7", 1), props.globals.getNode("/ECAM/msg/linec8", 1)];
 var rightLines = [props.globals.getNode("/ECAM/rightmsg/line1", 1), props.globals.getNode("/ECAM/rightmsg/line2", 1), props.globals.getNode("/ECAM/rightmsg/line3", 1), props.globals.getNode("/ECAM/rightmsg/line4", 1), props.globals.getNode("/ECAM/rightmsg/line5", 1), props.globals.getNode("/ECAM/rightmsg/line6", 1), props.globals.getNode("/ECAM/rightmsg/line7", 1), props.globals.getNode("/ECAM/rightmsg/line8", 1)];
@@ -18,7 +15,7 @@ var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
-var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL")];
+var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL")];
 var warningFlash = props.globals.initNode("/ECAM/warnings/master-warning-flash", 0, "BOOL");
 
 var lineIndex = 0;
@@ -46,11 +43,13 @@ var warning = {
 		t.sdPage = sdPage;
 		t.isMemo = isMemo;
 		t.hasCalled = 0;
+		t.wasActive = 0;
 		
 		return t
 	},
 	write: func() {
 		if (me.active == 0) { return; }
+		me.wasActive = 1;
 		lineIndex = 0;
 		while (lineIndex < 7 and lines[lineIndex].getValue() != "") {
 			lineIndex = lineIndex + 1; # go to next line until empty line
@@ -68,23 +67,37 @@ var warning = {
 		}
 	},
 	warnlight: func() {
-		if (me.light > 1 or me.noRepeat == 1 or me.active == 0) {return;}
+		if (me.light > 1) { return; }
+		if (me.active == 0 and me.wasActive == 1) {
+			lights[me.light].setBoolValue(0);
+			me.wasActive = 0;
+		}
+		
+		if (me.noRepeat == 1 or me.active == 0) { return; }
+		
 		lights[me.light].setBoolValue(1);
 		me.noRepeat = 1;
 	},
 	sound: func() {
-        if (me.aural > 1 or me.noRepeat2 == 1 or me.active == 0) {return;}
+		if (me.aural > 2) { return; }
+		if (me.active == 0 and me.wasActive == 1) {
+			aural[me.aural].setBoolValue(0); 
+			me.wasActive = 0;
+		}
+		
+        if (me.noRepeat2 == 1 or me.active == 0) { return; }
+		
 		if (me.aural != 0) {
 			aural[me.aural].setBoolValue(0); 
 		}
-        me.noRepeat2 = 1;
+		me.noRepeat2 = 1;
 		settimer(func() {
 			aural[me.aural].setBoolValue(1);
 		}, 0.15);
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
-		#libraries.LowerECAM.failCall(me.sdPage);
+		libraries.SystemDisplay.failCall(me.sdPage);
 		me.hasCalled = 1;
 	}
 };
@@ -147,6 +160,7 @@ var status = {
 
 var ECAM_controller = {
 	_recallCounter: 0,
+	_noneActive: 0,
 	init: func() {
 		ECAMloopTimer.start();
 		me.reset();
@@ -193,6 +207,9 @@ var ECAM_controller = {
 					w.warnlight();
 					w.sound();
 					counter += 1;
+				} elsif (w.wasActive == 1) {
+					w.warnlight();
+					w.sound();
 				}
 			}
 		}
@@ -277,6 +294,7 @@ var ECAM_controller = {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
+					libraries.ECAMControlPanel.lightOff("clr");
 				}
 			}
 		} else {
@@ -285,17 +303,19 @@ var ECAM_controller = {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
+					libraries.ECAMControlPanel.lightOff("clr");
 					break;
 				}
 			}
 		}
 		
 		if (statusFlag == 1) {
-			libraries.LowerECAM.failCall("sts");
+			libraries.SystemDisplay.manCall("sts");
 			statusFlag = 0;
 		}
 	},
 	recall: func() {
+		me._noneActive = 1;
 		me._recallCounter = 0;
 		foreach (var w; warnings.vector) {
 			if (w.clearFlag == 1) {
@@ -303,9 +323,13 @@ var ECAM_controller = {
 				w.clearFlag = 0;
 				me._recallCounter += 1;
 			}
+			
+			if (w.active == 1) {
+				me._noneActive = 0;
+			}
 		}
 		
-		if (me._recallCounter == 0) {
+		if (me._recallCounter == 0 and me._noneActive) {
 			FWC.Btn.recallStsNormal.setValue(1);
 			settimer(func() {
 				if (FWC.Btn.recallStsNormal.getValue() == 1) { # catch unexpected error, trying something new here
@@ -320,6 +344,9 @@ var ECAM_controller = {
 		warning.active = 0;
 		warning.noRepeat = 0;
 		warning.noRepeat2 = 0;
+		if (warning.aural == 2) {
+			aural[2].setValue(0);
+		}
 	},
 };
 

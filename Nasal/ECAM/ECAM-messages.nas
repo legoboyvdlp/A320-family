@@ -10,7 +10,13 @@
 # Left E/WD
 
 var warnings				  = std.Vector.new([
+	var stall                 = warning.new(msg: "", aural: 2),
 	var flap_not_zero         = warning.new(msg: "F/CTL FLAP LVR NOT ZERO",   colour: "r", aural: 0, light: 0),
+	
+	var overspeed          = warning.new(msg: "OVER SPEED",                colour: "r", aural: 0, light: 0, hasSubmsg: 1),
+	var overspeedVMO       = warning.new(msg: "-VMO/MMO.......350 /.82",   colour: "r"),
+	var overspeedGear      = warning.new(msg: "-VLE...........280 /.67",   colour: "r"),
+	var overspeedFlap      = warning.new(msg: "-VFE................XXX",   colour: "r"),
 	
 	# DUAL ENG FAIL
 	var dualFail              = warning.new(msg: "ENG DUAL FAILURE",          colour: "r", aural: 0, light: 0, hasSubmsg: 1),
@@ -118,11 +124,11 @@ var warnings				  = std.Vector.new([
 	
 	# Autopilot
 	var ap_offw				  = warning.new(msg: "AUTO FLT AP OFF",			  colour: "r", light: 0),
-	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1),
+	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var athr_offw_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
-	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1),
+	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var athr_lock_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
-	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1),
+	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var athr_lim_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
 	
 	# Cargo smoke
@@ -215,6 +221,9 @@ var warnings				  = std.Vector.new([
 	var acBusEssShed          = warning.new(msg: "ELEC DC ESS BUS SHED",      colour: "a", aural: 1, light: 1),
 	var acBusEssShedAtc       = warning.new(msg: " -ATC..............SYS 2",  colour: "c"),
 	
+	# TCAS FAULT
+	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1),
+	
 	# FCU fault
 	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
 	var fcuFaultBaro          = warning.new(msg: " -PFD BARO REF: STD ONLY",  colour: "c"),
@@ -239,7 +248,6 @@ var warnings				  = std.Vector.new([
 	var apuLoopBFault         = warning.new(msg: "APU FIRE LOOP B FAULT",     colour: "a"),
 	var crgFwdFireDetFault    = warning.new(msg: "FWD CRG DET FAULT",         colour: "a"), 
 	var crgAftFireDetFault    = warning.new(msg: "AFT CRG DET FAULT",         colour: "a"), 
-	
 	# Recall
 	var recallNormal          = warning.new(msg: "                    ", colour: "g", hasSubmsg: 1),
 	var recallNormal1         = warning.new(msg: "                    ", colour: "g", hasSubmsg: 1),

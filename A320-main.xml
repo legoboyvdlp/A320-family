@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
@@ -139,6 +139,10 @@
 			<autopilot n="12">
 				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
 			</autopilot>
+			<autopilot n="13">
+				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
+			</autopilot>
+			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
 		<sound>
@@ -320,6 +324,15 @@
 						</binding>
 					</item>
 					<item>
+						<label>Refuel Panel</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.refuelDialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
 						<label>Pushback</label>
 						<binding>
 							<command>dialog-show</command>
@@ -493,13 +506,19 @@
 
 	<it-fbw n="0">
 		<alpha-hld type="bool">0</alpha-hld>
+		<degrade-law type="int">0</degrade-law>
 		<law type="int">0</law>
-		<roll-lim type="double">33</roll-lim>
+		<roll-lim type="string">33</roll-lim>
 		<roll-back type="bool">0</roll-back>
+		<override type="bool">0</override>
 		<protections n="0">
 			<overspeed type="bool">0</overspeed>
 			<overspeed-roll-back type="bool">0</overspeed-roll-back>
 		</protections>
+		<spd-hld type="bool">0</spd-hld>
+		<speeds>
+			<vmo-mmo type="int">350</vmo-mmo>
+		</speeds>
 	</it-fbw>
 
 	<apu>
@@ -508,6 +527,7 @@
 	</apu>
 	
 	<FMGC n="0">
+		<active-fmgc-channel type="int">0</active-fmgc-channel>
 		<internal>
 			<cost-index type="int">0</cost-index>
 		</internal>
@@ -627,6 +647,26 @@
 				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
 		</engines>
+		<fctl>
+			<lights>
+				<elac1-fault type="bool">0</elac1-fault>
+				<elac2-fault type="bool">0</elac2-fault>
+				<sec1-fault type="bool">0</sec1-fault>
+				<sec2-fault type="bool">0</sec2-fault>
+				<sec3-fault type="bool">0</sec3-fault>
+				<fac1-fault type="bool">0</fac1-fault>
+				<fac2-fault type="bool">0</fac2-fault>
+			</lights>
+			<switches>
+				<elac1 type="bool">0</elac1>
+				<elac2 type="bool">0</elac2>
+				<sec1 type="bool">0</sec1>
+				<sec2 type="bool">0</sec2>
+				<sec3 type="bool">0</sec3>
+				<fac1 type="bool">0</fac1>
+				<fac2 type="bool">0</fac2>
+			</switches>
+		</fctl>
 		<fire>
 			<apu-test-btn type="bool">0</apu-test-btn>
 			<test-btn-1 type="bool">0</test-btn-1>
@@ -651,6 +691,19 @@
 				<pump-right-1 type="bool">0</pump-right-1>
 				<pump-right-2 type="bool">0</pump-right-2>
 			</switches>
+			<refuel>
+				<valve-l-guard type="bool">0</valve-l-guard>
+				<valve-c-guard type="bool">0</valve-c-guard>
+				<valve-r-guard type="bool">0</valve-r-guard>
+				<mode-guard type="bool">0</mode-guard>
+				<valve-l type="double">0.5</valve-l>
+				<valve-c type="double">0.5</valve-c>
+				<valve-r type="double">0.5</valve-r>
+				<mode type="double">0.5</mode>
+				<power type="bool">0</power>
+				<test type="double">0.5</test>
+				<amount type="double">12.0</amount>
+			</refuel>
 		</fuel>
 		<gear>
 			<brake-parking type="bool">0</brake-parking>
@@ -705,6 +758,40 @@
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<taxi-light-switch type="float">0</taxi-light-switch>
 		</lighting>
+		<navigation>
+			<adirscp>
+				<switches>
+					<adr-1 type="bool">0</adr-1>
+					<adr-2 type="bool">0</adr-2>
+					<adr-3 type="bool">0</adr-3>
+					<ir-1 type="bool">0</ir-1>
+					<ir-2 type="bool">0</ir-2>
+					<ir-3 type="bool">0</ir-3>
+					<ir-1-mode type="int">0</ir-1-mode>
+					<ir-2-mode type="int">0</ir-2-mode>
+					<ir-3-mode type="int">0</ir-3-mode>
+				</switches>
+				<lights>
+					<adr-1-fault type="bool">0</adr-1-fault>
+					<adr-2-fault type="bool">0</adr-2-fault>
+					<adr-3-fault type="bool">0</adr-3-fault>
+					<adr-1-off type="bool">1</adr-1-off>
+					<adr-2-off type="bool">1</adr-2-off>
+					<adr-3-off type="bool">1</adr-3-off>
+					<ir-1-fault type="bool">0</ir-1-fault>
+					<ir-2-fault type="bool">0</ir-2-fault>
+					<ir-3-fault type="bool">0</ir-3-fault>
+					<ir-1-off type="bool">0</ir-1-off>
+					<ir-2-off type="bool">0</ir-2-off>
+					<ir-3-off type="bool">0</ir-3-off>
+					<on-bat type="bool">0</on-bat>
+				</lights>
+			</adirscp>
+			<switching>
+				<att-hdg type="int">0</att-hdg>
+				<air-data type="int">0</air-data>
+			</switching>
+		</navigation>
 		<OH>
 			<protectors>
 				<ditching type="bool">0</ditching>
@@ -877,6 +964,15 @@
 				<tr-1 type="bool">0</tr-1>
 				<tr-2 type="bool">0</tr-2>
 			</electrical>
+			<fctl>
+				<elac1 type="bool">0</elac1>
+				<elac2 type="bool">0</elac2>
+				<sec1 type="bool">0</sec1>
+				<sec2 type="bool">0</sec2>
+				<sec3 type="bool">0</sec3>
+				<fac1 type="bool">0</fac1>
+				<fac2 type="bool">0</fac2>
+			</fctl>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>
@@ -906,6 +1002,11 @@
 			<cargo-aft-fire type="bool">0</cargo-aft-fire>
 		</failures>
 		<fctl n="0">
+			<elac1 type="bool">0</elac1>
+			<elac2 type="bool">0</elac2>
+			<sec1 type="bool">0</sec1>
+			<sec2 type="bool">0</sec2>
+			<sec3 type="bool">0</sec3>
 			<fac1 type="bool">0</fac1>
 			<fac2 type="bool">0</fac2>
 		</fctl>
@@ -955,6 +1056,30 @@
 			<green-psi>0</green-psi>
 			<yellow-psi>0</yellow-psi>
 		</hydraulic>
+		
+		<pitot n="1">
+            <serviceable>1</serviceable>
+		</pitot>
+		
+		<pitot n="2">
+            <serviceable>1</serviceable>
+		</pitot>
+		
+		<static n="1">
+            <serviceable>1</serviceable>
+		</static>
+		
+		<static n="2">
+            <serviceable>1</serviceable>
+		</static>
+		
+		<navigation>
+			<adr>
+				<operating-1 type="bool">0</operating-1>
+				<operating-2 type="bool">0</operating-2>
+				<operating-3 type="bool">0</operating-3>
+			</adr>
+		</navigation>
 	</systems>
 	
 	<options n="0">
@@ -968,6 +1093,26 @@
 	</options>
 	
 	<instrumentation n="0">
+		<altimeter n="1">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="2">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="3">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="4">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
+		<altimeter n="5">
+			<serviceable type="bool">true</serviceable>
+		</altimeter>
+		
 		<chrono n="0">
 			<started type="bool">0</started>
 			<paused type="bool">0</paused>
@@ -1056,6 +1201,10 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
+		<marker-beacon n="0">
+			<serviceable type="bool">true</serviceable>
+		</marker-beacon>
+		
 		<nav n="0">
 			<frequencies>
 				<selected-mhz type="double">111.15</selected-mhz>
@@ -1126,6 +1275,11 @@
 			</speaker>
 		</tcas>
 		
+		<transponder>
+			<airspeed-input-src type="int">0</airspeed-input-src>
+			<altimeter-input-src type="int">0</altimeter-input-src>
+		</transponder>
+		
 		<!-- See http://wiki.flightgear.org/index.php/GPWS -->
 		<mk-viii n="0">
 			<serviceable type="bool">true</serviceable>
@@ -1157,6 +1311,34 @@
 				<file-prefix>Aircraft/A320-family/Sounds/GPWS/</file-prefix>
 			</voice>
 		</mk-viii>
+		
+		<radar-altimeter n="0">
+			<antenna>
+				<x-offset-m type="double">-1</x-offset-m>
+				<y-offset-m type="double">0</y-offset-m>
+ 				<z-offset-m type="double">2.52</z-offset-m>
+ 			</antenna>
+			<az-step-deg type="int">10</az-step-deg>
+			<az-limit-deg type="int">30</az-limit-deg>
+			<elev-step-deg type="int">10</elev-step-deg>
+			<elev-limit type="int">30</elev-limit>
+			<max-range-m type="int">1219</max-range-m>
+			<serviceable type="bool">true</serviceable>
+		</radar-altimeter>
+		
+		<radar-altimeter n="1">
+			<antenna>
+				<x-offset-m type="double">-1</x-offset-m>
+				<y-offset-m type="double">0</y-offset-m>
+ 				<z-offset-m type="double">2.52</z-offset-m>
+ 			</antenna>
+			<az-step-deg type="int">10</az-step-deg>
+			<az-limit-deg type="int">30</az-limit-deg>
+			<elev-step-deg type="int">10</elev-step-deg>
+			<elev-limit type="int">30</elev-limit>
+			<max-range-m type="int">1219</max-range-m>
+			<serviceable type="bool">true</serviceable>
+		</radar-altimeter>
 	</instrumentation>
 	
 	<modes>
@@ -1616,46 +1798,50 @@
 	
 	<nasal>
 		<pts>
-			<file>Aircraft/A320-family/Nasal/property-tree-setup.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/property-tree-setup.nas</file>
 		</pts>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/efis.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM.nas</file>
-			<file>Aircraft/A320-family/Nasal/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/light-manager.nas</file>
-			<file>Aircraft/A320-family/Nasal/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/libraries.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/buttons.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/efis.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
 		<systems>
-			<file>Aircraft/A320-family/Nasal/electrical.nas</file>
-			<file>Aircraft/A320-family/Nasal/pneumatics.nas</file>
-			<file>Aircraft/A320-family/Nasal/hydraulics.nas</file>
-			<file>Aircraft/A320-family/Nasal/fuel.nas</file>
-			<file>Aircraft/A320-family/Nasal/engines-common.nas</file>
-			<file>Aircraft/A320-family/Nasal/ADIRS.nas</file>
-			<file>Aircraft/A320-family/Nasal/fire.nas</file>
-			<file>Aircraft/A320-family/Nasal/brakes.nas</file>
-			<file>Aircraft/A320-family/Nasal/ground_services.nas</file>
-			<file>Aircraft/A320-family/Nasal/payload.nas</file>
-			<file>Aircraft/A320-family/Nasal/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADIRS.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 		</systems>
 		<fadec>
-			<file>Aircraft/A320-family/Nasal/fadec-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
 		<fbw>
-			<file>Aircraft/A320-family/Nasal/it-fbw.nas</file>
+			<file>Aircraft/A320-family/Nasal/FBW/it-fbw.nas</file>
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
 		</fcu>
 		<fmgc>
-			<file>Aircraft/A320-family/Nasal/FMGC.nas</file>
-			<file>Aircraft/A320-family/Nasal/FMGC-b.nas</file>
-			<file>Aircraft/A320-family/Nasal/FMGC-c.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
 		</fmgc>
 		<mcdu>
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
@@ -1692,29 +1878,35 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
 		<icing>
-			<file>Aircraft/A320-family/Nasal/icing.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
 		</icing>
 		<autopush>
-			<file>Aircraft/A320-family/Nasal/autopush.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>
 		<autopush_driver>
-			<file>Aircraft/A320-family/Nasal/autopush_driver.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/autopush_driver.nas</file>
 		</autopush_driver>
 		<dynarr>
-			<file>Aircraft/A320-family/Nasal/dynarr.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/dynarr.nas</file>
 		</dynarr>
 		<autopush_route>
-			<file>Aircraft/A320-family/Nasal/autopush_route.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/autopush_route.nas</file>
 		</autopush_route>
 		<rmp>
-			<file>Aircraft/A320-family/Nasal/rmp.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>
 		</rmp>
 		<acp>
-			<file>Aircraft/A320-family/Nasal/acp.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/acp.nas</file>
 		</acp>
 		<atc>
-			<file>Aircraft/A320-family/Nasal/atc.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
+		<dmc>
+			<file>Aircraft/A320-family/Nasal/Systems/DMC.nas</file>
+		</dmc>
+		<Dialogs>
+			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
+		</Dialogs>
 	</nasal>
 
 </PropertyList>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
@@ -163,6 +163,14 @@
 			</config>
 		</view>
 		
+		<systems>
+      <wingflexer include="Systems/wingflexer-params.xml"/>
+      <property-rule n="100">
+        <name>wing flexer property rule</name>
+        <path>Aircraft/Generic/wingflexer.xml</path>
+      </property-rule>
+    </systems>
+		
 		<systems n="0">
             <autopilot n="0">
                 <path>Aircraft/A320-family/Systems/fadec-iae.xml</path>
@@ -171,7 +179,7 @@
 				<path>Aircraft/A320-family/Systems/v2500-sound.xml</path>
 			</autopilot>
 		</systems>
-		
+
 	</sim>
         
 	<limits>
@@ -197,7 +205,7 @@
 	
 	<nasal>
 		<specific>
-			<file>Aircraft/A320-family/Nasal/a320livery-iae.nas</file>
+			<file>Aircraft/A320-family/Nasal/Sim/a320livery-iae.nas</file>
 		</specific>
 	</nasal>
 

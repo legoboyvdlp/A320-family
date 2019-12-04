@@ -61,7 +61,6 @@
 		<object-name>IR2Btn2A</object-name>
 		<object-name>IR3Btn1F</object-name>
 		<object-name>IR3Btn2A</object-name>
-		<object-name>IrsOnBatLightOB</object-name>
 		<object-name>RamAirBtn2O</object-name>
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
@@ -521,11 +520,14 @@
 			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/adirs/ir[0]/knob</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRSnew.Switches.irModeSw[0].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRSnew.Switches.irModeSw[0].getValue() + 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(0, 0);
+					}
+				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -537,11 +539,14 @@
 			<button>4</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/adirs/ir[0]/knob</property>
-				<value>2</value>
-				<value>1</value>
-				<value>0</value>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRSnew.Switches.irModeSw[0].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRSnew.Switches.irModeSw[0].getValue() - 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(0, 2);
+					}
+				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -553,7 +558,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>IR1ModeKnb</object-name>
-		<property>controls/adirs/ir[0]/knob</property>
+		<property>controls/navigation/adirscp/switches/ir-1-mode</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-35</dep></entry>
 			<entry><ind>1</ind><dep>0</dep></entry>
@@ -575,7 +580,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[0]/fault</property>
+					<property>controls/navigation/adirscp/lights/ir-1-fault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -591,7 +596,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[0]/align</property>
+					<property>controls/navigation/adirscp/lights/ir-1-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -611,11 +616,14 @@
 			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/adirs/ir[1]/knob</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRSnew.Switches.irModeSw[1].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRSnew.Switches.irModeSw[1].getValue() + 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(1, 0);
+					}
+				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -627,11 +635,14 @@
 			<button>4</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/adirs/ir[1]/knob</property>
-				<value>2</value>
-				<value>1</value>
-				<value>0</value>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRSnew.Switches.irModeSw[1].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRSnew.Switches.irModeSw[1].getValue() - 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(1, 2);
+					}
+				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -643,7 +654,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>IR2ModeKnb</object-name>
-		<property>controls/adirs/ir[1]/knob</property>
+		<property>controls/navigation/adirscp/switches/ir-2-mode</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-35</dep></entry>
 			<entry><ind>1</ind><dep>0</dep></entry>
@@ -665,7 +676,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[1]/fault</property>
+					<property>controls/navigation/adirscp/lights/ir-2-fault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -681,7 +692,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[1]/align</property>
+					<property>controls/navigation/adirscp/lights/ir-2-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -701,11 +712,14 @@
 			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/adirs/ir[2]/knob</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRSnew.Switches.irModeSw[2].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRSnew.Switches.irModeSw[2].getValue() + 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(2, 0);
+					}
+				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -717,11 +731,14 @@
 			<button>4</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/adirs/ir[2]/knob</property>
-				<value>2</value>
-				<value>1</value>
-				<value>0</value>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRSnew.Switches.irModeSw[2].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRSnew.Switches.irModeSw[2].getValue() - 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(2, 2);
+					}
+				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -733,7 +750,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>IR3ModeKnb</object-name>
-		<property>controls/adirs/ir[2]/knob</property>
+		<property>controls/navigation/adirscp/switches/ir-3-mode</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-35</dep></entry>
 			<entry><ind>1</ind><dep>0</dep></entry>
@@ -755,7 +772,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[2]/fault</property>
+					<property>controls/navigation/adirscp/lights/ir-3-fault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -771,7 +788,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/ir[2]/align</property>
+					<property>controls/navigation/adirscp/lights/ir-3-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -789,7 +806,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/onbat</property>
+					<property>controls/navigation/adirscp/lights/on-bat</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -818,8 +835,8 @@
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
-				<command>property-toggle</command>
-				<property>controls/adirs/adr[0]/off</property>
+				<command>nasal</command>
+				<script>systems.ADIRSControlPanel.adrSw(0);</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -834,7 +851,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/adr[0]/fault</property>
+					<property>controls/navigation/adirscp/lights/adr-1-fault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -844,13 +861,14 @@
 			</or>
 		</condition>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ADR1Btn2O</object-name>
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/adr[0]/off</property>
+					<property>controls/navigation/adirscp/lights/adr-1-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -879,8 +897,8 @@
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
-				<command>property-toggle</command>
-				<property>controls/adirs/adr[1]/off</property>
+				<command>nasal</command>
+				<script>systems.ADIRSControlPanel.adrSw(1);</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -895,7 +913,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/adr[1]/fault</property>
+					<property>controls/navigation/adirscp/lights/adr-2-fault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -905,13 +923,14 @@
 			</or>
 		</condition>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ADR2Btn2O</object-name>
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/adr[1]/off</property>
+					<property>controls/navigation/adirscp/lights/adr-2-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -940,8 +959,8 @@
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
-				<command>property-toggle</command>
-				<property>controls/adirs/adr[2]/off</property>
+				<command>nasal</command>
+				<script>systems.ADIRSControlPanel.adrSw(2);</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -956,7 +975,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/adr[2]/fault</property>
+					<property>controls/navigation/adirscp/lights/adr-3-fault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -966,13 +985,14 @@
 			</or>
 		</condition>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ADR3Btn2O</object-name>
 		<condition>
 			<or>
 				<equals>
-					<property>controls/adirs/adr[2]/off</property>
+					<property>controls/navigation/adirscp/lights/adr-3-off</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -1174,7 +1194,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/elac1</property>
+				<property>controls/fctl/switches/elac1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1208,7 +1228,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/elac1</property>
+					<property>controls/fctl/switches/elac1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1237,7 +1257,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/sec1</property>
+				<property>controls/fctl/switches/sec1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1257,7 +1277,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/sec1</property>
+						<property>controls/fctl/switches/sec1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1275,7 +1295,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/sec1</property>
+					<property>controls/fctl/switches/sec1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1304,7 +1324,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/fac1</property>
+				<property>controls/fctl/switches/fac1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1324,7 +1344,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/fac1</property>
+						<property>controls/fctl/switches/fac1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1342,7 +1362,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/fac1</property>
+					<property>controls/fctl/switches/fac1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1371,7 +1391,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/elac2</property>
+				<property>controls/fctl/switches/elac2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1391,7 +1411,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/elac2</property>
+						<property>controls/fctl/switches/elac2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1409,7 +1429,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/elac2</property>
+					<property>controls/fctl/switches/elac2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1438,7 +1458,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/sec2</property>
+				<property>controls/fctl/switches/sec2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1458,7 +1478,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/sec2</property>
+						<property>controls/fctl/switches/sec2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1476,7 +1496,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/sec2</property>
+					<property>controls/fctl/switches/sec2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1505,7 +1525,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/sec3</property>
+				<property>controls/fctl/switches/sec3</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1525,7 +1545,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/sec3</property>
+						<property>controls/fctl/switches/sec3</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1543,7 +1563,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/sec3</property>
+					<property>controls/fctl/switches/sec3</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -1572,7 +1592,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fctl/fac2</property>
+				<property>controls/fctl/switches/fac2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1592,7 +1612,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/fctl/fac2</property>
+						<property>controls/fctl/switches/fac2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1610,7 +1630,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fctl/fac2</property>
+					<property>controls/fctl/switches/fac2</property>
 					<value>0</value>
 				</equals>
 				<equals>

@@ -1581,14 +1581,32 @@
 			<max-dist>100</max-dist>
 		</crc>
 	
+		<cricket>
+			<name>Cricket</name>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cricket.wav</path>
+			<mode>looped</mode>
+			<type>avionics</type>
+			<condition>
+				<property>/sim/sound/warnings/cricket</property>
+			</condition>
+			<volume>
+				<factor>0.2</factor>
+			</volume>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+		</cricket>
+		
 		<stall-voice>
 			<name>stall-voice</name>
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/stall_voice.wav</path>
 			<type>avionics</type>
 			<condition>
-				<property>warnings/stall/active</property>
+				<property>/sim/sound/warnings/stall-voice</property>
 			</condition>
+			<volume>
+				<factor>2.0</factor>
+			</volume>
 			<reference-dist>10</reference-dist>
 			<max-dist>100.0</max-dist>
 		</stall-voice>

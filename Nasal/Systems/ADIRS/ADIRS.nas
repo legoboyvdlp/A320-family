@@ -16,18 +16,9 @@ setprop("/controls/adirs/align-time", 600);
 var ADIRS = {
 	init: func() {
 		setprop("/controls/adirs/numm", 0);
-		setprop("/instrumentation/adirs/adr[0]/active", 0);
-		setprop("/instrumentation/adirs/adr[1]/active", 0);
-		setprop("/instrumentation/adirs/adr[2]/active", 0);
 		setprop("/instrumentation/adirs/ir[0]/aligned", 0);
 		setprop("/instrumentation/adirs/ir[1]/aligned", 0);
 		setprop("/instrumentation/adirs/ir[2]/aligned", 0);
-		setprop("/controls/adirs/adr[0]/fault", 0);
-		setprop("/controls/adirs/adr[1]/fault", 0);
-		setprop("/controls/adirs/adr[2]/fault", 0);
-		setprop("/controls/adirs/adr[0]/off", 0);
-		setprop("/controls/adirs/adr[1]/off", 0);
-		setprop("/controls/adirs/adr[2]/off", 0);
 		setprop("/controls/adirs/ir[0]/align", 0);
 		setprop("/controls/adirs/ir[1]/align", 0);
 		setprop("/controls/adirs/ir[2]/align", 0);
@@ -40,7 +31,6 @@ var ADIRS = {
 		setprop("/controls/adirs/ir[0]/fault", 0);
 		setprop("/controls/adirs/ir[1]/fault", 0);
 		setprop("/controls/adirs/ir[2]/fault", 0);
-		setprop("/controls/adirs/onbat", 0);
 		setprop("/controls/adirs/mcdu/mode1", ""); # INVAL ALIGN NAV ATT or off (blank)
 		setprop("/controls/adirs/mcdu/mode2", "");
 		setprop("/controls/adirs/mcdu/mode3", "");
@@ -81,22 +71,6 @@ var ADIRS = {
 			if (getprop("/controls/adirs/ir[2]/align") == 1) {
 				me.stopAlign(2,1);
 			}
-		}
-		
-		if (ac1 >= 110 or ac2 >= 110) {
-			pwr_src = "AC";
-		} else if (dcbat >= 25 and (getprop("/controls/adirs/ir[0]/knob") != 0 or getprop("/controls/adirs/ir[1]/knob") != 0 or getprop("/controls/adirs/ir[2]/knob") != 0)) {
-			pwr_src = "BATT";
-		} else {
-			pwr_src = "XX";
-		}
-		
-		if (getprop("/controls/adirs/ir[0]/time") + 3 >= getprop("/sim/time/elapsed-sec") or getprop("/controls/adirs/ir[1]/time") + 3 >= getprop("/sim/time/elapsed-sec") or getprop("/controls/adirs/ir[2]/time") + 3 >= getprop("/sim/time/elapsed-sec")) {
-			setprop("/controls/adirs/onbat", 1);
-		} else if (pwr_src == "BATT") {
-			setprop("/controls/adirs/onbat", 1);
-		} else {
-			setprop("/controls/adirs/onbat", 0);
 		}
 	},
 	knob: func(k) {
@@ -141,7 +115,6 @@ var ADIRS = {
 		} else if (n == 2) {
 			alignThree.stop();
 		}
-		setprop("/instrumentation/adirs/adr[" ~ n ~ "]/active", 0);
 		setprop("/instrumentation/adirs/ir[" ~ n ~ "]/aligned", 0);
 		setprop("/controls/adirs/mcducbtn", 0);
 	},

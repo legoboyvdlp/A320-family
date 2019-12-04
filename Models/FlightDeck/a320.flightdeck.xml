@@ -1209,7 +1209,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("sts");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("sts");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1228,7 +1228,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("apu");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("apu");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1247,7 +1247,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("bleed");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("bleed");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1266,7 +1266,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("press");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("press");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1285,7 +1285,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("elec");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("elec");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1304,7 +1304,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("hyd");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("hyd");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1323,7 +1323,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("fuel");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("fuel");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1342,7 +1342,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("eng");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("eng");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1361,7 +1361,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("cond");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("cond");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1380,7 +1380,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("door");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("door");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1399,7 +1399,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("wheel");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("wheel");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1418,7 +1418,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.LowerECAM.button("fctl");</script>
+				<script>libraries.ECAMControlPanel.sysPageBtn("fctl");</script>
 			</binding>
 		</action>
 	</animation>
@@ -1655,6 +1655,23 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ecam_sts_led</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>ECAM/Lower/light/sts</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -1671,7 +1688,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					ecam.ECAM_controller.recall();
+					libraries.ECAMControlPanel.rclBtn();
 					ecam.FWC.Btn.recall.setValue(1);
 				</script>
 			</binding>
@@ -1702,7 +1719,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					libraries.LowerECAM.button("clr");
+					libraries.ECAMControlPanel.clrBtn();
 					ecam.FWC.Btn.clr.setValue(1);
 				</script>
 			</binding>
@@ -6070,7 +6087,66 @@
 			</binding>
 		</action>
     </animation>
-
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ecam_air_data</object-name>
+		<object-name>ecam_air_data.mark</object-name>
+		<factor>30</factor>
+		<property>/controls/navigation/switching/air-data</property>
+		<axis>
+			<x1-m>-0.428673</x1-m>
+			<y1-m>-0.022557</y1-m>
+			<z1-m>-0.051784</z1-m>
+			<x2-m>-0.430086</x2-m>
+			<y2-m>-0.022557</y2-m>
+			<z2-m>-0.060321</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>ecam_air_data</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.SwitchingPanel.Switches.airData.getValue() != 1) {
+						systems.SwitchingPanel.doAirData(systems.SwitchingPanel.Switches.airData.getValue() + 1);
+					} else {
+						systems.SwitchingPanel.doAirData(-1);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>2</button>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.SwitchingPanel.Switches.airData.getValue() != -1) {
+						systems.SwitchingPanel.doAirData(systems.SwitchingPanel.Switches.airData.getValue() - 1);
+					} else {
+						systems.SwitchingPanel.doAirData(1);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
 	<!-- Z Colors/Effects -->
 	<animation>
 		<type>material</type>

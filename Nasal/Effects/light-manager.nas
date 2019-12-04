@@ -406,8 +406,3 @@ var light_manager = {
   		me.light5_is_on = 0;
 		},
 };
-
-light_manager.init();
-
-
-

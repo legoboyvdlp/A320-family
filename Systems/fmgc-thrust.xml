@@ -216,7 +216,7 @@
 				</and>
 			</condition>
 		</enable>
-		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
+		<input>/it-autoflight/internal/current-speed-input</input>
 		<reference>/it-autoflight/internal/kts</reference>
 		<output>/controls/engines/throttle-cmd-pid</output>
 		<config>
@@ -340,7 +340,7 @@
 			</condition>
 		</enable>
 		<input>
-			<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+			<property>/it-autoflight/internal/current-mach-input</property>
 			<scale>1000.0</scale>
 		</input>
 		<reference>

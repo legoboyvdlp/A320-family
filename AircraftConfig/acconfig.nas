@@ -135,9 +135,9 @@ setlistener("/systems/acconfig/new-revision", func {
 });
 
 var mismatch_chk = func {
-	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201910) {
+	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201912) {
 		setprop("/systems/acconfig/mismatch-code", "0x121");
-		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.1.0.");
+		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.1.2.");
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
@@ -273,6 +273,9 @@ var colddark = func {
 		setprop("/controls/switches/landing-lights-l", 0.0);
 		setprop("/controls/switches/landing-lights-r", 0.0);
 		setprop("/controls/atc/mode-knob", 0);
+		setprop("/controls/lighting/fcu-panel-knb", 0);
+		setprop("/controls/lighting/main-panel-knb", 0);
+		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
 		libraries.systemsInit();
 		failResetOld();
@@ -345,12 +348,15 @@ var beforestart = func {
 }
 var beforestart_b = func {
 	# Continue with engine start prep.
-	setprop("/controls/fuel/tank0pump1", 1);
-	setprop("/controls/fuel/tank0pump2", 1);
-	setprop("/controls/fuel/tank1pump1", 1);
-	setprop("/controls/fuel/tank1pump2", 1);
-	setprop("/controls/fuel/tank2pump1", 1);
-	setprop("/controls/fuel/tank2pump2", 1);
+	systems.FUEL.Switches.pumpLeft1.setValue(1);
+	systems.FUEL.Switches.pumpLeft2.setValue(1);
+	systems.FUEL.Switches.pumpCenter1.setValue(1);
+	systems.FUEL.Switches.pumpCenter2.setValue(1);
+	systems.FUEL.Switches.pumpRight1.setValue(1);
+	systems.FUEL.Switches.pumpRight2.setValue(1);
+	setprop("/controls/lighting/fcu-panel-knb", 1);
+	setprop("/controls/lighting/main-panel-knb", 1);
+	setprop("/controls/lighting/overhead-panel-knb", 1);
 	setprop("/controls/electrical/switches/apu", 1);
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
@@ -363,6 +369,12 @@ var beforestart_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
+	systems.ADIRSControlPanel.adrSw(0);
+	systems.ADIRSControlPanel.adrSw(1);
+	systems.ADIRSControlPanel.adrSw(2);
+	systems.ADIRSControlPanel.irModeSw(0, 1);
+	systems.ADIRSControlPanel.irModeSw(1, 1);
+	systems.ADIRSControlPanel.irModeSw(2, 1);
 	systems.ADIRS.skip(0);
 	systems.ADIRS.skip(1);
 	systems.ADIRS.skip(2);
@@ -427,12 +439,15 @@ var taxi = func {
 }
 var taxi_b = func {
 	# Continue with engine start prep, and start engines.
-	setprop("/controls/fuel/tank0pump1", 1);
-	setprop("/controls/fuel/tank0pump2", 1);
-	setprop("/controls/fuel/tank1pump1", 1);
-	setprop("/controls/fuel/tank1pump2", 1);
-	setprop("/controls/fuel/tank2pump1", 1);
-	setprop("/controls/fuel/tank2pump2", 1);
+	systems.FUEL.Switches.pumpLeft1.setValue(1);
+	systems.FUEL.Switches.pumpLeft2.setValue(1);
+	systems.FUEL.Switches.pumpCenter1.setValue(1);
+	systems.FUEL.Switches.pumpCenter2.setValue(1);
+	systems.FUEL.Switches.pumpRight1.setValue(1);
+	systems.FUEL.Switches.pumpRight2.setValue(1);
+	setprop("/controls/lighting/fcu-panel-knb", 1);
+	setprop("/controls/lighting/main-panel-knb", 1);
+	setprop("/controls/lighting/overhead-panel-knb", 1);
 	setprop("/controls/electrical/switches/apu", 1);
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
@@ -445,6 +460,12 @@ var taxi_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
+	systems.ADIRSControlPanel.adrSw(0);
+	systems.ADIRSControlPanel.adrSw(1);
+	systems.ADIRSControlPanel.adrSw(2);
+	systems.ADIRSControlPanel.irModeSw(0, 1);
+	systems.ADIRSControlPanel.irModeSw(1, 1);
+	systems.ADIRSControlPanel.irModeSw(2, 1);
 	systems.ADIRS.skip(0);
 	systems.ADIRS.skip(1);
 	systems.ADIRS.skip(2);

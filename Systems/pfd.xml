@@ -174,12 +174,46 @@
 		<input>
 			<expression>
 				<difference>
-					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<property>/systems/navigation/adr/output/cas-1</property>
 					<value>30</value>
 				</difference>
 			</expression>
 		</input>
-		<output>/instrumentation/pfd/speed-minus-30</output>
+		<output>/instrumentation/pfd/speed-minus-30-1</output>
+		<min>0</min>
+		<max>390</max>
+	</filter>
+	
+	<filter>
+		<name>Speed Predictor Input</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<property>/systems/navigation/adr/output/cas-2</property>
+					<value>30</value>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/speed-minus-30-2</output>
+		<min>0</min>
+		<max>390</max>
+	</filter>
+	
+	<filter>
+		<name>Speed Predictor Input</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<property>/systems/navigation/adr/output/cas-3</property>
+					<value>30</value>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/speed-minus-30-3</output>
 		<min>0</min>
 		<max>390</max>
 	</filter>
@@ -193,12 +227,57 @@
 		<filter-gain>0.01</filter-gain>
 	</predict-simple>
 	
+	<predict-simple>
+		<name>Speed Predictor (Smoothed)</name>
+		<debug>false</debug>
+		<input>/instrumentation/pfd/speed-minus-30-1</input>
+		<output>/instrumentation/pfd/speed-lookahead-cmd-1</output>
+		<seconds>10.0</seconds>
+		<filter-gain>0.01</filter-gain>
+	</predict-simple>
+	
+	<predict-simple>
+		<name>Speed Predictor (Smoothed)</name>
+		<debug>false</debug>
+		<input>/instrumentation/pfd/speed-minus-30-2</input>
+		<output>/instrumentation/pfd/speed-lookahead-cmd-2</output>
+		<seconds>10.0</seconds>
+		<filter-gain>0.01</filter-gain>
+	</predict-simple>
+	
+	<predict-simple>
+		<name>Speed Predictor (Smoothed)</name>
+		<debug>false</debug>
+		<input>/instrumentation/pfd/speed-minus-30-3</input>
+		<output>/instrumentation/pfd/speed-lookahead-cmd-3</output>
+		<seconds>10.0</seconds>
+		<filter-gain>0.01</filter-gain>
+	</predict-simple>
+	
 	<filter>
 		<name>Speed Predictor Exponential</name>
 		<debug>false</debug>
 		<type>exponential</type>
-		<input>/instrumentation/pfd/speed-lookahead-cmd</input>
-		<output>/instrumentation/pfd/speed-lookahead</output>
+		<input>/instrumentation/pfd/speed-lookahead-cmd-1</input>
+		<output>/instrumentation/pfd/speed-lookahead-1</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Speed Predictor Exponential</name>
+		<debug>false</debug>
+		<type>exponential</type>
+		<input>/instrumentation/pfd/speed-lookahead-cmd-2</input>
+		<output>/instrumentation/pfd/speed-lookahead-2</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Speed Predictor Exponential</name>
+		<debug>false</debug>
+		<type>exponential</type>
+		<input>/instrumentation/pfd/speed-lookahead-cmd-3</input>
+		<output>/instrumentation/pfd/speed-lookahead-3</output>
 		<filter-time>0.32</filter-time>
 	</filter>
 	
