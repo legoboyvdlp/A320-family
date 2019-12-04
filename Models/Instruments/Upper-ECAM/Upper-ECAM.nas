@@ -234,7 +234,7 @@ var canvas_upperECAM_base = {
 		}
 		
 		# FOB
-		if (acconfig_weight_kgs == 1)
+		if (acconfig_weight_kgs.getValue() == 1)
 		{
 			me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue() * LBS2KGS, 10)));
 			me["FOB-weight-unit"].setText("KG");
@@ -860,7 +860,7 @@ var canvas_upperECAM_iae_eis2 = {
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
 		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B","TO_Config_B",
-		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3"];
+		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3", "FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit"];
 	},
 	update: func() {
 		N1_1_cur = N1_1.getValue();

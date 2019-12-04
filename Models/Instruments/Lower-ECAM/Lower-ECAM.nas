@@ -1005,7 +1005,7 @@ var canvas_lowerECAM_crz = {
 			me["Fused-weight-unit"].setText("KG");
 			me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
 			me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
-			me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+			me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10) + math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10))));
 		} else {
 			me["Fused-weight-unit"].setText("LBS");
 			me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
