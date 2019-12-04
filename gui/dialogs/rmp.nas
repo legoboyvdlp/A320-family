@@ -5,6 +5,9 @@
 
 # Distribute under the terms of GPLv2.
 
+var _default_instrument_mhz = props.globals.getNode("instrumentation/comm[0]/frequencies/standby-mhz");
+var _default_instrument_chan = props.globals.getNode("instrumentation/comm[0]/frequencies/standby-channel");
+
 var rmpClass = {
 	new: func(instance) {
 		var m = {parents:[rmpClass]};
@@ -12,6 +15,10 @@ var rmpClass = {
 		m._gfd = nil;
 		m._canvas = nil;
 		m._timer = maketimer(0.1, m, rmpClass._timerf);
+		m._timerMhzUp = maketimer(0.1, m, rmpClass._mhzUp);
+		m._timerMhzDn = maketimer(0.1, m, rmpClass._mhzDn);
+		m._timerKhzUp = maketimer(0.1, m, rmpClass._khzUp);
+		m._timerKhzDn = maketimer(0.1, m, rmpClass._khzDn);
 		m._instance = instance;
 
 		# Get nodes for this rmp
@@ -42,8 +49,10 @@ var rmpClass = {
 	},
 	close: func() {
 		me._timer.stop();
-		me._timerUp.stop();
-		me._timerDn.stop();
+		me._timerMhzUp.stop();
+		me._timerMhzDn.stop();
+		me._timerKhzUp.stop();
+		me._timerKhzDn.stop();
 
 		me._gfd.del();
 		me._gfd = nil;
@@ -140,21 +149,37 @@ var rmpClass = {
 			}
 		});
 
-	#	me._Pre_dec_hb.addEventListener("mousedown", func() {
-	#		me._timerDn.start();
-	#	});
+		me._Inc_mhz.addEventListener("mousedown", func() {
+			me._timerMhzUp.start();
+		});
 
-	#	me._Pre_inc_hb.addEventListener("mousedown", func() {
-	#		me._timerUp.start();
-	#	});
-	#	
-	#	me._Pre_dec_hb.addEventListener("mouseup", func() {
-	#		me._timerDn.stop();
-	#	});
+		me._Dec_mhz.addEventListener("mousedown", func() {
+			me._timerMhzDn.start();
+		});
 
-	#	me._Pre_inc_hb.addEventListener("mouseup", func() {
-	#		me._timerUp.stop();
-	#	});
+		me._Inc_khz.addEventListener("mousedown", func() {
+			me._timerKhzUp.start();
+		});
+
+		me._Dec_khz.addEventListener("mousedown", func() {
+			me._timerKhzDn.start();
+		});
+
+		me._Inc_khz.addEventListener("mouseup", func() {
+			me._timerKhzUp.stop();
+		});
+
+		me._Dec_khz.addEventListener("mouseup", func() {
+			me._timerKhzDn.stop();
+		});
+
+		me._Inc_mhz.addEventListener("mouseup", func() {
+			me._timerMhzUp.stop();
+		});
+
+		me._Dec_mhz.addEventListener("mouseup", func() {
+			me._timerMhzDn.stop();
+		});
 
 		me._timerf();
 		me._timer.start();
@@ -223,6 +248,118 @@ var rmpClass = {
 			me._LS_ind.setColorFill(0.125, 0.125, 0.125);
 			me._ADF_ind.setColorFill(0.125, 0.125, 0.125);
 			me._BFO_ind.setColorFill(0.125, 0.125, 0.125);
+		}
+	},
+	_mhzUp: func() {
+		if (me._prop_power_source.getValue() >= 25 and me._prop_power.getValue() == 1) {
+			var chan_sel = me._prop_sel_chan.getValue();
+			if (chan_sel == "vhf1") {
+				var freq = me._prop_vhf1_stby.getValue();
+				if (freq >= 136) {
+					freq = freq - 18;
+				} else {
+					freq = freq + 1;
+				}
+				me._prop_vhf1_stby.setValue(freq);
+			} else if (chan_sel == "vhf2") {
+				var freq = me._prop_vhf2_stby.getValue();
+				if (freq >= 136) {
+					freq = freq - 18;
+				} else {
+					freq = freq + 1;
+				}
+				me._prop_vhf2_stby.setValue(freq);
+			} else if (chan_sel == "vhf3") {
+				var freq = me._prop_vhf3_stby.getValue();
+				if (freq >= 136) {
+					freq = freq - 18;
+				} else {
+					freq = freq + 1;
+				}
+				me._prop_vhf3_stby.setValue(freq);
+			}
+		}
+	},
+	_mhzDn: func() {
+		if (me._prop_power_source.getValue() >= 25 and me._prop_power.getValue() == 1) {
+			var chan_sel = me._prop_sel_chan.getValue();
+			if (chan_sel == "vhf1") {
+				var freq = me._prop_vhf1_stby.getValue();
+				if (freq < 119) {
+					freq = freq + 18;
+				} else {
+					freq = freq - 1;
+				}
+				me._prop_vhf1_stby.setValue(freq);
+			} else if (chan_sel == "vhf2") {
+				var freq = me._prop_vhf2_stby.getValue();
+				if (freq < 119) {
+					freq = freq + 18;
+				} else {
+					freq = freq - 1;
+				}
+				me._prop_vhf2_stby.setValue(freq);
+			} else if (chan_sel == "vhf3") {
+				var freq = me._prop_vhf3_stby.getValue();
+				if (freq < 119) {
+					freq = freq + 18;
+				} else {
+					freq = freq - 1;
+				}
+				me._prop_vhf3_stby.setValue(freq);
+			}
+		}
+	},
+	# We use a little hack to get 8.33KHz spacing working:
+ 	#    First we assign our current STBY freq we want to adjust to the default instrument.
+ 	#    Then we change the channel there.
+ 	#    Finally we assign the value back to out own prop.
+	_khzUp: func() {
+		if (me._prop_power_source.getValue() >= 25 and me._prop_power.getValue() == 1) {
+			var chan_sel = me._prop_sel_chan.getValue();
+			if (chan_sel == "vhf1") {
+				_default_instrument_mhz.setValue(me._prop_vhf1_stby.getValue());
+				var chan = _default_instrument_chan.getValue();
+				chan = chan + 1;
+				_default_instrument_chan.setValue(chan);
+				me._prop_vhf1_stby.setValue(_default_instrument_mhz.getValue());
+			} else if (chan_sel == "vhf2") {
+				_default_instrument_mhz.setValue(me._prop_vhf2_stby.getValue());
+				var chan = _default_instrument_chan.getValue();
+				chan = chan + 1;
+				_default_instrument_chan.setValue(chan);
+				me._prop_vhf2_stby.setValue(_default_instrument_mhz.getValue());
+			} else if (chan_sel == "vhf3") {
+				_default_instrument_mhz.setValue(me._prop_vhf3_stby.getValue());
+				var chan = _default_instrument_chan.getValue();
+				chan = chan + 1;
+				_default_instrument_chan.setValue(chan);
+				me._prop_vhf3_stby.setValue(_default_instrument_mhz.getValue());
+			}
+		}
+	},
+	_khzDn: func() {
+		if (me._prop_power_source.getValue() >= 25 and me._prop_power.getValue() == 1) {
+			var chan_sel = me._prop_sel_chan.getValue();
+			if (chan_sel == "vhf1") {
+				_default_instrument_mhz.setValue(me._prop_vhf1_stby.getValue());
+				var chan = _default_instrument_chan.getValue();
+				chan = chan - 1;
+				_default_instrument_chan.setValue(chan);
+				me._prop_vhf1_stby.setValue(_default_instrument_mhz.getValue());
+			} else if (chan_sel == "vhf2") {
+				_default_instrument_mhz.setValue(me._prop_vhf2_stby.getValue());
+				var chan = _default_instrument_chan.getValue();
+				chan = chan - 1;
+				_default_instrument_chan.setValue(chan);
+				me._prop_vhf2_stby.setValue(_default_instrument_mhz.getValue());
+			} else if (chan_sel == "vhf3") {
+				_default_instrument_mhz.setValue(me._prop_vhf3_stby.getValue());
+				var chan = _default_instrument_chan.getValue();
+				chan = chan - 1;
+				_default_instrument_chan.setValue(chan);
+				me._prop_vhf3_stby.setValue(_default_instrument_mhz.getValue());
+			}
 		}
 	},
 	_onClose: func() {
