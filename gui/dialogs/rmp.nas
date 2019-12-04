@@ -58,7 +58,7 @@ var rmpClass = {
 		me._gfd = nil;
 	},
 	openDialog: func() {
-		me._gfd = canvas.Window.new([320,196], "dialog");
+		me._gfd = canvas.Window.new([416,255], "dialog");
 		me._gfd._onClose = func() {rmpDialog._onClose();}
 
 		me._gfd.set("title", me._title);
