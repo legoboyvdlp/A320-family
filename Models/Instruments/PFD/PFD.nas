@@ -108,12 +108,6 @@ var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
 var gear_agl = props.globals.getNode("/position/gear-agl-ft", 1);
 var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast", 1);
 var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
-var adirs0_active = props.globals.getNode("/instrumentation/adirs/adr[0]/active", 1);
-var adirs1_active = props.globals.getNode("/instrumentation/adirs/adr[1]/active", 1);
-var adirs2_active = props.globals.getNode("/instrumentation/adirs/adr[2]/active", 1);
-var ir0_aligned = props.globals.getNode("/instrumentation/adirs/ir[0]/aligned", 1);
-var ir1_aligned = props.globals.getNode("/instrumentation/adirs/ir[1]/aligned", 1);
-var ir2_aligned = props.globals.getNode("/instrumentation/adirs/ir[2]/aligned", 1);
 var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
 var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
 
@@ -790,26 +784,22 @@ var canvas_PFD_1 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if ((adirs0_active.getValue() == 1) or (air_switch.getValue() == -1 and adirs2_active.getValue() == 1)) {
-			me["VS_group"].show();
-			me["VS_error"].hide();
-		} else {
-			me["VS_error"].show();
-			me["VS_group"].hide();
-		}
-		
-		if ((ir0_aligned.getValue() == 1) or (ir2_aligned.getValue() == 1 and att_switch.getValue() == -1)) {
+		if (systems.ADIRSnew.ADIRunits[0].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
 			me["HDG_error"].hide();
 			me["HDG_frame"].setColor(1,1,1);
+			me["VS_group"].show();
+			me["VS_error"].hide(); # VS is inertial-sourced
 		} else {
 			me["AI_error"].show();
 			me["HDG_error"].show();
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["VS_error"].show();
+			me["VS_group"].hide();
 		}
 		
 		# FD
@@ -1083,37 +1073,22 @@ var canvas_PFD_2 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if ((adirs1_active.getValue() == 1) or (air_switch.getValue() == 1 and adirs2_active.getValue() == 1)) {
-			me["ALT_group"].show();
-			me["ALT_group2"].show();
-			me["ALT_scale"].show();
-			me["VS_group"].show();
-			me["ALT_error"].hide();
-			me["ALT_frame"].setColor(1,1,1);
-			me["VS_error"].hide();
-		} else {
-			me["ALT_error"].show();
-			me["ALT_frame"].setColor(1,0,0);
-			me["VS_error"].show();
-			me["ASI_group"].hide();
-			me["ALT_group"].hide();
-			me["ALT_group2"].hide();
-			me["ALT_scale"].hide();
-			me["VS_group"].hide();
-		}
-		
-		if ((ir1_aligned.getValue() == 1) or (ir2_aligned.getValue() == 1 and att_switch.getValue() == 1)) {
+		if (systems.ADIRSnew.ADIRunits[1].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
 			me["HDG_error"].hide();
 			me["HDG_frame"].setColor(1,1,1);
+			me["VS_group"].show();
+			me["VS_error"].hide(); # VS is inertial-sourced
 		} else {
 			me["AI_error"].show();
 			me["HDG_error"].show();
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["VS_error"].show();
+			me["VS_group"].hide();
 		}
 		
 		# FD

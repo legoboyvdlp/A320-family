@@ -233,7 +233,6 @@ var systemsLoop = maketimer(0.1, func {
 	systems.PNEU.loop();
 	systems.HYD.loop();
 	systems.FUEL.loop();
-	systems.ADIRS.loop();
 	systems.ADIRSnew.loop();
 	libraries.ECAM.loop();
 	libraries.BUTTONS.update();

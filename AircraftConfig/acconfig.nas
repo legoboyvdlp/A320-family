@@ -372,9 +372,9 @@ var beforestart_b = func {
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
-	systems.ADIRS.skip(0);
-	systems.ADIRS.skip(1);
-	systems.ADIRS.skip(2);
+	systems.ADIRSnew.ADIRunits[0].instAlign();
+	systems.ADIRSnew.ADIRunits[1].instAlign();
+	systems.ADIRSnew.ADIRunits[2].instAlign();
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
@@ -463,9 +463,9 @@ var taxi_b = func {
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
-	systems.ADIRS.skip(0);
-	systems.ADIRS.skip(1);
-	systems.ADIRS.skip(2);
+	systems.ADIRSnew.ADIRunits[0].instAlign();
+	systems.ADIRSnew.ADIRunits[1].instAlign();
+	systems.ADIRSnew.ADIRunits[2].instAlign();
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
