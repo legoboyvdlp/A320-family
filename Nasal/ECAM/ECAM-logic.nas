@@ -29,6 +29,10 @@ var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
 var gear_agl_cur = nil;
+var numberMinutes = nil;
+var timeNow = nil;
+var timer10secIRS = nil;
+
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
 	
@@ -1387,6 +1391,39 @@ var messages_memo = func {
 		refuelg.active = 1;
 	} else {
 		refuelg.active = 0;
+	}
+	
+	if ((phaseVar == 1 or phaseVar == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRSnew.ADIRunits[0].inAlign == 1 or systems.ADIRSnew.ADIRunits[1].inAlign == 1 or systems.ADIRSnew.ADIRunits[2].inAlign == 1)) {
+		irs_in_align.active = 1;
+		if (getprop("/ECAM/phases/timer/eng1or2-output")) {
+			irs_in_align.colour = "a";
+		} else {
+			irs_in_align.colour = "g";
+		}
+		
+		timeNow = pts.Sim.Time.elapsedSec.getValue();
+		numberMinutes = math.round(math.max(systems.ADIRSnew.ADIRunits[0]._alignTime - timeNow, systems.ADIRSnew.ADIRunits[1]._alignTime - timeNow, systems.ADIRSnew.ADIRunits[2]._alignTime - timeNow) / 60);
+		
+		if (numberMinutes >= 7) {
+			irs_in_align.msg = "IRS IN ALIGN > 7 MN";
+		} elsif (numberMinutes >= 1) {
+			irs_in_align.msg = "IRS IN ALIGN " ~ numberMinutes ~ " MN";
+		} else {
+			irs_in_align.msg = "IRS IN ALIGN";
+		}
+	} else {
+		if (irs_in_align.active and !timer10secIRS) {
+			timer10secIRS = 1;
+			irs_in_align.msg = "IRS ALIGNED";
+			settimer(func() {
+				irs_in_align.active = 0;
+				irs_in_align.msg = "IRS IN ALIGN";
+				timer10secIRS = 0;
+			}, 10);
+		} elsif (!timer10secIRS) {
+			irs_in_align.active = 0;
+			irs_in_align.msg = "IRS IN ALIGN";
+		}
 	}
 	
 	if (getprop("/controls/flight/speedbrake-arm") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
