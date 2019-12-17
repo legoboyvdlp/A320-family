@@ -9,15 +9,15 @@
 	<adf>
 		<name>adf</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</adf>
 	
 	<adf>
 		<name>adf</name>
 		<number>1</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</adf>
 	
 	<airspeed-indicator>
@@ -126,29 +126,29 @@
 	<dme>
 		<name>dme</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</dme>
 	
 	<dme>
 		<name>dme</name>
 		<number>1</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</dme>
 	
 	<dme> <!-- fake extra dme units for the ILS -->
 		<name>dme</name>
 		<number>2</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</dme>
 	
 	<dme>
 		<name>dme</name>
 		<number>3</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</dme>
 	
 	<altimeter>
@@ -183,36 +183,36 @@
 	<marker-beacon> <!-- part of VOR1 unit -->
 		<name>marker-beacon</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</marker-beacon>
 	
 	<nav-radio> <!-- VOR unit -->
 		<name>nav</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</nav-radio>
 	
 	<nav-radio>
 		<name>nav</name>
 		<number>1</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</nav-radio>
 	
 	<nav-radio> <!-- ILS unit -->
 		<name>nav</name>
 		<number>2</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</nav-radio>
 	
 	<nav-radio>
 		<name>nav</name>
 		<number>3</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</nav-radio>
 	
 	<slip-skid-ball>
@@ -265,16 +265,16 @@
 		<name>radar-altimeter</name>
 		<number>0</number>
 		<update-interval-sec>0.0666</update-interval-sec>
-		<power-supply>/systems/electrical/bus/ac-1</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-1</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</radar-altimeter>
 	
 	<radar-altimeter>
 		<name>radar-altimeter</name>
 		<number>1</number>
 		<update-interval-sec>0.0666</update-interval-sec>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
-		<minimum-supply-volts>109.9</minimum-supply-volts>
+		<!--<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<minimum-supply-volts>109.9</minimum-supply-volts>-->
 	</radar-altimeter>
 	
 	<tacan>
