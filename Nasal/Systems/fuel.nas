@@ -22,6 +22,10 @@ var FUEL = {
 		pumpRight1: props.globals.getNode("/controls/fuel/switches/pump-right-1"),
 		pumpRight2: props.globals.getNode("/controls/fuel/switches/pump-right-2"),
 	},
+	Pumps: {
+		apu: props.globals.getNode("/systems/fuel/pumps/apu-operate"),
+		allOff: props.globals.getNode("/systems/fuel/pumps/all-eng-pump-off"),
+	},
 	Valves: {
 		crossfeed: props.globals.getNode("/systems/fuel/valves/crossfeed-valve"),
 		lpValve1: props.globals.getNode("/systems/fuel/valves/engine-1-lp-valve"),

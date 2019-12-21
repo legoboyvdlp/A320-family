@@ -100,6 +100,7 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (!ap1.getBoolValue()) {
 				ap1Input.setValue(1);
+				libraries.apWarnNode.setValue(0);
 			} else {
 				apOff("hard", 1);
 			}

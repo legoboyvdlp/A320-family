@@ -593,7 +593,7 @@ var canvas_lowerECAM_apu = {
 			me["APUAvail"].hide();
 		}
 
-		if (tank3_content_lbs.getValue() < 100) {
+		if (!systems.FUEL.Pumps.apu.getBoolValue() and systems.FUEL.Pumps.allOff.getBoolValue()) {
 			me["APUfuelLO"].show();
 		} else {
 			me["APUfuelLO"].hide();
