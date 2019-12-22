@@ -366,9 +366,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
-	systems.ADIRSControlPanel.adrSw(0);
-	systems.ADIRSControlPanel.adrSw(1);
-	systems.ADIRSControlPanel.adrSw(2);
+	if (systems.ADIRSnew.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
+	if (systems.ADIRSnew.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
+	if (systems.ADIRSnew.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
@@ -457,9 +457,9 @@ var taxi_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
-	systems.ADIRSControlPanel.adrSw(0);
-	systems.ADIRSControlPanel.adrSw(1);
-	systems.ADIRSControlPanel.adrSw(2);
+	if (systems.ADIRSnew.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
+	if (systems.ADIRSnew.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
+	if (systems.ADIRSnew.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
