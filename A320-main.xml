@@ -1933,7 +1933,7 @@
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
 		<dmc>
-			<file>Aircraft/A320-family/Nasal/Systems/DMC.nas</file>
+			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
