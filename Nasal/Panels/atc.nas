@@ -28,7 +28,7 @@ var Transponder = {
 	ac1Node: props.globals.getNode("/systems/electrical/bus/ac-1", 1),
 	tcasNode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
 	aglNode: props.globals.getNode("/position/gear-agl-ft", 1),
-	electricNode: props.globals.getNode("/systems/electrical/outputs/transponder", 1),
+	electricNode: props.globals.getNode("/systems/electrical/outputs/transponder", 1), # communicate to generic systems
 	new: func(elecSrc, ADIRS) {
 		var t = {parents:[Transponder]};
 		t.mode = 1;
