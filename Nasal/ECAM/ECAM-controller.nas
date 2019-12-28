@@ -341,12 +341,12 @@ var ECAM_controller = {
 		}
 	},
 	warningReset: func(warning) {
+		if (warning.aural != 9 and warning.active == 1) {
+			aural[warning.aural].setBoolValue(0); 
+		}
 		warning.active = 0;
 		warning.noRepeat = 0;
 		warning.noRepeat2 = 0;
-		if (warning.aural == 2) {
-			aural[2].setValue(0);
-		}
 	},
 };
 

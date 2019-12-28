@@ -124,6 +124,7 @@ var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBL
 var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
+var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
 var du1_test_amount = props.globals.initNode("/instrumentation/du/du1-test-amount", 0.0, "DOUBLE");
 var du2_test = props.globals.initNode("/instrumentation/du/du2-test", 0, "BOOL");
 var du2_test_time = props.globals.initNode("/instrumentation/du/du2-test-time", 0.0, "DOUBLE");
@@ -134,6 +135,7 @@ var du5_test_amount = props.globals.initNode("/instrumentation/du/du5-test-amoun
 var du6_test = props.globals.initNode("/instrumentation/du/du6-test", 0, "BOOL");
 var du6_test_time = props.globals.initNode("/instrumentation/du/du6-test-time", 0.0, "DOUBLE");
 var du6_test_amount = props.globals.initNode("/instrumentation/du/du6-test-amount", 0.0, "DOUBLE");
+var du6_offtime = props.globals.initNode("/instrumentation/du/du6-off-time", 0.0, "DOUBLE");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -187,47 +189,58 @@ var canvas_PFD_base = {
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
 		"TRK_pointer","machError"];
 	},
-	update: func() {
-		elapsedtime_act = elapsedtime.getValue();
+	updateDu1: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		if (acess.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+			if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+						du1_test.setValue(1);
+						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du1_test_time.setValue(elapsedtime_act);
+					} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
+						du1_test.setValue(1);
+						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du1_test_time.setValue(elapsedtime_act - 30);
+					}
+				} else {
 					du1_test.setValue(1);
-					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du1_test_time.setValue(elapsedtime_act);
-				} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
-					du1_test.setValue(1);
-					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du1_test_time.setValue(elapsedtime_act - 30);
+					du1_test_amount.setValue(0);
+					du1_test_time.setValue(-100);
 				}
-			} else {
-				du1_test.setValue(1);
-				du1_test_amount.setValue(0);
-				du1_test_time.setValue(-100);
 			}
 		} else {
 			du1_test.setValue(0);
+			du1_offtime.setValue(elapsedtime_act);
 		}
-		
+	},
+	updateDu6: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		if (ac2.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+			if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+						du6_test.setValue(1);
+						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du6_test_time.setValue(elapsedtime_act);
+					} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
+						du6_test.setValue(1);
+						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du6_test_time.setValue(elapsedtime_act - 30);
+					}
+				} else {
 					du6_test.setValue(1);
-					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du6_test_time.setValue(elapsedtime_act);
-				} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
-					du6_test.setValue(1);
-					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du6_test_time.setValue(elapsedtime_act - 30);
+					du6_test_amount.setValue(0);
+					du6_test_time.setValue(-100);
 				}
-			} else {
-				du6_test.setValue(1);
-				du6_test_amount.setValue(0);
-				du6_test_time.setValue(-100);
 			}
 		} else {
 			du6_test.setValue(0);
+			du6_offtime.setValue(elapsedtime_act);
 		}
+	},
+	update: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		
 		if (acconfig_mismatch.getValue() == "0x000") {
 			PFD_1_mismatch.page.hide();
@@ -1557,3 +1570,11 @@ var fontSizeHDG = func(input) {
 		return 32;
 	}
 };
+
+setlistener("/systems/electrical/bus/ac-ess", func() {
+	canvas_PFD_base.updateDu1();
+}, 0, 0);
+
+setlistener("/systems/electrical/bus/ac-2", func() {
+	canvas_PFD_base.updateDu6();
+}, 0, 0);

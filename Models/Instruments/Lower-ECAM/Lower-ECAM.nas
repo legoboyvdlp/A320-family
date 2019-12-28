@@ -253,6 +253,7 @@ var gen2_load = props.globals.initNode("/systems/electrical/extra/gen2-load", 0,
 var du4_test = props.globals.initNode("/instrumentation/du/du4-test", 0, "BOOL");
 var du4_test_time = props.globals.initNode("/instrumentation/du/du4-test-time", 0, "DOUBLE");
 var du4_test_amount = props.globals.initNode("/instrumentation/du/du4-test-amount", 0, "DOUBLE");
+var du4_offtime = props.globals.initNode("/instrumentation/du/du4-off-time", 0.0, "DOUBLE");
 
 var canvas_lowerECAM_base = {
 	init: func(canvas_group, file) {
@@ -274,27 +275,34 @@ var canvas_lowerECAM_base = {
 	getKeys: func() {
 		return [];
 	},
-	update: func() {
-		elapsedtime = elapsed_sec.getValue();
+	updateDu4: func() {
+		var elapsedtime = elapsed_sec.getValue();
+		
 		if (ac2.getValue() >= 110) {
-			if (gear0_wow.getValue() == 1) {
-				if (autoconfig_running.getValue() != 1 and du4_test.getValue() != 1) {
+			if (du4_offtime.getValue() + 3 < elapsedtime) {
+				if (gear0_wow.getValue() == 1) {
+					if (autoconfig_running.getValue() != 1 and du4_test.getValue() != 1) {
+						du4_test.setValue(1);
+						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du4_test_time.setValue(elapsedtime);
+					} else if (autoconfig_running.getValue() == 1 and du4_test.getValue() != 1) {
+						du4_test.setValue(1);
+						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du4_test_time.setValue(elapsedtime - 30);
+					}
+				} else {
 					du4_test.setValue(1);
-					du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du4_test_time.setValue(elapsedtime);
-				} else if (autoconfig_running.getValue() == 1 and du4_test.getValue() != 1) {
-					du4_test.setValue(1);
-					du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du4_test_time.setValue(elapsedtime - 30);
+					du4_test_amount.setValue(0);
+					du4_test_time.setValue(-100);
 				}
-			} else {
-				du4_test.setValue(1);
-				du4_test_amount.setValue(0);
-				du4_test_time.setValue(-100);
 			}
-		} else if (ac1_src.getValue() == "XX" or ac2_src.getValue() == "XX") {
+		} else {
 			du4_test.setValue(0);
+			du4_offtime.setValue(elapsedtime);
 		}
+	},
+	update: func() {
+		var elapsedtime = elapsed_sec.getValue();
 		
 		if (ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
 			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime) {
@@ -3244,6 +3252,7 @@ var canvas_lowerECAM_test = {
 		return ["Test_white","Test_text"];
 	},
 	update: func() {
+		var elapsedtime = elapsed_sec.getValue();
 		if (du4_test_time.getValue() + 1 >= elapsedtime) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
@@ -3310,3 +3319,7 @@ var showLowerECAM = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(lowerECAM_display);
 }
+
+setlistener("/systems/electrical/bus/ac-2", func() {
+	canvas_lowerECAM_base.updateDu4();
+}, 0, 0);

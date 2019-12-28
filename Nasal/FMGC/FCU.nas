@@ -151,8 +151,10 @@ var FCUController = {
 					setprop("/it-autoflight/sound/apoffsound", 0);
 					setprop("/it-autoflight/sound/apoffsound2", 0);
 				}
-				setprop("/it-autoflight/output/ap-warning", 0);
-				setprop("/ECAM/warnings/master-warning-light", 0);
+				if (getprop("/it-autoflight/output/ap-warning") != 0) {
+					setprop("/it-autoflight/output/ap-warning", 0);
+					setprop("/ECAM/warnings/master-warning-light", 0);
+				}
 			}
 		}
 	},
