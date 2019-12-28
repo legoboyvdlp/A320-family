@@ -4,6 +4,8 @@
 
 <system name="A320: Electrical">	
 	
+	<property value="0">/systems/electrical/some-electric-thingie/rat-deploy</property>
+	
 	<channel name="Main Electrical" execrate="8">
 		
 		<!-- Battery 1 -->
@@ -371,7 +373,6 @@
 		
 		<!-- Emergency Generator -->
 		<switch name="/systems/electrical/some-electric-thingie/rat-deploy">
-			<default value="0"/>
 			<test logic="AND" value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt gt 100
 				/systems/electrical/bus/ac-1 eq 0
@@ -382,6 +383,9 @@
 				/controls/hydraulic/switches/rat-man eq 1
 				/controls/electrical/switches/emer-elec-man-on eq 1 
 			</test>
+			<!--<test value="0">
+				/controls/hydraulic/switches/ground-rat-retraction eq 1
+			</test>-->
 		</switch>
 		
 		<switch name="/systems/electrical/some-electric-thingie/emer-gen-operate">

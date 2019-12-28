@@ -608,7 +608,7 @@ var canvas_lowerECAM_apu = {
 		}
 
 		# APU Gen
-		if (apu_volts.getValue() > 110) {
+		if (apu_volts.getValue() >= 110) {
 			me["APUGenVolt"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["APUGenVolt"].setColor(0.7333,0.3803,0);
@@ -1437,13 +1437,13 @@ var canvas_lowerECAM_elec = {
 				me["GEN1-num-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen1_volts.getValue() > 120 or gen1_volts.getValue() < 110 or gen1_hz.getValue() > 410 or gen1_hz.getValue() < 390 or gen1_load.getValue() > 110) {
+			if (gen1_volts.getValue() > 120 or gen1_volts.getValue() < 110 or gen1_hz.getValue() > 410 or gen1_hz.getValue() < 390 or gen1_load.getValue() >= 110) {
 				me["GEN1-label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["GEN1-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen1_load.getValue() > 110) {
+			if (gen1_load.getValue() >= 110) {
 				me["Gen1Load"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen1Load"].setColor(0.0509,0.7529,0.2941);
@@ -1494,13 +1494,13 @@ var canvas_lowerECAM_elec = {
 				me["GEN2-num-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen2_volts.getValue() > 120 or gen2_volts.getValue() < 110 or gen2_hz.getValue() > 410 or gen2_hz.getValue() < 390 or gen2_load.getValue() > 110) {
+			if (gen2_volts.getValue() > 120 or gen2_volts.getValue() < 110 or gen2_hz.getValue() > 410 or gen2_hz.getValue() < 390 or gen2_load.getValue() >= 110) {
 				me["GEN2-label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["GEN2-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen2_load.getValue() > 110) {
+			if (gen2_load.getValue() >= 110) {
 				me["Gen2Load"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen2Load"].setColor(0.0509,0.7529,0.2941);
@@ -1544,13 +1544,13 @@ var canvas_lowerECAM_elec = {
 					me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 				}
 
-				if (apu_volts.getValue() > 120 or apu_volts.getValue() < 110 or apu_hz.getValue() > 410 or apu_hz.getValue() < 390 or apu_load.getValue() > 110) {
+				if (apu_volts.getValue() > 120 or apu_volts.getValue() < 110 or apu_hz.getValue() > 410 or apu_hz.getValue() < 390 or apu_load.getValue() >= 110) {
 					me["APUGentext"].setColor(0.7333,0.3803,0);
 				} else {
 					me["APUGentext"].setColor(0.8078,0.8039,0.8078);
 				}
 
-				if(apu_load.getValue() > 110) {
+				if(apu_load.getValue() >= 110) {
 					me["APUGenLoad"].setColor(0.7333,0.3803,0);
 				} else {
 					me["APUGenLoad"].setColor(0.0509,0.7529,0.2941);
@@ -1629,25 +1629,25 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-DCESS-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac_ess.getValue() > 110) {
+		if (ac_ess.getValue() >= 110) {
 			me["ELEC-ACESS-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-ACESS-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (systems.ELEC.Bus.acEssShed.getValue() > 110) {
+		if (systems.ELEC.Bus.acEssShed.getValue() >= 110) {
 			me["ACESS-SHED"].hide();
 		} else {
 			me["ACESS-SHED"].show();
 		}
 
-		if (ac1.getValue() > 110) {
+		if (ac1.getValue() >= 110) {
 			me["ELEC-AC1-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-AC1-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac2.getValue() > 110) {
+		if (ac2.getValue() >= 110) {
 			me["ELEC-AC2-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-AC2-label"].setColor(0.7333,0.3803,0);
@@ -1716,11 +1716,19 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
-			me["ELEC-Line-AC1-ACESS"].show();
+			if (ac1.getValue() >= 110) {
+				me["ELEC-Line-AC1-ACESS"].show();
+			} else {
+				me["ELEC-Line-AC1-ACESS"].hide();
+			}
 			me["ELEC-Line-AC2-ACESS"].hide();
 		} elsif (getprop("/systems/electrical/relay/ac-ess-feed-2/contact-pos") == 1) {
 			me["ELEC-Line-AC1-ACESS"].hide();
-			me["ELEC-Line-AC2-ACESS"].show();
+			if (ac2.getValue() >= 110) {
+				me["ELEC-Line-AC2-ACESS"].show();
+			} else {
+				me["ELEC-Line-AC2-ACESS"].hide();
+			}
 		} else {
 			me["ELEC-Line-AC1-ACESS"].hide();
 			me["ELEC-Line-AC2-ACESS"].hide();
@@ -1786,7 +1794,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-Emergen-ESSTR"].hide();
 		}
 		
-		if (!getprop("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos") and (!getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") or !getprop("/systems/electrical/relay/tr-contactor-2/contact-pos"))) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110 and !getprop("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos") and (!getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") or !getprop("/systems/electrical/relay/tr-contactor-2/contact-pos"))) {
 			me["ELEC-Line-ACESS-TRESS"].show();
 		} else {
 			me["ELEC-Line-ACESS-TRESS"].hide();
@@ -2743,13 +2751,13 @@ var canvas_lowerECAM_hyd = {
 			me["OVHT-Blue"].hide();
 		}
 
-		if (systems.ELEC.Bus.ac1.getValue() > 110) {
+		if (systems.ELEC.Bus.ac1.getValue() >= 110) {
 			me["ELEC-Blue-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["ELEC-Blue-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (systems.ELEC.Bus.ac2.getValue() > 110) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			me["ELEC-Yellow-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
