@@ -749,40 +749,6 @@ var messages_priority_3 = func {
 		}
 	}
 	
-	if ((athr_lock.clearFlag == 0) and phaseVar >= 5 and phaseVar <= 7 and getprop("/systems/thrust/thr-locked-alert") == 1) {
-		if (getprop("/systems/thrust/thr-locked-flash") == 0) {
-			athr_lock.msg = " ";
-		} else {
-			athr_lock.msg = msgSave
-		}
-		athr_lock.active = 1;
-		athr_lock_1.active = 1;
-	} else {
-		ECAM_controller.warningReset(athr_lock);
-		ECAM_controller.warningReset(athr_lock_1);
-	}
-	
-	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar != 4 and phaseVar != 8 and phaseVar != 10) {
-		athr_offw.active = 1;
-		athr_offw_1.active = 1;
-	} else {
-		ECAM_controller.warningReset(athr_offw);
-		ECAM_controller.warningReset(athr_offw_1);
-		if (getprop("/it-autoflight/output/athr-warning") == 2) {
-			setprop("/it-autoflight/output/athr-warning", 0);
-			setprop("/ECAM/Lower/light/clr", 0);
-			setprop("/ECAM/warnings/master-caution-light", 0);
-		}
-	}
-	
-	if ((athr_lim.clearFlag == 0) and getprop("/it-autoflight/output/athr") == 1 and ((getprop("/systems/thrust/eng-out") != 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN")) or (getprop("/systems/thrust/eng-out") == 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN" or (getprop("/systems/thrust/state1") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83) or (getprop("/systems/thrust/state2") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar >= 5 and phaseVar <= 7)) {
-		athr_lim.active = 1;
-		athr_lim_1.active = 1;
-	} else {
-		ECAM_controller.warningReset(athr_lim);
-		ECAM_controller.warningReset(athr_lim_1);
-	}
-	
 	if (!systems.cargoTestBtn.getBoolValue()) {
 		if (cargoSmokeFwd.clearFlag == 0 and systems.fwdCargoFireWarn.getBoolValue() and (phaseVar <= 3 or phaseVar >= 9 or phaseVar == 6)) {
 			cargoSmokeFwd.active = 1;
@@ -854,7 +820,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (!(getprop("/systems/electrical/some-electric-thingie/generator-1-reset") and getprop("/systems/electrical/some-electric-thingie/generator-2-reset")) and emerconfigGen.clearFlag == 0) {
-			emerconfigGen.active = 1;
+			emerconfigGen.active = 1; # EGEN12R TRUE
 		} else {
 			ECAM_controller.warningReset(emerconfigGen);
 		}
@@ -866,7 +832,7 @@ var messages_priority_3 = func {
 			} else {
 				ECAM_controller.warningReset(emerconfigBusTie);
 			}
-			emerconfigGen3.active = 1;
+			emerconfigGen3.active = 1; #  EGENRESET TRUE
 		} else {
 			ECAM_controller.warningReset(emerconfigGen2);
 			ECAM_controller.warningReset(emerconfigBusTie);
@@ -1091,6 +1057,41 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShed);
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
+	
+	if ((athr_lock.clearFlag == 0) and phaseVar >= 5 and phaseVar <= 7 and getprop("/systems/thrust/thr-locked-alert") == 1) {
+		if (getprop("/systems/thrust/thr-locked-flash") == 0) {
+			athr_lock.msg = " ";
+		} else {
+			athr_lock.msg = msgSave
+		}
+		athr_lock.active = 1;
+		athr_lock_1.active = 1;
+	} else {
+		ECAM_controller.warningReset(athr_lock);
+		ECAM_controller.warningReset(athr_lock_1);
+	}
+	
+	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar != 4 and phaseVar != 8 and phaseVar != 10) {
+		athr_offw.active = 1;
+		athr_offw_1.active = 1;
+	} else {
+		ECAM_controller.warningReset(athr_offw);
+		ECAM_controller.warningReset(athr_offw_1);
+		if (getprop("/it-autoflight/output/athr-warning") == 2) {
+			setprop("/it-autoflight/output/athr-warning", 0);
+			setprop("/ECAM/Lower/light/clr", 0);
+			setprop("/ECAM/warnings/master-caution-light", 0);
+		}
+	}
+	
+	if ((athr_lim.clearFlag == 0) and getprop("/it-autoflight/output/athr") == 1 and ((getprop("/systems/thrust/eng-out") != 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN")) or (getprop("/systems/thrust/eng-out") == 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN" or (getprop("/systems/thrust/state1") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83) or (getprop("/systems/thrust/state2") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar >= 5 and phaseVar <= 7)) {
+		athr_lim.active = 1;
+		athr_lim_1.active = 1;
+	} else {
+		ECAM_controller.warningReset(athr_lim);
+		ECAM_controller.warningReset(athr_lim_1);
+	}
+	
 	
 	if (getprop("/instrumentation/tcas/serviceable") == 0 and phaseVar != 3 and phaseVar != 4 and phaseVar != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
