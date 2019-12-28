@@ -62,7 +62,7 @@ var FCUController = {
 	FCUworking: 0,
 	_init: 0,
 	init: func() {
-		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEssShed);
+		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEss);
 		me.FCU2 = FCU.new(systems.ELEC.Bus.dc2);
 		me._init = 1;
 	},
