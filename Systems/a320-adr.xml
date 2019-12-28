@@ -955,14 +955,26 @@
 			</clipto>
 		</pure_gain>
 		
-		<switch name="/instrumentation/transponder/altimeter-input">
-			<test logic="AND" value="/systems/navigation/adr/output/baro-alt-corrected-1-capt">
+		<switch name="/instrumentation/transponder/altimeter-input/mode-c-alt-ft">
+			<test logic="AND" value="/instrumentation/altimeter[0]/mode-c-alt-ft">
 				/instrumentation/transponder/altimeter-input-src eq 1
 			</test>
-			<test logic="AND" value="/systems/navigation/adr/output/baro-alt-corrected-2-capt">
+			<test logic="AND" value="/instrumentation/altimeter[1]/mode-c-alt-ft">
 				/instrumentation/transponder/altimeter-input-src eq 2
 			</test>
-			<test logic="AND" value="/systems/navigation/adr/output/baro-alt-corrected-3-capt">
+			<test logic="AND" value="/instrumentation/altimeter[2]/mode-c-alt-ft">
+				/instrumentation/transponder/altimeter-input-src eq 3
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/transponder/altimeter-input/mode-s-alt-ft">
+			<test logic="AND" value="/instrumentation/altimeter[0]/mode-s-alt-ft">
+				/instrumentation/transponder/altimeter-input-src eq 1
+			</test>
+			<test logic="AND" value="/instrumentation/altimeter[1]/mode-s-alt-ft">
+				/instrumentation/transponder/altimeter-input-src eq 2
+			</test>
+			<test logic="AND" value="/instrumentation/altimeter[2]/mode-s-alt-ft">
 				/instrumentation/transponder/altimeter-input-src eq 3
 			</test>
 		</switch>
