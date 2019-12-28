@@ -229,8 +229,8 @@ var ELEC = {
 		if (me.Bus.dcEssShed.getValue() < 25) {
 			if (getprop("/it-autoflight/output/ap1") == 1) {
 				fcu.apOff("hard", 1);
-				if (getprop("/it-autoflight/output/ap2") == 0) {
-					fcu.athrOff("hard"); # TODO - athr master FMGC logic
+				if (fcu.FCUController.activeFMGC.getValue() == 1) {
+					fcu.athrOff("hard");
 				}
 			}
 		}
@@ -238,8 +238,8 @@ var ELEC = {
 		if (me.Bus.dc2.getValue() < 25) {
 			if (getprop("/it-autoflight/output/ap2") == 1) {
 				fcu.apOff("hard", 2);
-				if (getprop("/it-autoflight/output/ap1") == 0) {
-					fcu.athrOff("hard"); # TODO - athr master FMGC logic
+				if (fcu.FCUController.activeFMGC.getValue() == 2) {
+					fcu.athrOff("hard");
 				}
 			}
 		}
