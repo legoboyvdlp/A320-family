@@ -70,10 +70,11 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {
+			clearFPLNComputer();
 			setprop("/FMGC/internal/dep-arpt", "");
 			setprop("/FMGC/internal/arr-arpt", "");
 			setprop("/FMGC/internal/tofrom-set", 0);
-			fmgc.updateARPT();
+			fmgc.flightplan.reset();
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
@@ -87,7 +88,7 @@ var initInputA = func(key, i) {
 					setprop("/FMGC/internal/arr-arpt", fromto[1]);
 					setprop("/FMGC/internal/tofrom-set", 1);
 					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
-					fmgc.updateARPT();
+					fmgc.flightplan.updateARPT(fromto[0], fromto[1], 2);
 				} else {
 					notAllowed(i);
 				}

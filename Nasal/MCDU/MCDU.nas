@@ -96,53 +96,59 @@ var lskbutton = func(btn, i) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("L1",i);
+			perfTOInput("L1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("L1",i);
+			radnavInput("L1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
-			dataInput("L1",i);
+			dataInput("L1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("L1",i);
+			printInput("L1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("L1",i);
+			printInput2("L1", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("L", 1, i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "2") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			PerfInput("L2",i);
+			PerfInput("L2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("L2",i);
+			perfTOInput("L2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("L2",i);
+			radnavInput("L2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLB") {
-			initInputA("L5",i); # Does the same thing as on the INIT page
+			initInputA("L5", i); # Does the same thing as on the INIT page
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CRZ") {
-			initInputA("L5",i); 
+			initInputA("L5", i); 
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DES") {
-			initInputA("L5",i); 
+			initInputA("L5", i); 
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
-			dataInput("L2",i);
+			dataInput("L2", i);
  		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("L2",i);
+			printInput("L2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("L2",i);
+			printInput2("L2", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("L", 2, i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "3") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("L3",i);
+			initInputA("L3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("L3",i);
+			perfTOInput("L3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
-			statusInput("L3",i);
+			statusInput("L3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("L3",i);
+			radnavInput("L3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("L3",i);
+			printInput("L3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("L3",i);
+			printInput2("L3", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("L", 3, i);
 		} else {
 			notAllowed(i);
 		}
@@ -150,45 +156,53 @@ var lskbutton = func(btn, i) {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
 			setprop("/MCDU[" ~ i ~ "]/page", "STATUS");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("L4",i);
+			perfTOInput("L4", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("L4",i);
+			radnavInput("L4", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("L4",i);
+			printInput2("L4", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("L", 4, i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "5") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("L5",i);
+			initInputA("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("L5",i);
+			perfTOInput("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLB") {
-			perfCLBInput("L5",i);
+			perfCLBInput("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CRZ") {
-			perfCRZInput("L5",i);
+			perfCRZInput("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DES") {
-			perfDESInput("L5",i);
+			perfDESInput("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("L5",i);
+			radnavInput("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("L5",i);
+			printInput("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("L5",i);
+			printInput2("L5", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("L", 5, i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "6") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("L6",i);
+			initInputA("L6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLB") {
-			perfCLBInput("L6",i);
+			perfCLBInput("L6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CRZ") {
-			perfCRZInput("L6",i);
+			perfCRZInput("L6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DES") {
-			perfDESInput("L6",i);
+			perfDESInput("L6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("L6",i);
+			printInput2("L6", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("L", 6, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 		} else {
 			notAllowed(i);
 		}
@@ -202,59 +216,59 @@ var lskbutton_b = func(btn, i) {
 var rskbutton = func(btn, i) {
 	if (btn == "1") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("R1",i);
+			initInputA("R1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
-			initInputB("R1",i);
+			initInputB("R1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("R1",i);
+			radnavInput("R1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("R1",i);
+			printInput("R1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("R1",i);
+			printInput2("R1", i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "2") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
-			initInputB("R2",i);
+			initInputB("R2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("R2",i);
+			radnavInput("R2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("R2",i);
+			printInput("R2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("R2",i);
+			printInput2("R2", i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "3") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("R3",i);
+			initInputA("R3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("R3",i);
+			perfTOInput("R3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			printInput("R3",i);
+			printInput("R3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("R3",i);
+			printInput2("R3", i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "4") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("R4",i);
+			perfTOInput("R4", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("R4",i);
+			radnavInput("R4", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			printInput2("R4",i);
+			printInput2("R4", i);
 		} else {
 			notAllowed(i);
 		}
 	} else if (btn == "5") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("R5",i);
+			perfTOInput("R5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
-			radnavInput("R5",i);
+			radnavInput("R5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
-			dataInput("R5",i);
+			dataInput("R5", i);
 		} else {
 			notAllowed(i);
 		}
@@ -268,11 +282,11 @@ var rskbutton = func(btn, i) {
 				notAllowed(i);
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
-			perfTOInput("R6",i);
+			perfTOInput("R6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLB") {
-			perfCLBInput("R6",i);
+			perfCLBInput("R6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CRZ") {
-			perfCRZInput("R6",i);
+			perfCRZInput("R6", i);
 		} else if ((getprop("/MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
 			if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
 				if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
@@ -284,7 +298,9 @@ var rskbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "AOC DISABLED");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("R6",i);
+			initInputA("R6", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			FPLNButton("R", 6, i);
 		} else {
 			notAllowed(i);
 		}
@@ -333,9 +349,13 @@ var arrowbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
 		}
 	} else if (btn == "up") {
-		# Nothing for now
+		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			slewFPLN(1, i);
+		}
 	} else if (btn == "down") {
-		# Nothing for now
+		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+			slewFPLN(-1, i);
+		}
 	}
 }
 
@@ -363,7 +383,12 @@ var pagebutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 			setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
 		} else if (btn == "f-pln") {
-			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+			if (active_out[2].getBoolValue()) {
+				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+			} else {
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+				setprop("/MCDU[" ~ i ~ "]/scratchpad", "ERROR. INITIALIZE ROUTE"); # Should be ERROR:, but the : character doesn't show in our MCDU font right now...
+			}
 		} else if (btn == "fuel-pred") {
 			setprop("/MCDU[" ~ i ~ "]/page", "FUELPRED");
 		}
@@ -532,6 +557,18 @@ var notAllowed = func(i) {
 	}
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 	setprop("/MCDU[" ~ i ~ "]/scratchpad", "NOT ALLOWED");
+}
+
+var formatError = func(i) {
+	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "FORMAT ERROR") {
+		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
+		} else {
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+		}
+	}
+	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+	setprop("/MCDU[" ~ i ~ "]/scratchpad", "FORMAT ERROR");
 }
 
 var screenFlash = func(time, i) {

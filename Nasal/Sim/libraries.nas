@@ -205,6 +205,7 @@ var systemsInit = func {
 	systems.eng_init();
 	systems.fire_init();
 	systems.autobrake_init();
+	fmgc.flightplan.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();

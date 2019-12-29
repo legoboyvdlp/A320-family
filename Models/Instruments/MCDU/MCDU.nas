@@ -6,11 +6,25 @@ var MCDU_1 = nil;
 var MCDU_2 = nil;
 var MCDU1_display = nil;
 var MCDU2_display = nil;
+var myLatRev = nil;
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
 var small = 56;
 var page = "";
+var fplnLineSize = 0;
+var fplnl1 = "";
+var fplnl1s = "";
+var fplnl2 = "";
+var fplnl2s = "";
+var fplnl3 = "";
+var fplnl3s = "";
+var fplnl4 = "";
+var fplnl4s = "";
+var fplnl5 = "";
+var fplnl5s = "";
+var fplnl6 = "";
+var fplnl6s = "";
 setprop("/MCDUC/colors/wht/r", 1);
 setprop("/MCDUC/colors/wht/g", 1);
 setprop("/MCDUC/colors/wht/b", 1);
@@ -27,9 +41,13 @@ setprop("/MCDUC/colors/yel/r", 0.9333);
 setprop("/MCDUC/colors/yel/g", 0.9333);
 setprop("/MCDUC/colors/yel/b", 0.0000);
 
+var WHITE = [1.0000,1.0000,1.0000];
+var GREEN = [0.0509,0.7529,0.2941];
+var BLUE = [0.0901,0.6039,0.7176];
+var AMBER = [0.7333,0.3803,0.0000];
+var YELLOW = [0.9333,0.9333,0.0000];
+
 # Fetch nodes:
-var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
 var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
 var acType = props.globals.getNode("/MCDUC/type", 1);
@@ -92,6 +110,7 @@ var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
 var transAlt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
+var TMPYActive = [props.globals.getNode("/FMGC/internal/tmpy-active[0]"), props.globals.getNode("/FMGC/internal/tmpy-active[1]")];
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
@@ -150,16 +169,16 @@ var canvas_MCDU_base = {
 		"Simple_L1_Arrow","Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S",
 		"Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S",
 		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","PERFTO","PERFTO_V1","PERFTO_VR",
-		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE"];
+		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","FPLN","FPLN_From","FPLN_TMPY_group","FPLN_Callsign","FPLN_L1","FPLN_L2","FPLN_L3","FPLN_L4","FPLN_L5","FPLN_L6","FPLN_L1S","FPLN_L2S","FPLN_L3S","FPLN_L4S","FPLN_L5S","FPLN_L6S","FPLN_6_group"];
 	},
 	update: func() {
-		if (ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
+		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
 			MCDU_1.update();
 			MCDU_1.page.show();
 		} else {
 			MCDU_1.page.hide();
 		}
-		if (ac2.getValue() >= 110 and mcdu2_lgt.getValue() > 0.01) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110 and mcdu2_lgt.getValue() > 0.01) {
 			MCDU_2.update();
 			MCDU_2.page.show();
 		} else {
@@ -168,10 +187,174 @@ var canvas_MCDU_base = {
 	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
-		if (page == "MCDU") {
+		if (page == "F-PLNA" or page == "F-PLNB") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].hide();
+				me["Simple_Center"].hide();
+				me["FPLN"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["PERFTO"].hide();
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (flightNumSet.getValue()) {
+				me["FPLN_Callsign"].setText(flightNum.getValue());
+				me["FPLN_Callsign"].show();
+			} else {
+				me["FPLN_Callsign"].hide();
+			}
+			
+			fplnLineSize = size(mcdu.FPLNLines[i].output);
+			
+			if (fplnLineSize >= 1) {
+				fplnl1 = mcdu.FPLNLines[i].output[0].getText();
+				if (fplnl1 != "") {
+					me["FPLN_L1"].setColor(mcdu.FPLNLines[i].output[0].getColor(i));
+					me["FPLN_L1"].setText(fplnl1);
+					me["FPLN_L1"].show();
+				} else {
+					me["FPLN_L1"].hide();
+				}
+				fplnl1s = mcdu.FPLNLines[i].output[0].getSubText(i);
+				if (fplnl1s != "") {
+					me["FPLN_L1S"].setText(fplnl1s);
+					me["FPLN_L1S"].show();
+				} else {
+					me["FPLN_L1S"].hide();
+				}
+			} else {
+				me["FPLN_L1"].hide();
+				me["FPLN_L1S"].hide();
+			}
+			
+			if (fplnLineSize >= 2) {
+				fplnl2 = mcdu.FPLNLines[i].output[1].getText();
+				if (fplnl2 != "") {
+					me["FPLN_L2"].setColor(mcdu.FPLNLines[i].output[1].getColor(i));
+					me["FPLN_L2"].setText(fplnl2);
+					me["FPLN_L2"].show();
+				} else {
+					me["FPLN_L2"].hide();
+				}
+				fplnl2s = mcdu.FPLNLines[i].output[1].getSubText(i);
+				if (fplnl2s != "") {
+					me["FPLN_L2S"].setText(fplnl2s);
+					me["FPLN_L2S"].show();
+				} else {
+					me["FPLN_L2S"].hide();
+				}
+			} else {
+				me["FPLN_L2"].hide();
+				me["FPLN_L2S"].hide();
+			}
+			
+			if (fplnLineSize >= 3) {
+				fplnl3 = mcdu.FPLNLines[i].output[2].getText();
+				if (fplnl3 != "") {
+					me["FPLN_L3"].setColor(mcdu.FPLNLines[i].output[2].getColor(i));
+					me["FPLN_L3"].setText(fplnl3);
+					me["FPLN_L3"].show();
+				} else {
+					me["FPLN_L3"].hide();
+				}
+				fplnl3s = mcdu.FPLNLines[i].output[2].getSubText(i);
+				if (fplnl3s != "") {
+					me["FPLN_L3S"].setText(fplnl3s);
+					me["FPLN_L3S"].show();
+				} else {
+					me["FPLN_L3S"].hide();
+				}
+			} else {
+				me["FPLN_L3"].hide();
+				me["FPLN_L3S"].hide();
+			}
+			
+			if (fplnLineSize >= 4) {
+				fplnl4 = mcdu.FPLNLines[i].output[3].getText();
+				if (fplnl4 != "") {
+					me["FPLN_L4"].setColor(mcdu.FPLNLines[i].output[3].getColor(i));
+					me["FPLN_L4"].setText(fplnl4);
+					me["FPLN_L4"].show();
+				} else {
+					me["FPLN_L4"].hide();
+				}
+				fplnl4s = mcdu.FPLNLines[i].output[3].getSubText(i);
+				if (fplnl4s != "") {
+					me["FPLN_L4S"].setText(fplnl4s);
+					me["FPLN_L4S"].show();
+				} else {
+					me["FPLN_L4S"].hide();
+				}
+			} else {
+				me["FPLN_L4"].hide();
+				me["FPLN_L4S"].hide();
+			}
+			
+			if (fplnLineSize >= 5) {
+				fplnl5 = mcdu.FPLNLines[i].output[4].getText();
+				if (fplnl5 != "") {
+					me["FPLN_L5"].setColor(mcdu.FPLNLines[i].output[4].getColor(i));
+					me["FPLN_L5"].setText(fplnl5);
+					me["FPLN_L5"].show();
+				} else {
+					me["FPLN_L5"].hide();
+				}
+				fplnl5s = mcdu.FPLNLines[i].output[4].getSubText(i);
+				if (fplnl5s != "") {
+					me["FPLN_L5S"].setText(fplnl5s);
+					me["FPLN_L5S"].show();
+				} else {
+					me["FPLN_L5S"].hide();
+				}
+			} else {
+				me["FPLN_L5"].hide();
+				me["FPLN_L5S"].hide();
+			}
+			
+			if (fplnLineSize >= 6) {
+				fplnl6 = mcdu.FPLNLines[i].output[5].getText();
+				if (fplnl6 != "") {
+					me["FPLN_L6"].setColor(mcdu.FPLNLines[i].output[5].getColor(i));
+					me["FPLN_L6"].setText(fplnl6);
+					me["FPLN_L6"].show();
+				} else {
+					me["FPLN_L6"].hide();
+				}
+				fplnl6s = mcdu.FPLNLines[i].output[5].getSubText(i);
+				if (fplnl6s != "") {
+					me["FPLN_L6S"].setText(fplnl6s);
+					me["FPLN_L6S"].show();
+				} else {
+					me["FPLN_L6S"].hide();
+				}
+			} else {
+				me["FPLN_L6"].hide();
+				me["FPLN_L6S"].hide();
+			}
+			
+			if (mcdu.FPLNLines[i].index == 0) {
+				me["FPLN_From"].show();
+			} else {
+				me["FPLN_From"].hide();
+			}
+			
+			if (TMPYActive[i].getBoolValue()) {
+				me["FPLN_TMPY_group"].show();
+				me["FPLN_6_group"].hide();
+			} else {
+				me["FPLN_TMPY_group"].hide();
+				me["FPLN_6_group"].show();
+			}
+		} elsif (page == "MCDU") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -253,6 +436,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -334,6 +518,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -413,6 +598,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -497,6 +683,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -593,6 +780,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -731,6 +919,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
+				me["FPLN"].hide();
 				me["INITA"].show();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -885,6 +1074,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].show();
 				me["PERFTO"].hide();
@@ -1014,6 +1204,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -1125,6 +1316,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].show();
@@ -1282,6 +1474,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -1399,9 +1592,244 @@ var canvas_MCDU_base = {
 			me["Simple_C1"].setText("---  ");
 			me["Simple_C5"].setText("             -350");
 			me["Simple_C1S"].setText("TIME  ");
+		} elsif (page == "LATREV") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].hide();
+				me["FPLN"].hide();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["PERFTO"].hide();
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				
+				if (myLatRev != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myLatRev.title[0] ~ myLatRev.title[1] ~ myLatRev.title[2]));
+					
+					forindex (var matrixArrow; myLatRev.arrowsMatrix) {
+						if (matrixArrow == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myLatRev.arrowsMatrix[matrixArrow]) {
+							if (myLatRev.arrowsMatrix[matrixArrow][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+							} else {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+							}
+						}
+					}
+					
+					forindex (var matrixFont; myLatRev.fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myLatRev.fontMatrix[matrixFont]) {
+							if (myLatRev.fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					if (myLatRev.L1[0] == nil) {
+						me["Simple_L1"].hide();
+						me["Simple_L1S"].hide();
+					} else {
+						me["Simple_L1"].show();
+						me["Simple_L1"].setText(myLatRev.L1[0]);
+						if (myLatRev.L1[1] != nil) {
+							me["Simple_L1S"].show();
+							me["Simple_L1S"].setText(myLatRev.L1[1]);
+						} else {
+							me["Simple_L1S"].hide();
+						}
+					}
+					
+					if (myLatRev.L2[0] == nil) {
+						me["Simple_L2"].hide();
+						me["Simple_L2S"].hide();
+					} else {
+						me["Simple_L2"].show();
+						me["Simple_L2"].setText(myLatRev.L2[0]);
+						if (myLatRev.L2[1] != nil) {
+							me["Simple_L2S"].show();
+							me["Simple_L2S"].setText(myLatRev.L2[1]);
+						} else {
+							me["Simple_L2S"].hide();
+						}
+					}
+					
+					if (myLatRev.L3[0] == nil) {
+						me["Simple_L3"].hide();
+						me["Simple_L3S"].hide();
+					} else {
+						me["Simple_L3"].show();
+						me["Simple_L3"].setText(myLatRev.L3[0]);
+						if (myLatRev.L3[1] != nil) {
+							me["Simple_L3S"].show();
+							me["Simple_L3S"].setText(myLatRev.L3[1]);
+						} else {
+							me["Simple_L3S"].hide();
+						}
+					}
+					
+					if (myLatRev.L4[0] == nil) {
+						me["Simple_L4"].hide();
+						me["Simple_L4S"].hide();
+					} else {
+						me["Simple_L4"].show();
+						me["Simple_L4"].setText(myLatRev.L4[0]);
+						if (myLatRev.L4[1] != nil) {
+							me["Simple_L4S"].show();
+							me["Simple_L4S"].setText(myLatRev.L4[1]);
+						} else {
+							me["Simple_L4S"].hide();
+						}
+					}
+					
+					if (myLatRev.L5[0] == nil) {
+						me["Simple_L5"].hide();
+						me["Simple_L5S"].hide();
+					} else {
+						me["Simple_L5"].show();
+						me["Simple_L5"].setText(myLatRev.L5[0]);
+						if (myLatRev.L5[1] != nil) {
+							me["Simple_L5S"].show();
+							me["Simple_L5S"].setText(myLatRev.L5[1]);
+						} else {
+							me["Simple_L5S"].hide();
+						}
+					}
+					
+					if (myLatRev.L6[0] == nil) {
+						me["Simple_L6"].hide();
+						me["Simple_L6S"].hide();
+					} else {
+						me["Simple_L6"].show();
+						me["Simple_L6"].setText(myLatRev.L6[0]);
+						if (myLatRev.L6[1] != nil) {
+							me["Simple_L6S"].show();
+							me["Simple_L6S"].setText(myLatRev.L6[1]);
+						} else {
+							me["Simple_L6S"].hide();
+						}
+					}
+					me.colorLeft(myLatRev.L1[2],myLatRev.L2[2],myLatRev.L3[2],myLatRev.L4[2],myLatRev.L5[2],myLatRev.L6[2]);
+					
+					if (myLatRev.R1[0] == nil) {
+						me["Simple_R1"].hide();
+						me["Simple_R1S"].hide();
+					} else {
+						me["Simple_R1"].show();
+						me["Simple_R1"].setText(myLatRev.R1[0]);
+						if (myLatRev.R1[1] != nil) {
+							me["Simple_R1S"].show();
+							me["Simple_R1S"].setText(myLatRev.R1[1]);
+						} else {
+							me["Simple_R1S"].hide();
+						}
+					}
+					
+					if (myLatRev.R2[0] == nil) {
+						me["Simple_R2"].hide();
+						me["Simple_R2S"].hide();
+					} else {
+						me["Simple_R2"].show();
+						me["Simple_R2"].setText(myLatRev.R2[0]);
+						if (myLatRev.R2[1] != nil) {
+							me["Simple_R2S"].show();
+							me["Simple_R2S"].setText(myLatRev.R2[1]);
+						} else {
+							me["Simple_R2S"].hide();
+						}
+					}
+					
+					if (myLatRev.R3[0] == nil) {
+						me["Simple_R3"].hide();
+						me["Simple_R3S"].hide();
+					} else {
+						me["Simple_R3"].show();
+						me["Simple_R3"].setText(myLatRev.R3[0]);
+						if (myLatRev.R3[1] != nil) {
+							me["Simple_R3S"].show();
+							me["Simple_R3S"].setText(myLatRev.R3[1]);
+						} else {
+							me["Simple_R3S"].hide();
+						}
+					}
+					
+					if (myLatRev.R4[0] == nil) {
+						me["Simple_R4"].hide();
+						me["Simple_R4S"].hide();
+					} else {
+						me["Simple_R4"].show();
+						me["Simple_R4"].setText(myLatRev.R4[0]);
+						if (myLatRev.R4[1] != nil) {
+							me["Simple_R4S"].show();
+							me["Simple_R4S"].setText(myLatRev.R4[1]);
+						} else {
+							me["Simple_R4S"].hide();
+						}
+					}
+					
+					if (myLatRev.R5[0] == nil) {
+						me["Simple_R5"].hide();
+						me["Simple_R5S"].hide();
+					} else {
+						me["Simple_R5"].show();
+						me["Simple_R5"].setText(myLatRev.R5[0]);
+						if (myLatRev.R5[1] != nil) {
+							me["Simple_R5S"].show();
+							me["Simple_R5S"].setText(myLatRev.R5[1]);
+						} else {
+							me["Simple_R5S"].hide();
+						}
+					}
+					
+					if (myLatRev.R6[0] == nil) {
+						me["Simple_R6"].hide();
+						me["Simple_R6S"].hide();
+					} else {
+						me["Simple_R6"].show();
+						me["Simple_R6"].setText(myLatRev.R6[0]);
+						if (myLatRev.R6[1] != nil) {
+							me["Simple_R6S"].show();
+							me["Simple_R6S"].setText(myLatRev.R6[1]);
+						} else {
+							me["Simple_R6S"].hide();
+						}
+					}
+					me.colorRight(myLatRev.R1[2],myLatRev.R2[2],myLatRev.R3[2],myLatRev.R4[2],myLatRev.R5[2],myLatRev.R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].hide();
+				me["FPLN"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
