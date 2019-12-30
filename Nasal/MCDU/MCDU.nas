@@ -105,6 +105,13 @@ var lskbutton = func(btn, i) {
 			printInput("L1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("L1", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+			if (canvas_mcdu.myDeparture[i] != nil) {
+				canvas_mcdu.myDeparture[i].del();
+			}
+			canvas_mcdu.myDeparture[i] = nil;
+			canvas_mcdu.myDeparture[i] = departurePage.new(canvas_mcdu.myLatRev[i].title[2], i);
+			setprop("/MCDU[" ~ i ~ "]/page", "DEPARTURE");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			FPLNButton("L", 1, i);
 		} else {
@@ -131,6 +138,8 @@ var lskbutton = func(btn, i) {
 			printInput2("L2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			FPLNButton("L", 2, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonLeft(2);
 		} else {
 			notAllowed(i);
 		}
@@ -149,6 +158,8 @@ var lskbutton = func(btn, i) {
 			printInput2("L3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			FPLNButton("L", 3, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonLeft(3);
 		} else {
 			notAllowed(i);
 		}
@@ -163,6 +174,8 @@ var lskbutton = func(btn, i) {
 			printInput2("L4", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			FPLNButton("L", 4, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonLeft(4);
 		} else {
 			notAllowed(i);
 		}
@@ -185,6 +198,8 @@ var lskbutton = func(btn, i) {
 			printInput2("L5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			FPLNButton("L", 5, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
 		} else {
 			notAllowed(i);
 		}
@@ -203,6 +218,12 @@ var lskbutton = func(btn, i) {
 			FPLNButton("L", 6, i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			if (canvas_mcdu.TMPYActive[i].getBoolValue()) {
+				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+			} else {
+				setprop("/MCDU[" ~ i ~ "]/page", "LATREV");
+			}
 		} else {
 			notAllowed(i);
 		}

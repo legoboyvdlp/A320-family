@@ -140,33 +140,35 @@ var FPLNText = {
 				}
 			} else if (size(scratchpad) == 1) {
 				formatError(me.computer.mcdu);
-			} else {
-				if (me.getText() == fmgc.fp[2].departure.id) {
-					if (canvas_mcdu.myLatRev != nil) {
-						canvas_mcdu.myLatRev.del();
+			} else if (scratchpad == "") {
+				if (me.getText() == fmgc.fp[2].departure.id or left(me.getText(), 4) == fmgc.fp[2].departure.id) {
+					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+						canvas_mcdu.myLatRev[me.computer.mcdu].del();
 					}
-					canvas_mcdu.myLatRev = nil;
-					canvas_mcdu.myLatRev = latRev.new(0, me.getText());
+					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(0, me.getText());
 				} elsif (me.index == fmgc.arrivalAirportI[2]) {
-					if (canvas_mcdu.myLatRev != nil) {
-						canvas_mcdu.myLatRev.del();
+					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+						canvas_mcdu.myLatRev[me.computer.mcdu].del();
 					}
-					canvas_mcdu.myLatRev = nil;
-					canvas_mcdu.myLatRev = latRev.new(1, me.getText());
-				} elsif (me.index == fmgc.currentWP[2]) {
-					if (canvas_mcdu.myLatRev != nil) {
-						canvas_mcdu.myLatRev.del();
+					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(1, me.getText());
+				} elsif (me.index == (fmgc.currentWP[2] - 1)) {
+					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+						canvas_mcdu.myLatRev[me.computer.mcdu].del();
 					}
-					canvas_mcdu.myLatRev = nil;
-					canvas_mcdu.myLatRev = latRev.new(2, me.getText());
+					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(2, me.getText());
 				} else {
-					if (canvas_mcdu.myLatRev != nil) {
-						canvas_mcdu.myLatRev.del();
+					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+						canvas_mcdu.myLatRev[me.computer.mcdu].del();
 					}
-					canvas_mcdu.myLatRev = nil;
-					canvas_mcdu.myLatRev = latRev.new(3, me.getText());
+					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(3, me.getText());
 				}
 				setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
+			} else {
+				notAllowed(me.computer.mcdu);
 			}
 		}
 	},

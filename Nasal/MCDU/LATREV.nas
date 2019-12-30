@@ -3,6 +3,7 @@ var latRev = {
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
+	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
 	L2: [nil, nil, "ack"],
 	L3: [nil, nil, "ack"],
@@ -34,33 +35,44 @@ var latRev = {
 			me.L3 = [" HOLD", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R1 = ["FIX INFO ", nil, "wht"];
-			me.R2 = ["[      ]°/[    ]°/[   ]", "LL XING/INCR/NO", "blu"];
+			me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
 			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
+			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
 		} else {
 			me.title = ["LAT REV", " FROM ", me.id];
 			
-			if (me.type == 0) {
-				me.depAirport = findAirportsByICAO(me.id);
+			if (me.type == 0) {	
+				if (size(me.id) > 4) {
+					me.depAirport = findAirportsByICAO(left(me.id, 4));
+				} else {
+					me.depAirport = findAirportsByICAO(me.id);
+				}
 				me.subtitle = [dmsToString(sprintf(me.depAirport[0].lat), "lat"), dmsToString(sprintf(me.depAirport[0].lon), "lon")];
 				me.L1 = [" DEPARTURE", nil, "wht"];
 				me.L2 = [" OFFSET", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R2 = ["[      ]°/[    ]°/[   ]", "LL XING/INCR/NO", "blu"];
-				me.R3 = ["[      ]", "NEXT WPT ", "blu"];
-				me.R4 = ["[    ]", "NEW DEST", "blu"];
+				me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
+				me.R3 = ["[        ]", "NEXT WPT   ", "blu"];
+				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
+				me.arrowsColour = [["wht", "wht", "ack", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]];
 			} elsif (me.type == 1) {
-				me.arrAirport = findAirportsByICAO(me.id);
+				if (size(me.id) > 4) {
+					me.arrAirport = findAirportsByICAO(left(me.id, 4));
+				} else {
+					me.arrAirport = findAirportsByICAO(me.id);
+				}
 				me.subtitle = [dmsToString(sprintf(me.arrAirport[0].lat), "lat"), dmsToString(sprintf(me.arrAirport[0].lon), "lon")];
 				me.L3 = [" ALTN", nil, "wht"];
-				me.L4 = [" ALTN", "ENABLE", "blu"];
+				me.L4 = [" ALTN", " ENABLE", "blu"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["ARRIVAL ", nil, "wht"];
-				me.R3 = ["[      ]", "NEXT WPT ", "blu"];
+				me.R3 = ["[        ]", "NEXT WPT   ", "blu"];
 				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
+				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			} elsif (me.type == 3) {
 				if (size(me.id) == 2 or size(me.id) == 3) {
@@ -72,13 +84,14 @@ var latRev = {
 				}
 				me.subtitle = [dmsToString(sprintf(me.wpt[0].lat), "lat"), dmsToString(sprintf(me.wpt[0].lon), "lon")];
 				me.L3 = [" HOLD", nil, "wht"];
-				me.L4 = [" ALTN", "ENABLE", "blu"];
+				me.L4 = [" ALTN", " ENABLE", "blu"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R3 = ["[      ]", "NEXT WPT ", "blu"];
-				me.R4 = ["[    ]", "NEW DEST", "blu"];
+				me.R3 = ["[        ]", "NEXT WPT   ", "blu"];
+				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.R5 = ["AIRWAYS ", nil, "wht"];
 				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
+				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 			}
 		}
@@ -86,13 +99,12 @@ var latRev = {
 };
 
 var dmsToString = func(dms, type) {
-	var decimalSplit = split(".", dms);
-	var degrees = decimalSplit[0];
-	var minutes = decimalSplit[1] * 60;
+	var degrees = int(dms);
+	var minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	if (type == "lat") {
 		var sign = degrees >= 0 ? "N" : "S";
 	} else {
 		var sign = degrees >= 0 ? "E" : "W";
 	}
-	return degrees ~ "g" ~ minutes ~ " " ~ sign;
+	return abs(degrees) ~ "g" ~ minutes ~ " " ~ sign;
 }
