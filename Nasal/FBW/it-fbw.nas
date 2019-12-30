@@ -179,7 +179,7 @@ var update_loop = func {
 		FBW.Lights.elac2.setValue(1);
 	}
 	
-	if (sec1_sw and !sec1_fail and dc_ess >= 110) {
+	if (sec1_sw and !sec1_fail and dc_ess >= 25) {
 		setprop("/systems/fctl/sec1", 1);
 		setprop("/systems/failures/spoiler-l3", 0);
 		setprop("/systems/failures/spoiler-r3", 0);
@@ -193,7 +193,7 @@ var update_loop = func {
 		setprop("/systems/failures/spoiler-r4", 1);
 	}
 	
-	if (sec2_sw and !sec2_fail and dc2 >= 110) {
+	if (sec2_sw and !sec2_fail and dc2 >= 25) {
 		setprop("/systems/fctl/sec2", 1);
 		setprop("/systems/failures/spoiler-l5", 0);
 		setprop("/systems/failures/spoiler-r5", 0);
@@ -203,7 +203,7 @@ var update_loop = func {
 		setprop("/systems/failures/spoiler-r5", 1);
 	}
 	
-	if (sec3_sw and !sec3_fail and dc2 >= 110) {
+	if (sec3_sw and !sec3_fail and dc2 >= 25) {
 		setprop("/systems/fctl/sec3", 1);
 		setprop("/systems/failures/spoiler-l1", 0);
 		setprop("/systems/failures/spoiler-r1", 0);
