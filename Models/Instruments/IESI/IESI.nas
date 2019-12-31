@@ -80,27 +80,20 @@ var canvas_IESI_base = {
 		dcess = systems.ELEC.Bus.dcEss.getValue();
 		dchot1 = systems.ELEC.Bus.dcHot1.getValue();
 		
-		if (dcess >= 25 or (dchot1 >= 25 and airspeed.getValue() >= 50)) {
+		cur_time = et.getValue();
+		if (dcess >= 25 or (dchot1 >= 25 and airspeed.getValue() >= 50 and cur_time >= 5)) {
 			IESI.page.show();
 			IESI.update();
 			
 			if (aconfig.getValue() != 1 and iesi_init.getValue() != 1) {
 				iesi_init.setBoolValue(1);
-				cur_time = et.getValue();
 				iesi_time.setValue(cur_time);
 			} else if (aconfig.getValue() == 1 and iesi_init.getValue() != 1) {
 				iesi_init.setBoolValue(1);
-				cur_time = et.getValue() - 87;
-				iesi_time.setValue(cur_time);
+				iesi_time.setValue(cur_time - 87);
 			}
 		} else {
 			iesi_init.setBoolValue(0);
-		}
-		
-		if (dcess >= 25 or (dchot1 >= 25 and airspeed.getValue() >= 50)) {
-			IESI.page.show();
-			IESI.update();
-		} else {
 			IESI.page.hide();
 		}
 	},
