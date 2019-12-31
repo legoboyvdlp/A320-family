@@ -1,4 +1,4 @@
-var departurePage = {
+var arrivalPage = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -22,7 +22,7 @@ var departurePage = {
 	R4: [nil, nil, "ack"],
 	R5: [nil, nil, "ack"],
 	R6: [nil, nil, "ack"],
-	depAirport: nil,
+	arrAirport: nil,
 	runways: nil,
 	selectedRunway: nil,
 	sids: nil,
@@ -32,13 +32,13 @@ var departurePage = {
 	_runways: nil,
 	_sids: nil,
 	new: func(icao, computer) {
-		var lr = {parents:[departurePage]};
+		var lr = {parents:[arrivalPage]};
 		lr.id = icao;
 		lr.computer = computer;
 		lr._setupPageWithData();
 		lr.updateRunways();
-		if (fmgc.fp[2].departure_runway != nil) {
-			lr.selectedRunway = fmgc.fp[2].departure_runway;
+		if (fmgc.fp[2].destination_runway != nil) {
+			lr.selectedRunway = fmgc.fp[2].destination_runway;
 		}
 		lr.updateActiveRunway();
 		return lr;
@@ -47,7 +47,7 @@ var departurePage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		me.title = ["DEPARTURE", " FROM ", left(me.id, 4)];
+		me.title = ["ARRIVAL", " TO ", left(me.id, 4)];
 		if (!TMPYActive[me.computer].getBoolValue()) {
 			me.L6 = [" RETURN END", nil, "wht"];
 		} else {
@@ -55,7 +55,8 @@ var departurePage = {
 			me.arrowsColour[0][5] = "yel";
 		}
 		
-		me.C1 = ["------- ", "SID", "wht"];
+		me.C1 = ["------- ", "VIA", "wht"];
+		me.R1 = ["-------", "STAR ", "wht"];
 		me.R1 = ["-------", "TRANS ", "wht"];
 		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
@@ -63,16 +64,16 @@ var departurePage = {
 	},
 	updateActiveRunway: func() {
 		if (me.selectedRunway != nil) {
-			if (fmgc.fp[2].departure_runway != nil) {
-				if (fmgc.fp[2].departure_runway.id == me.selectedRunway.id) {
-					me.L1 = [fmgc.fp[2].departure_runway.id, " RWY", "grn"];
-				} elsif (fmgc.fp[me.computer].departure_runway != nil) {
-					me.L1 = [fmgc.fp[me.computer].departure_runway.id, " RWY", "yel"];
+			if (fmgc.fp[2].destination_runway != nil) {
+				if (fmgc.fp[2].destination_runway.id == me.selectedRunway.id) {
+					me.L1 = [fmgc.fp[2].destination_runway.id, " RWY", "grn"];
+				} elsif (fmgc.fp[me.computer].destination_runway != nil) {
+					me.L1 = [fmgc.fp[me.computer].destination_runway.id, " RWY", "yel"];
 				} else {
 					me.L1 = ["---", " RWY", "wht"];
 				} 
-			} elsif (fmgc.fp[me.computer].departure_runway != nil) {
-				me.L1 = [fmgc.fp[me.computer].departure_runway.id, " RWY", "yel"];
+			} elsif (fmgc.fp[me.computer].destination_runway != nil) {
+				me.L1 = [fmgc.fp[me.computer].destination_runway.id, " RWY", "yel"];
 			} else {
 				me.L1 = ["---", " RWY", "wht"];
 			}
@@ -82,37 +83,37 @@ var departurePage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateRunways: func() {
-		me.depAirport = findAirportsByICAO(left(me.id, 4));
-		me._runways = keys(me.depAirport[0].runways);
+		me.arrAirport = findAirportsByICAO(left(me.id, 4));
+		me._runways = keys(me.arrAirport[0].runways);
 		me.runways = sort(me._runways,func(a,b) cmp(a,b));
 		
 		me.fourRunways = [nil, nil, nil, nil];
 		
 		if (size(me.runways) >= 1) {
 			me.L2 = [" " ~ me.runways[0 + me.scroll], nil, "blu"];
-			me.C2 = [math.round(me.depAirport[0].runways[me.runways[0 + me.scroll]].length) ~ "M", nil, "blu"];
-			me.R2 = ["CRS" ~ math.round(me.depAirport[0].runways[me.runways[0 + me.scroll]].heading), nil, "blu"];
+			me.C2 = [math.round(me.arrAirport[0].runways[me.runways[0 + me.scroll]].length) ~ "M", nil, "blu"];
+			me.R2 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.runways[0 + me.scroll]].heading), nil, "blu"];
 			me.arrowsMatrix[0][1] = 1;
 			me.arrowsColour[0][1] = "blu";
 		}
 		if (size(me.runways) >= 2) {
 			me.L3 = [" " ~ me.runways[1 + me.scroll], nil, "blu"];
-			me.C3 = [math.round(me.depAirport[0].runways[me.runways[1 + me.scroll]].length) ~ "M", nil, "blu"];
-			me.R3 = ["CRS" ~ math.round(me.depAirport[0].runways[me.runways[1 + me.scroll]].heading), nil, "blu"];
+			me.C3 = [math.round(me.arrAirport[0].runways[me.runways[1 + me.scroll]].length) ~ "M", nil, "blu"];
+			me.R3 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.runways[1 + me.scroll]].heading), nil, "blu"];
 			me.arrowsMatrix[0][2] = 1;
 			me.arrowsColour[0][2] = "blu";
 		}
 		if (size(me.runways) >= 3) {
 			me.L4 = [" " ~ me.runways[2 + me.scroll], nil, "blu"];
-			me.C4 = [math.round(me.depAirport[0].runways[me.runways[2 + me.scroll]].length) ~ "M", nil, "blu"];
-			me.R4 = ["CRS" ~ math.round(me.depAirport[0].runways[me.runways[2 + me.scroll]].heading), nil, "blu"];
+			me.C4 = [math.round(me.arrAirport[0].runways[me.runways[2 + me.scroll]].length) ~ "M", nil, "blu"];
+			me.R4 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.runways[2 + me.scroll]].heading), nil, "blu"];
 			me.arrowsMatrix[0][3] = 1;
 			me.arrowsColour[0][3] = "blu";
 		}
 		if (size(me.runways) >= 4) {
 			me.L5 = [" " ~ me.runways[3 + me.scroll], nil, "blu"];
-			me.C5 = [math.round(me.depAirport[0].runways[me.runways[3 + me.scroll]].length) ~ "M", nil, "blu"];
-			me.R5 = ["CRS" ~ math.round(me.depAirport[0].runways[me.runways[3 + me.scroll]].heading), nil, "blu"];
+			me.C5 = [math.round(me.arrAirport[0].runways[me.runways[3 + me.scroll]].length) ~ "M", nil, "blu"];
+			me.R5 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.runways[3 + me.scroll]].heading), nil, "blu"];
 			me.arrowsMatrix[0][4] = 1;
 			me.arrowsColour[0][4] = "blu";
 		}
@@ -150,9 +151,9 @@ var departurePage = {
 	},
 	depPushbuttonLeft: func(index) {
 		if (size(me.runways) >= (index - 1)) {
-			me.selectedRunway = me.depAirport[0].runway(me.runways[index - 2 + me.scroll]);
+			me.selectedRunway = me.arrAirport[0].runway(me.runways[index - 2 + me.scroll]);
 			me.makeTmpy();
-			fmgc.fp[me.computer].departure_runway = me.selectedRunway;
+			fmgc.fp[me.computer].destination_runway = me.selectedRunway;
 			me.updateActiveRunway();
 			fmgc.flightplan.checkWPOutputs(me.computer);
 		} else {

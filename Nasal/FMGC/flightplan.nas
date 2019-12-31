@@ -129,6 +129,9 @@ var flightplan = {
 			}
 			
 			currentWP[2] = 0;
+			
+			# Create discontinuity
+			fmgc.fp[2].insertWP(createDiscontinuity(), 1);
 		}
 		
 		me.checkWPOutputs(n);

@@ -18,10 +18,11 @@ var clearFPLNComputer = func {
 }
 
 var StaticText = {
-	new: func(computer, type) {
+	new: func(computer, type, index = nil) {
 		var in = {parents:[StaticText]};
 		in.type = type;
 		in.computer = computer;
+		in.index = index;
 		return in;
 	},
 	getText: func() {
@@ -45,7 +46,48 @@ var StaticText = {
 	},
 	type: nil,
 	pushButtonLeft: func() {
-		notAllowed(me.computer.mcdu);
+		if (me.type != "discontinuity") {
+			notAllowed(me.computer.mcdu);
+		} else {
+			var scratchpad = getprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad");
+			if (TMPYActive[me.computer.mcdu].getBoolValue()) {
+				if (scratchpad == "CLR") {
+					if (fmgc.flightplan.deleteWP(me.index, me.computer.mcdu, 0) != 0) {
+						notAllowed(me.computer.mcdu);
+					} else {
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad-msg", 0);
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					}
+				} elsif (scratchpad == "") {
+					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+						canvas_mcdu.myLatRev[me.computer.mcdu].del();
+					}
+					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(4, "DISCON", me.index, me.computer.mcdu);
+					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
+				} else {
+					notAllowed(me.computer.mcdu);
+				}
+			} else {
+				if (scratchpad == "CLR") {
+					if (fmgc.flightplan.deleteWP(me.index, 2, 0) != 0) {
+						notAllowed(me.computer.mcdu);
+					} else {
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad-msg", 0);
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					}
+				} elsif (scratchpad == "") {
+					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+						canvas_mcdu.myLatRev[me.computer.mcdu].del();
+					}
+					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(4, "DISCON", me.index, me.computer.mcdu);
+					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
+				} else {
+					notAllowed(me.computer.mcdu);
+				}
+			}
+		}
 	},
 	pushButtonRight: func() {
 		notAllowed(me.computer.mcdu);
@@ -53,6 +95,7 @@ var StaticText = {
 };
 
 var FPLNText = {
+	_text: nil,
 	new: func(computer, wp, dest, fp, wpIndex) {
 		var in = {parents:[FPLNText]};
 		in.wp = wp;
@@ -63,7 +106,12 @@ var FPLNText = {
 		return in;
 	},
 	getText: func() {
-		return me.wp.wp_name;
+		me._text = split("-",me.wp.wp_name);
+		if (size(me._text) == 2) {
+			return me._text[0] ~ me._text[1];
+		} else {
+			return me._text[0];
+		}
 	},
 	getColor: func(i) {
 		if (TMPYActive[i].getBoolValue()) {
@@ -112,7 +160,16 @@ var FPLNText = {
 			}
 		} else {
 			if (size(scratchpad) == 5) {
-				var insertReturn = fmgc.flightplan.insertFix(scratchpad, me.index, me.computer.mcdu);
+				var indexWp = fmgc.fp[me.computer.mcdu].indexOfWP(findFixesByID(scratchpad));
+				if (indexWp == -1) {
+					var insertReturn = fmgc.flightplan.insertFix(scratchpad, me.index, me.computer.mcdu);
+					fmgc.fp[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
+					fmgc.flightplan.checkWPOutputs(me.computer.mcdu);
+				} else {
+					for (var i = me.index; i == indexWp; i = i + 1) {
+						fmgc.flightplan.deleteWP(i, me.computer.mcdu, 0);
+					}
+				}
 				if (insertReturn == 2) {
 					notAllowed(me.computer.mcdu);
 				} else if (insertReturn == 1) {
@@ -121,7 +178,16 @@ var FPLNText = {
 					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
 				}
 			} else if (size(scratchpad) == 4) {
-				var insertReturn = fmgc.flightplan.insertArpt(scratchpad, me.index, me.computer.mcdu);
+				var indexWp = fmgc.fp[me.computer.mcdu].indexOfWP(findAirportsByICAO(scratchpad));
+				if (indexWp == -1) {
+					var insertReturn = fmgc.flightplan.insertArpt(scratchpad, me.index, me.computer.mcdu);
+					fmgc.fp[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
+					fmgc.flightplan.checkWPOutputs(me.computer.mcdu);
+				} else {
+					for (var i = me.index; i == indexWp; i = i + 1) {
+						fmgc.flightplan.deleteWP(i, me.computer.mcdu, 0);
+					}
+				}
 				if (insertReturn == 2) {
 					notAllowed(me.computer.mcdu);
 				} else if (insertReturn == 1) {
@@ -130,7 +196,16 @@ var FPLNText = {
 					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
 				}
 			} else if (size(scratchpad) == 3 or size(scratchpad) == 2) {
-				var insertReturn = fmgc.flightplan.insertNavaid(scratchpad, me.index, me.computer.mcdu);
+				var indexWp = fmgc.fp[me.computer.mcdu].indexOfWP(findNavaidsByID(scratchpad));
+				if (indexWp == -1) {
+					var insertReturn = fmgc.flightplan.insertNavaid(scratchpad, me.index, me.computer.mcdu);
+					fmgc.fp[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
+					fmgc.flightplan.checkWPOutputs(me.computer.mcdu);
+				} else {
+					for (var i = me.index; i == indexWp; i = i + 1) {
+						fmgc.flightplan.deleteWP(i, me.computer.mcdu, 0);
+					}
+				}
 				if (insertReturn == 2) {
 					notAllowed(me.computer.mcdu);
 				} else if (insertReturn == 1) {
@@ -141,32 +216,61 @@ var FPLNText = {
 			} else if (size(scratchpad) == 1) {
 				formatError(me.computer.mcdu);
 			} else if (scratchpad == "") {
-				if (me.getText() == fmgc.fp[2].departure.id or left(me.getText(), 4) == fmgc.fp[2].departure.id) {
-					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
-						canvas_mcdu.myLatRev[me.computer.mcdu].del();
+				if (!TMPYActive[me.computer.mcdu].getBoolValue()) {
+					if (me.getText() == fmgc.fp[2].departure.id or left(me.getText(), 4) == fmgc.fp[2].departure.id) {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(0, me.getText(), me.index, me.computer.mcdu);
+					} elsif (me.index == fmgc.arrivalAirportI[2]) {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(1, me.getText(), me.index, me.computer.mcdu);
+					} elsif (me.index == (fmgc.currentWP[2] - 1)) {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(2, me.getText(), me.index, me.computer.mcdu);
+					} else {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(3, me.getText(), me.index, me.computer.mcdu); # todo must not be available from lat lon / place - brg - dist / abeam etc
 					}
-					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
-					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(0, me.getText());
-				} elsif (me.index == fmgc.arrivalAirportI[2]) {
-					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
-						canvas_mcdu.myLatRev[me.computer.mcdu].del();
-					}
-					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
-					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(1, me.getText());
-				} elsif (me.index == (fmgc.currentWP[2] - 1)) {
-					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
-						canvas_mcdu.myLatRev[me.computer.mcdu].del();
-					}
-					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
-					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(2, me.getText());
+					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
 				} else {
-					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
-						canvas_mcdu.myLatRev[me.computer.mcdu].del();
+					if (me.getText() == fmgc.fp[me.computer.mcdu].departure.id or left(me.getText(), 4) == fmgc.fp[me.computer.mcdu].departure.id) {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(0, me.getText(), me.index, me.computer.mcdu);
+					} elsif (me.index == fmgc.arrivalAirportI[me.computer.mcdu]) {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(1, me.getText(), me.index, me.computer.mcdu);
+					} elsif (me.index == (fmgc.currentWP[2] - 1)) { # not a bug for PPOS
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(2, me.getText(), me.index, me.computer.mcdu);
+					} else {
+						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
+							canvas_mcdu.myLatRev[me.computer.mcdu].del();
+						}
+						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
+						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(3, me.getText(), me.index, me.computer.mcdu); # todo must not be available from lat lon / place - brg - dist / abeam etc
 					}
-					canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
-					canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(3, me.getText());
+					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
 				}
-				setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
 			} else {
 				notAllowed(me.computer.mcdu);
 			}
@@ -228,7 +332,12 @@ var FPLNLineComputer = {
 				if (j == me.destIndex) {
 					me.dest = 1;
 				}
-				append(me.planList, FPLNText.new(me, fpln.getWP(j), me.dest, fplnID, j));
+				var wpt = fpln.getWP(j);
+				if (wpt.wp_name == "DISCONTINUITY") {
+					append(me.planList, StaticText.new(me, "discontinuity", j));
+				} else {
+					append(me.planList, FPLNText.new(me, fpln.getWP(j), me.dest, fplnID, j));
+				}
 			}
 			if (debug == 1) printf("%d: dest is: %s", me.mcdu, fpln.getWP(me.destIndex).wp_name);
 		}

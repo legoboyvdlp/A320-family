@@ -270,6 +270,12 @@ var rskbutton = func(btn, i) {
 			printInput("R3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("R3", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+			if (canvas_mcdu.myLatRev[i].type != 2) {
+				canvas_mcdu.myLatRev[i].nextWpt();
+			} else {
+				notAllowed(i);
+			}
 		} else {
 			notAllowed(i);
 		}
@@ -372,10 +378,14 @@ var arrowbutton = func(btn, i) {
 	} else if (btn == "up") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			slewFPLN(1, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].scrollUp();
 		}
 	} else if (btn == "down") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			slewFPLN(-1, i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].scrollDn();
 		}
 	}
 }

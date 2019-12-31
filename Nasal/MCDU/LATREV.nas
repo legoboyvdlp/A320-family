@@ -18,15 +18,30 @@ var latRev = {
 	R6: [nil, nil, "ack"],
 	depAirport: nil,
 	arrAirport: nil,
-	new: func(type, id) {
+	index: nil,
+	computer: nil,
+	new: func(type, id, index, computer) {
 		var lr = {parents:[latRev]};
-		lr.type = type; # 0 = origin 1 = destination 2 = ppos (from waypoint) 3 = generic wpt
+		lr.type = type; # 0 = origin 1 = destination 2 = ppos (from waypoint) 3 = generic wpt, 4 = discon
 		lr.id = id;
+		lr.index = index;
+		lr.computer = computer;
 		lr._setupPageWithData();
+		lr._checkTmpy();
 		return lr;
 	},
 	del: func() {
 		return nil;
+	},
+	_checkTmpy: func() {
+		if (TMPYActive[me.computer].getBoolValue()) {
+			me.L6 = [" F-PLN", " TMPY", "yel"];
+			me.arrowsColour[0][5] = "yel";
+			me.R2[2] = "yel";
+			me.R3[2] = "yel";
+			me.R4[2] = "yel";
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+		}
 	},
 	_setupPageWithData: func() {
 		if (me.type == 2) { 
@@ -39,6 +54,14 @@ var latRev = {
 			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
+		} elsif (me.type == 4) { 
+			me.title = ["LAT REV", " FROM ", "DISCON"];
+			me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
+			me.R4 = ["[     ]", "NEW DEST", "blu"];
+			me.L6 = [" RETURN", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
+			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 		} else {
 			me.title = ["LAT REV", " FROM ", me.id];
 			
@@ -54,7 +77,7 @@ var latRev = {
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
 				me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
-				me.R3 = ["[        ]", "NEXT WPT   ", "blu"];
+				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 				me.arrowsColour = [["wht", "wht", "ack", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
@@ -70,7 +93,7 @@ var latRev = {
 				me.L4 = [" ALTN", " ENABLE", "blu"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["ARRIVAL ", nil, "wht"];
-				me.R3 = ["[        ]", "NEXT WPT   ", "blu"];
+				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
@@ -87,13 +110,90 @@ var latRev = {
 				me.L4 = [" ALTN", " ENABLE", "blu"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R3 = ["[        ]", "NEXT WPT   ", "blu"];
+				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.R5 = ["AIRWAYS ", nil, "wht"];
 				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
 				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 			}
+		}
+	},
+	makeTmpy: func() {
+		if (!TMPYActive[me.computer].getBoolValue()) {
+			fmgc.flightplan.initTempFP(me.computer, 2);
+			me._checkTmpy();
+		}
+	},
+	nextWpt: func() {
+		me.makeTmpy();
+		me.R3 = [getprop("/MCDU[" ~ me.computer ~ "]/scratchpad"), "NEXT WPT   ", "yel"];
+		me.fontMatrix[1][2] = 0;
+		
+		# check if it is part of the active f-pln, if so delete intermediate wpts, if not create discontinuiity after it with original wpts
+		if (size(me.R3[0]) == 5) {
+			var fix = findFixesByID(me.R3[0]);
+			if (fix != nil) {
+				var indexWp = fmgc.fp[me.computer].indexOfWP(fix[0]);
+				if (indexWp == -1) {
+					var _insert = fmgc.flightplan.insertFix(me.R3[0], me.index + 1, me.computer);
+					fmgc.fp[me.computer].insertWP(createDiscontinuity(), me.index + 2);
+					fmgc.flightplan.checkWPOutputs(me.computer);
+				} else {
+					for (var i = me.index + 1; i == indexWp; i = i + 1) {
+						fmgc.flightplan.deleteWP(i, me.computer, 0);
+					}
+					var _insert = fmgc.flightplan.insertFix(me.R3[0], me.index + 1, me.computer);
+				}
+			} else {
+				var _insert = 1;
+			}
+		} elsif (size(me.R3[0]) == 4) {
+			var airport = findAirportsByICAO(me.R3[0]);
+			if (airport != nil) {
+				var indexWp = fmgc.fp[me.computer].indexOfWP(fix[0]);
+				if (indexWp == -1) {
+					var _insert = fmgc.flightplan.insertArpt(me.R3[0], me.index + 1, me.computer);
+					fmgc.fp[me.computer].insertWP(createDiscontinuity(), me.index + 2);
+					fmgc.flightplan.checkWPOutputs(me.computer);
+				} else {
+					for (var i = me.index + 1; i == indexWp; i = i + 1) {
+						fmgc.flightplan.deleteWP(i, me.computer, 0);
+					}
+					var _insert = fmgc.flightplan.insertArpt(me.R3[0], me.index + 1, me.computer);
+				}
+			} else {
+				var _insert = 1;
+			}
+		} elsif (size(me.R3[0]) == 3 or size(me.R3[0]) == 2) {
+			var navaid = findNavaidsByID(me.R3[0]);
+			if (navaid != nil) {
+				var indexWp = fmgc.fp[me.computer].indexOfWP(navaid[0]);
+				if (indexWp == -1) {
+					var _insert = fmgc.flightplan.insertNavaid(me.R3[0], me.index + 1, me.computer);
+					fmgc.fp[me.computer].insertWP(createDiscontinuity(), me.index + 2);
+					fmgc.flightplan.checkWPOutputs(me.computer);
+				} else {
+					for (var i = me.index + 1; i == indexWp; i = i + 1) {
+						fmgc.flightplan.deleteWP(i, me.computer, 0);
+					}
+					var _insert = fmgc.flightplan.insertNavaid(me.R3[0], me.index + 1, me.computer);
+				}
+			} else {
+				var _insert = 1;
+			}
+		} else {
+			formatError(me.computer);
+		}
+		
+		if (_insert == 1) {
+			notInDataBase(me.computer);
+		} elsif (_insert == 2) {
+			notAllowed(me.computer);
+		} else {
+			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
+			fmgc.flightplan.checkWPOutputs(me.computer);
+			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 		}
 	},
 };
