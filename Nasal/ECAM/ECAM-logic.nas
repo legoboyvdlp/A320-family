@@ -1064,11 +1064,6 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(athr_offw);
 		ECAM_controller.warningReset(athr_offw_1);
-		if (getprop("/it-autoflight/output/athr-warning") == 2) {
-			setprop("/it-autoflight/output/athr-warning", 0);
-			setprop("/ECAM/Lower/light/clr", 0);
-			setprop("/ECAM/warnings/master-caution-light", 0);
-		}
 	}
 	
 	if ((athr_lock.clearFlag == 0) and phaseVar >= 5 and phaseVar <= 7 and getprop("/systems/thrust/thr-locked-alert") == 1) {
