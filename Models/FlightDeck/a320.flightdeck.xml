@@ -462,7 +462,6 @@
 	<!-- Remove from this animation once you simulate -->
 	<animation>
 		<type>select</type>
-		<object-name>alt-text-test</object-name>
 		<object-name>atc-test</object-name>
 		<object-name>audio_att_sgn</object-name>
 		<object-name>audio_call_hf2_led</object-name>
@@ -478,19 +477,27 @@
 		<object-name>engine_fault_1</object-name>
 		<object-name>engine_fault_2</object-name>
 		<object-name>exped_led</object-name>
-		<object-name>hdg-text-test</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>radio_opt_led</object-name>
 		<object-name>rudder-trim-test</object-name>
-		<object-name>spd-text-test</object-name>
 		<object-name>terr_on_nd_on</object-name>
 		<object-name>ver.fmgc</object-name>
+		<condition>
+			<property>controls/switches/annun-test</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>alt-text-test</object-name>
+		<object-name>hdg-text-test</object-name>
+		<object-name>spd-text-test</object-name>
 		<object-name>vs-text-test</object-name>
 		<condition>
-			<equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</equals>
+			<or>
+				<not><property>/FMGC/FCU-working</property></not>
+				<property>/controls/switches/annun-test</property>
+			</or>
 		</condition>
 	</animation>
 

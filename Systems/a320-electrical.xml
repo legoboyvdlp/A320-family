@@ -1452,7 +1452,7 @@
 		
 		<switch name="/systems/electrical/light/rat-emer-gen-fault">
 			<default value="0"/>
-			<test value="1">
+			<test logic="AND" value="1">
 				/systems/electrical/relay/dc-ess-feed-tr/output eq 0
 				/systems/electrical/bus/ac-1 eq 0
 				/systems/electrical/bus/ac-2 eq 0

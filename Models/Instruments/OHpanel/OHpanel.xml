@@ -3701,16 +3701,7 @@
 					<value>25</value>
 				</greater-than-equals>
 				<or>
-					<and>
-						<equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>0</value>
-						</equals>
-					</and>
+					<property>/systems/electrical/light/rat-emer-gen-fault</property>
 					<equals>
 						<property>controls/switches/annun-test</property>
 						<value>1</value>

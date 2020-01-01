@@ -122,14 +122,8 @@ var warnings				  = std.Vector.new([
 	var rud_trim_config_1     = warning.new(msg: "   NOT IN T.O. RANGE",      colour: "r", aural: 0, light: 0),
 	var park_brk_config       = warning.new(msg: "CONFIG PARK BRK ON",        colour: "r", aural: 0, light: 0),
 	
-	# Autopilot
+	# Autopilot off involuntary
 	var ap_offw				  = warning.new(msg: "AUTO FLT AP OFF",			  colour: "r", light: 0),
-	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, hasSubmsg: 1),
-	var athr_offw_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
-	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1, hasSubmsg: 1),
-	var athr_lock_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
-	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
-	var athr_lim_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
 	
 	# Cargo smoke
 	var cargoSmokeFwd         = warning.new(msg: "SMOKE FWD CARGO SMOKE",     colour: "r", aural: 0, light: 0, hasSubmsg: 1),
@@ -220,6 +214,14 @@ var warnings				  = std.Vector.new([
 	# AC ESS BUS SHED
 	var acBusEssShed          = warning.new(msg: "ELEC DC ESS BUS SHED",      colour: "a", aural: 1, light: 1),
 	var acBusEssShedAtc       = warning.new(msg: " -ATC..............SYS 2",  colour: "c"),
+	
+	# Autothrust
+	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var athr_offw_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
+	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var athr_lock_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
+	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1, hasSubmsg: 1),
+	var athr_lim_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
 	
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1),
