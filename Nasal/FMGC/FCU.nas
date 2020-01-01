@@ -34,6 +34,7 @@ var vertModeInput = props.globals.getNode("/it-autoflight/input/vert", 1);
 var vsModeInput = props.globals.getNode("/it-autoflight/input/vs", 1);
 var locArm = props.globals.getNode("/it-autoflight/output/loc-armed", 1);
 var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
+var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 
 var FCU = {
 	elecSupply: "",
@@ -73,10 +74,12 @@ var FCUController = {
 		me.FCU1.loop();
 		me.FCU2.loop();
 		
-		if (!me.FCU1.failed and !me.FCU2.failed) {
+		if (!me.FCU1.failed or !me.FCU2.failed) {
 			me.FCUworking = 1;
+			FCUworkingNode.setValue(1);
 		} else {
 			me.FCUworking = 0;
+			FCUworkingNode.setValue(0);
 		}
 		
 		notification = nil;

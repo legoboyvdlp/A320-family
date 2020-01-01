@@ -51,19 +51,21 @@ var warning = {
 		if (me.active == 0) { return; }
 		me.wasActive = 1;
 		lineIndex = 0;
-		while (lineIndex < 7 and lines[lineIndex].getValue() != "") {
+		while (lineIndex <= 7 and lines[lineIndex].getValue() != "") {
 			lineIndex = lineIndex + 1; # go to next line until empty line
 		}
 		
-		if (lineIndex == 7) {
+		if (lineIndex == 8) {
 			leftOverflow.setBoolValue(1);
 		} elsif (leftOverflow.getBoolValue()) {
 			leftOverflow.setBoolValue(0);
 		}
 		
-		if (lines[lineIndex].getValue() == "" and me.msg != "" and lineIndex <= 7) { # at empty line. Also checks if message is not blank to allow for some warnings with no displayed msg, eg stall
-			lines[lineIndex].setValue(me.msg);
-			linesCol[lineIndex].setValue(me.colour);
+		if (lineIndex <= 7) {
+			if (lines[lineIndex].getValue() == "" and me.msg != "") { # at empty line. Also checks if message is not blank to allow for some warnings with no displayed msg, eg stall
+				lines[lineIndex].setValue(me.msg);
+				linesCol[lineIndex].setValue(me.colour);
+			}
 		}
 	},
 	warnlight: func() {
@@ -309,7 +311,7 @@ var ECAM_controller = {
 			}
 		}
 		
-		if (statusFlag == 1) {
+		if (statusFlag == 1 and lines[0].getValue() == "") {
 			libraries.SystemDisplay.manCall("sts");
 			statusFlag = 0;
 		}
@@ -347,6 +349,7 @@ var ECAM_controller = {
 		warning.active = 0;
 		warning.noRepeat = 0;
 		warning.noRepeat2 = 0;
+		# don't set .wasActive to 0, warnlight / sound funcs do that
 	},
 };
 
