@@ -349,6 +349,7 @@ var ECAM_controller = {
 		warning.active = 0;
 		warning.noRepeat = 0;
 		warning.noRepeat2 = 0;
+		# don't set .wasActive to 0, warnlight / sound funcs do that
 	},
 };
 
