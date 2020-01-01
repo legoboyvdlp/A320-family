@@ -3696,10 +3696,6 @@
 		<object-name>EmerGenInd1F</object-name>
 		<condition>
 			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
 				<or>
 					<property>/systems/electrical/light/rat-emer-gen-fault</property>
 					<equals>
