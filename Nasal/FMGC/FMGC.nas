@@ -266,7 +266,7 @@ var masterFMGC = maketimer(0.2, func {
 	
 	if (getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") != 1024) {
 		setprop("/FMGC/internal/maxspeed", getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") - 4);
-	} elsif (getprop("/systems/navigation/adr/computation/overspeed-vle")) {
+	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
 		setprop("/FMGC/internal/maxspeed", 284);
 	} else {
 		setprop("/FMGC/internal/maxspeed", getprop("/it-fbw/speeds/vmo-mmo"));
