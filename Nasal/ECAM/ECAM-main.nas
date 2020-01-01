@@ -230,7 +230,7 @@ var SystemDisplay = {
 		
 		if (APUMaster == 1 and me.APU10sec != 1) {
 			me.autoCall("apu");
-			me.fctl20sec = 9;
+			me.fctl20sec = 0;
 			
 			if (me.APU10sec == 9 and APURPM >= 95.0) {
 				me.APU10sec = 0;
@@ -242,7 +242,7 @@ var SystemDisplay = {
 			}
 		} elsif (engModeSel == 0 or engModeSel == 2 or (engModeSel == 1 and me.eng10sec == 0)) {
 			me.autoCall("eng");
-			me.fctl20sec = 9;
+			me.fctl20sec = 0;
 			
 			if (me.eng10sec == 9 and engModeSel == 1) {
 				me.eng10sec = 0;
@@ -254,7 +254,9 @@ var SystemDisplay = {
 			}
 		} else {
 			# Reset variables
-			me.APU10sec = 9;
+			if (APUMaster == 0) {
+				me.APU10sec = 9;
+			}
 			me.eng10sec = 9;
 			
 			# Phase logic
