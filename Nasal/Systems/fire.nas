@@ -521,8 +521,8 @@ cargoDetectorLoop.new(2, 1, "/systems/fire/cargo/fwd/temperature", "/systems/fai
 ]);
 
 # Create extinguisher bottles
-var extinguisherBottles = std.Vector.new([extinguisherBottle.new(0, "/systems/fire/engine1/disch1", "/systems/electrical/bus/dc-bat", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine1/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"),
-extinguisherBottle.new(0, "/systems/fire/engine2/disch1", "/systems/electrical/bus/dc-bat", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine2/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), 
+var extinguisherBottles = std.Vector.new([extinguisherBottle.new(0, "/systems/fire/engine1/disch1", "/systems/electrical/bus/dc-hot-1", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine1/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"),
+extinguisherBottle.new(0, "/systems/fire/engine2/disch1", "/systems/electrical/bus/dc-hot-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine2/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), 
 extinguisherBottle.new(9, "/systems/fire/apu/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/apu-fire", "/systems/fire/apu/warning-active") ]);
 
 # There is only one bottle but the system will think there are two, so other parts work

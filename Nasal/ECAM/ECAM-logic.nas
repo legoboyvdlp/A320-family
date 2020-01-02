@@ -1363,7 +1363,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/ldg-memo-2200-set", 0);
 	}
 	
-	if (phaseVar >= 6 and phaseVar <= 8) {
+	if (phaseVar != 6 and phaseVar != 7 and phaseVar != 8) {
 		setprop("/ECAM/ldg-memo-2200-reset", 1);
 	} else {
 		setprop("/ECAM/ldg-memo-2200-reset", 0);
