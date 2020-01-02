@@ -585,6 +585,7 @@ eng1AgentTimerMakeTimerFunc = func() {
 		var timeToSetEng1 = eng1Time - etEng1;
 		eng1AgentTimer.setValue(timeToSetEng1);
 	} else {
+		eng1AgentTimer.setValue(99);
 		eng1AgentTimerMakeTimer.stop();
 	}
 }
@@ -596,6 +597,7 @@ eng1Agent2TimerMakeTimerFunc = func() {
 		var timeToSetEng12 = eng1Time2 - etEng12;
 		eng1Agent2Timer.setValue(timeToSetEng12);
 	} else {
+		eng1Agent2Timer.setValue(99);
 		eng1Agent2TimerMakeTimer.stop();
 	}
 }
@@ -626,6 +628,7 @@ eng2AgentTimerMakeTimerFunc = func() {
 		var timeToSetEng2 = eng2Time - etEng2;
 		eng2AgentTimer.setValue(timeToSetEng2);
 	} else {
+		eng2AgentTimer.setValue(99);
 		eng2AgentTimerMakeTimer.stop();
 	}
 }
@@ -637,6 +640,7 @@ eng2Agent2TimerMakeTimerFunc = func() {
 		var timeToSetEng22 = eng2Time2 - etEng22;
 		eng2Agent2Timer.setValue(timeToSetEng22);
 	} else {
+		eng2Agent2Timer.setValue(99);
 		eng2Agent2TimerMakeTimer.stop();
 	}
 }
