@@ -1384,12 +1384,14 @@
 			</test>
 		</switch>
 			
-		<switch name="/systems/electrical/light/apu-fault"> <!-- TODO: check out connection to engines -->
+		<switch name="/systems/electrical/light/apu-fault">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/electrical/switches/apu eq 1
 				/systems/electrical/relay/apu-glc/contact-pos eq 0
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
+				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
+				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
 				/systems/electrical/sources/apu/drive-rpm gt 2000
 			</test>
 		</switch>

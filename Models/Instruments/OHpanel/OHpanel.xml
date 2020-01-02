@@ -3248,16 +3248,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals> <!-- control is on DC BAT bus - so if you enter EMER ELEC with it turned off, too bad -->
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/apu</property>
