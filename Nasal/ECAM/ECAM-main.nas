@@ -324,12 +324,14 @@ var ECAMControlPanel = {
 	},
 	clrBtn: func() {
 		me.lightOff("clr");
-		if (athrWarnNode.getValue() == 2) {
-			athrWarnNode.setValue(0);
-			return;
-		}
+		
 		if (apWarnNode.getValue() == 2) {
 			apWarnNode.setValue(0);
+			return;
+		}
+		
+		if (athrWarnNode.getValue() == 2) {
+			athrWarnNode.setValue(0);
 			return;
 		}
 		

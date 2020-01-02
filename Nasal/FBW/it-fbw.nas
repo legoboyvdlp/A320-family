@@ -269,15 +269,28 @@ var update_loop = func {
 		if (!elac1 and !elac2) {
 			if (law == 0) {
 				FBW.degradeLaw.setValue(1);
+				fcu.apOff("hard", 0);
+				fcu.athrOff("hard");
+			}
+		}
+		if (getprop("/systems/electrical/some-electric-thingie/emer-elec-config") == 1) {
+			if (law == 0) {
+				FBW.degradeLaw.setValue(1);
+				fcu.apOff("hard", 0);
+				fcu.athrOff("hard");
 			}
 		}
 		if ((blue >= 1500 and green < 1500 and yellow < 1500) or (blue < 1500 and green < 1500 and yellow >= 1500)) {
 			if (law == 0 or law == 1) {
 				FBW.degradeLaw.setValue(2);
+				fcu.apOff("hard", 0);
+				fcu.athrOff("hard");
 			}
 		} 
 		if (dc_ess < 25 and dc2 < 25) {
 			FBW.degradeLaw.setValue(3);
+			fcu.apOff("hard", 0);
+			fcu.athrOff("hard");
 		}
 	}
 	
@@ -373,6 +386,7 @@ var fbw_loop = func {
 	if (FBW.activeLaw.getValue() != 0) {
 		if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
 			fcu.apOff("hard", 0);
+			fcu.athrOff("hard");
 		}
 	}
 }
