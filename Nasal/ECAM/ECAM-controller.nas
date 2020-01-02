@@ -27,14 +27,14 @@ var hasCleared = 0;
 var statusFlag = 0;
 
 var warning = {
-	new: func(msg,colour = "g",aural = 9,light = 9,hasSubmsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
+	new: func(msg,colour = "g",aural = 9,light = 9,isMainMsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
 		var t = {parents:[warning]};
 		
 		t.msg = msg;
 		t.colour = colour;
 		t.aural = aural;
 		t.light = light;
-		t.hasSubmsg = hasSubmsg;
+		t.isMainMsg = isMainMsg;
 		t.lastSubmsg = lastSubmsg;
 		t.active = 0;
 		t.noRepeat = 0;
@@ -292,7 +292,7 @@ var ECAM_controller = {
 				if (counter >= 8) { break; }
 				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
 					counter += 1;
-					if (w.hasSubmsg == 1) { continue; }
+					if (w.isMainMsg == 1) { continue; }
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;
@@ -301,7 +301,7 @@ var ECAM_controller = {
 			}
 		} else {
 			foreach (var w; warnings.vector) {
-				if (w.active == 1 and w.clearFlag != 1 and w.hasSubmsg == 1 and w.isMemo != 1) {
+				if (w.active == 1 and w.clearFlag != 1 and w.isMainMsg == 1 and w.isMemo != 1) {
 					w.clearFlag = 1;
 					hasCleared = 1;
 					statusFlag = 1;

@@ -754,21 +754,21 @@ var messages_priority_3 = func {
 			cargoSmokeFwd.active = 1;
 		} elsif (cargoSmokeFwd.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeFwd);
-			cargoSmokeFwd.hasSubmsg = 1;
+			cargoSmokeFwd.isMainMsg = 1;
 		}
 		
 		if (cargoSmokeFwdAgent.clearFlag == 0 and cargoSmokeFwd.active == 1 and !getprop("/systems/fire/cargo/disch")) {
 			cargoSmokeFwdAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeFwdAgent);
-			cargoSmokeFwd.hasSubmsg = 0;
+			cargoSmokeFwd.isMainMsg = 0;
 		}
 
 		if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar <= 3 or phaseVar >= 9 or phaseVar == 6)) {
 			cargoSmokeAft.active = 1;
 		} elsif (cargoSmokeAft.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeAft);
-			cargoSmokeAft.hasSubmsg = 1;
+			cargoSmokeAft.isMainMsg = 1;
 			systems.cargoTestBtnOff.setBoolValue(0);
 		}
 		
@@ -776,7 +776,7 @@ var messages_priority_3 = func {
 			cargoSmokeAftAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeAftAgent);
-			cargoSmokeAft.hasSubmsg = 0;
+			cargoSmokeAft.isMainMsg = 0;
 		}
 	} else {
 		if (systems.aftCargoFireWarn.getBoolValue()) {
@@ -1124,14 +1124,14 @@ var messages_priority_2 = func {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
-		apuEmerShutdown.hasSubmsg = 1;
+		apuEmerShutdown.isMainMsg = 1;
 	}
 	
 	if (apuEmerShutdownMast.clearFlag == 0 and getprop("/controls/APU/master") and apuEmerShutdown.active == 1) {
 		apuEmerShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);
-		apuEmerShutdown.hasSubmsg = 0;
+		apuEmerShutdown.isMainMsg = 0;
 	}
 	
 	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
