@@ -742,11 +742,6 @@ var messages_priority_3 = func {
 		ap_offw.active = 1;
 	} else {
 		ECAM_controller.warningReset(ap_offw);
-		if (getprop("/it-autoflight/output/ap-warning") == 2) {
-			setprop("/it-autoflight/output/ap-warning", 0);
-			setprop("/ECAM/Lower/light/clr", 0);
-			setprop("/ECAM/warnings/master-warning-light", 0);
-		}
 	}
 	
 	if (!systems.cargoTestBtn.getBoolValue()) {
@@ -754,21 +749,21 @@ var messages_priority_3 = func {
 			cargoSmokeFwd.active = 1;
 		} elsif (cargoSmokeFwd.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeFwd);
-			cargoSmokeFwd.hasSubmsg = 1;
+			cargoSmokeFwd.isMainMsg = 1;
 		}
 		
 		if (cargoSmokeFwdAgent.clearFlag == 0 and cargoSmokeFwd.active == 1 and !getprop("/systems/fire/cargo/disch")) {
 			cargoSmokeFwdAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeFwdAgent);
-			cargoSmokeFwd.hasSubmsg = 0;
+			cargoSmokeFwd.isMainMsg = 0;
 		}
 
 		if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar <= 3 or phaseVar >= 9 or phaseVar == 6)) {
 			cargoSmokeAft.active = 1;
 		} elsif (cargoSmokeAft.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeAft);
-			cargoSmokeAft.hasSubmsg = 1;
+			cargoSmokeAft.isMainMsg = 1;
 			systems.cargoTestBtnOff.setBoolValue(0);
 		}
 		
@@ -776,7 +771,7 @@ var messages_priority_3 = func {
 			cargoSmokeAftAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeAftAgent);
-			cargoSmokeAft.hasSubmsg = 0;
+			cargoSmokeAft.isMainMsg = 0;
 		}
 	} else {
 		if (systems.aftCargoFireWarn.getBoolValue()) {
@@ -1124,14 +1119,14 @@ var messages_priority_2 = func {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
-		apuEmerShutdown.hasSubmsg = 1;
+		apuEmerShutdown.isMainMsg = 1;
 	}
 	
 	if (apuEmerShutdownMast.clearFlag == 0 and getprop("/controls/APU/master") and apuEmerShutdown.active == 1) {
 		apuEmerShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);
-		apuEmerShutdown.hasSubmsg = 0;
+		apuEmerShutdown.isMainMsg = 0;
 	}
 	
 	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
@@ -1363,7 +1358,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/ldg-memo-2200-set", 0);
 	}
 	
-	if (phaseVar >= 6 and phaseVar <= 8) {
+	if (phaseVar != 6 and phaseVar != 7 and phaseVar != 8) {
 		setprop("/ECAM/ldg-memo-2200-reset", 1);
 	} else {
 		setprop("/ECAM/ldg-memo-2200-reset", 0);
@@ -1481,7 +1476,7 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if ((getprop("/gear/gear[1]/wow") == 0) and (getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/cargo-aft-fire") == 1 or getprop("/systems/failures/cargo-fwd-fire") == 1) or (((getprop("/systems/hydraulic/green-psi") < 1500 and getprop("/engines/engine[0]/state") == 3) and (getprop("/systems/hydraulic/yellow-psi") < 1500 and getprop("/engines/engine[1]/state") == 3)) or ((getprop("/systems/hydraulic/green-psi") < 1500 or getprop("/systems/hydraulic/yellow-psi") < 1500) and getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") == 3) and phaseVar >= 3 and phaseVar <= 8)) {
+	if ((getprop("/gear/gear[1]/wow") == 0) and (getprop("/systems/electrical/some-electric-thingie/emer-elec-config") or getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/cargo-aft-fire") == 1 or getprop("/systems/failures/cargo-fwd-fire") == 1) or (((getprop("/systems/hydraulic/green-psi") < 1500 and getprop("/engines/engine[0]/state") == 3) and (getprop("/systems/hydraulic/yellow-psi") < 1500 and getprop("/engines/engine[1]/state") == 3)) or ((getprop("/systems/hydraulic/green-psi") < 1500 or getprop("/systems/hydraulic/yellow-psi") < 1500) and getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") == 3) and phaseVar >= 3 and phaseVar <= 8)) {
 		# todo: emer elec
 		land_asap_r.active = 1;
 	} else {
