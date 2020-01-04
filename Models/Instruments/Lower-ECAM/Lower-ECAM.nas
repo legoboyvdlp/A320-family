@@ -179,6 +179,10 @@ var g_resv_ovht = props.globals.getNode("/systems/hydraulic/green-resv-ovht", 1)
 var askidsw = 0;
 var brakemode = 0;
 var accum = 0;
+var L1BrakeTempc = props.globals.getNode("/gear/gear[1]/L1brake-temp-degc", 1);
+var L2BrakeTempc = props.globals.getNode("/gear/gear[1]/L2brake-temp-degc", 1);
+var R3BrakeTempc = props.globals.getNode("/gear/gear[2]/R3brake-temp-degc", 1);
+var R4BrakeTempc = props.globals.getNode("/gear/gear[2]/R4brake-temp-degc", 1);
 
 var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
 var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
@@ -2778,7 +2782,7 @@ var canvas_lowerECAM_wheel = {
 		return ["TAT","SAT","GW","UTCh","UTCm","lgctltext","NORMbrk","NWStext","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR","autobrk","autobrkind","NWS","NWSrect","normbrk-rect","altnbrk","normbrkhyd","spoiler1Rex","spoiler1Rrt","spoiler2Rex",
 		"spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf",
 		"spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf","ALTNbrk","altnbrkhyd","altnbrk-rect","antiskidtext","brakearrow","accupress_text","accuonlyarrow","accuonly","braketemp1","normbrkhyd",
-		"braketemp2","braketemp3","braketemp4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
+		"braketemp2","braketemp3","braketemp4","toparc1","toparc2","toparc3","toparc4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
 	},
 	update: func() {
 		blue_psi = systems.HYD.Psi.blue.getValue();
@@ -3204,11 +3208,92 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler5Rf"].hide();
 		}
 
+		# Show Brakes temperature
+		if (L1BrakeTempc.getValue() > 300) {
+			me["braketemp1"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp1"].setColor(0.0509,0.7529,0.2941);
+		}
+
+		if (L2BrakeTempc.getValue() > 300) {
+			me["braketemp2"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp2"].setColor(0.0509,0.7529,0.2941);
+		}
+		if (R3BrakeTempc.getValue() > 300) {
+			me["braketemp3"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp3"].setColor(0.0509,0.7529,0.2941);
+		}
+		if (R4BrakeTempc.getValue() > 300) {
+			me["braketemp4"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp4"].setColor(0.0509,0.7529,0.2941);
+		}
+		
+		# Brake arcs
+		if (L1BrakeTempc.getValue() > 300) {
+			me["toparc1"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (L1BrakeTempc.getValue() > 100 and L1BrakeTempc.getValue() < 300)
+			{
+				me["toparc1"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc1"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		if (L2BrakeTempc.getValue() > 300) {
+			me["toparc2"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (L2BrakeTempc.getValue() > 100 and L2BrakeTempc.getValue() < 300)
+			{
+				me["toparc2"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc2"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		if (R3BrakeTempc.getValue() > 300) {
+			me["toparc3"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (R3BrakeTempc.getValue() > 100 and R3BrakeTempc.getValue() < 300)
+			{
+				me["toparc3"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc3"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		if (R4BrakeTempc.getValue() > 300) {
+			me["toparc4"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (R4BrakeTempc.getValue() > 100 and R4BrakeTempc.getValue() < 300)
+			{
+				me["toparc4"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc4"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		me["braketemp1"].setText(sprintf("%s", math.round(L1BrakeTempc.getValue(), 1)));
+		me["braketemp2"].setText(sprintf("%s", math.round(L2BrakeTempc.getValue(), 1)));
+		me["braketemp3"].setText(sprintf("%s", math.round(R3BrakeTempc.getValue(), 1)));
+		me["braketemp4"].setText(sprintf("%s", math.round(R4BrakeTempc.getValue(), 1)));
+		me["braketemp1"].show();
+		me["braketemp2"].show();
+		me["braketemp3"].show();
+		me["braketemp4"].show();
+		me["toparc1"].show();
+		me["toparc2"].show();
+		me["toparc3"].show();
+		me["toparc4"].show();
+
 		# Hide not yet implemented stuff
-		me["braketemp1"].hide();
-		me["braketemp2"].hide();
-		me["braketemp3"].hide();
-		me["braketemp4"].hide();
 		me["leftuplock"].hide();
 		me["noseuplock"].hide();
 		me["rightuplock"].hide();

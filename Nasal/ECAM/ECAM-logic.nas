@@ -1495,6 +1495,12 @@ var messages_right_memo = func {
 		park_brk.colour = "g";
 	}
 	
+	if (getprop("/controls/gear/brake-fans") == 1) {
+		brk_fan.active = 1;
+	} else {
+		brk_fan.active = 0;
+	}
+	
 	if (getprop("/controls/hydraulic/ptu") == 1 and ((getprop("/systems/hydraulic/yellow-psi") < 1450 and getprop("/systems/hydraulic/green-psi") > 1450 and getprop("/controls/hydraulic/elec-pump-yellow") == 0) or (getprop("/systems/hydraulic/yellow-psi") > 1450 and getprop("/systems/hydraulic/green-psi") < 1450))) {
 		ptu.active = 1;
 	} else {
@@ -1652,4 +1658,4 @@ setlistener("/engines/engine[1]/state", func() {
 	} else {
 		dualFailNode.setBoolValue(0);
 	}
-}, 0, 0);
+}, 0, 0);\ No newline at end of file

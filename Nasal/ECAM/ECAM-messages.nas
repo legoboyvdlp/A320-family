@@ -331,7 +331,7 @@ var memos                = std.Vector.new([
 	var apu_avail        = memo.new(msg: "APU AVAIL"   ),
 	var apu_bleed        = memo.new(msg: "APU BLEED"   ),
 	var ldg_lt           = memo.new(msg: "LDG LT"      ),
-	var brk_fan          = memo.new(msg: "BRK FAN"     ), # Not yet implemented
+	var brk_fan          = memo.new(msg: "BRK FAN"     ),
 	var audio3_xfrd      = memo.new(msg: "AUDIO 3 XFRD"), # Not yet implemented
 	var switchg_pnl      = memo.new(msg: "SWITCHG PNL" ), # Not yet implemented
 	var gpws_flap3       = memo.new(msg: "GPWS FLAP 3" ), 
@@ -485,4 +485,4 @@ var statusInop           = std.Vector.new();
 var statusMaintenance    = std.Vector.new();
 
 # hack thrust lock message:
-var msgSave = athr_lock.msg;
+var msgSave = athr_lock.msg;\ No newline at end of file
