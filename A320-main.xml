@@ -1690,7 +1690,7 @@
 					<script>libraries.fovZoom(1);</script>
 				</binding>
 			</key>
-			<key n="88">
+			<key n="99">
 				<name>c</name>
 				<desc>Reset view to center</desc>
 				<repeatable type="bool">true</repeatable>
