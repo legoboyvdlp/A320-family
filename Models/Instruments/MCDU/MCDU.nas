@@ -8,6 +8,7 @@ var MCDU1_display = nil;
 var MCDU2_display = nil;
 var myLatRev = [nil, nil];
 var myDeparture = [nil, nil];
+var myFpln = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
@@ -111,7 +112,6 @@ var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
 var transAlt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
-var TMPYActive = [props.globals.getNode("/FMGC/internal/tmpy-active[0]"), props.globals.getNode("/FMGC/internal/tmpy-active[1]")];
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
@@ -166,11 +166,15 @@ var canvas_MCDU_base = {
 		return me;
 	},
 	getKeys: func() {
-		return ["Simple","Simple_Center","Scratchpad","Simple_Title","Simple_PageNum","ArrowLeft","ArrowRight","Simple_L1","Simple_L2","Simple_L3","Simple_L4","Simple_L5","Simple_L6","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S",
-		"Simple_L1_Arrow","Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S",
-		"Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S",
-		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","PERFTO","PERFTO_V1","PERFTO_VR",
-		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","FPLN","FPLN_From","FPLN_TMPY_group","FPLN_Callsign","FPLN_L1","FPLN_L2","FPLN_L3","FPLN_L4","FPLN_L5","FPLN_L6","FPLN_L1S","FPLN_L2S","FPLN_L3S","FPLN_L4S","FPLN_L5S","FPLN_L6S","FPLN_6_group","departureTMPY"];
+		return ["Simple","Simple_Center","Scratchpad","Simple_Title","Simple_PageNum","ArrowLeft","ArrowRight","Simple_L1","Simple_L2","Simple_L3","Simple_L4"
+		,"Simple_L5","Simple_L6","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S", "Simple_L1_Arrow","Simple_L2_Arrow",
+		"Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6",
+		"Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow",
+		"Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S",
+		"Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo",
+		"INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2",
+		"PERFTO_FE","PERFTO_SE","PERFTO_OE","FPLN","FPLN_From","FPLN_TMPY_group","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L"
+		,"arrow4L","arrow5L","arrow1R","arrow2R","arrow3R","arrow4R","arrow5R"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -190,18 +194,35 @@ var canvas_MCDU_base = {
 		page = pageProp[i].getValue();
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].hide();
-				me["Simple_Center"].hide();
+				me["Simple"].show();
+				me["Simple_Center"].show();
 				me["FPLN"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["Simple_Title"].hide();
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
+				me["arrowsDepArr"].hide();
+				
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L4_Arrow"].hide();
+				me["Simple_L5_Arrow"].hide();
+				me["Simple_L6_Arrow"].hide();
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R4_Arrow"].hide();
+				me["Simple_R5_Arrow"].hide();
+				me["Simple_R6_Arrow"].hide();
 				
 				pageSwitch[i].setBoolValue(1);
 			}
+			
+			myFpln[i].update();
 			
 			if (flightNumSet.getValue()) {
 				me["FPLN_Callsign"].setText(flightNum.getValue());
@@ -210,144 +231,272 @@ var canvas_MCDU_base = {
 				me["FPLN_Callsign"].hide();
 			}
 			
-			fplnLineSize = size(mcdu.FPLNLines[i].output);
-			if (fplnLineSize >= 1) {
-				fplnl1 = mcdu.FPLNLines[i].output[0].getText();
-				if (fplnl1 != "") {
-					me["FPLN_L1"].setColor(mcdu.FPLNLines[i].output[0].getColor(i));
-					me["FPLN_L1"].setText(fplnl1);
-					me["FPLN_L1"].show();
-				} else {
-					me["FPLN_L1"].hide();
-				}
-				fplnl1s = mcdu.FPLNLines[i].output[0].getSubText(i);
-				if (fplnl1s != "") {
-					me["FPLN_L1S"].setText(fplnl1s);
-					me["FPLN_L1S"].show();
-				} else {
-					me["FPLN_L1S"].hide();
-				}
+			if (myFpln[i].L1[0] == nil) {
+				me["Simple_L1"].hide();
+				me["Simple_L1S"].hide();
 			} else {
-				me["FPLN_L1"].hide();
-				me["FPLN_L1S"].hide();
+				me["Simple_L1"].show();
+				me["Simple_L1"].setText(myFpln[i].L1[0]);
+				if (myFpln[i].L1[1] != nil) {
+					me["Simple_L1S"].show();
+					me["Simple_L1S"].setText(myFpln[i].L1[1]);
+				} else {
+					me["Simple_L1S"].hide();
+				}
 			}
 			
-			if (fplnLineSize >= 2) {
-				fplnl2 = mcdu.FPLNLines[i].output[1].getText();
-				if (fplnl2 != "") {
-					me["FPLN_L2"].setColor(mcdu.FPLNLines[i].output[1].getColor(i));
-					me["FPLN_L2"].setText(fplnl2);
-					me["FPLN_L2"].show();
-				} else {
-					me["FPLN_L2"].hide();
-				}
-				fplnl2s = mcdu.FPLNLines[i].output[1].getSubText(i);
-				if (fplnl2s != "") {
-					me["FPLN_L2S"].setText(fplnl2s);
-					me["FPLN_L2S"].show();
-				} else {
-					me["FPLN_L2S"].hide();
-				}
+			if (myFpln[i].L2[0] == nil) {
+				me["Simple_L2"].hide();
+				me["Simple_L2S"].hide();
 			} else {
-				me["FPLN_L2"].hide();
-				me["FPLN_L2S"].hide();
+				me["Simple_L2"].show();
+				me["Simple_L2"].setText(myFpln[i].L2[0]);
+				if (myFpln[i].L2[1] != nil) {
+					me["Simple_L2S"].show();
+					me["Simple_L2S"].setText(myFpln[i].L2[1]);
+				} else {
+					me["Simple_L2S"].hide();
+				}
 			}
 			
-			if (fplnLineSize >= 3) {
-				fplnl3 = mcdu.FPLNLines[i].output[2].getText();
-				if (fplnl3 != "") {
-					me["FPLN_L3"].setColor(mcdu.FPLNLines[i].output[2].getColor(i));
-					me["FPLN_L3"].setText(fplnl3);
-					me["FPLN_L3"].show();
-				} else {
-					me["FPLN_L3"].hide();
-				}
-				fplnl3s = mcdu.FPLNLines[i].output[2].getSubText(i);
-				if (fplnl3s != "") {
-					me["FPLN_L3S"].setText(fplnl3s);
-					me["FPLN_L3S"].show();
-				} else {
-					me["FPLN_L3S"].hide();
-				}
+			if (myFpln[i].L3[0] == nil) {
+				me["Simple_L3"].hide();
+				me["Simple_L3S"].hide();
 			} else {
-				me["FPLN_L3"].hide();
-				me["FPLN_L3S"].hide();
+				me["Simple_L3"].show();
+				me["Simple_L3"].setText(myFpln[i].L3[0]);
+				if (myFpln[i].L3[1] != nil) {
+					me["Simple_L3S"].show();
+					me["Simple_L3S"].setText(myFpln[i].L3[1]);
+				} else {
+					me["Simple_L3S"].hide();
+				}
 			}
 			
-			if (fplnLineSize >= 4) {
-				fplnl4 = mcdu.FPLNLines[i].output[3].getText();
-				if (fplnl4 != "") {
-					me["FPLN_L4"].setColor(mcdu.FPLNLines[i].output[3].getColor(i));
-					me["FPLN_L4"].setText(fplnl4);
-					me["FPLN_L4"].show();
-				} else {
-					me["FPLN_L4"].hide();
-				}
-				fplnl4s = mcdu.FPLNLines[i].output[3].getSubText(i);
-				if (fplnl4s != "") {
-					me["FPLN_L4S"].setText(fplnl4s);
-					me["FPLN_L4S"].show();
-				} else {
-					me["FPLN_L4S"].hide();
-				}
+			if (myFpln[i].L4[0] == nil) {
+				me["Simple_L4"].hide();
+				me["Simple_L4S"].hide();
 			} else {
-				me["FPLN_L4"].hide();
-				me["FPLN_L4S"].hide();
+				me["Simple_L4"].show();
+				me["Simple_L4"].setText(myFpln[i].L4[0]);
+				if (myFpln[i].L4[1] != nil) {
+					me["Simple_L4S"].show();
+					me["Simple_L4S"].setText(myFpln[i].L4[1]);
+				} else {
+					me["Simple_L4S"].hide();
+				}
 			}
 			
-			if (fplnLineSize >= 5) {
-				fplnl5 = mcdu.FPLNLines[i].output[4].getText();
-				if (fplnl5 != "") {
-					me["FPLN_L5"].setColor(mcdu.FPLNLines[i].output[4].getColor(i));
-					me["FPLN_L5"].setText(fplnl5);
-					me["FPLN_L5"].show();
-				} else {
-					me["FPLN_L5"].hide();
-				}
-				fplnl5s = mcdu.FPLNLines[i].output[4].getSubText(i);
-				if (fplnl5s != "") {
-					me["FPLN_L5S"].setText(fplnl5s);
-					me["FPLN_L5S"].show();
-				} else {
-					me["FPLN_L5S"].hide();
-				}
+			if (myFpln[i].L5[0] == nil) {
+				me["Simple_L5"].hide();
+				me["Simple_L5S"].hide();
 			} else {
-				me["FPLN_L5"].hide();
-				me["FPLN_L5S"].hide();
+				me["Simple_L5"].show();
+				me["Simple_L5"].setText(myFpln[i].L5[0]);
+				if (myFpln[i].L5[1] != nil) {
+					me["Simple_L5S"].show();
+					me["Simple_L5S"].setText(myFpln[i].L5[1]);
+				} else {
+					me["Simple_L5S"].hide();
+				}
 			}
 			
-			if (fplnLineSize >= 6) {
-				fplnl6 = mcdu.FPLNLines[i].output[5].getText();
-				if (fplnl6 != "") {
-					me["FPLN_L6"].setColor(mcdu.FPLNLines[i].output[5].getColor(i));
-					me["FPLN_L6"].setText(fplnl6);
-					me["FPLN_L6"].show();
-				} else {
-					me["FPLN_L6"].hide();
-				}
-				fplnl6s = mcdu.FPLNLines[i].output[5].getSubText(i);
-				if (fplnl6s != "") {
-					me["FPLN_L6S"].setText(fplnl6s);
-					me["FPLN_L6S"].show();
-				} else {
-					me["FPLN_L6S"].hide();
-				}
+			if (myFpln[i].L6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
+				me["Simple_L6"].hide();
+				me["Simple_L6S"].hide();
 			} else {
-				me["FPLN_L6"].hide();
-				me["FPLN_L6S"].hide();
+				me["Simple_L6"].show();
+				me["Simple_L6"].setText(myFpln[i].L6[0]);
+				if (myFpln[i].L6[1] != nil) {
+					me["Simple_L6S"].show();
+					me["Simple_L6S"].setText(myFpln[i].L6[1]);
+				} else {
+					me["Simple_L6S"].hide();
+				}
+			}
+			me.colorLeft(myFpln[i].L1[2],myFpln[i].L2[2],myFpln[i].L3[2],myFpln[i].L4[2],myFpln[i].L5[2],myFpln[i].L6[2]);
+			
+			if (myFpln[i].C1[0] == nil) {
+				me["Simple_C1"].hide();
+				me["Simple_C1S"].hide();
+			} else {
+				me["Simple_C1"].show();
+				me["Simple_C1"].setText(myFpln[i].C1[0]);
+				if (myFpln[i].C1[1] != nil) {
+					me["Simple_C1S"].show();
+					me["Simple_C1S"].setText(myFpln[i].C1[1]);
+				} else {
+					me["Simple_C1S"].hide();
+				}
 			}
 			
-			if (mcdu.FPLNLines[i].index == 0) {
-				me["FPLN_From"].show();
+			if (myFpln[i].C2[0] == nil) {
+				me["Simple_C2"].hide();
+				me["Simple_C2S"].hide();
 			} else {
-				me["FPLN_From"].hide();
+				me["Simple_C2"].show();
+				me["Simple_C2"].setText(myFpln[i].C2[0]);
+				if (myFpln[i].C2[1] != nil) {
+					me["Simple_C2S"].show();
+					me["Simple_C2S"].setText(myFpln[i].C2[1]);
+				} else {
+					me["Simple_C2S"].hide();
+				}
 			}
-			if (TMPYActive[i].getBoolValue()) {
+			
+			if (myFpln[i].C3[0] == nil) {
+				me["Simple_C3"].hide();
+				me["Simple_C3S"].hide();
+			} else {
+				me["Simple_C3"].show();
+				me["Simple_C3"].setText(myFpln[i].C3[0]);
+				if (myFpln[i].C3[1] != nil) {
+					me["Simple_C3S"].show();
+					me["Simple_C3S"].setText(myFpln[i].C3[1]);
+				} else {
+					me["Simple_C3S"].hide();
+				}
+			}
+			
+			if (myFpln[i].C4[0] == nil) {
+				me["Simple_C4"].hide();
+				me["Simple_C4S"].hide();
+			} else {
+				me["Simple_C4"].show();
+				me["Simple_C4"].setText(myFpln[i].C4[0]);
+				if (myFpln[i].C4[1] != nil) {
+					me["Simple_C4S"].show();
+					me["Simple_C4S"].setText(myFpln[i].C4[1]);
+				} else {
+					me["Simple_C4S"].hide();
+				}
+			}
+			
+			if (myFpln[i].C5[0] == nil) {
+				me["Simple_C5"].hide();
+				me["Simple_C5S"].hide();
+			} else {
+				me["Simple_C5"].show();
+				me["Simple_C5"].setText(myFpln[i].C5[0]);
+				if (myFpln[i].C5[1] != nil) {
+					me["Simple_C5S"].show();
+					me["Simple_C5S"].setText(myFpln[i].C5[1]);
+				} else {
+					me["Simple_C5S"].hide();
+				}
+			}
+			
+			if (myFpln[i].C6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
+				me["Simple_C6"].hide();
+				me["Simple_C6S"].hide();
+			} else {
+				me["Simple_C6"].show();
+				me["Simple_C6"].setText(myFpln[i].C6[0]);
+				if (myFpln[i].C6[1] != nil) {
+					me["Simple_C6S"].show();
+					me["Simple_C6S"].setText(myFpln[i].C6[1]);
+				} else {
+					me["Simple_C6S"].hide();
+				}
+			}
+			
+			me.colorCenter(myFpln[i].C1[2],myFpln[i].C2[2],myFpln[i].C3[2],myFpln[i].C4[2],myFpln[i].C5[2],myFpln[i].C6[2]);
+				
+			if (myFpln[i].R1[0] == nil) {
+				me["Simple_R1"].hide();
+				me["Simple_R1S"].hide();
+			} else {
+				me["Simple_R1"].show();
+				me["Simple_R1"].setText(myFpln[i].R1[0]);
+				if (myFpln[i].R1[1] != nil) {
+					me["Simple_R1S"].show();
+					me["Simple_R1S"].setText(myFpln[i].R1[1]);
+				} else {
+					me["Simple_R1S"].hide();
+				}
+			}
+			
+			if (myFpln[i].R2[0] == nil) {
+				me["Simple_R2"].hide();
+				me["Simple_R2S"].hide();
+			} else {
+				me["Simple_R2"].show();
+				me["Simple_R2"].setText(myFpln[i].R2[0]);
+				if (myFpln[i].R2[1] != nil) {
+					me["Simple_R2S"].show();
+					me["Simple_R2S"].setText(myFpln[i].R2[1]);
+				} else {
+					me["Simple_R2S"].hide();
+				}
+			}
+			
+			if (myFpln[i].R3[0] == nil) {
+				me["Simple_R3"].hide();
+				me["Simple_R3S"].hide();
+			} else {
+				me["Simple_R3"].show();
+				me["Simple_R3"].setText(myFpln[i].R3[0]);
+				if (myFpln[i].R3[1] != nil) {
+					me["Simple_R3S"].show();
+					me["Simple_R3S"].setText(myFpln[i].R3[1]);
+				} else {
+					me["Simple_R3S"].hide();
+				}
+			}
+			
+			if (myFpln[i].R4[0] == nil) {
+				me["Simple_R4"].hide();
+				me["Simple_R4S"].hide();
+			} else {
+				me["Simple_R4"].show();
+				me["Simple_R4"].setText(myFpln[i].R4[0]);
+				if (myFpln[i].R4[1] != nil) {
+					me["Simple_R4S"].show();
+					me["Simple_R4S"].setText(myFpln[i].R4[1]);
+				} else {
+					me["Simple_R4S"].hide();
+				}
+			}
+			
+			if (myFpln[i].R5[0] == nil) {
+				me["Simple_R5"].hide();
+				me["Simple_R5S"].hide();
+			} else {
+				me["Simple_R5"].show();
+				me["Simple_R5"].setText(myFpln[i].R5[0]);
+				if (myFpln[i].R5[1] != nil) {
+					me["Simple_R5S"].show();
+					me["Simple_R5S"].setText(myFpln[i].R5[1]);
+				} else {
+					me["Simple_R5S"].hide();
+				}
+			}
+			
+			if (myFpln[i].R6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
+				me["Simple_R6"].hide();
+				me["Simple_R6S"].hide();
+			} else {
+				me["Simple_R6"].show();
+				me["Simple_R6"].setText(myFpln[i].R6[0]);
+				if (myFpln[i].R6[1] != nil) {
+					me["Simple_R6S"].show();
+					me["Simple_R6S"].setText(myFpln[i].R6[1]);
+				} else {
+					me["Simple_R6S"].hide();
+				}
+			}
+			me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
+			
+			#if (mcdu.FPLNLines[i].index == 0) {
+			#	me["FPLN_From"].show();
+			#} else {
+			#	me["FPLN_From"].hide();
+			#}
+			
+			if (fmgc.flightPlanController.temporaryFlag[i]) {
 				me["FPLN_TMPY_group"].show();
-				me["FPLN_6_group"].hide();
 			} else {
 				me["FPLN_TMPY_group"].hide();
-				me["FPLN_6_group"].show();
 			}
 		} elsif (page == "MCDU") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -357,6 +506,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("MCDU MENU");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -439,6 +589,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -521,6 +672,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_PageNum"].setText("1/2");
 				me["Simple_PageNum"].show();
@@ -601,6 +753,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_PageNum"].setText("2/2");
 				me["Simple_PageNum"].show();
@@ -686,6 +839,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("POSITION MONITOR");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -783,6 +937,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("RADIO NAV");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -922,6 +1077,7 @@ var canvas_MCDU_base = {
 				me["INITA"].show();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1077,6 +1233,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].show();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1207,6 +1364,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("FUEL PRED");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1319,6 +1477,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].show();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText("TAKE OFF");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1477,6 +1636,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_Title"].setText(sprintf("%s", page));
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1599,6 +1759,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -1857,6 +2018,19 @@ var canvas_MCDU_base = {
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
+				me["arrowsDepArr"].show();
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L4_Arrow"].hide();
+				me["Simple_L5_Arrow"].hide();
+				me["Simple_L6_Arrow"].show();
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R4_Arrow"].hide();
+				me["Simple_R5_Arrow"].hide();
+				me["Simple_R6_Arrow"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1867,9 +2041,7 @@ var canvas_MCDU_base = {
 				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				
 				if (myDeparture[i] != nil) {
@@ -1882,14 +2054,18 @@ var canvas_MCDU_base = {
 							var sign = "R"; 
 						}
 						forindex (var item; myDeparture[i].arrowsMatrix[matrixArrow]) {
+							if (item == 5) { 
+								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/b"));
+								continue;
+							}
 							if (myDeparture[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+								me["arrow" ~ (item + 1) ~ sign].show();
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/b"));
 							} else {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+								me["arrow" ~ (item + 1) ~ sign].hide();
 							}
 						}
 					}
-					me.colorLeftArrow(myDeparture[i].arrowsColour[0][0],myDeparture[i].arrowsColour[0][1],myDeparture[i].arrowsColour[0][2],myDeparture[i].arrowsColour[0][3],myDeparture[i].arrowsColour[0][4],myDeparture[i].arrowsColour[0][5]);
 					
 					forindex (var matrixFont; myDeparture[i].fontMatrix) {
 						if (matrixFont == 0) { 

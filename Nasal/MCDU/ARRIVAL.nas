@@ -37,8 +37,8 @@ var arrivalPage = {
 		lr.computer = computer;
 		lr._setupPageWithData();
 		lr.updateRunways();
-		if (fmgc.fp[2].destination_runway != nil) {
-			lr.selectedRunway = fmgc.fp[2].destination_runway;
+		if (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
+			lr.selectedRunway = fmgc.flightPlanController.flightplans[2].destination_runway;
 		}
 		lr.updateActiveRunway();
 		return lr;
@@ -48,7 +48,7 @@ var arrivalPage = {
 	},
 	_setupPageWithData: func() {
 		me.title = ["ARRIVAL", " TO ", left(me.id, 4)];
-		if (!TMPYActive[me.computer].getBoolValue()) {
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L6 = [" RETURN END", nil, "wht"];
 		} else {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
@@ -64,16 +64,16 @@ var arrivalPage = {
 	},
 	updateActiveRunway: func() {
 		if (me.selectedRunway != nil) {
-			if (fmgc.fp[2].destination_runway != nil) {
-				if (fmgc.fp[2].destination_runway.id == me.selectedRunway.id) {
-					me.L1 = [fmgc.fp[2].destination_runway.id, " RWY", "grn"];
-				} elsif (fmgc.fp[me.computer].destination_runway != nil) {
-					me.L1 = [fmgc.fp[me.computer].destination_runway.id, " RWY", "yel"];
+			if (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
+				if (fmgc.flightPlanController.flightplans[2].destination_runway.id == me.selectedRunway.id) {
+					me.L1 = [fmgc.flightPlanController.flightplans[2].destination_runway.id, " RWY", "grn"];
+				} elsif (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
+					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].destination_runway.id, " RWY", "yel"];
 				} else {
 					me.L1 = ["---", " RWY", "wht"];
 				} 
-			} elsif (fmgc.fp[me.computer].destination_runway != nil) {
-				me.L1 = [fmgc.fp[me.computer].destination_runway.id, " RWY", "yel"];
+			} elsif (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
+				me.L1 = [fmgc.flightPlanController.flightplans[me.computer].destination_runway.id, " RWY", "yel"];
 			} else {
 				me.L1 = ["---", " RWY", "wht"];
 			}
@@ -124,8 +124,8 @@ var arrivalPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
-		if (!TMPYActive[me.computer].getBoolValue()) {
-			fmgc.flightplan.initTempFP(me.computer, 2);
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
 			me.L6 = [" F-PLN", " TMPY", "yel"];
 			me.arrowsColour[0][5] = "yel";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
@@ -153,9 +153,9 @@ var arrivalPage = {
 		if (size(me.runways) >= (index - 1)) {
 			me.selectedRunway = me.arrAirport[0].runway(me.runways[index - 2 + me.scroll]);
 			me.makeTmpy();
-			fmgc.fp[me.computer].destination_runway = me.selectedRunway;
+			fmgc.flightPlanController.flightplans[me.computer].destination_runway = me.selectedRunway;
 			me.updateActiveRunway();
-			fmgc.flightplan.checkWPOutputs(me.computer);
+			fmgc.flightPlanController.checkWPOutputs(me.computer);
 		} else {
 			notAllowed(me.computer);
 		}

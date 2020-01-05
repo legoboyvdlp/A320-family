@@ -74,7 +74,7 @@ var initInputA = func(key, i) {
 			setprop("/FMGC/internal/dep-arpt", "");
 			setprop("/FMGC/internal/arr-arpt", "");
 			setprop("/FMGC/internal/tofrom-set", 0);
-			fmgc.flightplan.reset();
+			fmgc.flightPlanController.reset();
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
@@ -88,7 +88,7 @@ var initInputA = func(key, i) {
 					setprop("/FMGC/internal/arr-arpt", fromto[1]);
 					setprop("/FMGC/internal/tofrom-set", 1);
 					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
-					fmgc.flightplan.updateARPT(fromto[0], fromto[1], 2);
+					fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 				} else {
 					notAllowed(i);
 				}

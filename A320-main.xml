@@ -428,7 +428,7 @@
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		 <minimum-fg-version>2019.2.0</minimum-fg-version>
+		 <minimum-fg-version>2019.1.2</minimum-fg-version>
 	</sim>
 	
 	<consumables>
@@ -1870,14 +1870,11 @@
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
 		</fcu>
 		<fmgc>
-			<file>Aircraft/A320-family/Nasal/FMGC/flightplan.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
 		</fmgc>
 		<mcdu>
-			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITB.nas</file>
@@ -1888,7 +1885,6 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/RADNAV.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file>
 		</mcdu>
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>

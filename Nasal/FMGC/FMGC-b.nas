@@ -59,8 +59,6 @@ var FPLN = {
 	maxBank: 0,
 	maxBankLimit: 0,
 	nextCourse: 0,
-	num: props.globals.getNode("/FMGC/flightplan[2]/num", 1),
-	numTemp: 0,
 	R: 0,
 	radius: 0,
 	turnDist: 0,
@@ -376,7 +374,6 @@ var ITAF = {
 		Velocity.trueAirspeedKtTemp = Velocity.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWPTemp = FPLN.currentWP.getValue();
-		FPLN.numTemp = FPLN.num.getValue();
 		
 		# Bank Limit
 		if (Velocity.trueAirspeedKtTemp >= 420) {
@@ -391,14 +388,14 @@ var ITAF = {
 		
 		# If in LNAV mode and route is not longer active, switch to HDG HLD
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
-			if (FPLN.num.getValue() == 0 or !FPLN.active.getBoolValue()) {
+			if (FPLN.num == 0 or !FPLN.active.getBoolValue()) {
 				me.setLatMode(3);
 			}
 		}
 		
 		# Waypoint Advance Logic
-		if (FPLN.numTemp > 0 and FPLN.activeTemp == 1) {
-			if ((FPLN.currentWPTemp + 1) < FPLN.numTemp) {
+		if (flightPlanController.num[2] > 0 and FPLN.activeTemp == 1) {
+			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2]) {
 				Velocity.groundspeedMps = Velocity.groundspeedKt.getValue() * 0.5144444444444;
 				FPLN.wpFlyFrom = FPLN.currentWPTemp;
 				if (FPLN.wpFlyFrom < 0) {
@@ -431,10 +428,10 @@ var ITAF = {
 				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
 				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist) {
-					if (currentWP[2] < 1) {	
-						currentWP[2] = 1;	
-					} else if (num_out[2].getValue() > 2) { # The Airbus doesn't display anything past the previous waypoint after advancing	
-						flightplan.advanceDelete(2);	
+					if (flightPlanController.currentToWptIndex < 1) {	
+						flightPlanController.currentToWptIndex = 1;	
+					} else if (flightPlanController.num[2] > 2) { # The Airbus doesn't display anything past the previous waypoint after advancing	
+						flightPlanController.autoSequencing();	
 					}
 				}
 			}
@@ -604,7 +601,7 @@ var ITAF = {
 			Custom.showHdg.setBoolValue(1);
 			me.armTextCheck();
 		} else if (n == 1) {
-			if (FPLN.num.getValue() > 0 and FPLN.active.getBoolValue()) {
+			if (flightPlanController.num[2] > 0 and FPLN.active.getBoolValue()) {
 				Output.lnavArm.setBoolValue(1);
 				Custom.showHdg.setBoolValue(0);
 				me.armTextCheck();
@@ -741,7 +738,7 @@ var ITAF = {
 		}
 	},
 	checkLNAV: func(t) {
-		if (FPLN.num.getValue() > 0 and FPLN.active.getBoolValue() and Position.gearAglFt.getValue() >= 30) {
+		if (flightPlanController.num[2] > 0 and FPLN.active.getBoolValue() and Position.gearAglFt.getValue() >= 30) {
 			me.activateLNAV();
 		} else if (Output.lat.getValue() != 1 and t != 1) {
 			Output.lnavArm.setBoolValue(1);

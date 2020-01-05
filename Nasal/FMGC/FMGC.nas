@@ -230,7 +230,7 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("/FMGC/status/phase", "5");
 	}
 	
-	if (getprop("/FMGC/flightplan[2]/num") > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and getprop("/FMGC/flightplan[2]/arrival-leg-dist") <= 15) {
+	if (flightPlanController.num[2] > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15) {
 		setprop("/FMGC/internal/decel", 1);
 	} else if (getprop("/FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
 		setprop("/FMGC/internal/decel", 0);

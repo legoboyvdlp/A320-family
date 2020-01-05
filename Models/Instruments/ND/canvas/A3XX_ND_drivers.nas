@@ -16,7 +16,7 @@ var A3XXRouteDriver = {
 		me.update();
 	},
 	update: func(){
-		me.flightplan = fmgc.fp[2];
+		me.flightplan = fmgc.flightPlanController.flightplans[2];
 	},
 	getNumberOfFlightPlans: func(){1},
 	getFlightPlanType: func(fpNum){"current"},

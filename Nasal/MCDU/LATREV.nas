@@ -34,7 +34,7 @@ var latRev = {
 		return nil;
 	},
 	_checkTmpy: func() {
-		if (TMPYActive[me.computer].getBoolValue()) {
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
 			me.arrowsColour[0][5] = "yel";
 			me.R2[2] = "yel";
@@ -120,8 +120,8 @@ var latRev = {
 		}
 	},
 	makeTmpy: func() {
-		if (!TMPYActive[me.computer].getBoolValue()) {
-			fmgc.flightplan.initTempFP(me.computer, 2);
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
 			me._checkTmpy();
 		}
 	},
@@ -133,51 +133,57 @@ var latRev = {
 		# check if it is part of the active f-pln, if so delete intermediate wpts, if not create discontinuiity after it with original wpts
 		if (size(me.R3[0]) == 5) {
 			var fix = findFixesByID(me.R3[0]);
-			if (fix != nil) {
-				var indexWp = fmgc.fp[me.computer].indexOfWP(fix[0]);
+			if (size(fix) >= 1) {
+				var indexWp = fmgc.flightPlanController.flightplans[me.computer].indexOfWP(fix[0]);
 				if (indexWp == -1) {
-					var _insert = fmgc.flightplan.insertFix(me.R3[0], me.index + 1, me.computer);
-					fmgc.fp[me.computer].insertWP(createDiscontinuity(), me.index + 2);
-					fmgc.flightplan.checkWPOutputs(me.computer);
+					var _insert = fmgc.flightPlanController.insertFix(me.R3[0], me.index + 1, me.computer);
+					fmgc.flightPlanController.flightplans[me.computer].insertWP(createDiscontinuity(), me.index + 2);
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
-					for (var i = me.index + 1; i == indexWp; i = i + 1) {
-						fmgc.flightplan.deleteWP(i, me.computer, 0);
+					var numTimesDelete = indexWp - me.index;
+					while (numTimesDelete > 1) {
+						fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+						numTimesDelete -= 1;
 					}
-					var _insert = fmgc.flightplan.insertFix(me.R3[0], me.index + 1, me.computer);
+					var _insert = 0;
 				}
 			} else {
 				var _insert = 1;
 			}
 		} elsif (size(me.R3[0]) == 4) {
 			var airport = findAirportsByICAO(me.R3[0]);
-			if (airport != nil) {
-				var indexWp = fmgc.fp[me.computer].indexOfWP(fix[0]);
+			if (size(airport) >= 1) {
+				var indexWp = fmgc.flightPlanController.flightplans[me.computer].indexOfWP(fix[0]);
 				if (indexWp == -1) {
-					var _insert = fmgc.flightplan.insertArpt(me.R3[0], me.index + 1, me.computer);
-					fmgc.fp[me.computer].insertWP(createDiscontinuity(), me.index + 2);
-					fmgc.flightplan.checkWPOutputs(me.computer);
+					var _insert = fmgc.flightPlanController.insertArpt(me.R3[0], me.index + 1, me.computer);
+					fmgc.flightPlanController.flightplans[me.computer].insertWP(createDiscontinuity(), me.index + 2);
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
-					for (var i = me.index + 1; i == indexWp; i = i + 1) {
-						fmgc.flightplan.deleteWP(i, me.computer, 0);
+					var numTimesDelete = indexWp - me.index;
+					while (numTimesDelete > 1) {
+						fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+						numTimesDelete -= 1;
 					}
-					var _insert = fmgc.flightplan.insertArpt(me.R3[0], me.index + 1, me.computer);
+					var _insert = 0;
 				}
 			} else {
 				var _insert = 1;
 			}
 		} elsif (size(me.R3[0]) == 3 or size(me.R3[0]) == 2) {
 			var navaid = findNavaidsByID(me.R3[0]);
-			if (navaid != nil) {
-				var indexWp = fmgc.fp[me.computer].indexOfWP(navaid[0]);
+			if (size(navaid) >= 1) {
+				var indexWp = fmgc.flightPlanController.flightplans[me.computer].indexOfWP(navaid[0]);
 				if (indexWp == -1) {
-					var _insert = fmgc.flightplan.insertNavaid(me.R3[0], me.index + 1, me.computer);
-					fmgc.fp[me.computer].insertWP(createDiscontinuity(), me.index + 2);
-					fmgc.flightplan.checkWPOutputs(me.computer);
+					var _insert = fmgc.flightPlanController.insertNavaid(me.R3[0], me.index + 1, me.computer);
+					fmgc.flightPlanController.flightplans[me.computer].insertWP(createDiscontinuity(), me.index + 2);
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
-					for (var i = me.index + 1; i == indexWp; i = i + 1) {
-						fmgc.flightplan.deleteWP(i, me.computer, 0);
+					var numTimesDelete = indexWp - me.index;
+					while (numTimesDelete > 1) {
+						fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+						numTimesDelete -= 1;
 					}
-					var _insert = fmgc.flightplan.insertNavaid(me.R3[0], me.index + 1, me.computer);
+					var _insert = 0;
 				}
 			} else {
 				var _insert = 1;
@@ -192,7 +198,7 @@ var latRev = {
 			notAllowed(me.computer);
 		} else {
 			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
-			fmgc.flightplan.checkWPOutputs(me.computer);
+			fmgc.flightPlanController.flightPlanChanged(me.computer);
 			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 		}
 	},

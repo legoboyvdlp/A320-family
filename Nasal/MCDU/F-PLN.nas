@@ -8,9 +8,6 @@ var TMPY = 5;
 var MAIN = 6;
 var debug = 0; # Set to 1 to check inner functionality
 var insertReturn = nil;
-var active_out = [nil, nil, props.globals.getNode("/FMGC/flightplan[2]/active")];
-var num_out = [props.globals.getNode("/FMGC/flightplan[0]/num"), props.globals.getNode("/FMGC/flightplan[1]/num"), props.globals.getNode("/FMGC/flightplan[2]/num")];
-var TMPYActive = [props.globals.getNode("/FMGC/internal/tmpy-active[0]"), props.globals.getNode("/FMGC/internal/tmpy-active[1]")];
 
 var clearFPLNComputer = func {
 	FPLNLines[0].clear();
@@ -50,13 +47,88 @@ var StaticText = {
 			notAllowed(me.computer.mcdu);
 		} else {
 			var scratchpad = getprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad");
-			if (TMPYActive[me.computer.mcdu].getBoolValue()) {
+			if (me.computer.lines == MAIN and scratchpad != "CLR" and scratchpad != "") {
+				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer.mcdu);
+			}
+			if (fmgc.flightPlanController.temporaryFlag[me.computer.mcdu]) {
 				if (scratchpad == "CLR") {
-					if (fmgc.flightplan.deleteWP(me.index, me.computer.mcdu, 0) != 0) {
+					if (fmgc.flightPlanController.deleteWP(me.index, me.computer.mcdu, 0) != 0) {
 						notAllowed(me.computer.mcdu);
 					} else {
 						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad-msg", 0);
 						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					}
+				} elsif (size(scratchpad) == 5) {
+					var fix = findFixesByID(scratchpad);
+					if (size(fix) >= 1) {
+						var indexWp = fmgc.flightPlanController.flightplans[me.computer.mcdu].indexOfWP(fix[0]);
+						if (indexWp == -1) {
+							var insertReturn = fmgc.flightPlanController.insertFix(scratchpad, me.index, me.computer.mcdu);
+							fmgc.flightPlanController.flightPlanChanged(me.computer.mcdu);
+						} else {
+							var numTimesDelete = indexWp - me.index;
+							while (numTimesDelete > 0) {
+								fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+								numTimesDelete -= 1;
+							}
+						}
+						if (insertReturn == 2) {
+							notAllowed(me.computer.mcdu);
+						} else if (insertReturn == 1) {
+							notInDataBase(me.computer.mcdu);
+						} else {
+							setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+						}
+					} else {
+						notInDataBase(me.computer.mcdu);
+					}
+				} else if (size(scratchpad) == 4) {
+					var arpt = findAirportsByICAO(scratchpad);
+					if (size(arpt) >= 1) {
+						var indexWp = fmgc.flightPlanController.flightplans[me.computer.mcdu].indexOfWP(arpt[0]);
+						if (indexWp == -1) {
+							var insertReturn = fmgc.flightPlanController.insertArpt(scratchpad, me.index, me.computer.mcdu);
+							fmgc.flightPlanController.flightPlanChanged(me.computer.mcdu);
+						} else {
+							var numTimesDelete = indexWp - me.index;
+							while (numTimesDelete > 0) {
+								fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+								numTimesDelete -= 1;
+							}
+						}
+						if (insertReturn == 2) {
+							notAllowed(me.computer.mcdu);
+						} else if (insertReturn == 1) {
+							notInDataBase(me.computer.mcdu);
+						} else {
+							setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+						}
+					} else {
+						notInDataBase(me.computer.mcdu);
+					}
+				} else if (size(scratchpad) == 3 or size(scratchpad) == 2) {
+					var navaid = findNavaidsByID(scratchpad);
+					if (size(navaid) >= 1) {
+						var indexWp = fmgc.flightPlanController.flightplans[me.computer.mcdu].indexOfWP(navaid[0]);
+						if (indexWp == -1) {
+							var insertReturn = fmgc.flightPlanController.insertNavaid(scratchpad, me.index, me.computer.mcdu);
+							fmgc.flightPlanController.flightPlanChanged(me.computer.mcdu);
+						} else {
+							var numTimesDelete = indexWp - me.index;
+							while (numTimesDelete > 0) {
+								fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+								numTimesDelete -= 1;
+							}
+						}
+						if (insertReturn == 2) {
+							notAllowed(me.computer.mcdu);
+						} else if (insertReturn == 1) {
+							notInDataBase(me.computer.mcdu);
+						} else {
+							setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+						}
+					} else {
+						notInDataBase(me.computer.mcdu);
 					}
 				} elsif (scratchpad == "") {
 					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
@@ -70,12 +142,14 @@ var StaticText = {
 				}
 			} else {
 				if (scratchpad == "CLR") {
-					if (fmgc.flightplan.deleteWP(me.index, 2, 0) != 0) {
+					if (fmgc.flightPlanController.deleteWP(me.index, 2, 0) != 0) {
 						notAllowed(me.computer.mcdu);
 					} else {
 						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad-msg", 0);
 						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
 					}
+				} elsif (size(scratchpad) != 0) {
+					me.pushButtonLeft();
 				} elsif (scratchpad == "") {
 					if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
 						canvas_mcdu.myLatRev[me.computer.mcdu].del();
@@ -114,7 +188,7 @@ var FPLNText = {
 		}
 	},
 	getColor: func(i) {
-		if (TMPYActive[i].getBoolValue()) {
+		if (fmgc.flightPlanController.temporaryFlag[i]) {
 			if (me.dest) {
 				return canvas_mcdu.WHITE;
 			} else {
@@ -131,14 +205,14 @@ var FPLNText = {
 	getSubText: func(i) {
 		if (me.index == 0) {
 				return "";
-		} else if (TMPYActive[i].getBoolValue()) {
-			if (fmgc.arrivalAirportI[i] == me.index) {
+		} else if (fmgc.flightPlanController.temporaryFlag[i]) {
+			if (fmgc.flightPlanController.arrivalIndex[i] == me.index) {
 				return "DEST";
 			} else {
 				return "C" ~ sprintf("%03d", fmgc.wpCoursePrev[me.fp][me.index].getValue()) ~ "g";
 			}
 		} else {
-			if (fmgc.arrivalAirportI[2] == me.index) {
+			if (fmgc.flightPlanController.arrivalIndex[2] == me.index) {
 				return "DEST";
 			} else {
 				return "C" ~ sprintf("%03d", fmgc.wpCoursePrev[me.fp][me.index].getValue()) ~ "g";
@@ -149,10 +223,10 @@ var FPLNText = {
 	pushButtonLeft: func() {
 		var scratchpad = getprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad");
 		if (me.computer.lines == MAIN and scratchpad != "") {
-			fmgc.flightplan.initTempFP(me.computer.mcdu, 2);
+			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer.mcdu);
 		}
 		if (scratchpad == "CLR") {
-			if (fmgc.flightplan.deleteWP(me.index, me.computer.mcdu, 0) != 0) {
+			if (fmgc.flightPlanController.deleteWP(me.index, me.computer.mcdu, 0) != 0) {
 				notAllowed(me.computer.mcdu);
 			} else {
 				setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad-msg", 0);
@@ -160,70 +234,91 @@ var FPLNText = {
 			}
 		} else {
 			if (size(scratchpad) == 5) {
-				var indexWp = fmgc.fp[me.computer.mcdu].indexOfWP(findFixesByID(scratchpad));
-				if (indexWp == -1) {
-					var insertReturn = fmgc.flightplan.insertFix(scratchpad, me.index, me.computer.mcdu);
-					fmgc.fp[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
-					fmgc.flightplan.checkWPOutputs(me.computer.mcdu);
-				} else {
-					for (var i = me.index; i == indexWp; i = i + 1) {
-						fmgc.flightplan.deleteWP(i, me.computer.mcdu, 0);
+				var fix = findFixesByID(scratchpad);
+				if (size(fix) >= 1) {
+					var indexWp = fmgc.flightPlanController.flightplans[me.computer.mcdu].indexOfWP(fix[0]);
+					if (indexWp == -1) {
+						var insertReturn = fmgc.flightPlanController.insertFix(scratchpad, me.index, me.computer.mcdu);
+						fmgc.flightPlanController.flightplans[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
+						fmgc.flightPlanController.flightPlanChanged(me.computer.mcdu);
+					} else {
+						var numTimesDelete = indexWp - me.index;
+						while (numTimesDelete > 0) {
+							fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+							numTimesDelete -= 1;
+						}
 					}
-				}
-				if (insertReturn == 2) {
-					notAllowed(me.computer.mcdu);
-				} else if (insertReturn == 1) {
-					notInDataBase(me.computer.mcdu);
+					if (insertReturn == 2) {
+						notAllowed(me.computer.mcdu);
+					} else if (insertReturn == 1) {
+						notInDataBase(me.computer.mcdu);
+					} else {
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					}
 				} else {
-					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					notInDataBase(me.computer.mcdu);
 				}
 			} else if (size(scratchpad) == 4) {
-				var indexWp = fmgc.fp[me.computer.mcdu].indexOfWP(findAirportsByICAO(scratchpad));
-				if (indexWp == -1) {
-					var insertReturn = fmgc.flightplan.insertArpt(scratchpad, me.index, me.computer.mcdu);
-					fmgc.fp[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
-					fmgc.flightplan.checkWPOutputs(me.computer.mcdu);
-				} else {
-					for (var i = me.index; i == indexWp; i = i + 1) {
-						fmgc.flightplan.deleteWP(i, me.computer.mcdu, 0);
+				var arpt = findAirportsByICAO(scratchpad);
+				if (size(arpt) >= 1) {
+					var indexWp = fmgc.flightPlanController.flightplans[me.computer.mcdu].indexOfWP(arpt[0]);
+					if (indexWp == -1) {
+						var insertReturn = fmgc.flightPlanController.insertArpt(scratchpad, me.index, me.computer.mcdu);
+						fmgc.flightPlanController.flightplans[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
+						fmgc.flightPlanController.flightPlanChanged(me.computer.mcdu);
+					} else {
+						var numTimesDelete = indexWp - me.index;
+						while (numTimesDelete > 0) {
+							fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+							numTimesDelete -= 1;
+						}
 					}
-				}
-				if (insertReturn == 2) {
-					notAllowed(me.computer.mcdu);
-				} else if (insertReturn == 1) {
-					notInDataBase(me.computer.mcdu);
+					if (insertReturn == 2) {
+						notAllowed(me.computer.mcdu);
+					} else if (insertReturn == 1) {
+						notInDataBase(me.computer.mcdu);
+					} else {
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					}
 				} else {
-					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					notInDataBase(me.computer.mcdu);
 				}
 			} else if (size(scratchpad) == 3 or size(scratchpad) == 2) {
-				var indexWp = fmgc.fp[me.computer.mcdu].indexOfWP(findNavaidsByID(scratchpad));
-				if (indexWp == -1) {
-					var insertReturn = fmgc.flightplan.insertNavaid(scratchpad, me.index, me.computer.mcdu);
-					fmgc.fp[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
-					fmgc.flightplan.checkWPOutputs(me.computer.mcdu);
-				} else {
-					for (var i = me.index; i == indexWp; i = i + 1) {
-						fmgc.flightplan.deleteWP(i, me.computer.mcdu, 0);
+				var navaid = findNavaidsByID(scratchpad);
+				if (size(navaid) >= 1) {
+					var indexWp = fmgc.flightPlanController.flightplans[me.computer.mcdu].indexOfWP(navaid[0]);
+					if (indexWp == -1) {
+						var insertReturn = fmgc.flightPlanController.insertNavaid(scratchpad, me.index, me.computer.mcdu);
+						fmgc.flightPlanController.flightplans[me.computer.mcdu].insertWP(createDiscontinuity(), me.index + 1);
+						fmgc.flightPlanController.flightPlanChanged(me.computer.mcdu);
+					} else {
+						var numTimesDelete = indexWp - me.index;
+						while (numTimesDelete > 0) {
+							fmgc.flightPlanController.deleteWP(me.index + 1, me.computer.mcdu, 0);
+							numTimesDelete -= 1;
+						}
 					}
-				}
-				if (insertReturn == 2) {
-					notAllowed(me.computer.mcdu);
-				} else if (insertReturn == 1) {
-					notInDataBase(me.computer.mcdu);
+					if (insertReturn == 2) {
+						notAllowed(me.computer.mcdu);
+					} else if (insertReturn == 1) {
+						notInDataBase(me.computer.mcdu);
+					} else {
+						setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					}
 				} else {
-					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/scratchpad", "");
+					notInDataBase(me.computer.mcdu);
 				}
 			} else if (size(scratchpad) == 1) {
 				formatError(me.computer.mcdu);
 			} else if (scratchpad == "") {
-				if (!TMPYActive[me.computer.mcdu].getBoolValue()) {
-					if (me.getText() == fmgc.fp[2].departure.id or left(me.getText(), 4) == fmgc.fp[2].departure.id) {
+				if (!fmgc.flightPlanController.temporaryFlag[me.computer.mcdu]) {
+					if (me.getText() == fmgc.flightPlanController.flightplans[2].departure.id or left(me.getText(), 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
 						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
 							canvas_mcdu.myLatRev[me.computer.mcdu].del();
 						}
 						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
 						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(0, me.getText(), me.index, me.computer.mcdu);
-					} elsif (me.index == fmgc.arrivalAirportI[2]) {
+					} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
 						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
 							canvas_mcdu.myLatRev[me.computer.mcdu].del();
 						}
@@ -244,13 +339,13 @@ var FPLNText = {
 					}
 					setprop("/MCDU[" ~ me.computer.mcdu ~ "]/page", "LATREV");
 				} else {
-					if (me.getText() == fmgc.fp[me.computer.mcdu].departure.id or left(me.getText(), 4) == fmgc.fp[me.computer.mcdu].departure.id) {
+					if (me.getText() == fmgc.flightPlanController.flightplans[me.computer.mcdu].departure.id or left(me.getText(), 4) == fmgc.flightPlanController.flightplans[me.computer.mcdu].departure.id) {
 						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
 							canvas_mcdu.myLatRev[me.computer.mcdu].del();
 						}
 						canvas_mcdu.myLatRev[me.computer.mcdu] = nil;
 						canvas_mcdu.myLatRev[me.computer.mcdu] = latRev.new(0, me.getText(), me.index, me.computer.mcdu);
-					} elsif (me.index == fmgc.arrivalAirportI[me.computer.mcdu]) {
+					} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer.mcdu]) {
 						if (canvas_mcdu.myLatRev[me.computer.mcdu] != nil) {
 							canvas_mcdu.myLatRev[me.computer.mcdu].del();
 						}
@@ -320,12 +415,12 @@ var FPLNLineComputer = {
 		
 		me.planList = [];
 		
-		if (!fmgc.active_out[2].getBoolValue()) {
+		if (!fmgc.flightPlanController.active.getBoolValue()) {
 			me.destIndex = -1;
 			me.destination = nil;
 		} else {
-			fpln = fmgc.fp[fplnID]; # Get the Nasal Flightplan
-			me.destIndex = fmgc.arrivalAirportI[fplnID];
+			fpln = fmgc.flightPlanController.flightplans[fplnID]; # Get the Nasal Flightplan
+			me.destIndex = fmgc.flightPlanController.arrivalIndex[fplnID];
 			me.destination = FPLNText.new(me, fpln.getWP(me.destIndex), 1, fplnID, me.destIndex);
 			for (var j = 0; j < fpln.getPlanSize(); j += 1) {
 				me.dest = 0;
@@ -452,16 +547,16 @@ var slewFPLN = func(d, i) { # Scrolling function. d is -1 or 1 for direction, an
 var FPLNButton = func(s, key, i) {
 	var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
 	if (s == "L") {
-		if (key == 6 and TMPYActive[i].getBoolValue()) {
-			fmgc.flightplan.eraseTempFP(i, 2);
+		if (key == 6 and fmgc.flightPlanController.temporaryFlag[i]) {
+			fmgc.flightPlanController.destroyTemporaryFlightPlan(i, 0);
 		} else {
 			if (size(FPLNLines[i].output) >= key) {
 				FPLNLines[i].output[key - 1].pushButtonLeft();
 			}
 		}
 	} else if (s == "R") {
-		if (key == 6 and TMPYActive[i].getBoolValue()) {
-			fmgc.flightplan.executeTempFP(i, 2);
+		if (key == 6 and fmgc.flightPlanController.temporaryFlag[i]) {
+			fmgc.flightPlanController.destroyTemporaryFlightPlan(i, 1);
 		} else {
 #			if (scratchpad != "") {
 #				if (size(FPLNLines[i].output) >= key) {
@@ -474,174 +569,3 @@ var FPLNButton = func(s, key, i) {
 		}
 	}
 }
-
-var notInDataBase = func(i) {
-		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) { # Messages clear after NOT IN DATABASE
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
-		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
-		}
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
-}
-
-# For testing purposes only -- do not touch!
-var test = func {
-	var fp = createFlightplan(getprop("sim/aircraft-dir")~"/plan.gpx");
-	var desti = int(fp.getPlanSize()*0.5);
-	FPLNLines[0].replacePlan(fp,6,desti,0);
-	print("Display:");
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("down");FPLNLines[0].scrollDown();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-	print("up");FPLNLines[0].scrollUp();
-	foreach(line;FPLNLines[0].output) {
-		printf("line: %s",line.getText());
-	}
-}
-
-#test();

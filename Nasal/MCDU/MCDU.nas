@@ -219,7 +219,7 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
-			if (canvas_mcdu.TMPYActive[i].getBoolValue()) {
+			if (fmgc.flightPlanController.temporaryFlag[i]) {
 				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/page", "LATREV");
@@ -258,6 +258,8 @@ var rskbutton = func(btn, i) {
 			printInput("R2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("R2", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
 		} else {
 			notAllowed(i);
 		}
@@ -344,46 +346,46 @@ var arrowbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATA2");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
-		}
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
 			if (getprop("/engines/engine[0]/state") != 3 and getprop("/engines/engine[1]/state") != 3) {
 				setprop("/MCDU[" ~ i ~ "]/page", "INITB");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
-		}
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC2");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].scrollLeft();
 		}
 	} else if (btn == "right") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATA2");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
-		}
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
 			if (getprop("/engines/engine[0]/state") != 3 and getprop("/engines/engine[1]/state") != 3) {
 				setprop("/MCDU[" ~ i ~ "]/page", "INITB");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
-		}
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC2");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].scrollRight();
 		}
 	} else if (btn == "up") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
-			slewFPLN(1, i);
+			canvas_mcdu.myFpln[i].scrollUp();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollUp();
 		}
 	} else if (btn == "down") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
-			slewFPLN(-1, i);
+			canvas_mcdu.myFpln[i].scrollDn();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollDn();
 		}
@@ -414,7 +416,10 @@ var pagebutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 			setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
 		} else if (btn == "f-pln") {
-			if (active_out[2].getBoolValue()) {
+			if (fmgc.flightPlanController.active.getBoolValue()) {
+				if (canvas_mcdu.myFpln[i] == nil) {
+					canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
+				}
 				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
