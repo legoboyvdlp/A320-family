@@ -1658,4 +1658,4 @@ setlistener("/engines/engine[1]/state", func() {
 	} else {
 		dualFailNode.setBoolValue(0);
 	}
-}, 0, 0);\ No newline at end of file
+}, 0, 0);

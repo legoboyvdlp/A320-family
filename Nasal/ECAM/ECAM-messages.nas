@@ -485,4 +485,4 @@ var statusInop           = std.Vector.new();
 var statusMaintenance    = std.Vector.new();
 
 # hack thrust lock message:
-var msgSave = athr_lock.msg;\ No newline at end of file
+var msgSave = athr_lock.msg;
