@@ -205,7 +205,7 @@ var systemsInit = func {
 	systems.eng_init();
 	systems.fire_init();
 	systems.autobrake_init();
-	fmgc.flightplan.reset();
+	fmgc.flightPlanController.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
@@ -227,7 +227,7 @@ var systemsInit = func {
 
 setlistener("/sim/signals/fdm-initialized", func {
 	systemsInit();
-	fmgc.outputPropsTimer.start();
+	fmgc.flightPlanTimer.start();
 });
 
 var systemsLoop = maketimer(0.1, func {

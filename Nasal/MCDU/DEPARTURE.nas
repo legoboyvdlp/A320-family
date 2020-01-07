@@ -160,22 +160,26 @@ var departurePage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateActiveTransitions: func() {
-		if (me.selectedTransition != nil) {
-			if (fmgc.flightPlanController.flightplans[2].sid_trans != nil) {
-				if (fmgc.flightPlanController.flightplans[2].sid_trans == me.selectedTransition) {
-					me.R1 = [fmgc.flightPlanController.flightplans[2].sid_trans.id, "TRANS", "grn"];
+		if (!me.hasPressNoTrans) {
+			if (me.selectedTransition != nil) {
+				if (fmgc.flightPlanController.flightplans[2].sid_trans != nil) {
+					if (fmgc.flightPlanController.flightplans[2].sid_trans == me.selectedTransition) {
+						me.R1 = [fmgc.flightPlanController.flightplans[2].sid_trans.id, "TRANS", "grn"];
+					} elsif (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
+						me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "TRANS", "yel"];
+					} else {
+						me.R1 = ["-------", "TRANS ", "wht"];
+					} 
 				} elsif (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
-					me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "TRANS", "yel"];
+					me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
 				} else {
 					me.R1 = ["-------", "TRANS ", "wht"];
-				} 
-			} elsif (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
-				me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
+				}
 			} else {
 				me.R1 = ["-------", "TRANS ", "wht"];
 			}
 		} else {
-			me.R1 = ["-------", "TRANS ", "wht"];
+			me.R1 = ["NONE", "TRANS ", "yel"];
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
@@ -319,7 +323,7 @@ var departurePage = {
 				me.arrowsColour[1][1] = "ack";
 			}
 		} elsif (size(me.transitions) >= 1) {
-			me.R2 = [" " ~ me.transitions[0], "TRANS", "blu"];
+			me.R2 = [me.transitions[0] ~ " ", "TRANS", "blu"];
 			if (me.transitions[0] != me.selectedTransition) {
 				me.arrowsMatrix[1][1] = 1;
 				me.arrowsColour[1][1] = "blu";
@@ -328,7 +332,7 @@ var departurePage = {
 				me.arrowsColour[1][1] = "ack";
 			}
 		} elsif (size(me.transitions) >= 2) {
-			me.R3 = [" " ~ me.transitions[1], nil, "blu"];
+			me.R3 = [me.transitions[1] ~ " ", nil, "blu"];
 			if (me.transitions[1] != me.selectedTransition) {
 				me.arrowsMatrix[1][2] = 1;
 				me.arrowsColour[1][2] = "blu";
@@ -337,7 +341,7 @@ var departurePage = {
 				me.arrowsColour[1][2] = "ack";
 			}
 		} elsif (size(me.transitions) >= 3) {
-			me.R4 = [" " ~ me.transitions[2], nil, "blu"];
+			me.R4 = [me.transitions[2] ~ " ", nil, "blu"];
 			if (me.transitions[2] != me.selectedTransition) {
 				me.arrowsMatrix[1][3] = 1;
 				me.arrowsColour[1][3] = "blu";
@@ -346,7 +350,7 @@ var departurePage = {
 				me.arrowsColour[1][3] = "ack";
 			}
 		} elsif (size(me.transitions) >= 4) {
-			me.R5 = [" " ~ me.transitions[3], nil, "blu"];
+			me.R5 = [me.transitions[3] ~ " ", nil, "blu"];
 			if (me.transitions[3] != me.selectedTransition) {
 				me.arrowsMatrix[1][4] = 1;
 				me.arrowsColour[1][4] = "blu";
@@ -399,6 +403,7 @@ var departurePage = {
 					me.scrollSids = size(me.sids) - 4;
 				}
 				me.updateSIDs();
+				me.hasPressNoTrans = 0;
 			}
 		}
 	},
@@ -430,7 +435,9 @@ var departurePage = {
 				fmgc.flightPlanController.flightplans[me.computer].sid = me.selectedSID;
 				me.updateActiveSIDs();
 				me.updateSIDs();
+				me.hasPressNoTrans = 0;
 				me.updateTransitions();
+				me.updateActiveTransitions();
 				fmgc.flightPlanController.flightPlanChanged(me.computer);
 			} else {
 				notAllowed(me.computer);
@@ -442,13 +449,15 @@ var departurePage = {
 			me.hasPressNoTrans = 1;
 			me.updateActiveTransitions();
 			me.updateTransitions();
-		} else {
+		} elsif (size(me.transitions) >= (index -  1)) {
 			me.selectedTransition = me.transitions[index - 2];
 			me.makeTmpy();
 			fmgc.flightPlanController.flightplans[me.computer].sid_trans = me.selectedTransition;
 			me.updateActiveTransitions();
 			me.updateTransitions();
 			fmgc.flightPlanController.flightPlanChanged(me.computer);
+		} else {
+			notAllowed(me.computer);
 		}
 	},
 };

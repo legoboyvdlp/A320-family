@@ -1,32 +1,55 @@
 var fplnItem = {
-	new: func(wp, index, plan) {
+	new: func(wp, index, plan, computer, colour = "grn") {
 		var fI = {parents:[fplnItem]};
 		fI.wp = wp;
 		fI.index = index;
 		fI.plan = plan;
+		fI.computer = computer;
+		fI.colour = colour;
 		return fI;
 	},
 	updateLeftText: func() {
-		if (me.wp.wp_name != "DISCONTINUITY") {
-			return [me.wp.wp_name, nil, "grn"];
+		if (me.wp != nil) {
+			if (me.wp.wp_name != "DISCONTINUITY") {
+				var wptName = split("-", me.wp.wp_name);
+				if (size(wptName) == 2) {
+					return[wptName[0] ~ wptName[1], nil, me.colour];
+				} else {
+					return [me.wp.wp_name, nil, me.colour];
+				}
+			} else {
+				return [nil, nil, "ack"];
+			}
 		} else {
-			return [nil, nil, "ack"];
+			return ["problem", nil, "ack"];
 		}
 	},
 	updateCenterText: func() {
-		if (me.wp.wp_name != "DISCONTINUITY") {
-			me.brg = me.getBrg();
-			me.track = me.getTrack();
-			return ["---- ", nil, "grn"];
+		if (me.wp != nil) { 
+			if (me.wp.wp_name != "DISCONTINUITY") {
+				me.brg = me.getBrg();
+				me.track = me.getTrack();
+				return ["---- ", nil, me.colour];
+			} else {
+				return ["---F-PLN DISCONTINUITY--", nil, "wht"];
+			}
 		} else {
-			return ["---F-PLN DISCONTINUITY--", nil, "wht"];
+			return ["problem", nil, "ack"];
 		}
 	},
 	updateRightText: func() {
-		me.spd = me.getSpd();
-		me.spd = me.getAlt();
-		me.spd = me.getDist();
-		return [me.spd ~ "/" ~ me.alt, "-" ~ me.dist ~ "NM     ", "grn"];
+		if (me.wp != nil) {
+			if (me.wp.wp_name != "DISCONTINUITY") {
+				me.spd = me.getSpd();
+				me.alt = me.getAlt();
+				me.dist = me.getDist();
+				return [me.spd ~ "/" ~ me.alt, " " ~ me.dist ~ "NM     ", me.colour];
+			} else {
+				return [nil, nil, "ack"];
+			}
+		} else {
+			return ["problem", nil, "ack"];
+		}
 	},
 	getBrg: func() {
 		return nil;
@@ -35,13 +58,70 @@ var fplnItem = {
 		return nil;
 	},
 	getSpd: func() {
-		return nil;
+		return "---";
 	},
 	getAlt: func() {
-		return nil;
+		return "-----";
 	},
 	getDist: func() {
-		return nil;
+		return "--";
+	},
+	pushButtonLeft: func() {
+		if (canvas_mcdu.myLatRev[me.computer] != nil) {
+			canvas_mcdu.myLatRev[me.computer].del();
+		}
+		canvas_mcdu.myLatRev[me.computer] = nil;
+		if (me.wp.wp_name == "DISCONTINUITY") {
+			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, "DISCON", me.index, me.computer);
+		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp.wp_name, me.index, me.computer);
+			} else {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp.wp_name, me.index, me.computer);
+			}
+		} else {
+			if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp.wp_name, me.index, me.computer);
+			} else {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp.wp_name, me.index, me.computer);
+			}
+		}
+		setprop("/MCDU[" ~ me.computer ~ "]/page", "LATREV");
+	},
+	pushButtonRight: func() {
+		notAllowed(me.computer);
+	},
+};
+
+var staticText = {
+	new: func(computer, text) {
+		var sT = {parents:[staticText]};
+		sT.computer = computer;
+		sT.text = text;
+		return sT;
+	},
+	updateLeftText: func() {
+		return [nil, nil, "ack"];
+	},
+	updateCenterText: func() {
+		return [me.text, nil, "wht"];
+	},
+	updateRightText: func() {
+		return [nil, nil, "ack"];
+	},
+	pushButtonLeft: func() {
+		notAllowed(me.computer);
+	},
+	pushButtonRight: func() {
+		notAllowed(me.computer);
 	},
 };
 
@@ -80,69 +160,110 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	planList: [],
 	outputList: [],
 	scroll: 0,
+	temporaryFlagFpln: 0,
 	new: func(plan, computer) {
-		var lr = {parents:[fplnPage]};
-		lr.plan = fmgc.flightPlanController.flightplans[plan];
-		lr.planIndex = plan;
-		lr.computer = computer;
-		lr._setupPageWithData();
-		return lr;
+		var fp = {parents:[fplnPage]};
+		fp.plan = fmgc.flightPlanController.flightplans[plan];
+		fp.planIndex = plan;
+		fp.computer = computer;
+		fp.planList = [];
+		fp.outputList = [];
+		return fp;
 	},
 	_setupPageWithData: func() {
 		me.destInfo();
 		me.createPlanList();
 	},
+	updatePlan: func() {
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			me.planIndex = 2;
+			me.plan = fmgc.flightPlanController.flightplans[2];
+			me.temporaryFlagFpln = 0;
+		} else {
+			me.planIndex = me.computer;
+			me.plan = fmgc.flightPlanController.flightplans[me.computer];
+			me.temporaryFlagFpln = 1;
+		}
+		me._setupPageWithData();
+	},
 	getText: func(type) {
-		if (me.type == "discontinuity") {
-			return "---F-PLN DISCONTINUITY--";
-		} else if (me.type == "fplnEnd") {
+		if (type == "fplnEnd") {
 			return "------END OF F-PLN------";
-		} else if (me.type == "altnFplnEnd") {
+		} else if (type == "altnFplnEnd") {
 			return "----END OF ALTN F-PLN---";
-		} else if (me.type == "noAltnFpln") {
+		} else if (type == "noAltnFpln") {
 			return "------NO ALTN F-PLN-----";
-		} else if (me.type == "empty") {
+		} else if (type == "empty") {
 			return "";
 		}
 	},
 	createPlanList: func() {
 		me.planList = [];
-		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
-			append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.plan));
+		if (me.temporaryFlagFpln) {
+			for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.plan, me.computer, "yel"));
+			}
+		} else {
+			for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.plan, me.computer));
+			}
 		}
-		
+		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
+		append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
+		me.update();
 	},
 	basePage: func() {
 		me.outputList = [];
-		for (var i = 0; i < size(me.planList); i += 1) {
-			if (i == 5) { break; }
+		for (var i = 0; i + me.scroll < size(me.planList); i += 1) {
 			append(me.outputList, me.planList[i + me.scroll] );
+			if (size(me.outputList) == 5) { break; }
 		}
-		if (size(me.outputList) > 1) {
+		if (size(me.outputList) >= 1) {
 			me.L1 = me.outputList[0].updateLeftText();
 			me.C1 = me.outputList[0].updateCenterText();
 			me.C1[1] = "TIME ";
-			me.R1 = ["---/-----", "SPD/ALT   ", "grn"];
+			me.R1 = me.outputList[0].updateRightText();
+			me.R1[1] = "SPD/ALT   ";
+		} else {
+			me.L1 = [nil, nil, "ack"];
+			me.C1 = [nil, nil, "ack"];
+			me.R1 = [nil, nil, "ack"];
 		}
-		if (size(me.outputList) > 2) {
+		if (size(me.outputList) >= 2) {
 			me.L2 = me.outputList[1].updateLeftText();
 			me.C2 = me.outputList[1].updateCenterText();
-			me.R2 = ["---/-----", nil, "grn"];
+			me.R2 = me.outputList[1].updateRightText();
+		} else {
+			me.L2 = [nil, nil, "ack"];
+			me.C2 = [nil, nil, "ack"];
+			me.R2 = [nil, nil, "ack"];
 		}
-		if (size(me.outputList) > 3) {
+		if (size(me.outputList) >= 3) {
 			me.L3 = me.outputList[2].updateLeftText();
 			me.C3 = me.outputList[2].updateCenterText();
-			me.R3 = ["---/-----", nil, "grn"];
+			me.R3 = me.outputList[2].updateRightText();
+		} else {
+			me.L3 = [nil, nil, "ack"];
+			me.C3 = [nil, nil, "ack"];
+			me.R3 = [nil, nil, "ack"];
 		}
-		if (size(me.outputList) > 4) {
+		if (size(me.outputList) >= 4) {
 			me.L4 = me.outputList[3].updateLeftText();
 			me.C4 = me.outputList[3].updateCenterText();
-			me.R4 = ["---/-----", nil, "grn"];
+			me.R4 = me.outputList[3].updateRightText();
+		} else {
+			me.L4 = [nil, nil, "ack"];
+			me.C4 = [nil, nil, "ack"];
+			me.R4 = [nil, nil, "ack"];
 		}
-		if (size(me.outputList) > 5) {
+		if (size(me.outputList) >= 5) {
 			me.L5 = me.outputList[4].updateLeftText();
 			me.C5 = me.outputList[4].updateCenterText();
-			me.R5 = ["---/-----", nil, "grn"];
+			me.R5 = me.outputList[4].updateRightText();
+		} else {
+			me.L5 = [nil, nil, "ack"];
+			me.C5 = [nil, nil, "ack"];
+			me.R5 = [nil, nil, "ack"];
 		}
 	},
 	destInfo: func() {
@@ -151,27 +272,72 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		me.R6 = ["--.-", "EFOB", "wht"];
 	},
 	update: func() {
-		me.destInfo();
 		me.basePage();
 	},
 	scrollUp: func() {
-		if (size(me.planList) > 4) {
+		if (size(me.planList) > 5) {
 			me.scroll += 1;
-			if (me.scroll > size(me.planList) - 4) {
+			if (me.scroll > size(me.planList) - 5) {
 				me.scroll = 0;
 			}
+		} else {
+			me.scroll = 0;
 		}
 	},
 	scrollDn: func() {
-		if (size(me.planList) > 4) {
-			me.scroll += 1;
+		if (size(me.planList) > 5) {
+			me.scroll -= 1;
 			if (me.scroll < 0) {
-				me.scroll = size(me.planList) - 4
+				me.scroll = size(me.planList) - 5;
+			}
+		} else {
+			me.scroll = 0;
+		}
+	},
+	pushButtonLeft: func(index) {
+		if (index == 1 and size(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
+			notAllowed(me.computer);
+			return;
+		}
+		if (index == 6) {
+			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+			} else {
+				notAllowed(me.computer);
+			}
+		} else {
+			if (size(me.outputList) >= index) {
+				if (size(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
+					var returny = fmgc.flightPlanController.scratchpad(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad"), (index - 1 + me.scroll), me.computer);
+					if (returny == 0) {
+						notInDataBase(me.computer);
+					} elsif (returny == 1) {
+						notAllowed(me.computer);
+					} else {
+						setprop("/MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
+						setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
+					}
+				} else {
+					me.outputList[index - 1 + me.scroll].pushButtonLeft();
+				}
+			} else {
+				notAllowed(me.computer);
 			}
 		}
 	},
+	pushButtonRight: func(index) {
+		if (index == 6) {
+			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+			} else {
+				notAllowed(me.computer);
+			}
+		} else {
+			notAllowed(me.computer);
+		}
+	},
 };
-	
+
 var notInDataBase = func(i) {
 		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
@@ -214,12 +380,12 @@ var duplicateNamesPage = {
 	scroll: 0,
 	distances: [],
 	new: func(vector, type, computer) {
-		var lr = {parents:[duplicateNamesPage]};
-		lr.id = vector;
-		lr.type = type; # 0 = other, 1 = navaid
-		lr.computer = computer;
-		lr._setupPageWithData();
-		return lr;
+		var fp = {parents:[duplicateNamesPage]};
+		fp.id = vector;
+		fp.type = type; # 0 = other, 1 = navaid
+		fp.computer = computer;
+		fp._setupPageWithData();
+		return fp;
 	},
 	del: func() {
 		return nil;
@@ -286,20 +452,20 @@ var duplicateNamesPage = {
 		me.L6 = [" RETURN", nil, "wht"];
 	},
 	scrollUp: func() {
-		if (me.enableScroll) {
-			me.scroll += 1;
-			if (me.scroll > size(me.vector) - 5) {
-				me.scroll = 0;
-			}
-		}	
+		#if (me.enableScroll) {
+		#	me.scroll += 1;
+		#	if (me.scroll > size(me.vector) - 5) {
+		#		me.scroll = 0;
+		#	}
+		#}	
 	},
 	scrollDn: func() {
-		if (me.enableScroll) {
-			me.scroll -= 1;
-			if (me.scroll < 0) {
-				me.scroll = size(me.vector) - 5;
-			}
-		}	
+		#if (me.enableScroll) {
+		#	me.scroll -= 1;
+		#	if (me.scroll < 0) {
+		#		me.scroll = size(me.vector) - 5;
+		#	}
+		#}	
 	},
 };
 

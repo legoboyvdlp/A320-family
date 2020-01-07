@@ -219,284 +219,293 @@ var canvas_MCDU_base = {
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
 				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			myFpln[i].update();
-			
-			if (flightNumSet.getValue()) {
-				me["FPLN_Callsign"].setText(flightNum.getValue());
-				me["FPLN_Callsign"].show();
-			} else {
-				me["FPLN_Callsign"].hide();
-			}
-			
-			if (myFpln[i].L1[0] == nil) {
-				me["Simple_L1"].hide();
-				me["Simple_L1S"].hide();
-			} else {
-				me["Simple_L1"].show();
-				me["Simple_L1"].setText(myFpln[i].L1[0]);
-				if (myFpln[i].L1[1] != nil) {
-					me["Simple_L1S"].show();
-					me["Simple_L1S"].setText(myFpln[i].L1[1]);
-				} else {
-					me["Simple_L1S"].hide();
-				}
-			}
-			
-			if (myFpln[i].L2[0] == nil) {
-				me["Simple_L2"].hide();
-				me["Simple_L2S"].hide();
-			} else {
-				me["Simple_L2"].show();
-				me["Simple_L2"].setText(myFpln[i].L2[0]);
-				if (myFpln[i].L2[1] != nil) {
-					me["Simple_L2S"].show();
-					me["Simple_L2S"].setText(myFpln[i].L2[1]);
-				} else {
-					me["Simple_L2S"].hide();
-				}
-			}
-			
-			if (myFpln[i].L3[0] == nil) {
-				me["Simple_L3"].hide();
-				me["Simple_L3S"].hide();
-			} else {
-				me["Simple_L3"].show();
-				me["Simple_L3"].setText(myFpln[i].L3[0]);
-				if (myFpln[i].L3[1] != nil) {
-					me["Simple_L3S"].show();
-					me["Simple_L3S"].setText(myFpln[i].L3[1]);
-				} else {
-					me["Simple_L3S"].hide();
-				}
-			}
-			
-			if (myFpln[i].L4[0] == nil) {
-				me["Simple_L4"].hide();
-				me["Simple_L4S"].hide();
-			} else {
-				me["Simple_L4"].show();
-				me["Simple_L4"].setText(myFpln[i].L4[0]);
-				if (myFpln[i].L4[1] != nil) {
-					me["Simple_L4S"].show();
-					me["Simple_L4S"].setText(myFpln[i].L4[1]);
-				} else {
-					me["Simple_L4S"].hide();
-				}
-			}
-			
-			if (myFpln[i].L5[0] == nil) {
-				me["Simple_L5"].hide();
-				me["Simple_L5S"].hide();
-			} else {
-				me["Simple_L5"].show();
-				me["Simple_L5"].setText(myFpln[i].L5[0]);
-				if (myFpln[i].L5[1] != nil) {
-					me["Simple_L5S"].show();
-					me["Simple_L5S"].setText(myFpln[i].L5[1]);
-				} else {
-					me["Simple_L5S"].hide();
-				}
-			}
-			
-			if (myFpln[i].L6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
-				me["Simple_L6"].hide();
-				me["Simple_L6S"].hide();
-			} else {
-				me["Simple_L6"].show();
-				me["Simple_L6"].setText(myFpln[i].L6[0]);
-				if (myFpln[i].L6[1] != nil) {
-					me["Simple_L6S"].show();
-					me["Simple_L6S"].setText(myFpln[i].L6[1]);
-				} else {
-					me["Simple_L6S"].hide();
-				}
-			}
-			me.colorLeft(myFpln[i].L1[2],myFpln[i].L2[2],myFpln[i].L3[2],myFpln[i].L4[2],myFpln[i].L5[2],myFpln[i].L6[2]);
-			
-			if (myFpln[i].C1[0] == nil) {
-				me["Simple_C1"].hide();
-				me["Simple_C1S"].hide();
-			} else {
-				me["Simple_C1"].show();
-				me["Simple_C1"].setText(myFpln[i].C1[0]);
-				if (myFpln[i].C1[1] != nil) {
-					me["Simple_C1S"].show();
-					me["Simple_C1S"].setText(myFpln[i].C1[1]);
-				} else {
-					me["Simple_C1S"].hide();
-				}
-			}
-			
-			if (myFpln[i].C2[0] == nil) {
-				me["Simple_C2"].hide();
-				me["Simple_C2S"].hide();
-			} else {
-				me["Simple_C2"].show();
-				me["Simple_C2"].setText(myFpln[i].C2[0]);
-				if (myFpln[i].C2[1] != nil) {
-					me["Simple_C2S"].show();
-					me["Simple_C2S"].setText(myFpln[i].C2[1]);
-				} else {
-					me["Simple_C2S"].hide();
-				}
-			}
-			
-			if (myFpln[i].C3[0] == nil) {
-				me["Simple_C3"].hide();
-				me["Simple_C3S"].hide();
-			} else {
-				me["Simple_C3"].show();
-				me["Simple_C3"].setText(myFpln[i].C3[0]);
-				if (myFpln[i].C3[1] != nil) {
-					me["Simple_C3S"].show();
-					me["Simple_C3S"].setText(myFpln[i].C3[1]);
-				} else {
-					me["Simple_C3S"].hide();
-				}
-			}
-			
-			if (myFpln[i].C4[0] == nil) {
-				me["Simple_C4"].hide();
-				me["Simple_C4S"].hide();
-			} else {
-				me["Simple_C4"].show();
-				me["Simple_C4"].setText(myFpln[i].C4[0]);
-				if (myFpln[i].C4[1] != nil) {
-					me["Simple_C4S"].show();
-					me["Simple_C4S"].setText(myFpln[i].C4[1]);
-				} else {
-					me["Simple_C4S"].hide();
-				}
-			}
-			
-			if (myFpln[i].C5[0] == nil) {
-				me["Simple_C5"].hide();
-				me["Simple_C5S"].hide();
-			} else {
-				me["Simple_C5"].show();
-				me["Simple_C5"].setText(myFpln[i].C5[0]);
-				if (myFpln[i].C5[1] != nil) {
-					me["Simple_C5S"].show();
-					me["Simple_C5S"].setText(myFpln[i].C5[1]);
-				} else {
-					me["Simple_C5S"].hide();
-				}
-			}
-			
-			if (myFpln[i].C6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
-				me["Simple_C6"].hide();
-				me["Simple_C6S"].hide();
-			} else {
-				me["Simple_C6"].show();
-				me["Simple_C6"].setText(myFpln[i].C6[0]);
-				if (myFpln[i].C6[1] != nil) {
-					me["Simple_C6S"].show();
-					me["Simple_C6S"].setText(myFpln[i].C6[1]);
-				} else {
-					me["Simple_C6S"].hide();
-				}
-			}
-			
-			me.colorCenter(myFpln[i].C1[2],myFpln[i].C2[2],myFpln[i].C3[2],myFpln[i].C4[2],myFpln[i].C5[2],myFpln[i].C6[2]);
+			if (myFpln[i] != nil) {
+				myFpln[i].update();
 				
-			if (myFpln[i].R1[0] == nil) {
-				me["Simple_R1"].hide();
-				me["Simple_R1S"].hide();
-			} else {
-				me["Simple_R1"].show();
-				me["Simple_R1"].setText(myFpln[i].R1[0]);
-				if (myFpln[i].R1[1] != nil) {
-					me["Simple_R1S"].show();
-					me["Simple_R1S"].setText(myFpln[i].R1[1]);
+				if (flightNumSet.getValue()) {
+					me["FPLN_Callsign"].setText(flightNum.getValue());
+					me["FPLN_Callsign"].show();
 				} else {
+					me["FPLN_Callsign"].hide();
+				}
+				
+				if (myFpln[i].L1[0] == nil) {
+					me["Simple_L1"].hide();
+					me["Simple_L1S"].hide();
+				} else {
+					me["Simple_L1"].show();
+					me["Simple_L1"].setText(myFpln[i].L1[0]);
+					if (myFpln[i].L1[1] != nil) {
+						me["Simple_L1S"].show();
+						me["Simple_L1S"].setText(myFpln[i].L1[1]);
+					} else {
+						me["Simple_L1S"].hide();
+					}
+				}
+				
+				if (myFpln[i].L2[0] == nil) {
+					me["Simple_L2"].hide();
+					me["Simple_L2S"].hide();
+				} else {
+					me["Simple_L2"].show();
+					me["Simple_L2"].setText(myFpln[i].L2[0]);
+					if (myFpln[i].L2[1] != nil) {
+						me["Simple_L2S"].show();
+						me["Simple_L2S"].setText(myFpln[i].L2[1]);
+					} else {
+						me["Simple_L2S"].hide();
+					}
+				}
+				
+				if (myFpln[i].L3[0] == nil) {
+					me["Simple_L3"].hide();
+					me["Simple_L3S"].hide();
+				} else {
+					me["Simple_L3"].show();
+					me["Simple_L3"].setText(myFpln[i].L3[0]);
+					if (myFpln[i].L3[1] != nil) {
+						me["Simple_L3S"].show();
+						me["Simple_L3S"].setText(myFpln[i].L3[1]);
+					} else {
+						me["Simple_L3S"].hide();
+					}
+				}
+				
+				if (myFpln[i].L4[0] == nil) {
+					me["Simple_L4"].hide();
+					me["Simple_L4S"].hide();
+				} else {
+					me["Simple_L4"].show();
+					me["Simple_L4"].setText(myFpln[i].L4[0]);
+					if (myFpln[i].L4[1] != nil) {
+						me["Simple_L4S"].show();
+						me["Simple_L4S"].setText(myFpln[i].L4[1]);
+					} else {
+						me["Simple_L4S"].hide();
+					}
+				}
+				
+				if (myFpln[i].L5[0] == nil) {
+					me["Simple_L5"].hide();
+					me["Simple_L5S"].hide();
+				} else {
+					me["Simple_L5"].show();
+					me["Simple_L5"].setText(myFpln[i].L5[0]);
+					if (myFpln[i].L5[1] != nil) {
+						me["Simple_L5S"].show();
+						me["Simple_L5S"].setText(myFpln[i].L5[1]);
+					} else {
+						me["Simple_L5S"].hide();
+					}
+				}
+				
+				if (myFpln[i].L6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
+					me["Simple_L6"].hide();
+					me["Simple_L6S"].hide();
+				} else {
+					me["Simple_L6"].show();
+					me["Simple_L6"].setText(myFpln[i].L6[0]);
+					if (myFpln[i].L6[1] != nil) {
+						me["Simple_L6S"].show();
+						me["Simple_L6S"].setText(myFpln[i].L6[1]);
+					} else {
+						me["Simple_L6S"].hide();
+					}
+				}
+				me.colorLeft(myFpln[i].L1[2],myFpln[i].L2[2],myFpln[i].L3[2],myFpln[i].L4[2],myFpln[i].L5[2],myFpln[i].L6[2]);
+				
+				if (myFpln[i].C1[0] == nil) {
+					me["Simple_C1"].hide();
+					me["Simple_C1S"].hide();
+				} else {
+					me["Simple_C1"].show();
+					me["Simple_C1"].setText(myFpln[i].C1[0]);
+					if (myFpln[i].C1[1] != nil) {
+						me["Simple_C1S"].show();
+						me["Simple_C1S"].setText(myFpln[i].C1[1]);
+					} else {
+						me["Simple_C1S"].hide();
+					}
+				}
+				
+				if (myFpln[i].C2[0] == nil) {
+					me["Simple_C2"].hide();
+					me["Simple_C2S"].hide();
+				} else {
+					me["Simple_C2"].show();
+					me["Simple_C2"].setText(myFpln[i].C2[0]);
+					if (myFpln[i].C2[1] != nil) {
+						me["Simple_C2S"].show();
+						me["Simple_C2S"].setText(myFpln[i].C2[1]);
+					} else {
+						me["Simple_C2S"].hide();
+					}
+				}
+				
+				if (myFpln[i].C3[0] == nil) {
+					me["Simple_C3"].hide();
+					me["Simple_C3S"].hide();
+				} else {
+					me["Simple_C3"].show();
+					me["Simple_C3"].setText(myFpln[i].C3[0]);
+					if (myFpln[i].C3[1] != nil) {
+						me["Simple_C3S"].show();
+						me["Simple_C3S"].setText(myFpln[i].C3[1]);
+					} else {
+						me["Simple_C3S"].hide();
+					}
+				}
+				
+				if (myFpln[i].C4[0] == nil) {
+					me["Simple_C4"].hide();
+					me["Simple_C4S"].hide();
+				} else {
+					me["Simple_C4"].show();
+					me["Simple_C4"].setText(myFpln[i].C4[0]);
+					if (myFpln[i].C4[1] != nil) {
+						me["Simple_C4S"].show();
+						me["Simple_C4S"].setText(myFpln[i].C4[1]);
+					} else {
+						me["Simple_C4S"].hide();
+					}
+				}
+				
+				if (myFpln[i].C5[0] == nil) {
+					me["Simple_C5"].hide();
+					me["Simple_C5S"].hide();
+				} else {
+					me["Simple_C5"].show();
+					me["Simple_C5"].setText(myFpln[i].C5[0]);
+					if (myFpln[i].C5[1] != nil) {
+						me["Simple_C5S"].show();
+						me["Simple_C5S"].setText(myFpln[i].C5[1]);
+					} else {
+						me["Simple_C5S"].hide();
+					}
+				}
+				
+				if (myFpln[i].C6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
+					me["Simple_C6"].hide();
+					me["Simple_C6S"].hide();
+				} else {
+					me["Simple_C6"].show();
+					me["Simple_C6"].setText(myFpln[i].C6[0]);
+					if (myFpln[i].C6[1] != nil) {
+						me["Simple_C6S"].show();
+						me["Simple_C6S"].setText(myFpln[i].C6[1]);
+					} else {
+						me["Simple_C6S"].hide();
+					}
+				}
+				
+				me.colorCenter(myFpln[i].C1[2],myFpln[i].C2[2],myFpln[i].C3[2],myFpln[i].C4[2],myFpln[i].C5[2],myFpln[i].C6[2]);
+					
+				if (myFpln[i].R1[0] == nil) {
+					me["Simple_R1"].hide();
 					me["Simple_R1S"].hide();
-				}
-			}
-			
-			if (myFpln[i].R2[0] == nil) {
-				me["Simple_R2"].hide();
-				me["Simple_R2S"].hide();
-			} else {
-				me["Simple_R2"].show();
-				me["Simple_R2"].setText(myFpln[i].R2[0]);
-				if (myFpln[i].R2[1] != nil) {
-					me["Simple_R2S"].show();
-					me["Simple_R2S"].setText(myFpln[i].R2[1]);
 				} else {
+					me["Simple_R1"].show();
+					me["Simple_R1"].setText(myFpln[i].R1[0]);
+					if (myFpln[i].R1[1] != nil) {
+						me["Simple_R1S"].show();
+						me["Simple_R1S"].setText(myFpln[i].R1[1]);
+					} else {
+						me["Simple_R1S"].hide();
+					}
+				}
+				
+				if (myFpln[i].R2[0] == nil) {
+					me["Simple_R2"].hide();
 					me["Simple_R2S"].hide();
-				}
-			}
-			
-			if (myFpln[i].R3[0] == nil) {
-				me["Simple_R3"].hide();
-				me["Simple_R3S"].hide();
-			} else {
-				me["Simple_R3"].show();
-				me["Simple_R3"].setText(myFpln[i].R3[0]);
-				if (myFpln[i].R3[1] != nil) {
-					me["Simple_R3S"].show();
-					me["Simple_R3S"].setText(myFpln[i].R3[1]);
 				} else {
+					me["Simple_R2"].show();
+					me["Simple_R2"].setText(myFpln[i].R2[0]);
+					if (myFpln[i].R2[1] != nil) {
+						me["Simple_R2S"].show();
+						me["Simple_R2S"].setText(myFpln[i].R2[1]);
+					} else {
+						me["Simple_R2S"].hide();
+					}
+				}
+				
+				if (myFpln[i].R3[0] == nil) {
+					me["Simple_R3"].hide();
 					me["Simple_R3S"].hide();
-				}
-			}
-			
-			if (myFpln[i].R4[0] == nil) {
-				me["Simple_R4"].hide();
-				me["Simple_R4S"].hide();
-			} else {
-				me["Simple_R4"].show();
-				me["Simple_R4"].setText(myFpln[i].R4[0]);
-				if (myFpln[i].R4[1] != nil) {
-					me["Simple_R4S"].show();
-					me["Simple_R4S"].setText(myFpln[i].R4[1]);
 				} else {
+					me["Simple_R3"].show();
+					me["Simple_R3"].setText(myFpln[i].R3[0]);
+					if (myFpln[i].R3[1] != nil) {
+						me["Simple_R3S"].show();
+						me["Simple_R3S"].setText(myFpln[i].R3[1]);
+					} else {
+						me["Simple_R3S"].hide();
+					}
+				}
+				
+				if (myFpln[i].R4[0] == nil) {
+					me["Simple_R4"].hide();
 					me["Simple_R4S"].hide();
-				}
-			}
-			
-			if (myFpln[i].R5[0] == nil) {
-				me["Simple_R5"].hide();
-				me["Simple_R5S"].hide();
-			} else {
-				me["Simple_R5"].show();
-				me["Simple_R5"].setText(myFpln[i].R5[0]);
-				if (myFpln[i].R5[1] != nil) {
-					me["Simple_R5S"].show();
-					me["Simple_R5S"].setText(myFpln[i].R5[1]);
 				} else {
+					me["Simple_R4"].show();
+					me["Simple_R4"].setText(myFpln[i].R4[0]);
+					if (myFpln[i].R4[1] != nil) {
+						me["Simple_R4S"].show();
+						me["Simple_R4S"].setText(myFpln[i].R4[1]);
+					} else {
+						me["Simple_R4S"].hide();
+					}
+				}
+				
+				if (myFpln[i].R5[0] == nil) {
+					me["Simple_R5"].hide();
 					me["Simple_R5S"].hide();
-				}
-			}
-			
-			if (myFpln[i].R6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
-				me["Simple_R6"].hide();
-				me["Simple_R6S"].hide();
-			} else {
-				me["Simple_R6"].show();
-				me["Simple_R6"].setText(myFpln[i].R6[0]);
-				if (myFpln[i].R6[1] != nil) {
-					me["Simple_R6S"].show();
-					me["Simple_R6S"].setText(myFpln[i].R6[1]);
 				} else {
-					me["Simple_R6S"].hide();
+					me["Simple_R5"].show();
+					me["Simple_R5"].setText(myFpln[i].R5[0]);
+					if (myFpln[i].R5[1] != nil) {
+						me["Simple_R5S"].show();
+						me["Simple_R5S"].setText(myFpln[i].R5[1]);
+					} else {
+						me["Simple_R5S"].hide();
+					}
 				}
-			}
-			me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
-			
-			#if (mcdu.FPLNLines[i].index == 0) {
-			#	me["FPLN_From"].show();
-			#} else {
-			#	me["FPLN_From"].hide();
-			#}
-			
-			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				me["FPLN_TMPY_group"].show();
-			} else {
-				me["FPLN_TMPY_group"].hide();
+				
+				if (myFpln[i].R6[0] == nil or fmgc.flightPlanController.temporaryFlag[i]) {
+					me["Simple_R6"].hide();
+					me["Simple_R6S"].hide();
+				} else {
+					me["Simple_R6"].show();
+					me["Simple_R6"].setText(myFpln[i].R6[0]);
+					if (myFpln[i].R6[1] != nil) {
+						me["Simple_R6S"].show();
+						me["Simple_R6S"].setText(myFpln[i].R6[1]);
+					} else {
+						me["Simple_R6S"].hide();
+					}
+				}
+				me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
+				
+				#if (mcdu.FPLNLines[i].index == 0) {
+				#	me["FPLN_From"].show();
+				#} else {
+				#	me["FPLN_From"].hide();
+				#}
+				
+				if (fmgc.flightPlanController.temporaryFlag[i]) {
+					me["FPLN_TMPY_group"].show();
+				} else {
+					me["FPLN_TMPY_group"].hide();
+				}
 			}
 		} elsif (page == "MCDU") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -1762,6 +1771,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
@@ -2016,6 +2026,7 @@ var canvas_MCDU_base = {
 				me["PERFTO"].hide();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();

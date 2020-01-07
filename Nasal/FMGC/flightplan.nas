@@ -64,6 +64,7 @@ var flightPlanController = {
 	},
 	
 	createTemporaryFlightPlan: func(n) {
+		me.resetFlightplan(n);
 		me.flightplans[n] = me.flightplans[2].clone();
 		me.temporaryFlag[n] = 1;
 		me.flightPlanChanged(n);
@@ -71,8 +72,11 @@ var flightPlanController = {
 	
 	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase
 		if (a == 1) {
+			flightPlanTimer.stop();
+			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			me.flightPlanChanged(2);
+			flightPlanTimer.start();
 		}
 		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
@@ -116,15 +120,18 @@ var flightPlanController = {
 	deleteWP: func(index, n) {
 		var wp = wpID[n][index].getValue();
 		if (wp != FMGCdep.getValue() and wp != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
-			if (me.flightplans[2].getWP(index).id != "DISCONTINUITY") { # if it is a discont, don't make a new one
-				me.flightplans[2].deleteWP(index);
-				if (me.flightplans[2].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
+			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # if it is a discont, don't make a new one
+				me.flightplans[n].deleteWP(index);
+				if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 					me.addDiscontinuity(index, n);
 				}
 			} else {
-				me.flightplans[2].deleteWP(index);
+				me.flightplans[n].deleteWP(index);
 			}
 			me.flightPlanChanged(n);
+			return 2;
+		} else {
+			return 1;
 		}
 	},
 	
@@ -143,15 +150,27 @@ var flightPlanController = {
 				if (me.flightplans[plan].indexOfWP(airport[0]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(airport[0]), index);
 					me.flightPlanChanged(plan);
+					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(airport[0]) - index;
+					while (numToDel > 0) {
+						me.deleteWP(index + 1, plan, 0);
+						numToDel -= 1;
+					}
+					return 2;
 				}
 			} else {
 				if (me.flightplans[plan].indexOfWP(airport[overrideIndex]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(airport[overrideIndex]), index);
 					me.flightPlanChanged(plan);
+					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(airport[overrideIndex]) - index;
+					while (numToDel > 0) {
+						me.deleteWP(index + 1, plan, 0);
+						numToDel -= 1;
+					}
+					return 2;
 				}
 			}
 		} elsif (size(airport) >= 1) {
@@ -170,12 +189,35 @@ var flightPlanController = {
 		}
 		
 		if (size(fix) == 1 or override) {
-			if (me.flightplans[plan].indexOfWP(fix[0]) == -1) {
-				me.flightplans[plan].insertWP(createWPFrom(fix[0]), index);
-				me.flightPlanChanged(plan);
+			if (!override) {
+				if (me.flightplans[plan].indexOfWP(fix[0]) == -1) {
+					me.flightplans[plan].insertWP(createWPFrom(fix[0]), index);
+					me.flightPlanChanged(plan);
+					return 2;
+				} else {
+					var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
+					while (numToDel > 0) {
+						me.deleteWP(index + 1, plan, 0);
+						numToDel -= 1;
+					}
+					return 2;
+				}
 			} else {
-				var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
+				if (me.flightplans[plan].indexOfWP(fix[overrideIndex]) == -1) {
+					me.flightplans[plan].insertWP(createWPFrom(fix[overrideIndex]), index);
+					me.flightPlanChanged(plan);
+					return 2;
+				} else {
+					var numToDel = me.flightplans[plan].indexOfWP(fix[overrideIndex]) - index;
+					while (numToDel > 0) {
+						me.deleteWP(index + 1, plan, 0);
+						numToDel -= 1;
+					}
+					return 2;
+				}
 			}
+		} elsif (size(fix) >= 1) {
+			# spawn DUPLICATE NAMES
 		}
 	},
 	
@@ -190,24 +232,58 @@ var flightPlanController = {
 		}
 		
 		if (size(navaid) == 1 or override) {
-			if (me.flightplans[plan].indexOfWP(navaid[0]) == -1) {
-				me.flightplans[plan].insertWP(createWPFrom(navaid[0]), index);
-				me.flightPlanChanged(plan);
+			if (!override) {
+				if (me.flightplans[plan].indexOfWP(navaid[0]) == -1) {
+					me.flightplans[plan].insertWP(createWPFrom(navaid[0]), index);
+					me.flightPlanChanged(plan);
+					return 2;
+				} else {
+					var numToDel = me.flightplans[plan].indexOfWP(navaid[0]) - index;
+					while (numToDel > 0) {
+						me.deleteWP(index + 1, plan, 0);
+						numToDel -= 1;
+					}
+					return 2;
+				}
 			} else {
-				var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
+				if (me.flightplans[plan].indexOfWP(navaid[overrideIndex]) == -1) {
+					me.flightplans[plan].insertWP(createWPFrom(navaid[overrideIndex]), index);
+					me.flightPlanChanged(plan);
+					return 2;
+				} else {
+					var numToDel = me.flightplans[plan].indexOfWP(navaid[overrideIndex]) - index;
+					while (numToDel > 0) {
+						me.deleteWP(index + 1, plan, 0);
+						numToDel -= 1;
+					}
+					return 2;
+				}
 			}
+		} elsif (size(navaid) >= 1) {
+			# spawn DUPLICATE NAMES
 		}
 	},
 	
 	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success
+		if (!fmgc.flightPlanController.temporaryFlag[plan]) {
+			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
+				var thePlan = 2;
+			} else {
+				fmgc.flightPlanController.createTemporaryFlightPlan(plan);
+				var thePlan = plan;
+			}
+		} else {
+			var thePlan = plan;
+		}
+		
 		if (text == "CLR") {
-			return me.deleteWP(index);
+			return me.deleteWP(index, thePlan);
 		} elsif (size(text) == 5) {
-			return me.insertFix(text, index, plan);
+			return me.insertFix(text, index, thePlan);
 		} elsif (size(text) == 4) {
-			return me.insertAirport(text, index, plan);
+			return me.insertAirport(text, index, thePlan);
 		} elsif (size(text) == 3 or size(text) == 2) {
-			return me.insertNavatext(text, index, plan);
+			return me.insertNavaid(text, index, thePlan);
 		} else {
 			return 1;
 		}
@@ -224,7 +300,6 @@ var flightPlanController = {
 			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
-		
 		me.updatePlans();
 	},
 	
@@ -267,8 +342,14 @@ var flightPlanController = {
 					wpDistancePrev[n][wpt].setValue(courseDistanceFrom[1]);
 				}
 				
-				if (wpID[n][wpt].getValue() == FMGCarr.getValue()) {
+				if (wpID[n][wpt].getValue() == FMGCarr.getValue() and me.arrivalIndex[n] != wpt) {
 					me.arrivalIndex[n] = wpt;
+					if (canvas_mcdu.myFpln[0] != nil) {
+						canvas_mcdu.myFpln[0].destInfo();
+					}
+					if (canvas_mcdu.myFpln[1] != nil) {
+						canvas_mcdu.myFpln[1].destInfo();
+					}
 				}
 			}
 		}
@@ -316,15 +397,10 @@ var flightPlanController = {
 		}
 	},
 	
-	updateMCDUDriver: func(n) {
+	updateMCDUDriver: func() {
 		for (var i = 0; i <= 1; i += 1) {
-			if (me.temporaryFlag[i] == 1) {
-				mcdu.FPLNLines[i].replacePlan(i, mcdu.TMPY, mcdu.FPLNLines[i].index);
-			} else {
-				mcdu.FPLNLines[i].replacePlan(2, mcdu.MAIN, mcdu.FPLNLines[i].index);
-				if (canvas_mcdu.myFpln[i] != nil) {
-					canvas_mcdu.myFpln[i].createPlanList();
-				}
+			if (canvas_mcdu.myFpln[i] != nil) {
+				canvas_mcdu.myFpln[i].updatePlan();
 			}
 		}
 	},
