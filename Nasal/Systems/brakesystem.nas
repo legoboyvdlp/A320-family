@@ -40,7 +40,7 @@ var BrakeSystem =
        # anything below <= 1.0 means energy absorbed by brakes is OK. 
        #m.ScalingDivisor= 700000*450.0;
 
-       m.ScalingDivisor = 0.000000008;
+       m.ScalingDivisor = 0.000000007;
        
        m.LSmokeActive   = 0;
        m.LSmokeToggle   = 0;
