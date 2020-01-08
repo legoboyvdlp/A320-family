@@ -112,7 +112,9 @@ var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
 var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
 var appr_enabled = props.globals.getNode("/it-autoflight/output/appr-armed/", 1);
 var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
-var ils_data = props.globals.getNode("/FMGC/internal/ils1-mcdu/", 1);
+var ils_data1 = props.globals.getNode("/FMGC/internal/ils1-mcdu/", 1);
+# Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
+# var ils_data2 = props.globals.getNode("/FMGC/internal/ils2-mcdu/", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -832,8 +834,8 @@ var canvas_PFD_1 = {
 		if (ap_ils_mode.getValue() == 1) {
 			me["LOC_scale"].show();
 			me["GS_scale"].show();
-			me["ils_code"].setText(split("/", ils_data.getValue())[0]);
-			me["ils_freq"].setText(split("/", ils_data.getValue())[1]);
+			me["ils_code"].setText(split("/", ils_data1.getValue())[0]);
+			me["ils_freq"].setText(split("/", ils_data1.getValue())[1]);
 			me["ils_code"].show();
 			me["ils_freq"].show();
 		} else {
@@ -1133,8 +1135,9 @@ var canvas_PFD_2 = {
 		if (ap_ils_mode2.getValue() == 1) {
 			me["LOC_scale"].show();
 			me["GS_scale"].show();
-			me["ils_code"].setText(ils_v[0].getValue());
-			me["ils_freq"].setText(ils_v[1].getValue());
+			# Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
+			me["ils_code"].setText(split("/", ils_data1.getValue())[0]);
+			me["ils_freq"].setText(split("/", ils_data1.getValue())[1]);
 			me["ils_code"].show();
 			me["ils_freq"].show();
 		} else {
