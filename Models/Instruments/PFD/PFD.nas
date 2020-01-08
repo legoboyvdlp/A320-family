@@ -110,6 +110,8 @@ var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast",
 var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
 var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
 var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
+var appr_enabled = props.globals.getNode("/it-autoflight/output/appr-armed/", 1);
+var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -187,7 +189,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError"];
+		"TRK_pointer","machError","ilsError"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -845,6 +847,12 @@ var canvas_PFD_1 = {
 			me["GS_pointer"].hide();
 		}
 		
+		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
+		    me["ilsError"].show();
+		} else {
+		    me["ilsError"].hide();
+		}
+		
 		me.updateCommon();
 	},
 	updateFast: func() {
@@ -1132,6 +1140,12 @@ var canvas_PFD_2 = {
 			me["GS_pointer"].show();
 		} else {
 			me["GS_pointer"].hide();
+		}
+		
+		if (ap_ils_mode2.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
+		    me["ilsError"].show();
+		} else {
+		    me["ilsError"].hide();
 		}
 		
 		me.updateCommon();
