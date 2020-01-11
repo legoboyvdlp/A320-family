@@ -220,7 +220,6 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		me.outputList = [];
 		for (var i = 0; i + me.scroll < size(me.planList); i += 1) {
 			append(me.outputList, me.planList[i + me.scroll] );
-			if (size(me.outputList) == 5) { break; }
 		}
 		if (size(me.outputList) >= 1) {
 			me.L1 = me.outputList[0].updateLeftText();
@@ -322,7 +321,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 						setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
 					}
 				} else {
-					me.outputList[index - 1 + me.scroll].pushButtonLeft();
+					me.outputList[index - 1].pushButtonLeft();
 				}
 			} else {
 				notAllowed(me.computer);

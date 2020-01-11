@@ -91,9 +91,9 @@ var arrivalPage = {
 			me.updateSTARs();
 		}
 		
-		me.updateActiveRunway();
-		me.updateActiveSTARs();
-		me.updateActiveTransitions();
+		#me.updateActiveRunway();
+		#me.updateActiveSTARs();
+		#me.updateActiveTransitions();
 	},
 	_clearPage: func() {
 		me.L1 = [nil, nil, "ack"];
