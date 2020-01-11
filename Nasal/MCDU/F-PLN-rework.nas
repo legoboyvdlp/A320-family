@@ -12,10 +12,14 @@ var fplnItem = {
 		if (me.wp != nil) {
 			if (me.wp.wp_name != "DISCONTINUITY") {
 				var wptName = split("-", me.wp.wp_name);
-				if (size(wptName) == 2) {
-					return[wptName[0] ~ wptName[1], nil, me.colour];
+				if (wptName[0] == "VECTORS") {
+					return ["MANUAL", nil, me.colour];
 				} else {
-					return [me.wp.wp_name, nil, me.colour];
+					if (size(wptName) == 2) {
+						return[wptName[0] ~ wptName[1], nil, me.colour];
+					} else {
+						return [me.wp.wp_name, nil, me.colour];
+					}
 				}
 			} else {
 				return [nil, nil, "ack"];
@@ -210,7 +214,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
 		append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
-		me.update();
+		me.basePage();
 	},
 	basePage: func() {
 		me.outputList = [];
@@ -272,7 +276,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		me.R6 = ["--.-", "EFOB", "wht"];
 	},
 	update: func() {
-		me.basePage();
+		#me.basePage();
 	},
 	scrollUp: func() {
 		if (size(me.planList) > 5) {
@@ -378,13 +382,15 @@ var duplicateNamesPage = {
 	computer: nil,
 	enableScroll: 0,
 	scroll: 0,
-	distances: [],
-	new: func(vector, type, computer) {
+	distances: nil,
+	new: func(vector, index, type, computer) {
 		var fp = {parents:[duplicateNamesPage]};
-		fp.id = vector;
+		fp.vector = vector;
+		fp.index = index;
 		fp.type = type; # 0 = other, 1 = navaid
 		fp.computer = computer;
 		fp._setupPageWithData();
+		fp.distances = [];
 		return fp;
 	},
 	del: func() {
@@ -396,8 +402,9 @@ var duplicateNamesPage = {
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		
-		for (var i = 0; i <= size(me.vector); i += 1) {
-			append(distances, courseAndDistance(me.vector[i]));
+		me.distances = [];
+		for (var i = 0; i < size(me.vector); i += 1) {
+			append(me.distances, math.round(courseAndDistance(me.vector[i])[1]));
 		}
 		
 		me.C1[1] = "LAT/LONG";
@@ -407,8 +414,10 @@ var duplicateNamesPage = {
 			me.arrowsMatrix[0][0] = 1;
 			me.arrowsColour[0][0] = "blu";
 			me.C1 = [" " ~ decimalToShortString(me.vector[0 + me.scroll].lat, "lat") ~ "/" ~ decimalToShortString(me.vector[0 + me.scroll].lon, "lon"), "LAT/LONG", "grn"];
-			if (me.vector[0 + me.scroll].frequency != nil) {
-				me.R1 = [me.vector[0 + me.scroll].frequency, "FREQ", "grn"];
+			if (me.type == 1) {
+				if (me.vector[0 + me.scroll].frequency != nil) {
+					me.R1 = [sprintf("%7.2f", me.vector[0 + me.scroll].frequency / 100), "FREQ", "grn"];
+				}
 			}
 		}
 		if (size(me.vector) >= 2) {
@@ -416,8 +425,10 @@ var duplicateNamesPage = {
 			me.arrowsMatrix[0][1] = 1;
 			me.arrowsColour[0][1] = "blu";
 			me.C2 = [" " ~ decimalToShortString(me.vector[1 + me.scroll].lat, "lat") ~ "/" ~ decimalToShortString(me.vector[1 + me.scroll].lon, "lon"), "LAT/LONG", "grn"];
-			if (me.vector[1 + me.scroll].frequency != nil) {
-				me.R2 = [me.vector[1 + me.scroll].frequency, nil, "grn"];
+			if (me.type == 1) {
+				if (me.vector[1 + me.scroll].frequency != nil) {
+					me.R2 = [sprintf("%7.2f", me.vector[1 + me.scroll].frequency / 100), "FREQ", "grn"];
+				}
 			}
 		}
 		if (size(me.vector) >= 3) {
@@ -425,8 +436,10 @@ var duplicateNamesPage = {
 			me.arrowsMatrix[0][2] = 1;
 			me.arrowsColour[0][2] = "blu";
 			me.C3 = [" " ~ decimalToShortString(me.vector[2 + me.scroll].lat, "lat") ~ "/" ~ decimalToShortString(me.vector[2 + me.scroll].lon, "lon"), "LAT/LONG", "grn"];
-			if (me.vector[2 + me.scroll].frequency != nil) {
-				me.R3 = [me.vector[2 + me.scroll].frequency, nil, "grn"];
+			if (me.type == 1) {
+				if (me.vector[2 + me.scroll].frequency != nil) {
+					me.R3 = [sprintf("%7.2f", me.vector[2 + me.scroll].frequency / 100), "FREQ", "grn"];
+				}
 			}
 		}
 		if (size(me.vector) >= 4) {
@@ -434,8 +447,10 @@ var duplicateNamesPage = {
 			me.arrowsMatrix[0][3] = 1;
 			me.arrowsColour[0][3] = "blu";
 			me.C4 = [" " ~ decimalToShortString(me.vector[3 + me.scroll].lat, "lat") ~ "/" ~ decimalToShortString(me.vector[3 + me.scroll].lon, "lon"), "LAT/LONG", "grn"];
-			if (me.vector[3 + me.scroll].frequency != nil) {
-				me.R4 = [me.vector[3 + me.scroll].frequency, nil, "grn"];
+			if (me.type == 1) {
+				if (me.vector[3 + me.scroll].frequency != nil) {
+					me.R4 = [sprintf("%7.2f", me.vector[3 + me.scroll].frequency / 100), "FREQ", "grn"];
+				}
 			}
 		}
 		if (size(me.vector) >= 5) {
@@ -443,8 +458,10 @@ var duplicateNamesPage = {
 			me.arrowsMatrix[0][4] = 1;
 			me.arrowsColour[0][4] = "blu";
 			me.C5 = [" " ~ decimalToShortString(me.vector[4 + me.scroll].lat, "lat") ~ "/" ~ decimalToShortString(me.vector[4 + me.scroll].lon, "lon"), "LAT/LONG", "grn"];
-			if (me.vector[4 + me.scroll].frequency != nil) {
-				me.R5 = [me.vector[4 + me.scroll].frequency, nil, "grn"];
+			if (me.type == 1) {
+				if (me.vector[4 + me.scroll].frequency != nil) {
+					me.R5 = [sprintf("%7.2f", me.vector[4 + me.scroll].frequency / 100), "FREQ", "grn"];
+				}
 			}
 		}
 		if (size(me.vector) > 5) { me.enableScroll = 1; }
@@ -452,25 +469,37 @@ var duplicateNamesPage = {
 		me.L6 = [" RETURN", nil, "wht"];
 	},
 	scrollUp: func() {
-		#if (me.enableScroll) {
-		#	me.scroll += 1;
-		#	if (me.scroll > size(me.vector) - 5) {
-		#		me.scroll = 0;
-		#	}
-		#}	
+		if (me.enableScroll) {
+			me.scroll += 1;
+			if (me.scroll > size(me.vector) - 5) {
+				me.scroll = 0;
+			}
+		}	
 	},
 	scrollDn: func() {
-		#if (me.enableScroll) {
-		#	me.scroll -= 1;
-		#	if (me.scroll < 0) {
-		#		me.scroll = size(me.vector) - 5;
-		#	}
-		#}	
+		if (me.enableScroll) {
+			me.scroll -= 1;
+			if (me.scroll < 0) {
+				me.scroll = size(me.vector) - 5;
+			}
+		}	
+	},
+	pushButtonLeft: func(indexSelect) {
+		if (size(me.vector[0].id) == 5) {
+			fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+		} elsif (size(me.vector[0].id) == 4) {
+			fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+		} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
+			fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+		}
 	},
 };
 
 var decimalToShortString = func(dms, type) {
-	var degrees = split(".", dms)[0];
+	var degrees = split(".", sprintf(dms))[0];
 	if (type == "lat") {
 		var sign = degrees >= 0 ? "N" : "S";
 	} else {

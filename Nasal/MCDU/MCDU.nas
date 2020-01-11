@@ -114,6 +114,8 @@ var lskbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "DEPARTURE");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(1);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+			canvas_mcdu.myDuplicate[i].pushButtonLeft(1);
 		} else {
 			notAllowed(i);
 		}
@@ -140,6 +142,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(2);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+			canvas_mcdu.myDuplicate[i].pushButtonLeft(2);
 		} else {
 			notAllowed(i);
 		}
@@ -160,6 +164,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(3);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(3);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+			canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
 		} else {
 			notAllowed(i);
 		}
@@ -176,6 +182,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(4);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+			canvas_mcdu.myDuplicate[i].pushButtonLeft(4);
 		} else {
 			notAllowed(i);
 		}
@@ -200,6 +208,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else {
 			notAllowed(i);
 		}
@@ -216,7 +226,7 @@ var lskbutton = func(btn, i) {
 			printInput2("L6", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV" or getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
@@ -246,6 +256,12 @@ var rskbutton = func(btn, i) {
 			printInput("R1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("R1", i);
+		} else if (getprop("/MCDU[" ~ i ~ "/page") == "LATREV") {
+			if (canvas_mcdu.myArrival[i] != nil) {
+				canvas_mcdu.myArrival[i].del();
+			}
+			canvas_mcdu.myArrival[i] = nil;
+			canvas_mcdu.myArrival[i] = arrivalPage.new(canvas_mcdu.myLatRev[i].title[2], i);
 		} else {
 			notAllowed(i);
 		}

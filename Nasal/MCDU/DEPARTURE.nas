@@ -51,12 +51,6 @@ var departurePage = {
 	},
 	_setupPageWithData: func() {
 		me.title = ["DEPARTURE", " FROM ", left(me.id, 4)];
-		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			me.L6 = [" RETURN END", nil, "wht"];
-		} else {
-			me.L6 = [" F-PLN", " TMPY", "yel"];
-			me.arrowsColour[0][5] = "yel";
-		}
 		
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
@@ -81,6 +75,13 @@ var departurePage = {
 		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+		
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			me.L6 = [" RETURN END", nil, "wht"];
+		} else {
+			me.L6 = [" F-PLN", " TMPY", "yel"];
+			me.arrowsColour[0][5] = "yel";
+		}
 		
 		if (me.activePage == 0) {
 			me.updateRunways();

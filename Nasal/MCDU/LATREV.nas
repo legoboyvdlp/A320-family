@@ -214,3 +214,31 @@ var dmsToString = func(dms, type) {
 	}
 	return abs(degrees) ~ "g" ~ minutes ~ " " ~ sign;
 }
+
+
+var stringToDegrees = func(string, type) {
+	if (type == "lat") {
+		var degrees = left(string, 2);
+		var minutesStr = right(string, 5);
+	} else {
+		var degrees = left(string, 3);
+		var minutesStr = right(string, 5);
+	}
+	
+	var minutes = left(minutesStr, 4);
+	var sign = right(minutesStr, 1);
+	var decimal = degrees + (minutes / 60);
+	if (type == "lat") {
+		if (sign == "N") {
+			return decimal;
+		} else {
+			return -decimal;
+		}
+	} else {
+		if (sign == "E") {
+			return decimal;
+		} else {
+			return -decimal;
+		}
+	}
+}

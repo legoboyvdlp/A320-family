@@ -117,10 +117,10 @@ var flightPlanController = {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), 0);
 	},
 	
-	deleteWP: func(index, n) {
+	deleteWP: func(index, n, a = 0) { # a = 1, means adding a waypoint via deleting intermediate
 		var wp = wpID[n][index].getValue();
 		if (wp != FMGCdep.getValue() and wp != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
-			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # if it is a discont, don't make a new one
+			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 					me.addDiscontinuity(index, n);
@@ -128,7 +128,8 @@ var flightPlanController = {
 			} else {
 				me.flightplans[n].deleteWP(index);
 			}
-			me.flightPlanChanged(n);
+			me.updatePlans();
+			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
 			return 2;
 		} else {
 			return 1;
@@ -154,7 +155,7 @@ var flightPlanController = {
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(airport[0]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 0);
+						me.deleteWP(index + 1, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -167,18 +168,24 @@ var flightPlanController = {
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(airport[overrideIndex]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 0);
+						me.deleteWP(index + 1, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
 				}
 			}
 		} elsif (size(airport) >= 1) {
-			# spawn DUPLICATE NAMES
+			if (canvas_mcdu.myDeparture[plan] != nil) {
+				canvas_mcdu.myDeparture[plan].del();
+			}
+			canvas_mcdu.myDeparture[plan] = nil;
+			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(airport, index, 0, plan);
+			setprop("/MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			return 2;
 		}
 	},
 	
-	insertFix: func(text, index, plan, override = 0) { # override - means always choose [0]
+	insertFix: func(text, index, plan, override = 0, overrideIndex = -1) { # override - means always choose [0]
 		if (index == 0) {
 			return 1;
 		}
@@ -197,7 +204,7 @@ var flightPlanController = {
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 0);
+						me.deleteWP(index + 1, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -210,18 +217,53 @@ var flightPlanController = {
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(fix[overrideIndex]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 0);
+						me.deleteWP(index + 1, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
 				}
 			}
 		} elsif (size(fix) >= 1) {
-			# spawn DUPLICATE NAMES
+			if (canvas_mcdu.myDeparture[plan] != nil) {
+				canvas_mcdu.myDeparture[plan].del();
+			}
+			canvas_mcdu.myDeparture[plan] = nil;
+			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(fix, index, 0, plan);
+			setprop("/MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			return 2;
 		}
 	},
 	
-	insertNavaid: func(text, index, plan, override = 0) {
+	insertLatLonFix: func(text, index, plan) {
+		if (index == 0) {
+			return 1;
+		}
+		
+		var lat = split("/", text)[0];
+		var lon = split("/", text)[1];
+		var latDecimal = mcdu.stringToDegrees(lat, "lat");
+		var lonDecimal = mcdu.stringToDegrees(lon, "lon");
+		
+		if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
+			return 1;
+		}
+		
+		var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ index);
+		if (me.flightplans[plan].indexOfWP(myWpLatLon) == -1) {
+			me.flightplans[plan].insertWP(myWpLatLon, index);
+			me.flightPlanChanged(plan);
+			return 2;
+		} else {
+			var numToDel = me.flightplans[plan].indexOfWP(myWpLatLon) - index;
+			while (numToDel > 0) {
+				me.deleteWP(index + 1, plan, 1);
+				numToDel -= 1;
+			}
+			return 2;
+		}
+	},
+	
+	insertNavaid: func(text, index, plan, override = 0, overrideIndex = -1) {
 		if (index == 0) {
 			return 1;
 		}
@@ -240,7 +282,7 @@ var flightPlanController = {
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(navaid[0]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 0);
+						me.deleteWP(index + 1, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -253,14 +295,20 @@ var flightPlanController = {
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(navaid[overrideIndex]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 0);
+						me.deleteWP(index + 1, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
 				}
 			}
 		} elsif (size(navaid) >= 1) {
-			# spawn DUPLICATE NAMES
+			if (canvas_mcdu.myDeparture[plan] != nil) {
+				canvas_mcdu.myDeparture[plan].del();
+			}
+			canvas_mcdu.myDeparture[plan] = nil;
+			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(navaid, index, 1, plan);
+			setprop("/MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			return 2;
 		}
 	},
 	
@@ -277,7 +325,9 @@ var flightPlanController = {
 		}
 		
 		if (text == "CLR") {
-			return me.deleteWP(index, thePlan);
+			return me.deleteWP(index, thePlan, 0);
+		} elsif (size(text) == 16) {
+			return me.insertLatLonFix(text, index, thePlan);
 		} elsif (size(text) == 5) {
 			return me.insertFix(text, index, thePlan);
 		} elsif (size(text) == 4) {
@@ -301,6 +351,7 @@ var flightPlanController = {
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
 		me.updatePlans();
+		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
 	
 	updatePlans: func() {
@@ -355,7 +406,6 @@ var flightPlanController = {
 		}
 		me.arrivalDist = me._arrivalDist;
 		me.updateMCDUDriver(n);
-		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
 	
 	updateCurrentWaypoint: func() {
