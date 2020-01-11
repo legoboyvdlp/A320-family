@@ -33,13 +33,14 @@ var BrakeSystem =
        # deceleration caused by brakes alone (knots/s2)
        m.BrakeDecel    = 1.0; # kt/s^2
        # Higher value means quicker cooling
-       m.CoolingFactor = 0.005;
+       m.CoolingFactor = 0.0005;
        # Scaling divisor. Use this to scale the energy output.
        # Manually tune this value: a total energy output
        # at "/gear/brake-thermal-energy" > 1.0 means overheated brakes,
        # anything below <= 1.0 means energy absorbed by brakes is OK. 
        #m.ScalingDivisor= 700000*450.0;
-       m.ScalingDivisor = 200000000;
+
+       m.ScalingDivisor = 0.000000007;
        
        m.LSmokeActive   = 0;
        m.LSmokeToggle   = 0;
@@ -72,15 +73,15 @@ var BrakeSystem =
 		#Introducing a random error on the brakes temp sensors
         if (rand() > 0.5)
         {
-        	setprop("gear/gear[1]/L1error_temp_degc", math.round(rand()*10));
-        	setprop("gear/gear[1]/L2error_temp_degc", math.round(rand()*10));
-        	setprop("gear/gear[2]/R3error_temp_degc", math.round(rand()*10));
-        	setprop("gear/gear[2]/R4error_temp_degc", math.round(rand()*10));
+        	setprop("gear/gear[1]/L1error_temp_degc", math.round(rand()*5));
+        	setprop("gear/gear[1]/L2error_temp_degc", math.round(rand()*5));
+        	setprop("gear/gear[2]/R3error_temp_degc", math.round(rand()*5));
+        	setprop("gear/gear[2]/R4error_temp_degc", math.round(rand()*5));
         } else {
-        	setprop("gear/gear[1]/L1error_temp_degc", math.round(rand()*(-10)));
-        	setprop("gear/gear[1]/L2error_temp_degc", math.round(rand()*(-10)));
-        	setprop("gear/gear[2]/R3error_temp_degc", math.round(rand()*(-10)));
-        	setprop("gear/gear[2]/R4error_temp_degc", math.round(rand()*(-10)));        
+        	setprop("gear/gear[1]/L1error_temp_degc", math.round(rand()*(-5)));
+        	setprop("gear/gear[1]/L2error_temp_degc", math.round(rand()*(-5)));
+        	setprop("gear/gear[2]/R3error_temp_degc", math.round(rand()*(-5)));
+        	setprop("gear/gear[2]/R4error_temp_degc", math.round(rand()*(-5)));        
         }
         setprop("sim/animation/fire-services",0);
         me.LastSimTime = 0.0;
@@ -94,12 +95,12 @@ var BrakeSystem =
 
         if (dt<1.0)
         {
-			#cooling effect: adjust cooling factor by a value proportional to the environment temp (m.CoolingFactor + environment temp-degf * 0.0001)
-			var CoolingRatio = me.CoolingFactor+(getprop("environment/temperature-degf")*0.0001);
+			#cooling effect: adjust cooling factor by a value proportional to the environment temp (m.CoolingFactor + environment temp-degf * 0.00001)
+			var CoolingRatio = me.CoolingFactor+(getprop("environment/temperature-degf")*0.00001);
 	        if (getprop("controls/gear/brake-fans"))
 	        {
 		        #increase CoolingRatio if Brake Fans are active
-	           	CoolingRatio = CoolingRatio * 2;
+	           	CoolingRatio = CoolingRatio * 3;
 			}
 						
 			var nCoolFactor = math.ln(1-CoolingRatio);
@@ -108,36 +109,43 @@ var BrakeSystem =
             var LThermalEnergy = getprop("gear/gear[1]/Lbrake-thermal-energy");
             var RThermalEnergy = getprop("gear/gear[2]/Rbrake-thermal-energy");
 			
-            if (getprop("controls/gear/brake-parking"))
-            {
-                var LBrakeLevel=1.0;
-                var RBrakeLevel=1.0;
-            }
-            else
-            {
-                var LBrakeLevel = getprop("fdm/jsbsim/fcs/left-brake-cmd-norm");
-                var RBrakeLevel = getprop("fdm/jsbsim/fcs/right-brake-cmd-norm");
-			}
+            var LBrakeLevel = getprop("fdm/jsbsim/fcs/left-brake-cmd-norm");
+            var RBrakeLevel = getprop("fdm/jsbsim/fcs/right-brake-cmd-norm");
+			#}
 			var BrakeLevel = (LBrakeLevel + RBrakeLevel)/2;
             if ((OnGround)and(BrakeLevel>0))
             {
                 # absorb more energy
                 var V1 = getprop("velocities/groundspeed-kt");
-                var Mass = getprop("fdm/jsbsim/inertia/weight-lbs")/(me.ScalingDivisor);
+                var Mass = getprop("fdm/jsbsim/inertia/weight-lbs")*(me.ScalingDivisor);
                 # absorb some kinetic energy:
                 # dE= 1/2 * m * V1^2 - 1/2 * m * V2^2) 
                 var V2_L = V1 - me.BrakeDecel * dt * LBrakeLevel;
                 var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
                 # do not absorb more energy when plane is (almost) stopped
+                # Thermal energy computation 
                 if (V2_L>0)
+                {
                     LThermalEnergy += Mass * (V1*V1 - V2_L*V2_L)/2;
+		            # cooling effect: reduce thermal energy by (nCoolFactor)^dt
+		           	LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * dt);
+		        } else {                
+		            # cooling effect: reduced cooling when speed = 0 and brakes on
+       	           	LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * 0.3 * dt);
+       	        }
                 if (V2_R>0)
+                {
                     RThermalEnergy += Mass * (V1*V1 - V2_R*V2_R)/2;
+                    # cooling effect: reduce thermal energy by (nCoolFactor)^dt
+		           	RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * dt);
+                } else {
+		            # cooling effect: reduced cooling when speed = 0 and brakes on
+ 		           	RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * 0.3 * dt);
+		        }
+            } else {
+            	LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * dt);
+            	RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * dt);
             }
-						
-            # cooling effect: reduce thermal energy by factor (nCoolFactor)^dt
-            LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * dt);
-            RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * dt);
             
             setprop("gear/gear[1]/Lbrake-thermal-energy",LThermalEnergy);
             setprop("gear/gear[2]/Rbrake-thermal-energy",RThermalEnergy);
