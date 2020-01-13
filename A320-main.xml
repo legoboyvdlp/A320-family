@@ -428,7 +428,7 @@
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		 <minimum-fg-version>2018.1.0</minimum-fg-version>
+		 <minimum-fg-version>2019.2.0</minimum-fg-version>
 	</sim>
 	
 	<consumables>
@@ -1690,6 +1690,15 @@
 					<script>libraries.fovZoom(1);</script>
 				</binding>
 			</key>
+			<key n="99">
+				<name>c</name>
+				<desc>Reset view to center</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.resetView();</script>
+				</binding>
+			</key>
 			<key n="120">
 				<name>x</name>
 				<desc>Decrease field of view</desc>
@@ -1933,7 +1942,7 @@
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
 		<dmc>
-			<file>Aircraft/A320-family/Nasal/Systems/DMC.nas</file>
+			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>

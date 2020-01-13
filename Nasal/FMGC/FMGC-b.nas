@@ -367,8 +367,6 @@ var ITAF = {
 		# Misc
 		if (Output.ap1Temp == 1 or Output.ap2Temp == 1) { # Trip AP off
 			if (abs(Control.aileron.getValue()) >= 0.2 or abs(Control.elevator.getValue()) >= 0.2 or abs(Control.rudder.getValue()) >= 0.2) {
-				me.ap1Master(0);
-				me.ap2Master(0);
 				fcu.apOff("hard", 0);
 			}
 		}

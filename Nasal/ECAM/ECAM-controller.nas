@@ -25,16 +25,19 @@ var statusIndex = 0;
 var flash = 0;
 var hasCleared = 0;
 var statusFlag = 0;
+var counter = 0;
+var noMainMsg = 0;
+var storeFirstWarning = nil;
 
 var warning = {
-	new: func(msg,colour = "g",aural = 9,light = 9,hasSubmsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
+	new: func(msg,colour = "g",aural = 9,light = 9,isMainMsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
 		var t = {parents:[warning]};
 		
 		t.msg = msg;
 		t.colour = colour;
 		t.aural = aural;
 		t.light = light;
-		t.hasSubmsg = hasSubmsg;
+		t.isMainMsg = isMainMsg;
 		t.lastSubmsg = lastSubmsg;
 		t.active = 0;
 		t.noRepeat = 0;
@@ -51,19 +54,21 @@ var warning = {
 		if (me.active == 0) { return; }
 		me.wasActive = 1;
 		lineIndex = 0;
-		while (lineIndex < 7 and lines[lineIndex].getValue() != "") {
+		while (lineIndex <= 7 and lines[lineIndex].getValue() != "") {
 			lineIndex = lineIndex + 1; # go to next line until empty line
 		}
 		
-		if (lineIndex == 7) {
+		if (lineIndex == 8) {
 			leftOverflow.setBoolValue(1);
 		} elsif (leftOverflow.getBoolValue()) {
 			leftOverflow.setBoolValue(0);
 		}
 		
-		if (lines[lineIndex].getValue() == "" and me.msg != "" and lineIndex <= 7) { # at empty line. Also checks if message is not blank to allow for some warnings with no displayed msg, eg stall
-			lines[lineIndex].setValue(me.msg);
-			linesCol[lineIndex].setValue(me.colour);
+		if (lineIndex <= 7) {
+			if (lines[lineIndex].getValue() == "" and me.msg != "") { # at empty line. Also checks if message is not blank to allow for some warnings with no displayed msg, eg stall
+				lines[lineIndex].setValue(me.msg);
+				linesCol[lineIndex].setValue(me.colour);
+			}
 		}
 	},
 	warnlight: func() {
@@ -89,11 +94,13 @@ var warning = {
 		
 		if (me.aural != 0) {
 			aural[me.aural].setBoolValue(0); 
+			settimer(func() {
+				aural[me.aural].setBoolValue(1);
+			}, 0.15);
+		} else {
+				aural[me.aural].setBoolValue(1);
 		}
 		me.noRepeat2 = 1;
-		settimer(func() {
-			aural[me.aural].setBoolValue(1);
-		}, 0.15);
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
@@ -201,12 +208,13 @@ var ECAM_controller = {
 		
 		if (!getprop("/systems/acconfig/autoconfig-running")) {
 			foreach (var w; warnings.vector) {
-				if (counter >= 9) { break; }
 				if (w.active == 1) {
-					w.write();
+					if (counter < 9) {
+						w.write();
+						counter += 1;
+					}
 					w.warnlight();
 					w.sound();
-					counter += 1;
 				} elsif (w.wasActive == 1) {
 					w.warnlight();
 					w.sound();
@@ -284,32 +292,50 @@ var ECAM_controller = {
 	clear: func() {
 		hasCleared = 0;
 		counter = 0;
+		noMainMsg = 0;
+		storeFirstWarning = nil;
 		
-		if (leftOverflow.getBoolValue()) {
-			foreach (var w; warnings.vector) {
-				if (counter >= 8) { break; }
-				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
-					counter += 1;
-					if (w.hasSubmsg == 1) { continue; }
-					w.clearFlag = 1;
-					hasCleared = 1;
-					statusFlag = 1;
-					libraries.ECAMControlPanel.lightOff("clr");
-				}
-			}
-		} else {
-			foreach (var w; warnings.vector) {
-				if (w.active == 1 and w.clearFlag != 1 and w.hasSubmsg == 1 and w.isMemo != 1) {
-					w.clearFlag = 1;
-					hasCleared = 1;
-					statusFlag = 1;
-					libraries.ECAMControlPanel.lightOff("clr");
-					break;
+		# first go through the first eight, see how many mainMsg there are
+		foreach (var w; warnings.vector) {
+			if (counter >= 8) { break; }
+			if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
+				counter += 1;
+				if (w.isMainMsg == 1) {
+					if (noMainMsg == 0) {
+						storeFirstWarning = w;
+					}
+					noMainMsg += 1;
 				}
 			}
 		}
 		
-		if (statusFlag == 1) {
+		# then, if there is an overflow and noMainMsg == 1, we clear the first shown ones
+		if (leftOverflow.getBoolValue() and noMainMsg == 1) {
+			counter = 0;
+			foreach (var w; warnings.vector) {
+				if (counter >= 8) { break; }
+				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
+					counter += 1;
+					if (w.isMainMsg == 1) { continue; }
+					w.clearFlag = 1;
+					hasCleared = 1;
+					statusFlag = 1;
+				}
+			}
+		}
+		
+		# else, we clear the first mainMsg stored
+		else {
+			if (storeFirstWarning != nil) {
+				if (storeFirstWarning.active == 1 and storeFirstWarning.clearFlag != 1 and storeFirstWarning.isMainMsg == 1 and storeFirstWarning.isMemo != 1) {
+					storeFirstWarning.clearFlag = 1;
+					hasCleared = 1;
+					statusFlag = 1;
+				}
+			}
+		}
+		
+		if (statusFlag == 1 and lines[0].getValue() == "") {
 			libraries.SystemDisplay.manCall("sts");
 			statusFlag = 0;
 		}
@@ -341,12 +367,13 @@ var ECAM_controller = {
 		}
 	},
 	warningReset: func(warning) {
+		if (warning.aural != 9 and warning.active == 1) {
+			aural[warning.aural].setBoolValue(0); 
+		}
 		warning.active = 0;
 		warning.noRepeat = 0;
 		warning.noRepeat2 = 0;
-		if (warning.aural == 2) {
-			aural[2].setValue(0);
-		}
+		# don't set .wasActive to 0, warnlight / sound funcs do that
 	},
 };
 

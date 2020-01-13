@@ -877,7 +877,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("TROPO");
 			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
 			me["Simple_R2"].setText("REQUEST ");
-			me["Simple_R3"].setText("ALIGN IRS ");
+			me["Simple_R3"].setText("IRS INIT >");
 			me["Simple_R4"].setText("-----.--");
 			me["Simple_R5"].setText("WIND ");
 			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));

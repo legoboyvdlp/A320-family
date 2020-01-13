@@ -303,13 +303,6 @@
 		</position>
 	</engine>
 	
-	
-	
-	
-	
-	
-	
-	
 	<!-- outside -->
 	<engine>
 		<name>a320_external_starter_left</name>
@@ -487,6 +480,9 @@
 	
 	<engine>
 		<name>a320_external_idle_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-idle.wav</path>
 		<condition>
@@ -518,6 +514,9 @@
 	
 	<engine>
 		<name>a320_external_idle_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-idle.wav</path>
 		<condition>
@@ -549,6 +548,9 @@
 	
 	<engine>
 		<name>a320_external_idle_rear_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-idleRear.wav</path>
 		<condition>
@@ -580,6 +582,9 @@
 	
 	<engine>
 		<name>a320_external_idle_rear_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-idleRear.wav</path>
 		<condition>
@@ -611,6 +616,9 @@
 	
 	<engine>
 		<name>a320_external_spool_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-spool.wav</path>
 		<condition>
@@ -642,6 +650,9 @@
 	
 	<engine>
 		<name>a320_external_spool_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-spool.wav</path>
 		<condition>
@@ -673,6 +684,9 @@
 	
 	<engine>
 		<name>a320_external_lowspool_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-lowspool.wav</path>
 		<condition>
@@ -704,6 +718,9 @@
 	
 	<engine>
 		<name>a320_external_lowspool_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-lowspool.wav</path>
 		<condition>
@@ -735,6 +752,9 @@
 	
 	<engine>
 		<name>a320_external_buzz_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-buzz.wav</path>
 		<condition>
@@ -766,6 +786,9 @@
 	
 	<engine>
 		<name>a320_external_buzz_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-buzz.wav</path>
 		<condition>
@@ -797,6 +820,9 @@
 	
 	<engine>
 		<name>a320_external_buzz_distant_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-buzzDist.wav</path>
 		<condition>
@@ -828,6 +854,9 @@
 	
 	<engine>
 		<name>a320_external_buzz_distant_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-buzzDist.wav</path>
 		<condition>
@@ -859,6 +888,9 @@
 	
 	<engine>
 		<name>a320_external_rumble_distant_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumbleDist.wav</path>
 		<condition>
@@ -887,6 +919,9 @@
 	
 	<engine>
 		<name>a320_external_rumble_distant_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumbleDist.wav</path>
 		<condition>
@@ -915,6 +950,9 @@
 	
 	<engine>
 		<name>a320_external_rumble_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumble.wav</path>
 		<condition>
@@ -946,6 +984,9 @@
 	
 	<engine>
 		<name>a320_external_rumble_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumble.wav</path>
 		<condition>
@@ -977,6 +1018,9 @@
 	
 	<engine>
 		<name>a320_external_rumble_side_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumbleSide.wav</path>
 		<condition>
@@ -1008,6 +1052,9 @@
 	
 	<engine>
 		<name>a320_external_rumble_side_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumbleSide.wav</path>
 		<condition>
@@ -1039,6 +1086,9 @@
 	
 	<engine>
 		<name>a320_external_rumble2_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumble.wav</path>
 		<condition>
@@ -1070,6 +1120,9 @@
 	
 	<engine>
 		<name>a320_external_rumble2_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-rumble.wav</path>
 		<condition>
@@ -1101,6 +1154,9 @@
 	
 	<engine>
 		<name>a320_external_reverse_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-reverse.wav</path>
 		<condition>
@@ -1132,6 +1188,9 @@
 	
 	<engine>
 		<name>a320_external_reverse_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-reverse.wav</path>
 		<condition>
@@ -1166,6 +1225,9 @@
 	<!-- wingaft -->
 	<engine>
 		<name>a320_wingaft_idle_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-idle.wav</path>
 		<condition>
@@ -1188,6 +1250,9 @@
 	
 	<engine>
 		<name>a320_wingaft_idle_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-idle.wav</path>
 		<condition>
@@ -1210,6 +1275,9 @@
 	
 	<engine>
 		<name>a320_wingaft_whine_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-whine.wav</path>
 		<condition>
@@ -1232,6 +1300,9 @@
 	
 	<engine>
 		<name>a320_wingaft_whine_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-whine.wav</path>
 		<condition>
@@ -1254,6 +1325,9 @@
 	
 	<engine>
 		<name>a320_wingaft_lowspool_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-lowspool.wav</path>
 		<condition>
@@ -1276,6 +1350,9 @@
 	
 	<engine>
 		<name>a320_wingaft_lowspool_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-lowspool.wav</path>
 		<condition>
@@ -1298,6 +1375,9 @@
 	
 	<engine>
 		<name>a320_wingaft_comb_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-comb.wav</path>
 		<condition>
@@ -1320,6 +1400,9 @@
 	
 	<engine>
 		<name>a320_wingaft_comb_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-comb.wav</path>
 		<condition>
@@ -1342,6 +1425,9 @@
 	
 	<engine>
 		<name>a320_wingaft_fullhum_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-fullhum.wav</path>
 		<condition>
@@ -1364,6 +1450,9 @@
 	
 	<engine>
 		<name>a320_wingaft_fullhum_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-fullhum.wav</path>
 		<condition>
@@ -1386,6 +1475,9 @@
 	
 	<engine>
 		<name>a320_wingaft_reverse_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-reverse.wav</path>
 		<condition>
@@ -1408,6 +1500,9 @@
 	
 	<engine>
 		<name>a320_wingaft_reverse_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingaft/v2500-reverse.wav</path>
 		<condition>
@@ -1441,6 +1536,9 @@
 	<!-- wingfwd -->
 	<engine>
 		<name>a320_wingfwd_idle_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-idle.wav</path>
 		<condition>
@@ -1463,6 +1561,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_idle_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-idle.wav</path>
 		<condition>
@@ -1485,6 +1586,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_lowspool_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-lowspool.wav</path>
 		<condition>
@@ -1507,6 +1611,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_lowspool_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-lowspool.wav</path>
 		<condition>
@@ -1529,6 +1636,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_comb_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-comb.wav</path>
 		<condition>
@@ -1551,6 +1661,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_comb_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-comb.wav</path>
 		<condition>
@@ -1573,6 +1686,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_fullhum_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-fullhum.wav</path>
 		<condition>
@@ -1595,6 +1711,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_fullhum_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-fullhum.wav</path>
 		<condition>
@@ -1617,6 +1736,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_buzz_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-buzz.wav</path>
 		<condition>
@@ -1639,6 +1761,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_buzz_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-buzz.wav</path>
 		<condition>
@@ -1661,6 +1786,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_reverse_left</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-reverse.wav</path>
 		<condition>
@@ -1683,6 +1811,9 @@
 	
 	<engine>
 		<name>a320_wingfwd_reverse_right</name>
+		<condition>
+			<not><property>sim/current-view/internal</property></not>
+		</condition>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/wingfwd/v2500-reverse.wav</path>
 		<condition>

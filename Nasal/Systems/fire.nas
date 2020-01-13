@@ -521,8 +521,8 @@ cargoDetectorLoop.new(2, 1, "/systems/fire/cargo/fwd/temperature", "/systems/fai
 ]);
 
 # Create extinguisher bottles
-var extinguisherBottles = std.Vector.new([extinguisherBottle.new(0, "/systems/fire/engine1/disch1", "/systems/electrical/bus/dc-bat", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine1/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"),
-extinguisherBottle.new(0, "/systems/fire/engine2/disch1", "/systems/electrical/bus/dc-bat", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine2/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), 
+var extinguisherBottles = std.Vector.new([extinguisherBottle.new(0, "/systems/fire/engine1/disch1", "/systems/electrical/bus/dc-hot-1", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine1/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"),
+extinguisherBottle.new(0, "/systems/fire/engine2/disch1", "/systems/electrical/bus/dc-hot-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine2/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), 
 extinguisherBottle.new(9, "/systems/fire/apu/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/apu-fire", "/systems/fire/apu/warning-active") ]);
 
 # There is only one bottle but the system will think there are two, so other parts work
@@ -585,6 +585,7 @@ eng1AgentTimerMakeTimerFunc = func() {
 		var timeToSetEng1 = eng1Time - etEng1;
 		eng1AgentTimer.setValue(timeToSetEng1);
 	} else {
+		eng1AgentTimer.setValue(99);
 		eng1AgentTimerMakeTimer.stop();
 	}
 }
@@ -596,6 +597,7 @@ eng1Agent2TimerMakeTimerFunc = func() {
 		var timeToSetEng12 = eng1Time2 - etEng12;
 		eng1Agent2Timer.setValue(timeToSetEng12);
 	} else {
+		eng1Agent2Timer.setValue(99);
 		eng1Agent2TimerMakeTimer.stop();
 	}
 }
@@ -626,6 +628,7 @@ eng2AgentTimerMakeTimerFunc = func() {
 		var timeToSetEng2 = eng2Time - etEng2;
 		eng2AgentTimer.setValue(timeToSetEng2);
 	} else {
+		eng2AgentTimer.setValue(99);
 		eng2AgentTimerMakeTimer.stop();
 	}
 }
@@ -637,6 +640,7 @@ eng2Agent2TimerMakeTimerFunc = func() {
 		var timeToSetEng22 = eng2Time2 - etEng22;
 		eng2Agent2Timer.setValue(timeToSetEng22);
 	} else {
+		eng2Agent2Timer.setValue(99);
 		eng2Agent2TimerMakeTimer.stop();
 	}
 }

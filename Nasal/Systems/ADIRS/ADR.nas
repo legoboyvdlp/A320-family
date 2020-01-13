@@ -9,17 +9,24 @@ var _selfTestTime = nil;
 
 var ADIRU = {
 	# local vars
+	_alignTime: 0,
 	_voltageMain: 0,
 	_voltageBackup: 0,
 	_voltageLimitedTime: 0,
 	_noPowerTime: 0,
 	_timeVar: 0,
+	_roll: 0,
+	_pitch: 0,
+	_gs: 0,
 	
 	num: 0,
+	aligned: 0,
+	inAlign: 0,
 	outputOn: 0, # 0 = disc, 1 = normal
 	mode: 0, # 0 = off, 1 = nav, 2 = att
 	energised: 0, # 0 = off, 1 = on
 	operative: 0, # 0 = off,
+	alignTimer: nil,
 	input: [],
 	output: [],
 	
@@ -27,8 +34,18 @@ var ADIRU = {
     new: func(n) {
 		var adiru = { parents:[ADIRU] };
 		adiru.num = n;
+		adiru.alignTimer = maketimer(0.1, adiru, me.alignLoop);
 		return adiru;
     },
+	setOperative: func(newOperative) { 
+		if (newOperative != me.operative) {
+			me.operative = newOperative;
+			if (newOperative) {
+				me.selfTest();
+			}
+		}
+	},
+	# Power and state
 	updateEnergised: func(mode) {
 		me.energised = mode != 0 ? 1 : 0;
 	},
@@ -41,6 +58,7 @@ var ADIRU = {
 		me._voltageLimitedTime = isLimited;
 		return me._voltageBackup;
 	},
+	# BITE
 	selfTest: func() {
 		ADIRSnew._selfTest = 1;
 		_selfTestTime = pts.Sim.Time.elapsedSec.getValue();
@@ -66,14 +84,67 @@ var ADIRU = {
 		
 		ADIRSnew.selfTest();
 	},
-	setOperative: func(newOperative) { 
-		if (newOperative != me.operative) {
-			me.operative = newOperative;
-			if (newOperative) {
-				me.selfTest();
+	# Alignment
+	align: func(time) {
+		ADIRSnew.Lights.irFault[me.num].setBoolValue(0);
+		if (!ADIRSnew.skip.getValue()) {
+			if (time > 0 and me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
+				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + time;
+				print("Alignment Started");
+				me.inAlign = 1;
+				if (me.alignTimer != nil) {
+					me.alignTimer.start();
+				}
+			}
+		} else {
+			if (me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
+				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + 5;
+				print("Fast Alignment Started");
+				me.inAlign = 1;
+				if (me.alignTimer != nil) {
+					me.alignTimer.start();
+				}
 			}
 		}
 	},
+	stopAlignNoAlign: func() {
+		print("Stopping alignment or setting unaligned state");
+		me.inAlign = 0;
+		me.aligned = 0;
+		if (me.alignTimer != nil) {
+			me.alignTimer.stop();
+		}
+	},
+	stopAlignAligned: func() {
+		print("Aligned");
+		me.inAlign = 0;
+		me.aligned = 1;
+		if (me.alignTimer != nil) {
+			me.alignTimer.stop();
+		}
+	},
+	alignLoop: func() {
+		me._roll = pts.Orientation.roll.getValue();
+		me._pitch = pts.Orientation.pitch.getValue();
+		me._gs = pts.Velocities.groundspeed.getValue();
+		
+		# todo use IR values
+		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {
+			me.stopAlignNoAlign();
+			print("Excessive motion, restarting");
+			me.update(); # update operative
+			me.align(calcAlignTime(pts.Position.latitude.getValue()));
+		} elsif (me.operative == 0) {
+			print("ADIRU " ~ me.num ~ " off");
+			me.stopAlignNoAlign();
+		} elsif (pts.Sim.Time.elapsedSec.getValue() >= me._alignTime) {
+			me.stopAlignAligned();
+		}
+	},
+	instAlign: func() {
+		me.stopAlignAligned();
+	},
+	# Update loop
 	update: func() {
 		me._timeVar = pts.Sim.Time.elapsedSec.getValue();
 		if (me.energised and !me._voltageMain and me._voltageLimitedTime and me._noPowerTime == 0) {
@@ -136,6 +207,13 @@ var ADIRSControlPanel = {
 			ADIRSnew.ADIRunits[n].mode = mode;
 			ADIRSnew.ADIRunits[n].updateEnergised(mode);
 			ADIRSnew.Switches.irModeSw[n].setValue(mode);
+			if (mode == 0) {
+				ADIRSnew.Lights.irFault[n].setBoolValue(0);
+				ADIRSnew.ADIRunits[n].stopAlignNoAlign();
+			} elsif (ADIRSnew.ADIRunits[n].aligned == 0) {
+				ADIRSnew.ADIRunits[n].update(); # update early so operative is set properly
+				ADIRSnew.ADIRunits[n].align(calcAlignTime(pts.Position.latitude.getValue())); # when you set NAV, it first acquires GPS position then acquires GPS. You then use IRS INIT > to set PPOS to align if you wish
+			}
 		}
 	}
 };
@@ -155,7 +233,6 @@ var ADIRSnew = {
 	
 	# ADIRS Units
 	ADIRunits: [nil, nil, nil],
-	#IRunits: [nil, nil, nil],
 	
 	# Electrical
 	mainSupply: [systems.ELEC.Bus.acEss, systems.ELEC.Bus.ac2, systems.ELEC.Bus.ac1],
@@ -180,6 +257,8 @@ var ADIRSnew = {
 	
 	# Nodes
 	overspeedVFE: props.globals.initNode("/systems/navigation/adr/computation/overspeed-vfe-spd", 0, "INT"),
+	skip: props.globals.initNode("/controls/adirs/skip", 0, "BOOL"),
+	mcduControl: props.globals.initNode("/controls/adirs/mcducbtn", 0, "BOOL"),
 	
 	# System
 	init: func() {
@@ -249,9 +328,23 @@ var ADIRSnew = {
 	
 };
 
+var calcAlignTime = func(latitude) {
+	return ((0.002 * (latitude * latitude)) + 5) * 60;
+};
+
 setlistener("/systems/fmgc/cas-compare/cas-reject-all", func() {
 	if (pts.FMGC.CasCompare.rejectAll.getBoolValue()) {
 		fcu.athrOff("hard");
+	}
+}, 0, 0);
+
+setlistener("/controls/adirs/skip", func() {
+	if (ADIRSnew.skip.getBoolValue()) {
+		for (i = 0; i < 3; i = i + 1) {
+			if (ADIRSnew.ADIRunits[i].inAlign == 1) {
+				ADIRSnew.ADIRunits[i].stopAlignAligned();
+			}
+		}
 	}
 }, 0, 0);
 

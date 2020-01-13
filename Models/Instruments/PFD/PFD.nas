@@ -108,12 +108,6 @@ var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
 var gear_agl = props.globals.getNode("/position/gear-agl-ft", 1);
 var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast", 1);
 var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
-var adirs0_active = props.globals.getNode("/instrumentation/adirs/adr[0]/active", 1);
-var adirs1_active = props.globals.getNode("/instrumentation/adirs/adr[1]/active", 1);
-var adirs2_active = props.globals.getNode("/instrumentation/adirs/adr[2]/active", 1);
-var ir0_aligned = props.globals.getNode("/instrumentation/adirs/ir[0]/aligned", 1);
-var ir1_aligned = props.globals.getNode("/instrumentation/adirs/ir[1]/aligned", 1);
-var ir2_aligned = props.globals.getNode("/instrumentation/adirs/ir[2]/aligned", 1);
 var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
 var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
 
@@ -128,11 +122,9 @@ var hdg_diff = props.globals.initNode("/instrumentation/pfd/hdg-diff", 0.0, "DOU
 var hdg_scale = props.globals.initNode("/instrumentation/pfd/heading-scale", 0.0, "DOUBLE");
 var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBLE");
 var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
-var speed_pred_1 = props.globals.initNode("/instrumentation/pfd/speed-lookahead-1", 0.0, "DOUBLE");
-var speed_pred_2 = props.globals.initNode("/instrumentation/pfd/speed-lookahead-2", 0.0, "DOUBLE");
-var speed_pred_3 = props.globals.initNode("/instrumentation/pfd/speed-lookahead-3", 0.0, "DOUBLE");
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
+var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
 var du1_test_amount = props.globals.initNode("/instrumentation/du/du1-test-amount", 0.0, "DOUBLE");
 var du2_test = props.globals.initNode("/instrumentation/du/du2-test", 0, "BOOL");
 var du2_test_time = props.globals.initNode("/instrumentation/du/du2-test-time", 0.0, "DOUBLE");
@@ -143,6 +135,7 @@ var du5_test_amount = props.globals.initNode("/instrumentation/du/du5-test-amoun
 var du6_test = props.globals.initNode("/instrumentation/du/du6-test", 0, "BOOL");
 var du6_test_time = props.globals.initNode("/instrumentation/du/du6-test-time", 0.0, "DOUBLE");
 var du6_test_amount = props.globals.initNode("/instrumentation/du/du6-test-amount", 0.0, "DOUBLE");
+var du6_offtime = props.globals.initNode("/instrumentation/du/du6-off-time", 0.0, "DOUBLE");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -196,47 +189,58 @@ var canvas_PFD_base = {
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
 		"TRK_pointer","machError"];
 	},
-	update: func() {
-		elapsedtime_act = elapsedtime.getValue();
+	updateDu1: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		if (acess.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+			if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+						du1_test.setValue(1);
+						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du1_test_time.setValue(elapsedtime_act);
+					} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
+						du1_test.setValue(1);
+						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du1_test_time.setValue(elapsedtime_act - 30);
+					}
+				} else {
 					du1_test.setValue(1);
-					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du1_test_time.setValue(elapsedtime_act);
-				} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
-					du1_test.setValue(1);
-					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du1_test_time.setValue(elapsedtime_act - 30);
+					du1_test_amount.setValue(0);
+					du1_test_time.setValue(-100);
 				}
-			} else {
-				du1_test.setValue(1);
-				du1_test_amount.setValue(0);
-				du1_test_time.setValue(-100);
 			}
 		} else {
 			du1_test.setValue(0);
+			du1_offtime.setValue(elapsedtime_act);
 		}
-		
+	},
+	updateDu6: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		if (ac2.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+			if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+						du6_test.setValue(1);
+						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du6_test_time.setValue(elapsedtime_act);
+					} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
+						du6_test.setValue(1);
+						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du6_test_time.setValue(elapsedtime_act - 30);
+					}
+				} else {
 					du6_test.setValue(1);
-					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du6_test_time.setValue(elapsedtime_act);
-				} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
-					du6_test.setValue(1);
-					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du6_test_time.setValue(elapsedtime_act - 30);
+					du6_test_amount.setValue(0);
+					du6_test_time.setValue(-100);
 				}
-			} else {
-				du6_test.setValue(1);
-				du6_test_amount.setValue(0);
-				du6_test_time.setValue(-100);
 			}
 		} else {
 			du6_test.setValue(0);
+			du6_offtime.setValue(elapsedtime_act);
 		}
+	},
+	update: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		
 		if (acconfig_mismatch.getValue() == "0x000") {
 			PFD_1_mismatch.page.hide();
@@ -790,26 +794,22 @@ var canvas_PFD_1 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if ((adirs0_active.getValue() == 1) or (air_switch.getValue() == -1 and adirs2_active.getValue() == 1)) {
-			me["VS_group"].show();
-			me["VS_error"].hide();
-		} else {
-			me["VS_error"].show();
-			me["VS_group"].hide();
-		}
-		
-		if ((ir0_aligned.getValue() == 1) or (ir2_aligned.getValue() == 1 and att_switch.getValue() == -1)) {
+		if (systems.ADIRSnew.ADIRunits[0].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
 			me["HDG_error"].hide();
 			me["HDG_frame"].setColor(1,1,1);
+			me["VS_group"].show();
+			me["VS_error"].hide(); # VS is inertial-sourced
 		} else {
 			me["AI_error"].show();
 			me["HDG_error"].show();
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["VS_error"].show();
+			me["VS_group"].hide();
 		}
 		
 		# FD
@@ -938,7 +938,7 @@ var canvas_PFD_1 = {
 				me["ASI_target"].hide();
 			}
 			
-			me.ASItrend = speed_pred_1.getValue() - me.ASI;
+			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
 			
@@ -1083,37 +1083,22 @@ var canvas_PFD_2 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if ((adirs1_active.getValue() == 1) or (air_switch.getValue() == 1 and adirs2_active.getValue() == 1)) {
-			me["ALT_group"].show();
-			me["ALT_group2"].show();
-			me["ALT_scale"].show();
-			me["VS_group"].show();
-			me["ALT_error"].hide();
-			me["ALT_frame"].setColor(1,1,1);
-			me["VS_error"].hide();
-		} else {
-			me["ALT_error"].show();
-			me["ALT_frame"].setColor(1,0,0);
-			me["VS_error"].show();
-			me["ASI_group"].hide();
-			me["ALT_group"].hide();
-			me["ALT_group2"].hide();
-			me["ALT_scale"].hide();
-			me["VS_group"].hide();
-		}
-		
-		if ((ir1_aligned.getValue() == 1) or (ir2_aligned.getValue() == 1 and att_switch.getValue() == 1)) {
+		if (systems.ADIRSnew.ADIRunits[1].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
 			me["HDG_error"].hide();
 			me["HDG_frame"].setColor(1,1,1);
+			me["VS_group"].show();
+			me["VS_error"].hide(); # VS is inertial-sourced
 		} else {
 			me["AI_error"].show();
 			me["HDG_error"].show();
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["VS_error"].show();
+			me["VS_group"].hide();
 		}
 		
 		# FD
@@ -1242,7 +1227,7 @@ var canvas_PFD_2 = {
 				me["ASI_target"].hide();
 			}
 			
-			me.ASItrend = speed_pred_2.getValue() - me.ASI;
+			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
 			
@@ -1585,3 +1570,11 @@ var fontSizeHDG = func(input) {
 		return 32;
 	}
 };
+
+setlistener("/systems/electrical/bus/ac-ess", func() {
+	canvas_PFD_base.updateDu1();
+}, 0, 0);
+
+setlistener("/systems/electrical/bus/ac-2", func() {
+	canvas_PFD_base.updateDu6();
+}, 0, 0);
