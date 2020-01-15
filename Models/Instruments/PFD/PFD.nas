@@ -856,7 +856,7 @@ var canvas_PFD_1 = {
 			me["GS_pointer"].hide();
 		}
 		
-		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
+		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1 or gs_in_range.getValue() == 1)) {
             me["ilsError"].show();    
 		} else {
 		    me["ilsError"].hide();
