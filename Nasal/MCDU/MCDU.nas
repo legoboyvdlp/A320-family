@@ -142,6 +142,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(2);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonLeft(2);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(2);
 		} else {
@@ -164,6 +166,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(3);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(3);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonLeft(3);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
 		} else {
@@ -182,6 +186,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(4);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonLeft(4);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(4);
 		} else {
@@ -208,6 +214,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else {
@@ -228,7 +236,7 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV" or getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE" or getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
 				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 			} else {
@@ -256,12 +264,13 @@ var rskbutton = func(btn, i) {
 			printInput("R1", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("R1", i);
-		} else if (getprop("/MCDU[" ~ i ~ "/page") == "LATREV") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
 			if (canvas_mcdu.myArrival[i] != nil) {
 				canvas_mcdu.myArrival[i].del();
 			}
 			canvas_mcdu.myArrival[i] = nil;
 			canvas_mcdu.myArrival[i] = arrivalPage.new(canvas_mcdu.myLatRev[i].title[2], i);
+			setprop("/MCDU[" ~ i ~ "]/page", "ARRIVAL");
 		} else {
 			notAllowed(i);
 		}
@@ -276,6 +285,8 @@ var rskbutton = func(btn, i) {
 			printInput2("R2", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonRight(2);
 		} else {
 			notAllowed(i);
 		}
@@ -288,6 +299,10 @@ var rskbutton = func(btn, i) {
 			printInput("R3", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("R3", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonRight(3);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonRight(3);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type != 2) {
 				canvas_mcdu.myLatRev[i].nextWpt();
@@ -304,6 +319,10 @@ var rskbutton = func(btn, i) {
 			radnavInput("R4", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("R4", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonRight(4);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonRight(4);
 		} else {
 			notAllowed(i);
 		}
@@ -314,6 +333,10 @@ var rskbutton = func(btn, i) {
 			radnavInput("R5", i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
 			dataInput("R5", i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+			canvas_mcdu.myDeparture[i].depPushbuttonRight(5);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonRight(5);
 		} else {
 			notAllowed(i);
 		}
@@ -374,6 +397,8 @@ var arrowbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollLeft();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].scrollLeft();
 		}
 	} else if (btn == "right") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
@@ -392,18 +417,24 @@ var arrowbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollRight();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].scrollRight();
 		}
 	} else if (btn == "up") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollUp();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollUp();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].scrollUp();
 		}
 	} else if (btn == "down") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollDn();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollDn();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].scrollDn();
 		}
 	}
 }

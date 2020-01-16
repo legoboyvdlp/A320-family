@@ -91,6 +91,7 @@ var flightPlanController = {
 		}
 		
 		me.addDiscontinuity(1, plan);
+		#todo if plan = 2, kill any tmpy flightplan
 		me.flightPlanChanged(plan);
 	},
 	

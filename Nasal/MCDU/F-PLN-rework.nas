@@ -270,7 +270,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 	},
 	destInfo: func() {
-		me.L6 = [me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name, " DEST", "wht"];
+		me.L6 = [left(me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name, 4), " DEST", "wht"];
 		me.C6 = ["----  " ~ int(fmgc.flightPlanController.arrivalDist), "TIME   DIST", "wht"];
 		me.R6 = ["--.-", "EFOB", "wht"];
 	},
@@ -306,7 +306,12 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 			} else {
-				notAllowed(me.computer);
+				if (canvas_mcdu.myLatRev[me.computer] != nil) {
+					canvas_mcdu.myLatRev[me.computer].del();
+				}
+				canvas_mcdu.myLatRev[me.computer] = nil;
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.L6[0], fmgc.flightPlanController.arrivalIndex[me.computer], me.computer);
+				setprop("/MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
 			if (size(me.outputList) >= index) {

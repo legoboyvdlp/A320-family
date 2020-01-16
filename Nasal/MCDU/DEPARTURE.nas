@@ -385,6 +385,8 @@ var departurePage = {
 					me.scrollSids = 0;
 				}
 				me.updateSIDs();
+				me.hasPressNoTrans = 0;
+				me.updateTransitions();
 			}
 		}
 	},
@@ -405,6 +407,7 @@ var departurePage = {
 				}
 				me.updateSIDs();
 				me.hasPressNoTrans = 0;
+				me.updateTransitions();
 			}
 		}
 	},
@@ -453,7 +456,7 @@ var departurePage = {
 		} elsif (size(me.transitions) >= (index -  1)) {
 			me.selectedTransition = me.transitions[index - 2];
 			me.makeTmpy();
-			fmgc.flightPlanController.flightplans[me.computer].sid_trans = me.selectedTransition;
+			fmgc.flightPlanController.flightplans[me.computer].sid = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
 			me.updateActiveTransitions();
 			me.updateTransitions();
 			fmgc.flightPlanController.flightPlanChanged(me.computer);
