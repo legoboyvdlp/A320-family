@@ -115,6 +115,8 @@ var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
 var ils_data1 = props.globals.getNode("/FMGC/internal/ils1-mcdu/", 1);
 # Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
 # var ils_data2 = props.globals.getNode("/FMGC/internal/ils2-mcdu/", 1);
+var dme_in_range = props.globals.getNode("/instrumentation/nav[0]/dme-in-range", 1);
+var dme_data = props.globals.getNode("/instrumentation/dme[0]/indicated-distance-nm", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -192,7 +194,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -838,11 +840,17 @@ var canvas_PFD_1 = {
 			me["ils_freq"].setText(split("/", ils_data1.getValue())[1]);
 			me["ils_code"].show();
 			me["ils_freq"].show();
+			if (dme_in_range.getValue() == 1) {
+		        me["dme_dist"].setText(int(dme_data.getValue()) ~ "NM");
+		        me["dme_dist"].show();
+		        
+		    }
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
 			me["ils_code"].hide();
 			me["ils_freq"].hide();
+			me["dme_dist"].hide();
 		}
 		
 		if (ap_ils_mode.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -856,7 +864,7 @@ var canvas_PFD_1 = {
 			me["GS_pointer"].hide();
 		}
 		
-		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1 or gs_in_range.getValue() == 1)) {
+		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
             me["ilsError"].show();    
 		} else {
 		    me["ilsError"].hide();
@@ -1140,11 +1148,16 @@ var canvas_PFD_2 = {
 			me["ils_freq"].setText(split("/", ils_data1.getValue())[1]);
 			me["ils_code"].show();
 			me["ils_freq"].show();
+			if (dme_in_range.getValue() == 1) {
+		        me["dme_dist"].setText(int(dme_data.getValue()) ~ "NM");
+		        me["dme_dist"].show();
+		    }
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
 			me["ils_code"].hide();
 			me["ils_freq"].hide();
+			me["dme_dist"].hide();
 		}
 		
 		if (ap_ils_mode2.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -1159,7 +1172,7 @@ var canvas_PFD_2 = {
 		}
 		
 		if (ap_ils_mode2.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
-		    me["ilsError"].show();
+            me["ilsError"].show();    
 		} else {
 		    me["ilsError"].hide();
 		}
