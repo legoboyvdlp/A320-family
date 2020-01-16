@@ -129,7 +129,7 @@ var flightPlanController = {
 			} else {
 				me.flightplans[n].deleteWP(index);
 			}
-			me.updatePlans();
+			me.flightPlanChanged(n);
 			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
 			return 2;
 		} else {
@@ -394,13 +394,15 @@ var flightPlanController = {
 					wpDistancePrev[n][wpt].setValue(courseDistanceFrom[1]);
 				}
 				
-				if (wpID[n][wpt].getValue() == FMGCarr.getValue() and me.arrivalIndex[n] != wpt) {
-					me.arrivalIndex[n] = wpt;
-					if (canvas_mcdu.myFpln[0] != nil) {
-						canvas_mcdu.myFpln[0].destInfo();
-					}
-					if (canvas_mcdu.myFpln[1] != nil) {
-						canvas_mcdu.myFpln[1].destInfo();
+				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue()) {
+					if (me.arrivalIndex[n] != wpt) { # don't merge line 397 and 398 if statements
+						me.arrivalIndex[n] = wpt;
+						if (canvas_mcdu.myFpln[0] != nil) {
+							canvas_mcdu.myFpln[0].destInfo();
+						}
+						if (canvas_mcdu.myFpln[1] != nil) {
+							canvas_mcdu.myFpln[1].destInfo();
+						}
 					}
 				}
 			}

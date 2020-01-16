@@ -55,17 +55,17 @@ var arrivalPage = {
 		me.title = ["ARRIVAL", " TO ", left(me.id, 4)];
 		
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			if (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
-				me.selectedApproach = fmgc.flightPlanController.flightplans[2].destination_runway;
+			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
+				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
 			}
 			if (fmgc.flightPlanController.flightplans[2].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[2].star;
 			}
 		} else {
-			if (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
-				me.selectedApproach = fmgc.flightPlanController.flightplans[me.computer].destination_runway;
-			} elsif (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
-				me.selectedApproach = fmgc.flightPlanController.flightplans[2].destination_runway;
+			if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
+				me.selectedApproach = fmgc.flightPlanController.flightplans[me.computer].approach;
+			} elsif (fmgc.flightPlanController.flightplans[2].approach != nil) {
+				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[me.computer].star;
@@ -93,7 +93,7 @@ var arrivalPage = {
 		
 		me.updateActiveApproach();
 		me.updateActiveSTARs();
-		#me.updateActiveTransitions();
+		me.updateActiveTransitions();
 	},
 	_clearPage: func() {
 		me.L1 = [nil, nil, "ack"];
@@ -208,9 +208,9 @@ var arrivalPage = {
 		if (size(me.approaches) >= 2) {
 			me.L4 = [" " ~ me.approaches[1 + me.scrollApproach], nil, "blu"];
 			if (me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).radio == "ILS") {
-				me.C5 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].length) ~ "M", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].ils_frequency_mhz), "blu"];
+				me.C4 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].length) ~ "M", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].ils_frequency_mhz), "blu"];
 			} else {
-				me.C5 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].length) ~ "M", nil, "blu"];
+				me.C4 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].length) ~ "M", nil, "blu"];
 			}
 			me.R4 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].heading), nil, "blu"];
 			if (me.approaches[1 + me.scrollApproach] != me.selectedApproach) {
@@ -311,7 +311,8 @@ var arrivalPage = {
 		if (me.arrAirport == nil) {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
-		
+		debug.dump(me.selectedSTAR);
+		debug.dump(me.arrAirport[0]);
 		me._transitions = me.arrAirport[0].getStar(me.selectedSTAR).transitions;
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
 		
@@ -436,7 +437,7 @@ var arrivalPage = {
 			}
 		} else {
 			if (size(me.stars) >= (index - 1)) {
-				me.selectedSTAR = me.stars[index - 3 + me.scrollStars];
+				me.selectedSTAR = me.stars[index - 2 + me.scrollStars];
 				me.makeTmpy();
 				fmgc.flightPlanController.flightplans[me.computer].star = me.arrAirport[0].getStar(me.selectedSTAR);
 				me.updateActiveSTARs();
