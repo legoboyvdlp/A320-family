@@ -56,7 +56,7 @@ var lvr_clb = props.globals.getNode("/systems/thrust/lvrclb", 1);
 var throt_box = props.globals.getNode("/modes/pfd/fma/throttle-mode-box", 1);
 var pitch_box = props.globals.getNode("/modes/pfd/fma/pitch-mode-box", 1);
 var ap_box = props.globals.getNode("/modes/pfd/fma/ap-mode-box", 1);
-var fd_box  = props.globals.getNode("/modes/pfd/fma/fd-mode-box", 1);
+var fd_box	= props.globals.getNode("/modes/pfd/fma/fd-mode-box", 1);
 var at_box = props.globals.getNode("/modes/pfd/fma/athr-mode-box", 1);
 var fbw_law = props.globals.getNode("/it-fbw/law", 1);
 var ap_mode = props.globals.getNode("/modes/pfd/fma/ap-mode", 1);
@@ -166,7 +166,7 @@ var canvas_PFD_base = {
 				tran_rect[2], # 1 xe
 				tran_rect[3], # 2 ye
 				tran_rect[0]); #3 xs
-				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
+				#	coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
 				me[key].set("clip", clip_rect);
 				me[key].set("clip-frame", canvas.Element.PARENT);
 			}
@@ -194,7 +194,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -356,7 +356,7 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX            ");
+				me["FMA_manmode"].setText("FLX			  ");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MAN THR" and thr1_act < 0.83) or (state2_act == "MAN THR" and thr2_act < 0.83)) {
 				me["FMA_flx_box"].hide();
@@ -386,7 +386,7 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX            ");
+				me["FMA_manmode"].setText("FLX			  ");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			}
 		} else {
@@ -619,7 +619,7 @@ var canvas_PFD_base = {
 	updateCommonFast: func() {
 		# Attitude Indicator
 		pitch_cur = pitch.getValue();
-		roll_cur =  roll.getValue();
+		roll_cur =	roll.getValue();
 		
 		me.AI_horizon_trans.setTranslation(0, pitch_cur * 11.825);
 		me.AI_horizon_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
@@ -841,16 +841,17 @@ var canvas_PFD_1 = {
 			me["ils_code"].show();
 			me["ils_freq"].show();
 			if (dme_in_range.getValue() == 1) {
-		        me["dme_dist"].setText(int(dme_data.getValue()) ~ "NM");
-		        me["dme_dist"].show();
-		        
-		    }
+				me["dme_dist"].setText(sprintf("%2.0f", int(dme_data.getValue())));
+				me["dme_dist"].show(); 
+				me["dme_dist_legend"].show();
+			}
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
 			me["ils_code"].hide();
 			me["ils_freq"].hide();
 			me["dme_dist"].hide();
+			me["dme_dist_legend"].hide();
 		}
 		
 		if (ap_ils_mode.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -865,9 +866,9 @@ var canvas_PFD_1 = {
 		}
 		
 		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
-            me["ilsError"].show();    
+			me["ilsError"].show();	  
 		} else {
-		    me["ilsError"].hide();
+			me["ilsError"].hide();
 		}
 		
 		me.updateCommon();
@@ -1149,15 +1150,17 @@ var canvas_PFD_2 = {
 			me["ils_code"].show();
 			me["ils_freq"].show();
 			if (dme_in_range.getValue() == 1) {
-		        me["dme_dist"].setText(int(dme_data.getValue()) ~ "NM");
-		        me["dme_dist"].show();
-		    }
+				me["dme_dist"].setText(sprintf("%2.0f", int(dme_data.getValue())));
+				me["dme_dist"].show(); 
+				me["dme_dist_legend"].show();
+			}
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
 			me["ils_code"].hide();
 			me["ils_freq"].hide();
 			me["dme_dist"].hide();
+			me["dme_dist_legend"].hide();
 		}
 		
 		if (ap_ils_mode2.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -1172,9 +1175,9 @@ var canvas_PFD_2 = {
 		}
 		
 		if (ap_ils_mode2.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
-            me["ilsError"].show();    
+			me["ilsError"].show();	  
 		} else {
-		    me["ilsError"].hide();
+			me["ilsError"].hide();
 		}
 		
 		me.updateCommon();

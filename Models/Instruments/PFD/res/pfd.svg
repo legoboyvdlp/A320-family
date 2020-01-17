@@ -37,16 +37,16 @@
      guidetolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="716"
+     inkscape:window-height="403"
      id="namedview371"
-     showgrid="false"
-     inkscape:zoom="2.0149341"
-     inkscape:cx="51.385843"
-     inkscape:cy="279.39354"
+     showgrid="true"
+     inkscape:zoom="1.025"
+     inkscape:cx="678.88837"
+     inkscape:cy="332.98605"
      inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg2"
      showguides="true"
      inkscape:snap-global="false"
@@ -4875,54 +4875,61 @@
        x="34.684372"
        y="874.4469"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ff0000;fill-opacity:1;stroke-width:0.75">MACH</tspan></text>
-       
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="677.62024"
-     y="835.1153"
+     style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     x="667.37634"
+     y="855.60309"
      id="ilsError"
      inkscape:label="#text1608"><tspan
        sodipodi:role="line"
-       id="tspan1605"
-       x="677.62024"
-       y="835.1153"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ff9900;fill-opacity:1;stroke-width:0.75">ILS</tspan></text>
-       
+       id="tspan773"
+       x="667.37634"
+       y="855.60309"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#bb6100;fill-opacity:1;stroke-width:0.75;">ILS</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
+     style="font-style:normal;font-weight:normal;font-size:38.98999884px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75;"
      x="34.684372"
-     y="885.26117"
+     y="935.95209"
      id="ils_code"><tspan
        sodipodi:role="line"
        id="tspan978"
        x="34.684372"
-       y="920.26117"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.39944839px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#b055be;fill-opacity:1;stroke-width:0.75">ILS</tspan></text>
-
+       y="935.95209"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.98999884px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#b055be;fill-opacity:1;stroke-width:0.75;">ILS</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
+     style="font-style:normal;font-weight:normal;font-size:38.98999884px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75;"
      x="34.684372"
-     y="930.26117"
+     y="974.72784"
      id="ils_freq"><tspan
        sodipodi:role="line"
        id="tspan979"
        x="34.684372"
-       y="960.26117"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.39944839px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#b055be;fill-opacity:1;stroke-width:0.75">ILS</tspan></text>
-       
+       y="974.72784"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.98999884px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#b055be;fill-opacity:1;stroke-width:0.75;">000.00</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
+     style="font-style:normal;font-weight:normal;font-size:38.98999884px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75;"
      x="34.684372"
-     y="975.26117"
+     y="1013.5292"
      id="dme_dist"><tspan
        sodipodi:role="line"
-       id="tspan979"
+       id="tspan780"
        x="34.684372"
-       y="1000.26117"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.39944839px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#b055be;fill-opacity:1;stroke-width:0.75">ILS</tspan></text>
-    
+       y="1013.5292"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.98999884px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#b055be;fill-opacity:1;stroke-width:0.75;">0.0</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:30.00000191px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="116.45473"
+     y="1014.0706"
+     id="dme_dist_legend"
+     inkscape:label="#dme_dist-5"><tspan
+       sodipodi:role="line"
+       id="tspan780-3"
+       x="116.45473"
+       y="1014.0706"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#179ab7;fill-opacity:1;stroke-width:0.75">NM</tspan></text>
 </svg>
