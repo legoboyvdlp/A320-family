@@ -394,7 +394,7 @@ var flightPlanController = {
 					wpDistancePrev[n][wpt].setValue(courseDistanceFrom[1]);
 				}
 				
-				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue()) {
+				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
 					if (me.arrivalIndex[n] != wpt) { # don't merge line 397 and 398 if statements
 						me.arrivalIndex[n] = wpt;
 						if (canvas_mcdu.myFpln[0] != nil) {
