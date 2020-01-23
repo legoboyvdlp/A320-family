@@ -306,11 +306,36 @@ var departurePage = {
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
+	clearTransitions: func() {
+		me.R2 = [nil, "TRANS", "wht"];
+		me.R3 = [nil, "TRANS", "wht"];
+		me.R4 = [nil, "TRANS", "wht"];
+		me.R5 = [nil, "TRANS", "wht"];
+		me.arrowsMatrix[1][1] = 0;
+		me.arrowsColour[1][1] = "ack";
+		me.arrowsMatrix[1][2] = 0;
+		me.arrowsColour[1][2] = "ack";
+		me.arrowsMatrix[1][3] = 0;
+		me.arrowsColour[1][3] = "ack";
+		me.arrowsMatrix[1][4] = 0;
+		me.arrowsColour[1][4] = "ack";
+	},
 	updateTransitions: func() {
 		if (me.depAirport == nil) {
 			me.depAirport = findAirportsByICAO(left(me.id, 4));
 		}
 		
+		if (me.selectedSID == nil) {
+			me.R2 = ["NO TRANS ", "TRANS", "blu"];
+			if (!me.hasPressNoTrans) {
+				me.arrowsMatrix[1][1] = 1;
+				me.arrowsColour[1][1] = "blu";
+			} else {
+				me.arrowsMatrix[1][1] = 0;
+				me.arrowsColour[1][1] = "ack";
+			}
+			return;
+		}
 		me._transitions = me.depAirport[0].getSid(me.selectedSID).transitions;
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
 		
@@ -385,8 +410,12 @@ var departurePage = {
 					me.scrollSids = 0;
 				}
 				me.updateSIDs();
+				if (me.selectedSID == nil) {
+					me.clearTransitions();
+				} else {
+					me.updateTransitions();
+				}
 				me.hasPressNoTrans = 0;
-				me.updateTransitions();
 			}
 		}
 	},
@@ -406,8 +435,12 @@ var departurePage = {
 					me.scrollSids = size(me.sids) - 4;
 				}
 				me.updateSIDs();
+				if (me.selectedSID == nil) {
+					me.clearTransitions();
+				} else {
+					me.updateTransitions();
+				}
 				me.hasPressNoTrans = 0;
-				me.updateTransitions();
 			}
 		}
 	},

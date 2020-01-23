@@ -78,20 +78,20 @@ var fplnItem = {
 		if (me.wp.wp_name == "DISCONTINUITY") {
 			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, "DISCON", me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
-			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+			} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp.wp_name, me.index, me.computer);
 			} else {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp.wp_name, me.index, me.computer);
 			}
 		} else {
-			if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
-			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp.wp_name, me.index, me.computer);
 			} else {
@@ -298,7 +298,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 	},
 	pushButtonLeft: func(index) {
-		if (index == 1 and size(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
+		if (left(me.L6[0], 4) == getprop("/FMGC/internal/dep-arpt") and size(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
 			notAllowed(me.computer);
 			return;
 		}

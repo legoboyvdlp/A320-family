@@ -1,4 +1,4 @@
-var latRev = {
+var vertrev = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -21,7 +21,7 @@ var latRev = {
 	index: nil,
 	computer: nil,
 	new: func(type, id, index, computer) {
-		var lr = {parents:[latRev]};
+		var lr = {parents:[vertrev]};
 		lr.type = type; # 0 = origin 1 = destination 2 = ppos (from waypoint) 3 = generic wpt, 4 = discon
 		lr.id = id;
 		lr.index = index;
@@ -45,7 +45,7 @@ var latRev = {
 	},
 	_setupPageWithData: func() {
 		if (me.type == 2) { 
-			me.title = ["LAT REV", " FROM ", "PPOS"];
+			me.title = ["VERT REV", " AT ", "PPOS"];
 			me.L2 = [" OFFSET", nil, "wht"];
 			me.L3 = [" HOLD", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
@@ -55,7 +55,7 @@ var latRev = {
 			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
 		} elsif (me.type == 4) { 
-			me.title = ["LAT REV", " FROM ", "DISCON"];
+			me.title = ["VERT REV", " AT ", "DISCON"];
 			me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 			me.R4 = ["[     ]", "NEW DEST", "blu"];
 			me.L6 = [" RETURN", nil, "wht"];
@@ -63,7 +63,7 @@ var latRev = {
 			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 		} else {
-			me.title = ["LAT REV", " FROM ", me.id];
+			me.title = ["VERT REV", " AT ", me.id];
 			
 			if (me.type == 0) {	
 				if (size(me.id) > 4) {

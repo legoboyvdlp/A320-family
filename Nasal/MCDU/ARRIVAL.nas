@@ -251,7 +251,7 @@ var arrivalPage = {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
 		if (me.selectedApproach != nil) {
-			me._stars = me.arrAirport[0].stars(me.selectedApproach.id);
+			me._stars = me.arrAirport[0].stars(me.selectedApproach.runways[0]);
 		} else {
 			me._stars = me.arrAirport[0].stars();
 		}
@@ -307,12 +307,35 @@ var arrivalPage = {
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
+	clearTransitions: func() {
+		me.R2 = [nil, "TRANS", "wht"];
+		me.R3 = [nil, "TRANS", "wht"];
+		me.R4 = [nil, "TRANS", "wht"];
+		me.R5 = [nil, "TRANS", "wht"];
+		me.arrowsMatrix[1][1] = 0;
+		me.arrowsColour[1][1] = "ack";
+		me.arrowsMatrix[1][2] = 0;
+		me.arrowsColour[1][2] = "ack";
+		me.arrowsMatrix[1][3] = 0;
+		me.arrowsColour[1][3] = "ack";
+		me.arrowsMatrix[1][4] = 0;
+		me.arrowsColour[1][4] = "ack";
+	},
 	updateTransitions: func() {
 		if (me.arrAirport == nil) {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
-		debug.dump(me.selectedSTAR);
-		debug.dump(me.arrAirport[0]);
+		if (me.selectedSTAR == nil) {
+			me.R2 = ["NO TRANS ", "TRANS", "blu"];
+			if (!me.hasPressNoTrans) {
+				me.arrowsMatrix[1][1] = 1;
+				me.arrowsColour[1][1] = "blu";
+			} else {
+				me.arrowsMatrix[1][1] = 0;
+				me.arrowsColour[1][1] = "ack";
+			}
+			return;
+		}
 		me._transitions = me.arrAirport[0].getStar(me.selectedSTAR).transitions;
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
 		
@@ -387,8 +410,12 @@ var arrivalPage = {
 					me.scrollStars = 0;
 				}
 				me.updateSTARs();
+				if (me.selectedSTAR == nil) {
+					me.clearTransitions();
+				} else {
+					me.updateTransitions();
+				}
 				me.hasPressNoTrans = 0;
-				me.updateTransitions();
 			}
 		}
 	},
@@ -408,8 +435,12 @@ var arrivalPage = {
 					me.scrollStars = size(me.stars) - 4;
 				}
 				me.updateSTARs();
+				if (me.selectedSTAR == nil) {
+					me.clearTransitions();
+				} else {
+					me.updateTransitions();
+				}
 				me.hasPressNoTrans = 0;
-				me.updateTransitions();
 			}
 		}
 	},

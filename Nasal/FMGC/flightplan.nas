@@ -1,8 +1,6 @@
 # A3XX FMGC Flightplan Driver
 # Copyright (c) 2019 Jonathan Redpath (2019)
 
-var magTrueError = 0;
-
 var wpDep = nil;
 var wpArr = nil;
 var pos = nil;
@@ -39,9 +37,9 @@ var flightPlanController = {
 	currentToWpt: nil, # container for the current TO waypoint ghost
 	currentToWptIndex: props.globals.initNode("/FMGC/flightplan[2]/current-wp", 0, "INT"),
 	currentToWptID: "",
-	courseToWpt: 0,
-	courseMagToWpt: 0,
-	distToWpt: 0,
+	courseToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course", 0, "DOUBLE"),
+	courseMagToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course-mag", 0, "DOUBLE"),
+	distToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-dist", 0, "DOUBLE"),,
 	
 	distanceToDest: [0, 0, 0],
 	num: [0, 0, 0],
@@ -123,8 +121,10 @@ var flightPlanController = {
 		if (wp != FMGCdep.getValue() and wp != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
-				if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
-					me.addDiscontinuity(index, n);
+				if (me.flightplans[n].getWP(index) != nil) {
+					if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
+						me.addDiscontinuity(index, n);
+					}
 				}
 			} else {
 				me.flightplans[n].deleteWP(index);
@@ -428,11 +428,11 @@ var flightPlanController = {
 					me.currentToWpt = me.flightplans[i].getWP(me.currentToWptIndex.getValue());
 					
 					me.currentToWptId = me.currentToWpt.wp_name;
-					me.courseToWpt = me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[0];
-					me.distToWpt = me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[1];
+					me.courseToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[0]);
+					me.distToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[1]);
 					
 					magTrueError = magHDG.getValue() - trueHDG.getValue();
-					me.courseMagToWpt = me.courseToWpt + magTrueError;
+					me.courseMagToWpt.setValue(me.courseToWpt.getValue() + magTrueError);
 					
 					return;
 				}

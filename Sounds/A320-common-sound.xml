@@ -1557,9 +1557,11 @@
 			<mode>once</mode>
 			<type>avionics</type>
 			<condition>
-				<property>/sim/current-view/internal</property>
 				<property>/sim/sound/warnings/chime</property>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</chime>

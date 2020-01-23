@@ -286,7 +286,7 @@ var reset_FMGC = func {
 	alt = getprop("/it-autoflight/input/alt");
 	ITAF.init();
 	FMGCinit();
-	flightplan.reset();
+	flightPlanController.reset();
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	setprop("/it-autoflight/input/fd1", fd1);
