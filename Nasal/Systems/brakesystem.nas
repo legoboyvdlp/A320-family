@@ -24,7 +24,11 @@
 # "overheated brakes", any level <=1 means "brake temperature OK".
 # No exact science here - but good enough for now :-).
 ##########################################################################
-
+#
+# Added brakes temp calculations and adapted for A320-family
+# 2020, Andrea Vezzali
+#
+##########################################################################
 var BrakeSystem =
 {
     new : func()
@@ -33,14 +37,14 @@ var BrakeSystem =
        # deceleration caused by brakes alone (knots/s2)
        m.BrakeDecel    = 1.0; # kt/s^2
        # Higher value means quicker cooling
-       m.CoolingFactor = 0.0005;
+       m.CoolingFactor = 0.00005;
        # Scaling divisor. Use this to scale the energy output.
        # Manually tune this value: a total energy output
        # at "/gear/brake-thermal-energy" > 1.0 means overheated brakes,
        # anything below <= 1.0 means energy absorbed by brakes is OK. 
        #m.ScalingDivisor= 700000*450.0;
 
-       m.ScalingDivisor = 0.000000007;
+       m.ScalingDivisor = 0.000000006;
        
        m.LSmokeActive   = 0;
        m.LSmokeToggle   = 0;
@@ -56,33 +60,35 @@ var BrakeSystem =
     reset : func()
     {
         # Initial thermal energy
-        setprop("controls/gear/brake-fans",0);
         setprop("gear/gear[1]/Lbrake-thermal-energy",0.0);
         setprop("gear/gear[2]/Rbrake-thermal-energy",0.0);
+
+        setprop("controls/gear/brake-fans",0);
         setprop("gear/gear[1]/Lbrake-smoke",0);
         setprop("gear/gear[2]/Rbrake-smoke",0);
-       	setprop("gear/gear[1]/L1brake-temp-degc",getprop("environment/temperature-degc"));
-       	setprop("gear/gear[1]/L2brake-temp-degc",getprop("environment/temperature-degc"));
-       	setprop("gear/gear[2]/R3brake-temp-degc",getprop("environment/temperature-degc"));
-       	setprop("gear/gear[2]/R4brake-temp-degc",getprop("environment/temperature-degc"));
-       	setprop("gear/gear[1]/L1brake-temp-degf",getprop("environment/temperature-degf"));
-       	setprop("gear/gear[1]/L2brake-temp-degf",getprop("environment/temperature-degf"));
-       	setprop("gear/gear[2]/R3brake-temp-degf",getprop("environment/temperature-degf"));
-       	setprop("gear/gear[2]/R4brake-temp-degf",getprop("environment/temperature-degf"));
-		
-		#Introducing a random error on the brakes temp sensors
-        if (rand() > 0.5)
-        {
-        	setprop("gear/gear[1]/L1error_temp_degc", math.round(rand()*5));
-        	setprop("gear/gear[1]/L2error_temp_degc", math.round(rand()*5));
-        	setprop("gear/gear[2]/R3error_temp_degc", math.round(rand()*5));
-        	setprop("gear/gear[2]/R4error_temp_degc", math.round(rand()*5));
-        } else {
-        	setprop("gear/gear[1]/L1error_temp_degc", math.round(rand()*(-5)));
-        	setprop("gear/gear[1]/L2error_temp_degc", math.round(rand()*(-5)));
-        	setprop("gear/gear[2]/R3error_temp_degc", math.round(rand()*(-5)));
-        	setprop("gear/gear[2]/R4error_temp_degc", math.round(rand()*(-5)));        
-        }
+        setprop("gear/gear[1]/L-Thrust",0);
+        setprop("gear/gear[2]/R-Thrust",0);
+
+		#Introducing a random error on temp sensors (max 5°C)
+       	setprop("gear/gear[1]/L1error-temp-degc", math.round(rand()*(5)));
+       	setprop("gear/gear[1]/L2error-temp-degc", math.round(rand()*(5)));
+       	setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)));
+       	setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)));        
+
+        var atemp  =  getprop("environment/temperature-degc") or 0;
+        var vmach  =  getprop("velocities/mach") or 0;
+        var tatdegc = atemp * (1 + (0.2 * math.pow(vmach, 2)));
+        var tatdegf = 32+(1.8 * tatdegc);
+
+       	setprop("gear/gear[1]/L1brake-temp-degc",tatdegc+getprop("gear/gear[1]/L1error-temp-degc"));
+       	setprop("gear/gear[1]/L2brake-temp-degc",tatdegc+getprop("gear/gear[1]/L2error-temp-degc"));
+       	setprop("gear/gear[2]/R3brake-temp-degc",tatdegc+getprop("gear/gear[2]/R3error-temp-degc"));
+       	setprop("gear/gear[2]/R4brake-temp-degc",tatdegc+getprop("gear/gear[2]/R4error-temp-degc"));
+       	setprop("gear/gear[1]/L1brake-temp-degf",tatdegf+32+(1.8 * getprop("gear/gear[1]/L1brake-temp-degc")));
+       	setprop("gear/gear[1]/L2brake-temp-degf",tatdegf+32+(1.8 * getprop("gear/gear[1]/L2brake-temp-degc")));
+       	setprop("gear/gear[2]/R3brake-temp-degf",tatdegf+32+(1.8 * getprop("gear/gear[2]/R3brake-temp-degc")));
+       	setprop("gear/gear[2]/R4brake-temp-degf",tatdegf+32+(1.8 * getprop("gear/gear[2]/R4brake-temp-degc")));
+
         setprop("sim/animation/fire-services",0);
         me.LastSimTime = 0.0;
     },
@@ -92,69 +98,192 @@ var BrakeSystem =
     {
         var CurrentTime = getprop("sim/time/elapsed-sec");
         var dt = CurrentTime - me.LastSimTime;
+        var LThermalEnergy = getprop("gear/gear[1]/Lbrake-thermal-energy");
+        var RThermalEnergy = getprop("gear/gear[2]/Rbrake-thermal-energy");
+		var LBrakeLevel = getprop("fdm/jsbsim/fcs/left-brake-cmd-norm");
+        var RBrakeLevel = getprop("fdm/jsbsim/fcs/right-brake-cmd-norm");
+        var atemp  =  getprop("environment/temperature-degc") or 0;
+        var vmach  =  getprop("velocities/mach") or 0;
+        var tatdegc = atemp * (1 + (0.2 * math.pow(vmach, 2)));
+        var tatdegf = 32+(1.8 * tatdegc);
+		setprop("environment/total-air-temperature-degc", tatdegc);
+		setprop("environment/total-air-temperature-degf", tatdegf);		
+		var L_thrust_lb = getprop("engines/engine[0]/thrust_lb");
+		var R_thrust_lb = getprop("engines/engine[1]/thrust_lb");
 
         if (dt<1.0)
         {
-			#cooling effect: adjust cooling factor by a value proportional to the environment temp (m.CoolingFactor + environment temp-degf * 0.00001)
-			var CoolingRatio = me.CoolingFactor+(getprop("environment/temperature-degf")*0.00001);
+            var OnGround = getprop("gear/gear[1]/wow");
+			#cooling effect: adjust cooling factor by a value proportional to the environment temp (m.CoolingFactor + environment temp-degc * 0.00001)
+			var LCoolingRatio = me.CoolingFactor+(tatdegc*0.000001);
+			var RCoolingRatio = me.CoolingFactor+(tatdegc*0.000001);
 	        if (getprop("controls/gear/brake-fans"))
 	        {
 		        #increase CoolingRatio if Brake Fans are active
-	           	CoolingRatio = CoolingRatio * 3;
+	           	LCoolingRatio = LCoolingRatio * 3;
+	           	RCoolingRatio = RCoolingRatio * 3;
 			}
-						
-			var nCoolFactor = math.ln(1-CoolingRatio);
+			if (getprop("gear/gear[1]/position-norm"))
+			{
+		       	#increase CoolingRatio if gear down according to airspeed
+	        	LCoolingRatio = LCoolingRatio * getprop("velocities/airspeed-kt");				
+			} else {
+		       	#Reduced CoolingRatio if gear up
+				LCoolingRatio = LCoolingRatio * 0.1;
+			}
+			if (getprop("gear/gear[2]/position-norm"))
+			{
+		       	#increase CoolingRatio if gear down according to airspeed
+	        	RCoolingRatio = RCoolingRatio * getprop("velocities/airspeed-kt");
+			} else {
+		       	#Reduced CoolingRatio if gear up
+				RCoolingRatio = RCoolingRatio * 0.1;
+			}
+			if (LBrakeLevel>0)
+	        {
+		        #Reduced CoolingRatio if Brakes used
+	           	LCoolingRatio = LCoolingRatio * 0.1 * LBrakeLevel;
+			}
+			if (RBrakeLevel>0)
+	        {
+		        #Reduced CoolingRatio if Brakes used
+	           	RCoolingRatio = RCoolingRatio * 0.1 * RBrakeLevel;
+			}
+	           				
+			var LnCoolFactor = math.ln(1-LCoolingRatio);
+			var RnCoolFactor = math.ln(1-RCoolingRatio);
 
-            var OnGround = getprop("gear/gear[1]/wow");
-            var LThermalEnergy = getprop("gear/gear[1]/Lbrake-thermal-energy");
-            var RThermalEnergy = getprop("gear/gear[2]/Rbrake-thermal-energy");
-			
-            var LBrakeLevel = getprop("fdm/jsbsim/fcs/left-brake-cmd-norm");
-            var RBrakeLevel = getprop("fdm/jsbsim/fcs/right-brake-cmd-norm");
-			#}
-			var BrakeLevel = (LBrakeLevel + RBrakeLevel)/2;
-            if ((OnGround)and(BrakeLevel>0))
-            {
-                # absorb more energy
+           	L_thrust_lb = math.abs(getprop("engines/engine[0]/thrust_lb"));
+           	if (L_thrust_lb < 1)
+           	{
+           		L_thrust_lb = 1
+           	}
+           	L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.000000001;
+
+           	R_thrust_lb = math.abs(getprop("engines/engine[1]/thrust_lb"));
+           	if (R_thrust_lb < 1)
+           	{
+           		R_thrust_lb = 1
+           	}
+           	R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.000000001;
+
+			if (OnGround)
+			{
                 var V1 = getprop("velocities/groundspeed-kt");
                 var Mass = getprop("fdm/jsbsim/inertia/weight-lbs")*(me.ScalingDivisor);
+
                 # absorb some kinetic energy:
                 # dE= 1/2 * m * V1^2 - 1/2 * m * V2^2) 
-                var V2_L = V1 - me.BrakeDecel * dt * LBrakeLevel;
+				var V2_L = V1 - me.BrakeDecel * dt * LBrakeLevel;
                 var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
-                # do not absorb more energy when plane is (almost) stopped
-                # Thermal energy computation 
-                if (V2_L>0)
-                {
-                    LThermalEnergy += Mass * (V1*V1 - V2_L*V2_L)/2;
-		            # cooling effect: reduce thermal energy by (nCoolFactor)^dt
-		           	LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * dt);
-		        } else {                
-		            # cooling effect: reduced cooling when speed = 0 and brakes on
-       	           	LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * 0.3 * dt);
-       	        }
-                if (V2_R>0)
-                {
-                    RThermalEnergy += Mass * (V1*V1 - V2_R*V2_R)/2;
-                    # cooling effect: reduce thermal energy by (nCoolFactor)^dt
-		           	RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * dt);
-                } else {
-		            # cooling effect: reduced cooling when speed = 0 and brakes on
- 		           	RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * 0.3 * dt);
-		        }
-            } else {
-            	LThermalEnergy = LThermalEnergy * math.exp(nCoolFactor * dt);
-            	RThermalEnergy = RThermalEnergy * math.exp(nCoolFactor * dt);
-            }
-            
+				
+				#TODO - Adjust ThermalEnergy according to differential braking
+				#LBrakeLevel-RBrakeLevel
+				
+				LThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
+				if (getprop("services/chocks/left"))
+				{
+					if (!getprop("controls/gear/brake-parking"))
+					{
+						# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
+						LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);					
+					} else {
+						#LThermalEnergy += L_Thrust;
+				    	# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
+		 		    	LThermalEnergy = (LThermalEnergy * math.exp(LnCoolFactor * dt)) + (L_Thrust * dt);
+					}
+				} else {
+					if (!getprop("controls/gear/brake-parking"))
+					{
+						if (LBrakeLevel>0)
+						{
+							if (V2_L>0)
+				            {
+				            	#LThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2) + L_thrust;
+						        # cooling effect: reduce thermal energy by (LnCoolFactor) * dt
+						      	LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);
+			                } else {
+			                	#LThermalEnergy += math.abs(L_Thrust);
+						    	# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
+				 		    	LThermalEnergy =  (LThermalEnergy * math.exp(LnCoolFactor * dt)) + (L_Thrust * dt);
+			                }
+						} else {
+							# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
+							LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);
+						}
+					} else {
+						#LThermalEnergy += math.abs(L_Thrust);
+				    	# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
+		 		    	LThermalEnergy =  (LThermalEnergy * math.exp(LnCoolFactor * dt)) + (L_Thrust * dt);
+					}
+				}
+
+	            RThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
+				if (getprop("services/chocks/right"))
+				{
+					if (!getprop("controls/gear/brake-parking"))
+					{
+						# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
+						RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
+					} else {
+						#RThermalEnergy += math.abs(R_Thrust);
+				    	# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
+		 		    	RThermalEnergy = (RThermalEnergy * math.exp(RnCoolFactor * dt)) + (R_Thrust * dt);
+					}
+				} else {
+					if (!getprop("controls/gear/brake-parking"))
+					{
+						if (RBrakeLevel>0)
+						{
+							if (V2_R>0)
+				            {
+			                	#RThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2) + R_thrust;
+				            	# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
+						      	RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
+			                } else {
+			                	#RThermalEnergy += math.abs(R_Thrust);
+						    	# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
+				 		    	RThermalEnergy = (RThermalEnergy * math.exp(RnCoolFactor * dt)) + (R_Thrust * dt);
+			                }
+						} else {
+							# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
+							RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
+						}
+					} else {
+						#RThermalEnergy += math.abs(R_Thrust);
+				    	# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
+		 		    	RThermalEnergy = (RThermalEnergy * math.exp(RnCoolFactor * dt)) + (R_Thrust * dt);
+					}
+				}
+
+			} else {
+            	LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);
+            	RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
+			}
+
+			if (LThermalEnergy < 0) {
+				LThermalEnergy = 0
+			}
+			if (LThermalEnergy > 3) {
+				LThermalEnergy = 3
+			}
+			if (RThermalEnergy < 0) {
+				RThermalEnergy = 0
+			}
+			if (RThermalEnergy > 3) {
+				RThermalEnergy = 3
+			}
+			
+			setprop("gear/gear[1]/L-Thrust",L_Thrust);
+			setprop("gear/gear[2]/R-Thrust",R_Thrust);
             setprop("gear/gear[1]/Lbrake-thermal-energy",LThermalEnergy);
             setprop("gear/gear[2]/Rbrake-thermal-energy",RThermalEnergy);
 
             #Calculating Brakes temperature
-            setprop("gear/gear[1]/L1brake-temp-degc",getprop("gear/gear[1]/L1error_temp_degc")+getprop("environment/temperature-degc")+(LThermalEnergy * (300-getprop("gear/gear[1]/L1error_temp_degc")-getprop("environment/temperature-degc"))));
-            setprop("gear/gear[1]/L2brake-temp-degc",getprop("gear/gear[1]/L2error_temp_degc")+getprop("environment/temperature-degc")+(LThermalEnergy * (300-getprop("gear/gear[1]/L2error_temp_degc")-getprop("environment/temperature-degc"))));
-            setprop("gear/gear[2]/R3brake-temp-degc",getprop("gear/gear[2]/R3error_temp_degc")+getprop("environment/temperature-degc")+(RThermalEnergy * (300-getprop("gear/gear[2]/R3error_temp_degc")-getprop("environment/temperature-degc"))));
-            setprop("gear/gear[2]/R4brake-temp-degc",getprop("gear/gear[2]/R4error_temp_degc")+getprop("environment/temperature-degc")+(RThermalEnergy * (300-getprop("gear/gear[2]/R4error_temp_degc")-getprop("environment/temperature-degc"))));
+            setprop("gear/gear[1]/L1brake-temp-degc",tatdegc+getprop("gear/gear[1]/L1error-temp-degc")+(LThermalEnergy * (300-tatdegc-getprop("gear/gear[1]/L1error-temp-degc"))));
+            setprop("gear/gear[1]/L2brake-temp-degc",tatdegc+getprop("gear/gear[1]/L2error-temp-degc")+(LThermalEnergy * (300-tatdegc-getprop("gear/gear[1]/L2error-temp-degc"))));
+            setprop("gear/gear[2]/R3brake-temp-degc",tatdegc+getprop("gear/gear[2]/R3error-temp-degc")+(RThermalEnergy * (300-tatdegc-getprop("gear/gear[2]/R3error-temp-degc"))));
+            setprop("gear/gear[2]/R4brake-temp-degc",tatdegc+getprop("gear/gear[2]/R4error-temp-degc")+(RThermalEnergy * (300-tatdegc-getprop("gear/gear[2]/R4error-temp-degc"))));
             setprop("gear/gear[1]/L1brake-temp-degf",(32 + (1.8 * getprop("gear/gear[1]/L1brake-temp-degc"))));
             setprop("gear/gear[1]/L2brake-temp-degf",(32 + (1.8 * getprop("gear/gear[1]/L2brake-temp-degc"))));
             setprop("gear/gear[2]/R3brake-temp-degf",(32 + (1.8 * getprop("gear/gear[2]/R3brake-temp-degc"))));
