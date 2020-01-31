@@ -34,7 +34,7 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>The Aircraft Config has detected that rendering settings are not set properly!</label>
+			<label>This model works best with certain rendering settings. It seems like these differ from your current settings.</label>
 		</text>
 		
 		<text>
@@ -44,29 +44,29 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>ALS, and custom shader settings must be on.</label>
+			<label>To use the lights, ALS must be enabled.</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>Landmass shader must be at least 4 for lightspots to work.</label>
+			<label>Landmass shader must be at least 4 for lights to display on pavement.</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>Model shader must be at least 2 for lightmaps to work.</label>
+			<label>Model shader must be at least 2 for cockpit lights to work.</label>
 		</text>
 		
 		<hrule/>
 		
 		<text>
 			<halign>left</halign>
-			<label>Would you like the Aircraft Config to automatically turn on ALS and fix shader settings?</label>
+			<label>You may automatically set these settings by using the buttons below</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>If the settings do not save after fixing, try quitting FlightGear through File -&gt; Exit after fixing.</label>
+			<label>If the settings do not save after updating, try quitting FlightGear through File -&gt; Exit after fixing.</label>
 		</text>
 	
 	</group>
@@ -77,7 +77,7 @@
 		<layout>hbox</layout>
 	
 		<checkbox>
-			<label>Do not warn me about rendering settings again</label>
+			<label>Don't show this information again</label>
 			<halign>center</halign>
 			<property>/systems/acconfig/options/no-rendering-warn</property>
 			<binding>
@@ -105,7 +105,7 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Yes, fix all settings</legend>
+			<legend>Automatically update graphics settings</legend>
 			<pref-width>180</pref-width>
 			<binding>
 				<command>nasal</command>
@@ -120,7 +120,7 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Yes, but I'll fix shaders myself</legend>
+			<legend>Open graphics settings</legend>
 			<pref-width>180</pref-width>
 			<binding>
 				<command>nasal</command>
@@ -143,7 +143,7 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>I don't care</legend>
+			<legend>Close</legend>
 			<pref-width>180</pref-width>
 			<binding>
 				<command>dialog-close</command>

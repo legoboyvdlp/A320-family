@@ -119,19 +119,12 @@ var du_quality = gui.Dialog.new("sim/gui/dialogs/acconfig/du-quality/dialog", "A
 var rendering_dlg = gui.Dialog.new("sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
 spinning.start();
 init_dlg.open();
-http.load("https://raw.githubusercontent.com/legoboyvdlp/A320-family/201912/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
 
-setlistener("/systems/acconfig/new-revision", func {
-	if (getprop("/systems/acconfig/new-revision") > current_revision) {
-		setprop("/systems/acconfig/out-of-date", 1);
-	} else {
-		setprop("/systems/acconfig/out-of-date", 0);
-	}
-});
+setprop("/systems/acconfig/out-of-date", 0);
 
 var mismatch_chk = func {
 	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201912) {
@@ -142,15 +135,6 @@ var mismatch_chk = func {
 		}
 		libraries.systemsLoop.stop();
 		print("Mismatch: 0x121");
-		welcome_dlg.close();
-	} else if (getprop("/gear/gear[0]/wow") == 0 or getprop("/position/altitude-ft") >= 15000) {
-		setprop("/systems/acconfig/mismatch-code", "0x223");
-		setprop("/systems/acconfig/mismatch-reason", "Preposterous configuration detected for initialization. Check your position or scenery.");
-		if (getprop("/systems/acconfig/out-of-date") != 1) {
-			error_mismatch.open();
-		}
-		libraries.systemsLoop.stop();
-		print("Mismatch: 0x223");
 		welcome_dlg.close();
 	} else if (getprop("/systems/acconfig/libraries-loaded") != 1) {
 		setprop("/systems/acconfig/mismatch-code", "0x247");
@@ -166,10 +150,7 @@ var mismatch_chk = func {
 
 setlistener("/sim/signals/fdm-initialized", func {
 	init_dlg.close();
-	if (getprop("/systems/acconfig/out-of-date") == 1) {
-		update_dlg.open();
-		print("System: The A320-family is out of date!");
-	} 
+	
 	mismatch_chk();
 	readSettings();
 	if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/options/revision") < current_revision and getprop("/systems/acconfig/mismatch-code") == "0x000") {
