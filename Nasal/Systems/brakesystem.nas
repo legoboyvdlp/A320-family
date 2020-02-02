@@ -37,7 +37,7 @@ var BrakeSystem =
 	   # deceleration caused by brakes alone (knots/s2)
 	   m.BrakeDecel	   = 1.0; # kt/s^2
 	   # Higher value means quicker cooling
-	   m.CoolingFactor = 0.00005;
+	   m.CoolingFactor = 0.000125;
 	   # Scaling divisor. Use this to scale the energy output.
 	   # Manually tune this value: a total energy output
 	   # at "/gear/brake-thermal-energy" > 1.0 means overheated brakes,
@@ -70,10 +70,10 @@ var BrakeSystem =
 		setprop("gear/gear[2]/R-Thrust",0);
 
 		#Introducing a random error on temp sensors (max 5°C)
-		setprop("gear/gear[1]/L1error-temp-degc", math.round(rand()*(5)));
-		setprop("gear/gear[1]/L2error-temp-degc", math.round(rand()*(5)));
-		setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)));
-		setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)));		  
+		setprop("gear/gear[1]/L1error-temp-degc", math.round(rand()*(5)) - 2.5);
+		setprop("gear/gear[1]/L2error-temp-degc", math.round(rand()*(5)) - 2.5);
+		setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)) - 2.5);
+		setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)) - 2.5);		  
 
 		var atemp  =  getprop("environment/temperature-degc") or 0;
 		var vmach  =  getprop("velocities/mach") or 0;
@@ -150,14 +150,14 @@ var BrakeSystem =
 			{
 				L_thrust_lb = 1
 			}
-			L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.000000001;
+			L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.0000000002;
 
 			R_thrust_lb = math.abs(getprop("engines/engine[1]/thrust_lb"));
 			if (R_thrust_lb < 1)
 			{
 				R_thrust_lb = 1
 			}
-			R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.000000001;
+			R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.0000000002;
 
 			if (OnGround)
 			{
