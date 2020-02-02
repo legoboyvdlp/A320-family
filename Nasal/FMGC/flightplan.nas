@@ -36,13 +36,13 @@ var flightPlanController = {
 	
 	currentToWpt: nil, # container for the current TO waypoint ghost
 	currentToWptIndex: props.globals.initNode("/FMGC/flightplan[2]/current-wp", 0, "INT"),
-	currentToWptID: "",
+	currentToWptID: props.globals.initNode("/FMGC/flightplan[2]/current-leg", "", "STRING"),
 	courseToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course", 0, "DOUBLE"),
 	courseMagToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course-mag", 0, "DOUBLE"),
 	distToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-dist", 0, "DOUBLE"),,
 	
 	distanceToDest: [0, 0, 0],
-	num: [0, 0, 0],
+	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[2]/num", 0, "INT")],
 	arrivalIndex: [0, 0, 0],
 	arrivalDist: 0,
 	_arrivalDist: 0,
@@ -94,7 +94,7 @@ var flightPlanController = {
 	},
 	
 	autoSequencing: func() {
-		if (me.num[2] > 2) {
+		if (me.num[2].getValue() > 2) {
 			if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
 				me.deleteWP(0, 0);
 			}
@@ -427,7 +427,9 @@ var flightPlanController = {
 					
 					me.currentToWpt = me.flightplans[i].getWP(me.currentToWptIndex.getValue());
 					
-					me.currentToWptId = me.currentToWpt.wp_name;
+					if (me.currentToWptID.getValue() != me.currentToWpt.wp_name) {
+						me.currentToWptID.setValue(me.currentToWpt.wp_name);
+					}
 					me.courseToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[0]);
 					me.distToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[1]);
 					
@@ -437,15 +439,24 @@ var flightPlanController = {
 					return;
 				}
 				
-				me.num[i] = me.flightplans[i].getPlanSize();
+				print("x");
+				if (me.num[i].getValue() != me.flightplans[i].getPlanSize()) {
+					me.num[i].setValue(me.flightplans[i].getPlanSize());
+					print("y");
+				}
+				print("z");
 			} else {
 				if (i == 2) {
 					if (me.active.getBoolValue()) {
 						me.active.setValue(0);
 					}
-					me.currentToWptID = "";
+					if (me.currentToWptID.getValue() != "") {
+						me.currentToWptID.setValue("");
+					}
 				}
-				me.num[i] = 0;
+				if (me.num[i].getValue() != 0) {
+					me.num[i].setValue(0);
+				}
 			}
 		}
 	},
