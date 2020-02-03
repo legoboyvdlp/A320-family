@@ -876,16 +876,16 @@ var canvas_PFD_1 = {
 			split_ils = split("/", ils_data1.getValue());
 			
 			if (size(split_ils) < 2) {
-			    me["ils_freq"].setText(split_ils[0]);
-			    me["ils_freq"].show();
-			    me["ils_code"].hide();
-			    me["dme_dist"].hide();
-			    me["dme_dist_legend"].hide();
+				me["ils_freq"].setText(split_ils[0]);
+				me["ils_freq"].show();
+				me["ils_code"].hide();
+				me["dme_dist"].hide();
+				me["dme_dist_legend"].hide();
 			} else {
-			    me["ils_code"].setText(split_ils[0]);
-			    me["ils_freq"].setText(split_ils[1]);
-			    me["ils_code"].show();
-			    me["ils_freq"].show();
+				me["ils_code"].setText(split_ils[0]);
+				me["ils_freq"].setText(split_ils[1]);
+				me["ils_code"].show();
+				me["ils_freq"].show();
 			}
 			
 			if (dme_in_range.getValue() == 1) {
@@ -1200,16 +1200,16 @@ var canvas_PFD_2 = {
 			split_ils = split("/", ils_data1.getValue());
 			
 			if (size(split_ils) < 2) {
-			    me["ils_freq"].setText(split_ils[0]);
-			    me["ils_freq"].show();
-			    me["ils_code"].hide();
-			    me["dme_dist"].hide();
-			    me["dme_dist_legend"].hide();
+				me["ils_freq"].setText(split_ils[0]);
+				me["ils_freq"].show();
+				me["ils_code"].hide();
+				me["dme_dist"].hide();
+				me["dme_dist_legend"].hide();
 			} else {
-			    me["ils_code"].setText(split_ils[0]);
-			    me["ils_freq"].setText(split_ils[1]);
-			    me["ils_code"].show();
-			    me["ils_freq"].show();
+				me["ils_code"].setText(split_ils[0]);
+				me["ils_freq"].setText(split_ils[1]);
+				me["ils_code"].show();
+				me["ils_freq"].show();
 			}
 			
 			if (dme_in_range.getValue() == 1) {
