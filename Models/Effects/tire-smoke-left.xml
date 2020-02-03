@@ -18,7 +18,7 @@
 
         <condition>
 				<equals>
-					<property>gear/Lbrake-smoke</property>
+					<property>gear/gear[1]/Lbrake-smoke</property>
 					<value>1</value>
 				</equals>
         </condition>
@@ -50,7 +50,7 @@
 
         <counter>
             <particles-per-sec>
-				<property>gear/Lbrake-thermal-energy</property>
+				<property>gear/gear[1]/Lbrake-thermal-energy</property>
 				<factor>20</factor>
                 <spread>70</spread>
             </particles-per-sec>
