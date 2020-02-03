@@ -386,7 +386,8 @@
 				<live>true</live>
 			</checkbox>
 			
-			<checkbox>
+			<!-- TODO Comment back in, when fully implemented -->
+			<!-- checkbox>
 				<label>Weight in KG</label>
 				<halign>left</halign>
 				<property>/options/system/weight-kgs</property>
@@ -404,7 +405,7 @@
 					</script>
 				</binding>
 				<live>true</live>
-			</checkbox>
+			</checkbox -->
 
 			<checkbox>
 				<label>ADIRS Aligns Instantly</label>
