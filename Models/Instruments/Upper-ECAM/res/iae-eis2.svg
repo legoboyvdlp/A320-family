@@ -197,7 +197,7 @@
          y="516.5" /></flowRegion><flowPara
        id="flowPara4394"
        style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>  <text
-     id="text4433"
+     id="FOB-weight-unit"
      y="579.20343"
      x="384.25583"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -240,7 +240,7 @@
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="140.95256"
      y="293.94324"
-     id="text4362"><tspan
+     id="FFlow1-weight-unit"><tspan
        sodipodi:role="line"
        id="tspan4364"
        x="140.95256"
@@ -825,7 +825,7 @@
        y="403.51654"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.25978088px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#179ab7;fill-opacity:1">%</tspan></text>
   <text
-     id="text4347"
+     id="FFlow2-weight-unit"
      y="293.94324"
      x="1100.5696"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
