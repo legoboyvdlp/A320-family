@@ -481,6 +481,7 @@ var taxi_b = func {
 	setprop("/controls/lighting/taxi-light-switch", 0.5);
 	setprop("/controls/switches/landing-lights-l", 0.5);
 	setprop("/controls/switches/landing-lights-r", 0.5);
+	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/pressure-sea-level-inhg"));
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
