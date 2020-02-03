@@ -103,7 +103,7 @@ var flightPlanController = {
 				me.deleteWP(0, 1);
 			}
 			
-			me.deleteWP(0, 2);
+			me.deleteWP(0, 2, 0, 1);
 		}
 	},
 	
@@ -116,12 +116,12 @@ var flightPlanController = {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), 0);
 	},
 	
-	deleteWP: func(index, n, a = 0) { # a = 1, means adding a waypoint via deleting intermediate
+	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate
 		var wp = wpID[n][index].getValue();
 		if (wp != FMGCdep.getValue() and wp != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
-				if (me.flightplans[n].getWP(index) != nil) {
+				if (me.flightplans[n].getWP(index) != nil and s == 0) {
 					if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 						me.addDiscontinuity(index, n);
 					}
