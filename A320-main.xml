@@ -1115,7 +1115,6 @@
 	<options n="0">
 		<system n="0">
 			<keyboard-mode type="bool">0</keyboard-mode>
-			<laptop-mode type="bool">0</laptop-mode>
 		</system>
 		<steep-ils type="bool">0</steep-ils>
 		<steep-ils-avail type="bool">0</steep-ils-avail>
