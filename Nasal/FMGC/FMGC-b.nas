@@ -428,8 +428,8 @@ var ITAF = {
 				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
 				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist) {
-					if (flightPlanController.currentToWptIndex < 1) {	
-						flightPlanController.currentToWptIndex = 1;	
+					if (flightPlanController.currentToWptIndex.getValue() < 1) {	
+						flightPlanController.currentToWptIndex.setValue(1);	
 					} else if (flightPlanController.num[2].getValue() > 2) { # The Airbus doesn't display anything past the previous waypoint after advancing	
 						flightPlanController.autoSequencing();	
 					}

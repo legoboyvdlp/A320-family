@@ -373,16 +373,18 @@ var flightPlanController = {
 				
 				if (wpt > 0) {
 					if (me.flightplans[n].getWP(wpt).id == "DISCONTINUITY") {
-					wpCoursePrev[n][wpt].setValue(0);
-					wpDistancePrev[n][wpt].setValue(0);
-					continue; 
+						wpCoursePrev[n][wpt].setValue(0);
+						wpDistancePrev[n][wpt].setValue(0);
+						continue; 
 					}
 					
-					if (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
-						geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
-					} else {
+					#if (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
+					#	if (wpt >= 2) {
+					#		geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
+					#	}
+					#} else {
 						geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
-					}
+					#}
 					
 					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
@@ -412,20 +414,20 @@ var flightPlanController = {
 	},
 	
 	updateCurrentWaypoint: func() {
-		for (var i = 0; i <= 2; i += 1) {
-			if (toFromSet.getBoolValue() and me.flightplans[i].departure != nil and me.flightplans[i].destination != nil) { # check if flightplan exists
+		for (var india = 0; india <= 2; india += 1) {
+			if (toFromSet.getBoolValue() and me.flightplans[india].departure != nil and me.flightplans[india].destination != nil) { # check if flightplan exists
 				var curAircraftPos = geo.aircraft_position(); # don't want to get this corrupted so make sure it is a local variable
 	
-				if (i == 2) { # main plan
+				if (india == 2) { # main plan
 					if (!me.active.getBoolValue()) {
 						me.active.setValue(1);
 					}
 					
-					if (me.currentToWptIndex.getValue() > me.flightplans[i].getPlanSize()) {
-						me.currentToWptIndex.setValue(me.flightplans[i].getPlanSize());
+					if (me.currentToWptIndex.getValue() > me.flightplans[india].getPlanSize()) {
+						me.currentToWptIndex.setValue(me.flightplans[india].getPlanSize());
 					}
 					
-					me.currentToWpt = me.flightplans[i].getWP(me.currentToWptIndex.getValue());
+					me.currentToWpt = me.flightplans[india].getWP(me.currentToWptIndex.getValue());
 					
 					if (me.currentToWptID.getValue() != me.currentToWpt.wp_name) {
 						me.currentToWptID.setValue(me.currentToWpt.wp_name);
@@ -436,17 +438,13 @@ var flightPlanController = {
 					magTrueError = magHDG.getValue() - trueHDG.getValue();
 					me.courseMagToWpt.setValue(me.courseToWpt.getValue() + magTrueError);
 					
-					return;
 				}
 				
-				print("x");
-				if (me.num[i].getValue() != me.flightplans[i].getPlanSize()) {
-					me.num[i].setValue(me.flightplans[i].getPlanSize());
-					print("y");
+				if (me.num[india].getValue() != me.flightplans[india].getPlanSize()) {
+					me.num[india].setValue(me.flightplans[india].getPlanSize());
 				}
-				print("z");
 			} else {
-				if (i == 2) {
+				if (india == 2) {
 					if (me.active.getBoolValue()) {
 						me.active.setValue(0);
 					}
@@ -454,8 +452,9 @@ var flightPlanController = {
 						me.currentToWptID.setValue("");
 					}
 				}
-				if (me.num[i].getValue() != 0) {
-					me.num[i].setValue(0);
+				
+				if (me.num[india].getValue() != 0) {
+					me.num[india].setValue(0);
 				}
 			}
 		}
