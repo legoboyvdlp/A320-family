@@ -776,9 +776,7 @@ var canvas_PFD_base = {
 				var r = runways[rwy];
 				if (r.ils_frequency_mhz == split_ils[1]) {
 					magnetic_hdg = r.heading - getprop("/environment/magnetic-variation-deg");
-					magnetic_hdg_dif = magnetic_hdg - heading.getValue();
-					print(magnetic_hdg_dif);
-
+					magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
 					if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
 						me["CRS_pointer"].setTranslation((magnetic_hdg_dif / 10) * 98.5416, 0);
 						me["ILS_HDG_R"].hide();
