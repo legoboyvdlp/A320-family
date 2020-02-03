@@ -5,6 +5,30 @@
 <PropertyList>
 
 	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>0.1</value>
+		</time>
+		<S>
+			<property>/controls/electrical/switches/gen-1</property>
+		</S>
+		<output>/systems/electrical/some-electric-thingie/generator-1-pb</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>0.1</value>
+		</time>
+		<S>
+			<property>/controls/electrical/switches/gen-2</property>
+		</S>
+		<output>/systems/electrical/some-electric-thingie/generator-2-pb</output>
+	</flipflop>
+	
+	<flipflop>
 		<type>RS</type>
 		<S>
 			<property>/systems/electrical/some-electric-thingie/emer-elec-config-generator-1-bustie</property>

@@ -56,7 +56,7 @@ var lvr_clb = props.globals.getNode("/systems/thrust/lvrclb", 1);
 var throt_box = props.globals.getNode("/modes/pfd/fma/throttle-mode-box", 1);
 var pitch_box = props.globals.getNode("/modes/pfd/fma/pitch-mode-box", 1);
 var ap_box = props.globals.getNode("/modes/pfd/fma/ap-mode-box", 1);
-var fd_box  = props.globals.getNode("/modes/pfd/fma/fd-mode-box", 1);
+var fd_box	= props.globals.getNode("/modes/pfd/fma/fd-mode-box", 1);
 var at_box = props.globals.getNode("/modes/pfd/fma/athr-mode-box", 1);
 var fbw_law = props.globals.getNode("/it-fbw/law", 1);
 var ap_mode = props.globals.getNode("/modes/pfd/fma/ap-mode", 1);
@@ -108,14 +108,15 @@ var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
 var gear_agl = props.globals.getNode("/position/gear-agl-ft", 1);
 var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast", 1);
 var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
-var adirs0_active = props.globals.getNode("/instrumentation/adirs/adr[0]/active", 1);
-var adirs1_active = props.globals.getNode("/instrumentation/adirs/adr[1]/active", 1);
-var adirs2_active = props.globals.getNode("/instrumentation/adirs/adr[2]/active", 1);
-var ir0_aligned = props.globals.getNode("/instrumentation/adirs/ir[0]/aligned", 1);
-var ir1_aligned = props.globals.getNode("/instrumentation/adirs/ir[1]/aligned", 1);
-var ir2_aligned = props.globals.getNode("/instrumentation/adirs/ir[2]/aligned", 1);
 var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
 var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
+var appr_enabled = props.globals.getNode("/it-autoflight/output/appr-armed/", 1);
+var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
+var ils_data1 = props.globals.getNode("/FMGC/internal/ils1-mcdu/", 1);
+# Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
+# var ils_data2 = props.globals.getNode("/FMGC/internal/ils2-mcdu/", 1);
+var dme_in_range = props.globals.getNode("/instrumentation/nav[0]/dme-in-range", 1);
+var dme_data = props.globals.getNode("/instrumentation/dme[0]/indicated-distance-nm", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -128,11 +129,9 @@ var hdg_diff = props.globals.initNode("/instrumentation/pfd/hdg-diff", 0.0, "DOU
 var hdg_scale = props.globals.initNode("/instrumentation/pfd/heading-scale", 0.0, "DOUBLE");
 var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBLE");
 var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
-var speed_pred_1 = props.globals.initNode("/instrumentation/pfd/speed-lookahead-1", 0.0, "DOUBLE");
-var speed_pred_2 = props.globals.initNode("/instrumentation/pfd/speed-lookahead-2", 0.0, "DOUBLE");
-var speed_pred_3 = props.globals.initNode("/instrumentation/pfd/speed-lookahead-3", 0.0, "DOUBLE");
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
+var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
 var du1_test_amount = props.globals.initNode("/instrumentation/du/du1-test-amount", 0.0, "DOUBLE");
 var du2_test = props.globals.initNode("/instrumentation/du/du2-test", 0, "BOOL");
 var du2_test_time = props.globals.initNode("/instrumentation/du/du2-test-time", 0.0, "DOUBLE");
@@ -143,6 +142,7 @@ var du5_test_amount = props.globals.initNode("/instrumentation/du/du5-test-amoun
 var du6_test = props.globals.initNode("/instrumentation/du/du6-test", 0, "BOOL");
 var du6_test_time = props.globals.initNode("/instrumentation/du/du6-test-time", 0.0, "DOUBLE");
 var du6_test_amount = props.globals.initNode("/instrumentation/du/du6-test-amount", 0.0, "DOUBLE");
+var du6_offtime = props.globals.initNode("/instrumentation/du/du6-off-time", 0.0, "DOUBLE");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -166,7 +166,7 @@ var canvas_PFD_base = {
 				tran_rect[2], # 1 xe
 				tran_rect[3], # 2 ye
 				tran_rect[0]); #3 xs
-				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
+				#	coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
 				me[key].set("clip", clip_rect);
 				me[key].set("clip-frame", canvas.Element.PARENT);
 			}
@@ -194,49 +194,60 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend"];
 	},
-	update: func() {
-		elapsedtime_act = elapsedtime.getValue();
+	updateDu1: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		if (acess.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+			if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+						du1_test.setValue(1);
+						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du1_test_time.setValue(elapsedtime_act);
+					} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
+						du1_test.setValue(1);
+						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du1_test_time.setValue(elapsedtime_act - 30);
+					}
+				} else {
 					du1_test.setValue(1);
-					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du1_test_time.setValue(elapsedtime_act);
-				} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
-					du1_test.setValue(1);
-					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du1_test_time.setValue(elapsedtime_act - 30);
+					du1_test_amount.setValue(0);
+					du1_test_time.setValue(-100);
 				}
-			} else {
-				du1_test.setValue(1);
-				du1_test_amount.setValue(0);
-				du1_test_time.setValue(-100);
 			}
 		} else {
 			du1_test.setValue(0);
+			du1_offtime.setValue(elapsedtime_act);
 		}
-		
+	},
+	updateDu6: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		if (ac2.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+			if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+						du6_test.setValue(1);
+						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du6_test_time.setValue(elapsedtime_act);
+					} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
+						du6_test.setValue(1);
+						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du6_test_time.setValue(elapsedtime_act - 30);
+					}
+				} else {
 					du6_test.setValue(1);
-					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du6_test_time.setValue(elapsedtime_act);
-				} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
-					du6_test.setValue(1);
-					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du6_test_time.setValue(elapsedtime_act - 30);
+					du6_test_amount.setValue(0);
+					du6_test_time.setValue(-100);
 				}
-			} else {
-				du6_test.setValue(1);
-				du6_test_amount.setValue(0);
-				du6_test_time.setValue(-100);
 			}
 		} else {
 			du6_test.setValue(0);
+			du6_offtime.setValue(elapsedtime_act);
 		}
+	},
+	update: func() {
+		var elapsedtime_act = elapsedtime.getValue();
 		
 		if (acconfig_mismatch.getValue() == "0x000") {
 			PFD_1_mismatch.page.hide();
@@ -345,7 +356,7 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX            ");
+				me["FMA_manmode"].setText("FLX			  ");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MAN THR" and thr1_act < 0.83) or (state2_act == "MAN THR" and thr2_act < 0.83)) {
 				me["FMA_flx_box"].hide();
@@ -375,7 +386,7 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX            ");
+				me["FMA_manmode"].setText("FLX			  ");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			}
 		} else {
@@ -608,7 +619,7 @@ var canvas_PFD_base = {
 	updateCommonFast: func() {
 		# Attitude Indicator
 		pitch_cur = pitch.getValue();
-		roll_cur =  roll.getValue();
+		roll_cur =	roll.getValue();
 		
 		me.AI_horizon_trans.setTranslation(0, pitch_cur * 11.825);
 		me.AI_horizon_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
@@ -790,26 +801,22 @@ var canvas_PFD_1 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if ((adirs0_active.getValue() == 1) or (air_switch.getValue() == -1 and adirs2_active.getValue() == 1)) {
-			me["VS_group"].show();
-			me["VS_error"].hide();
-		} else {
-			me["VS_error"].show();
-			me["VS_group"].hide();
-		}
-		
-		if ((ir0_aligned.getValue() == 1) or (ir2_aligned.getValue() == 1 and att_switch.getValue() == -1)) {
+		if (systems.ADIRSnew.ADIRunits[0].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
 			me["HDG_error"].hide();
 			me["HDG_frame"].setColor(1,1,1);
+			me["VS_group"].show();
+			me["VS_error"].hide(); # VS is inertial-sourced
 		} else {
 			me["AI_error"].show();
 			me["HDG_error"].show();
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["VS_error"].show();
+			me["VS_group"].hide();
 		}
 		
 		# FD
@@ -829,9 +836,22 @@ var canvas_PFD_1 = {
 		if (ap_ils_mode.getValue() == 1) {
 			me["LOC_scale"].show();
 			me["GS_scale"].show();
+			me["ils_code"].setText(split("/", ils_data1.getValue())[0]);
+			me["ils_freq"].setText(split("/", ils_data1.getValue())[1]);
+			me["ils_code"].show();
+			me["ils_freq"].show();
+			if (dme_in_range.getValue() == 1) {
+				me["dme_dist"].setText(sprintf("%2.0f", int(dme_data.getValue())));
+				me["dme_dist"].show(); 
+				me["dme_dist_legend"].show();
+			}
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
+			me["ils_code"].hide();
+			me["ils_freq"].hide();
+			me["dme_dist"].hide();
+			me["dme_dist_legend"].hide();
 		}
 		
 		if (ap_ils_mode.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -843,6 +863,12 @@ var canvas_PFD_1 = {
 			me["GS_pointer"].show();
 		} else {
 			me["GS_pointer"].hide();
+		}
+		
+		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
+			me["ilsError"].show();	  
+		} else {
+			me["ilsError"].hide();
 		}
 		
 		me.updateCommon();
@@ -938,7 +964,7 @@ var canvas_PFD_1 = {
 				me["ASI_target"].hide();
 			}
 			
-			me.ASItrend = speed_pred_1.getValue() - me.ASI;
+			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
 			
@@ -1083,37 +1109,22 @@ var canvas_PFD_2 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if ((adirs1_active.getValue() == 1) or (air_switch.getValue() == 1 and adirs2_active.getValue() == 1)) {
-			me["ALT_group"].show();
-			me["ALT_group2"].show();
-			me["ALT_scale"].show();
-			me["VS_group"].show();
-			me["ALT_error"].hide();
-			me["ALT_frame"].setColor(1,1,1);
-			me["VS_error"].hide();
-		} else {
-			me["ALT_error"].show();
-			me["ALT_frame"].setColor(1,0,0);
-			me["VS_error"].show();
-			me["ASI_group"].hide();
-			me["ALT_group"].hide();
-			me["ALT_group2"].hide();
-			me["ALT_scale"].hide();
-			me["VS_group"].hide();
-		}
-		
-		if ((ir1_aligned.getValue() == 1) or (ir2_aligned.getValue() == 1 and att_switch.getValue() == 1)) {
+		if (systems.ADIRSnew.ADIRunits[1].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
 			me["HDG_error"].hide();
 			me["HDG_frame"].setColor(1,1,1);
+			me["VS_group"].show();
+			me["VS_error"].hide(); # VS is inertial-sourced
 		} else {
 			me["AI_error"].show();
 			me["HDG_error"].show();
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["VS_error"].show();
+			me["VS_group"].hide();
 		}
 		
 		# FD
@@ -1133,9 +1144,23 @@ var canvas_PFD_2 = {
 		if (ap_ils_mode2.getValue() == 1) {
 			me["LOC_scale"].show();
 			me["GS_scale"].show();
+			# Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
+			me["ils_code"].setText(split("/", ils_data1.getValue())[0]);
+			me["ils_freq"].setText(split("/", ils_data1.getValue())[1]);
+			me["ils_code"].show();
+			me["ils_freq"].show();
+			if (dme_in_range.getValue() == 1) {
+				me["dme_dist"].setText(sprintf("%2.0f", int(dme_data.getValue())));
+				me["dme_dist"].show(); 
+				me["dme_dist_legend"].show();
+			}
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
+			me["ils_code"].hide();
+			me["ils_freq"].hide();
+			me["dme_dist"].hide();
+			me["dme_dist_legend"].hide();
 		}
 		
 		if (ap_ils_mode2.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -1147,6 +1172,12 @@ var canvas_PFD_2 = {
 			me["GS_pointer"].show();
 		} else {
 			me["GS_pointer"].hide();
+		}
+		
+		if (ap_ils_mode2.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
+			me["ilsError"].show();	  
+		} else {
+			me["ilsError"].hide();
 		}
 		
 		me.updateCommon();
@@ -1242,7 +1273,7 @@ var canvas_PFD_2 = {
 				me["ASI_target"].hide();
 			}
 			
-			me.ASItrend = speed_pred_2.getValue() - me.ASI;
+			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
 			
@@ -1585,3 +1616,11 @@ var fontSizeHDG = func(input) {
 		return 32;
 	}
 };
+
+setlistener("/systems/electrical/bus/ac-ess", func() {
+	canvas_PFD_base.updateDu1();
+}, 0, 0);
+
+setlistener("/systems/electrical/bus/ac-2", func() {
+	canvas_PFD_base.updateDu6();
+}, 0, 0);

@@ -29,6 +29,10 @@ var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
 var gear_agl_cur = nil;
+var numberMinutes = nil;
+var timeNow = nil;
+var timer10secIRS = nil;
+
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
 	
@@ -738,45 +742,6 @@ var messages_priority_3 = func {
 		ap_offw.active = 1;
 	} else {
 		ECAM_controller.warningReset(ap_offw);
-		if (getprop("/it-autoflight/output/ap-warning") == 2) {
-			setprop("/it-autoflight/output/ap-warning", 0);
-			setprop("/ECAM/Lower/light/clr", 0);
-			setprop("/ECAM/warnings/master-warning-light", 0);
-		}
-	}
-	
-	if ((athr_lock.clearFlag == 0) and phaseVar >= 5 and phaseVar <= 7 and getprop("/systems/thrust/thr-locked-alert") == 1) {
-		if (getprop("/systems/thrust/thr-locked-flash") == 0) {
-			athr_lock.msg = " ";
-		} else {
-			athr_lock.msg = msgSave
-		}
-		athr_lock.active = 1;
-		athr_lock_1.active = 1;
-	} else {
-		ECAM_controller.warningReset(athr_lock);
-		ECAM_controller.warningReset(athr_lock_1);
-	}
-	
-	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar != 4 and phaseVar != 8 and phaseVar != 10) {
-		athr_offw.active = 1;
-		athr_offw_1.active = 1;
-	} else {
-		ECAM_controller.warningReset(athr_offw);
-		ECAM_controller.warningReset(athr_offw_1);
-		if (getprop("/it-autoflight/output/athr-warning") == 2) {
-			setprop("/it-autoflight/output/athr-warning", 0);
-			setprop("/ECAM/Lower/light/clr", 0);
-			setprop("/ECAM/warnings/master-caution-light", 0);
-		}
-	}
-	
-	if ((athr_lim.clearFlag == 0) and getprop("/it-autoflight/output/athr") == 1 and ((getprop("/systems/thrust/eng-out") != 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN")) or (getprop("/systems/thrust/eng-out") == 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN" or (getprop("/systems/thrust/state1") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83) or (getprop("/systems/thrust/state2") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar >= 5 and phaseVar <= 7)) {
-		athr_lim.active = 1;
-		athr_lim_1.active = 1;
-	} else {
-		ECAM_controller.warningReset(athr_lim);
-		ECAM_controller.warningReset(athr_lim_1);
 	}
 	
 	if (!systems.cargoTestBtn.getBoolValue()) {
@@ -784,21 +749,21 @@ var messages_priority_3 = func {
 			cargoSmokeFwd.active = 1;
 		} elsif (cargoSmokeFwd.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeFwd);
-			cargoSmokeFwd.hasSubmsg = 1;
+			cargoSmokeFwd.isMainMsg = 1;
 		}
 		
 		if (cargoSmokeFwdAgent.clearFlag == 0 and cargoSmokeFwd.active == 1 and !getprop("/systems/fire/cargo/disch")) {
 			cargoSmokeFwdAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeFwdAgent);
-			cargoSmokeFwd.hasSubmsg = 0;
+			cargoSmokeFwd.isMainMsg = 0;
 		}
 
 		if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar <= 3 or phaseVar >= 9 or phaseVar == 6)) {
 			cargoSmokeAft.active = 1;
 		} elsif (cargoSmokeAft.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeAft);
-			cargoSmokeAft.hasSubmsg = 1;
+			cargoSmokeAft.isMainMsg = 1;
 			systems.cargoTestBtnOff.setBoolValue(0);
 		}
 		
@@ -806,7 +771,7 @@ var messages_priority_3 = func {
 			cargoSmokeAftAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeAftAgent);
-			cargoSmokeAft.hasSubmsg = 0;
+			cargoSmokeAft.isMainMsg = 0;
 		}
 	} else {
 		if (systems.aftCargoFireWarn.getBoolValue()) {
@@ -850,7 +815,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (!(getprop("/systems/electrical/some-electric-thingie/generator-1-reset") and getprop("/systems/electrical/some-electric-thingie/generator-2-reset")) and emerconfigGen.clearFlag == 0) {
-			emerconfigGen.active = 1;
+			emerconfigGen.active = 1; # EGEN12R TRUE
 		} else {
 			ECAM_controller.warningReset(emerconfigGen);
 		}
@@ -862,7 +827,7 @@ var messages_priority_3 = func {
 			} else {
 				ECAM_controller.warningReset(emerconfigBusTie);
 			}
-			emerconfigGen3.active = 1;
+			emerconfigGen3.active = 1; #  EGENRESET TRUE
 		} else {
 			ECAM_controller.warningReset(emerconfigGen2);
 			ECAM_controller.warningReset(emerconfigBusTie);
@@ -1088,6 +1053,37 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
 	
+	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar != 4 and phaseVar != 8 and phaseVar != 10) {
+		athr_offw.active = 1;
+		athr_offw_1.active = 1;
+	} else {
+		ECAM_controller.warningReset(athr_offw);
+		ECAM_controller.warningReset(athr_offw_1);
+	}
+	
+	if ((athr_lock.clearFlag == 0) and phaseVar >= 5 and phaseVar <= 7 and getprop("/systems/thrust/thr-locked-alert") == 1) {
+		if (getprop("/systems/thrust/thr-locked-flash") == 0) {
+			athr_lock.msg = " ";
+		} else {
+			athr_lock.msg = msgSave
+		}
+		athr_lock.active = 1;
+		athr_lock_1.active = 1;
+	} else {
+		ECAM_controller.warningReset(athr_lock);
+		ECAM_controller.warningReset(athr_lock_1);
+	}
+	
+	
+	if ((athr_lim.clearFlag == 0) and getprop("/it-autoflight/output/athr") == 1 and ((getprop("/systems/thrust/eng-out") != 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN")) or (getprop("/systems/thrust/eng-out") == 1 and (getprop("/systems/thrust/state1") == "MAN" or getprop("/systems/thrust/state2") == "MAN" or (getprop("/systems/thrust/state1") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83) or (getprop("/systems/thrust/state2") == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar >= 5 and phaseVar <= 7)) {
+		athr_lim.active = 1;
+		athr_lim_1.active = 1;
+	} else {
+		ECAM_controller.warningReset(athr_lim);
+		ECAM_controller.warningReset(athr_lim_1);
+	}
+	
+	
 	if (getprop("/instrumentation/tcas/serviceable") == 0 and phaseVar != 3 and phaseVar != 4 and phaseVar != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
@@ -1123,14 +1119,14 @@ var messages_priority_2 = func {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
-		apuEmerShutdown.hasSubmsg = 1;
+		apuEmerShutdown.isMainMsg = 1;
 	}
 	
 	if (apuEmerShutdownMast.clearFlag == 0 and getprop("/controls/APU/master") and apuEmerShutdown.active == 1) {
 		apuEmerShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);
-		apuEmerShutdown.hasSubmsg = 0;
+		apuEmerShutdown.isMainMsg = 0;
 	}
 	
 	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
@@ -1362,7 +1358,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/ldg-memo-2200-set", 0);
 	}
 	
-	if (phaseVar >= 6 and phaseVar <= 8) {
+	if (phaseVar != 6 and phaseVar != 7 and phaseVar != 8) {
 		setprop("/ECAM/ldg-memo-2200-reset", 1);
 	} else {
 		setprop("/ECAM/ldg-memo-2200-reset", 0);
@@ -1387,6 +1383,39 @@ var messages_memo = func {
 		refuelg.active = 1;
 	} else {
 		refuelg.active = 0;
+	}
+	
+	if ((phaseVar == 1 or phaseVar == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRSnew.ADIRunits[0].inAlign == 1 or systems.ADIRSnew.ADIRunits[1].inAlign == 1 or systems.ADIRSnew.ADIRunits[2].inAlign == 1)) {
+		irs_in_align.active = 1;
+		if (getprop("/ECAM/phases/timer/eng1or2-output")) {
+			irs_in_align.colour = "a";
+		} else {
+			irs_in_align.colour = "g";
+		}
+		
+		timeNow = pts.Sim.Time.elapsedSec.getValue();
+		numberMinutes = math.round(math.max(systems.ADIRSnew.ADIRunits[0]._alignTime - timeNow, systems.ADIRSnew.ADIRunits[1]._alignTime - timeNow, systems.ADIRSnew.ADIRunits[2]._alignTime - timeNow) / 60);
+		
+		if (numberMinutes >= 7) {
+			irs_in_align.msg = "IRS IN ALIGN > 7 MN";
+		} elsif (numberMinutes >= 1) {
+			irs_in_align.msg = "IRS IN ALIGN " ~ numberMinutes ~ " MN";
+		} else {
+			irs_in_align.msg = "IRS IN ALIGN";
+		}
+	} else {
+		if (irs_in_align.active and !timer10secIRS) {
+			timer10secIRS = 1;
+			irs_in_align.msg = "IRS ALIGNED";
+			settimer(func() {
+				irs_in_align.active = 0;
+				irs_in_align.msg = "IRS IN ALIGN";
+				timer10secIRS = 0;
+			}, 10);
+		} elsif (!timer10secIRS) {
+			irs_in_align.active = 0;
+			irs_in_align.msg = "IRS IN ALIGN";
+		}
 	}
 	
 	if (getprop("/controls/flight/speedbrake-arm") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
@@ -1447,7 +1476,7 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if ((getprop("/gear/gear[1]/wow") == 0) and (getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/cargo-aft-fire") == 1 or getprop("/systems/failures/cargo-fwd-fire") == 1) or (((getprop("/systems/hydraulic/green-psi") < 1500 and getprop("/engines/engine[0]/state") == 3) and (getprop("/systems/hydraulic/yellow-psi") < 1500 and getprop("/engines/engine[1]/state") == 3)) or ((getprop("/systems/hydraulic/green-psi") < 1500 or getprop("/systems/hydraulic/yellow-psi") < 1500) and getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") == 3) and phaseVar >= 3 and phaseVar <= 8)) {
+	if ((getprop("/gear/gear[1]/wow") == 0) and (getprop("/systems/electrical/some-electric-thingie/emer-elec-config") or getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/cargo-aft-fire") == 1 or getprop("/systems/failures/cargo-fwd-fire") == 1) or (((getprop("/systems/hydraulic/green-psi") < 1500 and getprop("/engines/engine[0]/state") == 3) and (getprop("/systems/hydraulic/yellow-psi") < 1500 and getprop("/engines/engine[1]/state") == 3)) or ((getprop("/systems/hydraulic/green-psi") < 1500 or getprop("/systems/hydraulic/yellow-psi") < 1500) and getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") == 3) and phaseVar >= 3 and phaseVar <= 8)) {
 		# todo: emer elec
 		land_asap_r.active = 1;
 	} else {
@@ -1493,6 +1522,12 @@ var messages_right_memo = func {
 		park_brk.colour = "a";
 	} else {
 		park_brk.colour = "g";
+	}
+	
+	if (getprop("/controls/gear/brake-fans") == 1) {
+		brk_fan.active = 1;
+	} else {
+		brk_fan.active = 0;
 	}
 	
 	if (getprop("/controls/hydraulic/ptu") == 1 and ((getprop("/systems/hydraulic/yellow-psi") < 1450 and getprop("/systems/hydraulic/green-psi") > 1450 and getprop("/controls/hydraulic/elec-pump-yellow") == 0) or (getprop("/systems/hydraulic/yellow-psi") > 1450 and getprop("/systems/hydraulic/green-psi") < 1450))) {

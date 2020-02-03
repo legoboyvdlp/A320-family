@@ -66,6 +66,7 @@ var FMGC = {
 var Gear = {
 	compression: [props.globals.getNode("/gear/gear[0]/compression-norm"),props.globals.getNode("/gear/gear[1]/compression-norm"),props.globals.getNode("/gear/gear[2]/compression-norm")],
 	wow: [props.globals.getNode("/gear/gear[0]/wow"),props.globals.getNode("/gear/gear[1]/wow"),props.globals.getNode("/gear/gear[2]/wow")],
+	position: [props.globals.getNode("/gear/gear[0]/position-norm"),props.globals.getNode("/gear/gear[1]/position-norm"),props.globals.getNode("/gear/gear[2]/position-norm")],
 };
 
 var Instrumentation = {
@@ -105,8 +106,16 @@ var Options = {
 	eng: props.globals.getNode("/options/eng"),
 };
 
+var Orientation = {
+	pitch: props.globals.getNode("/orientation/pitch-deg"),
+	roll: props.globals.getNode("/orientation/roll-deg"),
+	yaw: props.globals.getNode("/orientation/yaw-deg"),
+};
+
 var Position = {
 	gearAglFt: props.globals.getNode("/position/gear-agl-ft"),
+	latitude: props.globals.getNode("/position/latitude-deg"),
+	longitude: props.globals.getNode("/position/longitude-deg"),
 };
 
 var Sim = {
@@ -119,16 +128,14 @@ var Sim = {
 	},
 };
 
-var Orientation = {
-	pitch: props.globals.getNode("/orientation/pitch-deg"),
-	roll: props.globals.getNode("/orientation/roll-deg"),
-	yaw: props.globals.getNode("/orientation/yaw-deg"),
-};
-
 var PTSSystems = {
 	Thrust: {
 		flex: props.globals.getNode("/systems/thrust/lim-flex"),
 	},
+};
+
+var Velocities = {
+	groundspeed: props.globals.getNode("/velocities/groundspeed-kt"),
 };
 
 setprop("/systems/acconfig/property-tree-setup-loaded", 1);

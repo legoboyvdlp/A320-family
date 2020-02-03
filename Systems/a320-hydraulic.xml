@@ -109,7 +109,7 @@
 					<table>
 						<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar>
 						<tableData>
-							99   0
+							90   0
 							100  2500
 						</tableData>
 					</table>

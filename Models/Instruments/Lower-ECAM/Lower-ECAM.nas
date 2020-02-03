@@ -183,6 +183,10 @@ var g_resv_ovht = props.globals.getNode("/systems/hydraulic/green-resv-ovht", 1)
 var askidsw = 0;
 var brakemode = 0;
 var accum = 0;
+var L1BrakeTempc = props.globals.getNode("/gear/gear[1]/L1brake-temp-degc", 1);
+var L2BrakeTempc = props.globals.getNode("/gear/gear[1]/L2brake-temp-degc", 1);
+var R3BrakeTempc = props.globals.getNode("/gear/gear[2]/R3brake-temp-degc", 1);
+var R4BrakeTempc = props.globals.getNode("/gear/gear[2]/R4brake-temp-degc", 1);
 
 var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
 var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
@@ -257,6 +261,7 @@ var gen2_load = props.globals.initNode("/systems/electrical/extra/gen2-load", 0,
 var du4_test = props.globals.initNode("/instrumentation/du/du4-test", 0, "BOOL");
 var du4_test_time = props.globals.initNode("/instrumentation/du/du4-test-time", 0, "DOUBLE");
 var du4_test_amount = props.globals.initNode("/instrumentation/du/du4-test-amount", 0, "DOUBLE");
+var du4_offtime = props.globals.initNode("/instrumentation/du/du4-off-time", 0.0, "DOUBLE");
 
 var canvas_lowerECAM_base = {
 	init: func(canvas_group, file) {
@@ -278,27 +283,34 @@ var canvas_lowerECAM_base = {
 	getKeys: func() {
 		return [];
 	},
-	update: func() {
-		elapsedtime = elapsed_sec.getValue();
+	updateDu4: func() {
+		var elapsedtime = elapsed_sec.getValue();
+		
 		if (ac2.getValue() >= 110) {
-			if (gear0_wow.getValue() == 1) {
-				if (autoconfig_running.getValue() != 1 and du4_test.getValue() != 1) {
+			if (du4_offtime.getValue() + 3 < elapsedtime) {
+				if (gear0_wow.getValue() == 1) {
+					if (autoconfig_running.getValue() != 1 and du4_test.getValue() != 1) {
+						du4_test.setValue(1);
+						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du4_test_time.setValue(elapsedtime);
+					} else if (autoconfig_running.getValue() == 1 and du4_test.getValue() != 1) {
+						du4_test.setValue(1);
+						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du4_test_time.setValue(elapsedtime - 30);
+					}
+				} else {
 					du4_test.setValue(1);
-					du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du4_test_time.setValue(elapsedtime);
-				} else if (autoconfig_running.getValue() == 1 and du4_test.getValue() != 1) {
-					du4_test.setValue(1);
-					du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du4_test_time.setValue(elapsedtime - 30);
+					du4_test_amount.setValue(0);
+					du4_test_time.setValue(-100);
 				}
-			} else {
-				du4_test.setValue(1);
-				du4_test_amount.setValue(0);
-				du4_test_time.setValue(-100);
 			}
-		} else if (ac1_src.getValue() == "XX" or ac2_src.getValue() == "XX") {
+		} else {
 			du4_test.setValue(0);
+			du4_offtime.setValue(elapsedtime);
 		}
+	},
+	update: func() {
+		var elapsedtime = elapsed_sec.getValue();
 		
 		if (ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
 			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime) {
@@ -603,14 +615,14 @@ var canvas_lowerECAM_apu = {
 			me["APUAvail"].hide();
 		}
 
-		if (tank3_content_lbs.getValue() < 100) {
+		if (!systems.FUEL.Pumps.apu.getBoolValue() and systems.FUEL.Pumps.allOff.getBoolValue()) {
 			me["APUfuelLO"].show();
 		} else {
 			me["APUfuelLO"].hide();
 		}
 
 		# APU Gen
-		if (apu_volts.getValue() > 110) {
+		if (apu_volts.getValue() >= 110) {
 			me["APUGenVolt"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["APUGenVolt"].setColor(0.7333,0.3803,0);
@@ -1446,13 +1458,13 @@ var canvas_lowerECAM_elec = {
 				me["GEN1-num-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen1_volts.getValue() > 120 or gen1_volts.getValue() < 110 or gen1_hz.getValue() > 410 or gen1_hz.getValue() < 390 or gen1_load.getValue() > 110) {
+			if (gen1_volts.getValue() > 120 or gen1_volts.getValue() < 110 or gen1_hz.getValue() > 410 or gen1_hz.getValue() < 390 or gen1_load.getValue() >= 110) {
 				me["GEN1-label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["GEN1-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen1_load.getValue() > 110) {
+			if (gen1_load.getValue() >= 110) {
 				me["Gen1Load"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen1Load"].setColor(0.0509,0.7529,0.2941);
@@ -1503,13 +1515,13 @@ var canvas_lowerECAM_elec = {
 				me["GEN2-num-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen2_volts.getValue() > 120 or gen2_volts.getValue() < 110 or gen2_hz.getValue() > 410 or gen2_hz.getValue() < 390 or gen2_load.getValue() > 110) {
+			if (gen2_volts.getValue() > 120 or gen2_volts.getValue() < 110 or gen2_hz.getValue() > 410 or gen2_hz.getValue() < 390 or gen2_load.getValue() >= 110) {
 				me["GEN2-label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["GEN2-label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (gen2_load.getValue() > 110) {
+			if (gen2_load.getValue() >= 110) {
 				me["Gen2Load"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen2Load"].setColor(0.0509,0.7529,0.2941);
@@ -1553,13 +1565,13 @@ var canvas_lowerECAM_elec = {
 					me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 				}
 
-				if (apu_volts.getValue() > 120 or apu_volts.getValue() < 110 or apu_hz.getValue() > 410 or apu_hz.getValue() < 390 or apu_load.getValue() > 110) {
+				if (apu_volts.getValue() > 120 or apu_volts.getValue() < 110 or apu_hz.getValue() > 410 or apu_hz.getValue() < 390 or apu_load.getValue() >= 110) {
 					me["APUGentext"].setColor(0.7333,0.3803,0);
 				} else {
 					me["APUGentext"].setColor(0.8078,0.8039,0.8078);
 				}
 
-				if(apu_load.getValue() > 110) {
+				if(apu_load.getValue() >= 110) {
 					me["APUGenLoad"].setColor(0.7333,0.3803,0);
 				} else {
 					me["APUGenLoad"].setColor(0.0509,0.7529,0.2941);
@@ -1638,25 +1650,25 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-DCESS-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac_ess.getValue() > 110) {
+		if (ac_ess.getValue() >= 110) {
 			me["ELEC-ACESS-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-ACESS-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (systems.ELEC.Bus.acEssShed.getValue() > 110) {
+		if (systems.ELEC.Bus.acEssShed.getValue() >= 110) {
 			me["ACESS-SHED"].hide();
 		} else {
 			me["ACESS-SHED"].show();
 		}
 
-		if (ac1.getValue() > 110) {
+		if (ac1.getValue() >= 110) {
 			me["ELEC-AC1-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-AC1-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac2.getValue() > 110) {
+		if (ac2.getValue() >= 110) {
 			me["ELEC-AC2-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-AC2-label"].setColor(0.7333,0.3803,0);
@@ -1725,11 +1737,19 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
-			me["ELEC-Line-AC1-ACESS"].show();
+			if (ac1.getValue() >= 110) {
+				me["ELEC-Line-AC1-ACESS"].show();
+			} else {
+				me["ELEC-Line-AC1-ACESS"].hide();
+			}
 			me["ELEC-Line-AC2-ACESS"].hide();
 		} elsif (getprop("/systems/electrical/relay/ac-ess-feed-2/contact-pos") == 1) {
 			me["ELEC-Line-AC1-ACESS"].hide();
-			me["ELEC-Line-AC2-ACESS"].show();
+			if (ac2.getValue() >= 110) {
+				me["ELEC-Line-AC2-ACESS"].show();
+			} else {
+				me["ELEC-Line-AC2-ACESS"].hide();
+			}
 		} else {
 			me["ELEC-Line-AC1-ACESS"].hide();
 			me["ELEC-Line-AC2-ACESS"].hide();
@@ -1795,7 +1815,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-Emergen-ESSTR"].hide();
 		}
 		
-		if (!getprop("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos") and (!getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") or !getprop("/systems/electrical/relay/tr-contactor-2/contact-pos"))) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110 and !getprop("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos") and (!getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") or !getprop("/systems/electrical/relay/tr-contactor-2/contact-pos"))) {
 			me["ELEC-Line-ACESS-TRESS"].show();
 		} else {
 			me["ELEC-Line-ACESS-TRESS"].hide();
@@ -2794,13 +2814,13 @@ var canvas_lowerECAM_hyd = {
 			me["OVHT-Blue"].hide();
 		}
 
-		if (systems.ELEC.Bus.ac1.getValue() > 110) {
+		if (systems.ELEC.Bus.ac1.getValue() >= 110) {
 			me["ELEC-Blue-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["ELEC-Blue-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (systems.ELEC.Bus.ac2.getValue() > 110) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			me["ELEC-Yellow-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
@@ -2837,7 +2857,7 @@ var canvas_lowerECAM_wheel = {
 		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","lgctltext","NORMbrk","NWStext","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR","autobrk","autobrkind","NWS","NWSrect","normbrk-rect","altnbrk","normbrkhyd","spoiler1Rex","spoiler1Rrt","spoiler2Rex",
 		"spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf",
 		"spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf","ALTNbrk","altnbrkhyd","altnbrk-rect","antiskidtext","brakearrow","accupress_text","accuonlyarrow","accuonly","braketemp1","normbrkhyd",
-		"braketemp2","braketemp3","braketemp4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
+		"braketemp2","braketemp3","braketemp4","toparc1","toparc2","toparc3","toparc4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
 	},
 	update: func() {
 		blue_psi = systems.HYD.Psi.blue.getValue();
@@ -3263,11 +3283,92 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler5Rf"].hide();
 		}
 
+		# Show Brakes temperature
+		if (L1BrakeTempc.getValue() > 300) {
+			me["braketemp1"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp1"].setColor(0.0509,0.7529,0.2941);
+		}
+
+		if (L2BrakeTempc.getValue() > 300) {
+			me["braketemp2"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp2"].setColor(0.0509,0.7529,0.2941);
+		}
+		if (R3BrakeTempc.getValue() > 300) {
+			me["braketemp3"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp3"].setColor(0.0509,0.7529,0.2941);
+		}
+		if (R4BrakeTempc.getValue() > 300) {
+			me["braketemp4"].setColor(0.7333,0.3803,0);
+		} else {
+			me["braketemp4"].setColor(0.0509,0.7529,0.2941);
+		}
+		
+		# Brake arcs
+		if (L1BrakeTempc.getValue() > 300) {
+			me["toparc1"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (L1BrakeTempc.getValue() > 100 and L1BrakeTempc.getValue() < 300)
+			{
+				me["toparc1"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc1"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		if (L2BrakeTempc.getValue() > 300) {
+			me["toparc2"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (L2BrakeTempc.getValue() > 100 and L2BrakeTempc.getValue() < 300)
+			{
+				me["toparc2"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc2"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		if (R3BrakeTempc.getValue() > 300) {
+			me["toparc3"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (R3BrakeTempc.getValue() > 100 and R3BrakeTempc.getValue() < 300)
+			{
+				me["toparc3"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc3"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		if (R4BrakeTempc.getValue() > 300) {
+			me["toparc4"].setColor(0.7333,0.3803,0);
+		} else 
+		{
+			if (R4BrakeTempc.getValue() > 100 and R4BrakeTempc.getValue() < 300)
+			{
+				me["toparc4"].setColor(0.0509,0.7529,0.2941);
+			}
+			else { 
+				me["toparc4"].setColor(0.8078,0.8039,0.8078);
+			}
+		}
+		me["braketemp1"].setText(sprintf("%s", math.round(L1BrakeTempc.getValue(), 1)));
+		me["braketemp2"].setText(sprintf("%s", math.round(L2BrakeTempc.getValue(), 1)));
+		me["braketemp3"].setText(sprintf("%s", math.round(R3BrakeTempc.getValue(), 1)));
+		me["braketemp4"].setText(sprintf("%s", math.round(R4BrakeTempc.getValue(), 1)));
+		me["braketemp1"].show();
+		me["braketemp2"].show();
+		me["braketemp3"].show();
+		me["braketemp4"].show();
+		me["toparc1"].show();
+		me["toparc2"].show();
+		me["toparc3"].show();
+		me["toparc4"].show();
+
 		# Hide not yet implemented stuff
-		me["braketemp1"].hide();
-		me["braketemp2"].hide();
-		me["braketemp3"].hide();
-		me["braketemp4"].hide();
 		me["leftuplock"].hide();
 		me["noseuplock"].hide();
 		me["rightuplock"].hide();
@@ -3303,6 +3404,7 @@ var canvas_lowerECAM_test = {
 		return ["Test_white","Test_text"];
 	},
 	update: func() {
+		var elapsedtime = elapsed_sec.getValue();
 		if (du4_test_time.getValue() + 1 >= elapsedtime) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
@@ -3369,3 +3471,7 @@ var showLowerECAM = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(lowerECAM_display);
 }
+
+setlistener("/systems/electrical/bus/ac-2", func() {
+	canvas_lowerECAM_base.updateDu4();
+}, 0, 0);

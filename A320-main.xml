@@ -274,6 +274,9 @@
 							</script>
 						</binding>
 					</item>
+				</menu>
+				<menu n="103">
+					<label>Instruments</label>
 					<item>
 						<label>Left MCDU</label>
 						<binding>
@@ -292,8 +295,35 @@
 							</script>
 						</binding>
 					</item>
+					<item>
+						<label>RMP 1</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.rmp1Dialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
+						<label>RMP 2</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.rmp2Dialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
+						<label>RMP 3</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.rmp3Dialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
 				</menu>
-				<menu n="103">
+				<menu n="104">
 					<label>Utilities</label>
 					<item>
 						<label>Select Livery</label>
@@ -398,7 +428,7 @@
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		 <minimum-fg-version>2018.1.0</minimum-fg-version>
+		 <minimum-fg-version>2019.2.0</minimum-fg-version>
 	</sim>
 	
 	<consumables>
@@ -1659,6 +1689,15 @@
 					<script>libraries.fovZoom(1);</script>
 				</binding>
 			</key>
+			<key n="99">
+				<name>c</name>
+				<desc>Reset view to center</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.resetView();</script>
+				</binding>
+			</key>
 			<key n="120">
 				<name>x</name>
 				<desc>Decrease field of view</desc>
@@ -1902,10 +1941,11 @@
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
 		<dmc>
-			<file>Aircraft/A320-family/Nasal/Systems/DMC.nas</file>
+			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
+			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
 		</Dialogs>
 	</nasal>
 

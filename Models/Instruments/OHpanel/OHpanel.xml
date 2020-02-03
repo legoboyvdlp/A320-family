@@ -40,14 +40,6 @@
 		<object-name>ELAC1Btn1F</object-name>
 		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerExtLtBtn2O</object-name>
-		<object-name>Eng1FireAgt1Btn1S</object-name>
-		<object-name>Eng1FireAgt1Btn2D</object-name>
-		<object-name>Eng1FireAgt2Btn1S</object-name>
-		<object-name>Eng1FireAgt2Btn2D</object-name>
-		<object-name>Eng2FireAgt1Btn1S</object-name>
-		<object-name>Eng2FireAgt1Btn2D</object-name>
-		<object-name>Eng2FireAgt2Btn1S</object-name>
-		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
@@ -65,10 +57,18 @@
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
+		<object-name>Eng1FireAgt1Btn1S</object-name>
+		<object-name>Eng1FireAgt1Btn2D</object-name>
+		<object-name>Eng2FireAgt1Btn1S</object-name>
+		<object-name>Eng2FireAgt1Btn2D</object-name>
+		<object-name>Eng1FireAgt2Btn1S</object-name>
+		<object-name>Eng1FireAgt2Btn2D</object-name>
+		<object-name>Eng2FireAgt2Btn1S</object-name>
+		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/ac-ess</property>
-				<value>25</value>
+				<value>5</value>
 			</greater-than-equals>
 		</condition>
 	</animation>
@@ -167,7 +167,7 @@
 			</greater-than-equals>
 		</condition>
 	</animation>
-
+	
 	<!-- These are not simulated yet, so they only illuminate when the test is on. Remove each light/button once you add its select animation. -JD -->
 	<animation>
 		<type>select</type>
@@ -3248,16 +3248,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals> <!-- control is on DC BAT bus - so if you enter EMER ELEC with it turned off, too bad -->
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/apu</property>
@@ -3696,21 +3690,8 @@
 		<object-name>EmerGenInd1F</object-name>
 		<condition>
 			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
 				<or>
-					<and>
-						<equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>0</value>
-						</equals>
-					</and>
+					<property>/systems/electrical/light/rat-emer-gen-fault</property>
 					<equals>
 						<property>controls/switches/annun-test</property>
 						<value>1</value>
@@ -6497,6 +6478,18 @@
 				<command>property-assign</command>
 				<property>controls/engines/engine[0]/agent1-btn</property>
 				<value>1</value>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
 			</binding>
 		</action>
 	</animation>
@@ -6513,6 +6506,12 @@
 				<command>property-assign</command>
 				<property>controls/engines/engine[0]/agent2-btn</property>
 				<value>1</value>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
 			</binding>
 		</action>
 	</animation>
@@ -6520,22 +6519,60 @@
 	<animation>
 		<type>select</type>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
+		<condition>
+			<and>
+				<or>
+					<equals>
+						<property>controls/engines/engine[0]/fire-btn</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fire/test-btn-1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
 		<object-name>Eng1FireAgt2Btn1S</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/engines/engine[0]/fire-btn</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>/controls/fire/test-btn-1</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>controls/engines/engine[0]/fire-btn</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fire/test-btn-1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-2</property>
+					<value>25</value>
+				</greater-than-equals>
+			</and>
 		</condition>
 	</animation>
 
@@ -6592,6 +6629,24 @@
 				<command>property-assign</command>
 				<property>controls/fire/test-btn-1</property>
 				<value>1</value>
+				<condition>
+					<or>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-hot-1</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-hot-2</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
 			</binding>
 			<mod-up>
 				<binding>
@@ -6613,6 +6668,24 @@
 				<command>property-assign</command>
 				<property>controls/fire/test-btn-2</property>
 				<value>1</value>
+				<condition>
+					<or>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-hot-1</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-hot-2</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
 			</binding>
 			<mod-up>
 				<binding>
@@ -6634,6 +6707,18 @@
 				<command>property-assign</command>
 				<property>controls/fire/apu-test-btn</property>
 				<value>1</value>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
 			</binding>
 			<mod-up>
 				<binding>
@@ -6746,6 +6831,22 @@
 				<command>property-assign</command>
 				<property>controls/APU/agent-btn</property>
 				<value>1</value>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
 			</binding>
 		</action>
 	</animation>
@@ -6893,6 +6994,18 @@
 				<command>property-assign</command>
 				<property>controls/engines/engine[1]/agent1-btn</property>
 				<value>1</value>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-hot-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
 			</binding>
 		</action>
 	</animation>
@@ -6909,6 +7022,12 @@
 				<command>property-assign</command>
 				<property>controls/engines/engine[1]/agent2-btn</property>
 				<value>1</value>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
 			</binding>
 		</action>
 	</animation>
@@ -6916,22 +7035,60 @@
 	<animation>
 		<type>select</type>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
+		<condition>
+			<and>
+				<or>
+					<equals>
+						<property>controls/engines/engine[1]/fire-btn</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fire/test-btn-2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/engines/engine[1]/fire-btn</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/fire/test-btn-2</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>controls/engines/engine[1]/fire-btn</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fire/test-btn-2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-2</property>
+					<value>25</value>
+				</greater-than-equals>
+			</and>
 		</condition>
 	</animation>
 

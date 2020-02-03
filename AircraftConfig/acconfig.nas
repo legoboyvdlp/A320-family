@@ -120,7 +120,7 @@ var du_quality = gui.Dialog.new("sim/gui/dialogs/acconfig/du-quality/dialog", "A
 var rendering_dlg = gui.Dialog.new("sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
 spinning.start();
 init_dlg.open();
-http.load("https://raw.githubusercontent.com/legoboyvdlp/A320-family/master/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
+http.load("https://raw.githubusercontent.com/legoboyvdlp/A320-family/201912/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
@@ -369,15 +369,15 @@ var beforestart_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
-	systems.ADIRSControlPanel.adrSw(0);
-	systems.ADIRSControlPanel.adrSw(1);
-	systems.ADIRSControlPanel.adrSw(2);
+	if (systems.ADIRSnew.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
+	if (systems.ADIRSnew.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
+	if (systems.ADIRSnew.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
-	systems.ADIRS.skip(0);
-	systems.ADIRS.skip(1);
-	systems.ADIRS.skip(2);
+	systems.ADIRSnew.ADIRunits[0].instAlign();
+	systems.ADIRSnew.ADIRunits[1].instAlign();
+	systems.ADIRSnew.ADIRunits[2].instAlign();
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
@@ -460,15 +460,15 @@ var taxi_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
-	systems.ADIRSControlPanel.adrSw(0);
-	systems.ADIRSControlPanel.adrSw(1);
-	systems.ADIRSControlPanel.adrSw(2);
+	if (systems.ADIRSnew.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
+	if (systems.ADIRSnew.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
+	if (systems.ADIRSnew.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
-	systems.ADIRS.skip(0);
-	systems.ADIRS.skip(1);
-	systems.ADIRS.skip(2);
+	systems.ADIRSnew.ADIRunits[0].instAlign();
+	systems.ADIRSnew.ADIRunits[1].instAlign();
+	systems.ADIRSnew.ADIRunits[2].instAlign();
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);

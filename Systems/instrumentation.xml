@@ -226,8 +226,6 @@
 		<mode>2</mode>
 		<encoder-path>/instrumentation/transponder/altimeter-input</encoder-path>
 		<airspeed-path>/instrumentation/transponder/airspeed-input</airspeed-path>
-		<mode-c-altitude>/instrumentation/encoder/mode-c-alt-ft</mode-c-altitude>
-		<mode-s-altitude>/instrumentation/encoder/mode-s-alt-ft</mode-s-altitude>
 	</transponder>
 	
 	<turn-indicator>

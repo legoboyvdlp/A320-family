@@ -20,8 +20,10 @@ var du1_test_amount = props.globals.getNode("/instrumentation/du/du1-test-amount
 var du2_test = props.globals.getNode("/instrumentation/du/du2-test");
 var du2_test_time = props.globals.getNode("/instrumentation/du/du2-test-time");
 var du2_test_amount = props.globals.getNode("/instrumentation/du/du2-test-amount");
+var du2_offtime = props.globals.initNode("/instrumentation/du/du2-off-time", 0.0, "DOUBLE");
 var du5_test = props.globals.getNode("/instrumentation/du/du5-test");
 var du5_test_time = props.globals.getNode("/instrumentation/du/du5-test-time");
+var du5_offtime = props.globals.initNode("/instrumentation/du/du5-off-time", 0.0, "DOUBLE");
 var du5_test_amount = props.globals.getNode("/instrumentation/du/du5-test-amount");
 var du6_test = props.globals.getNode("/instrumentation/du/du6-test");
 var du6_test_time = props.globals.getNode("/instrumentation/du/du6-test-time");
@@ -84,46 +86,59 @@ var canvas_nd_base = {
 	getKeys: func() {
 		return [];
 	},
-	update: func() {
-		elapsedtime = getprop("/sim/time/elapsed-sec");
+	updateDu2: func() {
+		var elapsedtime = getprop("/sim/time/elapsed-sec");
 		if (getprop("/systems/electrical/bus/ac-ess-shed") >= 110) {
-			if (wow0.getValue() == 1) {
-				if (getprop("/systems/acconfig/autoconfig-running") != 1 and du2_test.getValue() != 1) {
+			if (du2_offtime.getValue() + 3 < elapsedtime) {
+				if (wow0.getValue() == 1) {
+					if (getprop("/systems/acconfig/autoconfig-running") != 1 and du2_test.getValue() != 1) {
+						du2_test.setValue(1);
+						du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du2_test_time.setValue(getprop("/sim/time/elapsed-sec"));
+					} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and du2_test.getValue() != 1) {
+						du2_test.setValue(1);
+						du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du2_test_time.setValue(getprop("/sim/time/elapsed-sec") - 30);
+					}
+				} else {
 					du2_test.setValue(1);
-					du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du2_test_time.setValue(getprop("/sim/time/elapsed-sec"));
-				} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and du2_test.getValue() != 1) {
-					du2_test.setValue(1);
-					du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du2_test_time.setValue(getprop("/sim/time/elapsed-sec") - 30);
+					du2_test_amount.setValue(0);
+					du2_test_time.setValue(-100);
 				}
-			} else {
-				du2_test.setValue(1);
-				du2_test_amount.setValue(0);
-				du2_test_time.setValue(-100);
 			}
 		} else {
 			du2_test.setValue(0);
+			du2_offtime.setValue(elapsedtime);
 		}
+	},
+	updateDu5: func() {
+		var elapsedtime = getprop("/sim/time/elapsed-sec");
 		if (getprop("/systems/electrical/bus/ac-2") >= 110) {
-			if (wow0.getValue() == 1) {
-				if (getprop("/systems/acconfig/autoconfig-running") != 1 and du5_test.getValue() != 1) {
+			if (du5_offtime.getValue() + 3 < elapsedtime) {
+				if (wow0.getValue() == 1) {
+					if (getprop("/systems/acconfig/autoconfig-running") != 1 and du5_test.getValue() != 1) {
+						du5_test.setValue(1);
+						du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du5_test_time.setValue(getprop("/sim/time/elapsed-sec"));
+					} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and du5_test.getValue() != 1) {
+						du5_test.setValue(1);
+						du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du5_test_time.setValue(getprop("/sim/time/elapsed-sec") - 30);
+					}
+				} else {
 					du5_test.setValue(1);
-					du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du5_test_time.setValue(getprop("/sim/time/elapsed-sec"));
-				} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and du5_test.getValue() != 1) {
-					du5_test.setValue(1);
-					du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du5_test_time.setValue(getprop("/sim/time/elapsed-sec") - 30);
+					du5_test_amount.setValue(0);
+					du5_test_time.setValue(-100);
 				}
-			} else {
-				du5_test.setValue(1);
-				du5_test_amount.setValue(0);
-				du5_test_time.setValue(-100);
 			}
 		} else {
 			du5_test.setValue(0);
+			du5_offtime.setValue(elapsedtime);
 		}
+		
+	},
+	update: func() {
+		var elapsedtime = getprop("/sim/time/elapsed-sec");
 		
 		if (getprop("/systems/electrical/bus/ac-ess-shed") >= 110 and getprop("/controls/lighting/DU/du2") > 0) {
 			if (du2_test_time.getValue() + du2_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() != 1) {
@@ -383,3 +398,11 @@ var showNd = func(nd = nil) {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(nd_display[nd]);
 }
+
+setlistener("/systems/electrical/bus/ac-ess-shed", func() {
+	canvas_nd_base.updateDu2();
+}, 0, 0);
+
+setlistener("/systems/electrical/bus/ac-2", func() {
+	canvas_nd_base.updateDu5();
+}, 0, 0);

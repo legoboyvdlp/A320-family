@@ -31,6 +31,7 @@ var N1_lim = props.globals.initNode("/ECAM/Upper/N1ylim", 0, "DOUBLE");
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
 var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
+var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
 
 # Fetch nodes:
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
@@ -137,28 +138,34 @@ var canvas_upperECAM_base = {
 	getKeys: func() {
 		return [];
 	},
-	update: func() {
-		elapsedtime = et.getValue();
+	updateDu3: func() {
+		var elapsedtime = et.getValue();
 		
 		if (acess.getValue() >= 110) {
-			if (wow0.getValue() == 1) {
-				if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
+			if (du3_offtime.getValue() + 3 < elapsedtime) {
+				if (wow0.getValue() == 1) {
+					if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
+						du3_test.setValue(1);
+						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du3_test_time.setValue(elapsedtime);
+					} else if (acconfig.getValue() == 1 and du3_test.getValue() != 1) {
+						du3_test.setValue(1);
+						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du3_test_time.setValue(elapsedtime - 30);
+					}
+				} else {
 					du3_test.setValue(1);
-					du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du3_test_time.setValue(elapsedtime);
-				} else if (acconfig.getValue() == 1 and du3_test.getValue() != 1) {
-					du3_test.setValue(1);
-					du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-					du3_test_time.setValue(elapsedtime - 30);
+					du3_test_amount.setValue(0);
+					du3_test_time.setValue(-100);
 				}
-			} else {
-				du3_test.setValue(1);
-				du3_test_amount.setValue(0);
-				du3_test_time.setValue(-100);
 			}
 		} else {
 			du3_test.setValue(0);
+			du3_offtime.setValue(elapsedtime);
 		}
+	},
+	update: func() {
+		var elapsedtime = et.getValue();
 		
 		cur_eng_option = eng_option.getValue();
 		if (acess.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
@@ -1196,6 +1203,7 @@ var canvas_upperECAM_test = {
 		return ["Test_white","Test_text"];
 	},
 	update: func() {
+		var elapsedtime = et.getValue();
 		if (du3_test_time.getValue() + 1 >= elapsedtime) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
@@ -1240,3 +1248,7 @@ var showUpperECAM = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(upperECAM_display);
 }
+
+setlistener("/systems/electrical/bus/ac-ess", func() {
+	canvas_upperECAM_base.updateDu3();
+}, 0, 0);

@@ -34,6 +34,7 @@ var vertModeInput = props.globals.getNode("/it-autoflight/input/vert", 1);
 var vsModeInput = props.globals.getNode("/it-autoflight/input/vs", 1);
 var locArm = props.globals.getNode("/it-autoflight/output/loc-armed", 1);
 var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
+var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 
 var FCU = {
 	elecSupply: "",
@@ -62,7 +63,7 @@ var FCUController = {
 	FCUworking: 0,
 	_init: 0,
 	init: func() {
-		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEssShed);
+		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEss);
 		me.FCU2 = FCU.new(systems.ELEC.Bus.dc2);
 		me._init = 1;
 	},
@@ -73,10 +74,12 @@ var FCUController = {
 		me.FCU1.loop();
 		me.FCU2.loop();
 		
-		if (!me.FCU1.failed and !me.FCU2.failed) {
+		if (!me.FCU1.failed or !me.FCU2.failed) {
 			me.FCUworking = 1;
+			FCUworkingNode.setValue(1);
 		} else {
 			me.FCUworking = 0;
+			FCUworkingNode.setValue(0);
 		}
 		
 		notification = nil;
@@ -97,16 +100,17 @@ var FCUController = {
 		me.FCU2.restore();
 	},
 	AP1: func() {
-		if (me.FCUworking) {
+		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!ap1.getBoolValue()) {
 				ap1Input.setValue(1);
+				libraries.apWarnNode.setValue(0);
 			} else {
 				apOff("hard", 1);
 			}
 		}
 	},
 	AP2: func() {
-		if (me.FCUworking) {
+		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!ap2.getBoolValue()) {
 				ap2Input.setValue(1);
 			} else {
@@ -115,8 +119,8 @@ var FCUController = {
 		}
 	},
 	ATHR: func() {
-		if (me.FCUworking) {
-			if (!athr.getBoolValue() and !pts.FMGC.CasCompare.rejectAll.getBoolValue()) {
+		if (me.FCUworking and !pts.FMGC.CasCompare.rejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
+			if (!athr.getBoolValue()) {
 				athrInput.setValue(1);
 			} else {
 				athrOff("hard");
@@ -150,8 +154,10 @@ var FCUController = {
 					setprop("/it-autoflight/sound/apoffsound", 0);
 					setprop("/it-autoflight/sound/apoffsound2", 0);
 				}
-				setprop("/it-autoflight/output/ap-warning", 0);
-				setprop("/ECAM/warnings/master-warning-light", 0);
+				if (getprop("/it-autoflight/output/ap-warning") != 0) {
+					setprop("/it-autoflight/output/ap-warning", 0);
+					setprop("/ECAM/warnings/master-warning-light", 0);
+				}
 			}
 		}
 	},
@@ -471,6 +477,10 @@ var updateActiveFMGC = func {
 
 # Autopilot Disconnection
 var apOff = func(type, side) {
+	if ((ap1Input.getValue() and (side == 1 or side == 0)) or (ap2Input.getValue() and (side == 2 or side == 0))) {
+		libraries.doApWarn(type);
+	}
+	
 	if (side == 0) {
 		ap1Input.setValue(0);
 		ap2Input.setValue(0);
@@ -479,18 +489,17 @@ var apOff = func(type, side) {
 	} elsif (side == 2) {
 		ap2Input.setValue(0);
 	}
-	libraries.doApWarn(type);
 }
 
 # Autothrust Disconnection
 var athrOff = func(type) {
-	if (type == "hard") {
-		fadec.lockThr();
+	if (athrInput.getValue() == 1) {
+		if (type == "hard") {
+			fadec.lockThr();
+		}
+		athrInput.setValue(0);
+		libraries.doAthrWarn(type);
 	}
-	
-	athrInput.setValue(0);
-	
-	libraries.doAthrWarn(type);
 }
 
 # If the heading knob is turned while in nav mode, it will display heading for a period of time

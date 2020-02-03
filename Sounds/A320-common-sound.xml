@@ -1557,6 +1557,7 @@
 			<mode>once</mode>
 			<type>avionics</type>
 			<condition>
+				<property>/sim/current-view/internal</property>
 				<property>/sim/sound/warnings/chime</property>
 			</condition>
 			<reference-dist>10</reference-dist>
@@ -1575,6 +1576,7 @@
 				</and>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>
 			</volume>
 			<reference-dist>10</reference-dist>
@@ -1590,6 +1592,7 @@
 				<property>/sim/sound/warnings/cricket</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.2</factor>
 			</volume>
 			<reference-dist>10</reference-dist>
@@ -1605,6 +1608,7 @@
 				<property>/sim/sound/warnings/stall-voice</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>2.0</factor>
 			</volume>
 			<reference-dist>10</reference-dist>

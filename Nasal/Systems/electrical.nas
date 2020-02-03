@@ -13,6 +13,8 @@ var dc2 = 0;
 
 # Main class
 var ELEC = {
+	_timer1On: 0,
+	_timer2On: 0,
 	Bus: {
 		acEss: props.globals.getNode("/systems/electrical/bus/ac-ess"),
 		acEssShed: props.globals.getNode("/systems/electrical/bus/ac-ess-shed"),
@@ -227,20 +229,32 @@ var ELEC = {
 		
 		# Autopilot Disconnection routines
 		if (me.Bus.dcEssShed.getValue() < 25) {
-			if (getprop("/it-autoflight/output/ap1") == 1) {
-				fcu.apOff("hard", 1);
-				if (getprop("/it-autoflight/output/ap2") == 0) {
-					fcu.athrOff("hard"); # TODO - athr master FMGC logic
-				}
+			if (getprop("/it-autoflight/output/ap1") == 1 and !me._timer1On) {
+				me._timer1On = 1;
+				settimer(func() {
+					if (me.Bus.dcEssShed.getValue() < 25) {
+						fcu.apOff("hard", 1);
+						if (fcu.FCUController.activeFMGC.getValue() == 1) {
+							fcu.athrOff("hard");
+						}
+					}
+					me._timer1On = 0;
+				}, 0.1);
 			}
 		}
 		
 		if (me.Bus.dc2.getValue() < 25) {
-			if (getprop("/it-autoflight/output/ap2") == 1) {
-				fcu.apOff("hard", 2);
-				if (getprop("/it-autoflight/output/ap1") == 0) {
-					fcu.athrOff("hard"); # TODO - athr master FMGC logic
-				}
+			if (getprop("/it-autoflight/output/ap2") == 1 and !me._timer2On) {
+				me._timer2On = 1;
+				settimer(func() {
+					if (me.Bus.dc2.getValue() < 25) {
+						fcu.apOff("hard", 2);
+						if (fcu.FCUController.activeFMGC.getValue() == 2) {
+							fcu.athrOff("hard");
+						}
+					}
+					me._timer2On = 0;
+				}, 0.1);
 			}
 		}
 	},

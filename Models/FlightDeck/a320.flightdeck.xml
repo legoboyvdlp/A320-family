@@ -368,6 +368,8 @@
 		<object-name>audio_vhf2_led</object-name>
 		<object-name>audio_vhf3_led</object-name>
 		<object-name>autoland_light_on</object-name>
+		<object-name>brk_fan_on</object-name>
+		<object-name>brk_hot_on</object-name>
 		<object-name>cstr_led</object-name>
 		<object-name>cstr_led.001</object-name>
 		<object-name>dec_low_on</object-name>
@@ -462,7 +464,6 @@
 	<!-- Remove from this animation once you simulate -->
 	<animation>
 		<type>select</type>
-		<object-name>alt-text-test</object-name>
 		<object-name>atc-test</object-name>
 		<object-name>audio_att_sgn</object-name>
 		<object-name>audio_call_hf2_led</object-name>
@@ -478,19 +479,27 @@
 		<object-name>engine_fault_1</object-name>
 		<object-name>engine_fault_2</object-name>
 		<object-name>exped_led</object-name>
-		<object-name>hdg-text-test</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>radio_opt_led</object-name>
 		<object-name>rudder-trim-test</object-name>
-		<object-name>spd-text-test</object-name>
 		<object-name>terr_on_nd_on</object-name>
 		<object-name>ver.fmgc</object-name>
+		<condition>
+			<property>controls/switches/annun-test</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>alt-text-test</object-name>
+		<object-name>hdg-text-test</object-name>
+		<object-name>spd-text-test</object-name>
 		<object-name>vs-text-test</object-name>
 		<condition>
-			<equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</equals>
+			<or>
+				<not><property>/FMGC/FCU-working</property></not>
+				<property>/controls/switches/annun-test</property>
+			</or>
 		</condition>
 	</animation>
 
@@ -667,6 +676,71 @@
 				<property>controls/gear/brake-parking</property>
 			</binding>
 		</action>
+	</animation>
+
+	<!-- Brake's fans -->
+	<animation>
+		<type>pick</type>
+		<object-name>brk_fan</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/gear/brake-fans</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>brk_fan_on</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>controls/gear/brake-fans</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>brk_hot_on</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<greater-than-equals>
+					<property>gear/gear[1]/L1brake-temp-degc</property>
+					<value>300</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>gear/gear[1]/L2brake-temp-degc</property>
+					<value>300</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>gear/gear[2]/R3brake-temp-degc</property>
+					<value>300</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>gear/gear[2]/R4brake-temp-degc</property>
+					<value>300</value>
+				</greater-than-equals>
+			</or>
+		</condition>
 	</animation>
 
 	<!-- Autobrakes -->
@@ -6479,6 +6553,8 @@
 		<object-name>brightness_nd_2_fo.mark</object-name>
 		<object-name>brightness_panel_emit</object-name>
 		<object-name>brk_fan</object-name>
+		<object-name>brk_fan_on</object-name>
+		<object-name>brk_hot_on</object-name>		
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_max_on</object-name>
 		<object-name>dec_med_on</object-name>
