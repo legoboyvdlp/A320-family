@@ -117,6 +117,7 @@ var ils_data1 = props.globals.getNode("/FMGC/internal/ils1-mcdu/", 1);
 # var ils_data2 = props.globals.getNode("/FMGC/internal/ils2-mcdu/", 1);
 var dme_in_range = props.globals.getNode("/instrumentation/nav[0]/dme-in-range", 1);
 var dme_data = props.globals.getNode("/instrumentation/dme[0]/indicated-distance-nm", 1);
+var arrival_airport = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -767,15 +768,16 @@ var canvas_PFD_base = {
 		}
 		
 		me["TRK_pointer"].setTranslation((track_diff.getValue() / 10) * 98.5416, 0);
-		
-		if (ap_ils_mode.getValue() == 1) {
-			var runways = airportinfo(airportinfo(getprop("/FMGC/internal/arr-arpt")).id).runways;
+		split_ils = split("/", ils_data1.getValue());
+		if (ap_ils_mode.getValue() == 1 and arrival_airport.getValue() != "" and size(split_ils) == 2) {
+			var runways = airportinfo(airportinfo(arrival_airport.getValue()).id).runways;
 			var runway_keys = sort(keys(runways), string.icmp);
 			foreach(var rwy; runway_keys) {
 				var r = runways[rwy];
-				if (r.ils_frequency_mhz == split("/", ils_data1.getValue())[1]) {
+				if (r.ils_frequency_mhz == split_ils[1]) {
 					magnetic_hdg = r.heading - getprop("/environment/magnetic-variation-deg");
 					magnetic_hdg_dif = magnetic_hdg - heading.getValue();
+					print(magnetic_hdg_dif);
 
 					if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
 						me["CRS_pointer"].setTranslation((magnetic_hdg_dif / 10) * 98.5416, 0);
@@ -784,8 +786,8 @@ var canvas_PFD_base = {
 						me["CRS_pointer"].show();
 					} else if (magnetic_hdg_dif < -23.62 and magnetic_hdg_dif >= -180) {
 						me["ILS_left"].setText(sprintf("%3.0f", int(magnetic_hdg)));
-						me["ILS_HDG_R"].hide();
 						me["ILS_HDG_L"].show();
+						me["ILS_HDG_R"].hide();
 						me["CRS_pointer"].hide();
 					} else if (magnetic_hdg_dif > 23.62 and magnetic_hdg_dif <= 180) {
 						me["ILS_right"].setText(sprintf("%3.0f", int(magnetic_hdg)));
@@ -872,20 +874,30 @@ var canvas_PFD_1 = {
 			me["LOC_scale"].show();
 			me["GS_scale"].show();
 			split_ils = split("/", ils_data1.getValue());
-			me["ils_code"].setText(split_ils[0]);
-			me["ils_freq"].setText(split_ils[1]);
-			me["ils_code"].show();
-			me["ils_freq"].show();
+			
+			if (size(split_ils) < 2) {
+			    me["ils_freq"].setText(split_ils[0]);
+			    me["ils_freq"].show();
+			    me["ils_code"].hide();
+			    me["dme_dist"].hide();
+			    me["dme_dist_legend"].hide();
+			} else {
+			    me["ils_code"].setText(split_ils[0]);
+			    me["ils_freq"].setText(split_ils[1]);
+			    me["ils_code"].show();
+			    me["ils_freq"].show();
+			}
+			
 			if (dme_in_range.getValue() == 1) {
 				dme_dist_data = dme_data.getValue();
-				if (dme_dist_data < 10.0) {
+				if (dme_dist_data < 20.0) {
 					me["dme_dist"].setText(sprintf("%1.1f", dme_dist_data));
 				} else {
 					me["dme_dist"].setText(sprintf("%2.0f", dme_dist_data));
 				}
 				me["dme_dist"].show(); 
 				me["dme_dist_legend"].show();
-			}	 
+			}
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
@@ -1186,20 +1198,30 @@ var canvas_PFD_2 = {
 			me["LOC_scale"].show();
 			me["GS_scale"].show();
 			split_ils = split("/", ils_data1.getValue());
-			me["ils_code"].setText(split_ils[0]);
-			me["ils_freq"].setText(split_ils[1]);
-			me["ils_code"].show();
-			me["ils_freq"].show();
+			
+			if (size(split_ils) < 2) {
+			    me["ils_freq"].setText(split_ils[0]);
+			    me["ils_freq"].show();
+			    me["ils_code"].hide();
+			    me["dme_dist"].hide();
+			    me["dme_dist_legend"].hide();
+			} else {
+			    me["ils_code"].setText(split_ils[0]);
+			    me["ils_freq"].setText(split_ils[1]);
+			    me["ils_code"].show();
+			    me["ils_freq"].show();
+			}
+			
 			if (dme_in_range.getValue() == 1) {
 				dme_dist_data = dme_data.getValue();
-				if (dme_dist_data < 10.0) {
+				if (dme_dist_data < 20.0) {
 					me["dme_dist"].setText(sprintf("%1.1f", dme_dist_data));
 				} else {
 					me["dme_dist"].setText(sprintf("%2.0f", dme_dist_data));
 				}
 				me["dme_dist"].show(); 
 				me["dme_dist_legend"].show();
-			}  
+			}
 		} else {
 			me["LOC_scale"].hide();
 			me["GS_scale"].hide();
