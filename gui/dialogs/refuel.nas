@@ -5,6 +5,9 @@
 
 # Distribute under the terms of GPLv2.
 
+# Conversion factor pounds to kilogram
+LBS2KGS = 0.4535924;
+
 if (pts.Sim.aero.getValue() == "A320-200-CFM") {
 	max_fuel = 42.8;
 } elsif (pts.Sim.aero.getValue() == "A320-200-IAE" or pts.Sim.aero.getValue() == "A320-100-CFM") {
@@ -14,6 +17,7 @@ if (pts.Sim.aero.getValue() == "A320-200-CFM") {
 }
 
 # Get nodes
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var valve_l_guard = props.globals.getNode("/controls/fuel/refuel/valve-l-guard", 1);
 var valve_c_guard = props.globals.getNode("/controls/fuel/refuel/valve-c-guard", 1);
 var valve_r_guard = props.globals.getNode("/controls/fuel/refuel/valve-r-guard", 1);
@@ -134,6 +138,9 @@ var refuelClass = {
 		me._FQI_R = me._svg.getElementById("FQI-R");
 
 		me._END_ind = me._svg.getElementById("END-ind");
+
+		me._Fuel_unit_1 = me._svg.getElementById("Fuel-unit-1");
+		me._Fuel_unit_2 = me._svg.getElementById("Fuel-unit-2");
 
 		# Load current panel state
 		# Guards
@@ -481,6 +488,13 @@ var refuelClass = {
 		me._timer.start();
 	},
 	_timerf: func() {
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me._Fuel_unit_1.setText("KG");
+			me._Fuel_unit_2.setText("KG");
+		} else {
+			me._Fuel_unit_1.setText("LBS");
+			me._Fuel_unit_2.setText("LBS");
+		}
 		# Check power
 		# TODO cut off power when turned on with BATT POWER switch:
 		# The electrical supply is automatically cut off:
@@ -493,11 +507,21 @@ var refuelClass = {
 			me._FQI_C.show();
 			me._FQI_R.show();
 
-			me._fuelPreselectAmount = amount.getValue();
-			me._fuelLeftAmount = (systems.FUEL.Quantity.leftOuter.getValue() + systems.FUEL.Quantity.leftInner.getValue()) / 1000;
-			me._fuelCenterAmount = systems.FUEL.Quantity.center.getValue() / 1000;
-			me._fuelRightAmount = (systems.FUEL.Quantity.rightOuter.getValue() + systems.FUEL.Quantity.rightInner.getValue()) / 1000;
-			me._fuelTotalAmount = pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000;
+			if (acconfig_weight_kgs.getValue() == 1) {
+				me._fuelPreselectAmount = amount.getValue() * LBS2KGS;
+				me._fuelLeftAmount = ((systems.FUEL.Quantity.leftOuter.getValue() + systems.FUEL.Quantity.leftInner.getValue()) / 1000) * LBS2KGS;
+				me._fuelCenterAmount = (systems.FUEL.Quantity.center.getValue() / 1000) * LBS2KGS;
+				me._fuelRightAmount = ((systems.FUEL.Quantity.rightOuter.getValue() + systems.FUEL.Quantity.rightInner.getValue()) / 1000) * LBS2KGS;
+				me._fuelTotalAmount = (pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000) * LBS2KGS;
+				var actual_fuel = pts.Consumables.Fuel.totalFuelLbs.getValue() * LBS2KGS;
+			} else {
+				me._fuelPreselectAmount = amount.getValue();
+				me._fuelLeftAmount = (systems.FUEL.Quantity.leftOuter.getValue() + systems.FUEL.Quantity.leftInner.getValue()) / 1000;
+				me._fuelCenterAmount = systems.FUEL.Quantity.center.getValue() / 1000;
+				me._fuelRightAmount = (systems.FUEL.Quantity.rightOuter.getValue() + systems.FUEL.Quantity.rightInner.getValue()) / 1000;
+				me._fuelTotalAmount = pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000;
+				var actual_fuel = pts.Consumables.Fuel.totalFuelLbs.getValue();
+			}
 			
 			if (me._fuelPreselectAmount >= 10.0) {
 				me._FQI_pre.setText(sprintf("%2.1f", me._fuelPreselectAmount));
@@ -524,9 +548,9 @@ var refuelClass = {
 			}
 			
 			if (me._fuelTotalAmount >= 10.0) {
-				me._FQI_actual.setText(sprintf("%2.1f", pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000));
+				me._FQI_actual.setText(sprintf("%2.1f", actual_fuel / 1000));
 			} else {
-				me._FQI_actual.setText(sprintf("%2.2f", pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000));
+				me._FQI_actual.setText(sprintf("%2.2f", actual_fuel / 1000));
 			}
 			
 			# HI LVL indicator color: #0184f6
