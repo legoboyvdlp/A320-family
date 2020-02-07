@@ -215,7 +215,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/controls/ventilation/blowFail</property>
+					<property>controls/ventilation/blowFail</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -233,7 +233,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/systems/fire/cargo/fwd/warning-active</property>
+					<property>systems/fire/cargo/fwd/warning-active</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -250,7 +250,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/systems/fire/cargo/aft/warning-active</property>
+					<property>systems/fire/cargo/aft/warning-active</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -267,11 +267,11 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/systems/fire/cargo/disch</property>
+					<property>systems/fire/cargo/disch</property>
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>/systems/fire/cargo/disch-test</property>
+					<property>systems/fire/cargo/disch-test</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -288,11 +288,11 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/systems/fire/cargo/disch</property>
+					<property>systems/fire/cargo/disch</property>
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>/systems/fire/cargo/disch-test</property>
+					<property>systems/fire/cargo/disch-test</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -323,7 +323,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -384,7 +384,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -432,7 +432,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -454,7 +454,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -476,7 +476,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -531,7 +531,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -550,7 +550,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -627,7 +627,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -646,7 +646,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -723,7 +723,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -742,7 +742,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -840,7 +840,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -902,7 +902,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -964,7 +964,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1198,7 +1198,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1210,7 +1210,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>/systems/failures/elac1-fault</property>
+						<property>systems/failures/elac1-fault</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1261,7 +1261,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1328,7 +1328,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1395,7 +1395,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1462,7 +1462,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1529,7 +1529,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1596,7 +1596,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1664,7 +1664,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation-->
@@ -1731,7 +1731,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1797,7 +1797,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1840,7 +1840,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1883,7 +1883,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1928,7 +1928,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1988,7 +1988,7 @@
 							<value>1</value>
 						</equals>
 						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-hot-2</property>
+							<property>systems/electrical/bus/dc-hot-2</property>
 							<value>25</value>
 						</greater-than-equals>
 					</and>
@@ -2004,7 +2004,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -2048,7 +2048,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2090,7 +2090,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2157,7 +2157,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2224,7 +2224,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2291,7 +2291,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2359,7 +2359,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2418,7 +2418,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2483,7 +2483,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2548,7 +2548,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2612,7 +2612,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2677,7 +2677,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2742,7 +2742,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2807,7 +2807,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2873,7 +2873,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2934,7 +2934,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3001,7 +3001,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3131,7 +3131,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3197,7 +3197,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3258,7 +3258,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3329,7 +3329,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3364,7 +3364,7 @@
 			<binding>
 				<condition>
 					<equals>
-						<property>/controls/electrical/ground-cart</property>
+						<property>controls/electrical/ground-cart</property>
 						<value>1</value>
 					</equals>
 				</condition>
@@ -3373,7 +3373,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3384,7 +3384,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/controls/electrical/ground-cart</property>
+					<property>controls/electrical/ground-cart</property>
 					<value>1</value>
 				</equals>
 				<and>
@@ -3409,7 +3409,7 @@
 			<and>
 				<or>
 					<equals>
-						<property>/systems/electrical/relay/ext-epc/contact-pos</property>
+						<property>systems/electrical/relay/ext-epc/contact-pos</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -3453,7 +3453,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3560,7 +3560,7 @@
 					</and>
 				</condition>
 				<command>property-assign</command>
-				<property>/controls/electrical/switches/emer-gen-test</property>
+				<property>controls/electrical/switches/emer-gen-test</property>
 				<value>1</value>
 			</binding>
 			<binding>
@@ -3571,7 +3571,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -3582,7 +3582,7 @@
 						</equals>
 					</condition>
 					<command>property-assign</command>
-					<property>/controls/electrical/switches/emer-gen-test</property>
+					<property>controls/electrical/switches/emer-gen-test</property>
 					<value>0</value>
 				</binding>
 				<binding>
@@ -3597,7 +3597,7 @@
 						</not>
 					</condition>
 					<command>nasal</command>
-					<script>setprop("/sim/sounde/oh-cover", 1);</script>
+					<script>setprop("sim/sounde/oh-cover", 1);</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -3619,7 +3619,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3691,7 +3691,7 @@
 		<condition>
 			<and>
 				<or>
-					<property>/systems/electrical/light/rat-emer-gen-fault</property>
+					<property>systems/electrical/light/rat-emer-gen-fault</property>
 					<equals>
 						<property>controls/switches/annun-test</property>
 						<value>1</value>
@@ -3716,7 +3716,7 @@
 							<value>1</value>
 						</equals>
 						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-hot-1</property>
+							<property>systems/electrical/bus/dc-hot-1</property>
 							<value>25</value>
 						</greater-than-equals>
 					</and>
@@ -3733,7 +3733,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -3777,7 +3777,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3815,7 +3815,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3831,7 +3831,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4024,7 +4024,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4040,7 +4040,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4094,7 +4094,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4161,7 +4161,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4234,7 +4234,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4301,7 +4301,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4367,7 +4367,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4440,7 +4440,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4523,7 +4523,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -4714,7 +4714,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4791,7 +4791,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -4873,7 +4873,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4889,7 +4889,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4929,7 +4929,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4967,7 +4967,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5008,7 +5008,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -5023,7 +5023,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5064,7 +5064,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -5078,7 +5078,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5120,7 +5120,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -5135,7 +5135,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5156,7 +5156,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -5171,7 +5171,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5234,7 +5234,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -5249,7 +5249,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5300,7 +5300,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5361,7 +5361,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5422,7 +5422,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5487,7 +5487,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5530,7 +5530,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5581,7 +5581,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5642,14 +5642,14 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/controls/APU/master") == 1 and getprop("/controls/APU/start") != 1) {
-					setprop("/controls/APU/start", 1);
+				if (getprop("controls/APU/master") == 1 and getprop("controls/APU/start") != 1) {
+					setprop("controls/APU/start", 1);
 				}
 				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5727,7 +5727,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5763,7 +5763,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5832,7 +5832,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5868,7 +5868,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5970,7 +5970,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -5985,7 +5985,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6028,7 +6028,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6072,7 +6072,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6088,7 +6088,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6132,7 +6132,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6148,7 +6148,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6190,7 +6190,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6205,7 +6205,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6387,13 +6387,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("/controls/engines/engine[0]/fire-btn") == 1) {
-						setprop("/controls/engines/engine[0]/fire-btn", 0);
-						setprop("/controls/engines/engine[0]/fire-btn-cover", 0);
-					} else if (getprop("/controls/engines/engine[0]/fire-btn-cover") == 1) {
-						setprop("/controls/engines/engine[0]/fire-btn", 1);
+					if (getprop("controls/engines/engine[0]/fire-btn") == 1) {
+						setprop("controls/engines/engine[0]/fire-btn", 0);
+						setprop("controls/engines/engine[0]/fire-btn-cover", 0);
+					} else if (getprop("controls/engines/engine[0]/fire-btn-cover") == 1) {
+						setprop("controls/engines/engine[0]/fire-btn", 1);
 					} else {
-						setprop("/controls/engines/engine[0]/fire-btn-cover", 1);
+						setprop("controls/engines/engine[0]/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6410,13 +6410,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("/controls/engines/engine[0]/fire-btn") == 1) {
-						setprop("/controls/engines/engine[0]/fire-btn", 0);
-						setprop("/controls/engines/engine[0]/fire-btn-cover", 0);
-					} else if (getprop("/controls/engines/engine[0]/fire-btn-cover") == 1) {
-						setprop("/controls/engines/engine[0]/fire-btn-cover", 0);
+					if (getprop("controls/engines/engine[0]/fire-btn") == 1) {
+						setprop("controls/engines/engine[0]/fire-btn", 0);
+						setprop("controls/engines/engine[0]/fire-btn-cover", 0);
+					} else if (getprop("controls/engines/engine[0]/fire-btn-cover") == 1) {
+						setprop("controls/engines/engine[0]/fire-btn-cover", 0);
 					} else {
-						setprop("/controls/engines/engine[0]/fire-btn-cover", 1);
+						setprop("controls/engines/engine[0]/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6527,7 +6527,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/controls/fire/test-btn-1</property>
+						<property>controls/fire/test-btn-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -6560,7 +6560,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/controls/fire/test-btn-1</property>
+						<property>controls/fire/test-btn-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -6582,11 +6582,11 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/systems/fire/engine1/disch1</property>
+					<property>systems/fire/engine1/disch1</property>
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>/controls/fire/test-btn-1</property>
+					<property>controls/fire/test-btn-1</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -6603,11 +6603,11 @@
 		<condition>
 			<or>
 				<equals>
-					<property>/systems/fire/engine1/disch2</property>
+					<property>systems/fire/engine1/disch2</property>
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>/controls/fire/test-btn-1</property>
+					<property>controls/fire/test-btn-1</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -6740,13 +6740,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("/controls/APU/fire-btn") == 1) {
-						setprop("/controls/APU/fire-btn", 0);
-						setprop("/controls/APU/fire-btn-cover", 0);
-					} else if (getprop("/controls/APU/fire-btn-cover") == 1) {
-						setprop("/controls/APU/fire-btn", 1);
+					if (getprop("controls/APU/fire-btn") == 1) {
+						setprop("controls/APU/fire-btn", 0);
+						setprop("controls/APU/fire-btn-cover", 0);
+					} else if (getprop("controls/APU/fire-btn-cover") == 1) {
+						setprop("controls/APU/fire-btn", 1);
 					} else {
-						setprop("/controls/APU/fire-btn-cover", 1);
+						setprop("controls/APU/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6763,13 +6763,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("/controls/APU/fire-btn") == 1) {
-						setprop("/controls/APU/fire-btn", 0);
-						setprop("/controls/APU/fire-btn-cover", 0);
-					} else if (getprop("/controls/APU/fire-btn-cover") == 1) {
-						setprop("/controls/APU/fire-btn-cover", 0);
+					if (getprop("controls/APU/fire-btn") == 1) {
+						setprop("controls/APU/fire-btn", 0);
+						setprop("controls/APU/fire-btn-cover", 0);
+					} else if (getprop("controls/APU/fire-btn-cover") == 1) {
+						setprop("controls/APU/fire-btn-cover", 0);
 					} else {
-						setprop("/controls/APU/fire-btn-cover", 1);
+						setprop("controls/APU/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6808,8 +6808,8 @@
 		<object-name>APUFireBtn</object-name>
 		<condition>
 			<or>
-				<property>/systems/fire/apu/warning-active</property>
-				<property>/controls/switches/annun-test</property>
+				<property>systems/fire/apu/warning-active</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 		<emission>
@@ -6903,13 +6903,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("/controls/engines/engine[1]/fire-btn") == 1) {
-						setprop("/controls/engines/engine[1]/fire-btn", 0);
-						setprop("/controls/engines/engine[1]/fire-btn-cover", 0);
-					} else if (getprop("/controls/engines/engine[1]/fire-btn-cover") == 1) {
-						setprop("/controls/engines/engine[1]/fire-btn", 1);
+					if (getprop("controls/engines/engine[1]/fire-btn") == 1) {
+						setprop("controls/engines/engine[1]/fire-btn", 0);
+						setprop("controls/engines/engine[1]/fire-btn-cover", 0);
+					} else if (getprop("controls/engines/engine[1]/fire-btn-cover") == 1) {
+						setprop("controls/engines/engine[1]/fire-btn", 1);
 					} else {
-						setprop("/controls/engines/engine[1]/fire-btn-cover", 1);
+						setprop("controls/engines/engine[1]/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6926,13 +6926,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("/controls/engines/engine[1]/fire-btn") == 1) {
-						setprop("/controls/engines/engine[1]/fire-btn", 0);
-						setprop("/controls/engines/engine[1]/fire-btn-cover", 0);
-					} else if (getprop("/controls/engines/engine[1]/fire-btn-cover") == 1) {
-						setprop("/controls/engines/engine[1]/fire-btn-cover", 0);
+					if (getprop("controls/engines/engine[1]/fire-btn") == 1) {
+						setprop("controls/engines/engine[1]/fire-btn", 0);
+						setprop("controls/engines/engine[1]/fire-btn-cover", 0);
+					} else if (getprop("controls/engines/engine[1]/fire-btn-cover") == 1) {
+						setprop("controls/engines/engine[1]/fire-btn-cover", 0);
 					} else {
-						setprop("/controls/engines/engine[1]/fire-btn-cover", 1);
+						setprop("controls/engines/engine[1]/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -7043,7 +7043,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/controls/fire/test-btn-2</property>
+						<property>controls/fire/test-btn-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -7076,7 +7076,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/controls/fire/test-btn-2</property>
+						<property>controls/fire/test-btn-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -7210,7 +7210,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -7233,7 +7233,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -7331,7 +7331,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -7372,7 +7372,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -7424,7 +7424,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -7456,7 +7456,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>

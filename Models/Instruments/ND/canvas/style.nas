@@ -687,7 +687,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) nd.aircraft_source.get_spd() > 100,
 				is_true: func(nd) {
-					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/velocities/TAS") ));
+					nd.symbols.tas.setText(sprintf("%3.0f",getprop("velocities/TAS") ));
 					nd.symbols.tas.show();
 				},
 				is_false: func(nd) nd.symbols.tas.hide(),
@@ -804,7 +804,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) getprop("autopilot/route-manager/wp/eta") != nil and getprop("FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
 				is_true: func(nd) {
-					var etaSec = getprop("/sim/time/utc/day-seconds")+
+					var etaSec = getprop("sim/time/utc/day-seconds")+
 						getprop("autopilot/route-manager/wp/eta-seconds");
 					var h = math.floor(etaSec/3600);
 					etaSec = etaSec-3600*h;
@@ -1194,9 +1194,9 @@ canvas.NDStyles["Airbus"] = {
 					var type = (is_ils ? "ils" : "vor");
 					var path = nd.get_nav_path(type, 0);
 					if (is_ils) {
-						nd.symbols.vorCrsPtr2.setRotation((getprop("/instrumentation/nav[0]/radials/selected-deg")-nd.aircraft_source.get_hdg_mag())*D2R);
+						nd.symbols.vorCrsPtr2.setRotation((getprop("instrumentation/nav[0]/radials/selected-deg")-nd.aircraft_source.get_hdg_mag())*D2R);
 					} else {
-						nd.symbols.vorCrsPtr2.setRotation((getprop("/instrumentation/nav[2]/radials/selected-deg")-nd.aircraft_source.get_hdg_mag())*D2R);
+						nd.symbols.vorCrsPtr2.setRotation((getprop("instrumentation/nav[2]/radials/selected-deg")-nd.aircraft_source.get_hdg_mag())*D2R);
 					}
 					var line = nd.symbols.vorCrsPtr2.getElementById("vorCrsPtr2_line");
 					if(!is_ils){
@@ -1217,7 +1217,7 @@ canvas.NDStyles["Airbus"] = {
 				predicate: func(nd) nd.in_mode("toggle_display_mode", ["APP"]),
 				is_true: func(nd) {
 					if(getprop("instrumentation/nav/gs-needle-deflection-norm") != nil)
-						nd.symbols.gsDiamond.setTranslation(getprop("/instrumentation/nav[0]/gs-needle-deflection-norm")*150,0);
+						nd.symbols.gsDiamond.setTranslation(getprop("instrumentation/nav[0]/gs-needle-deflection-norm")*150,0);
 				},
 				is_false: func(nd) nd.symbols.gsGroup.hide(),
 			},
@@ -1229,7 +1229,7 @@ canvas.NDStyles["Airbus"] = {
 				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["APP","VOR"]) and !nd.get_switch("toggle_centered") and getprop("instrumentation/nav/in-range")),
 				is_true: func(nd) {
 					nd.symbols.locPtr.show();
-					var deflection = getprop("/instrumentation/nav[0]/heading-needle-deflection-norm");
+					var deflection = getprop("instrumentation/nav[0]/heading-needle-deflection-norm");
 					nd.symbols.locPtr.setTranslation(deflection*150,0);
 				},
 				is_false: func(nd) nd.symbols.locPtr.hide(),
@@ -1278,8 +1278,8 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) {
-					var nav_id = getprop("/instrumentation/nav/nav-id");
-					var ils_mode = getprop("/flight-management/freq/ils-mode");
+					var nav_id = getprop("instrumentation/nav/nav-id");
+					var ils_mode = getprop("flight-management/freq/ils-mode");
 					var has_ils = (nav_id != nil and nav_id != "");
 					(nd.get_switch("toggle_display_mode") == "MAP" and 
 					 !nd.get_switch("toggle_centered") and has_ils and ils_mode);
@@ -1298,8 +1298,8 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) {
-					var nav_id = getprop("/instrumentation/nav/nav-id");
-					var ils_mode = getprop("/flight-management/freq/ils-mode");
+					var nav_id = getprop("instrumentation/nav/nav-id");
+					var ils_mode = getprop("flight-management/freq/ils-mode");
 					var has_ils = (nav_id != nil and nav_id != "");
 					(nd.get_switch("toggle_display_mode") == "MAP" and 
 					 nd.get_switch("toggle_centered") and has_ils and ils_mode);

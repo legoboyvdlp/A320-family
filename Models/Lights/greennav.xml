@@ -14,7 +14,7 @@
 		<object-name>Light</object-name>
 		<condition>
 			<equals>
-				<property>/sim/model/lights/nav-lights</property>
+				<property>sim/model/lights/nav-lights</property>
 				<value>1</value>
 			</equals>
 		</condition>
