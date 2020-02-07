@@ -424,7 +424,7 @@
 		
 		<current-view>
 			<z-offset-default type="float">80.0</z-offset-default>
-			<z-offset-min-m type="float">30.0</z-offset-min-m>
+			<z-offset-min-m type="float">10.0</z-offset-min-m>
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
