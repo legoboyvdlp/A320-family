@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+PRESTES Hangar - 2010 - presteshangar.wikidot.com
+=================================================
+
+Creation July 08, 2010 12:11:39 AM 
+Revisions
+		0.0.1	July 08, 2010 12:11:52 AM 
+		
+Original code author Maggse.
+
+-->
+<PropertyList>
+	<particlesystem>
+		<!-- <type>trail</type>-->
+		<name>flare</name>
+		<texture>res/smoke.png</texture>
+		<emissive>true</emissive>
+		<lighting>false</lighting>
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+			<pitch-deg>90</pitch-deg>
+		</offsets>
+		
+		<attach>local</attach>
+		
+		<placer>
+			<type>point</type>
+		</placer>
+		
+		<shooter>
+			<theta-min-deg>0</theta-min-deg>
+			<theta-max-deg>0</theta-max-deg>
+			<phi-min-deg>0</phi-min-deg>
+			<phi-max-deg>0</phi-max-deg>
+			<speed>
+				<value>10</value>
+				<spread>1</spread>
+			</speed>
+			<rotation-speed>
+				<x-min-deg-sec>0</x-min-deg-sec>
+				<y-min-deg-sec>0</y-min-deg-sec>
+				<z-min-deg-sec>10</z-min-deg-sec>
+				<x-max-deg-sec>0</x-max-deg-sec>
+				<y-max-deg-sec>10</y-max-deg-sec>
+				<z-max-deg-sec>20</z-max-deg-sec>
+			</rotation-speed>
+		</shooter>
+		
+		<counter>
+			<particles-per-sec>
+				<value>100</value>
+				<spread>10</spread>
+			</particles-per-sec>
+		</counter>
+		
+		<align>billboard</align>
+		
+		<particle>
+			<start>
+	        	<color>
+				<red><value>0.3</value></red>
+				<green><value>0.3</value></green>
+				<blue><value>0.3</value></blue>
+				<alpha><value>0.40</value></alpha>
+				</color>
+	        	<size>
+	          		<value>1.3</value>
+	        	</size>
+	      	</start>
+			<end>
+	        	<color>
+					<red><value>0.65</value></red>
+					<green><value>0.45</value></green>
+					<blue><value>0.35</value></blue>
+					<alpha><value>0.2</value></alpha>
+				</color>
+	        	<size>
+	          		<value>0.4</value>
+	        	</size>
+	      	</end>
+	
+			<life-sec><value>0.1</value></life-sec>
+			<mass-kg>0.4</mass-kg>
+			<radius-m>0.1</radius-m>
+		</particle>
+		
+		<program>
+			<fluid>air</fluid>
+			<gravity type="bool">false</gravity>
+			<wind type="bool">false</wind>
+		</program>
+		
+	</particlesystem>
+
+</PropertyList>
+

@@ -75,9 +75,9 @@ var BrakeSystem =
 		setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)) - 2.5);
 		setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)) - 2.5);		  
 
-		var atemp  =  getprop("environment/temperature-degc") or 0;
-		var vmach  =  getprop("velocities/mach") or 0;
-		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat");
+		#var atemp  =  getprop("environment/temperature-degc") or 0;
+		#var vmach  =  getprop("velocities/mach") or 0;
+		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat") or 0;
 
 		setprop("gear/gear[1]/L1brake-temp-degc",tatdegc+getprop("gear/gear[1]/L1error-temp-degc"));
 		setprop("gear/gear[1]/L2brake-temp-degc",tatdegc+getprop("gear/gear[1]/L2error-temp-degc"));
@@ -97,9 +97,10 @@ var BrakeSystem =
 		var RThermalEnergy = getprop("gear/gear[2]/Rbrake-thermal-energy");
 		var LBrakeLevel = getprop("fdm/jsbsim/fcs/left-brake-cmd-norm");
 		var RBrakeLevel = getprop("fdm/jsbsim/fcs/right-brake-cmd-norm");
-		var atemp  =  getprop("environment/temperature-degc") or 0;
-		var vmach  =  getprop("velocities/mach") or 0;
-		var tatdegc = atemp * (1 + (0.2 * math.pow(vmach, 2)));	
+		#var atemp  =  getprop("environment/temperature-degc") or 0;
+		#var vmach  =  getprop("velocities/mach") or 0;
+		#var tatdegc = atemp * (1 + (0.2 * math.pow(vmach, 2)));
+		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat") or 0;
 		var L_thrust_lb = getprop("engines/engine[0]/thrust_lb");
 		var R_thrust_lb = getprop("engines/engine[1]/thrust_lb");
 
@@ -150,14 +151,18 @@ var BrakeSystem =
 			{
 				L_thrust_lb = 1
 			}
-			L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.0000000002;
+			#Disabling thrust computation on Brakes temperature
+			#L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.0000000002;
+			L_Thrust = 0;
 
 			R_thrust_lb = math.abs(getprop("engines/engine[1]/thrust_lb"));
 			if (R_thrust_lb < 1)
 			{
 				R_thrust_lb = 1
 			}
-			R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.0000000002;
+			#Disabling thrust computation on Brakes temperature
+			#R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.0000000002;
+			R_Thrust = 0;
 
 			if (OnGround)
 			{

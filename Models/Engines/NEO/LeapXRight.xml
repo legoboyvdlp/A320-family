@@ -62,6 +62,61 @@
 		</offsets>
 	</model>
 
+
+	<!-- Takeoff/Landing Engine Moisture -->
+	<model>
+		<name>Right</name>
+		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<condition>
+			<and>
+				<greater-than>
+					<property>position/altitude-agl-ft</property>
+					<value>1</value>
+				</greater-than>
+				<greater-than>
+					<property>environment/relative-humidity</property>
+					<value>45</value>
+				</greater-than>
+				<less-than-equals>
+					<property>position/altitude-agl-ft</property>
+					<value>75</value>
+				</less-than-equals>
+				<less-than-equals>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.63</value>
+				</less-than-equals>
+				<greater-than>
+					<property>engines/engine[1]/n1</property>
+					<value>60</value>
+				</greater-than>
+				<!-- <not>
+					<property>sim/crashed</property>
+				</not> -->
+			</and>
+		</condition>
+		<offsets>
+			<x-m>-0.5</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+			<pitch-deg>0</pitch-deg>
+		</offsets>
+	</model>
+ 
+<!-- ############### -->
+<!-- Tubofan Exhaust -->
+<!-- ############### 
+    <model>
+        <name>Right Tubofan Exhaust</name>
+        <path>Aircraft/A320-family/Models/Effects/Exhaust/Exhaust.xml</path>
+        <offsets>
+            <x-m>-7.0</x-m>
+            <y-m> 7.77</y-m>
+            <z-m>-4.4</z-m>
+            <pitch-deg>0</pitch-deg>
+        </offsets>
+    </model>
+	-->
+
 	<model>
 		<name>Engine fire</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
