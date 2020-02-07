@@ -6,24 +6,24 @@ var distance = 0;
 var min_dist = 0;
 var max_dist = 0;
 var canChangeZOffset = 0;
-var decStep = -5;
-var incStep = 5;
+var decStep = -0.5;
+var incStep = 0.5;
 var viewName = "XX";
 
 var fovZoom = func(d) {
 	viewName = getprop("sim/current-view/name");
-	canChangeZOffset = getprop("sim/current-view/type") == "lookat" and viewName != "Tower View" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View";
+	canChangeZOffset = getprop("sim/current-view/type") == "lookat" and viewName != "Tower View"  and viewName != "Tower View AGL" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View";
 	
-	if (getprop("sim/current-view/z-offset-m") <= -50) {
-		decStep = -10;
+	if (getprop("sim/current-view/z-offset-m") <= -20) {
+		decStep = -2;
 	} else {
-		decStep = -5;
+		decStep = -1;
 	}
 	
-	if (getprop("sim/current-view/z-offset-m") < -50) { # Not a typo, the conditions are different
-		incStep = 10;
+	if (getprop("sim/current-view/z-offset-m") < -20) { # Not a typo, the conditions are different
+		incStep = 2;
 	} else {
-		incStep = 5;
+		incStep = 1;
 	}
 	
 	if (d == -1) {
