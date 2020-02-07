@@ -36,7 +36,7 @@
 					</greater-than-equals>
 				</or>
 				<greater-than-equals>
-					<property>/sim/model/lights/nose-lights</property>
+					<property>sim/model/lights/nose-lights</property>
 					<value>0.5</value>
 				</greater-than-equals>
 				<equals>

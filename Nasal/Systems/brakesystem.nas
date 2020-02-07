@@ -77,7 +77,7 @@ var BrakeSystem =
 
 		var atemp  =  getprop("environment/temperature-degc") or 0;
 		var vmach  =  getprop("velocities/mach") or 0;
-		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat");
+		var tatdegc = getprop("systems/navigation/probes/tat-1/compute-tat");
 
 		setprop("gear/gear[1]/L1brake-temp-degc",tatdegc+getprop("gear/gear[1]/L1error-temp-degc"));
 		setprop("gear/gear[1]/L2brake-temp-degc",tatdegc+getprop("gear/gear[1]/L2error-temp-degc"));

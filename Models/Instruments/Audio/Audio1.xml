@@ -14,7 +14,7 @@
 		<button>0</button>
 		<binding>
 			<command>property-toggle</command>
-			<property>/controls/audio/headset-toggle</property>
+			<property>controls/audio/headset-toggle</property>
 		</binding>
 	</action>
 </animation>

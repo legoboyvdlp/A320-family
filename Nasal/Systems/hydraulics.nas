@@ -22,23 +22,23 @@ var HYD = {
 		counter: props.globals.initNode("/systems/hydraulic/brakes/counter", 0, "INT"),
 	},
 	Fail: {
-		blueElec: props.globals.getNode("/systems/failures/hydraulic/blue-elec"),
-		blueLeak: props.globals.getNode("/systems/failures/hydraulic/blue-leak"),
-		greenEng: props.globals.getNode("/systems/failures/hydraulic/green-edp"),
-		greenLeak: props.globals.getNode("/systems/failures/hydraulic/green-leak"),
-		ptuFault: props.globals.getNode("/systems/failures/hydraulic/ptu"),
-		yellowEng: props.globals.getNode("/systems/failures/hydraulic/yellow-edp"),
-		yellowElec: props.globals.getNode("/systems/failures/hydraulic/yellow-elec"),
-		yellowLeak: props.globals.getNode("/systems/failures/hydraulic/yellow-leak"),
+		blueElec: props.globals.getNode("systems/failures/hydraulic/blue-elec"),
+		blueLeak: props.globals.getNode("systems/failures/hydraulic/blue-leak"),
+		greenEng: props.globals.getNode("systems/failures/hydraulic/green-edp"),
+		greenLeak: props.globals.getNode("systems/failures/hydraulic/green-leak"),
+		ptuFault: props.globals.getNode("systems/failures/hydraulic/ptu"),
+		yellowEng: props.globals.getNode("systems/failures/hydraulic/yellow-edp"),
+		yellowElec: props.globals.getNode("systems/failures/hydraulic/yellow-elec"),
+		yellowLeak: props.globals.getNode("systems/failures/hydraulic/yellow-leak"),
 	},
 	Psi: {
-		blue: props.globals.getNode("/systems/hydraulic/blue-psi"),
-		green: props.globals.getNode("/systems/hydraulic/green-psi"),
-		yellow: props.globals.getNode("/systems/hydraulic/yellow-psi"),
+		blue: props.globals.getNode("systems/hydraulic/blue-psi"),
+		green: props.globals.getNode("systems/hydraulic/green-psi"),
+		yellow: props.globals.getNode("systems/hydraulic/yellow-psi"),
 	},
 	Ptu: {
-		active: props.globals.getNode("/systems/hydraulic/sources/ptu/ptu-active"),
-		diff: props.globals.getNode("/systems/hydraulic/yellow-psi-diff"),
+		active: props.globals.getNode("systems/hydraulic/sources/ptu/ptu-active"),
+		diff: props.globals.getNode("systems/hydraulic/yellow-psi-diff"),
 	},
 	Qty: {
 		blueInput: props.globals.initNode("/systems/hydraulic/blue-qty-input", 0, "INT"),
@@ -46,20 +46,20 @@ var HYD = {
 		yellowInput: props.globals.initNode("/systems/hydraulic/yellow-qty-input", 0, "INT"),
 	},
 	Rat: {
-		position: props.globals.getNode("/systems/hydraulic/sources/rat/position"),
+		position: props.globals.getNode("systems/hydraulic/sources/rat/position"),
 	},
 	Switch: {
-		blueElec: props.globals.getNode("/controls/hydraulic/switches/blue-elec"),
-		blueElecOvrd: props.globals.getNode("/controls/hydraulic/switches/blue-elec-ovrd"),
-		greenEDP: props.globals.getNode("/controls/hydraulic/switches/green-edp"),
-		ptu: props.globals.getNode("/controls/hydraulic/switches/ptu"),
-		rat: props.globals.getNode("/controls/hydraulic/switches/rat-man"),
-		yellowEDP: props.globals.getNode("/controls/hydraulic/switches/yellow-edp"),
-		yellowElec: props.globals.getNode("/controls/hydraulic/switches/yellow-elec"),
+		blueElec: props.globals.getNode("controls/hydraulic/switches/blue-elec"),
+		blueElecOvrd: props.globals.getNode("controls/hydraulic/switches/blue-elec-ovrd"),
+		greenEDP: props.globals.getNode("controls/hydraulic/switches/green-edp"),
+		ptu: props.globals.getNode("controls/hydraulic/switches/ptu"),
+		rat: props.globals.getNode("controls/hydraulic/switches/rat-man"),
+		yellowEDP: props.globals.getNode("controls/hydraulic/switches/yellow-edp"),
+		yellowElec: props.globals.getNode("controls/hydraulic/switches/yellow-elec"),
 	},
 	Valve: {
-		yellowFire: props.globals.getNode("/systems/hydraulic/sources/yellow-edp/fire-valve"),
-		greenFire: props.globals.getNode("/systems/hydraulic/sources/green-edp/fire-valve"),
+		yellowFire: props.globals.getNode("systems/hydraulic/sources/yellow-edp/fire-valve"),
+		greenFire: props.globals.getNode("systems/hydraulic/sources/green-edp/fire-valve"),
 	},
 	init: func() {
 		me.resetFail();
@@ -86,7 +86,7 @@ var HYD = {
 	},
 	loop: func() {
 		accum = me.Brakes.accumPressPsi.getValue();
-		parking = getprop("/controls/gear/brake-parking");
+		parking = getprop("controls/gear/brake-parking");
 		askidnws_sw = me.Brakes.askidSw.getBoolValue();
 		
 		if (!parking and askidnws_sw and me.Psi.green.getValue() > 2500) {
@@ -107,8 +107,8 @@ var HYD = {
 };
 
 setlistener("/controls/gear/gear-down", func {
-	down = getprop("/controls/gear/gear-down");
-	if (!down and (getprop("/gear/gear[0]/wow") or getprop("/gear/gear[1]/wow") or getprop("/gear/gear[2]/wow"))) {
-		setprop("/controls/gear/gear-down", 1);
+	down = getprop("controls/gear/gear-down");
+	if (!down and (getprop("gear/gear[0]/wow") or getprop("gear/gear[1]/wow") or getprop("gear/gear[2]/wow"))) {
+		setprop("controls/gear/gear-down", 1);
 	}
 });

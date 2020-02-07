@@ -4,6 +4,6 @@
 
 var perfDESInput = func(key, i) {
 	if (key == "L6") {
-		setprop("/MCDU[" ~ i ~ "]/page", "CRZ");
+		setprop("MCDU[" ~ i ~ "]/page", "CRZ");
 	}
 }
