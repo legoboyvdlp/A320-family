@@ -51,11 +51,11 @@ var fetchWXRMap = func(size){
 					  .setSize(sz, sz)
 					  .setTranslation(transl, transl);
 			me.wxlayer.show();
-			me.last_request = getprop("/sim/time/elapsed-sec");
+			me.last_request = getprop("sim/time/elapsed-sec");
 		})
 		.always(func(){
-			setprop("/instrumentation/wxr/center/latitude-deg", lat);
-			setprop("/instrumentation/wxr/center/longitude-deg", lon);
+			setprop("instrumentation/wxr/center/latitude-deg", lat);
+			setprop("instrumentation/wxr/center/longitude-deg", lon);
 			me.fetching = 0;
 			print("[WXR] Live Layer Request: "~url); # Debugging
 		});
@@ -101,7 +101,7 @@ var draw = func {
 		me.wxlayer.show();
 	}
 
-	if(getprop("/sim/time/elapsed-sec") - me.last_request > me.update_interval) {
+	if(getprop("sim/time/elapsed-sec") - me.last_request > me.update_interval) {
 		#print('Fetching WXR map...');
 		me.key = me.model.key; # API Key from Wunderground API Subscription
 		me.res = me.model.res; # Resolution of image to fetch (default 2048)

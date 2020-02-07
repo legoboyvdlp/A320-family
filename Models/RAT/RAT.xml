@@ -32,7 +32,7 @@
 		<object-name>fan</object-name>
 		<object-name>holder</object-name>
 		<condition>    		
-				<property>/systems/hydraulic/sources/rat/position</property>
+				<property>systems/hydraulic/sources/rat/position</property>
 		</condition>
 	</animation>
 

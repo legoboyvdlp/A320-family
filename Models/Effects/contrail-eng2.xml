@@ -20,7 +20,7 @@
 					<value>50</value>
 				</greater-than>
 				<greater-than>
-					<property>/position/altitude-ft</property>
+					<property>position/altitude-ft</property>
 					<value>19000</value>
 				</greater-than>
 				<less-than>

@@ -11,9 +11,9 @@ var chan_rmp1_v = "vhr1";
 var chan_rmp2_v = "vhr2";
 var chan_rmp3_v = "vhr3";
 
-var act_vhf1 = props.globals.getNode("/instrumentation/comm[0]/frequencies/selected-mhz");
-var act_vhf2 = props.globals.getNode("/instrumentation/comm[1]/frequencies/selected-mhz");
-var act_vhf3 = props.globals.getNode("/instrumentation/comm[2]/frequencies/selected-mhz");
+var act_vhf1 = props.globals.getNode("instrumentation/comm[0]/frequencies/selected-mhz");
+var act_vhf2 = props.globals.getNode("instrumentation/comm[1]/frequencies/selected-mhz");
+var act_vhf3 = props.globals.getNode("instrumentation/comm[2]/frequencies/selected-mhz");
 
 var act_display_rmp1 = props.globals.initNode("/controls/radio/rmp[0]/active-display", "118.700", "STRING");
 var stby_display_rmp1 = props.globals.initNode("/controls/radio/rmp[0]/standby-display", "121.400", "STRING");
@@ -51,8 +51,8 @@ var am_mode_rmp3 = props.globals.initNode("/systems/radio/rmp[2]/am-active", 0, 
 
 var init = func() {
 	for(var i = 0; i < 3; i += 1) {
-		setprop("/systems/radio/rmp[" ~ i ~ "]/hf1-standby", 510);
-		setprop("/systems/radio/rmp[" ~ i ~ "]/hf2-standby", 891);
+		setprop("systems/radio/rmp[" ~ i ~ "]/hf1-standby", 510);
+		setprop("systems/radio/rmp[" ~ i ~ "]/hf2-standby", 891);
 	}
 	
 	chan_rmp1.setValue("vhf1");
@@ -250,15 +250,15 @@ var update_chan_sel = func(rmp_no) {
 
 var transfer = func(rmp_no) {
 	rmp_no = rmp_no - 1;
-	var sel_chan = getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/sel_chan");
+	var sel_chan = getprop("systems/radio/rmp[" ~ rmp_no ~ "]/sel_chan");
 
 	if (string.match(sel_chan, "vhf[1-3]")) {
 		var mod1 = int(string.replace(sel_chan, "vhf", ""));
 		var mod = mod1 - 1;
 
-		var mem = getprop("/instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz");
-		setprop("/instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz", getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby"));
-		setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby", mem);
+		var mem = getprop("instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz");
+		setprop("instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz", getprop("systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby"));
+		setprop("systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby", mem);
 	}
 }
 

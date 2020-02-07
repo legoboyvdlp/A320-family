@@ -37,7 +37,7 @@
 		<object-name>Rudder</object-name>
 		<condition>
 			<equals>
-				<property>/sim/model/lights/logo-lights</property>
+				<property>sim/model/lights/logo-lights</property>
 				<value>1</value>
 			</equals>
 		</condition>

@@ -10,6 +10,9 @@ var elapsedtime = 0;
 var leftmsg = "XX";
 var rightmsg = "XX";
 
+# Conversion factor pounds to kilogram
+LBS2KGS = 0.4535924;
+
 # Create Nodes:
 var fuel_1 = props.globals.initNode("/engines/engine[0]/fuel-flow_actual", 0);
 var fuel_2 = props.globals.initNode("/engines/engine[1]/fuel-flow_actual", 0);
@@ -31,69 +34,70 @@ var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amoun
 var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
 
 # Fetch nodes:
-var et = props.globals.getNode("/sim/time/elapsed-sec", 1);
-var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
-var acess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
-var eng_option = props.globals.getNode("/options/eng", 1);
-var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3", 1);
-var rev_1 = props.globals.getNode("/engines/engine[0]/reverser-pos-norm", 1);
-var rev_2 = props.globals.getNode("/engines/engine[1]/reverser-pos-norm", 1);
-var eng1_n1mode = props.globals.getNode("/systems/fadec/eng1/n1", 1);
-var eng1_eprmode = props.globals.getNode("/systems/fadec/eng1/epr", 1);
-var eng2_n1mode = props.globals.getNode("/systems/fadec/eng2/n1", 1);
-var eng2_eprmode = props.globals.getNode("/systems/fadec/eng2/epr", 1);
-var eng1_n2mode = props.globals.getNode("/systems/fadec/eng1/n2", 1);
-var eng2_n2mode = props.globals.getNode("/systems/fadec/eng2/n2", 1);
-var flap_text = props.globals.getNode("/controls/flight/flap-txt", 1);
-var flap_pos = props.globals.getNode("/controls/flight/flap-pos", 1);
-var fuel = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
-var modeautobrake = props.globals.getNode("/controls/autobrake/mode", 1);
-var speedbrakearm = props.globals.getNode("/controls/flight/speedbrake-arm", 1);
-var ECAMtoconfig = props.globals.getNode("/ECAM/to-config", 1);
-var gear = props.globals.getNode("/gear/gear[1]/position-norm", 1);
-var smoke = props.globals.getNode("/controls/lighting/no-smoking-sign", 1);
-var seatbelt = props.globals.getNode("/controls/lighting/seatbelt-sign", 1);
-var flaps3_ovr = props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 1);
-var wow0 = props.globals.getNode("/gear/gear[0]/wow");
-var eng1_n1 = props.globals.getNode("/engines/engine[0]/n1-actual", 1);
-var eng2_n1 = props.globals.getNode("/engines/engine[1]/n1-actual", 1);
-var eng1_n2 = props.globals.getNode("/engines/engine[0]/n2-actual", 1);
-var eng2_n2 = props.globals.getNode("/engines/engine[1]/n2-actual", 1);
-var eng1_epr = props.globals.getNode("/engines/engine[0]/epr-actual", 1);
-var eng2_epr = props.globals.getNode("/engines/engine[1]/epr-actual", 1);
-var eng1_egt = props.globals.getNode("/engines/engine[0]/egt-actual", 1);
-var eng2_egt = props.globals.getNode("/engines/engine[1]/egt-actual", 1);
-var eng1_egtmode = props.globals.getNode("/systems/fadec/eng1/egt", 1);
-var eng2_egtmode = props.globals.getNode("/systems/fadec/eng2/egt", 1);
-var eng1_ffmode = props.globals.getNode("/systems/fadec/eng1/ff", 1);
-var eng2_ffmode = props.globals.getNode("/systems/fadec/eng2/ff", 1);
-var fadecpower_1 = props.globals.getNode("/systems/fadec/powered1", 1);
-var fadecpower_2 = props.globals.getNode("/systems/fadec/powered2", 1);
-var fadecpowerup = props.globals.getNode("/systems/fadec/powerup", 1);
-var thr_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
-var n1_limit = props.globals.getNode("/controls/engines/n1-limit", 1);
-var epr_limit = props.globals.getNode("/controls/engines/epr-limit", 1);
-var n1mode1 = props.globals.getNode("/systems/fadec/n1mode1", 1);
-var n1mode2 = props.globals.getNode("/systems/fadec/n1mode2", 1);
-var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
-var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
-var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
-var ECAM_line4 = props.globals.getNode("/ECAM/msg/line4", 1);
-var ECAM_line5 = props.globals.getNode("/ECAM/msg/line5", 1);
-var ECAM_line6 = props.globals.getNode("/ECAM/msg/line6", 1);
-var ECAM_line7 = props.globals.getNode("/ECAM/msg/line7", 1);
-var ECAM_line8 = props.globals.getNode("/ECAM/msg/line8", 1);
-var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
-var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
-var ECAM_line3c = props.globals.getNode("/ECAM/msg/linec3", 1);
-var ECAM_line4c = props.globals.getNode("/ECAM/msg/linec4", 1);
-var ECAM_line5c = props.globals.getNode("/ECAM/msg/linec5", 1);
-var ECAM_line6c = props.globals.getNode("/ECAM/msg/linec6", 1);
-var ECAM_line7c = props.globals.getNode("/ECAM/msg/linec7", 1);
-var ECAM_line8c = props.globals.getNode("/ECAM/msg/linec8", 1);
-var ECAMleft = props.globals.getNode("/ECAM/left-msg", 1);
-var ECAMright = props.globals.getNode("/ECAM/right-msg", 1);
-var rate = props.globals.getNode("/systems/acconfig/options/uecam-rate", 1);
+var acconfig_weight_kgs = props.globals.getNode("systems/acconfig/options/weight-kgs", 1);
+var et = props.globals.getNode("sim/time/elapsed-sec", 1);
+var acconfig = props.globals.getNode("systems/acconfig/autoconfig-running", 1);
+var acess = props.globals.getNode("systems/electrical/bus/ac-ess", 1);
+var eng_option = props.globals.getNode("options/eng", 1);
+var du3_lgt = props.globals.getNode("controls/lighting/DU/du3", 1);
+var rev_1 = props.globals.getNode("engines/engine[0]/reverser-pos-norm", 1);
+var rev_2 = props.globals.getNode("engines/engine[1]/reverser-pos-norm", 1);
+var eng1_n1mode = props.globals.getNode("systems/fadec/eng1/n1", 1);
+var eng1_eprmode = props.globals.getNode("systems/fadec/eng1/epr", 1);
+var eng2_n1mode = props.globals.getNode("systems/fadec/eng2/n1", 1);
+var eng2_eprmode = props.globals.getNode("systems/fadec/eng2/epr", 1);
+var eng1_n2mode = props.globals.getNode("systems/fadec/eng1/n2", 1);
+var eng2_n2mode = props.globals.getNode("systems/fadec/eng2/n2", 1);
+var flap_text = props.globals.getNode("controls/flight/flap-txt", 1);
+var flap_pos = props.globals.getNode("controls/flight/flap-pos", 1);
+var fuel = props.globals.getNode("consumables/fuel/total-fuel-lbs", 1);
+var modeautobrake = props.globals.getNode("controls/autobrake/mode", 1);
+var speedbrakearm = props.globals.getNode("controls/flight/speedbrake-arm", 1);
+var ECAMtoconfig = props.globals.getNode("ECAM/to-config", 1);
+var gear = props.globals.getNode("gear/gear[1]/position-norm", 1);
+var smoke = props.globals.getNode("controls/lighting/no-smoking-sign", 1);
+var seatbelt = props.globals.getNode("controls/lighting/seatbelt-sign", 1);
+var flaps3_ovr = props.globals.getNode("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 1);
+var wow0 = props.globals.getNode("gear/gear[0]/wow");
+var eng1_n1 = props.globals.getNode("engines/engine[0]/n1-actual", 1);
+var eng2_n1 = props.globals.getNode("engines/engine[1]/n1-actual", 1);
+var eng1_n2 = props.globals.getNode("engines/engine[0]/n2-actual", 1);
+var eng2_n2 = props.globals.getNode("engines/engine[1]/n2-actual", 1);
+var eng1_epr = props.globals.getNode("engines/engine[0]/epr-actual", 1);
+var eng2_epr = props.globals.getNode("engines/engine[1]/epr-actual", 1);
+var eng1_egt = props.globals.getNode("engines/engine[0]/egt-actual", 1);
+var eng2_egt = props.globals.getNode("engines/engine[1]/egt-actual", 1);
+var eng1_egtmode = props.globals.getNode("systems/fadec/eng1/egt", 1);
+var eng2_egtmode = props.globals.getNode("systems/fadec/eng2/egt", 1);
+var eng1_ffmode = props.globals.getNode("systems/fadec/eng1/ff", 1);
+var eng2_ffmode = props.globals.getNode("systems/fadec/eng2/ff", 1);
+var fadecpower_1 = props.globals.getNode("systems/fadec/powered1", 1);
+var fadecpower_2 = props.globals.getNode("systems/fadec/powered2", 1);
+var fadecpowerup = props.globals.getNode("systems/fadec/powerup", 1);
+var thr_limit = props.globals.getNode("controls/engines/thrust-limit", 1);
+var n1_limit = props.globals.getNode("controls/engines/n1-limit", 1);
+var epr_limit = props.globals.getNode("controls/engines/epr-limit", 1);
+var n1mode1 = props.globals.getNode("systems/fadec/n1mode1", 1);
+var n1mode2 = props.globals.getNode("systems/fadec/n1mode2", 1);
+var ECAM_line1 = props.globals.getNode("ECAM/msg/line1", 1);
+var ECAM_line2 = props.globals.getNode("ECAM/msg/line2", 1);
+var ECAM_line3 = props.globals.getNode("ECAM/msg/line3", 1);
+var ECAM_line4 = props.globals.getNode("ECAM/msg/line4", 1);
+var ECAM_line5 = props.globals.getNode("ECAM/msg/line5", 1);
+var ECAM_line6 = props.globals.getNode("ECAM/msg/line6", 1);
+var ECAM_line7 = props.globals.getNode("ECAM/msg/line7", 1);
+var ECAM_line8 = props.globals.getNode("ECAM/msg/line8", 1);
+var ECAM_line1c = props.globals.getNode("ECAM/msg/linec1", 1);
+var ECAM_line2c = props.globals.getNode("ECAM/msg/linec2", 1);
+var ECAM_line3c = props.globals.getNode("ECAM/msg/linec3", 1);
+var ECAM_line4c = props.globals.getNode("ECAM/msg/linec4", 1);
+var ECAM_line5c = props.globals.getNode("ECAM/msg/linec5", 1);
+var ECAM_line6c = props.globals.getNode("ECAM/msg/linec6", 1);
+var ECAM_line7c = props.globals.getNode("ECAM/msg/linec7", 1);
+var ECAM_line8c = props.globals.getNode("ECAM/msg/linec8", 1);
+var ECAMleft = props.globals.getNode("ECAM/left-msg", 1);
+var ECAMright = props.globals.getNode("ECAM/right-msg", 1);
+var rate = props.globals.getNode("systems/acconfig/options/uecam-rate", 1);
 
 var canvas_upperECAM_base = {
 	init: func(canvas_group, file) {
@@ -237,7 +241,14 @@ var canvas_upperECAM_base = {
 		}
 		
 		# FOB
-		me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue(), 10)));
+		if (acconfig_weight_kgs.getValue() == 1)
+		{
+			me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue() * LBS2KGS, 10)));
+			me["FOB-weight-unit"].setText("KG");
+		} else {
+			me["FOB-LBS"].setText(sprintf("%s", math.round(fuel.getValue(), 10)));
+			me["FOB-weight-unit"].setText("LBS");
+		}
 		
 		# Left ECAM Messages
 		line1c = ECAM_line1c.getValue();
@@ -462,124 +473,124 @@ var canvas_upperECAM_base = {
 		
 		# Right ECAM Messages
 		if (rightmsg == "MSG") {
-			me["ECAMR1"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line1")));
-			me["ECAMR2"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line2")));
-			me["ECAMR3"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line3")));
-			me["ECAMR4"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line4")));
-			me["ECAMR5"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line5")));
-			me["ECAMR6"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line6")));
-			me["ECAMR7"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line7")));
-			me["ECAMR8"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line8")));
+			me["ECAMR1"].setText(sprintf("%s", getprop("ECAM/rightmsg/line1")));
+			me["ECAMR2"].setText(sprintf("%s", getprop("ECAM/rightmsg/line2")));
+			me["ECAMR3"].setText(sprintf("%s", getprop("ECAM/rightmsg/line3")));
+			me["ECAMR4"].setText(sprintf("%s", getprop("ECAM/rightmsg/line4")));
+			me["ECAMR5"].setText(sprintf("%s", getprop("ECAM/rightmsg/line5")));
+			me["ECAMR6"].setText(sprintf("%s", getprop("ECAM/rightmsg/line6")));
+			me["ECAMR7"].setText(sprintf("%s", getprop("ECAM/rightmsg/line7")));
+			me["ECAMR8"].setText(sprintf("%s", getprop("ECAM/rightmsg/line8")));
 			
-			if (getprop("/ECAM/rightmsg/linec1") == "w") {
+			if (getprop("ECAM/rightmsg/linec1") == "w") {
 				me["ECAMR1"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec1") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec1") == "c") {
 				me["ECAMR1"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec1") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec1") == "g") {
 				me["ECAMR1"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec1") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec1") == "a") {
 				me["ECAMR1"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec1") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec1") == "r") {
 				me["ECAMR1"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec1") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec1") == "m") {
 				me["ECAMR1"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec2") == "w") {
+			if (getprop("ECAM/rightmsg/linec2") == "w") {
 				me["ECAMR2"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec2") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec2") == "c") {
 				me["ECAMR2"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec2") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec2") == "g") {
 				me["ECAMR2"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec2") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec2") == "a") {
 				me["ECAMR2"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec2") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec2") == "r") {
 				me["ECAMR2"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec2") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec2") == "m") {
 				me["ECAMR2"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec3") == "w") {
+			if (getprop("ECAM/rightmsg/linec3") == "w") {
 				me["ECAMR3"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec3") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec3") == "c") {
 				me["ECAMR3"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec3") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec3") == "g") {
 				me["ECAMR3"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec3") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec3") == "a") {
 				me["ECAMR3"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec3") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec3") == "r") {
 				me["ECAMR3"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec3") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec3") == "m") {
 				me["ECAMR3"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec4") == "w") {
+			if (getprop("ECAM/rightmsg/linec4") == "w") {
 				me["ECAMR4"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec4") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec4") == "c") {
 				me["ECAMR4"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec4") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec4") == "g") {
 				me["ECAMR4"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec4") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec4") == "a") {
 				me["ECAMR4"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec4") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec4") == "r") {
 				me["ECAMR4"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec4") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec4") == "m") {
 				me["ECAMR4"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec5") == "w") {
+			if (getprop("ECAM/rightmsg/linec5") == "w") {
 				me["ECAMR5"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec5") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec5") == "c") {
 				me["ECAMR5"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec5") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec5") == "g") {
 				me["ECAMR5"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec5") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec5") == "a") {
 				me["ECAMR5"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec5") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec5") == "r") {
 				me["ECAMR5"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec5") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec5") == "m") {
 				me["ECAMR5"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec6") == "w") {
+			if (getprop("ECAM/rightmsg/linec6") == "w") {
 				me["ECAMR6"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec6") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec6") == "c") {
 				me["ECAMR6"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec6") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec6") == "g") {
 				me["ECAMR6"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec6") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec6") == "a") {
 				me["ECAMR6"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec6") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec6") == "r") {
 				me["ECAMR6"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec6") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec6") == "m") {
 				me["ECAMR6"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec7") == "w") {
+			if (getprop("ECAM/rightmsg/linec7") == "w") {
 				me["ECAMR7"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec7") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec7") == "c") {
 				me["ECAMR7"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec7") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec7") == "g") {
 				me["ECAMR7"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec7") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec7") == "a") {
 				me["ECAMR7"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec7") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec7") == "r") {
 				me["ECAMR7"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec7") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec7") == "m") {
 				me["ECAMR7"].setColor(0.6901,0.3333,0.7450);
 			}
 			
-			if (getprop("/ECAM/rightmsg/linec8") == "w") {
+			if (getprop("ECAM/rightmsg/linec8") == "w") {
 				me["ECAMR8"].setColor(0.8078,0.8039,0.8078);
-			} else if (getprop("/ECAM/rightmsg/linec8") == "c") {
+			} else if (getprop("ECAM/rightmsg/linec8") == "c") {
 				me["ECAMR8"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/ECAM/rightmsg/linec8") == "g") {
+			} else if (getprop("ECAM/rightmsg/linec8") == "g") {
 				me["ECAMR8"].setColor(0.0509,0.7529,0.2941);
-			} else if (getprop("/ECAM/rightmsg/linec8") == "a") {
+			} else if (getprop("ECAM/rightmsg/linec8") == "a") {
 				me["ECAMR8"].setColor(0.7333,0.3803,0);
-			} else if (getprop("/ECAM/rightmsg/linec8") == "r") {
+			} else if (getprop("ECAM/rightmsg/linec8") == "r") {
 				me["ECAMR8"].setColor(1,0,0);
-			} else if (getprop("/ECAM/rightmsg/linec8") == "m") {
+			} else if (getprop("ECAM/rightmsg/linec8") == "m") {
 				me["ECAMR8"].setColor(0.6901,0.3333,0.7450);
 			}
 			
@@ -602,7 +613,8 @@ var canvas_upperECAM_cfm_eis2 = {
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B",
-		"TO_Config_B","LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3"];
+		"TO_Config_B","LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3",
+		"FOB-weight-unit","FFlow-weight-unit"];
 	},
 	update: func() {
 		# N1
@@ -785,8 +797,15 @@ var canvas_upperECAM_cfm_eis2 = {
 		}
 		
 		# FF
-		me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
-		me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue() * LBS2KGS, 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue() * LBS2KGS, 10)));
+			me["FFlow-weight-unit"].setText("KG/H");
+		} else {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+			me["FFlow-weight-unit"].setText("LBS/H");
+		}
 		
 		if (ff_1 == 1) {
 			me["FF1"].show();
@@ -848,7 +867,7 @@ var canvas_upperECAM_iae_eis2 = {
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
 		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B","TO_Config_B",
-		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3"];
+		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3", "FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit"];
 	},
 	update: func() {
 		N1_1_cur = N1_1.getValue();
@@ -1100,8 +1119,17 @@ var canvas_upperECAM_iae_eis2 = {
 		}
 		
 		# FF
-		me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
-		me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue() * LBS2KGS, 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue() * LBS2KGS, 10)));
+			me["FFlow1-weight-unit"].setText("KG/H");
+			me["FFlow2-weight-unit"].setText("KG/H");
+		} else {
+			me["FF1"].setText(sprintf("%s", math.round(fuel_1.getValue(), 10)));
+			me["FF2"].setText(sprintf("%s", math.round(fuel_2.getValue(), 10)));
+			me["FFlow1-weight-unit"].setText("LBS/H");
+			me["FFlow2-weight-unit"].setText("LBS/H");
+		}
 		
 		if (ff_1 == 1) {
 			me["FF1"].show();

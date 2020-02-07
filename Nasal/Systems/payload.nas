@@ -3,12 +3,12 @@
 
 var fuelSvc = {
 	_needCenter: 0,
-	enable: props.globals.getNode("/services/fuel-truck/enable"),
-	connect: props.globals.getNode("/services/fuel-truck/connect"),
-	operate: props.globals.getNode("/services/fuel-truck/operate"),
+	enable: props.globals.getNode("services/fuel-truck/enable"),
+	connect: props.globals.getNode("services/fuel-truck/connect"),
+	operate: props.globals.getNode("services/fuel-truck/operate"),
 	Nodes: {
-		requestLbs: props.globals.getNode("/services/fuel-truck/request-lbs"),
-		requestTotalLbs: props.globals.getNode("/services/fuel-truck/request-total-lbs"),
+		requestLbs: props.globals.getNode("services/fuel-truck/request-lbs"),
+		requestTotalLbs: props.globals.getNode("services/fuel-truck/request-total-lbs"),
 	},
 	
 	newRequest: func() {

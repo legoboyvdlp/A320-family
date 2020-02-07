@@ -18,7 +18,7 @@ var lowerECAM_wheel = nil;
 var lowerECAM_test = nil;
 var lowerECAM_display = nil;
 var page = "fctl";
-var oat = getprop("/environment/temperature-degc");
+var oat = getprop("environment/temperature-degc");
 var blue_psi = 0;
 var green_psi = 0;
 var yellow_psi = 0;
@@ -38,217 +38,221 @@ var tr2_a = 0;
 var essTramps = 0;
 var essTrvolts = 0;
 
+# Conversion factor pounds to kilogram
+LBS2KGS = 0.4535924;
+
 # Fetch Nodes
-var elapsed_sec = props.globals.getNode("/sim/time/elapsed-sec", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
-var autoconfig_running = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
-var ac1_src = props.globals.getNode("/systems/electrical/ac1-src", 1);
-var ac2_src = props.globals.getNode("/systems/electrical/ac2-src", 1);
-var lighting_du4 = props.globals.getNode("/controls/lighting/DU/du4", 1);
-var ecam_page = props.globals.getNode("/ECAM/Lower/page", 1);
-var hour = props.globals.getNode("/sim/time/utc/hour", 1);
-var minute = props.globals.getNode("/sim/time/utc/minute", 1);
-var apu_flap = props.globals.getNode("/systems/apu/flap", 1);
-var apu_rpm = props.globals.getNode("/systems/apu/rpm", 1);
-var apu_egt = props.globals.getNode("/systems/apu/egt", 1);
-var door_left = props.globals.getNode("/ECAM/Lower/door-left", 1);
-var door_right = props.globals.getNode("/ECAM/Lower/door-right", 1);
-var door_nose_left = props.globals.getNode("/ECAM/Lower/door-nose-left", 1);
-var door_nose_right = props.globals.getNode("/ECAM/Lower/door-nose-right", 1);
-var apu_rpm_rot = props.globals.getNode("/ECAM/Lower/APU-N", 1);
-var apu_egt_rot = props.globals.getNode("/ECAM/Lower/APU-EGT", 1);
-var oil_qt1 = props.globals.getNode("/ECAM/Lower/Oil-QT[0]", 1);
-var oil_qt2 = props.globals.getNode("/ECAM/Lower/Oil-QT[1]", 1);
-var oil_psi1 = props.globals.getNode("/ECAM/Lower/Oil-PSI[0]", 1);
-var oil_psi2 = props.globals.getNode("/ECAM/Lower/Oil-PSI[1]", 1);
-var bleedapu = props.globals.getNode("/systems/pneumatic/bleedapu", 1);
-var oil_psi_actual1 = props.globals.getNode("/engines/engine[0]/oil-psi-actual", 1);
-var oil_psi_actual2 = props.globals.getNode("/engines/engine[1]/oil-psi-actual", 1);
-var aileron_ind_left = props.globals.getNode("/ECAM/Lower/aileron-ind-left", 1);
-var aileron_ind_right = props.globals.getNode("/ECAM/Lower/aileron-ind-right", 1);
-var elevator_ind_left = props.globals.getNode("/ECAM/Lower/elevator-ind-left", 1);
-var elevator_ind_right = props.globals.getNode("/ECAM/Lower/elevator-ind-right", 1);
-var elevator_trim_deg = props.globals.getNode("/ECAM/Lower/elevator-trim-deg", 1);
-var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/final-deg", 1);
-var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1);
-var gw = props.globals.getNode("/FMGC/internal/gw", 1);
-var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
-var apu_master = props.globals.getNode("/controls/APU/master", 1);
-var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
-var switch_bleedapu = props.globals.getNode("/controls/pneumatic/switches/bleedapu", 1);
-var pneumatic_xbleed_state = props.globals.getNode("/systems/pneumatic/xbleed-state", 1);
-var xbleed = props.globals.getNode("/systems/pneumatic/xbleed", 1);
-var hp_valve1_state = props.globals.getNode("/systems/pneumatic/hp-valve-1-state", 1);
-var hp_valve2_state = props.globals.getNode("/systems/pneumatic/hp-valve-2-state", 1);
-var hp_valve1 = props.globals.getNode("/systems/pneumatic/hp-valve-1", 1);
-var hp_valve2 = props.globals.getNode("/systems/pneumatic/hp-valve-2", 1);
-var eng_valve1_state = props.globals.getNode("/systems/pneumatic/eng-valve-1-state", 1);
-var eng_valve2_state = props.globals.getNode("/systems/pneumatic/eng-valve-2-state", 1);
-var eng_valve1 = props.globals.getNode("/systems/pneumatic/eng-valve-1", 1);
-var eng_valve2 = props.globals.getNode("/systems/pneumatic/eng-valve-2", 1);
-var precooler1_psi = props.globals.getNode("/systems/pneumatic/precooler-1-psi", 1);
-var precooler2_psi = props.globals.getNode("/systems/pneumatic/precooler-2-psi", 1);
-var precooler1_temp = props.globals.getNode("/systems/pneumatic/precooler-1-temp", 1);
-var precooler2_temp = props.globals.getNode("/systems/pneumatic/precooler-2-temp", 1);
-var precooler1_ovht = props.globals.getNode("/systems/pneumatic/precooler-1-ovht", 1);
-var precooler2_ovht = props.globals.getNode("/systems/pneumatic/precooler-2-ovht", 1);
-var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
-var switch_wing_aice = props.globals.getNode("/controls/switches/wing", 1);
-var deice_wing = props.globals.getNode("/controls/deice/wing", 1);
-var eng1_n2_actual = props.globals.getNode("/engines/engine[0]/n2-actual", 1);
-var eng2_n2_actual = props.globals.getNode("/engines/engine[1]/n2-actual", 1);
-var pack1_out_temp = props.globals.getNode("/systems/pressurization/pack-1-out-temp", 1);
-var pack2_out_temp = props.globals.getNode("/systems/pressurization/pack-2-out-temp", 1);
-var pack1_comp_out_temp = props.globals.getNode("/systems/pressurization/pack-1-comp-out-temp", 1);
-var pack2_comp_out_temp = props.globals.getNode("/systems/pressurization/pack-2-comp-out-temp", 1);
-var pack1_bypass = props.globals.getNode("/systems/pressurization/pack-1-bypass", 1);
-var pack2_bypass = props.globals.getNode("/systems/pressurization/pack-2-bypass", 1);
-var pack1_flow = props.globals.getNode("/systems/pressurization/pack-1-flow", 1);
-var pack2_flow = props.globals.getNode("/systems/pressurization/pack-2-flow", 1);
-var pack1_valve = props.globals.getNode("/systems/pressurization/pack-1-valve", 1);
-var pack2_valve = props.globals.getNode("/systems/pressurization/pack-2-valve", 1);
-var switch_pack1 = props.globals.getNode("/controls/pneumatic/switches/pack1", 1);
-var switch_pack2 = props.globals.getNode("/controls/pneumatic/switches/pack2", 1);
-var oil_qt1_actual = props.globals.getNode("/engines/engine[0]/oil-qt-actual", 1);
-var oil_qt2_actual = props.globals.getNode("/engines/engine[1]/oil-qt-actual", 1);
-var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
-var fuel_used_lbs2 = props.globals.getNode("/systems/fuel/fuel-used-2", 1);
+var acconfig_weight_kgs = props.globals.getNode("systems/acconfig/options/weight-kgs", 1);
+var elapsed_sec = props.globals.getNode("sim/time/elapsed-sec", 1);
+var ac2 = props.globals.getNode("systems/electrical/bus/ac-2", 1);
+var autoconfig_running = props.globals.getNode("systems/acconfig/autoconfig-running", 1);
+var ac1_src = props.globals.getNode("systems/electrical/ac1-src", 1);
+var ac2_src = props.globals.getNode("systems/electrical/ac2-src", 1);
+var lighting_du4 = props.globals.getNode("controls/lighting/DU/du4", 1);
+var ecam_page = props.globals.getNode("ECAM/Lower/page", 1);
+var hour = props.globals.getNode("sim/time/utc/hour", 1);
+var minute = props.globals.getNode("sim/time/utc/minute", 1);
+var apu_flap = props.globals.getNode("systems/apu/flap", 1);
+var apu_rpm = props.globals.getNode("systems/apu/rpm", 1);
+var apu_egt = props.globals.getNode("systems/apu/egt", 1);
+var door_left = props.globals.getNode("ECAM/Lower/door-left", 1);
+var door_right = props.globals.getNode("ECAM/Lower/door-right", 1);
+var door_nose_left = props.globals.getNode("ECAM/Lower/door-nose-left", 1);
+var door_nose_right = props.globals.getNode("ECAM/Lower/door-nose-right", 1);
+var apu_rpm_rot = props.globals.getNode("ECAM/Lower/APU-N", 1);
+var apu_egt_rot = props.globals.getNode("ECAM/Lower/APU-EGT", 1);
+var oil_qt1 = props.globals.getNode("ECAM/Lower/Oil-QT[0]", 1);
+var oil_qt2 = props.globals.getNode("ECAM/Lower/Oil-QT[1]", 1);
+var oil_psi1 = props.globals.getNode("ECAM/Lower/Oil-PSI[0]", 1);
+var oil_psi2 = props.globals.getNode("ECAM/Lower/Oil-PSI[1]", 1);
+var bleedapu = props.globals.getNode("systems/pneumatic/bleedapu", 1);
+var oil_psi_actual1 = props.globals.getNode("engines/engine[0]/oil-psi-actual", 1);
+var oil_psi_actual2 = props.globals.getNode("engines/engine[1]/oil-psi-actual", 1);
+var aileron_ind_left = props.globals.getNode("ECAM/Lower/aileron-ind-left", 1);
+var aileron_ind_right = props.globals.getNode("ECAM/Lower/aileron-ind-right", 1);
+var elevator_ind_left = props.globals.getNode("ECAM/Lower/elevator-ind-left", 1);
+var elevator_ind_right = props.globals.getNode("ECAM/Lower/elevator-ind-right", 1);
+var elevator_trim_deg = props.globals.getNode("ECAM/Lower/elevator-trim-deg", 1);
+var final_deg = props.globals.getNode("fdm/jsbsim/hydraulics/rudder/final-deg", 1);
+var temperature_degc = props.globals.getNode("environment/temperature-degc", 1);
+var gw = props.globals.getNode("FMGC/internal/gw", 1);
+var tank3_content_lbs = props.globals.getNode("fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
+var apu_master = props.globals.getNode("controls/APU/master", 1);
+var ir2_knob = props.globals.getNode("controls/adirs/ir[1]/knob", 1);
+var switch_bleedapu = props.globals.getNode("controls/pneumatic/switches/bleedapu", 1);
+var pneumatic_xbleed_state = props.globals.getNode("systems/pneumatic/xbleed-state", 1);
+var xbleed = props.globals.getNode("systems/pneumatic/xbleed", 1);
+var hp_valve1_state = props.globals.getNode("systems/pneumatic/hp-valve-1-state", 1);
+var hp_valve2_state = props.globals.getNode("systems/pneumatic/hp-valve-2-state", 1);
+var hp_valve1 = props.globals.getNode("systems/pneumatic/hp-valve-1", 1);
+var hp_valve2 = props.globals.getNode("systems/pneumatic/hp-valve-2", 1);
+var eng_valve1_state = props.globals.getNode("systems/pneumatic/eng-valve-1-state", 1);
+var eng_valve2_state = props.globals.getNode("systems/pneumatic/eng-valve-2-state", 1);
+var eng_valve1 = props.globals.getNode("systems/pneumatic/eng-valve-1", 1);
+var eng_valve2 = props.globals.getNode("systems/pneumatic/eng-valve-2", 1);
+var precooler1_psi = props.globals.getNode("systems/pneumatic/precooler-1-psi", 1);
+var precooler2_psi = props.globals.getNode("systems/pneumatic/precooler-2-psi", 1);
+var precooler1_temp = props.globals.getNode("systems/pneumatic/precooler-1-temp", 1);
+var precooler2_temp = props.globals.getNode("systems/pneumatic/precooler-2-temp", 1);
+var precooler1_ovht = props.globals.getNode("systems/pneumatic/precooler-1-ovht", 1);
+var precooler2_ovht = props.globals.getNode("systems/pneumatic/precooler-2-ovht", 1);
+var gs_kt = props.globals.getNode("velocities/groundspeed-kt", 1);
+var switch_wing_aice = props.globals.getNode("controls/switches/wing", 1);
+var deice_wing = props.globals.getNode("controls/deice/wing", 1);
+var eng1_n2_actual = props.globals.getNode("engines/engine[0]/n2-actual", 1);
+var eng2_n2_actual = props.globals.getNode("engines/engine[1]/n2-actual", 1);
+var pack1_out_temp = props.globals.getNode("systems/pressurization/pack-1-out-temp", 1);
+var pack2_out_temp = props.globals.getNode("systems/pressurization/pack-2-out-temp", 1);
+var pack1_comp_out_temp = props.globals.getNode("systems/pressurization/pack-1-comp-out-temp", 1);
+var pack2_comp_out_temp = props.globals.getNode("systems/pressurization/pack-2-comp-out-temp", 1);
+var pack1_bypass = props.globals.getNode("systems/pressurization/pack-1-bypass", 1);
+var pack2_bypass = props.globals.getNode("systems/pressurization/pack-2-bypass", 1);
+var pack1_flow = props.globals.getNode("systems/pressurization/pack-1-flow", 1);
+var pack2_flow = props.globals.getNode("systems/pressurization/pack-2-flow", 1);
+var pack1_valve = props.globals.getNode("systems/pressurization/pack-1-valve", 1);
+var pack2_valve = props.globals.getNode("systems/pressurization/pack-2-valve", 1);
+var switch_pack1 = props.globals.getNode("controls/pneumatic/switches/pack1", 1);
+var switch_pack2 = props.globals.getNode("controls/pneumatic/switches/pack2", 1);
+var oil_qt1_actual = props.globals.getNode("engines/engine[0]/oil-qt-actual", 1);
+var oil_qt2_actual = props.globals.getNode("engines/engine[1]/oil-qt-actual", 1);
+var fuel_used_lbs1 = props.globals.getNode("systems/fuel/fuel-used-1", 1);
+var fuel_used_lbs2 = props.globals.getNode("systems/fuel/fuel-used-2", 1);
 var doorL1_pos = props.globals.getNode("sim/model/door-positions/doorl1/position-norm", 1);
 var doorR1_pos = props.globals.getNode("sim/model/door-positions/doorr1/position-norm", 1);
 var doorL4_pos = props.globals.getNode("sim/model/door-positions/doorl4/position-norm", 1);
 var doorR4_pos = props.globals.getNode("sim/model/door-positions/doorr4/position-norm", 1);
-var cargobulk_pos = props.globals.getNode("/sim/model/door-positions/cargobulk/position-norm", 1);
-var cargofwd_pos = props.globals.getNode("/sim/model/door-positions/cargofwd/position-norm", 1);
-var cargoaft_pos = props.globals.getNode("/sim/model/door-positions/cargoaft/position-norm", 1);
+var cargobulk_pos = props.globals.getNode("sim/model/door-positions/cargobulk/position-norm", 1);
+var cargofwd_pos = props.globals.getNode("sim/model/door-positions/cargofwd/position-norm", 1);
+var cargoaft_pos = props.globals.getNode("sim/model/door-positions/cargoaft/position-norm", 1);
 
 # Electrical nodes
-var apu_volts = props.globals.getNode("/systems/electrical/sources/apu/output-volt", 1);
-var apu_hz = props.globals.getNode("/systems/electrical/sources/apu/output-hertz", 1);
-var gen_apu = props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos", 1);
-var switch_bat1 = props.globals.getNode("/controls/electrical/switches/bat-1", 1);
-var switch_bat2 = props.globals.getNode("/controls/electrical/switches/bat-2", 1);
-var bat1_amps = props.globals.getNode("/systems/electrical/sources/bat-1/amp", 1);
-var bat2_amps = props.globals.getNode("/systems/electrical/sources/bat-2/amp", 1);
-var bat1_volts = props.globals.getNode("/systems/electrical/sources/bat-1/volt", 1);
-var bat2_volts = props.globals.getNode("/systems/electrical/sources/bat-2/volt", 1);
-var bat1_fault = props.globals.getNode("/systems/electrical/light/bat-1-fault", 1);
-var bat2_fault = props.globals.getNode("/systems/electrical/light/bat-2-fault", 1);
-var emerGenVolts = props.globals.getNode("/systems/electrical/relay/emer-glc/output", 1);
-var emerGenHz = props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz", 1);
-var tr1_volts = props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output", 1);
-var tr2_volts = props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output", 1);
-var tr1_amps = props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output-amp", 1);
-var tr2_amps = props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output-amp", 1);
-var dc1 = props.globals.getNode("/systems/electrical/bus/dc-1", 1);
-var dc2 = props.globals.getNode("/systems/electrical/bus/dc-2", 1);
-var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
-var switch_emer_gen = props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt", 1);
-var switch_gen1 = props.globals.getNode("/controls/electrical/switches/gen-1", 1);
-var switch_gen2 = props.globals.getNode("/controls/electrical/switches/gen-2", 1);
-var gen1_volts = props.globals.getNode("/systems/electrical/sources/idg-1/output-volt", 1);
-var gen2_volts = props.globals.getNode("/systems/electrical/sources/idg-2/output-volt", 1);
-var gen1_hz = props.globals.getNode("/systems/electrical/sources/idg-1/output-hertz", 1);
-var gen2_hz = props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz", 1);
-var ext_volts = props.globals.getNode("/systems/electrical/sources/ext/output-volt", 1);
-var ext_hz = props.globals.getNode("/systems/electrical/sources/ext/output-hertz", 1);
-var galleyshed = props.globals.getNode("/systems/electrical/extra/galleyshed", 1);
-var switch_galley = props.globals.getNode("/controls/electrical/switches/galley", 1);
-var dcbat = props.globals.getNode("/systems/electrical/bus/dc-bat", 1);
-var ac_ess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
-var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
-var switch_ac_ess_feed = props.globals.getNode("/controls/electrical/switches/ac-ess-feed", 1);
-var tr1_fault = props.globals.getNode("/systems/failures/electrical/tr-1", 1);
-var tr2_fault = props.globals.getNode("/systems/failures/electrical/tr-2", 1);
-var essTrVolt = props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output", 1);
-var essTrAmp = props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output-amp", 1);
+var apu_volts = props.globals.getNode("systems/electrical/sources/apu/output-volt", 1);
+var apu_hz = props.globals.getNode("systems/electrical/sources/apu/output-hertz", 1);
+var gen_apu = props.globals.getNode("systems/electrical/relay/apu-glc/contact-pos", 1);
+var switch_bat1 = props.globals.getNode("controls/electrical/switches/bat-1", 1);
+var switch_bat2 = props.globals.getNode("controls/electrical/switches/bat-2", 1);
+var bat1_amps = props.globals.getNode("systems/electrical/sources/bat-1/amp", 1);
+var bat2_amps = props.globals.getNode("systems/electrical/sources/bat-2/amp", 1);
+var bat1_volts = props.globals.getNode("systems/electrical/sources/bat-1/volt", 1);
+var bat2_volts = props.globals.getNode("systems/electrical/sources/bat-2/volt", 1);
+var bat1_fault = props.globals.getNode("systems/electrical/light/bat-1-fault", 1);
+var bat2_fault = props.globals.getNode("systems/electrical/light/bat-2-fault", 1);
+var emerGenVolts = props.globals.getNode("systems/electrical/relay/emer-glc/output", 1);
+var emerGenHz = props.globals.getNode("systems/electrical/sources/emer-gen/output-hertz", 1);
+var tr1_volts = props.globals.getNode("systems/electrical/relay/tr-contactor-1/output", 1);
+var tr2_volts = props.globals.getNode("systems/electrical/relay/tr-contactor-2/output", 1);
+var tr1_amps = props.globals.getNode("systems/electrical/relay/tr-contactor-1/output-amp", 1);
+var tr2_amps = props.globals.getNode("systems/electrical/relay/tr-contactor-2/output-amp", 1);
+var dc1 = props.globals.getNode("systems/electrical/bus/dc-1", 1);
+var dc2 = props.globals.getNode("systems/electrical/bus/dc-2", 1);
+var dc_ess = props.globals.getNode("systems/electrical/bus/dc-ess", 1);
+var switch_emer_gen = props.globals.getNode("systems/electrical/sources/emer-gen/output-volt", 1);
+var switch_gen1 = props.globals.getNode("controls/electrical/switches/gen-1", 1);
+var switch_gen2 = props.globals.getNode("controls/electrical/switches/gen-2", 1);
+var gen1_volts = props.globals.getNode("systems/electrical/sources/idg-1/output-volt", 1);
+var gen2_volts = props.globals.getNode("systems/electrical/sources/idg-2/output-volt", 1);
+var gen1_hz = props.globals.getNode("systems/electrical/sources/idg-1/output-hertz", 1);
+var gen2_hz = props.globals.getNode("systems/electrical/sources/idg-2/output-hertz", 1);
+var ext_volts = props.globals.getNode("systems/electrical/sources/ext/output-volt", 1);
+var ext_hz = props.globals.getNode("systems/electrical/sources/ext/output-hertz", 1);
+var galleyshed = props.globals.getNode("systems/electrical/extra/galleyshed", 1);
+var switch_galley = props.globals.getNode("controls/electrical/switches/galley", 1);
+var dcbat = props.globals.getNode("systems/electrical/bus/dc-bat", 1);
+var ac_ess = props.globals.getNode("systems/electrical/bus/ac-ess", 1);
+var ac1 = props.globals.getNode("systems/electrical/bus/ac-1", 1);
+var ac2 = props.globals.getNode("systems/electrical/bus/ac-2", 1);
+var switch_ac_ess_feed = props.globals.getNode("controls/electrical/switches/ac-ess-feed", 1);
+var tr1_fault = props.globals.getNode("systems/failures/electrical/tr-1", 1);
+var tr2_fault = props.globals.getNode("systems/failures/electrical/tr-2", 1);
+var essTrVolt = props.globals.getNode("systems/electrical/relay/dc-ess-feed-tr/output", 1);
+var essTrAmp = props.globals.getNode("systems/electrical/relay/dc-ess-feed-tr/output-amp", 1);
 
 # Hydraulic
 var blue_psi = 0;
 var green_psi = 0;
 var yellow_psi = 0;
-var y_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/yellow-resv-lo-air-press", 1);
-var b_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/blue-resv-lo-air-press", 1);
-var g_resv_lo_air_press = props.globals.getNode("/systems/hydraulic/green-resv-lo-air-press", 1);
-var elec_pump_y_ovht = props.globals.getNode("/systems/hydraulic/elec-pump-yellow-ovht", 1);
-var elec_pump_b_ovht = props.globals.getNode("/systems/hydraulic/elec-pump-blue-ovht", 1);
-var rat_deployed = props.globals.getNode("/controls/hydraulic/rat-deployed", 1);
-var y_resv_ovht = props.globals.getNode("/systems/hydraulic/yellow-resv-ovht", 1);
-var b_resv_ovht = props.globals.getNode("/systems/hydraulic/blue-resv-ovht", 1);
-var g_resv_ovht = props.globals.getNode("/systems/hydraulic/green-resv-ovht", 1);
+var y_resv_lo_air_press = props.globals.getNode("systems/hydraulic/yellow-resv-lo-air-press", 1);
+var b_resv_lo_air_press = props.globals.getNode("systems/hydraulic/blue-resv-lo-air-press", 1);
+var g_resv_lo_air_press = props.globals.getNode("systems/hydraulic/green-resv-lo-air-press", 1);
+var elec_pump_y_ovht = props.globals.getNode("systems/hydraulic/elec-pump-yellow-ovht", 1);
+var elec_pump_b_ovht = props.globals.getNode("systems/hydraulic/elec-pump-blue-ovht", 1);
+var rat_deployed = props.globals.getNode("controls/hydraulic/rat-deployed", 1);
+var y_resv_ovht = props.globals.getNode("systems/hydraulic/yellow-resv-ovht", 1);
+var b_resv_ovht = props.globals.getNode("systems/hydraulic/blue-resv-ovht", 1);
+var g_resv_ovht = props.globals.getNode("systems/hydraulic/green-resv-ovht", 1);
 var askidsw = 0;
 var brakemode = 0;
 var accum = 0;
-var L1BrakeTempc = props.globals.getNode("/gear/gear[1]/L1brake-temp-degc", 1);
-var L2BrakeTempc = props.globals.getNode("/gear/gear[1]/L2brake-temp-degc", 1);
-var R3BrakeTempc = props.globals.getNode("/gear/gear[2]/R3brake-temp-degc", 1);
-var R4BrakeTempc = props.globals.getNode("/gear/gear[2]/R4brake-temp-degc", 1);
+var L1BrakeTempc = props.globals.getNode("gear/gear[1]/L1brake-temp-degc", 1);
+var L2BrakeTempc = props.globals.getNode("gear/gear[1]/L2brake-temp-degc", 1);
+var R3BrakeTempc = props.globals.getNode("gear/gear[2]/R3brake-temp-degc", 1);
+var R4BrakeTempc = props.globals.getNode("gear/gear[2]/R4brake-temp-degc", 1);
 
-var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
-var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
-var switch_cart = props.globals.getNode("/controls/electrical/ground-cart", 1);
-var total_psi = props.globals.getNode("/systems/pneumatic/total-psi", 1);
-var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l1/final-deg", 1);
-var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l2/final-deg", 1);
-var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l3/final-deg", 1);
-var spoiler_L4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l4/final-deg", 1);
-var spoiler_L5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l5/final-deg", 1);
-var spoiler_R1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r1/final-deg", 1);
-var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r2/final-deg", 1);
-var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r3/final-deg", 1);
-var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
-var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
-var spoiler_L1_fail = props.globals.getNode("/systems/failures/spoiler-l1", 1);
-var spoiler_L2_fail = props.globals.getNode("/systems/failures/spoiler-l2", 1);
-var spoiler_L3_fail = props.globals.getNode("/systems/failures/spoiler-l3", 1);
-var spoiler_L4_fail = props.globals.getNode("/systems/failures/spoiler-l4", 1);
-var spoiler_L5_fail = props.globals.getNode("/systems/failures/spoiler-l5", 1);
-var spoiler_R1_fail = props.globals.getNode("/systems/failures/spoiler-r1", 1);
-var spoiler_R2_fail = props.globals.getNode("/systems/failures/spoiler-r2", 1);
-var spoiler_R3_fail = props.globals.getNode("/systems/failures/spoiler-r3", 1);
-var spoiler_R4_fail = props.globals.getNode("/systems/failures/spoiler-r4", 1);
-var spoiler_R5_fail = props.globals.getNode("/systems/failures/spoiler-r5", 1);
-var elac1 = props.globals.getNode("/systems/fctl/elac1", 1);
-var elac2 = props.globals.getNode("/systems/fctl/elac2", 1);
-var sec1 = props.globals.getNode("/systems/fctl/sec1", 1);
-var sec2 = props.globals.getNode("/systems/fctl/sec2", 1);
-var sec3 = props.globals.getNode("/systems/fctl/sec3", 1);
-var elac1_fail = props.globals.getNode("/systems/failures/elac1", 1);
-var elac2_fail = props.globals.getNode("/systems/failures/elac2", 1);
-var sec1_fail = props.globals.getNode("/systems/failures/sec1", 1);
-var sec2_fail = props.globals.getNode("/systems/failures/sec2", 1);
-var sec3_fail = props.globals.getNode("/systems/failures/sec3", 1);
+var eng1_running = props.globals.getNode("engines/engine[0]/running", 1);
+var eng2_running = props.globals.getNode("engines/engine[1]/running", 1);
+var switch_cart = props.globals.getNode("controls/electrical/ground-cart", 1);
+var total_psi = props.globals.getNode("systems/pneumatic/total-psi", 1);
+var spoiler_L1 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-l1/final-deg", 1);
+var spoiler_L2 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-l2/final-deg", 1);
+var spoiler_L3 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-l3/final-deg", 1);
+var spoiler_L4 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-l4/final-deg", 1);
+var spoiler_L5 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-l5/final-deg", 1);
+var spoiler_R1 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-r1/final-deg", 1);
+var spoiler_R2 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-r2/final-deg", 1);
+var spoiler_R3 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-r3/final-deg", 1);
+var spoiler_R4 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
+var spoiler_R5 = props.globals.getNode("fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
+var spoiler_L1_fail = props.globals.getNode("systems/failures/spoiler-l1", 1);
+var spoiler_L2_fail = props.globals.getNode("systems/failures/spoiler-l2", 1);
+var spoiler_L3_fail = props.globals.getNode("systems/failures/spoiler-l3", 1);
+var spoiler_L4_fail = props.globals.getNode("systems/failures/spoiler-l4", 1);
+var spoiler_L5_fail = props.globals.getNode("systems/failures/spoiler-l5", 1);
+var spoiler_R1_fail = props.globals.getNode("systems/failures/spoiler-r1", 1);
+var spoiler_R2_fail = props.globals.getNode("systems/failures/spoiler-r2", 1);
+var spoiler_R3_fail = props.globals.getNode("systems/failures/spoiler-r3", 1);
+var spoiler_R4_fail = props.globals.getNode("systems/failures/spoiler-r4", 1);
+var spoiler_R5_fail = props.globals.getNode("systems/failures/spoiler-r5", 1);
+var elac1 = props.globals.getNode("systems/fctl/elac1", 1);
+var elac2 = props.globals.getNode("systems/fctl/elac2", 1);
+var sec1 = props.globals.getNode("systems/fctl/sec1", 1);
+var sec2 = props.globals.getNode("systems/fctl/sec2", 1);
+var sec3 = props.globals.getNode("systems/fctl/sec3", 1);
+var elac1_fail = props.globals.getNode("systems/failures/elac1", 1);
+var elac2_fail = props.globals.getNode("systems/failures/elac2", 1);
+var sec1_fail = props.globals.getNode("systems/failures/sec1", 1);
+var sec2_fail = props.globals.getNode("systems/failures/sec2", 1);
+var sec3_fail = props.globals.getNode("systems/failures/sec3", 1);
 var eng1_n1 = props.globals.getNode("engines/engine[0]/n1-actual", 1);
 var eng2_n1 = props.globals.getNode("engines/engine[1]/n1-actual", 1);
-var total_fuel_lbs = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
-var fadec1 = props.globals.getNode("/systems/fadec/powered1", 1);
-var fadec2 = props.globals.getNode("/systems/fadec/powered2", 1);
-var fuel_flow1 = props.globals.getNode("/engines/engine[0]/fuel-flow_actual", 1);
-var fuel_flow2 = props.globals.getNode("/engines/engine[1]/fuel-flow_actual", 1);
-var fuel_left_outer_temp = props.globals.getNode("/consumables/fuel/tank[0]/temperature_degC", 1);
-var fuel_left_inner_temp = props.globals.getNode("/consumables/fuel/tank[1]/temperature_degC", 1);
-var fuel_right_outer_temp = props.globals.getNode("/consumables/fuel/tank[3]/temperature_degC", 1);
-var fuel_right_inner_temp = props.globals.getNode("/consumables/fuel/tank[4]/temperature_degC", 1);
-var cutoff_switch1 = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
-var cutoff_switch2 = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
-var fuel_xfeed = props.globals.getNode("/controls/fuel/x-feed", 1);
+var total_fuel_lbs = props.globals.getNode("consumables/fuel/total-fuel-lbs", 1);
+var fadec1 = props.globals.getNode("systems/fadec/powered1", 1);
+var fadec2 = props.globals.getNode("systems/fadec/powered2", 1);
+var fuel_flow1 = props.globals.getNode("engines/engine[0]/fuel-flow_actual", 1);
+var fuel_flow2 = props.globals.getNode("engines/engine[1]/fuel-flow_actual", 1);
+var fuel_left_outer_temp = props.globals.getNode("consumables/fuel/tank[0]/temperature_degC", 1);
+var fuel_left_inner_temp = props.globals.getNode("consumables/fuel/tank[1]/temperature_degC", 1);
+var fuel_right_outer_temp = props.globals.getNode("consumables/fuel/tank[3]/temperature_degC", 1);
+var fuel_right_inner_temp = props.globals.getNode("consumables/fuel/tank[4]/temperature_degC", 1);
+var cutoff_switch1 = props.globals.getNode("controls/engines/engine[0]/cutoff-switch", 1);
+var cutoff_switch2 = props.globals.getNode("controls/engines/engine[1]/cutoff-switch", 1);
+var fuel_xfeed = props.globals.getNode("controls/fuel/x-feed", 1);
 var tank0pump1 = props.globals.getNode("controls/fuel/tank0pump1", 1);
 var tank0pump2 = props.globals.getNode("controls/fuel/tank0pump2", 1);
 var tank1pump1 = props.globals.getNode("controls/fuel/tank1pump1", 1);
 var tank1pump2 = props.globals.getNode("controls/fuel/tank1pump2", 1);
 var tank2pump1 = props.globals.getNode("controls/fuel/tank2pump1", 1);
 var tank2pump2 = props.globals.getNode("controls/fuel/tank2pump2", 1);
-var autobreak_mode = props.globals.getNode("/controls/autobrake/mode", 1);
+var autobreak_mode = props.globals.getNode("controls/autobrake/mode", 1);
 var gear1_pos = props.globals.getNode("gear/gear[0]/position-norm", 1);
 var gear2_pos = props.globals.getNode("gear/gear[1]/position-norm", 1);
 var gear3_pos = props.globals.getNode("gear/gear[2]/position-norm", 1);
-var gear_door_L = props.globals.getNode("/systems/hydraulic/gear/door-left", 1);
-var gear_door_R = props.globals.getNode("/systems/hydraulic/gear/door-right", 1);
-var gear_door_N = props.globals.getNode("/systems/hydraulic/gear/door-nose", 1);
-var gear_down = props.globals.getNode("/controls/gear/gear-down", 1);
-var press_vs_norm = props.globals.getNode("/systems/pressurization/vs-norm", 1);
-var cabinalt = props.globals.getNode("/systems/pressurization/cabinalt-norm", 1);
-var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
+var gear_door_L = props.globals.getNode("systems/hydraulic/gear/door-left", 1);
+var gear_door_R = props.globals.getNode("systems/hydraulic/gear/door-right", 1);
+var gear_door_N = props.globals.getNode("systems/hydraulic/gear/door-nose", 1);
+var gear_down = props.globals.getNode("controls/gear/gear-down", 1);
+var press_vs_norm = props.globals.getNode("systems/pressurization/vs-norm", 1);
+var cabinalt = props.globals.getNode("systems/pressurization/cabinalt-norm", 1);
+var gear0_wow = props.globals.getNode("gear/gear[0]/wow", 1);
 
 # Create Nodes:
 var apu_load = props.globals.initNode("/systems/electrical/extra/apu-load", 0, "DOUBLE");
@@ -572,9 +576,15 @@ var canvas_lowerECAM_base = {
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
 		
-		me["GW"].setText(sprintf("%s", math.round(gw.getValue())));
 		me["UTCh"].setText(sprintf("%02d", hour.getValue()));
 		me["UTCm"].setText(sprintf("%02d", minute.getValue()));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["GW"].setText(sprintf("%s", math.round(gw.getValue() * LBS2KGS)));
+			me["GW-weight-unit"].setText("KG");
+		} else {
+			me["GW"].setText(sprintf("%s", math.round(gw.getValue())));
+			me["GW-weight-unit"].setText("LBS");
+		}
 	},
 };
 
@@ -586,7 +596,7 @@ var canvas_lowerECAM_apu = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO",
 		"text3724","text3728","text3732"];
 	},
 	update: func() {
@@ -707,7 +717,7 @@ var canvas_lowerECAM_bleed = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1",
 		"BLEED-ENG-1", "BLEED-HP-Valve-2", "BLEED-ENG-2", "BLEED-Precooler-1-Inlet-Press", "BLEED-Precooler-1-Outlet-Temp",
 		"BLEED-Precooler-2-Inlet-Press", "BLEED-Precooler-2-Outlet-Temp", "BLEED-ENG-1-label", "BLEED-ENG-2-label",
 		"BLEED-GND", "BLEED-Pack-1-Flow-Valve", "BLEED-Pack-2-Flow-Valve", "BLEED-Pack-1-Out-Temp",
@@ -980,7 +990,7 @@ var canvas_lowerECAM_cond = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit"];
 	},
 	update: func() {
 
@@ -996,17 +1006,24 @@ var canvas_lowerECAM_crz = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","Oil1","Oil2","FUsed1","FUsed2","FUsed","VIB1N1","VIB1N2","VIB2N1","VIB2N2","deltaPSI","LDGELEV-AUTO","LDGELEV","CABVS","CABALT","VS-Arrow-UP","VS-Arrow-DN","CKPT-TEMP","FWD-TEMP","AFT-TEMP"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","Oil1","Oil2","FUsed1","FUsed2","FUsed","VIB1N1","VIB1N2","VIB2N1","VIB2N2","deltaPSI","LDGELEV-AUTO","LDGELEV","CABVS","CABALT","VS-Arrow-UP","VS-Arrow-DN","CKPT-TEMP","FWD-TEMP","AFT-TEMP","Fused-weight-unit"];
 	},
 	update: func() {
 
 		me["Oil1"].setText(sprintf("%2.1f", oil_qt1_actual.getValue()));
 		me["Oil2"].setText(sprintf("%2.1f", oil_qt2_actual.getValue()));
 
-		# Fuel Used
-		me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-		me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
-		me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["Fused-weight-unit"].setText("KG");
+			me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
+			me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
+			me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10) + math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10))));
+		} else {
+			me["Fused-weight-unit"].setText("LBS");
+			me["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+			me["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+			me["FUsed"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+		}
 
 		me.updateBottomStatus();
 	},
@@ -1020,7 +1037,7 @@ var canvas_lowerECAM_door = {
 		return m;
 	},
 	getKeys: func() {
-		return["TAT","SAT","GW","UTCh","UTCm","Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
+		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
 		"Cabin2LeftLine","Cabin2LeftSlide","Cabin2Right","Cabin2RightLbl","Cabin2RightLine","Cabin2RightSlide","Cabin3Left","Cabin3LeftLbl","Cabin3LeftLine","Cabin3LeftSlide","Cabin3Right","Cabin3RightLbl","Cabin3RightLine","Cabin3RightSlide","AvionicsLine1",
 		"AvionicsLbl1","AvionicsLine2","AvionicsLbl2","Cargo1Line","Cargo1Lbl","Cargo1Door","Cargo2Line","Cargo2Lbl","Cargo2Door","ExitLSlide","ExitLLine","ExitLLbl","ExitRSlide","ExitRLine","ExitRLbl","Cabin4Left","Cabin4LeftLbl","Cabin4LeftLine",
 		"Cabin4LeftSlide","Cabin4Right","Cabin4RightLbl","Cabin4RightLine","Cabin4RightSlide","DOOROXY-REGUL-LO-PR"];
@@ -1165,7 +1182,7 @@ var canvas_lowerECAM_elec = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","BAT1-label","Bat1Volt","Bat1Ampere","BAT2-label","Bat2Volt","Bat2Ampere","BAT1-charge","BAT1-discharge","BAT2-charge","BAT2-discharge","ELEC-Line-DC1-DCBAT","ELEC-Line-DC1-DCESS","ELEC-Line-DC2-DCBAT",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","BAT1-label","Bat1Volt","Bat1Ampere","BAT2-label","Bat2Volt","Bat2Ampere","BAT1-charge","BAT1-discharge","BAT2-charge","BAT2-discharge","ELEC-Line-DC1-DCBAT","ELEC-Line-DC1-DCESS","ELEC-Line-DC2-DCBAT",
 		"ELEC-Line-DC1-DCESS_DCBAT","ELEC-Line-DC2-DCESS_DCBAT","ELEC-Line-TR1-DC1","ELEC-Line-TR2-DC2","Shed-label","ELEC-Line-ESSTR-DCESS","TR1-label","TR1Volt","TR1Ampere","TR2-label","TR2Volt","TR2Ampere","EMERGEN-group","EmergenVolt","EmergenHz",
 		"ELEC-Line-Emergen-ESSTR","EMERGEN-Label-off","Emergen-Label","EMERGEN-out","ELEC-Line-ACESS-TRESS","ELEC-Line-AC1-TR1","ELEC-Line-AC2-TR2","ELEC-Line-AC1-ACESS","ELEC-Line-AC2-ACESS","ACESS-SHED","ACESS","AC1-in","AC2-in","ELEC-Line-GEN1-AC1","ELEC-Line-GEN2-AC2",
 		"ELEC-Line-APU-AC1","ELEC-Line-APU-EXT","ELEC-Line-EXT-AC2","APU-out","EXT-out","EXTPWR-group","ExtVolt","ExtHz","APU-content","APU-border","APUGentext","APUGenLoad","APUGenVolt","APUGenHz","APUGEN-off","GEN1-label","Gen1Load","Gen1Volt","Gen1Hz",
@@ -1659,25 +1676,25 @@ var canvas_lowerECAM_elec = {
 
 
 		# Managment of the connecting lines between the components
-		if (getprop("/systems/electrical/relay/apu-glc/contact-pos") and (getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") or getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"))) {
+		if (getprop("systems/electrical/relay/apu-glc/contact-pos") and (getprop("systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") or getprop("systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"))) {
 			me["APU-out"].show();
 		} else {
 			me["APU-out"].hide();
 		}
 
-		if (getprop("/systems/electrical/relay/ext-epc/contact-pos") and (getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") or getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"))) {
+		if (getprop("systems/electrical/relay/ext-epc/contact-pos") and (getprop("systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") or getprop("systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"))) {
 			me["EXT-out"].show();
 		} else {
 			me["EXT-out"].hide();
 		}
 
-		if (gen1_volts.getValue() >= 110 and getprop("/systems/electrical/relay/gen-1-glc/contact-pos")) {
+		if (gen1_volts.getValue() >= 110 and getprop("systems/electrical/relay/gen-1-glc/contact-pos")) {
 			me["ELEC-Line-GEN1-AC1"].show();
 		} else {
 			me["ELEC-Line-GEN1-AC1"].hide();
 		}
 
-		if (gen2_volts.getValue() >= 110 and getprop("/systems/electrical/relay/gen-2-glc/contact-pos")) {
+		if (gen2_volts.getValue() >= 110 and getprop("systems/electrical/relay/gen-2-glc/contact-pos")) {
 			me["ELEC-Line-GEN2-AC2"].show();
 		} else {
 			me["ELEC-Line-GEN2-AC2"].hide();
@@ -1695,38 +1712,38 @@ var canvas_lowerECAM_elec = {
 			me["AC2-in"].hide();
 		}
 
-		if (getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") and getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos")) {
+		if (getprop("systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") and getprop("systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos")) {
 			me["ELEC-Line-APU-AC1"].show();
 			me["ELEC-Line-APU-EXT"].show();
 			me["ELEC-Line-EXT-AC2"].show();
 		} else {
-			if (getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos")) {
+			if (getprop("systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos")) {
 				me["ELEC-Line-APU-AC1"].show();
 			} else {
 				me["ELEC-Line-APU-AC1"].hide();
 			}
 			
-			if ((getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos") and getprop("/systems/electrical/relay/apu-glc/contact-pos") and !getprop("/systems/electrical/relay/gen-2-glc/contact-pos")) or (getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") and getprop("/systems/electrical/relay/ext-epc/contact-pos") and !getprop("/systems/electrical/relay/gen-1-glc/contact-pos"))) {
+			if ((getprop("systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos") and getprop("systems/electrical/relay/apu-glc/contact-pos") and !getprop("systems/electrical/relay/gen-2-glc/contact-pos")) or (getprop("systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos") and getprop("systems/electrical/relay/ext-epc/contact-pos") and !getprop("systems/electrical/relay/gen-1-glc/contact-pos"))) {
 				me["ELEC-Line-APU-EXT"].show();
 			} else {
 				me["ELEC-Line-APU-EXT"].hide();
 			}
 			
-			if (getprop("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos")) {
+			if (getprop("systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos")) {
 				me["ELEC-Line-EXT-AC2"].show();
 			} else {
 				me["ELEC-Line-EXT-AC2"].hide();
 			}
 		}
 
-		if (getprop("/systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
+		if (getprop("systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
 			if (ac1.getValue() >= 110) {
 				me["ELEC-Line-AC1-ACESS"].show();
 			} else {
 				me["ELEC-Line-AC1-ACESS"].hide();
 			}
 			me["ELEC-Line-AC2-ACESS"].hide();
-		} elsif (getprop("/systems/electrical/relay/ac-ess-feed-2/contact-pos") == 1) {
+		} elsif (getprop("systems/electrical/relay/ac-ess-feed-2/contact-pos") == 1) {
 			me["ELEC-Line-AC1-ACESS"].hide();
 			if (ac2.getValue() >= 110) {
 				me["ELEC-Line-AC2-ACESS"].show();
@@ -1738,7 +1755,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-AC2-ACESS"].hide();
 		}
 
-		if (getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") == 1) {
+		if (getprop("systems/electrical/relay/tr-contactor-1/contact-pos") == 1) {
 			if (ac1.getValue() < 110) {
 				me["ELEC-Line-AC1-TR1"].setColorFill(0.7333,0.3803,0);
 			} else {
@@ -1751,7 +1768,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-TR1-DC1"].hide();
 		}
 
-		if (getprop("/systems/electrical/relay/tr-contactor-2/contact-pos") == 1) {
+		if (getprop("systems/electrical/relay/tr-contactor-2/contact-pos") == 1) {
 			if (ac2.getValue() < 110) {
 				me["ELEC-Line-AC2-TR2"].setColorFill(0.7333,0.3803,0);
 			} else {
@@ -1764,25 +1781,25 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-TR2-DC2"].hide();
 		}
 		
-		if (getprop("/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos")) {
+		if (getprop("systems/electrical/relay/dc-bus-tie-dc-1/contact-pos")) {
 			me["ELEC-Line-DC1-DCESS_DCBAT"].show();
 		} else {
 			me["ELEC-Line-DC1-DCESS_DCBAT"].hide();
 		}
 		
-		if (getprop("/systems/electrical/relay/dc-ess-feed-bat/contact-pos")) {
+		if (getprop("systems/electrical/relay/dc-ess-feed-bat/contact-pos")) {
 			me["ELEC-Line-DC1-DCESS"].show();
 		} else {
 			me["ELEC-Line-DC1-DCESS"].hide();
 		}
 		
-		if (getprop("/systems/electrical/relay/dc-ess-feed-bat/contact-pos") or getprop("/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos")) {
+		if (getprop("systems/electrical/relay/dc-ess-feed-bat/contact-pos") or getprop("systems/electrical/relay/dc-bus-tie-dc-1/contact-pos")) {
 			me["ELEC-Line-DC1-DCBAT"].show();
 		} else {
 			me["ELEC-Line-DC1-DCBAT"].hide();
 		}
 		
-		if (getprop("/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos")) {
+		if (getprop("systems/electrical/relay/dc-bus-tie-dc-2/contact-pos")) {
 			me["ELEC-Line-DC2-DCBAT"].show();
 			me["ELEC-Line-DC2-DCESS_DCBAT"].show();
 		} else {
@@ -1790,7 +1807,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-DC2-DCESS_DCBAT"].hide();
 		}
 		
-		if (getprop("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos")) {
+		if (getprop("systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos")) {
 			me["EMERGEN-out"].show();
 			me["ELEC-Line-Emergen-ESSTR"].show();
 		} else {
@@ -1798,13 +1815,13 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-Emergen-ESSTR"].hide();
 		}
 		
-		if (systems.ELEC.Bus.acEss.getValue() >= 110 and !getprop("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos") and (!getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") or !getprop("/systems/electrical/relay/tr-contactor-2/contact-pos"))) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110 and !getprop("systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos") and (!getprop("systems/electrical/relay/tr-contactor-1/contact-pos") or !getprop("systems/electrical/relay/tr-contactor-2/contact-pos"))) {
 			me["ELEC-Line-ACESS-TRESS"].show();
 		} else {
 			me["ELEC-Line-ACESS-TRESS"].hide();
 		}
 		
-		if (getprop("/systems/electrical/relay/dc-ess-feed-tr/contact-pos")) {
+		if (getprop("systems/electrical/relay/dc-ess-feed-tr/contact-pos")) {
 			me["ELEC-Line-ESSTR-DCESS"].show();
 		} else {
 			me["ELEC-Line-ESSTR-DCESS"].hide();
@@ -1831,7 +1848,7 @@ var canvas_lowerECAM_eng = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2","FUEL-used-1","FUEL-used-2"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2","FUEL-used-1","FUEL-used-2", "Fused-weight-unit"];
 	},
 	update: func() {
 		# Oil Quantity
@@ -1867,8 +1884,15 @@ var canvas_lowerECAM_eng = {
 		me["OilPSI2-needle"].setRotation((oil_psi2.getValue() + 90) * D2R);
 
 		# Fuel Used
-		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+		if (acconfig_weight_kgs.getValue() == 1) {
+			me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
+			me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
+			me["Fused-weight-unit"].setText("KG");
+		} else {
+			me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+			me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+			me["Fused-weight-unit"].setText("LBS");
+		}
 		
 		me.updateBottomStatus();
 	},
@@ -1882,7 +1906,7 @@ var canvas_lowerECAM_fctl = {
 		return m;
 	},
 	getKeys: func() {
-		return["TAT","SAT","GW","UTCh","UTCm","ailL","ailR","elevL","elevR","PTcc","PT","PTupdn","elac1","elac2","sec1","sec2","sec3","ailLblue","ailRblue","elevLblue","elevRblue","rudderblue","ailLgreen","ailRgreen","elevLgreen","ruddergreen","PTgreen",
+		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","ailL","ailR","elevL","elevR","PTcc","PT","PTupdn","elac1","elac2","sec1","sec2","sec3","ailLblue","ailRblue","elevLblue","elevRblue","rudderblue","ailLgreen","ailRgreen","elevLgreen","ruddergreen","PTgreen",
 		"elevRyellow","rudderyellow","PTyellow","rudder","spdbrkblue","spdbrkgreen","spdbrkyellow","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex",
 		"spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf",
 		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6"];
@@ -2268,15 +2292,17 @@ var canvas_lowerECAM_fuel = {
 		return m;
 	},
 	getKeys: func() {
-		return["TAT","SAT","GW","UTCh","UTCm","FUEL-Pump-Left-1","FUEL-Pump-Left-2","FUEL-Pump-Center-1","FUEL-Pump-Center-2","FUEL-Pump-Right-1","FUEL-Pump-Right-2","FUEL-Left-blocked","FUEL-Right-blocked","FUEL-Center-blocked","FUEL-Left-Transfer",
+		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","FUEL-Pump-Left-1","FUEL-Pump-Left-2","FUEL-Pump-Center-1","FUEL-Pump-Center-2","FUEL-Pump-Right-1","FUEL-Pump-Right-2","FUEL-Left-blocked","FUEL-Right-blocked","FUEL-Center-blocked","FUEL-Left-Transfer",
 		"FUEL-Right-Transfer","FUEL-Left-Outer-Inacc","FUEL-Left-Inner-Inacc","FUEL-Center-Inacc","FUEL-Right-Inner-Inacc","FUEL-Right-Outer-Inacc","FUEL-Left-Outer-quantity","FUEL-Left-Inner-quantity","FUEL-Center-quantity","FUEL-Right-Inner-quantity",
 		"FUEL-Right-Outer-quantity","FUEL-On-Board","FUEL-Flow-per-min","FUEL-APU-arrow","FUEL-APU-label","FUEL-used-1","FUEL-used-both","FUEL-used-2","FUEL-ENG-Master-1","FUEL-ENG-Master-2","FUEL-XFEED","FUEL-XFEED-pipes","FUEL-Left-Outer-temp",
 		"FUEL-Left-Inner-temp","FUEL-Right-Inner-temp","FUEL-Right-Outer-temp","FUEL-Pump-Left-1-Closed","FUEL-Pump-Left-1-Open","FUEL-Pump-Left-2-Closed","FUEL-Pump-Left-2-Open","FUEL-Pump-Center-1-Open","FUEL-Pump-Center-1-Closed","FUEL-Pump-Center-2-Closed",
-		"FUEL-Pump-Center-2-Open","FUEL-Pump-Right-1-Closed","FUEL-Pump-Right-1-Open","FUEL-Pump-Right-2-Closed","FUEL-Pump-Right-2-Open","FUEL-ENG-1-label","FUEL-ENG-2-label","FUEL-ENG-1-pipe","FUEL-ENG-2-pipe","ENG1idFFlow","ENG2idFFlow","FUEL-used-1","FUEL-used-2","FUEL-used-both"];
+		"FUEL-Pump-Center-2-Open","FUEL-Pump-Right-1-Closed","FUEL-Pump-Right-1-Open","FUEL-Pump-Right-2-Closed","FUEL-Pump-Right-2-Open","FUEL-ENG-1-label","FUEL-ENG-2-label","FUEL-ENG-1-pipe","FUEL-ENG-2-pipe","ENG1idFFlow","ENG2idFFlow","FUEL-used-1","FUEL-used-2","FUEL-used-both",
+		"Fused-weight-unit","FFlow-weight-unit","FOB-weight-unit"];
 	},
 	update: func() {
+		_weight_kgs = acconfig_weight_kgs.getValue();
 
-		# if (getprop("engines/engine[0]/n1-actual") < getprop("/controls/engines/idle-limit")) {
+		# if (getprop("engines/engine[0]/n1-actual") < getprop("controls/engines/idle-limit")) {
 		if (eng1_n1.getValue() <= 18.8) {
 			me["ENG1idFFlow"].setColor(0.7333,0.3803,0);
 			me["FUEL-ENG-1-label"].setColor(0.7333,0.3803,0);
@@ -2285,7 +2311,7 @@ var canvas_lowerECAM_fuel = {
 			me["FUEL-ENG-1-label"].setColor(0.8078,0.8039,0.8078);
 		}
 
-		# if (getprop("engines/engine[1]/n1-actual") < getprop("/controls/engines/idle-limit")) {
+		# if (getprop("engines/engine[1]/n1-actual") < getprop("controls/engines/idle-limit")) {
 		if (eng2_n1.getValue() <= 18.5) {
 			me["ENG2idFFlow"].setColor(0.7333,0.3803,0);
 			me["FUEL-ENG-2-label"].setColor(0.7333,0.3803,0);
@@ -2295,11 +2321,28 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add FOB half-boxed amber if some fuel is blocked
-		me["FUEL-On-Board"].setText(sprintf("%s", math.round(total_fuel_lbs.getValue(), 10)));
+		if (_weight_kgs == 1)
+		{
+			me["FUEL-On-Board"].setText(sprintf("%s", math.round(total_fuel_lbs.getValue() * LBS2KGS, 10)));
+			me["FOB-weight-unit"].setText("KG");
+		} else {
+			me["FUEL-On-Board"].setText(sprintf("%s", math.round(total_fuel_lbs.getValue(), 10)));
+			me["FOB-weight-unit"].setText("LBS");
+		}
+
+		if (_weight_kgs == 1) {
+			me["FFlow-weight-unit"].setText("KG/MIN");
+		} else {
+			me["FFlow-weight-unit"].setText("LBS/MIN");
+		}
 
 		if (fadec1.getValue() == 1 and fadec2.getValue() == 1) {
 			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
-			me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((fuel_flow1.getValue() + fuel_flow2.getValue()) / 60, 10)));
+			if (_weight_kgs == 1) {
+				me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((fuel_flow1.getValue() + fuel_flow2.getValue()) * LBS2KGS) / 60, 10)));
+			} else {
+				me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((fuel_flow1.getValue() + fuel_flow2.getValue()) / 60, 10)));
+			}
 		} else {
 			me["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
 			me["FUEL-Flow-per-min"].setText("XX");
@@ -2424,9 +2467,17 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# Fuel Used
-		me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-		me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
-		me["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+		if (_weight_kgs == 1) {
+			me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
+			me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
+			me["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10) + math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10))));
+			me["Fused-weight-unit"].setText("KG");
+		} else {
+			me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+			me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+			me["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue(), 10) + math.round(fuel_used_lbs2.getValue(), 10))));
+			me["Fused-weight-unit"].setText("LBS");
+		}
 
 		# Fuel Temp
 		me["FUEL-Left-Outer-temp"].setText(sprintf("%s", math.round(fuel_left_outer_temp.getValue())));
@@ -2436,11 +2487,19 @@ var canvas_lowerECAM_fuel = {
 
 		# Fuel Quantity
 		# TODO add LO indication
-		me["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue(), 10)));
-		me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue(), 10)));
-		me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue(), 10)));
-		me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue(), 10)));
-		me["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue(), 10)));
+		if (_weight_kgs == 1) {
+			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue() * LBS2KGS, 10)));
+			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue() * LBS2KGS, 10)));
+			me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue() * LBS2KGS, 10)));
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue() * LBS2KGS, 10)));
+			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue() * LBS2KGS, 10)));
+		} else {
+			me["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue(), 10)));
+			me["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue(), 10)));
+			me["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue(), 10)));
+			me["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue(), 10)));
+			me["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue(), 10)));
+		}
 		
 		if (systems.FUEL.Valves.transfer1.getValue() == 0) {
 			me["FUEL-Left-Transfer"].hide();
@@ -2491,7 +2550,7 @@ var canvas_lowerECAM_press = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm", "PRESS-Cab-VS", "PRESS-Cab-VS-neg", "PRESS-Cab-Alt"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "PRESS-Cab-VS", "PRESS-Cab-VS-neg", "PRESS-Cab-Alt"];
 	},
 	update: func() {
 		me["PRESS-Cab-VS"].setText(sprintf("%4.0f", press_vs_norm.getValue()));
@@ -2510,7 +2569,7 @@ var canvas_lowerECAM_status = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit"];
 	},
 	update: func() {
 
@@ -2526,7 +2585,7 @@ var canvas_lowerECAM_hyd = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","Green-Indicator","Blue-Indicator","Yellow-Indicator","Press-Green","Press-Blue","Press-Yellow","Green-Line","Blue-Line","Yellow-Line","PTU-Supply-Line","PTU-supply-yellow","PTU-supply-green","PTU-connection",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","Green-Indicator","Blue-Indicator","Yellow-Indicator","Press-Green","Press-Blue","Press-Yellow","Green-Line","Blue-Line","Yellow-Line","PTU-Supply-Line","PTU-supply-yellow","PTU-supply-green","PTU-connection",
 		"PTU-Auto-or-off","RAT-label","RAT-stowed","RAT-not-stowed","ELEC-Yellow-off","ELEC-Yellow-on","ELEC-Yellow-label","ELEC-OVTH-Yellow","ELEC-Blue-label","ELEC-OVHT-Blue","ELEC-OVHT-Yellow","Pump-Green-label","Pump-Yellow-label","Pump-Green",
 		"Pump-LOPR-Green","Pump-Green-off","Pump-Green-on","Pump-Yellow","Pump-LOPR-Yellow","Pump-Yellow-off","Pump-Yellow-on","Pump-Blue", "Pump-Blue-off","Pump-Blue-on","Fire-Valve-Green","Fire-Valve-Yellow","LO-AIR-PRESS-Green",
 		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label"];
@@ -2795,7 +2854,7 @@ var canvas_lowerECAM_wheel = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","lgctltext","NORMbrk","NWStext","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR","autobrk","autobrkind","NWS","NWSrect","normbrk-rect","altnbrk","normbrkhyd","spoiler1Rex","spoiler1Rrt","spoiler2Rex",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","lgctltext","NORMbrk","NWStext","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR","autobrk","autobrkind","NWS","NWSrect","normbrk-rect","altnbrk","normbrkhyd","spoiler1Rex","spoiler1Rrt","spoiler2Rex",
 		"spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf",
 		"spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf","ALTNbrk","altnbrkhyd","altnbrk-rect","antiskidtext","brakearrow","accupress_text","accuonlyarrow","accuonly","braketemp1","normbrkhyd",
 		"braketemp2","braketemp3","braketemp4","toparc1","toparc2","toparc3","toparc4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
@@ -3395,13 +3454,13 @@ setlistener("sim/signals/fdm-initialized", func {
 	lowerECAM_test = canvas_lowerECAM_test.new(group_test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg");
 
 	lowerECAM_update.start();
-	if (getprop("/systems/acconfig/options/lecam-rate") > 1) {
+	if (getprop("systems/acconfig/options/lecam-rate") > 1) {
 		l_rateApply();
 	}
 });
 
 var l_rateApply = func {
-	lowerECAM_update.restart(0.05 * getprop("/systems/acconfig/options/lecam-rate"));
+	lowerECAM_update.restart(0.05 * getprop("systems/acconfig/options/lecam-rate"));
 }
 
 var lowerECAM_update = maketimer(0.05, func {
