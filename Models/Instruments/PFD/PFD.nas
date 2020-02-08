@@ -617,6 +617,104 @@ var canvas_PFD_base = {
 		}
 	},
 	updateCommonFast: func() {
+		# Airspeed
+		ind_spd = ind_spd_kt.getValue();
+		# Subtract 30, since the scale starts at 30, but don"t allow less than 0, or more than 420 situations
+		if (ind_spd <= 30) {
+				ASI = 0;
+		} else if (ind_spd >= 420) {
+				ASI = 390;
+		} else {
+				ASI = ind_spd - 30;
+		}
+		
+		FMGC_max = FMGC_max_spd.getValue();
+		if (FMGC_max <= 30) {
+				ASImax = 0 - ASI;
+		} else if (FMGC_max >= 420) {
+				ASImax = 390 - ASI;
+		} else {
+				ASImax = FMGC_max - 30 - ASI;
+		}
+		
+		me["ASI_scale"].setTranslation(0, ASI * 6.6);
+		me["ASI_max"].setTranslation(0, ASImax * -6.6);
+		
+		ind_mach = ind_spd_mach.getValue();
+		if (ind_mach >= 0.5) {
+				me["ASI_mach_decimal"].show();
+				me["ASI_mach"].show();
+		} else {
+				me["ASI_mach_decimal"].hide();
+				me["ASI_mach"].hide();
+		}
+		
+		if (ind_mach >= 0.999) {
+				me["ASI_mach"].setText("999");
+		} else {
+				me["ASI_mach"].setText(sprintf("%3.0f", ind_mach * 1000));
+		}
+		
+		if (managed_spd.getValue() == 1) {
+				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
+				me["ASI_digit_UP"].setColor(0.6901,0.3333,0.7450);
+				me["ASI_decimal_UP"].setColor(0.6901,0.3333,0.7450);
+				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
+				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
+		} else {
+				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
+				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
+				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
+				me["ASI_digit_DN"].setColor(0.0901,0.6039,0.7176);
+				me["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
+		}
+		
+		tgt_ias = at_tgt_ias.getValue();
+		if (tgt_ias <= 30) {
+				ASItrgt = 0 - ASI;
+		} else if (tgt_ias >= 420) {
+				ASItrgt = 390 - ASI;
+		} else {
+				ASItrgt = tgt_ias - 30 - ASI;
+		}
+		
+		ASItrgtdiff = tgt_ias - ind_spd;
+		
+		if (ASItrgtdiff >= -42 and ASItrgtdiff <= 42) {
+				me["ASI_target"].setTranslation(0, ASItrgt * -6.6);
+				me["ASI_digit_UP"].hide();
+				me["ASI_decimal_UP"].hide();
+				me["ASI_digit_DN"].hide();
+				me["ASI_decimal_DN"].hide();
+				me["ASI_target"].show();
+		} else if (ASItrgtdiff < -42) {
+				if (at_mach_mode.getValue() == 1) {
+						me["ASI_digit_DN"].setText(sprintf("%3.0f", at_input_spd_mach.getValue() * 1000));
+						me["ASI_decimal_UP"].hide();
+						me["ASI_decimal_DN"].show();
+				} else {
+						me["ASI_digit_DN"].setText(sprintf("%3.0f", at_input_spd_kts.getValue()));
+						me["ASI_decimal_UP"].hide();
+						me["ASI_decimal_DN"].hide();
+				}
+				me["ASI_digit_DN"].show();
+				me["ASI_digit_UP"].hide();
+				me["ASI_target"].hide();
+		} else if (ASItrgtdiff > 42) {
+				if (at_mach_mode.getValue() == 1) {
+						me["ASI_digit_UP"].setText(sprintf("%3.0f", at_input_spd_mach.getValue() * 1000));
+						me["ASI_decimal_UP"].show();
+						me["ASI_decimal_DN"].hide();
+				} else {
+						me["ASI_digit_UP"].setText(sprintf("%3.0f", at_input_spd_kts.getValue()));
+						me["ASI_decimal_UP"].hide();
+						me["ASI_decimal_DN"].hide();
+				}
+				me["ASI_digit_UP"].show();
+				me["ASI_digit_DN"].hide();
+				me["ASI_target"].hide();
+		}
+		
 		# Attitude Indicator
 		pitch_cur = pitch.getValue();
 		roll_cur =	roll.getValue();
@@ -683,6 +781,69 @@ var canvas_PFD_base = {
 		}
 		
 		me["AI_stick_pos"].setTranslation(aileron_input.getValue() * 196.8, elevator_input.getValue() * 151.5);
+		
+		# Altitude
+		me.altitude = altitude.getValue();
+		me.altOffset = me.altitude / 500 - int(me.altitude / 500);
+		me.middleAltText = roundaboutAlt(me.altitude / 100);
+		me.middleAltOffset = nil;
+		if (me.altOffset > 0.5) {
+				me.middleAltOffset = -(me.altOffset - 1) * 243.3424;
+		} else {
+				me.middleAltOffset = -me.altOffset * 243.3424;
+		}
+		me["ALT_scale"].setTranslation(0, -me.middleAltOffset);
+		me["ALT_scale"].update();
+		me["ALT_five"].setText(sprintf("%03d", abs(me.middleAltText+10)));
+		me["ALT_four"].setText(sprintf("%03d", abs(me.middleAltText+5)));
+		me["ALT_three"].setText(sprintf("%03d", abs(me.middleAltText)));
+		me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
+		me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
+		
+		if (altitude.getValue() < 0) {
+				altPolarity = "-";
+		} else {
+				altPolarity = "";
+		}
+		me["ALT_digits"].setText(sprintf("%s%d", altPolarity, altitude_pfd.getValue()));
+		altTens = num(right(sprintf("%02d", altitude.getValue()), 2));
+		me["ALT_tens"].setTranslation(0, altTens * 1.392);
+		
+		ap_alt_cur = ap_alt.getValue();
+		alt_diff_cur = alt_diff.getValue();
+		if (alt_diff_cur >= -565 and alt_diff_cur <= 565) {
+				me["ALT_target"].setTranslation(0, (alt_diff_cur / 100) * -48.66856);
+				me["ALT_target_digit"].setText(sprintf("%03d", math.round(ap_alt_cur / 100)));
+				me["ALT_digit_UP"].hide();
+				me["ALT_digit_DN"].hide();
+				me["ALT_target"].show();
+		} else if (alt_diff_cur < -565) {
+				if (alt_std_mode.getValue() == 1) {
+						if (ap_alt_cur < 10000) {
+								me["ALT_digit_DN"].setText(sprintf("%s", "FL   " ~ ap_alt_cur / 100));
+						} else {
+								me["ALT_digit_DN"].setText(sprintf("%s", "FL " ~ ap_alt_cur / 100));
+						}
+				} else {
+						me["ALT_digit_DN"].setText(sprintf("%5.0f", ap_alt_cur));
+				}
+				me["ALT_digit_DN"].show();
+				me["ALT_digit_UP"].hide();
+				me["ALT_target"].hide();
+		} else if (alt_diff_cur > 565) {
+				if (alt_std_mode.getValue() == 1) {
+						if (ap_alt_cur < 10000) {
+								me["ALT_digit_UP"].setText(sprintf("%s", "FL   " ~ ap_alt_cur / 100));
+						} else {
+								me["ALT_digit_UP"].setText(sprintf("%s", "FL " ~ ap_alt_cur / 100));
+						}
+				} else {
+						me["ALT_digit_UP"].setText(sprintf("%5.0f", ap_alt_cur));
+				}
+				me["ALT_digit_UP"].show();
+				me["ALT_digit_DN"].hide();
+				me["ALT_target"].hide();
+		}
 		
 		# Vertical Speed
 		me["VS_pointer"].setRotation(vs_needle.getValue() * D2R);
@@ -802,6 +963,14 @@ var canvas_PFD_1 = {
 		
 		# Errors
 		if (systems.ADIRSnew.ADIRunits[0].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
+			me["ALT_error"].hide();
+			me["ALT_group"].show();
+			me["ALT_group2"].show();
+			me["ALT_scale"].show();
+			me["ALT_frame"].setColor(1,1,1);
+			me["ASI_error"].hide();
+			me["ASI_group"].show();
+			me["ASI_frame"].setColor(1,1,1);
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -815,6 +984,14 @@ var canvas_PFD_1 = {
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["ASI_group"].hide();
+			me["ASI_error"].show();
+			me["ASI_frame"].setColor(1,0,0);
+			me["ALT_group"].hide();
+			me["ALT_group2"].hide();
+			me["ALT_scale"].hide();
+			me["ALT_error"].show();
+			me["ALT_frame"].setColor(1,0,0);
 			me["VS_error"].show();
 			me["VS_group"].hide();
 		}
@@ -1110,6 +1287,14 @@ var canvas_PFD_2 = {
 		
 		# Errors
 		if (systems.ADIRSnew.ADIRunits[1].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
+			me["ALT_error"].hide();
+			me["ALT_group"].show();
+			me["ALT_group2"].show();
+			me["ALT_scale"].show();
+			me["ALT_frame"].setColor(1,1,1);
+			me["ASI_error"].hide();
+			me["ASI_group"].show();
+			me["ASI_frame"].setColor(1,1,1);
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -1123,6 +1308,14 @@ var canvas_PFD_2 = {
 			me["HDG_frame"].setColor(1,0,0);
 			me["AI_group"].hide();
 			me["HDG_group"].hide();
+			me["ASI_group"].hide();
+			me["ASI_error"].show();
+			me["ASI_frame"].setColor(1,0,0);
+			me["ALT_group"].hide();
+			me["ALT_group2"].hide();
+			me["ALT_scale"].hide();
+			me["ALT_error"].show();
+			me["ALT_frame"].setColor(1,0,0);
 			me["VS_error"].show();
 			me["VS_group"].hide();
 		}
