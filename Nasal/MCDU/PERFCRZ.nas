@@ -4,9 +4,9 @@
 
 var perfCRZInput = func(key, i) {
 	if (key == "L6") {
-		setprop("/MCDU[" ~ i ~ "]/page", "CLB");
+		setprop("MCDU[" ~ i ~ "]/page", "CLB");
 	}
 	if (key == "R6") {
-		setprop("/MCDU[" ~ i ~ "]/page", "DES");
+		setprop("MCDU[" ~ i ~ "]/page", "DES");
 	}
 }

@@ -23,7 +23,7 @@ var SymbolPainter = {
     },
     getAircraftDir: func(){
         if(me.aircraft_dir == nil)
-            me.aircraft_dir = split("/", getprop("/sim/aircraft-dir"))[-1];
+            me.aircraft_dir = split("/", getprop("sim/aircraft-dir"))[-1];
         return me.aircraft_dir;
     },
     svgPath: func(file){

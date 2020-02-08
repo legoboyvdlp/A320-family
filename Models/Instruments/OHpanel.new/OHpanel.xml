@@ -92,7 +92,7 @@
 		<object-name>adirs-coords</object-name>
 		<condition>
 			<greater-than-equals>
-				<property>/systems/electrical/outputs/efis</property>
+				<property>systems/electrical/outputs/efis</property>
 				<value>9</value>
 			</greater-than-equals>
 		</condition>
@@ -2002,7 +2002,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>/instrumentation/oh-panel/pos-string</property>
+		<property>instrumentation/oh-panel/pos-string</property>
 		<font type="string">Helvetica.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
@@ -2028,7 +2028,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.1f</format>
-		<property>/systems/electrical/suppliers/battery</property>
+		<property>systems/electrical/suppliers/battery</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
@@ -2054,7 +2054,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.1f</format>
-		<property>/systems/electrical/suppliers/battery</property>
+		<property>systems/electrical/suppliers/battery</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>

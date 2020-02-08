@@ -304,12 +304,12 @@ canvas.NavDisplay.update_sub = func(){
 				pos.lat = wp.wp_lat;
 				pos.lon = wp.wp_lon;
 			} else {
-				pos.lat = getprop("/autopilot/route-manager/route/wp["~pln_wpt_idx~"]/latitude-deg");
-				pos.lon = getprop("/autopilot/route-manager/route/wp["~pln_wpt_idx~"]/longitude-deg");
+				pos.lat = getprop("autopilot/route-manager/route/wp["~pln_wpt_idx~"]/latitude-deg");
+				pos.lon = getprop("autopilot/route-manager/route/wp["~pln_wpt_idx~"]/longitude-deg");
 			}
 		} else {
-			pos.lat = getprop("/autopilot/route-manager/route/wp["~pln_wpt_idx~"]/latitude-deg");
-			pos.lon = getprop("/autopilot/route-manager/route/wp["~pln_wpt_idx~"]/longitude-deg");
+			pos.lat = getprop("autopilot/route-manager/route/wp["~pln_wpt_idx~"]/latitude-deg");
+			pos.lon = getprop("autopilot/route-manager/route/wp["~pln_wpt_idx~"]/longitude-deg");
 		}
 	} else {
 		pos.lat = userLat;
@@ -407,8 +407,8 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	}
 
 	# Hide heading bug 10 secs after change
-	var vhdg_bug = getprop("/it-autoflight/input/hdg") or 0;
-	var hdg_bug_active = getprop("/it-autoflight/custom/show-hdg");
+	var vhdg_bug = getprop("it-autoflight/input/hdg") or 0;
+	var hdg_bug_active = getprop("it-autoflight/custom/show-hdg");
 	if (hdg_bug_active == nil)
 		hdg_bug_active = 1;
 
@@ -445,13 +445,13 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		var vorheading = userHdgTru;
 		var adfheading = userHdgMag;
 	}
-	if (getprop("/instrumentation/nav[2]/heading-deg") != nil) {
-		var nav0hdg = getprop("/instrumentation/nav[2]/heading-deg") - getprop("/orientation/heading-deg");
+	if (getprop("instrumentation/nav[2]/heading-deg") != nil) {
+		var nav0hdg = getprop("instrumentation/nav[2]/heading-deg") - getprop("orientation/heading-deg");
 	} else {
 		var nav0hdg = 0;
 	}
-	if (getprop("/instrumentation/nav[3]/heading-deg") != nil) {
-		var nav1hdg = getprop("/instrumentation/nav[3]/heading-deg") - getprop("/orientation/heading-deg");
+	if (getprop("instrumentation/nav[3]/heading-deg") != nil) {
+		var nav1hdg = getprop("instrumentation/nav[3]/heading-deg") - getprop("orientation/heading-deg");
 	} else {
 		var nav1hdg = 0;
 	}
@@ -595,5 +595,5 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	me.symbols["status.sta"].setVisible( me.get_switch("toggle_stations") and  me.in_mode("toggle_display_mode", ["MAP"]));
 	# Okay, _how_ do we hook this up with FGPlot?
 	printlog(_MP_dbg_lvl, "Total ND update took "~((systime()-_time)*100)~"ms");
-	setprop("/instrumentation/navdisplay["~ canvas.NavDisplay.id ~"]/update-ms", systime() - _time);
+	setprop("instrumentation/navdisplay["~ canvas.NavDisplay.id ~"]/update-ms", systime() - _time);
 };

@@ -44,49 +44,49 @@ var battery2_sw = 0;
 var law = 0;
 
 var FBW = {
-	degradeLaw: props.globals.getNode("/it-fbw/degrade-law"),
-	activeLaw: props.globals.getNode("/it-fbw/law"),
-	override: props.globals.getNode("/it-fbw/override"),
-	rollBack: props.globals.getNode("/it-fbw/roll-back"),
-	rollLim: props.globals.getNode("/it-fbw/roll-lim"),
+	degradeLaw: props.globals.getNode("it-fbw/degrade-law"),
+	activeLaw: props.globals.getNode("it-fbw/law"),
+	override: props.globals.getNode("it-fbw/override"),
+	rollBack: props.globals.getNode("it-fbw/roll-back"),
+	rollLim: props.globals.getNode("it-fbw/roll-lim"),
 	Computers: {
-		elac1: props.globals.getNode("/systems/fctl/elac1"),
-		elac2: props.globals.getNode("/systems/fctl/elac2"),
-		sec1: props.globals.getNode("/systems/fctl/sec1"),
-		sec2: props.globals.getNode("/systems/fctl/sec2"),
-		sec3: props.globals.getNode("/systems/fctl/sec3"),
-		fac1: props.globals.getNode("/systems/fctl/fac1"),
-		fac2: props.globals.getNode("/systems/fctl/fac2"),
+		elac1: props.globals.getNode("systems/fctl/elac1"),
+		elac2: props.globals.getNode("systems/fctl/elac2"),
+		sec1: props.globals.getNode("systems/fctl/sec1"),
+		sec2: props.globals.getNode("systems/fctl/sec2"),
+		sec3: props.globals.getNode("systems/fctl/sec3"),
+		fac1: props.globals.getNode("systems/fctl/fac1"),
+		fac2: props.globals.getNode("systems/fctl/fac2"),
 	},
 	Failures: {
-		elac1: props.globals.getNode("/systems/failures/fctl/elac1"),
-		elac2: props.globals.getNode("/systems/failures/fctl/elac2"),
-		sec1: props.globals.getNode("/systems/failures/fctl/sec1"),
-		sec2: props.globals.getNode("/systems/failures/fctl/sec2"),
-		sec3: props.globals.getNode("/systems/failures/fctl/sec3"),
-		fac1: props.globals.getNode("/systems/failures/fctl/fac1"),
-		fac2: props.globals.getNode("/systems/failures/fctl/fac2"),
+		elac1: props.globals.getNode("systems/failures/fctl/elac1"),
+		elac2: props.globals.getNode("systems/failures/fctl/elac2"),
+		sec1: props.globals.getNode("systems/failures/fctl/sec1"),
+		sec2: props.globals.getNode("systems/failures/fctl/sec2"),
+		sec3: props.globals.getNode("systems/failures/fctl/sec3"),
+		fac1: props.globals.getNode("systems/failures/fctl/fac1"),
+		fac2: props.globals.getNode("systems/failures/fctl/fac2"),
 	},
 	Lights: {
-		elac1: props.globals.getNode("/controls/fctl/lights/elac1-fault"),
-		elac2: props.globals.getNode("/controls/fctl/lights/elac2-fault"),
-		sec1: props.globals.getNode("/controls/fctl/lights/sec1-fault"),
-		sec2: props.globals.getNode("/controls/fctl/lights/sec2-fault"),
-		sec2: props.globals.getNode("/controls/fctl/lights/sec3-fault"),
-		fac1: props.globals.getNode("/controls/fctl/lights/fac1-fault"),
-		fac2: props.globals.getNode("/controls/fctl/lights/fac2-fault"),
+		elac1: props.globals.getNode("controls/fctl/lights/elac1-fault"),
+		elac2: props.globals.getNode("controls/fctl/lights/elac2-fault"),
+		sec1: props.globals.getNode("controls/fctl/lights/sec1-fault"),
+		sec2: props.globals.getNode("controls/fctl/lights/sec2-fault"),
+		sec2: props.globals.getNode("controls/fctl/lights/sec3-fault"),
+		fac1: props.globals.getNode("controls/fctl/lights/fac1-fault"),
+		fac2: props.globals.getNode("controls/fctl/lights/fac2-fault"),
 	},
 	Protections: {
-		overspeedRoll: props.globals.getNode("/it-fbw/protections/overspeed-roll-back"),
+		overspeedRoll: props.globals.getNode("it-fbw/protections/overspeed-roll-back"),
 	},
 	Switches: {
-		elac1Sw: props.globals.getNode("/controls/fctl/switches/elac1"),
-		elac2Sw: props.globals.getNode("/controls/fctl/switches/elac2"),
-		sec1Sw: props.globals.getNode("/controls/fctl/switches/sec1"),
-		sec2Sw: props.globals.getNode("/controls/fctl/switches/sec2"),
-		sec3Sw: props.globals.getNode("/controls/fctl/switches/sec3"),
-		fac1Sw: props.globals.getNode("/controls/fctl/switches/fac1"),
-		fac2Sw: props.globals.getNode("/controls/fctl/switches/fac2"),
+		elac1Sw: props.globals.getNode("controls/fctl/switches/elac1"),
+		elac2Sw: props.globals.getNode("controls/fctl/switches/elac2"),
+		sec1Sw: props.globals.getNode("controls/fctl/switches/sec1"),
+		sec2Sw: props.globals.getNode("controls/fctl/switches/sec2"),
+		sec3Sw: props.globals.getNode("controls/fctl/switches/sec3"),
+		fac1Sw: props.globals.getNode("controls/fctl/switches/fac1"),
+		fac2Sw: props.globals.getNode("controls/fctl/switches/fac2"),
 	},
 	init: func() {
 		if (updatet.isRunning) {
@@ -180,92 +180,92 @@ var update_loop = func {
 	}
 	
 	if (sec1_sw and !sec1_fail and dc_ess >= 25) {
-		setprop("/systems/fctl/sec1", 1);
-		setprop("/systems/failures/spoiler-l3", 0);
-		setprop("/systems/failures/spoiler-r3", 0);
-		setprop("/systems/failures/spoiler-l4", 0);
-		setprop("/systems/failures/spoiler-r4", 0);
+		setprop("systems/fctl/sec1", 1);
+		setprop("systems/failures/spoiler-l3", 0);
+		setprop("systems/failures/spoiler-r3", 0);
+		setprop("systems/failures/spoiler-l4", 0);
+		setprop("systems/failures/spoiler-r4", 0);
 	} else {
-		setprop("/systems/fctl/sec1", 0);
-		setprop("/systems/failures/spoiler-l3", 1);
-		setprop("/systems/failures/spoiler-r3", 1);
-		setprop("/systems/failures/spoiler-l4", 1);
-		setprop("/systems/failures/spoiler-r4", 1);
+		setprop("systems/fctl/sec1", 0);
+		setprop("systems/failures/spoiler-l3", 1);
+		setprop("systems/failures/spoiler-r3", 1);
+		setprop("systems/failures/spoiler-l4", 1);
+		setprop("systems/failures/spoiler-r4", 1);
 	}
 	
 	if (sec2_sw and !sec2_fail and dc2 >= 25) {
-		setprop("/systems/fctl/sec2", 1);
-		setprop("/systems/failures/spoiler-l5", 0);
-		setprop("/systems/failures/spoiler-r5", 0);
+		setprop("systems/fctl/sec2", 1);
+		setprop("systems/failures/spoiler-l5", 0);
+		setprop("systems/failures/spoiler-r5", 0);
 	} else {
-		setprop("/systems/fctl/sec2", 0);
-		setprop("/systems/failures/spoiler-l5", 1);
-		setprop("/systems/failures/spoiler-r5", 1);
+		setprop("systems/fctl/sec2", 0);
+		setprop("systems/failures/spoiler-l5", 1);
+		setprop("systems/failures/spoiler-r5", 1);
 	}
 	
 	if (sec3_sw and !sec3_fail and dc2 >= 25) {
-		setprop("/systems/fctl/sec3", 1);
-		setprop("/systems/failures/spoiler-l1", 0);
-		setprop("/systems/failures/spoiler-r1", 0);
-		setprop("/systems/failures/spoiler-l2", 0);
-		setprop("/systems/failures/spoiler-r2", 0);
+		setprop("systems/fctl/sec3", 1);
+		setprop("systems/failures/spoiler-l1", 0);
+		setprop("systems/failures/spoiler-r1", 0);
+		setprop("systems/failures/spoiler-l2", 0);
+		setprop("systems/failures/spoiler-r2", 0);
 	} else {
-		setprop("/systems/fctl/sec3", 0);
-		setprop("/systems/failures/spoiler-l1", 1);
-		setprop("/systems/failures/spoiler-r1", 1);
-		setprop("/systems/failures/spoiler-l2", 1);
-		setprop("/systems/failures/spoiler-r2", 1);
+		setprop("systems/fctl/sec3", 0);
+		setprop("systems/failures/spoiler-l1", 1);
+		setprop("systems/failures/spoiler-r1", 1);
+		setprop("systems/failures/spoiler-l2", 1);
+		setprop("systems/failures/spoiler-r2", 1);
 	}
 	
 	if (fac1_sw and !fac1_fail and (ac_ess >= 110 or dc_ess_shed >= 25)) {
-		setprop("/systems/fctl/fac1", 1);
-		setprop("/systems/failures/rudder", 0);
-		setprop("/systems/failures/fac1-fault", 0);
+		setprop("systems/fctl/fac1", 1);
+		setprop("systems/failures/rudder", 0);
+		setprop("systems/failures/fac1-fault", 0);
 	} else if (fac1_sw and (battery1_sw or battery2_sw) and (fac1_fail or ac_ess < 110 or dc_ess_shed < 25)) {
-		setprop("/systems/failures/fac1-fault", 1);
-		setprop("/systems/fctl/fac1", 0);
+		setprop("systems/failures/fac1-fault", 1);
+		setprop("systems/fctl/fac1", 0);
 		if (!fac2_sw or fac2_fail) {
-			setprop("/systems/failures/rudder", 1);
+			setprop("systems/failures/rudder", 1);
 		}
 	} else {
-		setprop("/systems/failures/fac1-fault", 0);
-		setprop("/systems/fctl/fac1", 0);
+		setprop("systems/failures/fac1-fault", 0);
+		setprop("systems/fctl/fac1", 0);
 		if (!fac2_sw or fac2_fail) {
-			setprop("/systems/failures/rudder", 1);
+			setprop("systems/failures/rudder", 1);
 		}
 	}
 	
 	if (fac2_sw and !fac2_fail and (ac2 >= 110 or dc2 >= 25)) {
-		setprop("/systems/fctl/fac2", 1);
-		setprop("/systems/failures/fac2-fault", 0);
+		setprop("systems/fctl/fac2", 1);
+		setprop("systems/failures/fac2-fault", 0);
 	} else if (fac2_sw and (fac2_fail or ac2 < 110 or dc2 < 25)) {
-		setprop("/systems/failures/fac2-fault", 1);
-		setprop("/systems/fctl/fac2", 0);
+		setprop("systems/failures/fac2-fault", 1);
+		setprop("systems/fctl/fac2", 0);
 		if (!fac1_sw or fac1_fail) {
-			setprop("/systems/failures/rudder", 1);
+			setprop("systems/failures/rudder", 1);
 		}
 	} else {
-		setprop("/systems/fctl/fac2", 0);
-		setprop("/systems/failures/fac2-fault", 0);
+		setprop("systems/fctl/fac2", 0);
+		setprop("systems/failures/fac2-fault", 0);
 		if (!fac1_sw or fac1_fail) {
-			setprop("/systems/failures/rudder", 1);
+			setprop("systems/failures/rudder", 1);
 		}
 	}
 	
-	var elac1 = getprop("/systems/fctl/elac1");
-	var elac2 = getprop("/systems/fctl/elac2");
-	var sec1 = getprop("/systems/fctl/sec1");
-	var sec2 = getprop("/systems/fctl/sec2");
-	var sec3 = getprop("/systems/fctl/sec3");
-	var fac1 = getprop("/systems/fctl/fac1");
-	var fac2 = getprop("/systems/fctl/fac2");
+	var elac1 = getprop("systems/fctl/elac1");
+	var elac2 = getprop("systems/fctl/elac2");
+	var sec1 = getprop("systems/fctl/sec1");
+	var sec2 = getprop("systems/fctl/sec2");
+	var sec3 = getprop("systems/fctl/sec3");
+	var fac1 = getprop("systems/fctl/fac1");
+	var fac2 = getprop("systems/fctl/fac2");
 	law = FBW.activeLaw.getValue();
 	
 	# Degrade logic, all failures which degrade FBW need to go here. -JD
 	blue = systems.HYD.Psi.blue.getValue();
 	green = systems.HYD.Psi.green.getValue();
 	yellow = systems.HYD.Psi.yellow.getValue();
-	if (getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0) {
+	if (getprop("gear/gear[1]/wow") == 0 and getprop("gear/gear[2]/wow") == 0) {
 		if (!elac1 and !elac2) {
 			if (law == 0) {
 				FBW.degradeLaw.setValue(1);
@@ -273,7 +273,7 @@ var update_loop = func {
 				fcu.athrOff("hard");
 			}
 		}
-		if (getprop("/systems/electrical/some-electric-thingie/emer-elec-config") == 1) {
+		if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") == 1) {
 			if (law == 0) {
 				FBW.degradeLaw.setValue(1);
 				fcu.apOff("hard", 0);
@@ -294,7 +294,7 @@ var update_loop = func {
 		}
 	}
 	
-	if (getprop("/controls/gear/gear-down") == 1 and getprop("/it-autoflight/output/ap1") == 0 and getprop("/it-autoflight/output/ap2") == 0) {
+	if (getprop("controls/gear/gear-down") == 1 and getprop("it-autoflight/output/ap1") == 0 and getprop("it-autoflight/output/ap2") == 0) {
 		if (law == 1) {
 			FBW.degradeLaw.setValue(2);
 		}
@@ -308,23 +308,23 @@ var update_loop = func {
 		FBW.degradeLaw.setValue(2);
 	}
 	
-	mmoIAS = (getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") / getprop("/instrumentation/airspeed-indicator/indicated-mach")) * 0.82;
+	mmoIAS = (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") / getprop("instrumentation/airspeed-indicator/indicated-mach")) * 0.82;
 	if (mmoIAS < 350) {
-		setprop("/it-fbw/speeds/vmo-mmo", mmoIAS);
+		setprop("it-fbw/speeds/vmo-mmo", mmoIAS);
 	} else {
-		setprop("/it-fbw/speeds/vmo-mmo", 350);
+		setprop("it-fbw/speeds/vmo-mmo", 350);
 	}
 	
-	if (getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") > getprop("/it-fbw/speeds/vmo-mmo") + 6 and (law == 0 or law == 1)) {
-		if (getprop("/it-autoflight/input/ap1") == 1 or getprop("/it-autoflight/input/ap2") == 1) {
+	if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") > getprop("it-fbw/speeds/vmo-mmo") + 6 and (law == 0 or law == 1)) {
+		if (getprop("it-autoflight/input/ap1") == 1 or getprop("it-autoflight/input/ap2") == 1) {
 			fcu.apOff("hard", 0);
 		}
-		if (getprop("/it-fbw/protections/overspeed") != 1) {
-			setprop("/it-fbw/protections/overspeed", 1);
+		if (getprop("it-fbw/protections/overspeed") != 1) {
+			setprop("it-fbw/protections/overspeed", 1);
 		}
 	} else {
-		if (getprop("/it-fbw/protections/overspeed") != 0) {
-			setprop("/it-fbw/protections/overspeed", 0);
+		if (getprop("it-fbw/protections/overspeed") != 0) {
+			setprop("it-fbw/protections/overspeed", 0);
 		}
 	}
 }
@@ -361,7 +361,7 @@ var fbw_loop = func {
 		FBW.Protections.overspeedRoll.setValue(1);
 	}
 
-	if (getprop("/it-fbw/override") == 0) {
+	if (getprop("it-fbw/override") == 0) {
 		var active = FBW.activeLaw.getValue();
 		var degrade = FBW.degradeLaw.getValue();
 		if (degrade == 0) {
@@ -384,7 +384,7 @@ var fbw_loop = func {
 	}
 	
 	if (FBW.activeLaw.getValue() != 0) {
-		if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
+		if (getprop("it-autoflight/output/ap1") == 1 or getprop("it-autoflight/output/ap2") == 1) {
 			fcu.apOff("hard", 0);
 			fcu.athrOff("hard");
 		}
