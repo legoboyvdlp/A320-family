@@ -96,8 +96,8 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R3") {
-		if (getprop("/controls/adirs/mcducbtn") == 0) {
-			setprop("/controls/adirs/mcducbtn", 1);
+		if (getprop("controls/adirs/mcducbtn") == 0) {
+			setprop("controls/adirs/mcducbtn", 1);
 		}
 	} else if (key == "R6") {
 		if (scratchpad == "CLR") {
