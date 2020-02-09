@@ -183,9 +183,9 @@
 	</marker-beacon>
 	
 	<marker-beacon>
-        <name>marker-beacon</name>
-        <number>0</number>
-    </marker-beacon>
+		<name>marker-beacon</name>
+		<number>0</number>
+	</marker-beacon>
 	
 	<nav-radio> <!-- VOR unit -->
 		<name>nav</name>
