@@ -112,6 +112,7 @@ var att_switch = props.globals.getNode("controls/switching/ATTHDG", 1);
 var air_switch = props.globals.getNode("controls/switching/AIRDATA", 1);
 var appr_enabled = props.globals.getNode("it-autoflight/output/appr-armed/", 1);
 var loc_enabled = props.globals.getNode("it-autoflight/output/loc-armed/", 1);
+var vert_state = props.globals.getNode("it-autoflight/output/vert/", 1);
 var ils_data1 = props.globals.getNode("FMGC/internal/ils1-mcdu/", 1);
 # Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
 # var ils_data2 = props.globals.getNode("FMGC/internal/ils2-mcdu/", 1);
@@ -120,6 +121,9 @@ var dme_data = props.globals.getNode("instrumentation/dme[0]/indicated-distance-
 var ils_crs = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg", 1);
 var ils1_crs_set = props.globals.getNode("FMGC/internal/ils1crs-set/", 1);
 var arrival_airport = props.globals.getNode("FMGC/internal/arr-arpt", 1);
+var outer_marker = props.globals.getNode("instrumentation/marker-beacon/outer", 1);
+var middle_marker = props.globals.getNode("instrumentation/marker-beacon/middle", 1);
+var inner_marker = props.globals.getNode("instrumentation/marker-beacon/inner", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -797,8 +801,8 @@ var canvas_PFD_base = {
 			}
 		
 		#Approach selected and tuned, overwrite RAD NAV
-		} else if (0) {		    
-#		    var runways = airportinfo(airportinfo(arrival_airport.getValue()).id).runways;
+#		} else if (0) {			
+#			var runways = airportinfo(airportinfo(arrival_airport.getValue()).id).runways;
 #			var runway_keys = sort(keys(runways), string.icmp);
 #			foreach(var rwy; runway_keys) {
 #				var r = runways[rwy];
@@ -806,9 +810,9 @@ var canvas_PFD_base = {
 #					magnetic_hdg = r.heading - getprop("environment/magnetic-variation-deg");
 #					magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
 #					
-#                   SET THE FMGC values here!!!!!
-#                   course = r.heading;
-#                   ils_frequency = r.ils_frequency_mhz;
+#					SET THE FMGC values here!!!!!
+#					course = r.heading;
+#					ils_frequency = r.ils_frequency_mhz;
 #
 #					break;
 #				}
@@ -917,6 +921,33 @@ var canvas_PFD_1 = {
 			me["ils_freq"].hide();
 			me["dme_dist"].hide();
 			me["dme_dist_legend"].hide();
+			me["outerMarker"].hide();
+			me["middleMarker"].hide();
+			me["innerMarker"].hide();	
+		}
+		
+		if (ap_ils_mode.getValue() == 1 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1 or vert_state.getValue() == 2)) {
+			if (outer_marker.getValue() == 1) {
+				me["outerMarker"].show();
+				me["middleMarker"].hide();
+				me["innerMarker"].hide();
+			} else if (middle_marker.getValue() == 1) {
+				me["middleMarker"].show();
+				me["outerMarker"].hide();
+				me["innerMarker"].hide();
+			} else if (inner_marker.getValue() == 1) {
+				me["innerMarker"].show();
+				me["outerMarker"].hide();
+				me["middleMarker"].hide();
+			} else {
+				me["outerMarker"].hide();
+				me["middleMarker"].hide();
+				me["innerMarker"].hide();	
+			}  
+		} else {
+			me["outerMarker"].hide();
+			me["middleMarker"].hide();
+			me["innerMarker"].hide();
 		}
 		
 		if (ap_ils_mode.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -929,38 +960,12 @@ var canvas_PFD_1 = {
 		} else {
 			me["GS_pointer"].hide();
 		}
-		
-		# Marker beacons/ILS warning
+
 		if (ap_ils_mode.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
-            me["ilsError"].show();
-            me["outerMarker"].hide();
-            me["middleMarker"].hide();
-            me["innerMarker"].hide();	  
-        } else if (ap_ils_mode.getValue() == 1 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
-            me["ilsError"].hide();	
-            if (getprop("instrumentation/marker-beacon/outer")) {
-                me["outerMarker"].show();
-                me["middleMarker"].hide();
-                me["innerMarker"].hide();
-            } else if (getprop("instrumentation/marker-beacon/middle")) {
-                me["middleMarker"].show();
-                me["outerMarker"].hide();
-                me["innerMarker"].hide();
-            } else if (getprop("instrumentation/marker-beacon/inner")) {
-                me["innerMarker"].show();
-                me["outerMarker"].hide();
-                me["middleMarker"].hide();
-            } else {
-                me["outerMarker"].hide();
-                me["middleMarker"].hide();
-                me["innerMarker"].hide();	
-            }
-        } else {
-            me["ilsError"].hide();
-            me["outerMarker"].hide();
-            me["middleMarker"].hide();
-            me["innerMarker"].hide();
-        }
+			me["ilsError"].show();	
+		} else {
+			me["ilsError"].hide();
+		}
 			
 		me.updateCommon();
 	},
@@ -1267,6 +1272,33 @@ var canvas_PFD_2 = {
 			me["ils_freq"].hide();
 			me["dme_dist"].hide();
 			me["dme_dist_legend"].hide();
+			me["outerMarker"].hide();
+			me["middleMarker"].hide();
+			me["innerMarker"].hide();	
+		}
+		
+		if (ap_ils_mode2.getValue() == 1 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1 or vert_state.getValue() == 2)) {
+			if (outer_marker.getValue() == 1) {
+				me["outerMarker"].show();
+				me["middleMarker"].hide();
+				me["innerMarker"].hide();
+			} else if (middle_marker.getValue() == 1) {
+				me["middleMarker"].show();
+				me["outerMarker"].hide();
+				me["innerMarker"].hide();
+			} else if (inner_marker.getValue() == 1) {
+				me["innerMarker"].show();
+				me["outerMarker"].hide();
+				me["middleMarker"].hide();
+			} else {
+				me["outerMarker"].hide();
+				me["middleMarker"].hide();
+				me["innerMarker"].hide();	
+			}  
+		} else {
+			me["outerMarker"].hide();
+			me["middleMarker"].hide();
+			me["innerMarker"].hide();
 		}
 		
 		if (ap_ils_mode2.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
@@ -1281,31 +1313,10 @@ var canvas_PFD_2 = {
 		}
 		
 		if (ap_ils_mode2.getValue() == 0 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1)) {
-            me["ilsError"].show();	  
-        } else if (ap_ils_mode2.getValue() == 1) {
-            me["ilsError"].hide();
-            
-            # Marker beacons		
-            if (getprop("instrumentation/marker-beacon/outer")) {
-                me["outerMarker"].show();
-                me["middleMarker"].hide();
-                me["innerMarker"].hide();
-            } else if (getprop("instrumentation/marker-beacon/middle")) {
-                me["middleMarker"].show();
-                me["outerMarker"].hide();
-                me["innerMarker"].hide();
-            } else if (getprop("instrumentation/marker-beacon/inner")) {
-                me["innerMarker"].show();
-                me["outerMarker"].hide();
-                me["middleMarker"].hide();
-            } else {
-                me["outerMarker"].hide();
-                me["middleMarker"].hide();
-                me["innerMarker"].hide();	
-            }
-        } else {
-            me["ilsError"].hide();
-        }
+			me["ilsError"].show();	  
+		} else {
+			me["ilsError"].hide();
+		}
 		
 		me.updateCommon();
 	},
