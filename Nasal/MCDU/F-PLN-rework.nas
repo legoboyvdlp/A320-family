@@ -204,11 +204,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	createPlanList: func() {
 		me.planList = [];
 		if (me.temporaryFlagFpln) {
-			for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+			for (var i = fmgc.flightPlanController.currentToWptIndex.getValue(); i < me.plan.getPlanSize(); i += 1) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.plan, me.computer, "yel"));
 			}
 		} else {
-			for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+			for (var i = fmgc.flightPlanController.currentToWptIndex.getValue(); i < me.plan.getPlanSize(); i += 1) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.plan, me.computer));
 			}
 		}
