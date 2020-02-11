@@ -1949,6 +1949,9 @@
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
 			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
 		</Dialogs>
+		<save>
+			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
+		</save>
 	</nasal>
 
 </PropertyList>
