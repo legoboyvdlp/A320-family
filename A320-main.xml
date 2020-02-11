@@ -15,6 +15,8 @@
 		</hud>
 
 		<model>
+			<fallback-model-index>212</fallback-model-index>
+
 			<autopush include="AircraftConfig/autopush-config.xml"/>
 			<icing>
 				<iceable>
