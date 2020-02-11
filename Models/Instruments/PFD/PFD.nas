@@ -926,28 +926,22 @@ var canvas_PFD_1 = {
 			me["innerMarker"].hide();	
 		}
 		
-		if (ap_ils_mode.getValue() == 1 and (appr_enabled.getValue() == 1 or loc_enabled.getValue() == 1 or vert_state.getValue() == 2)) {
-			if (outer_marker.getValue() == 1) {
-				me["outerMarker"].show();
-				me["middleMarker"].hide();
-				me["innerMarker"].hide();
-			} else if (middle_marker.getValue() == 1) {
-				me["middleMarker"].show();
-				me["outerMarker"].hide();
-				me["innerMarker"].hide();
-			} else if (inner_marker.getValue() == 1) {
-				me["innerMarker"].show();
-				me["outerMarker"].hide();
-				me["middleMarker"].hide();
-			} else {
-				me["outerMarker"].hide();
-				me["middleMarker"].hide();
-				me["innerMarker"].hide();	
-			}  
+		if (outer_marker.getValue() == 1) {
+			me["outerMarker"].show();
+			me["middleMarker"].hide();
+			me["innerMarker"].hide();
+		} else if (middle_marker.getValue() == 1) {
+			me["middleMarker"].show();
+			me["outerMarker"].hide();
+			me["innerMarker"].hide();
+		} else if (inner_marker.getValue() == 1) {
+			me["innerMarker"].show();
+			me["outerMarker"].hide();
+			me["middleMarker"].hide();
 		} else {
 			me["outerMarker"].hide();
 			me["middleMarker"].hide();
-			me["innerMarker"].hide();
+			me["innerMarker"].hide();	
 		}
 		
 		if (ap_ils_mode.getValue() == 1 and loc_in_range.getValue() == 1 and hasloc.getValue() == 1 and nav0_signalq.getValue() > 0.99) {
