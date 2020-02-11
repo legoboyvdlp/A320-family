@@ -96,15 +96,14 @@ var flightPlanController = {
 	autoSequencing: func() {
 		if (me.num[2].getValue() > 2) {
 			if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
-				#me.deleteWP(0, 0);
+				me.deleteWP(0, 0);
 			}
 			
 			if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
-				#me.deleteWP(0, 1);
+				me.deleteWP(0, 1);
 			}
 			
-			# me.deleteWP(0, 2, 0, 1);
-			me.currentToWptIndex.setValue(me.currentToWptIndex.getValue() + 1);
+			me.deleteWP(0, 2, 0, 1);
 		}
 	},
 	
@@ -117,7 +116,7 @@ var flightPlanController = {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), 0);
 	},
 	
-	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate s = 1, means skip adding discontinuity
+	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate
 		var wp = wpID[n][index].getValue();
 		if (wp != FMGCdep.getValue() and wp != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
