@@ -100,23 +100,37 @@ var apuBleedChk = maketimer(0.1, func {
 
 # Various Other Stuff
 var doIdleThrust = func {
+	# Idle does not respect selected engines, because it is used to respond
+	# to "Retard" and both engines must be idle for spoilers to deploy
 	setprop("controls/engines/engine[0]/throttle", 0.0);
 	setprop("controls/engines/engine[1]/throttle", 0.0);
 }
 
 var doCLThrust = func {
-	setprop("controls/engines/engine[0]/throttle", 0.63);
-	setprop("controls/engines/engine[1]/throttle", 0.63);
+	if (getprop("sim/input/selected/engine[0]") == 1) {
+		setprop("controls/engines/engine[0]/throttle", 0.63);
+	}
+	if (getprop("sim/input/selected/engine[1]") == 1) {
+		setprop("controls/engines/engine[1]/throttle", 0.63);
+	}
 }
 
 var doMCTThrust = func {
-	setprop("controls/engines/engine[0]/throttle", 0.8);
-	setprop("controls/engines/engine[1]/throttle", 0.8);
+	if (getprop("sim/input/selected/engine[0]") == 1) {
+		setprop("controls/engines/engine[0]/throttle", 0.8);
+	}
+	if (getprop("sim/input/selected/engine[1]") == 1) {
+		setprop("controls/engines/engine[1]/throttle", 0.8);
+	}
 }
 
 var doTOGAThrust = func {
-	setprop("controls/engines/engine[0]/throttle", 1.0);
-	setprop("controls/engines/engine[1]/throttle", 1.0);
+	if (getprop("sim/input/selected/engine[0]") == 1) {
+		setprop("controls/engines/engine[0]/throttle", 1.0);
+	}
+	if (getprop("sim/input/selected/engine[1]") == 1) {
+		setprop("controls/engines/engine[1]/throttle", 1.0);
+	}
 }
 
 # Reverse Thrust System
