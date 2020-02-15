@@ -1451,28 +1451,6 @@
 					<script>libraries.fovZoom(0);</script>
 				</binding>
 			</key>
-			<key n="33">
-				<name>PAGE UP</name>
-				<desc>Throttle Increase</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-						setprop("controls/engines/engine[0]/throttle", getprop("controls/engines/engine[0]/throttle") + 0.01);
-						setprop("controls/engines/engine[1]/throttle", getprop("controls/engines/engine[0]/throttle") + 0.01); # Not a typo, always use engine[0] as a reference
-					</script>
-				</binding>
-			</key>
-			<key n="34">
-				<name>PAGE DN</name>
-				<desc>Throttle Decrease</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-						setprop("controls/engines/engine[0]/throttle", getprop("controls/engines/engine[0]/throttle") - 0.01);
-						setprop("controls/engines/engine[1]/throttle", getprop("controls/engines/engine[0]/throttle") - 0.01); # Not a typo, always use engine[0] as a reference
-					</script>
-				</binding>
-			</key>
 			<key n="49">
 				<name>1</name>
 				<desc>Captain View/Elevator Trim Up</desc>
