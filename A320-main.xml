@@ -1509,8 +1509,7 @@
 					</condition>
 					<command>nasal</command>
 					<script>
-						setprop("controls/engines/engine[0]/throttle", getprop("controls/engines/engine[0]/throttle") - 0.01);
-						setprop("controls/engines/engine[1]/throttle", getprop("controls/engines/engine[0]/throttle") - 0.01); # Not a typo, always use engine[0] as a reference
+						controls.incThrottle(-0.01, -1.0);
 					</script>
 				</binding>
 			</key>
@@ -1637,8 +1636,7 @@
 					</condition>
 					<command>nasal</command>
 					<script>
-						setprop("controls/engines/engine[0]/throttle", getprop("controls/engines/engine[0]/throttle") + 0.01);
-						setprop("controls/engines/engine[1]/throttle", getprop("controls/engines/engine[0]/throttle") + 0.01); # Not a typo, always use engine[0] as a reference
+						controls.incThrottle(0.01, 1.0);
 					</script>
 				</binding>
 			</key>
