@@ -13,7 +13,7 @@ setlistener("/nasal/canvas/loaded", func() {
     ####### LOAD FILES #######
     #print("loading files");
     (func {
-     var aircraft_root = getprop("/sim/aircraft-dir");
+     var aircraft_root = getprop("sim/aircraft-dir");
 
     var load = func(file, name) {
         #print("Loading ..." ~ file);

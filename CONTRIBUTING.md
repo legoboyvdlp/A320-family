@@ -38,7 +38,7 @@ var someOtherThing = func {
 		something = 1;
 	}
 	settimer(func {
-		setprop("/something", something);
+		setprop("something", something);
 	}, 5);
 }
 ```

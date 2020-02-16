@@ -34,8 +34,8 @@ var rmpClass = {
 		m._prop_vhf2_stby = props.globals.getNode("systems/radio/rmp[" ~ (instance - 1) ~ "]/vhf2-standby");
 		m._prop_vhf3_stby = props.globals.getNode("systems/radio/rmp[" ~ (instance - 1) ~ "]/vhf3-standby");
 
-		m._prop_display_active = props.globals.getNode("/controls/radio/rmp[" ~ (instance - 1) ~ "]/active-display");
-		m._prop_display_standby = props.globals.getNode("/controls/radio/rmp[" ~ (instance - 1) ~ "]/standby-display");
+		m._prop_display_active = props.globals.getNode("controls/radio/rmp[" ~ (instance - 1) ~ "]/active-display");
+		m._prop_display_standby = props.globals.getNode("controls/radio/rmp[" ~ (instance - 1) ~ "]/standby-display");
 
 		# Power source depending on RMP number
 		if (instance == 1) {

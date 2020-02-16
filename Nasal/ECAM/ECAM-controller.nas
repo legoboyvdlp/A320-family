@@ -1,18 +1,18 @@
 # A3XX Electronic Centralised Aircraft Monitoring System
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
-var lines = [props.globals.getNode("/ECAM/msg/line1", 1), props.globals.getNode("/ECAM/msg/line2", 1), props.globals.getNode("/ECAM/msg/line3", 1), props.globals.getNode("/ECAM/msg/line4", 1), props.globals.getNode("/ECAM/msg/line5", 1), props.globals.getNode("/ECAM/msg/line6", 1), props.globals.getNode("/ECAM/msg/line7", 1), props.globals.getNode("/ECAM/msg/line8", 1)];
-var linesCol = [props.globals.getNode("/ECAM/msg/linec1", 1), props.globals.getNode("/ECAM/msg/linec2", 1), props.globals.getNode("/ECAM/msg/linec3", 1), props.globals.getNode("/ECAM/msg/linec4", 1), props.globals.getNode("/ECAM/msg/linec5", 1), props.globals.getNode("/ECAM/msg/linec6", 1), props.globals.getNode("/ECAM/msg/linec7", 1), props.globals.getNode("/ECAM/msg/linec8", 1)];
-var rightLines = [props.globals.getNode("/ECAM/rightmsg/line1", 1), props.globals.getNode("/ECAM/rightmsg/line2", 1), props.globals.getNode("/ECAM/rightmsg/line3", 1), props.globals.getNode("/ECAM/rightmsg/line4", 1), props.globals.getNode("/ECAM/rightmsg/line5", 1), props.globals.getNode("/ECAM/rightmsg/line6", 1), props.globals.getNode("/ECAM/rightmsg/line7", 1), props.globals.getNode("/ECAM/rightmsg/line8", 1)];
-var rightLinesCol = [props.globals.getNode("/ECAM/rightmsg/linec1", 1), props.globals.getNode("/ECAM/rightmsg/linec2", 1), props.globals.getNode("/ECAM/rightmsg/linec3", 1), props.globals.getNode("/ECAM/rightmsg/linec4", 1), props.globals.getNode("/ECAM/rightmsg/linec5", 1), props.globals.getNode("/ECAM/rightmsg/linec6", 1), props.globals.getNode("/ECAM/rightmsg/linec7", 1), props.globals.getNode("/ECAM/rightmsg/linec8", 1)];
-var statusLines = [props.globals.getNode("/ECAM/status/line1", 1), props.globals.getNode("/ECAM/status/line2", 1), props.globals.getNode("/ECAM/status/line3", 1), props.globals.getNode("/ECAM/status/line4", 1), props.globals.getNode("/ECAM/status/line5", 1), props.globals.getNode("/ECAM/status/line6", 1), props.globals.getNode("/ECAM/status/line7", 1), props.globals.getNode("/ECAM/status/line8", 1)];
-var statusLinesCol = [props.globals.getNode("/ECAM/status/linec1", 1), props.globals.getNode("/ECAM/status/linec2", 1), props.globals.getNode("/ECAM/status/linec3", 1), props.globals.getNode("/ECAM/status/linec4", 1), props.globals.getNode("/ECAM/status/linec5", 1), props.globals.getNode("/ECAM/status/linec6", 1), props.globals.getNode("/ECAM/status/linec7", 1), props.globals.getNode("/ECAM/status/linec8", 1)];
+var lines = [props.globals.getNode("ECAM/msg/line1", 1), props.globals.getNode("ECAM/msg/line2", 1), props.globals.getNode("ECAM/msg/line3", 1), props.globals.getNode("ECAM/msg/line4", 1), props.globals.getNode("ECAM/msg/line5", 1), props.globals.getNode("ECAM/msg/line6", 1), props.globals.getNode("ECAM/msg/line7", 1), props.globals.getNode("ECAM/msg/line8", 1)];
+var linesCol = [props.globals.getNode("ECAM/msg/linec1", 1), props.globals.getNode("ECAM/msg/linec2", 1), props.globals.getNode("ECAM/msg/linec3", 1), props.globals.getNode("ECAM/msg/linec4", 1), props.globals.getNode("ECAM/msg/linec5", 1), props.globals.getNode("ECAM/msg/linec6", 1), props.globals.getNode("ECAM/msg/linec7", 1), props.globals.getNode("ECAM/msg/linec8", 1)];
+var rightLines = [props.globals.getNode("ECAM/rightmsg/line1", 1), props.globals.getNode("ECAM/rightmsg/line2", 1), props.globals.getNode("ECAM/rightmsg/line3", 1), props.globals.getNode("ECAM/rightmsg/line4", 1), props.globals.getNode("ECAM/rightmsg/line5", 1), props.globals.getNode("ECAM/rightmsg/line6", 1), props.globals.getNode("ECAM/rightmsg/line7", 1), props.globals.getNode("ECAM/rightmsg/line8", 1)];
+var rightLinesCol = [props.globals.getNode("ECAM/rightmsg/linec1", 1), props.globals.getNode("ECAM/rightmsg/linec2", 1), props.globals.getNode("ECAM/rightmsg/linec3", 1), props.globals.getNode("ECAM/rightmsg/linec4", 1), props.globals.getNode("ECAM/rightmsg/linec5", 1), props.globals.getNode("ECAM/rightmsg/linec6", 1), props.globals.getNode("ECAM/rightmsg/linec7", 1), props.globals.getNode("ECAM/rightmsg/linec8", 1)];
+var statusLines = [props.globals.getNode("ECAM/status/line1", 1), props.globals.getNode("ECAM/status/line2", 1), props.globals.getNode("ECAM/status/line3", 1), props.globals.getNode("ECAM/status/line4", 1), props.globals.getNode("ECAM/status/line5", 1), props.globals.getNode("ECAM/status/line6", 1), props.globals.getNode("ECAM/status/line7", 1), props.globals.getNode("ECAM/status/line8", 1)];
+var statusLinesCol = [props.globals.getNode("ECAM/status/linec1", 1), props.globals.getNode("ECAM/status/linec2", 1), props.globals.getNode("ECAM/status/linec3", 1), props.globals.getNode("ECAM/status/linec4", 1), props.globals.getNode("ECAM/status/linec5", 1), props.globals.getNode("ECAM/status/linec6", 1), props.globals.getNode("ECAM/status/linec7", 1), props.globals.getNode("ECAM/status/linec8", 1)];
 
 var leftOverflow  = props.globals.initNode("/ECAM/warnings/overflow-left", 0, "BOOL");
 var rightOverflow = props.globals.initNode("/ECAM/warnings/overflow-right", 0, "BOOL");
 var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
-var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
+var dc_ess = props.globals.getNode("systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
 var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL")];
@@ -173,7 +173,7 @@ var ECAM_controller = {
 		me.reset();
 	},
 	loop: func() {
-		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !getprop("/systems/acconfig/acconfig-running")) {
+		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !getprop("systems/acconfig/acconfig-running")) {
 			# update FWC phases
 			phaseLoop();
 			
@@ -206,7 +206,7 @@ var ECAM_controller = {
 		# write to ECAM
 		var counter = 0;
 		
-		if (!getprop("/systems/acconfig/autoconfig-running")) {
+		if (!getprop("systems/acconfig/autoconfig-running")) {
 			foreach (var w; warnings.vector) {
 				if (w.active == 1) {
 					if (counter < 9) {

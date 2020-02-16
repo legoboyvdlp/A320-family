@@ -36,7 +36,7 @@ Original code author Maggse.
 			<phi-min-deg>0</phi-min-deg>
 			<phi-max-deg>0</phi-max-deg>
 			<speed>
-				<value>10</value>
+				<value>0</value>
 				<spread>1</spread>
 			</speed>
 			<rotation-speed>
@@ -51,8 +51,8 @@ Original code author Maggse.
 		
 		<counter>
 			<particles-per-sec>
-				<value>100</value>
-				<spread>10</spread>
+				<value>50</value>
+				<spread>0</spread>
 			</particles-per-sec>
 		</counter>
 		

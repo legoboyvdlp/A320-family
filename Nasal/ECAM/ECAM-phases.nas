@@ -36,8 +36,8 @@ var FWC = {
 		phase5Output: props.globals.initNode("/ECAM/phases/monostable/phase-5-output"),
 		phase7Output: props.globals.initNode("/ECAM/phases/monostable/phase-7-output"),
 		phase9Output: props.globals.initNode("/ECAM/phases/monostable/phase-9-output"),
-		toPowerOutput: props.globals.getNode("/ECAM/phases/monostable/to-power-set-output"),
-		m80kt: props.globals.getNode("/ECAM/phases/monostable-80kt"),
+		toPowerOutput: props.globals.getNode("ECAM/phases/monostable/to-power-set-output"),
+		m80kt: props.globals.getNode("ECAM/phases/monostable-80kt"),
 	},
 	Flipflop: {
 		gearSet: props.globals.initNode("/ECAM/phases/flipflop/gear-set", 0, "BOOL"),
@@ -59,11 +59,11 @@ var FWC = {
 		eng1or2: props.globals.initNode("/ECAM/phases/timer/eng1or2", 0, "INT"),
 		toInhibit: props.globals.initNode("/ECAM/phases/timer/to-inhibit", 0, "INT"),
 		ldgInhibit: props.globals.initNode("/ECAM/phases/timer/ldg-inhibit", 0, "INT"),
-		eng1idleOutput: props.globals.getNode("/ECAM/phases/timer/eng1idle-output"),
-		eng2idleOutput: props.globals.getNode("/ECAM/phases/timer/eng2idle-output"),
+		eng1idleOutput: props.globals.getNode("ECAM/phases/timer/eng1idle-output"),
+		eng2idleOutput: props.globals.getNode("ECAM/phases/timer/eng2idle-output"),
 		eng1or2Output: props.globals.initNode("/ECAM/phases/timer/eng1or2-output", 0, "INT"),
-		toInhibitOutput: props.globals.getNode("/ECAM/phases/timer/to-inhibit-output"),
-		ldgInhibitOutput: props.globals.getNode("/ECAM/phases/timer/ldg-inhibit-output"),
+		toInhibitOutput: props.globals.getNode("ECAM/phases/timer/to-inhibit-output"),
+		ldgInhibitOutput: props.globals.getNode("ECAM/phases/timer/ldg-inhibit-output"),
 	},
 	speed80: props.globals.initNode("/ECAM/phases/speed-gt-80", 0, "BOOL"),
 	toPower: props.globals.initNode("/ECAM/phases/to-power-set", 0, "BOOL"),
@@ -131,15 +131,15 @@ var phaseLoop = func() {
 	}
 	
 	if (eng == "IAE") {
-		eprlim = getprop("/controls/engines/epr-limit");
-		if ((!getprop("/controls/engines/engine[0]/reverser") and !getprop("/controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
+		eprlim = getprop("controls/engines/epr-limit");
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
 		}
 	} else {
-		n1lim = getprop("/controls/engines/n1-limit");
-		if ((!getprop("/controls/engines/engine[0]/reverser") and !getprop("/controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
+		n1lim = getprop("controls/engines/n1-limit");
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);

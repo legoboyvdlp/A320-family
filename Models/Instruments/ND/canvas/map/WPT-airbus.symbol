@@ -127,7 +127,7 @@ var draw = func{
     }
     if(me.model.is_departure or me.model.is_destination){
         var prop = (me.model.is_departure ? 'departure' : 'destination');
-        var rwy = getprop("/autopilot/route-manager/"~prop~"/runway");
+        var rwy = getprop("autopilot/route-manager/"~prop~"/runway");
         if(rwy != nil and size(rwy) > 0){
             me.wp_sym.hide();
         } else {

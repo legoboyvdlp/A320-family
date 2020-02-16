@@ -135,8 +135,8 @@
 		<object-name>engine_fire_1</object-name>
 		<condition>
 			<or>
-				<property>/systems/fire/engine1/warning-active</property>
-				<property>/controls/switches/annun-test</property>
+				<property>systems/fire/engine1/warning-active</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -164,8 +164,8 @@
 		<object-name>engine_fire_2</object-name>
 		<condition>
 			<or>
-				<property>/systems/fire/engine2/warning-active</property>
-				<property>/controls/switches/annun-test</property>
+				<property>systems/fire/engine2/warning-active</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -397,7 +397,7 @@
             </binding>
 			<binding>
                 <command>nasal</command>
-                <script>atc.transponderPanel.atcSwitch(getprop("/controls/atc/system-knob") + 1);</script>
+                <script>atc.transponderPanel.atcSwitch(getprop("controls/atc/system-knob") + 1);</script>
             </binding>
         </action>
 	</animation>
@@ -437,7 +437,7 @@
             </binding>
 			<binding>
                 <command>nasal</command>
-                <script>atc.transponderPanel.modeSwitch(getprop("/controls/atc/mode-knob") + 1);</script>
+                <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
             </binding>
         </action>
 		<action>
@@ -454,7 +454,7 @@
             </binding>
 			<binding>
                 <command>nasal</command>
-                <script>atc.transponderPanel.modeSwitch(getprop("/controls/atc/mode-knob") + 1);</script>
+                <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
             </binding>
         </action>
 	</animation>

@@ -46,7 +46,7 @@ var _advance_wp = func(flip_sign = 0) {
 }
 
 var _loop = func() {
-	if (!getprop("/sim/model/autopush/connected")) {
+	if (!getprop("sim/model/autopush/connected")) {
 		stop();
 		return;
 	}
@@ -54,9 +54,9 @@ var _loop = func() {
 	D *= NM2M;
 	var (psi_leg, D_leg) = courseAndDistance(_route[_to_wp - 1], _route[_to_wp]);
 	var deltapsi = geo.normdeg180(A - psi_leg);
-	var psi = getprop("/orientation/heading-deg") + _push * 180.0;
+	var psi = getprop("orientation/heading-deg") + _push * 180.0;
 	var deltaA = math.min(math.max(_K_psi * geo.normdeg180(A - psi), -_F_psi), _F_psi);
-	var time = getprop("/sim/time/elapsed-sec");
+	var time = getprop("sim/time/elapsed-sec");
 	var dt = time - _time;
 	var minus_psidot = (dt > 0.002) * math.min(math.max(_K_psidot * (_psi - psi) / dt, -_F_psidot), _F_psidot);
 	_psi = psi;
@@ -83,8 +83,8 @@ var _loop = func() {
 	if (_debug > 1) {
 		print("autopush_driver to_wp " ~ _to_wp ~ ", A " ~ geo.normdeg(A) ~ ", deltaA " ~ deltaA ~ ", minus_psidot " ~ minus_psidot);
 	}
-	setprop("/sim/model/autopush/target-speed-km_h", _sign * V);
-	setprop("/sim/model/autopush/steer-cmd-norm", steering);
+	setprop("sim/model/autopush/target-speed-km_h", _sign * V);
+	setprop("sim/model/autopush/steer-cmd-norm", steering);
 }
 
 var _timer = maketimer(0.051, func{_loop()});
@@ -100,7 +100,7 @@ var start = func() {
 		gui.popupTip("Already moving");
 		return;
 	}
-	if (!getprop("/sim/model/autopush/connected")) {
+	if (!getprop("sim/model/autopush/connected")) {
 		gui.popupTip("Pushback not connected");
 		return;
 	}
@@ -112,23 +112,23 @@ var start = func() {
 	} else {
 		autopush_route.done();
 	}
-	_K_V = getprop("/sim/model/autopush/driver/K_V");
-	_F_V = getprop("/sim/model/autopush/driver/F_V");
-	_R_turn_min = getprop("/sim/model/autopush/min-turn-radius-m");
-	_D_stop = getprop("/sim/model/autopush/stopping-distance-m");
-	_K_psi = getprop("/sim/model/autopush/driver/K_psi");
-	_F_psi = getprop("/sim/model/autopush/driver/F_psi");
-	_K_psidot = getprop("/sim/model/autopush/driver/K_psidot");
-	_F_psidot = getprop("/sim/model/autopush/driver/F_psidot");
-	_debug = getprop("/sim/model/autopush/debug") or 0;
+	_K_V = getprop("sim/model/autopush/driver/K_V");
+	_F_V = getprop("sim/model/autopush/driver/F_V");
+	_R_turn_min = getprop("sim/model/autopush/min-turn-radius-m");
+	_D_stop = getprop("sim/model/autopush/stopping-distance-m");
+	_K_psi = getprop("sim/model/autopush/driver/K_psi");
+	_F_psi = getprop("sim/model/autopush/driver/F_psi");
+	_K_psidot = getprop("sim/model/autopush/driver/K_psidot");
+	_F_psidot = getprop("sim/model/autopush/driver/F_psidot");
+	_debug = getprop("sim/model/autopush/debug") or 0;
 	if (!_to_wp) {
 		var (psi_park, D_park) = courseAndDistance(_route[0], _route[1]);
-		_push = (abs(geo.normdeg180(getprop("/orientation/heading-deg") - psi_park)) > 90.0);
+		_push = (abs(geo.normdeg180(getprop("orientation/heading-deg") - psi_park)) > 90.0);
 		_sign = 1.0 - 2.0 * _push;
 		_advance_wp();
 		_psi = 0.0;
 	}
-	_time = getprop("/sim/time/elapsed-sec");
+	_time = getprop("sim/time/elapsed-sec");
 	_timer.start();
 	var endsign = _sign;
 	for (ii = _to_wp; ii < size(_route_reverse); ii += 1) {
@@ -146,7 +146,7 @@ var start = func() {
 
 var pause = func() {
 	_timer.stop();
-	setprop("/sim/model/autopush/target-speed-km_h", 0.0);
+	setprop("sim/model/autopush/target-speed-km_h", 0.0);
 }
 
 var stop = func() {

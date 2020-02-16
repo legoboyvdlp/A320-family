@@ -13,8 +13,8 @@ var vhf2_recive = props.globals.initNode("/controls/audio/acp[0]/vhf2-recive", 1
 var vhf1_volume = props.globals.initNode("/controls/audio/acp[0]/vhf1-volume", 1, "DOUBLE");
 var vhf2_volume = props.globals.initNode("/controls/audio/acp[0]/vhf2-volume", 1, "DOUBLE");
 
-var com1_volume = props.globals.getNode("/instrumentation/comm[0]/volume");
-var com2_volume = props.globals.getNode("/instrumentation/comm[1]/volume");
+var com1_volume = props.globals.getNode("instrumentation/comm[0]/volume");
+var com2_volume = props.globals.getNode("instrumentation/comm[1]/volume");
 
 var init = func() {
 	vhf1_recive.setValue(1);

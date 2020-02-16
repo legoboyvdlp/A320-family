@@ -17,17 +17,17 @@ if (pts.Sim.aero.getValue() == "A320-200-CFM") {
 }
 
 # Get nodes
-var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
-var valve_l_guard = props.globals.getNode("/controls/fuel/refuel/valve-l-guard", 1);
-var valve_c_guard = props.globals.getNode("/controls/fuel/refuel/valve-c-guard", 1);
-var valve_r_guard = props.globals.getNode("/controls/fuel/refuel/valve-r-guard", 1);
-var mode_guard = props.globals.getNode("/controls/fuel/refuel/mode-guard", 1);
-var valve_l = props.globals.getNode("/controls/fuel/refuel/valve-l", 1);
-var valve_c = props.globals.getNode("/controls/fuel/refuel/valve-c", 1);
-var valve_r = props.globals.getNode("/controls/fuel/refuel/valve-r", 1);
-var power = props.globals.getNode("/controls/fuel/refuel/power", 1);
-var test = props.globals.getNode("/controls/fuel/refuel/test", 1);
-var amount = props.globals.getNode("/controls/fuel/refuel/amount", 1);
+var acconfig_weight_kgs = props.globals.getNode("systems/acconfig/options/weight-kgs", 1);
+var valve_l_guard = props.globals.getNode("controls/fuel/refuel/valve-l-guard", 1);
+var valve_c_guard = props.globals.getNode("controls/fuel/refuel/valve-c-guard", 1);
+var valve_r_guard = props.globals.getNode("controls/fuel/refuel/valve-r-guard", 1);
+var mode_guard = props.globals.getNode("controls/fuel/refuel/mode-guard", 1);
+var valve_l = props.globals.getNode("controls/fuel/refuel/valve-l", 1);
+var valve_c = props.globals.getNode("controls/fuel/refuel/valve-c", 1);
+var valve_r = props.globals.getNode("controls/fuel/refuel/valve-r", 1);
+var power = props.globals.getNode("controls/fuel/refuel/power", 1);
+var test = props.globals.getNode("controls/fuel/refuel/test", 1);
+var amount = props.globals.getNode("controls/fuel/refuel/amount", 1);
 
 var refuelClass = {
 	_fuelLeftAmount: nil,

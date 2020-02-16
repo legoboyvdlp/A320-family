@@ -159,11 +159,6 @@
 		<tau>0.1</tau>
 	</altimeter>
 	
-	<marker-beacon>
-		<name>marker-beacon</name>
-		<number>0</number>
-	</marker-beacon>
-	
 	<heading-indicator>
 		<name>heading-indicator</name>
 		<number>0</number>
@@ -185,6 +180,11 @@
 		<number>0</number>
 		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
+	</marker-beacon>
+	
+	<marker-beacon>
+		<name>marker-beacon</name>
+		<number>0</number>
 	</marker-beacon>
 	
 	<nav-radio> <!-- VOR unit -->
