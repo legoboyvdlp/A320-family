@@ -12,7 +12,7 @@ var element_id = "airplane";
 # Will have to be adapted if intended for use with other aircraft
 # (but one could simply copy the layer for that).
 var draw = func {
-	var rot = getprop("/orientation/heading-deg");
+	var rot = getprop("orientation/heading-deg");
 	rot -= me.layer.map.getHdg();
 	me.element.setRotation(rot*D2R);
 };

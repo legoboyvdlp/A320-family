@@ -25,9 +25,9 @@ var new = func(layer) {
 	};
 	layer.searcher._equals = func(l,r) l.equals(r);
 	m.addVisibilityListener();
-	var aircraft_dir = split('/', getprop("/sim/aircraft-dir"))[-1];
-	var saved_conf = getprop("/sim/fg-home") ~ "/Export/wxr_api.xml"; 
-	var df_conf = getprop("/sim/fg-root") ~ "/Aircraft/" ~ aircraft_dir ~  
+	var aircraft_dir = split('/', getprop("sim/aircraft-dir"))[-1];
+	var saved_conf = getprop("sim/fg-home") ~ "/Export/wxr_api.xml"; 
+	var df_conf = getprop("sim/fg-root") ~ "/Aircraft/" ~ aircraft_dir ~  
 		"/Models/Instruments/ND/canvas/wxr_api.xml";
 	if(io.stat(saved_conf) != nil)
 		io.read_properties(saved_conf, wxr_tree);

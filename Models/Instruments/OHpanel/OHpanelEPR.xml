@@ -63,7 +63,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -89,7 +89,7 @@
 				</binding>
 				<binding>
 					<command>nasal</command>
-					<script>setprop("/sim/sounde/oh-cover", 1);</script>
+					<script>setprop("sim/sounde/oh-cover", 1);</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -164,7 +164,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -190,7 +190,7 @@
 				</binding>
 				<binding>
 					<command>nasal</command>
-					<script>setprop("/sim/sounde/oh-cover", 1);</script>
+					<script>setprop("sim/sounde/oh-cover", 1);</script>
 				</binding>
 			</mod-up>
 		</action>

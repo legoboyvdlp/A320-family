@@ -5,53 +5,53 @@
 # Initialize all used variables and property nodes
 # Sim
 var Velocity = {
-	airspeedKt: props.globals.getNode("/velocities/airspeed-kt", 1), # Only used for gain scheduling
-	groundspeedKt: props.globals.getNode("/velocities/groundspeed-kt", 1),
+	airspeedKt: props.globals.getNode("velocities/airspeed-kt", 1), # Only used for gain scheduling
+	groundspeedKt: props.globals.getNode("velocities/groundspeed-kt", 1),
 	groundspeedMps: 0,
-	indicatedAirspeedKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1),
-	indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1),
-	trueAirspeedKt: props.globals.getNode("/instrumentation/airspeed-indicator/true-speed-kt", 1),
+	indicatedAirspeedKt: props.globals.getNode("instrumentation/airspeed-indicator/indicated-speed-kt", 1),
+	indicatedMach: props.globals.getNode("instrumentation/airspeed-indicator/indicated-mach", 1),
+	trueAirspeedKt: props.globals.getNode("instrumentation/airspeed-indicator/true-speed-kt", 1),
 	trueAirspeedKtTemp: 0,
 };
 
 var Position = {
 	gearAglFtTemp: 0,
-	gearAglFt: props.globals.getNode("/position/gear-agl-ft", 1),
-	indicatedAltitudeFt: props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1),
+	gearAglFt: props.globals.getNode("position/gear-agl-ft", 1),
+	indicatedAltitudeFt: props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1),
 	indicatedAltitudeFtTemp: 0,
 };
 
 var Gear = {
-	wow0: props.globals.getNode("/gear/gear[0]/wow", 1),
-	wow1: props.globals.getNode("/gear/gear[1]/wow", 1),
+	wow0: props.globals.getNode("gear/gear[0]/wow", 1),
+	wow1: props.globals.getNode("gear/gear[1]/wow", 1),
 	wow1Temp: 1,
-	wow2: props.globals.getNode("/gear/gear[2]/wow", 1),
+	wow2: props.globals.getNode("gear/gear[2]/wow", 1),
 	wow2Temp: 1,
 };
 
 var Control = {
-	aileron: props.globals.getNode("/controls/flight/aileron", 1),
-	elevator: props.globals.getNode("/controls/flight/elevator", 1),
-	rudder: props.globals.getNode("/controls/flight/rudder", 1),
+	aileron: props.globals.getNode("controls/flight/aileron", 1),
+	elevator: props.globals.getNode("controls/flight/elevator", 1),
+	rudder: props.globals.getNode("controls/flight/rudder", 1),
 };
 
 var Radio = {
-	gsDefl: [props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1), props.globals.getNode("/instrumentation/nav[1]/gs-needle-deflection-norm", 1)],
+	gsDefl: [props.globals.getNode("instrumentation/nav[0]/gs-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/gs-needle-deflection-norm", 1)],
 	gsDeflTemp: 0,
-	inRange: [props.globals.getNode("/instrumentation/nav[0]/in-range", 1), props.globals.getNode("/instrumentation/nav[1]/in-range", 1)],
+	inRange: [props.globals.getNode("instrumentation/nav[0]/in-range", 1), props.globals.getNode("instrumentation/nav[1]/in-range", 1)],
 	inRangeTemp: 0,
-	locDefl: [props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1), props.globals.getNode("/instrumentation/nav[1]/heading-needle-deflection-norm", 1)],
+	locDefl: [props.globals.getNode("instrumentation/nav[0]/heading-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/heading-needle-deflection-norm", 1)],
 	locDeflTemp: 0,
 	radioSel: 0,
-	signalQuality: [props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1), props.globals.getNode("/instrumentation/nav[1]/signal-quality-norm", 1)],
+	signalQuality: [props.globals.getNode("instrumentation/nav[0]/signal-quality-norm", 1), props.globals.getNode("instrumentation/nav[1]/signal-quality-norm", 1)],
 	signalQualityTemp: 0,
 };
 
 var FPLN = {
-	active: props.globals.getNode("/autopilot/route-manager/active", 1),
+	active: props.globals.getNode("autopilot/route-manager/active", 1),
 	activeTemp: 0,
 	currentCourse: 0,
-	currentWP: props.globals.getNode("/autopilot/route-manager/current-wp", 1),
+	currentWP: props.globals.getNode("autopilot/route-manager/current-wp", 1),
 	currentWPTemp: 0,
 	deltaAngle: 0,
 	deltaAngleRad: 0,
@@ -59,22 +59,22 @@ var FPLN = {
 	maxBank: 0,
 	maxBankLimit: 0,
 	nextCourse: 0,
-	num: props.globals.getNode("/autopilot/route-manager/route/num", 1),
+	num: props.globals.getNode("autopilot/route-manager/route/num", 1),
 	numTemp: 0,
 	R: 0,
 	radius: 0,
 	turnDist: 0,
-	wp0Dist: props.globals.getNode("/autopilot/route-manager/wp/dist", 1),
+	wp0Dist: props.globals.getNode("autopilot/route-manager/wp/dist", 1),
 	wpFlyFrom: 0,
 	wpFlyTo: 0,
 };
 
 var Misc = {
-	acEss: props.globals.getNode("/systems/electrical/bus/ac-ess", 1),
-	elapsedSec: props.globals.getNode("/sim/time/elapsed-sec", 1),
-	fbwLaw: props.globals.getNode("/it-fbw/law", 1),
-	flapNorm: props.globals.getNode("/surface-positions/flap-pos-norm", 1),
-	pfdHeadingScale: props.globals.getNode("/instrumentation/pfd/heading-scale", 1),
+	acEss: props.globals.getNode("systems/electrical/bus/ac-ess", 1),
+	elapsedSec: props.globals.getNode("sim/time/elapsed-sec", 1),
+	fbwLaw: props.globals.getNode("it-fbw/law", 1),
+	flapNorm: props.globals.getNode("surface-positions/flap-pos-norm", 1),
+	pfdHeadingScale: props.globals.getNode("instrumentation/pfd/heading-scale", 1),
 };
 
 # IT-AUTOFLIGHT
@@ -166,12 +166,12 @@ var Sound = {
 # A3XX Custom
 var Custom = {
 	apFdOn: 0,
-	hdgTime: props.globals.getNode("/modes/fcu/hdg-time", 1),
-	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
+	hdgTime: props.globals.getNode("modes/fcu/hdg-time", 1),
+	ndTrkSel: [props.globals.getNode("instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
 	Input: {
-		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
+		spdManaged: props.globals.getNode("it-autoflight/input/spd-managed", 1),
 	},
 	Output: {
 		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
@@ -180,7 +180,7 @@ var Custom = {
 		athrOff: props.globals.initNode("/it-autoflight/sound/athrsound", 0, "BOOL"),
 		enableAthrOff: 0,
 	},
-	ThrLock: props.globals.getNode("/systems/thrust/thr-locked", 1)
+	ThrLock: props.globals.getNode("systems/thrust/thr-locked", 1)
 };
 
 var ITAF = {
@@ -358,9 +358,9 @@ var ITAF = {
 		# Preselect Heading
 		if (Output.latTemp != 0 and Output.latTemp != 9) { # Modes that always show HDG
 			if (Custom.hdgTime.getValue() + 45 >= Misc.elapsedSec.getValue()) {
-				setprop("/it-autoflight/custom/show-hdg", 1);
+				setprop("it-autoflight/custom/show-hdg", 1);
 			} else {
-				setprop("/it-autoflight/custom/show-hdg", 0);
+				setprop("it-autoflight/custom/show-hdg", 0);
 			}
 		}
 		
@@ -404,12 +404,12 @@ var ITAF = {
 				if (FPLN.wpFlyFrom < 0) {
 					FPLN.wpFlyFrom = 0;
 				}
-				FPLN.currentCourse = getprop("/autopilot/route-manager/route/wp[" ~ FPLN.wpFlyFrom ~ "]/leg-bearing-true-deg"); # Best left at getprop
+				FPLN.currentCourse = getprop("autopilot/route-manager/route/wp[" ~ FPLN.wpFlyFrom ~ "]/leg-bearing-true-deg"); # Best left at getprop
 				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
 				if (FPLN.wpFlyTo < 0) {
 					FPLN.wpFlyTo = 0;
 				}
-				FPLN.nextCourse = getprop("/autopilot/route-manager/route/wp[" ~ FPLN.wpFlyTo ~ "]/leg-bearing-true-deg"); # Best left at getprop
+				FPLN.nextCourse = getprop("autopilot/route-manager/route/wp[" ~ FPLN.wpFlyTo ~ "]/leg-bearing-true-deg"); # Best left at getprop
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
 				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
@@ -1008,11 +1008,11 @@ setlistener("/sim/signals/fdm-initialized", func {
 
 # For Canvas Nav Display.
 setlistener("/it-autoflight/input/hdg", func {
-	setprop("/autopilot/settings/heading-bug-deg", getprop("/it-autoflight/input/hdg"));
+	setprop("autopilot/settings/heading-bug-deg", getprop("it-autoflight/input/hdg"));
 });
 
 setlistener("/it-autoflight/internal/alt", func {
-	setprop("/autopilot/settings/target-altitude-ft", getprop("/it-autoflight/internal/alt"));
+	setprop("autopilot/settings/target-altitude-ft", getprop("it-autoflight/internal/alt"));
 });
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);

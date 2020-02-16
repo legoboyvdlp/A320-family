@@ -497,8 +497,8 @@
 		<object-name>vs-text-test</object-name>
 		<condition>
 			<or>
-				<not><property>/FMGC/FCU-working</property></not>
-				<property>/controls/switches/annun-test</property>
+				<not><property>FMGC/FCU-working</property></not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -520,9 +520,9 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					var TrimVal = getprop("/controls/flight/rudder-trim");
-					setprop("/controls/flight/rudder-trim", TrimVal + 0.005);
-					setprop("/controls/switches/rudder-trim", 1);
+					var TrimVal = getprop("controls/flight/rudder-trim");
+					setprop("controls/flight/rudder-trim", TrimVal + 0.005);
+					setprop("controls/switches/rudder-trim", 1);
 				</script>
 			</binding>
 			<mod-up>
@@ -546,9 +546,9 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					var TrimVal = getprop("/controls/flight/rudder-trim");
-					setprop("/controls/flight/rudder-trim", TrimVal - 0.005);
-					setprop("/controls/switches/rudder-trim", -1);
+					var TrimVal = getprop("controls/flight/rudder-trim");
+					setprop("controls/flight/rudder-trim", TrimVal - 0.005);
+					setprop("controls/switches/rudder-trim", -1);
 				</script>
 			</binding>
 			<mod-up>
@@ -586,7 +586,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					setprop("/controls/flight/rudder-trim", 0);
+					setprop("controls/flight/rudder-trim", 0);
 				</script>
 			</binding>
 		</action>
@@ -880,12 +880,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/controls/autobrake/mode") != 1) {
+				if (getprop("controls/autobrake/mode") != 1) {
 					systems.arm_autobrake(1);
 				} else {
 					systems.arm_autobrake(0);
 				}
-				setprop("/sim/sounde/oh-btn", 1);
+				setprop("sim/sounde/oh-btn", 1);
 				</script>
 			</binding>
 		</action>
@@ -907,12 +907,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/controls/autobrake/mode") != 2) {
+				if (getprop("controls/autobrake/mode") != 2) {
 					systems.arm_autobrake(2);
 				} else {
 					systems.arm_autobrake(0);
 				}
-				setprop("/sim/sounde/oh-btn", 1);
+				setprop("sim/sounde/oh-btn", 1);
 				</script>
 			</binding>
 		</action>
@@ -934,12 +934,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/controls/autobrake/mode") != 3) {
+				if (getprop("controls/autobrake/mode") != 3) {
 					systems.arm_autobrake(3);
 				} else {
 					systems.arm_autobrake(0);
 				}
-				setprop("/sim/sounde/oh-btn", 1);
+				setprop("sim/sounde/oh-btn", 1);
 				</script>
 			</binding>
 		</action>
@@ -980,7 +980,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1511,13 +1511,13 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-assign</command>
-				<property>/ECAM/to-config-test</property>
+				<property>ECAM/to-config-test</property>
 				<value>1</value>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
-					<property>/ECAM/to-config-test</property>
+					<property>ECAM/to-config-test</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -1934,7 +1934,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/instrumentation/altimeter/setting-inhg", getprop("instrumentation/altimeter/setting-inhg") + 0.01);
+				setprop("instrumentation/altimeter/setting-inhg", getprop("instrumentation/altimeter/setting-inhg") + 0.01);
 				</script>
 				<condition>
 					<and>
@@ -1956,7 +1956,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/instrumentation/altimeter/setting-hpa", getprop("instrumentation/altimeter/setting-hpa") + 1.0);
+				setprop("instrumentation/altimeter/setting-hpa", getprop("instrumentation/altimeter/setting-hpa") + 1.0);
 				</script>
 				<condition>
 					<and>
@@ -1990,7 +1990,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/instrumentation/altimeter/setting-inhg", getprop("instrumentation/altimeter/setting-inhg") - 0.01);
+				setprop("instrumentation/altimeter/setting-inhg", getprop("instrumentation/altimeter/setting-inhg") - 0.01);
 				</script>
 				<condition>
 					<and>
@@ -2012,7 +2012,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/instrumentation/altimeter/setting-hpa", getprop("instrumentation/altimeter/setting-hpa") - 1.0);
+				setprop("instrumentation/altimeter/setting-hpa", getprop("instrumentation/altimeter/setting-hpa") - 1.0);
 				</script>
 				<condition>
 					<and>
@@ -2120,7 +2120,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.2f</format>
-		<property>/instrumentation/altimeter/setting-inhg</property>
+		<property>instrumentation/altimeter/setting-inhg</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2146,7 +2146,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.2f</format>
-		<property>/instrumentation/altimeter/setting-inhg</property>
+		<property>instrumentation/altimeter/setting-inhg</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2172,7 +2172,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.0f</format>
-		<property>/instrumentation/altimeter/setting-hpa</property>
+		<property>instrumentation/altimeter/setting-hpa</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2198,7 +2198,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.0f</format>
-		<property>/instrumentation/altimeter/setting-hpa</property>
+		<property>instrumentation/altimeter/setting-hpa</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2384,7 +2384,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.FD1();
-					setprop("/sim/sounde/btn1", 1);
+					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2486,7 +2486,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.FD2();
-					setprop("/sim/sounde/btn1", 1);
+					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2524,12 +2524,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis/inputs/CSTR") != 1) {
+				if (getprop("instrumentation/efis/inputs/CSTR") != 1) {
 					libraries.cpt_efis_btns("cstr");
 				} else {
 					libraries.cpt_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2566,12 +2566,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis[1]/inputs/CSTR") != 1) {
+				if (getprop("instrumentation/efis[1]/inputs/CSTR") != 1) {
 					libraries.fo_efis_btns("cstr");
 				} else {
 					libraries.fo_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2608,12 +2608,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis/inputs/wpt") != 1) {
+				if (getprop("instrumentation/efis/inputs/wpt") != 1) {
 					libraries.cpt_efis_btns("wpt");
 				} else {
 					libraries.cpt_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2650,12 +2650,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis[1]/inputs/wpt") != 1) {
+				if (getprop("instrumentation/efis[1]/inputs/wpt") != 1) {
 					libraries.fo_efis_btns("wpt");
 				} else {
 					libraries.fo_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2692,12 +2692,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis/inputs/VORD") != 1) {
+				if (getprop("instrumentation/efis/inputs/VORD") != 1) {
 					libraries.cpt_efis_btns("vord");
 				} else {
 					libraries.cpt_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2734,12 +2734,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis[1]/inputs/VORD") != 1) {
+				if (getprop("instrumentation/efis[1]/inputs/VORD") != 1) {
 					libraries.fo_efis_btns("vord");
 				} else {
 					libraries.fo_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2776,12 +2776,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis/inputs/NDB") != 1) {
+				if (getprop("instrumentation/efis/inputs/NDB") != 1) {
 					libraries.cpt_efis_btns("ndb");
 				} else {
 					libraries.cpt_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2818,12 +2818,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis[1]/inputs/NDB") != 1) {
+				if (getprop("instrumentation/efis[1]/inputs/NDB") != 1) {
 					libraries.fo_efis_btns("ndb");
 				} else {
 					libraries.fo_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2860,12 +2860,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis/inputs/arpt") != 1) {
+				if (getprop("instrumentation/efis/inputs/arpt") != 1) {
 					libraries.cpt_efis_btns("arpt");
 				} else {
 					libraries.cpt_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -2902,12 +2902,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("/instrumentation/efis[1]/inputs/arpt") != 1) {
+				if (getprop("instrumentation/efis[1]/inputs/arpt") != 1) {
 					libraries.fo_efis_btns("arpt");
 				} else {
 					libraries.fo_efis_btns("off");
 				}
-				setprop("/sim/sounde/btn1", 1);
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -3900,7 +3900,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3927,7 +3927,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3939,7 +3939,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4018,7 +4018,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4030,7 +4030,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4099,7 +4099,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4152,7 +4152,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4167,7 +4167,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.AP1();
-					setprop("/sim/sounde/btn1", 1);
+					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -4199,7 +4199,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.AP2();
-					setprop("/sim/sounde/btn1", 1);
+					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -4231,7 +4231,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.ATHR();
-					setprop("/sim/sounde/btn1", 1);
+					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -4275,7 +4275,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4287,7 +4287,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4356,7 +4356,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4383,7 +4383,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4395,7 +4395,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4464,7 +4464,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5307,12 +5307,12 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					if (getprop("/it-autoflight/output/ap-warning") == 1) {
-						setprop("/it-autoflight/output/ap-warning", 0);
+					if (getprop("it-autoflight/output/ap-warning") == 1) {
+						setprop("it-autoflight/output/ap-warning", 0);
 					}
-					if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
-						setprop("/it-autoflight/sound/apoffsound", 0);
-						setprop("/it-autoflight/sound/apoffsound2", 0);
+					if (getprop("it-autoflight/sound/apoffsound") == 1 or getprop("it-autoflight/sound/apoffsound2") == 1) {
+						setprop("it-autoflight/sound/apoffsound", 0);
+						setprop("it-autoflight/sound/apoffsound2", 0);
 					}
 				</script>
 			</binding>
@@ -5345,8 +5345,8 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					if (getprop("/it-autoflight/output/athr-warning") == 1) {
-						setprop("/it-autoflight/output/athr-warning", 0);
+					if (getprop("it-autoflight/output/athr-warning") == 1) {
+						setprop("it-autoflight/output/athr-warning", 0);
 					}
 				</script>
 			</binding>
@@ -5418,7 +5418,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>/controls/flight/elevator-trim</property>
+				<property>controls/flight/elevator-trim</property>
 				<step>0.01</step>
 			</binding>
 		</action>
@@ -5428,7 +5428,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>/controls/flight/elevator-trim</property>
+				<property>controls/flight/elevator-trim</property>
 				<step>-0.01</step>
 			</binding>
 		</action>
@@ -5543,17 +5543,17 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					var spdBrk = getprop("/controls/flight/speedbrake" );
+					var spdBrk = getprop("controls/flight/speedbrake" );
 					if(spdBrk == 0){
-						setprop("/controls/flight/speedbrake-arm", 0);
-						setprop("/controls/flight/speedbrake", 0.5);
+						setprop("controls/flight/speedbrake-arm", 0);
+						setprop("controls/flight/speedbrake", 0.5);
 					}
 					elsif(spdBrk == 0.5){
-						setprop("/controls/flight/speedbrake-arm", 0);
-						setprop("/controls/flight/speedbrake", 1);
+						setprop("controls/flight/speedbrake-arm", 0);
+						setprop("controls/flight/speedbrake", 1);
 					}
 					elsif(spdBrk == 1){
-						setprop("/controls/flight/speedbrake-arm", 0);
+						setprop("controls/flight/speedbrake-arm", 0);
 						# Do nothing because spoilers are fully up.
 					}
 				</script>
@@ -5565,18 +5565,18 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					var spdBrk = getprop("/controls/flight/speedbrake");
+					var spdBrk = getprop("controls/flight/speedbrake");
 					if(spdBrk == 0){
-						setprop("/controls/flight/speedbrake-arm", 0);
+						setprop("controls/flight/speedbrake-arm", 0);
 						# Do nothing because spoilers are fully down.
 					}
 					elsif(spdBrk == 0.5){
-						setprop("/controls/flight/speedbrake-arm", 0);
-						setprop("/controls/flight/speedbrake", 0);
+						setprop("controls/flight/speedbrake-arm", 0);
+						setprop("controls/flight/speedbrake", 0);
 					}
 					elsif(spdBrk == 1){
-						setprop("/controls/flight/speedbrake-arm", 0);
-						setprop("/controls/flight/speedbrake", 0.5);
+						setprop("controls/flight/speedbrake-arm", 0);
+						setprop("controls/flight/speedbrake", 0.5);
 					}
 				</script>
 			</binding>
@@ -5815,10 +5815,10 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					var a = getprop("/controls/flight/rudder");
+					var a = getprop("controls/flight/rudder");
 					a += 0.1;
 					if (a > 1) a = 1;
-					setprop("/controls/flight/rudder", a);
+					setprop("controls/flight/rudder", a);
 				</script>
 			</binding>
 		</action>
@@ -5828,10 +5828,10 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					var a = getprop("/controls/flight/rudder");
+					var a = getprop("controls/flight/rudder");
 					a -= 0.1;
 					if (abs(a) > 1) a = -1;
-					setprop("/controls/flight/rudder", a);
+					setprop("controls/flight/rudder", a);
 				</script>
 			</binding>
 		</action>
@@ -5841,7 +5841,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					setprop("/controls/flight/rudder", 0);
+					setprop("controls/flight/rudder", 0);
 				</script>
 			</binding>
 		</action>
@@ -6167,7 +6167,7 @@
 		<object-name>ecam_air_data</object-name>
 		<object-name>ecam_air_data.mark</object-name>
 		<factor>30</factor>
-		<property>/controls/navigation/switching/air-data</property>
+		<property>controls/navigation/switching/air-data</property>
 		<axis>
 			<x1-m>-0.428673</x1-m>
 			<y1-m>-0.022557</y1-m>
@@ -6197,7 +6197,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6216,7 +6216,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6717,7 +6717,7 @@
 		<object-name>HeadsetCpt</object-name>
 		<condition>
 			<not>
-				<property>/controls/audio/headset-toggle</property>
+				<property>controls/audio/headset-toggle</property>
 			</not>
 		</condition>
 	</animation>

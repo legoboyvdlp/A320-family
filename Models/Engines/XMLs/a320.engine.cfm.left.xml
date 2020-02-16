@@ -90,6 +90,17 @@
 		</offsets>
 	</model>
 
+	<!-- Takeoff/Landing Engine spray -->
+	<model>
+	  <path>Aircraft/A320-family/Models/Effects/engine-spray-left.xml</path>
+	  <name>engine-spray-l</name>
+			<offsets>
+				<x-m>4.875</x-m>
+				<y-m>0</y-m>
+				<z-m>0</z-m>
+			</offsets>
+	</model>
+
 	<model>
 		<name>Engine fire</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
