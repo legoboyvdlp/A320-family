@@ -1,6 +1,4 @@
-﻿<?xml version="1.0"?>
-
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <PropertyList>
 
@@ -20,12 +18,7 @@
 					<z-m>0</z-m>
 				</vertex>
 				<vertex>
-					<x-m>10</x-m>
-					<y-m>0</y-m>
-					<z-m>0</z-m>
-				</vertex>
-					<vertex>
-					<x-m>30</x-m>
+					<x-m>20</x-m>
 					<y-m>0</y-m>
 					<z-m>0</z-m>
 				</vertex>
@@ -37,8 +30,8 @@
             <phi-min-deg>-5</phi-min-deg>
             <phi-max-deg>5</phi-max-deg>
             <speed-mps>
-                <value>50</value>
-                <spread>5</spread>
+                <value>250</value>
+                <spread>15</spread>
             </speed-mps>
             <rotation-speed>
                 <x-max-deg-sec>15</x-max-deg-sec>
@@ -52,8 +45,8 @@
 
         <counter>
             <particles-per-sec>
-				<value>250</value>
-				<spread>100</spread>
+				<value>100</value>
+				<spread>10</spread>
             </particles-per-sec>
         </counter>
 
@@ -62,10 +55,10 @@
         <particle>
             <start>
                 <color>
-                    <red><value>0.95</value></red>
-                    <green><value>0.95</value></green>
-                    <blue><value>0.95</value></blue>
-                    <alpha><value>0.05</value></alpha>
+                    <red><value>0.9</value></red>
+                    <green><value>0.9</value></green>
+                    <blue><value>0.9</value></blue>
+                    <alpha><value>0.04</value></alpha>
                 </color>
                 <size>
                     <value>0.5</value>
@@ -83,7 +76,7 @@
                 </size>
             </end>
             <life-sec>
-                <value>2</value>
+                <value>1.5</value>
             </life-sec>
             <mass-kg>0.025</mass-kg>
             <radius-m>0.175</radius-m>

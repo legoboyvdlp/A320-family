@@ -92,8 +92,8 @@
 
 	<!-- Takeoff/Landing Engine spray -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-left.xml</path>
-		<name>engine-spray-l</name>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray-right.xml</path>
+		<name>engine-spray-r</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -113,11 +113,11 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[0]/n1</property>
+					<property>engines/engine[1]/n1</property>
 					<value>60</value>
 				</greater-than>
 				<greater-than>
-					<property>engines/engine[0]/thrust_lb</property>
+					<property>engines/engine[1]/thrust_lb</property>
 					<value>0</value>
 				</greater-than>
 				<!-- <not>
@@ -134,8 +134,8 @@
 
 	<!-- Takeoff/Landing Engine Reverse spray -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-left-reverse.xml</path>
-		<name>engine-spray-l-reverse</name>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray-right-reverse.xml</path>
+		<name>engine-spray-r-reverse</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -151,11 +151,11 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[0]/n1</property>
+					<property>engines/engine[1]/n1</property>
 					<value>60</value>
 				</greater-than>
 				<less-than>
-					<property>engines/engine[0]/thrust_lb</property>
+					<property>engines/engine[1]/thrust_lb</property>
 					<value>0</value>
 				</less-than>
 				<!-- <not>
