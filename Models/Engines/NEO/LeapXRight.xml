@@ -101,6 +101,86 @@
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
+
+	<!-- Takeoff/Landing Engine spray -->
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray-left.xml</path>
+		<name>engine-spray-l</name>
+		<condition>
+			<and>
+				<greater-than>
+					<property>position/altitude-agl-ft</property>
+					<value>1</value>
+				</greater-than>
+				<greater-than>
+					<property>environment/relative-humidity</property>
+					<value>60</value>
+				</greater-than>
+				<less-than-equals>
+					<property>position/altitude-agl-ft</property>
+					<value>15</value>
+				</less-than-equals>
+				<less-than-equals>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.63</value>
+				</less-than-equals>
+				<greater-than>
+					<property>engines/engine[0]/n1</property>
+					<value>60</value>
+				</greater-than>
+				<greater-than>
+					<property>engines/engine[0]/thrust_lb</property>
+					<value>0</value>
+				</greater-than>
+				<!-- <not>
+					<property>sim/crashed</property>
+				</not> -->
+			</and>
+		</condition>
+		<offsets>
+			<x-m>10.875</x-m>
+			<y-m>0</y-m>
+			<z-m>-2.5</z-m>
+		</offsets>
+	</model>
+
+	<!-- Takeoff/Landing Engine Reverse spray -->
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray-left-reverse.xml</path>
+		<name>engine-spray-l-reverse</name>
+		<condition>
+			<and>
+				<greater-than>
+					<property>position/altitude-agl-ft</property>
+					<value>1</value>
+				</greater-than>
+				<greater-than>
+					<property>environment/relative-humidity</property>
+					<value>60</value>
+				</greater-than>
+				<less-than-equals>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.63</value>
+				</less-than-equals>
+				<greater-than>
+					<property>engines/engine[0]/n1</property>
+					<value>60</value>
+				</greater-than>
+				<less-than>
+					<property>engines/engine[0]/thrust_lb</property>
+					<value>0</value>
+				</less-than>
+				<!-- <not>
+					<property>sim/crashed</property>
+				</not> -->
+			</and>
+		</condition>
+		<offsets>
+			<x-m>0.875</x-m>
+			<y-m>0</y-m>
+			<z-m>-2.5</z-m>
+		</offsets>
+	</model>
  
 <!-- ############### -->
 <!-- Tubofan Exhaust -->

@@ -15,7 +15,7 @@ Original code author Maggse.
 		<!-- <type>trail</type>-->
 		<name>flare</name>
 		<texture>res/smoke.png</texture>
-		<emissive>true</emissive>
+		<emissive>false</emissive>
 		<lighting>false</lighting>
 		<offsets>
 			<x-m>0</x-m>
@@ -40,12 +40,12 @@ Original code author Maggse.
 				<spread>1</spread>
 			</speed>
 			<rotation-speed>
-				<x-min-deg-sec>0</x-min-deg-sec>
-				<y-min-deg-sec>0</y-min-deg-sec>
-				<z-min-deg-sec>10</z-min-deg-sec>
-				<x-max-deg-sec>0</x-max-deg-sec>
-				<y-max-deg-sec>10</y-max-deg-sec>
-				<z-max-deg-sec>20</z-max-deg-sec>
+				<x-min-deg-sec>15</x-min-deg-sec>
+				<y-min-deg-sec>-15</y-min-deg-sec>
+				<z-min-deg-sec>15</z-min-deg-sec>
+				<x-max-deg-sec>-15</x-max-deg-sec>
+				<y-max-deg-sec>15</y-max-deg-sec>
+				<z-max-deg-sec>-15</z-max-deg-sec>
 			</rotation-speed>
 		</shooter>
 		
@@ -61,10 +61,10 @@ Original code author Maggse.
 		<particle>
 			<start>
 	        	<color>
-				<red><value>0.3</value></red>
-				<green><value>0.3</value></green>
-				<blue><value>0.3</value></blue>
-				<alpha><value>0.40</value></alpha>
+				<red><value>0.95</value></red>
+				<green><value>0.95</value></green>
+				<blue><value>0.95</value></blue>
+				<alpha><value>0.05</value></alpha>
 				</color>
 	        	<size>
 	          		<value>1.3</value>
@@ -72,24 +72,24 @@ Original code author Maggse.
 	      	</start>
 			<end>
 	        	<color>
-					<red><value>0.65</value></red>
-					<green><value>0.45</value></green>
-					<blue><value>0.35</value></blue>
-					<alpha><value>0.2</value></alpha>
+					<red><value>1</value></red>
+					<green><value>1</value></green>
+					<blue><value>1</value></blue>
+					<alpha><value>0.02</value></alpha>
 				</color>
 	        	<size>
 	          		<value>0.4</value>
 	        	</size>
 	      	</end>
 	
-			<life-sec><value>0.1</value></life-sec>
+			<life-sec><value>1</value></life-sec>
 			<mass-kg>0.4</mass-kg>
 			<radius-m>0.1</radius-m>
 		</particle>
 		
 		<program>
 			<fluid>air</fluid>
-			<gravity type="bool">false</gravity>
+			<gravity type="bool">true</gravity>
 			<wind type="bool">false</wind>
 		</program>
 		

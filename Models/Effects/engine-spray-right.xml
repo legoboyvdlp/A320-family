@@ -5,35 +5,37 @@
 <PropertyList>
 
     <particlesystem>
-        <name>tyre-smoke-r</name>
-        <texture>tiresmoke.png</texture>
+        <name>engine-spray-r</name>
+        <texture>res/smoke.png</texture>
         <emissive>false</emissive>
         <lighting>false</lighting>
 
-        <offsets>
-            <x-m>0</x-m>
-            <y-m>0</y-m>
-            <z-m>0</z-m>
-        </offsets>
-
-        <condition>
-				<equals>
-					<property>gear/gear[2]/Rbrake-smoke</property>
-					<value>1</value>
-				</equals>
-        </condition>
-
         <attach>world</attach>
 
-        <placer>
-            <type>point</type>
-        </placer>
+			<placer>
+				<type>segments</type>
+				<vertex>
+					<x-m>0</x-m>
+					<y-m>0</y-m>
+					<z-m>0</z-m>
+				</vertex>
+				<vertex>
+					<x-m>10</x-m>
+					<y-m>0</y-m>
+					<z-m>0</z-m>
+				</vertex>
+					<vertex>
+					<x-m>30</x-m>
+					<y-m>0</y-m>
+					<z-m>0</z-m>
+				</vertex>
+			</placer>
 
         <shooter>
-            <theta-min-deg>45</theta-min-deg>
-            <theta-max-deg>85</theta-max-deg>
-            <phi-min-deg>-60</phi-min-deg>
-            <phi-max-deg>60</phi-max-deg>
+            <theta-min-deg>15</theta-min-deg>
+            <theta-max-deg>60</theta-max-deg>
+            <phi-min-deg>-5</phi-min-deg>
+            <phi-max-deg>5</phi-max-deg>
             <speed-mps>
                 <value>50</value>
                 <spread>5</spread>
@@ -50,9 +52,8 @@
 
         <counter>
             <particles-per-sec>
-				<property>gear/gear[2]/Rbrake-thermal-energy</property>
-				<factor>20</factor>
-                <spread>70</spread>
+				<value>250</value>
+				<spread>100</spread>
             </particles-per-sec>
         </counter>
 
@@ -61,37 +62,21 @@
         <particle>
             <start>
                 <color>
-                    <red>
-                        <value>0.8</value>
-                    </red>
-                    <green>
-                        <value>0.8</value>
-                    </green>
-                    <blue>
-                        <value>0.8</value>
-                    </blue>
-                    <alpha>
-                        <value>0.5</value>
-                    </alpha>
+                    <red><value>0.95</value></red>
+                    <green><value>0.95</value></green>
+                    <blue><value>0.95</value></blue>
+                    <alpha><value>0.05</value></alpha>
                 </color>
                 <size>
-                    <value>1.5</value>
+                    <value>0.5</value>
                 </size>
             </start>
             <end>
                 <color>
-                    <red>
-                        <value>0.7</value>
-                    </red>
-                    <green>
-                        <value>0.7</value>
-                    </green>
-                    <blue>
-                        <value>0.7</value>
-                    </blue>
-                    <alpha>
-                        <value>0.005</value>
-                    </alpha>
+                    <red><value>1</value></red>
+                    <green><value>1</value></green>
+                    <blue><value>1</value></blue>
+                    <alpha><value>0.02</value></alpha>
                 </color>
                 <size>
                     <value>10</value>
@@ -106,10 +91,10 @@
 
         <program>
             <fluid>air</fluid>
-            <gravity>false</gravity>
+            <gravity>true</gravity>
             <wind>true</wind>
         </program>
 
-    </particlesystem>
+	 </particlesystem>
 
 </PropertyList>

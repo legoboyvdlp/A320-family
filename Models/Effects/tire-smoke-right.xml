@@ -5,7 +5,7 @@
 <PropertyList>
 
     <particlesystem>
-        <name>tyre-smoke-r</name>
+        <name>tire-smoke-r</name>
         <texture>tiresmoke.png</texture>
         <emissive>false</emissive>
         <lighting>false</lighting>
