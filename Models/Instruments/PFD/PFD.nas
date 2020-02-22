@@ -87,6 +87,7 @@ var fd_pitch = props.globals.getNode("it-autoflight/fd/pitch-bar", 1);
 var decision = props.globals.getNode("instrumentation/mk-viii/inputs/arinc429/decision-height", 1);
 var slip_skid = props.globals.getNode("instrumentation/pfd/slip-skid", 1);
 var FMGCphase = props.globals.getNode("FMGC/status/phase", 1);
+var tostate = props.globals.getNode("FMGC/status/to-state", 1);
 var loc = props.globals.getNode("instrumentation/nav[0]/heading-needle-deflection-norm", 1);
 var gs = props.globals.getNode("instrumentation/nav[0]/gs-needle-deflection-norm", 1);
 var show_hdg = props.globals.getNode("it-autoflight/custom/show-hdg", 1);
@@ -126,6 +127,12 @@ var arrival_airport = props.globals.getNode("FMGC/internal/arr-arpt", 1);
 var outer_marker = props.globals.getNode("instrumentation/marker-beacon/outer", 1);
 var middle_marker = props.globals.getNode("instrumentation/marker-beacon/middle", 1);
 var inner_marker = props.globals.getNode("instrumentation/marker-beacon/inner", 1);
+var v1 = props.globals.getNode("FMGC/internal/v1", 1);
+var v1_set = props.globals.getNode("FMGC/internal/v1-set", 1);
+var vr = props.globals.getNode("FMGC/internal/vr", 1);
+var vr_set = props.globals.getNode("FMGC/internal/vr-set", 1);
+var v2 = props.globals.getNode("FMGC/internal/v2", 1);
+var v2_set = props.globals.getNode("FMGC/internal/v2-set", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -208,7 +215,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash", "ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend", "ILS_HDG_R", "ILS_HDG_L", "ILS_right", "ILS_left", "outerMarker", "middleMarker", "innerMarker"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend", "ILS_HDG_R", "ILS_HDG_L", "ILS_right", "ILS_left", "outerMarker", "middleMarker", "innerMarker", "v1_group", "v1_text", "vr_speed"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -908,6 +915,12 @@ var canvas_PFD_1 = {
 	ASItrend: 0,
 	ASItrgt: 0,
 	ASItrgtdiff: 0,
+	V1trgt: 0,
+	VRtrgt: 0,
+	V2trgt: 0,
+	SPDv1trgtdiff: 0,
+	SPDvrtrgtdiff: 0,
+	SPDv2trgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_1, canvas_PFD_base]};
@@ -1137,6 +1150,79 @@ var canvas_PFD_1 = {
 				me["ASI_target"].hide();
 			}
 			
+			if (v1_set.getValue() == '1') {
+			    tgt_v1 = v1.getValue();
+                if (tgt_v1 <= 30) {
+                    me.V1trgt = 0 - me.ASI;
+                } else if (tgt_v1 >= 420) {
+                    me.V1trgt = 390 - me.ASI;
+                } else {
+                    me.V1trgt = tgt_v1 - 30 - me.ASI;
+                }
+            
+                me.SPDv1trgtdiff = tgt_v1 - ind_spd;
+            
+                if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
+                    me["v1_group"].show();
+                    me["v1_text"].hide();
+                    me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
+                } else if (tostate.getValue() == '1') {
+                    me["v1_group"].hide();
+                    me["v1_text"].show();
+                    me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
+                } else {
+                    me["v1_group"].hide();
+                    me["v1_text"].hide();
+                }
+			} else {
+			    me["v1_group"].hide();
+                me["v1_text"].hide();
+			}
+			
+			if (vr_set.getValue() == '1') {
+			    tgt_vr = vr.getValue();
+                if (tgt_vr <= 30) {
+                    me.VRtrgt = 0 - me.ASI;
+                } else if (tgt_vr >= 420) {
+                    me.VRtrgt = 390 - me.ASI;
+                } else {
+                    me.VRtrgt = tgt_vr - 30 - me.ASI;
+                }
+            
+                me.SPDvrtrgtdiff = tgt_vr - ind_spd;
+            
+                if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
+                    me["vr_speed"].show();
+                    me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
+                } else {
+                    me["vr_speed"].hide();
+                }
+			} else {
+			    me["vr_speed"].hide();
+			}
+			
+			if (v2_set.getValue() == '1') {
+			    tgt_v2 = v2.getValue();
+                if (tgt_v2 <= 30) {
+                    me.V2trgt = 0 - me.ASI;
+                } else if (tgt_v2 >= 420) {
+                    me.V2trgt = 390 - me.ASI;
+                } else {
+                    me.V2trgt = tgt_v2 - 30 - me.ASI;
+                }
+            
+                me.SPDv2trgtdiff = tgt_v2 - ind_spd;
+            
+                if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
+                    me["ASI_target"].show();
+                    me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
+                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+                } else if (tostate.getValue() == '1') {
+                    me["ASI_target"].hide();
+                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+                }
+			}
+			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
@@ -1284,6 +1370,12 @@ var canvas_PFD_2 = {
 	ASItrend: 0,
 	ASItrgt: 0,
 	ASItrgtdiff: 0,
+	V1trgt: 0,
+	VRtrgt: 0,
+	V2trgt: 0,
+	SPDv1trgtdiff: 0,
+	SPDvrtrgtdiff: 0,
+	SPDv2trgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_2, canvas_PFD_base]};
@@ -1511,6 +1603,79 @@ var canvas_PFD_2 = {
 				me["ASI_digit_UP"].show();
 				me["ASI_digit_DN"].hide();
 				me["ASI_target"].hide();
+			}
+			
+			if (v1_set.getValue() == '1') {
+			    tgt_v1 = v1.getValue();
+                if (tgt_v1 <= 30) {
+                    me.V1trgt = 0 - me.ASI;
+                } else if (tgt_v1 >= 420) {
+                    me.V1trgt = 390 - me.ASI;
+                } else {
+                    me.V1trgt = tgt_v1 - 30 - me.ASI;
+                }
+            
+                me.SPDv1trgtdiff = tgt_v1 - ind_spd;
+            
+                if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
+                    me["v1_group"].show();
+                    me["v1_text"].hide();
+                    me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
+                } else if (tostate.getValue() == '1') {
+                    me["v1_group"].hide();
+                    me["v1_text"].show();
+                    me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
+                } else {
+                    me["v1_group"].hide();
+                    me["v1_text"].hide();
+                }
+			} else {
+			    me["v1_group"].hide();
+                me["v1_text"].hide();
+			}
+			
+			if (vr_set.getValue() == '1') {
+			    tgt_vr = vr.getValue();
+                if (tgt_vr <= 30) {
+                    me.VRtrgt = 0 - me.ASI;
+                } else if (tgt_vr >= 420) {
+                    me.VRtrgt = 390 - me.ASI;
+                } else {
+                    me.VRtrgt = tgt_vr - 30 - me.ASI;
+                }
+            
+                me.SPDvrtrgtdiff = tgt_vr - ind_spd;
+            
+                if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
+                    me["vr_speed"].show();
+                    me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
+                } else {
+                    me["vr_speed"].hide();
+                }
+			} else {
+			    me["vr_speed"].hide();
+			}
+			
+			if (v2_set.getValue() == '1') {
+			    tgt_v2 = v2.getValue();
+                if (tgt_v2 <= 30) {
+                    me.V2trgt = 0 - me.ASI;
+                } else if (tgt_v2 >= 420) {
+                    me.V2trgt = 390 - me.ASI;
+                } else {
+                    me.V2trgt = tgt_v2 - 30 - me.ASI;
+                }
+            
+                me.SPDv2trgtdiff = tgt_v2 - ind_spd;
+            
+                if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
+                    me["ASI_target"].show();
+                    me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
+                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+                } else if (tostate.getValue() == '1') {
+                    me["ASI_target"].hide();
+                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+                }
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
