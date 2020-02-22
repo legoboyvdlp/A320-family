@@ -41,9 +41,9 @@
      inkscape:window-height="755"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="0.44418625"
-     inkscape:cx="586.98959"
-     inkscape:cy="803.99797"
+     inkscape:zoom="2.0328075"
+     inkscape:cx="1083.5209"
+     inkscape:cy="681.9368"
      inkscape:window-x="1"
      inkscape:window-y="23"
      inkscape:window-maximized="0"
@@ -2782,19 +2782,19 @@
       <path
          style="fill:#000000;fill-opacity:1;stroke:#ffff00;stroke-width:3.19995403;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          d="m 856.4002,481.90842 2.2e-4,-15.92813 52.07464,0 0,93.34657 -52.07457,0 0,-15.26583"
-         id="rect953"
+         id="path1283"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccc" />
       <path
          style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:3.19995403;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          d="m 770.31078,481.90873 86.08971,-3.1e-4"
-         id="path951"
+         id="path1285"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cc" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
-         id="path958"
+         id="path1287"
          d="m 770.31078,544.06163 86.08971,-6e-4"
          style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:3.19995403;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
     </g>
@@ -5010,13 +5010,35 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="625.49036"
-     y="792.17651"
+     x="675.69916"
+     y="792.12573"
      id="innerMarker"
      inkscape:label="#text1608"><tspan
        sodipodi:role="line"
        id="tspan773-9-9"
-       x="625.49036"
-       y="792.17651"
+       x="675.69916"
+       y="792.12573"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ffffff;fill-opacity:1;stroke-width:0.75">IM</tspan></text>
+  <g
+     id="ALT_box_flash"
+     inkscape:label="#g5173">
+    <path
+       style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:6;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="m 856.4002,481.90842 2.2e-4,-15.92813 52.07464,0 0,93.34657 -52.07457,0 0,-15.26583"
+       id="rect953"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:6;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="m 770.31078,481.90873 86.08971,-3.1e-4"
+       id="path951"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path958"
+       d="m 770.31078,544.06163 86.08971,-6e-4"
+       style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:6;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+  </g>
 </svg>
