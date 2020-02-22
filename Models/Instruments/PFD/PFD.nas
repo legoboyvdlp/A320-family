@@ -1151,76 +1151,76 @@ var canvas_PFD_1 = {
 			}
 			
 			if (v1_set.getValue() == '1') {
-			    tgt_v1 = v1.getValue();
-                if (tgt_v1 <= 30) {
-                    me.V1trgt = 0 - me.ASI;
-                } else if (tgt_v1 >= 420) {
-                    me.V1trgt = 390 - me.ASI;
-                } else {
-                    me.V1trgt = tgt_v1 - 30 - me.ASI;
-                }
-            
-                me.SPDv1trgtdiff = tgt_v1 - ind_spd;
-            
-                if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
-                    me["v1_group"].show();
-                    me["v1_text"].hide();
-                    me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
-                } else if (tostate.getValue() == '1') {
-                    me["v1_group"].hide();
-                    me["v1_text"].show();
-                    me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
-                } else {
-                    me["v1_group"].hide();
-                    me["v1_text"].hide();
-                }
+				tgt_v1 = v1.getValue();
+				if (tgt_v1 <= 30) {
+					me.V1trgt = 0 - me.ASI;
+				} else if (tgt_v1 >= 420) {
+					me.V1trgt = 390 - me.ASI;
+				} else {
+					me.V1trgt = tgt_v1 - 30 - me.ASI;
+				}
+			
+				me.SPDv1trgtdiff = tgt_v1 - ind_spd;
+			
+				if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
+					me["v1_group"].show();
+					me["v1_text"].hide();
+					me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
+				} else if (tostate.getValue() == '1') {
+					me["v1_group"].hide();
+					me["v1_text"].show();
+					me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
+				} else {
+					me["v1_group"].hide();
+					me["v1_text"].hide();
+				}
 			} else {
-			    me["v1_group"].hide();
-                me["v1_text"].hide();
+				me["v1_group"].hide();
+				me["v1_text"].hide();
 			}
 			
 			if (vr_set.getValue() == '1') {
-			    tgt_vr = vr.getValue();
-                if (tgt_vr <= 30) {
-                    me.VRtrgt = 0 - me.ASI;
-                } else if (tgt_vr >= 420) {
-                    me.VRtrgt = 390 - me.ASI;
-                } else {
-                    me.VRtrgt = tgt_vr - 30 - me.ASI;
-                }
-            
-                me.SPDvrtrgtdiff = tgt_vr - ind_spd;
-            
-                if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
-                    me["vr_speed"].show();
-                    me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
-                } else {
-                    me["vr_speed"].hide();
-                }
+				tgt_vr = vr.getValue();
+				if (tgt_vr <= 30) {
+					me.VRtrgt = 0 - me.ASI;
+				} else if (tgt_vr >= 420) {
+					me.VRtrgt = 390 - me.ASI;
+				} else {
+					me.VRtrgt = tgt_vr - 30 - me.ASI;
+				}
+			
+				me.SPDvrtrgtdiff = tgt_vr - ind_spd;
+			
+				if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
+					me["vr_speed"].show();
+					me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
+				} else {
+					me["vr_speed"].hide();
+				}
 			} else {
-			    me["vr_speed"].hide();
+				me["vr_speed"].hide();
 			}
 			
 			if (v2_set.getValue() == '1') {
-			    tgt_v2 = v2.getValue();
-                if (tgt_v2 <= 30) {
-                    me.V2trgt = 0 - me.ASI;
-                } else if (tgt_v2 >= 420) {
-                    me.V2trgt = 390 - me.ASI;
-                } else {
-                    me.V2trgt = tgt_v2 - 30 - me.ASI;
-                }
-            
-                me.SPDv2trgtdiff = tgt_v2 - ind_spd;
-            
-                if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
-                    me["ASI_target"].show();
-                    me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
-                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
-                } else if (tostate.getValue() == '1') {
-                    me["ASI_target"].hide();
-                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
-                }
+				tgt_v2 = v2.getValue();
+				if (tgt_v2 <= 30) {
+					me.V2trgt = 0 - me.ASI;
+				} else if (tgt_v2 >= 420) {
+					me.V2trgt = 390 - me.ASI;
+				} else {
+					me.V2trgt = tgt_v2 - 30 - me.ASI;
+				}
+			
+				me.SPDv2trgtdiff = tgt_v2 - ind_spd;
+			
+				if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
+					me["ASI_target"].show();
+					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+				} else if (tostate.getValue() == '1') {
+					me["ASI_target"].hide();
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+				}
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
@@ -1336,22 +1336,22 @@ var canvas_PFD_1 = {
 			
 			alt_target_diff = target_altitude.getValue() - altitude.getValue();
 			if ((FMGCphase.getValue() == '2' and alt_target_diff < 750 and alt_target_diff > 200) or (FMGCphase.getValue() == '4' and alt_target_diff > -750 and alt_target_diff < -200)) {
-                if (alt_going1 == 0) {
-                    alt_going1 = 1;
-                }
-                if (alt_going1 == 1) {
-                    altTimer1.start();
-                    if (altFlash1.getValue() == 1) {
-                        me["ALT_box_flash"].show();	
-                    } else {
-                        me["ALT_box_flash"].hide();	
-                    }
-                }
-            } else {
-                altTimer1.stop();
-                alt_going1 = 0;
-                me["ALT_box_flash"].hide();
-            }	
+				if (alt_going1 == 0) {
+					alt_going1 = 1;
+				}
+				if (alt_going1 == 1) {
+					altTimer1.start();
+					if (altFlash1.getValue() == 1) {
+						me["ALT_box_flash"].show(); 
+					} else {
+						me["ALT_box_flash"].hide(); 
+					}
+				}
+			} else {
+				altTimer1.stop();
+				alt_going1 = 0;
+				me["ALT_box_flash"].hide();
+			}	
 		} else {
 			me["ALT_error"].show();
 			me["ALT_frame"].setColor(1,0,0);
@@ -1606,76 +1606,76 @@ var canvas_PFD_2 = {
 			}
 			
 			if (v1_set.getValue() == '1') {
-			    tgt_v1 = v1.getValue();
-                if (tgt_v1 <= 30) {
-                    me.V1trgt = 0 - me.ASI;
-                } else if (tgt_v1 >= 420) {
-                    me.V1trgt = 390 - me.ASI;
-                } else {
-                    me.V1trgt = tgt_v1 - 30 - me.ASI;
-                }
-            
-                me.SPDv1trgtdiff = tgt_v1 - ind_spd;
-            
-                if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
-                    me["v1_group"].show();
-                    me["v1_text"].hide();
-                    me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
-                } else if (tostate.getValue() == '1') {
-                    me["v1_group"].hide();
-                    me["v1_text"].show();
-                    me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
-                } else {
-                    me["v1_group"].hide();
-                    me["v1_text"].hide();
-                }
+				tgt_v1 = v1.getValue();
+				if (tgt_v1 <= 30) {
+					me.V1trgt = 0 - me.ASI;
+				} else if (tgt_v1 >= 420) {
+					me.V1trgt = 390 - me.ASI;
+				} else {
+					me.V1trgt = tgt_v1 - 30 - me.ASI;
+				}
+			
+				me.SPDv1trgtdiff = tgt_v1 - ind_spd;
+			
+				if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
+					me["v1_group"].show();
+					me["v1_text"].hide();
+					me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
+				} else if (tostate.getValue() == '1') {
+					me["v1_group"].hide();
+					me["v1_text"].show();
+					me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
+				} else {
+					me["v1_group"].hide();
+					me["v1_text"].hide();
+				}
 			} else {
-			    me["v1_group"].hide();
-                me["v1_text"].hide();
+				me["v1_group"].hide();
+				me["v1_text"].hide();
 			}
 			
 			if (vr_set.getValue() == '1') {
-			    tgt_vr = vr.getValue();
-                if (tgt_vr <= 30) {
-                    me.VRtrgt = 0 - me.ASI;
-                } else if (tgt_vr >= 420) {
-                    me.VRtrgt = 390 - me.ASI;
-                } else {
-                    me.VRtrgt = tgt_vr - 30 - me.ASI;
-                }
-            
-                me.SPDvrtrgtdiff = tgt_vr - ind_spd;
-            
-                if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
-                    me["vr_speed"].show();
-                    me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
-                } else {
-                    me["vr_speed"].hide();
-                }
+				tgt_vr = vr.getValue();
+				if (tgt_vr <= 30) {
+					me.VRtrgt = 0 - me.ASI;
+				} else if (tgt_vr >= 420) {
+					me.VRtrgt = 390 - me.ASI;
+				} else {
+					me.VRtrgt = tgt_vr - 30 - me.ASI;
+				}
+			
+				me.SPDvrtrgtdiff = tgt_vr - ind_spd;
+			
+				if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
+					me["vr_speed"].show();
+					me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
+				} else {
+					me["vr_speed"].hide();
+				}
 			} else {
-			    me["vr_speed"].hide();
+				me["vr_speed"].hide();
 			}
 			
 			if (v2_set.getValue() == '1') {
-			    tgt_v2 = v2.getValue();
-                if (tgt_v2 <= 30) {
-                    me.V2trgt = 0 - me.ASI;
-                } else if (tgt_v2 >= 420) {
-                    me.V2trgt = 390 - me.ASI;
-                } else {
-                    me.V2trgt = tgt_v2 - 30 - me.ASI;
-                }
-            
-                me.SPDv2trgtdiff = tgt_v2 - ind_spd;
-            
-                if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
-                    me["ASI_target"].show();
-                    me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
-                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
-                } else if (tostate.getValue() == '1') {
-                    me["ASI_target"].hide();
-                    me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
-                }
+				tgt_v2 = v2.getValue();
+				if (tgt_v2 <= 30) {
+					me.V2trgt = 0 - me.ASI;
+				} else if (tgt_v2 >= 420) {
+					me.V2trgt = 390 - me.ASI;
+				} else {
+					me.V2trgt = tgt_v2 - 30 - me.ASI;
+				}
+			
+				me.SPDv2trgtdiff = tgt_v2 - ind_spd;
+			
+				if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
+					me["ASI_target"].show();
+					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+				} else if (tostate.getValue() == '1') {
+					me["ASI_target"].hide();
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+				}
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
@@ -1790,22 +1790,22 @@ var canvas_PFD_2 = {
 			
 			alt_target_diff = target_altitude.getValue() - altitude.getValue();
 			if ((FMGCphase.getValue() == '2' and alt_target_diff < 750 and alt_target_diff > 200) or (FMGCphase.getValue() == '4' and alt_target_diff > -750 and alt_target_diff < -200)) {
-                if (alt_going2 == 0) {
-                    alt_going2 = 1;
-                }
-                if (alt_going2 == 1) {
-                    altTimer2.start();
-                    if (altFlash2.getValue() == 1) {
-                        me["ALT_box_flash"].show();	
-                    } else {
-                        me["ALT_box_flash"].hide();	
-                    }
-                }
-            } else {
-                altTimer2.stop();
-                alt_going2 = 0;
-                me["ALT_box_flash"].hide();
-            }
+				if (alt_going2 == 0) {
+					alt_going2 = 1;
+				}
+				if (alt_going2 == 1) {
+					altTimer2.start();
+					if (altFlash2.getValue() == 1) {
+						me["ALT_box_flash"].show(); 
+					} else {
+						me["ALT_box_flash"].hide(); 
+					}
+				}
+			} else {
+				altTimer2.stop();
+				alt_going2 = 0;
+				me["ALT_box_flash"].hide();
+			}
 			
 		} else {
 			me["ALT_error"].show();
@@ -2080,7 +2080,7 @@ var qnhTimer = maketimer(0.25, func {
 
 var alt_going1 = 0;
 var altTimer1 = maketimer(0.25, func {
-    if (!altFlash1.getBoolValue()) {
+	if (!altFlash1.getBoolValue()) {
 		altFlash1.setBoolValue(1);
 	} else {
 		altFlash1.setBoolValue(0);
@@ -2089,7 +2089,7 @@ var altTimer1 = maketimer(0.25, func {
 
 var alt_going2 = 0;
 var altTimer2 = maketimer(0.25, func {
-    if (!altFlash2.getBoolValue()) {
+	if (!altFlash2.getBoolValue()) {
 		altFlash2.setBoolValue(1);
 	} else {
 		altFlash2.setBoolValue(0);
