@@ -134,6 +134,9 @@ var vr = props.globals.getNode("FMGC/internal/vr", 1);
 var vr_set = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2_set = props.globals.getNode("FMGC/internal/v2-set", 1);
+var flap_config = props.globals.getNode("controls/flight/flap-lever", 1);
+var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
+var weight_lbs = props.globals.getNode("fdm/jsbsim/inertia/weight-lbs", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -216,7 +219,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash", "ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -919,9 +922,13 @@ var canvas_PFD_1 = {
 	V1trgt: 0,
 	VRtrgt: 0,
 	V2trgt: 0,
+	Strgt: 0,
+	Ftrgt: 0,
 	SPDv1trgtdiff: 0,
 	SPDvrtrgtdiff: 0,
 	SPDv2trgtdiff: 0,
+	SPDstrgtdiff: 0,
+	SPDftrgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_1, canvas_PFD_base]};
@@ -1224,6 +1231,76 @@ var canvas_PFD_1 = {
 				}
 			}
 			
+			if (flap_config.getValue() == '1') {
+				me["F_target"].hide();
+				
+				lbs1000 = weight_lbs.getValue() / 1000;
+				tgt_S = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+			
+				if (tgt_S <= 30) {
+					me.Strgt = 0 - me.ASI;
+				} else if (tgt_S >= 420) {
+					me.Strgt = 390 - me.ASI;
+				} else {
+					me.Strgt = tgt_S - 30 - me.ASI;
+				}
+			
+				me.SPDstrgtdiff = tgt_S - ind_spd;
+			
+				if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42) {
+					me["S_target"].show();
+					me["S_target"].setTranslation(0, me.Strgt * -6.6);
+				} else {
+					me["S_target"].hide();
+				}
+			} else if (flap_config.getValue() == '2') {
+				me["S_target"].hide();
+				
+				lbs1000 = weight_lbs.getValue() / 1000;
+				tgt_F = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				if (tgt_F <= 30) {
+					me.Ftrgt = 0 - me.ASI;
+				} else if (tgt_F >= 420) {
+					me.Ftrgt = 390 - me.ASI;
+				} else {
+					me.Ftrgt = tgt_F - 30 - me.ASI;
+				}
+			
+				me.SPDftrgtdiff = tgt_F - ind_spd;
+			
+				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
+					me["F_target"].show();
+					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+				} else {
+					me["F_target"].hide();
+				}
+			} else if (flap_config.getValue() == '3') {
+				me["S_target"].hide();
+				
+				lbs1000 = weight_lbs.getValue() / 1000;
+				tgt_F = ((0.4352 * lbs1000) + 50.006) * 1.36;
+					
+				if (tgt_F <= 30) {
+					me.Ftrgt = 0 - me.ASI;
+				} else if (tgt_F >= 420) {
+					me.Ftrgt = 390 - me.ASI;
+				} else {
+					me.Ftrgt = tgt_F - 30 - me.ASI;
+				}
+			
+				me.SPDftrgtdiff = tgt_F - ind_spd;
+			
+				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
+					me["F_target"].show();
+					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+				} else {
+					me["F_target"].hide();
+				}
+			} else {
+				me["S_target"].hide();
+				me["F_target"].hide();
+			}
+			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
@@ -1374,9 +1451,13 @@ var canvas_PFD_2 = {
 	V1trgt: 0,
 	VRtrgt: 0,
 	V2trgt: 0,
+	Strgt: 0,
+	Ftrgt: 0,
 	SPDv1trgtdiff: 0,
 	SPDvrtrgtdiff: 0,
 	SPDv2trgtdiff: 0,
+	SPDstrgtdiff: 0,
+	SPDftrgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_2, canvas_PFD_base]};
@@ -1677,6 +1758,76 @@ var canvas_PFD_2 = {
 					me["ASI_target"].hide();
 					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
 				}
+			}
+			
+			if (flap_config.getValue() == '1') {
+				me["F_target"].hide();
+				
+				lbs1000 = weight_lbs.getValue() / 1000;
+				tgt_S = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+			
+				if (tgt_S <= 30) {
+					me.Strgt = 0 - me.ASI;
+				} else if (tgt_S >= 420) {
+					me.Strgt = 390 - me.ASI;
+				} else {
+					me.Strgt = tgt_S - 30 - me.ASI;
+				}
+			
+				me.SPDstrgtdiff = tgt_S - ind_spd;
+			
+				if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42) {
+					me["S_target"].show();
+					me["S_target"].setTranslation(0, me.Strgt * -6.6);
+				} else {
+					me["S_target"].hide();
+				}
+			} else if (flap_config.getValue() == '2') {
+				me["S_target"].hide();
+				
+				lbs1000 = weight_lbs.getValue() / 1000;
+				tgt_F = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				if (tgt_F <= 30) {
+					me.Ftrgt = 0 - me.ASI;
+				} else if (tgt_F >= 420) {
+					me.Ftrgt = 390 - me.ASI;
+				} else {
+					me.Ftrgt = tgt_F - 30 - me.ASI;
+				}
+			
+				me.SPDftrgtdiff = tgt_F - ind_spd;
+			
+				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
+					me["F_target"].show();
+					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+				} else {
+					me["F_target"].hide();
+				}
+			} else if (flap_config.getValue() == '3') {
+				me["S_target"].hide();
+				
+				lbs1000 = weight_lbs.getValue() / 1000;
+				tgt_F = ((0.4352 * lbs1000) + 50.006) * 1.36;
+					
+				if (tgt_F <= 30) {
+					me.Ftrgt = 0 - me.ASI;
+				} else if (tgt_F >= 420) {
+					me.Ftrgt = 390 - me.ASI;
+				} else {
+					me.Ftrgt = tgt_F - 30 - me.ASI;
+				}
+			
+				me.SPDftrgtdiff = tgt_F - ind_spd;
+			
+				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
+					me["F_target"].show();
+					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+				} else {
+					me["F_target"].hide();
+				}
+			} else {
+				me["S_target"].hide();
+				me["F_target"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
