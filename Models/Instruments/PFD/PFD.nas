@@ -219,7 +219,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash", "ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max","clean_speed"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -925,12 +925,14 @@ var canvas_PFD_1 = {
 	Strgt: 0,
 	Ftrgt: 0,
 	flaptrgt: 0,
+	cleantrgt: 0,
 	SPDv1trgtdiff: 0,
 	SPDvrtrgtdiff: 0,
 	SPDv2trgtdiff: 0,
 	SPDstrgtdiff: 0,
 	SPDftrgtdiff: 0,
 	SPDflaptrgtdiff: 0,
+	SPDcleantrgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_1, canvas_PFD_base]};
@@ -1235,6 +1237,7 @@ var canvas_PFD_1 = {
 			
 			if (flap_config.getValue() == '1') {
 				me["F_target"].hide();
+				me["clean_speed"].hide();
 				
 				lbs1000 = weight_lbs.getValue() / 1000;
 				tgt_S = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
@@ -1257,6 +1260,9 @@ var canvas_PFD_1 = {
 				}
 				
 				tgt_flap = 215;
+				if (ind_spd >= 210) {
+					tgt_flap = 230;
+				}
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
@@ -1269,6 +1275,7 @@ var canvas_PFD_1 = {
 				}
 			} else if (flap_config.getValue() == '2') {
 				me["S_target"].hide();
+				me["clean_speed"].hide();
 				
 				lbs1000 = weight_lbs.getValue() / 1000;
 				tgt_F = ((0.4352 * lbs1000) + 51.006) * 1.47;
@@ -1302,6 +1309,7 @@ var canvas_PFD_1 = {
 				}
 			} else if (flap_config.getValue() == '3') {
 				me["S_target"].hide();
+				me["clean_speed"].hide();
 				
 				lbs1000 = weight_lbs.getValue() / 1000;
 				tgt_F = ((0.4352 * lbs1000) + 50.006) * 1.36;
@@ -1337,6 +1345,7 @@ var canvas_PFD_1 = {
 			} else if (flap_config.getValue() == '4') {
 				me["S_target"].hide();
 				me["F_target"].hide();
+				me["clean_speed"].hide();
 				
 				tgt_flap = 177;
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
@@ -1353,6 +1362,21 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				me["flap_max"].hide();
+				
+				tgt_clean = 2 * weight_lbs.getValue() * 0.00045359237 + 85;
+				if (altitude.getValue() > 20000) {
+					tgt_clean += (altitude.getValue() - 20000) / 1000;
+				}
+				
+				me.cleantrgt = tgt_clean - 30 - me.ASI;
+				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
+			
+				if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
+					me["clean_speed"].show();
+					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
+				} else {
+					me["clean_speed"].hide();
+				}	
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
@@ -1508,12 +1532,14 @@ var canvas_PFD_2 = {
 	Strgt: 0,
 	Ftrgt: 0,
 	flaptrgt: 0,
+	cleantrgt: 0,
 	SPDv1trgtdiff: 0,
 	SPDvrtrgtdiff: 0,
 	SPDv2trgtdiff: 0,
 	SPDstrgtdiff: 0,
 	SPDftrgtdiff: 0,
 	SPDflaptrgtdiff: 0,
+	SPDcleantrgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_2, canvas_PFD_base]};
@@ -1818,6 +1844,7 @@ var canvas_PFD_2 = {
 			
 			if (flap_config.getValue() == '1') {
 				me["F_target"].hide();
+				me["clean_speed"].hide();
 				
 				lbs1000 = weight_lbs.getValue() / 1000;
 				tgt_S = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
@@ -1840,6 +1867,9 @@ var canvas_PFD_2 = {
 				}
 				
 				tgt_flap = 215;
+				if (ind_spd >= 210) {
+					tgt_flap = 230;
+				}
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
@@ -1852,6 +1882,7 @@ var canvas_PFD_2 = {
 				}
 			} else if (flap_config.getValue() == '2') {
 				me["S_target"].hide();
+				me["clean_speed"].hide();
 				
 				lbs1000 = weight_lbs.getValue() / 1000;
 				tgt_F = ((0.4352 * lbs1000) + 51.006) * 1.47;
@@ -1885,6 +1916,7 @@ var canvas_PFD_2 = {
 				}
 			} else if (flap_config.getValue() == '3') {
 				me["S_target"].hide();
+				me["clean_speed"].hide();
 				
 				lbs1000 = weight_lbs.getValue() / 1000;
 				tgt_F = ((0.4352 * lbs1000) + 50.006) * 1.36;
@@ -1920,6 +1952,7 @@ var canvas_PFD_2 = {
 			} else if (flap_config.getValue() == '4') {
 				me["S_target"].hide();
 				me["F_target"].hide();
+				me["clean_speed"].hide();
 				
 				tgt_flap = 177;
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
@@ -1936,6 +1969,21 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				me["flap_max"].hide();
+				
+				tgt_clean = 2 * weight_lbs.getValue() * 0.00045359237 + 85;
+				if (altitude.getValue() > 20000) {
+					tgt_clean += (altitude.getValue() - 20000) / 1000;
+				}
+				
+				me.cleantrgt = tgt_clean - 30 - me.ASI;
+				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
+			
+				if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
+					me["clean_speed"].show();
+					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
+				} else {
+					me["clean_speed"].hide();
+				}	
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
