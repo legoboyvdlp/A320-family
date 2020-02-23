@@ -219,7 +219,7 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash", "ALT_scale","ALT_target",
 		"ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -924,11 +924,13 @@ var canvas_PFD_1 = {
 	V2trgt: 0,
 	Strgt: 0,
 	Ftrgt: 0,
+	flaptrgt: 0,
 	SPDv1trgtdiff: 0,
 	SPDvrtrgtdiff: 0,
 	SPDv2trgtdiff: 0,
 	SPDstrgtdiff: 0,
 	SPDftrgtdiff: 0,
+	SPDflaptrgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_1, canvas_PFD_base]};
@@ -1253,6 +1255,18 @@ var canvas_PFD_1 = {
 				} else {
 					me["S_target"].hide();
 				}
+				
+				tgt_flap = 215;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
+				}
 			} else if (flap_config.getValue() == '2') {
 				me["S_target"].hide();
 				
@@ -1273,6 +1287,18 @@ var canvas_PFD_1 = {
 					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
 				} else {
 					me["F_target"].hide();
+				}
+				
+				tgt_flap = 200;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
 				}
 			} else if (flap_config.getValue() == '3') {
 				me["S_target"].hide();
@@ -1296,9 +1322,37 @@ var canvas_PFD_1 = {
 				} else {
 					me["F_target"].hide();
 				}
+				
+				tgt_flap = 185;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
+				}
+			} else if (flap_config.getValue() == '4') {
+				me["S_target"].hide();
+				me["F_target"].hide();
+				
+				tgt_flap = 177;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
+				}	
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
+				me["flap_max"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
@@ -1453,11 +1507,13 @@ var canvas_PFD_2 = {
 	V2trgt: 0,
 	Strgt: 0,
 	Ftrgt: 0,
+	flaptrgt: 0,
 	SPDv1trgtdiff: 0,
 	SPDvrtrgtdiff: 0,
 	SPDv2trgtdiff: 0,
 	SPDstrgtdiff: 0,
 	SPDftrgtdiff: 0,
+	SPDflaptrgtdiff: 0,
 	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_2, canvas_PFD_base]};
@@ -1782,6 +1838,18 @@ var canvas_PFD_2 = {
 				} else {
 					me["S_target"].hide();
 				}
+				
+				tgt_flap = 215;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
+				}
 			} else if (flap_config.getValue() == '2') {
 				me["S_target"].hide();
 				
@@ -1802,6 +1870,18 @@ var canvas_PFD_2 = {
 					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
 				} else {
 					me["F_target"].hide();
+				}
+				
+				tgt_flap = 200;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
 				}
 			} else if (flap_config.getValue() == '3') {
 				me["S_target"].hide();
@@ -1825,9 +1905,37 @@ var canvas_PFD_2 = {
 				} else {
 					me["F_target"].hide();
 				}
+				
+				tgt_flap = 185;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
+				}
+			} else if (flap_config.getValue() == '4') {
+				me["S_target"].hide();
+				me["F_target"].hide();
+				
+				tgt_flap = 177;
+				me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+					me["flap_max"].show();
+					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+				} else {
+					me["flap_max"].hide();
+				}	
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
+				me["flap_max"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
