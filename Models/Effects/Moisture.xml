@@ -13,7 +13,7 @@ Original code author Maggse.
 <PropertyList>
 	<particlesystem>
 		<!-- <type>trail</type>-->
-		<name>flare</name>
+		<name>Moisture</name>
 		<texture>res/smoke.png</texture>
 		<emissive>false</emissive>
 		<lighting>false</lighting>
@@ -37,7 +37,7 @@ Original code author Maggse.
 			<phi-max-deg>0</phi-max-deg>
 			<speed>
 				<value>0</value>
-				<spread>1</spread>
+				<spread>0</spread>
 			</speed>
 			<rotation-speed>
 				<x-min-deg-sec>15</x-min-deg-sec>

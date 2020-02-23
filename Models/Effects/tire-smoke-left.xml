@@ -106,7 +106,7 @@
 
         <program>
             <fluid>air</fluid>
-            <gravity>false</gravity>
+            <gravity>true</gravity>
             <wind>true</wind>
         </program>
 

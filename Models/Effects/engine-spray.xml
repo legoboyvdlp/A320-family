@@ -3,7 +3,7 @@
 <PropertyList>
 
     <particlesystem>
-        <name>engine-spray-l</name>
+        <name>engine-spray</name>
         <texture>res/smoke.png</texture>
         <emissive>false</emissive>
         <lighting>false</lighting>
@@ -76,7 +76,7 @@
                 </size>
             </end>
             <life-sec>
-                <value>1.5</value>
+                <value>1.0</value>
             </life-sec>
             <mass-kg>0.025</mass-kg>
             <radius-m>0.175</radius-m>

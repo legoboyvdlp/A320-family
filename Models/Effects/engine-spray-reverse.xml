@@ -5,7 +5,7 @@
 <PropertyList>
 
     <particlesystem>
-        <name>engine-spray-r-reverse</name>
+        <name>engine-spray-reverse</name>
         <texture>res/smoke.png</texture>
         <emissive>false</emissive>
         <lighting>false</lighting>
@@ -17,13 +17,13 @@
 			</placer>
 
         <shooter>
-            <theta-min-deg>45</theta-min-deg>
-            <theta-max-deg>80</theta-max-deg>
+            <theta-min-deg>0</theta-min-deg>
+            <theta-max-deg>360</theta-max-deg>
             <phi-min-deg>-5</phi-min-deg>
             <phi-max-deg>5</phi-max-deg>
             <speed-mps>
-                <value>engines/engine[0]/thrust_lb</value>
-                <spread>10</spread>
+                <value>0</value>
+                <spread>0</spread>
             </speed-mps>
             <rotation-speed>
                 <x-max-deg-sec>15</x-max-deg-sec>
@@ -37,8 +37,8 @@
 
         <counter>
             <particles-per-sec>
-				<property>engines/engine[0]/n2-actual</property>
-				<spread>20</spread>
+				<property>100</property>
+				<spread>0</spread>
             </particles-per-sec>
         </counter>
 
@@ -77,7 +77,7 @@
         <program>
             <fluid>air</fluid>
             <gravity>true</gravity>
-            <wind>true</wind>
+            <wind>false</wind>
         </program>
 
     </particlesystem>

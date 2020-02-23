@@ -37,8 +37,28 @@
 	</model>
 
 	<model>
-		<name>Contrail</name>
-		<path>Aircraft/A320-family/Models/Effects/contrail-eng2.xml</path>
+		<name>Contrail-eng2</name>
+		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<condition>
+			<and>
+				<greater-than>
+					<property>engines/engine[1]/n2-actual</property>
+					<value>50</value>
+				</greater-than>
+				<greater-than>
+					<property>position/altitude-ft</property>
+					<value>19000</value>
+				</greater-than>
+				<less-than>
+					<property>environment/temperature-degc</property>
+					<value>-30</value>
+				</less-than>
+				<equals>
+					<property>engines/engine[1]/state</property>
+					<value>3</value>
+				</equals>
+			</and>
+		</condition>
 		<overlay>
 			<params>
 				<contrail alias="../../../../params/contrail" />
@@ -92,7 +112,7 @@
 
 	<!-- Takeoff/Landing Engine spray -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-right.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
 		<name>engine-spray-r</name>
 		<condition>
 			<and>
@@ -101,8 +121,8 @@
 					<value>1</value>
 				</greater-than>
 				<greater-than>
-					<property>environment/relative-humidity</property>
-					<value>60</value>
+					<property>environment/surface/wetness</property>
+					<value>0.3</value>
 				</greater-than>
 				<less-than-equals>
 					<property>position/altitude-agl-ft</property>
@@ -113,28 +133,28 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[1]/n1</property>
-					<value>60</value>
+					<property>engines/engine[1]/n1-actual</property>
+					<value>65</value>
 				</greater-than>
-				<greater-than>
-					<property>engines/engine[1]/thrust_lb</property>
+				<equals>
+					<property>engines/engine[1]/reverser-pos-norm</property>
 					<value>0</value>
-				</greater-than>
+				</equals>
 				<!-- <not>
 					<property>sim/crashed</property>
 				</not> -->
 			</and>
 		</condition>
 		<offsets>
-			<x-m>10.875</x-m>
+			<x-m>4.875</x-m>
 			<y-m>0</y-m>
-			<z-m>-2.5</z-m>
+			<z-m>-5</z-m>
 		</offsets>
 	</model>
 
 	<!-- Takeoff/Landing Engine Reverse spray -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-right-reverse.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
 		<name>engine-spray-r-reverse</name>
 		<condition>
 			<and>
@@ -143,21 +163,21 @@
 					<value>1</value>
 				</greater-than>
 				<greater-than>
-					<property>environment/relative-humidity</property>
-					<value>60</value>
+					<property>environment/surface/wetness</property>
+					<value>0.3</value>
 				</greater-than>
 				<less-than-equals>
 					<property>sim/time/sun-angle-rad</property>
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[1]/n1</property>
+					<property>engines/engine[1]/n1-actual</property>
 					<value>60</value>
 				</greater-than>
-				<less-than>
-					<property>engines/engine[1]/thrust_lb</property>
-					<value>0</value>
-				</less-than>
+				<greater-than>
+					<property>engines/engine[1]/reverser-pos-norm</property>
+					<value>0.5</value>
+				</greater-than>
 				<!-- <not>
 					<property>sim/crashed</property>
 				</not> -->
