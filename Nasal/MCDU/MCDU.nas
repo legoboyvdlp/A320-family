@@ -97,6 +97,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L1",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
@@ -113,6 +115,8 @@ var lskbutton = func(btn, i) {
 			PerfInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L2",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
@@ -135,6 +139,8 @@ var lskbutton = func(btn, i) {
 			initInputA("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L3",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "STATUS") {
 			statusInput("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
@@ -151,6 +157,8 @@ var lskbutton = func(btn, i) {
 			setprop("MCDU[" ~ i ~ "]/page", "STATUS");
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L4",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
@@ -169,6 +177,8 @@ var lskbutton = func(btn, i) {
 			perfCRZInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
 			perfDESInput("L5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
@@ -187,6 +197,8 @@ var lskbutton = func(btn, i) {
 			perfCRZInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
 			perfDESInput("L6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("L6",i);
 		} else {
@@ -217,6 +229,8 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "2") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R2",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("R2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
@@ -231,6 +245,8 @@ var rskbutton = func(btn, i) {
 			initInputA("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R3",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
 			printInput("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
@@ -241,6 +257,8 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "4") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R4",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("R4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
@@ -273,6 +291,8 @@ var rskbutton = func(btn, i) {
 			perfCLBInput("R6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
 			perfCRZInput("R6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
+			perfDESInput("R6",i);
 		} else if ((getprop("MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
 			if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
 				if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
@@ -352,6 +372,8 @@ var pagebutton = func(btn, i) {
 				setprop("MCDU[" ~ i ~ "]/page", "CRZ");
 			} else if (getprop("FMGC/status/phase") == 4) {
 				setprop("MCDU[" ~ i ~ "]/page", "DES");
+			} else if (getprop("FMGC/status/phase") == 5) {
+				setprop("MCDU[" ~ i ~ "]/page", "APPR");
 			}
 		} else if (btn == "init") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
