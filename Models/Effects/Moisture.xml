@@ -13,7 +13,7 @@ Original code author Maggse.
 <PropertyList>
 	<particlesystem>
 		<!-- <type>trail</type>-->
-		<name>Moisture</name>
+		<name>moisture</name>
 		<texture>res/smoke.png</texture>
 		<emissive>false</emissive>
 		<lighting>false</lighting>

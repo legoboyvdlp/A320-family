@@ -48,7 +48,7 @@
 	</model>
 
 	<model>
-		<name>Contrail-eng2</name>
+		<name>contrail</name>
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
 		<condition>
 			<and>
@@ -82,10 +82,9 @@
 		</offsets>
 	</model>
 
-
 	<!-- Takeoff/Landing Engine Moisture -->
 	<model>
-		<name>Moisture_Right</name>
+		<name>moisture</name>
 		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
 		<condition>
 			<and>
@@ -125,7 +124,7 @@
 	<!-- Takeoff/Landing Engine spray -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
-		<name>engine-spray-r</name>
+		<name>engine-spray</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -167,7 +166,7 @@
 	<!-- Takeoff/Landing Engine Reverse spray -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
-		<name>engine-spray-r-reverse</name>
+		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -214,8 +213,7 @@
             <z-m>-4.4</z-m>
             <pitch-deg>0</pitch-deg>
         </offsets>
-    </model>
-	-->
+    </model> -->
 
 	<model>
 		<name>Engine fire</name>
@@ -244,10 +242,10 @@
 		</axis>
 	</animation>
 	
-	<!--effect>
+	<!-- <effect>
         <inherits-from>Aircraft/A320-family/Models/Effects/engineLEAPr</inherits-from>
         <object-name>Nacelle</object-name>
         <object-name>Reverser</object-name>
-	</effect-->
+	</effect> -->
 
 </PropertyList>

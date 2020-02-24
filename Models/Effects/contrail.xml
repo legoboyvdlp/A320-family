@@ -3,7 +3,7 @@
 <PropertyList>
 	
 	<particlesystem>
-		<name>contrail-eng1</name>
+		<name>contrail</name>
 		<texture>res/smoke.png</texture>
 		<offsets>
 			<x-m>30</x-m>
