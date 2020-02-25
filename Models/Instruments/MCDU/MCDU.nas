@@ -1377,8 +1377,8 @@ var canvas_MCDU_base = {
 				me.fontRight(default, symbol, symbol, symbol, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 				
-				me.fontSizeLeft(small, small, small, small, small, small);
-				me.fontSizeRight(small, small, small, small, 0, small);
+				me.fontSizeLeft(small, small, small, small, small, normal);
+				me.fontSizeRight(small, small, small, small, 0, normal);
 				me.fontSizeCenter(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
@@ -1475,6 +1475,7 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].hide();
 				me["Simple_C3"].hide();
 				me["Simple_C4"].hide();
+				me["Simple_C5"].hide();
 				me["Simple_C6"].hide();
 				me["Simple_C1S"].show();
 				me["Simple_C2S"].hide();

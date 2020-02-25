@@ -127,7 +127,7 @@ var lskbutton = func(btn, i) {
 			initInputA("L5",i); 
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
 			dataInput("L2",i);
- 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
 			printInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("L2",i);

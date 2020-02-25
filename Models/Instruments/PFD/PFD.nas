@@ -1397,6 +1397,13 @@ var canvas_PFD_1 = {
 			me["ASI_group"].hide();
 			me["ASI_error"].show();
 			me["ASI_frame"].setColor(1,0,0);
+			me["clean_speed"].hide();
+			me["S_target"].hide();
+			me["F_target"].hide();
+			me["flap_max"].hide();
+			me["v1_group"].hide();
+			me["v1_text"].hide();
+			me["vr_speed"].hide();
 		}
 		
 		if (dmc.DMController.DMCs[0].outputs[2] != nil) {
@@ -1514,6 +1521,7 @@ var canvas_PFD_1 = {
 			me["ALT_group"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
+			me["ALT_box_flash"].hide();
 		}
 		
 		me.updateCommonFast();
@@ -1866,10 +1874,7 @@ var canvas_PFD_2 = {
 					me["S_target"].hide();
 				}
 				
-				tgt_flap = 215;
-				if (ind_spd >= 210) {
-					tgt_flap = 230;
-				}
+				tgt_flap = 200;
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
@@ -1903,7 +1908,7 @@ var canvas_PFD_2 = {
 					me["F_target"].hide();
 				}
 				
-				tgt_flap = 200;
+				tgt_flap = 185;
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
@@ -1938,7 +1943,7 @@ var canvas_PFD_2 = {
 					me["F_target"].hide();
 				}
 				
-				tgt_flap = 185;
+				tgt_flap = 177;
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
@@ -1953,23 +1958,31 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				me["clean_speed"].hide();
-				
-				tgt_flap = 177;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}	
+				me["flap_max"].hide();
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				me["flap_max"].hide();
 				
+				me.altitude = dmc.DMController.DMCs[0].outputs[1].getValue();
+				
+				if (altitude.getValue() < 20000) {
+					tgt_flap = 215;
+					if (ind_spd >= 210) {
+						tgt_flap = 230;
+					}
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+				
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+			
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				}
+
 				tgt_clean = 2 * weight_lbs.getValue() * 0.00045359237 + 85;
 				if (altitude.getValue() > 20000) {
 					tgt_clean += (altitude.getValue() - 20000) / 1000;
@@ -1983,7 +1996,7 @@ var canvas_PFD_2 = {
 					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
 				} else {
 					me["clean_speed"].hide();
-				}	
+				}
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
@@ -2002,8 +2015,15 @@ var canvas_PFD_2 = {
 			}
 		} else {
 			me["ASI_error"].show();
-			me["ASI_frame"].setColor(1,0,0);
 			me["ASI_group"].hide();
+			me["ASI_frame"].setColor(1,0,0);
+			me["clean_speed"].hide();
+			me["S_target"].hide();
+			me["F_target"].hide();
+			me["flap_max"].hide();
+			me["v1_group"].hide();
+			me["v1_text"].hide();
+			me["vr_speed"].hide();
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[2] != nil) {
@@ -2121,6 +2141,7 @@ var canvas_PFD_2 = {
 			me["ALT_group"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
+			me["ALT_box_flash"].hide();
 		}
 		
 		me.updateCommonFast();
