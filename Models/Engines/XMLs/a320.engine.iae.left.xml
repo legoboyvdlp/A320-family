@@ -34,8 +34,8 @@
 	</model>
 
 	<model>
-		<name>contrail</name>
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<name>contrail</name>		
 		<condition>
 			<and>
 				<greater-than>
@@ -70,8 +70,8 @@
 
 	<!-- Takeoff/Landing Engine Moisture -->
 	<model>
-		<name>moisture</name>
 		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<name>moisture</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -94,9 +94,6 @@
 					<property>engines/engine[0]/n1</property>
 					<value>65</value>
 				</greater-than>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
@@ -137,9 +134,6 @@
 					<property>engines/engine[0]/reverser-pos-norm</property>
 					<value>0</value>
 				</equals>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
@@ -160,8 +154,8 @@
 					<value>1</value>
 				</greater-than>
 				<greater-than>
-					<property>environment/relative-humidity</property>
-					<value>60</value>
+					<property>environment/surface/wetness</property>
+					<value>0.3</value>
 				</greater-than>
 				<less-than-equals>
 					<property>sim/time/sun-angle-rad</property>
@@ -169,15 +163,12 @@
 				</less-than-equals>
 				<greater-than>
 					<property>engines/engine[0]/n1-actual</property>
-					<value>60</value>
+					<value>65</value>
 				</greater-than>
 				<greater-than>
 					<property>engines/engine[0]/reverser-pos-norm</property>
-					<value>0.5</value>
+					<value>0.75</value>
 				</greater-than>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>

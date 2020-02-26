@@ -97,9 +97,6 @@
 					<property>engines/engine[1]/n1</property>
 					<value>60</value>
 				</greater-than>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
@@ -140,9 +137,6 @@
 					<property>engines/engine[1]/reverser-pos-norm</property>
 					<value>0</value>
 				</equals>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
@@ -172,15 +166,12 @@
 				</less-than-equals>
 				<greater-than>
 					<property>engines/engine[1]/n1-actual</property>
-					<value>60</value>
+					<value>65</value>
 				</greater-than>
 				<greater-than>
 					<property>engines/engine[1]/reverser-pos-norm</property>
-					<value>0.5</value>
+					<value>0.75</value>
 				</greater-than>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>

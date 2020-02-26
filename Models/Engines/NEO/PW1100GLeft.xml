@@ -35,8 +35,8 @@
 	</model>
 
 	<model>
-		<name>contrail</name>
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<name>contrail</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -71,8 +71,8 @@
 
 	<!-- Takeoff/Landing Engine Moisture -->
 	<model>
-		<name>moisture</name>
 		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<name>moisture</name>
 		<condition>
 			<and>
 				<greater-than>
@@ -95,9 +95,6 @@
 					<property>engines/engine[0]/n1</property>
 					<value>65</value>
 				</greater-than>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
@@ -138,9 +135,6 @@
 					<property>engines/engine[0]/reverser-pos-norm</property>
 					<value>0</value>
 				</equals>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
@@ -174,17 +168,14 @@
 				</greater-than>
 				<greater-than>
 					<property>engines/engine[0]/reverser-pos-norm</property>
-					<value>0.5</value>
+					<value>0.75</value>
 				</greater-than>
-				<!-- <not>
-					<property>sim/crashed</property>
-				</not> -->
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0.875</x-m>
+			<x-m>1.5</x-m>
 			<y-m>0</y-m>
-			<z-m>-2.5</z-m>
+			<z-m>-1</z-m>
 		</offsets>
 	</model>
 
