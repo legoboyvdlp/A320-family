@@ -75,6 +75,9 @@ var BrakeSystem =
 		setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)) - 2.5);
 		setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)) - 2.5);		  
 
+		#var atemp  =  getprop("environment/temperature-degc") or 0;
+		#var vmach  =  getprop("velocities/mach") or 0;
+		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat") or 0;
 		var atemp  =  getprop("environment/temperature-degc") or 0;
 		var vmach  =  getprop("velocities/mach") or 0;
 		var tatdegc = getprop("systems/navigation/probes/tat-1/compute-tat");
@@ -97,9 +100,10 @@ var BrakeSystem =
 		var RThermalEnergy = getprop("gear/gear[2]/Rbrake-thermal-energy");
 		var LBrakeLevel = getprop("fdm/jsbsim/fcs/left-brake-cmd-norm");
 		var RBrakeLevel = getprop("fdm/jsbsim/fcs/right-brake-cmd-norm");
-		var atemp  =  getprop("environment/temperature-degc") or 0;
-		var vmach  =  getprop("velocities/mach") or 0;
-		var tatdegc = atemp * (1 + (0.2 * math.pow(vmach, 2)));	
+		#var atemp  =  getprop("environment/temperature-degc") or 0;
+		#var vmach  =  getprop("velocities/mach") or 0;
+		#var tatdegc = atemp * (1 + (0.2 * math.pow(vmach, 2)));
+		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat") or 0;
 		var L_thrust_lb = getprop("engines/engine[0]/thrust_lb");
 		var R_thrust_lb = getprop("engines/engine[1]/thrust_lb");
 
@@ -150,14 +154,18 @@ var BrakeSystem =
 			{
 				L_thrust_lb = 1
 			}
-			L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.0000000002;
+			#Disabling thrust computation on Brakes temperature
+			#L_Thrust = math.pow((math.log10(L_thrust_lb)),10)*0.0000000002;
+			L_Thrust = 0;
 
 			R_thrust_lb = math.abs(getprop("engines/engine[1]/thrust_lb"));
 			if (R_thrust_lb < 1)
 			{
 				R_thrust_lb = 1
 			}
-			R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.0000000002;
+			#Disabling thrust computation on Brakes temperature
+			#R_Thrust = math.pow((math.log10(R_thrust_lb)),10)*0.0000000002;
+			R_Thrust = 0;
 
 			if (OnGround)
 			{
@@ -169,10 +177,7 @@ var BrakeSystem =
 				var V2_L = V1 - me.BrakeDecel * dt * LBrakeLevel;
 				var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
 				
-				#TODO - Adjust ThermalEnergy according to differential braking
-				#LBrakeLevel-RBrakeLevel
-				
-				LThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
+				LThermalEnergy += (Mass * getprop("gear/gear[1]/compression-norm") * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
 				if (getprop("services/chocks/left"))
 				{
 					if (!getprop("controls/gear/brake-parking"))
@@ -210,7 +215,7 @@ var BrakeSystem =
 					}
 				}
 
-				RThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
+				RThermalEnergy += (Mass * getprop("gear/gear[2]/compression-norm") * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
 				if (getprop("services/chocks/right"))
 				{
 					if (!getprop("controls/gear/brake-parking"))
