@@ -18,11 +18,29 @@
 
 # To add more properties, just add them here:
 var saved_props = [
+	# CONSUMABLES
+	# Fuel
 	"/consumables/fuel/tank[0]/level-lbs",
 	"/consumables/fuel/tank[1]/level-lbs",
 	"/consumables/fuel/tank[2]/level-lbs",
 	"/consumables/fuel/tank[3]/level-lbs",
-	"/consumables/fuel/tank[4]/level-lbs"
+	"/consumables/fuel/tank[4]/level-lbs",
+	# CONTROLS
+	# rmp
+	"/controls/radio/rmp[0]/on",
+	"/controls/radio/rmp[1]/on",
+	"/controls/radio/rmp[2]/on",
+	# efis
+	"/instrumentation/efis[0]/inputs/range-nm",
+	"/instrumentation/efis[0]/nd/display-mode",
+	"/instrumentation/efis[0]/input/lh-vor-adf",
+	"/instrumentation/efis[0]/input/rh-vor-adf",
+	"/instrumentation/efis[1]/inputs/range-nm",
+	"/instrumentation/efis[1]/nd/display-mode",
+	"/instrumentation/efis[1]/input/lh-vor-adf",
+	"/instrumentation/efis[1]/input/rh-vor-adf",
+	# parking brake
+	"/controls/gear/brake-parking"
 ];
 
 var save = func (file) {
