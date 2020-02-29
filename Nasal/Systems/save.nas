@@ -24,9 +24,8 @@ var saved_props = [
 	"/consumables/fuel/tank[3]/level-lbs",
 	"/consumables/fuel/tank[4]/level-lbs"
 ];
-var file = getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml";
 
-var save = func {
+var save = func (file) {
 	print("Saving state...");
 	for (var i = 0; i < size(saved_props); i += 1)
 	{
@@ -39,7 +38,7 @@ var save = func {
 	print("State saved");
 }
 
-var restore = func {
+var restore = func (file) {
 	print("Loading saved state...");
 	var readNode = props.globals.initNode("/save", );
 
