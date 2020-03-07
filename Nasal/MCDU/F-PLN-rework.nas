@@ -298,10 +298,6 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 	},
 	pushButtonLeft: func(index) {
-		if (left(me.L6[0], 4) == getprop("/FMGC/internal/dep-arpt") and size(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
-			notAllowed(me.computer);
-			return;
-		}
 		if (index == 6) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);

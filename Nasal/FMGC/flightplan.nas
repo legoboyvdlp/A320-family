@@ -389,7 +389,9 @@ var flightPlanController = {
 					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
-					me._arrivalDist += courseDistanceFromPrev[1];
+					if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt") {
+						me._arrivalDist += courseDistanceFromPrev[1];
+					}
 				} else {
 					# use PPOS for the first waypoint
 					wpCoursePrev[n][wpt].setValue(courseDistanceFrom[0]);
