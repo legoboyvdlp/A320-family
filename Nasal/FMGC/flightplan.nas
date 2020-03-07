@@ -371,25 +371,33 @@ var flightPlanController = {
 				wpCourse[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[0]);
 				wpDistance[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[1]);
 				
+				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
+					if (me.arrivalIndex[n] != wpt) {
+						me.arrivalIndex[n] = wpt;
+					}
+				}
+				
 				if (wpt > 0) {
 					if (me.flightplans[n].getWP(wpt).id == "DISCONTINUITY") {
-						wpCoursePrev[n][wpt].setValue(0);
-						wpDistancePrev[n][wpt].setValue(0);
-						continue; 
-					}
-					
-					#if (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
-					#	if (wpt >= 2) {
-					#		geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
-					#	}
-					#} else {
+						if (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
+							if (wpt >= 2) {
+								geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
+							}
+						} else {
+							geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
+						}
+					} elsif (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
+						if (wpt >= 2) {
+							geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
+						}
+					} else {
 						geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
-					#}
+					}
 					
 					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
-					if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt") {
+					if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
 						me._arrivalDist += courseDistanceFromPrev[1];
 					}
 				} else {
@@ -400,7 +408,6 @@ var flightPlanController = {
 				
 				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
 					if (me.arrivalIndex[n] != wpt) { # don't merge line 397 and 398 if statements
-						me.arrivalIndex[n] = wpt;
 						if (canvas_mcdu.myFpln[0] != nil) {
 							canvas_mcdu.myFpln[0].destInfo();
 						}
