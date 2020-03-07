@@ -2381,7 +2381,7 @@ setlistener("/systems/electrical/bus/ac-2", func() {
 
 # Flash managers
 var ils_going1 = 0;
-var ilsTimer1 = maketimer(0.25, func {
+var ilsTimer1 = maketimer(0.50, func {
 	if (!ilsFlash1.getBoolValue()) {
 		ilsFlash1.setBoolValue(1);
 	} else {
@@ -2390,7 +2390,7 @@ var ilsTimer1 = maketimer(0.25, func {
 });
 
 var ils_going2 = 0;
-var ilsTimer2 = maketimer(0.25, func {
+var ilsTimer2 = maketimer(0.50, func {
 	if (!ilsFlash2.getBoolValue()) {
 		ilsFlash2.setBoolValue(1);
 	} else {
@@ -2399,7 +2399,7 @@ var ilsTimer2 = maketimer(0.25, func {
 });
 
 var qnh_going = 0;
-var qnhTimer = maketimer(0.25, func {
+var qnhTimer = maketimer(0.50, func {
 	if (!qnhFlash.getBoolValue()) {
 		qnhFlash.setBoolValue(1);
 	} else {
@@ -2408,7 +2408,7 @@ var qnhTimer = maketimer(0.25, func {
 });
 
 var alt_going1 = 0;
-var altTimer1 = maketimer(0.25, func {
+var altTimer1 = maketimer(0.50, func {
 	if (!altFlash1.getBoolValue()) {
 		altFlash1.setBoolValue(1);
 	} else {
@@ -2417,7 +2417,7 @@ var altTimer1 = maketimer(0.25, func {
 });
 
 var alt_going2 = 0;
-var altTimer2 = maketimer(0.25, func {
+var altTimer2 = maketimer(0.50, func {
 	if (!altFlash2.getBoolValue()) {
 		altFlash2.setBoolValue(1);
 	} else {
