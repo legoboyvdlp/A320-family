@@ -16,20 +16,17 @@
 		<path>Aircraft/A320-family/Models/Fuselages/A320/fuselage.xml</path>
 	</model>
 	
-	<!-- Separate Flightdeck to fit the modified nose -->
-	<model>
-		<name>Flightdeck</name>
-		<path>Aircraft/A320-family/Models/FlightDeck/a320.flightdeck.xml</path>
-		<offsets>
-			<x-m>4.81794</x-m>
-			<y-m>0.0</y-m>
-			<z-m>0.0</z-m>
-		</offsets>
-	</model>
-	
 	<model>
 		<name>Interior</name>
-		<path>Aircraft/A320-family/Models/Interior/a320.interior.xml</path>
+		<path>Aircraft/A320-family/Models/A320-interior.xml</path>
+		<!-- On multiplayer models, the interior is loaded separately and global
+			 offsets are not applied. This cancels the global offsets, so that
+			 the interior is loaded at (0,0,0) anyway. -->
+		<offsets>
+			<x-m>18.8499</x-m>
+			<z-m>-1.7005004</z-m>
+		</offsets>
+		<usage>interior</usage>
 	</model>
 
 	<model>
@@ -432,40 +429,40 @@
 	
 	<!--Firetruck-->
 
-<model>
- <name>Firetruck1</name>
- <path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
- <offsets>
-  <x-m>60.0</x-m>
-  <y-m>10.0</y-m>
-  <z-m>-4.4</z-m>
- </offsets>
-</model>
-
-<model>
- <name>Firetruck2</name>
- <path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
- <offsets>
-  <x-m>80.0</x-m>
-  <y-m>-8.0</y-m>
-  <z-m>-4.4</z-m>
- </offsets>
-</model>
-
-<animation>
-    <type>select</type>
-    <object-name>Firetruck1</object-name>
-    <object-name>Firetruck2</object-name>
-    <condition>
-        <and>
-            <property>sim/animation/fire-services</property>
-            <less-than>
-                <property>velocities/groundspeed-kt</property>
-                <value>40</value>
-            </less-than>
-        </and>
-    </condition>
-</animation>
+	<model>
+	 <name>Firetruck1</name>
+	 <path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
+	 <offsets>
+	  <x-m>60.0</x-m>
+	  <y-m>10.0</y-m>
+	  <z-m>-4.4</z-m>
+	 </offsets>
+	</model>
+	
+	<model>
+	 <name>Firetruck2</name>
+	 <path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
+	 <offsets>
+	  <x-m>80.0</x-m>
+	  <y-m>-8.0</y-m>
+	  <z-m>-4.4</z-m>
+	 </offsets>
+	</model>
+	
+	<animation>
+	    <type>select</type>
+	    <object-name>Firetruck1</object-name>
+	    <object-name>Firetruck2</object-name>
+	    <condition>
+	        <and>
+	            <property>sim/animation/fire-services</property>
+	            <less-than>
+	                <property>velocities/groundspeed-kt</property>
+	                <value>40</value>
+	            </less-than>
+	        </and>
+	    </condition>
+	</animation>
 	
 	<!-- LIVERY SELECT -->
 	<!-- Animation -->

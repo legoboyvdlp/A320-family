@@ -35,8 +35,28 @@
 	</model>
 
 	<model>
-		<name>Contrail</name>
-		<path>Aircraft/A320-family/Models/Effects/contrail-eng2.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<name>contrail</name>
+		<condition>
+			<and>
+				<greater-than>
+					<property>engines/engine[1]/n2-actual</property>
+					<value>50</value>
+				</greater-than>
+				<greater-than>
+					<property>position/altitude-ft</property>
+					<value>19000</value>
+				</greater-than>
+				<less-than>
+					<property>environment/temperature-degc</property>
+					<value>-30</value>
+				</less-than>
+				<equals>
+					<property>engines/engine[1]/state</property>
+					<value>3</value>
+				</equals>
+			</and>
+		</condition>
 		<overlay>
 			<params>
 				<contrail alias="../../../../params/contrail" />
@@ -46,6 +66,116 @@
 			<x-m>5.137</x-m>
 			<y-m>0</y-m>
 			<z-m>0</z-m>
+		</offsets>
+	</model>
+
+	<!-- Takeoff/Landing Engine Moisture -->
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<name>moisture</name>
+		<condition>
+			<and>
+				<greater-than>
+					<property>position/altitude-agl-ft</property>
+					<value>1</value>
+				</greater-than>
+				<greater-than>
+					<property>environment/relative-humidity</property>
+					<value>45</value>
+				</greater-than>
+				<less-than-equals>
+					<property>position/altitude-agl-ft</property>
+					<value>75</value>
+				</less-than-equals>
+				<less-than-equals>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.63</value>
+				</less-than-equals>
+				<greater-than>
+					<property>engines/engine[1]/n1</property>
+					<value>65</value>
+				</greater-than>
+			</and>
+		</condition>
+		<offsets>
+			<x-m>-0.5</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+			<pitch-deg>0</pitch-deg>
+		</offsets>
+	</model>
+
+	<!-- Takeoff/Landing Engine spray -->
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
+		<name>engine-spray</name>
+		<condition>
+			<and>
+				<greater-than>
+					<property>position/altitude-agl-ft</property>
+					<value>1</value>
+				</greater-than>
+				<greater-than>
+					<property>environment/surface/wetness</property>
+					<value>0.3</value>
+				</greater-than>
+				<less-than-equals>
+					<property>position/altitude-agl-ft</property>
+					<value>15</value>
+				</less-than-equals>
+				<less-than-equals>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.63</value>
+				</less-than-equals>
+				<greater-than>
+					<property>engines/engine[1]/n1-actual</property>
+					<value>65</value>
+				</greater-than>
+				<equals>
+					<property>engines/engine[1]/reverser-pos-norm</property>
+					<value>0</value>
+				</equals>
+			</and>
+		</condition>
+		<offsets>
+			<x-m>5.137</x-m>
+			<y-m>0</y-m>
+			<z-m>-5</z-m>
+		</offsets>
+	</model>
+
+	<!-- Takeoff/Landing Engine Reverse spray -->
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
+		<name>engine-spray-reverse</name>
+		<condition>
+			<and>
+				<greater-than>
+					<property>position/altitude-agl-ft</property>
+					<value>1</value>
+				</greater-than>
+				<greater-than>
+					<property>environment/surface/wetness</property>
+					<value>0.3</value>
+				</greater-than>
+				<less-than-equals>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.63</value>
+				</less-than-equals>
+				<greater-than>
+					<property>engines/engine[1]/n1-actual</property>
+					<value>65</value>
+				</greater-than>
+				<greater-than>
+					<property>engines/engine[1]/reverser-pos-norm</property>
+					<value>0.75</value>
+				</greater-than>
+			</and>
+		</condition>
+		<offsets>
+			<x-m>1.5</x-m>
+			<y-m>0</y-m>
+			<z-m>-1</z-m>
 		</offsets>
 	</model>
 
@@ -76,11 +206,11 @@
 		</axis>
 	</animation>
 	
-	<!--effect>
+	<!-- <effect>
         <inherits-from>Aircraft/A320-family/Models/Effects/enginePW1100R</inherits-from>
         <object-name>NacellePW1100G</object-name>
         <object-name>ReverserPW1100G</object-name>
         <object-name>SpoilersPW1100G</object-name>
-	</effect-->
+	</effect> -->
 
 </PropertyList>

@@ -3,7 +3,7 @@
 <PropertyList>
 	
 	<particlesystem>
-		<name>contrail-eng2</name>
+		<name>contrail</name>
 		<texture>res/smoke.png</texture>
 		<offsets>
 			<x-m>30</x-m>
@@ -13,26 +13,6 @@
 		</offsets>
 		<emissive type="bool">false</emissive>
 		<lighting type="bool">false</lighting>
-		<condition>
-			<and>
-				<greater-than>
-					<property>engines/engine[1]/n2-actual</property>
-					<value>50</value>
-				</greater-than>
-				<greater-than>
-					<property>position/altitude-ft</property>
-					<value>19000</value>
-				</greater-than>
-				<less-than>
-					<property>environment/temperature-degc</property>
-					<value>-30</value>
-				</less-than>
-				<equals>
-					<property>engines/engine[1]/state</property>
-					<value>3</value>
-				</equals>
-			</and>
-		</condition>
 		
 		<attach>world</attach>
 		
@@ -150,7 +130,7 @@
 		<program>
 			<fluid>air</fluid>
 			<gravity type="bool">true</gravity>
-			<wind typ="bool">true</wind>
+			<wind type="bool">true</wind>
 		</program>
 	</particlesystem>
 
