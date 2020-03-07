@@ -3,37 +3,17 @@
 <PropertyList>
 	
 	<particlesystem>
-		<name>contrail-eng1</name>
+		<name>engine-spray-reverse</name>
 		<texture>res/smoke.png</texture>
-		<offsets>
-			<x-m>30</x-m>
-			<y-m>0.00</y-m>
-			<z-m>2</z-m>
-			<pitch-deg>90</pitch-deg>
-		</offsets>
 		<emissive type="bool">false</emissive>
 		<lighting type="bool">false</lighting>
-		<condition>
-			<and>
-				<greater-than>
-					<property>engines/engine[0]/n2-actual</property>
-					<value>50</value>
-				</greater-than>
-				<greater-than>
-					<property>position/altitude-ft</property>
-					<value>19000</value>
-				</greater-than>
-				<less-than>
-					<property>environment/temperature-degc</property>
-					<value>-30</value>
-				</less-than>
-				<equals>
-					<property>engines/engine[0]/state</property>
-					<value>3</value>
-				</equals>
-			</and>
-		</condition>
-		
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+			<pitch-deg>180</pitch-deg>
+		</offsets>				
+				
 		<attach>world</attach>
 		
 		<placer>
@@ -135,16 +115,16 @@
 					</alpha>
 				</color>
 				<size>
-					<value>6</value>
+					<value>3</value>
 				</size>
 			</end>
 
 			<life-sec>
-				<value>10</value>
+				<value>0.4</value>
 			</life-sec>
 
 			<mass-kg>0.5</mass-kg>
-			<radius-m>0.5</radius-m>
+			<radius-m>0.1</radius-m>
 		</particle>
 
 		<program>
