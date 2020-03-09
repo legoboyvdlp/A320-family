@@ -181,7 +181,7 @@ var flightPlanController = {
 			}
 			canvas_mcdu.myDeparture[plan] = nil;
 			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(airport, index, 0, plan);
-			setprop("/MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 			return 2;
 		}
 	},
@@ -230,7 +230,7 @@ var flightPlanController = {
 			}
 			canvas_mcdu.myDeparture[plan] = nil;
 			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(fix, index, 0, plan);
-			setprop("/MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 			return 2;
 		}
 	},
@@ -308,7 +308,7 @@ var flightPlanController = {
 			}
 			canvas_mcdu.myDeparture[plan] = nil;
 			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(navaid, index, 1, plan);
-			setprop("/MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 			return 2;
 		}
 	},

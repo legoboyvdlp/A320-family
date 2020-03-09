@@ -1,4 +1,4 @@
-var vertrev = {
+var vertRev = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -21,14 +21,14 @@ var vertrev = {
 	index: nil,
 	computer: nil,
 	new: func(type, id, index, computer) {
-		var lr = {parents:[vertrev]};
-		lr.type = type; # 0 = origin 1 = destination 2 = ppos (from waypoint) 3 = generic wpt, 4 = discon
-		lr.id = id;
-		lr.index = index;
-		lr.computer = computer;
-		lr._setupPageWithData();
-		lr._checkTmpy();
-		return lr;
+		var vr = {parents:[vertRev]};
+		vr.type = type; # 0 = origin 1 = destination 2 = wpt not ppos 3 = ppos 4 = cruise wpt 5 = climb wpt (3 + 4 not needed yet)
+		vr.id = id;
+		vr.index = index;
+		vr.computer = computer;
+		vr._setupPageWithData();
+		vr._checkTmpy();
+		return vr;
 	},
 	del: func() {
 		return nil;
@@ -37,85 +37,62 @@ var vertrev = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
 			me.arrowsColour[0][5] = "yel";
-			me.R2[2] = "yel";
-			me.R3[2] = "yel";
-			me.R4[2] = "yel";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	},
 	_setupPageWithData: func() {
-		if (me.type == 2) { 
+		if (me.type == 3) { 
 			me.title = ["VERT REV", " AT ", "PPOS"];
-			me.L2 = [" OFFSET", nil, "wht"];
-			me.L3 = [" HOLD", nil, "wht"];
+			me.L1 = ["", "  EFOB=---", "wht"];
+			me.R1 = ["", "EXTRA=---  ", "wht"];
+			me.L2 = ["  250/10000", "  CLB SPD LIM", "mag"];
+			me.L4 = [" CONSTANT MACH", nil, "wht"];
+			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
-			me.R1 = ["FIX INFO ", nil, "wht"];
-			me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
-			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
-			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
-		} elsif (me.type == 4) { 
-			me.title = ["VERT REV", " AT ", "DISCON"];
-			me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-			me.R4 = ["[     ]", "NEW DEST", "blu"];
-			me.L6 = [" RETURN", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
-			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
+			me.R5 = ["STEP ALTS  ", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "ack"]];
+			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		} if (me.type == 2) { 
+			me.title = ["VERT REV", " AT ", me.id];
+			me.L1 = ["", "  EFOB=---", "wht"];
+			me.R1 = ["", "EXTRA=---  ", "wht"];
+			me.L2 = ["  250/10000", "  CLB SPD LIM", "mag"];
+			me.L3 = [" [    ]", " SPD CSTR", "blu"];
+			me.L4 = [" CONSTANT MACH", nil, "wht"];
+			me.L5 = [" WIND DATA", nil, "wht"];
+			me.L6 = [" CLB", nil, "wht"];
+			me.R2 = ["[    ] ", "UTC CSTR  ", "blu"];
+			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
+			me.R5 = ["STEP ALTS ", nil, "wht"];
+			me.R6 = ["DES ", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "ack"]];
+			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
 		} else {
 			me.title = ["VERT REV", " AT ", me.id];
 			
 			if (me.type == 0) {	
-				if (size(me.id) > 4) {
-					me.depAirport = findAirportsByICAO(left(me.id, 4));
-				} else {
-					me.depAirport = findAirportsByICAO(me.id);
-				}
-				me.subtitle = [dmsToString(sprintf(me.depAirport[0].lat), "lat"), dmsToString(sprintf(me.depAirport[0].lon), "lon")];
-				me.L1 = [" DEPARTURE", nil, "wht"];
-				me.L2 = [" OFFSET", nil, "wht"];
-				me.L6 = [" RETURN", nil, "wht"];
-				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
-				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.R4 = ["[     ]", "NEW DEST", "blu"];
-				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
-				me.arrowsColour = [["wht", "wht", "ack", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]];
+				# dunno
 			} elsif (me.type == 1) {
 				if (size(me.id) > 4) {
 					me.arrAirport = findAirportsByICAO(left(me.id, 4));
 				} else {
 					me.arrAirport = findAirportsByICAO(me.id);
 				}
-				me.subtitle = [dmsToString(sprintf(me.arrAirport[0].lat), "lat"), dmsToString(sprintf(me.arrAirport[0].lon), "lon")];
-				me.L3 = [" ALTN", nil, "wht"];
-				me.L4 = [" ALTN", " ENABLE", "blu"];
-				me.L6 = [" RETURN", nil, "wht"];
-				me.R1 = ["ARRIVAL ", nil, "wht"];
-				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
-				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
-			} elsif (me.type == 3) {
-				if (size(me.id) == 2 or size(me.id) == 3) {
-					me.wpt = findNavaidsByID(me.id);
-				} elsif (size(me.id) == 4) {
-					me.wpt = findAirportsByICAO(me.id);
-				} elsif (size(me.id) == 5) {
-					me.wpt = findFixesByID(me.id);
-				}
-				me.subtitle = [dmsToString(sprintf(me.wpt[0].lat), "lat"), dmsToString(sprintf(me.wpt[0].lon), "lon")];
-				me.L3 = [" HOLD", nil, "wht"];
-				me.L4 = [" ALTN", " ENABLE", "blu"];
-				me.L6 = [" RETURN", nil, "wht"];
-				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.R4 = ["[     ]", "NEW DEST", "blu"];
-				me.R5 = ["AIRWAYS ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
-				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
+				me.L1 = ["", "  EFOB=---", "wht"];
+				me.R1 = ["", "EXTRA=---  ", "wht"];
+				me.L2 = ["  250/10000", "  DES SPD LIM", "mag"];
+				me.L4 = [" CONSTANT MACH", nil, "wht"];
+				me.L5 = [" WIND DATA", nil, "wht"];
+				me.L6 = [" CLB", nil, "wht"];
+				me.R2 = ["[    ] ", "UTC CSTR  ", "blu"];
+				me.R3 = ["[   ]", "G/S INTCPT ", "grn"];
+				me.R5 = ["STEP ALTS  ", nil, "wht"];
+				me.R6 = ["DES ", nil, "wht"];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0]];
+				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "ack"]];
+				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
 			}
 		}
 	},
@@ -125,58 +102,4 @@ var vertrev = {
 			me._checkTmpy();
 		}
 	},
-	nextWpt: func() {
-		me.makeTmpy();
-		
-		var returny = fmgc.flightPlanController.scratchpad(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad"), me.index + 1, me.computer);
-		if (returny == 0) {
-			notInDataBase(me.computer);
-		} elsif (returny == 1) {
-			notAllowed(me.computer);
-		} else {
-			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
-			fmgc.flightPlanController.flightPlanChanged(me.computer);
-			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
-		}
-	},
 };
-
-var dmsToString = func(dms, type) {
-	var degrees = int(dms);
-	var minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-	if (type == "lat") {
-		var sign = degrees >= 0 ? "N" : "S";
-	} else {
-		var sign = degrees >= 0 ? "E" : "W";
-	}
-	return abs(degrees) ~ "g" ~ minutes ~ " " ~ sign;
-}
-
-
-var stringToDegrees = func(string, type) {
-	if (type == "lat") {
-		var degrees = left(string, 2);
-		var minutesStr = right(string, 5);
-	} else {
-		var degrees = left(string, 3);
-		var minutesStr = right(string, 5);
-	}
-	
-	var minutes = left(minutesStr, 4);
-	var sign = right(minutesStr, 1);
-	var decimal = degrees + (minutes / 60);
-	if (type == "lat") {
-		if (sign == "N") {
-			return decimal;
-		} else {
-			return -decimal;
-		}
-	} else {
-		if (sign == "E") {
-			return decimal;
-		} else {
-			return -decimal;
-		}
-	}
-}

@@ -75,6 +75,7 @@ var fplnItem = {
 			canvas_mcdu.myLatRev[me.computer].del();
 		}
 		canvas_mcdu.myLatRev[me.computer] = nil;
+		
 		if (me.wp.wp_name == "DISCONTINUITY") {
 			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, "DISCON", me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
@@ -98,10 +99,37 @@ var fplnItem = {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp.wp_name, me.index, me.computer);
 			}
 		}
-		setprop("/MCDU[" ~ me.computer ~ "]/page", "LATREV");
+		setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 	},
 	pushButtonRight: func() {
+		if (canvas_mcdu.myVertRev[me.computer] != nil) {
+			canvas_mcdu.myVertRev[me.computer].del();
+		}
+		canvas_mcdu.myVertRev[me.computer] = nil;
 		notAllowed(me.computer);
+		
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+			} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+				notAllowed(me.computer);
+			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
+			} else {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer);
+			}
+		} else {
+			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+				notAllowed(me.computer);
+			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
+			} else {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer);
+			}
+		}
+		setprop("MCDU[" ~ me.computer ~ "]/page", "VERTREV");
 	},
 };
 
@@ -307,19 +335,19 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				}
 				canvas_mcdu.myLatRev[me.computer] = nil;
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.L6[0], fmgc.flightPlanController.arrivalIndex[me.computer], me.computer);
-				setprop("/MCDU[" ~ me.computer ~ "]/page", "LATREV");
+				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
 			if (size(me.outputList) >= index) {
-				if (size(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
-					var returny = fmgc.flightPlanController.scratchpad(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad"), (index - 1 + me.scroll), me.computer);
+				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
+					var returny = fmgc.flightPlanController.scratchpad(getprop("MCDU[" ~ me.computer ~ "]/scratchpad"), (index - 1 + me.scroll), me.computer);
 					if (returny == 0) {
 						notInDataBase(me.computer);
 					} elsif (returny == 1) {
 						notAllowed(me.computer);
 					} else {
-						setprop("/MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-						setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
+						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
+						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
 					}
 				} else {
 					me.outputList[index - 1].pushButtonLeft();
@@ -337,19 +365,27 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				notAllowed(me.computer);
 			}
 		} else {
-			notAllowed(me.computer);
+			if (size(me.outputList) >= index) {
+				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
+					notAllowed(me.computer);
+				} else {
+					me.outputList[index - 1].pushButtonRight();
+				}
+			} else {
+				notAllowed(me.computer);
+			}
 		}
 	},
 };
 
 var notInDataBase = func(i) {
-		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
+		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+			setprop("MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
 		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
 		}
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
+	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+	setprop("MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
 }
 
 
@@ -487,13 +523,13 @@ var duplicateNamesPage = {
 	pushButtonLeft: func(indexSelect) {
 		if (size(me.vector[0].id) == 5) {
 			fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 		} elsif (size(me.vector[0].id) == 4) {
 			fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 		} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
 			fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 		}
 	},
 };
