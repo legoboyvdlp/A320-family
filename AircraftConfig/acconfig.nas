@@ -190,13 +190,13 @@ setlistener("/sim/signals/fdm-initialized", func {
 	writeSettings();
 	if (getprop("options/system/save-state") == 1)
 	{
-		save.restore(getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
+		save.restore(save.default, getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
 	}
 	spinning.stop();
 });
 
 setlistener("/sim/signals/exit", func {
-	save.save(getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
+	save.save(save.default, getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
 });
 
 var renderingSettings = {

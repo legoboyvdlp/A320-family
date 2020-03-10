@@ -16,8 +16,8 @@
 
 # Save and restore properties between sessions
 
-# To add more properties, just add them here:
-var saved_props = [
+# To add more properties to autosave, just add them here.
+var default = [
 	# CONSUMABLES
 	# Fuel
 	"/consumables/fuel/tank[0]/level-lbs",
@@ -43,7 +43,7 @@ var saved_props = [
 	"/controls/gear/brake-parking"
 ];
 
-var save = func (file) {
+var save = func (saved_props, file) {
 	print("Saving state...");
 	for (var i = 0; i < size(saved_props); i += 1)
 	{
@@ -56,7 +56,7 @@ var save = func (file) {
 	print("State saved");
 }
 
-var restore = func (file) {
+var restore = func (saved_props, file) {
 	print("Loading saved state...");
 	var readNode = props.globals.initNode("/save", );
 
