@@ -8,10 +8,10 @@
 		<emissive>false</emissive>
 		<lighting>false</lighting>
 		<offsets>
-			<x-m>3</x-m>
+			<x-m>0.5</x-m>
 			<y-m>0</y-m>
-			<z-m>0</z-m>
-			<pitch-deg>-90</pitch-deg>
+			<z-m>-1</z-m>
+			<pitch-deg>0</pitch-deg>
 		</offsets>
 		
 		<attach>local</attach>
@@ -30,18 +30,18 @@
 				<spread>0</spread>
 			</speed>
 			<rotation-speed>
-				<x-min-deg-sec>0</x-min-deg-sec>
-				<y-min-deg-sec>0</y-min-deg-sec>
-				<z-min-deg-sec>0</z-min-deg-sec>
-				<x-max-deg-sec>0</x-max-deg-sec>
-				<y-max-deg-sec>0</y-max-deg-sec>
-				<z-max-deg-sec>0</z-max-deg-sec>
+				<x-min-deg-sec>180</x-min-deg-sec>
+				<y-min-deg-sec>180</y-min-deg-sec>
+				<z-min-deg-sec>180</z-min-deg-sec>
+				<x-max-deg-sec>-180</x-max-deg-sec>
+				<y-max-deg-sec>-180</y-max-deg-sec>
+				<z-max-deg-sec>-180</z-max-deg-sec>
 			</rotation-speed>
 		</shooter>
 		
 		<counter>
 			<particles-per-sec>
-				<value>150</value>
+				<value>100</value>
 				<spread>0</spread>
 			</particles-per-sec>
 		</counter>
@@ -54,7 +54,7 @@
 					<red>
 						<expression>
 							<product>
-								<value>1.0</value>
+								<value>0.9</value>
 								<property>rendering/scene/diffuse/red</property>
 							</product>
 						</expression>
@@ -62,7 +62,7 @@
 					<green>
 						<expression>
 							<product>
-								<value>1.0</value>
+								<value>0.9</value>
 								<property>rendering/scene/diffuse/red</property>
 							</product>
 						</expression>
@@ -70,17 +70,17 @@
 					<blue>
 						<expression>
 							<product>
-								<value>1.0</value>
+								<value>0.9</value>
 								<property>rendering/scene/diffuse/red</property>
 							</product>
 						</expression>
 					</blue>
 					<alpha>
-						<value>0.00000001</value>
+						<value>0.1</value>
 					</alpha>
 				</color>
 				<size>
-					<value>1</value>
+					<value>1.5</value>
 				</size>
 			</start>
 
@@ -89,7 +89,7 @@
 					<red>
 						<expression>
 							<product>
-								<value>0.7</value>
+								<value>0.9</value>
 								<property>rendering/scene/diffuse/red</property>
 							</product>
 						</expression>
@@ -97,7 +97,7 @@
 					<green>
 						<expression>
 							<product>
-								<value>0.7</value>
+								<value>0.9</value>
 								<property>rendering/scene/diffuse/red</property>
 							</product>
 						</expression>
@@ -105,7 +105,7 @@
 					<blue>
 						<expression>
 							<product>
-								<value>0.7</value>
+								<value>0.9</value>
 								<property>rendering/scene/diffuse/red</property>
 							</product>
 						</expression>
@@ -119,14 +119,14 @@
 				</size>
 			</end>
 	
-			<life-sec><value>0.4</value></life-sec>
+			<life-sec><value>0.001</value></life-sec>
 			<mass-kg>0.4</mass-kg>
 			<radius-m>0.1</radius-m>
 		</particle>
 		
 		<program>
 			<fluid>air</fluid>
-			<gravity type="bool">true</gravity>
+			<gravity type="bool">false</gravity>
 			<wind type="bool">false</wind>
 		</program>
 		

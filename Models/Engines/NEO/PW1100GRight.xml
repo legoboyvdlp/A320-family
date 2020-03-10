@@ -98,7 +98,7 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-0.5</x-m>
+			<x-m>0</x-m>
 			<y-m>0</y-m>
 			<z-m>0</z-m>
 			<pitch-deg>0</pitch-deg>
@@ -173,9 +173,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>1.5</x-m>
+			<x-m>0</x-m>
 			<y-m>0</y-m>
-			<z-m>-1</z-m>
+			<z-m>0</z-m>
 		</offsets>
 	</model>
 
