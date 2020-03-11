@@ -386,6 +386,16 @@
 			</offsets>
 	</model>
 
+	<!-- wing condensation effect -->
+	<model>
+	  <path>Aircraft/A320-family/Models/Effects/wing-condensation-L.xml</path>
+	  <name>wing-condensation</name>
+	</model>
+	<model>
+	  <path>Aircraft/A320-family/Models/Effects/wing-condensation-R.xml</path>
+	  <name>wing-condensation</name>
+	</model>
+
 	<!-- Other non-aircraft models -->
 	<model>
 		<name>Pushback</name>
@@ -397,7 +407,7 @@
 		</offsets>
 	</model>
 	
-	<!--Firetruck-->
+	<!-- Firetruck -->
 
 	<model>
 	 <name>Firetruck1</name>
