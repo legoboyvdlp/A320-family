@@ -3,6 +3,35 @@
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)
 
+var Iceable = {
+	new: func(node) {
+		var m = { parents: [Iceable] };
+		m.ice_inches = node.getNode("ice-inches", 1);
+		m.sensitivity = node.getNode("sensitivity", 1);
+
+		var deice_prop = node.getValue("salvage-control");
+		m.deice = deice_prop ? props.globals.getNode(deice_prop, 1) : nil;
+		var output_prop = node.getValue("output-property");
+		m.output = output_prop ? props.globals.getNode(output_prop, 1): nil;
+
+		return m;
+	},
+
+	update: func(factor, melt) {
+		var icing = me.ice_inches.getValue();
+		if(me.deice != nil and me.deice.getBoolValue()) {
+			icing += melt;
+		} else {
+			icing += factor * me.sensitivity.getValue();
+		}
+		if(icing < 0) icing = 0;
+
+		me.ice_inches.setValue(icing);
+		if(me.output != nil) me.output.setValue(icing);
+	},
+};
+
+
 var dewpoint = 0;
 var temperature = 0;
 var speed = 0;
@@ -31,33 +60,12 @@ var lengAnti = 0;
 var rengAnti = 0;
 var WingHasBeenTurnedOff = 0;
 var GroundModeFinished = 0;
-var icing1 = 0;
-var sensitive1 = 0;
-var v = 0;
-var a = 0;
-var icing2 = 0;
-var sensitive2 = 0;
-var u = 0;
-var b = 0;
-var icing3 = 0;
-var sensitive3 = 0;
-var t = 0;
-var c = 0;
-var icing4 = 0;
-var sensitive4 = 0;
-var s = 0;
-var d = 0;
-var icing5 = 0;
-var sensitive5 = 0;
-var r = 0;
-var icing6 = 0;
-var sensitive6 = 0;
-var q = 0;
-var e = 0;
 var spread = 0;
 var windowprb = 0;
 var stateL = 0;
 var stateR = 0;
+
+var iceables = [];
 
 var icingInit = func {
 	setprop("systems/icing/severity", "0"); # maximum severity: we will make it random
@@ -80,6 +88,13 @@ var icingInit = func {
 	setprop("systems/pitot/failed", 1);
 	setprop("controls/deice/WingHasBeenTurnedOff", 0);
 	setprop("controls/deice/GroundModeFinished", 0);
+
+	iceables = props.globals.getNode("sim/model/icing", 1).getChildren("iceable");
+	forindex(var i; iceables) {
+		iceables[i] = Iceable.new(iceables[i]);
+	}
+
+	icing_timer.simulatedTime = 1;
 	icing_timer.start();
 }
 
@@ -126,74 +141,9 @@ var icingModel = func {
 	} else if (temperature < -40 and temperature >= -99 and icingCond) {
 		setprop("systems/icing/severity", "1");
 	}
-	
-	icing1 = getprop("sim/model/icing/iceable[0]/ice-inches");
-	sensitive1 = getprop("sim/model/icing/iceable[0]/sensitivity");
-	v = icing1 + (factor * sensitive1);
-	a = icing1 + melt;
-	if (icing1 < 0.0 and !pause) {
-		setprop("sim/model/icing/iceable[0]/ice-inches", 0.0);
-	} else if (wingAnti) {
-		setprop("sim/model/icing/iceable[0]/ice-inches", a);
-	} else if (!pause and !wingAnti) {
-		setprop("sim/model/icing/iceable[0]/ice-inches", v);
-	}
-	
-	icing2 = getprop("sim/model/icing/iceable[1]/ice-inches");
-	sensitive2 = getprop("sim/model/icing/iceable[1]/sensitivity");
-	u = icing2 + (factor * sensitive2);
-	b = icing2 + melt;
-	if (icing2 < 0.0 and !pause) {
-		setprop("sim/model/icing/iceable[1]/ice-inches", 0.0);
-	} else if (lengAnti) {
-		setprop("sim/model/icing/iceable[1]/ice-inches", b);
-	} else if (!pause and !lengAnti) {
-		setprop("sim/model/icing/iceable[1]/ice-inches", u);
-	}
-	
-	icing3 = getprop("sim/model/icing/iceable[2]/ice-inches");
-	sensitive3 = getprop("sim/model/icing/iceable[2]/sensitivity");
-	t = icing3 + (factor * sensitive3);
-	c = icing3 + melt;
-	if (icing3 < 0.0 and !pause) {
-		setprop("sim/model/icing/iceable[2]/ice-inches", 0.0);
-	} else if (rengAnti) {
-		setprop("sim/model/icing/iceable[2]/ice-inches", c);
-	} else if (!pause and !rengAnti) {
-		setprop("sim/model/icing/iceable[2]/ice-inches", t);
-	}
-	
-	icing4 = getprop("sim/model/icing/iceable[3]/ice-inches");
-	sensitive4 = getprop("sim/model/icing/iceable[3]/sensitivity");
-	s = icing4 + (factor * sensitive4);
-	d = icing4 + melt;
-	if (icing4 < 0.0 and !pause) {
-		setprop("sim/model/icing/iceable[3]/ice-inches", 0.0);
-	} else if (windowprobe) {
-		setprop("sim/model/icing/iceable[3]/ice-inches", d);
-	} else if (!pause and !windowprobe) {
-		setprop("sim/model/icing/iceable[3]/ice-inches", s);
-	}
-	
-	icing5 = getprop("sim/model/icing/iceable[4]/ice-inches");
-	sensitive5 = getprop("sim/model/icing/iceable[4]/sensitivity");
-	r = icing5 + (factor * sensitive5);
-	if (icing5 < 0.0 and !pause) {
-		setprop("sim/model/icing/iceable[4]/ice-inches", 0.0);
-	} else if (!pause) {
-		setprop("sim/model/icing/iceable[4]/ice-inches", r);
-	}
-	
-	icing6 = getprop("sim/model/icing/iceable[5]/ice-inches");
-	sensitive6 = getprop("sim/model/icing/iceable[5]/sensitivity");
-	q = icing6 + (factor * sensitive6);
-	e = icing6 + melt;
-	if (icing6 < 0.0 and !pause) {
-		setprop("sim/model/icing/iceable[5]/ice-inches", 0.0);
-	} else if (windowprobe) {
-		setprop("sim/model/icing/iceable[5]/ice-inches", e);
-	} else if (!pause and !windowprobe) {
-		setprop("sim/model/icing/iceable[5]/ice-inches", q);
+
+	foreach(iceable; iceables) {
+		iceable.update(factor, melt);
 	}
 	
 	# Do we create ice?
