@@ -609,27 +609,6 @@
 	</filter>
 	
 	<filter>
-		<name>Icing Severity</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/systems/icing/severity</property>
-					<entry><ind>0</ind><dep>-0.00000166</dep></entry>
-					<entry><ind>1</ind><dep> 0.00000277</dep></entry>
-					<entry><ind>2</ind><dep> 0.00000277</dep></entry>
-					<entry><ind>3</ind><dep> 0.00000554</dep></entry>
-					<entry><ind>4</ind><dep> 0.00001108</dep></entry>
-					<entry><ind>5</ind><dep> 0.00002216</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/systems/icing/factor</output>
-	</filter>
-	
-	<filter>
 		<name>TAS</name>
 		<type>gain</type>
 		<gain>1.0</gain>

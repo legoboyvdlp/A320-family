@@ -3,6 +3,8 @@
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)
 
+
+### Ice sensitive components definition.
 var Iceable = {
 	new: func(node) {
 		var m = { parents: [Iceable] };
@@ -32,17 +34,64 @@ var Iceable = {
 };
 
 
-var dewpoint = 0;
-var temperature = 0;
-var speed = 0;
-var visibility = 0;
-var visibLclWx = 0;
-var severity = 0;
-var factor = 0;
+### Icing parameters computation.
+# Environmental parameters of the icing model.
+var environment = {
+	dewpoint: props.globals.getNode("environment/dewpoint-degc"),
+	temperature: props.globals.getNode("environment/temperature-degc"),
+	visibility: props.globals.getNode("environment/effective-visibility-m"),
+	visibLclWx: props.globals.getNode("environment/visibility-m"),
+};
+
+
+# Icing factor computation.
 var maxSpread = 0;
-var icingCond = 0;
+
+var severity_factor_table = [
+	-0.00000166,
+	0.00000277,
+	0.00000277,
+	0.00000554,
+	0.00001108,
+	0.00002216,
+];
+
+var melt_factor = -0.00005;
+
+var icing_factor = func() {
+	var temperature = environment.temperature.getValue();
+	var dewpoint = environment.dewpoint.getValue();
+	var visibility = environment.visibility.getValue();
+	var visibLclWx = environment.visibLclWx.getValue();
+
+	# Do we create ice?
+	var spread = temperature - dewpoint;
+	# freezing fog or low temp and below dp or in advanced wx cloud
+	var icingCond = ((spread < maxSpread or visibility < 1000 or visibLclWx < 5000)
+					 and temperature < 0);
+
+	# todo: turn this into a table or something
+	var severity = 0;
+	if (icingCond) {
+		if (temperature >= -2) {
+			severity = 1;
+		} else if (temperature >= -12) {
+			severity = 3;
+		} else if (temperature >= -30) {
+			severity = 5;
+		} else if (temperature >= -40) {
+			severity = 3;
+		} else if (temperature >= -99) {
+			severity = 1;
+		}
+	}
+
+	return severity_factor_table[severity];
+}
+
+
+var speed = 0;
 var pause = 0;
-var melt = 0;
 var windowprobe = 0;
 var wingBtn = 0;
 var wingFault = 0;
@@ -60,7 +109,6 @@ var lengAnti = 0;
 var rengAnti = 0;
 var WingHasBeenTurnedOff = 0;
 var GroundModeFinished = 0;
-var spread = 0;
 var windowprb = 0;
 var stateL = 0;
 var stateR = 0;
@@ -68,11 +116,6 @@ var stateR = 0;
 var iceables = [];
 
 var icingInit = func {
-	setprop("systems/icing/severity", "0"); # maximum severity: we will make it random
-	setprop("systems/icing/factor", 0.0); # the factor is how many inches we add per second
-	setprop("systems/icing/max-spread-degc", 0.0);
-	setprop("systems/icing/melt-w-heat-factor", -0.00005000);
-	setprop("systems/icing/icingcond", 0);
 	setprop("controls/switches/windowprobeheat", 0);
 	setprop("controls/switches/wing", 0);
 	setprop("controls/switches/wingfault", 0);
@@ -99,17 +142,8 @@ var icingInit = func {
 }
 
 var icingModel = func {
-	dewpoint = getprop("environment/dewpoint-degc");
-	temperature = getprop("environment/temperature-degc");
 	speed = getprop("velocities/airspeed-kt");
-	visibility = getprop("environment/effective-visibility-m");
-	visibLclWx = getprop("environment/visibility-m");
-	severity = getprop("systems/icing/severity");
-	factor = getprop("systems/icing/factor");
-	maxSpread = getprop("systems/icing/max-spread-degc");
-	icingCond = getprop("systems/icing/icingcond");
 	pause = getprop("sim/freeze/master");
-	melt = getprop("systems/icing/melt-w-heat-factor");
 	windowprobe = getprop("controls/deice/windowprobeheat");
 	wingBtn = getprop("controls/switches/wing");
 	wingFault = getprop("controls/switches/wingfault");
@@ -127,39 +161,17 @@ var icingModel = func {
 	rengAnti = getprop("controls/deice/rengine");
 	WingHasBeenTurnedOff = getprop("controls/deice/WingHasBeenTurnedOff");
 	GroundModeFinished = getprop("controls/deice/GroundModeFinished");
-	
-	if (temperature >= 0 or !icingCond) {
-		setprop("systems/icing/severity", "0");
-	} else if (temperature < 0 and temperature >= -2 and icingCond) {
-		setprop("systems/icing/severity", "1");
-	} else if (temperature < -2 and temperature >= -12 and icingCond) {
-		setprop("systems/icing/severity", "3");
-	} else if (temperature < -12 and temperature >= -30 and icingCond) {
-		setprop("systems/icing/severity", "5");
-	} else if (temperature < -30 and temperature >= -40 and icingCond) {
-		setprop("systems/icing/severity", "3");
-	} else if (temperature < -40 and temperature >= -99 and icingCond) {
-		setprop("systems/icing/severity", "1");
-	}
 
+	var factor = icing_factor();
 	foreach(iceable; iceables) {
-		iceable.update(factor, melt);
-	}
-	
-	# Do we create ice?
-	spread = temperature - dewpoint;
-	# freezing fog or low temp and below dp or in advanced wx cloud
-	if ((spread < maxSpread and temperature < 0) or (temperature < 0 and visibility < 1000) or (visibLclWx < 5000 and temperature < 0)) { 
-		setprop("systems/icing/icingcond", 1);
-	} else {
-		setprop("systems/icing/icingcond", 0);
+		iceable.update(factor, melt_factor);
 	}
 	
 	if (WingHasBeenTurnedOff and !wowl and !wowr and GroundModeFinished) {
 		setprop("controls/deice/wing", 1);
 		setprop("controls/switches/WingHasBeenTurnedOff", 0);
 	}
-		
+
 	# If we have low pressure we have a fault
 	if (PSI < 10) {
 		setprop("controls/switches/wingfault", 1);
@@ -182,7 +194,7 @@ var icingModel = func {
 			setprop("systems/pitot/failed", 0);
 		}
 	}
-	
+
 	# if ((getprop("systems/electrical/bus/dc-1") == 0 or getprop("systems/electrical/bus/dc-2") == 0) and getprop("fdm/jsbsim/position/wow") == 0) {
 	#	setprop("controls/switches/leng", 1);
 	#	setprop("controls/switches/reng", 1);
