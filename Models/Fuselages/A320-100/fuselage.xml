@@ -14,7 +14,7 @@
     
 	<effect>
 		<inherits-from>Effects/glass</inherits-from>
-		<object-name>Windshield</object-name>
+		<object-name>Windsheild</object-name>
 		<object-name>Windows</object-name>
 		<object-name>glass</object-name>
 		<object-name>glass1</object-name>
