@@ -2,7 +2,7 @@
 
 <!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
-<PropertyList>
+<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
 
 		<author>Joshua Davidson (Octal450), Jonathan Redpath (legoboyvdlp), Thorsten Herrmann (TH-555), Based on IDG-A32X</author>
