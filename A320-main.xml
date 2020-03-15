@@ -1800,6 +1800,12 @@
 					<value>0</value>
 					<value>1</value>
 				</binding>
+				<binding>
+					<command>property-cycle</command>
+					<property>sim/rendering/als-secondary-lights/use-searchlight</property>
+					<value>0</value>
+					<value>1</value>
+				</binding>
 			</key>
 		</keyboard>
 	</input>
