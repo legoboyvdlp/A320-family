@@ -52,6 +52,7 @@
 					<ice-inches>0.0</ice-inches>
 					<!-- no salvage control, no deicing of the fuselage -->
 					<sensitivity type="double">0.3</sensitivity>
+					<salvage-control>services/deicing_truck/deicing/position-norm</salvage-control>
 					<output-property>/fdm/jsbsim/ice/fuselage</output-property>
 				</iceable>
 				<iceable>
