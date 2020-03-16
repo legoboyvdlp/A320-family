@@ -37,24 +37,7 @@
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
 		<name>contrail</name>
 		<condition>
-			<and>
-				<greater-than>
-					<property>engines/engine[1]/n2-actual</property>
-					<value>50</value>
-				</greater-than>
-				<greater-than>
-					<property>position/altitude-ft</property>
-					<value>19000</value>
-				</greater-than>
-				<less-than>
-					<property>environment/temperature-degc</property>
-					<value>-30</value>
-				</less-than>
-				<equals>
-					<property>engines/engine[1]/state</property>
-					<value>3</value>
-				</equals>
-			</and>
+			<property>environment/contrail</property>
 		</condition>
 		<overlay>
 			<params>

@@ -6,8 +6,8 @@
 		<texture>res/smoke.png</texture>
 		<emissive>false</emissive>
 		<lighting>false</lighting>
-		
-		<attach>world</attach>
+		<type>normal</type>
+		<attach>local</attach>
 
 		<condition>
 			<and>
@@ -98,20 +98,36 @@
 				<z-m>0</z-m>
 			</vertex>
 			<vertex>
-				<x-m>23</x-m>
+				<x-m>22</x-m>
 				<y-m>16</y-m>
 				<z-m>0.7</z-m>
 			</vertex>
 			<vertex>
-				<x-m>21</x-m>
+				<x-m>19</x-m>
 				<y-m>2.3</y-m>
 				<z-m>-1</z-m>
 			</vertex>
 		</placer>
 
      <shooter>
-         <theta-min-deg>90</theta-min-deg>
-         <theta-max-deg>90</theta-max-deg>
+         <theta-min-deg>
+   			<!-- <expression>
+					<sum>
+		         	<value>70</value>
+		         	<property>systems/navigation/adr/output/aoa-1</property>
+		         </sum>
+		      </expression> -->
+		      <value>90</value>
+         </theta-min-deg>
+         <theta-max-deg>
+   			<!-- <expression>
+					<sum>
+		         	<value>110</value>
+		         	<property>systems/navigation/adr/output/aoa-1</property>
+		         </sum>
+		      </expression> -->
+		      <value>90</value>        
+         </theta-max-deg>
          <phi-min-deg>90</phi-min-deg>
          <phi-max-deg>90</phi-max-deg>
          <speed-mps>
@@ -136,7 +152,12 @@
 
      <counter>
          <particles-per-sec>
-			<value>400</value>
+			<expression>
+				<product>
+					<value>4</value>
+					<property>environment/relative-humidity</property>
+				</product>
+			</expression>
 			<spread>10</spread>
          </particles-per-sec>
      </counter>
@@ -145,29 +166,85 @@
 
      <particle>
          <start>
-             <color>
-                 <red><value>0.9</value></red>
-                 <green><value>0.9</value></green>
-                 <blue><value>0.9</value></blue>
-                 <alpha><value>0.04</value></alpha>
-             </color>
-             <size>
-                 <value>1.5</value>
-             </size>
+				<color>
+					<red>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</red>
+					<green>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</green>
+					<blue>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</blue>
+					<alpha>
+						<expression>
+							<product>
+								<value>0.0007</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</alpha>
+				</color>
+				<size>
+					<value>1.5</value>
+				</size>
          </start>
          <end>
-             <color>
-                 <red><value>1</value></red>
-                 <green><value>1</value></green>
-                 <blue><value>1</value></blue>
-                 <alpha><value>0.02</value></alpha>
-             </color>
-             <size>
-                 <value>2</value>
-             </size>
+				<color>
+					<red>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</red>
+					<green>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</green>
+					<blue>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</blue>
+					<alpha>
+						<expression>
+							<product>
+								<value>0.00001</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</alpha>
+				</color>
+            <size>
+            	<value>2</value>
+            </size>
          </end>
          <life-sec>
-             <value>0.001</value>
+             <value>0.00001</value>
          </life-sec>
          <mass-kg>0.025</mass-kg>
          <radius-m>0.175</radius-m>

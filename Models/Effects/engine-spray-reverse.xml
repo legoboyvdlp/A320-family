@@ -15,12 +15,12 @@
 				<vertex>
 					<x-m>1</x-m>
 					<y-m>3</y-m>
-					<z-m>-2</z-m>
+					<z-m>-1</z-m>
 				</vertex>
 				<vertex>
 					<x-m>1</x-m>
 					<y-m>-3</y-m>
-					<z-m>-2</z-m>
+					<z-m>-1</z-m>
 				</vertex>
 			</placer>
 		
@@ -30,23 +30,28 @@
             <phi-min-deg>0</phi-min-deg>
             <phi-max-deg>0</phi-max-deg>
             <speed-mps>
-                <value>0</value>
-                <spread>0</spread>
+                <value>10</value>
+                <spread>1</spread>
             </speed-mps>
             <rotation-speed>
                 <x-max-deg-sec>180</x-max-deg-sec>
-                <x-min-deg-sec>180</x-min-deg-sec>
+                <x-min-deg-sec>-180</x-min-deg-sec>
                 <y-max-deg-sec>180</y-max-deg-sec>
                 <y-min-deg-sec>-180</y-min-deg-sec>
-                <z-max-deg-sec>-180</z-max-deg-sec>
+                <z-max-deg-sec>180</z-max-deg-sec>
                 <z-min-deg-sec>-180</z-min-deg-sec>
             </rotation-speed>
 		</shooter>
 		
 		<counter>
 			<particles-per-sec>
-			<value>50</value>
-			<spread>10</spread>
+				<expression>
+					<product>
+						<property>environment/surface/wetness</property>
+						<value>50</value>
+					</product>
+				</expression>
+				<spread>0</spread>
 			</particles-per-sec>
 		</counter>
 		
@@ -54,29 +59,85 @@
 		
 		<particle>
          <start>
-             <color>
-                 <red><value>0.9</value></red>
-                 <green><value>0.9</value></green>
-                 <blue><value>0.9</value></blue>
-                 <alpha><value>0.04</value></alpha>
-             </color>
+				<color>
+					<red>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</red>
+					<green>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</green>
+					<blue>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</blue>
+					<alpha>
+						<expression>
+							<product>
+								<value>0.2</value>
+								<property>environment/surface/wetness</property>
+							</product>
+						</expression>
+					</alpha>
+				</color>
              <size>
-                 <value>0.5</value>
+                 <value>5</value>
              </size>
          </start>
          <end>
-             <color>
-                 <red><value>1</value></red>
-                 <green><value>1</value></green>
-                 <blue><value>1</value></blue>
-                 <alpha><value>0.02</value></alpha>
-             </color>
-             <size>
-                 <value>10</value>
-             </size>
+				<color>
+					<red>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</red>
+					<green>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</green>
+					<blue>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</blue>
+					<alpha>
+						<expression>
+							<product>
+								<value>0.1</value>
+								<property>environment/surface/wetness</property>
+							</product>
+						</expression>
+					</alpha>
+				</color>
+            <size>
+            	<value>10</value>
+            </size>
          </end>
          <life-sec>
-             <value>1</value>
+             <value>0.5</value>
          </life-sec>
          <mass-kg>0.025</mass-kg>
          <radius-m>0.175</radius-m>
