@@ -12,7 +12,7 @@ var viewName = "XX";
 
 var fovZoom = func(d) {
 	viewName = getprop("sim/current-view/name");
-	canChangeZOffset = getprop("sim/current-view/type") == "lookat" and viewName != "Tower View"  and viewName != "Tower View AGL" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View";
+	canChangeZOffset = getprop("sim/current-view/type") == "lookat" and viewName != "Tower View"  and viewName != "Tower View AGL" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View" and viewName != "Walker Orbit View";
 	
 	if (getprop("sim/current-view/z-offset-m") <= -20) {
 		decStep = -2;
