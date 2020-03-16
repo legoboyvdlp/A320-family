@@ -43,6 +43,11 @@ var environment = {
 	visibLclWx: props.globals.getNode("environment/visibility-m"),
 };
 
+var effects = {
+	frost_inch: props.globals.getNode("environment/aircraft-effects/frost-inch", 1),
+	frost_norm: props.globals.getNode("environment/aircraft-effects/frost-level"),
+};
+
 
 # Icing factor computation.
 var maxSpread = 0;
@@ -166,6 +171,8 @@ var icingModel = func {
 	foreach(iceable; iceables) {
 		iceable.update(factor, melt_factor);
 	}
+
+	effects.frost_norm.setDoubleValue(effects.frost_inch.getValue() * 50);
 	
 	if (WingHasBeenTurnedOff and !wowl and !wowr and GroundModeFinished) {
 		setprop("controls/deice/wing", 1);
