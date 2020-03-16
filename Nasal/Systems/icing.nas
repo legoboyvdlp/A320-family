@@ -142,7 +142,6 @@ var icingInit = func {
 		iceables[i] = Iceable.new(iceables[i]);
 	}
 
-	icing_timer.simulatedTime = 1;
 	icing_timer.start();
 }
 
@@ -333,3 +332,4 @@ var update_Icing = func {
 }
 
 var icing_timer = maketimer(0.2, update_Icing);
+icing_timer.simulatedTime = 1;
