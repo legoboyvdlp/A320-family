@@ -229,15 +229,42 @@
 	</flipflop>
 	
 	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>ECAM/altitude-alert-monostable-set</property>
+		</S>
+		<R>
+			<property>ECAM/altitude-alert-monostable-intermediate-output</property>
+		</R>
+		<output>ECAM/altitude-alert-monostable-flipflop-intermediate</output>
+	</flipflop>
+	
+	<flipflop>
 		<type>monostable</type>
+		<inverted type="bool">true</inverted>
 		<time>
 			<value>1.5</value>
 		</time>
 		<S>
-			<property>ECAM/altitude-alert-monostable-set</property>
+			<not><property>ECAM/altitude-alert-monostable-flipflop-intermediate</property></not>
 		</S>
-		<output>ECAM/altitude-alert-monostable-output</output>
+		<output>ECAM/altitude-alert-monostable-intermediate-output</output>
 	</flipflop>
+	
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<property>ECAM/altitude-alert-monostable-flipflop-intermediate</property>
+					<not><property>ECAM/altitude-alert-monostable-intermediate-output</property></not>
+				</and>
+			</condition>
+			<value>1</value>
+		</input>
+		<output>ECAM/altitude-alert-monostable-output</output>
+	</filter>	
 	
 	<filter>
 		<type>derivative</type>
@@ -292,11 +319,13 @@
 	
 	
 	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
 		<input>
 			<condition>
 				<or>
-					<property>ECAM/gear-downlocked-set</property>
-					<property>ECAM/alt-is-changing</property>
+					<equals><property>ECAM/gear-downlocked-output</property><value>1</value></equals>
+					<equals><property>ECAM/alt-is-changing</property><value>1</value></equals>
 				</or>
 			</condition>
 			<value>1</value>
@@ -304,8 +333,8 @@
 		<input>
 			<condition>
 				<and>
-					<not><property>ECAM/gear-downlocked-set</property></not>
-					<not><property>ECAM/alt-is-changing</property></not>
+					<equals><property>ECAM/gear-downlocked-output</property><value>0</value></equals>
+					<equals><property>ECAM/alt-is-changing</property><value>0</value></equals>
 				</and>
 			</condition>
 			<value>0</value>
@@ -316,7 +345,7 @@
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>ECAM/altitude-alert-monostable-set</property>
+			<property>ECAM/flipflop/altitude-alert-rs-set</property>
 		</S>
 		<R>
 			<property>ECAM/flipflop/alt-alert-rs-reset</property>

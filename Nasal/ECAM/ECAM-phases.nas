@@ -40,6 +40,7 @@ var FWC = {
 		m80kt: props.globals.getNode("ECAM/phases/monostable-80kt"),
 		altAlert1: props.globals.initNode("ECAM/altitude-alert-monostable-set", 0, "BOOL"),
 		altAlert1Output: props.globals.initNode("ECAM/altitude-alert-monostable-output"),
+		altAlert2: props.globals.initNode("ECAM/flipflop/altitude-alert-rs-set", 0, "BOOL"),
 	},
 	Flipflop: {
 		gearSet: props.globals.initNode("ECAM/phases/flipflop/gear-set", 0, "BOOL"),
