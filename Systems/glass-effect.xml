@@ -26,10 +26,10 @@
                 <table>
                     <independentVar>velocities/v-aero-fps</independentVar>
                     <tableData>
-                        -25 -0.5
+                        -25 -0.1
                         -8  0
                         8   0
-                        25  0.5
+                        25  0.1
                     </tableData>
                 </table>
             </function>

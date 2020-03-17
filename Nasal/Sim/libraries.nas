@@ -841,14 +841,14 @@ var lightsView = func() {
 		}
 		
 		var hd = getprop("sim/current-view/heading-offset-deg");
-		var hd_t = 335;
+		var hd_t = 329;
 		if (hd < 180) {
 		  hd_t = hd_t - 360;
 		}
 		
 		interpolate("sim/current-view/field-of-view", 63, 0.66);
 		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", 10.6, 0.66);
+		interpolate("sim/current-view/pitch-offset-deg", 17.533, 0.66);
 		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
 		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
 		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
