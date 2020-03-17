@@ -112,7 +112,7 @@
 		<object-name>ACTUTATOR</object-name>
 		<object-name>Main Tires</object-name>
 		<object-name>Compression lower scissor</object-name>
-		<property>gear/gear[1]/compression-ft</property>
+		<property>gear/gear[1]/compression-norm</property>
 		<factor>0.305</factor>
 		<axis>
 			<x1-m>0</x1-m>

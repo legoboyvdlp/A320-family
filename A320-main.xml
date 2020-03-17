@@ -45,13 +45,14 @@
 					<ice-inches>0.0</ice-inches>
 					<salvage-control>/controls/deice/windowprobeheat</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
-					<!-- not relevant for fdm, ignore output-property -->
+					<output-property>/environment/aircraft-effects/frost-inch</output-property>
 				</iceable>
 				<iceable>
 					<name>Fuselage</name>
 					<ice-inches>0.0</ice-inches>
-					<!-- no salvage control, no deicing of the fuselage -->
+					<!-- salvage control: de-icing truck -->
 					<sensitivity type="double">0.3</sensitivity>
+					<salvage-control>services/deicing_truck/deicing/position-norm</salvage-control>
 					<output-property>/fdm/jsbsim/ice/fuselage</output-property>
 				</iceable>
 				<iceable>
@@ -1676,6 +1677,33 @@
 					<script>libraries.resetView();</script>
 				</binding>
 			</key>
+			<key n="105">
+				<name>i</name>
+				<desc>Change view to lights</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.lightsView();</script>
+				</binding>
+			</key>
+			<key n="111">
+				<name>o</name>
+				<desc>Change view to overhead</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.overheadView();</script>
+				</binding>
+			</key>
+			<key n="117">
+				<name>u</name>
+				<desc>Change view to pedestal</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.pedestalView();</script>
+				</binding>
+			</key>
 			<key n="120">
 				<name>x</name>
 				<desc>Decrease field of view</desc>
@@ -1683,6 +1711,15 @@
 				<binding>
 					<command>nasal</command>
 					<script>libraries.fovZoom(-1);</script>
+				</binding>
+			</key>
+			<key n="121">
+				<name>y</name>
+				<desc>Change view to autopilot</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.autopilotView();</script>
 				</binding>
 			</key>
 			<key n="127">
@@ -1797,6 +1834,12 @@
 				<binding>
 					<command>property-cycle</command>
 					<property>sim/rendering/als-secondary-lights/use-flashlight</property>
+					<value>0</value>
+					<value>1</value>
+				</binding>
+				<binding>
+					<command>property-cycle</command>
+					<property>sim/rendering/als-secondary-lights/use-searchlight</property>
 					<value>0</value>
 					<value>1</value>
 				</binding>
@@ -1926,6 +1969,9 @@
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
 			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
 		</Dialogs>
+		<save>
+			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
+		</save>
 	</nasal>
 
 </PropertyList>
