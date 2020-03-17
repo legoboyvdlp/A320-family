@@ -1261,9 +1261,6 @@ var canvas_PFD_1 = {
 				}
 				
 				tgt_flap = 200;
-				if (ind_spd >= 210) {
-					tgt_flap = 215;
-				}
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
@@ -1881,9 +1878,6 @@ var canvas_PFD_2 = {
 				}
 				
 				tgt_flap = 200;
-				if (ind_spd >= 210) {
-					tgt_flap = 215;
-				}
 				me.flaptrgt = tgt_flap - 30 - me.ASI;
 				
 				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
