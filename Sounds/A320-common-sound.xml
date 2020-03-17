@@ -1593,23 +1593,23 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.2</factor>
+				<factor>0.4</factor>
 			</volume>
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</cricket>
-	
+		
 		<cchord>
-			<name>Cricket</name>
+			<name>C-chord</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/c-chord.wav</path>
-			<mode>once</mode>
+			<mode>looped</mode>
 			<type>avionics</type>
 			<condition>
 				<property>/sim/sound/warnings/cchord</property>
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.2</factor>
+				<factor>0.6</factor>
 			</volume>
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
