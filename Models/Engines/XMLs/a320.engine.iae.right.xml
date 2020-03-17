@@ -82,7 +82,7 @@
 		<offsets>
 			<x-m>0</x-m>
 			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<z-m>0.3</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
