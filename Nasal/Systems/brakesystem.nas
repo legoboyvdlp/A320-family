@@ -70,10 +70,10 @@ var BrakeSystem =
 		setprop("gear/gear[2]/R-Thrust",0);
 
 		#Introducing a random error on temp sensors (max 5°C)
-		setprop("gear/gear[1]/L1error-temp-degc", math.round(rand()*(5)) - 2.5);
-		setprop("gear/gear[1]/L2error-temp-degc", math.round(rand()*(5)) - 2.5);
-		setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)) - 2.5);
-		setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)) - 2.5);		  
+		setprop("gear/gear[1]/L1error-temp-degc", math.round(rand()*(5)));
+		setprop("gear/gear[1]/L2error-temp-degc", math.round(rand()*(5)));
+		setprop("gear/gear[2]/R3error-temp-degc", math.round(rand()*(5)));
+		setprop("gear/gear[2]/R4error-temp-degc", math.round(rand()*(5)));		  
 
 		#var atemp  =  getprop("environment/temperature-degc") or 0;
 		#var vmach  =  getprop("velocities/mach") or 0;
