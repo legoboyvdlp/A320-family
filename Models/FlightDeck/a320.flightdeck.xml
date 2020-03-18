@@ -5307,6 +5307,10 @@
 				</condition>
 				<command>nasal</command>
 				<script>
+					if (getprop("sim/sound/warnings/cchord")) {
+						setprop("sim/sound/warnings/cchord-inhibit", 1);
+					}
+					
 					if (getprop("it-autoflight/output/ap-warning") == 1) {
 						setprop("it-autoflight/output/ap-warning", 0);
 					}

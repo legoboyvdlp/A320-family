@@ -32,6 +32,10 @@ var gear_agl_cur = nil;
 var numberMinutes = nil;
 var timeNow = nil;
 var timer10secIRS = nil;
+var altAlertInhibit = nil;
+var alt200 = nil;
+var alt750 = nil;
+var bigThree = nil;
 
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
@@ -742,6 +746,84 @@ var messages_priority_3 = func {
 		ap_offw.active = 1;
 	} else {
 		ECAM_controller.warningReset(ap_offw);
+	}
+	
+	# C-Chord
+	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 200) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 200) {
+		alt200 = 1;
+	} else {
+		alt200 = 0;
+	}
+	
+	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 750) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 750) {
+		alt750 = 1;
+	} else {
+		alt750 = 0;
+	}
+	
+	if (FWC.altChg.getValue() or pts.Gear.position[0].getValue() == 1 or (getprop("controls/gear/gear-down") and pts.JSBSIM.FCS.slatDeg.getValue() > 4) or fmgc.Output.vert.getValue() == 2) {
+		altAlertInhibit = 1;
+	} else {
+		altAlertInhibit = 0;
+	}
+	
+	if (alt750 and !alt200 and !altAlertInhibit) {
+		FWC.Monostable.altAlert2.setValue(1);
+	} else {
+		FWC.Monostable.altAlert2.setValue(0);
+	}
+	
+	if ((!fcu.ap1.getBoolValue() and !fcu.ap2.getBoolValue()) and FWC.Monostable.altAlert2.getValue()) {
+		FWC.Monostable.altAlert1.setValue(1);
+	} else {
+		FWC.Monostable.altAlert1.setValue(0);
+	}
+	
+	if (alt750 and alt200 and !altAlertInhibit) {
+		setprop("ECAM/flipflop/alt-alert-2-rs-set", 1);
+	} else {
+		setprop("ECAM/flipflop/alt-alert-2-rs-set", 0);
+	}
+	
+	if (getprop("ECAM/flipflop/alt-alert-rs-reset") or (!alt750 and !alt200 and !altAlertInhibit)) {
+		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 1);
+	} else {
+		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 0);
+	}
+	
+	if (alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-2-rs-output")) {
+		setprop("ECAM/flipflop/alt-alert-3-rs-set", 1);
+	} else {
+		setprop("ECAM/flipflop/alt-alert-3-rs-set", 0);
+	}
+	
+	if ((!alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-rs-output")) or (!alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-3-rs-output")) or getprop("ECAM/flipflop/alt-alert-3-rs-set")) {
+		bigThree = 1;
+	} else {
+		bigThree = 0;
+	}
+	
+	if (!gnd and (FWC.Monostable.altAlert1Output.getValue() or bigThree)) {
+		if (!getprop("sim/sound/warnings/cchord-inhibit")) {
+			setprop("sim/sound/warnings/cchord", 1);
+		} else {
+			setprop("sim/sound/warnings/cchord", 0);
+		}
+	} else {
+		setprop("sim/sound/warnings/cchord", 0);
+		setprop("sim/sound/warnings/cchord-inhibit", 0);
+	}
+	
+	if (!gnd and getprop("ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
+		setprop("ECAM/alt-alert-steady", 1);
+	} else {
+		setprop("ECAM/alt-alert-steady", 0);
+	}
+	
+	if (!gnd and bigThree) {
+		setprop("ECAM/alt-alert-flash", 1);
+	} else {
+		setprop("ECAM/alt-alert-flash", 0);
 	}
 	
 	if (!systems.cargoTestBtn.getBoolValue()) {

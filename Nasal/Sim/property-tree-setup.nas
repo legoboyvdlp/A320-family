@@ -102,6 +102,12 @@ var JSBSim = {
 	},
 };
 
+var Modes = {
+	Altimeter: {
+		std: props.globals.getNode("modes/altimeter/std"),
+	},
+};
+
 var Options = {
 	eng: props.globals.getNode("options/eng"),
 };
