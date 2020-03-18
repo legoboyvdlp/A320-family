@@ -2483,7 +2483,7 @@ var altTimer2 = maketimer(0.50, func {
 });
 
 var amber_going1 = 0;
-var amberTimer1 = maketimer(0.50, func {
+var amberTimer1 = maketimer(0.25, func {
 	if (!amberFlash1.getBoolValue()) {
 		amberFlash1.setBoolValue(1);
 	} else {
@@ -2492,7 +2492,7 @@ var amberTimer1 = maketimer(0.50, func {
 });
 
 var amber_going2 = 0;
-var amberTimer2 = maketimer(0.50, func {
+var amberTimer2 = maketimer(0.25, func {
 	if (!amberFlash2.getBoolValue()) {
 		amberFlash2.setBoolValue(1);
 	} else {

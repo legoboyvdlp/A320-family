@@ -33,7 +33,7 @@ var numberMinutes = nil;
 var timeNow = nil;
 var timer10secIRS = nil;
 var altAlertInhibit = nil;
-var alt250 = nil;
+var alt200 = nil;
 var alt750 = nil;
 var bigThree = nil;
 
@@ -749,10 +749,10 @@ var messages_priority_3 = func {
 	}
 	
 	# C-Chord
-	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 250) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 250) {
-		alt250 = 1;
+	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 200) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 200) {
+		alt200 = 1;
 	} else {
-		alt250 = 0;
+		alt200 = 0;
 	}
 	
 	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 750) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 750) {
@@ -767,7 +767,7 @@ var messages_priority_3 = func {
 		altAlertInhibit = 0;
 	}
 	
-	if (alt750 and !alt250 and !altAlertInhibit) {
+	if (alt750 and !alt200 and !altAlertInhibit) {
 		FWC.Monostable.altAlert2.setValue(1);
 	} else {
 		FWC.Monostable.altAlert2.setValue(0);
@@ -779,25 +779,25 @@ var messages_priority_3 = func {
 		FWC.Monostable.altAlert1.setValue(0);
 	}
 	
-	if (alt750 and alt250 and !altAlertInhibit) {
+	if (alt750 and alt200 and !altAlertInhibit) {
 		setprop("ECAM/flipflop/alt-alert-2-rs-set", 1);
 	} else {
 		setprop("ECAM/flipflop/alt-alert-2-rs-set", 0);
 	}
 	
-	if (getprop("ECAM/flipflop/alt-alert-rs-reset") or (!alt750 and !alt250 and !altAlertInhibit)) {
+	if (getprop("ECAM/flipflop/alt-alert-rs-reset") or (!alt750 and !alt200 and !altAlertInhibit)) {
 		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 1);
 	} else {
 		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 0);
 	}
 	
-	if (alt750 and !alt250 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-2-rs-output")) {
+	if (alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-2-rs-output")) {
 		setprop("ECAM/flipflop/alt-alert-3-rs-set", 1);
 	} else {
 		setprop("ECAM/flipflop/alt-alert-3-rs-set", 0);
 	}
 	
-	if ((!alt750 and !alt250 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-rs-output")) or (!alt750 and !alt250 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-3-rs-output")) or getprop("ECAM/flipflop/alt-alert-3-rs-set")) {
+	if ((!alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-rs-output")) or (!alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-3-rs-output")) or getprop("ECAM/flipflop/alt-alert-3-rs-set")) {
 		bigThree = 1;
 	} else {
 		bigThree = 0;
@@ -814,7 +814,7 @@ var messages_priority_3 = func {
 		setprop("sim/sound/warnings/cchord-inhibit", 0);
 	}
 	
-	if (!gnd and getprop("ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt250 and !altAlertInhibit) {
+	if (!gnd and getprop("ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
 		setprop("ECAM/alt-alert-steady", 1);
 	} else {
 		setprop("ECAM/alt-alert-steady", 0);
