@@ -460,6 +460,12 @@
 		</fuel>
 	</consumables>
 	
+	<environment>
+		<aircraft-effects>
+			<frost-inch type="double">0</frost-inch>
+		</aircraft-effects>
+	</environment>	
+	
 	<fdm>
 		<jsbsim>
 			<external_reactions>
