@@ -773,7 +773,7 @@ var messages_priority_3 = func {
 		FWC.Monostable.altAlert2.setValue(0);
 	}
 	
-	if ((fcu.ap1.getBoolValue() or fcu.ap2.getBoolValue()) and FWC.Monostable.altAlert2.getValue()) {
+	if ((!fcu.ap1.getBoolValue() and !fcu.ap2.getBoolValue()) and FWC.Monostable.altAlert2.getValue()) {
 		FWC.Monostable.altAlert1.setValue(1);
 	} else {
 		FWC.Monostable.altAlert1.setValue(0);
