@@ -106,13 +106,13 @@ var fplnItem = {
 			canvas_mcdu.myVertRev[me.computer].del();
 		}
 		canvas_mcdu.myVertRev[me.computer] = nil;
-		notAllowed(me.computer);
 		
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
 				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
 			} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
 				notAllowed(me.computer);
+				return;
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
 			} else {
@@ -123,6 +123,7 @@ var fplnItem = {
 				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
 			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
 				notAllowed(me.computer);
+				return;
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
 			} else {
