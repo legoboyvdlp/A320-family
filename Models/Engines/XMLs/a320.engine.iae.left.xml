@@ -37,24 +37,7 @@
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
 		<name>contrail</name>		
 		<condition>
-			<and>
-				<greater-than>
-					<property>engines/engine[0]/n2-actual</property>
-					<value>50</value>
-				</greater-than>
-				<greater-than>
-					<property>position/altitude-ft</property>
-					<value>19000</value>
-				</greater-than>
-				<less-than>
-					<property>environment/temperature-degc</property>
-					<value>-30</value>
-				</less-than>
-				<equals>
-					<property>engines/engine[0]/state</property>
-					<value>3</value>
-				</equals>
-			</and>
+			<property>environment/contrail</property>
 		</condition>
 		<overlay>
 			<params>
@@ -97,9 +80,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-0.5</x-m>
+			<x-m>0</x-m>
 			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<z-m>0.5</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -172,9 +155,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0.875</x-m>
+			<x-m>0</x-m>
 			<y-m>0</y-m>
-			<z-m>-2.5</z-m>
+			<z-m>0</z-m>
 		</offsets>
 	</model>
 
