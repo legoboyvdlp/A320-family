@@ -14,6 +14,8 @@
 	<animation>
 		<name>DDRMI inside illumination</name>
 		<type>material</type>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
 		<object-name>ddrmi_inside</object-name>
 		<object-name>ddrmi_pointer_1_vor</object-name>
 		<object-name>ddrmi_pointer_1_adf</object-name>
@@ -173,11 +175,13 @@
 			<object-name>ddrmi_vor_adf_flag_2.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
 		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_dme1_screen</object-name>
+		<object-name>ddrmi_dme2_screen</object-name>
 		<object-name>ddrmi_vor_adf_select_1</object-name>
 		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<object-name>ddrmi_pointer_1</object-name>
@@ -205,6 +209,9 @@
 		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<object-name>ddrmi_pointer_1</object-name>
 		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
 	</effect>
 	
 	<effect>
