@@ -96,6 +96,7 @@ setprop("systems/acconfig/options/weight-kgs", 0);
 setprop("systems/acconfig/options/adirs-skip", 0);
 setprop("systems/acconfig/options/welcome-skip", 0);
 setprop("systems/acconfig/options/no-rendering-warn", 0);
+setprop("systems/acconfig/options/save-state", 0);
 setprop("systems/acconfig/options/pfd-rate", 1);
 setprop("systems/acconfig/options/nd-rate", 1);
 setprop("systems/acconfig/options/uecam-rate", 1);
@@ -187,7 +188,15 @@ setlistener("/sim/signals/fdm-initialized", func {
 	}
 	setprop("systems/acconfig/options/revision", current_revision);
 	writeSettings();
+	if (getprop("options/system/save-state") == 1)
+	{
+		save.restore(save.default, getprop("sim/fg-home") ~ "/Export/" ~ getprop("sim/aircraft") ~ "-save.xml");
+	}
 	spinning.stop();
+});
+
+setlistener("/sim/signals/exit", func {
+	save.save(save.default, getprop("sim/fg-home") ~ "/Export/" ~ getprop("sim/aircraft") ~ "-save.xml");
 });
 
 var renderingSettings = {
@@ -223,6 +232,7 @@ var readSettings = func {
 	io.read_properties(getprop("sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 	setprop("options/system/keyboard-mode", getprop("systems/acconfig/options/keyboard-mode"));
 	setprop("options/system/weight-kgs", getprop("systems/acconfig/options/weight-kgs"));
+	setprop("options/system/save-state", getprop("systems/acconfig/options/save-state"));
 	setprop("controls/adirs/skip", getprop("systems/acconfig/options/adirs-skip"));
 	setprop("sim/model/autopush/route/show", getprop("systems/acconfig/options/autopush/show-route"));
 	setprop("sim/model/autopush/route/show-wingtip", getprop("systems/acconfig/options/autopush/show-wingtip"));
@@ -232,6 +242,7 @@ var readSettings = func {
 var writeSettings = func {
 	setprop("systems/acconfig/options/keyboard-mode", getprop("options/system/keyboard-mode"));
 	setprop("systems/acconfig/options/weight-kgs", getprop("options/system/weight-kgs"));
+	setprop("systems/acconfig/options/save-state", getprop("options/system/save-state"));
 	setprop("systems/acconfig/options/adirs-skip", getprop("controls/adirs/skip"));
 	setprop("systems/acconfig/options/autopush/show-route", getprop("sim/model/autopush/route/show"));
 	setprop("systems/acconfig/options/autopush/show-wingtip", getprop("sim/model/autopush/route/show-wingtip"));
