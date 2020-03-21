@@ -376,6 +376,7 @@
 			<default value="/systems/electrical/some-electric-thingie/rat-deploy"/>
 			<test logic="AND" value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt gt 100
+				/sim/time/elapsed-sec gt 30
 				/systems/electrical/bus/ac-1 eq 0
 				/systems/electrical/bus/ac-2 eq 0
 				/controls/electrical/switches/emer-elec-man-on eq 0
