@@ -384,7 +384,7 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX			  ");
+				me["FMA_manmode"].setText("FLX            ");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MAN THR" and thr1_act < 0.83) or (state2_act == "MAN THR" and thr2_act < 0.83)) {
 				me["FMA_flx_box"].hide();
