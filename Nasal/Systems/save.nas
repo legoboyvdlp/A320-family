@@ -33,10 +33,12 @@ var default = [
 	# efis
 	"/instrumentation/efis[0]/inputs/range-nm",
 	"/instrumentation/efis[0]/nd/display-mode",
+	"/instrumentation/efis[0]/mfd/pnl_mode-num", # The model
 	"/instrumentation/efis[0]/input/lh-vor-adf",
 	"/instrumentation/efis[0]/input/rh-vor-adf",
 	"/instrumentation/efis[1]/inputs/range-nm",
 	"/instrumentation/efis[1]/nd/display-mode",
+	"/instrumentation/efis[1]/mfd/pnl_mode-num", # The model
 	"/instrumentation/efis[1]/input/lh-vor-adf",
 	"/instrumentation/efis[1]/input/rh-vor-adf",
 	# parking brake
