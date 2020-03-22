@@ -148,6 +148,13 @@ var canvas_MCDU_base = {
 		me["PERFAPPR_SE"].setColor(0.8078,0.8039,0.8078);
 		me["PERFAPPR_OE"].setColor(0.8078,0.8039,0.8078);
 		
+		me["PERFGA_FE"].setFont(symbol);
+		me["PERFGA_SE"].setFont(symbol);
+		me["PERFGA_OE"].setFont(symbol);
+		me["PERFGA_FE"].setColor(0.8078,0.8039,0.8078);
+		me["PERFGA_SE"].setColor(0.8078,0.8039,0.8078);
+		me["PERFGA_OE"].setColor(0.8078,0.8039,0.8078);
+		
 		me.page = canvas_group;
 		
 		return me;
@@ -157,7 +164,7 @@ var canvas_MCDU_base = {
 		"Simple_L1_Arrow","Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S",
 		"Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S",
 		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","PERFTO","PERFTO_V1","PERFTO_VR",
-		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE"];
+		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
 	},
 	update: func() {
 		if (ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -183,6 +190,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("MCDU MENU");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -266,6 +274,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -349,6 +358,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_PageNum"].setText("1/2");
 				me["Simple_PageNum"].show();
@@ -430,6 +440,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_PageNum"].setText("2/2");
 				me["Simple_PageNum"].show();
@@ -516,6 +527,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("POSITION MONITOR");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -614,6 +626,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("RADIO NAV");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -754,6 +767,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -910,6 +924,7 @@ var canvas_MCDU_base = {
 				me["INITB"].show();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1041,6 +1056,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("FUEL PRED");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1154,6 +1170,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].show();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("TAKE OFF");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1316,6 +1333,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].show();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText("APPR");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1432,6 +1450,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].show();
 				me["Simple_Title"].setText("GO AROUND");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1539,6 +1558,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].setText(sprintf("%s", page));
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1662,6 +1682,7 @@ var canvas_MCDU_base = {
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
