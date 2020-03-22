@@ -3,7 +3,7 @@
     <inherits-from>Effects/model-interior</inherits-from>
     <parameters>
         <lightmap-enabled type="int">1</lightmap-enabled>
-        <lightmap-factor type="float" n="0"><use>/controls/lighting/panel-light</use></lightmap-factor>
+        <lightmap-factor type="float" n="0"><use>controls/lighting/panel-light</use></lightmap-factor>
         <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
         <texture n="3">
             <image>Aircraft/A320-family/Models/Effects/ddrmi.png</image>

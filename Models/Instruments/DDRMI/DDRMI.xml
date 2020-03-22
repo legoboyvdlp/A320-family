@@ -9,27 +9,7 @@
 <PropertyList>
 	
 	<path>res/DDRMI.ac</path>
-	
-	<!-- Lighting -->
-	<animation>
-		<name>DDRMI inside illumination</name>
-		<type>material</type>
-		<object-name>ddrmi_inside</object-name>
-		<object-name>ddrmi_pointer_1_vor</object-name>
-		<object-name>ddrmi_pointer_1_adf</object-name>
-		<object-name>ddrmi_pointer_2_vor</object-name>
-		<object-name>ddrmi_pointer_2_adf</object-name>
-		<object-name>ddrmi_vor_adf_flag_1</object-name>
-		<object-name>ddrmi_vor_adf_flag_2</object-name>
-		<object-name>ddrmi_hdg</object-name>
-		<emission>
-			<red>0.50</red>
-			<green>0.35</green>
-			<blue>0.2</blue>
-			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
-		</emission>
-	</animation>
-	
+
 	<!-- heading and pointer -->
 	<animation>
 		<name>Heading rotate</name>
@@ -173,13 +153,11 @@
 			<object-name>ddrmi_vor_adf_flag_2.axis</object-name>
 		</axis>
 	</animation>
-	
+
+	<!-- Lighting -->
 	<animation>
-		<name>Panel lighting</name>
+		<name>DDRMI inside illumination</name>
 		<type>material</type>
-		<object-name>ddrmi_body</object-name>
-		<object-name>ddrmi_vor_adf_select_1</object-name>
-		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<object-name>ddrmi_pointer_1</object-name>
 		<object-name>ddrmi_pointer_2</object-name>
 		<object-name>ddrmi_inside</object-name>
@@ -190,10 +168,87 @@
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
 		<object-name>ddrmi_hdg</object-name>
+		<!-- <emission>
+			<red>0.50</red>
+			<green>0.35</green>
+			<blue>0.2</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission> -->
+		<condition>
+			<not>
+				<and>
+					<greater-than>
+						<property>sim/model/lights/dome-light</property>
+						<value>0</value>
+					</greater-than>
+					<less-than>
+						<property>controls/lighting/main-panel-norm</property>
+						<value>0.25</value>
+					</less-than>
+				</and>
+			</not>
+		</condition>
 		<emission>
+			<red>0.50</red>
+			<green>0.35</green>
+			<blue>0.2</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission>
+	</animation>
+
+	<animation>
+		<name>Panel lighting (dome)</name>
+		<type>material</type>
+		<object-name>ddrmi_dme1_screen</object-name>
+		<object-name>ddrmi_dme2_screen</object-name>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_pointer_1_vor</object-name>
+		<object-name>ddrmi_pointer_1_adf</object-name>
+		<object-name>ddrmi_pointer_2_vor</object-name>
+		<object-name>ddrmi_pointer_2_adf</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg</object-name>
+		<!-- <emission>
 			<red>0.3</red>
 			<green>0.3</green>
 			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission> -->
+		<condition>
+			<and>
+				<not>
+					<greater-than>
+						<property>controls/lighting/main-panel-norm</property>
+						<value>0.25</value>
+					</greater-than>
+				</not>
+				<greater-than>
+					<property>sim/model/lights/dome-light</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+		<emission>
+			<red>0.20</red>
+			<green>0.20</green>
+			<blue>0.20</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<animation>
+		<name>DDRMI body lighting</name>
+		<type>material</type>
+		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<emission>
+			<red>0.2</red>
+			<green>0.2</green>
+			<blue>0.2</blue>
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
@@ -205,6 +260,9 @@
 		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<object-name>ddrmi_pointer_1</object-name>
 		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
 	</effect>
 	
 	<effect>

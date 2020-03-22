@@ -216,7 +216,7 @@ var canvas_PFD_base = {
 		return me;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
+		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
 		"FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box","FMA_Middle1",
 		"FMA_Middle2","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank",
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber",
@@ -360,23 +360,28 @@ var canvas_PFD_base = {
 		if (athr.getValue() == 1 and (state1_act == "TOGA" or state1_act == "MCT" or state1_act == "MAN THR" or state2_act == "TOGA" or state2_act == "MCT" or state2_act == "MAN THR") and eng_out.getValue() != 1 and alpha_floor_act != 1 and 
 		toga_lk_act != 1) {
 			me["FMA_man"].show();
-			me["FMA_manmode"].show();
 			if (state1_act == "TOGA" or state2_act == "TOGA") {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("TOGA");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MAN THR" and thr1_act >= 0.83) or (state2_act == "MAN THR" and thr2_act >= 0.83)) {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("THR");
 				me["FMA_man_box"].setColor(0.7333,0.3803,0);
 			} else if ((state1_act == "MCT" or state2_act == "MCT") and thrust_limit_act != "FLX") {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("MCT");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MCT" or state2_act == "MCT") and thrust_limit_act == "FLX") {
@@ -384,29 +389,35 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX			  ");
+				me["FMA_manmode"].hide();
+				me["FMA_flxmode"].show();
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MAN THR" and thr1_act < 0.83) or (state2_act == "MAN THR" and thr2_act < 0.83)) {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("THR");
 				me["FMA_man_box"].setColor(0.7333,0.3803,0);
 			}
 		} else if (athr.getValue() == 1 and (state1_act == "TOGA" or (state1_act == "MCT" and thrust_limit_act == "FLX") or (state1_act == "MAN THR" and thr1_act >= 0.83) or state2_act == "TOGA" or (state2_act == "MCT" and 
 		thrust_limit_act == "FLX") or (state2_act == "MAN THR" and thr2_act >= 0.83)) and eng_out.getValue() == 1 and alpha_floor_act != 1 and toga_lk_act != 1) {
 			me["FMA_man"].show();
-			me["FMA_manmode"].show();
 			if (state1_act == "TOGA" or state2_act == "TOGA") {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("TOGA");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			} else if ((state1_act == "MAN THR" and thr1_act >= 0.83) or (state2_act == "MAN THR" and thr2_act >= 0.83)) {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("THR");
 				me["FMA_man_box"].setColor(0.7333,0.3803,0);
 			} else if ((state1_act == "MCT" or state2_act == "MCT") and thrust_limit_act == "FLX") {
@@ -414,7 +425,8 @@ var canvas_PFD_base = {
 				me["FMA_man_box"].hide();
 				me["FMA_flx_box"].show();
 				me["FMA_flxtemp"].show();
-				me["FMA_manmode"].setText("FLX			  ");
+				me["FMA_manmode"].hide();
+				me["FMA_flxmode"].show();
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
 			}
 		} else {
@@ -423,6 +435,7 @@ var canvas_PFD_base = {
 			me["FMA_man_box"].hide();
 			me["FMA_flx_box"].hide();
 			me["FMA_flxtemp"].hide();
+			me["FMA_flxmode"].hide();
 		}
 		
 		if ((state1_act == "CL" and state2_act != "CL") or (state1_act != "CL" and state2_act == "CL") and eng_out.getValue() != 1) {
@@ -870,12 +883,24 @@ var canvas_PFD_base = {
 				me["ILS_HDG_L"].hide();
 				me["CRS_pointer"].show();
 			} else if (magnetic_hdg_dif < -23.62 and magnetic_hdg_dif >= -180) {
-				me["ILS_left"].setText(sprintf("%3.0f", int(magnetic_hdg)));
+				if (int(magnetic_hdg) < 10) {
+					me["ILS_left"].setText(sprintf("00%1.0f", int(magnetic_hdg)));
+				} else if (int(magnetic_hdg) < 100) {
+					me["ILS_left"].setText(sprintf("0%2.0f", int(magnetic_hdg)));
+				} else {
+					me["ILS_left"].setText(sprintf("%3.0f", int(magnetic_hdg)));
+				}
 				me["ILS_HDG_L"].show();
 				me["ILS_HDG_R"].hide();
 				me["CRS_pointer"].hide();
 			} else if (magnetic_hdg_dif > 23.62 and magnetic_hdg_dif <= 180) {
-				me["ILS_right"].setText(sprintf("%3.0f", int(magnetic_hdg)));
+				if (int(magnetic_hdg) < 10) {
+					me["ILS_right"].setText(sprintf("00%1.0f", int(magnetic_hdg)));
+				} else if (int(magnetic_hdg) < 100) {
+					me["ILS_right"].setText(sprintf("0%2.0f", int(magnetic_hdg)));
+				} else {
+					me["ILS_right"].setText(sprintf("%3.0f", int(magnetic_hdg)));
+				}
 				me["ILS_HDG_R"].show();
 				me["ILS_HDG_L"].hide();
 				me["CRS_pointer"].hide();
