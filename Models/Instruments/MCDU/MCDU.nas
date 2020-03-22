@@ -1410,10 +1410,12 @@ var canvas_MCDU_base = {
 			me["Simple_R2"].setText(" [    ]");
 			me["Simple_R3"].setText(" [    ]");
 			me["Simple_R4"].setText(" [    ]");
+			me["Simple_R6"].setText("PHASE ");
 			me["Simple_R1S"].setText("FINAL");
 			me["Simple_R2S"].setText("MDA");
 			me["Simple_R3S"].setText("DH");
 			me["Simple_R4S"].setText("LDG CONF");
+			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_C1"].setText(" ---");
 			me["Simple_C2"].setText(" ---");
 			me["Simple_C3"].setText(" ---");
@@ -1422,6 +1424,113 @@ var canvas_MCDU_base = {
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
 			me["Simple_C5S"].setText("VLS   ");
+		} else if (page == "GA") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["Simple_Title"].setText("GO AROUND");
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L1"].hide();
+				me["Simple_L2"].hide();
+				me["Simple_L3"].hide();
+				me["Simple_L4"].hide();
+				me["Simple_L5"].show();
+				me["Simple_L6"].show();
+				me["Simple_L0S"].hide();
+				me["Simple_L1S"].hide();
+				me["Simple_L2S"].hide();
+				me["Simple_L3S"].hide();
+				me["Simple_L4S"].hide();
+				me["Simple_L5S"].show();
+				me["Simple_L6S"].show();
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L4_Arrow"].hide();
+				me["Simple_L5_Arrow"].hide();
+				me["Simple_L6_Arrow"].show();
+				me["Simple_R1"].hide();
+				me["Simple_R2"].hide();
+				me["Simple_R3"].hide();
+				me["Simple_R4"].hide();
+				me["Simple_R5"].show();
+				me["Simple_R6"].hide();
+				me["Simple_R1S"].hide();
+				me["Simple_R2S"].hide();
+				me["Simple_R3S"].hide();
+				me["Simple_R4S"].hide();
+				me["Simple_R5S"].show();
+				me["Simple_R6S"].hide();
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R4_Arrow"].hide();
+				me["Simple_R5_Arrow"].hide();
+				me["Simple_R6_Arrow"].hide();
+				me["Simple_C1"].show();
+				me["Simple_C2"].show();
+				me["Simple_C3"].show();
+				me["Simple_C4"].hide();
+				me["Simple_C5"].hide();
+				me["Simple_C6"].hide();
+				me["Simple_C1S"].show();
+				me["Simple_C2S"].show();
+				me["Simple_C3S"].show();
+				me["Simple_C4S"].hide();
+				me["Simple_C5S"].hide();
+				me["Simple_C6S"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, symbol, 0, 0, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
+				me.fontSizeRight(normal, small, 0, 0, 0, normal);
+				
+				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "blu", "blu", "blu", "blu", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (thrAccSet.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+			} else {
+				me["Simple_L5"].setFontSize(small);
+			}
+			if (engOutAccSet.getValue() == 1) {
+				me["Simple_R5"].setFontSize(normal);
+			} else {
+				me["Simple_R5"].setFontSize(small);
+			}
+			
+			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
+			me["Simple_L6"].setText(" PHASE");
+			me["Simple_L5S"].setText("THR RED/ACC");
+			me["Simple_L6S"].setText(" PREV");
+			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
+			me["Simple_R5S"].setText("ENG OUT ACC");
+			me["Simple_C1"].setText(" ---");
+			me["Simple_C2"].setText(" ---");
+			me["Simple_C3"].setText(" ---");
+			me["Simple_C1S"].setText("FLP RETR");
+			me["Simple_C2S"].setText("SLT RETR");
+			me["Simple_C3S"].setText("CLEAN  ");
 		} else if (page == "CLB" or page == "CRZ" or page == "DES") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
