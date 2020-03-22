@@ -26,9 +26,16 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/cruise-fl", 100);
 	setprop("FMGC/internal/cost-index", "0");
 	setprop("FMGC/internal/trans-alt", 18000);
-	setprop("FMGC/internal/reduc-agl-ft", "3000");
-	setprop("FMGC/internal/eng-out-reduc", "3500");
+	setprop("FMGC/internal/reduc-agl-ft", "1500"); #eventually set to 1500 above runway
+	setprop("FMGC/internal/eng-out-reduc", "1500");
 	setprop("FMGC/internal/v1", 0);
+	setprop("FMGC/internal/vr", 0);
+	setprop("FMGC/internal/v2", 0);
+	setprop("FMGC/internal/f-speed", 0);
+	setprop("FMGC/internal/s-speed", 0);
+	setprop("FMGC/internal/o-speed", 0);
+	setprop("FMGC/internal/minspeed", 0);
+	#setprop("FMGC/internal/vapp-speed", 0);
 	setprop("FMGC/internal/vr", 0);
 	setprop("FMGC/internal/v2", 0);
 	setprop("FMGC/internal/block", 0.0);
@@ -179,6 +186,8 @@ var lskbutton = func(btn, i) {
 			perfDESInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
 			perfAPPRInput("L5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
+			perfGAInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
@@ -199,6 +208,8 @@ var lskbutton = func(btn, i) {
 			perfDESInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
 			perfAPPRInput("L6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
+			perfGAInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("L6",i);
 		} else {
@@ -269,6 +280,8 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "5") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
+			perfGAInput("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
@@ -293,6 +306,8 @@ var rskbutton = func(btn, i) {
 			perfCRZInput("R6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
 			perfDESInput("R6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("R6",i);
 		} else if ((getprop("MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
 			if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
 				if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
@@ -374,6 +389,8 @@ var pagebutton = func(btn, i) {
 				setprop("MCDU[" ~ i ~ "]/page", "DES");
 			} else if (getprop("FMGC/status/phase") == 5) {
 				setprop("MCDU[" ~ i ~ "]/page", "APPR");
+			} else if (getprop("FMGC/status/phase") == 6) {
+				setprop("MCDU[" ~ i ~ "]/page", "GA");
 			}
 		} else if (btn == "init") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
