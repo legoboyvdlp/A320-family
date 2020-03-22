@@ -102,7 +102,7 @@ setprop("FMGC/internal/mng-spd", 157);
 setprop("FMGC/internal/mng-spd-cmd", 157);
 setprop("FMGC/internal/mng-kts-mach", 0);
 setprop("FMGC/internal/mach-switchover", 0);
-setprop("it-autoflight/settings/reduc-agl-ft", 3000);
+setprop("it-autoflight/settings/reduc-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("it-autoflight/internal/vert-speed-fpm", 0);
 setprop("it-autoflight/output/fma-pwr", 0);
 setprop("instrumentation/nav[0]/nav-id", "XXX");
@@ -123,7 +123,7 @@ var FMGCinit = func {
 	setprop("FMGC/internal/mng-spd-cmd", 157);
 	setprop("FMGC/internal/mng-kts-mach", 0);
 	setprop("FMGC/internal/mach-switchover", 0);
-	setprop("it-autoflight/settings/reduc-agl-ft", 3000);
+	setprop("it-autoflight/settings/reduc-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("FMGC/internal/decel", 0);
 	setprop("FMGC/internal/loc-source", "NAV0");
 	setprop("FMGC/internal/optalt", 0);

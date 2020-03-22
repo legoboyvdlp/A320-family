@@ -26,8 +26,8 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/cruise-fl", 100);
 	setprop("FMGC/internal/cost-index", "0");
 	setprop("FMGC/internal/trans-alt", 18000);
-	setprop("FMGC/internal/reduc-agl-ft", "3000");
-	setprop("FMGC/internal/eng-out-reduc", "3500");
+	setprop("FMGC/internal/reduc-agl-ft", "1500"); #eventually set to 1500 above runway
+	setprop("FMGC/internal/eng-out-reduc", "1500");
 	setprop("FMGC/internal/v1", 0);
 	setprop("FMGC/internal/vr", 0);
 	setprop("FMGC/internal/v2", 0);
