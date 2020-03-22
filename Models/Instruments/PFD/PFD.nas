@@ -88,7 +88,6 @@ var fd_pitch = props.globals.getNode("it-autoflight/fd/pitch-bar", 1);
 var decision = props.globals.getNode("instrumentation/mk-viii/inputs/arinc429/decision-height", 1);
 var slip_skid = props.globals.getNode("instrumentation/pfd/slip-skid", 1);
 var FMGCphase = props.globals.getNode("FMGC/status/phase", 1);
-var tostate = props.globals.getNode("FMGC/status/to-state", 1);
 var loc = props.globals.getNode("instrumentation/nav[0]/heading-needle-deflection-norm", 1);
 var gs = props.globals.getNode("instrumentation/nav[0]/gs-needle-deflection-norm", 1);
 var show_hdg = props.globals.getNode("it-autoflight/custom/show-hdg", 1);
@@ -1202,11 +1201,11 @@ var canvas_PFD_1 = {
 			
 				me.SPDv1trgtdiff = tgt_v1 - ind_spd;
 			
-				if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
+				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
 					me["v1_group"].show();
 					me["v1_text"].hide();
 					me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
-				} else if (tostate.getValue() == '1') {
+				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["v1_group"].hide();
 					me["v1_text"].show();
 					me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
@@ -1231,7 +1230,7 @@ var canvas_PFD_1 = {
 			
 				me.SPDvrtrgtdiff = tgt_vr - ind_spd;
 			
-				if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
+				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
 					me["vr_speed"].show();
 					me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
 				} else {
@@ -1253,11 +1252,11 @@ var canvas_PFD_1 = {
 			
 				me.SPDv2trgtdiff = tgt_v2 - ind_spd;
 			
-				if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
+				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
 					me["ASI_target"].show();
 					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
 					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
-				} else if (tostate.getValue() == '1') {
+				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["ASI_target"].hide();
 					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
 				}
@@ -1848,11 +1847,11 @@ var canvas_PFD_2 = {
 			
 				me.SPDv1trgtdiff = tgt_v1 - ind_spd;
 			
-				if (tostate.getValue() == '1' and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
+				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
 					me["v1_group"].show();
 					me["v1_text"].hide();
 					me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
-				} else if (tostate.getValue() == '1') {
+				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["v1_group"].hide();
 					me["v1_text"].show();
 					me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
@@ -1877,7 +1876,7 @@ var canvas_PFD_2 = {
 			
 				me.SPDvrtrgtdiff = tgt_vr - ind_spd;
 			
-				if (tostate.getValue() == '1' and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
+				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
 					me["vr_speed"].show();
 					me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
 				} else {
@@ -1899,11 +1898,11 @@ var canvas_PFD_2 = {
 			
 				me.SPDv2trgtdiff = tgt_v2 - ind_spd;
 			
-				if (tostate.getValue() == '1' and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
+				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
 					me["ASI_target"].show();
 					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
 					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
-				} else if (tostate.getValue() == '1') {
+				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["ASI_target"].hide();
 					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
 				}
