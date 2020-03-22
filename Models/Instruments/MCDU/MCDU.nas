@@ -80,6 +80,12 @@ var vr = props.globals.getNode("FMGC/internal/vr", 1);
 var vrSet = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2Set = props.globals.getNode("FMGC/internal/v2-set", 1);
+var f_speed = props.globals.getNode("FMGC/internal/f-speed", 1);
+var s_speed = props.globals.getNode("FMGC/internal/s-speed", 1);
+var o_speed = props.globals.getNode("FMGC/internal/o-speed", 1);
+var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
+#var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
+var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
 var clbReducFt = props.globals.getNode("systems/thrust/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("FMGC/internal/reduc-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("MCDUC/thracc-set", 1);
@@ -1234,6 +1240,7 @@ var canvas_MCDU_base = {
 				
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
+				me.fontSizeCenter(small, small, small, 0, 0, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -1319,9 +1326,29 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("FLEX TO TEMP");
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
-			me["Simple_C1"].setText(" ---");
-			me["Simple_C2"].setText(" ---");
-			me["Simple_C3"].setText(" ---");
+			
+			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
+				lbs1000 = KG2LB * num(zfw.getValue() + block.getValue());
+				
+				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				setprop("FMGC/internal/f-speed", tgt_f);
+				tgt_s = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+				setprop("FMGC/internal/s-speed", tgt_s);
+				tgt_clean = 2 * lbs1000 * 0.45359237 + 85;
+				if (altitude.getValue() > 20000) {
+					tgt_clean += (altitude.getValue() - 20000) / 1000;
+				}
+				setprop("FMGC/internal/o-speed", tgt_clean);
+				
+				me["Simple_C1"].setText(sprintf("%3.0f", f_speed.getValue()));
+				me["Simple_C2"].setText(sprintf("%3.0f", s_speed.getValue()));
+				me["Simple_C3"].setText(sprintf("%3.0f", o_speed.getValue()));
+			} else {
+				me["Simple_C1"].setText(" ---");
+				me["Simple_C2"].setText(" ---");
+				me["Simple_C3"].setText(" ---");
+			}
+			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
@@ -1434,10 +1461,31 @@ var canvas_MCDU_base = {
 			me["Simple_R3S"].setText("DH");
 			me["Simple_R4S"].setText("LDG CONF");
 			me["Simple_R6S"].setText("NEXT ");
-			me["Simple_C1"].setText(" ---");
-			me["Simple_C2"].setText(" ---");
-			me["Simple_C3"].setText(" ---");
-			me["Simple_C5"].setText(" ---");
+			
+			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
+				lbs1000 = KG2LB * num(zfw.getValue() + block.getValue());
+				
+				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				setprop("FMGC/internal/f-speed", tgt_f);
+				tgt_s = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+				setprop("FMGC/internal/s-speed", tgt_s);
+				tgt_clean = 2 * lbs1000 * 0.45359237 + 85;
+				if (altitude.getValue() > 20000) {
+					tgt_clean += (altitude.getValue() - 20000) / 1000;
+				}
+				setprop("FMGC/internal/o-speed", tgt_clean);
+				
+				me["Simple_C1"].setText(sprintf("%3.0f", f_speed.getValue()));
+				me["Simple_C2"].setText(sprintf("%3.0f", s_speed.getValue()));
+				me["Simple_C3"].setText(sprintf("%3.0f", o_speed.getValue()));
+				me["Simple_C5"].setText(sprintf("%3.0f", min_speed.getValue()));
+			} else {
+				me["Simple_C1"].setText(" ---");
+				me["Simple_C2"].setText(" ---");
+				me["Simple_C3"].setText(" ---");
+				me["Simple_C5"].setText(" ---");
+			}
+			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
@@ -1514,6 +1562,7 @@ var canvas_MCDU_base = {
 				
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
+				me.fontSizeCenter(small, small, small, 0, 0, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -1544,9 +1593,29 @@ var canvas_MCDU_base = {
 			me["Simple_L6S"].setText(" PREV");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
-			me["Simple_C1"].setText(" ---");
-			me["Simple_C2"].setText(" ---");
-			me["Simple_C3"].setText(" ---");
+			
+			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
+				lbs1000 = KG2LB * num(zfw.getValue() + block.getValue());
+				
+				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				setprop("FMGC/internal/f-speed", tgt_f);
+				tgt_s = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+				setprop("FMGC/internal/s-speed", tgt_s);
+				tgt_clean = 2 * lbs1000 * 0.45359237 + 85;
+				if (altitude.getValue() > 20000) {
+					tgt_clean += (altitude.getValue() - 20000) / 1000;
+				}
+				setprop("FMGC/internal/o-speed", tgt_clean);
+				
+				me["Simple_C1"].setText(sprintf("%3.0f", f_speed.getValue()));
+				me["Simple_C2"].setText(sprintf("%3.0f", s_speed.getValue()));
+				me["Simple_C3"].setText(sprintf("%3.0f", o_speed.getValue()));
+			} else {
+				me["Simple_C1"].setText(" ---");
+				me["Simple_C2"].setText(" ---");
+				me["Simple_C3"].setText(" ---");
+			}
+			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");

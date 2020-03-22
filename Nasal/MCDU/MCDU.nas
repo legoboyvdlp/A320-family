@@ -31,6 +31,13 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/v1", 0);
 	setprop("FMGC/internal/vr", 0);
 	setprop("FMGC/internal/v2", 0);
+	setprop("FMGC/internal/f-speed", 0);
+	setprop("FMGC/internal/s-speed", 0);
+	setprop("FMGC/internal/o-speed", 0);
+	setprop("FMGC/internal/minspeed", 0);
+	#setprop("FMGC/internal/vapp-speed", 0);
+	setprop("FMGC/internal/vr", 0);
+	setprop("FMGC/internal/v2", 0);
 	setprop("FMGC/internal/block", 0.0);
 	setprop("FMGC/internal/zfw", 0);
 	setprop("FMGC/internal/zfwcg", 55.1); # 25KG default
