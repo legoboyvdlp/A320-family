@@ -31,7 +31,6 @@ var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
 var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
 var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
 var alt_efob = props.globals.getNode("FMGC/internal/alt-efob", 1);
-
 var fob = props.globals.getNode("FMGC/internal/fob", 1);
 var gw = props.globals.getNode("FMGC/internal/gw", 1);
 var gc = props.globals.getNode("FMGC/internal/gc", 1);

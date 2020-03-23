@@ -207,5 +207,14 @@ var initInputB = func(key, i) {
 				notAllowed(i);
 			}
 		}
+	} else if (key == "R3") {
+	    if (scratchpad != "") {
+	        notAllowed(i);
+	    } else {
+	        setprop("FMGC/internal/zfw", num((getprop("fdm/jsbsim/inertia/weight-lbs") - getprop("consumables/fuel/total-fuel-lbs")) / 1000));
+			setprop("FMGC/internal/zfw-set", 1);
+	        setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+	        setprop("FMGC/internal/block-set", 1);
+	    }
 	}
 }

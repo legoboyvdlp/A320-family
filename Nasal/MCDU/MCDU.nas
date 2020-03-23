@@ -62,6 +62,14 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/extra-fuel", 0);
 	setprop("FMGC/internal/extra-time", "0000");
 	
+	setprop("FMGC/internal/alt-airport", 0);
+    setprop("FMGC/internal/pri-utc", "0000");
+    setprop("FMGC/internal/alt-utc", "0000");
+    setprop("FMGC/internal/pri-efob", 0);
+    setprop("FMGC/internal/alt-efob", 0);
+    setprop("FMGC/internal/fob", 0);
+    setprop("FMGC/internal/gw", 0);
+    setprop("FMGC/internal/gc", 0);
 	
 	setprop("FMGC/internal/v1-set", 0);
 	setprop("FMGC/internal/vr-set", 0);
@@ -236,8 +244,6 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "6") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
-			initInputB("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
 			perfCLBInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
@@ -292,6 +298,8 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "3") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("R3",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			fuelPredInput("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
