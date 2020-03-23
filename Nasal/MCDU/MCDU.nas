@@ -62,6 +62,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/extra-fuel", 0);
 	setprop("FMGC/internal/extra-time", "0000");
 	
+	#FUELPRED
 	setprop("FMGC/internal/alt-airport", 0);
     setprop("FMGC/internal/pri-utc", "0000");
     setprop("FMGC/internal/alt-utc", "0000");
@@ -69,7 +70,7 @@ var MCDU_reset = func(i) {
     setprop("FMGC/internal/alt-efob", 0);
     setprop("FMGC/internal/fob", 0);
     setprop("FMGC/internal/gw", 0);
-    setprop("FMGC/internal/gc", 0);
+    setprop("FMGC/internal/cg", 0);
 	
 	setprop("FMGC/internal/v1-set", 0);
 	setprop("FMGC/internal/vr-set", 0);

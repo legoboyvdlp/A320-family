@@ -89,6 +89,16 @@ var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
 var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 
+# FUELPRED Specials
+var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
+var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
+var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
+var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
+var alt_efob = props.globals.getNode("FMGC/internal/alt-efob", 1);
+var fob = props.globals.getNode("FMGC/internal/fob", 1);
+var gw = props.globals.getNode("FMGC/internal/gw", 1);
+var cg = props.globals.getNode("FMGC/internal/cg", 1);
+
 var state1 = props.globals.getNode("engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("engines/engine[1]/state", 1);
 var engrdy = props.globals.getNode("engines/ready", 1);
@@ -1241,8 +1251,11 @@ var canvas_MCDU_base = {
 			    me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
 			    me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
                 
-                me["Simple_R4"].setText(sprintf("%4.1f/FF+FQ", 0.0));
-			    me["Simple_R5"].setText(sprintf("%4.1f/", 0.0) ~ sprintf("%4.1f", 0.0));
+                setprop("FMGC/internal/fob", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+                setprop("FMGC/internal/gw", num(getprop("fdm/jsbsim/inertia/weight-lbs") / 1000));
+                setprop("FMGC/internal/cg", num(getprop("FMGC/internal/zfwcg")));
+                me["Simple_R4"].setText(sprintf("%4.1f/FF+FQ", fob.getValue()));
+			    me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
 			    me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
 			    me.colorLeft("ack", "ack", "blu", "blu", "blu", "blu");
