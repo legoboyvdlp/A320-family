@@ -153,7 +153,7 @@ var Text = {
 };
 
 var Setting = {
-	reducAglFt: props.globals.initNode("/it-autoflight/settings/reduc-agl-ft", 3000, "INT"), # Changable from MCDU
+	reducAglFt: props.globals.initNode("/it-autoflight/settings/reduc-agl-ft", 1500, "INT"), # Changable from MCDU #eventually set to 1500 above runway
 };
 
 var Sound = {
