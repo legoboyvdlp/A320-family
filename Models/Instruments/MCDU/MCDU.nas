@@ -119,13 +119,7 @@ var managedSpeed = props.globals.getNode("it-autoflight/input/spd-managed", 1);
 
 # INT-A variables
 
-
-
-
-
 # PREF
-
-
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("MCDU[0]/page", 1), props.globals.getNode("MCDU[1]/page", 1)];
@@ -197,8 +191,8 @@ var canvas_MCDU_base = {
 		return ["Simple","Simple_Center","Scratchpad","Simple_Title","Simple_PageNum","ArrowLeft","ArrowRight","Simple_L1","Simple_L2","Simple_L3","Simple_L4","Simple_L5","Simple_L6","Simple_L0S","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S",
 		"Simple_L1_Arrow","Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S",
 		"Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S",
-		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","PERFTO","PERFTO_V1","PERFTO_VR",
-		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
+		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW","FUELPRED_ZFWCG","FUELPRED_ZFW_S",
+		"PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
 	},
 	update: func() {
 		if (ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -222,6 +216,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -306,6 +301,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -390,6 +386,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -472,6 +469,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -559,6 +557,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -658,6 +657,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -799,6 +799,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].hide();
 				me["INITA"].show();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -950,6 +951,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].show();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1043,7 +1045,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(trip_wind.getValue());
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (blockSet.getValue() == 1) {
+			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
 			    setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
 			    setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
 			    setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
@@ -1054,8 +1056,7 @@ var canvas_MCDU_base = {
 			    me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
 			    me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
 			    me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
-				me["Simple_R2"].show();
-				me["Simple_R3S"].hide(); 
+				me["Simple_R3S"].hide();
 				me["Simple_R3"].hide(); 
 				me["Simple_R3_Arrow"].hide();
 				me["Simple_C4"].hide();
@@ -1063,7 +1064,6 @@ var canvas_MCDU_base = {
 			    me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
 				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
-				me["INITB_Block"].hide();
 				
 			    me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
 			    me.colorRight("ack", "ack", "ack", "grn", "ack", "grn");
@@ -1073,7 +1073,6 @@ var canvas_MCDU_base = {
 			    me["Simple_L4"].setText("---.-/----");
 			    me["Simple_L5"].setText("---.-/----");
 			    me["Simple_L6"].setText("---.-");
-				me["Simple_R2"].hide(); 
 				me["Simple_R3S"].show();
 				me["Simple_R3"].show(); 
 				me["Simple_R3_Arrow"].show();
@@ -1087,7 +1086,6 @@ var canvas_MCDU_base = {
                 me["Simple_R6"].setText("---.-/----");
 				
 				me["Simple_Title"].setText("INIT");
-				me["INITB_Block"].show();
 			}
 			
 			me["Simple_R1S"].setText("ZFWCG/   ZFW");
@@ -1112,12 +1110,21 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].hide(); 
 			}
 			
+			if (blockSet.getValue() == 1) {
+			    me["Simple_R2"].show();
+				me["INITB_Block"].hide();			
+			} else {
+			    me["Simple_R2"].hide(); 
+			    me["INITB_Block"].show();
+			}
+			
 		} else if (page == "FUELPRED") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].show();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1148,7 +1155,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6_Arrow"].hide();
 				me["Simple_C1"].show();
 				me["Simple_C2"].show();
-				me["Simple_C3"].hide();
+				me["Simple_C3"].show();
 				me["Simple_C4"].hide();
 				me["Simple_C5"].hide();
 				me["Simple_C6"].hide();
@@ -1160,16 +1167,16 @@ var canvas_MCDU_base = {
 				me["Simple_C6S"].hide();
 				me["Simple_R1"].show();
 				me["Simple_R2"].show();
-				me["Simple_R3"].show();
+				me["Simple_R3"].hide();
 				me["Simple_R4"].show();
-				me["Simple_R5"].hide();
-				me["Simple_R6"].hide();
+				me["Simple_R5"].show();
+				me["Simple_R6"].show();
 				me["Simple_R1S"].show();
 				me["Simple_R2S"].hide();
 				me["Simple_R3S"].show();
 				me["Simple_R4S"].show();
-				me["Simple_R5S"].hide();
-				me["Simple_R6S"].hide();
+				me["Simple_R5S"].show();
+				me["Simple_R6S"].show();
 				me["Simple_R1_Arrow"].hide();
 				me["Simple_R2_Arrow"].hide();
 				me["Simple_R3_Arrow"].hide();
@@ -1182,15 +1189,15 @@ var canvas_MCDU_base = {
 				me.fontRight(default, default, default, default, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeLeft(normal, normal, small, small, small, small);
+				me.fontSizeRight(normal, normal, small, small, small, small);
 				
-				me.colorLeft("grn", "grn", "blu", "blu", "blu", "grn");
+				me.colorLeft("grn", "grn", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "blu", "wht", "wht", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("grn", "grn", "blu", "blu", "wht", "wht");
+				me.colorRight("grn", "grn", "blu", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
@@ -1202,18 +1209,14 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText(arrArpt.getValue());
 			}
-			
 			me["Simple_L2"].setText("----");
-			me["Simple_L3"].setText("--.-/--.-");
-			me["Simple_L4"].setText("-.-/-.-");
-			me["Simple_L5"].setText("--.-/----");
-			me["Simple_L6"].setText("--.-/----");
+			
 			me["Simple_L1S"].setText("AT");
 			me["Simple_L2S"].setText("X");
-			me["Simple_L3S"].setText("GW/CG");
-			me["Simple_L4S"].setText("RTE RSV/");
+			me["Simple_L3S"].setText("RTE RSV/PCT");
+			me["Simple_L4S"].setText("ALTN/TIME");
 			me["Simple_L5S"].setText("FINAL/TIME");
-			me["Simple_L6S"].setText("EXTRA/TIME");
+			me["Simple_L6S"].setText("MIN DEST FOB");
 			
 			me["Simple_C1S"].setText("UTC");
 			me["Simple_C1"].setText("----");
@@ -1221,17 +1224,69 @@ var canvas_MCDU_base = {
 			
 			me["Simple_R1"].setText("-.-");
 			me["Simple_R2"].setText("-.-");
-			me["Simple_R3"].setText("-.-/--+--");
-			me["Simple_R4"].setText("----*/36090");
 			me["Simple_R1S"].setText("EFOB");
-			me["Simple_R3S"].setText("FOB");
-			me["Simple_R4S"].setText("CRZTEMP/TROPO");
+			me["Simple_R2S"].setText("X");
+			me["Simple_R4S"].setText("FOB     ");
+			me["Simple_R5S"].setText("   GW/   CG");
+			me["Simple_R6S"].setText("EXTRA/TIME");
+			
+			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
+			    setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+			    setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+			    setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+				setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+				
+			    me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
+			    me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
+			    me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
+			    me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
+                
+                me["Simple_R4"].setText(sprintf("%4.1f/FF+FQ", 0.0));
+			    me["Simple_R5"].setText(sprintf("%4.1f/", 0.0) ~ sprintf("%4.1f", 0.0));
+			    me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+				
+			    me.colorLeft("ack", "ack", "blu", "blu", "blu", "blu");
+			    me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
+			} else {
+			    me["Simple_L3"].setText("---.-/---.-");
+			    me["Simple_L4"].setText("---.-/----");
+			    me["Simple_L5"].setText("---.-/----");
+			    me["Simple_L6"].setText("---.-");
+
+				me["Simple_R4"].setText("---.-/FF+FQ");
+				me["Simple_R5"].setText("---.-/---.-");
+                me["Simple_R6"].setText("---.-/----");
+			}
+			
+			me["Simple_R3S"].setText("ZFWCG/ZFW");
+			me["Simple_R3"].setText(sprintf("%3.1f", zfw.getValue()));
+			if (zfwcgSet.getValue() == 1) {
+				me["Simple_C3"].setFontSize(normal); 
+				me["Simple_C3"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
+				me["FUELPRED_ZFWCG"].hide();
+			} else {
+				me["Simple_C3"].setFontSize(small);
+				me["Simple_C3"].setText("           " ~ sprintf("%3.1f", zfwcg.getValue()));
+				me["FUELPRED_ZFWCG"].hide();
+			}
+			
+			if (zfwSet.getValue() == 1) {
+				me["FUELPRED_ZFW"].hide();
+				me["FUELPRED_ZFW_S"].show();
+				me["Simple_R3"].show(); 
+			} else {
+				me["FUELPRED_ZFW"].show();
+				me["FUELPRED_ZFW_S"].hide();
+				me["Simple_R3"].hide(); 
+			}
+			
 		} else if (page == "TO") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].show();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1416,6 +1471,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].show();
 				me["PERFGA"].hide();
@@ -1554,6 +1610,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].show();
@@ -1683,6 +1740,7 @@ var canvas_MCDU_base = {
 				me["Simple_Center"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();

@@ -1913,6 +1913,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITB.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/FUELPRED.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFAPPR.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCLB.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCRZ.nas</file>

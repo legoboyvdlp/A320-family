@@ -37,17 +37,17 @@
      guidetolerance="20"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1035"
+     inkscape:window-width="1280"
+     inkscape:window-height="730"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="0.5"
-     inkscape:cx="997.98642"
-     inkscape:cy="772.65269"
+     inkscape:zoom="0.55334531"
+     inkscape:cx="846.30776"
+     inkscape:cy="468.14561"
      inkscape:window-x="0"
      inkscape:window-y="23"
      inkscape:window-maximized="1"
-     inkscape:current-layer="Simple"
+     inkscape:current-layer="FUELPRED"
      showguides="false"
      inkscape:snap-global="false"
      units="px"
@@ -1406,6 +1406,123 @@
   </g>
   <g
      inkscape:groupmode="layer"
+     id="FUELPRED"
+     inkscape:label="FUELPRED">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="818.74951"
+       y="421.89355"
+       id="FUELPRED_ZFW_S"
+       transform="scale(0.991516,1.0085566)"
+       inkscape:label="#text4244"><tspan
+         sodipodi:role="line"
+         id="tspan1051"
+         x="818.74951"
+         y="421.89355"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:end;text-anchor:end;fill:#179ab7;fill-opacity:1">/</tspan></text>
+    <g
+       id="FUELPRED_ZFW"
+       inkscape:label="#g3600"
+       transform="translate(0,236.8)">
+      <text
+         inkscape:label="#text4244"
+         transform="scale(0.991516,1.0085566)"
+         id="text1056"
+         y="187.10254"
+         x="980.0838"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:end;text-anchor:end;fill:#bb6100;fill-opacity:1"
+           y="187.10254"
+           x="980.0838"
+           id="tspan1054"
+           sodipodi:role="line">.</tspan></text>
+      <text
+         inkscape:label="#text4244"
+         transform="scale(0.991516,1.0085566)"
+         id="text1060"
+         y="187.10254"
+         x="818.74951"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:end;text-anchor:end;fill:#bb6100;fill-opacity:1"
+           y="187.10254"
+           x="818.74951"
+           id="tspan1058"
+           sodipodi:role="line">/</tspan></text>
+      <g
+         transform="translate(0,44.720803)"
+         id="g1068">
+        <rect
+           y="100.6336"
+           x="968.38361"
+           height="41.350403"
+           width="39.4547"
+           id="rect1062"
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:4.03199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+        <rect
+           y="100.6336"
+           x="889.46741"
+           height="41.350403"
+           width="39.4547"
+           id="rect1064"
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:4.03199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+        <rect
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:4.03199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+           id="rect1066"
+           width="39.4547"
+           height="41.350403"
+           x="850.01111"
+           y="100.6336" />
+      </g>
+    </g>
+    <g
+       id="FUELPRED_ZFWCG"
+       inkscape:label="#g3610"
+       transform="translate(-34.71127,236.52639)">
+      <g
+         transform="translate(0,44.720803)"
+         id="g1077">
+        <rect
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:4.03199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+           id="rect1071"
+           width="39.4547"
+           height="41.350403"
+           x="759.62421"
+           y="100.6336" />
+        <rect
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:4.03199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+           id="rect1073"
+           width="39.4547"
+           height="41.350403"
+           x="680.70801"
+           y="100.6336" />
+        <rect
+           y="100.6336"
+           x="641.25171"
+           height="41.350403"
+           width="39.4547"
+           id="rect1075"
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:4.03199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="769.53815"
+         y="187.10254"
+         id="text1081"
+         transform="scale(0.991516,1.0085566)"
+         inkscape:label="#text4244"><tspan
+           sodipodi:role="line"
+           id="tspan1079"
+           x="769.53815"
+           y="187.10254"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:end;text-anchor:end;fill:#bb6100;fill-opacity:1">.</tspan></text>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="PERFTO"
      inkscape:label="PERFTO">
     <g
@@ -1610,7 +1727,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="187.10254"
          x="399.48752"
-         id="tspan1079"
+         id="tspan1115"
          sodipodi:role="line">F</tspan></text>
     <text
        xml:space="preserve"
@@ -1693,7 +1810,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="187.10254"
          x="399.48752"
-         id="tspan1079"
+         id="tspan1129"
          sodipodi:role="line">F</tspan></text>
     <text
        xml:space="preserve"
@@ -1704,7 +1821,7 @@
        transform="scale(0.991516,1.0085566)"
        inkscape:label="#text4244"><tspan
          sodipodi:role="line"
-         id="tspan1082"
+         id="tspan1132"
          x="398.21817"
          y="304.35275"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
@@ -1719,7 +1836,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="422.15305"
          x="398.21817"
-         id="tspan1085"
+         id="tspan1135"
          sodipodi:role="line">O</tspan></text>
     <text
        xml:space="preserve"
@@ -1730,7 +1847,7 @@
        transform="scale(0.90642126,1.1032398)"
        inkscape:label="#text4244"><tspan
          sodipodi:role="line"
-         id="tspan1088"
+         id="tspan1138"
          x="478.87796"
          y="171.04486"
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:63.9924px;line-height:1.25;font-family:'Helvetica Medium';-inkscape-font-specification:'Helvetica Medium,  Medium';text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">=</tspan></text>
@@ -1745,7 +1862,7 @@
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:63.9924px;line-height:1.25;font-family:'Helvetica Medium';-inkscape-font-specification:'Helvetica Medium,  Medium';text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="278.32764"
          x="478.87796"
-         id="tspan1091"
+         id="tspan1141"
          sodipodi:role="line">=</tspan></text>
     <text
        xml:space="preserve"
@@ -1756,7 +1873,7 @@
        transform="scale(0.90642126,1.1032398)"
        inkscape:label="#text4244"><tspan
          sodipodi:role="line"
-         id="tspan1094"
+         id="tspan1144"
          x="478.87796"
          y="385.6102"
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:63.9924px;line-height:1.25;font-family:'Helvetica Medium';-inkscape-font-specification:'Helvetica Medium,  Medium';text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">=</tspan></text>

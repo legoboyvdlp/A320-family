@@ -170,6 +170,8 @@ var lskbutton = func(btn, i) {
 			initInputA("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L3",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+			fuelPredInput("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
@@ -190,6 +192,8 @@ var lskbutton = func(btn, i) {
 			setprop("MCDU[" ~ i ~ "]/page", "STATUS");
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L4",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+			fuelPredInput("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
@@ -206,6 +210,8 @@ var lskbutton = func(btn, i) {
 			initInputA("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+			fuelPredInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
@@ -286,6 +292,8 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "3") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("R3",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+			fuelPredInput("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
