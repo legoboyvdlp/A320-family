@@ -65,12 +65,30 @@ var cruiseSet = props.globals.getNode("FMGC/internal/cruise-lvl-set", 1);
 var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
+
+# INT-B variables
 var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
 var zfwcgSet = props.globals.getNode("FMGC/internal/zfwcg-set", 1);
 var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
 var zfwSet = props.globals.getNode("FMGC/internal/zfw-set", 1);
 var block = props.globals.getNode("FMGC/internal/block", 1);
 var blockSet = props.globals.getNode("FMGC/internal/block-set", 1);
+var taxi_fuel = props.globals.getNode("FMGC/internal/taxi-fuel", 1);
+var trip_fuel = props.globals.getNode("FMGC/internal/trip-fuel", 1);
+var trip_time = props.globals.getNode("FMGC/internal/trip-time", 1);
+var rte_rsv = props.globals.getNode("FMGC/internal/rte-rsv", 1);
+var rte_percent = props.globals.getNode("FMGC/internal/rte-percent", 1);
+var alt_fuel = props.globals.getNode("FMGC/internal/alt-fuel", 1);
+var alt_time = props.globals.getNode("FMGC/internal/alt-time", 1);
+var final_fuel = props.globals.getNode("FMGC/internal/final-fuel", 1);
+var final_time = props.globals.getNode("FMGC/internal/final-time", 1);
+var min_dest_fob = props.globals.getNode("FMGC/internal/min-dest-fob", 1);
+var tow = props.globals.getNode("FMGC/internal/tow", 1);
+var lw = props.globals.getNode("FMGC/internal/lw", 1);
+var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
+var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
+var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
+
 var state1 = props.globals.getNode("engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("engines/engine[1]/state", 1);
 var engrdy = props.globals.getNode("engines/ready", 1);
@@ -98,6 +116,16 @@ var engOutAcc = props.globals.getNode("FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("MCDUC/reducacc-set", 1);
 var transAlt = props.globals.getNode("FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("it-autoflight/input/spd-managed", 1);
+
+# INT-A variables
+
+
+
+
+
+# PREF
+
+
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("MCDU[0]/page", 1), props.globals.getNode("MCDU[1]/page", 1)];
@@ -777,6 +805,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
 				
 				me["Simple_L2"].show();
 				me["Simple_L4"].show();
@@ -825,14 +855,6 @@ var canvas_MCDU_base = {
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				pageSwitch[i].setBoolValue(1);
-			}
-			
-			if (state1.getValue() != 3 and state2.getValue() != 3) {
-				me["ArrowLeft"].show();
-				me["ArrowRight"].show();
-			} else {
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
 			}
 			
 			if (flightNumSet.getValue() == 1) {
@@ -931,7 +953,6 @@ var canvas_MCDU_base = {
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
-				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
@@ -970,19 +991,19 @@ var canvas_MCDU_base = {
 				me["Simple_C6S"].hide();
 				me["Simple_R1"].hide();
 				me["Simple_R2"].show();
-				me["Simple_R3"].hide();
+				me["Simple_R3"].show();
 				me["Simple_R4"].show();
 				me["Simple_R5"].show();
-				me["Simple_R6"].hide();
+				me["Simple_R6"].show();
 				me["Simple_R1S"].show();
 				me["Simple_R2S"].show();
-				me["Simple_R3S"].hide();
+				me["Simple_R3S"].show();
 				me["Simple_R4S"].show();
 				me["Simple_R5S"].show();
-				me["Simple_R6S"].hide();
+				me["Simple_R6S"].show();
 				me["Simple_R1_Arrow"].hide();
 				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
+				me["Simple_R3_Arrow"].show();
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
@@ -992,20 +1013,85 @@ var canvas_MCDU_base = {
 				me.fontRight(default, default, default, default, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeLeft(small, small, small, small, small, small);
+				me.fontSizeRight(normal, normal, normal, small, small, small);
 				
 				me.colorLeft("blu", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("blu", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("blu", "blu", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("blu", "wht", "wht", "grn", "wht", "wht");
+				me.colorRight("blu", "blu", "amb", "wht", "blu", "wht");
+				me.colorRightS("wht", "wht", "amb", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "amb", "wht", "wht", "wht");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
+					
+			me["Simple_L1S"].setText("TAXI");
+			me["Simple_L1"].setText(sprintf("%2.1f", taxi_fuel.getValue()));
+			me["Simple_L2S"].setText("TRIP/TIME");
+			me["Simple_L3S"].setText("RTE RSV/PCT");
+			me["Simple_L4S"].setText("ALTN/TIME");
+			me["Simple_L5S"].setText("FINAL/TIME");
+			me["Simple_L6S"].setText("MIN DEST FOB");
+			me["Simple_R2S"].setText("BLOCK");
+			me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+			me["Simple_R3S"].setText("FUEL");
+			me["Simple_R3"].setText("PLANNING ");
+			me["Simple_R4S"].setText("TOW/   LW");
+			me["Simple_R5S"].setText("TRIP WIND");
+			me["Simple_R5"].setText(trip_wind.getValue());
+			me["Simple_R6S"].setText("EXTRA/TIME");
 			
+			if (blockSet.getValue() == 1) {
+			    setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+			    setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+			    setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+				setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+				
+			    me["Simple_L2"].setText(sprintf("%4.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
+			    me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
+			    me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
+			    me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
+			    me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
+				me["Simple_R2"].show();
+				me["Simple_R3S"].hide(); 
+				me["Simple_R3"].hide(); 
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_C4"].hide();
+			    me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
+			    me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+				
+				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
+				me["INITB_Block"].hide();
+				
+			    me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
+			    me.colorRight("ack", "ack", "ack", "grn", "ack", "grn");
+			} else {
+			    me["Simple_L2"].setText("---.-/----");
+			    me["Simple_L3"].setText("---.-/---.-");
+			    me["Simple_L4"].setText("---.-/----");
+			    me["Simple_L5"].setText("---.-/----");
+			    me["Simple_L6"].setText("---.-");
+				me["Simple_R2"].hide(); 
+				me["Simple_R3S"].show();
+				me["Simple_R3"].show(); 
+				me["Simple_R3_Arrow"].show();
+				me["Simple_R4"].setText("---.-/---.-");
+				# if (lw.getValue() == 0) {
+#                     me["Simple_R4"].setText("---.-");
+#                     me["Simple_C4"].show();
+#                     me["Simple_C4"].setFontSize(small); 
+#                     me["Simple_C4"].setText("               " ~ sprintf("%4.1f/", tow.getValue()));
+#                 }
+                me["Simple_R6"].setText("---.-/----");
+				
+				me["Simple_Title"].setText("INIT");
+				me["INITB_Block"].show();
+			}
+			
+			me["Simple_R1S"].setText("ZFWCG/   ZFW");
+			me["Simple_R1"].setText(sprintf("%3.1f", zfw.getValue()));
 			if (zfwcgSet.getValue() == 1) {
 				me["Simple_C1"].setFontSize(normal); 
 				me["Simple_C1"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
@@ -1026,34 +1112,6 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].hide(); 
 			}
 			
-			if (blockSet.getValue() == 1) {
-				me["INITB_Block"].hide();
-				me["Simple_R2"].show(); 
-			} else {
-				me["INITB_Block"].show();
-				me["Simple_R2"].hide(); 
-			}
-			
-			me["Simple_L1"].setText("0.2");
-			me["Simple_L2"].setText("---.-/----");
-			me["Simple_L3"].setText("---.-/--.-");
-			me["Simple_L4"].setText("---.-/----");
-			me["Simple_L5"].setText("---.-/----");
-			me["Simple_L6"].setText("---.-/----");
-			me["Simple_L1S"].setText("TAXI");
-			me["Simple_L2S"].setText("TRIP/TIME");
-			me["Simple_L3S"].setText("RTE RSV/");
-			me["Simple_L4S"].setText("ALTN/TIME");
-			me["Simple_L5S"].setText("FINAL/TIME");
-			me["Simple_L6S"].setText("EXTRA/TIME");
-			me["Simple_R1"].setText(sprintf("%3.1f", zfw.getValue()));
-			me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
-			me["Simple_R4"].setText("---.-");
-			me["Simple_R5"].setText("---.-");
-			me["Simple_R1S"].setText("ZFWCG/   ZFW");
-			me["Simple_R2S"].setText("BLOCK");
-			me["Simple_R4S"].setText("TOW");
-			me["Simple_R5S"].setText("LW");
 		} else if (page == "FUELPRED") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -1066,8 +1124,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("FUEL PRED");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
 				
 				me["Simple_L1"].show();
 				me["Simple_L2"].show();

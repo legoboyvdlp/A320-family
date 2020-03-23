@@ -38,15 +38,35 @@ var MCDU_reset = func(i) {
 	#setprop("FMGC/internal/vapp-speed", 0);
 	setprop("FMGC/internal/vr", 0);
 	setprop("FMGC/internal/v2", 0);
+	
+	# INT-B
 	setprop("FMGC/internal/block", 0.0);
+	setprop("FMGC/internal/block-set", 0);
 	setprop("FMGC/internal/zfw", 0);
-	setprop("FMGC/internal/zfwcg", 55.1); # 25KG default
+	setprop("FMGC/internal/zfw-set", 0);
+	setprop("FMGC/internal/zfwcg", 55.1);
+	setprop("FMGC/internal/zfwcg-set", 0);
+	setprop("FMGC/internal/taxi-fuel", 0.4);
+	setprop("FMGC/internal/trip-fuel", 0);
+	setprop("FMGC/internal/trip-time", "0000");
+	setprop("FMGC/internal/rte-rsv", 0);
+	setprop("FMGC/internal/rte-percent", 5.0);
+	setprop("FMGC/internal/alt-fuel", 0);
+	setprop("FMGC/internal/alt-time", "0000");
+	setprop("FMGC/internal/final-fuel", 0);
+	setprop("FMGC/internal/final-time", "0000");
+	setprop("FMGC/internal/min-dest-fob", 0);
+	setprop("FMGC/internal/tow", 0);
+	setprop("FMGC/internal/lw", 0);
+	setprop("FMGC/internal/trip-wind", "HD000");
+	setprop("FMGC/internal/extra-fuel", 0);
+	setprop("FMGC/internal/extra-time", "0000");
+	
+	
 	setprop("FMGC/internal/v1-set", 0);
 	setprop("FMGC/internal/vr-set", 0);
 	setprop("FMGC/internal/v2-set", 0);
-	setprop("FMGC/internal/block-set", 0);
-	setprop("FMGC/internal/zfw-set", 0);
-	setprop("FMGC/internal/zfwcg-set", 0);
+	
 	setprop("FMGC/internal/to-flap", 0);
 	setprop("FMGC/internal/to-ths", "0.0");
 	setprop("FMGC/internal/tofrom-set", 0);
@@ -102,6 +122,8 @@ var lskbutton = func(btn, i) {
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
@@ -120,6 +142,8 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "2") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			PerfInput("L2",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
@@ -144,6 +168,8 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "3") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("L3",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
@@ -162,6 +188,8 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "4") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
 			setprop("MCDU[" ~ i ~ "]/page", "STATUS");
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
@@ -176,6 +204,8 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "5") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("L5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
@@ -200,6 +230,8 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "6") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("L6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
 			perfCLBInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
@@ -278,7 +310,9 @@ var rskbutton = func(btn, i) {
 			notAllowed(i);
 		}
 	} else if (btn == "5") {
-		if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+			initInputB("R5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
 			perfGAInput("R5",i);
@@ -340,8 +374,10 @@ var arrowbutton = func(btn, i) {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "INITB");
+			} else {
+			    setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
 			}
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB" or getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
 		}
 		if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
@@ -358,8 +394,10 @@ var arrowbutton = func(btn, i) {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "INITB");
+			} else {
+			    setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
 			}
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB" or getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
 		}
 		if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
