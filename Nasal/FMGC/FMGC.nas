@@ -155,12 +155,18 @@ var trimReset = func {
 var updateARPT = func {
 	dep = getprop("FMGC/internal/dep-arpt");
 	arr = getprop("FMGC/internal/arr-arpt");
+	alt = getprop("FMGC/internal/alt-airport");
 	setprop("autopilot/route-manager/departure/airport", dep);
 	setprop("autopilot/route-manager/destination/airport", arr);
+	setprop("autopilot/route-manager/alternate/airport", alt);
 	if (getprop("autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
 	}
 }
+
+# var updateVSPEEDS = func {
+# 
+# }
 
 setlistener("/FMGC/internal/cruise-ft", func {
 	setprop("autopilot/route-manager/cruise/altitude-ft", getprop("FMGC/internal/cruise-ft"));

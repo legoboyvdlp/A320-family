@@ -64,7 +64,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/extra-time", "0000");
 	
 	#FUELPRED
-	setprop("FMGC/internal/alt-airport", 0);
+	setprop("FMGC/internal/alt-airport", "");
     setprop("FMGC/internal/pri-utc", "0000");
     setprop("FMGC/internal/alt-utc", "0000");
     setprop("FMGC/internal/pri-efob", 0);
@@ -169,7 +169,7 @@ var lskbutton = func(btn, i) {
 		}
 	} else if (btn == "2") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
-			PerfInput("L2",i);
+			initInputA("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {

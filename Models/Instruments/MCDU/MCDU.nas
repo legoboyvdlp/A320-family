@@ -937,7 +937,11 @@ var canvas_MCDU_base = {
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText("NONE");
+				if (alt_airport.getValue() == "") {
+			        me["Simple_L2"].setText("NONE");
+                } else {
+                    me["Simple_L2"].setText(alt_airport.getValue());
+                }
 				me["Simple_R1"].show();
 				me["Simple_R2"].hide();
 				me["Simple_R2S"].hide();
@@ -1249,7 +1253,11 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText(arrArpt.getValue());
 			}
-			me["Simple_L2"].setText("----");
+			if (!engrdy.getBoolValue() or alt_airport.getValue() == "") {
+				me["Simple_L2"].setText("----");
+			} else {
+				me["Simple_L2"].setText(alt_airport.getValue());
+			}
 			
 			me["Simple_L1S"].setText("AT");
 			me["Simple_L2S"].setText("X");

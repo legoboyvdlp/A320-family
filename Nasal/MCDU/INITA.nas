@@ -1,10 +1,29 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Matthew Maring (hayden2000)
 
 var initInputA = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
-	if (key == "L3") {
+	if (key == "L2") {
+	    if (scratchpad == "CLR") {
+	        setprop("FMGC/internal/alt-airport", "");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			fmgc.updateARPT();
+	    } else if (getprop("FMGC/internal/tofrom-set") == 1) {
+	        var tfs = size(scratchpad);
+			if (tfs == 4) {
+				setprop("FMGC/internal/alt-airport", scratchpad);
+				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				fmgc.updateARPT();
+			} else {
+                notAllowed(i);
+            }
+	    } else {
+	        notAllowed(i);
+	    }
+	} else if (key == "L3") {
 		if (scratchpad == "CLR") {
 			setprop("MCDUC/flight-num", "");
 			setprop("MCDUC/flight-num-set", 0);
