@@ -1,6 +1,7 @@
-# A3XX mCDU by Joshua Davidson (Octal450) and Jonathan Redpath
+# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Matthew Maring (hayden2000)
 
 var MCDU_init = func(i) {
 	MCDU_reset(i); # Reset MCDU, clears data
@@ -71,11 +72,11 @@ var MCDU_reset = func(i) {
     setprop("FMGC/internal/fob", 0);
     setprop("FMGC/internal/gw", 0);
     setprop("FMGC/internal/cg", 0);
-	
-	setprop("FMGC/internal/v1-set", 0);
+    
+    #PERF TO
+    setprop("FMGC/internal/v1-set", 0);
 	setprop("FMGC/internal/vr-set", 0);
 	setprop("FMGC/internal/v2-set", 0);
-	
 	setprop("FMGC/internal/to-flap", 0);
 	setprop("FMGC/internal/to-ths", "0.0");
 	setprop("FMGC/internal/tofrom-set", 0);
@@ -83,6 +84,26 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/cruise-lvl-set", 0);
 	setprop("FMGC/internal/flap-ths-set", 0);
 	setprop("FMGC/internal/flex-set", 0);
+	setprop("FMGC/internal/tropo", 36090);
+	setprop("FMGC/internal/tropo-set", 0);
+	
+    #PERF APPR
+    setprop("FMGC/internal/dest-qnh", -1);
+    setprop("FMGC/internal/dest-temp", -999);
+    setprop("FMGC/internal/dest-mag", -1);
+    setprop("FMGC/internal/dest-wind", -1);
+    setprop("FMGC/internal/vapp-speed", -1);
+    setprop("FMGC/internal/vapp-speed-set", 0);
+    setprop("FMGC/internal/f-speed-appr", -1);
+    setprop("FMGC/internal/s-speed-appr", -1);
+    setprop("FMGC/internal/o-speed-appr", -1);
+    setprop("FMGC/internal/vls-speed-appr", -1);
+    setprop("FMGC/internal/final", "");
+    setprop("FMGC/internal/mda", -1);
+    setprop("FMGC/internal/dh", -1);
+    setprop("FMGC/internal/ldg-config-3-set", 0);
+    setprop("FMGC/internal/ldg-config-f-set", 1);
+	
 	setprop("FMGC/internal/ils1freq-set", 0);
 	setprop("FMGC/internal/ils1crs-set", 0);
 	setprop("FMGC/internal/vor1freq-set", 0);
@@ -109,8 +130,6 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/print/mcdu/page2/R2req", 0);
 	setprop("FMGC/print/mcdu/page2/R3req", 0);
 	setprop("FMGC/print/mcdu/page2/R4req", 0);
-	setprop("FMGC/internal/tropo", 36090);
-	setprop("FMGC/internal/tropo-set", 0);
 }
 
 var lskbutton = func(btn, i) {
@@ -331,6 +350,8 @@ var rskbutton = func(btn, i) {
 			initInputB("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+			perfAPPRInput("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
 			perfGAInput("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {

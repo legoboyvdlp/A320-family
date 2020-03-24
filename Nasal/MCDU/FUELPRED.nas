@@ -1,4 +1,4 @@
-# A3XX mCDU by Joshua Davidson (Octal450) and Jonathan Redpath
+# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
 
 # Copyright (c) 2020 Matthew Maring (hayden2000)
 

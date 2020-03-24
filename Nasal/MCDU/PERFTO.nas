@@ -1,6 +1,7 @@
-# A3XX mCDU by Joshua Davidson (Octal450) and Jonathan Redpath
+# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
 
 # Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Matthew Maring (hayden2000)
 
 var perfTOInput = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
@@ -68,7 +69,8 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L4") {
 		if (scratchpad == "CLR") {
-			notAllowed(i);
+			setprop("FMGC/internal/trans-alt", 18000);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 4 or tfs == 5) {

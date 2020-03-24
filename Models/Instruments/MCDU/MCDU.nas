@@ -90,6 +90,10 @@ var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 
 # FUELPRED Specials
+var state1 = props.globals.getNode("engines/engine[0]/state", 1);
+var state2 = props.globals.getNode("engines/engine[1]/state", 1);
+var engrdy = props.globals.getNode("engines/ready", 1);
+
 var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
 var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
 var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
@@ -99,21 +103,22 @@ var fob = props.globals.getNode("FMGC/internal/fob", 1);
 var gw = props.globals.getNode("FMGC/internal/gw", 1);
 var cg = props.globals.getNode("FMGC/internal/cg", 1);
 
-var state1 = props.globals.getNode("engines/engine[0]/state", 1);
-var state2 = props.globals.getNode("engines/engine[1]/state", 1);
-var engrdy = props.globals.getNode("engines/ready", 1);
+# PERF
+var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
+var vs1g = props.globals.getNode("FMGC/internal/vs1g", 1);
+
+# TO PERF
 var v1 = props.globals.getNode("FMGC/internal/v1", 1);
 var v1Set = props.globals.getNode("FMGC/internal/v1-set", 1);
 var vr = props.globals.getNode("FMGC/internal/vr", 1);
 var vrSet = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2Set = props.globals.getNode("FMGC/internal/v2-set", 1);
-var f_speed = props.globals.getNode("FMGC/internal/f-speed", 1);
-var s_speed = props.globals.getNode("FMGC/internal/s-speed", 1);
-var o_speed = props.globals.getNode("FMGC/internal/o-speed", 1);
-var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
-#var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
-var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
+
+var f_speed_to = props.globals.getNode("FMGC/internal/f-speed-to", 1);
+var s_speed_to = props.globals.getNode("FMGC/internal/s-speed-to", 1);
+var o_speed_to = props.globals.getNode("FMGC/internal/o-speed-to", 1);
+
 var clbReducFt = props.globals.getNode("systems/thrust/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("FMGC/internal/reduc-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("MCDUC/thracc-set", 1);
@@ -127,9 +132,34 @@ var engOutAccSet = props.globals.getNode("MCDUC/reducacc-set", 1);
 var transAlt = props.globals.getNode("FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("it-autoflight/input/spd-managed", 1);
 
-# INT-A variables
+# CLB PERF
 
-# PREF
+# CRZ PERF
+
+# DES PERF
+
+# APPR PERF
+var dest_qnh = props.globals.getNode("FMGC/internal/dest-qnh", 1);
+var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
+var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
+var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
+var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
+var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
+var f_speed_appr = props.globals.getNode("FMGC/internal/f-speed-appr", 1);
+var s_speed_appr = props.globals.getNode("FMGC/internal/s-speed-appr", 1);
+var o_speed_appr = props.globals.getNode("FMGC/internal/o-speed-appr", 1);
+var vls_speed_appr = props.globals.getNode("FMGC/internal/vls-speed-appr", 1);
+var final = props.globals.getNode("FMGC/internal/final", 1);
+var mda = props.globals.getNode("FMGC/internal/mda", 1);
+var dh = props.globals.getNode("FMGC/internal/dh", 1);
+var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
+var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
+
+var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
+
+# GA PERF
+
+# INT-A variables
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("MCDU[0]/page", 1), props.globals.getNode("MCDU[1]/page", 1)];
@@ -202,7 +232,7 @@ var canvas_MCDU_base = {
 		"Simple_L1_Arrow","Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S",
 		"Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S",
 		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW","FUELPRED_ZFWCG","FUELPRED_ZFW_S",
-		"PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
+		"PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
 	},
 	update: func() {
 		if (ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -1454,21 +1484,17 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("NEXT ");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				lbs1000 = num(zfw.getValue() + block.getValue());
-				
-				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
-				setprop("FMGC/internal/f-speed", tgt_f);
-				tgt_s = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
-				setprop("FMGC/internal/s-speed", tgt_s);
-				tgt_clean = 2 * lbs1000 * 0.45359237 + 85;
+				setprop("FMGC/internal/f-speed-to", ((-0.0005 * tow.getValue() * tow.getValue()) + (0.5488 * tow.getValue()) + 44.279) * 1.47);
+				setprop("FMGC/internal/s-speed-to", ((0.0024 * tow.getValue() * tow.getValue()) + (0.124 * tow.getValue()) + 88.942) * 1.23);
+				tgt_clean = 2 * tow.getValue() * 0.45359237 + 85;
 				if (altitude.getValue() > 20000) {
 					tgt_clean += (altitude.getValue() - 20000) / 1000;
 				}
-				setprop("FMGC/internal/o-speed", tgt_clean);
+				setprop("FMGC/internal/o-speed-to", tgt_clean);
 				
-				me["Simple_C1"].setText(sprintf("%3.0f", f_speed.getValue()));
-				me["Simple_C2"].setText(sprintf("%3.0f", s_speed.getValue()));
-				me["Simple_C3"].setText(sprintf("%3.0f", o_speed.getValue()));
+				me["Simple_C1"].setText(sprintf("%3.0f", f_speed_to.getValue()));
+				me["Simple_C2"].setText(sprintf("%3.0f", s_speed_to.getValue()));
+				me["Simple_C3"].setText(sprintf("%3.0f", o_speed_to.getValue()));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -1517,7 +1543,7 @@ var canvas_MCDU_base = {
 				me["Simple_R2"].show();
 				me["Simple_R3"].show();
 				me["Simple_R4"].show();
-				me["Simple_R5"].hide();
+				me["Simple_R5"].show();
 				me["Simple_R6"].show();
 				me["Simple_R1S"].show();
 				me["Simple_R2S"].show();
@@ -1546,11 +1572,11 @@ var canvas_MCDU_base = {
 				
 				me.fontLeft(symbol, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, symbol, symbol, symbol, default, default);
+				me.fontRight(default, symbol, symbol, default, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(small, small, small, small, small, normal);
-				me.fontSizeRight(small, small, small, small, 0, normal);
+				me.fontSizeRight(small, small, small, small, normal, normal);
 				me.fontSizeCenter(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
@@ -1565,47 +1591,125 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			me["Simple_L1"].setText("[    ]  ");
-			me["Simple_L2"].setText("---g  ");
-			me["Simple_L3"].setText("---g/---");
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
-			me["Simple_L5"].setText("[    ]  ");
-			me["Simple_L6"].setText(" PHASE");
+			# var dest_qnh = props.globals.getNode("FMGC/internal/dest-qnh", 1);
+# var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
+# var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
+# var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
+# var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
+# var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
+# var f_speed_appr = props.globals.getNode("FMGC/internal/f-speed-appr", 1);
+# var s_speed_appr = props.globals.getNode("FMGC/internal/s-speed-appr", 1);
+# var o_speed_appr = props.globals.getNode("FMGC/internal/o-speed-appr", 1);
+# var vls_speed_appr = props.globals.getNode("FMGC/internal/vls-speed-appr", 1);
+# var final = props.globals.getNode("FMGC/internal/final", 1);
+# var mda = props.globals.getNode("FMGC/internal/mda", 1);
+# var dh = props.globals.getNode("FMGC/internal/dh", 1);
+# var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
+# var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
+			
 			me["Simple_L0S"].setText("DEST");
 			me["Simple_L1S"].setText("QNH");
+			if (dest_qnh.getValue() != -1) {
+			    if (dest_qnh.getValue() < 100) {
+			        me["Simple_L1"].setText(sprintf("%4.2f", dest_qnh.getValue()));
+			    } else {
+			        me["Simple_L1"].setText(sprintf("%4.0f", dest_qnh.getValue()));
+			    }
+			    me.fontLeft(default, 0, 0, 0, 0, 0);
+			} else {
+			    me["Simple_L1"].setText("[    ]  ");
+			    me.fontLeft(symbol, 0, 0, 0, 0, 0);
+			}
+			
 			me["Simple_L2S"].setText("TEMP");
+			if (dest_temp.getValue() != -999) {
+			    me["Simple_L2"].setText(sprintf("%3.0fg  ", dest_temp.getValue()));
+			} else {
+			    me["Simple_L2"].setText("---g  ");
+			}
+			
 			me["Simple_L3S"].setText("MAG WIND");
+			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
+			    me["Simple_L3"].setText(sprintf("%3.0fg/", dest_mag.getValue()) ~ sprintf("%3.0f", dest_wind.getValue()));
+			} else {
+			    me["Simple_L3"].setText("---g/---");;
+			}
+			
 			me["Simple_L4S"].setText("TRANS ALT");
+			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			
 			me["Simple_L5S"].setText(" VAPP");
-			me["Simple_L6S"].setText(" PREV");
-			me["Simple_R1"].setText("-----");
-			me["Simple_R2"].setText(" [    ]");
-			me["Simple_R3"].setText(" [    ]");
-			me["Simple_R4"].setText(" [    ]");
-			me["Simple_R6"].setText("PHASE ");
+			if (vapp_speed.getValue() != -1) {
+			    me["Simple_L5"].setText(sprintf("%3.0f", vapp_speed.getValue()));
+                me.fontLeft(0, 0, 0, 0, default, 0);
+			    if (vapp_speed_set.getValue() == 1) {
+                    me.fontSizeLeft(0, 0, 0, 0, normal, 0);
+			    } else {
+			        me.fontSizeLeft(0, 0, 0, 0, small, 0);
+			    }
+			} else {
+			    me["Simple_L5"].setText("[    ]  ");
+			    me.fontLeft(0, 0, 0, 0, symbol, 0);
+			}
+			
 			me["Simple_R1S"].setText("FINAL");
+			me["Simple_R1"].setText("-----");
+			
 			me["Simple_R2S"].setText("MDA");
+			me["Simple_R2"].setText(" [    ]");
+			
 			me["Simple_R3S"].setText("DH");
-			me["Simple_R4S"].setText("LDG CONF");
+			me["Simple_R3"].setText(" [    ]");
+			
+			me["Simple_R4S"].setText("LDG CONF  ");
+			me["Simple_R4"].setText("CONF3  ");
+			me["Simple_R5"].setText("FULL  ");
+			if (ldg_config_3_set.getValue() == 1 and ldg_config_f_set.getValue() == 0) {
+			    me["PERFAPPR_LDG_3"].hide();
+			    me["PERFAPPR_LDG_F"].show();
+			    me.fontSizeRight(0, 0, 0, normal, small, 0);
+			} else {
+			    me["PERFAPPR_LDG_3"].show();
+			    me["PERFAPPR_LDG_F"].hide();
+			    me.fontSizeRight(0, 0, 0, small, normal, 0);
+			}
+
+			me["Simple_L6S"].setText(" PREV");
+			me["Simple_L6"].setText(" PHASE");
+			
 			me["Simple_R6S"].setText("NEXT ");
+			me["Simple_R6"].setText("PHASE ");
+			
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				lbs1000 = num(zfw.getValue() + block.getValue());
-				
-				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
-				setprop("FMGC/internal/f-speed", tgt_f);
-				tgt_s = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
-				setprop("FMGC/internal/s-speed", tgt_s);
-				tgt_clean = 2 * lbs1000 * 0.45359237 + 85;
+				setprop("FMGC/internal/f-speed-appr", ((-0.0005 * lw.getValue() * lw.getValue()) + (0.5488 * lw.getValue()) + 44.279) * 1.47);
+				setprop("FMGC/internal/s-speed-appr", ((0.0024 * lw.getValue() * lw.getValue()) + (0.124 * lw.getValue()) + 88.942) * 1.23);
+				tgt_clean = 2 * lw.getValue() * 0.45359237 + 85;
 				if (altitude.getValue() > 20000) {
 					tgt_clean += (altitude.getValue() - 20000) / 1000;
 				}
-				setprop("FMGC/internal/o-speed", tgt_clean);
+				setprop("FMGC/internal/o-speed-appr", tgt_clean);
 				
-				me["Simple_C1"].setText(sprintf("%3.0f", f_speed.getValue()));
-				me["Simple_C2"].setText(sprintf("%3.0f", s_speed.getValue()));
-				me["Simple_C3"].setText(sprintf("%3.0f", o_speed.getValue()));
-				me["Simple_C5"].setText(sprintf("%3.0f", min_speed.getValue()));
+				if (ldg_config_3_set.getValue() == 1) {
+				    setprop("FMGC/internal/vls-speed-appr", ((-0.0005 * lw.getValue() * lw.getValue()) + (0.5488 * lw.getValue()) + 43.279) * 1.23);
+				} else {
+				    setprop("FMGC/internal/vls-speed-appr", ((-0.0007 * lw.getValue() * lw.getValue()) + (0.6002 * lw.getValue()) + 38.479) * 1.23);
+				}
+				
+				if (vapp_speed_set.getValue() == 0) {
+				    if (dest_wind.getValue() < 5) {
+                        setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + 5);
+                    } else if (dest_wind.getValue() > 15) {
+                        setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + 15);
+                    } else {
+                        setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + dest_wind.getValue());
+                    }
+				}
+				
+				me["Simple_C1"].setText(sprintf("%3.0f", f_speed_appr.getValue()));
+				me["Simple_C2"].setText(sprintf("%3.0f", s_speed_appr.getValue()));
+				me["Simple_C3"].setText(sprintf("%3.0f", o_speed_appr.getValue()));
+				me["Simple_C5"].setText(sprintf("%3.0f", vls_speed_appr.getValue()));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -1723,21 +1827,17 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				lbs1000 = num(zfw.getValue() + block.getValue());
-				
-				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
-				setprop("FMGC/internal/f-speed", tgt_f);
-				tgt_s = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
-				setprop("FMGC/internal/s-speed", tgt_s);
-				tgt_clean = 2 * lbs1000 * 0.45359237 + 85;
+				setprop("FMGC/internal/f-speed-appr", ((-0.0005 * lw.getValue() * lw.getValue()) + (0.5488 * lw.getValue()) + 44.279) * 1.47);
+				setprop("FMGC/internal/s-speed-appr", ((0.0024 * lw.getValue() * lw.getValue()) + (0.124 * lw.getValue()) + 88.942) * 1.23);
+				tgt_clean = 2 * lw.getValue() * 0.45359237 + 85;
 				if (altitude.getValue() > 20000) {
 					tgt_clean += (altitude.getValue() - 20000) / 1000;
 				}
-				setprop("FMGC/internal/o-speed", tgt_clean);
+				setprop("FMGC/internal/o-speed-appr", tgt_clean);
 				
-				me["Simple_C1"].setText(sprintf("%3.0f", f_speed.getValue()));
-				me["Simple_C2"].setText(sprintf("%3.0f", s_speed.getValue()));
-				me["Simple_C3"].setText(sprintf("%3.0f", o_speed.getValue()));
+				me["Simple_C1"].setText(sprintf("%3.0f", f_speed_appr.getValue()));
+				me["Simple_C2"].setText(sprintf("%3.0f", s_speed_appr.getValue()));
+				me["Simple_C3"].setText(sprintf("%3.0f", o_speed_appr.getValue()));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -2136,19 +2236,19 @@ var canvas_MCDU_base = {
 		if (a != 0) {
 			me["Simple_L1"].setFontSize(a); 
 		}
-		if (b != "ack") {
+		if (b != 0) {
 			me["Simple_L2"].setFontSize(b); 
 		}
-		if (c != "ack") {
+		if (c != 0) {
 			me["Simple_L3"].setFontSize(c); 
 		}
-		if (d != "ack") {
+		if (d != 0) {
 			me["Simple_L4"].setFontSize(d); 
 		}
-		if (e != "ack") {
+		if (e != 0) {
 			me["Simple_L5"].setFontSize(e); 
 		}
-		if (f != "ack") {
+		if (f != 0) {
 			me["Simple_L6"].setFontSize(f); 
 		}
 	},
