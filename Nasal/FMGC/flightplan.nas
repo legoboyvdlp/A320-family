@@ -46,6 +46,10 @@ var flightPlanController = {
 	arrivalIndex: [0, 0, 0],
 	arrivalDist: 0,
 	_arrivalDist: 0,
+	fromWptTime: nil,
+	fromWptAlt: nil,
+	_timeTemp: nil,
+	_altTemp: nil,
 	
 	reset: func() {
 		me.temporaryFlag[0] = 0;
@@ -94,6 +98,24 @@ var flightPlanController = {
 	},
 	
 	autoSequencing: func() {
+		me._timeTemp = math.round(getprop("/sim/time/utc/minute") + (getprop("/sim/time/utc/second") / 60));
+		if (me._timeTemp < 10) {
+			me._timeTemp = "0" ~ me._timeTemp;
+		}
+		me.fromWptTime = getprop("/sim/time/utc/hour") ~ me._timeTemp;
+		me._altTemp = getprop("/systems/navigation/adr/output/baro-alt-corrected-1-capt");
+		
+		if (me._altTemp > getprop("FMGC/internal/trans-alt")) {
+			me.fromWptAlt = "FL" ~ math.round(me._altTemp / 100);
+		} else {
+			if (me._altTemp > 0) {
+				me.fromWptAlt = math.round(me._altTemp);
+			} else {
+				me.fromWptAlt = "M" ~ math.round(me._altTemp);
+			}
+		}
+		
+		# todo setlistener on sim/time/warp to recompute predictions
 		if (me.num[2].getValue() > 2) {
 			if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
 				me.deleteWP(0, 0);

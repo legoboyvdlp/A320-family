@@ -31,9 +31,15 @@ var fplnItem = {
 	updateCenterText: func() {
 		if (me.wp != nil) { 
 			if (me.wp.wp_name != "DISCONTINUITY") {
-				me.brg = me.getBrg();
-				me.track = me.getTrack();
-				return ["---- ", nil, me.colour];
+				if (me.index != (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) or fmgc.flightPlanController.fromWptTime == nil) {
+					me.brg = me.getBrg();
+					me.track = me.getTrack();
+					return ["---- ", nil, me.colour];
+				} else {
+					me.brg = me.getBrg();
+					me.track = me.getTrack();
+					return [fmgc.flightPlanController.fromWptTime ~ " ", nil, me.colour];
+				}
 			} else {
 				return ["---F-PLN DISCONTINUITY--", nil, "wht"];
 			}
@@ -65,7 +71,11 @@ var fplnItem = {
 		return "---";
 	},
 	getAlt: func() {
-		return "-----";
+		if (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
+			return " " ~ fmgc.flightPlanController.fromWptAlt;
+		} else {
+			return "-----";
+		}
 	},
 	getDist: func() {
 		return "--";
