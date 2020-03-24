@@ -327,8 +327,8 @@ var canvas_MCDU_base = {
 				me.showLeftS(1, 1, 1, -1, 1, 1);
 				me.showLeftArrow(-1, -1, 1, -1, -1, -1);
 				me.showRight(-1, 1, -1, -1, -1, 1);
-                me.showRightS(-1, -1, -1, -1, -1, 1);
-                me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showRightS(-1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -382,7 +382,7 @@ var canvas_MCDU_base = {
 				me.showLeftS(1, 1, 1, -1, -1, -1);
 				me.showLeftArrow(1, 1, 1, 1, -1, -1);
 				me.showRight(-1, -1, -1, -1, 1, 1);
-                me.showRightS(-1, -1, -1, -1, 1, 1);
+				me.showRightS(-1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, 1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -548,32 +548,12 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].hide();
+				me.showLeft(1, 1, 1, 1, 1, -1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].show();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].hide();
+				me.showLeftS(1, 1, 1, 1, 1, -1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_R1"].show();
-				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].hide(); 
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].show();
-				me["Simple_R3S"].show();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].hide();
+				me.showRight(1, 1, 1, 1, 1, -1);
+				me.showRightS(1, 1, 1, 1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, 0, default);
@@ -686,7 +666,7 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me.showRight(0, 0, 0, 1, 1, 1);
 				me.showRightS(1, 0, -1, 1, -1, 1);
-                me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -818,7 +798,7 @@ var canvas_MCDU_base = {
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(-1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
-                me.showRightArrow(-1, -1, 1, -1, -1, -1);
+				me.showRightArrow(-1, -1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -944,8 +924,8 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me.showCenterS(1, -1, -1, -1, -1, -1);
-                me.showRight(1, 1, -1, 1, 1, 1);
-                me.showRightS(1, -1, 1, 1, 1, 1);
+				me.showRight(1, 1, -1, 1, 1, 1);
+				me.showRightS(1, -1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -1707,355 +1687,355 @@ var canvas_MCDU_base = {
 	},
 	# -1 = hide, 0 = ignore, 1 = show
 	showLeft: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_L1"].show(); 
-	        } else {
-	            me["Simple_L1"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_L1"].show(); 
+			} else {
+				me["Simple_L1"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_L2"].show(); 
-	        } else {
-	            me["Simple_L2"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_L2"].show(); 
+			} else {
+				me["Simple_L2"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_L3"].show(); 
-	        } else {
-	            me["Simple_L3"].hide(); 
-	        }
+				me["Simple_L3"].show(); 
+			} else {
+				me["Simple_L3"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_L4"].show(); 
-	        } else {
-	            me["Simple_L4"].hide(); 
-	        }
+				me["Simple_L4"].show(); 
+			} else {
+				me["Simple_L4"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_L5"].show(); 
-	        } else {
-	            me["Simple_L5"].hide(); 
-	        }
+				me["Simple_L5"].show(); 
+			} else {
+				me["Simple_L5"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_L6"].show(); 
-	        } else {
-	            me["Simple_L6"].hide(); 
-	        }
+				me["Simple_L6"].show(); 
+			} else {
+				me["Simple_L6"].hide(); 
+			}
 		}
 	},
 	showLeftS: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_L1S"].show(); 
-	        } else {
-	            me["Simple_L1S"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_L1S"].show(); 
+			} else {
+				me["Simple_L1S"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_L2S"].show(); 
-	        } else {
-	            me["Simple_L2S"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_L2S"].show(); 
+			} else {
+				me["Simple_L2S"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_L3S"].show(); 
-	        } else {
-	            me["Simple_L3S"].hide(); 
-	        }
+				me["Simple_L3S"].show(); 
+			} else {
+				me["Simple_L3S"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_L4S"].show(); 
-	        } else {
-	            me["Simple_L4S"].hide(); 
-	        }
+				me["Simple_L4S"].show(); 
+			} else {
+				me["Simple_L4S"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_L5S"].show(); 
-	        } else {
-	            me["Simple_L5S"].hide(); 
-	        }
+				me["Simple_L5S"].show(); 
+			} else {
+				me["Simple_L5S"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_L6S"].show(); 
-	        } else {
-	            me["Simple_L6S"].hide(); 
-	        }
+				me["Simple_L6S"].show(); 
+			} else {
+				me["Simple_L6S"].hide(); 
+			}
 		}
 	},
 	showLeftArrow: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_L1_Arrow"].show(); 
-	        } else {
-	            me["Simple_L1_Arrow"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_L1_Arrow"].show(); 
+			} else {
+				me["Simple_L1_Arrow"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_L2_Arrow"].show(); 
-	        } else {
-	            me["Simple_L2_Arrow"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_L2_Arrow"].show(); 
+			} else {
+				me["Simple_L2_Arrow"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_L3_Arrow"].show(); 
-	        } else {
-	            me["Simple_L3_Arrow"].hide(); 
-	        }
+				me["Simple_L3_Arrow"].show(); 
+			} else {
+				me["Simple_L3_Arrow"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_L4_Arrow"].show(); 
-	        } else {
-	            me["Simple_L4_Arrow"].hide(); 
-	        }
+				me["Simple_L4_Arrow"].show(); 
+			} else {
+				me["Simple_L4_Arrow"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_L5_Arrow"].show(); 
-	        } else {
-	            me["Simple_L5_Arrow"].hide(); 
-	        }
+				me["Simple_L5_Arrow"].show(); 
+			} else {
+				me["Simple_L5_Arrow"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_L6_Arrow"].show(); 
-	        } else {
-	            me["Simple_L6_Arrow"].hide(); 
-	        }
+				me["Simple_L6_Arrow"].show(); 
+			} else {
+				me["Simple_L6_Arrow"].hide(); 
+			}
 		}
 	},
-    showRight: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_R1"].show(); 
-	        } else {
-	            me["Simple_R1"].hide(); 
-	        }
+	showRight: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_R1"].show(); 
+			} else {
+				me["Simple_R1"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_R2"].show(); 
-	        } else {
-	            me["Simple_R2"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_R2"].show(); 
+			} else {
+				me["Simple_R2"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_R3"].show(); 
-	        } else {
-	            me["Simple_R3"].hide(); 
-	        }
+				me["Simple_R3"].show(); 
+			} else {
+				me["Simple_R3"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_R4"].show(); 
-	        } else {
-	            me["Simple_R4"].hide(); 
-	        }
+				me["Simple_R4"].show(); 
+			} else {
+				me["Simple_R4"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_R5"].show(); 
-	        } else {
-	            me["Simple_R5"].hide(); 
-	        }
+				me["Simple_R5"].show(); 
+			} else {
+				me["Simple_R5"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_R6"].show(); 
-	        } else {
-	            me["Simple_R6"].hide(); 
-	        }
+				me["Simple_R6"].show(); 
+			} else {
+				me["Simple_R6"].hide(); 
+			}
 		}
 	},
 	showRightS: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_R1S"].show(); 
-	        } else {
-	            me["Simple_R1S"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_R1S"].show(); 
+			} else {
+				me["Simple_R1S"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_R2S"].show(); 
-	        } else {
-	            me["Simple_R2S"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_R2S"].show(); 
+			} else {
+				me["Simple_R2S"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_R3S"].show(); 
-	        } else {
-	            me["Simple_R3S"].hide(); 
-	        }
+				me["Simple_R3S"].show(); 
+			} else {
+				me["Simple_R3S"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_R4S"].show(); 
-	        } else {
-	            me["Simple_R4S"].hide(); 
-	        }
+				me["Simple_R4S"].show(); 
+			} else {
+				me["Simple_R4S"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_R5S"].show(); 
-	        } else {
-	            me["Simple_R5S"].hide(); 
-	        }
+				me["Simple_R5S"].show(); 
+			} else {
+				me["Simple_R5S"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_R6S"].show(); 
-	        } else {
-	            me["Simple_R6S"].hide(); 
-	        }
+				me["Simple_R6S"].show(); 
+			} else {
+				me["Simple_R6S"].hide(); 
+			}
 		}
 	},
 	showRightArrow: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_R1_Arrow"].show(); 
-	        } else {
-	            me["Simple_R1_Arrow"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_R1_Arrow"].show(); 
+			} else {
+				me["Simple_R1_Arrow"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_R2_Arrow"].show(); 
-	        } else {
-	            me["Simple_R2_Arrow"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_R2_Arrow"].show(); 
+			} else {
+				me["Simple_R2_Arrow"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_R3_Arrow"].show(); 
-	        } else {
-	            me["Simple_R3_Arrow"].hide(); 
-	        }
+				me["Simple_R3_Arrow"].show(); 
+			} else {
+				me["Simple_R3_Arrow"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_R4_Arrow"].show(); 
-	        } else {
-	            me["Simple_R4_Arrow"].hide(); 
-	        }
+				me["Simple_R4_Arrow"].show(); 
+			} else {
+				me["Simple_R4_Arrow"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_R5_Arrow"].show(); 
-	        } else {
-	            me["Simple_R5_Arrow"].hide(); 
-	        }
+				me["Simple_R5_Arrow"].show(); 
+			} else {
+				me["Simple_R5_Arrow"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_R6_Arrow"].show(); 
-	        } else {
-	            me["Simple_R6_Arrow"].hide(); 
-	        }
+				me["Simple_R6_Arrow"].show(); 
+			} else {
+				me["Simple_R6_Arrow"].hide(); 
+			}
 		}
 	},
 	showCenter: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_C1"].show(); 
-	        } else {
-	            me["Simple_C1"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_C1"].show(); 
+			} else {
+				me["Simple_C1"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_C2"].show(); 
-	        } else {
-	            me["Simple_C2"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_C2"].show(); 
+			} else {
+				me["Simple_C2"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_C3"].show(); 
-	        } else {
-	            me["Simple_C3"].hide(); 
-	        }
+				me["Simple_C3"].show(); 
+			} else {
+				me["Simple_C3"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_C4"].show(); 
-	        } else {
-	            me["Simple_C4"].hide(); 
-	        }
+				me["Simple_C4"].show(); 
+			} else {
+				me["Simple_C4"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_C5"].show(); 
-	        } else {
-	            me["Simple_C5"].hide(); 
-	        }
+				me["Simple_C5"].show(); 
+			} else {
+				me["Simple_C5"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_C6"].show(); 
-	        } else {
-	            me["Simple_C6"].hide(); 
-	        }
+				me["Simple_C6"].show(); 
+			} else {
+				me["Simple_C6"].hide(); 
+			}
 		}
 	},
 	showCenterS: func (a, b, c, d, e, f) {
-	    if (a != 0) {
-	        if (a >= 1) {
-	            me["Simple_C1S"].show(); 
-	        } else {
-	            me["Simple_C1S"].hide(); 
-	        }
+		if (a != 0) {
+			if (a >= 1) {
+				me["Simple_C1S"].show(); 
+			} else {
+				me["Simple_C1S"].hide(); 
+			}
 		}
 		if (b != 0) {
-	        if (b >= 1) {
-	            me["Simple_C2S"].show(); 
-	        } else {
-	            me["Simple_C2S"].hide(); 
-	        }
+			if (b >= 1) {
+				me["Simple_C2S"].show(); 
+			} else {
+				me["Simple_C2S"].hide(); 
+			}
 		}
 		if (c != 0) {
 			if (c >= 1) {
-	            me["Simple_C3S"].show(); 
-	        } else {
-	            me["Simple_C3S"].hide(); 
-	        }
+				me["Simple_C3S"].show(); 
+			} else {
+				me["Simple_C3S"].hide(); 
+			}
 		}
 		if (d != 0) {
 			if (d >= 1) {
-	            me["Simple_C4S"].show(); 
-	        } else {
-	            me["Simple_C4S"].hide(); 
-	        }
+				me["Simple_C4S"].show(); 
+			} else {
+				me["Simple_C4S"].hide(); 
+			}
 		}
 		if (e != 0) {
 			if (e >= 1) {
-	            me["Simple_C5S"].show(); 
-	        } else {
-	            me["Simple_C5S"].hide(); 
-	        }
+				me["Simple_C5S"].show(); 
+			} else {
+				me["Simple_C5S"].hide(); 
+			}
 		}
 		if (f != 0) {
 			if (f >= 1) {
-	            me["Simple_C6S"].show(); 
-	        } else {
-	            me["Simple_C6S"].hide(); 
-	        }
+				me["Simple_C6S"].show(); 
+			} else {
+				me["Simple_C6S"].hide(); 
+			}
 		}
 	},
 	# 0 = ignore
