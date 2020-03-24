@@ -1078,6 +1078,12 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
+			if (getprop("FMGC/status/phase") == 1) {
+                me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+            } else {
+                me["Simple_Title"].setColor(1, 1, 1);
+            }
+			
 			if (v1Set.getValue() == 1) {
 				me["PERFTO_V1"].hide();
 				me["Simple_L1"].show();
@@ -1218,6 +1224,12 @@ var canvas_MCDU_base = {
 				
 				pageSwitch[i].setBoolValue(1);
 			}
+			
+			if (getprop("FMGC/status/phase") == 5) {
+                me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+            } else {
+                me["Simple_Title"].setColor(1, 1, 1);
+            }
 			
 			me["Simple_L0S"].setText("DEST");
 			me["Simple_L1S"].setText("QNH");
@@ -1380,6 +1392,12 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
+			if (getprop("FMGC/status/phase") == 6) {
+                me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+            } else {
+                me["Simple_Title"].setColor(1, 1, 1);
+            }
+			
 			if (thrAccSet.getValue() == 1) {
 				me["Simple_L5"].setFontSize(normal);
 			} else {
@@ -1465,6 +1483,16 @@ var canvas_MCDU_base = {
 				
 				pageSwitch[i].setBoolValue(1);
 			}
+			
+			if (page == "CLB" and getprop("FMGC/status/phase") == 2) {
+                me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+            } else if (page == "CRZ" and getprop("FMGC/status/phase") == 3) {
+                me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+            }else if (page == "DES" and getprop("FMGC/status/phase") == 4) {
+                me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+            } else {
+                me["Simple_Title"].setColor(1, 1, 1);
+            }
 			
 			if (managedSpeed.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
