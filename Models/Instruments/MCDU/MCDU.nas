@@ -1701,7 +1701,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("NEXT ");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				lbs1000 = KG2LB * num(zfw.getValue() + block.getValue());
+				lbs1000 = num(zfw.getValue() + block.getValue());
 				
 				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
 				setprop("FMGC/internal/f-speed", tgt_f);
@@ -1836,7 +1836,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("NEXT ");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				lbs1000 = KG2LB * num(zfw.getValue() + block.getValue());
+				lbs1000 = num(zfw.getValue() + block.getValue());
 				
 				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
 				setprop("FMGC/internal/f-speed", tgt_f);
@@ -1968,7 +1968,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				lbs1000 = KG2LB * num(zfw.getValue() + block.getValue());
+				lbs1000 = num(zfw.getValue() + block.getValue());
 				
 				tgt_f = ((0.4352 * lbs1000) + 51.006) * 1.47;
 				setprop("FMGC/internal/f-speed", tgt_f);
