@@ -25,7 +25,8 @@ var perfAPPRInput = func(key, i) {
 	        setprop("FMGC/internal/dest-qnh", -1);
 	        setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-	    } else if (scratchpad >= 0 and scratchpad <= 1100) {
+	    } else if ((scratchpad >= 25 and scratchpad <= 60) or (scratchpad >= 900 and scratchpad <= 1100)) {
+	        # doesn't support accidental temp input yet
 			setprop("FMGC/internal/dest-qnh", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 	    } else {
