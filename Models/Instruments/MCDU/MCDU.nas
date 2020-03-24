@@ -265,43 +265,14 @@ var canvas_MCDU_base = {
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].hide();
-				me["Simple_L6"].hide();
+				
+				me.showLeft(1, 1, 1, 1, -1, -1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].hide();
-				me["Simple_L2S"].hide();
-				me["Simple_L3S"].hide();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].hide();
-				me["Simple_L6S"].hide();
-				me["Simple_L1_Arrow"].show();
-				me["Simple_L2_Arrow"].show();
-				me["Simple_L3_Arrow"].show();
-				me["Simple_L4_Arrow"].show();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_R1"].hide();
-				me["Simple_R2"].hide();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].hide();
-				me["Simple_R5"].hide();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].hide();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].hide();
-				me["Simple_R5S"].hide();
-				me["Simple_R6S"].hide();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].show();
+				me.showLeftS(-1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(1, 1, 1, 1, -1, -1);
+				me.showRight(-1, -1, -1, -1, -1, 1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -351,43 +322,13 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].hide();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, -1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].show();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_R1"].hide();
-				me["Simple_R2"].show();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].hide();
-				me["Simple_R5"].hide();
-				me["Simple_R6"].show(); 
-				me["Simple_R1S"].hide();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].hide();
-				me["Simple_R5S"].hide();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].show();
+				me.showLeftS(1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, 1, -1, -1, -1);
+				me.showRight(-1, 1, -1, -1, -1, 1);
+                me.showRightS(-1, -1, -1, -1, -1, 1);
+                me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -436,43 +377,13 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].hide();
-				me["Simple_L6"].hide();
+				me.showLeft(1, 1, 1, 1, -1, -1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].hide();
-				me["Simple_L6S"].hide();
-				me["Simple_L1_Arrow"].show();
-				me["Simple_L2_Arrow"].show();
-				me["Simple_L3_Arrow"].show();
-				me["Simple_L4_Arrow"].show();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_R1"].hide();
-				me["Simple_R2"].hide();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].hide();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].hide();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].hide();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].show();
-				me["Simple_R6_Arrow"].show();
+				me.showLeftS(1, 1, 1, -1, -1, -1);
+				me.showLeftArrow(1, 1, 1, 1, -1, -1);
+				me.showRight(-1, -1, -1, -1, 1, 1);
+                me.showRightS(-1, -1, -1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, 1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -519,43 +430,13 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].hide();
-				me["Simple_L2S"].hide();
-				me["Simple_L3S"].hide();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].show();
-				me["Simple_L2_Arrow"].show();
-				me["Simple_L3_Arrow"].show();
-				me["Simple_L4_Arrow"].show();
-				me["Simple_L5_Arrow"].show();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1"].show();
-				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
-				me["Simple_R5"].hide();
-				me["Simple_R6"].hide();
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].show();
-				me["Simple_R3S"].show();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].hide();
-				me["Simple_R6S"].hide();
-				me["Simple_R1_Arrow"].show();
-				me["Simple_R2_Arrow"].show();
-				me["Simple_R3_Arrow"].show();
-				me["Simple_R4_Arrow"].show();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.showLeftS(-1, -1, -1, -1, 1, 1);
+				me.showLeftArrow(1, 1, 1, 1, 1, 1);
+				me.showRight(1, 1, 1, 1, -1, -1);
+				me.showRightS(1, 1, 1, 1, -1, -1);
+				me.showRightArrow(1, 1, 1, 1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -607,55 +488,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].hide();
-				me["Simple_L2S"].hide();
-				me["Simple_L3S"].hide();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].hide();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_C1"].hide();
-				me["Simple_C2"].hide();
-				me["Simple_C3"].hide();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].show();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].hide();
-				me["Simple_C2S"].hide();
-				me["Simple_C3S"].hide();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].show();
-				me["Simple_C6S"].hide();
-				me["Simple_R1"].show();
-				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].hide();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].hide();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].show();
+				me.showLeftS(-1, -1, -1, -1, 1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, 1, -1);
+				me.showCenterS(-1, -1, -1, -1, 1, -1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(-1, -1, -1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -720,12 +561,7 @@ var canvas_MCDU_base = {
 				me["Simple_L4S"].show();
 				me["Simple_L5S"].show();
 				me["Simple_L6S"].hide();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_R1"].show();
 				me["Simple_R2"].show();
 				me["Simple_R3"].show();
@@ -738,12 +574,7 @@ var canvas_MCDU_base = {
 				me["Simple_R4S"].show();
 				me["Simple_R5S"].show();
 				me["Simple_R6S"].hide();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, 0, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -849,36 +680,13 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me["Simple_L2"].show();
-				me["Simple_L4"].show();
-				me["Simple_L6"].show();
+				me.showLeft(0, 1, 0, 1, 0, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].show();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].show();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].hide();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].show();
-				me["Simple_R6_Arrow"].hide();
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
+				me.showRight(0, 0, 0, 1, 1, 1);
+				me.showRightS(1, 0, -1, 1, -1, 1);
+                me.showRightArrow(-1, -1, -1, -1, 1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -942,8 +750,7 @@ var canvas_MCDU_base = {
                 } else {
                     me["Simple_L2"].setText(alt_airport.getValue());
                 }
-				me["Simple_R1"].show();
-				me["Simple_R2"].hide();
+				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
 				me["INITA_InitRequest"].hide();
 			} else {
@@ -952,8 +759,7 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].hide();
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText("----/----------");
-				me["Simple_R1"].hide();
-				me["Simple_R2"].show();
+				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
 				me["INITA_InitRequest"].show();
 			}
@@ -1004,55 +810,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].show();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_C1"].show();
-				me["Simple_C2"].hide();
-				me["Simple_C3"].hide();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].hide();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].hide();
-				me["Simple_C2S"].hide();
-				me["Simple_C3S"].hide();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].hide();
-				me["Simple_C6S"].hide();
-				me["Simple_R1"].hide();
-				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].show();
-				me["Simple_R3S"].show();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].show();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, -1, -1, -1);
+				me.showRight(-1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, 1, 1);
+                me.showRightArrow(-1, -1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1121,12 +887,6 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].show(); 
 				me["Simple_R3_Arrow"].show();
 				me["Simple_R4"].setText("---.-/---.-");
-				# if (lw.getValue() == 0) {
-#                     me["Simple_R4"].setText("---.-");
-#                     me["Simple_C4"].show();
-#                     me["Simple_C4"].setFontSize(small); 
-#                     me["Simple_C4"].setText("               " ~ sprintf("%4.1f/", tow.getValue()));
-#                 }
                 me["Simple_R6"].setText("---.-/----");
 				
 				me["Simple_Title"].setText("INIT");
@@ -1178,55 +938,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].hide();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].show();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_C1"].show();
-				me["Simple_C2"].show();
-				me["Simple_C3"].show();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].hide();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].show();
-				me["Simple_C2S"].hide();
-				me["Simple_C3S"].hide();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].hide();
-				me["Simple_C6S"].hide();
-				me["Simple_R1"].show();
-				me["Simple_R2"].show();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].show();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.showLeftS(1, -1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(1, 1, 1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+                me.showRight(1, 1, -1, 1, 1, 1);
+                me.showRightS(1, -1, 1, 1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1347,55 +1067,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].show();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1"].show();
-				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].show();
-				me["Simple_R3S"].show();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].show();
-				me["Simple_C1"].show();
-				me["Simple_C2"].show();
-				me["Simple_C3"].show();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].hide();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].show();
-				me["Simple_C2S"].show();
-				me["Simple_C3S"].show();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].hide();
-				me["Simple_C6S"].hide();
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, 1, 1, -1, -1, -1);
+				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1528,55 +1208,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].show();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].show();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].show();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1"].show();
-				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
-				me["Simple_R5"].show();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].show();
-				me["Simple_R3S"].show();
-				me["Simple_R4S"].show();
-				me["Simple_R5S"].hide();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].show();
-				me["Simple_C1"].show();
-				me["Simple_C2"].show();
-				me["Simple_C3"].show();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].show();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].show();
-				me["Simple_C2S"].show();
-				me["Simple_C3S"].show();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].show();
-				me["Simple_C6S"].hide();
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRight(1, 1, 1, 1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, 1, 1, -1, 1, -1);
+				me.showCenterS(1, 1, 1, -1, 1, -1);
 				
 				me.fontLeft(symbol, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1598,22 +1238,6 @@ var canvas_MCDU_base = {
 				
 				pageSwitch[i].setBoolValue(1);
 			}
-			
-			# var dest_qnh = props.globals.getNode("FMGC/internal/dest-qnh", 1);
-# var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
-# var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
-# var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
-# var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
-# var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
-# var f_speed_appr = props.globals.getNode("FMGC/internal/f-speed-appr", 1);
-# var s_speed_appr = props.globals.getNode("FMGC/internal/s-speed-appr", 1);
-# var o_speed_appr = props.globals.getNode("FMGC/internal/o-speed-appr", 1);
-# var vls_speed_appr = props.globals.getNode("FMGC/internal/vls-speed-appr", 1);
-# var final = props.globals.getNode("FMGC/internal/final", 1);
-# var mda = props.globals.getNode("FMGC/internal/mda", 1);
-# var dh = props.globals.getNode("FMGC/internal/dh", 1);
-# var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
-# var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
 			
 			me["Simple_L0S"].setText("DEST");
 			me["Simple_L1S"].setText("QNH");
@@ -1745,55 +1369,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].hide();
-				me["Simple_L2"].hide();
-				me["Simple_L3"].hide();
-				me["Simple_L4"].hide();
-				me["Simple_L5"].show();
-				me["Simple_L6"].show();
+				me.showLeft(-1, -1, -1, -1, 1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].hide();
-				me["Simple_L2S"].hide();
-				me["Simple_L3S"].hide();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].show();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1"].hide();
-				me["Simple_R2"].hide();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].hide();
-				me["Simple_R5"].show();
-				me["Simple_R6"].hide();
-				me["Simple_R1S"].hide();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].hide();
-				me["Simple_R5S"].show();
-				me["Simple_R6S"].hide();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
-				me["Simple_C1"].show();
-				me["Simple_C2"].show();
-				me["Simple_C3"].show();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].hide();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].show();
-				me["Simple_C2S"].show();
-				me["Simple_C3S"].show();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].hide();
-				me["Simple_C6S"].hide();
+				me.showLeftS(-1, -1, -1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, -1, -1, -1, 1, -1);
+				me.showRightS(-1, -1, -1, -1, 1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(1, 1, 1, -1, -1, -1);
+				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1871,53 +1455,15 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L1"].show();
-				me["Simple_L2"].show();
-				me["Simple_L3"].show();
-				me["Simple_L4"].hide();
-				me["Simple_L5"].hide();
-				me["Simple_L6"].show();
+				me.showLeft(1, 1, 1, -1, -1, 1);
 				me["Simple_L0S"].hide();
-				me["Simple_L1S"].show();
-				me["Simple_L2S"].show();
-				me["Simple_L3S"].show();
-				me["Simple_L4S"].hide();
-				me["Simple_L5S"].hide();
-				me["Simple_L6S"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1"].show();
-				me["Simple_R2"].hide();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].hide();
-				me["Simple_R6"].show();
-				me["Simple_R1S"].show();
-				me["Simple_R2S"].hide();
-				me["Simple_R3S"].hide();
-				me["Simple_R4S"].hide();
-				me["Simple_R6S"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].show();
-				me["Simple_C1"].show();
-				me["Simple_C2"].hide();
-				me["Simple_C3"].hide();
-				me["Simple_C4"].hide();
-				me["Simple_C5"].hide();
-				me["Simple_C6"].hide();
-				me["Simple_C1S"].show();
-				me["Simple_C2S"].hide();
-				me["Simple_C3S"].hide();
-				me["Simple_C4S"].hide();
-				me["Simple_C5S"].hide();
-				me["Simple_C6S"].hide();
+				me.showLeftS(1, 1, 1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, -1, -1, -1, 0, 1);
+				me.showRightS(1, -1, -1, -1, 0, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -2157,6 +1703,359 @@ var canvas_MCDU_base = {
 		}
 		if (f != "ack") {
 			me["Simple_C6S"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+		}
+	},
+	# -1 = hide, 0 = ignore, 1 = show
+	showLeft: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_L1"].show(); 
+	        } else {
+	            me["Simple_L1"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_L2"].show(); 
+	        } else {
+	            me["Simple_L2"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_L3"].show(); 
+	        } else {
+	            me["Simple_L3"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_L4"].show(); 
+	        } else {
+	            me["Simple_L4"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_L5"].show(); 
+	        } else {
+	            me["Simple_L5"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_L6"].show(); 
+	        } else {
+	            me["Simple_L6"].hide(); 
+	        }
+		}
+	},
+	showLeftS: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_L1S"].show(); 
+	        } else {
+	            me["Simple_L1S"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_L2S"].show(); 
+	        } else {
+	            me["Simple_L2S"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_L3S"].show(); 
+	        } else {
+	            me["Simple_L3S"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_L4S"].show(); 
+	        } else {
+	            me["Simple_L4S"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_L5S"].show(); 
+	        } else {
+	            me["Simple_L5S"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_L6S"].show(); 
+	        } else {
+	            me["Simple_L6S"].hide(); 
+	        }
+		}
+	},
+	showLeftArrow: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_L1_Arrow"].show(); 
+	        } else {
+	            me["Simple_L1_Arrow"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_L2_Arrow"].show(); 
+	        } else {
+	            me["Simple_L2_Arrow"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_L3_Arrow"].show(); 
+	        } else {
+	            me["Simple_L3_Arrow"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_L4_Arrow"].show(); 
+	        } else {
+	            me["Simple_L4_Arrow"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_L5_Arrow"].show(); 
+	        } else {
+	            me["Simple_L5_Arrow"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_L6_Arrow"].show(); 
+	        } else {
+	            me["Simple_L6_Arrow"].hide(); 
+	        }
+		}
+	},
+    showRight: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_R1"].show(); 
+	        } else {
+	            me["Simple_R1"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_R2"].show(); 
+	        } else {
+	            me["Simple_R2"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_R3"].show(); 
+	        } else {
+	            me["Simple_R3"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_R4"].show(); 
+	        } else {
+	            me["Simple_R4"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_R5"].show(); 
+	        } else {
+	            me["Simple_R5"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_R6"].show(); 
+	        } else {
+	            me["Simple_R6"].hide(); 
+	        }
+		}
+	},
+	showRightS: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_R1S"].show(); 
+	        } else {
+	            me["Simple_R1S"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_R2S"].show(); 
+	        } else {
+	            me["Simple_R2S"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_R3S"].show(); 
+	        } else {
+	            me["Simple_R3S"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_R4S"].show(); 
+	        } else {
+	            me["Simple_R4S"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_R5S"].show(); 
+	        } else {
+	            me["Simple_R5S"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_R6S"].show(); 
+	        } else {
+	            me["Simple_R6S"].hide(); 
+	        }
+		}
+	},
+	showRightArrow: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_R1_Arrow"].show(); 
+	        } else {
+	            me["Simple_R1_Arrow"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_R2_Arrow"].show(); 
+	        } else {
+	            me["Simple_R2_Arrow"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_R3_Arrow"].show(); 
+	        } else {
+	            me["Simple_R3_Arrow"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_R4_Arrow"].show(); 
+	        } else {
+	            me["Simple_R4_Arrow"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_R5_Arrow"].show(); 
+	        } else {
+	            me["Simple_R5_Arrow"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_R6_Arrow"].show(); 
+	        } else {
+	            me["Simple_R6_Arrow"].hide(); 
+	        }
+		}
+	},
+	showCenter: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_C1"].show(); 
+	        } else {
+	            me["Simple_C1"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_C2"].show(); 
+	        } else {
+	            me["Simple_C2"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_C3"].show(); 
+	        } else {
+	            me["Simple_C3"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_C4"].show(); 
+	        } else {
+	            me["Simple_C4"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_C5"].show(); 
+	        } else {
+	            me["Simple_C5"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_C6"].show(); 
+	        } else {
+	            me["Simple_C6"].hide(); 
+	        }
+		}
+	},
+	showCenterS: func (a, b, c, d, e, f) {
+	    if (a != 0) {
+	        if (a >= 1) {
+	            me["Simple_C1S"].show(); 
+	        } else {
+	            me["Simple_C1S"].hide(); 
+	        }
+		}
+		if (b != 0) {
+	        if (b >= 1) {
+	            me["Simple_C2S"].show(); 
+	        } else {
+	            me["Simple_C2S"].hide(); 
+	        }
+		}
+		if (c != 0) {
+			if (c >= 1) {
+	            me["Simple_C3S"].show(); 
+	        } else {
+	            me["Simple_C3S"].hide(); 
+	        }
+		}
+		if (d != 0) {
+			if (d >= 1) {
+	            me["Simple_C4S"].show(); 
+	        } else {
+	            me["Simple_C4S"].hide(); 
+	        }
+		}
+		if (e != 0) {
+			if (e >= 1) {
+	            me["Simple_C5S"].show(); 
+	        } else {
+	            me["Simple_C5S"].hide(); 
+	        }
+		}
+		if (f != 0) {
+			if (f >= 1) {
+	            me["Simple_C6S"].show(); 
+	        } else {
+	            me["Simple_C6S"].hide(); 
+	        }
 		}
 	},
 	# 0 = ignore
