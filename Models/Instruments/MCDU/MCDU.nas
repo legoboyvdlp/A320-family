@@ -1193,7 +1193,7 @@ var canvas_MCDU_base = {
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
 				me.showRight(1, 1, 1, 1, 1, 1);
-				me.showRight(1, 1, 1, 1, -1, 1);
+				me.showRightS(1, 1, 1, 1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, 1, -1);
 				me.showCenterS(1, 1, 1, -1, 1, -1);
