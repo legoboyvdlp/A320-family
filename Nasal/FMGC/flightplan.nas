@@ -420,7 +420,7 @@ var flightPlanController = {
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
 					if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-						me._arrivalDist += courseDistanceFromPrev[1];
+						me._arrivalDist += courseDistanceFromPrev[1]; # todo - buggy. Neglect discontinuity, and should show distance to next wpt, + distance thereafter
 					}
 				} else {
 					# use PPOS for the first waypoint

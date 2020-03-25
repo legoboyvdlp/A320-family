@@ -309,8 +309,16 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 	},
 	destInfo: func() {
-		me.L6 = [left(me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name, 4), " DEST", "wht"];
-		me.C6 = ["----  " ~ int(fmgc.flightPlanController.arrivalDist), "TIME   DIST", "wht"];
+		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil) {
+			me.L6 = [left(me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name, 4), " DEST", "wht"];
+		} else {
+			me.L6 = ["----", " DEST", "wht"];
+		}
+		if (fmgc.flightPlanController.arrivalDist != nil) {
+			me.C6 = ["----  " ~ int(fmgc.flightPlanController.arrivalDist), "TIME   DIST", "wht"];
+		} else {
+			me.C6 = ["----   ----", "TIME   DIST", "wht"];
+		}
 		me.R6 = ["--.-", "EFOB", "wht"];
 	},
 	update: func() {
