@@ -1,9 +1,33 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Matthew Maring (hayden2000)
 
 var perfCRZInput = func(key, i) {
-	if (key == "L6") {
+    var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	if (key == "L2") {
+		if (scratchpad == "CLR") {
+			setprop("FMGC/internal/cost-index", 0);
+			setprop("FMGC/internal/cost-index-set", 0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		} else {
+			var ci = int(scratchpad);
+			var cis = size(scratchpad);
+			if (cis >= 1 and cis <= 3) {
+				if (ci == nil) {
+					notAllowed(i);
+				} else if (ci >= 0 and ci <= 999) {
+					setprop("FMGC/internal/cost-index", ci);
+					setprop("FMGC/internal/cost-index-set", 1);
+					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				} else {
+					notAllowed(i);
+				}
+			} else {
+				notAllowed(i);
+			}
+		}
+	} else if (key == "L6") {
 		setprop("MCDU[" ~ i ~ "]/page", "CLB");
 	}
 	if (key == "R6") {

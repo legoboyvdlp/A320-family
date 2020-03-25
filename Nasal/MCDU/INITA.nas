@@ -11,12 +11,17 @@ var initInputA = func(key, i) {
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			fmgc.updateARPT();
+	    } else if (scratchpad == "") {
+	        setprop("FMGC/internal/alt-selected", 1);
+	        setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 	    } else if (getprop("FMGC/internal/tofrom-set") == 1) {
 	        var tfs = size(scratchpad);
 			if (tfs == 4) {
 				setprop("FMGC/internal/alt-airport", scratchpad);
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				fmgc.updateARPT();
+				setprop("FMGC/internal/alt-selected", 1);
+				setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 			} else {
                 notAllowed(i);
             }
@@ -95,6 +100,9 @@ var initInputA = func(key, i) {
 			fmgc.updateARPT();
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		} else if (scratchpad == "") {
+		    setprop("FMGC/internal/alt-selected", 0);
+		    setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 9 and find("/", scratchpad) != -1) {
@@ -107,6 +115,8 @@ var initInputA = func(key, i) {
 					setprop("FMGC/internal/tofrom-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					fmgc.updateARPT();
+					setprop("FMGC/internal/alt-selected", 0);
+					setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 				} else {
 					notAllowed(i);
 				}
@@ -115,9 +125,7 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R3") {
-		#if (getprop("controls/adirs/mcducbtn") == 0) {
-		#	setprop("controls/adirs/mcducbtn", 1);
-		#}
+		setprop("MCDU[" ~ i ~ "]/page", "IRSINIT");
 	} else if (key == "R6") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/tropo", 36090);
@@ -126,7 +134,7 @@ var initInputA = func(key, i) {
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tropo = size(scratchpad);
-			if (tropo == 5) {
+			if (tropo == 5 and scratchpad <= 99990) {
 				setprop("FMGC/internal/tropo-set", 1);
 				setprop("FMGC/internal/tropo", scratchpad);
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");

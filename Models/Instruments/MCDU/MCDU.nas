@@ -37,6 +37,8 @@ var engType = props.globals.getNode("MCDUC/eng", 1);
 var database1 = props.globals.getNode("FMGC/internal/navdatabase", 1);
 var database2 = props.globals.getNode("FMGC/internal/navdatabase2", 1);
 var databaseCode = props.globals.getNode("FMGC/internal/navdatabasecode", 1);
+
+# RADNAV
 var vor1 = props.globals.getNode("FMGC/internal/vor1-mcdu", 1);
 var vor2 = props.globals.getNode("FMGC/internal/vor2-mcdu", 1);
 var ils1 = props.globals.getNode("FMGC/internal/ils1-mcdu", 1);
@@ -53,6 +55,8 @@ var adf2FreqSet = props.globals.getNode("FMGC/internal/adf2freq-set", 1);
 var ils1CRS = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg", 1);
 var vor1CRS = props.globals.getNode("instrumentation/nav[2]/radials/selected-deg", 1);
 var vor2CRS = props.globals.getNode("instrumentation/nav[3]/radials/selected-deg", 1);
+
+# INT-A variabless
 var flightNum = props.globals.getNode("MCDUC/flight-num", 1);
 var flightNumSet = props.globals.getNode("MCDUC/flight-num-set", 1);
 var depArpt = props.globals.getNode("FMGC/internal/dep-arpt", 1);
@@ -65,6 +69,12 @@ var cruiseSet = props.globals.getNode("FMGC/internal/cruise-lvl-set", 1);
 var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
+
+# IRSINIT variables
+var align_set = props.globals.getNode("FMGC/internal/align-set", 1);
+
+# ROUTE SELECTION variables
+var alt_selected = props.globals.getNode("FMGC/internal/alt-selected", 1);
 
 # INT-B variables
 var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
@@ -158,8 +168,6 @@ var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1
 var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
 
 # GA PERF
-
-# INT-A variables
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("MCDU[0]/page", 1), props.globals.getNode("MCDU[1]/page", 1)];
@@ -733,6 +741,16 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
 				me["INITA_InitRequest"].hide();
+                if (getprop("autopilot/route-manager/route/wp[0]/latitude-deg") > 0) {
+                    me["Simple_L4"].setText(sprintf("%6.2fN", getprop("autopilot/route-manager/route/wp[0]/latitude-deg")));
+                } else {
+                    me["Simple_L4"].setText(sprintf("%6.2fS", getprop("autopilot/route-manager/route/wp[0]/latitude-deg") * -1));
+                }
+                if (getprop("autopilot/route-manager/route/wp[0]/longitude-deg") > 0) {
+                    me["Simple_R4"].setText(sprintf("%7.2fE", getprop("autopilot/route-manager/route/wp[0]/longitude-deg")));
+                } else {
+                    me["Simple_R4"].setText(sprintf("%7.2fW", getprop("autopilot/route-manager/route/wp[0]/longitude-deg") * -1));
+                }
 			} else {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
@@ -742,13 +760,17 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
 				me["INITA_InitRequest"].show();
+				me["Simple_L4"].setText("----.-");
+				me["Simple_R4"].setText("-----.--");
 			}
-			if (toFromSet.getValue() == 1 and ADIRSMCDUBTN.getValue() != 1) {
+			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
 				me["Simple_R3"].show();
+				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			} else {
 				me["INITA_AlignIRS"].hide();
 				me["Simple_R3"].hide();
+				me.showRightArrow(0, 0, -1, 0, 0, 0);
 			}
 			if (tropoSet.getValue() == 1) {
 				me["Simple_R6"].setFontSize(normal); 
@@ -764,17 +786,203 @@ var canvas_MCDU_base = {
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			me["Simple_L1"].setText("NONE");
 			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
-			me["Simple_L4"].setText("----.-");
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
 			me["Simple_R4S"].setText("LONG");
 			me["Simple_R6S"].setText("TROPO");
 			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
 			me["Simple_R2"].setText("REQUEST ");
-			me["Simple_R3"].setText("IRS INIT >");
-			me["Simple_R4"].setText("-----.--");
+			me["Simple_R3"].setText("IRS INIT ");
 			me["Simple_R5"].setText("WIND ");
 			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));
+		} else if (page == "IRSINIT") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].setText("IRS INIT");
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, -1, -1, -1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, -1, -1, -1, 1);
+				me.showRightS(1, 1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, -1, 1, 1, 1, -1);
+				me.showCenterS(1, 1, 1, 1, 1, -1);
+				
+				me.fontLeft(default, default, 0, 0, 0, default);
+				me.fontLeftS(default, default, 0, 0, 0, 0);
+				me.fontRight(default, default, 0, 0, 0, default);
+				me.fontRightS(default, default, 0, 0, 0, 0);
+				
+				me.fontSizeLeft(small, small, 0, 0, 0, small);
+				me.fontSizeRight(small, small, 0, 0, 0, normal);
+				me.fontSizeCenter(normal, small, small, small, small, 0);
+				
+				me.colorLeft("blu", "blu", "ack", "ack", "ack", "wht");
+				me.colorLeftS("wht", "wht", "ack", "ack", "ack", "ack");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "ack", "ack", "ack", "blu");
+				me.colorRightS("wht", "wht", "ack", "ack", "ack", "ack");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorCenter("grn", "ack", "grn", "grn", "grn", "grn");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (toFromSet.getValue() == 1) {
+			    #need to convert lat/long format
+			    if (getprop("autopilot/route-manager/route/wp[0]/latitude-deg") > 0) {
+                    me["Simple_L1"].setText(sprintf("%6.2fN", getprop("autopilot/route-manager/route/wp[0]/latitude-deg")));
+                } else {
+                    me["Simple_L1"].setText(sprintf("%6.2fS", getprop("autopilot/route-manager/route/wp[0]/latitude-deg") * -1));
+                }
+                if (getprop("autopilot/route-manager/route/wp[0]/longitude-deg") > 0) {
+                    me["Simple_R1"].setText(sprintf("%7.2fE", getprop("autopilot/route-manager/route/wp[0]/longitude-deg")));
+                } else {
+                    me["Simple_R1"].setText(sprintf("%7.2fW", getprop("autopilot/route-manager/route/wp[0]/longitude-deg") * -1));
+                }
+			    me["Simple_C1"].setText(sprintf("%s", depArpt.getValue()));
+			} else {
+			    me["Simple_L1"].setText("-----.--");
+			    me["Simple_R1"].setText("------.--");
+			    me["Simple_C1"].setText("----");
+			}
+			
+			#need to convert lat/long format
+			gps_lat = getprop("position/latitude-deg");
+			gps_lon = getprop("position/longitude-deg");
+			if (gps_lat > 0) {
+                me["Simple_L2"].setText(sprintf("%6.2fN", gps_lat));
+            } else {
+                me["Simple_L2"].setText(sprintf("%6.2fS", gps_lat * -1));
+            }
+            if (gps_lon > 0) {
+                me["Simple_R2"].setText(sprintf("%7.2fE", gps_lon));
+            } else {
+                me["Simple_R2"].setText(sprintf("%7.2fW", gps_lon * -1));
+            }
+			if (getprop("systems/navigation/adr/operating-1")) {
+                #me["Simple_C3"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
+                if (gps_lat > 0 and gps_lon > 0) {
+                    me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
+                } else if (gps_lat > 0) {
+                    me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
+                } else if (gps_lon > 0) {
+                    me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
+                } else {
+                    me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
+                }
+			} else {
+			    me["Simple_C3"].setText("-----.--/-----.--");
+			}
+			if (getprop("systems/navigation/adr/operating-2")) {
+                #me["Simple_C4"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
+                if (gps_lat > 0 and gps_lon > 0) {
+                    me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
+                } else if (gps_lat > 0) {
+                    me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
+                } else if (gps_lon > 0) {
+                    me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
+                } else {
+                    me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
+                }
+			} else {
+			    me["Simple_C4"].setText("-----.--/-----.--");
+			}
+			if (getprop("systems/navigation/adr/operating-3")) {
+                #me["Simple_C5"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
+                if (gps_lat > 0 and gps_lon > 0) {
+                    me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
+                } else if (gps_lat > 0) {
+                    me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
+                } else if (gps_lon > 0) {
+                    me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
+                } else {
+                    me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
+                }
+			} else {
+			    me["Simple_C5"].setText("-----.--/-----.--");
+			}
+			
+			if (align_set.getValue() == 1) {
+			    #still need * to right of button instead of arrow
+			    me["Simple_R6"].setText("CONFIRM ALIGN ");
+			    me.colorRight("ack", "ack", "ack", "ack", "ack", "amb");
+				me.colorRightArrow("ack", "ack", "ack", "ack", "ack", "amb");
+			} else {
+			    me["Simple_R6"].setText("ALIGN ON REF ");
+			}
+			
+			me["Simple_L1S"].setText("LAT");
+			me["Simple_L2S"].setText("LAT");
+			me["Simple_L6"].setText(" RETURN");
+			me["Simple_R1S"].setText("LONG");
+			me["Simple_R2S"].setText("LONG");
+			me["Simple_C1S"].setText("REFERENCE");
+			me["Simple_C2S"].setText("GPS POSITION");
+			me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
+			me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
+			me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
+
+		} else if (page == "ROUTESELECTION") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].setText("ROUTE SELECTION");
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, -1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, -1, -1, -1, -1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, -1, -1, -1);
+				
+				me.fontLeft(default, 0, 0, 0, 0, default);
+				
+				me.fontSizeLeft(normal, 0, 0, 0, 0, normal);
+				
+				me.colorLeft("grn", "ack", "ack", "ack", "ack", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			me["Simple_L1"].setText("NONE");
+			me["Simple_L6"].setText(" RETURN");
+
+			if (toFromSet.getValue() == 1 and alt_selected.getValue() == 0) {
+			    me["Simple_Title"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
+			} else if (alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
+			    me["Simple_Title"].setText(sprintf("%s", alt_airport.getValue()));
+			} else {
+			    me["Simple_Title"].setText("ROUTE SELECTION");
+            }
+
 		} else if (page == "INITB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -2167,6 +2375,26 @@ var canvas_MCDU_base = {
 			me["Simple_L6"].setFontSize(f); 
 		}
 	},
+	fontSizeLeftS: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_L1S"].setFontSize(a); 
+		}
+		if (b != 0) {
+			me["Simple_L2S"].setFontSize(b); 
+		}
+		if (c != 0) {
+			me["Simple_L3S"].setFontSize(c); 
+		}
+		if (d != 0) {
+			me["Simple_L4S"].setFontSize(d); 
+		}
+		if (e != 0) {
+			me["Simple_L5S"].setFontSize(e); 
+		}
+		if (f != 0) {
+			me["Simple_L6S"].setFontSize(f); 
+		}
+	},
 	fontSizeRight: func (a, b, c, d, e, f) {
 		if (a != 0) {
 			me["Simple_R1"].setFontSize(a); 
@@ -2187,6 +2415,26 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setFontSize(f); 
 		}
 	},
+	fontSizeRightS: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_R1S"].setFontSize(a); 
+		}
+		if (b != 0) {
+			me["Simple_R2S"].setFontSize(b); 
+		}
+		if (c != 0) {
+			me["Simple_R3S"].setFontSize(c); 
+		}
+		if (d != 0) {
+			me["Simple_R4S"].setFontSize(d); 
+		}
+		if (e != 0) {
+			me["Simple_R5S"].setFontSize(e); 
+		}
+		if (f != 0) {
+			me["Simple_R6S"].setFontSize(f); 
+		}
+	},
 	fontSizeCenter: func (a, b, c, d, e, f) {
 		if (a != 0) {
 			me["Simple_C1"].setFontSize(a); 
@@ -2205,6 +2453,26 @@ var canvas_MCDU_base = {
 		}
 		if (f != 0) {
 			me["Simple_C6"].setFontSize(f); 
+		}
+	},
+	fontSizeCenterS: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_C1S"].setFontSize(a); 
+		}
+		if (b != 0) {
+			me["Simple_C2S"].setFontSize(b); 
+		}
+		if (c != 0) {
+			me["Simple_C3S"].setFontSize(c); 
+		}
+		if (d != 0) {
+			me["Simple_C4S"].setFontSize(d); 
+		}
+		if (e != 0) {
+			me["Simple_C5S"].setFontSize(e); 
+		}
+		if (f != 0) {
+			me["Simple_C6S"].setFontSize(f); 
 		}
 	},
 };

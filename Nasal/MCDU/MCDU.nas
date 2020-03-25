@@ -40,6 +40,12 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/vr", 0);
 	setprop("FMGC/internal/v2", 0);
 	
+	# IRSINIT variables
+    setprop("FMGC/internal/align-set", 0);
+
+    # ROUTE SELECTION variables
+    setprop("FMGC/internal/alt-selected", 0);
+
 	# INT-B
 	setprop("FMGC/internal/block", 0.0);
 	setprop("FMGC/internal/block-set", 0);
@@ -179,11 +185,11 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
-			initInputA("L5",i); # Does the same thing as on the INIT page
+			perfCLBInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
-			initInputA("L5",i); 
+			perfCRZInput("L2",i); 
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
-			initInputA("L5",i); 
+			perfDESInput("L2",i); 
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
 			dataInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
@@ -264,6 +270,10 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "6") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("L6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+			initInputIRS("L6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "ROUTESELECTION") {
+			initInputROUTESEL("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
 			perfCLBInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
@@ -370,6 +380,8 @@ var rskbutton = func(btn, i) {
 			} else {
 				notAllowed(i);
 			}
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+			initInputIRS("R6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("R6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
