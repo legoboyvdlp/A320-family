@@ -1,3 +1,0 @@
-TO ADD NEW SPLASHES NAME THEM "splashXX" 
-
-PS it is currently its coded up to splash8
