@@ -393,6 +393,10 @@ var flightPlanController = {
 				wpCourse[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[0]);
 				wpDistance[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[1]);
 				
+				if (wpt == 1) {
+					me._arrivalDist += courseDistanceFrom[1]; # distance to next waypoint, therafter to end of flightplan
+				}
+				
 				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
 					if (me.arrivalIndex[n] != wpt) {
 						me.arrivalIndex[n] = wpt;
@@ -419,8 +423,10 @@ var flightPlanController = {
 					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
-					if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-						me._arrivalDist += courseDistanceFromPrev[1]; # todo - buggy. Neglect discontinuity, and should show distance to next wpt, + distance thereafter
+					if (wpt > 1) {
+						if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
+							me._arrivalDist += courseDistanceFromPrev[1]; # todo - buggy. Neglect discontinuity
+						}
 					}
 				} else {
 					# use PPOS for the first waypoint
