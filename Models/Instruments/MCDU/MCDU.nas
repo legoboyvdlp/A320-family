@@ -229,6 +229,8 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].hide();
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();

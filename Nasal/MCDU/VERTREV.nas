@@ -43,20 +43,20 @@ var vertRev = {
 	_setupPageWithData: func() {
 		if (me.type == 3) { 
 			me.title = ["VERT REV", " AT ", "PPOS"];
-			me.L1 = ["", "  EFOB=---", "wht"];
-			me.R1 = ["", "EXTRA=---  ", "wht"];
+			me.L1 = ["", "  EFOB ---.-", "wht"];
+			me.R1 = ["", "EXTRA ---.- ", "wht"];
 			me.L2 = ["  250/10000", "  CLB SPD LIM", "mag"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
-			me.R5 = ["STEP ALTS  ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "ack"]];
+			me.R5 = ["STEP ALTS ", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} if (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
-			me.L1 = ["", "  EFOB=---", "wht"];
-			me.R1 = ["", "EXTRA=---  ", "wht"];
+			me.L1 = ["", "  EFOB ---.-", "wht"];
+			me.R1 = ["", "EXTRA ---.- ", "wht"];
 			me.L2 = ["  250/10000", "  CLB SPD LIM", "mag"];
 			me.L3 = [" [    ]", " SPD CSTR", "blu"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
@@ -66,8 +66,8 @@ var vertRev = {
 			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
 			me.R5 = ["STEP ALTS ", nil, "wht"];
 			me.R6 = ["DES ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "ack"]];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
 		} else {
 			me.title = ["VERT REV", " AT ", me.id];
@@ -80,18 +80,18 @@ var vertRev = {
 				} else {
 					me.arrAirport = findAirportsByICAO(me.id);
 				}
-				me.L1 = ["", "  EFOB=---", "wht"];
-				me.R1 = ["", "EXTRA=---  ", "wht"];
+				me.L1 = ["", "  EFOB ---.-", "wht"];
+				me.R1 = ["", "EXTRA ---.- ", "wht"];
 				me.L2 = ["  250/10000", "  DES SPD LIM", "mag"];
 				me.L4 = [" CONSTANT MACH", nil, "wht"];
 				me.L5 = [" WIND DATA", nil, "wht"];
 				me.L6 = [" CLB", nil, "wht"];
 				me.R2 = ["[    ] ", "UTC CSTR  ", "blu"];
 				me.R3 = ["[   ]", "G/S INTCPT ", "grn"];
-				me.R5 = ["STEP ALTS  ", nil, "wht"];
+				me.R5 = ["STEP ALTS ", nil, "wht"];
 				me.R6 = ["DES ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0]];
-				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "ack"]];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1]];
+				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "wht"]];
 				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
 			}
 		}
