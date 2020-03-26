@@ -6826,16 +6826,16 @@
 		<name>dme</name>
 		<offsets>
 			<x-m>-0.529</x-m>
-			<y-m>-0.15</y-m>
+			<y-m>-0.155</y-m>
 			<z-m>0.1305</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">%s</format>
-		<property>instrumentation/dme[0]/indicated-distance-nm</property>
+		<type type="string">number-value</type>
+		<format type="string">%4.1f</format>
+		<property>instrumentation/dme[2]/indicated-distance-nm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
@@ -6857,16 +6857,16 @@
 		<name>dme1</name>
 		<offsets>
 			<x-m>-0.529</x-m>
-			<y-m>-0.117</y-m>
+			<y-m>-0.122</y-m>
 			<z-m>0.1305</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">%s</format>
-		<property>instrumentation/dme[1]/indicated-distance-nm</property>
+		<type type="string">number-value</type>
+		<format type="string">%4.1f</format>
+		<property>instrumentation/dme[3]/indicated-distance-nm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
