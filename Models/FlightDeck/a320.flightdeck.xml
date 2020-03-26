@@ -6477,6 +6477,7 @@
 		<object-name>cylinder30.002</object-name>
 		<object-name>cylinder30.003</object-name>
 		<object-name>cylinder30.004</object-name>
+		<object-name>rear_breakers</object-name>
 		<object-name>efis_display_foil</object-name>
 		<object-name>fcu_integ_knb</object-name>
 		<object-name>hud_brt</object-name>
