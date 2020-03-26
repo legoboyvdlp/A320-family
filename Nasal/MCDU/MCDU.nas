@@ -16,6 +16,7 @@ var MCDU_reset = func(i) {
 	setprop("MCDU[" ~ i ~ "]/page", "MCDU");
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+	setprop("MCDU/keyboard-entry", 0);
 	setprop("MCDUC/flight-num", "");
 	setprop("MCDUC/thracc-set", 0);
 	setprop("MCDUC/reducacc-set", 0);
@@ -136,6 +137,15 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/print/mcdu/page2/R2req", 0);
 	setprop("FMGC/print/mcdu/page2/R3req", 0);
 	setprop("FMGC/print/mcdu/page2/R4req", 0);
+}
+
+var setMode = func(will) {
+    setprop("MCDU/keyboard-entry", will);
+    if (will == 0) {
+        gui.popupTip("MCDU keyboard entry disabled");
+    } else {
+        gui.popupTip("MCDU keyboard entry enabled");
+    }
 }
 
 var lskbutton = func(btn, i) {

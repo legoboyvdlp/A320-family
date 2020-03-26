@@ -37,6 +37,7 @@ var engType = props.globals.getNode("MCDUC/eng", 1);
 var database1 = props.globals.getNode("FMGC/internal/navdatabase", 1);
 var database2 = props.globals.getNode("FMGC/internal/navdatabase2", 1);
 var databaseCode = props.globals.getNode("FMGC/internal/navdatabasecode", 1);
+var mcdu_keyboard_entry = props.globals.getNode("MCDU/keyboard-entry", 1);
 
 # RADNAV
 var vor1 = props.globals.getNode("FMGC/internal/vor1-mcdu", 1);
