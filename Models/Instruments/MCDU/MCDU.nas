@@ -104,7 +104,6 @@ var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 var state1 = props.globals.getNode("engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("engines/engine[1]/state", 1);
 var engrdy = props.globals.getNode("engines/ready", 1);
-
 var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
 var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
 var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
@@ -165,8 +164,6 @@ var mda = props.globals.getNode("FMGC/internal/mda", 1);
 var dh = props.globals.getNode("FMGC/internal/dh", 1);
 var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
 var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
-
-var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
 
 # GA PERF
 

@@ -111,6 +111,7 @@ var MCDU_reset = func(i) {
     setprop("FMGC/internal/ldg-config-3-set", 0);
     setprop("FMGC/internal/ldg-config-f-set", 1);
 	
+	#RADNAV
 	setprop("FMGC/internal/ils1freq-set", 0);
 	setprop("FMGC/internal/ils1crs-set", 0);
 	setprop("FMGC/internal/vor1freq-set", 0);
@@ -119,6 +120,8 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/vor2crs-set", 0);
 	setprop("FMGC/internal/adf1freq-set", 0);
 	setprop("FMGC/internal/adf2freq-set", 0);
+	
+	#ACCONFIC
 	setprop("FMGC/internal/navdatabase", "01JAN-28JAN");
 	setprop("FMGC/internal/navdatabase2", "29JAN-26FEB");
 	setprop("FMGC/internal/navdatabasecode", "AB20170101");

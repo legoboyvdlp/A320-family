@@ -3,12 +3,8 @@
 # Copyright (c) 2020 Matthew Maring (hayden2000)
 
 # From INIT-B
-var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
-var zfwcgSet = props.globals.getNode("FMGC/internal/zfwcg-set", 1);
 var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
-var zfwSet = props.globals.getNode("FMGC/internal/zfw-set", 1);
 var block = props.globals.getNode("FMGC/internal/block", 1);
-var blockSet = props.globals.getNode("FMGC/internal/block-set", 1);
 var taxi_fuel = props.globals.getNode("FMGC/internal/taxi-fuel", 1);
 var trip_fuel = props.globals.getNode("FMGC/internal/trip-fuel", 1);
 var trip_time = props.globals.getNode("FMGC/internal/trip-time", 1);
@@ -24,17 +20,6 @@ var lw = props.globals.getNode("FMGC/internal/lw", 1);
 var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
 var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
-
-# FUELPRED Specials
-var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
-var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
-var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
-var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
-var alt_efob = props.globals.getNode("FMGC/internal/alt-efob", 1);
-var fob = props.globals.getNode("FMGC/internal/fob", 1);
-var gw = props.globals.getNode("FMGC/internal/gw", 1);
-var cg = props.globals.getNode("FMGC/internal/cg", 1);
-
 
 var fuelPredInput = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");

@@ -2,12 +2,8 @@
 
 # Copyright (c) 2020 Matthew Maring (hayden2000)
 
-var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
-var zfwcgSet = props.globals.getNode("FMGC/internal/zfwcg-set", 1);
 var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
-var zfwSet = props.globals.getNode("FMGC/internal/zfw-set", 1);
 var block = props.globals.getNode("FMGC/internal/block", 1);
-var blockSet = props.globals.getNode("FMGC/internal/block-set", 1);
 var taxi_fuel = props.globals.getNode("FMGC/internal/taxi-fuel", 1);
 var trip_fuel = props.globals.getNode("FMGC/internal/trip-fuel", 1);
 var trip_time = props.globals.getNode("FMGC/internal/trip-time", 1);
