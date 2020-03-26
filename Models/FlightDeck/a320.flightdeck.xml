@@ -6715,7 +6715,7 @@
 		</emission>
 	</animation>
 
-<!-- headset show/hide -->
+	<!-- headset show/hide -->
 	<animation>
 		<type>select</type>
 		<object-name>HeadsetFo</object-name>
@@ -6726,5 +6726,162 @@
 			</not>
 		</condition>
 	</animation>
+	
+	<!-- Chrono -->
+	<text>
+		<name>Chrono1</name>
+		<offsets>
+			<x-m>-0.553</x-m>
+			<y-m>0.159</y-m>
+			<z-m>0.215</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/chrono/text</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.009</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.050</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<text>
+		<name>Chrono2</name>
+		<offsets>
+			<x-m>-0.546</x-m>
+			<y-m>0.159</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/indicated-string</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.009</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.050</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<text>
+		<name>Chrono3</name>
+		<offsets>
+			<x-m>-0.54</x-m>
+			<y-m>0.159</y-m>
+			<z-m>0.178</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/indicated-short-string</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.009</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<!-- dme -->
+	<text>
+		<name>dme</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.15</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/dme[0]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>dme1</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.117</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/dme[1]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
 
 </PropertyList>
