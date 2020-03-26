@@ -2,8 +2,7 @@
 
 <!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
-<PropertyList>
-<!--<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">-->
+<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
 
 		<author>Joshua Davidson (Octal450), Jonathan Redpath (legoboyvdlp), Thorsten Herrmann (TH-555), Based on IDG-A32X</author>
@@ -1578,13 +1577,6 @@
             <key n="47">
                 <name>SLASH</name>
                 <desc>Open property browser</desc>
-                <binding>
-				    <condition>
-				        <property>/MCDU/keyboard-entry</property>
-					</condition>
-					<command>nasal</command>
-					<script>mcdu.button("SLASH", 0);</script>
-				</binding>
 				<binding>
 				    <condition>
 				        <not><property>/MCDU/keyboard-entry</property></not>
@@ -1592,6 +1584,13 @@
                     <command>nasal</command>
                     <script>gui.property_browser();</script>
                 </binding>
+                <binding>
+				    <condition>
+				        <property>/MCDU/keyboard-entry</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("SLASH", 0);</script>
+				</binding>
             </key>
 			<key n="48">
 				<name>0</name>
@@ -1946,7 +1945,78 @@
 			</key>
 			<key n="97">
                 <name>a</name>
-                <desc>Increase speed-up</desc>
+                <desc>Slide left</desc>
+                <repeatable>false</repeatable>
+                <binding n="0">
+                    <condition>
+                        <not><property>/MCDU/keyboard-entry</property></not>
+                        <equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walk View</value>
+                        </equals>
+                     </condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/slide</property>
+                    <value>-1</value>
+                </binding>
+                <binding n="1">
+                    <condition>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+					</condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/speed</property>
+                    <property>sim/walker/speed-mps</property>
+                </binding>
+                <binding n="2">
+                    <condition>
+                        <and>
+                        <not><property>/MCDU/keyboard-entry</property></not>
+                        <not-equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walk View</value>
+                        </not-equals>
+                        <not-equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walker Orbit View</value>
+                        </not-equals>
+                        </and>
+                    </condition>
+                    <command>nasal</command>
+                    <script>controls.speedup(1);</script>
+                </binding>
+                <binding n="3">
+                    <condition>
+                        <not><property>/MCDU/keyboard-entry</property></not>
+                        <equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walker Orbit View</value>
+                        </equals>
+                    </condition>
+                     <command>property-adjust</command>
+                    <property>/sim/walker/model-heading-deg</property>
+                    <min>0</min>
+                    <max>360</max>
+                    <wrap type="bool">true</wrap>
+                    <step type="int">-10</step>
+                </binding>
+                <mod-up>
+                    <binding n="0">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/slide</property>
+                        <value>0</value>
+                    </binding>
+                    <binding n="1">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/speed</property>
+                        <property>sim/walker/speed-mps</property>
+                    </binding>
+                </mod-up>
                 <binding>
 				    <condition>
 				        <property>/MCDU/keyboard-entry</property>
@@ -1954,13 +2024,6 @@
 					<command>nasal</command>
 					<script>mcdu.button("A", 0);</script>
 				</binding>
-				<binding>
-				    <condition>
-				        <not><property>/MCDU/keyboard-entry</property></not>
-					</condition>
-		            <command>nasal</command>
-		            <script>controls.speedup(1);</script>
-	            </binding>
             </key>
             <key n="98">
                 <name>b</name>
@@ -2010,15 +2073,69 @@
 			</key>
 			<key n="100">
 				<name>d</name>
-				<desc>MCDU</desc>
-				<binding>
+			    <desc>Slide right</desc>
+                <repeatable>false</repeatable>
+                <binding n="0">
+                    <condition>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+					    <equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walk View</value>
+                        </equals>
+                    </condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/slide</property>
+                    <value>1</value>
+                </binding>
+                <binding n="1">
+                    <condition>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+					</condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/speed</property>
+                    <property>sim/walker/speed-mps</property>
+                </binding>
+                <binding n="2">
+                    <condition>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+                        <equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walker Orbit View</value>
+                        </equals>
+                    </condition>
+                    <command>property-adjust</command>
+                    <property>/sim/walker/model-heading-deg</property>
+                    <min>0</min>
+                    <max>360</max>
+                    <wrap type="bool">true</wrap>
+                    <step type="int">10</step>
+                </binding>
+                <mod-up>
+                    <binding n="0">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/slide</property>
+                        <value>0</value>
+                    </binding>
+                    <binding n="1">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/speed</property>
+                        <property>sim/walker/speed-mps</property>
+                    </binding>
+                </mod-up>
+                <binding>
 				    <condition>
 				        <property>/MCDU/keyboard-entry</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("D", 0);</script>
 				</binding>
-			</key>
+            </key>
             <key n="101">
 				<name>e</name>
 				<desc>Thrust Levers Idle</desc>
@@ -2270,23 +2387,71 @@
 			</key>
             <key n="115">
                 <name>s</name>
-                <desc>Fire Starter on Selected Engine(s)</desc>
-                <binding>
-				    <condition>
-				        <property>/MCDU/keyboard-entry</property>
-					</condition>
-					<command>nasal</command>
-					<script>mcdu.button("S", 0);</script>
-				</binding>
-				<binding>
-				    <condition>
+                <desc>Walk backward</desc>
+                <repeatable>false</repeatable>
+                <binding n="0">
+                    <condition>
+                        <and>
+                        <not><property>/MCDU/keyboard-entry</property></not>
+                        <or>
+                        <equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walk View</value>
+                        </equals>
+                        <equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walker Orbit View</value>
+                        </equals>
+                        </or>
+                        </and>
+                    </condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/forward</property>
+                    <value>-1</value>
+                </binding>
+                <binding n="1">
+                    <condition>
 				        <not><property>/MCDU/keyboard-entry</property></not>
 					</condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/speed</property>
+                    <property>sim/walker/speed-mps</property>
+                </binding>
+                <binding n="2">
+                    <condition>
+                        <and>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+                        <not-equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walk View</value>
+                        </not-equals>
+                        <not-equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walker Orbit View</value>
+                        </not-equals>
+                        </and>
+                    </condition>
                     <command>nasal</command>
                     <script>controls.startEngine(1)</script>
                 </binding>
                 <mod-up>
-                    <binding>
+                    <binding n="0">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/forward</property>
+                        <value>0</value>
+                    </binding>
+                    <binding n="1">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/speed</property>
+                        <property>sim/walker/speed-mps</property>
+                    </binding>
+                    <binding n="2">
                         <condition>
 				            <not><property>/MCDU/keyboard-entry</property></not>
 					    </condition>
@@ -2294,6 +2459,13 @@
                         <script>controls.startEngine(0)</script>
                     </binding>
                 </mod-up>
+                <binding>
+				    <condition>
+				        <property>/MCDU/keyboard-entry</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("S", 0);</script>
+				</binding>
             </key>
 			<key n="116">
                 <name>t</name>
@@ -2374,8 +2546,42 @@
             </key>
             <key n="119">
 				<name>w</name>
-				<desc>MCDU</desc>
-				<binding>
+				<desc>Walk forward</desc>
+				<binding n="0">
+				    <condition>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+					</condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/forward</property>
+                    <value>1</value>
+                </binding>
+                <binding n="1">
+                    <condition>
+				        <not><property>/MCDU/keyboard-entry</property></not>
+					</condition>
+                    <command>property-assign</command>
+                    <property>sim/walker/key-triggers/speed</property>
+                    <property>sim/walker/speed-mps</property>
+                </binding>
+                <mod-up>
+                    <binding n="0">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/forward</property>
+                        <value>0</value>
+                    </binding>
+                    <binding n="1">
+                        <condition>
+				            <not><property>/MCDU/keyboard-entry</property></not>
+					    </condition>
+                        <command>property-assign</command>
+                        <property>sim/walker/key-triggers/speed</property>
+                        <property>sim/walker/speed-mps</property>
+                    </binding>
+                </mod-up>
+                <binding>
 				    <condition>
 				        <property>/MCDU/keyboard-entry</property>
 					</condition>
