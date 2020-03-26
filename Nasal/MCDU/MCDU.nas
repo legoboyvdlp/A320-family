@@ -525,6 +525,11 @@ var pagebutton = func(btn, i) {
             }
         } else if (btn == "fuel-pred") {
             setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
+        } else if (btn == "dirto") {
+			if (canvas_mcdu.myDirTo[i] == nil) {
+				canvas_mcdu.myDirTo[i] = dirTo.new(i);
+			}
+            setprop("MCDU[" ~ i ~ "]/page", "DIRTO");
         }
     }
 }

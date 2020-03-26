@@ -1911,6 +1911,7 @@
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
 		</fmgc>
 		<mcdu>
+			<file>Aircraft/A320-family/Nasal/MCDU/DIRTO.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> <!-- dynamic page - init before MCDU -->	
 			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> <!-- dynamic page - init before MCDU -->	
 			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
