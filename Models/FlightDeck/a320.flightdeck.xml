@@ -1911,6 +1911,7 @@
 		<type>pick</type>
 		<object-name>qnh_cpt_knb</object-name>
 		<object-name>qnh_fo_knb</object-name>
+		<object-name>iesi_baro_knb</object-name>
 		<action>
 			<button>0</button>
 			<button>1</button>
@@ -6317,7 +6318,12 @@
 		<object-name>compass_box</object-name>
 		<object-name>iesi</object-name>
 		<object-name>clock_body</object-name>
-		<object-name>clock.001</object-name>
+		<object-name>clock_glare</object-name>
+		<object-name>clock_et_selector</object-name>
+		<object-name>clock_utc_selector</object-name>
+		<object-name>clock_reset_pushbutton</object-name>
+		<object-name>clock_chr_pushbutton</object-name>
+		<object-name>clock_date_set_pushbutton</object-name>
 		<object-name>gear_lever_body</object-name>
 		<object-name>ParkBrk</object-name>
 		<object-name>RudderTrim</object-name>
@@ -6445,8 +6451,9 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
 		<object-name>clock</object-name>
-		<object-name>clock.001</object-name>
 		<object-name>clock_body</object-name>
+		<object-name>clock_glare</object-name>
+		
 	</effect>
 
 	<effect>
@@ -6466,6 +6473,13 @@
 		<object-name>carpet</object-name>
 		<object-name>ceiling</object-name>
 		<object-name>compass_box</object-name>
+		<object-name>clock_body</object-name>
+		<object-name>clock_glare</object-name>
+		<object-name>clock_et_selector</object-name>
+		<object-name>clock_utc_selector</object-name>
+		<object-name>clock_reset_pushbutton</object-name>
+		<object-name>clock_chr_pushbutton</object-name>
+		<object-name>clock_date_set_pushbutton</object-name>
 		<object-name>DoorC</object-name>
 		<object-name>efis_box_1</object-name>
 		<object-name>efis_box_2</object-name>
@@ -6728,8 +6742,27 @@
 	</animation>
 	
 	<!-- Chrono -->
+	
+	<animation>
+		<type>select</type>
+		<object-name>chrono1</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/chrono/running</property>
+				<property>instrumentation/chrono/paused</property>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>chrono3</object-name>
+		<condition>
+			<property>instrumentation/clock/serviceable</property>
+		</condition>
+	</animation>	
+	
 	<text>
-		<name>Chrono1</name>
+		<name>chrono1</name>
 		<offsets>
 			<x-m>-0.553</x-m>
 			<y-m>0.159</y-m>
@@ -6760,7 +6793,7 @@
 	</text>
 	
 	<text>
-		<name>Chrono2</name>
+		<name>chrono2</name>
 		<offsets>
 			<x-m>-0.546</x-m>
 			<y-m>0.159</y-m>
@@ -6791,7 +6824,7 @@
 	</text>
 	
 	<text>
-		<name>Chrono3</name>
+		<name>chrono3</name>
 		<offsets>
 			<x-m>-0.54</x-m>
 			<y-m>0.159</y-m>
@@ -6822,6 +6855,18 @@
 	</text>
 
 	<!-- dme -->
+
+	<animation>
+		<type>select</type>
+		<object-name>dme</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<property>instrumentation/dme[2]/in-range</property>
+			</and>
+		</condition>
+	</animation>
+
 	<text>
 		<name>dme</name>
 		<offsets>
@@ -6853,6 +6898,17 @@
 		<kerning>default</kerning>
 	</text>
 
+	<animation>
+		<type>select</type>
+		<object-name>dme1</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<property>instrumentation/dme[3]/in-range</property>
+			</and>
+		</condition>
+	</animation>
+
 	<text>
 		<name>dme1</name>
 		<offsets>
@@ -6883,5 +6939,137 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
+
+	<animation>
+		<type>pick</type>
+		<object-name>clock_reset_pushbutton</object-name>
+		<property>controls/switches/clock_reset_pushbutton</property>
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instruments/clock/chrono-reset</property>
+				<value>1</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>clock_chr_pushbutton</object-name>
+		<property>instruments/clock/time-knob</property>
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instruments/clock/time-knob</property>
+				<value>1</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>clock_date_set_pushbutton</object-name>
+		<property>controls/switches/clock_date_set_pushbutton</property>
+		<action>
+			<button>0</button><!-- Date Mode -->
+			<button>1</button><!-- Time Mode -->
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instruments/clock/set-knob</property>
+				<value>0</value><!-- Date Mode -->
+				<value>1</value><!-- Time Mode -->
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>UTC selector rotate</name>
+		<type>pick</type>
+		<object-name>clock_utc_selector</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/utc-selector</property>
+				<value>0</value><!-- GPS -->
+				<value>1</value><!-- INT -->
+				<value>2</value><!-- SET -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/utc-selector</property>
+				<value>2</value><!-- SET -->
+				<value>1</value><!-- INT -->
+				<value>0</value><!-- GPS -->
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>UTC selector rotate</name>
+		<type>rotate</type>
+		<object-name>clock_utc_selector</object-name>
+		<property>instrumentation/clock/utc-selector</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>45</dep></entry>
+			<entry><ind>2</ind><dep>90</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>clock_utc_selector.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>clock_et_selector</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/et-knob</property>
+				<value>0</value><!-- RUN -->
+				<value>1</value><!-- STP -->
+				<value>2</value><!-- RST -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/et-knob</property>
+				<value>2</value><!-- RST -->
+				<value>1</value><!-- STP -->
+				<value>0</value><!-- RUN -->
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>ET selector rotate</name>
+		<type>rotate</type>
+		<object-name>clock_et_selector</object-name>
+		<property>instrumentation/clock/et-knob</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>45</dep></entry>
+			<entry><ind>2</ind><dep>90</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>clock_et_selector.axis</object-name>
+		</axis>
+	</animation>
 
 </PropertyList>
