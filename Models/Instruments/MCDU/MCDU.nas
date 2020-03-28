@@ -267,6 +267,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("MCDU MENU");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -323,6 +324,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -378,6 +380,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("DATA INDEX");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("1/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -431,6 +434,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("DATA INDEX");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("2/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -489,6 +493,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("POSITION MONITOR");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -549,6 +554,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("RADIO NAV");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -661,6 +667,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("INIT");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
@@ -804,6 +811,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("IRS INIT");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -946,6 +954,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("ROUTE SELECTION");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -1060,6 +1069,7 @@ var canvas_MCDU_base = {
 			    me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
 				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
+				me["Simple_Title"].setColor(1, 1, 1);
 				
 			    me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
 			    me.colorRight("ack", "ack", "ack", "grn", "ack", "grn");
@@ -1076,6 +1086,7 @@ var canvas_MCDU_base = {
                 me["Simple_R6"].setText("---.-/----");
 				
 				me["Simple_Title"].setText("INIT");
+				me["Simple_Title"].setColor(1, 1, 1);
 			}
 			
 			me["Simple_R1S"].setText("ZFWCG/   ZFW");
@@ -1119,6 +1130,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("FUEL PRED");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
@@ -1395,6 +1407,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].show();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText("APPR");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -1562,6 +1575,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].show();
 				me["Simple_Title"].setText("GO AROUND");
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -1654,6 +1668,7 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].setText(sprintf("%s", page));
+				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
