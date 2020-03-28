@@ -3640,6 +3640,7 @@ var canvas_MCDU_base = {
 				if (myDirTo[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myDirTo[i].title[0]));
 					me["Simple_Title"].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/b"));
+					
 					forindex (var matrixArrow; myDirTo[i].arrowsMatrix) {
 						if (matrixArrow == 0) { 
 							var sign = "L"; 

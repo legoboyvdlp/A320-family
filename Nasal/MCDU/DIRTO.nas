@@ -46,8 +46,8 @@ var dirTo = {
 		me.R4 = ["[   ]  ", "RADIAL IN   ", "blu"];
 		me.R5 = ["[   ]  ", "RADIAL OUT  ", "blu"];
 		me.R6 = ["INSERT* ", "DIR TO   ", "yel"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 1, 0, 1, 0, 0]];
-		me.arrowsColour = [["ack", "blu", "blu", "blu", "blu", "yel"], ["ack", "blu", "ack", "blu", "ack", "ack"]];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 1, 0, 0]];
+		me.arrowsColour = [["ack", "blu", "blu", "blu", "blu", "ack"], ["ack", "blu", "ack", "blu", "ack", "ack"]];
 		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		me.updateFromFpln();
 		me.updateTmpy();
@@ -67,6 +67,7 @@ var dirTo = {
 			me.L6 = [" ERASE", "   DIR TO", "yel"];
 			me.R6 = ["INSERT ", "DIR TO   ", "yel"];
 			me.arrowsMatrix[0][5] = 1;
+			me.arrowsColour[0][5] = "yel";
 			me.L1[2] = "yel";
 			me.R2[2] = "yel";
 			me.titleColour = "yel";
@@ -74,15 +75,18 @@ var dirTo = {
 			me.L6 = [nil, nil, "yel"];
 			me.R6 = [nil, nil, "yel"];
 			me.arrowsMatrix[0][5] = 0;
+			me.arrowsColour[0][5] = "ack";
 			me.L1[2] = "blu";
 			me.R2[2] = "blu";
 			me.titleColour = "wht";
 		}
+		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateFromFpln: func() {
 		if (canvas_mcdu.myFpln[me.computer] == nil) {
 			 canvas_mcdu.myFpln[i] = fplnPage.new(2, me.computer);
 		}
+		
 		var x = 0;
 		me.vector = [];
 		for (var i = 1 + (me.scroll - 1); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
