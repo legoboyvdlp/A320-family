@@ -474,6 +474,8 @@ var arrowbutton = func(btn, i) {
             canvas_mcdu.myDeparture[i].scrollUp();
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
             canvas_mcdu.myArrival[i].scrollUp();
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+            canvas_mcdu.myDirTo[i].scrollUp();
         }
     } else if (btn == "down") {
         if (getprop("MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("MCDU[" ~ i ~ "]/page") == "F-PLNB") {
@@ -482,6 +484,8 @@ var arrowbutton = func(btn, i) {
             canvas_mcdu.myDeparture[i].scrollDn();
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
             canvas_mcdu.myArrival[i].scrollDn();
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+            canvas_mcdu.myDirTo[i].scrollDn();
         }
     }
 }
@@ -526,10 +530,19 @@ var pagebutton = func(btn, i) {
         } else if (btn == "fuel-pred") {
             setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
         } else if (btn == "dirto") {
-			if (canvas_mcdu.myDirTo[i] == nil) {
-				canvas_mcdu.myDirTo[i] = dirTo.new(i);
-			}
-            setprop("MCDU[" ~ i ~ "]/page", "DIRTO");
+			if (fmgc.flightPlanController.active.getBoolValue()) {
+				if (fmgc.flightPlanController.temporaryFlag[i] and !dirToFlag) {
+					setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+					setprop("MCDU[" ~ i ~ "]/scratchpad", "INSRT / ERASE TMPY FIRST");
+					return;
+				} elsif (canvas_mcdu.myDirTo[i] == nil) {
+					canvas_mcdu.myDirTo[i] = dirTo.new(i);
+				}
+				setprop("MCDU[" ~ i ~ "]/page", "DIRTO");
+			} else {
+                setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+                setprop("MCDU[" ~ i ~ "]/scratchpad", "ERROR. INITIALIZE ROUTE"); # Should be ERROR:, but the : character doesn't show in our MCDU font right now...
+            }
         }
     }
 }

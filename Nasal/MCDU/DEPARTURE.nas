@@ -391,10 +391,15 @@ var departurePage = {
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
-			me.L6 = [" F-PLN", " TMPY", "yel"];
-			me.arrowsColour[0][5] = "yel";
-			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			if (!dirToFlag) {
+				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+				me.L6 = [" F-PLN", " TMPY", "yel"];
+				me.arrowsColour[0][5] = "yel";
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} else {
+                setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+                setprop("MCDU[" ~ i ~ "]/scratchpad", "DIR TO IN PROGRESS");
+            }
 		}
 	},
 	scrollUp: func() {
@@ -458,27 +463,37 @@ var departurePage = {
 	depPushbuttonLeft: func(index) {
 		if (me.activePage == 0) {
 			if (size(me.runways) >= (index - 1)) {
-				me.selectedRunway = me.depAirport[0].runway(me.runways[index - 2 + me.scrollRwy]);
-				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].departure_runway = me.selectedRunway;
-				me.updateActiveRunway();
-				me.updateRunways();
-				fmgc.flightPlanController.flightPlanChanged(me.computer);
-				me.scrollRight();
+				if (!dirToFlag) {
+					me.selectedRunway = me.depAirport[0].runway(me.runways[index - 2 + me.scrollRwy]);
+					me.makeTmpy();
+					fmgc.flightPlanController.flightplans[me.computer].departure_runway = me.selectedRunway;
+					me.updateActiveRunway();
+					me.updateRunways();
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
+					me.scrollRight();
+				} else {
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				}
 			} else {
 				notAllowed(me.computer);
 			}
 		} else {
 			if (size(me.sids) >= (index - 1)) {
-				me.selectedSID = me.sids[index - 2 + me.scrollSids];
-				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].sid = me.selectedSID;
-				me.updateActiveSIDs();
-				me.updateSIDs();
-				me.hasPressNoTrans = 0;
-				me.updateTransitions();
-				me.updateActiveTransitions();
-				fmgc.flightPlanController.flightPlanChanged(me.computer);
+				if (!dirToFlag) {
+					me.selectedSID = me.sids[index - 2 + me.scrollSids];
+					me.makeTmpy();
+					fmgc.flightPlanController.flightplans[me.computer].sid = me.selectedSID;
+					me.updateActiveSIDs();
+					me.updateSIDs();
+					me.hasPressNoTrans = 0;
+					me.updateTransitions();
+					me.updateActiveTransitions();
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
+				} else {
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				}
 			} else {
 				notAllowed(me.computer);
 			}
@@ -486,16 +501,26 @@ var departurePage = {
 	},
 	depPushbuttonRight: func(index) {
 		if (index == 2 and size(me.transitions) == 0) {
-			me.hasPressNoTrans = 1;
-			me.updateActiveTransitions();
-			me.updateTransitions();
+			if (!dirToFlag) {
+				me.hasPressNoTrans = 1;
+				me.updateActiveTransitions();
+				me.updateTransitions();
+			} else {
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 		} elsif (size(me.transitions) >= (index -  1)) {
-			me.selectedTransition = me.transitions[index - 2];
-			me.makeTmpy();
-			fmgc.flightPlanController.flightplans[me.computer].sid = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
-			me.updateActiveTransitions();
-			me.updateTransitions();
-			fmgc.flightPlanController.flightPlanChanged(me.computer);
+			if (!dirToFlag) {
+				me.selectedTransition = me.transitions[index - 2];
+				me.makeTmpy();
+				fmgc.flightPlanController.flightplans[me.computer].sid = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
+				me.updateActiveTransitions();
+				me.updateTransitions();
+				fmgc.flightPlanController.flightPlanChanged(me.computer);
+			} else {
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 		} else {
 			notAllowed(me.computer);
 		}

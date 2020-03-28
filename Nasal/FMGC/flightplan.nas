@@ -69,6 +69,9 @@ var flightPlanController = {
 		me.resetFlightplan(n);
 		me.flightplans[n] = me.flightplans[2].clone();
 		me.temporaryFlag[n] = 1;
+		if (canvas_mcdu.myDirTo[n] != nil) {
+			canvas_mcdu.myDirTo[n].updateTmpy();
+		}
 		me.flightPlanChanged(n);
 	},
 	
@@ -82,6 +85,9 @@ var flightPlanController = {
 		}
 		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
+		if (canvas_mcdu.myDirTo[n] != nil) {
+			canvas_mcdu.myDirTo[n].updateTmpy();
+		}
 	},
 	
 	updateAirports: func(dep, arr, plan) {
@@ -336,6 +342,12 @@ var flightPlanController = {
 	},
 	
 	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success
+		if (mcdu.dirToFlag) {
+			setprop("MCDU[" ~ plan ~ "]/scratchpad-msg", 1);
+            setprop("MCDU[" ~ plan ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			return;
+		}
+		
 		if (!fmgc.flightPlanController.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
 				var thePlan = 2;
@@ -394,7 +406,9 @@ var flightPlanController = {
 				wpDistance[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[1]);
 				
 				if (wpt == 1) {
-					me._arrivalDist += courseDistanceFrom[1]; # distance to next waypoint, therafter to end of flightplan
+					if (me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
+						me._arrivalDist += courseDistanceFrom[1]; # distance to next waypoint, therafter to end of flightplan
+					}
 				}
 				
 				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
@@ -404,27 +418,13 @@ var flightPlanController = {
 				}
 				
 				if (wpt > 0) {
-					if (me.flightplans[n].getWP(wpt).id == "DISCONTINUITY") {
-						if (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
-							if (wpt >= 2) {
-								geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
-							}
-						} else {
-							geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
-						}
-					} elsif (me.flightplans[n].getWP(wpt - 1).id == "DISCONTINUITY") {
-						if (wpt >= 2) {
-							geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 2).lat, me.flightplans[n].getWP(wpt - 2).lon);
-						}
-					} else {
-						geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
-					}
+					geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
 					
 					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
 					if (wpt > 1) {
-						if (me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
+						if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
 							me._arrivalDist += courseDistanceFromPrev[1]; # todo - buggy. Neglect discontinuity
 						}
 					}
@@ -501,6 +501,9 @@ var flightPlanController = {
 		for (var i = 0; i <= 1; i += 1) {
 			if (canvas_mcdu.myFpln[i] != nil) {
 				canvas_mcdu.myFpln[i].updatePlan();
+			}
+			if (canvas_mcdu.myDirTo[i] != nil) {
+				canvas_mcdu.myDirTo[i].updateFromFpln();
 			}
 		}
 	},

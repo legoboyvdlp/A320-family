@@ -98,7 +98,12 @@ var vertRev = {
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+			if (!dirToFlag) {
+				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+			} else {
+			    setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+                setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 			me._checkTmpy();
 		}
 	},

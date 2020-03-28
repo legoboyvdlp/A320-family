@@ -3609,8 +3609,20 @@ var canvas_MCDU_base = {
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L4_Arrow"].hide();
+				me["Simple_L5_Arrow"].hide();
+				me["Simple_L6_Arrow"].show();
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R4_Arrow"].hide();
+				me["Simple_R5_Arrow"].hide();
+				me["Simple_R6_Arrow"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3621,13 +3633,13 @@ var canvas_MCDU_base = {
 				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				if (myDirTo[i] != nil) {
-					me["Simple_Title"].setText(sprintf("%s", myDirTo[i].title));
-					
+					me["Simple_Title"].setText(sprintf("%s", myDirTo[i].title[0]));
+					me["Simple_Title"].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/b"));
 					forindex (var matrixArrow; myDirTo[i].arrowsMatrix) {
 						if (matrixArrow == 0) { 
 							var sign = "L"; 
@@ -3635,14 +3647,19 @@ var canvas_MCDU_base = {
 							var sign = "R"; 
 						}
 						forindex (var item; myDirTo[i].arrowsMatrix[matrixArrow]) {
+							if (item == 5) { 
+								me["Simple_L6_Arrow"].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[0][5] ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[0][5] ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[0][5] ~ "/b"));
+								continue;
+							}
 							if (myDirTo[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+								me["arrow" ~ (item + 1) ~ sign].show();
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/b"));
 							} else {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+								me["arrow" ~ (item + 1) ~ sign].hide();
 							}
 						}
 					}
-					me.colorLeftArrow(myDirTo[i].arrowsColour[0][0],myDirTo[i].arrowsColour[0][1],myDirTo[i].arrowsColour[0][2],myDirTo[i].arrowsColour[0][3],myDirTo[i].arrowsColour[0][4],myDirTo[i].arrowsColour[0][5]);
+					
 					
 					
 					forindex (var matrixFont; myDirTo[i].fontMatrix) {

@@ -388,10 +388,15 @@ var arrivalPage = {
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
-			me.L6 = [" F-PLN", " TMPY", "yel"];
-			me.arrowsColour[0][5] = "yel";
-			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			if (!dirToFlag) {
+				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+				me.L6 = [" F-PLN", " TMPY", "yel"];
+				me.arrowsColour[0][5] = "yel";
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} else {
+				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+                setprop("MCDU[" ~ i ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 		}
 	},
 	scrollUp: func() {
@@ -455,28 +460,38 @@ var arrivalPage = {
 	arrPushbuttonLeft: func(index) {
 		if (me.activePage == 0) {
 			if (size(me.approaches) >= (index - 1) and index != 2) {
-				me.selectedApproach = me.arrAirport[0].getIAP(me.approaches[index - 3 + me.scrollApproach]);
-				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].destination_runway = me.arrAirport[0].runways[me.selectedApproach.runways[0]];
-				fmgc.flightPlanController.flightplans[me.computer].approach = me.selectedApproach;
-				me.updateActiveApproach();
-				me.updateApproaches();
-				fmgc.flightPlanController.flightPlanChanged(me.computer);
-				me.scrollRight();
+				if (!dirToFlag) {
+					me.selectedApproach = me.arrAirport[0].getIAP(me.approaches[index - 3 + me.scrollApproach]);
+					me.makeTmpy();
+					fmgc.flightPlanController.flightplans[me.computer].destination_runway = me.arrAirport[0].runways[me.selectedApproach.runways[0]];
+					fmgc.flightPlanController.flightplans[me.computer].approach = me.selectedApproach;
+					me.updateActiveApproach();
+					me.updateApproaches();
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
+					me.scrollRight();
+				} else {
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				}
 			} else {
 				notAllowed(me.computer);
 			}
 		} else {
 			if (size(me.stars) >= (index - 1)) {
-				me.selectedSTAR = me.stars[index - 2 + me.scrollStars];
-				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].star = me.arrAirport[0].getStar(me.selectedSTAR);
-				me.updateActiveSTARs();
-				me.updateSTARs();
-				me.hasPressNoTrans = 0;
-				me.updateTransitions();
-				me.updateActiveTransitions();
-				fmgc.flightPlanController.flightPlanChanged(me.computer);
+				if (!dirToFlag) {
+					me.selectedSTAR = me.stars[index - 2 + me.scrollStars];
+					me.makeTmpy();
+					fmgc.flightPlanController.flightplans[me.computer].star = me.arrAirport[0].getStar(me.selectedSTAR);
+					me.updateActiveSTARs();
+					me.updateSTARs();
+					me.hasPressNoTrans = 0;
+					me.updateTransitions();
+					me.updateActiveTransitions();
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
+				} else {
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+					setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				}
 			} else {
 				notAllowed(me.computer);
 			}
@@ -484,16 +499,26 @@ var arrivalPage = {
 	},
 	arrPushbuttonRight: func(index) {
 		if (index == 2 and size(me.transitions) == 0) {
-			me.hasPressNoTrans = 1;
-			me.updateActiveTransitions();
-			me.updateTransitions();
+			if (!dirToFlag) {
+				me.hasPressNoTrans = 1;
+				me.updateActiveTransitions();
+				me.updateTransitions();
+			} else {
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 		} elsif (size(me.transitions) >= (index -  1)) {
-			me.selectedTransition = me.transitions[index - 2];
-			me.makeTmpy();
-			fmgc.flightPlanController.flightplans[me.computer].star_trans = me.selectedTransition;
-			me.updateActiveTransitions();
-			me.updateTransitions();
-			fmgc.flightPlanController.flightPlanChanged(me.computer);
+			if (!dirToFlag) {
+				me.selectedTransition = me.transitions[index - 2];
+				me.makeTmpy();
+				fmgc.flightPlanController.flightplans[me.computer].star_trans = me.selectedTransition;
+				me.updateActiveTransitions();
+				me.updateTransitions();
+				fmgc.flightPlanController.flightPlanChanged(me.computer);
+			} else {
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 		} else {
 			notAllowed(me.computer);
 		}

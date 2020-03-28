@@ -105,7 +105,9 @@ var latRev = {
 				} elsif (size(me.id) == 5) {
 					me.wpt = findFixesByID(me.id);
 				}
-				me.subtitle = [dmsToString(sprintf(me.wpt[0].lat), "lat"), dmsToString(sprintf(me.wpt[0].lon), "lon")];
+				if (me.wpt[0] != nil) {
+					me.subtitle = [dmsToString(sprintf(me.wpt[0].lat), "lat"), dmsToString(sprintf(me.wpt[0].lon), "lon")];
+				}
 				me.L3 = [" HOLD", nil, "wht"];
 				me.L4 = [" ALTN", " ENABLE", "blu"];
 				me.L6 = [" RETURN", nil, "wht"];
@@ -121,7 +123,12 @@ var latRev = {
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+			if (!dirToFlag) {
+				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+			} else {
+				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+                setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+			}
 			me._checkTmpy();
 		}
 	},
