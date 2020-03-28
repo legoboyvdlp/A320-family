@@ -129,7 +129,7 @@ var perfTOInput = func(key, i) {
 					notAllowed(i);
 				}
 			} else if (tfs == 1) {
-			    if (scratchpad >= 1 and scratchpad <= 4) {
+				if (scratchpad >= 1 and scratchpad <= 4) {
 					setprop("FMGC/internal/to-flap", scratchpad);
 					setprop("FMGC/internal/flap-ths-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");

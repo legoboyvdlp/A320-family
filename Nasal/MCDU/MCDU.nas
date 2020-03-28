@@ -42,10 +42,10 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/v2", 0);
 	
 	# IRSINIT variables
-    setprop("FMGC/internal/align-set", 0);
+	setprop("FMGC/internal/align-set", 0);
 
-    # ROUTE SELECTION variables
-    setprop("FMGC/internal/alt-selected", 0);
+	# ROUTE SELECTION variables
+	setprop("FMGC/internal/alt-selected", 0);
 
 	# INT-B
 	setprop("FMGC/internal/block", 0.0);
@@ -72,16 +72,16 @@ var MCDU_reset = func(i) {
 	
 	#FUELPRED
 	setprop("FMGC/internal/alt-airport", "");
-    setprop("FMGC/internal/pri-utc", "0000");
-    setprop("FMGC/internal/alt-utc", "0000");
-    setprop("FMGC/internal/pri-efob", 0);
-    setprop("FMGC/internal/alt-efob", 0);
-    setprop("FMGC/internal/fob", 0);
-    setprop("FMGC/internal/gw", 0);
-    setprop("FMGC/internal/cg", 0);
-    
-    #PERF TO
-    setprop("FMGC/internal/v1-set", 0);
+	setprop("FMGC/internal/pri-utc", "0000");
+	setprop("FMGC/internal/alt-utc", "0000");
+	setprop("FMGC/internal/pri-efob", 0);
+	setprop("FMGC/internal/alt-efob", 0);
+	setprop("FMGC/internal/fob", 0);
+	setprop("FMGC/internal/gw", 0);
+	setprop("FMGC/internal/cg", 0);
+	
+	#PERF TO
+	setprop("FMGC/internal/v1-set", 0);
 	setprop("FMGC/internal/vr-set", 0);
 	setprop("FMGC/internal/v2-set", 0);
 	setprop("FMGC/internal/to-flap", 0);
@@ -94,22 +94,22 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/tropo", 36090);
 	setprop("FMGC/internal/tropo-set", 0);
 	
-    #PERF APPR
-    setprop("FMGC/internal/dest-qnh", -1);
-    setprop("FMGC/internal/dest-temp", -999);
-    setprop("FMGC/internal/dest-mag", -1);
-    setprop("FMGC/internal/dest-wind", -1);
-    setprop("FMGC/internal/vapp-speed", -1);
-    setprop("FMGC/internal/vapp-speed-set", 0);
-    setprop("FMGC/internal/f-speed-appr", -1);
-    setprop("FMGC/internal/s-speed-appr", -1);
-    setprop("FMGC/internal/o-speed-appr", -1);
-    setprop("FMGC/internal/vls-speed-appr", -1);
-    setprop("FMGC/internal/final", "");
-    setprop("FMGC/internal/mda", -1);
-    setprop("FMGC/internal/dh", -1);
-    setprop("FMGC/internal/ldg-config-3-set", 0);
-    setprop("FMGC/internal/ldg-config-f-set", 1);
+	#PERF APPR
+	setprop("FMGC/internal/dest-qnh", -1);
+	setprop("FMGC/internal/dest-temp", -999);
+	setprop("FMGC/internal/dest-mag", -1);
+	setprop("FMGC/internal/dest-wind", -1);
+	setprop("FMGC/internal/vapp-speed", -1);
+	setprop("FMGC/internal/vapp-speed-set", 0);
+	setprop("FMGC/internal/f-speed-appr", -1);
+	setprop("FMGC/internal/s-speed-appr", -1);
+	setprop("FMGC/internal/o-speed-appr", -1);
+	setprop("FMGC/internal/vls-speed-appr", -1);
+	setprop("FMGC/internal/final", "");
+	setprop("FMGC/internal/mda", -1);
+	setprop("FMGC/internal/dh", -1);
+	setprop("FMGC/internal/ldg-config-3-set", 0);
+	setprop("FMGC/internal/ldg-config-f-set", 1);
 	
 	#RADNAV
 	setprop("FMGC/internal/ils1freq-set", 0);
@@ -143,12 +143,12 @@ var MCDU_reset = func(i) {
 }
 
 var setMode = func(will) {
-    setprop("MCDU/keyboard-entry", will);
-    if (will == 0) {
-        gui.popupTip("MCDU keyboard entry disabled");
-    } else {
-        gui.popupTip("MCDU keyboard entry enabled");
-    }
+	setprop("MCDU/keyboard-entry", will);
+	if (will == 0) {
+		gui.popupTip("MCDU keyboard entry disabled");
+	} else {
+		gui.popupTip("MCDU keyboard entry enabled");
+	}
 }
 
 var lskbutton = func(btn, i) {
@@ -438,7 +438,7 @@ var arrowbutton = func(btn, i) {
 			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "INITB");
 			} else {
-			    setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
+				setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB" or getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
@@ -458,7 +458,7 @@ var arrowbutton = func(btn, i) {
 			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "INITB");
 			} else {
-			    setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
+				setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB" or getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");

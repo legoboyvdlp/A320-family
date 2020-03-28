@@ -23,55 +23,55 @@ var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 var initInputB = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
 	if (key == "L1") {
-	    if (scratchpad == "CLR") {
-	        notAllowed(i);
-	    } else {
-	        var tfs = size(scratchpad);
-	        if (tfs >= 1 and tfs <= 4) {
-	            if (scratchpad >= 0.0 and scratchpad <= 10.0) {
+		if (scratchpad == "CLR") {
+			notAllowed(i);
+		} else {
+			var tfs = size(scratchpad);
+			if (tfs >= 1 and tfs <= 4) {
+				if (scratchpad >= 0.0 and scratchpad <= 10.0) {
 					setprop("FMGC/internal/taxi-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-                    setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-                    setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-                    setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 
 				} else {
 					notAllowed(i);
 				}
-	        } else {
-	            notAllowed(i);
-	        } 
-	    }
+			} else {
+				notAllowed(i);
+			} 
+		}
 	}
 	# else if (key == "L2") {
-# 	    if (scratchpad == "CLR") {
-# 			notAllowed(i);
-# 		} else if (getprop("FMGC/internal/trip-fuel") != 0) {
-# 			var tfs = size(scratchpad);
-# 			if (tfs >= 1 and tfs <= 4) {
-# 				var temp_rte = num(scratchpad * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100));
-# 				if (scratchpad >= 0.0 and scratchpad <= block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - temp_rte) {
-# 					setprop("FMGC/internal/trip-fuel", scratchpad);
-# 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-# 					
-# 					setprop("FMGC/internal/rte-rsv", temp_rte);
-#                     setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-#                     setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-# 				} else {
-# 					notAllowed(i);
-# 				}
-# 			} else {
-# 				notAllowed(i);
-# 			}
-# 		} else {
-#             notAllowed(i);
-#         }
-# 	
-# 	}
+#		if (scratchpad == "CLR") {
+#			notAllowed(i);
+#		} else if (getprop("FMGC/internal/trip-fuel") != 0) {
+#			var tfs = size(scratchpad);
+#			if (tfs >= 1 and tfs <= 4) {
+#				var temp_rte = num(scratchpad * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100));
+#				if (scratchpad >= 0.0 and scratchpad <= block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - temp_rte) {
+#					setprop("FMGC/internal/trip-fuel", scratchpad);
+#					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+#					
+#					setprop("FMGC/internal/rte-rsv", temp_rte);
+#					  setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+#					  setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+#				} else {
+#					notAllowed(i);
+#				}
+#			} else {
+#				notAllowed(i);
+#			}
+#		} else {
+#			  notAllowed(i);
+#		  }
+#	
+#	}
 	else if (key == "L3") {
-	    if (scratchpad == "CLR") {
+		if (scratchpad == "CLR") {
 			notAllowed(i);
 		} else if (getprop("FMGC/internal/trip-fuel") != 0) {
 			var tfs = size(scratchpad);
@@ -94,54 +94,54 @@ var initInputB = func(key, i) {
 				notAllowed(i);
 			}
 		} else {
-            notAllowed(i);
-        }
+			notAllowed(i);
+		}
 	} else if (key == "L4") {
-	    if (scratchpad == "CLR") {
-	        notAllowed(i);
-	    } else {
-	        var tfs = size(scratchpad);
-	        if (tfs >= 1 and tfs <= 3) {
-	            if (scratchpad >= 0.0 and scratchpad <= 99.9) {
+		if (scratchpad == "CLR") {
+			notAllowed(i);
+		} else {
+			var tfs = size(scratchpad);
+			if (tfs >= 1 and tfs <= 3) {
+				if (scratchpad >= 0.0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/alt-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-                    setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-                    setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-                    setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 
 				} else {
 					notAllowed(i);
 				}
-	        } else {
-	            notAllowed(i);
-	        } 
-	    }
+			} else {
+				notAllowed(i);
+			} 
+		}
 	} else if (key == "L5") {
-	    if (scratchpad == "CLR") {
-	        notAllowed(i);
-	    } else {
-	        var tfs = size(scratchpad);
-	        if (tfs >= 1 and tfs <= 3) {
-	            if (scratchpad >= 0.0 and scratchpad <= 99.9) {
+		if (scratchpad == "CLR") {
+			notAllowed(i);
+		} else {
+			var tfs = size(scratchpad);
+			if (tfs >= 1 and tfs <= 3) {
+				if (scratchpad >= 0.0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/final-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-                    setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-                    setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-                    setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 
 				} else {
 					notAllowed(i);
 				}
-	        } else {
-	            notAllowed(i);
-	        } 
-	    }
+			} else {
+				notAllowed(i);
+			} 
+		}
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {
 			notAllowed(i);
@@ -204,13 +204,13 @@ var initInputB = func(key, i) {
 			}
 		}
 	} else if (key == "R3") {
-	    if (scratchpad != "") {
-	        notAllowed(i);
-	    } else {
-	        setprop("FMGC/internal/zfw", num((getprop("fdm/jsbsim/inertia/weight-lbs") - getprop("consumables/fuel/total-fuel-lbs")) / 1000));
+		if (scratchpad != "") {
+			notAllowed(i);
+		} else {
+			setprop("FMGC/internal/zfw", num((getprop("fdm/jsbsim/inertia/weight-lbs") - getprop("consumables/fuel/total-fuel-lbs")) / 1000));
 			setprop("FMGC/internal/zfw-set", 1);
-	        setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
-	        setprop("FMGC/internal/block-set", 1);
-	    }
+			setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+			setprop("FMGC/internal/block-set", 1);
+		}
 	}
 }
