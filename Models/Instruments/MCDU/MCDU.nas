@@ -740,8 +740,6 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
 				if (alt_airport.getValue() == "") {
-			        me["Simple_L2"].setText("NONE");
-                } else {
 					me["Simple_L2"].setText("NONE");
 				} else {
 					me["Simple_L2"].setText(alt_airport.getValue());
