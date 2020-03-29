@@ -137,11 +137,23 @@ var flightPlanController = {
 	
 	# for these two remember to call flightPlanChanged
 	addDiscontinuity: func(index, plan) {
-		me.flightplans[plan].insertWP(createDiscontinuity(), index);
+		if (index > 0) {
+			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
+				me.flightplans[plan].insertWP(createDiscontinuity(), index);
+			}
+		} else {
+			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY") {
+				me.flightplans[plan].insertWP(createDiscontinuity(), index);
+			}
+		}
 	},
 	
 	insertPPOS: func(n) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), 0);
+	},
+	
+	insertTP: func(n) {
+		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), 0);
 	},
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate
@@ -179,12 +191,13 @@ var flightPlanController = {
 			if (!override) {
 				if (me.flightplans[plan].indexOfWP(airport[0]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(airport[0]), index);
+					me.addDiscontinuity(index + 1, plan);
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(airport[0]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 1);
+						me.deleteWP(index, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -192,12 +205,13 @@ var flightPlanController = {
 			} else {
 				if (me.flightplans[plan].indexOfWP(airport[overrideIndex]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(airport[overrideIndex]), index);
+					me.addDiscontinuity(index + 1, plan);
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(airport[overrideIndex]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 1);
+						me.deleteWP(index, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -228,12 +242,13 @@ var flightPlanController = {
 			if (!override) {
 				if (me.flightplans[plan].indexOfWP(fix[0]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(fix[0]), index);
+					me.addDiscontinuity(index + 1, plan);
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 1);
+						me.deleteWP(index, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -241,12 +256,13 @@ var flightPlanController = {
 			} else {
 				if (me.flightplans[plan].indexOfWP(fix[overrideIndex]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(fix[overrideIndex]), index);
+					me.addDiscontinuity(index + 1, plan);
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(fix[overrideIndex]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 1);
+						me.deleteWP(index, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -280,12 +296,13 @@ var flightPlanController = {
 		var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ index);
 		if (me.flightplans[plan].indexOfWP(myWpLatLon) == -1) {
 			me.flightplans[plan].insertWP(myWpLatLon, index);
+			me.addDiscontinuity(index + 1, plan);
 			me.flightPlanChanged(plan);
 			return 2;
 		} else {
 			var numToDel = me.flightplans[plan].indexOfWP(myWpLatLon) - index;
 			while (numToDel > 0) {
-				me.deleteWP(index + 1, plan, 1);
+				me.deleteWP(index, plan, 1);
 				numToDel -= 1;
 			}
 			return 2;
@@ -306,12 +323,13 @@ var flightPlanController = {
 			if (!override) {
 				if (me.flightplans[plan].indexOfWP(navaid[0]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(navaid[0]), index);
+					me.addDiscontinuity(index + 1, plan);
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(navaid[0]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 1);
+						me.deleteWP(index, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
@@ -319,12 +337,13 @@ var flightPlanController = {
 			} else {
 				if (me.flightplans[plan].indexOfWP(navaid[overrideIndex]) == -1) {
 					me.flightplans[plan].insertWP(createWPFrom(navaid[overrideIndex]), index);
+					me.addDiscontinuity(index + 1, plan);
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
 					var numToDel = me.flightplans[plan].indexOfWP(navaid[overrideIndex]) - index;
 					while (numToDel > 0) {
-						me.deleteWP(index + 1, plan, 1);
+						me.deleteWP(index, plan, 1);
 						numToDel -= 1;
 					}
 					return 2;
