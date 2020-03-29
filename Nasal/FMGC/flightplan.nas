@@ -341,11 +341,9 @@ var flightPlanController = {
 		}
 	},
 	
-	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success
+	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success, 3 = not allowed due to dir to
 		if (mcdu.dirToFlag) {
-			setprop("MCDU[" ~ plan ~ "]/scratchpad-msg", 1);
-            setprop("MCDU[" ~ plan ~ "]/scratchpad", "DIR TO IN PROGRESS");
-			return;
+			return 3;
 		}
 		
 		if (!fmgc.flightPlanController.temporaryFlag[plan]) {

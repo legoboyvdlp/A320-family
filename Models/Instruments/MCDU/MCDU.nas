@@ -203,8 +203,8 @@ var canvas_MCDU_base = {
 		"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S",
 		"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
 		"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE",
-		"FPLN","FPLN_From","FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R",
-		"arrow2R","arrow3R","arrow4R","arrow5R"];
+		"FPLN","FPLN_From","FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L",
+		"arrow1R","arrow2R","arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -227,6 +227,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].show();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -539,9 +540,16 @@ var canvas_MCDU_base = {
 				#}
 				
 				if (fmgc.flightPlanController.temporaryFlag[i]) {
-					me["FPLN_TMPY_group"].show();
+					if (!mcdu.dirToFlag) {
+						me["FPLN_TMPY_group"].show();
+						me["DIRTO_TMPY_group"].hide();
+					} else {
+						me["DIRTO_TMPY_group"].show();
+						me["FPLN_TMPY_group"].hide();
+					}
 				} else {
 					me["FPLN_TMPY_group"].hide();
+					me["DIRTO_TMPY_group"].hide();
 				}
 			}
 		} elsif (page == "MCDU") {
@@ -549,6 +557,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -635,6 +644,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -721,6 +731,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -805,6 +816,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -894,6 +906,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -995,6 +1008,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -1138,6 +1152,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].show();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -1297,6 +1312,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].show();
 				me["PERFTO"].hide();
@@ -1431,6 +1447,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -1547,6 +1564,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].show();
@@ -2000,6 +2018,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -2127,6 +2146,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -2383,6 +2403,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -2639,6 +2660,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -2964,6 +2986,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -3277,6 +3300,7 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
@@ -3602,21 +3626,22 @@ var canvas_MCDU_base = {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
+				me["arrowsDepArr"].show();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
-				me["ArrowLeft"].show();
-				me["ArrowRight"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
 				me["Simple_L1_Arrow"].hide();
 				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].hide();
 				me["Simple_L4_Arrow"].hide();
 				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
+				me["Simple_L6_Arrow"].hide();
 				me["Simple_R1_Arrow"].hide();
 				me["Simple_R2_Arrow"].hide();
 				me["Simple_R3_Arrow"].hide();
@@ -3648,10 +3673,7 @@ var canvas_MCDU_base = {
 							var sign = "R"; 
 						}
 						forindex (var item; myDirTo[i].arrowsMatrix[matrixArrow]) {
-							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[0][5] ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[0][5] ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[0][5] ~ "/b"));
-								continue;
-							}
+							if (item == 5) { continue; }
 							if (myDirTo[i].arrowsMatrix[matrixArrow][item] == 1) {
 								me["arrow" ~ (item + 1) ~ sign].show();
 								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/b"));
@@ -3660,8 +3682,6 @@ var canvas_MCDU_base = {
 							}
 						}
 					}
-					
-					
 					
 					forindex (var matrixFont; myDirTo[i].fontMatrix) {
 						if (matrixFont == 0) { 
@@ -3678,6 +3698,12 @@ var canvas_MCDU_base = {
 								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
 							}
 						}
+					}
+					
+					if (fmgc.flightPlanController.temporaryFlag[i] and mcdu.dirToFlag) {
+						me["DIRTO_TMPY_group"].show();
+					} else {
+						me["DIRTO_TMPY_group"].hide();
 					}
 					
 					if (myDirTo[i].L1[0] == nil) {
@@ -3856,6 +3882,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].hide();
 				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].show();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();

@@ -39,15 +39,13 @@ var dirTo = {
 		me.L3 = [nil, nil, "blu"];
 		me.L4 = [nil, nil, "blu"];
 		me.L5 = [nil, nil, "blu"];
-		me.L6 = [" ERASE", "   DIR TO", "yel"];
 		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 		me.R2 = ["DIRECT TO ", nil, "blu"];
 		me.R3 = ["ABEAM PTS ", "WITH        ", "blu"];
 		me.R4 = ["[   ]  ", "RADIAL IN   ", "blu"];
 		me.R5 = ["[   ]  ", "RADIAL OUT  ", "blu"];
-		me.R6 = ["INSERT* ", "DIR TO   ", "yel"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 1, 0, 0]];
-		me.arrowsColour = [["ack", "blu", "blu", "blu", "blu", "ack"], ["ack", "blu", "ack", "blu", "ack", "ack"]];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
+		me.arrowsColour = [["ack", "blu", "blu", "blu", "blu", "ack"], ["ack", "blu", "blu", "ack", "ack", "ack"]];
 		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		me.updateFromFpln();
 		me.updateTmpy();
@@ -64,27 +62,25 @@ var dirTo = {
 	},
 	updateTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			me.L6 = [" ERASE", "   DIR TO", "yel"];
-			me.R6 = ["INSERT ", "DIR TO   ", "yel"];
-			me.arrowsMatrix[0][5] = 1;
-			me.arrowsColour[0][5] = "yel";
 			me.L1[2] = "yel";
 			me.R2[2] = "yel";
+			me.R3[2] = "yel";
+			me.arrowsColour[1][1] = "yel";
+			me.arrowsColour[1][2] = "yel";
 			me.titleColour = "yel";
 		} else {
-			me.L6 = [nil, nil, "yel"];
-			me.R6 = [nil, nil, "yel"];
-			me.arrowsMatrix[0][5] = 0;
-			me.arrowsColour[0][5] = "ack";
 			me.L1[2] = "blu";
 			me.R2[2] = "blu";
+			me.R3[2] = "blu";
+			me.arrowsColour[1][1] = "blu";
+			me.arrowsColour[1][2] = "blu";
 			me.titleColour = "wht";
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateFromFpln: func() {
 		if (canvas_mcdu.myFpln[me.computer] == nil) {
-			 canvas_mcdu.myFpln[i] = fplnPage.new(2, me.computer);
+			 canvas_mcdu.myFpln[me.computer] = fplnPage.new(2, me.computer);
 		}
 		
 		var x = 0;

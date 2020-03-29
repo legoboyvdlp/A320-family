@@ -360,7 +360,10 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (size(me.outputList) >= index) {
 				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
 					var returny = fmgc.flightPlanController.scratchpad(getprop("MCDU[" ~ me.computer ~ "]/scratchpad"), (index - 1 + me.scroll), me.computer);
-					if (returny == 0) {
+					if (returny == 3) {
+						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
+						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+					} elsif (returny == 0) {
 						notInDataBase(me.computer);
 					} elsif (returny == 1) {
 						notAllowed(me.computer);
