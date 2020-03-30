@@ -84,6 +84,7 @@ var initInputA = func(key, i) {
 				} else if (crz > 0 and crz <= 430 and temp >= -100 and temp < 100) {
 					setprop("FMGC/internal/cruise-ft", crz * 100);
 					setprop("FMGC/internal/cruise-fl", crz);
+					setprop("FMGC/internal/cruise-fl-prog", crz);
 					setprop("FMGC/internal/cruise-lvl-set", 1);
 					setprop("FMGC/internal/cruise-temp", temp);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");

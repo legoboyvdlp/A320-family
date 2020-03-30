@@ -105,6 +105,9 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/gw", 0);
 	setprop("FMGC/internal/cg", 0);
 	
+	# PROG
+	setprop("FMGC/internal/cruise-fl-prog", 100);
+	
 	# PERF
 	setprop("FMGC/internal/vs1g", 0);
 	
@@ -186,6 +189,12 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L1",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PROGTO") {
+			progTOInput("L1",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PROGCLB") {
+			progCLBInput("L1",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PROGCRZ") {
+			progCRZInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {

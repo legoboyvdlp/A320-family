@@ -120,6 +120,9 @@ var fob = props.globals.getNode("FMGC/internal/fob", 1);
 var gw = props.globals.getNode("FMGC/internal/gw", 1);
 var cg = props.globals.getNode("FMGC/internal/cg", 1);
 
+# PROG
+var cruiseFL_prog = props.globals.getNode("FMGC/internal/cruise-fl-prog", 1);
+
 # PERF
 var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
 var vs1g = props.globals.getNode("FMGC/internal/vs1g", 1);
@@ -245,7 +248,7 @@ var canvas_MCDU_base = {
 		"Simple_L1_Arrow","Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S",
 		"Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S",
 		"Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW","FUELPRED_ZFWCG","FUELPRED_ZFW_S",
-		"PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
+		"PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR","PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE"];
 	},
 	update: func() {
 		if (ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -270,6 +273,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -327,6 +331,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -383,6 +388,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -437,6 +443,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -496,6 +503,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -557,6 +565,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -670,6 +679,7 @@ var canvas_MCDU_base = {
 				me["INITA"].show();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -814,6 +824,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -957,6 +968,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1006,6 +1018,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].show();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1135,6 +1148,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].show();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1279,6 +1293,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].show();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1329,7 +1344,7 @@ var canvas_MCDU_base = {
 				if (page == "PROGCRZ") {
 					me.showLeftS(0, 0, -1, 0, 0, 0);
 					me.showCenterS(0, 0, 1, 0, 0, 0);
-					me.showRight(0, 0, 1, 0, 0, 0);
+					#me.showRight(0, 0, 1, 0, 0, 0); #Add when implement cruise phase
 					me.fontLeft(0, 0, default, 0, 0, 0);
 				} else if (page == "PROGDES") {
 					me.showRight(0, 1, 0, 0, 0, 0);
@@ -1355,36 +1370,42 @@ var canvas_MCDU_base = {
 			}
 			
 			if (cruiseSet.getValue() == 1 and page != "PROGDES") {
-				me["Simple_L1"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()));
+				if (getprop("it-autoflight/input/alt") > cruiseFL_prog.getValue() * 100) {
+					me["Simple_L1"].setText(sprintf("%s", "FL" ~ getprop("it-autoflight/input/alt") / 100));
+				} else {
+					me["Simple_L1"].setText(sprintf("%s", "FL" ~ cruiseFL_prog.getValue()));
+				}
 			} else {
 				me["Simple_L1"].setText("----");
 			}
 			me["Simple_L2"].setText(" REPORT");
 			if (page == "PROGCRZ") {
-				me["Simple_L3"].setText("-----.--/-----.--");
-				me["Simple_R3"].setText("AGN *");
+				me["Simple_L3"].setText(" -----.--/-----.--");
+				#me["Simple_R3"].setText("AGN *"); #Add when implement cruise phase
+				me["PROG_UPDATE"].hide();
 			} else {
+				me["PROG_UPDATE"].show();
 				me["Simple_L3"].setText("  [    ]");
 			}
-			me["Simple_L4"].setText("---g/----");
+			me["Simple_L4"].setText(" ---g /----.-");
 			me["Simple_L5"].setText(" GPS");
 			me["Simple_L6"].setText("----");
-			me["Simple_L1S"].setText("CRZ");
-			me["Simple_L3S"].setText("UPDATE AT");
-			me["Simple_L4S"].setText("BRG/DIST");
-			me["Simple_L5S"].setText("PREDICTIVE");
+			me["Simple_L1S"].setText(" CRZ");
+			me["Simple_L3S"].setText(" UPDATE AT");
+			me["Simple_L4S"].setText("  BRG /DIST");
+			me["Simple_L5S"].setText(" PREDICTIVE");
 			me["Simple_L6S"].setText("REQUIRED");
 			me["Simple_R1"].setText("FL398");
 			me["Simple_R2"].setText("VDEV = + 750 FT");
 			me["Simple_R4"].setText("[    ]");
 			me["Simple_R5"].setText("GPS PRIMARY");
 			me["Simple_R6"].setText("----");
-			me["Simple_R1S"].setText("REC MAX");
+			me["Simple_R1S"].setText("REC MAX ");
 			me["Simple_R6S"].setText("ESTIMATED");
 			me["Simple_C1"].setText("----");
 			me["Simple_C1S"].setText("OPT");
 			me["Simple_C3S"].setText("CONFIRM UPDATE AT");
-			me["Simple_C4"].setText("TO");
+			me["Simple_C4"].setText("   TO");
 			me["Simple_C6S"].setText("ACCUR");
 			me["Simple_C6"].setText("HIGH");
 			
@@ -1395,6 +1416,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].show();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -1569,6 +1591,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].show();
 				me["PERFGA"].hide();
@@ -1737,6 +1760,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].show();
@@ -1830,6 +1854,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
