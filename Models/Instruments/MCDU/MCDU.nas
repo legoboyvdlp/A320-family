@@ -1259,6 +1259,20 @@ var canvas_MCDU_base = {
 			}
 			
 		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
+			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
+				page = "PROGTO";
+			} else if (getprop("FMGC/status/phase") == 2) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
+				page = "PROGCLB";
+			} else if (getprop("FMGC/status/phase") == 3) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
+				page = "PROGCRZ";
+			} else if (getprop("FMGC/status/phase") == 4 or getprop("FMGC/status/phase") == 5 or getprop("FMGC/status/phase") == 6) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
+				page = "PROGDES";
+			}
+			
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
