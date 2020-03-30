@@ -25,7 +25,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("FMGC/internal/dest-qnh", -1);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if ((scratchpad >= 25 and scratchpad <= 60) or (scratchpad >= 900 and scratchpad <= 1100)) {
+		} else if (num(scratchpad) != nil and (scratchpad >= 25 and scratchpad <= 60) or (scratchpad >= 900 and scratchpad <= 1100)) {
 			# doesn't support accidental temp input yet
 			setprop("FMGC/internal/dest-qnh", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -37,7 +37,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("FMGC/internal/dest-temp", -999);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (scratchpad >= -100 and scratchpad < 100) {
+		} else if (num(scratchpad) != nil and scratchpad >= -100 and scratchpad < 100) {
 			setprop("FMGC/internal/dest-temp", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
@@ -52,13 +52,19 @@ var perfAPPRInput = func(key, i) {
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (tfs >= 3 and tfs <= 7 and find("/", scratchpad) != -1) {
 			var weather = split("/", scratchpad);
-			var mag = size(weather[0]);
-			var wind = size(weather[1]);
-			if (mag >= 1 and mag <= 3 and weather[0] >= 1 and weather[0] <= 360 and wind >= 1 and wind <= 3 and weather[1] >= 0 and weather[1] <= 100) {
-				setprop("FMGC/internal/dest-mag", weather[0]);
-				setprop("FMGC/internal/dest-wind", weather[1]);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-				fmgc.updateARPT();
+			var mag = int(weather[0]);
+			var mags = size(weather[0]);
+			var wind = int(weather[1]);
+			var winds = size(weather[1]);
+			if (mags >= 1 and mags <= 3 and winds >= 1 and winds <= 3) {
+				if (mag != nil and wind != nil and mag >= 1 and mag <= 360 and wind >= 0 and wind <= 100) {
+					setprop("FMGC/internal/dest-mag", weather[0]);
+					setprop("FMGC/internal/dest-wind", weather[1]);
+					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					fmgc.updateARPT();
+				} else {
+					notAllowed(i);
+				}
 			} else {
 				notAllowed(i);
 			}
@@ -70,7 +76,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("FMGC/internal/trans-alt", 18000);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (scratchpad >= 0 and scratchpad <= 50000) {
+		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 50000) {
 			setprop("FMGC/internal/trans-alt", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
@@ -88,7 +94,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("FMGC/internal/vapp-speed-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (scratchpad >= 0 and scratchpad <= 200) {
+		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 200) {
 			setprop("FMGC/internal/vapp-speed", scratchpad);
 			setprop("FMGC/internal/vapp-speed-set", 1);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");

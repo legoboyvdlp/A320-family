@@ -54,9 +54,7 @@ var initInputA = func(key, i) {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
 			if (cis >= 1 and cis <= 3) {
-				if (ci == nil) {
-					notAllowed(i);
-				} else if (ci >= 0 and ci <= 999) {
+				if (ci != nil and ci >= 0 and ci <= 999) {
 					setprop("FMGC/internal/cost-index", ci);
 					setprop("FMGC/internal/cost-index-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -74,16 +72,20 @@ var initInputA = func(key, i) {
 			setprop("FMGC/internal/cruise-lvl-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else {
-			var crz = int(scratchpad);
-			var crzs = size(scratchpad);
-			if (crzs >= 1 and crzs <= 3) {
-				if (crz == nil) {
+		} else if (find("/", scratchpad) != -1) {
+			var crztemp = split("/", scratchpad);
+			var crz = int(crztemp[0]);
+			var crzs = size(crztemp[0]);
+			var temp = num(crztemp[1]);
+			var temps = size(crztemp[1]);
+			if (crzs >= 1 and crzs <= 3 and temps >= 1 and temps <= 5) {
+				if (crz == nil or temp == nil) {
 					notAllowed(i);
-				} else if (crz > 0 and crz <= 430) {
+				} else if (crz > 0 and crz <= 430 and temp >= -100 and temp < 100) {
 					setprop("FMGC/internal/cruise-ft", crz * 100);
 					setprop("FMGC/internal/cruise-fl", crz);
 					setprop("FMGC/internal/cruise-lvl-set", 1);
+					setprop("FMGC/internal/cruise-temp", temp);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
@@ -91,6 +93,8 @@ var initInputA = func(key, i) {
 			} else {
 				notAllowed(i);
 			}
+		} else {
+			notAllowed(i);
 		}
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {

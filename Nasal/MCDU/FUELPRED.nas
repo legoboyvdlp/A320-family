@@ -29,14 +29,14 @@ var fuelPredInput = func(key, i) {
 		} else if (getprop("FMGC/internal/trip-fuel") != 0) {
 			var tfs = size(scratchpad);
 			if (tfs >= 2 and tfs <= 5 and find("/", scratchpad) == 0) {
-				var perc = split("/", scratchpad)[1];
-				if (perc >= 0.0 and perc <= 100.0) {
+				var perc = num(split("/", scratchpad)[1]);
+				if (perc != nil and perc >= 0.0 and perc <= 100.0) {
 					setprop("FMGC/internal/rte-rsv", num(perc) / 100 * num(trip_fuel.getValue()));
 					setprop("FMGC/internal/rte-percent", perc);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				}
 			} else if (tfs >= 1 and tfs <= 4) {
-				if (scratchpad >= 0.0 and scratchpad <= trip_fuel.getValue()) {
+				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= trip_fuel.getValue()) {
 					setprop("FMGC/internal/rte-rsv", scratchpad);
 					setprop("FMGC/internal/rte-percent", scratchpad / num(trip_fuel.getValue()) * 100);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -55,10 +55,9 @@ var fuelPredInput = func(key, i) {
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 3) {
-				if (scratchpad >= 0.0 and scratchpad <= 99.9) {
+				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/alt-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-					
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
 					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
@@ -78,16 +77,14 @@ var fuelPredInput = func(key, i) {
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 3) {
-				if (scratchpad >= 0.0 and scratchpad <= 99.9) {
+				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/final-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-					
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
 					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
 					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
 					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-
 				} else {
 					notAllowed(i);
 				}
@@ -105,32 +102,34 @@ var fuelPredInput = func(key, i) {
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "/" ~ sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
 			} else if (tfs >= 2 and tfs <= 11 and find("/", scratchpad) != -1) {
 				var zfwi = split("/", scratchpad);
-				var zfwcg = size(zfwi[0]);
-				var zfw = size(zfwi[1]);
-				if (zfwcg >= 1 and zfwcg <= 5 and zfwi[0] > 0 and zfwi[0] <= 99.9) {
-					setprop("FMGC/internal/zfwcg", zfwi[0]);
+				var zfwcg = num(zfwi[0]);
+				var zfw = num(zfwi[1]);
+				var zfwcgs = size(zfwi[0]);
+				var zfws = size(zfwi[1]);
+				if (zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) {
+					setprop("FMGC/internal/zfwcg", zfwcg);
 					setprop("FMGC/internal/zfwcg-set", 1);
 					if (getprop("FMGC/internal/block-set") != 1) {
 						setprop("FMGC/internal/block", 30);
 						setprop("FMGC/internal/block-set", 1);
 					}
 				}
-				if (zfw >= 1 and zfw <= 5 and zfwi[1] > 0 and zfwi[1] <= 999.9) {
-					setprop("FMGC/internal/zfw", zfwi[1]);
+				if (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9) {
+					setprop("FMGC/internal/zfw", zfw);
 					setprop("FMGC/internal/zfw-set", 1);
 					if (getprop("FMGC/internal/block-set") != 1) {
 						setprop("FMGC/internal/block", 30);
 						setprop("FMGC/internal/block-set", 1);
 					}
 				}
-				if ((zfwcg >= 1 and zfwcg <= 5 and zfwi[0] > 0 and zfwi[0] <= 99.9) or (zfw >= 1 and zfw <= 5 and zfwi[1] > 0 and zfwi[1] <= 999.9)) {
+				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
 				}
 			} else if (tfs >= 1 and tfs <= 5) {
 				var zfwcg = size(scratchpad);
-				if (zfwcg >= 1 and zfwcg <= 5 and scratchpad > 0 and scratchpad <= 99.9) {
+				if (num(scratchpad) != nil and zfwcg >= 1 and zfwcg <= 5 and scratchpad > 0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/zfwcg", scratchpad);
 					setprop("FMGC/internal/zfwcg-set", 1);
 					if (getprop("FMGC/internal/block-set") != 1) {

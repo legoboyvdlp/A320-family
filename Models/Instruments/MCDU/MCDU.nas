@@ -29,6 +29,9 @@ setprop("MCDUC/colors/yel/g", 0.9333);
 setprop("MCDUC/colors/yel/b", 0.0000);
 
 # Fetch nodes:
+var mcdu_keyboard_entry = props.globals.getNode("MCDU/keyboard-entry", 1);
+
+#ACCONFIG
 var ac1 = props.globals.getNode("systems/electrical/bus/ac-1", 1);
 var ac2 = props.globals.getNode("systems/electrical/bus/ac-2", 1);
 var mcdu1_lgt = props.globals.getNode("controls/lighting/DU/mcdu1", 1);
@@ -38,7 +41,6 @@ var engType = props.globals.getNode("MCDUC/eng", 1);
 var database1 = props.globals.getNode("FMGC/internal/navdatabase", 1);
 var database2 = props.globals.getNode("FMGC/internal/navdatabase2", 1);
 var databaseCode = props.globals.getNode("FMGC/internal/navdatabasecode", 1);
-var mcdu_keyboard_entry = props.globals.getNode("MCDU/keyboard-entry", 1);
 
 # RADNAV
 var vor1 = props.globals.getNode("FMGC/internal/vor1-mcdu", 1);
@@ -58,16 +60,18 @@ var ils1CRS = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg
 var vor1CRS = props.globals.getNode("instrumentation/nav[2]/radials/selected-deg", 1);
 var vor2CRS = props.globals.getNode("instrumentation/nav[3]/radials/selected-deg", 1);
 
-# INT-A variabless
+# INT-A
 var flightNum = props.globals.getNode("MCDUC/flight-num", 1);
 var flightNumSet = props.globals.getNode("MCDUC/flight-num-set", 1);
 var depArpt = props.globals.getNode("FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("FMGC/internal/arr-arpt", 1);
+var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
 var toFromSet = props.globals.getNode("FMGC/internal/tofrom-set", 1);
 var costIndex = props.globals.getNode("FMGC/internal/cost-index", 1);
 var costIndexSet = props.globals.getNode("FMGC/internal/cost-index-set", 1);
 var cruiseFL = props.globals.getNode("FMGC/internal/cruise-fl", 1);
 var cruiseSet = props.globals.getNode("FMGC/internal/cruise-lvl-set", 1);
+var cruiseTemp = props.globals.getNode("FMGC/internal/cruise-temp", 1);
 var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
@@ -75,10 +79,10 @@ var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
 # IRSINIT variables
 var align_set = props.globals.getNode("FMGC/internal/align-set", 1);
 
-# ROUTE SELECTION variables
+# ROUTE SELECTION
 var alt_selected = props.globals.getNode("FMGC/internal/alt-selected", 1);
 
-# INT-B variables
+# INT-B
 var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
 var zfwcgSet = props.globals.getNode("FMGC/internal/zfwcg-set", 1);
 var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
@@ -101,11 +105,10 @@ var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
 var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 
-# FUELPRED Specials
+# FUELPRED
 var state1 = props.globals.getNode("engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("engines/engine[1]/state", 1);
 var engrdy = props.globals.getNode("engines/ready", 1);
-var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
 var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
 var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
 var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
@@ -725,10 +728,10 @@ var canvas_MCDU_base = {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} else if (cruiseSet.getValue() == 1) {
+			} else if (cruiseSet.getValue() == 1 and cruiseTemp.getValue() != -999) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue() ~ "/---g"));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(0.7333,0.3803,0);
@@ -1331,8 +1334,12 @@ var canvas_MCDU_base = {
 			}
 			if (flapTHSSet.getValue() == 1) {
 				me["Simple_R3"].setFont(default); 
-				me["Simple_R3"].setFontSize(normal); 
-				me["Simple_R3"].setText(sprintf("%s", flapTO.getValue() ~ "/UP" ~ THSTO.getValue()));
+				me["Simple_R3"].setFontSize(normal);
+				if (THSTO.getValue() >= 0) {
+					me["Simple_R3"].setText(sprintf("%s", flapTO.getValue()) ~ sprintf("/UP%2.1f", THSTO.getValue()));
+				} else {
+					me["Simple_R3"].setText(sprintf("%s", flapTO.getValue()) ~ sprintf("/DN%2.1f", -1 * THSTO.getValue()));
+				}
 			} else {
 				me["Simple_R3"].setFont(symbol); 
 				me["Simple_R3"].setFontSize(small); 

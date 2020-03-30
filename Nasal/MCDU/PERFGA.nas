@@ -17,7 +17,7 @@ var perfGAInput = func(key, i) {
 				var thracc = split("/", scratchpad);
 				var thrred = size(thracc[0]);
 				var acc = size(thracc[1]);
-				if ((thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)) {
+				if (int(thrred) != nil and int(acc) != nil and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)) {
 					setprop("systems/thrust/clbreduc-ft", thracc[0]);
 					setprop("FMGC/internal/reduc-agl-ft", thracc[1]);
 					setprop("MCDUC/thracc-set", 1);
@@ -39,7 +39,7 @@ var perfGAInput = func(key, i) {
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
-			if (tfs >= 3 and tfs <= 5) {
+			if (int(scratchpad) != nil and tfs >= 3 and tfs <= 5) {
 				setprop("FMGC/internal/eng-out-reduc", scratchpad);
 				setprop("MCDUC/reducacc-set", 1);
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");

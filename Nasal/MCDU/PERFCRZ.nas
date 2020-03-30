@@ -14,9 +14,7 @@ var perfCRZInput = func(key, i) {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
 			if (cis >= 1 and cis <= 3) {
-				if (ci == nil) {
-					notAllowed(i);
-				} else if (ci >= 0 and ci <= 999) {
+				if (ci != nil and ci >= 0 and ci <= 999) {
 					setprop("FMGC/internal/cost-index", ci);
 					setprop("FMGC/internal/cost-index-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");

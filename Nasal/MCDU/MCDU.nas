@@ -9,119 +9,17 @@ var MCDU_init = func(i) {
 
 var MCDU_reset = func(i) {
 	setprop("MCDU[" ~ i ~ "]/active", 0);
-	setprop("it-autoflight/settings/togaspd", 157);
+	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
 	setprop("MCDU[" ~ i ~ "]/last-page", "NONE");
 	setprop("MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("MCDU[" ~ i ~ "]/page", "MCDU");
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+	
 	setprop("MCDU/keyboard-entry", 0);
-	setprop("MCDUC/flight-num", "");
-	setprop("MCDUC/thracc-set", 0);
-	setprop("MCDUC/reducacc-set", 0);
-	setprop("MCDUC/flight-num-set", 0);
-	setprop("FMGC/internal/flex", 0);
-	setprop("FMGC/internal/dep-arpt", "");
-	setprop("FMGC/internal/arr-arpt", "");
-	setprop("FMGC/internal/cruise-ft", 10000);
-	setprop("FMGC/internal/cruise-fl", 100);
-	setprop("FMGC/internal/cost-index", "0");
-	setprop("FMGC/internal/trans-alt", 18000);
-	setprop("FMGC/internal/reduc-agl-ft", "1500"); #eventually set to 1500 above runway
-	setprop("FMGC/internal/eng-out-reduc", "1500");
-	setprop("FMGC/internal/v1", 0);
-	setprop("FMGC/internal/vr", 0);
-	setprop("FMGC/internal/v2", 0);
-	setprop("FMGC/internal/f-speed", 0);
-	setprop("FMGC/internal/s-speed", 0);
-	setprop("FMGC/internal/o-speed", 0);
-	setprop("FMGC/internal/minspeed", 0);
-	#setprop("FMGC/internal/vapp-speed", 0);
-	setprop("FMGC/internal/vr", 0);
-	setprop("FMGC/internal/v2", 0);
 	
-	# IRSINIT variables
-	setprop("FMGC/internal/align-set", 0);
-
-	# ROUTE SELECTION variables
-	setprop("FMGC/internal/alt-selected", 0);
-
-	# INT-B
-	setprop("FMGC/internal/block", 0.0);
-	setprop("FMGC/internal/block-set", 0);
-	setprop("FMGC/internal/zfw", 0);
-	setprop("FMGC/internal/zfw-set", 0);
-	setprop("FMGC/internal/zfwcg", 55.1);
-	setprop("FMGC/internal/zfwcg-set", 0);
-	setprop("FMGC/internal/taxi-fuel", 0.4);
-	setprop("FMGC/internal/trip-fuel", 0);
-	setprop("FMGC/internal/trip-time", "0000");
-	setprop("FMGC/internal/rte-rsv", 0);
-	setprop("FMGC/internal/rte-percent", 5.0);
-	setprop("FMGC/internal/alt-fuel", 0);
-	setprop("FMGC/internal/alt-time", "0000");
-	setprop("FMGC/internal/final-fuel", 0);
-	setprop("FMGC/internal/final-time", "0000");
-	setprop("FMGC/internal/min-dest-fob", 0);
-	setprop("FMGC/internal/tow", 0);
-	setprop("FMGC/internal/lw", 0);
-	setprop("FMGC/internal/trip-wind", "HD000");
-	setprop("FMGC/internal/extra-fuel", 0);
-	setprop("FMGC/internal/extra-time", "0000");
-	
-	#FUELPRED
-	setprop("FMGC/internal/alt-airport", "");
-	setprop("FMGC/internal/pri-utc", "0000");
-	setprop("FMGC/internal/alt-utc", "0000");
-	setprop("FMGC/internal/pri-efob", 0);
-	setprop("FMGC/internal/alt-efob", 0);
-	setprop("FMGC/internal/fob", 0);
-	setprop("FMGC/internal/gw", 0);
-	setprop("FMGC/internal/cg", 0);
-	
-	#PERF TO
-	setprop("FMGC/internal/v1-set", 0);
-	setprop("FMGC/internal/vr-set", 0);
-	setprop("FMGC/internal/v2-set", 0);
-	setprop("FMGC/internal/to-flap", 0);
-	setprop("FMGC/internal/to-ths", "0.0");
-	setprop("FMGC/internal/tofrom-set", 0);
-	setprop("FMGC/internal/cost-index-set", 0);
-	setprop("FMGC/internal/cruise-lvl-set", 0);
-	setprop("FMGC/internal/flap-ths-set", 0);
-	setprop("FMGC/internal/flex-set", 0);
-	setprop("FMGC/internal/tropo", 36090);
-	setprop("FMGC/internal/tropo-set", 0);
-	
-	#PERF APPR
-	setprop("FMGC/internal/dest-qnh", -1);
-	setprop("FMGC/internal/dest-temp", -999);
-	setprop("FMGC/internal/dest-mag", -1);
-	setprop("FMGC/internal/dest-wind", -1);
-	setprop("FMGC/internal/vapp-speed", -1);
-	setprop("FMGC/internal/vapp-speed-set", 0);
-	setprop("FMGC/internal/f-speed-appr", -1);
-	setprop("FMGC/internal/s-speed-appr", -1);
-	setprop("FMGC/internal/o-speed-appr", -1);
-	setprop("FMGC/internal/vls-speed-appr", -1);
-	setprop("FMGC/internal/final", "");
-	setprop("FMGC/internal/mda", -1);
-	setprop("FMGC/internal/dh", -1);
-	setprop("FMGC/internal/ldg-config-3-set", 0);
-	setprop("FMGC/internal/ldg-config-f-set", 1);
-	
-	#RADNAV
-	setprop("FMGC/internal/ils1freq-set", 0);
-	setprop("FMGC/internal/ils1crs-set", 0);
-	setprop("FMGC/internal/vor1freq-set", 0);
-	setprop("FMGC/internal/vor1crs-set", 0);
-	setprop("FMGC/internal/vor2freq-set", 0);
-	setprop("FMGC/internal/vor2crs-set", 0);
-	setprop("FMGC/internal/adf1freq-set", 0);
-	setprop("FMGC/internal/adf2freq-set", 0);
-	
-	#ACCONFIC
+	#ACCONFIG
 	setprop("FMGC/internal/navdatabase", "01JAN-28JAN");
 	setprop("FMGC/internal/navdatabase2", "29JAN-26FEB");
 	setprop("FMGC/internal/navdatabasecode", "AB20170101");
@@ -140,6 +38,123 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/print/mcdu/page2/R2req", 0);
 	setprop("FMGC/print/mcdu/page2/R3req", 0);
 	setprop("FMGC/print/mcdu/page2/R4req", 0);
+	
+	#RADNAV
+	setprop("FMGC/internal/ils1freq-set", 0);
+	setprop("FMGC/internal/ils1crs-set", 0);
+	setprop("FMGC/internal/vor1freq-set", 0);
+	setprop("FMGC/internal/vor1crs-set", 0);
+	setprop("FMGC/internal/vor2freq-set", 0);
+	setprop("FMGC/internal/vor2crs-set", 0);
+	setprop("FMGC/internal/adf1freq-set", 0);
+	setprop("FMGC/internal/adf2freq-set", 0);
+	
+	# INT-A
+	setprop("MCDUC/flight-num", "");
+	setprop("MCDUC/flight-num-set", 0);
+	setprop("FMGC/internal/dep-arpt", "");
+	setprop("FMGC/internal/arr-arpt", "");
+	setprop("FMGC/internal/tofrom-set", 0);
+	setprop("FMGC/internal/alt-airport", "");
+	setprop("FMGC/internal/tofrom-set", 0);
+	setprop("FMGC/internal/cost-index", "0");
+	setprop("FMGC/internal/cost-index-set", 0);
+	setprop("FMGC/internal/cruise-ft", 10000);
+	setprop("FMGC/internal/cruise-fl", 100);
+	setprop("FMGC/internal/cruise-lvl-set", 0);
+	setprop("FMGC/internal/tropo", 36090);
+	setprop("FMGC/internal/tropo-set", 0);
+	setprop("FMGC/internal/cruise-temp", -999);
+	
+	# IRSINIT
+	setprop("FMGC/internal/align-set", 0);
+
+	# ROUTE SELECTION
+	setprop("FMGC/internal/alt-selected", 0);
+
+	# INT-B
+	setprop("FMGC/internal/zfw", 0);
+	setprop("FMGC/internal/zfw-set", 0);
+	setprop("FMGC/internal/zfwcg", 55.1);
+	setprop("FMGC/internal/zfwcg-set", 0);
+	setprop("FMGC/internal/block", 0.0);
+	setprop("FMGC/internal/block-set", 0);
+	setprop("FMGC/internal/taxi-fuel", 0.4);
+	setprop("FMGC/internal/trip-fuel", 0);
+	setprop("FMGC/internal/trip-time", "0000");
+	setprop("FMGC/internal/rte-rsv", 0);
+	setprop("FMGC/internal/rte-percent", 5.0);
+	setprop("FMGC/internal/alt-fuel", 0);
+	setprop("FMGC/internal/alt-time", "0000");
+	setprop("FMGC/internal/final-fuel", 0);
+	setprop("FMGC/internal/final-time", "0000");
+	setprop("FMGC/internal/min-dest-fob", 0);
+	setprop("FMGC/internal/tow", 0);
+	setprop("FMGC/internal/lw", 0);
+	setprop("FMGC/internal/trip-wind", "HD000");
+	setprop("FMGC/internal/extra-fuel", 0);
+	setprop("FMGC/internal/extra-time", "0000");
+	
+	# FUELPRED
+	setprop("FMGC/internal/alt-airport", "");
+	setprop("FMGC/internal/pri-utc", "0000");
+	setprop("FMGC/internal/alt-utc", "0000");
+	setprop("FMGC/internal/pri-efob", 0);
+	setprop("FMGC/internal/alt-efob", 0);
+	setprop("FMGC/internal/fob", 0);
+	setprop("FMGC/internal/gw", 0);
+	setprop("FMGC/internal/cg", 0);
+	
+	# PERF
+	setprop("FMGC/internal/vs1g", 0);
+	
+	#PERF TO
+	setprop("FMGC/internal/v1", 0);
+	setprop("FMGC/internal/v1-set", 0);
+	setprop("FMGC/internal/vr", 0);
+	setprop("FMGC/internal/vr-set", 0);
+	setprop("FMGC/internal/v2", 0);
+	setprop("FMGC/internal/v2-set", 0);
+	
+	setprop("FMGC/internal/f-speed", 0);
+	setprop("FMGC/internal/s-speed", 0);
+	setprop("FMGC/internal/o-speed", 0);
+	
+	setprop("FMGC/internal/reduc-agl-ft", "1500"); #eventually set to 1500 above runway
+	setprop("MCDUC/thracc-set", 0);
+	setprop("FMGC/internal/to-flap", 0);
+	setprop("FMGC/internal/to-ths", "0.0");
+	setprop("FMGC/internal/flap-ths-set", 0);
+	setprop("FMGC/internal/flex", 0);
+	setprop("FMGC/internal/flex-set", 0);
+	setprop("FMGC/internal/eng-out-reduc", "1500");
+	setprop("MCDUC/reducacc-set", 0);
+	setprop("FMGC/internal/trans-alt", 18000);
+	
+	# CLB PERF
+
+	# CRZ PERF
+
+	# DES PERF
+
+	# APPR PERF
+	setprop("FMGC/internal/dest-qnh", -1);
+	setprop("FMGC/internal/dest-temp", -999);
+	setprop("FMGC/internal/dest-mag", -1);
+	setprop("FMGC/internal/dest-wind", -1);
+	setprop("FMGC/internal/vapp-speed", -1);
+	setprop("FMGC/internal/vapp-speed-set", 0);
+	setprop("FMGC/internal/f-speed-appr", -1);
+	setprop("FMGC/internal/s-speed-appr", -1);
+	setprop("FMGC/internal/o-speed-appr", -1);
+	setprop("FMGC/internal/vls-speed-appr", -1);
+	setprop("FMGC/internal/final", "");
+	setprop("FMGC/internal/mda", -1);
+	setprop("FMGC/internal/dh", -1);
+	setprop("FMGC/internal/ldg-config-3-set", 0);
+	setprop("FMGC/internal/ldg-config-f-set", 1);
+	
+	# GA PERF
 }
 
 var setMode = func(will) {
