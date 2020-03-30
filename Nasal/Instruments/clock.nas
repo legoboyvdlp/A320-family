@@ -10,7 +10,6 @@ setlistener("sim/signals/fdm-initialized", func {
     props.globals.initNode("instrumentation/clock/indicated-string",0,"STRING");
     props.globals.initNode("instrumentation/clock/elapsed-string",0,"STRING");
     props.globals.initNode("instrumentation/chrono/elapsed-string",0,"STRING");
-    props.globals.initNode("instrumentation/clock/display-string",0,"STRING");
     props.globals.initNode("instrumentation/clock/et-selector",1,"INT");
 	props.globals.initNode("instrumentation/clock/utc-selector",0,"INT");
     props.globals.initNode("instrumentation/clock/set-knob",0,"INT");
@@ -19,6 +18,7 @@ setlistener("sim/signals/fdm-initialized", func {
     props.globals.initNode("instrumentation/clock/et-min",0,"INT");
     props.globals.initNode("instrumentation/chrono/et-hr",0,"INT");
     props.globals.initNode("instrumentation/chrono/et-min",0,"INT");
+    props.globals.initNode("instrumentation/chrono/et-sec",0,"INT");
     start_loop.start();
 });
 
@@ -95,7 +95,7 @@ var start_loop = maketimer(0.1, func {
     et_min = et_tmp - (et_hr * 60);
     setprop("instrumentation/chrono/et-hr",et_hr);
     setprop("instrumentation/chrono/et-min",et_min);
-    setprop("instrumentation/chrono/et-min",et_sec);
+    setprop("instrumentation/chrono/et-sec",et_sec);
     et_tmp = sprintf("%02d %02d", et_min, et_sec);
     setprop("instrumentation/chrono/elapsed-string", et_tmp);
 });
