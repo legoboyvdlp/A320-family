@@ -27,6 +27,9 @@ setprop("MCDUC/colors/amb/b", 0.0000);
 setprop("MCDUC/colors/yel/r", 0.9333);
 setprop("MCDUC/colors/yel/g", 0.9333);
 setprop("MCDUC/colors/yel/b", 0.0000);
+setprop("MCDUC/colors/mag/r", 0.6902);
+setprop("MCDUC/colors/mag/g", 0.3333);
+setprop("MCDUC/colors/mag/b", 0.7541);
 
 # Fetch nodes:
 var mcdu_keyboard_entry = props.globals.getNode("MCDU/keyboard-entry", 1);
@@ -988,8 +991,10 @@ var canvas_MCDU_base = {
 
 			if (toFromSet.getValue() == 1 and alt_selected.getValue() == 0) {
 				me["Simple_Title"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
-			} else if (alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
+			} else if (toFromSet.getValue() == 0 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
 				me["Simple_Title"].setText(sprintf("%s", alt_airport.getValue()));
+			} else if (toFromSet.getValue() == 1 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
+				me["Simple_Title"].setText(sprintf("%s", arrArpt.getValue() ~ "/" ~ alt_airport.getValue()));
 			} else {
 				me["Simple_Title"].setText("ROUTE SELECTION");
 			}
@@ -1253,7 +1258,123 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].hide(); 
 			}
 			
-		} else if (page == "TO") {
+		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				
+				if (flightNumSet.getValue() == 1) {
+					if (page == "PROGTO") {
+						me["Simple_Title"].setText(sprintf("TAKE OFF %s", flightNum.getValue()));
+					} else if (page == "PROGCLB") {
+						me["Simple_Title"].setText(sprintf("CLIMB %s", flightNum.getValue()));
+					} else if (page == "PROGCRZ") {
+						me["Simple_Title"].setText(sprintf("CRUISE %s", flightNum.getValue()));
+					} else if (page == "PROGDES") {
+						me["Simple_Title"].setText(sprintf("DESCENT %s", flightNum.getValue()));
+					}
+				} else {
+					if (page == "PROGTO") {
+						me["Simple_Title"].setText("TAKE OFF");
+					} else if (page == "PROGCLB") {
+						me["Simple_Title"].setText("CLIMB");
+					} else if (page == "PROGCRZ") {
+						me["Simple_Title"].setText("CRUISE");
+					} else if (page == "PROGDES") {
+						me["Simple_Title"].setText("DESCENT");
+					}
+				}
+				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, 1, -1, -1, 1, -1);
+				me.showRight(1, -1, -1, 1, 1, 1);
+				me.showRightS(1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(1, -1, -1, 1, -1, 1);
+				me.showCenterS(1, -1, -1, -1, -1, 1);
+				
+				me.fontLeft(default, default, symbol, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, symbol, symbol, symbol, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				if (page == "PROGCRZ") {
+					me.showLeftS(0, 0, -1, 0, 0, 0);
+					me.showCenterS(0, 0, 1, 0, 0, 0);
+					me.showRight(0, 0, 1, 0, 0, 0);
+					me.fontLeft(0, 0, default, 0, 0, 0);
+				} else if (page == "PROGDES") {
+					me.showRight(0, 1, 0, 0, 0, 0);
+				}
+				
+				me.fontSizeLeft(normal, normal, small, small, normal, small);
+				me.fontSizeLeftS(small, small, small, small, small, small);
+				me.fontSizeRight(normal, small, small, small, normal, small);
+				me.fontSizeRightS(small, small, small, small, small, small);
+				me.fontSizeCenter(small, small, small, small, small, normal);
+				me.fontSizeCenterS(normal, small, small, small, small, small);
+				
+				me.colorLeft("blu", "wht", "blu", "wht", "wht", "blu");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("mag", "blu", "blu", "blu", "grn", "grn");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "wht", "wht", "wht", "wht", "grn");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (cruiseSet.getValue() == 1 and page != "PROGDES") {
+				me["Simple_L1"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()));
+			} else {
+				me["Simple_L1"].setText("----");
+			}
+			me["Simple_L2"].setText(" REPORT");
+			if (page == "PROGCRZ") {
+				me["Simple_L3"].setText("-----.--/-----.--");
+				me["Simple_R3"].setText("AGN *");
+			} else {
+				me["Simple_L3"].setText("  [    ]");
+			}
+			me["Simple_L4"].setText("---g/----");
+			me["Simple_L5"].setText(" GPS");
+			me["Simple_L6"].setText("----");
+			me["Simple_L1S"].setText("CRZ");
+			me["Simple_L3S"].setText("UPDATE AT");
+			me["Simple_L4S"].setText("BRG/DIST");
+			me["Simple_L5S"].setText("PREDICTIVE");
+			me["Simple_L6S"].setText("REQUIRED");
+			me["Simple_R1"].setText("FL398");
+			me["Simple_R2"].setText("VDEV = + 750 FT");
+			me["Simple_R4"].setText("[    ]");
+			me["Simple_R5"].setText("GPS PRIMARY");
+			me["Simple_R6"].setText("----");
+			me["Simple_R1S"].setText("REC MAX");
+			me["Simple_R6S"].setText("ESTIMATED");
+			me["Simple_C1"].setText("----");
+			me["Simple_C1S"].setText("OPT");
+			me["Simple_C3S"].setText("CONFIRM UPDATE AT");
+			me["Simple_C4"].setText("TO");
+			me["Simple_C6S"].setText("ACCUR");
+			me["Simple_C6"].setText("HIGH");
+			
+		} else if (page == "PERFTO") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1299,6 +1420,29 @@ var canvas_MCDU_base = {
 				
 				pageSwitch[i].setBoolValue(1);
 			}
+			
+			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
+			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
+			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
+			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
+			me["Simple_L6"].setText(" TO DATA");
+			me["Simple_L1S"].setText(" V1");
+			me["Simple_L2S"].setText(" VR");
+			me["Simple_L3S"].setText(" V2");
+			me["Simple_L4S"].setText("TRANS ALT");
+			me["Simple_L5S"].setText("THR RED/ACC");
+			me["Simple_L6S"].setText(" UPLINK");
+			me["Simple_R1"].setText("--- ");
+			me["Simple_R2"].setText("[    ]  ");
+			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
+			me["Simple_R6"].setText("PHASE ");
+			me["Simple_R1S"].setText("RWY ");
+			me["Simple_R2S"].setText("TO SHIFT ");
+			me["Simple_R3S"].setText("FLAPS/THS");
+			me["Simple_R4S"].setText("FLEX TO TEMP");
+			me["Simple_R5S"].setText("ENG OUT ACC");
+			me["Simple_R6S"].setText("NEXT ");
 			
 			if (getprop("FMGC/status/phase") == 1) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
@@ -1404,7 +1548,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-		} else if (page == "APPR") {
+		} else if (page == "PERFAPPR") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1572,7 +1716,7 @@ var canvas_MCDU_base = {
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
 			me["Simple_C5S"].setText("VLS   ");
-		} else if (page == "GA") {
+		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1665,7 +1809,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-		} else if (page == "CLB" or page == "CRZ" or page == "DES") {
+		} else if (page == "PERFCLB" or page == "PERFCRZ" or page == "PERFDES") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1675,7 +1819,13 @@ var canvas_MCDU_base = {
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
-				me["Simple_Title"].setText(sprintf("%s", page));
+				if (page == "PERFCLB") {
+					me["Simple_Title"].setText("CLB");
+				} else if (page == "PERFCRZ") {
+					me["Simple_Title"].setText("CRZ");
+				} else if (page == "PERFDES") {
+					me["Simple_Title"].setText("DES");
+				}
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1713,9 +1863,9 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (page == "CLB" and getprop("FMGC/status/phase") == 2) {
+			if (page == "PERFCLB" and getprop("FMGC/status/phase") == 2) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
-			} else if (page == "CRZ" and getprop("FMGC/status/phase") == 3) {
+			} else if (page == "PERFCRZ" and getprop("FMGC/status/phase") == 3) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			}else if (page == "DES" and getprop("FMGC/status/phase") == 4) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
@@ -1737,7 +1887,7 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("---");
 			}
 			
-			if (page == "CRZ") {
+			if (page == "PERFCRZ") {
 				me["Simple_R5"].show();
 				me["Simple_R5S"].show();
 				me["Simple_C5"].show();
@@ -1781,7 +1931,7 @@ var canvas_MCDU_base = {
 		
 		me["Scratchpad"].setText(sprintf("%s", scratchpad[i].getValue()));
 	},
-	# ack = ignore, wht = white, grn = green, blu = blue, amb = amber, yel = yellow
+	# ack = ignore, wht = white, grn = green, blu = blue, amb = amber, yel = yellow, mag = magenta
 	colorLeft: func(a, b, c, d, e, f) {
 		if (a != "ack") {
 			me["Simple_L1"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));

@@ -30,7 +30,7 @@ var perfGAInput = func(key, i) {
 			}
 		}
 	} else if (key == "L6") {
-		setprop("MCDU[" ~ i ~ "]/page", "APPR");
+		setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/eng-out-reduc", "1500");

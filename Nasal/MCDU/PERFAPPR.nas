@@ -102,7 +102,7 @@ var perfAPPRInput = func(key, i) {
 			notAllowed(i);
 		}
 	} else if (key == "L6") {
-		setprop("MCDU[" ~ i ~ "]/page", "DES");
+		setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
 	} else if (key == "R4") {
 		if (scratchpad == "" and ldg_config_f_set.getValue() == 1 and ldg_config_3_set.getValue() == 0) {
 			setprop("FMGC/internal/ldg-config-3-set", 1);
@@ -118,7 +118,7 @@ var perfAPPRInput = func(key, i) {
 			notAllowed(i);
 		}
 	} else if (key == "R6") {
-		setprop("MCDU[" ~ i ~ "]/page", "GA");
+		setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
 	}
 
 }

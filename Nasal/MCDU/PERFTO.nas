@@ -193,6 +193,6 @@ var perfTOInput = func(key, i) {
 			}
 		}
 	} else if (key == "R6") {
-		setprop("MCDU[" ~ i ~ "]/page", "CLB");
+		setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
 	} 
 }

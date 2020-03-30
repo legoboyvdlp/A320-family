@@ -26,9 +26,9 @@ var perfCRZInput = func(key, i) {
 			}
 		}
 	} else if (key == "L6") {
-		setprop("MCDU[" ~ i ~ "]/page", "CLB");
+		setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
 	}
 	if (key == "R6") {
-		setprop("MCDU[" ~ i ~ "]/page", "DES");
+		setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
 	}
 }

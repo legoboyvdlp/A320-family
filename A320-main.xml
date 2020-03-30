@@ -2939,6 +2939,10 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ROUTESELECTION.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITB.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/FUELPRED.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGTO.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGCLB.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGCRZ.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGDES.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFAPPR.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCLB.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCRZ.nas</file>

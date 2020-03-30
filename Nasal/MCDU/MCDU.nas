@@ -186,9 +186,9 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L1",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L1",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L1",i);
@@ -206,17 +206,17 @@ var lskbutton = func(btn, i) {
 			initInputA("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L2",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L2",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L2",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCLB") {
 			perfCLBInput("L2",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
 			perfCRZInput("L2",i); 
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFDES") {
 			perfDESInput("L2",i); 
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
 			dataInput("L2",i);
@@ -234,9 +234,9 @@ var lskbutton = func(btn, i) {
 			initInputB("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			fuelPredInput("L3",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L3",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("L3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "STATUS") {
 			statusInput("L3",i);
@@ -256,9 +256,9 @@ var lskbutton = func(btn, i) {
 			initInputB("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			fuelPredInput("L4",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L4",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("L4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L4",i);
@@ -274,17 +274,17 @@ var lskbutton = func(btn, i) {
 			initInputB("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			fuelPredInput("L5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCLB") {
 			perfCLBInput("L5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
 			perfCRZInput("L5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFDES") {
 			perfDESInput("L5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("L5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFGA") {
 			perfGAInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("L5",i);
@@ -302,15 +302,15 @@ var lskbutton = func(btn, i) {
 			initInputIRS("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCLB") {
 			perfCLBInput("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
 			perfCRZInput("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFDES") {
 			perfDESInput("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFGA") {
 			perfGAInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("L6",i);
@@ -342,7 +342,7 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "2") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R2",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R2",i);
@@ -360,9 +360,9 @@ var rskbutton = func(btn, i) {
 			initInputB("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			fuelPredInput("R3",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R3",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R3",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
 			printInput("R3",i);
@@ -372,9 +372,9 @@ var rskbutton = func(btn, i) {
 			notAllowed(i);
 		}
 	} else if (btn == "4") {
-		if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R4",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R4",i);
@@ -386,11 +386,11 @@ var rskbutton = func(btn, i) {
 	} else if (btn == "5") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "GA") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFGA") {
 			perfGAInput("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R5",i);
@@ -410,15 +410,15 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("R6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "TO") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLB") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCLB") {
 			perfCLBInput("R6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CRZ") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
 			perfCRZInput("R6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DES") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFDES") {
 			perfDESInput("R6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "APPR") {
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R6",i);
 		} else if ((getprop("MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
 			if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
@@ -494,19 +494,29 @@ var pagebutton = func(btn, i) {
 	if (getprop("MCDU[" ~ i ~ "]/page") != "MCDU") {
 		if (btn == "radnav") {
 			setprop("MCDU[" ~ i ~ "]/page", "RADNAV");
+		} else if (btn == "prog") {
+			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
+			} else if (getprop("FMGC/status/phase") == 2) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
+			} else if (getprop("FMGC/status/phase") == 3) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
+			} else if (getprop("FMGC/status/phase") == 4 or getprop("FMGC/status/phase") == 5 or getprop("FMGC/status/phase") == 6) {
+				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
+			}
 		} else if (btn == "perf") {
 			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
-				setprop("MCDU[" ~ i ~ "]/page", "TO");
+				setprop("MCDU[" ~ i ~ "]/page", "PERFTO");
 			} else if (getprop("FMGC/status/phase") == 2) {
-				setprop("MCDU[" ~ i ~ "]/page", "CLB");
+				setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
 			} else if (getprop("FMGC/status/phase") == 3) {
-				setprop("MCDU[" ~ i ~ "]/page", "CRZ");
+				setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
 			} else if (getprop("FMGC/status/phase") == 4) {
-				setprop("MCDU[" ~ i ~ "]/page", "DES");
+				setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
 			} else if (getprop("FMGC/status/phase") == 5) {
-				setprop("MCDU[" ~ i ~ "]/page", "APPR");
+				setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 			} else if (getprop("FMGC/status/phase") == 6) {
-				setprop("MCDU[" ~ i ~ "]/page", "GA");
+				setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
 			}
 		} else if (btn == "init") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
