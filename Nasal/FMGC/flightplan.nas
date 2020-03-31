@@ -153,7 +153,22 @@ var flightPlanController = {
 	},
 	
 	insertTP: func(n) {
-		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), 0);
+		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), 1);
+	},
+	
+	directTo: func(waypointGhost, plan) {
+		if (me.flightplans[plan].indexOfWP(waypointGhost) == -1) {
+			me.insertTP(plan);
+			me.flightplans[plan].insertWP(createWPFrom(waypointGhost), 2);
+			me.addDiscontinuity(3, plan);
+			me.deleteWP(0, plan);
+			var curAircraftPosDirTo = geo.aircraft_position();
+			canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		} else {
+			me.insertTP(plan);
+			#todo
+		}
+		me.flightPlanChanged(plan);
 	},
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate
@@ -218,10 +233,10 @@ var flightPlanController = {
 				}
 			}
 		} elsif (size(airport) >= 1) {
-			if (canvas_mcdu.myDeparture[plan] != nil) {
-				canvas_mcdu.myDeparture[plan].del();
+			if (canvas_mcdu.myDuplicate[plan] != nil) {
+				canvas_mcdu.myDuplicate[plan].del();
 			}
-			canvas_mcdu.myDeparture[plan] = nil;
+			canvas_mcdu.myDuplicate[plan] = nil;
 			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(airport, index, 0, plan);
 			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 			return 2;
@@ -269,10 +284,10 @@ var flightPlanController = {
 				}
 			}
 		} elsif (size(fix) >= 1) {
-			if (canvas_mcdu.myDeparture[plan] != nil) {
-				canvas_mcdu.myDeparture[plan].del();
+			if (canvas_mcdu.myDuplicate[plan] != nil) {
+				canvas_mcdu.myDuplicate[plan].del();
 			}
-			canvas_mcdu.myDeparture[plan] = nil;
+			canvas_mcdu.myDuplicate[plan] = nil;
 			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(fix, index, 0, plan);
 			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 			return 2;
@@ -350,10 +365,10 @@ var flightPlanController = {
 				}
 			}
 		} elsif (size(navaid) >= 1) {
-			if (canvas_mcdu.myDeparture[plan] != nil) {
-				canvas_mcdu.myDeparture[plan].del();
+			if (canvas_mcdu.myDuplicate[plan] != nil) {
+				canvas_mcdu.myDuplicate[plan].del();
 			}
-			canvas_mcdu.myDeparture[plan] = nil;
+			canvas_mcdu.myDuplicate[plan] = nil;
 			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(navaid, index, 1, plan);
 			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 			return 2;

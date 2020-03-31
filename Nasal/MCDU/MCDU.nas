@@ -123,7 +123,9 @@ var lskbutton = func(btn, i) {
             setprop("MCDU[" ~ i ~ "]/page", "DEPARTURE");
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("MCDU[" ~ i ~ "]/page") == "F-PLNB") {
             canvas_mcdu.myFpln[i].pushButtonLeft(1);
-        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+			canvas_mcdu.myDirTo[i].fieldL1(getprop("MCDU[" ~ i ~ "]/scratchpad"));
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
             canvas_mcdu.myDuplicate[i].pushButtonLeft(1);
         } else {
             notAllowed(i);
@@ -265,6 +267,8 @@ var lskbutton = func(btn, i) {
             } else {
                 setprop("MCDU[" ~ i ~ "]/page", "LATREV");
             }
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+            canvas_mcdu.myDirTo[i].fieldL6();
         } else {
             notAllowed(i);
         }
@@ -416,6 +420,8 @@ var rskbutton = func(btn, i) {
             canvas_mcdu.myFpln[i].pushButtonRight(6);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "VERTREV") {
             setprop("MCDU/[" ~ i ~ "]/page", "F-PLNA");
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+            canvas_mcdu.myDirTo[i].fieldR6();
         } else {
             notAllowed(i);
         }

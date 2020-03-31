@@ -44,7 +44,7 @@ var dirTo = {
 		me.R3 = ["ABEAM PTS ", "WITH        ", "blu"];
 		me.R4 = ["[   ]  ", "RADIAL IN   ", "blu"];
 		me.R5 = ["[   ]  ", "RADIAL OUT  ", "blu"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "blu", "blu", "blu", "blu", "ack"], ["ack", "blu", "blu", "ack", "ack", "ack"]];
 		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		me.updateFromFpln();
@@ -64,16 +64,12 @@ var dirTo = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L1[2] = "yel";
 			me.R2[2] = "yel";
-			me.R3[2] = "yel";
-			me.arrowsColour[1][1] = "yel";
-			me.arrowsColour[1][2] = "yel";
+			me.arrowsMatrix[1][2] = 1;
 			me.titleColour = "yel";
 		} else {
 			me.L1[2] = "blu";
 			me.R2[2] = "blu";
-			me.R3[2] = "blu";
-			me.arrowsColour[1][1] = "blu";
-			me.arrowsColour[1][2] = "blu";
+			me.arrowsMatrix[1][2] = 0;
 			me.titleColour = "wht";
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
@@ -85,8 +81,8 @@ var dirTo = {
 		
 		var x = 0;
 		me.vector = [];
-		for (var i = 1 + (me.scroll - 1); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
-			if (canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; }
+		for (var i = 1 + (me.scroll); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
+			if (canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; }
 			if (fmgc.flightPlanController.temporaryFlag[me.computer] and canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[me.computer]) { 
 				continue; 
 			} elsif (!fmgc.flightPlanController.temporaryFlag[me.computer] and canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) {
@@ -150,5 +146,115 @@ var dirTo = {
 		}
 		me.updateFromFpln();
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+	},
+	fieldL1: func(text, override = 0, overrideIndex = -1) {
+		me.makeTmpy();
+		me.L1[0] = text;
+		if (size(text) == 16) {
+			# lat lon
+			var lat = split("/", text)[0];
+			var lon = split("/", text)[1];
+			var latDecimal = mcdu.stringToDegrees(lat, "lat");
+			var lonDecimal = mcdu.stringToDegrees(lon, "lon");
+			
+			if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
+				notAllowed(me.computer);
+			}
+			
+			var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ 01);
+			fmgc.flightPlanController.directTo(myWpLatLon, me.computer);
+			
+		} elsif (size(text) == 5) {
+			# fix
+			var fix = findFixesByID(text);
+			if (size(fix) == 0) {
+				notInDataBase(me.computer);
+			}
+			
+			if (size(fix) == 1 or override) {
+				if (!override) {
+					fmgc.flightPlanController.directTo(fix[0], me.computer);
+				} else {
+					fmgc.flightPlanController.directTo(fix[overrideIndex], me.computer);
+				}
+			} elsif (size(fix) >= 1) {
+				if (canvas_mcdu.myDuplicate[me.computer] != nil) {
+					canvas_mcdu.myDuplicate[me.computer].del();
+				}
+				canvas_mcdu.myDuplicate[me.computer] = nil;
+				canvas_mcdu.myDuplicate[me.computer] = mcdu.duplicateNamesPage.new(fix, 0, 0, me.computer);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "DUPLICATENAMES");
+			}
+			
+		} elsif (size(text) == 4) {
+			# airport
+			var airport =  findAirportsByICAO(text);
+			if (size(airport) == 0) {
+				notInDataBase(me.computer);
+			}
+			
+			if (size(airport) == 1 or override) {
+				if (!override) {
+					fmgc.flightPlanController.directTo(airport[0], me.computer);
+				} else {
+					fmgc.flightPlanController.directTo(airport[overrideIndex], me.computer);
+				}
+			} elsif (size(airport) >= 1) {
+				if (canvas_mcdu.myDuplicate[me.computer] != nil) {
+					canvas_mcdu.myDuplicate[me.computer].del();
+				}
+				canvas_mcdu.myDuplicate[me.computer] = nil;
+				canvas_mcdu.myDuplicate[me.computer] = mcdu.duplicateNamesPage.new(airport, 0, 0, me.computer);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "DUPLICATENAMES");
+			}
+			
+		} elsif (size(text) == 3 or size(text) == 2) {
+			# navaid
+			var navaid =  findNavaidsByID(text);
+			if (size(navaid) == 0) {
+				notInDataBase(me.computer);
+			}
+			
+			if (size(navaid) == 1 or override) {
+				if (!override) {
+					fmgc.flightPlanController.directTo(navaid[0], me.computer);
+				} else {
+					fmgc.flightPlanController.directTo(navaid[overrideIndex], me.computer);
+				}
+			} elsif (size(navaid) >= 1) {
+				if (canvas_mcdu.myDuplicate[me.computer] != nil) {
+					canvas_mcdu.myDuplicate[me.computer].del();
+				}
+				canvas_mcdu.myDuplicate[me.computer] = nil;
+				canvas_mcdu.myDuplicate[me.computer] = mcdu.duplicateNamesPage.new(navaid, 0, 0, me.computer);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "DUPLICATENAMES");
+			}
+			
+		} else {
+			notAllowed(me.computer);
+		}
+		setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
+		setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
+	},
+	fieldL6: func() {
+		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
+			dirToFlag = 0;
+			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+		} else {
+			notAllowed(me.computer);
+		}
+		me.L1 = [" [       ]", " WAYPOINT", "blu"];
+	},
+	fieldR6: func() {
+		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
+			dirToFlag = 0;
+			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+		} else {
+			notAllowed(me.computer);
+		}
+		me.L1 = [" [       ]", " WAYPOINT", "blu"];
+	},
+	updateDist: func(dist) {
+		me.R1 = ["----   " ~ sprintf("%.0f", dist) ~ "  ", "UTC   DIST  ", "wht"];
 	},
 };

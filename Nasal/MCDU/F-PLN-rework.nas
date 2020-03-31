@@ -10,7 +10,9 @@ var fplnItem = {
 	},
 	updateLeftText: func() {
 		if (me.wp != nil) {
-			if (me.wp.wp_name != "DISCONTINUITY") {
+			if (me.wp.wp_name == "T-P") {
+				return ["T-P", nil, me.colour];
+			} elsif (me.wp.wp_name != "DISCONTINUITY") {
 				var wptName = split("-", me.wp.wp_name);
 				if (wptName[0] == "VECTORS") {
 					return ["MANUAL", nil, me.colour];
@@ -382,6 +384,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	pushButtonRight: func(index) {
 		if (index == 6) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				if (dirToFlag) { dirToFlag = 0; }
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 			} else {
 				notAllowed(me.computer);
@@ -543,15 +546,20 @@ var duplicateNamesPage = {
 		}	
 	},
 	pushButtonLeft: func(indexSelect) {
-		if (size(me.vector[0].id) == 5) {
-			fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
-		} elsif (size(me.vector[0].id) == 4) {
-			fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
-		} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
-			fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+		if (!dirToFlag) {
+			if (size(me.vector[0].id) == 5) {
+				fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			} elsif (size(me.vector[0].id) == 4) {
+				fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
+				fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			}
+		} else {
+			canvas_mcdu.myDirTo[me.computer].fieldL1(me.vector[0].id, 1, indexSelect - 1);
+			setprop("MCDU[" ~ me.computer ~ "]/page", "DIRTO");
 		}
 	},
 };
