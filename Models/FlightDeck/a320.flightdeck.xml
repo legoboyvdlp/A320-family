@@ -7079,8 +7079,8 @@
 		<object-name>dme</object-name>
 		<condition>
 			<and>
-				<property>instrumentation/dme[2]/operable</property>
-				<property>instrumentation/dme[2]/in-range</property>
+				<property>instrumentation/dme[0]/operable</property>
+				<property>instrumentation/dme[0]/in-range</property>
 			</and>
 		</condition>
 	</animation>
@@ -7098,7 +7098,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%4.1f</format>
-		<property>instrumentation/dme[2]/indicated-distance-nm</property>
+		<property>instrumentation/dme[0]/indicated-distance-nm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
@@ -7121,8 +7121,8 @@
 		<object-name>dme1</object-name>
 		<condition>
 			<and>
-				<property>instrumentation/dme[3]/operable</property>
-				<property>instrumentation/dme[3]/in-range</property>
+				<property>instrumentation/dme[1]/operable</property>
+				<property>instrumentation/dme[1]/in-range</property>
 			</and>
 		</condition>
 	</animation>
@@ -7140,7 +7140,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%4.1f</format>
-		<property>instrumentation/dme[3]/indicated-distance-nm</property>
+		<property>instrumentation/dme[1]/indicated-distance-nm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
