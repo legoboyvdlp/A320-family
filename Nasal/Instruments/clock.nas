@@ -5,7 +5,9 @@ var chr_et = aircraft.timer.new("instrumentation/chrono/elapsetime-sec",1);
 var et = aircraft.timer.new("instrumentation/clock/elapsetime-sec",1);
 
 setlistener("sim/signals/fdm-initialized", func {
-    chr_et.stop();
+	chr_et.stop();
+    chr_et.reset();
+    et.reset();
     et.stop();
     props.globals.initNode("instrumentation/clock/indicated-string",0,"STRING");
     props.globals.initNode("instrumentation/clock/elapsed-string",0,"STRING");
@@ -13,10 +15,9 @@ setlistener("sim/signals/fdm-initialized", func {
     props.globals.initNode("instrumentation/clock/et-selector",1,"INT");
 	props.globals.initNode("instrumentation/clock/utc-selector",0,"INT");
     props.globals.initNode("instrumentation/clock/set-knob",0,"INT");
-    props.globals.initNode("instrumentation/chrono/chrono-reset",2,"INT");
+    props.globals.initNode("instrumentation/chrono/chrono-reset",1,"INT");
     props.globals.initNode("instrumentation/clock/et-hr",0,"INT");
     props.globals.initNode("instrumentation/clock/et-min",0,"INT");
-    props.globals.initNode("instrumentation/chrono/et-hr",0,"INT");
     props.globals.initNode("instrumentation/chrono/et-min",0,"INT");
     props.globals.initNode("instrumentation/chrono/et-sec",0,"INT");
     start_loop.start();
@@ -73,7 +74,6 @@ var start_loop = maketimer(0.1, func {
     var et_hr  = int(et_min * 0.0166666666667);
     et_min = et_min - (et_hr * 60);
     et_tmp = et_hr * 100 + et_min;
-    setprop("instrumentation/clock/elapsed-string",et_tmp);
     et_tmp = int(getprop("instrumentation/clock/elapsetime-sec") * 0.0166666666667);
     et_hr = int(et_tmp * 0.0166666666667);
     et_min = et_tmp - (et_hr * 60);
@@ -86,14 +86,10 @@ var start_loop = maketimer(0.1, func {
     var et_tmp = getprop("instrumentation/chrono/elapsetime-sec");
     var et_min = int(et_tmp * 0.0166666666667);
     var et_hr  = int(et_min * 0.0166666666667);
-    et_min = et_min - (et_hr * 60);
-    et_sec = int(et_tmp) - (et_min * 60) - (et_hr * 3600);
-    et_tmp = et_hr * 100 + et_min + et_sec;
-    setprop("instrumentation/chrono/elapsed-string",et_tmp);
-    et_tmp = int(getprop("instrumentation/chrono/elapsetime-sec") * 0.0166666666667);
-    et_hr = int(et_tmp * 0.0166666666667);
-    et_min = et_tmp - (et_hr * 60);
-    setprop("instrumentation/chrono/et-hr",et_hr);
+    var et_sec = et_tmp - (et_min * 60);
+    if (et_tmp = 6000) {
+    	chr_et.reset();
+    };
     setprop("instrumentation/chrono/et-min",et_min);
     setprop("instrumentation/chrono/et-sec",et_sec);
     et_tmp = sprintf("%02d %02d", et_min, et_sec);

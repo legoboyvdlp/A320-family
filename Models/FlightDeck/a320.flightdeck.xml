@@ -6763,10 +6763,10 @@
 		<object-name>chrono1</object-name>
 		<condition>
 			<and>
-				<not-equals>
+				<!--<not-equals>
 					<property>instrumentation/chrono/chrono-reset</property>
 					<value>2</value>
-				</not-equals>
+				</not-equals>-->
 				<property>instrumentation/clock/serviceable</property>
 			</and>
 		</condition>
