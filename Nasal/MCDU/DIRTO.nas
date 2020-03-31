@@ -244,6 +244,7 @@ var dirTo = {
 			notAllowed(me.computer);
 		}
 		me.L1 = [" [       ]", " WAYPOINT", "blu"];
+		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 	},
 	fieldR6: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
@@ -253,6 +254,7 @@ var dirTo = {
 			notAllowed(me.computer);
 		}
 		me.L1 = [" [       ]", " WAYPOINT", "blu"];
+		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 	},
 	updateDist: func(dist) {
 		me.R1 = ["----   " ~ sprintf("%.0f", dist) ~ "  ", "UTC   DIST  ", "wht"];

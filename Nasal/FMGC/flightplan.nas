@@ -162,13 +162,13 @@ var flightPlanController = {
 			me.flightplans[plan].insertWP(createWPFrom(waypointGhost), 2);
 			me.addDiscontinuity(3, plan);
 			me.deleteWP(0, plan);
-			var curAircraftPosDirTo = geo.aircraft_position();
-			canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
 		} else {
 			me.insertTP(plan);
 			#todo
 		}
 		me.flightPlanChanged(plan);
+		var curAircraftPosDirTo = geo.aircraft_position();
+		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
 	},
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate
