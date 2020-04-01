@@ -7072,92 +7072,6 @@
 		<kerning>default</kerning>
 	</text>
 
-	<!-- dme -->
-
-	<animation>
-		<type>select</type>
-		<object-name>dme</object-name>
-		<condition>
-			<and>
-				<property>instrumentation/dme[2]/operable</property>
-				<property>instrumentation/dme[2]/in-range</property>
-			</and>
-		</condition>
-	</animation>
-
-	<text>
-		<name>dme</name>
-		<offsets>
-			<x-m>-0.529</x-m>
-			<y-m>-0.155</y-m>
-			<z-m>0.1305</z-m>
-			<heading-deg>90</heading-deg>
-			<roll-deg>72.81</roll-deg>
-		</offsets>
-		<alignment>center-center</alignment>
-		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%4.1f</format>
-		<property>instrumentation/dme[2]/indicated-distance-nm</property>
-		<truncate>false</truncate>
-		<layout>left-to-right</layout>
-		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
-		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
-		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
-		<max-height>0.012</max-height> <!-- the maximum height of the text -->
-		<max-width>0.040</max-width> <!-- the maximum width of the text -->
-		<font-resolution>
-		<width type="int">32</width>
-		<height type="int">32</height>
-		</font-resolution>
-		<kerning>default</kerning>
-	</text>
-
-	<animation>
-		<type>select</type>
-		<object-name>dme1</object-name>
-		<condition>
-			<and>
-				<property>instrumentation/dme[3]/operable</property>
-				<property>instrumentation/dme[3]/in-range</property>
-			</and>
-		</condition>
-	</animation>
-
-	<text>
-		<name>dme1</name>
-		<offsets>
-			<x-m>-0.529</x-m>
-			<y-m>-0.122</y-m>
-			<z-m>0.1305</z-m>
-			<heading-deg>90</heading-deg>
-			<roll-deg>72.81</roll-deg>
-		</offsets>
-		<alignment>center-center</alignment>
-		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%4.1f</format>
-		<property>instrumentation/dme[3]/indicated-distance-nm</property>
-		<truncate>false</truncate>
-		<layout>left-to-right</layout>
-		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
-		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
-		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
-		<max-height>0.012</max-height> <!-- the maximum height of the text -->
-		<max-width>0.040</max-width> <!-- the maximum width of the text -->
-		<font-resolution>
-		<width type="int">32</width>
-		<height type="int">32</height>
-		</font-resolution>
-		<kerning>default</kerning>
-	</text>
-
 	<animation>
 		<type>pick</type>
 		<object-name>clock_reset_pushbutton</object-name>
@@ -7309,5 +7223,184 @@
 			<object-name>clock_et_selector.axis</object-name>
 		</axis>
 	</animation>
+
+	<!-- dme -->
+	<animation>
+		<type>select</type>
+		<object-name>dme</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<property>instrumentation/dme[2]/in-range</property>
+				<less-than-equals>
+					<property>instrumentation/dme[2]/indicated-distance-nm</property>
+					<value>20</value>
+				</less-than-equals>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>dme20</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<property>instrumentation/dme[2]/in-range</property>
+				<greater-than>
+					<property>instrumentation/dme[2]/indicated-distance-nm</property>
+					<value>20</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>dme1</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<property>instrumentation/dme[3]/in-range</property>
+				<less-than-equals>
+					<property>instrumentation/dme[3]/indicated-distance-nm</property>
+					<value>20</value>
+				</less-than-equals>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>dme120</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<property>instrumentation/dme[3]/in-range</property>
+				<greater-than>
+					<property>instrumentation/dme[3]/indicated-distance-nm</property>
+					<value>20</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+
+	<text>
+		<name>dme</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.155</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%4.1f</format>
+		<property>instrumentation/dme[2]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	<text>
+		<name>dme20</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.162</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%4.0f.</format>
+		<property>instrumentation/dme[2]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	<text>
+		<name>dme1</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.122</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%4.1f</format>
+		<property>instrumentation/dme[3]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	<text>
+		<name>dme120</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.129</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%4.0f.</format>
+		<property>instrumentation/dme[3]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
 
 </PropertyList>
