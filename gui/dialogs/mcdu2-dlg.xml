@@ -24,6 +24,10 @@
 			<legend>X</legend>
 			<key>Esc</key>
 			<binding>
+				<command>nasal</command>
+				<script>setprop("FMGC/keyboard-right", 0);</script>
+			</binding>
+			<binding>
 				<command>dialog-close</command>
 			</binding>
 		</button>

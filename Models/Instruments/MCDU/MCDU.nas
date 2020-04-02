@@ -32,7 +32,8 @@ setprop("MCDUC/colors/mag/g", 0.3333);
 setprop("MCDUC/colors/mag/b", 0.7541);
 
 # Fetch nodes:
-var mcdu_keyboard_entry = props.globals.getNode("MCDU/keyboard-entry", 1);
+var mcdu_keyboard_left = props.globals.getNode("FMGC/keyboard-left", 0);
+var mcdu_keyboard_right = props.globals.getNode("FMGC/keyboard-right", 0);
 
 #ACCONFIG
 var ac1 = props.globals.getNode("systems/electrical/bus/ac-1", 1);
@@ -2738,12 +2739,14 @@ setlistener("sim/signals/fdm-initialized", func {
 var MCDU_update = maketimer(0.125, func {
 	canvas_MCDU_base.update();
 });
-
+	
 var showMCDU1 = func {
+	setprop("FMGC/keyboard-left", 1);
 	gui.showDialog("mcdu1");
 }
 
 var showMCDU2 = func {
+	setprop("FMGC/keyboard-right", 1);
 	gui.showDialog("mcdu2");
 }
 

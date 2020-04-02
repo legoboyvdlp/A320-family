@@ -17,7 +17,8 @@ var MCDU_reset = func(i) {
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 	
-	setprop("MCDU/keyboard-entry", 0);
+	setprop("FMGC/keyboard-left", 0);
+	setprop("FMGC/keyboard-right", 0);
 	
 	#ACCONFIG
 	setprop("FMGC/internal/navdatabase", "01JAN-28JAN");
