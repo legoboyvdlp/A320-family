@@ -164,12 +164,9 @@ var flightPlanController = {
 			me.deleteWP(0, plan);
 		} else {
 			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost); # delete four times, so on last iteration it equals one and then goes to zero, leave it without subtracting one
-			print(timesToDelete);
 			while (timesToDelete > 1) {
-				print(timesToDelete);
 				me.deleteWP(1, plan, 1);
 				timesToDelete -= 1; 
-				print(timesToDelete);
 			}
 			me.insertTP(plan);
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
