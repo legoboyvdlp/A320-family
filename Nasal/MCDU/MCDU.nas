@@ -115,7 +115,7 @@ var lskbutton = func(btn, i) {
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
             printInput2("L1", i);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "LATREV") {
-			if (canvas_mcy.myLatRev[i].type == 0) {
+			if (canvas_mcdu.myLatRev[i].type == 0) {
 				if (canvas_mcdu.myDeparture[i] != nil) {
 					canvas_mcdu.myDeparture[i].del();
 				}
@@ -304,7 +304,7 @@ var rskbutton = func(btn, i) {
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
             printInput2("R1", i);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "LATREV") {
-			if (canvas_mcy.myLatRev[i].type == 1) {
+			if (canvas_mcdu.myLatRev[i].type == 1) {
 				if (canvas_mcdu.myArrival[i] != nil) {
 					canvas_mcdu.myArrival[i].del();
 				}

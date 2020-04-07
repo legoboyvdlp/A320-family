@@ -91,7 +91,10 @@ var fplnItem = {
 		if (me.wp.wp_name == "DISCONTINUITY") {
 			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, "DISCON", me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			print(me.index);
+			print(fmgc.flightPlanController.arrivalIndex[me.computer]);
 			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+				print("DA");
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
 			} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
