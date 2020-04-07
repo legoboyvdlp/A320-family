@@ -115,12 +115,16 @@ var lskbutton = func(btn, i) {
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
             printInput2("L1", i);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "LATREV") {
-            if (canvas_mcdu.myDeparture[i] != nil) {
-                canvas_mcdu.myDeparture[i].del();
-            }
-            canvas_mcdu.myDeparture[i] = nil;
-            canvas_mcdu.myDeparture[i] = departurePage.new(canvas_mcdu.myLatRev[i].title[2], i);
-            setprop("MCDU[" ~ i ~ "]/page", "DEPARTURE");
+			if (canvas_mcy.myLatRev[i].type == 0) {
+				if (canvas_mcdu.myDeparture[i] != nil) {
+					canvas_mcdu.myDeparture[i].del();
+				}
+				canvas_mcdu.myDeparture[i] = nil;
+				canvas_mcdu.myDeparture[i] = departurePage.new(canvas_mcdu.myLatRev[i].title[2], i);
+				setprop("MCDU[" ~ i ~ "]/page", "DEPARTURE");
+			} else {
+				notAllowed(i);
+			}
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("MCDU[" ~ i ~ "]/page") == "F-PLNB") {
             canvas_mcdu.myFpln[i].pushButtonLeft(1);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
@@ -300,12 +304,16 @@ var rskbutton = func(btn, i) {
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
             printInput2("R1", i);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "LATREV") {
-            if (canvas_mcdu.myArrival[i] != nil) {
-                canvas_mcdu.myArrival[i].del();
-            }
-            canvas_mcdu.myArrival[i] = nil;
-            canvas_mcdu.myArrival[i] = arrivalPage.new(canvas_mcdu.myLatRev[i].title[2], i);
-            setprop("MCDU[" ~ i ~ "]/page", "ARRIVAL");
+			if (canvas_mcy.myLatRev[i].type == 1) {
+				if (canvas_mcdu.myArrival[i] != nil) {
+					canvas_mcdu.myArrival[i].del();
+				}
+				canvas_mcdu.myArrival[i] = nil;
+				canvas_mcdu.myArrival[i] = arrivalPage.new(canvas_mcdu.myLatRev[i].title[2], i);
+				setprop("MCDU[" ~ i ~ "]/page", "ARRIVAL");
+			} else {
+				notAllowed(i);
+			}
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("MCDU[" ~ i ~ "]/page") == "F-PLNB") {
             canvas_mcdu.myFpln[i].pushButtonRight(1);
         } else {
