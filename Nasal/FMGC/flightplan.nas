@@ -163,17 +163,27 @@ var flightPlanController = {
 			me.addDiscontinuity(3, plan);
 			me.deleteWP(0, plan);
 		} else {
+			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost); # delete four times, so on last iteration it equals one and then goes to zero, leave it without subtracting one
+			print(timesToDelete);
+			while (timesToDelete > 1) {
+				print(timesToDelete);
+				me.deleteWP(1, plan, 1);
+				timesToDelete -= 1; 
+				print(timesToDelete);
+			}
 			me.insertTP(plan);
-			#todo
+			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
+			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
+			# so four individual deletions. Delete index 1 four times. 
 		}
 		me.flightPlanChanged(plan);
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
 	},
 	
-	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate
+	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means don't add discontinuity ever
 		var wp = wpID[n][index].getValue();
-		if (wp != FMGCdep.getValue() and wp != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
+		if (left(wp, 4) != FMGCdep.getValue() and left(wp, 4) != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				if (me.flightplans[n].getWP(index) != nil and s == 0) {

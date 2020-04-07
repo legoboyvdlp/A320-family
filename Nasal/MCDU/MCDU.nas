@@ -157,7 +157,9 @@ var lskbutton = func(btn, i) {
             canvas_mcdu.myDeparture[i].depPushbuttonLeft(2);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
             canvas_mcdu.myArrival[i].arrPushbuttonLeft(2);
-        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+			canvas_mcdu.myDirTo[i].leftFieldBtn(2);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
             canvas_mcdu.myDuplicate[i].pushButtonLeft(2);
         } else {
             notAllowed(i);
@@ -183,7 +185,9 @@ var lskbutton = func(btn, i) {
             canvas_mcdu.myDeparture[i].depPushbuttonLeft(3);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
             canvas_mcdu.myArrival[i].arrPushbuttonLeft(3);
-        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+			canvas_mcdu.myDirTo[i].leftFieldBtn(3);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
             canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
         } else {
             notAllowed(i);
@@ -205,7 +209,9 @@ var lskbutton = func(btn, i) {
             canvas_mcdu.myDeparture[i].depPushbuttonLeft(4);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
             canvas_mcdu.myArrival[i].arrPushbuttonLeft(4);
-        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+			canvas_mcdu.myDirTo[i].leftFieldBtn(4);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
             canvas_mcdu.myDuplicate[i].pushButtonLeft(4);
         } else {
             notAllowed(i);
@@ -237,7 +243,9 @@ var lskbutton = func(btn, i) {
             canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
         } else if (getprop("MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
             canvas_mcdu.myArrival[i].arrPushbuttonLeft(5);
-        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+        } else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
+			canvas_mcdu.myDirTo[i].leftFieldBtn(5);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
             canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
         } else {
             notAllowed(i);

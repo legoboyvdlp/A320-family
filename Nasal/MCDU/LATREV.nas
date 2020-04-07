@@ -144,7 +144,9 @@ var latRev = {
 			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
 			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
 			fmgc.flightPlanController.flightPlanChanged(me.computer);
-			setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			if (getprop("/MCDU[" ~ me.computer ~ "]/page") != "DUPLICATENAMES") {
+				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			}
 		}
 	},
 };

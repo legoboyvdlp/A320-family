@@ -236,6 +236,9 @@ var dirTo = {
 		setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
 		setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
 	},
+	leftFieldBtn: func(index) {
+		print("DA TOVARISHCH" ~ index);
+	},
 	fieldL6: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
 			dirToFlag = 0;
