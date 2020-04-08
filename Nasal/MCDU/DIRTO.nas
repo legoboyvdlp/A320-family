@@ -82,40 +82,38 @@ var dirTo = {
 		var x = 0;
 		me.vector = [];
 		for (var i = 1 + (me.scroll); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
-			if (canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; }
-			if (fmgc.flightPlanController.temporaryFlag[me.computer] and canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[me.computer]) { 
-				continue; 
-			} elsif (!fmgc.flightPlanController.temporaryFlag[me.computer] and canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) {
+			if (canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; } # can't ever have tmpy with dir to
+			if (canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) {
 				continue; 
 			}
-			append(me.vector, " " ~ canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name);
+			append(me.vector, canvas_mcdu.myFpln[me.computer].planList[i].wp);
 			x += 1;
 			if (x == 4) { break; }
 		}
 		
 		if (size(me.vector) > 0) {
-			me.L2[0] = me.vector[0];
+			me.L2[0] = " " ~ me.vector[0].wp_name;
 			me.arrowsMatrix[0][1] = 1;
 		} else {
 			me.L2[0] = nil;
 			me.arrowsMatrix[0][1] = 0;
 		}
 		if (size(me.vector) > 1) {
-			me.L3[0] = me.vector[1];
+			me.L3[0] = " " ~ me.vector[1].wp_name;
 			me.arrowsMatrix[0][2] = 1;
 		} else {
 			me.L3[0] = nil;
 			me.arrowsMatrix[0][2] = 0;
 		}
 		if (size(me.vector) > 2) {
-			me.L4[0] = me.vector[2];
+			me.L4[0] = " " ~ me.vector[2].wp_name;
 			me.arrowsMatrix[0][3] = 1;
 		} else {
 			me.L4[0] = nil;
 			me.arrowsMatrix[0][3] = 0;
 		}
 		if (size(me.vector) > 3) {
-			me.L5[0] = me.vector[3];
+			me.L5[0] = " " ~ me.vector[3].wp_name;
 			me.arrowsMatrix[0][4] = 1;
 		} else {
 			me.L5[0] = nil;
@@ -237,7 +235,18 @@ var dirTo = {
 		setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
 	},
 	leftFieldBtn: func(index) {
-		print("DA TOVARISHCH" ~ index);
+		me.makeTmpy();
+		me.L1[0] = me.vector[index + me.scroll - 2].wp_name;
+		fmgc.flightPlanController.directTo(me.vector[index + me.scroll - 2], me.computer);
+		me.arrowsMatrix[0][1] = 0;
+		# FIGURE OUT HOW TO MAKE IT SO IT DOESN'T DELETE THE WAYPOINTS ON DIR TO BUT DOES IN FLIGHTPLAN
+		#for (var i = 2; i != 6; i = i + 1) {
+		#	if (i == index) {
+		#		me.arrowsMatrix[0][i - 1] = 0;
+		#	} else {
+		#		me.arrowsMatrix[0][i - 1] = 1;
+		#	}
+		#}
 	},
 	fieldL6: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
@@ -258,6 +267,7 @@ var dirTo = {
 		}
 		me.L1 = [" [       ]", " WAYPOINT", "blu"];
 		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
+		setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 	},
 	updateDist: func(dist) {
 		me.R1 = ["----   " ~ sprintf("%.0f", dist) ~ "  ", "UTC   DIST  ", "wht"];
