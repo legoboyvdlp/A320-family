@@ -53,7 +53,7 @@ var holdPage = {
 		me.C5 = ["----  ---.-", "UTC    FUEL", "wht"];
 		me.R1 = ["COMPUTED ", nil, "blu"];
 		me.R2 = ["DATABASE ", nil, "blu"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["blu", "blu", "ack", "ack", "ack", "ack"]];
 		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
