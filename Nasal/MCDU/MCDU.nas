@@ -198,6 +198,8 @@ var lskbutton = func(btn, i) {
 			progCLBInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PROGCRZ") {
 			progCRZInput("L1",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PROGDES") {
+			progDESInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {

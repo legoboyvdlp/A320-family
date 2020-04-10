@@ -220,38 +220,38 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if ((n1_left < 70 or n1_right < 70) and gs < 90 and mode == " " and gear0 == 1 and phase == 1) {
-		setprop("FMGC/status/phase", "0");
+		setprop("FMGC/status/phase", 0);
 		setprop("systems/pressurization/mode", "GN");
 	}
 	
 	if (gear0 == 1 and phase == 0 and ((n1_left >= 70 and n1_right >= 70) or gs >= 90) and (state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and thr1 >= 0.83) or 
 	(state2 == "MAN THR" and thr2 >= 0.83)))) {
-		setprop("FMGC/status/phase", "1");
+		setprop("FMGC/status/phase", 1);
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if (phase == 1 and mode != "SRS" and mode != " ") {
-		setprop("FMGC/status/phase", "2");
+	if (phase == 1 and ((mode != "SRS" and mode != " ") or alt >= reduc_agl_ft)) {
+		setprop("FMGC/status/phase", 2);
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
 	if ((phase == 3 or phase == 4) and (mode == "OP CLB" or mode == "CLB" or (modeI == "V/S" and getprop("it-autoflight/input/vs") >= 100) or (modeI == "FPA" and getprop("it-autoflight/input/fpa") >= 0.1))) {
-		setprop("FMGC/status/phase", "2");
+		setprop("FMGC/status/phase", 2);
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
 	if ((phase == 2 or phase == 4) and (mode == "ALT" or mode == "ALT CRZ" or mode == "ALT CST")) {
-		setprop("FMGC/status/phase", "3");
+		setprop("FMGC/status/phase", 3);
 		setprop("systems/pressurization/mode", "CR");
 	}
 	
 	if ((phase == 2 or phase == 3) and (mode == "OP DES" or mode == "DES" or (modeI == "V/S" and getprop("it-autoflight/input/vs") <= -100) or (modeI == "FPA" and getprop("it-autoflight/input/fpa") <= -0.1))) {
-		setprop("FMGC/status/phase", "4");
+		setprop("FMGC/status/phase", 4);
 		setprop("systems/pressurization/mode", "DE");
 	}
 	
 	if (getprop("FMGC/status/to-state") == 0 and flaps >= 3 and (phase == "4" or mode == "G/S" or mode == "LAND" or mode == "FLARE")) {
-		setprop("FMGC/status/phase", "5");
+		setprop("FMGC/status/phase", 5);
 	}
 	
 	if (getprop("autopilot/route-manager/route/num") > 0 and getprop("autopilot/route-manager/active") == 1 and getprop("autopilot/route-manager/distance-remaining-nm") <= 15) {
@@ -261,9 +261,15 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if (phase == "5" and state1 == "TOGA" and state2 == "TOGA") {
-		setprop("FMGC/status/phase", "6");
+		setprop("FMGC/status/phase", 6);
+		# set speed to green dot here
 		setprop("systems/pressurization/mode", "TO");
 		setprop("it-autoflight/input/toga", 1);
+	}
+	
+	#handle go-around
+	if (phase == "6" and alt >= reduc_agl_ft) {
+		setprop("FMGC/status/phase", 2);
 	}
 	
 	if (wowl and wowr and gs <= 40 and (phase == "2" or phase == "3" or phase == "4" or phase == "5" or phase == "6") and ap1 == 0 and ap2 == 0) {

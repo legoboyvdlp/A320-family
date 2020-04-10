@@ -26,7 +26,22 @@ var perfDESInput = func(key, i) {
 			}
 		}
 	} else if (key == "L6") {
-		setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
+		if (getprop("FMGC/status/phase") == 4) {
+			if (getprop("FMGC/internal/activate-once") == 1) {
+				if (getprop("FMGC/internal/activate-twice") == 0) {
+					setprop("FMGC/internal/activate-twice", 1);
+					setprop("FMGC/status/phase", 5);
+					setprop("FMGC/internal/decel", 1);
+					setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
+				} else {
+					notAllowed(i);
+				}
+			} else {
+				setprop("FMGC/internal/activate-once", 1);
+			}
+		} else {
+			setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
+		}
 	} else if (key == "R6") {
 		setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 	}
