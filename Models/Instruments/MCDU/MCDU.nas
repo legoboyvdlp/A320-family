@@ -154,6 +154,8 @@ var transAlt = props.globals.getNode("FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("it-autoflight/input/spd-managed", 1);
 
 # CLB PERF
+var activate_once = props.globals.getNode("FMGC/internal/activate-once", 1);
+var activate_twice = props.globals.getNode("FMGC/internal/activate-twice", 1);
 
 # CRZ PERF
 
@@ -1585,6 +1587,348 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
+		} else if (page == "PERFCLB") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].setText("CLB");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, 1, 1);
+				me.showRight(-1, 1, 1, 1, -1, 1);
+				me.showRightS(-1, -1, 1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(-1, 1, 1, 1, -1, -1);
+				me.showCenterS(-1, -1, 1, -1, 1, -1);
+				
+				me.fontLeft(default, default, default, symbol, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, small, small, normal, normal);
+				me.fontSizeLeftS(0, 0, 0, 0, small, 0);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenterS(small, small, small, small, small, small);
+				me.fontSizeCenter(normal, small, normal, normal, small, normal);
+				
+				me.colorLeft("grn", "blu", "grn", "blu", "wht", "blu");
+				me.colorLeftS("wht", "wht", "wht", "wht", "grn", "blu");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "blu", "grn", "grn", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "grn", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("wht", "wht", "grn", "grn", "wht", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "grn", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (getprop("FMGC/status/phase") == 2) {
+				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me.showLeft(0, 0, 0, 0, 1, 0);
+				me.showLeftS(0, 0, 0, 0, 1, 0);
+				me.showLeftArrow(0, 0, 0, 0, 1, 1);
+				me.showRight(0, 0, 0, 1, 0, 0);
+				me.showRightS(0, 0, 0, 0, 1, 0);
+				me.showCenterS(0, 0, 0, 0, 1, 0);
+				
+				me["Simple_L4S"].setText(" SELECTED");
+				
+				if (activate_once.getValue() == 0 and activate_twice.getValue() == 0) {
+					me["Simple_L6S"].setText(" ACTIVATE");
+					me["Simple_L6"].setText(" APPR PHASE");
+					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
+					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
+					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
+				} else if (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
+					me["Simple_L6S"].setText(" CONFIRM");
+					me["Simple_L6"].setText(" APPR PHASE");
+					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
+					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
+					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
+				} else if (getprop("FMGC/status/phase") == 5) {
+					me["Simple_L6S"].setText("");
+					me["Simple_L6"].setText("");
+					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
+					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
+					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
+					me.showLeftArrow(0, 0, 0, 0, 0, -1);
+				} else {
+					setprop("FMGC/internal/activate-once", 0);
+					setprop("FMGC/internal/activate-twice", 0);
+				}
+			} else {
+				me["Simple_Title"].setColor(1, 1, 1);
+				me.showLeft(0, 0, 0, 0, -1, 0);
+				me.showLeftS(0, 0, 0, 0, -1, 0);
+				me.showLeftArrow(0, 0, 0, 0, -1, 0);
+				me.showRight(0, 0, 0, -1, 0, 0);
+				me.showRightS(0, 0, 0, 0, -1, 0);
+				me.showCenterS(0, 0, 0, 0, -1, 0);
+				
+				me.colorLeft("ack", "ack", "ack", "ack", "ack", "wht");
+				me.colorLeftS("ack", "ack", "ack", "ack", "ack", "wht");
+				me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "wht");
+				
+				me["Simple_L4S"].setText(" PRESEL");
+				me["Simple_L6S"].setText(" PREV");
+				me["Simple_L6"].setText(" PHASE");
+				
+			}
+			
+			me["Simple_L1S"].setText("ACT MODE");
+			if (managedSpeed.getValue() == 1) {
+				me["Simple_L1"].setText("MANAGED");
+				me["Simple_L4"].setText(" [    ]");
+				me.fontLeft(0, 0, 0, symbol, 0, 0);
+			} else {
+				me["Simple_L1"].setText("SELECTED");
+				if (getprop("it-autoflight/input/kts-mach")) {
+					me["Simple_L4"].setText(sprintf(" %s", getprop("it-autoflight/input/spd-mach")));
+				} else {
+					me["Simple_L4"].setText(sprintf(" %s", getprop("it-autoflight/input/spd-kts")));
+				}
+				me.fontLeft(0, 0, 0, default, 0, 0);
+			}		
+			
+			me["Simple_L2S"].setText(" CI");
+			if (costIndexSet.getValue() == 1) {
+				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+			} else {
+				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setText(" ---");
+			}
+			
+			me["Simple_L3S"].setText(" MANAGED");
+			me["Simple_L3"].setText(sprintf(" %s", getprop("FMGC/internal/mng-spd")));
+			
+			me["Simple_L5S"].setText(" EXPEDITE");
+			me["Simple_L5"].setText(" T/O PHASE");
+			
+			me["Simple_C2"].setText("         PRED TO");
+			me["Simple_R2"].setText(sprintf("FL%s", getprop("it-autoflight/input/alt") / 100));
+			
+			me["Simple_R3S"].setText("DIST");
+			me["Simple_R3"].setText("---");
+			
+			me["Simple_R4"].setText("---");
+			me["Simple_R5S"].setText("---");
+			
+			me["Simple_C3S"].setText("UTC");
+			me["Simple_C3"].setText("----");
+			me["Simple_C4"].setText("----");
+			me["Simple_C5S"].setText("----");
+
+			me["Simple_R6S"].setText("NEXT ");
+			me["Simple_R6"].setText("PHASE ");
+		} else if (page == "PERFCRZ") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].setText("CRZ");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, 1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, -1, -1, -1, 0, 1);
+				me.showRightS(1, -1, -1, -1, 0, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				
+				me.fontLeft(default, default, default, symbol, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, small, small, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, small, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, small, normal);
+				
+				me.colorLeft("grn", "ack", "grn", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "blu", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (getprop("FMGC/status/phase") == 3) {
+				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["Simple_Title"].setColor(1, 1, 1);
+			}
+			
+			if (managedSpeed.getValue() == 1) {
+				me["Simple_L1"].setText("MANAGED");
+			} else {
+				me["Simple_L1"].setText("SELECTED");
+			}
+			
+			if (costIndexSet.getValue() == 1) {
+				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setText(sprintf("%s", costIndex.getValue()));
+			} else {
+				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setText("---");
+			}
+			
+			if (page == "PERFCRZ") {
+				me["Simple_R5"].show();
+				me["Simple_R5S"].show();
+				me["Simple_C5"].show();
+			} else {
+				me["Simple_R5"].hide();
+				me["Simple_R5S"].hide();
+				me["Simple_C5"].hide();
+			}
+			
+			me["Simple_L3"].setText("");
+			me["Simple_L4"].setText(" [    ]");
+			me["Simple_L6"].setText(" PHASE");
+			me["Simple_L1S"].setText("ACT MODE");
+			me["Simple_L2S"].setText(" CI");
+			me["Simple_L3S"].setText(" MANAGED");
+			me["Simple_L4S"].setText(" PRESEL");
+			me["Simple_L6S"].setText(" PREV");
+			me["Simple_R1"].setText("---");
+			me["Simple_R5"].setText("FT/MIN");
+			me["Simple_R6"].setText("PHASE ");
+			me["Simple_R1S"].setText("DES EFOB");
+			me["Simple_R5S"].setText("DES CABIN RATE");
+			me["Simple_R6S"].setText("NEXT ");
+			me["Simple_C1"].setText("---  ");
+			me["Simple_C5"].setText("             -350");
+			me["Simple_C1S"].setText("TIME  ");
+		} else if (page == "PERFDES") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["INITA"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].setText("DES");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, 1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, -1, -1, -1, 0, 1);
+				me.showRightS(1, -1, -1, -1, 0, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				
+				me.fontLeft(default, default, default, symbol, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, small, small, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, small, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, small, normal);
+				
+				me.colorLeft("grn", "ack", "grn", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "blu", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (getprop("FMGC/status/phase") == 4) {
+				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["Simple_Title"].setColor(1, 1, 1);
+			}
+			
+			if (managedSpeed.getValue() == 1) {
+				me["Simple_L1"].setText("MANAGED");
+			} else {
+				me["Simple_L1"].setText("SELECTED");
+			}
+			
+			if (costIndexSet.getValue() == 1) {
+				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setText(sprintf("%s", costIndex.getValue()));
+			} else {
+				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setText("---");
+			}
+			
+			if (page == "PERFCRZ") {
+				me["Simple_R5"].show();
+				me["Simple_R5S"].show();
+				me["Simple_C5"].show();
+			} else {
+				me["Simple_R5"].hide();
+				me["Simple_R5S"].hide();
+				me["Simple_C5"].hide();
+			}
+			
+			me["Simple_L3"].setText("");
+			me["Simple_L4"].setText(" [    ]");
+			me["Simple_L6"].setText(" PHASE");
+			me["Simple_L1S"].setText("ACT MODE");
+			me["Simple_L2S"].setText(" CI");
+			me["Simple_L3S"].setText(" MANAGED");
+			me["Simple_L4S"].setText(" PRESEL");
+			me["Simple_L6S"].setText(" PREV");
+			me["Simple_R1"].setText("---");
+			me["Simple_R5"].setText("FT/MIN");
+			me["Simple_R6"].setText("PHASE ");
+			me["Simple_R1S"].setText("DES EFOB");
+			me["Simple_R5S"].setText("DES CABIN RATE");
+			me["Simple_R6S"].setText("NEXT ");
+			me["Simple_C1"].setText("---  ");
+			me["Simple_C5"].setText("             -350");
+			me["Simple_C1S"].setText("TIME  ");
 		} else if (page == "PERFAPPR") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -1848,112 +2192,6 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-		} else if (page == "PERFCLB" or page == "PERFCRZ" or page == "PERFDES") {
-			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["INITA"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["PERFAPPR"].hide();
-				me["PERFGA"].hide();
-				if (page == "PERFCLB") {
-					me["Simple_Title"].setText("CLB");
-				} else if (page == "PERFCRZ") {
-					me["Simple_Title"].setText("CRZ");
-				} else if (page == "PERFDES") {
-					me["Simple_Title"].setText("DES");
-				}
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
-				
-				me.showLeft(1, 1, 1, -1, -1, 1);
-				me["Simple_L0S"].hide();
-				me.showLeftS(1, 1, 1, -1, -1, 1);
-				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
-				me.showRight(1, -1, -1, -1, 0, 1);
-				me.showRightS(1, -1, -1, -1, 0, 1);
-				me.showRightArrow(-1, -1, -1, -1, -1, 1);
-				me.showCenter(1, -1, -1, -1, -1, -1);
-				me.showCenterS(1, -1, -1, -1, -1, -1);
-				
-				me.fontLeft(default, default, default, symbol, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, small, small, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, small, normal);
-				me.fontSizeCenter(normal, normal, normal, normal, small, normal);
-				
-				me.colorLeft("grn", "ack", "grn", "blu", "wht", "wht");
-				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("wht", "wht", "wht", "wht", "blu", "wht");
-				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-				
-				pageSwitch[i].setBoolValue(1);
-			}
-			
-			if (page == "PERFCLB" and getprop("FMGC/status/phase") == 2) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
-			} else if (page == "PERFCRZ" and getprop("FMGC/status/phase") == 3) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
-			}else if (page == "DES" and getprop("FMGC/status/phase") == 4) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
-			}
-			
-			if (managedSpeed.getValue() == 1) {
-				me["Simple_L1"].setText("MANAGED");
-			} else {
-				me["Simple_L1"].setText("SELECTED");
-			}
-			
-			if (costIndexSet.getValue() == 1) {
-				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf("%s", costIndex.getValue()));
-			} else {
-				me["Simple_L2"].setColor(1,1,1);
-				me["Simple_L2"].setText("---");
-			}
-			
-			if (page == "PERFCRZ") {
-				me["Simple_R5"].show();
-				me["Simple_R5S"].show();
-				me["Simple_C5"].show();
-			} else {
-				me["Simple_R5"].hide();
-				me["Simple_R5S"].hide();
-				me["Simple_C5"].hide();
-			}
-			
-			me["Simple_L3"].setText("");
-			me["Simple_L4"].setText(" [    ]");
-			me["Simple_L6"].setText(" PHASE");
-			me["Simple_L1S"].setText("ACT MODE");
-			me["Simple_L2S"].setText(" CI");
-			me["Simple_L3S"].setText(" MANAGED");
-			me["Simple_L4S"].setText(" PRESEL");
-			me["Simple_L6S"].setText(" PREV");
-			me["Simple_R1"].setText("---");
-			me["Simple_R5"].setText("FT/MIN");
-			me["Simple_R6"].setText("PHASE ");
-			me["Simple_R1S"].setText("DES EFOB");
-			me["Simple_R5S"].setText("DES CABIN RATE");
-			me["Simple_R6S"].setText("NEXT ");
-			me["Simple_C1"].setText("---  ");
-			me["Simple_C5"].setText("             -350");
-			me["Simple_C1S"].setText("TIME  ");
 		} else {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].hide();

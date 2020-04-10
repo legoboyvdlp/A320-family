@@ -235,12 +235,12 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if ((phase == 3 or phase == 4 or phase == 5 or phase == 6) and (mode == "OP CLB" or mode == "CLB" or (modeI == "V/S" and getprop("it-autoflight/input/vs") >= 100) or (modeI == "FPA" and getprop("it-autoflight/input/fpa") >= 0.1))) {
+	if ((phase == 3 or phase == 4) and (mode == "OP CLB" or mode == "CLB" or (modeI == "V/S" and getprop("it-autoflight/input/vs") >= 100) or (modeI == "FPA" and getprop("it-autoflight/input/fpa") >= 0.1))) {
 		setprop("FMGC/status/phase", "2");
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if ((phase == 2 or phase == 4 or phase == 5) and (mode == "ALT" or mode == "ALT CRZ" or mode == "ALT CST")) {
+	if ((phase == 2 or phase == 4) and (mode == "ALT" or mode == "ALT CRZ" or mode == "ALT CST")) {
 		setprop("FMGC/status/phase", "3");
 		setprop("systems/pressurization/mode", "CR");
 	}

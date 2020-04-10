@@ -136,6 +136,8 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/trans-alt", 18000);
 	
 	# CLB PERF
+	setprop("FMGC/internal/activate-once", 0);
+	setprop("FMGC/internal/activate-twice", 0);
 
 	# CRZ PERF
 
