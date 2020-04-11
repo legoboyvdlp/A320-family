@@ -246,12 +246,13 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("systems/pressurization/mode", "DE");
 	}
 	
-	if (getprop("FMGC/status/to-state") == 0 and flaps >= 3 and (phase == "4" or mode == "G/S" or mode == "LAND" or mode == "FLARE")) {
+	if (aglalt < 7200 and (phase == "4" or mode == "G/S" or mode == "LAND" or mode == "FLARE")) {
 		setprop("FMGC/status/phase", 5);
 	}
 	
 	if (getprop("autopilot/route-manager/route/num") > 0 and getprop("autopilot/route-manager/active") == 1 and getprop("autopilot/route-manager/distance-remaining-nm") <= 15) {
 		setprop("FMGC/internal/decel", 1);
+		setprop("FMGC/status/phase", 5);
 	} else if (getprop("FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
 		setprop("FMGC/internal/decel", 0);
 	}
