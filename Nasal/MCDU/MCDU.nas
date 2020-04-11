@@ -78,7 +78,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/zfw-set", 0);
 	setprop("FMGC/internal/zfwcg", 55.1);
 	setprop("FMGC/internal/zfwcg-set", 0);
-	setprop("FMGC/internal/block", 0);
+	setprop("FMGC/internal/block", 0.0);
 	setprop("FMGC/internal/block-set", 0);
 	setprop("FMGC/internal/taxi-fuel", 0.4);
 	setprop("FMGC/internal/trip-fuel", 0);
