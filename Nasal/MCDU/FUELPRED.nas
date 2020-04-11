@@ -4,7 +4,7 @@
 
 # From INIT-B
 var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
-var block = props.globals.getNode("FMGC/internal/block", 1);
+var fob = props.globals.getNode("FMGC/internal/fob", 1);
 var taxi_fuel = props.globals.getNode("FMGC/internal/taxi-fuel", 1);
 var trip_fuel = props.globals.getNode("FMGC/internal/trip-fuel", 1);
 var trip_time = props.globals.getNode("FMGC/internal/trip-time", 1);
@@ -59,9 +59,9 @@ var fuelPredInput = func(key, i) {
 					setprop("FMGC/internal/alt-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
-					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+					setprop("FMGC/internal/rte-rsv", num((fob.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+					setprop("FMGC/internal/trip-fuel", num(fob.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+					setprop("FMGC/internal/tow", num(fob.getValue() + zfw.getValue() - taxi_fuel.getValue()));
 					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 
 				} else {
@@ -81,9 +81,9 @@ var fuelPredInput = func(key, i) {
 					setprop("FMGC/internal/final-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
-					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+					setprop("FMGC/internal/rte-rsv", num((fob.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+					setprop("FMGC/internal/trip-fuel", num(fob.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+					setprop("FMGC/internal/tow", num(fob.getValue() + zfw.getValue() - taxi_fuel.getValue()));
 					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 				} else {
 					notAllowed(i);

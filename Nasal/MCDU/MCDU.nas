@@ -78,7 +78,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/zfw-set", 0);
 	setprop("FMGC/internal/zfwcg", 55.1);
 	setprop("FMGC/internal/zfwcg-set", 0);
-	setprop("FMGC/internal/block", 0.0);
+	setprop("FMGC/internal/block", 0);
 	setprop("FMGC/internal/block-set", 0);
 	setprop("FMGC/internal/taxi-fuel", 0.4);
 	setprop("FMGC/internal/trip-fuel", 0);
@@ -110,7 +110,6 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/cruise-fl-prog", 100);
 	
 	# PERF
-	setprop("FMGC/internal/vs1g", 0);
 	
 	#PERF TO
 	setprop("FMGC/internal/v1", 0);
@@ -119,10 +118,6 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/vr-set", 0);
 	setprop("FMGC/internal/v2", 0);
 	setprop("FMGC/internal/v2-set", 0);
-	
-	setprop("FMGC/internal/f-speed", 0);
-	setprop("FMGC/internal/s-speed", 0);
-	setprop("FMGC/internal/o-speed", 0);
 	
 	setprop("FMGC/internal/reduc-agl-ft", "1500"); #eventually set to 1500 above runway
 	setprop("MCDUC/thracc-set", 0);
@@ -148,12 +143,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/dest-temp", -999);
 	setprop("FMGC/internal/dest-mag", -1);
 	setprop("FMGC/internal/dest-wind", -1);
-	setprop("FMGC/internal/vapp-speed", -1);
 	setprop("FMGC/internal/vapp-speed-set", 0);
-	setprop("FMGC/internal/f-speed-appr", -1);
-	setprop("FMGC/internal/s-speed-appr", -1);
-	setprop("FMGC/internal/o-speed-appr", -1);
-	setprop("FMGC/internal/vls-speed-appr", -1);
 	setprop("FMGC/internal/final", "");
 	setprop("FMGC/internal/mda", -1);
 	setprop("FMGC/internal/dh", -1);

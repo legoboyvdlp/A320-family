@@ -126,7 +126,6 @@ var cruiseFL_prog = props.globals.getNode("FMGC/internal/cruise-fl-prog", 1);
 
 # PERF
 var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
-var vs1g = props.globals.getNode("FMGC/internal/vs1g", 1);
 
 # TO PERF
 var v1 = props.globals.getNode("FMGC/internal/v1", 1);
@@ -135,10 +134,6 @@ var vr = props.globals.getNode("FMGC/internal/vr", 1);
 var vrSet = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2Set = props.globals.getNode("FMGC/internal/v2-set", 1);
-
-var f_speed_to = props.globals.getNode("FMGC/internal/f-speed-to", 1);
-var s_speed_to = props.globals.getNode("FMGC/internal/s-speed-to", 1);
-var o_speed_to = props.globals.getNode("FMGC/internal/o-speed-to", 1);
 
 var clbReducFt = props.globals.getNode("systems/thrust/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("FMGC/internal/reduc-agl-ft", 1); # It's not AGL anymore
@@ -166,12 +161,7 @@ var dest_qnh = props.globals.getNode("FMGC/internal/dest-qnh", 1);
 var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
 var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
-var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
 var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
-var f_speed_appr = props.globals.getNode("FMGC/internal/f-speed-appr", 1);
-var s_speed_appr = props.globals.getNode("FMGC/internal/s-speed-appr", 1);
-var o_speed_appr = props.globals.getNode("FMGC/internal/o-speed-appr", 1);
-var vls_speed_appr = props.globals.getNode("FMGC/internal/vls-speed-appr", 1);
 var final = props.globals.getNode("FMGC/internal/final", 1);
 var mda = props.globals.getNode("FMGC/internal/mda", 1);
 var dh = props.globals.getNode("FMGC/internal/dh", 1);
@@ -1223,9 +1213,9 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
 			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+				setprop("FMGC/internal/rte-rsv", num((fob.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+				setprop("FMGC/internal/trip-fuel", num(fob.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+				setprop("FMGC/internal/tow", num(fob.getValue() + zfw.getValue() - taxi_fuel.getValue()));
 				setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 				
 				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
@@ -1567,17 +1557,9 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("NEXT ");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				setprop("FMGC/internal/f-speed-to", ((-0.0005 * tow.getValue() * tow.getValue()) + (0.5488 * tow.getValue()) + 44.279) * 1.47);
-				setprop("FMGC/internal/s-speed-to", ((0.0024 * tow.getValue() * tow.getValue()) + (0.124 * tow.getValue()) + 88.942) * 1.23);
-				tgt_clean = 2 * tow.getValue() * 0.45359237 + 85;
-				if (altitude.getValue() > 20000) {
-					tgt_clean += (altitude.getValue() - 20000) / 1000;
-				}
-				setprop("FMGC/internal/o-speed-to", tgt_clean);
-				
-				me["Simple_C1"].setText(sprintf("%3.0f", f_speed_to.getValue()));
-				me["Simple_C2"].setText(sprintf("%3.0f", s_speed_to.getValue()));
-				me["Simple_C3"].setText(sprintf("%3.0f", o_speed_to.getValue()));
+				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_to")));
+				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_to")));
+				me["Simple_C3"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/clean_to")));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -1778,14 +1760,16 @@ var canvas_MCDU_base = {
 				
 				me.fontSizeLeft(normal, normal, small, small, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, small, normal);
+				me.fontSizeCenterS(small, small, small, small, small, small);
+				me.fontSizeCenter(normal, small, normal, normal, small, normal);
 				
 				me.colorLeft("grn", "blu", "grn", "blu", "wht", "blu");
 				me.colorLeftS("wht", "wht", "wht", "wht", "grn", "blu");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRight("wht", "blu", "grn", "grn", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "grn", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("wht", "wht", "grn", "grn", "wht", "wht");
+				me.colorCenter("wht", "wht", "grn", "grn", "blu", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "grn", "wht");
 				
 				pageSwitch[i].setBoolValue(1);
@@ -1867,10 +1851,10 @@ var canvas_MCDU_base = {
 			me["Simple_L3S"].setText(" MANAGED");
 			me["Simple_L3"].setText(sprintf(" %s", getprop("FMGC/internal/mng-spd")));
 			
-			me["Simple_R1S"].setText("DES EFOB");
+			me["Simple_R1S"].setText("DEST EFOB");
 			me["Simple_R1"].setText("---");
 			
-			me["Simple_R5S"].setText("DEST CABIN RATE");
+			me["Simple_R5S"].setText("DES CABIN RATE");
 			me["Simple_C5"].setText("             -350");
 			me["Simple_R5"].setText("FT/MIN");
 			
@@ -2019,7 +2003,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L5"].setText(" EXPEDITE");
 			
-			me["Simple_R1S"].setText("DES EFOB");
+			me["Simple_R1S"].setText("DEST EFOB");
 			me["Simple_R1"].setText("---");
 			
 			me["Simple_C2"].setText("         PRED TO");
@@ -2126,20 +2110,6 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
 			
-			me["Simple_L5S"].setText(" VAPP");
-			if (vapp_speed.getValue() != -1) {
-				me["Simple_L5"].setText(sprintf("%3.0f", vapp_speed.getValue()));
-				me.fontLeft(0, 0, 0, 0, default, 0);
-				if (vapp_speed_set.getValue() == 1) {
-					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
-				} else {
-					me.fontSizeLeft(0, 0, 0, 0, small, 0);
-				}
-			} else {
-				me["Simple_L5"].setText("[    ]  ");
-				me.fontLeft(0, 0, 0, 0, symbol, 0);
-			}
-			
 			me["Simple_R1S"].setText("FINAL");
 			me["Simple_R1"].setText("-----");
 			
@@ -2168,41 +2138,26 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
 			
-			
+			me["Simple_L5S"].setText(" VAPP");
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				setprop("FMGC/internal/f-speed-appr", ((-0.0005 * lw.getValue() * lw.getValue()) + (0.5488 * lw.getValue()) + 44.279) * 1.47);
-				setprop("FMGC/internal/s-speed-appr", ((0.0024 * lw.getValue() * lw.getValue()) + (0.124 * lw.getValue()) + 88.942) * 1.23);
-				tgt_clean = 2 * lw.getValue() * 0.45359237 + 85;
-				if (altitude.getValue() > 20000) {
-					tgt_clean += (altitude.getValue() - 20000) / 1000;
-				}
-				setprop("FMGC/internal/o-speed-appr", tgt_clean);
-				
-				if (ldg_config_3_set.getValue() == 1) {
-					setprop("FMGC/internal/vls-speed-appr", ((-0.0005 * lw.getValue() * lw.getValue()) + (0.5488 * lw.getValue()) + 43.279) * 1.23);
+				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_appr")));
+				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_appr")));
+				me["Simple_C3"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/clean_appr")));
+				me["Simple_C5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vls_appr")));
+				me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
+				me.fontLeft(0, 0, 0, 0, default, 0);
+				if (vapp_speed_set.getValue() == 1) {
+					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
-					setprop("FMGC/internal/vls-speed-appr", ((-0.0007 * lw.getValue() * lw.getValue()) + (0.6002 * lw.getValue()) + 38.479) * 1.23);
+					me.fontSizeLeft(0, 0, 0, 0, small, 0);
 				}
-				
-				if (vapp_speed_set.getValue() == 0) {
-					if (dest_wind.getValue() < 5) {
-						setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + 5);
-					} else if (dest_wind.getValue() > 15) {
-						setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + 15);
-					} else {
-						setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + dest_wind.getValue());
-					}
-				}
-				
-				me["Simple_C1"].setText(sprintf("%3.0f", f_speed_appr.getValue()));
-				me["Simple_C2"].setText(sprintf("%3.0f", s_speed_appr.getValue()));
-				me["Simple_C3"].setText(sprintf("%3.0f", o_speed_appr.getValue()));
-				me["Simple_C5"].setText(sprintf("%3.0f", vls_speed_appr.getValue()));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
+				me["Simple_L5"].setText("[    ]  ");
+				me.fontLeft(0, 0, 0, 0, symbol, 0);
 			}
 			
 			me["Simple_C1S"].setText("FLP RETR");
@@ -2283,17 +2238,9 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				setprop("FMGC/internal/f-speed-appr", ((-0.0005 * lw.getValue() * lw.getValue()) + (0.5488 * lw.getValue()) + 44.279) * 1.47);
-				setprop("FMGC/internal/s-speed-appr", ((0.0024 * lw.getValue() * lw.getValue()) + (0.124 * lw.getValue()) + 88.942) * 1.23);
-				tgt_clean = 2 * lw.getValue() * 0.45359237 + 85;
-				if (altitude.getValue() > 20000) {
-					tgt_clean += (altitude.getValue() - 20000) / 1000;
-				}
-				setprop("FMGC/internal/o-speed-appr", tgt_clean);
-				
-				me["Simple_C1"].setText(sprintf("%3.0f", f_speed_appr.getValue()));
-				me["Simple_C2"].setText(sprintf("%3.0f", s_speed_appr.getValue()));
-				me["Simple_C3"].setText(sprintf("%3.0f", o_speed_appr.getValue()));
+				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_appr")));
+				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_appr")));
+				me["Simple_C3"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/clean_appr")));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");

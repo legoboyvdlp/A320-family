@@ -135,8 +135,6 @@ var vr_set = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2_set = props.globals.getNode("FMGC/internal/v2-set", 1);
 var flap_config = props.globals.getNode("controls/flight/flap-lever", 1);
-var min_speed = props.globals.getNode("FMGC/internal/minspeed", 1);
-var weight_lbs = props.globals.getNode("fdm/jsbsim/inertia/weight-lbs", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -1266,8 +1264,7 @@ var canvas_PFD_1 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				lbs1000 = weight_lbs.getValue() / 1000;
-				tgt_S = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+				tgt_S = getprop("FMGC/internal/computed-speeds/slat");
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -1301,8 +1298,8 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				lbs1000 = weight_lbs.getValue() / 1000;
-				tgt_F = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				tgt_F = getprop("FMGC/internal/computed-speeds/flap2");
+				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
 				} else if (tgt_F >= 420) {
@@ -1335,8 +1332,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				lbs1000 = weight_lbs.getValue() / 1000;
-				tgt_F = ((0.4352 * lbs1000) + 50.006) * 1.36;
+				tgt_F = getprop("FMGC/internal/computed-speeds/flap3");
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1375,10 +1371,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = 2 * weight_lbs.getValue() * 0.00045359237 + 85;
-				if (altitude.getValue() > 20000) {
-					tgt_clean += (altitude.getValue() - 20000) / 1000;
-				}
+				tgt_clean = getprop("FMGC/internal/computed-speeds/clean");
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
@@ -1912,8 +1905,7 @@ var canvas_PFD_2 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				lbs1000 = weight_lbs.getValue() / 1000;
-				tgt_S = ((0.0024 * lbs1000 * lbs1000) + (0.124 * lbs1000) + 88.942) * 1.23;
+				tgt_S = tgt_S = getprop("FMGC/internal/computed-speeds/slat");
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -1947,8 +1939,8 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				lbs1000 = weight_lbs.getValue() / 1000;
-				tgt_F = ((0.4352 * lbs1000) + 51.006) * 1.47;
+				tgt_F = tgt_S = getprop("FMGC/internal/computed-speeds/flap2");
+				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
 				} else if (tgt_F >= 420) {
@@ -1981,8 +1973,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				lbs1000 = weight_lbs.getValue() / 1000;
-				tgt_F = ((0.4352 * lbs1000) + 50.006) * 1.36;
+				tgt_F = tgt_S = getprop("FMGC/internal/computed-speeds/flap3");
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2021,10 +2012,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = 2 * weight_lbs.getValue() * 0.00045359237 + 85;
-				if (altitude.getValue() > 20000) {
-					tgt_clean += (altitude.getValue() - 20000) / 1000;
-				}
+				tgt_clean = tgt_S = getprop("FMGC/internal/computed-speeds/clean");
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;

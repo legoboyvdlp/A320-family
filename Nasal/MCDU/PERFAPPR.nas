@@ -6,12 +6,6 @@ var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
 var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
 var transAlt = props.globals.getNode("FMGC/internal/trans-alt", 1);
-var vapp_speed = props.globals.getNode("FMGC/internal/vapp-speed", 1);
-var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
-var f_speed_appr = props.globals.getNode("FMGC/internal/f-speed-appr", 1);
-var s_speed_appr = props.globals.getNode("FMGC/internal/s-speed-appr", 1);
-var o_speed_appr = props.globals.getNode("FMGC/internal/o-speed-appr", 1);
-var vls_speed_appr = props.globals.getNode("FMGC/internal/vls-speed-appr", 1);
 var final = props.globals.getNode("FMGC/internal/final", 1);
 var mda = props.globals.getNode("FMGC/internal/mda", 1);
 var dh = props.globals.getNode("FMGC/internal/dh", 1);
@@ -84,19 +78,12 @@ var perfAPPRInput = func(key, i) {
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
-			if (dest_wind.getValue() < 5) {
-				setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + 5);
-			} else if (dest_wind.getValue() > 15) {
-				setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + 15);
-			} else {
-				setprop("FMGC/internal/vapp-speed", vls_speed_appr.getValue() + dest_wind.getValue());
-			}
 			setprop("FMGC/internal/vapp-speed-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 200) {
-			setprop("FMGC/internal/vapp-speed", scratchpad);
 			setprop("FMGC/internal/vapp-speed-set", 1);
+			setprop("FMGC/internal/computed-speeds/vapp_appr", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			notAllowed(i);
