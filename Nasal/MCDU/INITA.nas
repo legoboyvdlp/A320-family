@@ -70,12 +70,13 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/dep-arpt", "");
-			setprop("FMGC/internal/arr-arpt", "");
-			setprop("FMGC/internal/tofrom-set", 0);
-			fmgc.updateARPT();
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			clearFPLNComputer();
+			setprop("/FMGC/internal/dep-arpt", "");
+			setprop("/FMGC/internal/arr-arpt", "");
+			setprop("/FMGC/internal/tofrom-set", 0);
+			fmgc.flightPlanController.reset();
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 9 and find("/", scratchpad) != -1) {
@@ -83,11 +84,11 @@ var initInputA = func(key, i) {
 				var froms = size(fromto[0]);
 				var tos = size(fromto[1]);
 				if (froms == 4 and tos == 4) {
-					setprop("FMGC/internal/dep-arpt", fromto[0]);
-					setprop("FMGC/internal/arr-arpt", fromto[1]);
-					setprop("FMGC/internal/tofrom-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-					fmgc.updateARPT();
+					setprop("/FMGC/internal/dep-arpt", fromto[0]);
+					setprop("/FMGC/internal/arr-arpt", fromto[1]);
+					setprop("/FMGC/internal/tofrom-set", 1);
+					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 				} else {
 					notAllowed(i);
 				}

@@ -449,7 +449,7 @@
 			</condition>
 			<expression>
 				<sum>
-					<property>/autopilot/route-manager/wp[0]/true-bearing-deg</property>
+					<property>/FMGC/flightplan[2]/current-leg-course</property>
 					<product>
 						<property>/it-autoflight/internal/drift-angle-deg</property>
 						<value>-1.0</value>

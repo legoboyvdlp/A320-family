@@ -148,24 +148,6 @@ var trimReset = func {
 	}
 }
 
-###############
-# MCDU Inputs #
-###############
-
-var updateARPT = func {
-	dep = getprop("FMGC/internal/dep-arpt");
-	arr = getprop("FMGC/internal/arr-arpt");
-	setprop("autopilot/route-manager/departure/airport", dep);
-	setprop("autopilot/route-manager/destination/airport", arr);
-	if (getprop("autopilot/route-manager/active") != 1) {
-		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
-	}
-}
-
-setlistener("/FMGC/internal/cruise-ft", func {
-	setprop("autopilot/route-manager/cruise/altitude-ft", getprop("FMGC/internal/cruise-ft"));
-});
-
 ############################
 # Flight Phase and Various #
 ############################
@@ -248,10 +230,10 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("FMGC/status/phase", "5");
 	}
 	
-	if (getprop("autopilot/route-manager/route/num") > 0 and getprop("autopilot/route-manager/active") == 1 and getprop("autopilot/route-manager/distance-remaining-nm") <= 15) {
-		setprop("FMGC/internal/decel", 1);
-	} else if (getprop("FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
-		setprop("FMGC/internal/decel", 0);
+	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15) {
+		setprop("/FMGC/internal/decel", 1);
+	} else if (getprop("/FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
+		setprop("/FMGC/internal/decel", 0);
 	}
 	
 	if (phase == "5" and state1 == "TOGA" and state2 == "TOGA") {
@@ -304,6 +286,7 @@ var reset_FMGC = func {
 	alt = getprop("it-autoflight/input/alt");
 	ITAF.init();
 	FMGCinit();
+	flightPlanController.reset();
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	setprop("it-autoflight/input/fd1", fd1);

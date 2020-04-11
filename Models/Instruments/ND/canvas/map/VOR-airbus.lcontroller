@@ -5,58 +5,58 @@ var parents = [SymbolLayer.Controller];
 var __self__ = caller(0)[0];
 SymbolLayer.Controller.add(name, __self__);
 SymbolLayer.add(name, {
-    parents: [NavaidSymbolLayer],
-    type: name, # Symbol type
-    df_controller: __self__, # controller to use by default -- this one
-    df_options: {
-        vor1_frq: 'instrumentation/nav[2]/frequencies/selected-mhz',
-        vor2_frq: 'instrumentation/nav[3]/frequencies/selected-mhz'
-    },
-    df_style: {
-        scale: 1            
-    }
+	parents: [NavaidSymbolLayer],
+	type: name, # Symbol type
+	df_controller: __self__, # controller to use by default -- this one
+	df_options: {
+		vor1_frq: 'instrumentation/nav[2]/frequencies/selected-mhz',
+		vor2_frq: 'instrumentation/nav[3]/frequencies/selected-mhz'
+	},
+	df_style: {
+		scale: 1            
+	}
 });
 var new = func(layer) {
-    var m = {
-        parents: [__self__],
-        layer: layer,
-        map: layer.map,
-        active_vors: [],
-        navNs: props.globals.getNode("instrumentation").getChildren("nav"),
-        listeners: [],
-        query_type:'vor',
-    };
-    setsize(m.active_vors, size(m.navNs));
-    foreach (var navN; m.navNs) {
-        append(m.listeners, setlistener(
-               navN.getNode("frequencies/selected-mhz"),
-            func m.changed_freq()
-        ));
-    }
-    #call(debug.dump, keys(layer));
-    m.changed_freq(update:0);
-    m.addVisibilityListener();
+	var m = {
+		parents: [__self__],
+		layer: layer,
+		map: layer.map,
+		active_vors: [],
+		navNs: props.globals.getNode("instrumentation").getChildren("nav"),
+		listeners: [],
+		query_type:'vor',
+	};
+	setsize(m.active_vors, size(m.navNs));
+	foreach (var navN; m.navNs) {
+		append(m.listeners, setlistener(
+			   navN.getNode("frequencies/selected-mhz"),
+			func m.changed_freq()
+		));
+	}
+	#call(debug.dump, keys(layer));
+	m.changed_freq(update:0);
+	m.addVisibilityListener();
 
-    return m;
+	return m;
 };
 var del = func() {
-    printlog(_MP_dbg_lvl, name,".lcontroller.del()");
-    foreach (var l; me.listeners)
-    removelistener(l);
+	printlog(_MP_dbg_lvl, name,".lcontroller.del()");
+	foreach (var l; me.listeners)
+	removelistener(l);
 };
 
 # Controller methods
 var isActive = func(model) {
-    var my_freq = model.frequency/100;
-    foreach (var freq; me.active_vors)
-        if (freq == my_freq) return 1;
-    return 0;
+	var my_freq = model.frequency/100;
+	foreach (var freq; me.active_vors)
+		if (freq == my_freq) return 1;
+	return 0;
 };
 var changed_freq = func(update=1) {
-    #debug.dump(me.active_vors);
-    foreach (var navN; me.navNs)
-    me.active_vors[ navN.getIndex() ] = navN.getValue("frequencies/selected-mhz");
-    if (update) me.layer.update();
+	#debug.dump(me.active_vors);
+	foreach (var navN; me.navNs)
+	me.active_vors[ navN.getIndex() ] = navN.getValue("frequencies/selected-mhz");
+	if (update) me.layer.update();
 };
 
 var searchCmd = NavaidSymbolLayer.make('vor');
