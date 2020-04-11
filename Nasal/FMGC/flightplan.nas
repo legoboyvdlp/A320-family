@@ -178,9 +178,9 @@ var flightPlanController = {
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
 	},
 	
-	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means don't add discontinuity ever
+	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		if (left(wp, 4) != FMGCdep.getValue() and left(wp, 4) != FMGCarr.getValue() and me.flightplans[n].getPlanSize() > 2) {
+		if (((s == 0 and left(wp, 4) != FMGCdep.getValue() and left(wp, 4) != FMGCarr.getValue()) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				if (me.flightplans[n].getWP(index) != nil and s == 0) {
