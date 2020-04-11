@@ -1128,12 +1128,30 @@ var canvas_PFD_1 = {
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
 			if (managed_spd.getValue() == 1) {
+				if (FMGCphase.getValue() == 5) {
+					vapp = getprop("FMGC/internal/computed-speeds/vapp");
+					tgt_ias = vapp;
+					tgt_kts = vapp;
+				} else if (FMGCphase.getValue() == 6) {
+					vapp = getprop("FMGC/internal/computed-speeds/clean");
+					tgt_ias = clean;
+					tgt_kts = clean;
+				} else {
+					tgt_ias = at_tgt_ias.getValue();
+					tgt_mach = at_input_spd_mach.getValue();
+					tgt_kts = at_input_spd_kts.getValue();
+				}
+				
 				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_digit_UP"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_UP"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
 			} else {
+				tgt_ias = at_tgt_ias.getValue();
+				tgt_mach = at_input_spd_mach.getValue();
+				tgt_kts = at_input_spd_kts.getValue();
+				
 				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
@@ -1141,7 +1159,6 @@ var canvas_PFD_1 = {
 				me["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 			}
 			
-			tgt_ias = at_tgt_ias.getValue();
 			if (tgt_ias <= 30) {
 				me.ASItrgt = 0 - me.ASI;
 			} else if (tgt_ias >= 420) {
@@ -1161,11 +1178,11 @@ var canvas_PFD_1 = {
 				me["ASI_target"].show();
 			} else if (me.ASItrgtdiff < -42) {
 				if (at_mach_mode.getValue() == 1) {
-					me["ASI_digit_DN"].setText(sprintf("%3.0f", at_input_spd_mach.getValue() * 1000));
+					me["ASI_digit_DN"].setText(sprintf("%3.0f", tgt_mach * 1000));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].show();
 				} else {
-					me["ASI_digit_DN"].setText(sprintf("%3.0f", at_input_spd_kts.getValue()));
+					me["ASI_digit_DN"].setText(sprintf("%3.0f", tgt_kts));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].hide();
 				}
@@ -1174,11 +1191,11 @@ var canvas_PFD_1 = {
 				me["ASI_target"].hide();
 			} else if (me.ASItrgtdiff > 42) {
 				if (at_mach_mode.getValue() == 1) {
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", at_input_spd_mach.getValue() * 1000));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", tgt_mach * 1000));
 					me["ASI_decimal_UP"].show();
 					me["ASI_decimal_DN"].hide();
 				} else {
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", at_input_spd_kts.getValue()));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", tgt_kts));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].hide();
 				}
@@ -1769,12 +1786,30 @@ var canvas_PFD_2 = {
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
 			if (managed_spd.getValue() == 1) {
+				if (FMGCphase.getValue() == 5) {
+					vapp = getprop("FMGC/internal/computed-speeds/vapp");
+					tgt_ias = vapp;
+					tgt_kts = vapp;
+				} else if (FMGCphase.getValue() == 6) {
+					clean = getprop("FMGC/internal/computed-speeds/clean");
+					tgt_ias = clean;
+					tgt_kts = clean;
+				} else {
+					tgt_ias = at_tgt_ias.getValue();
+					tgt_mach = at_input_spd_mach.getValue();
+					tgt_kts = at_input_spd_kts.getValue();
+				}
+				
 				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_digit_UP"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_UP"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
 			} else {
+				tgt_ias = at_tgt_ias.getValue();
+				tgt_mach = at_input_spd_mach.getValue();
+				tgt_kts = at_input_spd_kts.getValue();
+				
 				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
@@ -1802,11 +1837,11 @@ var canvas_PFD_2 = {
 				me["ASI_target"].show();
 			} else if (me.ASItrgtdiff < -42) {
 				if (at_mach_mode.getValue() == 1) {
-					me["ASI_digit_DN"].setText(sprintf("%3.0f", at_input_spd_mach.getValue() * 1000));
+					me["ASI_digit_DN"].setText(sprintf("%3.0f", tgt_mach * 1000));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].show();
 				} else {
-					me["ASI_digit_DN"].setText(sprintf("%3.0f", at_input_spd_kts.getValue()));
+					me["ASI_digit_DN"].setText(sprintf("%3.0f", tgt_kts));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].hide();
 				}
@@ -1815,11 +1850,11 @@ var canvas_PFD_2 = {
 				me["ASI_target"].hide();
 			} else if (me.ASItrgtdiff > 42) {
 				if (at_mach_mode.getValue() == 1) {
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", at_input_spd_mach.getValue() * 1000));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", tgt_mach * 1000));
 					me["ASI_decimal_UP"].show();
 					me["ASI_decimal_DN"].hide();
 				} else {
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", at_input_spd_kts.getValue()));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", tgt_kts));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].hide();
 				}
