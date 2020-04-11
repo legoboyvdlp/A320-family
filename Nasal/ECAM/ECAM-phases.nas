@@ -136,14 +136,14 @@ var phaseLoop = func() {
 	
 	if (eng == "IAE") {
 		eprlim = getprop("controls/engines/epr-limit");
-		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.78 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.78) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
 		}
 	} else {
 		n1lim = getprop("controls/engines/n1-limit");
-		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.8 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.8) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.78 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.78) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
