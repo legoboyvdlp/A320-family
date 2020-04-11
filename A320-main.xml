@@ -204,13 +204,6 @@
 							<dialog-name>autopilot</dialog-name>
 						</binding>
 					</item>
-					<item>
-						<label>Route Manager</label>
-						<binding>
-							<command>dialog-show</command>
-							<dialog-name>route-manager</dialog-name>
-						</binding>
-					</item>
 				</menu>
 				<menu n="102">
 					<label>DU</label>
