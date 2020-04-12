@@ -30,6 +30,14 @@
  		</emission>
  	</animation>
 
+	<effect>
+		<inherits-from>Effects/model-interior-display</inherits-from>
+		<object-name>mcdu2.screen</object-name>
+		<parameters>
+			<contrast>0.7</contrast>
+		</parameters>
+	</effect>
+
 	<animation>
 		<type>pick</type>
 		<object-name>BRT</object-name>
@@ -260,6 +268,31 @@
 			<binding>
 				<command>nasal</command>
 				<script>mcdu.pagebutton("fuel-pred", 1);</script>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than>
+							<property>controls/lighting/DU/mcdu2</property>
+							<value>0.01</value>
+						</greater-than>
+					</and>
+				</condition>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>dir</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("dirto", 1);</script>
 				<condition>
 					<and>
 						<greater-than-equals>

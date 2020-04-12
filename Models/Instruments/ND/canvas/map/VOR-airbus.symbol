@@ -11,33 +11,33 @@ var svg_path = get_local_path('res/airbus_vor.svg');
 var vor_sym = nil;
 
 var draw = func{
-    if(me.vor_sym == nil) 
-        me.vor_sym = me.element.getElementById("airbus-vor-sym");
-    me.vor_sym.setTranslation(-24,-24);
-    if(me.text_vor == nil){
-        var transl = me.getStyle('translation', [25,10]);
-        var text_color = me.getStyle('text_color', [1,1,1]);
-        me.text_vor = me.element.createChild("text")
-        .setDrawMode( canvas.Text.TEXT )
-        .setText(me.model.id)
-        .setFont("LiberationFonts/LiberationSans-Regular.ttf")
-        .setFontSize(28)
-        .setColor(text_color)
-        .setTranslation(transl);
-    }  
-    
-    var frq = me.model.frequency;
-    if(frq != nil){
-        var dfcolor = me.getStyle('color', [0.9,0,0.47]);
-        var tuned_color = me.getStyle('tuned_color', [0,0.62,0.84]);
-        frq = frq / 100;
-        var vor1_frq = getprop(me.options.vor1_frq);
-        var vor2_frq = getprop(me.options.vor2_frq);
-        if(vor1_frq == frq or vor2_frq == frq){
-            me.element.setColor(tuned_color);
-        } else {
-            me.element.setColor(dfcolor);
-        }
-    }
-    me.text_vor.setColor(me.getStyle('text_color', [1,1,1]));
+	if(me.vor_sym == nil) 
+		me.vor_sym = me.element.getElementById("airbus-vor-sym");
+	me.vor_sym.setTranslation(-24,-24);
+	if(me.text_vor == nil){
+		var transl = me.getStyle('translation', [25,10]);
+		var text_color = me.getStyle('text_color', [1,1,1]);
+		me.text_vor = me.element.createChild("text")
+		.setDrawMode( canvas.Text.TEXT )
+		.setText(me.model.id)
+		.setFont("LiberationFonts/LiberationSans-Regular.ttf")
+		.setFontSize(28)
+		.setColor(text_color)
+		.setTranslation(transl);
+	}  
+	
+	var frq = me.model.frequency;
+	if(frq != nil){
+		var dfcolor = me.getStyle('color', [0.9,0,0.47]);
+		var tuned_color = me.getStyle('tuned_color', [0,0.62,0.84]);
+		frq = frq / 100;
+		var vor1_frq = getprop(me.options.vor1_frq);
+		var vor2_frq = getprop(me.options.vor2_frq);
+		if(vor1_frq == frq or vor2_frq == frq){
+			me.element.setColor(tuned_color);
+		} else {
+			me.element.setColor(dfcolor);
+		}
+	}
+	me.text_vor.setColor(me.getStyle('text_color', [1,1,1]));
 }

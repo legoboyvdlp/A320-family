@@ -73,6 +73,9 @@ var Instrumentation = {
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("instrumentation/airspeed-indicator/indicated-speed-kt"),
 	},
+	Altimeter: {
+		indicatedFt: props.globals.getNode("instrumentation/altimeter[0]/indicated-altitude-ft"),
+	},
 	TCAS: {
 		Inputs: {
 			mode: props.globals.getNode("instrumentation/tcas/inputs/mode"),

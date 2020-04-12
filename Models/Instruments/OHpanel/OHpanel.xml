@@ -6438,17 +6438,17 @@
 		</axis>
 	</animation>
 
-		<animation>
-				<type>translate</type>
-				<object-name>Eng1FireBtn</object-name>
-				<property>controls/engines/engine[0]/fire-btn</property>
-				<factor>0.025</factor>
-				<axis>
-						<x>1</x>
-						<y>0</y>
-						<z>0</z>
-				</axis>
-		</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>Eng1FireBtn</object-name>
+		<property>controls/engines/engine[0]/fire-btn</property>
+		<factor>0.025</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>material</type>
@@ -6791,17 +6791,17 @@
 		</axis>
 	</animation>
 
-		<animation>
-				<type>translate</type>
+	<animation>
+		<type>translate</type>
 		<object-name>APUFireBtn</object-name>
-				<property>controls/APU/fire-btn</property>
-				<factor>0.025</factor>
-				<axis>
-						<x>1</x>
-						<y>0</y>
-						<z>0</z>
-				</axis>
-		</animation>
+		<property>controls/APU/fire-btn</property>
+		<factor>0.025</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>material</type>
@@ -6954,33 +6954,33 @@
 		</axis>
 	</animation>
 
-		<animation>
-				<type>translate</type>
+	<animation>
+		<type>translate</type>
 		<object-name>Eng2FireBtn</object-name>
-				<property>controls/engines/engine[1]/fire-btn</property>
-				<factor>0.025</factor>
-				<axis>
-						<x>1</x>
-						<y>0</y>
-						<z>0</z>
-				</axis>
-		</animation>
+		<property>controls/engines/engine[1]/fire-btn</property>
+		<factor>0.025</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
-		<animation>
-			<type>material</type>
-			<object-name>Eng2FireBtn</object-name>
-			<condition>
-				<or>
-					<property>systems/fire/engine2/warning-active</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-			</condition>
-			<emission>
-				<red>1.0</red>
-				<green>1.0</green>
-				<blue>1.0</blue>
-			</emission>
-		</animation>
+	<animation>
+		<type>material</type>
+		<object-name>Eng2FireBtn</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/engine2/warning-active</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
 
 	<animation>
 		<type>pick</type>

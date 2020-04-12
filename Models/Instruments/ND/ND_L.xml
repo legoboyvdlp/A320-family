@@ -37,4 +37,12 @@
 		</emission>
 	</animation>
    
+	<effect>
+		<inherits-from>Effects/model-interior-display</inherits-from>
+		<object-name>ND.screen</object-name>
+		<parameters>
+			<contrast>0.7</contrast>
+		</parameters>
+	</effect>
+
 </PropertyList>

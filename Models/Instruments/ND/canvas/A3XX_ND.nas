@@ -5,8 +5,8 @@
 # Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var get_local_path = func(file){
-    var aircraft_dir = split("/", getprop("sim/aircraft-dir"))[-1];
-    return "Aircraft/" ~ aircraft_dir ~ "/Models/Instruments/ND/canvas/"~ file;
+	var aircraft_dir = split("/", getprop("/sim/aircraft-dir"))[-1];
+	return "Aircraft/" ~ aircraft_dir ~ "/Models/Instruments/ND/canvas/"~ file;
 };
 
 var version = getprop("sim/version/flightgear");

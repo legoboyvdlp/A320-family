@@ -48,10 +48,10 @@ var Radio = {
 };
 
 var FPLN = {
-	active: props.globals.getNode("autopilot/route-manager/active", 1),
+	active: props.globals.getNode("/FMGC/flightplan[2]/active", 1),
 	activeTemp: 0,
 	currentCourse: 0,
-	currentWP: props.globals.getNode("autopilot/route-manager/current-wp", 1),
+	currentWP: props.globals.getNode("/FMGC/flightplan[2]/current-wp", 1),
 	currentWPTemp: 0,
 	deltaAngle: 0,
 	deltaAngleRad: 0,
@@ -59,12 +59,10 @@ var FPLN = {
 	maxBank: 0,
 	maxBankLimit: 0,
 	nextCourse: 0,
-	num: props.globals.getNode("autopilot/route-manager/route/num", 1),
-	numTemp: 0,
 	R: 0,
 	radius: 0,
 	turnDist: 0,
-	wp0Dist: props.globals.getNode("autopilot/route-manager/wp/dist", 1),
+	wp0Dist: props.globals.getNode("/FMGC/flightplan[2]/current-leg-dist", 1),
 	wpFlyFrom: 0,
 	wpFlyTo: 0,
 };
@@ -376,7 +374,6 @@ var ITAF = {
 		Velocity.trueAirspeedKtTemp = Velocity.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWPTemp = FPLN.currentWP.getValue();
-		FPLN.numTemp = FPLN.num.getValue();
 		
 		# Bank Limit
 		if (Velocity.trueAirspeedKtTemp >= 420) {
@@ -391,25 +388,25 @@ var ITAF = {
 		
 		# If in LNAV mode and route is not longer active, switch to HDG HLD
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
-			if (FPLN.num.getValue() == 0 or !FPLN.active.getBoolValue()) {
+			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getBoolValue()) {
 				me.setLatMode(3);
 			}
 		}
 		
 		# Waypoint Advance Logic
-		if (FPLN.numTemp > 0 and FPLN.activeTemp == 1) {
-			if ((FPLN.currentWPTemp + 1) < FPLN.numTemp) {
+		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
+			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
 				Velocity.groundspeedMps = Velocity.groundspeedKt.getValue() * 0.5144444444444;
 				FPLN.wpFlyFrom = FPLN.currentWPTemp;
 				if (FPLN.wpFlyFrom < 0) {
 					FPLN.wpFlyFrom = 0;
 				}
-				FPLN.currentCourse = getprop("autopilot/route-manager/route/wp[" ~ FPLN.wpFlyFrom ~ "]/leg-bearing-true-deg"); # Best left at getprop
+				FPLN.currentCourse = getprop("/FMGC/flightplan[2]/wp[" ~ FPLN.wpFlyFrom ~ "]/course"); # Best left at getprop
 				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
 				if (FPLN.wpFlyTo < 0) {
 					FPLN.wpFlyTo = 0;
 				}
-				FPLN.nextCourse = getprop("autopilot/route-manager/route/wp[" ~ FPLN.wpFlyTo ~ "]/leg-bearing-true-deg"); # Best left at getprop
+				FPLN.nextCourse = getprop("/FMGC/flightplan[2]/wp[" ~ FPLN.wpFlyTo ~ "]/course"); # Best left at getprop
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
 				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
@@ -431,7 +428,11 @@ var ITAF = {
 				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
 				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist) {
-					FPLN.currentWP.setValue(FPLN.currentWPTemp + 1);
+					if (flightPlanController.currentToWptIndex.getValue() < 1) {	
+						flightPlanController.currentToWptIndex.setValue(1);	
+					} else if (flightPlanController.num[2].getValue() > 2) { # The Airbus doesn't display anything past the previous waypoint after advancing	
+						flightPlanController.autoSequencing();	
+					}
 				}
 			}
 		}
@@ -600,7 +601,7 @@ var ITAF = {
 			Custom.showHdg.setBoolValue(1);
 			me.armTextCheck();
 		} else if (n == 1) {
-			if (FPLN.num.getValue() > 0 and FPLN.active.getBoolValue()) {
+			if (flightPlanController.num[2].getValue() > 0 and FPLN.active.getBoolValue()) {
 				Output.lnavArm.setBoolValue(1);
 				Custom.showHdg.setBoolValue(0);
 				me.armTextCheck();
@@ -647,7 +648,10 @@ var ITAF = {
 			Text.vert.setValue("ALT CAP");
 		} else if (n == 4) { # FLCH
 			Output.apprArm.setBoolValue(0);
-			if (abs(Input.altDiff) >= 125) { # SPD CLB or SPD DES
+			Output.vert.setValue(1);
+			Internal.alt.setValue(Input.alt.getValue());
+			Internal.altDiff = Internal.alt.getValue() - Position.indicatedAltitudeFt.getValue();
+			if (abs(Internal.altDiff) >= 250) { # SPD CLB or SPD DES
 				if (Input.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) { # Usually set Thrust Mode Selector, but we do it now due to timer lag
 					Text.vert.setValue("SPD CLB");
 				} else {
@@ -734,7 +738,7 @@ var ITAF = {
 		}
 	},
 	checkLNAV: func(t) {
-		if (FPLN.num.getValue() > 0 and FPLN.active.getBoolValue() and Position.gearAglFt.getValue() >= 30) {
+		if (flightPlanController.num[2].getValue() > 0 and FPLN.active.getBoolValue() and Position.gearAglFt.getValue() >= 30) {
 			me.activateLNAV();
 		} else if (Output.lat.getValue() != 1 and t != 1) {
 			Output.lnavArm.setBoolValue(1);

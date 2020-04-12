@@ -32,9 +32,9 @@ var draw = func{
 #    var name = me.model.getName();
 #    var sym_group = me.element.getElementById(name);
 #    sym_group.set('z-index', 5);
-    if(me.spd_sym == nil){
-        me.spd_sym = me.getElementById("airbus-spd-sym");
-        me.spd_sym.setTranslation(-24, -24).set('z-index', 5);
-    }
-    
+	if(me.spd_sym == nil){
+		me.spd_sym = me.getElementById("airbus-spd-sym");
+		me.spd_sym.setTranslation(-24, -24).set('z-index', 5);
+	}
+	
 }
