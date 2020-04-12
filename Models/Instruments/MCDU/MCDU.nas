@@ -265,16 +265,16 @@ var canvas_MCDU_base = {
 	},
 	getKeys: func() {
 		return ["Simple","Simple_Center","Scratchpad","Simple_Title","Simple_PageNum","ArrowLeft","ArrowRight","Simple_L1","Simple_L2","Simple_L3","Simple_L4",
-    "Simple_L5","Simple_L6","Simple_L0S","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S","Simple_L1_Arrow",
-    "Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5",
-    "Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
-    "Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S",
-    "Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
-    "INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
-    "FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
-    "PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
-    "FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
-    "arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group"];
+	"Simple_L5","Simple_L6","Simple_L0S","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S","Simple_L1_Arrow",
+	"Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5",
+	"Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
+	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S",
+	"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
+	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
+	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
+	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
+	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
+	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -622,7 +622,7 @@ var canvas_MCDU_base = {
 					me["DIRTO_TMPY_group"].hide();
 				}
 			}
-		} elsif (page == "MCDU") {
+		} else if (page == "MCDU") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
@@ -636,6 +636,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("MCDU MENU");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -672,10 +673,10 @@ var canvas_MCDU_base = {
 			if (active[i].getValue() == 0) {
 				me["Simple_L1"].setText(" FMGC");
 				me["Simple_L1"].setColor(1,1,1);
-			} elsif (active[i].getValue() == 1) {
+			} else if (active[i].getValue() == 1) {
 				me["Simple_L1"].setText(" FMGC(SEL)");
 				me["Simple_L1"].setColor(0.0901,0.6039,0.7176);
-			} elsif (active[i].getValue() == 2) {
+			} else if (active[i].getValue() == 2) {
 				me["Simple_L1"].setText(" FMGC");
 				me["Simple_L1"].setColor(0.0509,0.7529,0.2941);
 			}
@@ -683,7 +684,7 @@ var canvas_MCDU_base = {
 			me["Simple_L3"].setText(" AIDS");
 			me["Simple_L4"].setText(" CFDS");
 			me["Simple_R6"].setText("RETURN ");
-		} elsif (page == "STATUS") {
+		} else if (page == "STATUS") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
@@ -697,6 +698,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -743,7 +745,7 @@ var canvas_MCDU_base = {
 			me["Simple_R2"].setText(sprintf("%s", databaseCode.getValue() ~ " "));
 			me["Simple_R6"].setText("STATUS/XLOAD ");
 			me["Simple_R6S"].setText("SOFTWARE ");
-		} elsif (page == "DATA") {
+		} else if (page == "DATA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
@@ -757,6 +759,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("1/2");
@@ -801,7 +804,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("FUNCTION ");
 			me["Simple_R5S"].setText("PRINT ");
 			me["Simple_R6S"].setText("AOC ");
-		} elsif (page == "DATA2") {
+		} else if (page == "DATA2") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
@@ -815,6 +818,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("2/2");
@@ -864,7 +868,7 @@ var canvas_MCDU_base = {
 			me["Simple_R2S"].setText("PILOTS ");
 			me["Simple_R3S"].setText("PILOTS ");
 			me["Simple_R4S"].setText("PILOTS ");
-		} elsif (page == "POSMON") {
+		} else if (page == "POSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -878,6 +882,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("POSITION MONITOR");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -925,11 +930,11 @@ var canvas_MCDU_base = {
 			me["Simple_R3"].setText("----.-X/-----.-X");
 			me["Simple_R4"].setText("----.-X/-----.-X");
 			me["Simple_R5"].setText("NAV -.-");
-			me["Simple_R5S"].setText("IRS3   ");
+			me["Simple_R5S"].setText("IRS3	 ");
 			me["Simple_R6S"].setText("SEL ");
 			me["Simple_C5"].setText("NAV -.-");
 			me["Simple_C5S"].setText("IRS2");
-		} elsif (page == "RADNAV") {
+		} else if (page == "RADNAV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
@@ -943,6 +948,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("RADIO NAV");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -1046,7 +1052,7 @@ var canvas_MCDU_base = {
 			me["Simple_R3S"].setText("CHAN/ MLS");
 			me["Simple_R4S"].setText("SLOPE   CRS");
 			me["Simple_R5S"].setText("FREQ/ADF2");
-		} elsif (page == "INITA") {
+		} else if (page == "INITA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
@@ -1060,6 +1066,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("INIT");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -1105,7 +1112,7 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].setColor(1,1,1);
 				me["Simple_L5"].show();
 				me["Simple_L5"].setText("---");
-			} elsif (costIndexSet.getValue() == 1) {
+			} else if (costIndexSet.getValue() == 1) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(0.0901,0.6039,0.7176);
 				me["Simple_L5"].show();
@@ -1118,7 +1125,7 @@ var canvas_MCDU_base = {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} elsif (cruiseSet.getValue() == 1 and cruiseTemp.getValue() != -999) {
+			} else if (cruiseSet.getValue() == 1 and cruiseTemp.getValue() != -999) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
@@ -1140,16 +1147,18 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
 				me["INITA_InitRequest"].hide();
-				if (getprop("autopilot/route-manager/route/wp[0]/latitude-deg") > 0) {
-					me["Simple_L4"].setText(sprintf("%6.2fN", getprop("autopilot/route-manager/route/wp[0]/latitude-deg")));
-				} else {
-					me["Simple_L4"].setText(sprintf("%6.2fS", getprop("autopilot/route-manager/route/wp[0]/latitude-deg") * -1));
-				}
-				if (getprop("autopilot/route-manager/route/wp[0]/longitude-deg") > 0) {
-					me["Simple_R4"].setText(sprintf("%7.2fE", getprop("autopilot/route-manager/route/wp[0]/longitude-deg")));
-				} else {
-					me["Simple_R4"].setText(sprintf("%7.2fW", getprop("autopilot/route-manager/route/wp[0]/longitude-deg") * -1));
-				}
+				me["Simple_L4"].setText("----.-");
+				me["Simple_R4"].setText("-----.--");
+				# if (getprop("autopilot/route-manager/route/wp[0]/latitude-deg") > 0) {
+#					me["Simple_L4"].setText(sprintf("%6.2fN", getprop("autopilot/route-manager/route/wp[0]/latitude-deg")));
+#				} else {
+#					me["Simple_L4"].setText(sprintf("%6.2fS", getprop("autopilot/route-manager/route/wp[0]/latitude-deg") * -1));
+#				}
+#				if (getprop("autopilot/route-manager/route/wp[0]/longitude-deg") > 0) {
+#					me["Simple_R4"].setText(sprintf("%7.2fE", getprop("autopilot/route-manager/route/wp[0]/longitude-deg")));
+#				} else {
+#					me["Simple_R4"].setText(sprintf("%7.2fW", getprop("autopilot/route-manager/route/wp[0]/longitude-deg") * -1));
+#				}
 			} else {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
@@ -1194,7 +1203,7 @@ var canvas_MCDU_base = {
 			me["Simple_R3"].setText("IRS INIT ");
 			me["Simple_R5"].setText("WIND ");
 			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));
-		} elsif (page == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1208,6 +1217,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("IRS INIT");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -1282,9 +1292,9 @@ var canvas_MCDU_base = {
 				#me["Simple_C3"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
 				if (gps_lat > 0 and gps_lon > 0) {
 					me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} elsif (gps_lat > 0) {
+				} else if (gps_lat > 0) {
 					me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} elsif (gps_lon > 0) {
+				} else if (gps_lon > 0) {
 					me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
 				} else {
 					me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
@@ -1296,9 +1306,9 @@ var canvas_MCDU_base = {
 				#me["Simple_C4"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
 				if (gps_lat > 0 and gps_lon > 0) {
 					me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} elsif (gps_lat > 0) {
+				} else if (gps_lat > 0) {
 					me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} elsif (gps_lon > 0) {
+				} else if (gps_lon > 0) {
 					me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
 				} else {
 					me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
@@ -1310,9 +1320,9 @@ var canvas_MCDU_base = {
 				#me["Simple_C5"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
 				if (gps_lat > 0 and gps_lon > 0) {
 					me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} elsif (gps_lat > 0) {
+				} else if (gps_lat > 0) {
 					me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} elsif (gps_lon > 0) {
+				} else if (gps_lon > 0) {
 					me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
 				} else {
 					me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
@@ -1341,7 +1351,7 @@ var canvas_MCDU_base = {
 			me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
 			me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
 
-		} elsif (page == "ROUTESELECTION") {
+		} else if (page == "ROUTESELECTION") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1355,6 +1365,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("ROUTE SELECTION");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -1386,15 +1397,15 @@ var canvas_MCDU_base = {
 
 			if (toFromSet.getValue() == 1 and alt_selected.getValue() == 0) {
 				me["Simple_Title"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
-			} elsif (toFromSet.getValue() == 0 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
+			} else if (toFromSet.getValue() == 0 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
 				me["Simple_Title"].setText(sprintf("%s", alt_airport.getValue()));
-			} elsif (toFromSet.getValue() == 1 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
+			} else if (toFromSet.getValue() == 1 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
 				me["Simple_Title"].setText(sprintf("%s", arrArpt.getValue() ~ "/" ~ alt_airport.getValue()));
 			} else {
 				me["Simple_Title"].setText("ROUTE SELECTION");
 			}
 
-		} elsif (page == "INITB") {
+		} else if (page == "INITB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1408,6 +1419,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
@@ -1527,7 +1539,7 @@ var canvas_MCDU_base = {
 				me["INITB_Block"].show();
 			}
 			
-		} elsif (page == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1541,6 +1553,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("FUEL PRED");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -1661,17 +1674,17 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].hide(); 
 			}
 			
-		} elsif (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
+		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
 			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
 				page = "PROGTO";
-			} elsif (getprop("FMGC/status/phase") == 2) {
+			} else if (getprop("FMGC/status/phase") == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
 				page = "PROGCLB";
-			} elsif (getprop("FMGC/status/phase") == 3) {
+			} else if (getprop("FMGC/status/phase") == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
 				page = "PROGCRZ";
-			} elsif (getprop("FMGC/status/phase") == 4 or getprop("FMGC/status/phase") == 5 or getprop("FMGC/status/phase") == 6) {
+			} else if (getprop("FMGC/status/phase") == 4 or getprop("FMGC/status/phase") == 5 or getprop("FMGC/status/phase") == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
 				page = "PROGDES";
 			}
@@ -1693,26 +1706,27 @@ var canvas_MCDU_base = {
 				if (flightNumSet.getValue() == 1) {
 					if (page == "PROGTO") {
 						me["Simple_Title"].setText(sprintf("TAKE OFF %s", flightNum.getValue()));
-					} elsif (page == "PROGCLB") {
+					} else if (page == "PROGCLB") {
 						me["Simple_Title"].setText(sprintf("CLIMB %s", flightNum.getValue()));
-					} elsif (page == "PROGCRZ") {
+					} else if (page == "PROGCRZ") {
 						me["Simple_Title"].setText(sprintf("CRUISE %s", flightNum.getValue()));
-					} elsif (page == "PROGDES") {
+					} else if (page == "PROGDES") {
 						me["Simple_Title"].setText(sprintf("DESCENT %s", flightNum.getValue()));
 					}
 				} else {
 					if (page == "PROGTO") {
 						me["Simple_Title"].setText("TAKE OFF");
-					} elsif (page == "PROGCLB") {
+					} else if (page == "PROGCLB") {
 						me["Simple_Title"].setText("CLIMB");
-					} elsif (page == "PROGCRZ") {
+					} else if (page == "PROGCRZ") {
 						me["Simple_Title"].setText("CRUISE");
-					} elsif (page == "PROGDES") {
+					} else if (page == "PROGDES") {
 						me["Simple_Title"].setText("DESCENT");
 					}
 				}
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				
+				me["Simple_Title"].show();
+				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -1738,7 +1752,7 @@ var canvas_MCDU_base = {
 					me.showCenterS(0, 0, 1, 0, 0, 0);
 					#me.showRight(0, 0, 1, 0, 0, 0); #Add when implement cruise phase
 					me.fontLeft(0, 0, default, 0, 0, 0);
-				} elsif (page == "PROGDES") {
+				} else if (page == "PROGDES") {
 					me.showRight(0, 1, 0, 0, 0, 0);
 				}
 				
@@ -1801,7 +1815,7 @@ var canvas_MCDU_base = {
 			me["Simple_C6S"].setText("ACCUR");
 			me["Simple_C6"].setText("HIGH");
 			
-		} elsif (page == "PERFTO") {
+		} else if (page == "PERFTO") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1815,6 +1829,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("TAKE OFF");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -1971,7 +1986,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-		} elsif (page == "PERFCLB") {
+		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -1985,6 +2000,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("CLB");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -2049,13 +2065,13 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
-				} elsif (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
+				} else if (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
 					me["Simple_L6S"].setText(" CONFIRM");
 					me["Simple_L6"].setText(" APPR PHASE");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} elsif (getprop("FMGC/status/phase") == 5) {
+				} else if (getprop("FMGC/status/phase") == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2134,7 +2150,7 @@ var canvas_MCDU_base = {
 
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
-		} elsif (page == "PERFCRZ") {
+		} else if (page == "PERFCRZ") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -2148,6 +2164,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("CRZ");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -2205,13 +2222,13 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
-				} elsif (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
+				} else if (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
 					me["Simple_L6S"].setText(" CONFIRM");
 					me["Simple_L6"].setText(" APPR PHASE");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} elsif (getprop("FMGC/status/phase") == 5) {
+				} else if (getprop("FMGC/status/phase") == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2280,7 +2297,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
 			
-		} elsif (page == "PERFDES") {
+		} else if (page == "PERFDES") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -2294,6 +2311,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("DES");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -2357,13 +2375,13 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
-				} elsif (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
+				} else if (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
 					me["Simple_L6S"].setText(" CONFIRM");
 					me["Simple_L6"].setText(" APPR PHASE");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} elsif (getprop("FMGC/status/phase") == 5) {
+				} else if (getprop("FMGC/status/phase") == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2447,7 +2465,7 @@ var canvas_MCDU_base = {
 
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
-		} elsif (page == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -2461,6 +2479,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].show();
 				me["PERFGA"].hide();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("APPR");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -2590,7 +2609,7 @@ var canvas_MCDU_base = {
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
 			me["Simple_C5S"].setText("VLS   ");
-		} elsif (page == "PERFGA") {
+		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -2604,6 +2623,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].show();
+				me["Simple_Title"].show();
 				me["Simple_Title"].setText("GO AROUND");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
@@ -2679,7 +2699,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-		} elsif (page == "LATREV") {
+		} else if (page == "LATREV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -2938,7 +2958,7 @@ var canvas_MCDU_base = {
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
-		} elsif (page == "VERTREV") {
+		} else if (page == "VERTREV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -3197,7 +3217,7 @@ var canvas_MCDU_base = {
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
-		} elsif (page == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -3525,7 +3545,7 @@ var canvas_MCDU_base = {
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
-		} elsif (page == "DUPLICATENAMES") {
+		} else if (page == "DUPLICATENAMES") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -3841,7 +3861,7 @@ var canvas_MCDU_base = {
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
-		} elsif (page == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -4169,7 +4189,7 @@ var canvas_MCDU_base = {
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
-		} elsif (page == "HOLD") {
+		} else if (page == "HOLD") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -4498,7 +4518,7 @@ var canvas_MCDU_base = {
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
-		} elsif (page == "DIRTO") {
+		} else if (page == "DIRTO") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
