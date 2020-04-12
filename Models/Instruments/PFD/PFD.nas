@@ -1131,7 +1131,7 @@ var canvas_PFD_1 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (FMGCphase.getValue() >= 2 and FMGCphase.getValue() <= 6) {
+			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and FMGCphase.getValue() <= 6) {
 				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -1156,10 +1156,19 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
+				me.FMGC_vsw = getprop("FMGC/internal/computed-speeds/vsw");
+				if (me.FMGC_vsw <= 30) {
+					me.ALPHAvsw = 0 - me.ASI;
+				} else if (me.FMGC_vsw >= 420) {
+					me.ALPHAvsw = 390 - me.ASI;
+				} else {
+					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
+				}
 				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
 				me["VLS_min"].show();
 				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
 				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
+				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
 				if (getprop("it-fbw/law") == 0) {
 					me["ALPHA_PROT"].show();
 					me["ALPHA_MAX"].show();
@@ -1833,7 +1842,7 @@ var canvas_PFD_2 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (FMGCphase.getValue() >= 2 and FMGCphase.getValue() <= 6) {
+			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and FMGCphase.getValue() <= 6) {
 				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -1858,10 +1867,19 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
+				me.FMGC_vsw = getprop("FMGC/internal/computed-speeds/vsw");
+				if (me.FMGC_vsw <= 30) {
+					me.ALPHAvsw = 0 - me.ASI;
+				} else if (me.FMGC_vsw >= 420) {
+					me.ALPHAvsw = 390 - me.ASI;
+				} else {
+					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
+				}
 				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
 				me["VLS_min"].show();
 				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
 				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
+				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
 				if (getprop("it-fbw/law") == 0) {
 					me["ALPHA_PROT"].show();
 					me["ALPHA_MAX"].show();

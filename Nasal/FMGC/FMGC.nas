@@ -426,10 +426,24 @@ var masterFMGC = maketimer(0.2, func {
 		} else if (flap == 3) { # 2
 			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_2 * 1.23);
 		} else if (flap == 4) { # 3
-			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_3 * 1.23);;
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_3 * 1.23);
 		} else if (flap == 5) { # FULL
 			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_full * 1.23);
 		}
+	}
+	
+	if (flap == 0) { # 0
+		setprop("FMGC/internal/computed-speeds/vsw", vs1g_clean);
+	} else if (flap == 1) { # 1
+		setprop("FMGC/internal/computed-speeds/vsw", vs1g_conf_1); 
+	} else if (flap == 2) { # 1+F
+		setprop("FMGC/internal/computed-speeds/vsw", vs1g_conf_1f);
+	} else if (flap == 3) { # 2
+		setprop("FMGC/internal/computed-speeds/vsw", vs1g_conf_2);
+	} else if (flap == 4) { # 3
+		setprop("FMGC/internal/computed-speeds/vsw", vs1g_conf_3);
+	} else if (flap == 5) { # FULL
+		setprop("FMGC/internal/computed-speeds/vsw", vs1g_conf_full);
 	}
 	
 	if (flap == 0) { # 0
