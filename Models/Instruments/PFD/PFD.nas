@@ -215,7 +215,7 @@ var canvas_PFD_base = {
 	getKeys: func() {
 		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
 		"FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box","FMA_Middle1",
-		"FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank",
+		"FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_clip","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank",
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber",
 		"ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
@@ -1106,6 +1106,10 @@ var canvas_PFD_1 = {
 			me["ASI_error"].hide();
 			me["ASI_frame"].setColor(1,1,1);
 			me["ASI_group"].show();
+			me["VLS_min"].hide();
+			me["ALPHA_PROT"].hide();
+			me["ALPHA_MAX"].hide();
+			me["ALPHA_SW"].hide();
 			
 			if (ind_spd <= 30) {
 				me.ASI = 0;
@@ -1136,7 +1140,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
 				}
-				me.FMGC_prot = getprop("FMGC/internal/computed-speeds/vls_min") * 0.95;
+				me.FMGC_prot = getprop("FMGC/internal/computed-speeds/alpha_prot");
 				if (me.FMGC_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
 				} else if (me.FMGC_prot >= 420) {
@@ -1144,7 +1148,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
 				}
-				me.FMGC_max = getprop("FMGC/internal/computed-speeds/vls_min") * 0.90;
+				me.FMGC_max = getprop("FMGC/internal/computed-speeds/alpha_max");
 				if (me.FMGC_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
 				} else if (me.FMGC_max >= 420) {
@@ -1154,8 +1158,8 @@ var canvas_PFD_1 = {
 				}
 				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
 				me["VLS_min"].show();
-				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6); #CHANGE LATER
-				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6); #CHANGE LATER
+				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
+				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
 				if (getprop("it-fbw/law") == 0) {
 					me["ALPHA_PROT"].show();
 					me["ALPHA_MAX"].show();
@@ -1165,15 +1169,10 @@ var canvas_PFD_1 = {
 					me["ALPHA_MAX"].hide();
 					me["ALPHA_SW"].show();
 				}
-			} else {
-				me["VLS_min"].hide();
-				me["ALPHA_PROT"].hide();
-				me["ALPHA_MAX"].hide();
-				me["ALPHA_SW"].hide();
 			}
 			
 			if (managed_spd.getValue() == 1) {
-				if (FMGCphase.getValue() == 5) {
+				if (getprop("FMGC/internal/decel") == 1) {
 					vapp = getprop("FMGC/internal/computed-speeds/vapp");
 					tgt_ias = vapp;
 					tgt_kts = vapp;
@@ -1809,6 +1808,10 @@ var canvas_PFD_2 = {
 			me["ASI_error"].hide();
 			me["ASI_frame"].setColor(1,1,1);
 			me["ASI_group"].show();
+			me["VLS_min"].hide();
+			me["ALPHA_PROT"].hide();
+			me["ALPHA_MAX"].hide();
+			me["ALPHA_SW"].hide();
 			
 			if (ind_spd <= 30) {
 				me.ASI = 0;
@@ -1839,7 +1842,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
 				}
-				me.FMGC_prot = getprop("FMGC/internal/computed-speeds/vls_min") * 0.95;
+				me.FMGC_prot = getprop("FMGC/internal/computed-speeds/alpha_prot");
 				if (me.FMGC_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
 				} else if (me.FMGC_prot >= 420) {
@@ -1847,7 +1850,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
 				}
-				me.FMGC_max = getprop("FMGC/internal/computed-speeds/vls_min") * 0.90;
+				me.FMGC_max = getprop("FMGC/internal/computed-speeds/alpha_max");
 				if (me.FMGC_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
 				} else if (me.FMGC_max >= 420) {
@@ -1857,8 +1860,8 @@ var canvas_PFD_2 = {
 				}
 				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
 				me["VLS_min"].show();
-				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6); #CHANGE LATER
-				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6); #CHANGE LATER
+				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
+				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
 				if (getprop("it-fbw/law") == 0) {
 					me["ALPHA_PROT"].show();
 					me["ALPHA_MAX"].show();
@@ -1868,15 +1871,10 @@ var canvas_PFD_2 = {
 					me["ALPHA_MAX"].hide();
 					me["ALPHA_SW"].show();
 				}
-			} else {
-				me["VLS_min"].hide();
-				me["ALPHA_PROT"].hide();
-				me["ALPHA_MAX"].hide();
-				me["ALPHA_SW"].hide();
 			}
 			
 			if (managed_spd.getValue() == 1) {
-				if (FMGCphase.getValue() == 5) {
+				if (getprop("FMGC/internal/decel") == 1) {
 					vapp = getprop("FMGC/internal/computed-speeds/vapp");
 					tgt_ias = vapp;
 					tgt_kts = vapp;

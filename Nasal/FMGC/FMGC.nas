@@ -246,30 +246,32 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("systems/pressurization/mode", "DE");
 	}
 	
-	if (aglalt < 7200 and (phase == "4" or mode == "G/S" or mode == "LAND" or mode == "FLARE")) {
+	if (!wowl and !wowr and aglalt < 7200 and (phase == "4" or mode == "G/S" or mode == "LAND" or mode == "FLARE")) {
 		setprop("FMGC/status/phase", 5);
 	}
 	
 	if (getprop("autopilot/route-manager/route/num") > 0 and getprop("autopilot/route-manager/active") == 1 and getprop("autopilot/route-manager/distance-remaining-nm") <= 15) {
 		setprop("FMGC/internal/decel", 1);
-		setprop("FMGC/status/phase", 5);
 	} else if (getprop("FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
 		setprop("FMGC/internal/decel", 0);
 	}
 	
-	if (phase == "5" and state1 == "TOGA" and state2 == "TOGA") {
+	#handle go-around
+	if ((phase == "5" or phase == "7") and state1 == "TOGA" and state2 == "TOGA") {
 		setprop("FMGC/status/phase", 6);
-		# set speed to green dot here
 		setprop("systems/pressurization/mode", "TO");
 		setprop("it-autoflight/input/toga", 1);
 	}
 	
-	#handle go-around
 	if (phase == "6" and alt >= reduc_agl_ft) {
 		setprop("FMGC/status/phase", 2);
 	}
 	
-	if (wowl and wowr and gs <= 40 and (phase == "2" or phase == "3" or phase == "4" or phase == "5" or phase == "6") and ap1 == 0 and ap2 == 0) {
+	if (wowl and wowr and (phase == "2" or phase == "3" or phase == "4" or phase == "5" or phase == "6")) {
+		setprop("FMGC/status/phase", 7);
+	}
+	
+	if (wowl and wowr and gs <= 40 and phase == "7" and ap1 == 0 and ap2 == 0) {
 		reset_FMGC();
 	}
 	
@@ -320,6 +322,15 @@ var masterFMGC = maketimer(0.2, func {
 			vapp = vls + dest_wind;
 		}
 	}
+	
+	aoa_prot = 15;
+	aoa_max = 17.5;
+	aoa_0 = -5;
+	aoa = getprop("systems/navigation/adr/output/aoa-1");
+	cas = getprop("systems/navigation/adr/output/cas-1");
+	
+	alpha_prot = cas * math.sqrt((aoa - aoa_0)/(aoa_prot - aoa_0));
+	alpha_max = cas * math.sqrt((aoa - aoa_0)/(aoa_max - aoa_0));
 	
 	# predicted to speeds
 	clean_to = 2 * tow * 0.45359237 + 85;
@@ -374,6 +385,8 @@ var masterFMGC = maketimer(0.2, func {
 	setprop("FMGC/internal/computed-speeds/flap3", flap3);
 	setprop("FMGC/internal/computed-speeds/vls", vls);
 	setprop("FMGC/internal/computed-speeds/vapp", vapp);
+	setprop("FMGC/internal/computed-speeds/alpha_prot", alpha_prot);
+	setprop("FMGC/internal/computed-speeds/alpha_max", alpha_max);
 	
 	setprop("FMGC/internal/computed-speeds/vs1g_clean_to", vs1g_clean_to);
 	setprop("FMGC/internal/computed-speeds/vs1g_conf_2_to", vs1g_conf_2_to);
@@ -393,18 +406,30 @@ var masterFMGC = maketimer(0.2, func {
 	setprop("FMGC/internal/computed-speeds/vls_appr", vls_appr);
 	setprop("FMGC/internal/computed-speeds/vapp_appr", vapp_appr);
 	
-	if (flap == 0) { # 0
-		setprop("FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.23);
-	} else if (flap == 1) { # 1
-		setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_1 * 1.23);
-	} else if (flap == 2) { # 1+F
-		setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_1f * 1.23);
-	} else if (flap == 3) { # 2
-		setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_2 * 1.23);
-	} else if (flap == 4) { # 3
-		setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_3 * 1.23);;
-	} else if (flap == 5) { # FULL
-		setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_full * 1.23);
+	# Need info on these, also correct for height at altitude...
+	# https://www.pprune.org/archive/index.php/t-587639.html
+	if (getprop("FMGC/status/to-state") == 1) {
+		if (flap == 0) { # 0
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.28);
+		} else if (flap == 1) { # 1
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_1 * 1.23); 
+		} else { # 1+F
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.13);
+		}
+	} else {
+		if (flap == 0) { # 0
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.23);
+		} else if (flap == 1) { # 1
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_1 * 1.23); 
+		} else if (flap == 2) { # 1+F
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_1f * 1.23);
+		} else if (flap == 3) { # 2
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_2 * 1.23);
+		} else if (flap == 4) { # 3
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_3 * 1.23);;
+		} else if (flap == 5) { # FULL
+			setprop("FMGC/internal/computed-speeds/vls_min", vs1g_conf_full * 1.23);
+		}
 	}
 	
 	if (flap == 0) { # 0
