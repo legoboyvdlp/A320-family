@@ -1149,16 +1149,16 @@ var canvas_MCDU_base = {
 				me["INITA_InitRequest"].hide();
 				me["Simple_L4"].setText("----.-");
 				me["Simple_R4"].setText("-----.--");
-				# if (getprop("autopilot/route-manager/route/wp[0]/latitude-deg") > 0) {
-#					me["Simple_L4"].setText(sprintf("%6.2fN", getprop("autopilot/route-manager/route/wp[0]/latitude-deg")));
-#				} else {
-#					me["Simple_L4"].setText(sprintf("%6.2fS", getprop("autopilot/route-manager/route/wp[0]/latitude-deg") * -1));
-#				}
-#				if (getprop("autopilot/route-manager/route/wp[0]/longitude-deg") > 0) {
-#					me["Simple_R4"].setText(sprintf("%7.2fE", getprop("autopilot/route-manager/route/wp[0]/longitude-deg")));
-#				} else {
-#					me["Simple_R4"].setText(sprintf("%7.2fW", getprop("autopilot/route-manager/route/wp[0]/longitude-deg") * -1));
-#				}
+				if (getprop("FMGC/flightplan[2]/wp[0]/lat") > 0) {
+					me["Simple_L4"].setText(sprintf("%6.2fN", getprop("FMGC/flightplan[2]/wp[0]/lat")));
+				} else {
+					me["Simple_L4"].setText(sprintf("%6.2fS", getprop("FMGC/flightplan[2]/wp[0]/lat") * -1));
+				}
+				if (getprop("FMGC/flightplan[2]/wp[0]/lon") > 0) {
+					me["Simple_R4"].setText(sprintf("%7.2fE", getprop("FMGC/flightplan[2]/wp[0]/lon")));
+				} else {
+					me["Simple_R4"].setText(sprintf("%7.2fW", getprop("FMGC/flightplan[2]/wp[0]/lon") * -1));
+				}
 			} else {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
@@ -1258,15 +1258,15 @@ var canvas_MCDU_base = {
 			
 			if (toFromSet.getValue() == 1) {
 				#need to convert lat/long format
-				if (getprop("autopilot/route-manager/route/wp[0]/latitude-deg") > 0) {
-					me["Simple_L1"].setText(sprintf("%6.2fN", getprop("autopilot/route-manager/route/wp[0]/latitude-deg")));
+				if (getprop("FMGC/flightplan[2]/wp[0]/lat") > 0) {
+					me["Simple_L1"].setText(sprintf("%6.2fN", getprop("FMGC/flightplan[2]/wp[0]/lat")));
 				} else {
-					me["Simple_L1"].setText(sprintf("%6.2fS", getprop("autopilot/route-manager/route/wp[0]/latitude-deg") * -1));
+					me["Simple_L1"].setText(sprintf("%6.2fS", getprop("FMGC/flightplan[2]/wp[0]/lat") * -1));
 				}
-				if (getprop("autopilot/route-manager/route/wp[0]/longitude-deg") > 0) {
-					me["Simple_R1"].setText(sprintf("%7.2fE", getprop("autopilot/route-manager/route/wp[0]/longitude-deg")));
+				if (getprop("FMGC/flightplan[2]/wp[0]/lon") > 0) {
+					me["Simple_R1"].setText(sprintf("%7.2fE", getprop("FMGC/flightplan[2]/wp[0]/lon")));
 				} else {
-					me["Simple_R1"].setText(sprintf("%7.2fW", getprop("autopilot/route-manager/route/wp[0]/longitude-deg") * -1));
+					me["Simple_R1"].setText(sprintf("%7.2fW", getprop("FMGC/flightplan[2]/wp[0]/lon") * -1));
 				}
 				me["Simple_C1"].setText(sprintf("%s", depArpt.getValue()));
 			} else {
