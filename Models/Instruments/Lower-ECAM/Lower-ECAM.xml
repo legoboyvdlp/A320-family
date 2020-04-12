@@ -37,4 +37,12 @@
 		</emission>
 	</animation>
 
+	<effect>
+		<inherits-from>Effects/model-interior-display</inherits-from>
+		<object-name>lecam.screen</object-name>
+		<parameters>
+			<contrast>0.7</contrast>
+		</parameters>
+	</effect>
+
 </PropertyList>

@@ -36,5 +36,13 @@
 			<factor-prop>controls/lighting/DU/du6</factor-prop>
 		</emission>
 	</animation>
+   
+	<effect>
+		<inherits-from>Effects/model-interior-display</inherits-from>
+		<object-name>pfd2.screen</object-name>
+		<parameters>
+			<contrast>0.7</contrast>
+		</parameters>
+	</effect>
 
 </PropertyList>

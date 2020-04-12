@@ -30,6 +30,14 @@
  		</emission>
  	</animation>
 
+	<effect>
+		<inherits-from>Effects/model-interior-display</inherits-from>
+		<object-name>mcdu1.screen</object-name>
+		<parameters>
+			<contrast>0.7</contrast>
+		</parameters>
+	</effect>
+
 	<animation>
 		<type>pick</type>
 		<object-name>BRT</object-name>
