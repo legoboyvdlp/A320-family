@@ -3996,4 +3996,8 @@
 		</save>
 	</nasal>
 
+	<maintainance>
+		<cockpit-cleaness-factor type="float">1.0</cockpit-cleaness-factor>
+	</maintainance>
+
 </PropertyList>

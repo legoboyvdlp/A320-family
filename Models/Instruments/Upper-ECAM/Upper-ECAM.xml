@@ -42,6 +42,7 @@
 		<object-name>uecam.screen</object-name>
 		<parameters>
 			<contrast>0.7</contrast>
+			<dirt-factor><use>/maintainance/cockpit-cleaness-factor</use></dirt-factor>
 		</parameters>
 	</effect>
 
