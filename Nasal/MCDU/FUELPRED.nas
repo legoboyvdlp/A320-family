@@ -2,6 +2,7 @@
 
 # Copyright (c) 2020 Matthew Maring (hayden2000)
 
+# From INIT-B
 var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
 var block = props.globals.getNode("FMGC/internal/block", 1);
 var taxi_fuel = props.globals.getNode("FMGC/internal/taxi-fuel", 1);
@@ -20,57 +21,9 @@ var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
 var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 
-var initInputB = func(key, i) {
+var fuelPredInput = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
-	if (key == "L1") {
-		if (scratchpad == "CLR") {
-			notAllowed(i);
-		} else {
-			var tfs = size(scratchpad);
-			if (tfs >= 1 and tfs <= 4) {
-				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 10.0) {
-					setprop("FMGC/internal/taxi-fuel", scratchpad);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-					
-					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-
-				} else {
-					notAllowed(i);
-				}
-			} else {
-				notAllowed(i);
-			} 
-		}
-	}
-	# else if (key == "L2") {
-#		if (scratchpad == "CLR") {
-#			notAllowed(i);
-#		} else if (getprop("FMGC/internal/trip-fuel") != 0) {
-#			var tfs = size(scratchpad);
-#			if (tfs >= 1 and tfs <= 4) {
-#				var temp_rte = num(scratchpad * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100));
-#				if (scratchpad >= 0.0 and scratchpad <= block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - temp_rte) {
-#					setprop("FMGC/internal/trip-fuel", scratchpad);
-#					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-#					
-#					setprop("FMGC/internal/rte-rsv", temp_rte);
-#					  setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-#					  setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-#				} else {
-#					notAllowed(i);
-#				}
-#			} else {
-#				notAllowed(i);
-#			}
-#		} else {
-#			  notAllowed(i);
-#		  }
-#	
-#	}
-	else if (key == "L3") {
+	if (key == "L3") {
 		if (scratchpad == "CLR") {
 			notAllowed(i);
 		} else if (getprop("FMGC/internal/trip-fuel") != 0) {
@@ -105,7 +58,6 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/alt-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-					
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
 					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
@@ -128,13 +80,11 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/final-fuel", scratchpad);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-					
 					setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
 					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
 					setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
 					setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-
 				} else {
 					notAllowed(i);
 				}
@@ -142,7 +92,7 @@ var initInputB = func(key, i) {
 				notAllowed(i);
 			} 
 		}
-	} else if (key == "R1") {
+	} else if (key == "R3") {
 		if (scratchpad == "CLR") {
 			notAllowed(i);
 		} else {
@@ -157,12 +107,20 @@ var initInputB = func(key, i) {
 				var zfwcgs = size(zfwi[0]);
 				var zfws = size(zfwi[1]);
 				if (zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) {
-					setprop("FMGC/internal/zfwcg", zfwi[0]);
+					setprop("FMGC/internal/zfwcg", zfwcg);
 					setprop("FMGC/internal/zfwcg-set", 1);
+					if (getprop("FMGC/internal/block-set") != 1) {
+						setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+						setprop("FMGC/internal/block-set", 1);
+					}
 				}
 				if (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9) {
-					setprop("FMGC/internal/zfw", zfwi[1]);
+					setprop("FMGC/internal/zfw", zfw);
 					setprop("FMGC/internal/zfw-set", 1);
+					if (getprop("FMGC/internal/block-set") != 1) {
+						setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+						setprop("FMGC/internal/block-set", 1);
+					}
 				}
 				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -174,6 +132,10 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and zfwcg >= 1 and zfwcg <= 5 and scratchpad > 0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/zfwcg", scratchpad);
 					setprop("FMGC/internal/zfwcg-set", 1);
+					if (getprop("FMGC/internal/block-set") != 1) {
+						setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+						setprop("FMGC/internal/block-set", 1);
+					}
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
@@ -181,38 +143,6 @@ var initInputB = func(key, i) {
 			} else {
 				notAllowed(i);
 			}
-		}
-	} else if (key == "R2") {
-		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/block", 0.0);
-			setprop("FMGC/internal/block-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else {
-			var tfs = size(scratchpad);
-			var maxblock = getprop("options/maxblock");
-			if (tfs == 0) {
-				setprop("MCDU[" ~ i ~ "]/scratchpad", sprintf("%3.1f", math.round(getprop("consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
-			} else if (tfs >= 1 and tfs <= 5) {
-				if (num(scratchpad) != nil and scratchpad >= 1.0 and scratchpad <= maxblock) {
-					setprop("FMGC/internal/block", scratchpad);
-					setprop("FMGC/internal/block-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-				} else {
-					notAllowed(i);
-				}
-			} else {
-				notAllowed(i);
-			}
-		}
-	} else if (key == "R3") {
-		if (scratchpad != "") {
-			notAllowed(i);
-		} else {
-			setprop("FMGC/internal/zfw", num((getprop("fdm/jsbsim/inertia/weight-lbs") - getprop("consumables/fuel/total-fuel-lbs")) / 1000));
-			setprop("FMGC/internal/zfw-set", 1);
-			setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
-			setprop("FMGC/internal/block-set", 1);
 		}
 	}
 }

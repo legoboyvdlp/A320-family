@@ -24,6 +24,10 @@
 			<legend>X</legend>
 			<key>Esc</key>
 			<binding>
+				<command>nasal</command>
+				<script>setprop("FMGC/keyboard-right", 0);</script>
+			</binding>
+			<binding>
 				<command>dialog-close</command>
 			</binding>
 		</button>
@@ -308,6 +312,16 @@
 			<legend>PROG</legend>
 			<pref-height>25</pref-height>
 			<pref-width>40</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("prog", 1);</script>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-1</property>
+						<value>110</value>
+					</greater-than-equals>
+				</condition>
+			</binding>
 		</button>
 		
 		<button>
