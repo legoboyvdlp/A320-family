@@ -1879,7 +1879,6 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R1"].setText("--- ");
 			me["Simple_R2"].setText("[    ]  ");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
@@ -1922,6 +1921,13 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L5"].setFontSize(small);
 			}
+			
+			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
+				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].departure_runway.id));
+			} else {
+				me["Simple_R1"].setText("--- ");
+			}
+			
 			if (flapTHSSet.getValue() == 1) {
 				me["Simple_R3"].setFont(default); 
 				me["Simple_R3"].setFontSize(normal);
@@ -1949,29 +1955,6 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R5"].setFontSize(small);
 			}
-			
-			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
-			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
-			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
-			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
-			me["Simple_L6"].setText(" TO DATA");
-			me["Simple_L1S"].setText(" V1");
-			me["Simple_L2S"].setText(" VR");
-			me["Simple_L3S"].setText(" V2");
-			me["Simple_L4S"].setText("TRANS ALT");
-			me["Simple_L5S"].setText("THR RED/ACC");
-			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R1"].setText("--- ");
-			me["Simple_R2"].setText("[    ]  ");
-			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
-			me["Simple_R6"].setText("PHASE ");
-			me["Simple_R1S"].setText("RWY ");
-			me["Simple_R2S"].setText("TO SHIFT ");
-			me["Simple_R3S"].setText("FLAPS/THS");
-			me["Simple_R4S"].setText("FLEX TO TEMP");
-			me["Simple_R5S"].setText("ENG OUT ACC");
-			me["Simple_R6S"].setText("NEXT ");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_to")));
@@ -2503,7 +2486,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(small, small, small, small, small, normal);
-				me.fontSizeRight(small, small, small, small, normal, normal);
+				me.fontSizeRight(normal, small, small, small, normal, normal);
 				me.fontSizeCenter(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
@@ -2556,7 +2539,11 @@ var canvas_MCDU_base = {
 			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
 			
 			me["Simple_R1S"].setText("FINAL");
-			me["Simple_R1"].setText("-----");
+			if (fmgc.flightPlanController.flightplans[2].approach.id != nil) {
+				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].approach.id));
+			} else {
+				me["Simple_R1"].setText("--- ");
+			}
 			
 			me["Simple_R2S"].setText("MDA");
 			me["Simple_R2"].setText(" [    ]");
