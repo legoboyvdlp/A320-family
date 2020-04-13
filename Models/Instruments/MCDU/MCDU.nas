@@ -1078,7 +1078,7 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
-				me.showRight(0, 0, 0, 1, 1, 1);
+				me.showRight(0, 0, 1, 1, 1, 1);
 				me.showRightS(1, 0, -1, 1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, -1);
 				
@@ -1171,12 +1171,12 @@ var canvas_MCDU_base = {
 			}
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
-				me["Simple_R3"].show();
-				me.showRightArrow(0, 0, 1, 0, 0, 0);
+				me["Simple_R3"].setColor(AMBER);
+				me.showRightArrow(0, 0, -1, 0, 0, 0);
 			} else {
 				me["INITA_AlignIRS"].hide();
-				me["Simple_R3"].hide();
-				me.showRightArrow(0, 0, -1, 0, 0, 0);
+				me["Simple_R3"].setColor(WHITE);
+				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			}
 			if (tropoSet.getValue() == 1) {
 				me["Simple_R6"].setFontSize(normal); 

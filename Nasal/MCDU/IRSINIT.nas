@@ -9,6 +9,7 @@ var initInputIRS = func(key, i) {
 				setprop("FMGC/internal/align-set", 1);
 			} else {
 				setprop("controls/adirs/mcducbtn", 1);
+				setprop("FMGC/internal/align-set", 0);
 				setprop("MCDU[" ~ i ~ "]/page", "INITA");
 			}
 		} else if (getprop("FMGC/internal/tofrom-set") == 0) {
