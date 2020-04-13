@@ -1147,18 +1147,16 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
 				me["INITA_InitRequest"].hide();
-				me["Simple_L4"].setText("----.-");
-				me["Simple_R4"].setText("-----.--");
-				if (getprop("FMGC/flightplan[2]/wp[0]/lat") > 0) {
-					me["Simple_L4"].setText(sprintf("%6.2fN", getprop("FMGC/flightplan[2]/wp[0]/lat")));
-				} else {
-					me["Simple_L4"].setText(sprintf("%6.2fS", getprop("FMGC/flightplan[2]/wp[0]/lat") * -1));
-				}
-				if (getprop("FMGC/flightplan[2]/wp[0]/lon") > 0) {
-					me["Simple_R4"].setText(sprintf("%7.2fE", getprop("FMGC/flightplan[2]/wp[0]/lon")));
-				} else {
-					me["Simple_R4"].setText(sprintf("%7.2fW", getprop("FMGC/flightplan[2]/wp[0]/lon") * -1));
-				}
+				dms = getprop("FMGC/flightplan[2]/wp[0]/lat");
+				degrees = int(dms);
+				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+				sign = degrees >= 0 ? "N" : "S";
+				me["Simple_L4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
+				dms = getprop("FMGC/flightplan[2]/wp[0]/lon");
+				degrees = int(dms);
+				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+				sign = degrees >= 0 ? "E" : "W";
+				me["Simple_R4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
 			} else {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
@@ -1257,17 +1255,16 @@ var canvas_MCDU_base = {
 			}
 			
 			if (toFromSet.getValue() == 1) {
-				#need to convert lat/long format
-				if (getprop("FMGC/flightplan[2]/wp[0]/lat") > 0) {
-					me["Simple_L1"].setText(sprintf("%6.2fN", getprop("FMGC/flightplan[2]/wp[0]/lat")));
-				} else {
-					me["Simple_L1"].setText(sprintf("%6.2fS", getprop("FMGC/flightplan[2]/wp[0]/lat") * -1));
-				}
-				if (getprop("FMGC/flightplan[2]/wp[0]/lon") > 0) {
-					me["Simple_R1"].setText(sprintf("%7.2fE", getprop("FMGC/flightplan[2]/wp[0]/lon")));
-				} else {
-					me["Simple_R1"].setText(sprintf("%7.2fW", getprop("FMGC/flightplan[2]/wp[0]/lon") * -1));
-				}
+				dms = getprop("FMGC/flightplan[2]/wp[0]/lat");
+				degrees = int(dms);
+				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+				sign = degrees >= 0 ? "N" : "S";
+				me["Simple_L1"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
+				dms = getprop("FMGC/flightplan[2]/wp[0]/lon");
+				degrees = int(dms);
+				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+				sign = degrees >= 0 ? "E" : "W";
+				me["Simple_R1"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
 				me["Simple_C1"].setText(sprintf("%s", depArpt.getValue()));
 			} else {
 				me["Simple_L1"].setText("-----.--");
@@ -1275,58 +1272,28 @@ var canvas_MCDU_base = {
 				me["Simple_C1"].setText("----");
 			}
 			
-			#need to convert lat/long format
-			gps_lat = getprop("position/latitude-deg");
-			gps_lon = getprop("position/longitude-deg");
-			if (gps_lat > 0) {
-				me["Simple_L2"].setText(sprintf("%6.2fN", gps_lat));
-			} else {
-				me["Simple_L2"].setText(sprintf("%6.2fS", gps_lat * -1));
-			}
-			if (gps_lon > 0) {
-				me["Simple_R2"].setText(sprintf("%7.2fE", gps_lon));
-			} else {
-				me["Simple_R2"].setText(sprintf("%7.2fW", gps_lon * -1));
-			}
+			dms = getprop("position/latitude-deg");
+			degrees = int(dms);
+			minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+			sign = degrees >= 0 ? "N" : "S";
+			me["Simple_L2"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
+			dms2 = getprop("position/longitude-deg");
+			degrees2 = int(dms2);
+			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
+			sign2 = degrees2 >= 0 ? "E" : "W";
+			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			if (getprop("systems/navigation/adr/operating-1")) {
-				#me["Simple_C3"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
-				if (gps_lat > 0 and gps_lon > 0) {
-					me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else if (gps_lat > 0) {
-					me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} else if (gps_lon > 0) {
-					me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else {
-					me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				}
+				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C3"].setText("-----.--/-----.--");
 			}
 			if (getprop("systems/navigation/adr/operating-2")) {
-				#me["Simple_C4"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
-				if (gps_lat > 0 and gps_lon > 0) {
-					me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else if (gps_lat > 0) {
-					me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} else if (gps_lon > 0) {
-					me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else {
-					me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				}
+				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C4"].setText("-----.--/-----.--");
 			}
 			if (getprop("systems/navigation/adr/operating-3")) {
-				#me["Simple_C5"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
-				if (gps_lat > 0 and gps_lon > 0) {
-					me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else if (gps_lat > 0) {
-					me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} else if (gps_lon > 0) {
-					me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else {
-					me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				}
+				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C5"].setText("-----.--/-----.--");
 			}
