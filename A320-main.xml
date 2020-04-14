@@ -341,6 +341,13 @@
 						</binding>
 					</item>
 					<item>
+						<label>Maintainance</label>
+						<binding>
+							<command>nasal</command>
+							<script>Dialogs.maintainance.toggle()</script>
+						</binding>
+					</item>
+					<item>
 						<label>Announcements</label>
 						<binding>
 							<command>nasal</command>
@@ -3990,6 +3997,7 @@
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
 			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
+			<file>Aircraft/A320-family/gui/dialogs/maintainance.nas</file>
 		</Dialogs>
 		<save>
 			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
