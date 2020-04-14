@@ -8,19 +8,21 @@ var initInputA = func(key, i) {
 	if (key == "L2") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/alt-airport", "");
+			setprop("FMGC/internal/alt-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			fmgc.updateARPT();
-		} else if (scratchpad == "") {
-			setprop("FMGC/internal/alt-selected", 1);
+		#} else if (scratchpad == "") {
+			#setprop("FMGC/internal/alt-selected", 1);
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else if (getprop("FMGC/internal/tofrom-set") == 1) {
 			var tfs = size(scratchpad);
 			if (tfs == 4) {
 				setprop("FMGC/internal/alt-airport", scratchpad);
+				setprop("FMGC/internal/alt-set", 1);
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				fmgc.updateARPT();
-				setprop("FMGC/internal/alt-selected", 1);
+				#setprop("FMGC/internal/alt-selected", 1);
 				#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 			} else {
 				notAllowed(i);
@@ -70,23 +72,37 @@ var initInputA = func(key, i) {
 			setprop("FMGC/internal/cruise-ft", 10000);
 			setprop("FMGC/internal/cruise-fl", 100);
 			setprop("FMGC/internal/cruise-lvl-set", 0);
+			setprop("FMGC/internal/cruise-temp", 15);
+			setprop("FMGC/internal/cruise-temp-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");	
 		} else if (find("/", scratchpad) != -1) {
 			var crztemp = split("/", scratchpad);
-			var crz = int(crztemp[0]);
-			var crzs = size(crztemp[0]);
-			var temp = num(crztemp[1]);
+			if (find("FL", crztemp[0]) != -1) {
+				var crz = int(substr(crztemp[0], 2));
+				var crzs = size(substr(crztemp[0], 2));
+			} else {
+				var crz = int(crztemp[0]);
+				var crzs = size(crztemp[0]);
+			}
+			var temp = int(crztemp[1]);
 			var temps = size(crztemp[1]);
-			if (crzs >= 1 and crzs <= 3 and temps >= 1 and temps <= 5) {
-				if (crz == nil or temp == nil) {
+			print(crzs);
+			if (crzs == 0 and temps >= 1 and temps <= 3 and temp != nil and getprop("FMGC/internal/cruise-lvl-set")) {
+				if (temp >= -99 and temp <= 99) {
+					setprop("FMGC/internal/cruise-temp", temp);
+					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				} else {
 					notAllowed(i);
-				} else if (crz > 0 and crz <= 430 and temp >= -100 and temp < 100) {
+				}
+			} else if (crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
+				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
 					setprop("FMGC/internal/cruise-ft", crz * 100);
 					setprop("FMGC/internal/cruise-fl", crz);
 					setprop("FMGC/internal/cruise-fl-prog", crz);
 					setprop("FMGC/internal/cruise-lvl-set", 1);
 					setprop("FMGC/internal/cruise-temp", temp);
+					setprop("FMGC/internal/cruise-temp-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
@@ -95,19 +111,37 @@ var initInputA = func(key, i) {
 				notAllowed(i);
 			}
 		} else {
-			notAllowed(i);
+			if (find("FL", scratchpad) != -1) {
+				var crz = int(substr(scratchpad, 2));
+				var crzs = size(substr(scratchpad, 2));
+			} else {
+				var crz = int(scratchpad);
+				var crzs = size(scratchpad);
+			}
+			if (crzs >= 1 and crzs <= 3 and crz != nil) {
+				if (crz > 0 and crz <= 390) {
+					setprop("FMGC/internal/cruise-ft", crz * 100);
+					setprop("FMGC/internal/cruise-fl", crz);
+					setprop("FMGC/internal/cruise-fl-prog", crz);
+					setprop("FMGC/internal/cruise-lvl-set", 1);
+					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				} else {
+					notAllowed(i);
+				}
+			} else {
+				notAllowed(i);
+			}
 		}
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {
-			clearFPLNComputer();
 			setprop("FMGC/internal/dep-arpt", "");
 			setprop("FMGC/internal/arr-arpt", "");
 			setprop("FMGC/internal/tofrom-set", 0);
 			fmgc.flightPlanController.reset();
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (scratchpad == "") {
-			setprop("FMGC/internal/alt-selected", 0);
+		#} else if (scratchpad == "") {
+			#setprop("FMGC/internal/alt-selected", 0);
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else {
 			var tfs = size(scratchpad);

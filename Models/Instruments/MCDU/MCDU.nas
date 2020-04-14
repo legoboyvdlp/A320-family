@@ -96,13 +96,15 @@ var flightNum = props.globals.getNode("MCDUC/flight-num", 1);
 var flightNumSet = props.globals.getNode("MCDUC/flight-num-set", 1);
 var depArpt = props.globals.getNode("FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("FMGC/internal/arr-arpt", 1);
-var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
 var toFromSet = props.globals.getNode("FMGC/internal/tofrom-set", 1);
+var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
+var altSet = props.globals.getNode("FMGC/internal/alt-set", 1);
 var costIndex = props.globals.getNode("FMGC/internal/cost-index", 1);
 var costIndexSet = props.globals.getNode("FMGC/internal/cost-index-set", 1);
 var cruiseFL = props.globals.getNode("FMGC/internal/cruise-fl", 1);
 var cruiseSet = props.globals.getNode("FMGC/internal/cruise-lvl-set", 1);
 var cruiseTemp = props.globals.getNode("FMGC/internal/cruise-temp", 1);
+var cruiseTempSet = props.globals.getNode("FMGC/internal/cruise-temp-set", 1);
 var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
@@ -1125,9 +1127,15 @@ var canvas_MCDU_base = {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} else if (cruiseSet.getValue() == 1 and cruiseTemp.getValue() != -999) {
+			} else if (cruiseSet.getValue() == 1 and cruiseTempSet.getValue() == 1) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
+			} else if (cruiseSet.getValue() == 1) {
+				me["INITA_CruiseFLTemp"].hide();
+				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
+				setprop("FMGC/internal/cruise-temp", 15 - (2 * cruiseFL.getValue() / 10));
+				setprop("FMGC/internal/cruise-temp-set", 1);
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
@@ -1139,10 +1147,10 @@ var canvas_MCDU_base = {
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				if (alt_airport.getValue() == "") {
-					me["Simple_L2"].setText("NONE");
-				} else {
+				if (altSet.getValue() == 1) {
 					me["Simple_L2"].setText(alt_airport.getValue());
+				} else {
+					me["Simple_L2"].setText("NONE");
 				}
 				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
