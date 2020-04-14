@@ -147,6 +147,7 @@ var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
 var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
 var alt_efob = props.globals.getNode("FMGC/internal/alt-efob", 1);
 var fob = props.globals.getNode("FMGC/internal/fob", 1);
+var fffq_sensor = props.globals.getNode("FMGC/internal/fffq-sensor", 1);
 var gw = props.globals.getNode("FMGC/internal/gw", 1);
 var cg = props.globals.getNode("FMGC/internal/cg", 1);
 
@@ -1472,7 +1473,7 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("---.-/----");
 				me["Simple_L3"].setText("---.-/---.-");
 				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/----");
+				me["Simple_L5"].setText("---.-/0030");
 				me["Simple_L6"].setText("---.-");
 				me["Simple_R3S"].show();
 				me["Simple_R3"].show(); 
@@ -1610,7 +1611,7 @@ var canvas_MCDU_base = {
 				setprop("FMGC/internal/fob", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
 				setprop("FMGC/internal/gw", num(getprop("fdm/jsbsim/inertia/weight-lbs") / 1000));
 				setprop("FMGC/internal/cg", num(getprop("FMGC/internal/zfwcg")));
-				me["Simple_R4"].setText(sprintf("%4.1f/FF+FQ", fob.getValue()));
+				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fffq_sensor.getValue(), fob.getValue()));
 				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
 				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
@@ -1619,7 +1620,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L3"].setText("---.-/---.-");
 				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/----");
+				me["Simple_L5"].setText("---.-/0030");
 				me["Simple_L6"].setText("---.-");
 
 				me["Simple_R4"].setText("---.-/FF+FQ");
@@ -2514,7 +2515,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
 			
 			me["Simple_R1S"].setText("FINAL");
-			if (fmgc.flightPlanController.flightplans[2].approach.id != nil) {
+			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].approach.id));
 			} else {
 				me["Simple_R1"].setText("--- ");

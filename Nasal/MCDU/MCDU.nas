@@ -89,11 +89,12 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/alt-fuel", 0);
 	setprop("FMGC/internal/alt-time", "0000");
 	setprop("FMGC/internal/final-fuel", 0);
-	setprop("FMGC/internal/final-time", "0000");
+	setprop("FMGC/internal/final-time", "0030");
 	setprop("FMGC/internal/min-dest-fob", 0);
 	setprop("FMGC/internal/tow", 0);
 	setprop("FMGC/internal/lw", 0);
 	setprop("FMGC/internal/trip-wind", "HD000");
+	setprop("FMGC/internal/fffq-sensor", "FF+FQ");
 	setprop("FMGC/internal/extra-fuel", 0);
 	setprop("FMGC/internal/extra-time", "0000");
 	
@@ -488,7 +489,9 @@ var rskbutton = func(btn, i) {
 			notAllowed(i);
 		}
 	} else if (btn == "4") {
-		if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+			fuelPredInput("R4",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R4",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R4",i);

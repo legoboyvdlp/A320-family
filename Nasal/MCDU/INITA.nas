@@ -87,7 +87,6 @@ var initInputA = func(key, i) {
 			}
 			var temp = int(crztemp[1]);
 			var temps = size(crztemp[1]);
-			print(crzs);
 			if (crzs == 0 and temps >= 1 and temps <= 3 and temp != nil and getprop("FMGC/internal/cruise-lvl-set")) {
 				if (temp >= -99 and temp <= 99) {
 					setprop("FMGC/internal/cruise-temp", temp);
