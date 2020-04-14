@@ -57,7 +57,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/arr-arpt", "");
 	setprop("FMGC/internal/tofrom-set", 0);
 	setprop("FMGC/internal/alt-airport", "");
-	setprop("FMGC/internal/tofrom-set", 0);
+	setprop("FMGC/internal/alt-set", 0);
 	setprop("FMGC/internal/cost-index", "0");
 	setprop("FMGC/internal/cost-index-set", 0);
 	setprop("FMGC/internal/cruise-ft", 10000);
@@ -65,7 +65,8 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/cruise-lvl-set", 0);
 	setprop("FMGC/internal/tropo", 36090);
 	setprop("FMGC/internal/tropo-set", 0);
-	setprop("FMGC/internal/cruise-temp", -999);
+	setprop("FMGC/internal/cruise-temp", 15);
+	setprop("FMGC/internal/cruise-temp-set", 0);
 	
 	# IRSINIT
 	setprop("FMGC/internal/align-set", 0);
