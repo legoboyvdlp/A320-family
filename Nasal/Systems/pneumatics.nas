@@ -178,7 +178,7 @@ var PNEU = {
 		eng2_starter = getprop("systems/pneumatic/eng2-starter");
 		groundair = getprop("systems/pneumatic/groundair");
 		groundair_supp = getprop("controls/pneumatic/switches/groundair");
-		rpmapu = getprop("systems/apu/rpm");
+		rpmapu = getprop("engines/engine[2]/n1");
 		stateL = getprop("engines/engine[0]/state");
 		stateR = getprop("engines/engine[1]/state");
 		bleedapu_fail = getprop("systems/failures/bleed-apu");
@@ -196,7 +196,7 @@ var PNEU = {
 		# Air Sources/PSI
 		if (rpmapu >= 94.9 and bleedapu_sw and !bleedapu_fail) {
 			setprop("systems/pneumatic/bleedapu", 34);
-			if (getprop("controls/APU/master") == 1) {
+			if (getprop("controls/apu/master") == 1) {
 				setprop("systems/apu/bleed-used", 1);
 			}
 		} else {

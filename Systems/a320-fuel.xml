@@ -312,8 +312,8 @@
 		<switch name="/systems/fuel/valves/apu-lp-valve-cmd">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/APU/master eq 1
-				/controls/APU/fire-btn eq 0
+				/controls/apu/master eq 1
+				/controls/apu/fire-btn eq 0
 			</test>
 		</switch>
 		

@@ -6,8 +6,8 @@
 # Usage Example: pts.Class.SubClass.node.getValue()
 
 var APU = {
-	masterSw: props.globals.getNode("controls/APU/master"),
-	rpm: props.globals.getNode("systems/apu/rpm"),
+	masterSw: props.globals.getNode("controls/apu/master"),
+	rpm: props.globals.getNode("engines/engine[2]/n1"),
 };
 
 var Consumables = {

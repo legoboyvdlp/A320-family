@@ -203,6 +203,7 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.ADIRSnew.init();
 	systems.eng_init();
+	systems.APUController.init();
 	systems.fire_init();
 	systems.autobrake_init();
 	fmgc.flightPlanController.reset();
