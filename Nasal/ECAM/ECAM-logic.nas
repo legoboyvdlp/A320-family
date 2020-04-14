@@ -16,7 +16,7 @@ var state2Node = props.globals.getNode("engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("fdm/jsbsim/position/wow", 1);
 var apu_rpm    = props.globals.getNode("systems/apu/rpm", 1);
 var wing_pb    = props.globals.getNode("controls/switches/wing", 1);
-var apumaster  = props.globals.getNode("controls/APU/master", 1);
+var apumaster  = props.globals.getNode("controls/apu/master", 1);
 var apu_bleedSw   = props.globals.getNode("controls/pneumatic/switches/bleedapu", 1);
 var gear       = props.globals.getNode("gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("controls/engines/engine[0]/cutoff-switch", 1);
@@ -424,7 +424,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnevacSw);
 			}
 			
-			if (eng1FireGnevacApu.clearFlag == 0 and getprop("controls/APU/master") and getprop("systems/apu/rpm") > 99) {
+			if (eng1FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("systems/apu/rpm") > 99) {
 				eng1FireGnevacApu.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnevacApu);
@@ -607,7 +607,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnevacSw);
 			}
 			
-			if (eng2FireGnevacApu.clearFlag == 0 and getprop("controls/APU/master") and getprop("systems/apu/rpm") > 99) {
+			if (eng2FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("systems/apu/rpm") > 99) {
 				eng2FireGnevacApu.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnevacApu);
@@ -660,7 +660,7 @@ var messages_priority_3 = func {
 	
 	# APU Fire
 	if (apuFire.active == 1) {
-		if (apuFirePB.clearFlag == 0 and !getprop("controls/APU/fire-btn")) {
+		if (apuFirePB.clearFlag == 0 and !getprop("controls/apu/fire-btn")) {
 			apuFirePB.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFirePB);
@@ -670,19 +670,19 @@ var messages_priority_3 = func {
 			apuFireAgentTimer.msg = " -AGENT AFT " ~ getprop("systems/fire/apu/agent-timer") ~ " S...DISCH";
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("controls/APU/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") != 0) {
+		if (apuFireAgent.clearFlag == 0 and getprop("controls/apu/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") != 0) {
 			apuFireAgentTimer.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgentTimer);
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("controls/APU/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") == 0) {
+		if (apuFireAgent.clearFlag == 0 and getprop("controls/apu/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") == 0) {
 			apuFireAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgent);
 		}
 		
-		if (apuFireMaster.clearFlag == 0 and getprop("controls/APU/master")) {
+		if (apuFireMaster.clearFlag == 0 and getprop("controls/apu/master")) {
 			apuFireMaster.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireMaster);
@@ -1204,7 +1204,7 @@ var messages_priority_2 = func {
 		apuEmerShutdown.isMainMsg = 1;
 	}
 	
-	if (apuEmerShutdownMast.clearFlag == 0 and getprop("controls/APU/master") and apuEmerShutdown.active == 1) {
+	if (apuEmerShutdownMast.clearFlag == 0 and getprop("controls/apu/master") and apuEmerShutdown.active == 1) {
 		apuEmerShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);

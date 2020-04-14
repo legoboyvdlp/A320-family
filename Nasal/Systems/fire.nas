@@ -37,7 +37,7 @@ var wow = props.globals.getNode("fdm/jsbsim/position/wow", 1);
 var dcbatNode = props.globals.getNode("systems/electrical/bus/dc-bat", 1);
 var dcessNode = props.globals.getNode("systems/electrical/bus/dc-ess", 1);
 var apuBleedNode = props.globals.getNode("systems/apu/bleed-used", 1);
-var apuMaster = props.globals.getNode("controls/APU/master", 1);
+var apuMaster = props.globals.getNode("controls/apu/master", 1);
 
 var fire_init = func {
 	setprop("controls/OH/protectors/fwddisch", 0);
@@ -645,8 +645,8 @@ eng2Agent2TimerMakeTimerFunc = func() {
 	}
 }
 
-setlistener("/controls/APU/fire-btn", func() { 
-	if (getprop("controls/APU/fire-btn") == 1) { 
+setlistener("/controls/apu/fire-btn", func() { 
+	if (getprop("controls/apu/fire-btn") == 1) { 
 		ecam.shutUpYou(); 
 		apuAgentTimerMakeTimer.stop();
 		apuAgentTimer.setValue(10);
@@ -790,7 +790,7 @@ createFireBottleListener("/controls/engines/engine[0]/agent1-btn", "/controls/en
 createFireBottleListener("/controls/engines/engine[0]/agent2-btn", "/controls/engines/engine[0]/fire-btn", 1);
 createFireBottleListener("/controls/engines/engine[1]/agent1-btn", "/controls/engines/engine[1]/fire-btn", 2);
 createFireBottleListener("/controls/engines/engine[1]/agent2-btn", "/controls/engines/engine[1]/fire-btn", 3);
-createFireBottleListener("/controls/APU/agent-btn", "/controls/APU/fire-btn", 4);
+createFireBottleListener("/controls/apu/agent-btn", "/controls/apu/fire-btn", 4);
 createCargoFireBottleListener("/controls/fire/cargo/aftdisch", 0);
 createCargoFireBottleListener("/controls/fire/cargo/fwddisch", 1);
 

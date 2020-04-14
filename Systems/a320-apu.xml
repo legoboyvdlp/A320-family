@@ -1,0 +1,52 @@
+<!-- Airbus A320 APU -->
+
+<!-- Copyright (c) 2020 Jonathan Redpath -->
+
+<system name="A320: APU">
+
+    <channel name="Inlet Flap">
+        <!-- 100% RPM = 49300 -->
+        <!-- bleed 1.8 kg / sec @ 42 psig -->
+        <!-- fuel 148 kg/hr -->
+        <!-- 0% 427°C (800°F)
+10% 788°C (1450°F)
+20% 899°C (1650°F)
+30% 899°C (1650°F)
+50% 853°C (1567°F)
+80% 788°C (1450°F)
+100% 670°C (1238°F) (start)
+100% 722°C (1332°F) -->
+<!-- oil psi min 35, normal 50 - 60 -->
+<!-- oil temp 135 max, 185 @ generator -->
+<!-- generator 24034 rpm, 10129 rpm fuel ctl, 32045 rpm starter, 51965 rpm cooling, 4137rpm oil pump -->
+<!-- power 400kw, 132 elec, 252 pneumatic -->
+
+        <fcs_function name="/systems/apu/egt-degC">
+            <function>
+            <!-- SIC Dry motoring already accounted for: the table is zero for its RPM (~25%) -->
+            <table>
+                <independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+                <tableData>
+					5.0     20.0
+					8.0     45.0
+					10.0    120.0
+					12.0    225.0
+					18.0    430.0
+					25.0    500.0
+					27.0    560.0
+					30.0    720.0
+					35.0    785.0
+					40.0    800.0
+					45.0    795.0
+					50.0    785.0
+					60.0    755.0
+                    75.0    645.0
+                    90.0    520.0
+                    100.0   415.0
+                </tableData>
+            </table>
+            </function>
+        </fcs_function>
+    </channel>
+
+</system>

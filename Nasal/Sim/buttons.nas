@@ -164,8 +164,8 @@ var CVR_test = func {
 	}
 }
 
-setlistener("/controls/APU/master", func() {
-	if (!getprop("controls/APU/master") and systems.apuEmerShutdown.getBoolValue()) {
+setlistener("/controls/apu/master", func() {
+	if (!getprop("controls/apu/master") and systems.apuEmerShutdown.getBoolValue()) {
 		systems.apuEmerShutdown.setBoolValue(0);
 	}
 }, 0, 0);

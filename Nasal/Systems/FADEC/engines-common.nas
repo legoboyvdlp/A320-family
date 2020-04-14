@@ -24,8 +24,8 @@ var eng_common_init = func {
 }
 
 # Start APU
-setlistener("/controls/APU/start", func {
-	if (getprop("controls/APU/master") == 1 and getprop("controls/APU/start") == 1) {
+setlistener("/controls/apu/start", func {
+	if (getprop("controls/apu/master") == 1 and getprop("controls/apu/start") == 1) {
 		apuBleedChk.stop();
 		setprop("systems/apu/bleed-counting", 0);
 		if (getprop("systems/acconfig/autoconfig-running") == 0) {
@@ -35,7 +35,7 @@ setlistener("/controls/APU/start", func {
 			interpolate("/systems/apu/rpm", apu_max, 5);
 			interpolate("/systems/apu/egt", apu_egt_min, 5);
 		}
-	} else if (getprop("controls/APU/master") == 0) {
+	} else if (getprop("controls/apu/master") == 0) {
 		apu_egt_check.stop();
 		apu_stop();
 	}
@@ -57,13 +57,13 @@ var apu_egt2_check = maketimer(0.5, func {
 });
 
 # Stop APU
-setlistener("/controls/APU/master", func {
-	if (getprop("controls/APU/master") == 0) {
-		setprop("controls/APU/start", 0);
+setlistener("/controls/apu/master", func {
+	if (getprop("controls/apu/master") == 0) {
+		setprop("controls/apu/start", 0);
 		apu_egt_check.stop();
 		apu_egt2_check.stop();
 		apu_stop();
-	} else if (getprop("controls/APU/master") == 1) {
+	} else if (getprop("controls/apu/master") == 1) {
 		apuBleedChk.stop();
 		setprop("systems/apu/bleed-counting", 0);
 		setprop("systems/apu/bleed-used", 0);
