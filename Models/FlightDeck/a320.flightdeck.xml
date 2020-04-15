@@ -6328,6 +6328,10 @@
 		<object-name>qnh-test</object-name>
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-test</object-name>
+		<object-name>dme</object-name>
+		<object-name>dme20</object-name>
+		<object-name>dme1</object-name>
+		<object-name>dme120</object-name>
 		<diffuse>
 			<red>0.89</red>
 			<green>0.37</green>
@@ -6347,6 +6351,37 @@
 			<red>0.89</red>
 			<green>0.37</green>
 			<blue>0.08</blue>
+		</emission>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>chrono1</object-name>
+		<object-name>chrono2_1</object-name>
+		<object-name>chrono2_2</object-name>
+		<object-name>chrono3</object-name>
+		<object-name>UTC_1</object-name>
+		<object-name>UTC_2</object-name>
+		<object-name>UTC_3</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
 		</emission>
 	</animation>
 
