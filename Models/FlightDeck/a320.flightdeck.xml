@@ -440,9 +440,7 @@
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
 		<object-name>terr_on_nd_label</object-name>
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>clock_glare</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
@@ -682,6 +680,77 @@
 				<property>controls/gear/brake-parking</property>
 			</binding>
 		</action>
+	</animation>
+
+	<!-- Terr on ND -->
+	<animation>
+		<type>pick</type>
+		<object-name>terr_on_nd_l</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/switches/terr_on_nd_l</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>terr_on_nd_on_l</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>controls/switches/terr_on_nd_l</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>terr_on_nd_r</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/switches/terr_on_nd_r</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>terr_on_nd_on_r</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>controls/switches/terr_on_nd_r</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
 	</animation>
 
 	<!-- Brake's fans -->
@@ -5021,9 +5090,7 @@
 		<object-name>brakes_accum_psi.mark</object-name>
 		<object-name>brakes_lb_psi.mark</object-name>
 		<object-name>brakes_rb_psi.mark</object-name>
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>clock_glare</object-name>
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>integ_lt.mark</object-name>
@@ -5124,15 +5191,13 @@
 		<object-name>brakes_accum_psi.mark</object-name>
 		<object-name>brakes_lb_psi.mark</object-name>
 		<object-name>brakes_rb_psi.mark</object-name>
-<!--		<object-name>clock_et_selector</object-name>-->
-<!--		<object-name>clock_utc_selector</object-name>-->
-<!--		<object-name>clock_reset_pushbutton</object-name>-->
-<!--		<object-name>clock_chr_pushbutton</object-name>-->
-<!--		<object-name>clock_date_set_pushbutton</object-name>-->
+<!--		<object-name>et_knob</object-name>-->
+<!--		<object-name>clock_knob</object-name>-->
+<!--		<object-name>chrono_reset</object-name>-->
+<!--		<object-name>chrono_btn</object-name>-->
+<!--		<object-name>clock_set</object-name>-->
 <!--		<object-name>clock_display</object-name>-->
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>clock_glare</object-name>
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>integ_lt.mark</object-name>
@@ -6334,14 +6399,12 @@
 		<object-name>compass_box</object-name>
 		<object-name>iesi</object-name>
 		<object-name>clock_body</object-name>
-		<object-name>clock_et_selector</object-name>
-		<object-name>clock_utc_selector</object-name>
-		<object-name>clock_reset_pushbutton</object-name>
-		<object-name>clock_chr_pushbutton</object-name>
-		<object-name>clock_date_set_pushbutton</object-name>
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+		<object-name>clock_glare</object-name>
 		<object-name>gear_lever_body</object-name>
 		<object-name>ParkBrk</object-name>
 		<object-name>RudderTrim</object-name>
@@ -6457,9 +6520,7 @@
 
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock-glare</inherits-from>
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>clock_glare</object-name>
 	</effect>
 
 	<effect>
@@ -6475,17 +6536,15 @@
 
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
-		<object-name>clock</object-name>
+<!--		<object-name>clock</object-name>-->
 		<object-name>clock_body</object-name>
-		<object-name>clock_et_selector</object-name>
-		<object-name>clock_utc_selector</object-name>
-		<object-name>clock_reset_pushbutton</object-name>
-		<object-name>clock_chr_pushbutton</object-name>
-		<object-name>clock_date_set_pushbutton</object-name>
-		<object-name>clock_display</object-name>
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+<!--		<object-name>clock_display</object-name>-->
+		<object-name>clock_glare</object-name>
 	</effect>
 
 	<!-- move any objects requiring lightmap to another effect file -->
@@ -6501,14 +6560,12 @@
 		<object-name>ceiling</object-name>
 		<object-name>compass_box</object-name>
 		<object-name>clock_body</object-name>
-		<object-name>clock_et_selector</object-name>
-		<object-name>clock_utc_selector</object-name>
-		<object-name>clock_reset_pushbutton</object-name>
-		<object-name>clock_chr_pushbutton</object-name>
-		<object-name>clock_date_set_pushbutton</object-name>
-		<object-name>clock_glare_c</object-name>
-		<object-name>clock_glare_l</object-name>
-		<object-name>clock_glare_r</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+		<object-name>clock_glare</object-name>
 		<object-name>DoorC</object-name>
 		<object-name>efis_box_1</object-name>
 		<object-name>efis_box_2</object-name>
@@ -6760,22 +6817,36 @@
 	</animation>
 
 	<animation>
-		<name>Clock lighting</name>
-		<type>material</type>
+		<type>select</type>
+		<object-name>clock_display_illuminated</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
 		<object-name>clock_display</object-name>
 		<condition>
-			<not>
-				<and>
-					<greater-than>
-						<property>sim/model/lights/dome-light</property>
-						<value>0</value>
-					</greater-than>
-					<less-than>
-						<property>controls/lighting/main-panel-norm</property>
-						<value>0.25</value>
-					</less-than>
-				</and>
-			</not>
+			<less-than>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</less-than>
+		</condition>
+	</animation>
+
+	<animation>
+		<name>Clock lighting</name>
+		<type>material</type>
+		<object-name>clock_display_illuminated</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</greater-than-equals>
 		</condition>
 		<emission>
 			<red>0.1</red>
@@ -6790,18 +6861,10 @@
 		<type>material</type>
 		<object-name>clock_display</object-name>
 		<condition>
-			<and>
-				<not>
-					<greater-than>
-						<property>controls/lighting/main-panel-norm</property>
-						<value>0.25</value>
-					</greater-than>
-				</not>
-				<greater-than>
-					<property>sim/model/lights/dome-light</property>
-					<value>0</value>
-				</greater-than>
-			</and>
+			<less-than>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</less-than>
 		</condition>
 		<emission>
 			<red>0.20</red>
@@ -6973,7 +7036,7 @@
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.152</y-m>
-			<z-m>0.197</z-m>
+			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
@@ -7004,7 +7067,7 @@
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.175</y-m>
-			<z-m>0.197</z-m>
+			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
@@ -7035,7 +7098,7 @@
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.144</y-m>
-			<z-m>0.197</z-m>
+			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
@@ -7066,7 +7129,7 @@
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.158</y-m>
-			<z-m>0.197</z-m>
+			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
@@ -7097,7 +7160,7 @@
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.175</y-m>
-			<z-m>0.197</z-m>
+			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
@@ -7127,7 +7190,7 @@
 		<name>chrono3</name>
 		<offsets>
 			<x-m>-0.54</x-m>
-			<y-m>0.16</y-m>
+			<y-m>0.158</y-m>
 			<z-m>0.1785</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -7156,7 +7219,7 @@
 
 	<animation>
 		<type>pick</type>
-		<object-name>clock_reset_pushbutton</object-name>
+		<object-name>chrono_reset</object-name>
 		<property>instrumentation/chrono/chrono-reset</property>
 		<action>
 			<button>0</button>
@@ -7171,7 +7234,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>clock_chr_pushbutton</object-name>
+		<object-name>chrono_btn</object-name>
 		<property>instrumentation/chrono/chrono-reset</property>
 		<action>
 			<button>0</button>
@@ -7197,7 +7260,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>clock_date_set_pushbutton</object-name>
+		<object-name>clock_set</object-name>
 		<property>instrumentation/clock/set-knob</property>
 		<action>
 			<button>0</button>
@@ -7224,7 +7287,7 @@
 	<animation>
 		<name>UTC selector rotate</name>
 		<type>pick</type>
-		<object-name>clock_utc_selector</object-name>
+		<object-name>clock_knob</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -7252,7 +7315,7 @@
 	<animation>
 		<name>UTC selector rotate</name>
 		<type>rotate</type>
-		<object-name>clock_utc_selector</object-name>
+		<object-name>clock_knob</object-name>
 		<property>instrumentation/clock/utc-selector</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -7260,16 +7323,16 @@
 			<entry><ind>2</ind><dep>90</dep></entry>
 		</interpolation>
 		<axis>
-			<object-name>clock_utc_selector.axis</object-name>
+			<object-name>clock_knob.axis</object-name>
 		</axis>
 	</animation>
 	
 	<animation>
 		<type>knob</type>
-		<object-name>clock_et_selector</object-name>
+		<object-name>et_knob</object-name>
 		<property>instrumentation/clock/et-selector</property>
 		<axis>
-			<object-name>clock_et_selector.axis</object-name>
+			<object-name>et_knob.axis</object-name>
 		</axis>
 		<action>
 			<binding>
@@ -7295,7 +7358,7 @@
 	<animation>
 		<name>ET selector rotate</name>
 		<type>rotate</type>
-		<object-name>clock_et_selector</object-name>
+		<object-name>et_knob</object-name>
 		<property>instrumentation/clock/et-selector</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -7303,7 +7366,7 @@
 			<entry><ind>2</ind><dep>90</dep></entry>
 		</interpolation>
 		<axis>
-			<object-name>clock_et_selector.axis</object-name>
+			<object-name>et_knob.axis</object-name>
 		</axis>
 	</animation>
 
