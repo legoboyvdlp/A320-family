@@ -1,27 +1,5 @@
 <?xml version="1.0"?>
 
-<!--
-  File:     APS3200.xml
-  Author:   AeromatiC++ v 3.3.10
-
-  See: http://wiki.flightgear.org/JSBSim_Engines#FGTurbine
-
-  Inputs:
-    name:                    APS3200
-    type:                    Turbine Engine
-    thrust:                  2.6 lbf
-    bypass ratio:            0.070:1
-    overall pressure ratio:  8.0:1
-    augmented?               no
-    injected?                no
-
-  Outputs
-    tsfc:                    0.8
-    engine weight:           1.0 lbs
-    engine length:           0.3 ft
-    engine diameter:         0.1 ft
--->
-
 <turbine_engine name="APS3200">
   <milthrust> 2.6 </milthrust>
   <bypassratio>     0.000 </bypassratio>
@@ -37,6 +15,9 @@
   <n2startrate> 1.8222</n2startrate>
   <idlen1>         99.9 </idlen1>
   <idlen2>         99.9 </idlen2>
+  <n1spindown>     20</n1spindown>
+  <n2spindown>     20</n2spindown>
+  <disable-windmill> 1</disable-windmill>
   
   <maxn1>         100.0 </maxn1>
   <maxn2>         100.0 </maxn2>
