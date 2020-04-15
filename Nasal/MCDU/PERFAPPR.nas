@@ -19,7 +19,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("FMGC/internal/dest-qnh", -1);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (num(scratchpad) != nil and (scratchpad >= 25 and scratchpad <= 60) or (scratchpad >= 900 and scratchpad <= 1100)) {
+		} else if (num(scratchpad) != nil and (scratchpad >= 28.06 and scratchpad <= 31.01) or (scratchpad >= 745 and scratchpad <= 1050)) {
 			# doesn't support accidental temp input yet
 			setprop("FMGC/internal/dest-qnh", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -31,7 +31,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("FMGC/internal/dest-temp", -999);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (num(scratchpad) != nil and scratchpad >= -100 and scratchpad < 100) {
+		} else if (num(scratchpad) != nil and scratchpad >= -99 and scratchpad < 99) {
 			setprop("FMGC/internal/dest-temp", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
@@ -51,7 +51,7 @@ var perfAPPRInput = func(key, i) {
 			var wind = int(weather[1]);
 			var winds = size(weather[1]);
 			if (mags >= 1 and mags <= 3 and winds >= 1 and winds <= 3) {
-				if (mag != nil and wind != nil and mag >= 1 and mag <= 360 and wind >= 0 and wind <= 100) {
+				if (mag != nil and wind != nil and mag >= 0 and mag <= 360 and wind >= 0 and wind <= 200) {
 					setprop("FMGC/internal/dest-mag", weather[0]);
 					setprop("FMGC/internal/dest-wind", weather[1]);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
