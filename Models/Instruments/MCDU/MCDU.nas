@@ -1847,7 +1847,7 @@ var canvas_MCDU_base = {
 			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
 			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
 			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
-			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
+			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
 			me["Simple_L2S"].setText(" VR");
@@ -2378,14 +2378,14 @@ var canvas_MCDU_base = {
 				if (getprop("it-autoflight/input/kts-mach")) {
 					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("it-autoflight/input/spd-mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("it-autoflight/input/spd-kts")));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
 			
 			if (costIndexSet.getValue() == 1) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %2.0f", costIndex.getValue()));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
@@ -2398,7 +2398,7 @@ var canvas_MCDU_base = {
 			if (getprop("it-autoflight/input/kts-mach")) {
 				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("FMGC/internal/mng-spd")));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %3.0f", getprop("FMGC/internal/mng-spd")));
 			}
 			
 			me["Simple_L5"].setText(" EXPEDITE");
@@ -2407,7 +2407,7 @@ var canvas_MCDU_base = {
 			me["Simple_R1"].setText("---");
 			
 			me["Simple_C2"].setText("         PRED TO");
-			me["Simple_R2"].setText(sprintf("FL%s", getprop("it-autoflight/input/alt") / 100));
+			me["Simple_R2"].setText(sprintf("FL%3.0f", getprop("it-autoflight/input/alt") / 100));
 			
 			me["Simple_R3S"].setText("DIST");
 			me["Simple_R3"].setText("---");
@@ -2499,14 +2499,14 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L2S"].setText("TEMP");
 			if (dest_temp.getValue() != -999) {
-				me["Simple_L2"].setText(sprintf("%3.0fg  ", dest_temp.getValue()));
+				me["Simple_L2"].setText(sprintf("%3.0fg", dest_temp.getValue()));
 			} else {
-				me["Simple_L2"].setText("---g  ");
+				me["Simple_L2"].setText("---g");
 			}
 			
 			me["Simple_L3S"].setText("MAG WIND");
 			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
-				me["Simple_L3"].setText(sprintf("%3.0fg/", dest_mag.getValue()) ~ sprintf("%3.0f", dest_wind.getValue()));
+				me["Simple_L3"].setText(sprintf("%3.0fg", dest_mag.getValue()) ~ sprintf("/%3.0f", dest_wind.getValue()));
 			} else {
 				me["Simple_L3"].setText("---g/---");;
 			}
@@ -2642,7 +2642,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
+			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" PREV");
