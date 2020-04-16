@@ -277,7 +277,7 @@ var canvas_MCDU_base = {
 	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
-	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group"];
+	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -302,6 +302,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].show();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
@@ -632,6 +633,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -694,6 +696,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -755,6 +758,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -814,6 +818,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -878,6 +883,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -944,6 +950,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1062,6 +1069,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].show();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1217,6 +1225,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].show();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1263,22 +1272,52 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
+			me["Simple_L1S"].setText("LAT");
+				me["Simple_R1S"].setText("LONG");
+			if (getprop("FMGC/internal/align-ref-lat-edit")) {
+				me["IRSINIT_1"].show();
+				me["IRSINIT_2"].hide();
+			} else if (getprop("FMGC/internal/align-ref-long-edit")) {
+				me["IRSINIT_1"].hide();
+				me["IRSINIT_2"].show();
+			} else {
+				me["IRSINIT_1"].hide();
+				me["IRSINIT_2"].hide();
+			}
+			
 			if (toFromSet.getValue() == 1) {
-				dms = getprop("FMGC/flightplan[2]/wp[0]/lat");
-				degrees = int(dms);
-				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-				sign = degrees >= 0 ? "N" : "S";
-				me["Simple_L1"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
-				dms = getprop("FMGC/flightplan[2]/wp[0]/lon");
-				degrees = int(dms);
-				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-				sign = degrees >= 0 ? "E" : "W";
-				me["Simple_R1"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
-				me["Simple_C1"].setText(sprintf("%s", depArpt.getValue()));
+				degrees = getprop("FMGC/internal/align-ref-lat-degrees");
+				minutes = getprop("FMGC/internal/align-ref-lat-minutes");
+				sign = getprop("FMGC/internal/align-ref-lat-sign");
+				dms_lat = getprop("FMGC/flightplan[2]/wp[0]/lat");
+				degrees_lat = int(dms_lat);
+				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
+				sign_lat = degrees_lat >= 0 ? "N" : "S";
+				lat_same = degrees_lat == degrees and minutes_lat == minutes and sign_lat == sign;
+				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
+				
+				degrees = getprop("FMGC/internal/align-ref-long-degrees");
+				minutes = getprop("FMGC/internal/align-ref-long-minutes");
+				sign = getprop("FMGC/internal/align-ref-long-sign");
+				dms_long = getprop("FMGC/flightplan[2]/wp[0]/lon");
+				degrees_long = int(dms_long);
+				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
+				sign_long = degrees_long >= 0 ? "E" : "W";
+				long_same = degrees_long == degrees and minutes_long == minutes and sign_long == sign;
+				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
+				
+				if (lat_same and long_same) {
+					me["Simple_C1"].setText(getprop("FMGC/flightplan[2]/wp[0]/id"));
+					me["Simple_C1"].setColor(GREEN);
+				} else {
+					me["Simple_C1"].setText("----");
+					me["Simple_C1"].setColor(WHITE);
+				}
 			} else {
 				me["Simple_L1"].setText("-----.--");
 				me["Simple_R1"].setText("------.--");
 				me["Simple_C1"].setText("----");
+				me["Simple_C1"].setColor(WHITE);
 			}
 			
 			dms = getprop("position/latitude-deg");
@@ -1291,35 +1330,35 @@ var canvas_MCDU_base = {
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
 			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			if (getprop("systems/navigation/adr/operating-1")) {
+			if (getprop("systems/navigation/adr/operating-1") and getprop("FMGC/internal/align1-done")) {
 				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C3"].setText("-----.--/-----.--");
 			}
-			if (getprop("systems/navigation/adr/operating-2")) {
+			if (getprop("systems/navigation/adr/operating-2") and getprop("FMGC/internal/align2-done")) {
 				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C4"].setText("-----.--/-----.--");
 			}
-			if (getprop("systems/navigation/adr/operating-3")) {
+			if (getprop("systems/navigation/adr/operating-3") and getprop("FMGC/internal/align3-done")) {
 				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C5"].setText("-----.--/-----.--");
 			}
 			
 			if (align_set.getValue() == 1) {
-				#still need * to right of button instead of arrow
 				me["Simple_R6"].setText("CONFIRM ALIGN ");
 				me.colorRight("ack", "ack", "ack", "ack", "ack", "amb");
-				me.colorRightArrow("ack", "ack", "ack", "ack", "ack", "amb");
+				me["IRSINIT_star"].show();
+				me.showRightArrow(0, 0, 0, 0, 0, -1);
 			} else {
 				me["Simple_R6"].setText("ALIGN ON REF ");
+				me["IRSINIT_star"].hide();
+				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
-			me["Simple_L1S"].setText("LAT");
 			me["Simple_L2S"].setText("LAT");
 			me["Simple_L6"].setText(" RETURN");
-			me["Simple_R1S"].setText("LONG");
 			me["Simple_R2S"].setText("LONG");
 			me["Simple_C1S"].setText("REFERENCE");
 			me["Simple_C2S"].setText("GPS POSITION");
@@ -1334,6 +1373,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1388,6 +1428,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].show();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1522,6 +1563,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].show();
 				me["PROG"].hide();
@@ -1671,6 +1713,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].show();
@@ -1798,6 +1841,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1952,6 +1996,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2116,6 +2161,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2263,6 +2309,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2431,6 +2478,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2579,6 +2627,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2669,6 +2718,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2928,6 +2978,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -3187,6 +3238,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -3515,6 +3567,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -3831,6 +3884,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -4159,6 +4213,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -4488,6 +4543,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].show();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -4746,6 +4802,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
