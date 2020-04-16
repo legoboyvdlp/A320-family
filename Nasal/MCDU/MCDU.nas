@@ -70,6 +70,17 @@ var MCDU_reset = func(i) {
 	
 	# IRSINIT
 	setprop("FMGC/internal/align-set", 0);
+	setprop("FMGC/internal/align-ref-lat-degrees", 0);
+	setprop("FMGC/internal/align-ref-lat-minutes", 0);
+	setprop("FMGC/internal/align-ref-lat-sign", "");
+	setprop("FMGC/internal/align-ref-long-degrees", 0);
+	setprop("FMGC/internal/align-ref-long-minutes", 0);
+	setprop("FMGC/internal/align-ref-long-sign", "");
+	setprop("FMGC/internal/align-ref-lat-edit", 0);
+	setprop("FMGC/internal/align-ref-long-edit", 0);
+	setprop("FMGC/internal/align1-done", 0);
+	setprop("FMGC/internal/align2-done", 0);
+	setprop("FMGC/internal/align3-done", 0);
 
 	# ROUTE SELECTION
 	setprop("FMGC/internal/alt-selected", 0);
@@ -182,6 +193,8 @@ var lskbutton = func(btn, i) {
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+			initInputIRS("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PROGTO") {
@@ -414,6 +427,8 @@ var rskbutton = func(btn, i) {
 	if (btn == "1") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("R1",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+			initInputIRS("R1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R1",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "RADNAV") {
@@ -633,6 +648,8 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myArrival[i].scrollUp();
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
 			canvas_mcdu.myDirTo[i].scrollUp();
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+			initInputIRS("up",i);
 		}
 	} else if (btn == "down") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("MCDU[" ~ i ~ "]/page") == "F-PLNB") {
@@ -643,7 +660,9 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myArrival[i].scrollDn();
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
 			canvas_mcdu.myDirTo[i].scrollDn();
-		}
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+			initInputIRS("down",i);
+		} 
 	}
 }
 

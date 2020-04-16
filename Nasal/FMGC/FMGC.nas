@@ -130,6 +130,9 @@ var FMGCinit = func {
 	setprop("FMGC/internal/loc-source", "NAV0");
 	setprop("FMGC/internal/optalt", 0);
 	setprop("FMGC/internal/landing-time", -99);
+	setprop("FMGC/internal/align1-time", -99);
+	setprop("FMGC/internal/align2-time", -99);
+	setprop("FMGC/internal/align3-time", -99);
 	masterFMGC.start();
 	various.start();
 	various2.start();
@@ -808,6 +811,7 @@ var switchDatabase = func {
 	setprop("FMGC/internal/navdatabasecode2", code1);
 }
 
+# Landing to phase 7
 setlistener("gear/gear[1]/wow", func() {
 	if (timer30secLanding.isRunning) {
 		timer30secLanding.stop();
@@ -824,5 +828,65 @@ var timer30secLanding = maketimer(1, func() {
 		setprop("FMGC/status/phase", 7);
 		setprop("FMGC/internal/landing-time", -99);
 		timer30secLanding.stop();
+	}
+});
+
+# Align IRS 1
+setlistener("systems/navigation/adr/operating-1", func() {
+	if (timer48gpsAlign1.isRunning) {
+		timer48gpsAlign1.stop();
+	}
+	
+	if (getprop("FMGC/internal/align1-time") == -99) {
+		timer48gpsAlign1.start();
+		setprop("FMGC/internal/align1-time", pts.Sim.Time.elapsedSec.getValue());
+	}
+}, 0, 0);
+
+var timer48gpsAlign1 = maketimer(1, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align1-time") + 48) {
+		setprop("FMGC/internal/align1-done", 1);
+		setprop("FMGC/internal/align1-time", -99);
+		timer48gpsAlign1.stop();
+	}
+});
+
+# Align IRS 2
+setlistener("systems/navigation/adr/operating-2", func() {
+	if (timer48gpsAlign2.isRunning) {
+		timer48gpsAlign2.stop();
+	}
+	
+	if (getprop("FMGC/internal/align2-time") == -99) {
+		timer48gpsAlign2.start();
+		setprop("FMGC/internal/align2-time", pts.Sim.Time.elapsedSec.getValue());
+	}
+}, 0, 0);
+
+var timer48gpsAlign2 = maketimer(1, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align2-time") + 48) {
+		setprop("FMGC/internal/align2-done", 1);
+		setprop("FMGC/internal/align2-time", -99);
+		timer48gpsAlign2.stop();
+	}
+});
+
+# Align IRS 3
+setlistener("systems/navigation/adr/operating-3", func() {
+	if (timer48gpsAlign3.isRunning) {
+		timer48gpsAlign3.stop();
+	}
+	
+	if (getprop("gear/gear[1]/wow") == 1 and getprop("FMGC/internal/align3-time") == -99) {
+		timer48gpsAlign3.start();
+		setprop("FMGC/internal/align3-time", pts.Sim.Time.elapsedSec.getValue());
+	}
+}, 0, 0);
+
+var timer48gpsAlign3 = maketimer(1, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align3-time") + 48) {
+		setprop("FMGC/internal/align3-done", 1);
+		setprop("FMGC/internal/align3-time", -99);
+		timer48gpsAlign3.stop();
 	}
 });

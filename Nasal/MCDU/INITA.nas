@@ -136,6 +136,10 @@ var initInputA = func(key, i) {
 			setprop("FMGC/internal/dep-arpt", "");
 			setprop("FMGC/internal/arr-arpt", "");
 			setprop("FMGC/internal/tofrom-set", 0);
+			setprop("FMGC/internal/align-ref-lat", 0);
+			setprop("FMGC/internal/align-ref-long", 0);
+			setprop("FMGC/internal/align-ref-lat-edit", 0);
+			setprop("FMGC/internal/align-ref-long-edit", 0);
 			fmgc.flightPlanController.reset();
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -149,12 +153,33 @@ var initInputA = func(key, i) {
 				var froms = size(fromto[0]);
 				var tos = size(fromto[1]);
 				if (froms == 4 and tos == 4) {
+					#route
 					setprop("FMGC/internal/dep-arpt", fromto[0]);
 					setprop("FMGC/internal/arr-arpt", fromto[1]);
 					setprop("FMGC/internal/tofrom-set", 1);
+					#scratchpad
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 					fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 					setprop("FMGC/internal/alt-selected", 0);
+					#ref lat
+					dms = getprop("FMGC/flightplan[2]/wp[0]/lat");
+					degrees = int(dms);
+					minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+					sign = degrees >= 0 ? "N" : "S";
+					setprop("FMGC/internal/align-ref-lat-degrees", degrees);
+					setprop("FMGC/internal/align-ref-lat-minutes", minutes);
+					setprop("FMGC/internal/align-ref-lat-sign", sign);
+					#ref long
+					dms = getprop("FMGC/flightplan[2]/wp[0]/lon");
+					degrees = int(dms);
+					minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+					sign = degrees >= 0 ? "E" : "W";
+					setprop("FMGC/internal/align-ref-long-degrees", degrees);
+					setprop("FMGC/internal/align-ref-long-minutes", minutes);
+					setprop("FMGC/internal/align-ref-long-sign", sign);
+					#ref edit
+					setprop("FMGC/internal/align-ref-lat-edit", 0);
+					setprop("FMGC/internal/align-ref-long-edit", 0);
 					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 				} else {
 					notAllowed(i);
