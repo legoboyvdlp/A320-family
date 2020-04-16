@@ -809,8 +809,8 @@ var switchDatabase = func {
 }
 
 setlistener("gear/gear[1]/wow", func() {
-	if (timer30secLandingstart.isRunning) {
-		timer30secLandingstart.stop();
+	if (timer30secLanding.isRunning) {
+		timer30secLanding.stop();
 	}
 	
 	if (getprop("gear/gear[1]/wow") == 1 and getprop("FMGC/internal/landing-time") == -99) {
@@ -819,10 +819,10 @@ setlistener("gear/gear[1]/wow", func() {
 	}
 }, 0, 0);
 
-var timer30secLandingstart = maketimer(1, func() {
+var timer30secLanding = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/landing-time") + 30) {
 		setprop("FMGC/status/phase", 7);
 		setprop("FMGC/internal/landing-time", -99);
-		timer30secLandingstart.stop();
+		timer30secLanding.stop();
 	}
 });
