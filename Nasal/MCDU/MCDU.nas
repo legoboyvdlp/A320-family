@@ -674,8 +674,13 @@ var pagebutton = func(btn, i) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 			} else if (getprop("FMGC/status/phase") == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
+			} else if (getprop("FMGC/status/phase") == 7) {
+				reset_FMGC();
 			}
 		} else if (btn == "init") {
+			if (getprop("FMGC/status/phase") == 7) {
+				reset_FMGC();
+			}
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
 		} else if (btn == "data") {
 			setprop("MCDU[" ~ i ~ "]/page", "DATA");
