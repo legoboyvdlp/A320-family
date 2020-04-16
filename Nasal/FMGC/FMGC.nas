@@ -481,10 +481,10 @@ var masterFMGC = maketimer(0.2, func {
     		#print(r.stopway);
     		#print(r.threshold);
     		magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
-			if (!getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+			if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-			} else if (!getprop("FMGC/internal/ils1freq-set")) {
+			} else if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set")) {
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 			} else if (!getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
@@ -505,10 +505,10 @@ var masterFMGC = maketimer(0.2, func {
 		if (runways[rwy] != nil) {
 			var r = runways[rwy];
 			magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
-			if (!getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+			if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-			} else if (!getprop("FMGC/internal/ils1freq-set")) {
+			} else if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set")) {
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 			} else if (!getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
