@@ -4,7 +4,7 @@
 
 <turbine_engine name="LEAP1A26">
 	
-	<milthrust>     27000 </milthrust>
+	<milthrust>     27120 </milthrust>
 	<tsfc>          0.445 </tsfc>
 	<bleed>          0.03 </bleed>
 	<ignitionn1>	  0.6 </ignitionn1>
