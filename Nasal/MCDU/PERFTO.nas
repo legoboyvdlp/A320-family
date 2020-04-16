@@ -83,7 +83,7 @@ var perfTOInput = func(key, i) {
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
 			setprop("systems/thrust/clbreduc-ft", "1500");
-			setprop("FMGC/internal/reduc-agl-ft", "1500");
+			setprop("FMGC/internal/accel-agl-ft", "1500");
 			setprop("MCDUC/thracc-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -97,11 +97,11 @@ var perfTOInput = func(key, i) {
 				var accs = size(acc);
 				if (int(thrred) != nil and (thrreds == 4 or thrreds == 5) and thrred >= 1000 and thrred <= 39000 and int(acc) != nil and (accs == 4 or accs == 5) and acc >= 1000 and acc <= 39000) {
 					setprop("systems/thrust/clbreduc-ft", int(thrred / 10) * 10);
-					setprop("FMGC/internal/reduc-agl-ft", int(acc / 10) * 10);
+					setprop("FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 					setprop("MCDUC/thracc-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else if (thrreds == 0 and int(acc) != nil and (accs == 4 or accs == 5) and acc >= 1000 and acc <= 39000) {
-					setprop("FMGC/internal/reduc-agl-ft", int(acc / 10) * 10);
+					setprop("FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
