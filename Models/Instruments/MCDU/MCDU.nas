@@ -166,7 +166,7 @@ var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2Set = props.globals.getNode("FMGC/internal/v2-set", 1);
 
 var clbReducFt = props.globals.getNode("systems/thrust/clbreduc-ft", 1);
-var reducFt = props.globals.getNode("FMGC/internal/reduc-agl-ft", 1); # It's not AGL anymore
+var reducFt = props.globals.getNode("FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("MCDUC/thracc-set", 1);
 var flapTO = props.globals.getNode("FMGC/internal/to-flap", 1);
 var THSTO = props.globals.getNode("FMGC/internal/to-ths", 1);
