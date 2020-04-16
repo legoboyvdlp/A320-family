@@ -1357,14 +1357,29 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
+			if (getprop("systems/navigation/adr/operating-1") and systems.ADIRSnew.ADIRunits[0].inAlign == 0) {
+				me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
+			} else {
+				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
+			}
+			
+			if (getprop("systems/navigation/adr/operating-2") and systems.ADIRSnew.ADIRunits[1].inAlign == 0) {
+				me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
+			} else {
+				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
+			}
+			
+			if (getprop("systems/navigation/adr/operating-3") and systems.ADIRSnew.ADIRunits[2].inAlign == 0) {
+				me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
+			} else {
+				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
+			}
+			
 			me["Simple_L2S"].setText("LAT");
 			me["Simple_L6"].setText(" RETURN");
 			me["Simple_R2S"].setText("LONG");
 			me["Simple_C1S"].setText("REFERENCE");
 			me["Simple_C2S"].setText("GPS POSITION");
-			me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
-			me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
-			me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
 
 		} else if (page == "ROUTESELECTION") {
 			if (!pageSwitch[i].getBoolValue()) {
