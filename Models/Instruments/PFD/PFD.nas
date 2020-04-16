@@ -124,7 +124,6 @@ var dme_in_range = props.globals.getNode("instrumentation/nav[0]/dme-in-range", 
 var dme_data = props.globals.getNode("instrumentation/dme[0]/indicated-distance-nm", 1);
 var ils_crs = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg", 1);
 var ils1_crs_set = props.globals.getNode("FMGC/internal/ils1crs-set/", 1);
-var arrival_airport = props.globals.getNode("FMGC/internal/arr-arpt", 1);
 var outer_marker = props.globals.getNode("instrumentation/marker-beacon/outer", 1);
 var middle_marker = props.globals.getNode("instrumentation/marker-beacon/middle", 1);
 var inner_marker = props.globals.getNode("instrumentation/marker-beacon/inner", 1);
@@ -871,7 +870,7 @@ var canvas_PFD_base = {
 		me["TRK_pointer"].setTranslation((track_diff.getValue() / 10) * 98.5416, 0);
 		split_ils = split("/", ils_data1.getValue());
 		
-		if (ap_ils_mode.getValue() == 1 and ils1_crs_set.getValue() == 1 and size(split_ils) == 2) {
+		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
 			magnetic_hdg = ils_crs.getValue();
 			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
 			if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
@@ -906,25 +905,6 @@ var canvas_PFD_base = {
 				me["ILS_HDG_L"].hide();
 				me["CRS_pointer"].hide();
 			}
-		
-		#Approach selected and tuned, overwrite RAD NAV
-#		} else if (0) {			
-#			var runways = airportinfo(airportinfo(arrival_airport.getValue()).id).runways;
-#			var runway_keys = sort(keys(runways), string.icmp);
-#			foreach(var rwy; runway_keys) {
-#				var r = runways[rwy];
-#				if (r.ils_frequency_mhz == split_ils[1]) {
-#					magnetic_hdg = r.heading - getprop("environment/magnetic-variation-deg");
-#					magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
-#					
-#					SET THE FMGC values here!!!!!
-#					course = r.heading;
-#					ils_frequency = r.ils_frequency_mhz;
-#
-#					break;
-#				}
-#			}
-
 		} else {
 			me["ILS_HDG_R"].hide();
 			me["ILS_HDG_L"].hide();

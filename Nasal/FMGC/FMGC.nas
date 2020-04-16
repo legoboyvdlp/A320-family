@@ -466,6 +466,64 @@ var masterFMGC = maketimer(0.2, func {
 	if (pts.Position.gearAglFt.getValue() >= 55) {
 		setprop("FMGC/status/to-state", 0);
 	}
+	
+	#handle radios, runways, v1/vr/v2
+	if (fmgc.flightPlanController.flightplans[2].approach != nil and phase >= 2) {
+		var runways = airportinfo(airportinfo(getprop("FMGC/internal/arr-arpt")).id).runways;
+		var rwy = string.replace(fmgc.flightPlanController.flightplans[2].approach.id, "ILS", "");
+		if (runways[rwy] != nil) {
+			var r = runways[rwy];
+			#print(r.lat);
+    		#print(r.lon);
+    		#print(r.length);
+    		#print(r.width);
+    		#print(r.heading);
+    		#print(r.stopway);
+    		#print(r.threshold);
+    		magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
+			if (!getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
+				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			} else if (!getprop("FMGC/internal/ils1freq-set")) {
+				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
+			} else if (!getprop("FMGC/internal/ils1crs-set")) {
+				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			}
+			# if (getprop("FMGC/internal/ils1freq-set") and r.ils_frequency_mhz != getprop("instrumentation/nav[0]/frequencies/selected-mhz")) {
+# 				if (getprop("MCDU[0]/page") == "RADNAV") {
+# 					setprop("MCDU[0]/scratchpad-msg", 1);
+# 					setprop("MCDU[0]/scratchpad", "RWY/LS MISMATCH");
+# 				} else if (getprop("MCDU[1]/page") == "RADNAV") {
+# 					setprop("MCDU[1]/scratchpad-msg", 1);
+# 					setprop("MCDU[1]/scratchpad", "RWY/LS MISMATCH");
+# 				}
+# 			}
+		}
+	} else if (fmgc.flightPlanController.flightplans[2].departure_runway != nil and phase <= 1) {
+		var runways = airportinfo(airportinfo(getprop("FMGC/internal/dep-arpt")).id).runways;
+		var rwy = fmgc.flightPlanController.flightplans[2].departure_runway.id;
+		if (runways[rwy] != nil) {
+			var r = runways[rwy];
+			magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
+			if (!getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
+				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			} else if (!getprop("FMGC/internal/ils1freq-set")) {
+				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
+			} else if (!getprop("FMGC/internal/ils1crs-set")) {
+				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			}
+			# if (getprop("FMGC/internal/ils1freq-set") and r.ils_frequency_mhz != getprop("instrumentation/nav[0]/frequencies/selected-mhz")) {
+# 				if (getprop("MCDU[0]/page") == "RADNAV") {
+# 					setprop("MCDU[0]/scratchpad-msg", 1);
+# 					setprop("MCDU[0]/scratchpad", "RWY/LS MISMATCH");
+# 				} else if (getprop("MCDU[1]/page") == "RADNAV") {
+# 					setprop("MCDU[1]/scratchpad-msg", 1);
+# 					setprop("MCDU[1]/scratchpad", "RWY/LS MISMATCH");
+# 				}
+# 			}
+		}
+	}
 });
 
 var reset_FMGC = func {
