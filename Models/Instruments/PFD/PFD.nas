@@ -1111,7 +1111,7 @@ var canvas_PFD_1 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and FMGCphase.getValue() <= 6) {
+			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -1822,7 +1822,7 @@ var canvas_PFD_2 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and FMGCphase.getValue() <= 6) {
+			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
