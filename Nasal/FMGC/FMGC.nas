@@ -814,12 +814,12 @@ setlistener("gear/gear[1]/wow", func() {
 	}
 	
 	if (getprop("gear/gear[1]/wow") == 1 and getprop("FMGC/internal/landing-time") == -99) {
-		timer30secLandingstart();
+		timer30secLanding.start();
 		setprop("FMGC/internal/landing-time", pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-var timer30secLandingstart = maketimer(0.1, func() {
+var timer30secLandingstart = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/landing-time") + 30) {
 		setprop("FMGC/status/phase", 7);
 		setprop("FMGC/internal/landing-time", -99);
