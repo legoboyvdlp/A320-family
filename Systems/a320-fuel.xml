@@ -456,7 +456,7 @@
 		
 		<switch name="/systems/fuel/apu-feed-pump">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="AND" value="1">
 				/systems/fuel/pumps/apu-operate eq 1
 				/systems/fuel/valves/apu-lp-valve eq 1
 			</test>
@@ -551,7 +551,6 @@
 					/systems/fuel/apu-feed-pump eq 1
 				</test>
 				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
-				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 			<test logic="AND" value="1"> <!-- left -->
 				<test logic="OR">
@@ -559,7 +558,6 @@
 					/systems/fuel/apu-feed-pump eq 1
 				</test>
 				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
-				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 			<test logic="AND" value="3"> <!-- right -->
 				<test logic="OR">
@@ -568,7 +566,6 @@
 				</test>
 				/systems/fuel/valves/crossfeed-valve eq 1
 				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
-				propulsion/tank[5]/contents-lbs lt 9
 			</test>
 		</switch>
 		
