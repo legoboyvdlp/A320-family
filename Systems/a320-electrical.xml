@@ -1307,10 +1307,8 @@
 			<test logic="AND" value="1">
 				/systems/electrical/bus/ac-1 lt 110
 				/systems/electrical/bus/ac-2 lt 110
-				/systems/acconfig/autoconfig-running ne 1
 			</test>
 			<test logic="AND" value="1">
-				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
 				<test logic="OR">
 					/controls/electrical/switches/gen-1 eq 0

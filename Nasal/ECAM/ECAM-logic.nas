@@ -887,7 +887,7 @@ var messages_priority_3 = func {
 	}
 	
 	# EMER CONFIG
-	if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dualFailNode.getBoolValue() and phaseVar != 4 and phaseVar != 8 and emerconfig.clearFlag == 0) {
+	if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dualFailNode.getBoolValue() and phaseVar != 4 and phaseVar != 8 and emerconfig.clearFlag == 0 and !getprop("systems/acconfig/autoconfig-running")) {
 		emerconfig.active = 1;
 		
 		if (getprop("systems/hydraulic/sources/rat/position") != 0 and emerconfigMinRat.clearFlag == 0) {

@@ -347,7 +347,7 @@ var beforestart = func {
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
 		setprop("controls/apu/master", 1);
-		systems.APUController.APU.startCommand(1);
+		systems.APUController.APU.startCommand();
 		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
 			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);

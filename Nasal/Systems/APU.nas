@@ -26,7 +26,7 @@ var APU = {
 	listenStopSignal: 0,
 	bleedTime: 0,
 	cooldownEndTime: 0,
-	startFast: 0,
+	fastStart: 0,
 	warnings: {
 		lowOilLevel: 0,
 	},
@@ -57,7 +57,6 @@ var APU = {
 		me.signals.bleedWasUsed = 0;
 		me.signals.fault = 0;
 		me.signals.autoshutdown = 0;
-		me.startFast = 0;
 		checkApuStartTimer.stop();
 		apuStartTimer.stop();
 		apuStartTimer2.stop();
@@ -96,15 +95,18 @@ var APU = {
 		}, 3);
 		settimer(func() { me.checkOil }, 8);
 	},
-	startCommand: func(fast = 0) {
+	startCommand: func(fast) {
 		if (me.listenSignals and (me.state == 1 or me.state == 2)) {
 			me.signals.startInProgress.setValue(1);
-			me.startFast = fast;
 			me.setState(3);
 			checkApuStartTimer.start();
+			me.fastStart = fast;
 		}
 	},
-	checkApuStart: func(fast) {
+	checkApuStart: func() {
+		if (me.fastStart) {
+			me.inletFlap.setpos(1);
+		}
 		if (pts.APU.rpm.getValue() < 7 and me.fuelValvePos.getValue() and me.inletFlapPos.getValue() == 1 and me.signals.oilTestComplete and !me.warnings.lowOilLevel) {
 			me.setState(4);
 			me.listenStopSignal = 1;
@@ -114,16 +116,6 @@ var APU = {
 	},
 	startSequence: func() {
 		me.GenericControls.starter.setValue(1);
-		if (me.startFast) {
-			setprop("controls/engines/engine[2]/cutoff", 0);
-			setprop("engines/engine[2]/out-of-fuel", 0);
-			setprop("engines/engine[2]/run", 1);
-
-			setprop("engines/engine[2]/cutoff", 0);
-			setprop("engines/engine[2]/starter", 0);
-
-			setprop("fdm/jsbsim/propulsion/set-running", 0);
-		}
 		apuStartTimer.start();
 	},
 	waitStart: func() {
@@ -266,13 +258,13 @@ setlistener("controls/apu/master", func() {
 			APUController.APU.stop();
 		}
 	}
-}, 0, 1);
+}, 0, 0);
 
 setlistener("controls/pneumatic/switches/bleedapu", func() {
 	if (APUController.APU != nil) {
 		APUController.APU.signals.bleedWasUsed = 1;
 	}
-}, 0, 1);
+}, 0, 0);
 
 var checkMasterThreeMinTimer = maketimer(0.1, func() {
 	if (!APUNodes.Controls.master.getValue()) {
