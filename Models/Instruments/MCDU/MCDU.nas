@@ -295,6 +295,24 @@ var canvas_MCDU_base = {
 	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
+		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+			color_selected = getprop("MCDU[" ~ i ~ "]/scratchpad-color");
+			if (color_selected == "grn") {
+				me["Scratchpad"].setColor(GREEN);
+			} else if (color_selected == "blu") {
+				me["Scratchpad"].setColor(BLUE);
+			} else if (color_selected == "amb") {
+				me["Scratchpad"].setColor(AMBER);
+			} else if (color_selected == "yel") {
+				me["Scratchpad"].setColor(YELLOW);
+			} else if (color_selected == "mag") {
+				me["Scratchpad"].setColor(MAGENTA);
+			} else {
+				me["Scratchpad"].setColor(WHITE);
+			}
+		} else {
+			me["Scratchpad"].setColor(WHITE);
+		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -304,6 +322,7 @@ var canvas_MCDU_base = {
 				me["INITA"].hide();
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
