@@ -70,6 +70,32 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			</thruster>
 		</engine>
 		
+		<engine file="APS3200">
+            <location unit="M">
+                <x> 38.9 </x>
+                <y> 0 </y>
+                <z> 0.95 </z>
+            </location>
+            <orient unit="DEG">
+                <roll> 0.0 </roll>
+                <pitch> 0.0 </pitch>
+                <yaw> 0.0 </yaw>
+            </orient>
+            <feed>5</feed>
+            <thruster file="direct">
+                <location unit="M">
+                    <x> 38.9 </x>
+                    <y> 0 </y>
+                    <z> 0.95 </z>
+                </location>
+                <orient unit="DEG">
+                    <roll> 0.0 </roll>
+                    <pitch> 0.0 </pitch>
+                    <yaw> 0.0 </yaw>
+                </orient>
+            </thruster>
+        </engine>
+		
 		<tank type="FUEL">    <!-- Outer Left Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>

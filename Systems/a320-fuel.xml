@@ -309,14 +309,6 @@
 			<rate_limit>/systems/fuel/valves/engine-2-lp-valve-power</rate_limit>
 		</actuator>
 		
-		<switch name="/systems/fuel/valves/apu-lp-valve-cmd">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/apu/master eq 1
-				/controls/apu/fire-btn eq 0
-			</test>
-		</switch>
-		
 		<switch name="/systems/fuel/valves/apu-lp-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="1.0">
@@ -459,6 +451,13 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/center-pump-2-operate eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fuel/apu-feed-pump">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fuel/pumps/apu-operate eq 1
 			</test>
 		</switch>
 		

@@ -16,9 +16,9 @@ var APUNodes = {
 
 var APU = {
 	state: 0, # off, power up, watch, starting preparation, starting, run, cooldown, shutdown
-	fuelValve: aircraft.door.new("controls/apu/fuel-valve", 1),
 	inletFlap: aircraft.door.new("controls/apu/inlet-flap", 12),
-	fuelValvePos: props.globals.getNode("controls/apu/fuel-valve/position-norm"),
+	fuelValveCmd: props.globals.getNode("/systems/fuel/valves/apu-lp-valve-cmd"),
+	fuelValvePos: props.globals.getNode("/systems/fuel/valves/apu-lp-valve"),
 	inletFlapPos: props.globals.getNode("controls/apu/inlet-flap/position-norm"),
 	oilLevel: props.globals.getNode("systems/apu/oil/level-l"),
 	listenSignals: 0,
@@ -75,7 +75,7 @@ var APU = {
 	powerOn: func() {
 		# apu able to receive emergency stop or start signals
 		me.setState(1);
-		me.fuelValve.open();
+		me.fuelValveCmd.setValue(1);
 		me.inletFlap.open();
 		me.checkOil();
 		me.listenSignals = 1;
@@ -149,7 +149,7 @@ var APU = {
 		
 		if (pts.APU.rpm.getValue() < 7) {
 			me.inletFlap.close();
-			me.fuelValve.close();
+			me.fuelValveCmd.setValue(0);
 			if (!APUNodes.Controls.master.getValue()) {
 				me.setState(0);
 				me.resetStuff();
@@ -199,7 +199,7 @@ var APU = {
 		if (me.listenSignals and (me.state < 4)) {
 			checkApuStartTimer.stop();
 			me.inletFlap.close();
-			me.fuelValve.close();
+			me.fuelValveCmd.setValue(0);
 			me.signals.fault = 1;
 			me.setState(0);
 		} elsif (me.state >= 4) {

@@ -1088,6 +1088,9 @@
 				<right-valve type="bool">0</right-valve>
 				<refuelling type="bool">0</refuelling>
 			</refuel>
+			<valves>
+				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
+			</valves>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 		</fuel>

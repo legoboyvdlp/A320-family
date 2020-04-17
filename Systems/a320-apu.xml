@@ -23,7 +23,6 @@
 
         <fcs_function name="/systems/apu/egt-degC">
             <function>
-            <!-- SIC Dry motoring already accounted for: the table is zero for its RPM (~25%) -->
             <table>
                 <independentVar lookup="row">/engines/engine[2]/n1</independentVar>
                 <tableData>
