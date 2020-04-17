@@ -477,25 +477,25 @@
 			<name>Cockpit Crew</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
 			<min-lb type="double">200</min-lb>
-			<max-lb type="double">440</max-lb>
+			<max-lb type="double">776</max-lb>
 		</weight>
 		<weight n="1">
 			<name>Forward Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">4649</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="2">
 			<name>Center Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">13949</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="3">
 			<name>Aft Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">10462</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="4">
 			<name>Forward Cargo</name>

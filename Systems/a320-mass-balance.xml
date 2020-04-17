@@ -13,7 +13,7 @@
 	<emptywt unit="LBS" >   80431 </emptywt>
 	
 	<location name="CG" unit="M">
-		<x> 18.8231 </x>
+		<x> 18.849 </x> <!-- 25% MAC -->
 		<y> 0 </y>
 		<z> 0.19249 </z>
 	</location>
