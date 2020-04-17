@@ -1323,7 +1323,7 @@
 				<test logic="OR">
 					/controls/electrical/switches/apu eq 0
 					/systems/failures/electrical/apu eq 1
-					/systems/apu/rpm lt 94.9
+					/engines/engine[2]/n1 lt 94.9
                 </test>
 			</test>
 		</switch>

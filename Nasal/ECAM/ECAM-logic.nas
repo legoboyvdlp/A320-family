@@ -14,7 +14,7 @@ var fac1Node   = props.globals.getNode("controls/fctl/switches/fac1", 1);
 var state1Node = props.globals.getNode("engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("fdm/jsbsim/position/wow", 1);
-var apu_rpm    = props.globals.getNode("systems/apu/rpm", 1);
+var apu_rpm    = props.globals.getNode("engines/engine[2]/n1", 1);
 var wing_pb    = props.globals.getNode("controls/switches/wing", 1);
 var apumaster  = props.globals.getNode("controls/apu/master", 1);
 var apu_bleedSw   = props.globals.getNode("controls/pneumatic/switches/bleedapu", 1);
@@ -424,7 +424,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnevacSw);
 			}
 			
-			if (eng1FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("systems/apu/rpm") > 99) {
+			if (eng1FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("engines/engine[2]/n1") > 99) {
 				eng1FireGnevacApu.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnevacApu);
@@ -607,7 +607,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnevacSw);
 			}
 			
-			if (eng2FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("systems/apu/rpm") > 99) {
+			if (eng2FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("engines/engine[2]/n1") > 99) {
 				eng2FireGnevacApu.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnevacApu);
@@ -1660,13 +1660,13 @@ var messages_right_memo = func {
 		ignition.active = 0;
 	}
 	
-	if (getprop("controls/pneumatic/switches/bleedapu") == 1 and getprop("systems/apu/rpm") >= 95) {
+	if (getprop("controls/pneumatic/switches/bleedapu") == 1 and getprop("engines/engine[2]/n1") >= 95) {
 		apu_bleed.active = 1;
 	} else {
 		apu_bleed.active = 0;
 	}
 
-	if (apu_bleed.active == 0 and getprop("systems/apu/rpm") >= 95) {
+	if (apu_bleed.active == 0 and getprop("engines/engine[2]/n1") >= 95) {
 		apu_avail.active = 1;
 	} else {
 		apu_avail.active = 0;

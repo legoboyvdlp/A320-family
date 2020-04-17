@@ -306,7 +306,6 @@ var colddark = func {
 var colddark_b = func {
 	# Continues the Cold and Dark script, after engines fully shutdown.
 	setprop("controls/apu/master", 0);
-	setprop("controls/apu/start", 0);
 	settimer(func {
 		setprop("controls/gear/brake-left", 0);
 		setprop("controls/gear/brake-right", 0);
@@ -343,15 +342,14 @@ var beforestart = func {
 		libraries.systemsInit();
 		failResetOld();
 		setprop("controls/apu/master", 0);
-		setprop("controls/apu/start", 0);
 		
 		# Now the Startup!
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
 		setprop("controls/apu/master", 1);
-		setprop("controls/apu/start", 1);
-		var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
-			if (getprop("systems/apu/rpm") >= 98) {
+		systems.APUController.APU.startCommand(1);
+		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
+			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);
 				beforestart_b();
 			}
@@ -434,15 +432,14 @@ var taxi = func {
 		libraries.systemsInit();
 		failResetOld();
 		setprop("controls/apu/master", 0);
-		setprop("controls/apu/start", 0);
 		
 		# Now the Startup!
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
 		setprop("controls/apu/master", 1);
-		setprop("controls/apu/start", 1);
-		var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
-			if (getprop("systems/apu/rpm") >= 98) {
+		systems.APUController.APU.startCommand(1);
+		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
+			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);
 				taxi_b();
 			}
@@ -511,7 +508,6 @@ var taxi_d = func {
 	# After Start items.
 	setprop("controls/engines/engine-start-switch", 1);
 	setprop("controls/apu/master", 0);
-	setprop("controls/apu/start", 0);
 	setprop("controls/pneumatic/switches/bleedapu", 0);
 	setprop("controls/gear/brake-left", 0);
 	setprop("controls/gear/brake-right", 0);

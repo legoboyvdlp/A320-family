@@ -9,94 +9,9 @@ if (getprop("options/eng") == "IAE") {
 	io.include("engines-cfm.nas");
 }
 
-var spinup_time = 49;
-var apu_max = 100;
-var apu_egt_min = 352;
-var apu_egt_max = 704;
-setprop("systems/apu/rpm", 0);
-setprop("systems/apu/egt", 42);
-setprop("systems/apu/bleed-used", 0);
-setprop("systems/apu/bleed-counting", 0);
-setprop("systems/apu/bleed-time", 0);
-
 var eng_common_init = func {
-	setprop("systems/apu/bleed-used", 0);
+	# nada
 }
-
-# Start APU
-setlistener("/controls/apu/start", func {
-	if (getprop("controls/apu/master") == 1 and getprop("controls/apu/start") == 1) {
-		apuBleedChk.stop();
-		setprop("systems/apu/bleed-counting", 0);
-		if (getprop("systems/acconfig/autoconfig-running") == 0) {
-			interpolate("/systems/apu/rpm", apu_max, spinup_time);
-			apu_egt_check.start();
-		} else if (getprop("systems/acconfig/autoconfig-running") == 1) {
-			interpolate("/systems/apu/rpm", apu_max, 5);
-			interpolate("/systems/apu/egt", apu_egt_min, 5);
-		}
-	} else if (getprop("controls/apu/master") == 0) {
-		apu_egt_check.stop();
-		apu_stop();
-	}
-});
-
-var apu_egt_check = maketimer(0.5, func {
-	if (getprop("systems/apu/rpm") >= 28) {
-		apu_egt_check.stop();
-		interpolate("/systems/apu/egt", apu_egt_max, 5);
-		apu_egt2_check.start();
-	}
-});
-
-var apu_egt2_check = maketimer(0.5, func {
-	if (getprop("systems/apu/egt") >= 701) {
-		apu_egt2_check.stop();
-		interpolate("/systems/apu/egt", apu_egt_min, 30);
-	}
-});
-
-# Stop APU
-setlistener("/controls/apu/master", func {
-	if (getprop("controls/apu/master") == 0) {
-		setprop("controls/apu/start", 0);
-		apu_egt_check.stop();
-		apu_egt2_check.stop();
-		apu_stop();
-	} else if (getprop("controls/apu/master") == 1) {
-		apuBleedChk.stop();
-		setprop("systems/apu/bleed-counting", 0);
-		setprop("systems/apu/bleed-used", 0);
-	}
-});
-
-var apu_stop = func {
-	if (getprop("systems/apu/bleed-used") == 1 and getprop("systems/apu/bleed-counting") != 1 and getprop("systems/acconfig/autoconfig-running") != 1) {
-		setprop("systems/apu/bleed-counting", 1);
-		setprop("systems/apu/bleed-time", getprop("sim/time/elapsed-sec"));
-	}
-	if (getprop("systems/apu/bleed-used") == 1 and getprop("systems/apu/bleed-counting") == 1 and getprop("systems/acconfig/autoconfig-running") != 1) {
-		apuBleedChk.start();
-	} else {
-		apuBleedChk.stop();
-		interpolate("/systems/apu/rpm", 0, 30);
-		interpolate("/systems/apu/egt", 42, 40);
-		setprop("systems/apu/bleed-counting", 0);
-		setprop("systems/apu/bleed-used", 0);
-	}
-}
-
-var apuBleedChk = maketimer(0.1, func {
-	if (getprop("systems/apu/bleed-used") == 1 and getprop("systems/apu/bleed-counting") == 1) {
-		if (getprop("systems/apu/bleed-time") + 60 <= getprop("sim/time/elapsed-sec")) {
-			apuBleedChk.stop();
-			interpolate("/systems/apu/rpm", 0, 30);
-			interpolate("/systems/apu/egt", 42, 40);
-			setprop("systems/apu/bleed-counting", 0);
-			setprop("systems/apu/bleed-used", 0);
-		}
-	}
-});
 
 # Various Other Stuff
 var doIdleThrust = func {
