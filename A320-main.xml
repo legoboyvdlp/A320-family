@@ -451,6 +451,9 @@
 			<tank n="6">
 				<name>Engine 2 Pipes</name>
 			</tank>
+			<tank n="7">
+				<name>APU Pipes</name>
+			</tank>
 		</fuel>
 	</consumables>
 	
