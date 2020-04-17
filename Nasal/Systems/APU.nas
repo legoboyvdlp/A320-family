@@ -246,11 +246,11 @@ setlistener("controls/apu/master", func() {
 	} elsif (!APUNodes.Controls.master.getValue()) {
 		APUController.APU.stop();
 	}
-}, 0, 0);
+}, 0, 1);
 
 setlistener("controls/pneumatic/switches/bleedapu", func() {
 	APUController.APU.signals.bleedWasUsed = 1;
-}, 0, 0);
+}, 0, 1);
 
 var checkMasterThreeMinTimer = maketimer(0.1, func() {
 	if (!APUNodes.Controls.master.getValue()) {
