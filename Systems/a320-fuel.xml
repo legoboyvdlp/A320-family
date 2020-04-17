@@ -541,7 +541,6 @@
 		<switch name="/systems/fuel/internal/apu-source"> <!-- this only when all pumps off -->
 			<default value="0"/> <!-- no fuel -->
 			<test logic="AND" value="2"> <!-- center preferentially, higher psi -->
-				/systems/fuel/quantity/center-low eq 0
 				/systems/fuel/apu-feed-pump eq 1
 				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
 			</test>
