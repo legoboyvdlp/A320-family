@@ -81,7 +81,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
                 <pitch> 0.0 </pitch>
                 <yaw> 0.0 </yaw>
             </orient>
-            <feed>5</feed>
+            <feed>7</feed>
             <thruster file="direct">
                 <location unit="M">
                     <x> 38.9 </x>
