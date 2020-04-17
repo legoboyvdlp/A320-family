@@ -536,6 +536,41 @@
 		</switch>
 		
 		<!-- Feed system -->
+		
+		<switch name="/systems/fuel/internal/apu-source">
+			<default value="0"/> <!-- no fuel -->
+			<test logic="AND" value="2"> <!-- center preferentially, higher psi -->
+				/systems/fuel/quantity/center-low eq 0
+				<test logic="OR">
+					/systems/fuel/feed-center-1 eq 1
+					<test logic="AND">
+						/systems/fuel/feed-center-2 eq 1
+						/systems/fuel/valves/crossfeed-valve eq 1
+					</test>
+					/systems/fuel/apu-feed-pump eq 1
+				</test>
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
+				propulsion/tank[5]/contents-lbs lt 9
+			</test>
+			<test logic="AND" value="1"> <!-- left -->
+				<test logic="OR">
+					/systems/fuel/feed-left-inner eq 1
+					/systems/fuel/apu-feed-pump eq 1
+				</test>
+				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
+				propulsion/tank[5]/contents-lbs lt 9
+			</test>
+			<test logic="AND" value="3"> <!-- right -->
+				<test logic="OR">
+					/systems/fuel/feed-right-inner eq 1
+					/systems/fuel/apu-feed-pump eq 1
+				</test>
+				/systems/fuel/valves/crossfeed-valve eq 1
+				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
+				propulsion/tank[5]/contents-lbs lt 9
+			</test>
+		</switch>
+		
 		<switch name="/systems/fuel/internal/left-wing-tank-eng-1">
 			<default value="0"/>
 			<test logic="AND" value="9">
@@ -543,7 +578,10 @@
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-1 eq 0
 				</test>
-				/systems/fuel/feed-left-inner eq 1
+				<test logic="OR">
+					/systems/fuel/feed-left-inner eq 1
+					/systems/fuel/internal/apu-source eq 1
+				</test>
 				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
 				propulsion/tank[5]/contents-lbs lt 9
 			</test>
@@ -558,6 +596,7 @@
 						/systems/fuel/feed-center-2 eq 1
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
+					/systems/fuel/internal/apu-source eq 2
 				</test>
 				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
 				propulsion/tank[5]/contents-lbs lt 9
@@ -567,10 +606,13 @@
 		<switch name="/systems/fuel/internal/right-wing-tank-eng-1">
 			<default value="0"/>
 			<test logic="AND" value="9">
-				/systems/fuel/feed-right-inner eq 1
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-2 eq 0
+				</test>
+				<test logic="OR">
+					/systems/fuel/feed-right-inner eq 1
+					/systems/fuel/internal/apu-source eq 3
 				</test>
 				/systems/fuel/valves/crossfeed-valve eq 1
 				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
