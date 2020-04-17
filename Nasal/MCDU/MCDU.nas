@@ -15,6 +15,7 @@ var MCDU_reset = func(i) {
 	setprop("MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("MCDU[" ~ i ~ "]/page", "MCDU");
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
+	setprop("MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 	
 	setprop("FMGC/keyboard-left", 0);
@@ -43,6 +44,7 @@ var MCDU_reset = func(i) {
 	#RADNAV
 	setprop("FMGC/internal/ils1freq-set", 0);
 	setprop("FMGC/internal/ils1crs-set", 0);
+	setprop("FMGC/internal/ils1freq-calculated", 0);
 	setprop("FMGC/internal/vor1freq-set", 0);
 	setprop("FMGC/internal/vor1crs-set", 0);
 	setprop("FMGC/internal/vor2freq-set", 0);
@@ -667,6 +669,7 @@ var arrowbutton = func(btn, i) {
 }
 
 var pagebutton = func(btn, i) {
+	setprop("MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	if (getprop("MCDU[" ~ i ~ "]/page") != "MCDU") {
 		if (btn == "radnav") {
 			setprop("MCDU[" ~ i ~ "]/page", "RADNAV");
@@ -877,6 +880,7 @@ var button = func(btn, i) {
 		}
 	} else {
 		if (btn == "CLR") {
+			setprop("MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 			var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
 			if (size(scratchpad) == 0) {
 				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
@@ -890,7 +894,21 @@ var button = func(btn, i) {
 	}
 }
 
+var genericMessage = func(i, text, color) {
+	if (getprop("MCDU[" ~ i ~ "]/scratchpad") != text) {
+		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+			setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
+		} else {
+			setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+		}
+	}
+	setprop("MCDU[" ~ i ~ "]/scratchpad-color", color);
+	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+	setprop("MCDU[" ~ i ~ "]/scratchpad", text);
+}
+
 var notAllowed = func(i) {
+	setprop("MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "NOT ALLOWED") {
 		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 			setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
@@ -903,6 +921,7 @@ var notAllowed = func(i) {
 }
 
 var formatError = func(i) {
+	setprop("MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "FORMAT ERROR") {
 		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 			setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");

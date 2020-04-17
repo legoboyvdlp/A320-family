@@ -480,6 +480,7 @@ var masterFMGC = maketimer(0.2, func {
     		#print(r.heading);
     		#print(r.stopway);
     		#print(r.threshold);
+    		setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
     		magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
 			if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
@@ -489,21 +490,13 @@ var masterFMGC = maketimer(0.2, func {
 			} else if (!getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 			}
-			# if (getprop("FMGC/internal/ils1freq-set") and r.ils_frequency_mhz != getprop("instrumentation/nav[0]/frequencies/selected-mhz")) {
-# 				if (getprop("MCDU[0]/page") == "RADNAV") {
-# 					setprop("MCDU[0]/scratchpad-msg", 1);
-# 					setprop("MCDU[0]/scratchpad", "RWY/LS MISMATCH");
-# 				} else if (getprop("MCDU[1]/page") == "RADNAV") {
-# 					setprop("MCDU[1]/scratchpad-msg", 1);
-# 					setprop("MCDU[1]/scratchpad", "RWY/LS MISMATCH");
-# 				}
-# 			}
 		}
 	} else if (fmgc.flightPlanController.flightplans[2].departure_runway != nil and phase <= 1) {
 		var runways = airportinfo(airportinfo(getprop("FMGC/internal/dep-arpt")).id).runways;
 		var rwy = fmgc.flightPlanController.flightplans[2].departure_runway.id;
 		if (runways[rwy] != nil) {
 			var r = runways[rwy];
+			setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
 			magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
 			if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
@@ -513,15 +506,6 @@ var masterFMGC = maketimer(0.2, func {
 			} else if (!getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 			}
-			# if (getprop("FMGC/internal/ils1freq-set") and r.ils_frequency_mhz != getprop("instrumentation/nav[0]/frequencies/selected-mhz")) {
-# 				if (getprop("MCDU[0]/page") == "RADNAV") {
-# 					setprop("MCDU[0]/scratchpad-msg", 1);
-# 					setprop("MCDU[0]/scratchpad", "RWY/LS MISMATCH");
-# 				} else if (getprop("MCDU[1]/page") == "RADNAV") {
-# 					setprop("MCDU[1]/scratchpad-msg", 1);
-# 					setprop("MCDU[1]/scratchpad", "RWY/LS MISMATCH");
-# 				}
-# 			}
 		}
 	}
 });

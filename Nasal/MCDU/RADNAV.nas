@@ -69,6 +69,9 @@ var radnavInput = func(key, i) {
 						setprop("instrumentation/nav[0]/frequencies/selected-mhz", scratchpad);
 						setprop("FMGC/internal/ils1freq-set", 1);
 						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+						if (num(getprop("FMGC/internal/ils1freq-calculated")) != 0 and num(getprop("FMGC/internal/ils1freq-calculated")) != num(getprop("instrumentation/nav[0]/frequencies/selected-mhz"))) {
+							genericMessage(i, "RWY/LS MISMATCH", "amb");
+						}
 					} else {
 						notAllowed(i);
 					}
