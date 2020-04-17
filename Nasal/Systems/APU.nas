@@ -6,6 +6,7 @@
 var APUNodes = {
 	Controls: {
 		master: props.globals.getNode("controls/apu/master"),
+		fire: props.globals.getNode("controls/apu/fire-btn"),
 		bleed: props.globals.getNode("controls/pneumatic/switches/bleedapu"),
 	},
 	Oil: {
@@ -55,6 +56,11 @@ var APU = {
 		me.signals.bleedWasUsed = 0;
 		me.signals.fault = 0;
 		me.signals.autoshutdown = 0;
+		checkApuStartTimer.stop();
+		apuStartTimer.stop();
+		apuStartTimer2.stop();
+		shutdownTimer.stop();
+		cooldownTimer.stop();
 	},
 	new: func() {
 		var a = { parents:[APU] };
@@ -73,6 +79,8 @@ var APU = {
 	
 	# Routines to do with state
 	powerOn: func() {
+		# just in case
+		me.resetStuff();
 		# apu able to receive emergency stop or start signals
 		me.setState(1);
 		me.fuelValveCmd.setValue(1);
@@ -203,6 +211,7 @@ var APU = {
 			me.signals.fault = 1;
 			me.setState(0);
 		} elsif (me.state >= 4) {
+			me.fuelValveCmd.setValue(0);
 			me.autoStop();
 		}
 	},

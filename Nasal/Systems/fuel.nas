@@ -27,6 +27,7 @@ var FUEL = {
 		allOff: props.globals.getNode("systems/fuel/pumps/all-eng-pump-off"),
 	},
 	Valves: {
+		apu: props.globals.getNode("systems/fuel/valves/apu-lp-valve"),
 		crossfeed: props.globals.getNode("systems/fuel/valves/crossfeed-valve"),
 		lpValve1: props.globals.getNode("systems/fuel/valves/engine-1-lp-valve"),
 		lpValve2: props.globals.getNode("systems/fuel/valves/engine-2-lp-valve"),

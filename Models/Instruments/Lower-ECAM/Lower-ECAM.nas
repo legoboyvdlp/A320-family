@@ -2294,7 +2294,7 @@ var canvas_lowerECAM_fuel = {
 	getKeys: func() {
 		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","FUEL-Pump-Left-1","FUEL-Pump-Left-2","FUEL-Pump-Center-1","FUEL-Pump-Center-2","FUEL-Pump-Right-1","FUEL-Pump-Right-2","FUEL-Left-blocked","FUEL-Right-blocked","FUEL-Center-blocked","FUEL-Left-Transfer",
 		"FUEL-Right-Transfer","FUEL-Left-Outer-Inacc","FUEL-Left-Inner-Inacc","FUEL-Center-Inacc","FUEL-Right-Inner-Inacc","FUEL-Right-Outer-Inacc","FUEL-Left-Outer-quantity","FUEL-Left-Inner-quantity","FUEL-Center-quantity","FUEL-Right-Inner-quantity",
-		"FUEL-Right-Outer-quantity","FUEL-On-Board","FUEL-Flow-per-min","FUEL-APU-arrow","FUEL-APU-label","FUEL-used-1","FUEL-used-both","FUEL-used-2","FUEL-ENG-Master-1","FUEL-ENG-Master-2","FUEL-XFEED","FUEL-XFEED-pipes","FUEL-Left-Outer-temp",
+		"FUEL-Right-Outer-quantity","FUEL-On-Board","FUEL-Flow-per-min","FUEL-APU-arrow","FUEL-APU-line","FUEL-APU-label","FUEL-used-1","FUEL-used-both","FUEL-used-2","FUEL-ENG-Master-1","FUEL-ENG-Master-2","FUEL-XFEED","FUEL-XFEED-pipes","FUEL-Left-Outer-temp",
 		"FUEL-Left-Inner-temp","FUEL-Right-Inner-temp","FUEL-Right-Outer-temp","FUEL-Pump-Left-1-Closed","FUEL-Pump-Left-1-Open","FUEL-Pump-Left-2-Closed","FUEL-Pump-Left-2-Open","FUEL-Pump-Center-1-Open","FUEL-Pump-Center-1-Closed","FUEL-Pump-Center-2-Closed",
 		"FUEL-Pump-Center-2-Open","FUEL-Pump-Right-1-Closed","FUEL-Pump-Right-1-Open","FUEL-Pump-Right-2-Closed","FUEL-Pump-Right-2-Open","FUEL-ENG-1-label","FUEL-ENG-2-label","FUEL-ENG-1-pipe","FUEL-ENG-2-pipe","ENG1idFFlow","ENG2idFFlow","FUEL-used-1","FUEL-used-2","FUEL-used-both",
 		"Fused-weight-unit","FFlow-weight-unit","FOB-weight-unit"];
@@ -2527,6 +2527,30 @@ var canvas_lowerECAM_fuel = {
 			me["FUEL-Center-blocked"].show();
 		} else {
 			me["FUEL-Center-blocked"].hide();
+		}
+		
+		# APU
+		if (systems.FUEL.Valves.apu.getValue() == 1 and systems.APUNodes.Controls.master.getValue() and !systems.APUNodes.Controls.fire.getValue()) {
+			me["FUEL-APU-label"].setColor(0.8078, 0.8039, 0.8078);
+			me["FUEL-APU-line"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-APU-arrow"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-APU-line"].show();
+			me["FUEL-APU-arrow"].show();
+		} elsif (systems.FUEL.Valves.apu.getValue() == 1 and (!systems.APUNodes.Controls.master.getValue() or systems.APUNodes.Controls.fire.getValue())) {
+			me["FUEL-APU-label"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-line"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-arrow"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-line"].show();
+			me["FUEL-APU-arrow"].show();
+		} elsif (systems.FUEL.Valves.apu.getValue() != 1 and (systems.APUNodes.Controls.master.getValue() or systems.APUNodes.Controls.fire.getValue())) {
+			me["FUEL-APU-label"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-line"].hide();
+			me["FUEL-APU-arrow"].hide();
+		} else {
+			me["FUEL-APU-label"].setColor(0.8078, 0.8039, 0.8078);
+			me["FUEL-APU-arrow"].setColor(0.8078, 0.8039, 0.8078);
+			me["FUEL-APU-line"].hide();
+			me["FUEL-APU-arrow"].show();
 		}
 
 		# Hide not yet implemented features
