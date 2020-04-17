@@ -370,6 +370,7 @@
 		<object-name>autoland_light_on</object-name>
 		<object-name>brk_fan_on</object-name>
 		<object-name>brk_hot_on</object-name>
+		<object-name>clock_glare</object-name>
 		<object-name>cstr_led</object-name>
 		<object-name>cstr_led.001</object-name>
 		<object-name>dec_low_on</object-name>
@@ -429,18 +430,19 @@
 		<object-name>radio_vor_led</object-name>
 		<object-name>rgear_down</object-name>
 		<object-name>rgear_unlk</object-name>
+		<object-name>rudder-trim-letter</object-name>
 		<object-name>rudder-trim</object-name>
 		<object-name>spd-text</object-name>
 		<object-name>spd-text-test</object-name>
-		<object-name>terr_on_nd_on</object-name>
+		<object-name>terr_on_nd_label</object-name>
+		<object-name>terr_on_nd_on_l</object-name>
+		<object-name>terr_on_nd_on_r</object-name>
 		<object-name>vord_led</object-name>
 		<object-name>vord_led.001</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
-		<object-name>terr_on_nd_label</object-name>
-		<object-name>clock_glare</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
@@ -483,7 +485,6 @@
 		<object-name>exped_led</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>radio_opt_led</object-name>
-		<object-name>rudder-trim-test</object-name>
 		<object-name>ver.fmgc</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
@@ -594,27 +595,26 @@
 	</animation>
 
 	<text>
-		<name>rudder-trim</name>
+		<name>rudder-trim-letter</name>
 		<offsets>
 			<x-m>0.108</x-m>
-			<y-m>-0.016</y-m>
+			<y-m>-0.032</y-m>
 			<z-m>-0.133</z-m>
-			<!--<z-m>-0.134</z-m>-->
 			<heading-deg>90</heading-deg>
 			<roll-deg>0</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>left-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
-		<property>fdm/jsbsim/hydraulics/rudder/trim-cmd-deg</property>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>controls/flight/rudder-trim-letter-display</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
-		<font type="string">led.txf</font>
+		<font type="string">DSEG/DSEG14/Classic/DSEG14Classic-Bold.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
-		<character-size>0.008</character-size>
+		<character-size>0.007</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
@@ -623,41 +623,32 @@
 	</text>
 
 	<text>
-		<name>rudder-trim-test</name>
+		<name>rudder-trim</name>
 		<offsets>
-			<x-m>0.12323</x-m>
-			<y-m>-0.01972</y-m>
-			<z-m>-0.137</z-m>
+			<x-m>0.108</x-m>
+			<y-m>-0.008</y-m>
+			<z-m>-0.133</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>0</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
-		<format type="string">-88.8</format>
-		<property>autopilot/serviceable</property>
+		<format type="string">%s</format>
+		<property>controls/flight/rudder-trim-display</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<layout>left-to-right</layout>
+		<font>led.txf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
-		<character-size>0.009</character-size>
+		<character-size>0.007</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
 		</font-resolution>
+		<kerning>default</kerning>
 	</text>
-
-	<animation>
-		<type>select</type>
-		<object-name>rudder-trim</object-name>
-		<condition>
-			<not-equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</not-equals>
-		</condition>
-	</animation>
 
 	<animation>
 		<type>rotate</type>
@@ -705,16 +696,22 @@
 		<type>select</type>
 		<object-name>terr_on_nd_on_l</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/terr_on_nd_l</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/terr_on_nd_l</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
 		</condition>
 	</animation>
 	
@@ -740,16 +737,22 @@
 		<type>select</type>
 		<object-name>terr_on_nd_on_r</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/terr_on_nd_r</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/terr_on_nd_r</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
 		</condition>
 	</animation>
 
@@ -6926,22 +6929,42 @@
 		<type>select</type>
 		<object-name>chrono1</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>instrumentation/chrono/chrono-reset</property>
-					<value>0</value>
-				</equals>
-				<and>
+			<and>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
+				<or>
 					<equals>
-						<property>instrumentation/chrono/chrono-reset</property>
+						<property>controls/switches/annun-test</property>
 						<value>1</value>
 					</equals>
-					<greater-than>
-						<property>instrumentation/chrono/elapsetime-sec</property>
+					<equals>
+						<property>instrumentation/chrono/chrono-reset</property>
 						<value>0</value>
-					</greater-than>
-				</and>
-			</or>
+					</equals>
+					<and>
+						<equals>
+							<property>instrumentation/chrono/chrono-reset</property>
+							<value>1</value>
+						</equals>
+						<greater-than>
+							<property>instrumentation/chrono/elapsetime-sec</property>
+							<value>0</value>
+						</greater-than>
+					</and>
+				</or>
+			</and>
 		</condition>
 	</animation>
 	
@@ -6950,6 +6973,20 @@
 		<object-name>chrono2_1</object-name>
 		<condition>
 			<and>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
 				<property>instrumentation/clock/serviceable</property>
 				<or>
 					<equals>
@@ -6976,7 +7013,25 @@
 		<object-name>chrono2_2</object-name>
 		<condition>
 			<and>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
 				<property>instrumentation/clock/serviceable</property>
+				<not-equals>
+					<property>instrumentation/chrono[0]/chrono-reset</property>
+					<value>2</value>
+				</not-equals>
 				<or>
 					<equals>
 						<property>instrumentation/clock/set-knob</property>
@@ -7003,27 +7058,43 @@
 		<object-name>UTC_2</object-name>
 		<object-name>UTC_3</object-name>
 		<condition>
-			<not>
-				<and>
-					<property>instrumentation/clock/serviceable</property>
-					<or>
-						<equals>
-							<property>instrumentation/clock/set-knob</property>
-							<value>0</value>
-						</equals>
-						<and>
+			<and>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
+				<not>
+					<and>
+						<property>instrumentation/clock/serviceable</property>
+						<or>
 							<equals>
 								<property>instrumentation/clock/set-knob</property>
-								<value>1</value>
+								<value>0</value>
 							</equals>
-							<equals>
-								<property>instrumentation/clock/utc-selector</property>
-								<value>2</value>
-							</equals>
-						</and>
-					</or>
-				</and>
-			</not>
+							<and>
+								<equals>
+									<property>instrumentation/clock/set-knob</property>
+									<value>1</value>
+								</equals>
+								<equals>
+									<property>instrumentation/clock/utc-selector</property>
+									<value>2</value>
+								</equals>
+							</and>
+						</or>
+					</and>
+				</not>
+			</and>
 		</condition>
 	</animation>
 
@@ -7031,7 +7102,23 @@
 		<type>select</type>
 		<object-name>chrono3</object-name>
 		<condition>
-			<property>instrumentation/clock/serviceable</property>
+			<and>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-2</property>
+						<value>25</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</or>
+				<property>instrumentation/clock/serviceable</property>
+			</and>
 		</condition>
 	</animation>	
 	
@@ -7079,7 +7166,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/clock/indicated-short-string</property>
+		<property>instrumentation/clock/clock_hh_mm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
@@ -7225,7 +7312,7 @@
 		<name>chrono3</name>
 		<offsets>
 			<x-m>-0.54</x-m>
-			<y-m>0.158</y-m>
+			<y-m>0.1595</y-m>
 			<z-m>0.1785</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
