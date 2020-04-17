@@ -458,6 +458,7 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/apu-operate eq 1
+				/systems/fuel/valves/apu-lp-valve eq 1
 			</test>
 		</switch>
 		
