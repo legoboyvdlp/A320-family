@@ -87,7 +87,11 @@ var APU = {
 		me.inletFlap.open();
 		me.checkOil();
 		me.listenSignals = 1;
-		settimer(func() { me.setState(2)}, 3);
+		settimer(func() { 
+			if (APUNodes.Controls.master.getValue()) { 
+				me.setState(2);
+			}
+		}, 3);
 		settimer(func() { me.checkOil }, 8);
 	},
 	startCommand: func() {
@@ -155,7 +159,7 @@ var APU = {
 			me.signals.fault = 1;
 		}
 		
-		if (pts.APU.rpm.getValue() < 7) {
+		if (pts.APU.rpm.getValue() < 7 and !APUNodes.Controls.master.getValue()) {
 			me.inletFlap.close();
 			me.fuelValveCmd.setValue(0);
 			if (!APUNodes.Controls.master.getValue()) {
@@ -238,18 +242,23 @@ var APUController = {
 
 var _masterTime = 0;
 setlistener("controls/apu/master", func() {
-	if (APUNodes.Controls.master.getValue() and APUController.APU.state == 0) {
-		APUNodes.masterElecThreeMin.setValue(1);
-		checkMasterThreeMinTimer.start();
-		_masterTime = pts.Sim.Time.elapsedSec.getValue();
-		APUController.APU.powerOn();
-	} elsif (!APUNodes.Controls.master.getValue()) {
-		APUController.APU.stop();
+	if (APUController.APU != nil) {
+		if (APUNodes.Controls.master.getValue() and APUController.APU.state == 0) {
+			shutdownTimer.stop();
+			APUNodes.masterElecThreeMin.setValue(1);
+			checkMasterThreeMinTimer.start();
+			_masterTime = pts.Sim.Time.elapsedSec.getValue();
+			APUController.APU.powerOn();
+		} elsif (!APUNodes.Controls.master.getValue()) {
+			APUController.APU.stop();
+		}
 	}
 }, 0, 1);
 
 setlistener("controls/pneumatic/switches/bleedapu", func() {
-	APUController.APU.signals.bleedWasUsed = 1;
+	if (APUController.APU != nil) {
+		APUController.APU.signals.bleedWasUsed = 1;
+	}
 }, 0, 1);
 
 var checkMasterThreeMinTimer = maketimer(0.1, func() {
