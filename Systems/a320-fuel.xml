@@ -660,7 +660,7 @@
 		<switch name="/systems/fuel/internal/center-tank-apu">
 			<default value="0"/>
 			<test logic="AND" value="9">
-				<<test logic="OR">
+				<test logic="OR">
 					/systems/fuel/feed-center-1 eq 1
 					<test logic="AND">
 						/systems/fuel/feed-center-2 eq 1
