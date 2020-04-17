@@ -97,7 +97,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<temperature>50</temperature>
 		</tank>
 		
-		<tank type="FUEL">    <!-- Center Tank -->
+		<tank type="FUEL">    <!-- Center Tank - wing box may be modified to center fuel tank on the -100 so we have a center tank. Or mostly because its easier... -->
 			<location unit="M">
 				<x> 18.9731 </x>
 				<y> 0 </y>
