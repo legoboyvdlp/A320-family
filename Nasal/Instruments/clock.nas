@@ -96,6 +96,7 @@ setlistener("instrumentation/clock/et-selector", func(et){
 },0,0);
 
 var start_loop = maketimer(0.1, func {
+	if (systems.ELEC.Bus.dcEss.getValue() < 25) { return; }
 	# Annun-test
 	if (getprop("controls/switches/annun-test") == 1) {
 		var UTC_date = sprintf("%02d %02d %02d", "88", "88", "88");
