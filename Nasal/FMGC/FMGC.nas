@@ -469,9 +469,9 @@ var masterFMGC = maketimer(0.2, func {
 	
 	#handle radios, runways, v1/vr/v2
 	if (fmgc.flightPlanController.flightplans[2].approach != nil and phase >= 2) {
-		var airport = airportinfo(getprop("FMGC/internal/arr-arpt")).id;
+		var airport = airportinfo(getprop("FMGC/internal/arr-arpt"));
 		setprop("FMGC/internal/ldg-elev", airport.elevation * M2FT);
-		var runways = airportinfo(airport).runways;
+		var runways = airportinfo(airport.id).runways;
 		var rwy = string.replace(fmgc.flightPlanController.flightplans[2].approach.id, "ILS", "");
 		if (runways[rwy] != nil) {
 			var r = runways[rwy];
@@ -482,12 +482,13 @@ var masterFMGC = maketimer(0.2, func {
     		#print(r.heading);
     		#print(r.stopway);
     		#print(r.threshold);
-    		setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
     		magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
 			if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+				setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 			} else if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set")) {
+				setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 			} else if (!getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
@@ -498,12 +499,13 @@ var masterFMGC = maketimer(0.2, func {
 		var rwy = fmgc.flightPlanController.flightplans[2].departure_runway.id;
 		if (runways[rwy] != nil) {
 			var r = runways[rwy];
-			setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
 			magnetic_hdg = geo.normdeg(r.heading - getprop("environment/magnetic-variation-deg"));
 			if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+				setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 			} else if (r.ils_frequency_mhz != nil and !getprop("FMGC/internal/ils1freq-set")) {
+				setprop("FMGC/internal/ils1freq-calculated", r.ils_frequency_mhz);
 				setprop("instrumentation/nav[0]/frequencies/selected-mhz", r.ils_frequency_mhz);
 			} else if (!getprop("FMGC/internal/ils1crs-set")) {
 				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
