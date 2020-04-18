@@ -1436,10 +1436,6 @@
 					<command>nasal</command>
 					<script>
 						fcu.FCUController.ATDisc();
-						setprop("/sim/sounde/apdiscbtn", 1);
-						settimer(func {
-							setprop("/sim/sounde/apdiscbtn", 0);
-						}, 0.5);
 					</script>
 				</binding>
 			</key>
@@ -2192,10 +2188,6 @@
 					<command>nasal</command>
 					<script>
 						fcu.FCUController.APDisc();
-						setprop("/sim/sounde/apdiscbtn", 1);
-						settimer(func {
-							setprop("/sim/sounde/apdiscbtn", 0);
-						}, 0.5);
 					</script>
 				</binding>
 			</key>
