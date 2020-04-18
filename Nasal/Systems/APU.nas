@@ -121,7 +121,9 @@ var APU = {
 	waitStart: func() {
 		if (pts.APU.rpm.getValue() >= 4.9) {
 			me.GenericControls.cutoff.setValue(0);
-			setprop("/fdm/jsbsim/propulsion/set-running", 2);
+			if (me.fastStart) {
+				setprop("/fdm/jsbsim/propulsion/set-running", 2);
+			}
 			apuStartTimer.stop();
 			apuStartTimer2.start();
 		}

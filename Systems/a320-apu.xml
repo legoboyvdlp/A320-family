@@ -23,29 +23,55 @@
 
         <fcs_function name="/systems/apu/egt-degC">
             <function>
-            <table>
-                <independentVar lookup="row">/engines/engine[2]/n1</independentVar>
-                <tableData>
-					5.0     20.0
-					8.0     45.0
-					10.0    120.0
-					12.0    225.0
-					18.0    430.0
-					25.0    500.0
-					27.0    560.0
-					30.0    720.0
-					35.0    785.0
-					40.0    800.0
-					45.0    795.0
-					50.0    785.0
-					60.0    755.0
-                    75.0    645.0
-                    90.0    520.0
-                    100.0   415.0
-                </tableData>
-            </table>
+				<ifthen>
+					<gt>
+						<property>/systems/apu/dn-dt</property>
+						<value>0</value>
+					</gt>
+					<table>
+						<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+						<tableData>
+							5.0     20.0
+							8.0     45.0
+							10.0    120.0
+							12.0    225.0
+							18.0    430.0
+							25.0    500.0
+							27.0    560.0
+							30.0    720.0
+							35.0    785.0
+							40.0    800.0
+							45.0    795.0
+							50.0    785.0
+							60.0    755.0
+							75.0    645.0
+							90.0    520.0
+							100.0   415.0
+						</tableData>
+					</table>
+					<table>
+						<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+						<tableData>
+							2.0     200.0
+							8.0     220.0
+							12.0    225.0
+							18.0    240.0
+							30.0    250.0
+							50.0    265.0
+							60.0    295.0
+							75.0    380.0
+							90.0    410.0
+							100.0   415.0
+						</tableData>
+					</table>
+				</ifthen>
             </function>
         </fcs_function>
+		
+		<washout_filter name="/systems/apu/dn-dt">
+			<input>/engines/engine[2]/n1</input>
+			<c1>1</c1>
+		</washout_filter>
     </channel>
 
 </system>
