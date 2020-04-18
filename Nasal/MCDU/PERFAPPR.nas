@@ -1,14 +1,6 @@
 # Copyright (c) 2020 Matthew Maring (hayden2000)
 
 # APPR PERF
-var dest_qnh = props.globals.getNode("FMGC/internal/dest-qnh", 1);
-var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
-var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
-var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
-var transAlt = props.globals.getNode("FMGC/internal/trans-alt", 1);
-var final = props.globals.getNode("FMGC/internal/final", 1);
-var mda = props.globals.getNode("FMGC/internal/mda", 1);
-var dh = props.globals.getNode("FMGC/internal/dh", 1);
 var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
 var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
 
@@ -94,6 +86,36 @@ var perfAPPRInput = func(key, i) {
 		if (scratchpad == "" and ldg_config_f_set.getValue() == 1 and ldg_config_3_set.getValue() == 0) {
 			setprop("FMGC/internal/ldg-config-3-set", 1);
 			setprop("FMGC/internal/ldg-config-f-set", 0);
+		} else {
+			notAllowed(i);
+		}
+	} else if (key == "R2") {
+		if (scratchpad == "CLR") {
+			setprop("FMGC/internal/baro", -1);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		} else if (int(scratchpad) != nil and scratchpad >= getprop("FMGC/internal/ldg-elev") and scratchpad <= 5000 + getprop("FMGC/internal/ldg-elev")) {
+			if (getprop("FMGC/internal/radio-no") == 0) {
+				setprop("FMGC/internal/radio", -1);
+			}
+			setprop("FMGC/internal/baro", scratchpad);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		} else {
+			notAllowed(i);
+		}
+	} else if (key == "R3") {
+		if (scratchpad == "CLR") {
+			setprop("FMGC/internal/radio", -1);
+			setprop("FMGC/internal/radio-no", 0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		} else if (scratchpad == "NO") {
+			setprop("FMGC/internal/radio", -1);
+			setprop("FMGC/internal/radio-no", 1);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 700) {
+			setprop("FMGC/internal/baro", -1);
+			setprop("FMGC/internal/radio-no", 0);
+			setprop("FMGC/internal/radio", scratchpad);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			notAllowed(i);
 		}

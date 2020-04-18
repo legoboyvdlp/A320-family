@@ -321,6 +321,7 @@ var masterFMGC = maketimer(0.2, func {
 		} else {
 			vapp = vls + dest_wind;
 		}
+		setprop("FMGC/internal/computed-speeds/vapp", vapp);
 	}
 	
 	aoa_prot = 15;
@@ -370,6 +371,7 @@ var masterFMGC = maketimer(0.2, func {
 		} else {
 			vapp_appr = vls_appr + dest_wind;
 		}
+		setprop("FMGC/internal/computed-speeds/vapp_appr", vapp_appr);
 	}
 	
 	# set the values globally
@@ -384,7 +386,6 @@ var masterFMGC = maketimer(0.2, func {
 	setprop("FMGC/internal/computed-speeds/flap2", flap2);
 	setprop("FMGC/internal/computed-speeds/flap3", flap3);
 	setprop("FMGC/internal/computed-speeds/vls", vls);
-	setprop("FMGC/internal/computed-speeds/vapp", vapp);
 	setprop("FMGC/internal/computed-speeds/alpha_prot", alpha_prot);
 	setprop("FMGC/internal/computed-speeds/alpha_max", alpha_max);
 	
@@ -404,7 +405,6 @@ var masterFMGC = maketimer(0.2, func {
 	setprop("FMGC/internal/computed-speeds/flap2_appr", flap2_appr);
 	setprop("FMGC/internal/computed-speeds/clean_appr", clean_appr);
 	setprop("FMGC/internal/computed-speeds/vls_appr", vls_appr);
-	setprop("FMGC/internal/computed-speeds/vapp_appr", vapp_appr);
 	
 	# Need info on these, also correct for height at altitude...
 	# https://www.pprune.org/archive/index.php/t-587639.html
@@ -469,7 +469,9 @@ var masterFMGC = maketimer(0.2, func {
 	
 	#handle radios, runways, v1/vr/v2
 	if (fmgc.flightPlanController.flightplans[2].approach != nil and phase >= 2) {
-		var runways = airportinfo(airportinfo(getprop("FMGC/internal/arr-arpt")).id).runways;
+		var airport = airportinfo(getprop("FMGC/internal/arr-arpt")).id;
+		setprop("FMGC/internal/ldg-elev", airport.elevation * M2FT);
+		var runways = airportinfo(airport).runways;
 		var rwy = string.replace(fmgc.flightPlanController.flightplans[2].approach.id, "ILS", "");
 		if (runways[rwy] != nil) {
 			var r = runways[rwy];
