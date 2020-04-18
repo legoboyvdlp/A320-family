@@ -948,7 +948,12 @@
 		<apu>
 			<oil>
 				<level-l type="double">5.4</level-l>
+				<allow-oil-consumption type="bool">1</allow-oil-consumption>
+				<oil-pressure-psi type="double">0</oil-pressure-psi>
+				<oil-temperature-degC type="double">0</oil-temperature-degC>
 			</oil>
+			<bleed-load-kw type="double">252</bleed-load-kw>
+			<electrical-load-kw type="double">132</electrical-load-kw>
 			<available type="bool">0</available>
 			<dc-bat-three-minutes type="bool">0</dc-bat-three-minutes>
 			<start type="bool">0</start>

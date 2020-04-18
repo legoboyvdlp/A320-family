@@ -596,7 +596,7 @@ var canvas_lowerECAM_apu = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO","APU-low-oil",
 		"text3724","text3728","text3732"];
 	},
 	update: func() {
@@ -669,7 +669,7 @@ var canvas_lowerECAM_apu = {
 		me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 
 		# APU Bleed
-		if (ir2_knob.getValue() != 0 and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
+		if (systems.ADIRSnew.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
 			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
 			me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
 		} else {
@@ -705,6 +705,12 @@ var canvas_lowerECAM_apu = {
 		me["APUN-needle"].setRotation((apu_rpm_rot.getValue() + 90) * D2R);
 		me["APUEGT-needle"].setRotation((apu_egt_rot.getValue() + 90) * D2R);
 
+		if (systems.APUNodes.Oil.level.getValue() < 3.69 and apu_rpm.getValue() < 94.9 and gear0_wow.getValue()) {
+			me["APU-low-oil"].show();
+		} else {
+			me["APU-low-oil"].hide();
+		}
+		
 		me.updateBottomStatus();
 	},
 };

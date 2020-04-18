@@ -11,6 +11,8 @@ var APUNodes = {
 	},
 	Oil: {
 		level: props.globals.getNode("systems/apu/oil/level-l"),
+		pressure: props.globals.getNode("systems/apu/oil/oil-pressure-psi"),
+		temperature: props.globals.getNode("systems/apu/oil/oil-temperature-degC"),
 	},
 	masterElecThreeMin: props.globals.getNode("systems/apu/dc-bat-three-minutes"),
 };
@@ -89,7 +91,7 @@ var APU = {
 		me.checkOil();
 		me.listenSignals = 1;
 		settimer(func() { 
-			if (APUNodes.Controls.master.getValue()) { 
+			if (APUNodes.Controls.master.getValue() and !getprop("systems/acconfig/autoconfig-running")) { 
 				me.setState(2);
 			}
 		}, 3);
@@ -208,11 +210,12 @@ var APU = {
 			checkApuStartTimer.stop();
 			apuStartTimer.stop();
 			apuStartTimer2.stop();
-			apuStartTimer3.stop();
 			cooldownTimer.stop();
 			me.stopAPU();
 			me.setState(7);
 			shutdownTimer.start();
+			me.signals.autoshutdown = 1;
+			me.signals.fault = 1;
 		}
 	},
 	emergencyStop: func() {
@@ -220,6 +223,7 @@ var APU = {
 			checkApuStartTimer.stop();
 			me.inletFlap.close();
 			me.fuelValveCmd.setValue(0);
+			me.signals.autoshutdown = 1;
 			me.signals.fault = 1;
 			me.setState(0);
 		} elsif (me.state >= 4) {
@@ -236,6 +240,11 @@ var APU = {
 		APUNodes.Controls.bleed.setValue(0);
 		me.bleedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	},
+	update: func() {
+		if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
+			me.autoStop();
+		}
+	},
 };
 
 var APUController = {
@@ -244,8 +253,14 @@ var APUController = {
 	init: func() {
 		if (!me._init) {
 			me.APU = APU.new();
+			me._init = 1;
 		}
 	},
+	loop: func() {
+		if (me._init) {
+			me.APU.update();
+		}
+	}
 };
 
 var _masterTime = 0;
