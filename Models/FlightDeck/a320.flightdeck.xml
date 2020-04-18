@@ -527,10 +527,16 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -553,10 +559,16 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -593,10 +605,16 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
