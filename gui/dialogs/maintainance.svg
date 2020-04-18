@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.8555026"
-     inkscape:cx="575.63557"
-     inkscape:cy="294.82537"
+     inkscape:zoom="1.363126"
+     inkscape:cx="580.67971"
+     inkscape:cy="159.38775"
      inkscape:document-units="px"
-     inkscape:current-layer="cockpit-group"
+     inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:showpageshadow="false"
@@ -241,7 +241,7 @@
       <path
          sodipodi:nodetypes="cc"
          style="opacity:1;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.08879185px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 478.70428,500.08483 -5.59232,-38.60248"
+         d="m 478.70428,500.08483 -3.3915,-31.81661"
          id="path2278-3-5-3-5"
          inkscape:connector-curvature="0" />
       <circle
@@ -253,7 +253,7 @@
       <path
          sodipodi:nodetypes="cc"
          style="opacity:1;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.08879185px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 476.1789,484.11179 -15.82012,-20.546"
+         d="M 476.1789,484.11179 465.67744,472.36908"
          id="path2278-3-5-3-5-2"
          inkscape:connector-curvature="0" />
     </g>
@@ -263,11 +263,11 @@
        id="path1218"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:2.08899999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 560.35715,423.62261 -11.25,10e-6 -8.66072,0.53572 -7.41071,1.51786 c 0,0 -140.5666,25.51509 -148.24524,27.47121 -2.3527,0.59935 -5.29247,3.10033 -4.90406,5.38516 0.3992,2.34823 3.48294,3.3856 5.6493,4.37577 5.35634,2.4482 11.48538,2.69172 17.32142,3.48214 9.16572,1.24138 18.38458,0.99848 27.63394,1.02679 8.82913,0.027 17.67739,-0.0479 26.47668,-0.7758 7.74749,-0.64087 29.35724,-4.40673 29.35724,-4.40673"
+       style="fill:none;stroke:#000000;stroke-width:2.089;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 560.35715,423.62261 -11.25,10e-6 -8.66072,0.53572 -7.41071,1.51786 c 0,0 -132.49691,24.41468 -140.17555,26.3708 -2.3527,0.59935 -24.34467,4.83495 -24.34467,4.83495 4.1763,7.12766 27.89339,8.65582 34.34164,9.50853 9.16572,1.24138 43.58991,6.71225 43.58991,6.71225 l 21.15802,-2.24301 18.71993,-8.62498"
        id="path1220"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccssssssc" />
+       sodipodi:nodetypes="ccccsccccc" />
     <path
        inkscape:connector-curvature="0"
        id="path2278-3-1"
@@ -309,97 +309,12 @@
        width="394.72931"
        id="weardown-ratio-vis"
        style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <rect
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#f00000;stroke-width:1.02303457;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="cockpit-cleaness-frame"
-       width="88.359222"
-       height="20.237518"
-       x="422.6207"
-       y="345.70856"
-       inkscape:label="#rect2899" />
-    <g
-       id="cockpit-group"
-       inkscape:label="#g1055">
-      <rect
-         ry="24.955845"
-         y="273.13718"
-         x="390.73325"
-         height="339.83978"
-         width="249.21349"
-         id="rect2264"
-         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#161616;stroke-width:5.468;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.82061481px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="509.52219"
-         y="313.33981"
-         id="text2584"><tspan
-           sodipodi:role="line"
-           id="tspan2582"
-           x="509.52219"
-           y="313.33981"
-           style="font-size:26.66666603px;stroke-width:0.22051534px">Cockpit</tspan></text>
-      <rect
-         style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:1.03214848;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         id="cockpit-cleaness-level"
-         width="89.146385"
-         height="20.417809"
-         x="421.83353"
-         y="345.61658"
-         inkscape:label="#rect2899" />
-      <rect
-         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         id="cockpit-cleaness-vis"
-         width="89.146385"
-         height="20.325813"
-         x="421.83353"
-         y="345.70856"
-         ry="2.3991122"
-         inkscape:label="#rect2609" />
-      <text
-         id="text2619"
-         y="361.30414"
-         x="561.95166"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-size:16px;stroke-width:0.22051534px"
-           y="361.30414"
-           x="561.95166"
-           id="tspan2617"
-           sodipodi:role="line">Cleaness</tspan></text>
-      <rect
-         y="293.81628"
-         x="594.47504"
-         height="20.490194"
-         width="33.458672"
-         id="cockpit-close"
-         style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:5.46799994;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         inkscape:label="#rect934" />
-      <text
-         inkscape:label="#text2619-3"
-         id="cockpit-close-test"
-         y="306.88315"
-         x="611.04022"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.82061481px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="stroke-width:0.22051534px"
-           y="306.88315"
-           x="611.04022"
-           id="tspan2617-6"
-           sodipodi:role="line">close</tspan></text>
-      <text
-         inkscape:label="#text2619-7"
-         id="cockpit-cleaness-fix"
-         y="361.69397"
-         x="466.64932"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-size:16px;stroke-width:0.22051534px"
-           y="361.69397"
-           x="466.64932"
-           id="tspan2617-5"
-           sodipodi:role="line">fix</tspan></text>
-    </g>
+    <path
+       style="fill:#00ff00;stroke:#000000;stroke-width:2.089;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 346.99653,461.70404 c -1.45808,4.65469 3.48464,37.2306 3.48464,37.2306 0.56453,2.34449 3.91941,2.99701 6.23567,3.66804 10.92751,3.16575 22.75621,1.77946 34.11276,1.10041 9.69222,-0.57953 28.79411,-4.40164 28.79411,-4.40164 l -0.5502,-5.50206 31.72854,-6.60247 0.3668,-13.38835 -31.54514,-9.1701 -0.3668,-2.38422 c 0,0 -20.80347,-4.27656 -31.36174,-5.13526 -8.53059,-0.69379 -25.67627,0 -25.67627,0 0,0 -13.63827,-0.47195 -15.22237,4.58505 z"
+       id="path944"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssssccccccscs" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#c80000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -447,5 +362,97 @@
        d="M 148.79094,415.25939 137.78091,426.5836"
        style="opacity:1;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.08879185px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        sodipodi:nodetypes="cc" />
+    <g
+       id="cockpit-group"
+       inkscape:label="#g971"
+       transform="translate(-3.6337245,3.5563919)">
+      <rect
+         ry="24.955845"
+         y="273.22916"
+         x="390.73325"
+         height="339.83978"
+         width="249.21349"
+         id="rect2264"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#161616;stroke-width:5.46799994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.82061481px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="509.52219"
+         y="313.43179"
+         id="text2584"><tspan
+           sodipodi:role="line"
+           id="tspan2582"
+           x="509.52219"
+           y="313.43179"
+           style="font-size:26.66666603px;stroke-width:0.22051534px">Cockpit</tspan></text>
+      <rect
+         style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:1.03214848;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="cockpit-cleaness-level"
+         width="89.146385"
+         height="20.417809"
+         x="421.83353"
+         y="345.70856"
+         inkscape:label="#rect2899" />
+      <rect
+         inkscape:label="#rect2899"
+         y="345.70856"
+         x="422.6207"
+         height="20.237518"
+         width="88.359222"
+         id="cockpit-cleaness-frame"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#f00000;stroke-width:1.02303457;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="cockpit-cleaness-vis"
+         width="89.146385"
+         height="20.325813"
+         x="421.83353"
+         y="345.80054"
+         ry="2.3991122"
+         inkscape:label="#rect2609" />
+      <text
+         id="text2619"
+         y="361.39612"
+         x="561.95166"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-size:16px;stroke-width:0.22051534px"
+           y="361.39612"
+           x="561.95166"
+           id="tspan2617"
+           sodipodi:role="line">Cleaness</tspan></text>
+      <rect
+         y="293.90826"
+         x="594.47504"
+         height="20.490194"
+         width="33.458672"
+         id="cockpit-close"
+         style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:5.46799994;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:label="#rect934" />
+      <text
+         inkscape:label="#text2619-3"
+         id="cockpit-close-test"
+         y="306.97513"
+         x="611.04022"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.82061481px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.22051534px"
+           y="306.97513"
+           x="611.04022"
+           id="tspan2617-6"
+           sodipodi:role="line">close</tspan></text>
+      <text
+         inkscape:label="#text2619-7"
+         id="cockpit-cleaness-fix"
+         y="361.78595"
+         x="466.64932"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:100%;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22051534px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-size:16px;stroke-width:0.22051534px"
+           y="361.78595"
+           x="466.64932"
+           id="tspan2617-5"
+           sodipodi:role="line">fix</tspan></text>
+    </g>
   </g>
 </svg>
