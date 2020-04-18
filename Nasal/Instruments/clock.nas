@@ -156,7 +156,7 @@ var start_loop = maketimer(0.1, func {
 		};
 		setprop("instrumentation/chrono[0]/chr-et-min",chr_min);
 		setprop("instrumentation/chrono[0]/chr-et-sec",chr_sec);
-		chr_tmp = sprintf("%02d %02d", chr_min, chr_sec);
+		chr_tmp = sprintf("%02d:%02d", chr_min, chr_sec);
 		setprop("instrumentation/chrono[0]/chr-et-string", chr_tmp);
 
 		# ET clock
