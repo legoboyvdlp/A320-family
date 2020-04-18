@@ -6333,8 +6333,10 @@
 		<object-name>qnh-test</object-name>
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-letter</object-name>
+		<object-name>dme0</object-name>
 		<object-name>dme</object-name>
 		<object-name>dme20</object-name>
+		<object-name>dme10</object-name>
 		<object-name>dme1</object-name>
 		<object-name>dme120</object-name>
 		<diffuse>
@@ -7495,6 +7497,30 @@
 	</animation>
 
 	<!-- dme -->
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme0</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<property>instrumentation/dme[2]/in-range</property>
+				<less-than-equals>
+					<property>instrumentation/dme[2]/indicated-distance-nm</property>
+					<value>1</value>
+				</less-than-equals>
+				<greater-than-equals>
+					<property>/systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>dme</object-name>
@@ -7502,6 +7528,10 @@
 			<and>
 				<property>instrumentation/dme[2]/operable</property>
 				<property>instrumentation/dme[2]/in-range</property>
+				<greater-than>
+					<property>instrumentation/dme[2]/indicated-distance-nm</property>
+					<value>1</value>
+				</greater-than>
 				<less-than-equals>
 					<property>instrumentation/dme[2]/indicated-distance-nm</property>
 					<value>20</value>
@@ -7543,11 +7573,38 @@
 	
 	<animation>
 		<type>select</type>
+		<object-name>dme10</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<property>instrumentation/dme[3]/in-range</property>
+				<less-than-equals>
+					<property>instrumentation/dme[3]/indicated-distance-nm</property>
+					<value>1</value>
+				</less-than-equals>
+				<greater-than-equals>
+					<property>/systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
 		<object-name>dme1</object-name>
 		<condition>
 			<and>
 				<property>instrumentation/dme[3]/operable</property>
 				<property>instrumentation/dme[3]/in-range</property>
+				<greater-than>
+					<property>instrumentation/dme[3]/indicated-distance-nm</property>
+					<value>1</value>
+				</greater-than>
 				<less-than-equals>
 					<property>instrumentation/dme[3]/indicated-distance-nm</property>
 					<value>20</value>
@@ -7588,6 +7645,37 @@
 	</animation>
 
 	<text>
+		<name>dme0</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.155</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">0.0</format>
+		<property>autopilot/serviceable</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<text>
 		<name>dme</name>
 		<offsets>
 			<x-m>-0.529</x-m>
@@ -7617,6 +7705,7 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
+	
 	<text>
 		<name>dme20</name>
 		<offsets>
@@ -7647,6 +7736,38 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
+	
+	<text>
+		<name>dme10</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.122</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">0.0</format>
+		<property>autopilot/serviceable</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
 	<text>
 		<name>dme1</name>
 		<offsets>
@@ -7677,6 +7798,7 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
+	
 	<text>
 		<name>dme120</name>
 		<offsets>
