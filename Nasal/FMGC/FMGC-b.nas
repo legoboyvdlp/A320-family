@@ -88,6 +88,7 @@ var Input = {
 	fd2: props.globals.initNode("/it-autoflight/input/fd2", 1, "BOOL"),
 	fpa: props.globals.initNode("/it-autoflight/input/fpa", 0, "DOUBLE"),
 	hdg: props.globals.initNode("/it-autoflight/input/hdg", 0, "INT"),
+	hdgCalc: 0,
 	ias: props.globals.initNode("/it-autoflight/input/spd-kts", 250, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
@@ -110,6 +111,7 @@ var Internal = {
 	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 30, "INT"),
 	bankLimitAuto: 30,
 	captVS: 0,
+	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
 	hdg: props.globals.initNode("/it-autoflight/internal/heading-deg", 0, "DOUBLE"),
@@ -911,9 +913,13 @@ var ITAF = {
 		Input.trk.setBoolValue(1);
 		Custom.ndTrkSel[0].setBoolValue(1);
 		Custom.ndTrkSel[1].setBoolValue(1);
-		if (abs(Internal.hdgErrorDeg.getValue()) <= 10 and Output.lat.getValue() == 0) {
-			me.setLatMode(3);
+		Input.hdgCalc = Input.hdg.getValue() + math.round(Internal.driftAngle.getValue());
+		if (Input.hdgCalc > 360) { # It's rounded, so this is ok. Otherwise do >= 360.5
+			Input.hdgCalc = Input.hdgCalc - 360;
+		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
+			Input.hdgCalc = Input.hdgCalc + 360;
 		}
+		Input.hdg.setValue(Input.hdgCalc);
 	},
 	trkFpaOff: func() {
 		Custom.trkFpa.setBoolValue(0);
@@ -923,9 +929,13 @@ var ITAF = {
 		Input.trk.setBoolValue(0);
 		Custom.ndTrkSel[0].setBoolValue(0);
 		Custom.ndTrkSel[1].setBoolValue(0);
-		if (abs(Internal.hdgErrorDeg.getValue()) <= 10 and Output.lat.getValue() == 0) {
-			me.setLatMode(3);
+		Input.hdgCalc = Input.hdg.getValue() - math.round(Internal.driftAngle.getValue());
+		if (Input.hdgCalc > 360) { # It's rounded, so this is ok. Otherwise do >= 360.5
+			Input.hdgCalc = Input.hdgCalc - 360;
+		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
+			Input.hdgCalc = Input.hdgCalc + 360;
 		}
+		Input.hdg.setValue(Input.hdgCalc);
 	},
 };
 

@@ -388,6 +388,15 @@
 		<name>DRIFT ANGLE</name>
 		<type>gain</type>
 		<gain>1.0</gain>
+		<input>
+			<condition>
+				<less-than-equals>
+					<property>/velocities/groundspeed-kt</property>
+					<value>1</value>
+				</less-than-equals>
+			</condition>
+			<property>/orientation/heading-magnetic-deg</property>
+		</input>
 		<input>/orientation/track-magnetic-deg</input>
 		<reference>/orientation/heading-magnetic-deg</reference>
 		<output>/it-autoflight/internal/drift-angle-deg</output>
