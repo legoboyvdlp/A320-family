@@ -1,6 +1,6 @@
 # A3XX Lower ECAM Canvas
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var lowerECAM_apu = nil;
 var lowerECAM_bleed = nil;

@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var version = getprop("sim/version/flightgear");
 var v = split(".", version);

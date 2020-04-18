@@ -1,7 +1,7 @@
 # A3XX Engine Control
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 if (getprop("options/eng") == "IAE") {
 	io.include("engines-iae.nas");

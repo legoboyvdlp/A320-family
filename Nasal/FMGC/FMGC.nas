@@ -1,7 +1,7 @@
 # A3XX FMGC/Autoflight
 # Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 ##################
 # Init Functions #
