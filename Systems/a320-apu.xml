@@ -24,10 +24,16 @@
         <fcs_function name="/systems/apu/egt-degC">
             <function>
 				<ifthen>
-					<gt>
-						<property>/systems/apu/dn-dt</property>
-						<value>0</value>
-					</gt>
+					<or>
+						<lt>
+							<property>/engines/engine[2]/n1</property>
+							<value>0.5</value>
+						</lt>
+						<gt>
+							<property>/systems/apu/dn-dt</property>
+							<value>0</value>
+						</gt>
+					</or>
 					<table>
 						<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
 						<tableData>
