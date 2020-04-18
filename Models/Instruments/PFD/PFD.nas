@@ -212,7 +212,7 @@ var canvas_PFD_base = {
 		return me;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
+		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","dhReached","FMA_ap","FMA_fd","FMA_athr",
 		"FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box","FMA_Middle1",
 		"FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_clip","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank",
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber",
@@ -601,8 +601,6 @@ var canvas_PFD_base = {
 		me["FMA_catmode_box"].hide();
 		me["FMA_cattype_box"].hide();
 		me["FMA_cat_box"].hide();
-		me["FMA_nodh"].hide();
-		me["FMA_dh_box"].hide();
 		
 		# FMA AP FD ATHR
 		me["FMA_ap"].setText(sprintf("%s", ap_mode.getValue()));
@@ -756,16 +754,58 @@ var canvas_PFD_base = {
 		
 		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
-		if (gear_agl_cur <= decision.getValue()) {
-			me["AI_agl"].setColor(0.7333,0.3803,0);
-		} else {
-			me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-		}
-		
 		if (gear_agl_cur <= 2500) {
 			me["AI_agl"].show();
+			me["FMA_dh_box"].hide(); #not implemented
+			me["dhReached"].hide(); #not implemented
+			if (getprop("FMGC/internal/radio") != -1) {
+				me["FMA_dh"].setText("DH");
+				me["FMA_dh"].show();
+				me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+				me["FMA_dhn"].show();
+				me["FMA_nodh"].hide();
+				if (gear_agl_cur <= getprop("FMGC/internal/radio") + 100) {
+					me["AI_agl"].setColor(0.7333,0.3803,0);
+				} else {
+					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+				}
+			} else if (getprop("FMGC/internal/baro") != -1) {
+				me["FMA_dh"].setText("MDA");
+				me["FMA_dh"].show();
+				me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+				me["FMA_dhn"].show();
+				me["FMA_nodh"].hide();
+				if (gear_agl_cur <= getprop("FMGC/internal/baro") + 100) {
+					me["AI_agl"].setColor(0.7333,0.3803,0);
+				} else {
+					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+				}
+			} else if (getprop("FMGC/internal/radio-no")) {
+				me["FMA_dh"].setText("DH");
+				me["FMA_dh"].show();
+				me["FMA_dhn"].setText("100");
+				me["FMA_dhn"].show();
+				me["FMA_nodh"].hide();
+				if (gear_agl_cur <= 100) {
+					me["AI_agl"].setColor(0.7333,0.3803,0);
+				} else {
+					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+				}
+			} else {
+				me["FMA_dh"].hide();
+				me["FMA_dhn"].hide();
+				me["FMA_nodh"].show();
+				if (gear_agl_cur <= 400) {
+					me["AI_agl"].setColor(0.7333,0.3803,0);
+				} else {
+					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+				}
+			}
 		} else {
 			me["AI_agl"].hide();
+			me["FMA_nodh"].hide();
+			me["FMA_dh_box"].hide();
+			me["dhReached"].hide();
 		}
 		
 		me["AI_agl_g"].setRotation(-roll_cur * D2R);
