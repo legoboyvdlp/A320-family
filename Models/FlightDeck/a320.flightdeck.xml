@@ -7587,7 +7587,7 @@
 					<value>25</value>
 				</greater-than-equals>
 				<equals>
-					<property>/instrumentation/ddrmi/vor-adf-1</property>
+					<property>/instrumentation/ddrmi/vor-adf-2</property>
 					<value>1</value>
 				</equals>
 			</and>
