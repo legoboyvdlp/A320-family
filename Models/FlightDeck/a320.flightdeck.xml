@@ -7506,9 +7506,18 @@
 					<property>instrumentation/dme[2]/indicated-distance-nm</property>
 					<value>20</value>
 				</less-than-equals>
+				<greater-than-equals>
+					<property>/systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
 			</and>
 		</condition>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>dme20</object-name>
@@ -7520,9 +7529,18 @@
 					<property>instrumentation/dme[2]/indicated-distance-nm</property>
 					<value>20</value>
 				</greater-than>
+				<greater-than-equals>
+					<property>/systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
 			</and>
 		</condition>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>dme1</object-name>
@@ -7534,9 +7552,18 @@
 					<property>instrumentation/dme[3]/indicated-distance-nm</property>
 					<value>20</value>
 				</less-than-equals>
+				<greater-than-equals>
+					<property>/systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/ddrmi/vor-adf-2</property>
+					<value>1</value>
+				</equals>
 			</and>
 		</condition>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>dme120</object-name>
@@ -7548,6 +7575,14 @@
 					<property>instrumentation/dme[3]/indicated-distance-nm</property>
 					<value>20</value>
 				</greater-than>
+				<greater-than-equals>
+					<property>/systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/ddrmi/vor-adf-2</property>
+					<value>1</value>
+				</equals>
 			</and>
 		</condition>
 	</animation>
@@ -7594,7 +7629,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%4.0f.</format>
+		<format type="string">%4.0f</format>
 		<property>instrumentation/dme[2]/indicated-distance-nm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
@@ -7654,7 +7689,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%4.0f.</format>
+		<format type="string">%4.0f</format>
 		<property>instrumentation/dme[3]/indicated-distance-nm</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
