@@ -173,8 +173,10 @@ var start_loop = maketimer(0.1, func {
 		et_tmp = sprintf("%02d:%02d", et_hr, et_min);
 		setprop("instrumentation/clock/elapsed-string", et_tmp);
 	};
+});
 
-	# Rudder trim
+setlistener("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg", func() {
+	if (systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25) { return; }
 	var rudder_val = getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg");
 	if (getprop("controls/switches/annun-test") == 1) {
 		setprop("controls/flight/rudder-trim-display", "88.8");
@@ -195,4 +197,4 @@ var start_loop = maketimer(0.1, func {
 			};
 		};
 	};
-});
+},0, 0);
