@@ -95,7 +95,7 @@ var APU = {
 		}, 3);
 		settimer(func() { me.checkOil }, 8);
 	},
-	startCommand: func(fast) {
+	startCommand: func(fast = 0) {
 		if (me.listenSignals and (me.state == 1 or me.state == 2)) {
 			me.signals.startInProgress.setValue(1);
 			me.setState(3);
@@ -121,6 +121,7 @@ var APU = {
 	waitStart: func() {
 		if (pts.APU.rpm.getValue() >= 4.9) {
 			me.GenericControls.cutoff.setValue(0);
+			setprop("/fdm/jsbsim/propulsion/set-running", 2);
 			apuStartTimer.stop();
 			apuStartTimer2.start();
 		}
