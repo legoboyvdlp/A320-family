@@ -243,13 +243,13 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("systems/pressurization/mode", "CR");
 	}
 	
-	if (crzFl >= 20000) {
+	if (crzFl >= 200) {
 		if ((phase == 2 or phase == 3) and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
 			setprop("FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
-		if ((phase == 2 or phase == 3) and (flightPlanController.arrivalDist <= 200 or altSel < crzFl)) { # todo - not sure about crzFl condition, investigate what happens!
+		if ((phase == 2 or phase == 3) and (flightPlanController.arrivalDist <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			setprop("FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
