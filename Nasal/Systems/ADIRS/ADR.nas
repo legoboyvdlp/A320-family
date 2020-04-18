@@ -110,7 +110,7 @@ var ADIRU = {
 		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
-		setprop("systems/navigation/aligned-" ~ me.num + 1, false);
+		setprop("systems/navigation/aligned-" ~ (me.num + 1), 0);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
@@ -118,7 +118,7 @@ var ADIRU = {
 	stopAlignAligned: func() {
 		me.inAlign = 0;
 		me.aligned = 1;
-		setprop("systems/navigation/aligned-" ~ me.num + 1, true);
+		setprop("systems/navigation/aligned-" ~ (me.num + 1), 1);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
