@@ -1281,6 +1281,18 @@
 		</switch>
 		
 		<switch>
+			<name>APDisc</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/autopilot-disconnect-button.wav</path>
+			<condition>
+				<property>/sim/sounde/apdiscbtn</property>
+			</condition>
+			<volume>
+				<factor>0.75</factor>
+			</volume>
+		</switch>
+		
+		<switch>
 			<name>ButtonOH</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/button2.wav</path>

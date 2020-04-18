@@ -1434,7 +1434,13 @@
 				<desc>Autothrottle Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>fcu.FCUController.ATDisc();</script>
+					<script>
+						fcu.FCUController.ATDisc();
+						setprop("/sim/sounde/apdiscbtn", 1);
+						settimer(func {
+							setprop("/sim/sounde/apdiscbtn", 0);
+						}, 0.5);
+					</script>
 				</binding>
 			</key>
 			<key n="6">
@@ -2184,7 +2190,13 @@
 				        <not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>fcu.FCUController.APDisc();</script>
+					<script>
+						fcu.FCUController.APDisc();
+						setprop("/sim/sounde/apdiscbtn", 1);
+						settimer(func {
+							setprop("/sim/sounde/apdiscbtn", 0);
+						}, 0.5);
+					</script>
 				</binding>
 			</key>
 			<key n="69">
