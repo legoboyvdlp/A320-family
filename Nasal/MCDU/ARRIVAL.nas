@@ -465,6 +465,9 @@ var arrivalPage = {
 					me.makeTmpy();
 					fmgc.flightPlanController.flightplans[me.computer].destination_runway = me.arrAirport[0].runways[me.selectedApproach.runways[0]];
 					fmgc.flightPlanController.flightplans[me.computer].approach = me.selectedApproach;
+					setprop("FMGC/internal/baro", -1);
+					setprop("FMGC/internal/radio", -1);
+					setprop("FMGC/internal/radio-no", 0);
 					me.updateActiveApproach();
 					me.updateApproaches();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);

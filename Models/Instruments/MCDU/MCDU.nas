@@ -193,8 +193,8 @@ var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
 var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("FMGC/internal/final", 1);
-var mda = props.globals.getNode("FMGC/internal/mda", 1);
-var dh = props.globals.getNode("FMGC/internal/dh", 1);
+var mda = props.globals.getNode("FMGC/internal/radio", 1);
+var dh = props.globals.getNode("FMGC/internal/baro", 1);
 var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
 var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
 
@@ -331,6 +331,8 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me["Simple_L1_Arrow"].hide();
 				me["Simple_L2_Arrow"].hide();
@@ -2588,7 +2590,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L3S"].setText("MAG WIND");
 			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
-				me["Simple_L3"].setText(sprintf("%3.0fg", dest_mag.getValue()) ~ sprintf("/%3.0f", dest_wind.getValue()));
+				me["Simple_L3"].setText(sprintf("%3.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
 			} else {
 				me["Simple_L3"].setText("---g/---");;
 			}
@@ -2603,11 +2605,31 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("--- ");
 			}
 			
-			me["Simple_R2S"].setText("MDA");
-			me["Simple_R2"].setText(" [    ]");
+			me["Simple_R2S"].setText("BARO");
+			if (getprop("FMGC/internal/baro") != -1) {
+				me["Simple_R2"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+				me.fontRight(0, default, 0, 0, 0, 0);
+				me.fontSizeRight(0, normal, 0, 0, 0, 0);
+			} else {
+				me["Simple_R2"].setText(" [    ]");
+				me.fontRight(0, symbol, 0, 0, 0, 0);
+				me.fontSizeRight(0, small, 0, 0, 0, 0);
+			}
 			
-			me["Simple_R3S"].setText("DH");
-			me["Simple_R3"].setText(" [    ]");
+			me["Simple_R3S"].setText("RADIO");
+			if (getprop("FMGC/internal/radio") != -1) {
+				me["Simple_R3"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+				me.fontRight(0, 0, default, 0, 0, 0);
+				me.fontSizeRight(0, 0, normal, 0, 0, 0);
+			} else if (getprop("FMGC/internal/radio-no")) {
+				me["Simple_R3"].setText("NO");
+				me.fontRight(0, 0, default, 0, 0, 0);
+				me.fontSizeRight(0, 0, normal, 0, 0, 0);
+			} else {
+				me["Simple_R3"].setText(" [    ]");
+				me.fontRight(0, 0, symbol, 0, 0, 0);
+				me.fontSizeRight(0, 0, small, 0, 0, 0);
+			}
 			
 			me["Simple_R4S"].setText("LDG CONF  ");
 			me["Simple_R4"].setText("CONF3  ");
@@ -2636,7 +2658,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vls_appr")));
 				me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
 				me.fontLeft(0, 0, 0, 0, default, 0);
-				if (vapp_speed_set.getValue() == 1) {
+				if (vapp_speed_set.getValue()) {
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
@@ -2646,8 +2668,15 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setText(" ---");
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
-				me["Simple_L5"].setText("[    ]  ");
-				me.fontLeft(0, 0, 0, 0, symbol, 0);
+				if (vapp_speed_set.getValue()) {
+					me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
+					me.fontLeft(0, 0, 0, 0, default, 0);
+					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
+				} else {
+					me["Simple_L5"].setText("[    ]  ");
+					me.fontLeft(0, 0, 0, 0, symbol, 0);
+					me.fontSizeLeft(0, 0, 0, 0, small, 0);
+				}
 			}
 			
 			me["Simple_C1S"].setText("FLP RETR");
@@ -2763,6 +2792,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3023,6 +3054,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3295,6 +3328,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3612,6 +3647,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3942,6 +3979,8 @@ var canvas_MCDU_base = {
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
 				
+				me["Simple_L0S"].hide();
+				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
 				me.fontRight(default, default, default, default, default, default);
@@ -4270,6 +4309,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4600,6 +4641,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
