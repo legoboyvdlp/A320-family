@@ -228,7 +228,7 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("systems/pressurization/mode", "GN");
 	}
 	
-	if (gear0 == 1 and phase == 0 and ((n1_left >= 85 and n1_right >= 85) or gs >= 90) and mode == "SRS") {
+	if (gear0 == 1 and phase == 0 and ((n1_left >= 85 and n1_right >= 85) and mode == "SRS") or gs >= 90) {
 		setprop("FMGC/status/phase", 1);
 		setprop("systems/pressurization/mode", "TO");
 	}
