@@ -672,13 +672,13 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
-					<less-than-equals> <!-- Until I add a calulation for minimums + 100, and add the ability to adjust DH, I'm keeping 350. Should be working soon -->
+					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>350</value>
+						<value><property>/instrumentation/pfd/hundred-above</property></value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value>300</value>
+						<value><property>/instrumentation/pfd/hundred-above</property> - 50</value>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -708,11 +708,11 @@
 					</equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>250</value>
+						<value><property>/instrumentation/pfd/minimum</property></value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value>200</value>
+						<value><property>/instrumentation/pfd/minimum</property> - 50</value>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>

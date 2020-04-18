@@ -71,6 +71,8 @@ var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitu
 var altitude_pfd = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
 var trans_alt = props.globals.getNode("FMGC/internal/trans-alt", 1);
 var alt_diff = props.globals.getNode("instrumentation/pfd/alt-diff", 1);
+var ground_diff = props.globals.getNode("instrumentation/pfd/ground-diff", 1);
+var landing_diff = props.globals.getNode("instrumentation/pfd/landing-diff", 1);
 var ap_alt = props.globals.getNode("it-autoflight/internal/alt", 1);
 var alt_agl = props.globals.getNode("position/altitude-agl-ft", 1);
 var vs_needle = props.globals.getNode("instrumentation/pfd/vs-needle", 1);
@@ -139,6 +141,8 @@ var flap_config = props.globals.getNode("controls/flight/flap-lever", 1);
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
 var vs_needle_trans = props.globals.initNode("/instrumentation/pfd/vs-digit-trans", 0.0, "DOUBLE");
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
+var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
+var landing_diff = props.globals.initNode("/instrumentation/pfd/landing-diff", 0.0, "DOUBLE");
 var heading = props.globals.initNode("/instrumentation/pfd/heading-deg", 0.0, "DOUBLE");
 var horizon_pitch = props.globals.initNode("/instrumentation/pfd/horizon-pitch", 0.0, "DOUBLE");
 var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground", 0.0, "DOUBLE");
@@ -168,6 +172,8 @@ var altFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/al
 var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-1", 0, "BOOL");
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
+var hundredAbove = props.globals.initNode("/instrumentation/pfd/hundred-above", 100, "BOOL");
+var minimum = props.globals.initNode("/instrumentation/pfd/minimum", 0, "BOOL");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -213,13 +219,14 @@ var canvas_PFD_base = {
 		return me;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","dhReached","FMA_ap","FMA_fd","FMA_athr",
+		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
 		"FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box","FMA_Middle1",
 		"FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_clip","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank",
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber",
 		"ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max","clean_speed"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max","clean_speed",
+		"ground","ground_ref"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -760,7 +767,7 @@ var canvas_PFD_base = {
 			me["FMA_dh"].hide();
 			me["FMA_dhn"].hide();
 			me["FMA_nodh"].hide();
-			me["dhReached"].hide();
+			#me["dhReached"].hide();
 			if (gear_agl_cur <= 2500) {
 				me["AI_agl"].show();
 				if (gear_agl_cur <= decision.getValue()) {
@@ -781,12 +788,15 @@ var canvas_PFD_base = {
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
+					hundredAbove.setValue(getprop("FMGC/internal/radio") + 100);
+					minimum.setValue(getprop("FMGC/internal/radio"));
 					if (gear_agl_cur <= getprop("FMGC/internal/radio") + 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					me["dhReached"].hide();
+					
+					#me["dhReached"].hide();
 					# if (gear_agl_cur <= getprop("FMGC/internal/radio")) {
 # 						if (dh_going == 0) {
 # 							dh_going = 1;
@@ -796,7 +806,7 @@ var canvas_PFD_base = {
 # 							if (dhFlash.getValue() == 1) {
 # 								me["dhReached"].show();
 # 							} else {
-# 								me["dhReached"].hide();
+# 								#me["dhReached"].hide();
 # 							}
 # 						}
 # 						if (dh_going == -1) {
@@ -805,32 +815,36 @@ var canvas_PFD_base = {
 # 					} else {
 # 						dhTimer.stop();
 # 						dh_going = 0;
-# 						me["dhReached"].hide();
+# 						#me["dhReached"].hide();
 # 					}
 				} else if (getprop("FMGC/internal/baro") != -1) {
-					me["FMA_dh"].setText("MDA");
+					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
+					hundredAbove.setValue(getprop("FMGC/internal/baro") + 100);
+					minimum.setValue(getprop("FMGC/internal/baro"));
 					if (gear_agl_cur <= getprop("FMGC/internal/baro") + 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					me["dhReached"].hide();
+					#me["dhReached"].hide();
 				} else if (getprop("FMGC/internal/radio-no")) {
 					me["FMA_dh"].setText("DH");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
+					hundredAbove.setValue(100);
+					minimum.setValue(0);
 					if (gear_agl_cur <= 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					me["dhReached"].hide();
+					#me["dhReached"].hide();
 					# if (gear_agl_cur <= getprop("FMGC/internal/radio")) {
 # 						if (dh_going == 0) {
 # 							dh_going = 1;
@@ -840,7 +854,7 @@ var canvas_PFD_base = {
 # 							if (dhFlash.getValue() == 1) {
 # 								me["dhReached"].show();
 # 							} else {
-# 								me["dhReached"].hide();
+# 								#me["dhReached"].hide();
 # 							}
 # 						}
 # 						if (dh_going == -1) {
@@ -849,24 +863,26 @@ var canvas_PFD_base = {
 # 					} else {
 # 						dhTimer.stop();
 # 						dh_going = 0;
-# 						me["dhReached"].hide();
+# 						#me["dhReached"].hide();
 # 					}
 				} else {
 					me["FMA_dh"].hide();
 					me["FMA_dhn"].hide();
 					me["FMA_nodh"].show();
+					hundredAbove.setValue(400);
+					minimum.setValue(300);
 					if (gear_agl_cur <= 400) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					me["dhReached"].hide();
+					#me["dhReached"].hide();
 				}
 			} else {
 				me["AI_agl"].hide();
 				me["FMA_nodh"].hide();
 				me["FMA_dh_box"].hide();
-				me["dhReached"].hide();
+				#me["dhReached"].hide();
 			}
 		}
 		
@@ -1578,6 +1594,13 @@ var canvas_PFD_1 = {
 			me["v1_group"].hide();
 			me["v1_text"].hide();
 			me["vr_speed"].hide();
+			me["ground"].hide();
+			me["ground_ref"].hide();
+			me["VLS_min"].hide();
+			me["VLS_min"].hide();
+			me["ALPHA_PROT"].hide();
+			me["ALPHA_MAX"].hide();
+			me["ALPHA_SW"].hide();
 		}
 		
 		if (dmc.DMController.DMCs[0].outputs[2] != nil) {
@@ -1670,6 +1693,26 @@ var canvas_PFD_1 = {
 				me["ALT_digit_UP"].show();
 				me["ALT_digit_DN"].hide();
 				me["ALT_target"].hide();
+			}
+			
+			ground_diff_cur = ground_diff.getValue();
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
+				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
+				me["ground_ref"].show();
+			} else {
+				me["ground_ref"].hide();
+			}
+			
+			landing_diff_cur = landing_diff.getValue();
+			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+				if ((FMGCphase.getValue() == 5 or FMGCphase.getValue() == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
+					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].show();
+				} else {
+					me["ground"].hide();
+				}
+			} else {
+				me["ground"].hide();
 			}
 			
 			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
@@ -2290,6 +2333,13 @@ var canvas_PFD_2 = {
 			me["v1_group"].hide();
 			me["v1_text"].hide();
 			me["vr_speed"].hide();
+			me["ground"].hide();
+			me["ground_ref"].hide();
+			me["VLS_min"].hide();
+			me["VLS_min"].hide();
+			me["ALPHA_PROT"].hide();
+			me["ALPHA_MAX"].hide();
+			me["ALPHA_SW"].hide();
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[2] != nil) {
@@ -2381,6 +2431,21 @@ var canvas_PFD_2 = {
 				me["ALT_digit_UP"].show();
 				me["ALT_digit_DN"].hide();
 				me["ALT_target"].hide();
+			}
+			
+			ground_diff_cur = ground_diff.getValue();
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
+				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
+				me["ground_ref"].show();
+				if ((FMGCphase.getValue() == 5 or FMGCphase.getValue() == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
+					me["ground"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
+					me["ground"].show();
+				} else {
+					me["ground"].hide();
+				}
+			} else {
+				me["ground"].hide();
+				me["ground_ref"].hide();
 			}
 			
 			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
