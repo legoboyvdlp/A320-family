@@ -167,6 +167,7 @@ var altFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/al
 var altFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/alt-flash-2", 0, "BOOL");
 var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-1", 0, "BOOL");
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
+var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -754,58 +755,119 @@ var canvas_PFD_base = {
 		
 		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
-		if (gear_agl_cur <= 2500) {
-			me["AI_agl"].show();
-			me["FMA_dh_box"].hide(); #not implemented
-			me["dhReached"].hide(); #not implemented
-			if (getprop("FMGC/internal/radio") != -1) {
-				me["FMA_dh"].setText("DH");
-				me["FMA_dh"].show();
-				me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
-				me["FMA_dhn"].show();
-				me["FMA_nodh"].hide();
-				if (gear_agl_cur <= getprop("FMGC/internal/radio") + 100) {
-					me["AI_agl"].setColor(0.7333,0.3803,0);
-				} else {
-					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-				}
-			} else if (getprop("FMGC/internal/baro") != -1) {
-				me["FMA_dh"].setText("MDA");
-				me["FMA_dh"].show();
-				me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
-				me["FMA_dhn"].show();
-				me["FMA_nodh"].hide();
-				if (gear_agl_cur <= getprop("FMGC/internal/baro") + 100) {
-					me["AI_agl"].setColor(0.7333,0.3803,0);
-				} else {
-					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-				}
-			} else if (getprop("FMGC/internal/radio-no")) {
-				me["FMA_dh"].setText("DH");
-				me["FMA_dh"].show();
-				me["FMA_dhn"].setText("100");
-				me["FMA_dhn"].show();
-				me["FMA_nodh"].hide();
-				if (gear_agl_cur <= 100) {
+		if (FMGCphase.getValue() < 3) {
+			me["FMA_dh_box"].hide();
+			me["FMA_dh"].hide();
+			me["FMA_dhn"].hide();
+			me["FMA_nodh"].hide();
+			me["dhReached"].hide();
+			if (gear_agl_cur <= 2500) {
+				me["AI_agl"].show();
+				if (gear_agl_cur <= decision.getValue()) {
 					me["AI_agl"].setColor(0.7333,0.3803,0);
 				} else {
 					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 				}
 			} else {
-				me["FMA_dh"].hide();
-				me["FMA_dhn"].hide();
-				me["FMA_nodh"].show();
-				if (gear_agl_cur <= 400) {
-					me["AI_agl"].setColor(0.7333,0.3803,0);
-				} else {
-					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-				}
+				me["AI_agl"].hide();
 			}
 		} else {
-			me["AI_agl"].hide();
-			me["FMA_nodh"].hide();
-			me["FMA_dh_box"].hide();
-			me["dhReached"].hide();
+			if (gear_agl_cur <= 2500) {
+				me["AI_agl"].show();
+				me["FMA_dh_box"].hide(); #not implemented
+				if (getprop("FMGC/internal/radio") != -1) {
+					me["FMA_dh"].setText("DH");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+					if (gear_agl_cur <= getprop("FMGC/internal/radio") + 100) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+					me["dhReached"].hide();
+					# if (gear_agl_cur <= getprop("FMGC/internal/radio")) {
+# 						if (dh_going == 0) {
+# 							dh_going = 1;
+# 						}
+# 						if (dh_going == 1) {
+# 							dhTimer.start();
+# 							if (dhFlash.getValue() == 1) {
+# 								me["dhReached"].show();
+# 							} else {
+# 								me["dhReached"].hide();
+# 							}
+# 						}
+# 						if (dh_going == -1) {
+# 							me["dhReached"].show();
+# 						}
+# 					} else {
+# 						dhTimer.stop();
+# 						dh_going = 0;
+# 						me["dhReached"].hide();
+# 					}
+				} else if (getprop("FMGC/internal/baro") != -1) {
+					me["FMA_dh"].setText("MDA");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+					if (gear_agl_cur <= getprop("FMGC/internal/baro") + 100) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+					me["dhReached"].hide();
+				} else if (getprop("FMGC/internal/radio-no")) {
+					me["FMA_dh"].setText("DH");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText("100");
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+					if (gear_agl_cur <= 100) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+					me["dhReached"].hide();
+					# if (gear_agl_cur <= getprop("FMGC/internal/radio")) {
+# 						if (dh_going == 0) {
+# 							dh_going = 1;
+# 						}
+# 						if (dh_going == 1) {
+# 							dhTimer.start();
+# 							if (dhFlash.getValue() == 1) {
+# 								me["dhReached"].show();
+# 							} else {
+# 								me["dhReached"].hide();
+# 							}
+# 						}
+# 						if (dh_going == -1) {
+# 							me["dhReached"].show();
+# 						}
+# 					} else {
+# 						dhTimer.stop();
+# 						dh_going = 0;
+# 						me["dhReached"].hide();
+# 					}
+				} else {
+					me["FMA_dh"].hide();
+					me["FMA_dhn"].hide();
+					me["FMA_nodh"].show();
+					if (gear_agl_cur <= 400) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+					me["dhReached"].hide();
+				}
+			} else {
+				me["AI_agl"].hide();
+				me["FMA_nodh"].hide();
+				me["FMA_dh_box"].hide();
+				me["dhReached"].hide();
+			}
 		}
 		
 		me["AI_agl_g"].setRotation(-roll_cur * D2R);
@@ -2672,6 +2734,21 @@ var amberTimer2 = maketimer(0.50, func {
 		amberFlash2.setBoolValue(1);
 	} else {
 		amberFlash2.setBoolValue(0);
+	}
+});
+
+var dh_going = 0;
+var dh_count = 0;
+var dhTimer = maketimer(0.50, func {
+	if (!dhFlash.getBoolValue()) {
+		dhFlash.setBoolValue(1);
+	} else {
+		dhFlash.setBoolValue(0);
+	}
+	if (dh_count == 18) {
+		dh_count = 0;
+	} else {
+		dh_count = dh_count + 1;
 	}
 });
 
