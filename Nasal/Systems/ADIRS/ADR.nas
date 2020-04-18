@@ -35,6 +35,7 @@ var ADIRU = {
 		var adiru = { parents:[ADIRU] };
 		adiru.num = n;
 		adiru.alignTimer = maketimer(0.1, adiru, me.alignLoop);
+		
 		return adiru;
     },
 	setOperative: func(newOperative) { 
@@ -90,7 +91,6 @@ var ADIRU = {
 		if (!ADIRSnew.skip.getValue()) {
 			if (time > 0 and me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + time;
-				print("Alignment Started");
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -99,7 +99,6 @@ var ADIRU = {
 		} else {
 			if (me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + 5;
-				print("Fast Alignment Started");
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -111,14 +110,15 @@ var ADIRU = {
 		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
+		setprop("systems/navigation/aligned-" ~ me.num + 1, false);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
 	},
 	stopAlignAligned: func() {
-		print("Aligned");
 		me.inAlign = 0;
 		me.aligned = 1;
+		setprop("systems/navigation/aligned-" ~ me.num + 1, true);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}

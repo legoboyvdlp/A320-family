@@ -1107,6 +1107,9 @@
 		</static>
 		
 		<navigation>
+			<aligned-1 type="bool">0</aligned-1>
+			<aligned-2 type="bool">0</aligned-2>
+			<aligned-3 type="bool">0</aligned-3>
 			<adr>
 				<operating-1 type="bool">0</operating-1>
 				<operating-2 type="bool">0</operating-2>
