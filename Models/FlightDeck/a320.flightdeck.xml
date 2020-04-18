@@ -443,6 +443,8 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
+		<object-name>terr_on_nd_label</object-name>
+		<object-name>clock_glare</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
@@ -490,7 +492,7 @@
 			<property>controls/switches/annun-test</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>alt-text-test</object-name>
@@ -714,7 +716,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>terr_on_nd_r</object-name>
@@ -791,7 +793,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>brk_hot_on</object-name>
@@ -1807,7 +1809,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ecam_sts_led</object-name>
@@ -5395,7 +5397,7 @@
 					if (getprop("sim/sound/warnings/cchord")) {
 						setprop("sim/sound/warnings/cchord-inhibit", 1);
 					}
-					
+
 					if (getprop("it-autoflight/output/ap-warning") == 1) {
 						setprop("it-autoflight/output/ap-warning", 0);
 					}
@@ -6250,7 +6252,7 @@
 			</binding>
 		</action>
     </animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>ecam_air_data</object-name>
@@ -6266,7 +6268,7 @@
 			<z2-m>-0.060321</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_air_data</object-name>
@@ -6309,7 +6311,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<!-- Z Colors/Effects -->
 	<animation>
 		<type>material</type>
@@ -6356,7 +6358,7 @@
 			<blue>0.08</blue>
 		</emission>
 	</animation>
-	
+
 	<animation>
 		<type>material</type>
 		<object-name>chrono1</object-name>
@@ -6697,7 +6699,7 @@
 		<object-name>brightness_panel_emit</object-name>
 		<object-name>brk_fan</object-name>
 		<object-name>brk_fan_on</object-name>
-		<object-name>brk_hot_on</object-name>		
+		<object-name>brk_hot_on</object-name>
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_max_on</object-name>
 		<object-name>dec_med_on</object-name>
@@ -6923,7 +6925,7 @@
 			</not>
 		</condition>
 	</animation>
-	
+
 	<!-- Chrono -->
 	<animation>
 		<type>select</type>
@@ -6967,7 +6969,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>chrono2_1</object-name>
@@ -7007,7 +7009,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>chrono2_2</object-name>
@@ -7050,8 +7052,8 @@
 				</or>
 			</and>
 		</condition>
-	</animation>	
-	
+	</animation>
+
 	<animation>
 		<type>select</type>
 		<object-name>UTC_1</object-name>
@@ -7120,8 +7122,8 @@
 				<property>instrumentation/clock/serviceable</property>
 			</and>
 		</condition>
-	</animation>	
-	
+	</animation>
+
 	<text>
 		<name>chrono1</name>
 		<offsets>
@@ -7214,7 +7216,7 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
-	
+
 	<text>
 		<name>UTC_1</name>
 		<offsets>
@@ -7307,7 +7309,7 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
-	
+
 	<text>
 		<name>chrono3</name>
 		<offsets>
@@ -7353,7 +7355,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_btn</object-name>
@@ -7379,7 +7381,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>clock_set</object-name>
@@ -7400,7 +7402,7 @@
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/clock/set-knob</property>
-				<value>1</value><!-- Time Mode -->				
+				<value>1</value><!-- Time Mode -->
 				<value>0</value><!-- Date Mode -->
 			</binding>
 		</action>
@@ -7448,7 +7450,7 @@
 			<object-name>clock_knob.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>knob</type>
 		<object-name>et_knob</object-name>
@@ -7474,7 +7476,7 @@
                 <min>0</min>
                 <max>1</max>
             </binding>
-        </release>		
+        </release>
 	</animation>
 
 	<animation>

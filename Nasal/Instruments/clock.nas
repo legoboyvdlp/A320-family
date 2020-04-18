@@ -1,5 +1,5 @@
 #
-# Chrono - Clock - ET 
+# Chrono - Clock - ET
 #
 var chr = aircraft.timer.new("instrumentation/chrono[0]/elapsetime-sec",1);
 var clk = aircraft.timer.new("instrumentation/clock/elapsetime-sec",1);
@@ -142,7 +142,7 @@ var start_loop = maketimer(0.1, func {
 #		if (getprop("instrumentation/clock/utc-selector") == 2) {
 #			# To do - SET mode
 #		};
-		
+
 		# Chrono
 		var chr_tmp = getprop("instrumentation/chrono[0]/elapsetime-sec");
 		if (chr_tmp >= 6000) {
@@ -172,7 +172,7 @@ var start_loop = maketimer(0.1, func {
 		et_tmp = sprintf("%02d:%02d", et_hr, et_min);
 		setprop("instrumentation/clock/elapsed-string", et_tmp);
 	};
-	
+
 	# Rudder trim
 	var rudder_val = getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg");
 	if (getprop("controls/switches/annun-test") == 1) {
@@ -190,7 +190,7 @@ var start_loop = maketimer(0.1, func {
 				if (rudder_val <= -0.05) {
 					setprop("controls/flight/rudder-trim-display", sprintf("%2.1f", abs(rudder_val)));
 					setprop("controls/flight/rudder-trim-letter-display", "L");
-				};	
+				};
 			};
 		};
 	};
