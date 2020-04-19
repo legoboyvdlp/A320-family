@@ -782,7 +782,7 @@ var canvas_PFD_base = {
 			if (gear_agl_cur <= 2500) {
 				me["AI_agl"].show();
 				me["FMA_dh_box"].hide(); #not implemented
-				if (getprop("FMGC/internal/radio") != -1) {
+				if (int(getprop("FMGC/internal/radio")) != -1) {
 					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
@@ -795,29 +795,7 @@ var canvas_PFD_base = {
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					
-					#me["dhReached"].hide();
-					# if (gear_agl_cur <= getprop("FMGC/internal/radio")) {
-# 						if (dh_going == 0) {
-# 							dh_going = 1;
-# 						}
-# 						if (dh_going == 1) {
-# 							dhTimer.start();
-# 							if (dhFlash.getValue() == 1) {
-# 								me["dhReached"].show();
-# 							} else {
-# 								#me["dhReached"].hide();
-# 							}
-# 						}
-# 						if (dh_going == -1) {
-# 							me["dhReached"].show();
-# 						}
-# 					} else {
-# 						dhTimer.stop();
-# 						dh_going = 0;
-# 						#me["dhReached"].hide();
-# 					}
-				} else if (getprop("FMGC/internal/baro") != -1) {
+				} else if (int(getprop("FMGC/internal/baro")) != -1) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
@@ -830,7 +808,6 @@ var canvas_PFD_base = {
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					#me["dhReached"].hide();
 				} else if (getprop("FMGC/internal/radio-no")) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
@@ -844,27 +821,6 @@ var canvas_PFD_base = {
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					#me["dhReached"].hide();
-					# if (gear_agl_cur <= getprop("FMGC/internal/radio")) {
-# 						if (dh_going == 0) {
-# 							dh_going = 1;
-# 						}
-# 						if (dh_going == 1) {
-# 							dhTimer.start();
-# 							if (dhFlash.getValue() == 1) {
-# 								me["dhReached"].show();
-# 							} else {
-# 								#me["dhReached"].hide();
-# 							}
-# 						}
-# 						if (dh_going == -1) {
-# 							me["dhReached"].show();
-# 						}
-# 					} else {
-# 						dhTimer.stop();
-# 						dh_going = 0;
-# 						#me["dhReached"].hide();
-# 					}
 				} else {
 					me["FMA_dh"].hide();
 					me["FMA_dhn"].hide();
@@ -876,13 +832,34 @@ var canvas_PFD_base = {
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-					#me["dhReached"].hide();
 				}
 			} else {
 				me["AI_agl"].hide();
 				me["FMA_nodh"].hide();
-				me["FMA_dh_box"].hide();
-				#me["dhReached"].hide();
+				me["FMA_dh_box"].hide(); #not implemented
+				if (int(getprop("FMGC/internal/radio")) != -1) {
+					me["FMA_dh"].setText("RADIO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+				} else if (int(getprop("FMGC/internal/baro")) != -1) {
+					me["FMA_dh"].setText("BARO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+				} else if (getprop("FMGC/internal/radio-no")) {
+					me["FMA_dh"].setText("BARO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText("100");
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+				} else {
+					me["FMA_dh"].hide();
+					me["FMA_dhn"].hide();
+					me["FMA_nodh"].show();
+				}
 			}
 		}
 		

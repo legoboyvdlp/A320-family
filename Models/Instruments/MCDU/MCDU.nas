@@ -324,6 +324,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
