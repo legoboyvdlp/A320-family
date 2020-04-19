@@ -244,18 +244,18 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if (crzFl >= 200) {
-		if ((phase == 2 or phase == 3) and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
 			setprop("FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
-		if ((phase == 2 or phase == 3) and (flightPlanController.arrivalDist <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			setprop("FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
 	}
 	
-	if (getprop("/FMGC/internal/decel")) {
+	if (phase == 4 and getprop("/FMGC/internal/decel")) {
 		setprop("FMGC/status/phase", 5);
 	}
 	
@@ -811,14 +811,6 @@ setlistener("gear/gear[1]/wow", func() {
 	}
 }, 0, 0);
 
-var timer30secLanding = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/landing-time") + 30) {
-		setprop("FMGC/status/phase", 7);
-		setprop("FMGC/internal/landing-time", -99);
-		timer30secLanding.stop();
-	}
-});
-
 # Align IRS 1
 setlistener("systems/navigation/adr/operating-1", func() {
 	if (timer48gpsAlign1.isRunning) {
@@ -830,14 +822,6 @@ setlistener("systems/navigation/adr/operating-1", func() {
 		setprop("FMGC/internal/align1-time", pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
-
-var timer48gpsAlign1 = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align1-time") + 48) {
-		setprop("FMGC/internal/align1-done", 1);
-		setprop("FMGC/internal/align1-time", -99);
-		timer48gpsAlign1.stop();
-	}
-});
 
 # Align IRS 2
 setlistener("systems/navigation/adr/operating-2", func() {
@@ -851,14 +835,6 @@ setlistener("systems/navigation/adr/operating-2", func() {
 	}
 }, 0, 0);
 
-var timer48gpsAlign2 = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align2-time") + 48) {
-		setprop("FMGC/internal/align2-done", 1);
-		setprop("FMGC/internal/align2-time", -99);
-		timer48gpsAlign2.stop();
-	}
-});
-
 # Align IRS 3
 setlistener("systems/navigation/adr/operating-3", func() {
 	if (timer48gpsAlign3.isRunning) {
@@ -870,6 +846,32 @@ setlistener("systems/navigation/adr/operating-3", func() {
 		setprop("FMGC/internal/align3-time", pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
+
+# Maketimers
+
+var timer30secLanding = maketimer(1, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/landing-time") + 30) {
+		setprop("FMGC/status/phase", 7);
+		setprop("FMGC/internal/landing-time", -99);
+		timer30secLanding.stop();
+	}
+});
+
+var timer48gpsAlign1 = maketimer(1, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align1-time") + 48) {
+		setprop("FMGC/internal/align1-done", 1);
+		setprop("FMGC/internal/align1-time", -99);
+		timer48gpsAlign1.stop();
+	}
+});
+
+var timer48gpsAlign2 = maketimer(1, func() {
+	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align2-time") + 48) {
+		setprop("FMGC/internal/align2-done", 1);
+		setprop("FMGC/internal/align2-time", -99);
+		timer48gpsAlign2.stop();
+	}
+});
 
 var timer48gpsAlign3 = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("FMGC/internal/align3-time") + 48) {
