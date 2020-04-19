@@ -23,8 +23,6 @@
 		<object-name>ADR2Btn2O</object-name>
 		<object-name>ADR3Btn1F</object-name>
 		<object-name>ADR3Btn2O</object-name>
-		<object-name>APUFireAgtBtn1S</object-name>
-		<object-name>APUFireAgtBtn2D</object-name>
 		<object-name>BatteryBtn11F</object-name>
 		<object-name>BatteryBtn21F</object-name>
 		<object-name>BusTieBtn2O</object-name>
@@ -45,14 +43,6 @@
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
-		<object-name>Eng1FireAgt1Btn1S</object-name>
-		<object-name>Eng1FireAgt1Btn2D</object-name>
-		<object-name>Eng2FireAgt1Btn1S</object-name>
-		<object-name>Eng2FireAgt1Btn2D</object-name>
-		<object-name>Eng1FireAgt2Btn1S</object-name>
-		<object-name>Eng1FireAgt2Btn2D</object-name>
-		<object-name>Eng2FireAgt2Btn1S</object-name>
-		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/ac-ess</property>
@@ -71,6 +61,16 @@
 		<object-name>APUMasterBtn2O</object-name>
 		<object-name>APUStartBtn1A</object-name>
 		<object-name>APUStartBtn2O</object-name>
+		<object-name>APUFireAgtBtn1S</object-name>
+		<object-name>APUFireAgtBtn2D</object-name>
+		<object-name>Eng1FireAgt1Btn1S</object-name>
+		<object-name>Eng1FireAgt1Btn2D</object-name>
+		<object-name>Eng2FireAgt1Btn1S</object-name>
+		<object-name>Eng2FireAgt1Btn2D</object-name>
+		<object-name>Eng1FireAgt2Btn1S</object-name>
+		<object-name>Eng1FireAgt2Btn2D</object-name>
+		<object-name>Eng2FireAgt2Btn1S</object-name>
+		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>Gen1Btn1F</object-name>
 		<object-name>Gen1Btn2O</object-name>
 		<object-name>Gen2Btn1F</object-name>
@@ -6714,16 +6714,10 @@
 				<property>controls/fire/apu-test-btn</property>
 				<value>1</value>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals>
 				</condition>
 			</binding>
 			<mod-up>
@@ -6838,20 +6832,10 @@
 				<property>controls/apu/agent-btn</property>
 				<value>1</value>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-2</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals>
 				</condition>
 			</binding>
 		</action>
