@@ -783,7 +783,7 @@ var canvas_PFD_base = {
 				me["AI_agl"].show();
 				me["FMA_dh_box"].hide(); #not implemented
 				if (getprop("FMGC/internal/radio") != -1) {
-					me["FMA_dh"].setText("DH");
+					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
 					me["FMA_dhn"].show();
@@ -820,7 +820,7 @@ var canvas_PFD_base = {
 				} else if (getprop("FMGC/internal/baro") != -1) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
 					hundredAbove.setValue(getprop("FMGC/internal/baro") + 100);
@@ -832,7 +832,7 @@ var canvas_PFD_base = {
 					}
 					#me["dhReached"].hide();
 				} else if (getprop("FMGC/internal/radio-no")) {
-					me["FMA_dh"].setText("DH");
+					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
 					me["FMA_dhn"].show();
