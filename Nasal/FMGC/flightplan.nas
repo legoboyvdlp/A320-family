@@ -11,6 +11,8 @@ var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
 
+var DEBUG_DISCONT = 1;
+
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
 var trueHDG = props.globals.getNode("/orientation/heading-deg", 1);
@@ -98,7 +100,7 @@ var flightPlanController = {
 			me.currentToWptIndex.setValue(0);
 		}
 		
-		# me.addDiscontinuity(1, plan); bugfix for linux!
+		me.addDiscontinuity(1, plan); bugfix for linux!
 		#todo if plan = 2, kill any tmpy flightplan
 		me.flightPlanChanged(plan);
 	},
@@ -137,6 +139,7 @@ var flightPlanController = {
 	
 	# for these two remember to call flightPlanChanged
 	addDiscontinuity: func(index, plan) {
+		if (DEBUG_DISCONT) { return; }
 		if (index > 0) {
 			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
 				me.flightplans[plan].insertWP(createDiscontinuity(), index);
