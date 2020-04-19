@@ -832,7 +832,7 @@ var canvas_PFD_base = {
 					}
 					#me["dhReached"].hide();
 				} else if (getprop("FMGC/internal/radio-no")) {
-					me["FMA_dh"].setText("RADIO");
+					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
 					me["FMA_dhn"].show();
