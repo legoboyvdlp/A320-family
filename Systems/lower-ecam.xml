@@ -11,7 +11,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/systems/apu/rpm</property>
+					<property>/engines/engine[2]/n1</property>
 					<entry><ind>  0</ind><dep>-127</dep></entry>
 					<entry><ind>100</ind><dep>  53</dep></entry>
 					<entry><ind>110</ind><dep>  70</dep></entry>
@@ -28,7 +28,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/systems/apu/egt</property>
+					<property>/systems/apu/egt-degC</property>
 					<entry><ind>  0</ind><dep>-115</dep></entry>
 					<entry><ind> 275</ind><dep>-115</dep></entry>
 					<entry><ind> 300</ind><dep>-108</dep></entry>

@@ -94,6 +94,7 @@ setprop("systems/acconfig/options/keyboard-mode", 0);
 # TODO Revert default weight-kgs to 1, when fully implemented
 setprop("systems/acconfig/options/weight-kgs", 0);
 setprop("systems/acconfig/options/adirs-skip", 0);
+setprop("systems/acconfig/options/allow-oil-consumption", 0);
 setprop("systems/acconfig/options/welcome-skip", 0);
 setprop("systems/acconfig/options/no-rendering-warn", 0);
 setprop("systems/acconfig/options/save-state", 0);
@@ -234,6 +235,7 @@ var readSettings = func {
 	setprop("options/system/weight-kgs", getprop("systems/acconfig/options/weight-kgs"));
 	setprop("options/system/save-state", getprop("systems/acconfig/options/save-state"));
 	setprop("controls/adirs/skip", getprop("systems/acconfig/options/adirs-skip"));
+	setprop("systems/apu/oil/allow-oil-consumption", getprop("systems/acconfig/options/allow-oil-consumption"));
 	setprop("sim/model/autopush/route/show", getprop("systems/acconfig/options/autopush/show-route"));
 	setprop("sim/model/autopush/route/show-wingtip", getprop("systems/acconfig/options/autopush/show-wingtip"));
 	
@@ -244,6 +246,7 @@ var writeSettings = func {
 	setprop("systems/acconfig/options/weight-kgs", getprop("options/system/weight-kgs"));
 	setprop("systems/acconfig/options/save-state", getprop("options/system/save-state"));
 	setprop("systems/acconfig/options/adirs-skip", getprop("controls/adirs/skip"));
+	setprop("systems/acconfig/options/allow-oil-consumption", getprop("systems/apu/oil/allow-oil-consumption"));
 	setprop("systems/acconfig/options/autopush/show-route", getprop("sim/model/autopush/route/show"));
 	setprop("systems/acconfig/options/autopush/show-wingtip", getprop("sim/model/autopush/route/show-wingtip"));
 	io.write_properties(getprop("sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
@@ -305,8 +308,7 @@ var colddark = func {
 }
 var colddark_b = func {
 	# Continues the Cold and Dark script, after engines fully shutdown.
-	setprop("controls/APU/master", 0);
-	setprop("controls/APU/start", 0);
+	setprop("controls/apu/master", 0);
 	settimer(func {
 		setprop("controls/gear/brake-left", 0);
 		setprop("controls/gear/brake-right", 0);
@@ -342,16 +344,15 @@ var beforestart = func {
 		setprop("controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		failResetOld();
-		setprop("controls/APU/master", 0);
-		setprop("controls/APU/start", 0);
+		setprop("controls/apu/master", 0);
 		
 		# Now the Startup!
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
-		setprop("controls/APU/master", 1);
-		setprop("controls/APU/start", 1);
-		var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
-			if (getprop("systems/apu/rpm") >= 98) {
+		setprop("controls/apu/master", 1);
+		systems.APUController.APU.startCommand(1);
+		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
+			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);
 				beforestart_b();
 			}
@@ -433,16 +434,15 @@ var taxi = func {
 		setprop("controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		failResetOld();
-		setprop("controls/APU/master", 0);
-		setprop("controls/APU/start", 0);
+		setprop("controls/apu/master", 0);
 		
 		# Now the Startup!
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
-		setprop("controls/APU/master", 1);
-		setprop("controls/APU/start", 1);
-		var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
-			if (getprop("systems/apu/rpm") >= 98) {
+		setprop("controls/apu/master", 1);
+		systems.APUController.APU.startCommand(1);
+		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
+			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);
 				taxi_b();
 			}
@@ -510,8 +510,7 @@ var taxi_c = func {
 var taxi_d = func {
 	# After Start items.
 	setprop("controls/engines/engine-start-switch", 1);
-	setprop("controls/APU/master", 0);
-	setprop("controls/APU/start", 0);
+	setprop("controls/apu/master", 0);
 	setprop("controls/pneumatic/switches/bleedapu", 0);
 	setprop("controls/gear/brake-left", 0);
 	setprop("controls/gear/brake-right", 0);

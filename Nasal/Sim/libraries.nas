@@ -203,6 +203,7 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.ADIRSnew.init();
 	systems.eng_init();
+	systems.APUController.init();
 	systems.fire_init();
 	systems.autobrake_init();
 	fmgc.flightPlanController.reset();
@@ -242,6 +243,7 @@ var systemsLoop = maketimer(0.1, func {
 	rmp.rmpUpdate();
 	fcu.FCUController.loop();
 	dmc.DMController.loop();
+	systems.APUController.loop();
 	
 	if ((getprop("controls/pneumatic/switches/groundair") or getprop("controls/electrical/ground-cart")) and ((getprop("velocities/groundspeed-kt") > 2) or (getprop("controls/gear/brake-parking") == 0 and getprop("services/chocks/nose") == 0 and getprop("services/chocks/left") == 0 and getprop("services/chocks/right") == 0))) {
 		setprop("controls/electrical/ground-cart", 0);

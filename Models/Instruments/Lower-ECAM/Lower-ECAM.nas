@@ -52,9 +52,9 @@ var lighting_du4 = props.globals.getNode("controls/lighting/DU/du4", 1);
 var ecam_page = props.globals.getNode("ECAM/Lower/page", 1);
 var hour = props.globals.getNode("sim/time/utc/hour", 1);
 var minute = props.globals.getNode("sim/time/utc/minute", 1);
-var apu_flap = props.globals.getNode("systems/apu/flap", 1);
-var apu_rpm = props.globals.getNode("systems/apu/rpm", 1);
-var apu_egt = props.globals.getNode("systems/apu/egt", 1);
+var apu_flap = props.globals.getNode("controls/apu/inlet-flap/position-norm", 1);
+var apu_rpm = props.globals.getNode("engines/engine[2]/n1", 1);
+var apu_egt = props.globals.getNode("systems/apu/egt-degC", 1);
 var door_left = props.globals.getNode("ECAM/Lower/door-left", 1);
 var door_right = props.globals.getNode("ECAM/Lower/door-right", 1);
 var door_nose_left = props.globals.getNode("ECAM/Lower/door-nose-left", 1);
@@ -77,7 +77,7 @@ var final_deg = props.globals.getNode("fdm/jsbsim/hydraulics/rudder/final-deg", 
 var temperature_degc = props.globals.getNode("environment/temperature-degc", 1);
 var gw = props.globals.getNode("FMGC/internal/gw", 1);
 var tank3_content_lbs = props.globals.getNode("fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
-var apu_master = props.globals.getNode("controls/APU/master", 1);
+var apu_master = props.globals.getNode("controls/apu/master", 1);
 var ir2_knob = props.globals.getNode("controls/adirs/ir[1]/knob", 1);
 var switch_bleedapu = props.globals.getNode("controls/pneumatic/switches/bleedapu", 1);
 var pneumatic_xbleed_state = props.globals.getNode("systems/pneumatic/xbleed-state", 1);
@@ -596,7 +596,7 @@ var canvas_lowerECAM_apu = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO","APU-low-oil",
 		"text3724","text3728","text3732"];
 	},
 	update: func() {
@@ -669,7 +669,7 @@ var canvas_lowerECAM_apu = {
 		me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 
 		# APU Bleed
-		if (ir2_knob.getValue() != 0 and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
+		if (systems.ADIRSnew.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
 			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
 			me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
 		} else {
@@ -690,12 +690,12 @@ var canvas_lowerECAM_apu = {
 			me["APUN"].setColor(0.0509,0.7529,0.2941);
 			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue())));
 			me["APUEGT"].setColor(0.0509,0.7529,0.2941);
-			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue())));
+			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue(), 5)));
 		} else if (apu_rpm.getValue() >= 1) {
 			me["APUN"].setColor(0.0509,0.7529,0.2941);
 			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue())));
 			me["APUEGT"].setColor(0.0509,0.7529,0.2941);
-			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue())));
+			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue(), 5)));
 		} else {
 			me["APUN"].setColor(0.7333,0.3803,0);
 			me["APUN"].setText(sprintf("%s", "XX"));
@@ -705,6 +705,12 @@ var canvas_lowerECAM_apu = {
 		me["APUN-needle"].setRotation((apu_rpm_rot.getValue() + 90) * D2R);
 		me["APUEGT-needle"].setRotation((apu_egt_rot.getValue() + 90) * D2R);
 
+		if (systems.APUNodes.Oil.level.getValue() < 3.69 and apu_rpm.getValue() < 94.9 and gear0_wow.getValue()) {
+			me["APU-low-oil"].show();
+		} else {
+			me["APU-low-oil"].hide();
+		}
+		
 		me.updateBottomStatus();
 	},
 };
@@ -2294,7 +2300,7 @@ var canvas_lowerECAM_fuel = {
 	getKeys: func() {
 		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","FUEL-Pump-Left-1","FUEL-Pump-Left-2","FUEL-Pump-Center-1","FUEL-Pump-Center-2","FUEL-Pump-Right-1","FUEL-Pump-Right-2","FUEL-Left-blocked","FUEL-Right-blocked","FUEL-Center-blocked","FUEL-Left-Transfer",
 		"FUEL-Right-Transfer","FUEL-Left-Outer-Inacc","FUEL-Left-Inner-Inacc","FUEL-Center-Inacc","FUEL-Right-Inner-Inacc","FUEL-Right-Outer-Inacc","FUEL-Left-Outer-quantity","FUEL-Left-Inner-quantity","FUEL-Center-quantity","FUEL-Right-Inner-quantity",
-		"FUEL-Right-Outer-quantity","FUEL-On-Board","FUEL-Flow-per-min","FUEL-APU-arrow","FUEL-APU-label","FUEL-used-1","FUEL-used-both","FUEL-used-2","FUEL-ENG-Master-1","FUEL-ENG-Master-2","FUEL-XFEED","FUEL-XFEED-pipes","FUEL-Left-Outer-temp",
+		"FUEL-Right-Outer-quantity","FUEL-On-Board","FUEL-Flow-per-min","FUEL-APU-arrow","FUEL-APU-line","FUEL-APU-label","FUEL-used-1","FUEL-used-both","FUEL-used-2","FUEL-ENG-Master-1","FUEL-ENG-Master-2","FUEL-XFEED","FUEL-XFEED-pipes","FUEL-Left-Outer-temp",
 		"FUEL-Left-Inner-temp","FUEL-Right-Inner-temp","FUEL-Right-Outer-temp","FUEL-Pump-Left-1-Closed","FUEL-Pump-Left-1-Open","FUEL-Pump-Left-2-Closed","FUEL-Pump-Left-2-Open","FUEL-Pump-Center-1-Open","FUEL-Pump-Center-1-Closed","FUEL-Pump-Center-2-Closed",
 		"FUEL-Pump-Center-2-Open","FUEL-Pump-Right-1-Closed","FUEL-Pump-Right-1-Open","FUEL-Pump-Right-2-Closed","FUEL-Pump-Right-2-Open","FUEL-ENG-1-label","FUEL-ENG-2-label","FUEL-ENG-1-pipe","FUEL-ENG-2-pipe","ENG1idFFlow","ENG2idFFlow","FUEL-used-1","FUEL-used-2","FUEL-used-both",
 		"Fused-weight-unit","FFlow-weight-unit","FOB-weight-unit"];
@@ -2527,6 +2533,30 @@ var canvas_lowerECAM_fuel = {
 			me["FUEL-Center-blocked"].show();
 		} else {
 			me["FUEL-Center-blocked"].hide();
+		}
+		
+		# APU
+		if (systems.FUEL.Valves.apu.getValue() == 1 and systems.APUNodes.Controls.master.getValue() and !systems.APUNodes.Controls.fire.getValue()) {
+			me["FUEL-APU-label"].setColor(0.8078, 0.8039, 0.8078);
+			me["FUEL-APU-line"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-APU-arrow"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-APU-line"].show();
+			me["FUEL-APU-arrow"].show();
+		} elsif (systems.FUEL.Valves.apu.getValue() == 1 and (!systems.APUNodes.Controls.master.getValue() or systems.APUNodes.Controls.fire.getValue())) {
+			me["FUEL-APU-label"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-line"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-arrow"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-line"].show();
+			me["FUEL-APU-arrow"].show();
+		} elsif (systems.FUEL.Valves.apu.getValue() != 1 and (systems.APUNodes.Controls.master.getValue() or systems.APUNodes.Controls.fire.getValue())) {
+			me["FUEL-APU-label"].setColor(0.7333,0.3803,0);
+			me["FUEL-APU-line"].hide();
+			me["FUEL-APU-arrow"].hide();
+		} else {
+			me["FUEL-APU-label"].setColor(0.8078, 0.8039, 0.8078);
+			me["FUEL-APU-arrow"].setColor(0.8078, 0.8039, 0.8078);
+			me["FUEL-APU-line"].hide();
+			me["FUEL-APU-arrow"].show();
 		}
 
 		# Hide not yet implemented features

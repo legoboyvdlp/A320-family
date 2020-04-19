@@ -426,6 +426,26 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
+			
+			<checkbox>
+				<label>Allow APU Oil Consumption</label>
+				<halign>left</halign>
+				<property>/systems/apu/oil/allow-oil-consumption</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/systems/apu/oil/allow-oil-consumption</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
 
 			<checkbox>
 				<!-- TODO there might be a better way to formulate this. -->

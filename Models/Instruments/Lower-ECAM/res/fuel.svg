@@ -961,25 +961,21 @@
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.45647562;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-8" />
   </g>
-  <g
-     id="FUEL-APU-arrow"
-     inkscape:label="#g5828">
-    <rect
-       ry="0"
-       transform="matrix(0,1,-1,0,0,0)"
-       y="-261.75253"
-       x="232.60442"
-       height="18.894773"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-0-0-42"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.09431255;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       sodipodi:nodetypes="cccccsc"
-       inkscape:connector-curvature="0"
-       id="path5824"
-       d="m 209.24999,234.99999 15.75,-7.5 16.5,-8.25 v 17.25 l 0,15.30854 c 0,0 -1.69343,-0.68362 -19.69533,-10.2091 -11.05467,-5.84944 -12.55467,-6.59944 -12.55467,-6.59944 z"
-       style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
+  <rect
+   ry="0"
+   transform="matrix(0,1,-1,0,0,0)"
+   y="-261.75253"
+   x="232.60442"
+   height="18.894773"
+   width="5.3955846"
+   id="FUEL-APU-line"
+   style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.09431255;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <path
+   sodipodi:nodetypes="cccccsc"
+   inkscape:connector-curvature="0"
+   id="FUEL-APU-arrow"
+   d="m 209.24999,234.99999 15.75,-7.5 16.5,-8.25 v 17.25 l 0,15.30854 c 0,0 -1.69343,-0.68362 -19.69533,-10.2091 -11.05467,-5.84944 -12.55467,-6.59944 -12.55467,-6.59944 z"
+   style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
