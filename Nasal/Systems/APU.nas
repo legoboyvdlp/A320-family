@@ -168,7 +168,7 @@ var APU = {
 		if (!me.signals.autoshutdown and pts.APU.rpm.getValue() < 95 and me.signals.available.getValue()) {
 			me.signals.available.setValue(0);
 		}
-		if (me.signals.autoshutdown and (me.signals.available.getValue() or !me.signals.fault)) {
+		if (me.signals.autoshutdown and (me.signals.available.getValue() or !me.signals.fault.getValue())) {
 			me.signals.available.setValue(0);
 			me.signals.fault.setValue(1);
 		}
@@ -193,6 +193,7 @@ var APU = {
 			shutdownTimer.start();
 		} else {
 			if (me.signals.bleedWasUsed) {
+				if (me.bleedTime == 0) { me.shutBleed(); }
 				if (120 - (pts.Sim.Time.elapsedSec.getValue() - me.bleedTime) > 0) {
 					me.cooldownEndTime = me.bleedTime + 120;
 					me.setState(6);
@@ -250,7 +251,7 @@ var APU = {
 	},
 	shutBleed: func() {
 		APUNodes.Controls.bleed.setValue(0);
-		me.bleedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		me.bleedTime = pts.Sim.Time.elapsedSec.getValue();
 	},
 	update: func() {
 		if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
@@ -302,7 +303,11 @@ setlistener("controls/apu/master", func() {
 
 setlistener("controls/pneumatic/switches/bleedapu", func() {
 	if (APUController.APU != nil) {
-		APUController.APU.signals.bleedWasUsed = 1;
+		if (APUNodes.Controls.bleed.getValue()) {
+			APUController.APU.signals.bleedWasUsed = 1;
+		} else {
+			APUController.APU.bleedTime = pts.Sim.Time.elapsedSec.getValue();
+		}
 	}
 }, 0, 0);
 

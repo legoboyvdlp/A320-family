@@ -165,8 +165,8 @@ var CVR_test = func {
 }
 
 setlistener("/controls/apu/master", func() { # poor mans set-reset latch 
-	if (!getprop("controls/apu/master") and (systems.APUController.APU.signals.emer or systems.APUController.signals.autoshutdown)) {
+	if (!getprop("controls/apu/master") and (systems.APUController.APU.signals.emer or systems.APUController.APU.signals.autoshutdown)) {
 		systems.APUController.APU.signals.emer = 0;
-		systems.APUController.signals.autoshutdown = 0;
+		systems.APUController.APU.signals.autoshutdown = 0;
 	}
 }, 0, 0);
