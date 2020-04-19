@@ -311,7 +311,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("dir-to", 0);</script>
+				<script>mcdu.pagebutton("dirto", 1);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac-2</property>
