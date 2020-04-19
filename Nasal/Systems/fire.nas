@@ -22,7 +22,6 @@ var eng2Inop = props.globals.initNode("/systems/fire/engine2/det-inop", 0, "BOOL
 var apuInop = props.globals.initNode("/systems/fire/apu/det-inop", 0, "BOOL");
 var aftCargoFireWarn = props.globals.initNode("/systems/fire/cargo/aft/warning-active", 0, "BOOL");
 var fwdCargoFireWarn = props.globals.initNode("/systems/fire/cargo/fwd/warning-active", 0, "BOOL");
-var apuEmerShutdown = props.globals.getNode("systems/apu/emer-shutdown", 1);
 var eng1AgentTimer = props.globals.initNode("/systems/fire/engine1/agent1-timer", 99, "INT");
 var eng2AgentTimer = props.globals.initNode("/systems/fire/engine2/agent1-timer", 99, "INT");
 var eng1Agent2Timer = props.globals.initNode("/systems/fire/engine1/agent2-timer", 99, "INT");
@@ -180,18 +179,11 @@ var engFireDetectorUnit = {
 		} elsif (system == 2) {
 			apuFireWarn.setBoolValue(1);
 			if (me.wow.getValue() == 1) {
-				if (apuMaster.getBoolValue()) {
-					apuBleedNode.setValue(0);
-					systems.apu_stop();
-					apuEmerShutdown.setBoolValue(1);
-					settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
-						extinguisherBottles.vector[4].discharge();
-					}, 3);
-				} else {
-					settimer(func() {
-						extinguisherBottles.vector[4].discharge();
-					}, 3);
-				}
+				apuBleedNode.setValue(0);
+				systems.APUController.APU.emergencyStop();
+				settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
+					extinguisherBottles.vector[4].discharge();
+				}, 3);
 			}
 		}
 	},
@@ -648,6 +640,8 @@ eng2Agent2TimerMakeTimerFunc = func() {
 setlistener("/controls/apu/fire-btn", func() { 
 	if (getprop("controls/apu/fire-btn") == 1) { 
 		ecam.shutUpYou(); 
+		apuBleedNode.setValue(0);
+		systems.APUController.APU.emergencyStop();
 		apuAgentTimerMakeTimer.stop();
 		apuAgentTimer.setValue(10);
 		apuAgentTimerTime.setValue(elapsedTime.getValue() + 11);

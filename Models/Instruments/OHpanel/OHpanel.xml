@@ -5607,7 +5607,7 @@
 		<object-name>APUMasterBtn1F</object-name>
 		<condition>
 			<or>
-				<property>systems/apu/emer-shutdown</property>
+				<property>systems/apu/fault</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>

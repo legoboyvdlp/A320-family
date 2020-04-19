@@ -237,6 +237,8 @@ var warnings				  = std.Vector.new([
 	# APU shutdown
 	var apuEmerShutdown       = warning.new(msg: "APU EMER SHUT DOWN",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var apuEmerShutdownMast   = warning.new(msg: " -MASTER SW..........OFF",  colour: "c"),
+	var apuAutoShutdown       = warning.new(msg: "APU AUTO SHUT DOWN",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var apuAutoShutdownMast   = warning.new(msg: " -MASTER SW..........OFF",  colour: "c"),
 
 	# FIRE det fault
 	var eng1FireDetFault      = warning.new(msg: "ENG 1 FIRE DET FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1), 

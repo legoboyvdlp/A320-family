@@ -1197,7 +1197,7 @@ var messages_priority_2 = func {
 	}
 	
 	# APU EMER SHUT DOWN
-	if (apuEmerShutdown.clearFlag == 0 and systems.apuEmerShutdown.getBoolValue() and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuEmerShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
@@ -1209,6 +1209,21 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);
 		apuEmerShutdown.isMainMsg = 0;
+	}
+	
+	# APU AUTO SHUT DOWN
+	if (apuEmerShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and !systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+		apuAutoShutdown.active = 1;
+	} elsif (apuAutoShutdown.clearFlag == 1) {
+		ECAM_controller.warningReset(apuAutoShutdown);
+		apuAutoShutdown.isMainMsg = 1;
+	}
+	
+	if (apuAutoShutdownMast.clearFlag == 0 and getprop("controls/apu/master") and apuAutoShutdown.active == 1) {
+		apuAutoShutdownMast.active = 1;
+	} else {
+		ECAM_controller.warningReset(apuAutoShutdownMast);
+		apuAutoShutdown.isMainMsg = 0;
 	}
 	
 	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {

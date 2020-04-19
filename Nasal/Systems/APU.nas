@@ -42,8 +42,9 @@ var APU = {
 		oilTestComplete: 0,
 		available: props.globals.getNode("systems/apu/available"),
 		bleedWasUsed: 0,
-		fault: 0,
+		fault: props.globals.getNode("systems/apu/fault"),
 		autoshutdown: 0,
+		emer: 0,
 	},
 	setState: func(num) {
 		me.state = num;
@@ -57,8 +58,9 @@ var APU = {
 		me.cooldownEndTime = 0;
 		me.signals.oilTestComplete = 0;
 		me.signals.bleedWasUsed = 0;
-		me.signals.fault = 0;
+		me.signals.fault.setValue(0);
 		me.signals.autoshutdown = 0;
+		me.signals.emer = 0;
 		checkApuStartTimer.stop();
 		apuStartTimer.stop();
 		apuStartTimer2.stop();
@@ -84,6 +86,7 @@ var APU = {
 	powerOn: func() {
 		# just in case
 		me.resetStuff();
+		if (systems.ELEC.Bus.dcBat.getValue() < 25) { return; }
 		# apu able to receive emergency stop or start signals
 		me.setState(1);
 		me.fuelValveCmd.setValue(1);
@@ -98,6 +101,7 @@ var APU = {
 		settimer(func() { me.checkOil }, 8);
 	},
 	startCommand: func(fast = 0) {
+		
 		if (me.listenSignals and (me.state == 1 or me.state == 2)) {
 			me.signals.startInProgress.setValue(1);
 			me.setState(3);
@@ -166,7 +170,7 @@ var APU = {
 		}
 		if (me.signals.autoshutdown and (me.signals.available.getValue() or !me.signals.fault)) {
 			me.signals.available.setValue(0);
-			me.signals.fault = 1;
+			me.signals.fault.setValue(1);
 		}
 		
 		if (pts.APU.rpm.getValue() < 7 and !APUNodes.Controls.master.getValue()) {
@@ -215,16 +219,24 @@ var APU = {
 			me.setState(7);
 			shutdownTimer.start();
 			me.signals.autoshutdown = 1;
-			me.signals.fault = 1;
+			me.signals.fault.setValue(1);
+		} else {
+			checkApuStartTimer.stop();
+			me.inletFlap.close();
+			me.fuelValveCmd.setValue(0);
+			me.signals.autoshutdown = 1;
+			me.signals.fault.setValue(1);
+			me.setState(0);
 		}
 	},
 	emergencyStop: func() {
+		me.signals.emer = 1;
 		if (me.listenSignals and (me.state < 4)) {
 			checkApuStartTimer.stop();
 			me.inletFlap.close();
 			me.fuelValveCmd.setValue(0);
 			me.signals.autoshutdown = 1;
-			me.signals.fault = 1;
+			me.signals.fault.setValue(1);
 			me.setState(0);
 		} elsif (me.state >= 4) {
 			me.fuelValveCmd.setValue(0);
@@ -243,6 +255,16 @@ var APU = {
 	update: func() {
 		if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
 			me.autoStop();
+		}
+		
+		if (systems.ELEC.Bus.dcBat.getValue() < 25) {	
+			if (me.GenericControls.starter.getValue()) {
+				me.GenericControls.starter.setValue(0);
+			}
+			if (me.state != 0) {
+				me.autoStop();
+				me.resetStuff();
+			}
 		}
 	},
 };
