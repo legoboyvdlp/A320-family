@@ -313,6 +313,10 @@ var masterFMGC = maketimer(0.2, func {
 		vls = vs1g_conf_full * 1.23
 	}
 	
+	if (vls < 113) {
+		vls = 113;
+	}
+	
 	if (!getprop("FMGC/internal/vapp-speed-set")) {
 		if (dest_wind < 5) {
 			vapp = vls + 5;
@@ -361,6 +365,10 @@ var masterFMGC = maketimer(0.2, func {
 		vls_appr = vs1g_conf_3_appr * 1.23;
 	} else {
 		vls_appr = vs1g_conf_full_appr * 1.23
+	}
+	
+	if (vls_appr < 113) {
+		vls_appr = 113;
 	}
 	
 	if (!getprop("FMGC/internal/vapp-speed-set")) {
