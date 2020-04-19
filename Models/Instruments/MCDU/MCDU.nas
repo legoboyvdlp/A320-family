@@ -193,8 +193,9 @@ var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
 var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("FMGC/internal/final", 1);
-var mda = props.globals.getNode("FMGC/internal/radio", 1);
-var dh = props.globals.getNode("FMGC/internal/baro", 1);
+var radio = props.globals.getNode("FMGC/internal/radio", 1);
+var baro = props.globals.getNode("FMGC/internal/baro", 1);
+var radio_no = props.globals.getNode("FMGC/internal/radio-no", 1);
 var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
 var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
 
