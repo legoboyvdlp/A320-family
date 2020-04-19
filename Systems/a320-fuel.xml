@@ -12,8 +12,8 @@
 			<test logic="AND" value="1">
 				/systems/fuel/pumps/all-eng-pump-off eq 1
 				<test logic="OR">
-					/systems/electrical/bus/ac-ess-shed ge 110
-					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110 <!-- TODO 2QC breaker -->
+					/systems/electrical/bus/ac-si-bus ge 110 <!-- TODO 1QC breaker -->
 				</test>
 			</test>
 		</switch>
@@ -312,8 +312,8 @@
 		<switch name="/systems/fuel/valves/apu-lp-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="1.0">
-				/systems/electrical/bus/dc-bat ge 25
-				/systems/electrical/bus/dc-hot-1 ge 25
+				/systems/electrical/bus/dc-bat ge 25 <!-- 4WF -->
+				/systems/electrical/bus/dc-hot-1 ge 25 <!-- 3WF -->
 			</test>
 		</switch>
 		
