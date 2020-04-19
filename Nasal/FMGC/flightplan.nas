@@ -100,7 +100,7 @@ var flightPlanController = {
 			me.currentToWptIndex.setValue(0);
 		}
 		
-		me.addDiscontinuity(1, plan); bugfix for linux!
+		me.addDiscontinuity(1, plan);
 		#todo if plan = 2, kill any tmpy flightplan
 		me.flightPlanChanged(plan);
 	},
