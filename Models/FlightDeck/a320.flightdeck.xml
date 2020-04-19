@@ -5224,12 +5224,12 @@
 		<object-name>brakes_accum_psi.mark</object-name>
 		<object-name>brakes_lb_psi.mark</object-name>
 		<object-name>brakes_rb_psi.mark</object-name>
-<!--		<object-name>et_knob</object-name>-->
-<!--		<object-name>clock_knob</object-name>-->
-<!--		<object-name>chrono_reset</object-name>-->
-<!--		<object-name>chrono_btn</object-name>-->
-<!--		<object-name>clock_set</object-name>-->
-<!--		<object-name>clock_display</object-name>-->
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+		<object-name>clock_display</object-name>
 		<object-name>clock_glare</object-name>
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
@@ -6606,15 +6606,14 @@
 
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
-<!--		<object-name>clock</object-name>-->
+		<object-name>clock</object-name>
 		<object-name>clock_body</object-name>
 		<object-name>et_knob</object-name>
 		<object-name>clock_knob</object-name>
 		<object-name>chrono_reset</object-name>
 		<object-name>chrono_btn</object-name>
 		<object-name>clock_set</object-name>
-<!--		<object-name>clock_display</object-name>-->
-		<object-name>clock_glare</object-name>
+		<object-name>clock_display</object-name>
 	</effect>
 
 	<!-- move any objects requiring lightmap to another effect file -->
@@ -6629,13 +6628,6 @@
 		<object-name>carpet</object-name>
 		<object-name>ceiling</object-name>
 		<object-name>compass_box</object-name>
-		<object-name>clock_body</object-name>
-		<object-name>et_knob</object-name>
-		<object-name>clock_knob</object-name>
-		<object-name>chrono_reset</object-name>
-		<object-name>chrono_btn</object-name>
-		<object-name>clock_set</object-name>
-		<object-name>clock_glare</object-name>
 		<object-name>DoorC</object-name>
 		<object-name>efis_box_1</object-name>
 		<object-name>efis_box_2</object-name>
@@ -7807,5 +7799,28 @@
 		</font-resolution>
 		<kerning>default</kerning>
 	</text>
+	
+	<!-- torch -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>torch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>sim/rendering/als-secondary-lights/use-flashlight</property>
+				<value>0</value>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-cycle</command>
+				<property>sim/rendering/als-secondary-lights/use-searchlight</property>
+				<value>0</value>
+				<value>1</value>
+			</binding>
+		</action>
+	</animation>
 
 </PropertyList>
