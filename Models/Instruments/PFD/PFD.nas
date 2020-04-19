@@ -2437,15 +2437,20 @@ var canvas_PFD_2 = {
 			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 				me["ground_ref"].show();
+			} else {
+				me["ground_ref"].hide();
+			}
+			
+			landing_diff_cur = landing_diff.getValue();
+			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
 				if ((FMGCphase.getValue() == 5 or FMGCphase.getValue() == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
-					me["ground"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
+					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
 					me["ground"].show();
 				} else {
 					me["ground"].hide();
 				}
 			} else {
 				me["ground"].hide();
-				me["ground_ref"].hide();
 			}
 			
 			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
