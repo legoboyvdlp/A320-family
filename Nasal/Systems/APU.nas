@@ -29,6 +29,7 @@ var APU = {
 	bleedTime: 0,
 	cooldownEndTime: 0,
 	fastStart: 0,
+	_count: 0,
 	warnings: {
 		lowOilLevel: 0,
 	},
@@ -101,7 +102,6 @@ var APU = {
 		settimer(func() { me.checkOil }, 8);
 	},
 	startCommand: func(fast = 0) {
-		
 		if (me.listenSignals and (me.state == 1 or me.state == 2)) {
 			me.signals.startInProgress.setValue(1);
 			me.setState(3);
@@ -254,17 +254,20 @@ var APU = {
 		me.bleedTime = pts.Sim.Time.elapsedSec.getValue();
 	},
 	update: func() {
-		if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
-			me.autoStop();
-		}
-		
-		if (systems.ELEC.Bus.dcBat.getValue() < 25) {	
-			if (me.GenericControls.starter.getValue()) {
-				me.GenericControls.starter.setValue(0);
-			}
-			if (me.state != 0) {
+		me._count += 1;
+		if (me._count == 5) {
+			me._count = 0;
+			if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
 				me.autoStop();
-				me.resetStuff();
+			}
+			
+			if (systems.ELEC.Bus.dcBat.getValue() < 25) {	
+				if (me.GenericControls.starter.getValue()) {
+					me.GenericControls.starter.setValue(0);
+				}
+				if (me.state != 0) {
+					me.autoStop();
+				}
 			}
 		}
 	},

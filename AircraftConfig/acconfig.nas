@@ -344,13 +344,15 @@ var beforestart = func {
 		setprop("controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		failResetOld();
-		setprop("controls/apu/master", 0);
 		
 		# Now the Startup!
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
 		setprop("controls/apu/master", 1);
-		systems.APUController.APU.startCommand(1);
+		settimer(func() {
+			systems.APUController.APU.powerOn(); # guarantee it always works
+			systems.APUController.APU.startCommand(1);
+		}, 0.1);
 		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
 			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);
@@ -434,13 +436,15 @@ var taxi = func {
 		setprop("controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		failResetOld();
-		setprop("controls/apu/master", 0);
 		
 		# Now the Startup!
 		props.globals.getNode("controls/electrical/switches/bat-1").setValue(1);
 		props.globals.getNode("controls/electrical/switches/bat-2").setValue(1);
 		setprop("controls/apu/master", 1);
-		systems.APUController.APU.startCommand(1);
+		settimer(func() {
+			systems.APUController.APU.powerOn(); # guarantee it always works
+			systems.APUController.APU.startCommand(1);
+		}, 0.1);
 		var apu_rpm_chk = setlistener("/engines/engine[2]/n1", func {
 			if (getprop("engines/engine[2]/n1") >= 98) {
 				removelistener(apu_rpm_chk);
