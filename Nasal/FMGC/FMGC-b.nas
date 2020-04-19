@@ -151,7 +151,7 @@ var Text = {
 	lat: props.globals.initNode("/it-autoflight/mode/lat", "T/O", "STRING"),
 	thr: props.globals.initNode("/it-autoflight/mode/thr", "PITCH", "STRING"),
 	vert: props.globals.initNode("/it-autoflight/mode/vert", "T/O CLB", "STRING"),
-	vertTemp: 0,
+	vertTemp: "T/O CLB",
 };
 
 var Setting = {
