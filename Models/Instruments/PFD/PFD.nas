@@ -136,6 +136,8 @@ var vr_set = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2_set = props.globals.getNode("FMGC/internal/v2-set", 1);
 var flap_config = props.globals.getNode("controls/flight/flap-lever", 1);
+var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
+var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
@@ -172,8 +174,6 @@ var altFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/al
 var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-1", 0, "BOOL");
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
-var hundredAbove = props.globals.initNode("/instrumentation/pfd/hundred-above", 99999, "INT");
-var minimum = props.globals.initNode("/instrumentation/pfd/minimum", 99999, "INT");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
