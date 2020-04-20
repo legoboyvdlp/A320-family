@@ -33,6 +33,7 @@ var fuelPredInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/rte-rsv", 0.05 * num(trip_fuel.getValue()));
 			setprop("FMGC/internal/rte-percent", 5.0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
@@ -64,6 +65,7 @@ var fuelPredInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/alt-fuel", 0.0);
 			setprop("FMGC/internal/alt-time", "0000");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
@@ -100,6 +102,7 @@ var fuelPredInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/final-fuel", 0.0);
 			setprop("FMGC/internal/final-time", "0030");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
@@ -187,6 +190,7 @@ var fuelPredInput = func(key, i) {
 	} else if (key == "R4") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/fffq-sensor", "FF+FQ");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (find("/", scratchpad) == 0) {
 			var sensor = substr(scratchpad, 1);

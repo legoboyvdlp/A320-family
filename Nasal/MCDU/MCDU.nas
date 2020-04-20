@@ -528,7 +528,9 @@ var rskbutton = func(btn, i) {
 			notAllowed(i);
 		}
 	} else if (btn == "5") {
-		if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
+			initInputA("R5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R5",i);
@@ -558,6 +560,8 @@ var rskbutton = func(btn, i) {
 			} else {
 				notAllowed(i);
 			}
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
+			initInputA("R6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("R6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {

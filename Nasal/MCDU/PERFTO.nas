@@ -70,6 +70,7 @@ var perfTOInput = func(key, i) {
 	} else if (key == "L4") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/trans-alt", 18000);
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
