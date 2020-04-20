@@ -84,12 +84,12 @@ var perfAPPRInput = func(key, i) {
 		setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
 	} else if (key == "R2") {
 		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/baro", -1);
+			setprop("FMGC/internal/baro", 99999);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (int(scratchpad) != nil and scratchpad >= getprop("FMGC/internal/ldg-elev") and scratchpad <= 5000 + getprop("FMGC/internal/ldg-elev")) {
 			if (getprop("FMGC/internal/radio-no") == 0) {
-				setprop("FMGC/internal/radio", -1);
+				setprop("FMGC/internal/radio", 99999);
 			}
 			setprop("FMGC/internal/baro", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -98,16 +98,16 @@ var perfAPPRInput = func(key, i) {
 		}
 	} else if (key == "R3") {
 		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/radio", -1);
+			setprop("FMGC/internal/radio", 99999);
 			setprop("FMGC/internal/radio-no", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (scratchpad == "NO") {
-			setprop("FMGC/internal/radio", -1);
+			setprop("FMGC/internal/radio", 99999);
 			setprop("FMGC/internal/radio-no", 1);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 700) {
-			setprop("FMGC/internal/baro", -1);
+			setprop("FMGC/internal/baro", 99999);
 			setprop("FMGC/internal/radio-no", 0);
 			setprop("FMGC/internal/radio", scratchpad);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");

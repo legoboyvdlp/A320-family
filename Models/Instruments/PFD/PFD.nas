@@ -172,8 +172,8 @@ var altFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/al
 var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-1", 0, "BOOL");
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
-var hundredAbove = props.globals.initNode("/instrumentation/pfd/hundred-above", 100, "BOOL");
-var minimum = props.globals.initNode("/instrumentation/pfd/minimum", 0, "BOOL");
+var hundredAbove = props.globals.initNode("/instrumentation/pfd/hundred-above", 99999, "INT");
+var minimum = props.globals.initNode("/instrumentation/pfd/minimum", 99999, "INT");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
