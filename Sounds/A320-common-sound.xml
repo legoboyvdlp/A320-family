@@ -661,7 +661,6 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</gpws>
-		
 	    <gpws>
 			<name>100above</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100-above.wav</path>
@@ -674,11 +673,16 @@
 					</equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value><property>/instrumentation/pfd/hundred-above</property></value>
+						<property>/instrumentation/pfd/hundred-above</property>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value><property>/instrumentation/pfd/hundred-above</property> - 50</value>
+						<expression>
+							<difference>
+								<property>/instrumentation/pfd/hundred-above</property>
+								<value>50</value>
+							</difference>
+						</expression>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -708,11 +712,16 @@
 					</equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value><property>/instrumentation/pfd/minimum</property></value>
+						<property>/instrumentation/pfd/minimum</property>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value><property>/instrumentation/pfd/minimum</property> - 50</value>
+						<expression>
+							<difference>
+								<property>/instrumentation/pfd/minimum</property>
+								<value>50</value>
+							</difference>
+						</expression>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
