@@ -1367,6 +1367,11 @@
 			</voice>
 		</mk-viii>
 		
+		<pfd n="0">
+			<hundred-above type="int">99999</hundred-above>
+			<minimums type="int">99999</minimums>
+		</pfd>
+		
 		<radar-altimeter n="0">
 			<antenna>
 				<x-offset-m type="double">-1</x-offset-m>

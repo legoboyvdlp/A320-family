@@ -169,6 +169,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>2500</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>2400</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>2500</value>
@@ -203,6 +211,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>2000</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>1900</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>2000</value>
@@ -237,6 +253,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>1000</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>900</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>1000</value>
@@ -271,6 +295,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>500</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>400</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>500</value>
@@ -305,6 +337,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>400</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>300</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>400</value>
@@ -339,6 +379,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>300</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>200</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>300</value>
@@ -373,6 +421,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>200</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>100</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>200</value>
@@ -407,6 +463,14 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>100</value>
+					</not-equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>0</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>100</value>
@@ -441,6 +505,10 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>50</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>50</value>
@@ -475,6 +543,10 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>40</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>40</value>
@@ -509,6 +581,10 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>30</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>30</value>
@@ -543,6 +619,10 @@
 						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>20</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>20</value>
@@ -581,6 +661,10 @@
 						<property>/controls/flight/flaps</property>
 						<value>0.640</value>
 					</greater-than>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>10</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>10</value>
@@ -629,6 +713,10 @@
 						<property>/controls/flight/flaps</property>
 						<value>0.640</value>
 					</greater-than>
+					<not-equals>
+						<property>/instrumentation/pfd/minimums-no-gpws-alt</property>
+						<value>5</value>
+					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
 						<value>5</value>
@@ -672,17 +760,12 @@
 						<value>0</value>
 					</equals>
 					<less-than-equals>
-						<property>/position/gear-agl-ft</property>
-						<property>/instrumentation/pfd/hundred-above</property>
+						<property>/instrumentation/pfd/minimums-ref-alt</property>
+						<property>/instrumentation/pfd/minimums-plus-100</property>
 					</less-than-equals>
 					<greater-than>
-						<property>/position/gear-agl-ft</property>
-						<expression>
-							<difference>
-								<property>/instrumentation/pfd/hundred-above</property>
-								<value>50</value>
-							</difference>
-						</expression>
+						<property>/instrumentation/pfd/minimums-ref-alt</property>
+						<property>/instrumentation/pfd/minimums-plus-50</property>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -711,17 +794,12 @@
 						<value>0</value>
 					</equals>
 					<less-than-equals>
-						<property>/position/gear-agl-ft</property>
-						<property>/instrumentation/pfd/minimum</property>
+						<property>/instrumentation/pfd/minimums-ref-alt</property>
+						<property>/instrumentation/pfd/minimums</property>
 					</less-than-equals>
 					<greater-than>
-						<property>/position/gear-agl-ft</property>
-						<expression>
-							<difference>
-								<property>/instrumentation/pfd/minimum</property>
-								<value>50</value>
-							</difference>
-						</expression>
+						<property>/instrumentation/pfd/minimums-ref-alt</property>
+						<property>/instrumentation/pfd/minimums-minus-50</property>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
