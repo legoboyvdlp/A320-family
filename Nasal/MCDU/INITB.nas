@@ -265,13 +265,13 @@ var initInputB = func(key, i) {
 			}
 		}
 	} else if (key == "R3") {
-		if (scratchpad != "") {
-			notAllowed(i);
-		} else {
+		if (scratchpad == "" and (!getprop("FMGC/internal/block-set") or !getprop("FMGC/internal/zfw-set"))) {
 			setprop("FMGC/internal/zfw", num((getprop("fdm/jsbsim/inertia/weight-lbs") - getprop("consumables/fuel/total-fuel-lbs")) / 1000));
 			setprop("FMGC/internal/zfw-set", 1);
 			setprop("FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
 			setprop("FMGC/internal/block-set", 1);
+		} else {
+			notAllowed(i);
 		}
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
