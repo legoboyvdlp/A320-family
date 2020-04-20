@@ -782,7 +782,7 @@ var canvas_PFD_base = {
 			if (gear_agl_cur <= 2500) {
 				me["AI_agl"].show();
 				me["FMA_dh_box"].hide(); #not implemented
-				if (int(getprop("FMGC/internal/radio")) != -1) {
+				if (int(getprop("FMGC/internal/radio")) != 99999) {
 					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
@@ -795,7 +795,7 @@ var canvas_PFD_base = {
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-				} else if (int(getprop("FMGC/internal/baro")) != -1) {
+				} else if (int(getprop("FMGC/internal/baro")) != 99999) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
@@ -837,13 +837,13 @@ var canvas_PFD_base = {
 				me["AI_agl"].hide();
 				me["FMA_nodh"].hide();
 				me["FMA_dh_box"].hide(); #not implemented
-				if (int(getprop("FMGC/internal/radio")) != -1) {
+				if (int(getprop("FMGC/internal/radio")) != 99999) {
 					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
-				} else if (int(getprop("FMGC/internal/baro")) != -1) {
+				} else if (int(getprop("FMGC/internal/baro")) != 99999) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
