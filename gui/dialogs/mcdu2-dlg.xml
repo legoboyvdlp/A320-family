@@ -19,13 +19,26 @@
 		</text>
 		<button>
 			<halign>right</halign>
+			<pref-width>220</pref-width>
+			<pref-height>20</pref-height>
+			<legend>Toggle Keyboard Input</legend>
+			<live>true</live>
+			<property>/FMGC/keyboard-right</property>
+			<binding>
+				<command>property-toggle</command>
+				<property>/FMGC/keyboard-right</property>
+			</binding>
+		</button>
+		<button>
+			<halign>right</halign>
 			<pref-width>20</pref-width>
 			<pref-height>20</pref-height>
 			<legend>X</legend>
 			<key>Esc</key>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("FMGC/keyboard-right", 0);</script>
+				<command>property-assign</command>
+				<property>/FMGC/keyboard-right</property>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>dialog-close</command>
