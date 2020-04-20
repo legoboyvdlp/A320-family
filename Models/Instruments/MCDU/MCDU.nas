@@ -2613,7 +2613,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R2S"].setText("BARO");
-			if (getprop("FMGC/internal/baro") != -1) {
+			if (getprop("FMGC/internal/baro") != 99999) {
 				me["Simple_R2"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
 				me.fontRight(0, default, 0, 0, 0, 0);
 				me.fontSizeRight(0, normal, 0, 0, 0, 0);
@@ -2624,7 +2624,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R3S"].setText("RADIO");
-			if (getprop("FMGC/internal/radio") != -1) {
+			if (getprop("FMGC/internal/radio") != 99999) {
 				me["Simple_R3"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
