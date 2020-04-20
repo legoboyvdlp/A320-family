@@ -107,6 +107,8 @@ var cruiseTemp = props.globals.getNode("FMGC/internal/cruise-temp", 1);
 var cruiseTempSet = props.globals.getNode("FMGC/internal/cruise-temp-set", 1);
 var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
+var gndtemp = props.globals.getNode("FMGC/internal/gndtemp", 1);
+var gndtempSet = props.globals.getNode("FMGC/internal/gndtemp-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
@@ -1108,13 +1110,13 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me.showLeft(0, 1, 0, 1, 0, 1);
+				me.showLeft(0, 1, 0, -1, 0, 1);
 				me["Simple_L0S"].hide();
-				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftS(1, 1, 1, -1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me.showRight(0, 0, 1, 1, 1, 1);
-				me.showRightS(1, 0, -1, 1, -1, 1);
-				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me.showRightS(1, 0, -1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, 1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1127,7 +1129,7 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "wht", "blu", "blu", "ack", "ack");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("blu", "amb", "amb", "blu", "wht", "blu");
+				me.colorRight("blu", "amb", "amb", "wht", "blu", "blu");
 				me.colorRightS("wht", "amb", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
@@ -1187,16 +1189,6 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
 				me["INITA_InitRequest"].hide();
-				dms = getprop("FMGC/flightplan[2]/wp[0]/lat");
-				degrees = int(dms);
-				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-				sign = degrees >= 0 ? "N" : "S";
-				me["Simple_L4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
-				dms = getprop("FMGC/flightplan[2]/wp[0]/lon");
-				degrees = int(dms);
-				minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-				sign = degrees >= 0 ? "E" : "W";
-				me["Simple_R4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
 			} else {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
@@ -1206,8 +1198,6 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
 				me["INITA_InitRequest"].show();
-				me["Simple_L4"].setText("----.-");
-				me["Simple_R4"].setText("-----.--");
 			}
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
@@ -1219,28 +1209,41 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			}
 			if (tropoSet.getValue() == 1) {
-				me["Simple_R6"].setFontSize(normal); 
+				me["Simple_R5"].setFontSize(normal); 
 			} else {
+				me["Simple_R5"].setFontSize(small); 
+			}
+			
+			me["Simple_R6S"].setText("GND TEMP");
+			if (getprop("FMGC/status/phase") == 0 and !getprop("FMGC/internal/gndtemp-set")) {
+				setprop("FMGC/internal/gndtemp", 15 - (2 * getprop("position/gear-agl-ft") / 1000));
+				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 				me["Simple_R6"].setFontSize(small); 
+			} else {
+				if (getprop("FMGC/internal/gndtemp-set")) {
+					me["Simple_R6"].setFontSize(normal); 
+				} else {
+					me["Simple_R6"].setFontSize(small); 
+				}
+				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 			}
 			
 			me["Simple_L1S"].setText(" CO RTE");
 			me["Simple_L2S"].setText("ALTN/CO RTE");
 			me["Simple_L3S"].setText("FLT NBR");
-			me["Simple_L4S"].setText("LAT");
 			me["Simple_L5S"].setText("COST INDEX");
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			me["Simple_L1"].setText("NONE");
 			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
-			me["Simple_R4S"].setText("LONG");
-			me["Simple_R6S"].setText("TROPO");
+			me["Simple_R5S"].setText("TROPO");
+			
 			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("IRS INIT ");
-			me["Simple_R5"].setText("WIND ");
-			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));
+			me["Simple_R4"].setText("WIND ");
+			me["Simple_R5"].setText(sprintf("%5.0f", tropo.getValue()));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();

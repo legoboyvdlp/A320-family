@@ -29,6 +29,7 @@ var initInputB = func(key, i) {
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/taxi-fuel", 0.4);
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -78,6 +79,7 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/rte-rsv", 0.05 * num(trip_fuel.getValue()));
 			setprop("FMGC/internal/rte-percent", 5.0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
@@ -109,6 +111,7 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/alt-fuel", 0.0);
 			setprop("FMGC/internal/alt-time", "0000");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
@@ -145,6 +148,7 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/final-fuel", 0.0);
 			setprop("FMGC/internal/final-time", "0030");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
@@ -272,6 +276,7 @@ var initInputB = func(key, i) {
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/trip-wind", "HD000");
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			if (find("TL", scratchpad) != -1 or find("HD", scratchpad) != -1) {
