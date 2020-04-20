@@ -688,14 +688,14 @@ var canvas_lowerECAM_apu = {
 		# APU N and EGT
 		if (apu_master.getValue() == 1) {
 			me["APUN"].setColor(0.0509,0.7529,0.2941);
-			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue())));
+			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue() or 0)));
 			me["APUEGT"].setColor(0.0509,0.7529,0.2941);
-			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue(), 5)));
+			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue() or 0, 5)));
 		} else if (apu_rpm.getValue() >= 1) {
 			me["APUN"].setColor(0.0509,0.7529,0.2941);
-			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue())));
+			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue() or 0)));
 			me["APUEGT"].setColor(0.0509,0.7529,0.2941);
-			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue(), 5)));
+			me["APUEGT"].setText(sprintf("%s", math.round(apu_egt.getValue() or 0, 5)));
 		} else {
 			me["APUN"].setColor(0.7333,0.3803,0);
 			me["APUN"].setText(sprintf("%s", "XX"));
