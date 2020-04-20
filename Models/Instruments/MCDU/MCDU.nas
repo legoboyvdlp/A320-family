@@ -1901,8 +1901,8 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
-				me.showRight(1, 1, 1, 1, 1, 1);
-				me.showRightS(1, 1, 1, 1, 1, 1);
+				me.showRight(-1, 1, 1, 1, 1, 1);
+				me.showRightS(-1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me.showCenterS(1, 1, 1, -1, -1, -1);
@@ -1956,6 +1956,12 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setColor(1, 1, 1);
 			}
 			
+			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
+				me["Simple_Title"].setText(sprintf("TAKE OFF RWY %s", fmgc.flightPlanController.flightplans[2].departure_runway.id));
+			} else {
+				me["Simple_Title"].setText("TAKE OFF");
+			}
+			
 			if (v1Set.getValue() == 1) {
 				me["PERFTO_V1"].hide();
 				me["Simple_L1"].show();
@@ -1981,12 +1987,6 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].setFontSize(normal);
 			} else {
 				me["Simple_L5"].setFontSize(small);
-			}
-			
-			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
-				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].departure_runway.id));
-			} else {
-				me["Simple_R1"].setText("--- ");
 			}
 			
 			if (flapTHSSet.getValue() == 1) {
@@ -2606,8 +2606,10 @@ var canvas_MCDU_base = {
 			me["Simple_R1S"].setText("FINAL");
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].approach.id));
+				me["Simple_R1"].setColor(GREEN);
 			} else {
 				me["Simple_R1"].setText("--- ");
+				me["Simple_R1"].setColor(WHITE);
 			}
 			
 			me["Simple_R2S"].setText("BARO");
