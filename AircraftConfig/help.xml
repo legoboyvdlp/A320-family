@@ -123,6 +123,10 @@
 				<halign>left</halign>
 				<label>SHIFT + F - Set CL Thrust</label>
 			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + K - Toggle MCDU keyboard input</label>
+			</text>
 			
 		</group>
 	

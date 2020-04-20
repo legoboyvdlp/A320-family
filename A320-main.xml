@@ -1469,8 +1469,8 @@
 				</binding>
 			</key>
 			<key n="8">
-                <name>Ctrl-H</name>
-                <desc>Toggle autopilot heading lock</desc>
+                <name>Del</name>
+                <desc>CLR</desc>
                 <binding>
 				    <condition>
 				        <property>/FMGC/keyboard-left</property>
@@ -1485,22 +1485,19 @@
 					<command>nasal</command>
 					<script>mcdu.button("CLR", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
-					</condition>
-                    <command>nasal</command>
-                    <script>
-                    var node = props.globals.getNode("/autopilot/locks/heading", 1);
-                    if ( node.getValue() == "dg-heading-hold" ) {
-                        node.setValue( "" );
-                    } else {
-                        node.setValue( "dg-heading-hold" );
-                    }
-                    </script>
-                </binding>
             </key>
+			<key n="11">
+				<name>Toggle keyboard mode</name>
+				<desc>Ctrl + k</desc>
+				<binding>
+					<command>property-toggle</command>
+					<property>FMGC/keyboard-left</property>
+				</binding>
+				<binding>
+					<command>property-toggle</command>
+					<property>FMGC/keyboard-right</property>
+				</binding>
+			</key>
 			<key n="24">
 				<name>Ctrl-x</name>
 				<desc>Reset zoom to default</desc>
@@ -2031,6 +2028,12 @@
 					<script>
 						controls.incThrottle(0.01, 1.0);
 					</script>
+				</binding>
+			</key>
+			<key n="63">
+				<binding>
+					<command>nasal</command>
+					<script>acconfig.help_dlg.open();</script>
 				</binding>
 			</key>
 			<key n="65"> 

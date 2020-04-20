@@ -5569,12 +5569,10 @@ var MCDU_update = maketimer(0.125, func {
 });
 	
 var showMCDU1 = func {
-	setprop("FMGC/keyboard-left", 1);
 	gui.showDialog("mcdu1");
 }
 
 var showMCDU2 = func {
-	setprop("FMGC/keyboard-right", 1);
 	gui.showDialog("mcdu2");
 }
 
