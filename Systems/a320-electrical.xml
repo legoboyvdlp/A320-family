@@ -232,14 +232,14 @@
 		
 		<!-- APU gen -->
 		<pure_gain name="/systems/electrical/sources/apu/drive-rpm-input">
-			<input>/systems/apu/rpm</input>
-			<gain>240</gain>
+			<input>/engines/engine[2]/n1</input>
+			<gain>240.34</gain>
 		</pure_gain>
 		
 		<switch name="/systems/electrical/sources/apu/working">
 			<default value="1"/>
 			<test logic="OR" value="0">
-				/controls/APU/fire-btn eq 1
+				/controls/apu/fire-btn eq 1
 			</test>
 		</switch>
 		
@@ -525,7 +525,7 @@
 		<switch name="/systems/electrical/relay/apu-glc/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/APU/master eq 1
+				/controls/apu/master eq 1
 				/controls/electrical/switches/apu eq 1
 				/systems/electrical/sources/apu/output-volt ge 110
 				/systems/electrical/sources/apu/output-volt lt 130
@@ -1205,13 +1205,22 @@
                 /systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
                 /systems/electrical/bus/dc-2-src ne 2
 			</test>
-			<test value="3"> <!-- BAT -->
-				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
-				<test logic="OR">
-					/controls/electrical/switches/bat-1 eq 1
-					/controls/electrical/switches/bat-2 eq 1
+			<test logic="OR" value="3"> <!-- BAT -->
+				<test logic="AND">
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					<test logic="OR">
+						/controls/electrical/switches/bat-1 eq 1
+						/controls/electrical/switches/bat-2 eq 1
+					</test>
+					/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				</test>
-				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
+				<test logic="AND">
+					<test logic="OR">
+						/controls/electrical/switches/bat-1 eq 1
+						/controls/electrical/switches/bat-2 eq 1
+					</test>
+					/systems/apu/dc-bat-three-minutes eq 1
+				</test>
 			</test>
 		</switch>
 		
@@ -1228,19 +1237,35 @@
                 /systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 1
                 /systems/electrical/bus/dc-2-src ne 2
             </test>
-            <test logic="AND" value="/systems/electrical/sources/bat-1/volt">
-				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
-				/controls/electrical/switches/bat-1 eq 1
-				/systems/electrical/bus/dc-bat-src eq 3
-				/systems/electrical/sources/bat-1/volt ge 25
-				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
+            <test logic="OR" value="/systems/electrical/sources/bat-1/volt">
+				<test logic="AND">
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/controls/electrical/switches/bat-1 eq 1
+					/systems/electrical/bus/dc-bat-src eq 3
+					/systems/electrical/sources/bat-1/volt ge 25
+					/systems/electrical/some-electric-thingie/emer-elec-config eq 1
+				</test>
+				<test logic="AND">
+					/systems/apu/dc-bat-three-minutes eq 1
+					/controls/electrical/switches/bat-1 eq 1
+					/systems/electrical/bus/dc-bat-src eq 3
+					/systems/electrical/sources/bat-1/volt ge 25
+				</test>
             </test>
-            <test logic="AND" value="/systems/electrical/sources/bat-2/volt">
-				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
-				/controls/electrical/switches/bat-2 eq 1
-				/systems/electrical/bus/dc-bat-src eq 3
-				/systems/electrical/sources/bat-2/volt ge 25
-				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
+            <test logic="OR" value="/systems/electrical/sources/bat-2/volt">
+				<test logic="AND">
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/controls/electrical/switches/bat-2 eq 1
+					/systems/electrical/bus/dc-bat-src eq 3
+					/systems/electrical/sources/bat-2/volt ge 25
+					/systems/electrical/some-electric-thingie/emer-elec-config eq 1
+				</test>
+				<test logic="AND">
+					/systems/apu/dc-bat-three-minutes eq 1
+					/controls/electrical/switches/bat-2 eq 1
+					/systems/electrical/bus/dc-bat-src eq 3
+					/systems/electrical/sources/bat-2/volt ge 25
+				</test>
             </test>
         </switch>
 		
@@ -1282,10 +1307,8 @@
 			<test logic="AND" value="1">
 				/systems/electrical/bus/ac-1 lt 110
 				/systems/electrical/bus/ac-2 lt 110
-				/systems/acconfig/autoconfig-running ne 1
 			</test>
 			<test logic="AND" value="1">
-				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
 				<test logic="OR">
 					/controls/electrical/switches/gen-1 eq 0
@@ -1298,7 +1321,7 @@
 				<test logic="OR">
 					/controls/electrical/switches/apu eq 0
 					/systems/failures/electrical/apu eq 1
-					/systems/apu/rpm lt 94.9
+					/engines/engine[2]/n1 lt 94.9
                 </test>
 			</test>
 		</switch>

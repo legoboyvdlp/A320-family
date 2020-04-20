@@ -1,4 +1,4 @@
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<fx>
@@ -10,12 +10,12 @@
 				<property>/sim/current-view/internal</property>
 			</condition>
 			<volume>
-				<property>/systems/apu/rpm</property>
+				<property>/engines/engine[2]/n1</property>
 				<factor>0.005</factor>
 				<max>0.25</max>
 			</volume>
 			<pitch>
-				<property>/systems/apu/rpm</property>
+				<property>/engines/engine[2]/n1</property>
 				<factor>0.05</factor>
 				<offset>-2</offset>
 			</pitch>
@@ -29,11 +29,11 @@
 				<not><property>/sim/current-view/internal</property></not>
 			</condition>
 			<volume>
-				<property>/systems/apu/rpm</property>
+				<property>/engines/engine[2]/n1</property>
 				<factor>0.005</factor>
 			</volume>
 			<pitch>
-				<property>/systems/apu/rpm</property>
+				<property>/engines/engine[2]/n1</property>
 				<factor>0.01</factor>
 			</pitch>
 			<reference-dist>60</reference-dist>
@@ -1274,6 +1274,18 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/button.wav</path>
 			<condition>
 				<property>/sim/sounde/btn1</property>
+			</condition>
+			<volume>
+				<factor>0.75</factor>
+			</volume>
+		</switch>
+		
+		<switch>
+			<name>APDisc</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/autopilot-disconnect-button.wav</path>
+			<condition>
+				<property>/sim/sounde/apdiscbtn</property>
 			</condition>
 			<volume>
 				<factor>0.75</factor>

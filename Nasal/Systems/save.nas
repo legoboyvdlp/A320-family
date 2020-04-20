@@ -25,6 +25,8 @@ var default = [
 	"/consumables/fuel/tank[2]/level-lbs",
 	"/consumables/fuel/tank[3]/level-lbs",
 	"/consumables/fuel/tank[4]/level-lbs",
+	# apu oil
+	"/systems/apu/oil/level-l",
 	# CONTROLS
 	# rmp
 	"/controls/radio/rmp[0]/on",

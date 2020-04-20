@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -955,20 +955,16 @@
 		<gain>1.0</gain>
 		<enable>
 			<condition>
-				<or>
+				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-bat</property>
+						<property>/systems/electrical/bus/dc-ess</property>
 						<value>25</value>
 					</greater-than-equals>
-					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-1</property>
-						<value>25</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-2</property>
-						<value>25</value>
-					</greater-than-equals>
-				</or>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
+						<value>1</value>
+					</equals> <!-- TODO ATT HDG SWITCH -->
+				</and>
 			</condition>
 		</enable>
 		<input>/orientation/heading-magnetic-deg</input>
@@ -1001,26 +997,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/nav[2]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1031,26 +1021,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
 						<value>-1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[0]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1088,26 +1072,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/nav[3]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1118,26 +1096,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
 						<value>-1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[1]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1156,20 +1128,14 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
+						<value>1</value>
+					</equals>
 					<or>
 						<and>
 							<equals>
@@ -1208,20 +1174,14 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
+						<value>1</value>
+					</equals>
 					<or>
 						<and>
 							<equals>

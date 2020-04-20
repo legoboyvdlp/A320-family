@@ -344,7 +344,7 @@
 			<repeatable type="bool">false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/APU/fire-switch</property>
+				<property>controls/apu/fire-switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -360,7 +360,7 @@
 			<red>0.9</red>
 			<green>0.7</green>
 			<blue>0.7</blue>
-			<factor-prop>controls/APU/fire-switch</factor-prop>
+			<factor-prop>controls/apu/fire-switch</factor-prop>
 		</emission>
 	</animation>
 
@@ -1515,7 +1515,7 @@
 			<repeatable type="bool">false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/APU/master-switch</property>
+				<property>controls/apu/master-switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1541,7 +1541,7 @@
 		<name>APU master switch on</name>
 		<type>textranslate</type>
 		<object-name>APUMasterBtn2</object-name>
-		<property>controls/APU/master-switch</property>
+		<property>controls/apu/master-switch</property>
 		<factor>0.5</factor>
 		<axis>
 			<x>1</x>
@@ -1559,7 +1559,7 @@
 			<repeatable type="bool">false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/APU/starter</property>
+				<property>controls/apu/starter</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1571,7 +1571,7 @@
 		<name>APU starter on</name>
 		<type>textranslate</type>
 		<object-name>APUStartBtn2</object-name>
-		<property>controls/APU/starter</property>
+		<property>controls/apu/starter</property>
 		<factor>0.5</factor>
 		<axis>
 			<x>1</x>

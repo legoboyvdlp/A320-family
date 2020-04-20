@@ -1,6 +1,6 @@
 <!-- Airbus A320 JSBsim -->
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <mass_balance>
 	<ixx unit="SLUG*FT2">  611903 </ixx>
@@ -13,7 +13,7 @@
 	<emptywt unit="LBS" >   80431 </emptywt>
 	
 	<location name="CG" unit="M">
-		<x> 18.8231 </x>
+		<x> 18.849 </x> <!-- 25% MAC -->
 		<y> 0 </y>
 		<z> 0.19249 </z>
 	</location>

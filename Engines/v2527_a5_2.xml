@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <turbine_engine name="V2527_A5">
 	
 	<!-- data measured from https://www.youtube.com/watch?v=gPRQcYNRV_U -->
-	<milthrust>     26600 </milthrust>
+	<milthrust>     24800 </milthrust>
 	<tsfc>          0.445 </tsfc>
 	<bleed>          0.03 </bleed>
 	<ignitionn1>	  4.8 </ignitionn1>

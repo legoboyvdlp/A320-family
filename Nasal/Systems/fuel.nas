@@ -1,7 +1,7 @@
 # A3XX Fuel System
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var FUEL = {
 	offset1: 0,
@@ -27,6 +27,7 @@ var FUEL = {
 		allOff: props.globals.getNode("systems/fuel/pumps/all-eng-pump-off"),
 	},
 	Valves: {
+		apu: props.globals.getNode("systems/fuel/valves/apu-lp-valve"),
 		crossfeed: props.globals.getNode("systems/fuel/valves/crossfeed-valve"),
 		lpValve1: props.globals.getNode("systems/fuel/valves/engine-1-lp-valve"),
 		lpValve2: props.globals.getNode("systems/fuel/valves/engine-2-lp-valve"),

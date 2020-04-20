@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 <!-- Copyright (c) 2020 Matthew Maring (hayden2000) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
 
-		<author>Joshua Davidson (Octal450), Jonathan Redpath (legoboyvdlp), Thorsten Herrmann (TH-555), Based on IDG-A32X</author>
+		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/hayden2000 (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
 		<status>Pre V1.0</status>
 		
@@ -451,6 +451,9 @@
 			<tank n="6">
 				<name>Engine 2 Pipes</name>
 			</tank>
+			<tank n="7">
+				<name>APU Pipes</name>
+			</tank>
 		</fuel>
 	</consumables>
 	
@@ -477,43 +480,43 @@
 			<name>Cockpit Crew</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
 			<min-lb type="double">200</min-lb>
-			<max-lb type="double">440</max-lb>
+			<max-lb type="double">776</max-lb>
 		</weight>
 		<weight n="1">
 			<name>Forward Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">4649</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="2">
 			<name>Center Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">13949</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="3">
 			<name>Aft Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">10462</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="4">
 			<name>Forward Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">5000</max-lb>
+			<max-lb type="double">7500</max-lb>
 		</weight>
 		<weight n="5">
 			<name>Aft Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">6662</max-lb>
+			<max-lb type="double">10000</max-lb>
 		</weight>
 		<weight n="6">
 			<name>Aft Bulk Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[6]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">3285</max-lb>
+			<max-lb type="double">3300</max-lb>
 		</weight>
 	</payload>
 	
@@ -553,11 +556,6 @@
 			<vmo-mmo type="int">350</vmo-mmo>
 		</speeds>
 	</it-fbw>
-
-	<apu>
-		<rpm type="float">0</rpm>
-		<egt type="float">0</egt>
-	</apu>
 	
 	<FMGC n="0">
 		<active-fmgc-channel type="int">0</active-fmgc-channel>
@@ -614,14 +612,15 @@
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
 		</atc>
-		<APU>
+		<apu>
+			<agent-btn type="bool">0</agent-btn>
 			<fire-btn type="bool">0</fire-btn>
 			<fire-btn-cover type="bool">0</fire-btn-cover>
 			<fire-light type="bool">0</fire-light>
 			<master type="bool">0</master>
 			<start type="bool">0</start>
 			<bleed type="bool">0</bleed>
-		</APU>
+		</apu>
 		<autobrake>
 			<active type="bool">0</active>
 			<brake-left type="double">0</brake-left>
@@ -676,6 +675,12 @@
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
+				<throttle-output type="double">0</throttle-output>
+				<throttle-fdm type="double">0</throttle-fdm>
+			</engine>
+			<engine n="2">
+				<cutoff type="bool">true</cutoff>
+				<starter type="bool">0</starter>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
@@ -867,12 +872,6 @@
 	</controls>
 	
 	<engines>
-		<apu>
-			<rpm type="double">0</rpm>
-			<on-fire type="bool">0</on-fire>
-			<running type="bool">0</running>
-			<serviceable type="bool">true</serviceable>
-		</apu>
 		<engine n="0">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
@@ -892,6 +891,13 @@
 			<reverser-pos-norm type="double">0</reverser-pos-norm>
 			<running type="bool">0</running>
 			<state type="int">0</state>
+		</engine>
+		<engine n="2">
+			<egt-actual type="double">0</egt-actual>
+			<n1 type="double">0</n1>
+			<n-actual type="double">0</n-actual>
+			<running type="bool">0</running>
+			<servicable type="bool">1</servicable>
 		</engine>
 	</engines>
 
@@ -939,9 +945,19 @@
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
 		</atc>
-		<apu n="0">
-			<n2 type="double">0</n2>
-			<emer-shutdown type="bool">false</emer-shutdown>
+		<apu>
+			<oil>
+				<level-l type="double">5.4</level-l>
+				<allow-oil-consumption type="bool">1</allow-oil-consumption>
+				<oil-pressure-psi type="double">0</oil-pressure-psi>
+				<oil-temperature-degC type="double">0</oil-temperature-degC>
+			</oil>
+			<bleed-load-kw type="double">252</bleed-load-kw>
+			<electrical-load-kw type="double">132</electrical-load-kw>
+			<available type="bool">0</available>
+			<fault type="bool">0</fault>
+			<dc-bat-three-minutes type="bool">0</dc-bat-three-minutes>
+			<start type="bool">0</start>
 		</apu>
 		<electrical n="0">
 			<bus>
@@ -1081,6 +1097,9 @@
 				<right-valve type="bool">0</right-valve>
 				<refuelling type="bool">0</refuelling>
 			</refuel>
+			<valves>
+				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
+			</valves>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 		</fuel>
@@ -1107,6 +1126,9 @@
 		</static>
 		
 		<navigation>
+			<aligned-1 type="bool">0</aligned-1>
+			<aligned-2 type="bool">0</aligned-2>
+			<aligned-3 type="bool">0</aligned-3>
 			<adr>
 				<operating-1 type="bool">0</operating-1>
 				<operating-2 type="bool">0</operating-2>
@@ -1431,7 +1453,9 @@
 				<desc>Autothrottle Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>fcu.FCUController.ATDisc();</script>
+					<script>
+						fcu.FCUController.ATDisc();
+					</script>
 				</binding>
 			</key>
 			<key n="6">
@@ -2181,7 +2205,9 @@
 				        <not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>fcu.FCUController.APDisc();</script>
+					<script>
+						fcu.FCUController.APDisc();
+					</script>
 				</binding>
 			</key>
 			<key n="69">
@@ -3878,6 +3904,7 @@
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
 		<systems>
+			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
@@ -3893,6 +3920,7 @@
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
+			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
 		</systems>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>

@@ -1,13 +1,13 @@
 # A320 Property Tree Setup
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 # Modified by Jonathan Redpath for A320
 # Nodes organized like property tree, except when lots of identical (example: Gear wow), where vectors are used to make it easier
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
 
 var APU = {
-	masterSw: props.globals.getNode("controls/APU/master"),
-	rpm: props.globals.getNode("systems/apu/rpm"),
+	masterSw: props.globals.getNode("controls/apu/master"),
+	rpm: props.globals.getNode("engines/engine[2]/n1"),
 };
 
 var Consumables = {

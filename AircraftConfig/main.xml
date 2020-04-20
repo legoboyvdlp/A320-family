@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -414,6 +414,26 @@
 				<binding>
 					<command>property-toggle</command>
 					<property>/controls/adirs/skip</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Allow APU Oil Consumption</label>
+				<halign>left</halign>
+				<property>/systems/apu/oil/allow-oil-consumption</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/systems/apu/oil/allow-oil-consumption</property>
 				</binding>
 				<binding>
 					<command>dialog-apply</command>

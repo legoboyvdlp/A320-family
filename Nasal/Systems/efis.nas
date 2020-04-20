@@ -1,6 +1,6 @@
 # A3XX EFIS controller by Joshua Davidson (Octal450).
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 setlistener("sim/signals/fdm-initialized", func {
 	setprop("instrumentation/efis[0]/nd/display-mode", "NAV");

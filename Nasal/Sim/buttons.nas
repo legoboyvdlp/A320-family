@@ -1,7 +1,7 @@
 # A3XX Buttons
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 # Resets buttons to the default values
 var variousReset = func {
@@ -164,8 +164,9 @@ var CVR_test = func {
 	}
 }
 
-setlistener("/controls/APU/master", func() {
-	if (!getprop("controls/APU/master") and systems.apuEmerShutdown.getBoolValue()) {
-		systems.apuEmerShutdown.setBoolValue(0);
+setlistener("/controls/apu/master", func() { # poor mans set-reset latch 
+	if (!getprop("controls/apu/master") and (systems.APUController.APU.signals.emer or systems.APUController.APU.signals.autoshutdown)) {
+		systems.APUController.APU.signals.emer = 0;
+		systems.APUController.APU.signals.autoshutdown = 0;
 	}
 }, 0, 0);

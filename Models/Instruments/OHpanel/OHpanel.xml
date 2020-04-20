@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -23,16 +23,6 @@
 		<object-name>ADR2Btn2O</object-name>
 		<object-name>ADR3Btn1F</object-name>
 		<object-name>ADR3Btn2O</object-name>
-		<object-name>APUBleedBtn1F</object-name>
-		<object-name>APUBleedBtn2O</object-name>
-		<object-name>APUFireAgtBtn1S</object-name>
-		<object-name>APUFireAgtBtn2D</object-name>
-		<object-name>APUGenBtn1F</object-name>
-		<object-name>APUGenBtn2O</object-name>
-		<object-name>APUMasterBtn1F</object-name>
-		<object-name>APUMasterBtn2O</object-name>
-		<object-name>APUStartBtn1A</object-name>
-		<object-name>APUStartBtn2O</object-name>
 		<object-name>BatteryBtn11F</object-name>
 		<object-name>BatteryBtn21F</object-name>
 		<object-name>BusTieBtn2O</object-name>
@@ -43,10 +33,6 @@
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
-		<object-name>Gen1Btn1F</object-name>
-		<object-name>Gen1Btn2O</object-name>
-		<object-name>Gen2Btn1F</object-name>
-		<object-name>Gen2Btn2O</object-name>
 		<object-name>IR1Btn1F</object-name>
 		<object-name>IR1Btn2A</object-name>
 		<object-name>IR2Btn1F</object-name>
@@ -57,6 +43,26 @@
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>systems/electrical/bus/ac-ess</property>
+				<value>5</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>APUBleedBtn1F</object-name>
+		<object-name>APUBleedBtn2O</object-name>
+		<object-name>APUGenBtn1F</object-name>
+		<object-name>APUGenBtn2O</object-name>
+		<object-name>APUMasterBtn1F</object-name>
+		<object-name>APUMasterBtn2O</object-name>
+		<object-name>APUStartBtn1A</object-name>
+		<object-name>APUStartBtn2O</object-name>
+		<object-name>APUFireAgtBtn1S</object-name>
+		<object-name>APUFireAgtBtn2D</object-name>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -65,11 +71,21 @@
 		<object-name>Eng1FireAgt2Btn2D</object-name>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
 		<object-name>Eng2FireAgt2Btn2D</object-name>
+		<object-name>Gen1Btn1F</object-name>
+		<object-name>Gen1Btn2O</object-name>
+		<object-name>Gen2Btn1F</object-name>
+		<object-name>Gen2Btn2O</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/ac-ess</property>
-				<value>5</value>
-			</greater-than-equals>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-si-bus</property>
+					<value>5</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>5</value>
+				</greater-than-equals>
+			</or>
 		</condition>
 	</animation>
 
@@ -3251,7 +3267,7 @@
 					<greater-than-equals>
 						<property>systems/electrical/bus/dc-bat</property>
 						<value>25</value>
-					</greater-than-equals> <!-- control is on DC BAT bus - so if you enter EMER ELEC with it turned off, too bad -->
+					</greater-than-equals> <!-- control is on DC BAT bus 301PP via 11 PB - so if you enter EMER ELEC with it turned off, too bad -->
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/apu</property>
@@ -5577,7 +5593,7 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/APU/master</property>
+				<property>controls/apu/master</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5591,7 +5607,7 @@
 		<object-name>APUMasterBtn1F</object-name>
 		<condition>
 			<or>
-				<property>systems/apu/emer-shutdown</property>
+				<property>systems/apu/fault</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -5606,7 +5622,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/APU/master</property>
+					<property>controls/apu/master</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5634,16 +5650,12 @@
 							<property>systems/electrical/bus/dc-bat</property>
 							<value>25</value>
 						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
 					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("controls/APU/master") == 1 and getprop("controls/APU/start") != 1) {
-					setprop("controls/APU/start", 1);
+				if (getprop("controls/apu/master") == 1) {
+					systems.APUController.APU.startCommand();
 				}
 				</script>
 			</binding>
@@ -5659,10 +5671,10 @@
 		<object-name>APUStartBtn1A</object-name>
 		<condition>
 			<or>
-				<greater-than>
-					<property>systems/apu/rpm</property>
-					<value>94.9</value>
-				</greater-than>
+				<equals>
+					<property>systems/apu/available</property>
+					<value>1</value>
+				</equals>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -5676,16 +5688,10 @@
 		<object-name>APUStartBtn2O</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>controls/APU/start</property>
-						<value>1</value>
-					</equals>
-					<less-than-equals>
-						<property>systems/apu/rpm</property>
-						<value>94.9</value>
-					</less-than-equals>
-				</and>
+				<equals>
+					<property>systems/apu/start</property>
+					<value>1</value>
+				</equals>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -6708,16 +6714,10 @@
 				<property>controls/fire/apu-test-btn</property>
 				<value>1</value>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals>
 				</condition>
 			</binding>
 			<mod-up>
@@ -6740,13 +6740,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("controls/APU/fire-btn") == 1) {
-						setprop("controls/APU/fire-btn", 0);
-						setprop("controls/APU/fire-btn-cover", 0);
-					} else if (getprop("controls/APU/fire-btn-cover") == 1) {
-						setprop("controls/APU/fire-btn", 1);
+					if (getprop("controls/apu/fire-btn") == 1) {
+						setprop("controls/apu/fire-btn", 0);
+						setprop("controls/apu/fire-btn-cover", 0);
+					} else if (getprop("controls/apu/fire-btn-cover") == 1) {
+						setprop("controls/apu/fire-btn", 1);
 					} else {
-						setprop("controls/APU/fire-btn-cover", 1);
+						setprop("controls/apu/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6763,13 +6763,13 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (getprop("controls/APU/fire-btn") == 1) {
-						setprop("controls/APU/fire-btn", 0);
-						setprop("controls/APU/fire-btn-cover", 0);
-					} else if (getprop("controls/APU/fire-btn-cover") == 1) {
-						setprop("controls/APU/fire-btn-cover", 0);
+					if (getprop("controls/apu/fire-btn") == 1) {
+						setprop("controls/apu/fire-btn", 0);
+						setprop("controls/apu/fire-btn-cover", 0);
+					} else if (getprop("controls/apu/fire-btn-cover") == 1) {
+						setprop("controls/apu/fire-btn-cover", 0);
 					} else {
-						setprop("controls/APU/fire-btn-cover", 1);
+						setprop("controls/apu/fire-btn-cover", 1);
 					}
 				</script>
 			</binding>
@@ -6779,7 +6779,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>APUFireCover</object-name>
-		<property>controls/APU/fire-btn-cover</property>
+		<property>controls/apu/fire-btn-cover</property>
 		<factor>-110</factor>
 		<axis>
 			<x1-m>-0.00583</x1-m>
@@ -6794,7 +6794,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>APUFireBtn</object-name>
-		<property>controls/APU/fire-btn</property>
+		<property>controls/apu/fire-btn</property>
 		<factor>0.025</factor>
 		<axis>
 			<x>1</x>
@@ -6829,23 +6829,13 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>controls/APU/agent-btn</property>
+				<property>controls/apu/agent-btn</property>
 				<value>1</value>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-hot-2</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-bat</property>
+						<value>25</value>
+					</greater-than-equals>
 				</condition>
 			</binding>
 		</action>
@@ -6857,7 +6847,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/APU/fire-btn</property>
+					<property>controls/apu/fire-btn</property>
 					<value>1</value>
 				</equals>
 				<equals>

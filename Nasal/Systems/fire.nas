@@ -1,7 +1,7 @@
 # A3XX Fire System
 # Jonathan Redpath
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var elapsedTime = props.globals.getNode("sim/time/elapsed-sec");
 var apuTestBtn = props.globals.getNode("controls/fire/apu-test-btn", 1);
@@ -22,7 +22,6 @@ var eng2Inop = props.globals.initNode("/systems/fire/engine2/det-inop", 0, "BOOL
 var apuInop = props.globals.initNode("/systems/fire/apu/det-inop", 0, "BOOL");
 var aftCargoFireWarn = props.globals.initNode("/systems/fire/cargo/aft/warning-active", 0, "BOOL");
 var fwdCargoFireWarn = props.globals.initNode("/systems/fire/cargo/fwd/warning-active", 0, "BOOL");
-var apuEmerShutdown = props.globals.getNode("systems/apu/emer-shutdown", 1);
 var eng1AgentTimer = props.globals.initNode("/systems/fire/engine1/agent1-timer", 99, "INT");
 var eng2AgentTimer = props.globals.initNode("/systems/fire/engine2/agent1-timer", 99, "INT");
 var eng1Agent2Timer = props.globals.initNode("/systems/fire/engine1/agent2-timer", 99, "INT");
@@ -37,7 +36,7 @@ var wow = props.globals.getNode("fdm/jsbsim/position/wow", 1);
 var dcbatNode = props.globals.getNode("systems/electrical/bus/dc-bat", 1);
 var dcessNode = props.globals.getNode("systems/electrical/bus/dc-ess", 1);
 var apuBleedNode = props.globals.getNode("systems/apu/bleed-used", 1);
-var apuMaster = props.globals.getNode("controls/APU/master", 1);
+var apuMaster = props.globals.getNode("controls/apu/master", 1);
 
 var fire_init = func {
 	setprop("controls/OH/protectors/fwddisch", 0);
@@ -180,18 +179,11 @@ var engFireDetectorUnit = {
 		} elsif (system == 2) {
 			apuFireWarn.setBoolValue(1);
 			if (me.wow.getValue() == 1) {
-				if (apuMaster.getBoolValue()) {
-					apuBleedNode.setValue(0);
-					systems.apu_stop();
-					apuEmerShutdown.setBoolValue(1);
-					settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
-						extinguisherBottles.vector[4].discharge();
-					}, 3);
-				} else {
-					settimer(func() {
-						extinguisherBottles.vector[4].discharge();
-					}, 3);
-				}
+				apuBleedNode.setValue(0);
+				systems.APUController.APU.emergencyStop();
+				settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
+					extinguisherBottles.vector[4].discharge();
+				}, 3);
 			}
 		}
 	},
@@ -645,9 +637,11 @@ eng2Agent2TimerMakeTimerFunc = func() {
 	}
 }
 
-setlistener("/controls/APU/fire-btn", func() { 
-	if (getprop("controls/APU/fire-btn") == 1) { 
+setlistener("/controls/apu/fire-btn", func() { 
+	if (getprop("controls/apu/fire-btn") == 1) { 
 		ecam.shutUpYou(); 
+		apuBleedNode.setValue(0);
+		systems.APUController.APU.emergencyStop();
 		apuAgentTimerMakeTimer.stop();
 		apuAgentTimer.setValue(10);
 		apuAgentTimerTime.setValue(elapsedTime.getValue() + 11);
@@ -790,7 +784,7 @@ createFireBottleListener("/controls/engines/engine[0]/agent1-btn", "/controls/en
 createFireBottleListener("/controls/engines/engine[0]/agent2-btn", "/controls/engines/engine[0]/fire-btn", 1);
 createFireBottleListener("/controls/engines/engine[1]/agent1-btn", "/controls/engines/engine[1]/fire-btn", 2);
 createFireBottleListener("/controls/engines/engine[1]/agent2-btn", "/controls/engines/engine[1]/fire-btn", 3);
-createFireBottleListener("/controls/APU/agent-btn", "/controls/APU/fire-btn", 4);
+createFireBottleListener("/controls/apu/agent-btn", "/controls/apu/fire-btn", 4);
 createCargoFireBottleListener("/controls/fire/cargo/aftdisch", 0);
 createCargoFireBottleListener("/controls/fire/cargo/fwddisch", 1);
 

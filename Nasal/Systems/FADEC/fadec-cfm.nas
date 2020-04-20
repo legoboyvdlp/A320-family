@@ -1,6 +1,6 @@
 # A3XX CFM FADEC by Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 setprop("systems/fadec/n1mode1", 0); # Doesn't do anything, just here for other logic #
 setprop("systems/fadec/n1mode2", 0); # Doesn't do anything, just here for other logic #

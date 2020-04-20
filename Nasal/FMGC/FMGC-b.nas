@@ -1,10 +1,10 @@
 # A3XX FMGC Autopilot
 # Based off IT-AUTOFLIGHT System Controller V4.0.X
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 # Initialize all used variables and property nodes
 # Sim
-var Velocity = {
+var Velocities = {
 	airspeedKt: props.globals.getNode("velocities/airspeed-kt", 1), # Only used for gain scheduling
 	groundspeedKt: props.globals.getNode("velocities/groundspeed-kt", 1),
 	groundspeedMps: 0,
@@ -88,6 +88,7 @@ var Input = {
 	fd2: props.globals.initNode("/it-autoflight/input/fd2", 1, "BOOL"),
 	fpa: props.globals.initNode("/it-autoflight/input/fpa", 0, "DOUBLE"),
 	hdg: props.globals.initNode("/it-autoflight/input/hdg", 0, "INT"),
+	hdgCalc: 0,
 	ias: props.globals.initNode("/it-autoflight/input/spd-kts", 250, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
@@ -110,6 +111,7 @@ var Internal = {
 	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 30, "INT"),
 	bankLimitAuto: 30,
 	captVS: 0,
+	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
 	hdg: props.globals.initNode("/it-autoflight/internal/heading-deg", 0, "DOUBLE"),
@@ -149,7 +151,7 @@ var Text = {
 	lat: props.globals.initNode("/it-autoflight/mode/lat", "T/O", "STRING"),
 	thr: props.globals.initNode("/it-autoflight/mode/thr", "PITCH", "STRING"),
 	vert: props.globals.initNode("/it-autoflight/mode/vert", "T/O CLB", "STRING"),
-	vertTemp: 0,
+	vertTemp: "T/O CLB",
 };
 
 var Setting = {
@@ -371,14 +373,14 @@ var ITAF = {
 	},
 	slowLoop: func() {
 		Input.bankLimitSWTemp = Input.bankLimitSW.getValue();
-		Velocity.trueAirspeedKtTemp = Velocity.trueAirspeedKt.getValue();
+		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWPTemp = FPLN.currentWP.getValue();
 		
 		# Bank Limit
-		if (Velocity.trueAirspeedKtTemp >= 420) {
+		if (Velocities.trueAirspeedKtTemp >= 420) {
 			Internal.bankLimitAuto = 15;
-		} else if (Velocity.trueAirspeedKtTemp >= 340) {
+		} else if (Velocities.trueAirspeedKtTemp >= 340) {
 			Internal.bankLimitAuto = 20;
 		} else {
 			Internal.bankLimitAuto = 25;
@@ -396,7 +398,7 @@ var ITAF = {
 		# Waypoint Advance Logic
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
 			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
-				Velocity.groundspeedMps = Velocity.groundspeedKt.getValue() * 0.5144444444444;
+				Velocities.groundspeedMps = Velocities.groundspeedKt.getValue() * 0.5144444444444;
 				FPLN.wpFlyFrom = FPLN.currentWPTemp;
 				if (FPLN.wpFlyFrom < 0) {
 					FPLN.wpFlyFrom = 0;
@@ -414,7 +416,7 @@ var ITAF = {
 				if (FPLN.maxBank > FPLN.maxBankLimit) {
 					FPLN.maxBank = FPLN.maxBankLimit;
 				}
-				FPLN.radius = (Velocity.groundspeedMps * Velocity.groundspeedMps) / (9.81 * math.tan(FPLN.maxBank / 57.2957795131));
+				FPLN.radius = (Velocities.groundspeedMps * Velocities.groundspeedMps) / (9.81 * math.tan(FPLN.maxBank / 57.2957795131));
 				FPLN.deltaAngleRad = (180 - FPLN.deltaAngle) / 114.5915590262;
 				FPLN.R = FPLN.radius / math.sin(FPLN.deltaAngleRad);
 				FPLN.distCoeff = FPLN.deltaAngle * -0.011111 + 2;
@@ -740,7 +742,7 @@ var ITAF = {
 	checkLNAV: func(t) {
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.active.getBoolValue() and Position.gearAglFt.getValue() >= 30) {
 			me.activateLNAV();
-		} else if (Output.lat.getValue() != 1 and t != 1) {
+		} else if (FPLN.active.getBoolValue() and Output.lat.getValue() != 1 and t != 1) {
 			Output.lnavArm.setBoolValue(1);
 			me.armTextCheck();
 		}
@@ -813,7 +815,7 @@ var ITAF = {
 	},
 	takeoffGoAround: func() {
 		Output.vertTemp = Output.vert.getValue();
-		if ((Output.vertTemp == 2 or Output.vertTemp == 6) and Velocity.indicatedAirspeedKt.getValue() >= 80) {
+		if ((Output.vertTemp == 2 or Output.vertTemp == 6) and Velocities.indicatedAirspeedKt.getValue() >= 80) {
 			if (Gear.wow1.getBoolValue() or Gear.wow2.getBoolValue()) {
 				me.ap1Master(0);
 				me.ap2Master(0);
@@ -825,7 +827,9 @@ var ITAF = {
 			me.syncIAS();
 		} else if (Gear.wow1Temp or Gear.wow2Temp) {
 			me.athrMaster(1);
-			me.setLatMode(5);
+			if (Output.lat.getValue() != 5) { # Don't accidently disarm LNAV
+				me.setLatMode(5);
+			}
 			me.setVertMode(7);
 			Text.vert.setValue("T/O CLB");
 		}
@@ -842,10 +846,10 @@ var ITAF = {
 		}
 	},
 	syncIAS: func() {
-		Input.ias.setValue(math.clamp(math.round(Velocity.indicatedAirspeedKt.getValue()), 100, 350));
+		Input.ias.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
 	},
 	syncMach: func() {
-		Input.mach.setValue(math.clamp(math.round(Velocity.indicatedMach.getValue(), 0.001), 0.5, 0.82));
+		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));
 	},
 	syncHDG: func() {
 		Input.hdg.setValue(math.round(Internal.hdgPredicted.getValue())); # Switches to track automatically
@@ -909,9 +913,13 @@ var ITAF = {
 		Input.trk.setBoolValue(1);
 		Custom.ndTrkSel[0].setBoolValue(1);
 		Custom.ndTrkSel[1].setBoolValue(1);
-		if (abs(Internal.hdgErrorDeg.getValue()) <= 10 and Output.lat.getValue() == 0) {
-			me.setLatMode(3);
+		Input.hdgCalc = Input.hdg.getValue() + math.round(Internal.driftAngle.getValue());
+		if (Input.hdgCalc > 360) { # It's rounded, so this is ok. Otherwise do >= 360.5
+			Input.hdgCalc = Input.hdgCalc - 360;
+		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
+			Input.hdgCalc = Input.hdgCalc + 360;
 		}
+		Input.hdg.setValue(Input.hdgCalc);
 	},
 	trkFpaOff: func() {
 		Custom.trkFpa.setBoolValue(0);
@@ -921,9 +929,13 @@ var ITAF = {
 		Input.trk.setBoolValue(0);
 		Custom.ndTrkSel[0].setBoolValue(0);
 		Custom.ndTrkSel[1].setBoolValue(0);
-		if (abs(Internal.hdgErrorDeg.getValue()) <= 10 and Output.lat.getValue() == 0) {
-			me.setLatMode(3);
+		Input.hdgCalc = Input.hdg.getValue() - math.round(Internal.driftAngle.getValue());
+		if (Input.hdgCalc > 360) { # It's rounded, so this is ok. Otherwise do >= 360.5
+			Input.hdgCalc = Input.hdgCalc - 360;
+		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
+			Input.hdgCalc = Input.hdgCalc + 360;
 		}
+		Input.hdg.setValue(Input.hdgCalc);
 	},
 };
 

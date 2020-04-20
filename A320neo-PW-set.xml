@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList include="A320-main.xml">
 
@@ -183,10 +183,10 @@
 	</sim>
         
 	<limits>
-		<mass-and-balance> <!--Data source: https://en.wikipedia.org/wiki/Airbus_A320_family#Specifications-->
-			<maximum-takeoff-mass-lbs>172000</maximum-takeoff-mass-lbs>
-			<maximum-landing-mass-lbs>146000</maximum-landing-mass-lbs>
-			<maximum-zero-fuel-mass-lbs>138000</maximum-zero-fuel-mass-lbs>
+		<mass-and-balance> <!--Data source: TCDS WV 55 -->
+			<maximum-takeoff-mass-lbs>174200</maximum-takeoff-mass-lbs>
+			<maximum-landing-mass-lbs>148600</maximum-landing-mass-lbs>
+			<maximum-zero-fuel-mass-lbs>141800</maximum-zero-fuel-mass-lbs>
 		</mass-and-balance>
 	</limits>
 	

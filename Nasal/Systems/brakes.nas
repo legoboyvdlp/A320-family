@@ -1,7 +1,7 @@
 # A3XX Autobrake
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var thr1 = 0;
 var thr2 = 0;
