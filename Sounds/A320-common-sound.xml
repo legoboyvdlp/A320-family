@@ -1477,13 +1477,29 @@
 			<condition>
 				<and>
 					<property>/sim/current-view/internal</property>
-					<equals>
-						<property>/systems/comm/hf/tone1000hz</property>
-						<value>1</value>
-					</equals>
+					<property>/systems/comm/hf/tone1000hz-1</property>
+					<property>/controls/audio/acp[0]/hf1-recive</property>
 				</and>
 			</condition>
 			<volume>
+				<property>controls/audio/acp[0]/hf1-volume</property>
+				<factor>0.4</factor>
+			</volume>
+		</hftone>
+		
+		<hftone>
+			<name>HF PTT tone 2</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/1000hz.wav</path>
+			<condition>
+				<and>
+					<property>/sim/current-view/internal</property>
+					<property>/systems/comm/hf/tone1000hz-2</property>
+					<property>/controls/audio/acp[0]/hf2-recive</property>
+				</and>
+			</condition>
+			<volume>
+				<property>controls/audio/acp[0]/hf2-volume</property>
 				<factor>0.4</factor>
 			</volume>
 		</hftone>
@@ -1495,13 +1511,31 @@
 			<condition>
 				<and>
 					<property>/sim/current-view/internal</property>
-					<equals>
-						<property>/systems/comm/hf/reception</property>
-						<value>1</value>
-					</equals>
+					<property>/systems/comm/hf/reception-1</property>
+					<property>/controls/audio/acp[0]/hf1-recive</property>
+					<not><property>/systems/comm/hf/tone1000hz-1</property></not>
 				</and>
 			</condition>
 			<volume>
+				<property>controls/audio/acp[0]/hf1-volume</property>
+				<factor>0.4</factor>
+			</volume>
+		</hfstatic>
+		
+		<hfstatic>
+			<name>HF static 2</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/hf-radio-static.wav</path>
+			<condition>
+				<and>
+					<property>/sim/current-view/internal</property>
+					<property>/systems/comm/hf/reception-2</property>
+					<property>/controls/audio/acp[0]/hf2-recive</property>
+					<not><property>/systems/comm/hf/tone1000hz-2</property></not>
+				</and>
+			</condition>
+			<volume>
+				<property>controls/audio/acp[0]/hf2-volume</property>
 				<factor>0.4</factor>
 			</volume>
 		</hfstatic>

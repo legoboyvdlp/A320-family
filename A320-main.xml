@@ -961,7 +961,10 @@
 		</apu>
 		<comm>
 			<hf>
-				<tone1000hz type="bool">0</tone1000hz>
+				<reception-1 type="bool">1</reception-1>
+				<reception-2 type="bool">1</reception-2>
+				<tone1000hz-1 type="bool">0</tone1000hz-1>
+				<tone1000hz-2 type="bool">0</tone1000hz-2>
 			</hf>
 		</comm>
 		<electrical n="0">
@@ -1541,7 +1544,11 @@
                     <command>nasal</command>
                     <script>
 						space(1, modifiers.getValue());
-						systems.HFS[0].pttToggle();
+						if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+							systems.HFS[0].pttToggle();
+						} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+							systems.HFS[1].pttToggle();
+						}
 					</script>
                 </binding>
                 <mod-up>
@@ -1553,7 +1560,11 @@
                         <command>nasal</command>
                         <script>
 							space(0, modifiers.getValue());
-							systems.HFS[0].pttToggle();
+							if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+								systems.HFS[0].pttToggle();
+							} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+								systems.HFS[1].pttToggle();
+							}
 						</script>
                     </binding>
                 </mod-up>

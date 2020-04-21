@@ -5,6 +5,22 @@
 # Copyright (c) merspieler #
 ############################
 
+var genFourRand = func() {
+	var sequence = int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10);
+	while (sequence < 2000 or sequence > 10000) {
+		sequence = int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10);
+	}
+	return sequence;
+}
+
+var genFiveRand = func() {
+	var sequence = int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10);
+	while (sequence < 10000 or sequence > 29999) {
+		sequence = int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10);
+	}
+	return sequence;
+}
+
 # GLOBAL TODO add stuff for HF1, HF2, VOR, LS and ADF
 
 var chan_rmp1_v = "vhr1";
@@ -15,29 +31,37 @@ var act_vhf1 = props.globals.getNode("instrumentation/comm[0]/frequencies/select
 var act_vhf2 = props.globals.getNode("instrumentation/comm[1]/frequencies/selected-mhz");
 var act_vhf3 = props.globals.getNode("instrumentation/comm[2]/frequencies/selected-mhz");
 
+if (rand() > 0.5) {
+	var hf1 = genFourRand();
+	var hf2 = genFiveRand();
+} else {
+	var hf1 = genFiveRand();
+	var hf2 = genFourRand();
+}
+
 var act_display_rmp1 = props.globals.initNode("/controls/radio/rmp[0]/active-display", "118.700", "STRING");
 var stby_display_rmp1 = props.globals.initNode("/controls/radio/rmp[0]/standby-display", "121.400", "STRING");
 var stby_rmp1_vhf1 = props.globals.initNode("/systems/radio/rmp[0]/vhf1-standby", 121.4, "DOUBLE");
 var stby_rmp1_vhf2 = props.globals.initNode("/systems/radio/rmp[0]/vhf2-standby", 122.6, "DOUBLE");
 var stby_rmp1_vhf3 = props.globals.initNode("/systems/radio/rmp[0]/vhf3-standby", 123.2, "DOUBLE");
-var stby_rmp1_hf1 = props.globals.initNode("/systems/radio/rmp[0]/hf1-standby", 12501, "DOUBLE");
-var stby_rmp1_hf2 = props.globals.initNode("/systems/radio/rmp[0]/hf2-standby", 2809, "DOUBLE");
+var stby_rmp1_hf1 = props.globals.initNode("/systems/radio/rmp[0]/hf1-standby", hf1, "DOUBLE");
+var stby_rmp1_hf2 = props.globals.initNode("/systems/radio/rmp[0]/hf2-standby", hf2, "DOUBLE");
 
 var act_display_rmp2 = props.globals.initNode("/controls/radio/rmp[1]/active-display", "119.400", "STRING");
 var stby_display_rmp2 = props.globals.initNode("/controls/radio/rmp[1]/standby-display", "122.600", "STRING");
 var stby_rmp2_vhf1 = props.globals.initNode("/systems/radio/rmp[1]/vhf1-standby", 121.4, "DOUBLE");
 var stby_rmp2_vhf2 = props.globals.initNode("/systems/radio/rmp[1]/vhf2-standby", 122.6, "DOUBLE");
 var stby_rmp2_vhf3 = props.globals.initNode("/systems/radio/rmp[1]/vhf3-standby", 123.2, "DOUBLE");
-var stby_rmp2_hf1 = props.globals.initNode("/systems/radio/rmp[1]/hf1-standby", 22801, "DOUBLE");
-var stby_rmp2_hf2 = props.globals.initNode("/systems/radio/rmp[1]/hf2-standby", 6079, "DOUBLE");
+var stby_rmp2_hf1 = props.globals.initNode("/systems/radio/rmp[1]/hf1-standby", hf1, "DOUBLE");
+var stby_rmp2_hf2 = props.globals.initNode("/systems/radio/rmp[1]/hf2-standby", hf2, "DOUBLE");
 
 var act_display_rmp3 = props.globals.initNode("/controls/radio/rmp[2]/active-display", "data", "STRING");
 var stby_display_rmp3 = props.globals.initNode("/controls/radio/rmp[2]/standby-display", "123.200", "STRING");
 var stby_rmp3_vhf1 = props.globals.initNode("/systems/radio/rmp[2]/vhf1-standby", 121.4, "DOUBLE");
 var stby_rmp3_vhf2 = props.globals.initNode("/systems/radio/rmp[2]/vhf2-standby", 122.6, "DOUBLE");
 var stby_rmp3_vhf3 = props.globals.initNode("/systems/radio/rmp[2]/vhf3-standby", 123.2, "DOUBLE");
-var stby_rmp3_hf1 = props.globals.initNode("/systems/radio/rmp[2]/hf1-standby", 8650, "DOUBLE");
-var stby_rmp3_hf2 = props.globals.initNode("/systems/radio/rmp[2]/hf2-standby", 18506, "DOUBLE");
+var stby_rmp3_hf1 = props.globals.initNode("/systems/radio/rmp[2]/hf1-standby", hf1, "DOUBLE");
+var stby_rmp3_hf2 = props.globals.initNode("/systems/radio/rmp[2]/hf2-standby", hf2, "DOUBLE");
 
 var chan_rmp1 = props.globals.initNode("/systems/radio/rmp[0]/sel_chan", "vhf1", "STRING");
 var chan_rmp2 = props.globals.initNode("/systems/radio/rmp[1]/sel_chan", "vhf2", "STRING");
