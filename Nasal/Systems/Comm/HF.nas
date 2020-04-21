@@ -8,16 +8,16 @@ var reception = props.globals.getNode("/systems/comm/hf/reception");
 var _toneTime = nil;
 
 var highFrequencyRadio = {
-	selectedChannelKhz: -9999,
+	selectedChannelKhz: int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10) ~ int(rand() * 10),
 	transmit: 0,
 	tuned: 0,
 	overrideDataLink: 0,
 	datalinkConnected: 0,
 	_transmitTime: nil,
-	new: func(powerNode) {
+	new: func(powerNode, num) {
         var a = { parents:[highFrequencyRadio] };
 		a.powerNode = powerNode;
-		me.selectChannel(2800);
+		a.num = num;
         return a;
     },
 	selectChannel: func(selectedKhz) {
@@ -25,6 +25,7 @@ var highFrequencyRadio = {
 		if (selectedKhz - int(selectedKhz) != 0) { return; }
 		me.selectedChannelKhz = selectedKhz;
 		me.tuned = 0;
+		rmp.update_active_vhf(me.num + 4);
 	},
 	pttToggle: func() {
 		if (me.powerNode.getValue() < 110) {
@@ -42,6 +43,7 @@ var highFrequencyRadio = {
 		
 		if (me.transmit) {
 			_transmitTime = pts.Sim.Time.elapsedSec.getValue();
+			transmitTimer.start();
 			if (me.selectedChannelKhz < 2800 or me.selectedChannelKhz > 23999) {
 				me.generate1000Hz();
 				return;
@@ -51,6 +53,7 @@ var highFrequencyRadio = {
 				me.tuned = 1;
 			}
 		} else {
+			transmitTimer.stop();
 			ecam.transmitFlag = 0;
 			if (_toneTime == nil) {
 				toneControl.setValue(0);
@@ -59,7 +62,7 @@ var highFrequencyRadio = {
 		}
 	},
 	monitorPTT: func() {
-		if (transmit) {
+		if (me.transmit) {
 			if (pts.Sim.Time.elapsedSec.getValue() > _transmitTime + 60) {
 				ecam.transmitFlag = 1;
 			}
@@ -88,7 +91,7 @@ var highFrequencyRadio = {
 	},
 };
 
-var HFS = [highFrequencyRadio.new(systems.ELEC.Bus.acEssShed), highFrequencyRadio.new(systems.ELEC.Bus.ac2)];
+var HFS = [highFrequencyRadio.new(systems.ELEC.Bus.acEssShed, 0), highFrequencyRadio.new(systems.ELEC.Bus.ac2, 1)];
 
 
 var toneTimer = maketimer(1, func() {
@@ -97,4 +100,8 @@ var toneTimer = maketimer(1, func() {
 		_toneTime = nil;
 		toneTimer.stop();
 	}	
+});
+
+var transmitTimer = maketimer(1, func() {
+	HFS[0].monitorPTT();
 });
