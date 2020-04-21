@@ -25,6 +25,8 @@ var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "B
 var engOpt     = props.globals.getNode("options/eng", 1);
 
 # local variables
+var transmitFlag1 = 0;
+var transmitFlag2 = 0;
 var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
@@ -1290,6 +1292,18 @@ var messages_priority_2 = func {
 		crgFwdFireDetFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(crgFwdFireDetFault);
+	}
+	
+	if (hf1Emitting.clearFlag == 0 and transmitFlag1) {
+		hf1Emitting.active = 1;
+	} else {
+		ECAM_controller.warningReset(hf1Emitting);
+	}
+	
+	if (hf2Emitting.clearFlag == 0 and transmitFlag2) {
+		hf2Emitting.active = 1;
+	} else {
+		ECAM_controller.warningReset(hf2Emitting);
 	}
 }
 

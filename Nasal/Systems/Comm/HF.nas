@@ -63,7 +63,12 @@ var highFrequencyRadio = {
 				transmitTimer2.stop();
 			}
 			
-			ecam.transmitFlag = 0;
+			if (me.num == 0) {
+				ecam.transmitFlag1 = 0;
+			} else {
+				ecam.transmitFlag2 = 0;
+			}
+			
 			if (me._toneTime == nil) {
 				me.toneControl.setValue(0);
 			}
@@ -73,7 +78,11 @@ var highFrequencyRadio = {
 	monitorPTT: func() {
 		if (me.transmit) {
 			if (pts.Sim.Time.elapsedSec.getValue() > me._transmitTime + 60) {
-				ecam.transmitFlag = 1;
+				if (me.num == 0) {
+					ecam.transmitFlag1 = 1;
+				} else {
+					ecam.transmitFlag2 = 1;
+				}
 			}
 		}
 	},
@@ -119,7 +128,7 @@ var toneTimer2 = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > HFS[1]._toneTime) {
 		HFS[1].toneControl.setValue(0);
 		HFS[1]._toneTime = nil;
-		toneTimer1.stop();
+		toneTimer2.stop();
 	}	
 });
 
