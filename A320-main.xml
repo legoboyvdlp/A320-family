@@ -959,6 +959,11 @@
 			<dc-bat-three-minutes type="bool">0</dc-bat-three-minutes>
 			<start type="bool">0</start>
 		</apu>
+		<comm>
+			<hf>
+				<tone1000hz type="bool">0</tone1000hz>
+			</hf>
+		</comm>
 		<electrical n="0">
 			<bus>
 				<dc-1 type="double">0</dc-1>
@@ -1529,7 +1534,10 @@
 				        <not><property>/FMGC/keyboard-right</property></not>
 					</condition>
                     <command>nasal</command>
-                    <script>space(1, modifiers.getValue())</script>
+                    <script>
+						space(1, modifiers.getValue());
+						systems.HFS[0].pttToggle();
+					</script>
                 </binding>
                 <mod-up>
                     <binding>
@@ -1538,7 +1546,10 @@
 					        <not><property>/FMGC/keyboard-right</property></not>
 					    </condition>
                         <command>nasal</command>
-                        <script>space(0, modifiers.getValue())</script>
+                        <script>
+							space(0, modifiers.getValue());
+							systems.HFS[0].pttToggle();
+						</script>
                     </binding>
                 </mod-up>
                 <mod-shift>
@@ -3917,6 +3928,7 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADIRS.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
