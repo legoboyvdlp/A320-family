@@ -1492,15 +1492,17 @@
 				</binding>
             </key>
 			<key n="11">
-				<name>Toggle keyboard mode</name>
-				<desc>Ctrl + k</desc>
+				<name>Disable MCDU keyboard mode</name>
+				<desc>Ctrl+k</desc>
 				<binding>
-					<command>property-toggle</command>
-					<property>FMGC/keyboard-left</property>
+					<command>property-assign</command>
+					<property>/FMGC/keyboard-left</property>
+					<value>0</value>
 				</binding>
 				<binding>
-					<command>property-toggle</command>
-					<property>FMGC/keyboard-right</property>
+					<command>property-assign</command>
+					<property>/FMGC/keyboard-right</property>
+					<value>0</value>
 				</binding>
 			</key>
 			<key n="24">

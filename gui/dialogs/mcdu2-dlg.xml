@@ -25,6 +25,11 @@
 			<live>true</live>
 			<property>/FMGC/keyboard-right</property>
 			<binding>
+				<command>property-assign</command>
+				<property>/FMGC/keyboard-left</property>
+				<value>0</value>
+			</binding>
+			<binding>
 				<command>property-toggle</command>
 				<property>/FMGC/keyboard-right</property>
 			</binding>

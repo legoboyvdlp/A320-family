@@ -125,7 +125,7 @@
 			</text>
 			<text>
 				<halign>left</halign>
-				<label>CTRL + K - Toggle MCDU keyboard input</label>
+				<label>CTRL + K - Disable MCDU keyboard input</label>
 			</text>
 			
 		</group>

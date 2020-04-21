@@ -18,6 +18,24 @@
 			</binding>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>KBMode.Toggle</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/FMGC/keyboard-left</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/FMGC/keyboard-right</property>
+			</binding>
+		</action>
+	</animation>
 
 	<animation>
  		<type>material</type>
