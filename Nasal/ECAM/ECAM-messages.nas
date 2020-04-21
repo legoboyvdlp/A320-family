@@ -252,6 +252,11 @@ var warnings				  = std.Vector.new([
 	var apuLoopBFault         = warning.new(msg: "APU FIRE LOOP B FAULT",     colour: "a", isMainMsg: 1),
 	var crgFwdFireDetFault    = warning.new(msg: "FWD CRG DET FAULT",         colour: "a", isMainMsg: 1), 
 	var crgAftFireDetFault    = warning.new(msg: "AFT CRG DET FAULT",         colour: "a", isMainMsg: 1), 
+	
+	# Radios
+	var hf1Emitting           = warning.new(msg: "COM HF 1 EMITTING",         colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hf2Emitting           = warning.new(msg: "COM HF 2 EMITTING",         colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	
 	# Recall
 	var recallNormal          = warning.new(msg: "                    ", colour: "g", isMainMsg: 1),
 	var recallNormal1         = warning.new(msg: "                    ", colour: "g", isMainMsg: 1),

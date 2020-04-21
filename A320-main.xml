@@ -959,6 +959,14 @@
 			<dc-bat-three-minutes type="bool">0</dc-bat-three-minutes>
 			<start type="bool">0</start>
 		</apu>
+		<comm>
+			<hf>
+				<reception-1 type="bool">1</reception-1>
+				<reception-2 type="bool">1</reception-2>
+				<tone1000hz-1 type="bool">0</tone1000hz-1>
+				<tone1000hz-2 type="bool">0</tone1000hz-2>
+			</hf>
+		</comm>
 		<electrical n="0">
 			<bus>
 				<dc-1 type="double">0</dc-1>
@@ -1536,7 +1544,14 @@
 				        <not><property>/FMGC/keyboard-right</property></not>
 					</condition>
                     <command>nasal</command>
-                    <script>space(1, modifiers.getValue())</script>
+                    <script>
+						space(1, modifiers.getValue());
+						if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+							systems.HFS[0].pttToggle();
+						} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+							systems.HFS[1].pttToggle();
+						}
+					</script>
                 </binding>
                 <mod-up>
                     <binding>
@@ -1545,7 +1560,14 @@
 					        <not><property>/FMGC/keyboard-right</property></not>
 					    </condition>
                         <command>nasal</command>
-                        <script>space(0, modifiers.getValue())</script>
+                        <script>
+							space(0, modifiers.getValue());
+							if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+								systems.HFS[0].pttToggle();
+							} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+								systems.HFS[1].pttToggle();
+							}
+						</script>
                     </binding>
                 </mod-up>
                 <mod-shift>
@@ -3924,6 +3946,7 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADIRS.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>

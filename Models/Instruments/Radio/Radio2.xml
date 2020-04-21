@@ -484,8 +484,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf1-standby</property>
 				<step>1</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 			</binding>
 
@@ -509,8 +509,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf2-standby</property>
 				<step>1</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 			</binding>
 
@@ -750,8 +750,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf1-standby</property>
 				<step>-1</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 			</binding>
 
@@ -775,8 +775,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf2-standby</property>
 				<step>-1</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 			</binding>
 
@@ -894,8 +894,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf1-standby</property>
 				<step>100</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 				<mask>integer</mask>
 			</binding>
@@ -920,8 +920,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf2-standby</property>
 				<step>100</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 				<mask>integer</mask>
 			</binding>
@@ -1036,8 +1036,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf1-standby</property>
 				<step>-100</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 				<mask>integer</mask>
 			</binding>
@@ -1062,8 +1062,8 @@
 				<command>property-adjust</command>
 				<property>systems/radio/rmp[1]/hf2-standby</property>
 				<step>-100</step>
-				<min>200</min>
-				<max>1800</max>
+				<min>2000</min>
+				<max>29999</max>
 				<wrap>true</wrap>
 				<mask>integer</mask>
 			</binding>
