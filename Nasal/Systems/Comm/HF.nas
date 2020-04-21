@@ -115,6 +115,46 @@ var highFrequencyRadio = {
 
 var HFS = [highFrequencyRadio.new(systems.ELEC.Bus.acEssShed, 0), highFrequencyRadio.new(systems.ELEC.Bus.ac2, 1)];
 
+# Can't use setlistener on the voltage as it always gets written to by JSB (and changes according to engine rpm)
+
+var update_items_HF_radio = [
+	props.UpdateManager.FromProperty("/systems/electrical/bus/ac-ess-shed", 0.1, func(notification)
+		{
+			if (systems.ELEC.Bus.acEssShed.getValue() < 110) {
+				HFS[0].transmit = 0;
+				HFS[0].receptionProp.setValue(0);
+				toneTimer1.stop();
+				transmitTimer1.stop();
+				HFS[0].toneControl.setValue(0);
+				HFS[0]._toneTime = nil;
+				ecam.transmitFlag1 = 0;
+			} else {
+				HFS[0].receptionProp.setValue(1);
+			}
+		}
+	),
+	props.UpdateManager.FromProperty("/systems/electrical/bus/ac-2", 0.1, func(notification)
+		{
+			if (systems.ELEC.Bus.ac2.getValue() < 110) {
+				HFS[1].transmit = 0;
+				HFS[1].receptionProp.setValue(0);
+				toneTimer2.stop();
+				transmitTimer2.stop();
+				HFS[1].toneControl.setValue(0);
+				HFS[1]._toneTime = nil;
+				ecam.transmitFlag2 = 0;
+			} else {
+				HFS[1].receptionProp.setValue(1);
+			}
+		}
+	),
+];
+
+var HFLoop = func() {
+	foreach (var update_item_HF; update_items_HF_radio) {
+		update_item_HF.update(nil);
+	}
+}
 
 var toneTimer1 = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > HFS[0]._toneTime) {
@@ -135,6 +175,7 @@ var toneTimer2 = maketimer(1, func() {
 var transmitTimer1 = maketimer(1, func() {
 	HFS[0].monitorPTT();
 });
+
 var transmitTimer2 = maketimer(1, func() {
 	HFS[1].monitorPTT();
 });
