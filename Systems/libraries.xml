@@ -1212,4 +1212,145 @@
 		<output>/instrumentation/ddrmi/flag-2</output>
 		<filter-time>0.64</filter-time>
 	</filter>
+	
+	<!-- Minimums stuff -->
+	<filter>
+		<name>Minimums Selector</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/baro</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+		</input>
+		<input>/position/gear-agl-ft</input>
+		<output>/instrumentation/pfd/minimums-ref-alt</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Selector</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/radio</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/FMGC/internal/radio</property>
+		</input>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/baro</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<expression> <!-- A bit ehhh, but avoids huge mess in A320-common-sound.xml -->
+				<product>
+					<floor>
+						<sum>
+							<div>
+								<sum> <!-- Calculate offseted radio value -->
+									<difference>
+										<property>/position/gear-agl-ft</property>
+										<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+									</difference>
+									<property>/FMGC/internal/baro</property>
+								</sum>
+								<value>25</value>
+							</div>
+							<value>0.5</value> <!-- Make floor round it -->
+						</sum>
+					</floor>
+					<value>25</value>
+				</product>
+			</expression>
+		</input>
+		<input>99999</input>
+		<output>/instrumentation/pfd/minimums-no-gpws-alt</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Selector</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/radio</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/FMGC/internal/radio</property>
+		</input>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/baro</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/FMGC/internal/baro</property>
+		</input>
+		<input>99999</input>
+		<output>/instrumentation/pfd/minimums</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Minus 50</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input> 
+			<expression>
+				<difference>
+					<property>/instrumentation/pfd/minimums</property>
+					<value>50</value>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/minimums-minus-50</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Plus 50</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<sum>
+					<property>/instrumentation/pfd/minimums</property>
+					<value>50</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/minimums-plus-50</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Plus 100</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<sum>
+					<property>/instrumentation/pfd/minimums</property>
+					<value>100</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/minimums-plus-100</output>
+	</filter>
+
 </PropertyList>

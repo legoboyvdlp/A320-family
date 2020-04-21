@@ -96,15 +96,19 @@ var flightNum = props.globals.getNode("MCDUC/flight-num", 1);
 var flightNumSet = props.globals.getNode("MCDUC/flight-num-set", 1);
 var depArpt = props.globals.getNode("FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("FMGC/internal/arr-arpt", 1);
-var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
 var toFromSet = props.globals.getNode("FMGC/internal/tofrom-set", 1);
+var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
+var altSet = props.globals.getNode("FMGC/internal/alt-set", 1);
 var costIndex = props.globals.getNode("FMGC/internal/cost-index", 1);
 var costIndexSet = props.globals.getNode("FMGC/internal/cost-index-set", 1);
 var cruiseFL = props.globals.getNode("FMGC/internal/cruise-fl", 1);
 var cruiseSet = props.globals.getNode("FMGC/internal/cruise-lvl-set", 1);
 var cruiseTemp = props.globals.getNode("FMGC/internal/cruise-temp", 1);
+var cruiseTempSet = props.globals.getNode("FMGC/internal/cruise-temp-set", 1);
 var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
+var gndtemp = props.globals.getNode("FMGC/internal/gndtemp", 1);
+var gndtempSet = props.globals.getNode("FMGC/internal/gndtemp-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
@@ -145,6 +149,7 @@ var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
 var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
 var alt_efob = props.globals.getNode("FMGC/internal/alt-efob", 1);
 var fob = props.globals.getNode("FMGC/internal/fob", 1);
+var fffq_sensor = props.globals.getNode("FMGC/internal/fffq-sensor", 1);
 var gw = props.globals.getNode("FMGC/internal/gw", 1);
 var cg = props.globals.getNode("FMGC/internal/cg", 1);
 
@@ -163,7 +168,7 @@ var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2Set = props.globals.getNode("FMGC/internal/v2-set", 1);
 
 var clbReducFt = props.globals.getNode("systems/thrust/clbreduc-ft", 1);
-var reducFt = props.globals.getNode("FMGC/internal/reduc-agl-ft", 1); # It's not AGL anymore
+var reducFt = props.globals.getNode("FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("MCDUC/thracc-set", 1);
 var flapTO = props.globals.getNode("FMGC/internal/to-flap", 1);
 var THSTO = props.globals.getNode("FMGC/internal/to-ths", 1);
@@ -190,8 +195,9 @@ var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
 var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("FMGC/internal/final", 1);
-var mda = props.globals.getNode("FMGC/internal/mda", 1);
-var dh = props.globals.getNode("FMGC/internal/dh", 1);
+var radio = props.globals.getNode("FMGC/internal/radio", 1);
+var baro = props.globals.getNode("FMGC/internal/baro", 1);
+var radio_no = props.globals.getNode("FMGC/internal/radio-no", 1);
 var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
 var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
 
@@ -274,7 +280,7 @@ var canvas_MCDU_base = {
 	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
-	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group"];
+	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -292,6 +298,24 @@ var canvas_MCDU_base = {
 	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
+		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+			color_selected = getprop("MCDU[" ~ i ~ "]/scratchpad-color");
+			if (color_selected == "grn") {
+				me["Scratchpad"].setColor(GREEN);
+			} else if (color_selected == "blu") {
+				me["Scratchpad"].setColor(BLUE);
+			} else if (color_selected == "amb") {
+				me["Scratchpad"].setColor(AMBER);
+			} else if (color_selected == "yel") {
+				me["Scratchpad"].setColor(YELLOW);
+			} else if (color_selected == "mag") {
+				me["Scratchpad"].setColor(MAGENTA);
+			} else {
+				me["Scratchpad"].setColor(WHITE);
+			}
+		} else {
+			me["Scratchpad"].setColor(WHITE);
+		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -299,7 +323,10 @@ var canvas_MCDU_base = {
 				me["FPLN"].show();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
@@ -308,6 +335,8 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me["Simple_L1_Arrow"].hide();
 				me["Simple_L2_Arrow"].hide();
@@ -629,6 +658,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -691,6 +721,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -752,6 +783,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -811,6 +843,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -875,6 +908,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -941,6 +975,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1059,6 +1094,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].show();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1074,13 +1110,13 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me.showLeft(0, 1, 0, 1, 0, 1);
+				me.showLeft(0, 1, 0, -1, 0, 1);
 				me["Simple_L0S"].hide();
-				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftS(1, 1, 1, -1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
-				me.showRight(0, 0, 0, 1, 1, 1);
-				me.showRightS(1, 0, -1, 1, -1, 1);
-				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me.showRight(0, 0, 1, 1, 1, 1);
+				me.showRightS(1, 0, -1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, 1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1093,7 +1129,7 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "wht", "blu", "blu", "ack", "ack");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("blu", "amb", "amb", "blu", "wht", "blu");
+				me.colorRight("blu", "amb", "amb", "wht", "blu", "blu");
 				me.colorRightS("wht", "amb", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
@@ -1125,9 +1161,15 @@ var canvas_MCDU_base = {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} else if (cruiseSet.getValue() == 1 and cruiseTemp.getValue() != -999) {
+			} else if (cruiseSet.getValue() == 1 and cruiseTempSet.getValue() == 1) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
+			} else if (cruiseSet.getValue() == 1) {
+				me["INITA_CruiseFLTemp"].hide();
+				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
+				setprop("FMGC/internal/cruise-temp", 15 - (2 * cruiseFL.getValue() / 10));
+				setprop("FMGC/internal/cruise-temp-set", 1);
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
@@ -1139,26 +1181,14 @@ var canvas_MCDU_base = {
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				if (alt_airport.getValue() == "") {
-					me["Simple_L2"].setText("NONE");
-				} else {
+				if (altSet.getValue() == 1) {
 					me["Simple_L2"].setText(alt_airport.getValue());
+				} else {
+					me["Simple_L2"].setText("NONE");
 				}
 				me.showRight(1, -1, 0, 0, 0, 0);
 				me["Simple_R2S"].hide();
 				me["INITA_InitRequest"].hide();
-				me["Simple_L4"].setText("----.-");
-				me["Simple_R4"].setText("-----.--");
-				if (getprop("FMGC/flightplan[2]/wp[0]/lat") > 0) {
-					me["Simple_L4"].setText(sprintf("%6.2fN", getprop("FMGC/flightplan[2]/wp[0]/lat")));
-				} else {
-					me["Simple_L4"].setText(sprintf("%6.2fS", getprop("FMGC/flightplan[2]/wp[0]/lat") * -1));
-				}
-				if (getprop("FMGC/flightplan[2]/wp[0]/lon") > 0) {
-					me["Simple_R4"].setText(sprintf("%7.2fE", getprop("FMGC/flightplan[2]/wp[0]/lon")));
-				} else {
-					me["Simple_R4"].setText(sprintf("%7.2fW", getprop("FMGC/flightplan[2]/wp[0]/lon") * -1));
-				}
 			} else {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
@@ -1168,41 +1198,52 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
 				me["INITA_InitRequest"].show();
-				me["Simple_L4"].setText("----.-");
-				me["Simple_R4"].setText("-----.--");
 			}
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
-				me["Simple_R3"].show();
-				me.showRightArrow(0, 0, 1, 0, 0, 0);
+				me["Simple_R3"].setColor(AMBER);
+				me.showRightArrow(0, 0, -1, 0, 0, 0);
 			} else {
 				me["INITA_AlignIRS"].hide();
-				me["Simple_R3"].hide();
-				me.showRightArrow(0, 0, -1, 0, 0, 0);
+				me["Simple_R3"].setColor(WHITE);
+				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			}
 			if (tropoSet.getValue() == 1) {
-				me["Simple_R6"].setFontSize(normal); 
+				me["Simple_R5"].setFontSize(normal); 
 			} else {
+				me["Simple_R5"].setFontSize(small); 
+			}
+			
+			me["Simple_R6S"].setText("GND TEMP");
+			if (getprop("FMGC/status/phase") == 0 and !getprop("FMGC/internal/gndtemp-set")) {
+				setprop("FMGC/internal/gndtemp", 15 - (2 * getprop("position/gear-agl-ft") / 1000));
+				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 				me["Simple_R6"].setFontSize(small); 
+			} else {
+				if (getprop("FMGC/internal/gndtemp-set")) {
+					me["Simple_R6"].setFontSize(normal); 
+				} else {
+					me["Simple_R6"].setFontSize(small); 
+				}
+				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 			}
 			
 			me["Simple_L1S"].setText(" CO RTE");
 			me["Simple_L2S"].setText("ALTN/CO RTE");
 			me["Simple_L3S"].setText("FLT NBR");
-			me["Simple_L4S"].setText("LAT");
 			me["Simple_L5S"].setText("COST INDEX");
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			me["Simple_L1"].setText("NONE");
 			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
-			me["Simple_R4S"].setText("LONG");
-			me["Simple_R6S"].setText("TROPO");
+			me["Simple_R5S"].setText("TROPO");
+			
 			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("IRS INIT ");
-			me["Simple_R5"].setText("WIND ");
-			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));
+			me["Simple_R4"].setText("WIND ");
+			me["Simple_R5"].setText(sprintf("%5.0f", tropo.getValue()));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -1210,6 +1251,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].show();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1256,100 +1298,114 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
+			me["Simple_L1S"].setText("LAT");
+				me["Simple_R1S"].setText("LONG");
+			if (getprop("FMGC/internal/align-ref-lat-edit")) {
+				me["IRSINIT_1"].show();
+				me["IRSINIT_2"].hide();
+			} else if (getprop("FMGC/internal/align-ref-long-edit")) {
+				me["IRSINIT_1"].hide();
+				me["IRSINIT_2"].show();
+			} else {
+				me["IRSINIT_1"].hide();
+				me["IRSINIT_2"].hide();
+			}
+			
 			if (toFromSet.getValue() == 1) {
-				#need to convert lat/long format
-				if (getprop("FMGC/flightplan[2]/wp[0]/lat") > 0) {
-					me["Simple_L1"].setText(sprintf("%6.2fN", getprop("FMGC/flightplan[2]/wp[0]/lat")));
+				degrees = getprop("FMGC/internal/align-ref-lat-degrees");
+				minutes = getprop("FMGC/internal/align-ref-lat-minutes");
+				sign = getprop("FMGC/internal/align-ref-lat-sign");
+				dms_lat = getprop("FMGC/flightplan[2]/wp[0]/lat");
+				degrees_lat = int(dms_lat);
+				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
+				sign_lat = degrees_lat >= 0 ? "N" : "S";
+				lat_same = degrees_lat == degrees and minutes_lat == minutes and sign_lat == sign;
+				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
+				
+				degrees = getprop("FMGC/internal/align-ref-long-degrees");
+				minutes = getprop("FMGC/internal/align-ref-long-minutes");
+				sign = getprop("FMGC/internal/align-ref-long-sign");
+				dms_long = getprop("FMGC/flightplan[2]/wp[0]/lon");
+				degrees_long = int(dms_long);
+				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
+				sign_long = degrees_long >= 0 ? "E" : "W";
+				long_same = degrees_long == degrees and minutes_long == minutes and sign_long == sign;
+				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
+				
+				if (lat_same and long_same) {
+					me["Simple_C1"].setText(getprop("FMGC/flightplan[2]/wp[0]/id"));
+					me["Simple_C1"].setColor(GREEN);
 				} else {
-					me["Simple_L1"].setText(sprintf("%6.2fS", getprop("FMGC/flightplan[2]/wp[0]/lat") * -1));
+					me["Simple_C1"].setText("----");
+					me["Simple_C1"].setColor(WHITE);
 				}
-				if (getprop("FMGC/flightplan[2]/wp[0]/lon") > 0) {
-					me["Simple_R1"].setText(sprintf("%7.2fE", getprop("FMGC/flightplan[2]/wp[0]/lon")));
-				} else {
-					me["Simple_R1"].setText(sprintf("%7.2fW", getprop("FMGC/flightplan[2]/wp[0]/lon") * -1));
-				}
-				me["Simple_C1"].setText(sprintf("%s", depArpt.getValue()));
 			} else {
 				me["Simple_L1"].setText("-----.--");
 				me["Simple_R1"].setText("------.--");
 				me["Simple_C1"].setText("----");
+				me["Simple_C1"].setColor(WHITE);
 			}
 			
-			#need to convert lat/long format
-			gps_lat = getprop("position/latitude-deg");
-			gps_lon = getprop("position/longitude-deg");
-			if (gps_lat > 0) {
-				me["Simple_L2"].setText(sprintf("%6.2fN", gps_lat));
-			} else {
-				me["Simple_L2"].setText(sprintf("%6.2fS", gps_lat * -1));
-			}
-			if (gps_lon > 0) {
-				me["Simple_R2"].setText(sprintf("%7.2fE", gps_lon));
-			} else {
-				me["Simple_R2"].setText(sprintf("%7.2fW", gps_lon * -1));
-			}
-			if (getprop("systems/navigation/adr/operating-1")) {
-				#me["Simple_C3"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
-				if (gps_lat > 0 and gps_lon > 0) {
-					me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else if (gps_lat > 0) {
-					me["Simple_C3"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} else if (gps_lon > 0) {
-					me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else {
-					me["Simple_C3"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				}
+			dms = getprop("position/latitude-deg");
+			degrees = int(dms);
+			minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+			sign = degrees >= 0 ? "N" : "S";
+			me["Simple_L2"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
+			dms2 = getprop("position/longitude-deg");
+			degrees2 = int(dms2);
+			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
+			sign2 = degrees2 >= 0 ? "E" : "W";
+			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
+			if (getprop("systems/navigation/adr/operating-1") and getprop("FMGC/internal/align1-done")) {
+				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C3"].setText("-----.--/-----.--");
 			}
-			if (getprop("systems/navigation/adr/operating-2")) {
-				#me["Simple_C4"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
-				if (gps_lat > 0 and gps_lon > 0) {
-					me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else if (gps_lat > 0) {
-					me["Simple_C4"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} else if (gps_lon > 0) {
-					me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else {
-					me["Simple_C4"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				}
+			if (getprop("systems/navigation/adr/operating-2") and getprop("FMGC/internal/align2-done")) {
+				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C4"].setText("-----.--/-----.--");
 			}
-			if (getprop("systems/navigation/adr/operating-3")) {
-				#me["Simple_C5"].setText(getprop("position/latitude-string") ~ "/" ~ getprop("position/longitude-string"));
-				if (gps_lat > 0 and gps_lon > 0) {
-					me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else if (gps_lat > 0) {
-					me["Simple_C5"].setText(sprintf("%6.2fN", gps_lat) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				} else if (gps_lon > 0) {
-					me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fE", gps_lon));
-				} else {
-					me["Simple_C5"].setText(sprintf("%6.2fS", gps_lat * -1) ~ "/" ~ sprintf("%7.2fW", gps_lon * -1));
-				}
+			if (getprop("systems/navigation/adr/operating-3") and getprop("FMGC/internal/align3-done")) {
+				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C5"].setText("-----.--/-----.--");
 			}
 			
 			if (align_set.getValue() == 1) {
-				#still need * to right of button instead of arrow
 				me["Simple_R6"].setText("CONFIRM ALIGN ");
 				me.colorRight("ack", "ack", "ack", "ack", "ack", "amb");
-				me.colorRightArrow("ack", "ack", "ack", "ack", "ack", "amb");
+				me["IRSINIT_star"].show();
+				me.showRightArrow(0, 0, 0, 0, 0, -1);
 			} else {
 				me["Simple_R6"].setText("ALIGN ON REF ");
+				me["IRSINIT_star"].hide();
+				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
-			me["Simple_L1S"].setText("LAT");
+			if (getprop("systems/navigation/adr/operating-1") and systems.ADIRSnew.ADIRunits[0].inAlign == 0) {
+				me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
+			} else {
+				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
+			}
+			
+			if (getprop("systems/navigation/adr/operating-2") and systems.ADIRSnew.ADIRunits[1].inAlign == 0) {
+				me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
+			} else {
+				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
+			}
+			
+			if (getprop("systems/navigation/adr/operating-3") and systems.ADIRSnew.ADIRunits[2].inAlign == 0) {
+				me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
+			} else {
+				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
+			}
+			
 			me["Simple_L2S"].setText("LAT");
 			me["Simple_L6"].setText(" RETURN");
-			me["Simple_R1S"].setText("LONG");
 			me["Simple_R2S"].setText("LONG");
 			me["Simple_C1S"].setText("REFERENCE");
 			me["Simple_C2S"].setText("GPS POSITION");
-			me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
-			me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
-			me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
 
 		} else if (page == "ROUTESELECTION") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -1358,6 +1414,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1412,6 +1469,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].show();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1497,7 +1555,7 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("---.-/----");
 				me["Simple_L3"].setText("---.-/---.-");
 				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/----");
+				me["Simple_L5"].setText("---.-/0030");
 				me["Simple_L6"].setText("---.-");
 				me["Simple_R3S"].show();
 				me["Simple_R3"].show(); 
@@ -1546,6 +1604,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].show();
 				me["PROG"].hide();
@@ -1635,7 +1694,7 @@ var canvas_MCDU_base = {
 				setprop("FMGC/internal/fob", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
 				setprop("FMGC/internal/gw", num(getprop("fdm/jsbsim/inertia/weight-lbs") / 1000));
 				setprop("FMGC/internal/cg", num(getprop("FMGC/internal/zfwcg")));
-				me["Simple_R4"].setText(sprintf("%4.1f/FF+FQ", fob.getValue()));
+				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fffq_sensor.getValue(), fob.getValue()));
 				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
 				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
@@ -1644,7 +1703,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L3"].setText("---.-/---.-");
 				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/----");
+				me["Simple_L5"].setText("---.-/0030");
 				me["Simple_L6"].setText("---.-");
 
 				me["Simple_R4"].setText("---.-/FF+FQ");
@@ -1695,6 +1754,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].show();
@@ -1822,6 +1882,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -1840,8 +1901,8 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
-				me.showRight(1, 1, 1, 1, 1, 1);
-				me.showRightS(1, 1, 1, 1, 1, 1);
+				me.showRight(-1, 1, 1, 1, 1, 1);
+				me.showRightS(-1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me.showCenterS(1, 1, 1, -1, -1, -1);
@@ -1871,7 +1932,7 @@ var canvas_MCDU_base = {
 			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
 			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
 			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
-			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
+			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
 			me["Simple_L2S"].setText(" VR");
@@ -1879,7 +1940,6 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R1"].setText("--- ");
 			me["Simple_R2"].setText("[    ]  ");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
@@ -1894,6 +1954,12 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
+			}
+			
+			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
+				me["Simple_Title"].setText(sprintf("TAKE OFF RWY %s", fmgc.flightPlanController.flightplans[2].departure_runway.id));
+			} else {
+				me["Simple_Title"].setText("TAKE OFF");
 			}
 			
 			if (v1Set.getValue() == 1) {
@@ -1922,6 +1988,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L5"].setFontSize(small);
 			}
+			
 			if (flapTHSSet.getValue() == 1) {
 				me["Simple_R3"].setFont(default); 
 				me["Simple_R3"].setFontSize(normal);
@@ -1950,29 +2017,6 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
-			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
-			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
-			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
-			me["Simple_L6"].setText(" TO DATA");
-			me["Simple_L1S"].setText(" V1");
-			me["Simple_L2S"].setText(" VR");
-			me["Simple_L3S"].setText(" V2");
-			me["Simple_L4S"].setText("TRANS ALT");
-			me["Simple_L5S"].setText("THR RED/ACC");
-			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R1"].setText("--- ");
-			me["Simple_R2"].setText("[    ]  ");
-			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
-			me["Simple_R6"].setText("PHASE ");
-			me["Simple_R1S"].setText("RWY ");
-			me["Simple_R2S"].setText("TO SHIFT ");
-			me["Simple_R3S"].setText("FLAPS/THS");
-			me["Simple_R4S"].setText("FLEX TO TEMP");
-			me["Simple_R5S"].setText("ENG OUT ACC");
-			me["Simple_R6S"].setText("NEXT ");
-			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_to")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_to")));
@@ -1993,6 +2037,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2157,6 +2202,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2304,6 +2350,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2419,14 +2466,14 @@ var canvas_MCDU_base = {
 				if (getprop("it-autoflight/input/kts-mach")) {
 					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("it-autoflight/input/spd-mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("it-autoflight/input/spd-kts")));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
 			
 			if (costIndexSet.getValue() == 1) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %2.0f", costIndex.getValue()));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
@@ -2439,7 +2486,7 @@ var canvas_MCDU_base = {
 			if (getprop("it-autoflight/input/kts-mach")) {
 				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("FMGC/internal/mng-spd")));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %3.0f", getprop("FMGC/internal/mng-spd")));
 			}
 			
 			me["Simple_L5"].setText(" EXPEDITE");
@@ -2448,7 +2495,7 @@ var canvas_MCDU_base = {
 			me["Simple_R1"].setText("---");
 			
 			me["Simple_C2"].setText("         PRED TO");
-			me["Simple_R2"].setText(sprintf("FL%s", getprop("it-autoflight/input/alt") / 100));
+			me["Simple_R2"].setText(sprintf("FL%3.0f", getprop("it-autoflight/input/alt") / 100));
 			
 			me["Simple_R3S"].setText("DIST");
 			me["Simple_R3"].setText("---");
@@ -2472,6 +2519,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2503,7 +2551,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(small, small, small, small, small, normal);
-				me.fontSizeRight(small, small, small, small, normal, normal);
+				me.fontSizeRight(normal, small, small, small, normal, normal);
 				me.fontSizeCenter(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
@@ -2540,14 +2588,14 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L2S"].setText("TEMP");
 			if (dest_temp.getValue() != -999) {
-				me["Simple_L2"].setText(sprintf("%3.0fg  ", dest_temp.getValue()));
+				me["Simple_L2"].setText(sprintf("%3.0fg", dest_temp.getValue()));
 			} else {
-				me["Simple_L2"].setText("---g  ");
+				me["Simple_L2"].setText("---g");
 			}
 			
 			me["Simple_L3S"].setText("MAG WIND");
 			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
-				me["Simple_L3"].setText(sprintf("%3.0fg/", dest_mag.getValue()) ~ sprintf("%3.0f", dest_wind.getValue()));
+				me["Simple_L3"].setText(sprintf("%3.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
 			} else {
 				me["Simple_L3"].setText("---g/---");;
 			}
@@ -2556,13 +2604,39 @@ var canvas_MCDU_base = {
 			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
 			
 			me["Simple_R1S"].setText("FINAL");
-			me["Simple_R1"].setText("-----");
+			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
+				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].approach.id));
+				me["Simple_R1"].setColor(GREEN);
+			} else {
+				me["Simple_R1"].setText("--- ");
+				me["Simple_R1"].setColor(WHITE);
+			}
 			
-			me["Simple_R2S"].setText("MDA");
-			me["Simple_R2"].setText(" [    ]");
+			me["Simple_R2S"].setText("BARO");
+			if (getprop("FMGC/internal/baro") != 99999) {
+				me["Simple_R2"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+				me.fontRight(0, default, 0, 0, 0, 0);
+				me.fontSizeRight(0, normal, 0, 0, 0, 0);
+			} else {
+				me["Simple_R2"].setText(" [    ]");
+				me.fontRight(0, symbol, 0, 0, 0, 0);
+				me.fontSizeRight(0, small, 0, 0, 0, 0);
+			}
 			
-			me["Simple_R3S"].setText("DH");
-			me["Simple_R3"].setText(" [    ]");
+			me["Simple_R3S"].setText("RADIO");
+			if (getprop("FMGC/internal/radio") != 99999) {
+				me["Simple_R3"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+				me.fontRight(0, 0, default, 0, 0, 0);
+				me.fontSizeRight(0, 0, normal, 0, 0, 0);
+			} else if (getprop("FMGC/internal/radio-no")) {
+				me["Simple_R3"].setText("NO");
+				me.fontRight(0, 0, default, 0, 0, 0);
+				me.fontSizeRight(0, 0, normal, 0, 0, 0);
+			} else {
+				me["Simple_R3"].setText(" [    ]");
+				me.fontRight(0, 0, symbol, 0, 0, 0);
+				me.fontSizeRight(0, 0, small, 0, 0, 0);
+			}
 			
 			me["Simple_R4S"].setText("LDG CONF  ");
 			me["Simple_R4"].setText("CONF3  ");
@@ -2591,7 +2665,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vls_appr")));
 				me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
 				me.fontLeft(0, 0, 0, 0, default, 0);
-				if (vapp_speed_set.getValue() == 1) {
+				if (vapp_speed_set.getValue()) {
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
@@ -2601,8 +2675,15 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setText(" ---");
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
-				me["Simple_L5"].setText("[    ]  ");
-				me.fontLeft(0, 0, 0, 0, symbol, 0);
+				if (vapp_speed_set.getValue()) {
+					me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
+					me.fontLeft(0, 0, 0, 0, default, 0);
+					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
+				} else {
+					me["Simple_L5"].setText("[    ]  ");
+					me.fontLeft(0, 0, 0, 0, symbol, 0);
+					me.fontSizeLeft(0, 0, 0, 0, small, 0);
+				}
 			}
 			
 			me["Simple_C1S"].setText("FLP RETR");
@@ -2616,6 +2697,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2679,7 +2761,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
+			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" PREV");
@@ -2706,6 +2788,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2716,6 +2799,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -2965,6 +3050,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -2975,6 +3061,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3224,6 +3312,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -3246,6 +3335,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3552,6 +3643,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -3562,6 +3654,8 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3868,6 +3962,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -3890,6 +3985,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4196,6 +4293,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -4218,6 +4316,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4525,6 +4625,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].show();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
@@ -4547,6 +4648,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4783,6 +4886,7 @@ var canvas_MCDU_base = {
 				me["FPLN"].hide();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
+				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
 				me["PROG"].hide();

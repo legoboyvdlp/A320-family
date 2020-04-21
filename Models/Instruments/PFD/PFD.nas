@@ -71,6 +71,8 @@ var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitu
 var altitude_pfd = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
 var trans_alt = props.globals.getNode("FMGC/internal/trans-alt", 1);
 var alt_diff = props.globals.getNode("instrumentation/pfd/alt-diff", 1);
+var ground_diff = props.globals.getNode("instrumentation/pfd/ground-diff", 1);
+var landing_diff = props.globals.getNode("instrumentation/pfd/landing-diff", 1);
 var ap_alt = props.globals.getNode("it-autoflight/internal/alt", 1);
 var alt_agl = props.globals.getNode("position/altitude-agl-ft", 1);
 var vs_needle = props.globals.getNode("instrumentation/pfd/vs-needle", 1);
@@ -124,7 +126,6 @@ var dme_in_range = props.globals.getNode("instrumentation/nav[0]/dme-in-range", 
 var dme_data = props.globals.getNode("instrumentation/dme[0]/indicated-distance-nm", 1);
 var ils_crs = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg", 1);
 var ils1_crs_set = props.globals.getNode("FMGC/internal/ils1crs-set/", 1);
-var arrival_airport = props.globals.getNode("FMGC/internal/arr-arpt", 1);
 var outer_marker = props.globals.getNode("instrumentation/marker-beacon/outer", 1);
 var middle_marker = props.globals.getNode("instrumentation/marker-beacon/middle", 1);
 var inner_marker = props.globals.getNode("instrumentation/marker-beacon/inner", 1);
@@ -135,11 +136,15 @@ var vr_set = props.globals.getNode("FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("FMGC/internal/v2", 1);
 var v2_set = props.globals.getNode("FMGC/internal/v2-set", 1);
 var flap_config = props.globals.getNode("controls/flight/flap-lever", 1);
+var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
+var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
 # Create Nodes:
 var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
 var vs_needle_trans = props.globals.initNode("/instrumentation/pfd/vs-digit-trans", 0.0, "DOUBLE");
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
+var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
+var landing_diff = props.globals.initNode("/instrumentation/pfd/landing-diff", 0.0, "DOUBLE");
 var heading = props.globals.initNode("/instrumentation/pfd/heading-deg", 0.0, "DOUBLE");
 var horizon_pitch = props.globals.initNode("/instrumentation/pfd/horizon-pitch", 0.0, "DOUBLE");
 var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground", 0.0, "DOUBLE");
@@ -168,6 +173,7 @@ var altFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/al
 var altFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/alt-flash-2", 0, "BOOL");
 var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-1", 0, "BOOL");
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
+var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -219,7 +225,8 @@ var canvas_PFD_base = {
 		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber",
 		"ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
 		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max","clean_speed"];
+		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max","clean_speed",
+		"ground","ground_ref"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -602,8 +609,6 @@ var canvas_PFD_base = {
 		me["FMA_catmode_box"].hide();
 		me["FMA_cattype_box"].hide();
 		me["FMA_cat_box"].hide();
-		me["FMA_nodh"].hide();
-		me["FMA_dh_box"].hide();
 		
 		# FMA AP FD ATHR
 		me["FMA_ap"].setText(sprintf("%s", ap_mode.getValue()));
@@ -757,16 +762,105 @@ var canvas_PFD_base = {
 		
 		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
-		if (gear_agl_cur <= decision.getValue()) {
-			me["AI_agl"].setColor(0.7333,0.3803,0);
+		if (FMGCphase.getValue() < 3) {
+			me["FMA_dh_box"].hide();
+			me["FMA_dh"].hide();
+			me["FMA_dhn"].hide();
+			me["FMA_nodh"].hide();
+			#me["dhReached"].hide();
+			if (gear_agl_cur <= 2500) {
+				me["AI_agl"].show();
+				if (gear_agl_cur <= decision.getValue()) {
+					me["AI_agl"].setColor(0.7333,0.3803,0);
+				} else {
+					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+				}
+			} else {
+				me["AI_agl"].hide();
+			}
 		} else {
-			me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-		}
-		
-		if (gear_agl_cur <= 2500) {
-			me["AI_agl"].show();
-		} else {
-			me["AI_agl"].hide();
+			if (gear_agl_cur <= 2500) {
+				me["AI_agl"].show();
+				me["FMA_dh_box"].hide(); #not implemented
+				if (int(getprop("FMGC/internal/radio")) != 99999) {
+					me["FMA_dh"].setText("RADIO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+					hundredAbove.setValue(getprop("FMGC/internal/radio") + 100);
+					minimum.setValue(getprop("FMGC/internal/radio"));
+					if (gear_agl_cur <= getprop("FMGC/internal/radio") + 100) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+				} else if (int(getprop("FMGC/internal/baro")) != 99999) {
+					me["FMA_dh"].setText("BARO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+					hundredAbove.setValue(getprop("FMGC/internal/baro") + 100);
+					minimum.setValue(getprop("FMGC/internal/baro"));
+					if (gear_agl_cur <= getprop("FMGC/internal/baro") + 100) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+				} else if (getprop("FMGC/internal/radio-no")) {
+					me["FMA_dh"].setText("BARO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText("100");
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+					hundredAbove.setValue(100);
+					minimum.setValue(0);
+					if (gear_agl_cur <= 100) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+				} else {
+					me["FMA_dh"].hide();
+					me["FMA_dhn"].hide();
+					me["FMA_nodh"].show();
+					hundredAbove.setValue(400);
+					minimum.setValue(300);
+					if (gear_agl_cur <= 400) {
+						me["AI_agl"].setColor(0.7333,0.3803,0);
+					} else {
+						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
+					}
+				}
+			} else {
+				me["AI_agl"].hide();
+				me["FMA_nodh"].hide();
+				me["FMA_dh_box"].hide(); #not implemented
+				if (int(getprop("FMGC/internal/radio")) != 99999) {
+					me["FMA_dh"].setText("RADIO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+				} else if (int(getprop("FMGC/internal/baro")) != 99999) {
+					me["FMA_dh"].setText("BARO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+				} else if (getprop("FMGC/internal/radio-no")) {
+					me["FMA_dh"].setText("BARO");
+					me["FMA_dh"].show();
+					me["FMA_dhn"].setText("100");
+					me["FMA_dhn"].show();
+					me["FMA_nodh"].hide();
+				} else {
+					me["FMA_dh"].hide();
+					me["FMA_dhn"].hide();
+					me["FMA_nodh"].show();
+				}
+			}
 		}
 		
 		me["AI_agl_g"].setRotation(-roll_cur * D2R);
@@ -871,7 +965,7 @@ var canvas_PFD_base = {
 		me["TRK_pointer"].setTranslation((track_diff.getValue() / 10) * 98.5416, 0);
 		split_ils = split("/", ils_data1.getValue());
 		
-		if (ap_ils_mode.getValue() == 1 and ils1_crs_set.getValue() == 1 and size(split_ils) == 2) {
+		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
 			magnetic_hdg = ils_crs.getValue();
 			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
 			if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
@@ -906,25 +1000,6 @@ var canvas_PFD_base = {
 				me["ILS_HDG_L"].hide();
 				me["CRS_pointer"].hide();
 			}
-		
-		#Approach selected and tuned, overwrite RAD NAV
-#		} else if (0) {			
-#			var runways = airportinfo(airportinfo(arrival_airport.getValue()).id).runways;
-#			var runway_keys = sort(keys(runways), string.icmp);
-#			foreach(var rwy; runway_keys) {
-#				var r = runways[rwy];
-#				if (r.ils_frequency_mhz == split_ils[1]) {
-#					magnetic_hdg = r.heading - getprop("environment/magnetic-variation-deg");
-#					magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
-#					
-#					SET THE FMGC values here!!!!!
-#					course = r.heading;
-#					ils_frequency = r.ils_frequency_mhz;
-#
-#					break;
-#				}
-#			}
-
 		} else {
 			me["ILS_HDG_R"].hide();
 			me["ILS_HDG_L"].hide();
@@ -1131,7 +1206,7 @@ var canvas_PFD_1 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and FMGCphase.getValue() <= 6) {
+			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -1496,6 +1571,13 @@ var canvas_PFD_1 = {
 			me["v1_group"].hide();
 			me["v1_text"].hide();
 			me["vr_speed"].hide();
+			me["ground"].hide();
+			me["ground_ref"].hide();
+			me["VLS_min"].hide();
+			me["VLS_min"].hide();
+			me["ALPHA_PROT"].hide();
+			me["ALPHA_MAX"].hide();
+			me["ALPHA_SW"].hide();
 		}
 		
 		if (dmc.DMController.DMCs[0].outputs[2] != nil) {
@@ -1588,6 +1670,26 @@ var canvas_PFD_1 = {
 				me["ALT_digit_UP"].show();
 				me["ALT_digit_DN"].hide();
 				me["ALT_target"].hide();
+			}
+			
+			ground_diff_cur = ground_diff.getValue();
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
+				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
+				me["ground_ref"].show();
+			} else {
+				me["ground_ref"].hide();
+			}
+			
+			landing_diff_cur = landing_diff.getValue();
+			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+				if ((FMGCphase.getValue() == 5 or FMGCphase.getValue() == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
+					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].show();
+				} else {
+					me["ground"].hide();
+				}
+			} else {
+				me["ground"].hide();
 			}
 			
 			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
@@ -1842,7 +1944,7 @@ var canvas_PFD_2 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and FMGCphase.getValue() <= 6) {
+			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -2208,6 +2310,13 @@ var canvas_PFD_2 = {
 			me["v1_group"].hide();
 			me["v1_text"].hide();
 			me["vr_speed"].hide();
+			me["ground"].hide();
+			me["ground_ref"].hide();
+			me["VLS_min"].hide();
+			me["VLS_min"].hide();
+			me["ALPHA_PROT"].hide();
+			me["ALPHA_MAX"].hide();
+			me["ALPHA_SW"].hide();
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[2] != nil) {
@@ -2299,6 +2408,26 @@ var canvas_PFD_2 = {
 				me["ALT_digit_UP"].show();
 				me["ALT_digit_DN"].hide();
 				me["ALT_target"].hide();
+			}
+			
+			ground_diff_cur = ground_diff.getValue();
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
+				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
+				me["ground_ref"].show();
+			} else {
+				me["ground_ref"].hide();
+			}
+			
+			landing_diff_cur = landing_diff.getValue();
+			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+				if ((FMGCphase.getValue() == 5 or FMGCphase.getValue() == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
+					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].show();
+				} else {
+					me["ground"].hide();
+				}
+			} else {
+				me["ground"].hide();
 			}
 			
 			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
@@ -2652,6 +2781,21 @@ var amberTimer2 = maketimer(0.50, func {
 		amberFlash2.setBoolValue(1);
 	} else {
 		amberFlash2.setBoolValue(0);
+	}
+});
+
+var dh_going = 0;
+var dh_count = 0;
+var dhTimer = maketimer(0.50, func {
+	if (!dhFlash.getBoolValue()) {
+		dhFlash.setBoolValue(1);
+	} else {
+		dhFlash.setBoolValue(0);
+	}
+	if (dh_count == 18) {
+		dh_count = 0;
+	} else {
+		dh_count = dh_count + 1;
 	}
 });
 
