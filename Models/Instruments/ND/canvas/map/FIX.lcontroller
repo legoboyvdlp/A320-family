@@ -22,7 +22,7 @@ var new = func(layer) {
 	return m;
 };
 var del = func() {
-	printlog(_MP_dbg_lvl, "VOR.lcontroller.del()");
+	logprint(_MP_dbg_lvl, "VOR.lcontroller.del()");
 	foreach (var l; me.listeners)
 		removelistener(l);
 };

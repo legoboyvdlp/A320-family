@@ -55,7 +55,7 @@ canvas.Group.setColor = func(){
 canvas.Map.addLayer =  func(factory, type_arg=nil, priority=nil, style=nil, opts=nil, visible=1)
 {
     if(contains(me.layers, type_arg))
-        printlog("warn", "addLayer() warning: overwriting existing layer:", type_arg);
+        logprint("warn", "addLayer() warning: overwriting existing layer:", type_arg);
     var options = opts;
     # Argument handling
 
@@ -105,7 +105,7 @@ canvas.Symbol.formattedString = func(frmt, model_props){
             var tp = typeof(val);
             if(tp != "scalar"){
                 val = "";
-                #printlog("warn", "formattedString: invalid type for "~prop~" (" ~ tp ~ ")");
+                #logprint("warn", "formattedString: invalid type for "~prop~" (" ~ tp ~ ")");
             } else {
                 append(args, val);
             }
@@ -280,7 +280,7 @@ canvas.LineSymbol.new = func(group, layer, model, controller=nil) {
 canvas.LineSymbol.draw = func() {
 	me.callback("draw_before");
 	if (!me.needs_update) return;
-	#printlog(_MP_dbg_lvl, "redrawing a LineSymbol "~me.layer.type);
+	#logprint(_MP_dbg_lvl, "redrawing a LineSymbol "~me.layer.type);
 	me.element.reset();
 	var cmds = [];
 	var coords = [];

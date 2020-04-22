@@ -170,7 +170,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 		if(!layer["isMapStructure"]) # set up an old INEFFICIENT and SLOW layer
 			the_layer = me.layers[layer.name] = canvas.MAP_LAYERS[layer.name].new( me.map, layer.name, controller );
 		else {
-			printlog(_MP_dbg_lvl, "Setting up MapStructure-based layer for ND, name:", layer.name);
+			logprint(_MP_dbg_lvl, "Setting up MapStructure-based layer for ND, name:", layer.name);
 			var opt = me.options != nil and me.options[layer.name] != nil ? me.options[layer.name] :nil;
 			if(opt == nil and contains(layer, "options"))
 				opt = layer.options;
@@ -205,7 +205,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 				l.predicate = func {
 					var t = systime();
 					call(_predicate, arg, me);
-					printlog(_MP_dbg_lvl, "Took "~((systime()-t)*1000)~"ms to update layer "~l.name);
+					logprint(_MP_dbg_lvl, "Took "~((systime()-t)*1000)~"ms to update layer "~l.name);
 				}
 			})();
 		}
@@ -594,6 +594,6 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	me.symbols["status.arpt"].setVisible( me.get_switch("toggle_airports") and me.in_mode("toggle_display_mode", ["MAP"]));
 	me.symbols["status.sta"].setVisible( me.get_switch("toggle_stations") and  me.in_mode("toggle_display_mode", ["MAP"]));
 	# Okay, _how_ do we hook this up with FGPlot?
-	printlog(_MP_dbg_lvl, "Total ND update took "~((systime()-_time)*100)~"ms");
+	logprint(_MP_dbg_lvl, "Total ND update took "~((systime()-_time)*100)~"ms");
 	setprop("instrumentation/navdisplay["~ canvas.NavDisplay.id ~"]/update-ms", systime() - _time);
 };
