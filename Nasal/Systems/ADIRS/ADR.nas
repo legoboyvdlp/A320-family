@@ -135,7 +135,6 @@ var ADIRU = {
 			me.update(); # update operative
 			me.align(calcAlignTime(pts.Position.latitude.getValue()));
 		} elsif (me.operative == 0) {
-			print("ADIRU " ~ me.num ~ " off");
 			me.stopAlignNoAlign();
 		} elsif (pts.Sim.Time.elapsedSec.getValue() >= me._alignTime) {
 			me.stopAlignAligned();
