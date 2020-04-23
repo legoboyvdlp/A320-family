@@ -124,10 +124,10 @@ var vertRev = {
 	updateR5: func() {
 		if (getprop("FMGC/internal/cruise-lvl-set") and (getprop("FMGC/status/phase") < 4 or getprop("FMGC/status/phase") == 7)) {
 			me.R5 = ["STEP ALTS ", nil, "wht"];
-			me.arrows[1][4] = 1;
+			me.arrowsMatrix[1][4] = 1;
 		} else {
 			me.R5 = [nil, nil, "ack"];
-			me.arrows[1][4] = 0;
+			me.arrowsMatrix[1][4] = 0;
 		}
 	},
 };
