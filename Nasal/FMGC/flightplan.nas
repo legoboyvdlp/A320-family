@@ -1,5 +1,5 @@
 # A3XX FMGC Flightplan Driver
-# Copyright (c) 2019 Jonathan Redpath (2019)
+# Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var wpDep = nil;
 var wpArr = nil;
@@ -38,10 +38,12 @@ var flightPlanController = {
 	
 	currentToWpt: nil, # container for the current TO waypoint ghost
 	currentToWptIndex: props.globals.initNode("/FMGC/flightplan[2]/current-wp", 0, "INT"),
+	currentToWptIndexTemp: 0,
 	currentToWptID: props.globals.initNode("/FMGC/flightplan[2]/current-leg", "", "STRING"),
 	courseToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course", 0, "DOUBLE"),
 	courseMagToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course-mag", 0, "DOUBLE"),
-	distToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-dist", 0, "DOUBLE"),,
+	distToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-dist", 0, "DOUBLE"),
+	wptTypeNoAdvanceDelete: 0,
 	
 	distanceToDest: [0, 0, 0],
 	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[2]/num", 0, "INT")],
@@ -124,16 +126,43 @@ var flightPlanController = {
 		}
 		
 		# todo setlistener on sim/time/warp to recompute predictions
-		if (me.num[2].getValue() > 2) {
-			if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
-				me.deleteWP(0, 0);
+		
+		# Advancing logic
+		me.currentToWptIndexTemp = me.currentToWptIndex.getValue();
+		if (me.currentToWptIndexTemp < 1) {
+			me.currentToWptIndex.setValue(1);
+		} else if (me.num[2].getValue() > 2) {
+			if (me.currentToWptIndexTemp == 2) { # Clean up after a no-sequence waypoint
+				me.currentToWptIndex.setValue(1); # MUST be set first
+				# TODO: Add support for deleting multiple waypoints at once, this will do for now
+				if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
+					me.deleteWP(0, 0);
+				}
+				if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
+					me.deleteWP(0, 1);
+				}
+				me.deleteWP(0, 2, 0, 1);
+				if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
+					me.deleteWP(0, 0);
+				}
+				if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
+					me.deleteWP(0, 1);
+				}
+				me.deleteWP(0, 2, 0, 1);
+			} else {
+				me.wptTypeNoAdvanceDelete = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type == "radialIntercept" or me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type == "vectors" or me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type == "hdgToAlt";
+				if (me.wptTypeNoAdvanceDelete) {
+					me.currentToWptIndex.setValue(2);
+				} else {
+					if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
+						me.deleteWP(0, 0);
+					}
+					if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
+						me.deleteWP(0, 1);
+					}
+					me.deleteWP(0, 2, 0, 1);
+				}
 			}
-			
-			if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
-				me.deleteWP(0, 1);
-			}
-			
-			me.deleteWP(0, 2, 0, 1);
 		}
 	},
 	
