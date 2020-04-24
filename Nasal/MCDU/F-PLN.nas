@@ -89,26 +89,26 @@ var fplnItem = {
 		canvas_mcdu.myLatRev[me.computer] = nil;
 		
 		if (me.wp.wp_name == "DISCONTINUITY") {
-			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, "DISCON", me.index, me.computer);
+			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, me.wp, me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
 			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
 			} else {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
 		} else {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
 			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
 			} else {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
 		}
 		setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
@@ -353,7 +353,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 					canvas_mcdu.myLatRev[me.computer].del();
 				}
 				canvas_mcdu.myLatRev[me.computer] = nil;
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.L6[0], fmgc.flightPlanController.arrivalIndex[me.computer], me.computer);
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.arrivalIndex[2]), fmgc.flightPlanController.arrivalIndex[2], me.computer);
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {

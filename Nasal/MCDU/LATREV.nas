@@ -20,11 +20,10 @@ var latRev = {
 	arrAirport: nil,
 	index: nil,
 	computer: nil,
-	wpt: nil,
-	new: func(type, id, index, computer) {
+	new: func(type, wpt, index, computer) {
 		var lr = {parents:[latRev]};
 		lr.type = type; # 0 = origin 1 = destination 2 = ppos (from waypoint) 3 = generic wpt, 4 = discon
-		lr.id = id;
+		lr.wpt = wpt;
 		lr.index = index;
 		lr.computer = computer;
 		lr._setupPageWithData();
@@ -64,13 +63,12 @@ var latRev = {
 			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 		} else {
-			me.title = ["LAT REV", " FROM ", me.id];
-			
 			if (me.type == 0) {	
-				if (size(me.id) > 4) {
-					me.depAirport = findAirportsByICAO(left(me.id, 4));
+				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
+				if (size(me.wpt.wp_name) > 4) {
+					me.depAirport = findAirportsByICAO(left(me.wpt.wp_name, 4));
 				} else {
-					me.depAirport = findAirportsByICAO(me.id);
+					me.depAirport = findAirportsByICAO(me.wpt.wp_name);
 				}
 				me.subtitle = [dmsToString(sprintf(me.depAirport[0].lat), "lat"), dmsToString(sprintf(me.depAirport[0].lon), "lon")];
 				me.L1 = [" DEPARTURE", nil, "wht"];
@@ -84,10 +82,11 @@ var latRev = {
 				me.arrowsColour = [["wht", "wht", "ack", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]];
 			} elsif (me.type == 1) {
-				if (size(me.id) > 4) {
-					me.arrAirport = findAirportsByICAO(left(me.id, 4));
+				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
+				if (size(me.wpt.wp_name) > 4) {
+					me.arrAirport = findAirportsByICAO(left(me.wpt.wp_name, 4));
 				} else {
-					me.arrAirport = findAirportsByICAO(me.id);
+					me.arrAirport = findAirportsByICAO(me.wpt.wp_name);
 				}
 				me.subtitle = [dmsToString(sprintf(me.arrAirport[0].lat), "lat"), dmsToString(sprintf(me.arrAirport[0].lon), "lon")];
 				me.L3 = [" ALTN", nil, "wht"];
@@ -99,15 +98,9 @@ var latRev = {
 				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			} elsif (me.type == 3) {
-				if (size(me.id) == 2 or size(me.id) == 3) {
-					me.wpt = findNavaidsByID(me.id);
-				} elsif (size(me.id) == 4) {
-					me.wpt = findAirportsByICAO(me.id);
-				} elsif (size(me.id) == 5) {
-					me.wpt = findFixesByID(me.id);
-				}
-				if (me.wpt[0] != nil) {
-					me.subtitle = [dmsToString(sprintf(me.wpt[0].lat), "lat"), dmsToString(sprintf(me.wpt[0].lon), "lon")];
+				me.title = ["LAT REV", " FROM ", me.wpt.wp_name];
+				if (me.wpt != nil) {
+					me.subtitle = [dmsToString(sprintf(me.wpt.lat), "lat"), dmsToString(sprintf(me.wpt.lon), "lon")];
 				}
 				me.L3 = [" HOLD", nil, "wht"];
 				me.L4 = [" ALTN", " ENABLE", "blu"];
