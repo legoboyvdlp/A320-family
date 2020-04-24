@@ -523,7 +523,7 @@ var masterFMGC = maketimer(0.2, func {
 });
 
 var reset_FMGC = func {
-	setprop("FMGC/status/phase", "7");
+	setprop("FMGC/status/phase", "0");
 	fd1 = getprop("it-autoflight/input/fd1");
 	fd2 = getprop("it-autoflight/input/fd2");
 	spd = getprop("it-autoflight/input/spd-kts");
@@ -811,6 +811,7 @@ var switchDatabase = func {
 setlistener("gear/gear[1]/wow", func() {
 	if (timer30secLanding.isRunning) {
 		timer30secLanding.stop();
+		setprop("FMGC/internal/landing-time", -99);
 	}
 	
 	if (getprop("gear/gear[1]/wow") == 1 and getprop("FMGC/internal/landing-time") == -99) {

@@ -510,6 +510,7 @@ var flightPlanController = {
 				
 				if (wpt == 1) {
 					if (me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
+						# print("Adding " ~ courseDistanceFrom[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
 						me._arrivalDist += courseDistanceFrom[1]; # distance to next waypoint, therafter to end of flightplan
 					}
 				}
@@ -528,7 +529,8 @@ var flightPlanController = {
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
 					if (wpt > 1) {
 						if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-							me._arrivalDist += courseDistanceFromPrev[1]; # todo - buggy. Neglect discontinuity
+							# print("Adding " ~ courseDistanceFromPrev[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
+							me._arrivalDist += courseDistanceFromPrev[1]; 
 						}
 					}
 				} else {
@@ -549,6 +551,7 @@ var flightPlanController = {
 				}
 			}
 		}
+		# print("Total: " ~ me._arrivalDist);
 		me.arrivalDist = me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},
