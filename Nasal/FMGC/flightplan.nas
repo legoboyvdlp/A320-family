@@ -180,12 +180,32 @@ var flightPlanController = {
 		}
 	},
 	
-	insertPPOS: func(n) {
-		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), 0);
-	},
-	
 	insertTP: func(n) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), 1);
+	},
+	
+	childWPBearingDistance: func(wpt, bearing, dist, name, typeStr = "") {
+		var coordinates = greatCircleMove(wpt.lat, wpt.lon, bearing, dist);
+		if (typeStr != "") {
+			return createWP(coordinates, name);
+		} else {
+			return createWP(coordinates, name, typeStr);
+		}
+	},
+	
+	insertNOSTAR: func(n) {
+		var wptStore = me.flightplans[n].getWP(me.arrivalIndex[n]);
+		if (wptStore.wp_type == "runway") {
+			if (me.flightplans[n].getWP(me.arrivalIndex[n] - 1).id == "CF") { # check if we have NO STAR already loaded
+				me.deleteWP(me.arrivalIndex[n] - 1, n, 1);
+			}
+			var hdg = me.flightplans[n].destination_runway.heading + 180;
+			if (hdg > 360) {
+				hdg = hdg - 360;
+			}
+			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, hdg, 5, "CF", "star"), me.arrivalIndex[n]);
+		}
+		me.flightPlanChanged(n);
 	},
 	
 	directTo: func(waypointGhost, plan) {

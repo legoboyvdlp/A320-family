@@ -448,6 +448,7 @@ var rskbutton = func(btn, i) {
 				}
 				canvas_mcdu.myArrival[i] = nil;
 				canvas_mcdu.myArrival[i] = arrivalPage.new(canvas_mcdu.myLatRev[i].title[2], i);
+				canvas_mcdu.myArrival[i]._setupPageWithData();
 				setprop("MCDU[" ~ i ~ "]/page", "ARRIVAL");
 			} else {
 				notAllowed(i);
