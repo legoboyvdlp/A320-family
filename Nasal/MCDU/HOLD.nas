@@ -38,8 +38,7 @@ var holdPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		# me.title = ["LAT REV", " AT ", me.waypoint.wp_name]; TODO FIXME LATREV
-		me.title = ["HOLD", " AT ", me.waypoint];
+		me.title = ["LAT REV", " AT ", me.waypoint.wp_name];
 		me.titleColour = "wht";
 		me.L1 = [" [   ]", " INB CRS", "blu"];
 		me.L2 = [" R", " TURN", "blu"];
