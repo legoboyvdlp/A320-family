@@ -141,7 +141,13 @@ var departurePage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateActiveSIDs: func() {
-		if (me.selectedSID != nil) {
+		if (me.selectedSID == " NO SID") {
+			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				me.C1 = ["NONE", "SID", "grn"];
+			} else {
+				me.C1 = ["NONE", "SID", "yel"];
+			}
+		} elsif (me.selectedSID != nil) {
 			if (fmgc.flightPlanController.flightplans[2].sid != nil) {
 				if (fmgc.flightPlanController.flightplans[2].sid == me.selectedSID) {
 					me.C1 = [fmgc.flightPlanController.flightplans[2].sid.id, "SID", "grn"];
@@ -150,7 +156,7 @@ var departurePage = {
 				} else {
 					me.C1 = ["------- ", "SID", "wht"];
 				} 
-			} elsif (fmgc.flightPlanController.flightplans[me.computer].sid.id != nil) {
+			} elsif (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
 				me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid.id, "SID", "yel"];
 			} else {
 				me.C1 = ["------- ", "SID", "wht"];
@@ -259,6 +265,12 @@ var departurePage = {
 		}
 		
 		me.sids = sort(me._sids,func(a,b) cmp(a,b));
+		
+		if (me.sids == nil) {
+			me.stars = [" NO SID"];
+		} else {
+			append(me.sids, " NO SID");
+		}
 		
 		if (size(me.sids) >= 1) {
 			me.L2 = [" " ~ me.sids[0 + me.scrollSids], "SIDS", "blu"];
@@ -418,7 +430,7 @@ var departurePage = {
 					me.scrollSids = 0;
 				}
 				me.updateSIDs();
-				if (me.selectedSID == nil) {
+				if (me.selectedSID == nil or me.selectedSID == " NO SID") {
 					me.clearTransitions();
 				} else {
 					me.updateTransitions();
@@ -443,7 +455,7 @@ var departurePage = {
 					me.scrollSids = size(me.sids) - 4;
 				}
 				me.updateSIDs();
-				if (me.selectedSID == nil) {
+				if (me.selectedSID == nil or me.selectedSID == " NO SID") {
 					me.clearTransitions();
 				} else {
 					me.updateTransitions();
@@ -483,11 +495,20 @@ var departurePage = {
 				if (!dirToFlag) {
 					me.selectedSID = me.sids[index - 2 + me.scrollSids];
 					me.makeTmpy();
-					fmgc.flightPlanController.flightplans[me.computer].sid = me.selectedSID;
+					if (me.selectedSID != " NO SID") {
+						fmgc.flightPlanController.flightplans[me.computer].sid = me.selectedSID;
+					} else {
+						fmgc.flightPlanController.flightplans[me.computer].sid = nil;
+						fmgc.flightPlanController.insertNOSID(me.computer);
+					}
 					me.updateActiveSIDs();
 					me.updateSIDs();
-					me.hasPressNoTrans = 0;
-					me.updateTransitions();
+					if (me.selectedSID != " NO SID") {
+						me.hasPressNoTrans = 0;
+						me.updateTransitions();
+					} else {
+						me.hasPressNoTrans = 1;
+					}
 					me.updateActiveTransitions();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {

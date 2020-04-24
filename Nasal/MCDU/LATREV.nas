@@ -20,6 +20,7 @@ var latRev = {
 	arrAirport: nil,
 	index: nil,
 	computer: nil,
+	wpt: nil,
 	new: func(type, id, index, computer) {
 		var lr = {parents:[latRev]};
 		lr.type = type; # 0 = origin 1 = destination 2 = ppos (from waypoint) 3 = generic wpt, 4 = discon

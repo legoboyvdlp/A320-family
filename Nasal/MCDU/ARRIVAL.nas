@@ -499,7 +499,7 @@ var arrivalPage = {
 					me.scrollStars = 0;
 				}
 				me.updateSTARs();
-				if (me.selectedSTAR == nil or me.selectedSTAR != " NO STAR") {
+				if (me.selectedSTAR == nil or me.selectedSTAR == " NO STAR") {
 					me.clearTransitions();
 				} else {
 					me.updateTransitions();
@@ -524,7 +524,7 @@ var arrivalPage = {
 					me.scrollStars = size(me.stars) - 4;
 				}
 				me.updateSTARs();
-				if (me.selectedSTAR == nil or me.selectedSTAR != " NO STAR") {
+				if (me.selectedSTAR == nil or me.selectedSTAR == " NO STAR") {
 					me.clearTransitions();
 				} else {
 					me.updateTransitions();

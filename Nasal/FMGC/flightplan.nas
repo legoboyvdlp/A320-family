@@ -193,6 +193,18 @@ var flightPlanController = {
 		}
 	},
 	
+	insertNOSID: func(n) {
+		var wptStore = me.flightplans[n].getWP(0);
+		if (wptStore.wp_type == "runway") {
+			if (me.flightplans[n].getWP(1).id == "(1500)") { # check if we have NO SID already loaded
+				me.deleteWP(1, n, 1);
+			}
+			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
+			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5, "(1500)", "sid"), 1);
+		}
+		me.flightPlanChanged(n);
+	},
+	
 	insertNOSTAR: func(n) {
 		var wptStore = me.flightplans[n].getWP(me.arrivalIndex[n]);
 		if (wptStore.wp_type == "runway") {
