@@ -58,19 +58,22 @@
 		</hyd-yellow>
 		
 		<!-- Disabled until proper PTU system implemented, to not annoy people -->
-		<!--hyd>
+		<hyd>
 			<name>PTU</name>
 			<mode>once</mode>
 			<path>airbus_ptu.wav</path>
 			<condition>
-				<property>/systems/hydraulic/ptu-active</property>
+				<or>
+					<property>/systems/hydraulic/sources/ptu/yellow-green</property>
+					<property>/systems/hydraulic/sources/ptu/green-yellow</property>
+				</or>
 			</condition>
 			<volume>
 				<factor>8</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
-		</hyd-->
+		</hyd>
 		
 		<announcement>
 			<name>PurserSnacks</name>

@@ -1950,6 +1950,16 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
 			
+			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 7) {
+				me["Simple_L6_Arrow"].show(); 
+				me["Simple_L6"].show();
+				me["Simple_L6S"].show();
+			} else {
+				me["Simple_L6_Arrow"].hide(); 
+				me["Simple_L6"].hide();
+				me["Simple_L6S"].hide();
+			}
+			
 			if (getprop("FMGC/status/phase") == 1) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {

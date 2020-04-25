@@ -6,66 +6,78 @@
 var perfTOInput = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
 	if (key == "L1") {
-		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/v1", 0);
-			setprop("FMGC/internal/v1-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else {
-			var tfs = size(scratchpad);
-			if (tfs == 3) {
-				if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-					setprop("FMGC/internal/v1", scratchpad);
-					setprop("FMGC/internal/v1-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		if (getprop("FMGC/status/phase") != 1) {
+			if (scratchpad == "CLR") {
+				setprop("FMGC/internal/v1", 0);
+				setprop("FMGC/internal/v1-set", 0);
+				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			} else {
+				var tfs = size(scratchpad);
+				if (tfs == 3) {
+					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
+						setprop("FMGC/internal/v1", scratchpad);
+						setprop("FMGC/internal/v1-set", 1);
+						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					} else {
+						notAllowed(i);
+					}
 				} else {
 					notAllowed(i);
 				}
-			} else {
-				notAllowed(i);
 			}
+		} else {
+			notAllowed(i);
 		}
 	} else if (key == "L2") {
-		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/vr", 0);
-			setprop("FMGC/internal/vr-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else {
-			var tfs = size(scratchpad);
-			if (tfs == 3) {
-				if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-					setprop("FMGC/internal/vr", scratchpad);
-					setprop("FMGC/internal/vr-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		if (getprop("FMGC/status/phase") != 1) {
+			if (scratchpad == "CLR") {
+				setprop("FMGC/internal/vr", 0);
+				setprop("FMGC/internal/vr-set", 0);
+				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			} else {
+				var tfs = size(scratchpad);
+				if (tfs == 3) {
+					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
+						setprop("FMGC/internal/vr", scratchpad);
+						setprop("FMGC/internal/vr-set", 1);
+						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					} else {
+						notAllowed(i);
+					}
 				} else {
 					notAllowed(i);
 				}
-			} else {
-				notAllowed(i);
 			}
+		} else {
+			notAllowed(i);
 		}
 	} else if (key == "L3") {
-		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/v2", 0);
-			setprop("FMGC/internal/v2-set", 0);
-			setprop("it-autoflight/settings/togaspd", 157);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else {
-			var tfs = size(scratchpad);
-			if (tfs == 3) {
-				if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-					setprop("FMGC/internal/v2", scratchpad);
-					setprop("FMGC/internal/v2-set", 1);
-					setprop("it-autoflight/settings/togaspd", scratchpad);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+		if (getprop("FMGC/status/phase") != 1) {
+			if (scratchpad == "CLR") {
+				setprop("FMGC/internal/v2", 0);
+				setprop("FMGC/internal/v2-set", 0);
+				setprop("it-autoflight/settings/togaspd", 157);
+				setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			} else {
+				var tfs = size(scratchpad);
+				if (tfs == 3) {
+					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
+						setprop("FMGC/internal/v2", scratchpad);
+						setprop("FMGC/internal/v2-set", 1);
+						setprop("it-autoflight/settings/togaspd", scratchpad);
+						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					} else {
+						notAllowed(i);
+					}
 				} else {
 					notAllowed(i);
 				}
-			} else {
-				notAllowed(i);
 			}
+		} else {
+		notAllowed(i);
 		}
 	} else if (key == "L4") {
 		if (scratchpad == "CLR") {
@@ -96,18 +108,18 @@ var perfTOInput = func(key, i) {
 				var thrreds = size(thrred);
 				var acc = thracc[1];
 				var accs = size(acc);
-				if (int(thrred) != nil and (thrreds == 4 or thrreds == 5) and thrred >= 1000 and thrred <= 39000 and int(acc) != nil and (accs == 4 or accs == 5) and acc >= 1000 and acc <= 39000) {
+				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= 400 and thrred <= 39000 and int(acc) != nil and (accs == 3 or accs == 4 or accs == 5) and acc >= 400 and acc <= 39000) {
 					setprop("systems/thrust/clbreduc-ft", int(thrred / 10) * 10);
 					setprop("FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 					setprop("MCDUC/thracc-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-				} else if (thrreds == 0 and int(acc) != nil and (accs == 4 or accs == 5) and acc >= 1000 and acc <= 39000) {
+				} else if (thrreds == 0 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= 400 and acc <= 39000) {
 					setprop("FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
 				}
-			} else if (num(scratchpad) != nil and (tfs == 4 or tfs == 5) and scratchpad >= 1000 and scratchpad <= 39000) {
+			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= 400 and scratchpad <= 39000) {
 				setprop("systems/thrust/clbreduc-ft", int(scratchpad / 10) * 10);
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			} else {
