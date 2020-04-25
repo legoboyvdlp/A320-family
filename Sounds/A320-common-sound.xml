@@ -57,16 +57,32 @@
 			</condition>
 		</hyd-yellow>
 		
-		<!-- Disabled until proper PTU system implemented, to not annoy people -->
 		<hyd>
 			<name>PTU</name>
 			<mode>once</mode>
-			<path>airbus_ptu.wav</path>
+			<path>airbus_ptu_on.wav</path>
 			<condition>
 				<or>
 					<property>/systems/hydraulic/sources/ptu/yellow-green</property>
 					<property>/systems/hydraulic/sources/ptu/green-yellow</property>
 				</or>
+			</condition>
+			<volume>
+				<factor>8</factor>
+			</volume>
+			<reference-dist>20.0</reference-dist>
+			<max-dist>100.0</max-dist>
+		</hyd>
+		
+		<hyd>
+			<name>PTU-loop</name>
+			<mode>looped</mode>
+			<path>airbus_ptu.wav</path>
+			<condition>
+				<equals>
+					<property>/systems/hydraulic/sources/ptu/ptu-loop-sound</property>
+					<value>1</value>
+				</equals>
 			</condition>
 			<volume>
 				<factor>8</factor>

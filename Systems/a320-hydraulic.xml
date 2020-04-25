@@ -416,25 +416,44 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/hydraulic/sources/ptu/ptu-active">
+		<switch name="/systems/hydraulic/sources/ptu/ptu-inhibited">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				<test logic="AND">
+					/sim/model/autopush/enabled eq 0
+					/controls/gear/brake-parking eq 0
+				</test>
+				<test logic="AND">
+					/controls/engines/engine[0]/cutoff-switch eq 0
+					/controls/engines/engine[1]/cutoff-switch eq 0
+				</test>
+				<test logic="AND">
+					/controls/engines/engine[0]/cutoff-switch eq 1
+					/controls/engines/engine[1]/cutoff-switch eq 1
+				</test>
+				/gear/gear[0]/compression-norm eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/sources/ptu/ptu-hydraulic-condition">
 			<test logic="AND" value="0">
 				/systems/hydraulic/yellow-psi-diff gt -250
 				/systems/hydraulic/yellow-psi-diff lt 250
-				/systems/hydraulic/sources/ptu/ptu-active eq 1
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
 			</test>
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/hydraulic/yellow-psi-diff ge 250
 					/systems/hydraulic/yellow-psi-diff le -250
 				</test>
-				/systems/hydraulic/sources/ptu/ptu-active eq 1
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
 			</test>
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/hydraulic/yellow-psi-diff gt 500
 					/systems/hydraulic/yellow-psi-diff lt -500
 				</test>
-				/systems/hydraulic/sources/ptu/ptu-active eq 0
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 0
 			</test>
 		</switch>
 		
@@ -442,18 +461,34 @@
 			<default value="0"/>
 			<test logic="AND" value="/systems/hydraulic/green-psi-ptu">
 				/controls/hydraulic/switches/ptu eq 1
-				/systems/hydraulic/sources/ptu/ptu-active eq 1
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
+				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/hydraulic/ptu ne 1
 				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
+		<switch name="/systems/hydraulic/sources/ptu/ptu-loop-sound-cmd">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/sources/ptu/yellow-green ne 0
+				/systems/hydraulic/sources/ptu/green-yellow ne 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/hydraulic/sources/ptu/ptu-loop-sound">
+			<input>/systems/hydraulic/sources/ptu/ptu-loop-sound-cmd</input>
+			<rate_limit sense="incr">1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit> <!-- instant -->
+		</actuator>
+		
 		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
 			<default value="0"/>
 			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
 				/controls/hydraulic/switches/ptu eq 1
-				/systems/hydraulic/sources/ptu/ptu-active eq 1
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
+				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/hydraulic/ptu ne 1
 				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
