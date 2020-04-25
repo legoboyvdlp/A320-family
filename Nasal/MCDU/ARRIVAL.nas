@@ -459,7 +459,7 @@ var arrivalPage = {
 	},
 	arrPushbuttonLeft: func(index) {
 		if (me.activePage == 0) {
-			if (size(me.approaches) >= (index - 1) and index != 2) {
+			if (size(me.approaches) >= (index - 2) and index != 2) {
 				if (!dirToFlag) {
 					me.selectedApproach = me.arrAirport[0].getIAP(me.approaches[index - 3 + me.scrollApproach]);
 					me.makeTmpy();
