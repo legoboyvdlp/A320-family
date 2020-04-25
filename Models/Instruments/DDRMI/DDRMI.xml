@@ -199,8 +199,8 @@
 	<animation>
 		<name>Panel lighting (dome)</name>
 		<type>material</type>
-		<object-name>ddrmi_dme1_screen</object-name>
-		<object-name>ddrmi_dme2_screen</object-name>
+<!--		<object-name>ddrmi_dme1_screen</object-name>-->
+<!--		<object-name>ddrmi_dme2_screen</object-name>-->
 		<object-name>ddrmi_pointer_1</object-name>
 		<object-name>ddrmi_pointer_2</object-name>
 		<object-name>ddrmi_inside</object-name>
@@ -271,5 +271,5 @@
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
 	</effect>
-
+	
 </PropertyList>

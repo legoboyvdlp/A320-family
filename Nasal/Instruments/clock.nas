@@ -24,6 +24,7 @@ setlistener("sim/signals/fdm-initialized", func {
 	props.globals.initNode("instrumentation/chrono[0]/chr-et-min",0,"INT");
 	props.globals.initNode("instrumentation/chrono[0]/chr-et-sec",0,"INT");
 	props.globals.initNode("controls/flight/rudder-trim-display",0,"STRING");
+	setprop("controls/flight/rudder-trim-display", sprintf("%2.1f", getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg")));
 	start_loop.start();
 });
 
