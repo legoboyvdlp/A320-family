@@ -123,7 +123,7 @@ var du_quality = gui.Dialog.new("sim/gui/dialogs/acconfig/du-quality/dialog", "A
 var rendering_dlg = gui.Dialog.new("sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
 spinning.start();
 init_dlg.open();
-http.load("https://raw.githubusercontent.com/legoboyvdlp/A320-family/201912/revision.txt").done(func(r) setprop("systems/acconfig/new-revision", r.response));
+http.load("https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/revision.txt").done(func(r) setprop("systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
@@ -138,9 +138,9 @@ setlistener("/systems/acconfig/new-revision", func {
 });
 
 var mismatch_chk = func {
-	if (num(string.replace(getprop("sim/version/flightgear"),".","")) < 201912) {
+	if (num(string.replace(getprop("sim/version/flightgear"),".","")) < 201920) {
 		setprop("systems/acconfig/mismatch-code", "0x121");
-		setprop("systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.1.2.");
+		setprop("systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.2.0.");
 		if (getprop("systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
