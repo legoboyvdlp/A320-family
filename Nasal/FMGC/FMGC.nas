@@ -476,39 +476,35 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	#handle radios, runways, v1/vr/v2
-	if (fmgc.flightPlanController.flightplans[2].approach != nil and phase >= 2) {
+	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
+	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
+	if (destination_rwy != nil and phase >= 2) {
 		var airport = airportinfo(getprop("FMGC/internal/arr-arpt"));
 		setprop("FMGC/internal/ldg-elev", airport.elevation * M2FT);
-		var rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
-		if (rwy != nil) {
-    		magnetic_hdg = geo.normdeg(rwy.heading - getprop("environment/magnetic-variation-deg"));
-			runway_ils = rwy.ils_frequency_mhz;
-			if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
-				setprop("FMGC/internal/ils1freq-calculated", runway_ils);
-				setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-			} else if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set")) {
-				setprop("FMGC/internal/ils1freq-calculated", runway_ils);
-				setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-			} else if (!getprop("FMGC/internal/ils1crs-set")) {
-				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-			}
+		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("environment/magnetic-variation-deg"));
+		runway_ils = destination_rwy.ils_frequency_mhz;
+		if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+			setprop("FMGC/internal/ils1freq-calculated", runway_ils);
+			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+		} else if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set")) {
+			setprop("FMGC/internal/ils1freq-calculated", runway_ils);
+			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+		} else if (!getprop("FMGC/internal/ils1crs-set")) {
+			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
-	} else if (fmgc.flightPlanController.flightplans[2].departure_runway != nil and phase <= 1) {
-		var rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
-		if (rwy != nil) {
-			magnetic_hdg = geo.normdeg(rwy.heading - getprop("environment/magnetic-variation-deg"));
-			runway_ils = rwy.ils_frequency_mhz;
-			if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
-				setprop("FMGC/internal/ils1freq-calculated", runway_ils);
-				setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-			} else if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set")) {
-				setprop("FMGC/internal/ils1freq-calculated", runway_ils);
-				setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-			} else if (!getprop("FMGC/internal/ils1crs-set")) {
-				setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-			}
+	} else if (departure_rwy != nil and phase <= 1) {
+		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("environment/magnetic-variation-deg"));
+		runway_ils = departure_rwy.ils_frequency_mhz;
+		if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set") and !getprop("FMGC/internal/ils1crs-set")) {
+			setprop("FMGC/internal/ils1freq-calculated", runway_ils);
+			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+		} else if (runway_ils != nil and !getprop("FMGC/internal/ils1freq-set")) {
+			setprop("FMGC/internal/ils1freq-calculated", runway_ils);
+			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+		} else if (!getprop("FMGC/internal/ils1crs-set")) {
+			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
 	}
 });
