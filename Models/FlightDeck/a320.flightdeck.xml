@@ -7466,12 +7466,12 @@
 		<name>dme_0</name>
 		<offsets>
 			<x-m>-0.529</x-m>
-			<y-m>-0.160</y-m>
+			<y-m>-0.153</y-m>
 			<z-m>0.1305</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.0f.</format>
@@ -7497,12 +7497,12 @@
 		<name>dme</name>
 		<offsets>
 			<x-m>-0.529</x-m>
-			<y-m>-0.153</y-m>
+			<y-m>-0.149</y-m>
 			<z-m>0.1305</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.1f</format>
@@ -7530,12 +7530,12 @@
 		<name>dme1_0</name>
 		<offsets>
 			<x-m>-0.529</x-m>
-			<y-m>-0.127</y-m>
+			<y-m>-0.120</y-m>
 			<z-m>0.1305</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.0f.</format>
@@ -7561,12 +7561,12 @@
 		<name>dme1</name>
 		<offsets>
 			<x-m>-0.529</x-m>
-			<y-m>-0.120</y-m>
+			<y-m>-0.116</y-m>
 			<z-m>0.1305</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.1f</format>
