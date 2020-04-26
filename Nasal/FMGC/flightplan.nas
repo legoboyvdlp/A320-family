@@ -166,7 +166,8 @@ var flightPlanController = {
 		}
 	},
 	
-	# for these two remember to call flightPlanChanged
+	# for these two remember to call flightPlanChanged. We are assuming this is called from a function which will all flightPlanChanged itself.
+	
 	addDiscontinuity: func(index, plan) {
 		if (DEBUG_DISCONT) { return; }
 		if (index > 0) {
@@ -180,9 +181,23 @@ var flightPlanController = {
 		}
 	},
 	
-	insertTP: func(n) {
-		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), 1);
+	# insertTP - insert PPOS waypoint denoted "T-P" at specified index
+	# args: n, index
+	#    n: flightplan to which the PPOS waypoint will be inserted
+	#    index: optional argument, defaults to 1, index which the waypoint will be at. 
+	# Default to one, as direct to will insert TP, then create leg to DIRTO waypoint, then delete waypoint[0]
+	
+	insertTP: func(n, index = 1) {
+		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), index);
 	},
+	
+	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
+	# args: wpt, bearing, dist, name, typeStr
+	#    wpt: waypoint ghost
+	#    bearing: bearing of waypoint to be created from specified waypoint
+	#    distance: distance of waypoint to be created from specified waypoint, nautical miles
+	#    name: name of waypoint to be created
+	#    typeStr: optional argument to be passed to createWP, must be one of "sid", "star" "approach" "missed" or "pseudo"
 	
 	childWPBearingDistance: func(wpt, bearing, dist, name, typeStr = "") {
 		var coordinates = greatCircleMove(wpt.lat, wpt.lon, bearing, dist);
@@ -193,17 +208,28 @@ var flightPlanController = {
 		}
 	},
 	
+	# insertNOSID - create default SID and add to flightplan
+	# args: n: plan on which the SID will be created
+	# The default SID is a leg from departure runway to a point 2.5 miles on the runway extended centreline
+	# if NO SID has already been inserted, we will not insert another one.
+	
 	insertNOSID: func(n) {
 		var wptStore = me.flightplans[n].getWP(0);
 		if (wptStore.wp_type == "runway") {
 			if (me.flightplans[n].getWP(1).id == "1500") { # check if we have NO SID already loaded
 				me.deleteWP(1, n, 1);
 			}
+			
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
 			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5, "1500", "sid"), 1);
 		}
 		me.flightPlanChanged(n);
 	},
+	
+	# insertNOSTAR - create default STAR and add to flightplan
+	# args: n: plan on which the STAR will be created
+	# The default STAR is a leg from departure runway to a point 5 miles on the runway extended centreline
+	# if NO STAR has already been inserted, we will not insert another one.
 	
 	insertNOSTAR: func(n) {
 		var wptStore = me.flightplans[n].getWP(me.arrivalIndex[n]);
@@ -220,23 +246,37 @@ var flightPlanController = {
 		me.flightPlanChanged(n);
 	},
 	
+	# directTo - create leg direct from present position to a specified waypoint
+	# args: waypointGhost, plan
+	#    waypointGost: waypoint ghost of the waypoint
+	#    plan: plan on which the direct to leg will be created
+	# We first insert a PPOS waypoint at index 1
+	# We check if the flightplan already contains the waypoint passed to the function
+	# If it exists, we delete intermediate waypoints
+	# If it does not, we insert the waypoint at index 2 and add a discontinuity at index 3
+	# In either case, we delete the current FROM waypoint, index 0, and call flightPlanChanged to recalculate
+	# We attempt to get the distance from the aircraft current position to the chosen waypoint and update mcdu with it
+	
 	directTo: func(waypointGhost, plan) {
 		if (me.flightplans[plan].indexOfWP(waypointGhost) == -1) {
-			me.insertTP(plan);
+			me.insertTP(plan, 1);
 			me.flightplans[plan].insertWP(createWPFrom(waypointGhost), 2);
 			me.addDiscontinuity(3, plan);
-			me.deleteWP(0, plan);
 		} else {
-			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost); # delete four times, so on last iteration it equals one and then goes to zero, leave it without subtracting one
+			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
+			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
+			# so four individual deletions. Delete index 1 four times. 
+			# Add one extra for the TP, so while > 2
+			
+			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost);
 			while (timesToDelete > 1) {
 				me.deleteWP(1, plan, 1);
 				timesToDelete -= 1; 
 			}
-			me.insertTP(plan);
-			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
-			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
-			# so four individual deletions. Delete index 1 four times. 
+			# Add TP afterwards, this is essential
+			me.insertTP(plan, 1);
 		}
+		me.deleteWP(0, plan);
 		me.flightPlanChanged(plan);
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
