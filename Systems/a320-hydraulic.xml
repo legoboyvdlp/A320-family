@@ -5,8 +5,6 @@
 <system name="A320: Hydraulic">	
 	
 	<property value="500">/systems/hydraulic/sys-incr-rate</property> <!-- 2 seconds per 1000 psi -->
-	<property value="0">/systems/hydraulic/sources/ptu/green-yellow</property>
-	<property value="0">/systems/hydraulic/sources/ptu/yellow-green</property>
 	<channel name="SYS Leak Logic" execrate="8">
 		
 		<!-- Blue -->

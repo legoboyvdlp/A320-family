@@ -1112,6 +1112,12 @@
 			<fuel-used-2 type="double">0</fuel-used-2>
 		</fuel>
 		<hydraulic n="0">
+			<sources>
+				<ptu>
+					<green-yellow type="double">0</green-yellow>
+					<yellow-green type="double">0</yellow-green>
+				</ptu>
+			</sources>
 			<blue-psi>0</blue-psi>
 			<green-psi>0</green-psi>
 			<yellow-psi>0</yellow-psi>
