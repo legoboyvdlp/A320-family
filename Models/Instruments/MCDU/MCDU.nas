@@ -2615,7 +2615,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_R1S"].setText("FINAL");
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
-				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].approach.id));
+				me["Simple_R1"].setText(sprintf("%s",fmgc.flightPlanController.flightplans[2].approach.id)); # should exclude ILS/LDA/RNAV etc in future
 				me["Simple_R1"].setColor(GREEN);
 			} else {
 				me["Simple_R1"].setText("--- ");
