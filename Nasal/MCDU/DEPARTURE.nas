@@ -257,9 +257,6 @@ var departurePage = {
 		}
 		if (me.selectedRunway != nil) {
 			me._sids = me.depAirport[0].sids(me.selectedRunway.id);
-			if (size(me._sids) == 0) { # account for cases such as EGJJ where runway code does not match SIDS
-				me._sids = me.depAirport[0].sids();
-			}
 		} else {
 			me._sids = me.depAirport[0].sids();
 		}
