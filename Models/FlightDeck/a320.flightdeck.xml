@@ -6417,10 +6417,27 @@
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
-		<object-name>ceiling</object-name>
+		<object-name>atc_0</object-name>
+		<object-name>atc_1</object-name>
+		<object-name>atc_2</object-name>
+		<object-name>atc_3</object-name>
+		<object-name>atc_4</object-name>
+		<object-name>atc_5</object-name>
+		<object-name>atc_6</object-name>
+		<object-name>atc_7</object-name>
+		<object-name>atc_abv</object-name>
+		<object-name>atc_body</object-name>
+		<object-name>atc_clr</object-name>
+		<object-name>atc_fail</object-name>
+		<object-name>atc_ident</object-name>
+		<object-name>atc_screen</object-name>
+		<object-name>atc_stby</object-name>
+		<object-name>atc_sys</object-name>
+		<object-name>atc_thrt</object-name>
 		<object-name>beam</object-name>
 		<object-name>beam_a</object-name>
 		<object-name>beam_f</object-name>
+		<object-name>ceiling</object-name>
 		<object-name>sfl.001</object-name>
 		<object-name>sfl.011</object-name>
 		<object-name>sfl.012</object-name>
@@ -6614,6 +6631,23 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>ACP</object-name>
+		<object-name>atc_0</object-name>
+		<object-name>atc_1</object-name>
+		<object-name>atc_2</object-name>
+		<object-name>atc_3</object-name>
+		<object-name>atc_4</object-name>
+		<object-name>atc_5</object-name>
+		<object-name>atc_6</object-name>
+		<object-name>atc_7</object-name>
+		<object-name>atc_abv</object-name>
+		<object-name>atc_body</object-name>
+		<object-name>atc_clr</object-name>
+		<object-name>atc_fail</object-name>
+		<object-name>atc_ident</object-name>
+		<object-name>atc_screen</object-name>
+		<object-name>atc_stby</object-name>
+		<object-name>atc_sys</object-name>
+		<object-name>atc_thrt</object-name>
 		<object-name>beam</object-name>
 		<object-name>beam_a</object-name>
 		<object-name>beam_f</object-name>
@@ -6858,7 +6892,7 @@
 		<object-name>WindowOpenerFo</object-name>
 		<object-name>WX</object-name>
 	</effect>
-
+	
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
