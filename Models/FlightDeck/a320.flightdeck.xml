@@ -7125,12 +7125,12 @@
 		<name>chrono2_1</name>
 		<offsets>
 			<x-m>-0.547</x-m>
-			<y-m>0.151</y-m>
+			<y-m>0.167</y-m>
 			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
@@ -7187,7 +7187,7 @@
 		<name>UTC_1</name>
 		<offsets>
 			<x-m>-0.547</x-m>
-			<y-m>0.144</y-m>
+			<y-m>0.146</y-m>
 			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -7218,7 +7218,7 @@
 		<name>UTC_2</name>
 		<offsets>
 			<x-m>-0.547</x-m>
-			<y-m>0.158</y-m>
+			<y-m>0.160</y-m>
 			<z-m>0.196</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
