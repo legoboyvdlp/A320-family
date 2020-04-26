@@ -762,7 +762,7 @@ var canvas_PFD_base = {
 		
 		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
-		if (FMGCphase.getValue() < 3) {
+		if (FMGCphase.getValue() < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
 			me["FMA_dh_box"].hide();
 			me["FMA_dh"].hide();
 			me["FMA_dhn"].hide();
