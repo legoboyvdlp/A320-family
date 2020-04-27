@@ -751,19 +751,19 @@ var messages_priority_3 = func {
 	}
 	
 	# C-Chord
-	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 200) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 200) {
+	if ((pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 200) or !pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 200) {
 		alt200 = 1;
 	} else {
 		alt200 = 0;
 	}
 	
-	if ((pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 750) or !pts.Modes.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 750) {
+	if ((pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 750) or !pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 750) {
 		alt750 = 1;
 	} else {
 		alt750 = 0;
 	}
 	
-	if (FWC.altChg.getValue() or pts.Gear.position[0].getValue() == 1 or (getprop("controls/gear/gear-down") and pts.JSBSIM.FCS.slatDeg.getValue() > 4) or fmgc.Output.vert.getValue() == 2) {
+	if (FWC.altChg.getValue() or pts.Gear.position[0].getValue() == 1 or (getprop("controls/gear/gear-down") and pts.Fdm.JSBsim.Fcs.slatDeg.getValue() > 4) or fmgc.Output.vert.getValue() == 2) {
 		altAlertInhibit = 1;
 	} else {
 		altAlertInhibit = 0;

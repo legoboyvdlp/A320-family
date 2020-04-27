@@ -271,8 +271,8 @@ var ADIRSnew = {
 	update_items: [
 		props.UpdateManager.FromPropertyHashList(["/fdm/jsbsim/fcs/flap-pos-deg","/fdm/jsbsim/fcs/slat-pos-deg"], 0.1, func(notification)
 			{
-				me._flapPos = pts.JSBSIM.FCS.flapDeg.getValue();
-				me._slatPos = pts.JSBSIM.FCS.slatDeg.getValue();
+				me._flapPos = pts.Fdm.JSBsim.Fcs.flapDeg.getValue();
+				me._slatPos = pts.Fdm.JSBsim.Fcs.slatDeg.getValue();
 				
 				if (me._flapPos >= 23 and me._slatPos >= 25) {
 					ADIRSnew.overspeedVFE.setValue(181);

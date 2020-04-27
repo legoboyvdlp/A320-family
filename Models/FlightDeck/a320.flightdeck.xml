@@ -2048,11 +2048,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -2070,11 +2070,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -2104,11 +2104,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -2126,11 +2126,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -2163,7 +2163,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>modes/altimeter/inhg</property>
+				<property>instrumentation/altimeter/inhg</property>
 				<value>0</value>
 				<value>1</value>
 			</binding>
@@ -2193,7 +2193,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_cpt_sw</object-name>
-		<property>modes/altimeter/inhg</property>
+		<property>instrumentation/altimeter/inhg</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>40</dep></entry>
 			<entry><ind>1</ind><dep>-3</dep></entry>
@@ -2206,7 +2206,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_fo_sw</object-name>
-		<property>modes/altimeter/inhg</property>
+		<property>instrumentation/altimeter/inhg</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>40</dep></entry>
 			<entry><ind>1</ind><dep>-3</dep></entry>
@@ -2434,11 +2434,11 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>modes/altimeter/inhg</property>
+					<property>instrumentation/altimeter/inhg</property>
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>modes/altimeter/std</property>
+					<property>instrumentation/altimeter/std</property>
 					<value>0</value>
 				</equals>
 			</and>
@@ -2455,11 +2455,11 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>modes/altimeter/inhg</property>
+					<property>instrumentation/altimeter/inhg</property>
 					<value>0</value>
 				</equals>
 				<equals>
-					<property>modes/altimeter/std</property>
+					<property>instrumentation/altimeter/std</property>
 					<value>0</value>
 				</equals>
 			</and>
@@ -2476,7 +2476,7 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>modes/altimeter/std</property>
+					<property>instrumentation/altimeter/std</property>
 					<value>1</value>
 				</equals>
 			</and>

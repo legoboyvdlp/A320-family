@@ -170,3 +170,14 @@ setlistener("/controls/apu/master", func() { # poor mans set-reset latch
 		systems.APUController.APU.signals.autoshutdown = 0;
 	}
 }, 0, 0);
+
+var toggleSTD = func {
+	if (pts.Instrumentation.Altimeter.std.getBoolValue()) {
+		pts.Instrumentation.Altimeter.settingInhg.setValue(pts.Instrumentation.Altimeter.oldQnh.getValue());
+		pts.Instrumentation.Altimeter.std.setBoolValue(0);
+	} else {
+		pts.Instrumentation.Altimeter.oldQnh.setValue(pts.Instrumentation.Altimeter.settingInhg.getValue());
+		pts.Instrumentation.Altimeter.settingInhg.setValue(29.92);
+		pts.Instrumentation.Altimeter.std.setBoolValue(1);
+	}
+}

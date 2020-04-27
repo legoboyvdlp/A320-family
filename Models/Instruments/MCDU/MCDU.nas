@@ -33,24 +33,24 @@ var fplnl5 = "";
 var fplnl5s = "";
 var fplnl6 = "";
 var fplnl6s = "";
-setprop("MCDUC/colors/wht/r", 1);
-setprop("MCDUC/colors/wht/g", 1);
-setprop("MCDUC/colors/wht/b", 1);
-setprop("MCDUC/colors/grn/r", 0.0509);
-setprop("MCDUC/colors/grn/g", 0.7529);
-setprop("MCDUC/colors/grn/b", 0.2941);
-setprop("MCDUC/colors/blu/r", 0.0901);
-setprop("MCDUC/colors/blu/g", 0.6039);
-setprop("MCDUC/colors/blu/b", 0.7176);
-setprop("MCDUC/colors/amb/r", 0.7333);
-setprop("MCDUC/colors/amb/g", 0.3803);
-setprop("MCDUC/colors/amb/b", 0.0000);
-setprop("MCDUC/colors/yel/r", 0.9333);
-setprop("MCDUC/colors/yel/g", 0.9333);
-setprop("MCDUC/colors/yel/b", 0.0000);
-setprop("MCDUC/colors/mag/r", 0.6902);
-setprop("MCDUC/colors/mag/g", 0.3333);
-setprop("MCDUC/colors/mag/b", 0.7541);
+setprop("/MCDUC/colors/wht/r", 1);
+setprop("/MCDUC/colors/wht/g", 1);
+setprop("/MCDUC/colors/wht/b", 1);
+setprop("/MCDUC/colors/grn/r", 0.0509);
+setprop("/MCDUC/colors/grn/g", 0.7529);
+setprop("/MCDUC/colors/grn/b", 0.2941);
+setprop("/MCDUC/colors/blu/r", 0.0901);
+setprop("/MCDUC/colors/blu/g", 0.6039);
+setprop("/MCDUC/colors/blu/b", 0.7176);
+setprop("/MCDUC/colors/amb/r", 0.7333);
+setprop("/MCDUC/colors/amb/g", 0.3803);
+setprop("/MCDUC/colors/amb/b", 0.0000);
+setprop("/MCDUC/colors/yel/r", 0.9333);
+setprop("/MCDUC/colors/yel/g", 0.9333);
+setprop("/MCDUC/colors/yel/b", 0.0000);
+setprop("/MCDUC/colors/mag/r", 0.6902);
+setprop("/MCDUC/colors/mag/g", 0.3333);
+setprop("/MCDUC/colors/mag/b", 0.7541);
 var WHITE = [1.0000,1.0000,1.0000];
 var GREEN = [0.0509,0.7529,0.2941];
 var BLUE = [0.0901,0.6039,0.7176];
@@ -59,154 +59,154 @@ var YELLOW = [0.9333,0.9333,0.0000];
 var MAGENTA = [0.6902,0.3333,0.7541];
 
 # Fetch nodes:
-var mcdu_keyboard_left = props.globals.getNode("FMGC/keyboard-left", 0);
-var mcdu_keyboard_right = props.globals.getNode("FMGC/keyboard-right", 0);
+var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
+var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
 
 #ACCONFIG
-var ac1 = props.globals.getNode("systems/electrical/bus/ac-1", 1);
-var ac2 = props.globals.getNode("systems/electrical/bus/ac-2", 1);
-var mcdu1_lgt = props.globals.getNode("controls/lighting/DU/mcdu1", 1);
-var mcdu2_lgt = props.globals.getNode("controls/lighting/DU/mcdu2", 1);
-var acType = props.globals.getNode("MCDUC/type", 1);
-var engType = props.globals.getNode("MCDUC/eng", 1);
-var database1 = props.globals.getNode("FMGC/internal/navdatabase", 1);
-var database2 = props.globals.getNode("FMGC/internal/navdatabase2", 1);
-var databaseCode = props.globals.getNode("FMGC/internal/navdatabasecode", 1);
+var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1", 1);
+var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
+var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
+var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
+var acType = props.globals.getNode("/MCDUC/type", 1);
+var engType = props.globals.getNode("/MCDUC/eng", 1);
+var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
+var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
+var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
 
 # RADNAV
-var vor1 = props.globals.getNode("FMGC/internal/vor1-mcdu", 1);
-var vor2 = props.globals.getNode("FMGC/internal/vor2-mcdu", 1);
-var ils1 = props.globals.getNode("FMGC/internal/ils1-mcdu", 1);
-var adf1 = props.globals.getNode("FMGC/internal/adf1-mcdu", 1);
-var adf2 = props.globals.getNode("FMGC/internal/adf2-mcdu", 1);
-var vor1FreqSet = props.globals.getNode("FMGC/internal/vor1freq-set", 1);
-var vor1CRSSet = props.globals.getNode("FMGC/internal/vor1crs-set", 1);
-var vor2FreqSet = props.globals.getNode("FMGC/internal/vor2freq-set", 1);
-var vor2CRSSet = props.globals.getNode("FMGC/internal/vor2crs-set", 1);
-var ils1FreqSet = props.globals.getNode("FMGC/internal/ils1freq-set", 1);
-var ils1CRSSet = props.globals.getNode("FMGC/internal/ils1crs-set", 1);
-var adf1FreqSet = props.globals.getNode("FMGC/internal/adf1freq-set", 1);
-var adf2FreqSet = props.globals.getNode("FMGC/internal/adf2freq-set", 1);
-var ils1CRS = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg", 1);
-var vor1CRS = props.globals.getNode("instrumentation/nav[2]/radials/selected-deg", 1);
-var vor2CRS = props.globals.getNode("instrumentation/nav[3]/radials/selected-deg", 1);
+var vor1 = props.globals.getNode("/FMGC/internal/vor1-mcdu", 1);
+var vor2 = props.globals.getNode("/FMGC/internal/vor2-mcdu", 1);
+var ils1 = props.globals.getNode("/FMGC/internal/ils1-mcdu", 1);
+var adf1 = props.globals.getNode("/FMGC/internal/adf1-mcdu", 1);
+var adf2 = props.globals.getNode("/FMGC/internal/adf2-mcdu", 1);
+var vor1FreqSet = props.globals.getNode("/FMGC/internal/vor1freq-set", 1);
+var vor1CRSSet = props.globals.getNode("/FMGC/internal/vor1crs-set", 1);
+var vor2FreqSet = props.globals.getNode("/FMGC/internal/vor2freq-set", 1);
+var vor2CRSSet = props.globals.getNode("/FMGC/internal/vor2crs-set", 1);
+var ils1FreqSet = props.globals.getNode("/FMGC/internal/ils1freq-set", 1);
+var ils1CRSSet = props.globals.getNode("/FMGC/internal/ils1crs-set", 1);
+var adf1FreqSet = props.globals.getNode("/FMGC/internal/adf1freq-set", 1);
+var adf2FreqSet = props.globals.getNode("/FMGC/internal/adf2freq-set", 1);
+var ils1CRS = props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg", 1);
+var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg", 1);
+var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
 
 # INT-A
-var flightNum = props.globals.getNode("MCDUC/flight-num", 1);
-var flightNumSet = props.globals.getNode("MCDUC/flight-num-set", 1);
-var depArpt = props.globals.getNode("FMGC/internal/dep-arpt", 1);
-var arrArpt = props.globals.getNode("FMGC/internal/arr-arpt", 1);
-var toFromSet = props.globals.getNode("FMGC/internal/tofrom-set", 1);
-var alt_airport = props.globals.getNode("FMGC/internal/alt-airport", 1);
-var altSet = props.globals.getNode("FMGC/internal/alt-set", 1);
-var costIndex = props.globals.getNode("FMGC/internal/cost-index", 1);
-var costIndexSet = props.globals.getNode("FMGC/internal/cost-index-set", 1);
-var cruiseFL = props.globals.getNode("FMGC/internal/cruise-fl", 1);
-var cruiseSet = props.globals.getNode("FMGC/internal/cruise-lvl-set", 1);
-var cruiseTemp = props.globals.getNode("FMGC/internal/cruise-temp", 1);
-var cruiseTempSet = props.globals.getNode("FMGC/internal/cruise-temp-set", 1);
-var tropo = props.globals.getNode("FMGC/internal/tropo", 1);
-var tropoSet = props.globals.getNode("FMGC/internal/tropo-set", 1);
-var gndtemp = props.globals.getNode("FMGC/internal/gndtemp", 1);
-var gndtempSet = props.globals.getNode("FMGC/internal/gndtemp-set", 1);
-var ADIRSMCDUBTN = props.globals.getNode("controls/adirs/mcducbtn", 1);
+var flightNum = props.globals.getNode("/MCDUC/flight-num", 1);
+var flightNumSet = props.globals.getNode("/MCDUC/flight-num-set", 1);
+var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
+var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
+var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
+var alt_airport = props.globals.getNode("/FMGC/internal/alt-airport", 1);
+var altSet = props.globals.getNode("/FMGC/internal/alt-set", 1);
+var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
+var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
+var cruiseFL = props.globals.getNode("/FMGC/internal/cruise-fl", 1);
+var cruiseSet = props.globals.getNode("/FMGC/internal/cruise-lvl-set", 1);
+var cruiseTemp = props.globals.getNode("/FMGC/internal/cruise-temp", 1);
+var cruiseTempSet = props.globals.getNode("/FMGC/internal/cruise-temp-set", 1);
+var tropo = props.globals.getNode("/FMGC/internal/tropo", 1);
+var tropoSet = props.globals.getNode("/FMGC/internal/tropo-set", 1);
+var gndtemp = props.globals.getNode("/FMGC/internal/gndtemp", 1);
+var gndtempSet = props.globals.getNode("/FMGC/internal/gndtemp-set", 1);
+var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
-var align_set = props.globals.getNode("FMGC/internal/align-set", 1);
+var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 
 # ROUTE SELECTION
-var alt_selected = props.globals.getNode("FMGC/internal/alt-selected", 1);
+var alt_selected = props.globals.getNode("/FMGC/internal/alt-selected", 1);
 
 # INT-B
-var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
-var zfwcgSet = props.globals.getNode("FMGC/internal/zfwcg-set", 1);
-var zfw = props.globals.getNode("FMGC/internal/zfw", 1);
-var zfwSet = props.globals.getNode("FMGC/internal/zfw-set", 1);
-var block = props.globals.getNode("FMGC/internal/block", 1);
-var blockSet = props.globals.getNode("FMGC/internal/block-set", 1);
-var taxi_fuel = props.globals.getNode("FMGC/internal/taxi-fuel", 1);
-var trip_fuel = props.globals.getNode("FMGC/internal/trip-fuel", 1);
-var trip_time = props.globals.getNode("FMGC/internal/trip-time", 1);
-var rte_rsv = props.globals.getNode("FMGC/internal/rte-rsv", 1);
-var rte_percent = props.globals.getNode("FMGC/internal/rte-percent", 1);
-var alt_fuel = props.globals.getNode("FMGC/internal/alt-fuel", 1);
-var alt_time = props.globals.getNode("FMGC/internal/alt-time", 1);
-var final_fuel = props.globals.getNode("FMGC/internal/final-fuel", 1);
-var final_time = props.globals.getNode("FMGC/internal/final-time", 1);
-var min_dest_fob = props.globals.getNode("FMGC/internal/min-dest-fob", 1);
-var tow = props.globals.getNode("FMGC/internal/tow", 1);
-var lw = props.globals.getNode("FMGC/internal/lw", 1);
-var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
-var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
-var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
+var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
+var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
+var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
+var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
+var block = props.globals.getNode("/FMGC/internal/block", 1);
+var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
+var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
+var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
+var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
+var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
+var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
+var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
+var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
+var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
+var final_time = props.globals.getNode("/FMGC/internal/final-time", 1);
+var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
+var tow = props.globals.getNode("/FMGC/internal/tow", 1);
+var lw = props.globals.getNode("/FMGC/internal/lw", 1);
+var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
+var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
+var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
 
 # FUELPRED
-var state1 = props.globals.getNode("engines/engine[0]/state", 1);
-var state2 = props.globals.getNode("engines/engine[1]/state", 1);
-var engrdy = props.globals.getNode("engines/ready", 1);
-var pri_utc = props.globals.getNode("FMGC/internal/pri-utc", 1);
-var alt_utc = props.globals.getNode("FMGC/internal/alt-utc", 1);
-var pri_efob = props.globals.getNode("FMGC/internal/pri-efob", 1);
-var alt_efob = props.globals.getNode("FMGC/internal/alt-efob", 1);
-var fob = props.globals.getNode("FMGC/internal/fob", 1);
-var fffq_sensor = props.globals.getNode("FMGC/internal/fffq-sensor", 1);
-var gw = props.globals.getNode("FMGC/internal/gw", 1);
-var cg = props.globals.getNode("FMGC/internal/cg", 1);
+var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
+var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
+var engrdy = props.globals.getNode("/engines/ready", 1);
+var pri_utc = props.globals.getNode("/FMGC/internal/pri-utc", 1);
+var alt_utc = props.globals.getNode("/FMGC/internal/alt-utc", 1);
+var pri_efob = props.globals.getNode("/FMGC/internal/pri-efob", 1);
+var alt_efob = props.globals.getNode("/FMGC/internal/alt-efob", 1);
+var fob = props.globals.getNode("/FMGC/internal/fob", 1);
+var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
+var gw = props.globals.getNode("/FMGC/internal/gw", 1);
+var cg = props.globals.getNode("/FMGC/internal/cg", 1);
 
 # PROG
-var cruiseFL_prog = props.globals.getNode("FMGC/internal/cruise-fl-prog", 1);
+var cruiseFL_prog = props.globals.getNode("/FMGC/internal/cruise-fl-prog", 1);
 
 # PERF
-var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
+var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 
 # TO PERF
-var v1 = props.globals.getNode("FMGC/internal/v1", 1);
-var v1Set = props.globals.getNode("FMGC/internal/v1-set", 1);
-var vr = props.globals.getNode("FMGC/internal/vr", 1);
-var vrSet = props.globals.getNode("FMGC/internal/vr-set", 1);
-var v2 = props.globals.getNode("FMGC/internal/v2", 1);
-var v2Set = props.globals.getNode("FMGC/internal/v2-set", 1);
+var v1 = props.globals.getNode("/FMGC/internal/v1", 1);
+var v1Set = props.globals.getNode("/FMGC/internal/v1-set", 1);
+var vr = props.globals.getNode("/FMGC/internal/vr", 1);
+var vrSet = props.globals.getNode("/FMGC/internal/vr-set", 1);
+var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
+var v2Set = props.globals.getNode("/FMGC/internal/v2-set", 1);
 
-var clbReducFt = props.globals.getNode("systems/thrust/clbreduc-ft", 1);
-var reducFt = props.globals.getNode("FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
-var thrAccSet = props.globals.getNode("MCDUC/thracc-set", 1);
-var flapTO = props.globals.getNode("FMGC/internal/to-flap", 1);
-var THSTO = props.globals.getNode("FMGC/internal/to-ths", 1);
-var flapTHSSet = props.globals.getNode("FMGC/internal/flap-ths-set", 1);
-var flex = props.globals.getNode("FMGC/internal/flex", 1);
-var flexSet = props.globals.getNode("FMGC/internal/flex-set", 1);
-var engOutAcc = props.globals.getNode("FMGC/internal/eng-out-reduc", 1);
-var engOutAccSet = props.globals.getNode("MCDUC/reducacc-set", 1);
-var transAlt = props.globals.getNode("FMGC/internal/trans-alt", 1);
-var managedSpeed = props.globals.getNode("it-autoflight/input/spd-managed", 1);
+var clbReducFt = props.globals.getNode("/systems/thrust/clbreduc-ft", 1);
+var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
+var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
+var flapTO = props.globals.getNode("/FMGC/internal/to-flap", 1);
+var THSTO = props.globals.getNode("/FMGC/internal/to-ths", 1);
+var flapTHSSet = props.globals.getNode("/FMGC/internal/flap-ths-set", 1);
+var flex = props.globals.getNode("/FMGC/internal/flex", 1);
+var flexSet = props.globals.getNode("/FMGC/internal/flex-set", 1);
+var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
+var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
+var transAlt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
+var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
 
 # CLB PERF
-var activate_once = props.globals.getNode("FMGC/internal/activate-once", 1);
-var activate_twice = props.globals.getNode("FMGC/internal/activate-twice", 1);
+var activate_once = props.globals.getNode("/FMGC/internal/activate-once", 1);
+var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
 
 # CRZ PERF
 
 # DES PERF
 
 # APPR PERF
-var dest_qnh = props.globals.getNode("FMGC/internal/dest-qnh", 1);
-var dest_temp = props.globals.getNode("FMGC/internal/dest-temp", 1);
-var dest_mag = props.globals.getNode("FMGC/internal/dest-mag", 1);
-var dest_wind = props.globals.getNode("FMGC/internal/dest-wind", 1);
-var vapp_speed_set = props.globals.getNode("FMGC/internal/vapp-speed-set", 1);
-var final = props.globals.getNode("FMGC/internal/final", 1);
-var radio = props.globals.getNode("FMGC/internal/radio", 1);
-var baro = props.globals.getNode("FMGC/internal/baro", 1);
-var radio_no = props.globals.getNode("FMGC/internal/radio-no", 1);
-var ldg_config_3_set = props.globals.getNode("FMGC/internal/ldg-config-3-set", 1);
-var ldg_config_f_set = props.globals.getNode("FMGC/internal/ldg-config-f-set", 1);
+var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
+var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
+var dest_mag = props.globals.getNode("/FMGC/internal/dest-mag", 1);
+var dest_wind = props.globals.getNode("/FMGC/internal/dest-wind", 1);
+var vapp_speed_set = props.globals.getNode("/FMGC/internal/vapp-speed-set", 1);
+var final = props.globals.getNode("/FMGC/internal/final", 1);
+var radio = props.globals.getNode("/FMGC/internal/radio", 1);
+var baro = props.globals.getNode("/FMGC/internal/baro", 1);
+var radio_no = props.globals.getNode("/FMGC/internal/radio-no", 1);
+var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 1);
+var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 1);
 
 # GA PERF
 
 # Fetch nodes into vectors
-var pageProp = [props.globals.getNode("MCDU[0]/page", 1), props.globals.getNode("MCDU[1]/page", 1)];
-var active = [props.globals.getNode("MCDU[0]/active", 1), props.globals.getNode("MCDU[1]/active", 1)];
-var scratchpad = [props.globals.getNode("MCDU[0]/scratchpad", 1), props.globals.getNode("MCDU[1]/scratchpad", 1)];
+var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
+var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
+var scratchpad = [props.globals.getNode("/MCDU[0]/scratchpad", 1), props.globals.getNode("/MCDU[1]/scratchpad", 1)];
 
 # Create Nodes:
 var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
@@ -298,8 +298,8 @@ var canvas_MCDU_base = {
 	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
-		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			color_selected = getprop("MCDU[" ~ i ~ "]/scratchpad-color");
+		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+			color_selected = getprop("/MCDU[" ~ i ~ "]/scratchpad-color");
 			if (color_selected == "grn") {
 				me["Scratchpad"].setColor(GREEN);
 			} else if (color_selected == "blu") {
@@ -1168,8 +1168,8 @@ var canvas_MCDU_base = {
 			} else if (cruiseSet.getValue() == 1) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				setprop("FMGC/internal/cruise-temp", 15 - (2 * cruiseFL.getValue() / 10));
-				setprop("FMGC/internal/cruise-temp-set", 1);
+				setprop("/FMGC/internal/cruise-temp", 15 - (2 * cruiseFL.getValue() / 10));
+				setprop("/FMGC/internal/cruise-temp-set", 1);
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
@@ -1215,12 +1215,12 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R6S"].setText("GND TEMP");
-			if (getprop("FMGC/status/phase") == 0 and !getprop("FMGC/internal/gndtemp-set")) {
-				setprop("FMGC/internal/gndtemp", 15 - (2 * getprop("position/gear-agl-ft") / 1000));
+			if (getprop("/FMGC/status/phase") == 0 and !getprop("/FMGC/internal/gndtemp-set")) {
+				setprop("/FMGC/internal/gndtemp", 15 - (2 * getprop("/position/gear-agl-ft") / 1000));
 				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 				me["Simple_R6"].setFontSize(small); 
 			} else {
-				if (getprop("FMGC/internal/gndtemp-set")) {
+				if (getprop("/FMGC/internal/gndtemp-set")) {
 					me["Simple_R6"].setFontSize(normal); 
 				} else {
 					me["Simple_R6"].setFontSize(small); 
@@ -1300,10 +1300,10 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L1S"].setText("LAT");
 				me["Simple_R1S"].setText("LONG");
-			if (getprop("FMGC/internal/align-ref-lat-edit")) {
+			if (getprop("/FMGC/internal/align-ref-lat-edit")) {
 				me["IRSINIT_1"].show();
 				me["IRSINIT_2"].hide();
-			} else if (getprop("FMGC/internal/align-ref-long-edit")) {
+			} else if (getprop("/FMGC/internal/align-ref-long-edit")) {
 				me["IRSINIT_1"].hide();
 				me["IRSINIT_2"].show();
 			} else {
@@ -1312,20 +1312,20 @@ var canvas_MCDU_base = {
 			}
 			
 			if (toFromSet.getValue() == 1) {
-				degrees = getprop("FMGC/internal/align-ref-lat-degrees");
-				minutes = getprop("FMGC/internal/align-ref-lat-minutes");
-				sign = getprop("FMGC/internal/align-ref-lat-sign");
-				dms_lat = getprop("FMGC/flightplan[2]/wp[0]/lat");
+				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
+				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
+				sign = getprop("/FMGC/internal/align-ref-lat-sign");
+				dms_lat = getprop("/FMGC/flightplan[2]/wp[0]/lat");
 				degrees_lat = int(dms_lat);
 				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
 				lat_same = degrees_lat == degrees and minutes_lat == minutes and sign_lat == sign;
 				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
 				
-				degrees = getprop("FMGC/internal/align-ref-long-degrees");
-				minutes = getprop("FMGC/internal/align-ref-long-minutes");
-				sign = getprop("FMGC/internal/align-ref-long-sign");
-				dms_long = getprop("FMGC/flightplan[2]/wp[0]/lon");
+				degrees = getprop("/FMGC/internal/align-ref-long-degrees");
+				minutes = getprop("/FMGC/internal/align-ref-long-minutes");
+				sign = getprop("/FMGC/internal/align-ref-long-sign");
+				dms_long = getprop("/FMGC/flightplan[2]/wp[0]/lon");
 				degrees_long = int(dms_long);
 				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
 				sign_long = degrees_long >= 0 ? "E" : "W";
@@ -1333,7 +1333,7 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
 				
 				if (lat_same and long_same) {
-					me["Simple_C1"].setText(getprop("FMGC/flightplan[2]/wp[0]/id"));
+					me["Simple_C1"].setText(getprop("/FMGC/flightplan[2]/wp[0]/id"));
 					me["Simple_C1"].setColor(GREEN);
 				} else {
 					me["Simple_C1"].setText("----");
@@ -1346,27 +1346,27 @@ var canvas_MCDU_base = {
 				me["Simple_C1"].setColor(WHITE);
 			}
 			
-			dms = getprop("position/latitude-deg");
+			dms = getprop("/position/latitude-deg");
 			degrees = int(dms);
 			minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 			sign = degrees >= 0 ? "N" : "S";
 			me["Simple_L2"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
-			dms2 = getprop("position/longitude-deg");
+			dms2 = getprop("/position/longitude-deg");
 			degrees2 = int(dms2);
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
 			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			if (getprop("systems/navigation/adr/operating-1") and getprop("FMGC/internal/align1-done")) {
+			if (getprop("/systems/navigation/adr/operating-1") and getprop("/FMGC/internal/align1-done")) {
 				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C3"].setText("-----.--/-----.--");
 			}
-			if (getprop("systems/navigation/adr/operating-2") and getprop("FMGC/internal/align2-done")) {
+			if (getprop("/systems/navigation/adr/operating-2") and getprop("/FMGC/internal/align2-done")) {
 				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C4"].setText("-----.--/-----.--");
 			}
-			if (getprop("systems/navigation/adr/operating-3") and getprop("FMGC/internal/align3-done")) {
+			if (getprop("/systems/navigation/adr/operating-3") and getprop("/FMGC/internal/align3-done")) {
 				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C5"].setText("-----.--/-----.--");
@@ -1383,19 +1383,19 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
-			if (getprop("systems/navigation/adr/operating-1") and systems.ADIRSnew.ADIRunits[0].inAlign == 0) {
+			if (getprop("/systems/navigation/adr/operating-1") and systems.ADIRSnew.ADIRunits[0].inAlign == 0) {
 				me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
 			} else {
 				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
 			}
 			
-			if (getprop("systems/navigation/adr/operating-2") and systems.ADIRSnew.ADIRunits[1].inAlign == 0) {
+			if (getprop("/systems/navigation/adr/operating-2") and systems.ADIRSnew.ADIRunits[1].inAlign == 0) {
 				me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
 			} else {
 				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
 			}
 			
-			if (getprop("systems/navigation/adr/operating-3") and systems.ADIRSnew.ADIRunits[2].inAlign == 0) {
+			if (getprop("/systems/navigation/adr/operating-3") and systems.ADIRSnew.ADIRunits[2].inAlign == 0) {
 				me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
 			} else {
 				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
@@ -1529,10 +1529,10 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
 			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-				setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+				setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+				setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+				setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+				setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 				
 				me["Simple_L2"].setText(sprintf("%4.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
 				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
@@ -1681,19 +1681,19 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
 			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-				setprop("FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+				setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+				setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+				setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+				setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 				
 				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
 				me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
 				me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
 				me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
 				
-				setprop("FMGC/internal/fob", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
-				setprop("FMGC/internal/gw", num(getprop("fdm/jsbsim/inertia/weight-lbs") / 1000));
-				setprop("FMGC/internal/cg", num(getprop("FMGC/internal/zfwcg")));
+				setprop("/FMGC/internal/fob", num(getprop("/consumables/fuel/total-fuel-lbs") / 1000));
+				setprop("/FMGC/internal/gw", num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000));
+				setprop("/FMGC/internal/cg", num(getprop("/FMGC/internal/zfwcg")));
 				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fffq_sensor.getValue(), fob.getValue()));
 				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
 				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
@@ -1734,17 +1734,17 @@ var canvas_MCDU_base = {
 			}
 			
 		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
-			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
+			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+				setprop("/MCDU[" ~ i ~ "]/page", "PROGTO");
 				page = "PROGTO";
-			} else if (getprop("FMGC/status/phase") == 2) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
+			} else if (getprop("/FMGC/status/phase") == 2) {
+				setprop("/MCDU[" ~ i ~ "]/page", "PROGCLB");
 				page = "PROGCLB";
-			} else if (getprop("FMGC/status/phase") == 3) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
+			} else if (getprop("/FMGC/status/phase") == 3) {
+				setprop("/MCDU[" ~ i ~ "]/page", "PROGCRZ");
 				page = "PROGCRZ";
-			} else if (getprop("FMGC/status/phase") == 4 or getprop("FMGC/status/phase") == 5 or getprop("FMGC/status/phase") == 6) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
+			} else if (getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5 or getprop("/FMGC/status/phase") == 6) {
+				setprop("/MCDU[" ~ i ~ "]/page", "PROGDES");
 				page = "PROGDES";
 			}
 			
@@ -1836,8 +1836,8 @@ var canvas_MCDU_base = {
 			}
 			
 			if (cruiseSet.getValue() == 1 and page != "PROGDES") {
-				if (getprop("it-autoflight/input/alt") > cruiseFL_prog.getValue() * 100) {
-					me["Simple_L1"].setText(sprintf("%s", "FL" ~ getprop("it-autoflight/input/alt") / 100));
+				if (getprop("/it-autoflight/input/alt") > cruiseFL_prog.getValue() * 100) {
+					me["Simple_L1"].setText(sprintf("%s", "FL" ~ getprop("/it-autoflight/input/alt") / 100));
 				} else {
 					me["Simple_L1"].setText(sprintf("%s", "FL" ~ cruiseFL_prog.getValue()));
 				}
@@ -1950,7 +1950,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
 			
-			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 7) {
+			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
 				me["Simple_L6_Arrow"].show(); 
 				me["Simple_L6"].show();
 				me["Simple_L6S"].show();
@@ -1960,7 +1960,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 			}
 			
-			if (getprop("FMGC/status/phase") == 1) {
+			if (getprop("/FMGC/status/phase") == 1) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2028,9 +2028,9 @@ var canvas_MCDU_base = {
 			}
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_to")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_to")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/clean_to")));
+				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_to")));
+				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_to")));
+				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_to")));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -2096,7 +2096,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("FMGC/status/phase") == 2) {
+			if (getprop("/FMGC/status/phase") == 2) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showLeftS(0, 0, 0, 0, 1, 0);
@@ -2126,7 +2126,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("FMGC/status/phase") == 5) {
+				} else if (getprop("/FMGC/status/phase") == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2134,8 +2134,8 @@ var canvas_MCDU_base = {
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
 					me.showLeftArrow(0, 0, 0, 0, 0, -1);
 				} else {
-					setprop("FMGC/internal/activate-once", 0);
-					setprop("FMGC/internal/activate-twice", 0);
+					setprop("/FMGC/internal/activate-once", 0);
+					setprop("/FMGC/internal/activate-twice", 0);
 				}
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2162,10 +2162,10 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("it-autoflight/input/spd-mach")));
+				if (getprop("/it-autoflight/input/kts-mach")) {
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}		
@@ -2180,17 +2180,17 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("FMGC/internal/mng-spd")));
+			if (getprop("/it-autoflight/input/kts-mach")) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %s", int(getprop("/FMGC/internal/mng-spd"))));
 			}
 			
 			me["Simple_L5S"].setText(" EXPEDITE");
 			me["Simple_L5"].setText(" T/O PHASE");
 			
 			me["Simple_C2"].setText("         PRED TO");
-			me["Simple_R2"].setText(sprintf("FL%s", getprop("it-autoflight/input/alt") / 100));
+			me["Simple_R2"].setText(sprintf("FL%s", getprop("/it-autoflight/input/alt") / 100));
 			
 			me["Simple_R3S"].setText("DIST");
 			me["Simple_R3"].setText("---");
@@ -2260,7 +2260,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("FMGC/status/phase") == 3) {
+			if (getprop("/FMGC/status/phase") == 3) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 
 				if (managedSpeed.getValue() == 1) {
@@ -2284,7 +2284,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("FMGC/status/phase") == 5) {
+				} else if (getprop("/FMGC/status/phase") == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2292,8 +2292,8 @@ var canvas_MCDU_base = {
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
 					me.showLeftArrow(0, 0, 0, 0, 0, -1);
 				} else {
-					setprop("FMGC/internal/activate-once", 0);
-					setprop("FMGC/internal/activate-twice", 0);
+					setprop("/FMGC/internal/activate-once", 0);
+					setprop("/FMGC/internal/activate-twice", 0);
 				}
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2314,10 +2314,10 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("it-autoflight/input/spd-mach")));
+				if (getprop("/it-autoflight/input/kts-mach")) {
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
@@ -2334,10 +2334,10 @@ var canvas_MCDU_base = {
 			me["Simple_L2S"].setText(" CI");
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("FMGC/internal/mng-spd")));
+			if (getprop("/it-autoflight/input/kts-mach")) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %s", int(getprop("/FMGC/internal/mng-spd"))));
 			}
 			
 			me["Simple_R1S"].setText("DEST EFOB");
@@ -2409,7 +2409,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("FMGC/status/phase") == 4) {
+			if (getprop("/FMGC/status/phase") == 4) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showRight(0, 1, 0, 1, 0, 0);
@@ -2438,7 +2438,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("FMGC/status/phase") == 5) {
+				} else if (getprop("/FMGC/status/phase") == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2446,8 +2446,8 @@ var canvas_MCDU_base = {
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
 					me.showLeftArrow(0, 0, 0, 0, 0, -1);
 				} else {
-					setprop("FMGC/internal/activate-once", 0);
-					setprop("FMGC/internal/activate-twice", 0);
+					setprop("/FMGC/internal/activate-once", 0);
+					setprop("/FMGC/internal/activate-twice", 0);
 				}
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2473,10 +2473,10 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("it-autoflight/input/spd-mach")));
+				if (getprop("/it-autoflight/input/kts-mach")) {
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("it-autoflight/input/spd-kts")));
+					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/spd-kts")));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
@@ -2493,10 +2493,10 @@ var canvas_MCDU_base = {
 			me["Simple_L2S"].setText(" CI");
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("FMGC/internal/mng-spd")));
+			if (getprop("/it-autoflight/input/kts-mach")) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %3.0f", getprop("FMGC/internal/mng-spd")));
+				me["Simple_L3"].setText(sprintf(" %3.0f", getprop("/FMGC/internal/mng-spd")));
 			}
 			
 			me["Simple_L5"].setText(" EXPEDITE");
@@ -2505,7 +2505,7 @@ var canvas_MCDU_base = {
 			me["Simple_R1"].setText("---");
 			
 			me["Simple_C2"].setText("         PRED TO");
-			me["Simple_R2"].setText(sprintf("FL%3.0f", getprop("it-autoflight/input/alt") / 100));
+			me["Simple_R2"].setText(sprintf("FL%3.0f", getprop("/it-autoflight/input/alt") / 100));
 			
 			me["Simple_R3S"].setText("DIST");
 			me["Simple_R3"].setText("---");
@@ -2576,7 +2576,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("FMGC/status/phase") == 5) {
+			if (getprop("/FMGC/status/phase") == 5) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2623,8 +2623,8 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R2S"].setText("BARO");
-			if (getprop("FMGC/internal/baro") != 99999) {
-				me["Simple_R2"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+			if (getprop("/FMGC/internal/baro") != 99999) {
+				me["Simple_R2"].setText(sprintf("%.0f", getprop("/FMGC/internal/baro")));
 				me.fontRight(0, default, 0, 0, 0, 0);
 				me.fontSizeRight(0, normal, 0, 0, 0, 0);
 			} else {
@@ -2634,11 +2634,11 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R3S"].setText("RADIO");
-			if (getprop("FMGC/internal/radio") != 99999) {
-				me["Simple_R3"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+			if (getprop("/FMGC/internal/radio") != 99999) {
+				me["Simple_R3"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
-			} else if (getprop("FMGC/internal/radio-no")) {
+			} else if (getprop("/FMGC/internal/radio-no")) {
 				me["Simple_R3"].setText("NO");
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
@@ -2669,11 +2669,11 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L5S"].setText(" VAPP");
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/clean_appr")));
-				me["Simple_C5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vls_appr")));
-				me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
+				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
+				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
+				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
+				me["Simple_C5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vls_appr")));
+				me["Simple_L5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vapp_appr")));
 				me.fontLeft(0, 0, 0, 0, default, 0);
 				if (vapp_speed_set.getValue()) {
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
@@ -2686,7 +2686,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
 				if (vapp_speed_set.getValue()) {
-					me["Simple_L5"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/vapp_appr")));
+					me["Simple_L5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vapp_appr")));
 					me.fontLeft(0, 0, 0, 0, default, 0);
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
@@ -2754,7 +2754,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("FMGC/status/phase") == 6) {
+			if (getprop("/FMGC/status/phase") == 6) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2779,9 +2779,9 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
 			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("FMGC/internal/computed-speeds/clean_appr")));
+				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
+				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
+				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -3371,12 +3371,12 @@ var canvas_MCDU_base = {
 						}
 						forindex (var item; myDeparture[i].arrowsMatrix[matrixArrow]) {
 							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/r"), getprop("MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/g"), getprop("MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/b"));
+								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/b"));
 								continue;
 							}
 							if (myDeparture[i].arrowsMatrix[matrixArrow][item] == 1) {
 								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/b"));
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/b"));
 							} else {
 								me["arrow" ~ (item + 1) ~ sign].hide();
 							}
@@ -4021,12 +4021,12 @@ var canvas_MCDU_base = {
 						}
 						forindex (var item; myArrival[i].arrowsMatrix[matrixArrow]) {
 							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/r"), getprop("MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/g"), getprop("MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/b"));
+								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/b"));
 								continue;
 							}
 							if (myArrival[i].arrowsMatrix[matrixArrow][item] == 1) {
 								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/b"));
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/b"));
 							} else {
 								me["arrow" ~ (item + 1) ~ sign].hide();
 							}
@@ -4353,12 +4353,12 @@ var canvas_MCDU_base = {
 						}
 						forindex (var item; myHold[i].arrowsMatrix[matrixArrow]) {
 							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/r"), getprop("MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/g"), getprop("MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/b"));
+								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/b"));
 								continue;
 							}
 							if (myHold[i].arrowsMatrix[matrixArrow][item] == 1) {
 								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/b"));
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/b"));
 							} else {
 								me["arrow" ~ (item + 1) ~ sign].hide();
 							}
@@ -4676,7 +4676,7 @@ var canvas_MCDU_base = {
 				
 				if (myDirTo[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myDirTo[i].title[0]));
-					me["Simple_Title"].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/b"));
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/b"));
 					
 					forindex (var matrixArrow; myDirTo[i].arrowsMatrix) {
 						if (matrixArrow == 0) { 
@@ -4688,7 +4688,7 @@ var canvas_MCDU_base = {
 							if (item == 5) { continue; }
 							if (myDirTo[i].arrowsMatrix[matrixArrow][item] == 1) {
 								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/b"));
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/b"));
 							} else {
 								me["arrow" ~ (item + 1) ~ sign].hide();
 							}
@@ -4916,162 +4916,162 @@ var canvas_MCDU_base = {
 	# ack = ignore, wht = white, grn = green, blu = blue, amb = amber, yel = yellow, mag = magenta
 	colorLeft: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_L1"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_L1"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_L2"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_L2"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_L3"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_L3"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_L4"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_L4"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_L5"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_L5"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_L6"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_L6"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorLeftS: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_L1S"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_L1S"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_L2S"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_L2S"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_L3S"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_L3S"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_L4S"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_L4S"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_L5S"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_L5S"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_L6S"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_L6S"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorLeftArrow: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_L1_Arrow"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_L1_Arrow"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_L2_Arrow"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_L2_Arrow"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_L3_Arrow"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_L3_Arrow"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_L4_Arrow"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_L4_Arrow"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_L5_Arrow"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_L5_Arrow"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_L6_Arrow"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorRight: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_R1"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_R1"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_R2"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_R2"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_R3"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_R3"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_R4"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_R4"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_R5"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_R5"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_R6"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_R6"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorRightS: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_R1S"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_R1S"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_R2S"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_R2S"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_R3S"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_R3S"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_R4S"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_R4S"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_R5S"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_R5S"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_R6S"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_R6S"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorRightArrow: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_R1_Arrow"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_R1_Arrow"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_R2_Arrow"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_R2_Arrow"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_R3_Arrow"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_R3_Arrow"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_R4_Arrow"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_R4_Arrow"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_R5_Arrow"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_R5_Arrow"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_R6_Arrow"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_R6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorCenter: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_C1"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_C1"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_C2"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_C2"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_C3"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_C3"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_C4"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_C4"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_C5"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_C5"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_C6"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_C6"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	colorCenterS: func(a, b, c, d, e, f) {
 		if (a != "ack") {
-			me["Simple_C1S"].setColor(getprop("MCDUC/colors/" ~ a ~ "/r"), getprop("MCDUC/colors/" ~ a ~ "/g"), getprop("MCDUC/colors/" ~ a ~ "/b"));
+			me["Simple_C1S"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
 		}
 		if (b != "ack") {
-			me["Simple_C2S"].setColor(getprop("MCDUC/colors/" ~ b ~ "/r"), getprop("MCDUC/colors/" ~ b ~ "/g"), getprop("MCDUC/colors/" ~ b ~ "/b"));
+			me["Simple_C2S"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
 		}
 		if (c != "ack") {
-			me["Simple_C3S"].setColor(getprop("MCDUC/colors/" ~ c ~ "/r"), getprop("MCDUC/colors/" ~ c ~ "/g"), getprop("MCDUC/colors/" ~ c ~ "/b"));
+			me["Simple_C3S"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
 		}
 		if (d != "ack") {
-			me["Simple_C4S"].setColor(getprop("MCDUC/colors/" ~ d ~ "/r"), getprop("MCDUC/colors/" ~ d ~ "/g"), getprop("MCDUC/colors/" ~ d ~ "/b"));
+			me["Simple_C4S"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
 		}
 		if (e != "ack") {
-			me["Simple_C5S"].setColor(getprop("MCDUC/colors/" ~ e ~ "/r"), getprop("MCDUC/colors/" ~ e ~ "/g"), getprop("MCDUC/colors/" ~ e ~ "/b"));
+			me["Simple_C5S"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 		if (f != "ack") {
-			me["Simple_C6S"].setColor(getprop("MCDUC/colors/" ~ f ~ "/r"), getprop("MCDUC/colors/" ~ f ~ "/g"), getprop("MCDUC/colors/" ~ f ~ "/b"));
+			me["Simple_C6S"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
 		}
 	},
 	# -1 = hide, 0 = ignore, 1 = show

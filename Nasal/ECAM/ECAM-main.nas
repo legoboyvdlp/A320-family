@@ -264,8 +264,8 @@ var SystemDisplay = {
 				me.autoCall("door");
 				me.fctl20sec = 9;
 			} elsif (phase == 2) {
-				aileron = pts.JSBSim.FBW.aileron.getValue();
-				elevator = pts.JSBSim.FBW.elevator.getValue();
+				aileron = pts.Fdm.JSBsim.Fbw.aileron.getValue();
+				elevator = pts.Fdm.JSBsim.Fbw.elevator.getValue();
 				
 				if (abs(aileron) >= 0.15 or abs(elevator) >= 0.15 and me.fctl20sec == 9) {
 					me.autoCall("fctl");

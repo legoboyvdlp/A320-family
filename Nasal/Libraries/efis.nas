@@ -1,99 +1,84 @@
 # A3XX EFIS Controller
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
-setlistener("/sim/signals/fdm-initialized", func {
-	setprop("/instrumentation/efis[0]/nd/display-mode", "NAV");
-	setprop("/instrumentation/efis[0]/mfd/pnl_mode-num", 2);
-	setprop("/instrumentation/efis[0]/inputs/range-nm", 20);
-	setprop("/instrumentation/efis[0]/inputs/tfc", 0);
-	setprop("/instrumentation/efis[0]/inputs/CSTR", 0);
-	setprop("/instrumentation/efis[0]/inputs/wpt", 0);
-	setprop("/instrumentation/efis[0]/inputs/VORD", 0);
-	setprop("/instrumentation/efis[0]/inputs/DME", 0);
-	setprop("/instrumentation/efis[0]/inputs/NDB", 0);
-	setprop("/instrumentation/efis[0]/inputs/arpt", 0);
-	setprop("/instrumentation/efis[1]/nd/display-mode", "NAV");
-	setprop("/instrumentation/efis[1]/mfd/pnl_mode-num", 2);
-	setprop("/instrumentation/efis[1]/inputs/range-nm", 20);
-	setprop("/instrumentation/efis[1]/inputs/tfc", 0);
-	setprop("/instrumentation/efis[1]/inputs/CSTR", 0);
-	setprop("/instrumentation/efis[1]/inputs/wpt", 0);
-	setprop("/instrumentation/efis[1]/inputs/VORD", 0);
-	setprop("/instrumentation/efis[1]/inputs/DME", 0);
-	setprop("/instrumentation/efis[1]/inputs/NDB", 0);
-	setprop("/instrumentation/efis[1]/inputs/arpt", 0);
+var mode = "NAV";
+var rng = 20;
+
+setlistener("sim/signals/fdm-initialized", func { # Fix completely retarded shit on the ND
+	pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(2);
+	pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(2);
+	pts.Instrumentation.Efis.Nd.displayMode[0].setValue("NAV");
+	pts.Instrumentation.Efis.Nd.displayMode[1].setValue("NAV");
 });
 
 var setCptND = func(d) {
-	var mode = getprop("instrumentation/efis[0]/nd/display-mode");
-	
+	mode = pts.Instrumentation.Efis.Nd.displayMode[0].getValue();
 	if (d == 1) {
 		if (mode == "ILS") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "VOR");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 1);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("VOR");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(1);
 		} else if (mode == "VOR") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "NAV");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 2);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("NAV");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(2);
 		} else if (mode == "NAV") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "ARC");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 3);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("ARC");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(3);
 		} else if (mode == "ARC") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "PLAN");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 4);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("PLAN");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(4);
 		}
 	} else if (d == -1) {
 		if (mode == "PLAN") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "ARC");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 3);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("ARC");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(3);
 		} else if (mode == "ARC") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "NAV");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 2);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("NAV");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(2);
 		} else if (mode == "NAV") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "VOR");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 1);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("VOR");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(1);
 		} else if (mode == "VOR") {
-			setprop("instrumentation/efis[0]/nd/display-mode", "ILS");
-			setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 0);
+			pts.Instrumentation.Efis.Nd.displayMode[0].setValue("ILS");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(0);
 		}
 	}
 }
 
 var setFoND = func(d) {
-	var mode = getprop("instrumentation/efis[1]/nd/display-mode");
-	
+	mode = pts.Instrumentation.Efis.Nd.displayMode[1].getValue();
 	if (d == 1) {
 		if (mode == "ILS") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "VOR");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 1);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("VOR");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(1);
 		} else if (mode == "VOR") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "NAV");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 2);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("NAV");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(2);
 		} else if (mode == "NAV") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "ARC");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 3);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("ARC");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(3);
 		} else if (mode == "ARC") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "PLAN");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 4);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("PLAN");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(4);
 		}
 	} else if (d == -1) {
 		if (mode == "PLAN") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "ARC");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 3);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("ARC");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(3);
 		} else if (mode == "ARC") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "NAV");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 2);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("NAV");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(2);
 		} else if (mode == "NAV") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "VOR");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 1);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("VOR");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(1);
 		} else if (mode == "VOR") {
-			setprop("instrumentation/efis[1]/nd/display-mode", "ILS");
-			setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 0);
+			pts.Instrumentation.Efis.Nd.displayMode[1].setValue("ILS");
+			pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(0);
 		}
 	}
 }
 
 var setNDRange = func(n, d) {
-	var rng = getprop("instrumentation/efis[" ~ n ~ "]/inputs/range-nm");
+	rng = pts.Instrumentation.Efis.Inputs.rangeNm[n].getValue();
 	if (d == 1) {
 		rng = rng * 2;
 		if (rng > 320) {
@@ -105,111 +90,46 @@ var setNDRange = func(n, d) {
 			rng = 10;
 		}
 	}
-	setprop("instrumentation/efis[" ~ n ~ "]/inputs/range-nm", rng);
+	pts.Instrumentation.Efis.Inputs.rangeNm[n].setValue(rng);
 }
 
 var cpt_efis_btns = func(i) {
 	if (i == "cstr") {
-		setprop("instrumentation/efis[0]/inputs/CSTR", 1);
-		setprop("instrumentation/efis[0]/inputs/wpt", 0);
-		setprop("instrumentation/efis[0]/inputs/VORD", 0);
-		setprop("instrumentation/efis[0]/inputs/DME", 0);
-		setprop("instrumentation/efis[0]/inputs/NDB", 0);
-		setprop("instrumentation/efis[0]/inputs/arpt", 0);
+		setEfisOptions(0, 0, 1, 0, 0, 0, 0);
 	} else if (i == "wpt") {
-		setprop("instrumentation/efis[0]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[0]/inputs/wpt", 1);
-		setprop("instrumentation/efis[0]/inputs/VORD", 0);
-		setprop("instrumentation/efis[0]/inputs/DME", 0);
-		setprop("instrumentation/efis[0]/inputs/NDB", 0);
-		setprop("instrumentation/efis[0]/inputs/arpt", 0);
+		setEfisOptions(0, 0, 0, 0, 0, 0, 1);
 	} else if (i == "vord") {
-		setprop("instrumentation/efis[0]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[0]/inputs/wpt", 0);
-		setprop("instrumentation/efis[0]/inputs/VORD", 1);
-		setprop("instrumentation/efis[0]/inputs/DME", 1);
-		setprop("instrumentation/efis[0]/inputs/NDB", 0);
-		setprop("instrumentation/efis[0]/inputs/arpt", 0);
+		setEfisOptions(0, 0, 0, 1, 0, 1, 0);
 	} else if (i == "ndb") {
-		setprop("instrumentation/efis[0]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[0]/inputs/wpt", 0);
-		setprop("instrumentation/efis[0]/inputs/VORD", 0);
-		setprop("instrumentation/efis[0]/inputs/DME", 0);
-		setprop("instrumentation/efis[0]/inputs/NDB", 1);
-		setprop("instrumentation/efis[0]/inputs/arpt", 0);
+		setEfisOptions(0, 0, 0, 0, 1, 0, 0);
 	} else if (i == "arpt") {
-		setprop("instrumentation/efis[0]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[0]/inputs/wpt", 0);
-		setprop("instrumentation/efis[0]/inputs/VORD", 0);
-		setprop("instrumentation/efis[0]/inputs/DME", 0);
-		setprop("instrumentation/efis[0]/inputs/NDB", 0);
-		setprop("instrumentation/efis[0]/inputs/arpt", 1);
+		setEfisOptions(0, 1, 0, 0, 0, 0, 0);
 	} else if (i == "off") {
-		setprop("instrumentation/efis[0]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[0]/inputs/wpt", 0);
-		setprop("instrumentation/efis[0]/inputs/VORD", 0);
-		setprop("instrumentation/efis[0]/inputs/DME", 0);
-		setprop("instrumentation/efis[0]/inputs/NDB", 0);
-		setprop("instrumentation/efis[0]/inputs/arpt", 0);
+		setEfisOptions(0, 0, 0, 0, 0, 0, 0);
 	}
 }
 
 var fo_efis_btns = func(i) {
 	if (i == "cstr") {
-		setprop("instrumentation/efis[1]/inputs/CSTR", 1);
-		setprop("instrumentation/efis[1]/inputs/wpt", 0);
-		setprop("instrumentation/efis[1]/inputs/VORD", 0);
-		setprop("instrumentation/efis[1]/inputs/DME", 0);
-		setprop("instrumentation/efis[1]/inputs/NDB", 0);
-		setprop("instrumentation/efis[1]/inputs/arpt", 0);
+		setEfisOptions(1, 0, 1, 0, 0, 0, 0);
 	} else if (i == "wpt") {
-		setprop("instrumentation/efis[1]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[1]/inputs/wpt", 1);
-		setprop("instrumentation/efis[1]/inputs/VORD", 0);
-		setprop("instrumentation/efis[1]/inputs/DME", 0);
-		setprop("instrumentation/efis[1]/inputs/NDB", 0);
-		setprop("instrumentation/efis[1]/inputs/arpt", 0);
+		setEfisOptions(1, 0, 0, 0, 0, 0, 1);
 	} else if (i == "vord") {
-		setprop("instrumentation/efis[1]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[1]/inputs/wpt", 0);
-		setprop("instrumentation/efis[1]/inputs/VORD", 1);
-		setprop("instrumentation/efis[1]/inputs/DME", 1);
-		setprop("instrumentation/efis[1]/inputs/NDB", 0);
-		setprop("instrumentation/efis[1]/inputs/arpt", 0);
+		setEfisOptions(1, 0, 0, 1, 0, 1, 0);
 	} else if (i == "ndb") {
-		setprop("instrumentation/efis[1]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[1]/inputs/wpt", 0);
-		setprop("instrumentation/efis[1]/inputs/VORD", 0);
-		setprop("instrumentation/efis[1]/inputs/DME", 0);
-		setprop("instrumentation/efis[1]/inputs/NDB", 1);
-		setprop("instrumentation/efis[1]/inputs/arpt", 0);
+		setEfisOptions(1, 0, 0, 0, 1, 0, 0);
 	} else if (i == "arpt") {
-		setprop("instrumentation/efis[1]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[1]/inputs/wpt", 0);
-		setprop("instrumentation/efis[1]/inputs/VORD", 0);
-		setprop("instrumentation/efis[1]/inputs/DME", 0);
-		setprop("instrumentation/efis[1]/inputs/NDB", 0);
-		setprop("instrumentation/efis[1]/inputs/arpt", 1);
+		setEfisOptions(1, 1, 0, 0, 0, 0, 0);
 	} else if (i == "off") {
-		setprop("instrumentation/efis[1]/inputs/CSTR", 0);
-		setprop("instrumentation/efis[1]/inputs/wpt", 0);
-		setprop("instrumentation/efis[1]/inputs/VORD", 0);
-		setprop("instrumentation/efis[1]/inputs/DME", 0);
-		setprop("instrumentation/efis[1]/inputs/NDB", 0);
-		setprop("instrumentation/efis[1]/inputs/arpt", 0);
+		setEfisOptions(1, 0, 0, 0, 0, 0, 0);
 	}
 }
 
-var toggleSTD = func {
-	var Std = getprop("modes/altimeter/std");
-	if (Std == 1) {
-		var oldqnh = getprop("modes/altimeter/oldqnh");
-		setprop("instrumentation/altimeter/setting-inhg", oldqnh);
-		setprop("modes/altimeter/std", 0);
-	} else if (Std == 0) {
-		var qnh = getprop("instrumentation/altimeter/setting-inhg");
-		setprop("modes/altimeter/oldqnh", qnh);
-		setprop("instrumentation/altimeter/setting-inhg", 29.92);
-		setprop("modes/altimeter/std", 1);
-	}
-}
+var setEfisOptions = func(n, a, b, c, d, e, f) {
+	pts.Instrumentation.Efis.Inputs.arpt[n].setBoolValue(a);
+	pts.Instrumentation.Efis.Inputs.cstr[n].setBoolValue(b);
+	pts.Instrumentation.Efis.Inputs.dme[n].setBoolValue(c);
+	pts.Instrumentation.Efis.Inputs.ndb[n].setBoolValue(d);
+	pts.Instrumentation.Efis.Inputs.vord[n].setBoolValue(e);
+	pts.Instrumentation.Efis.Inputs.wpt[n].setBoolValue(f);
+};

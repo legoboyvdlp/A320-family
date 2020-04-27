@@ -58,12 +58,12 @@ var FUEL = {
 	
 	},
 	loop: func() {
-		systems.FUEL.Quantity.usedLeft.setValue(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue() + me.offset1);
-		systems.FUEL.Quantity.usedRight.setValue(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue() + me.offset2);
+		systems.FUEL.Quantity.usedLeft.setValue(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue() + me.offset1);
+		systems.FUEL.Quantity.usedRight.setValue(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[1].getValue() + me.offset2);
 	},
 	setOffset: func() {
-		me.offset1 = me.offset1 -(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue());
-		me.offset2 = me.offset2 -(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue());
+		me.offset1 = me.offset1 -(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue());
+		me.offset2 = me.offset2 -(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[1].getValue());
 	}
 };
 

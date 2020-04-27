@@ -17,125 +17,125 @@ var altTens = 0;
 var altPolarity = "";
 
 # Fetch nodes:
-var state1 = props.globals.getNode("systems/thrust/state1", 1);
-var state2 = props.globals.getNode("systems/thrust/state2", 1);
-var throttle_mode = props.globals.getNode("modes/pfd/fma/throttle-mode", 1);
-var pitch_mode = props.globals.getNode("modes/pfd/fma/pitch-mode", 1);
-var pitch_mode_armed = props.globals.getNode("modes/pfd/fma/pitch-mode-armed", 1);
-var pitch_mode2_armed = props.globals.getNode("modes/pfd/fma/pitch-mode2-armed", 1);
-var pitch_mode_armed_box = props.globals.getNode("modes/pfd/fma/pitch-mode-armed-box", 1);
-var pitch_mode2_armed_box = props.globals.getNode("modes/pfd/fma/pitch-mode2-armed-box", 1);
-var roll_mode = props.globals.getNode("modes/pfd/fma/roll-mode", 1);
-var roll_mode_armed = props.globals.getNode("modes/pfd/fma/roll-mode-armed", 1);
-var roll_mode_box = props.globals.getNode("modes/pfd/fma/roll-mode-box", 1);
-var roll_mode_armed_box = props.globals.getNode("modes/pfd/fma/roll-mode-armed-box", 1);
-var thr1 = props.globals.getNode("controls/engines/engine[0]/throttle-pos", 1);
-var thr2 = props.globals.getNode("controls/engines/engine[1]/throttle-pos", 1);
-var wow0 = props.globals.getNode("gear/gear[0]/wow");
-var wow1 = props.globals.getNode("gear/gear[1]/wow");
-var wow2 = props.globals.getNode("gear/gear[2]/wow");
-var pitch = props.globals.getNode("orientation/pitch-deg", 1);
-var roll = props.globals.getNode("orientation/roll-deg", 1);
-var elapsedtime = props.globals.getNode("sim/time/elapsed-sec", 1);
-var acess = props.globals.getNode("systems/electrical/bus/ac-ess", 1);
-var ac2 = props.globals.getNode("systems/electrical/bus/ac-2", 1);
-var du1_lgt = props.globals.getNode("controls/lighting/DU/du1", 1);
-var du6_lgt = props.globals.getNode("controls/lighting/DU/du6", 1);
-var acconfig = props.globals.getNode("systems/acconfig/autoconfig-running", 1);
-var acconfig_mismatch = props.globals.getNode("systems/acconfig/mismatch-code", 1);
-var cpt_du_xfr = props.globals.getNode("modes/cpt-du-xfr", 1);
-var fo_du_xfr = props.globals.getNode("modes/fo-du-xfr", 1);
-var eng_out = props.globals.getNode("systems/thrust/eng-out", 1);
-var eng0_state = props.globals.getNode("engines/engine[0]/state", 1);
-var eng1_state = props.globals.getNode("engines/engine[1]/state", 1);
-var alpha_floor = props.globals.getNode("systems/thrust/alpha-floor", 1);
-var toga_lk = props.globals.getNode("systems/thrust/toga-lk", 1);
-var thrust_limit = props.globals.getNode("controls/engines/thrust-limit", 1);
-var flex = props.globals.getNode("FMGC/internal/flex", 1);
-var lvr_clb = props.globals.getNode("systems/thrust/lvrclb", 1);
-var throt_box = props.globals.getNode("modes/pfd/fma/throttle-mode-box", 1);
-var pitch_box = props.globals.getNode("modes/pfd/fma/pitch-mode-box", 1);
-var ap_box = props.globals.getNode("modes/pfd/fma/ap-mode-box", 1);
-var fd_box	= props.globals.getNode("modes/pfd/fma/fd-mode-box", 1);
-var at_box = props.globals.getNode("modes/pfd/fma/athr-mode-box", 1);
-var fbw_law = props.globals.getNode("it-fbw/law", 1);
-var ap_mode = props.globals.getNode("modes/pfd/fma/ap-mode", 1);
-var fd_mode = props.globals.getNode("modes/pfd/fma/fd-mode", 1);
-var at_mode = props.globals.getNode("modes/pfd/fma/at-mode", 1);
-var alt_std_mode = props.globals.getNode("modes/altimeter/std", 1);
-var alt_inhg_mode = props.globals.getNode("modes/altimeter/inhg", 1);
-var alt_hpa = props.globals.getNode("instrumentation/altimeter/setting-hpa", 1);
-var alt_inhg = props.globals.getNode("instrumentation/altimeter/setting-inhg", 1);
-var target_altitude = props.globals.getNode("autopilot/settings/target-altitude-ft", 1);
-var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1);
-var altitude_pfd = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
-var trans_alt = props.globals.getNode("FMGC/internal/trans-alt", 1);
-var alt_diff = props.globals.getNode("instrumentation/pfd/alt-diff", 1);
-var ground_diff = props.globals.getNode("instrumentation/pfd/ground-diff", 1);
-var landing_diff = props.globals.getNode("instrumentation/pfd/landing-diff", 1);
-var ap_alt = props.globals.getNode("it-autoflight/internal/alt", 1);
-var alt_agl = props.globals.getNode("position/altitude-agl-ft", 1);
-var vs_needle = props.globals.getNode("instrumentation/pfd/vs-needle", 1);
-var vs_digit = props.globals.getNode("instrumentation/pfd/vs-digit-trans", 1);
-var ap_vs_pfd = props.globals.getNode("it-autoflight/internal/vert-speed-fpm-pfd", 1);
-var athr_arm = props.globals.getNode("modes/pfd/fma/athr-armed", 1);
-var FMGC_max_spd = props.globals.getNode("FMGC/internal/maxspeed", 1);
-var ind_spd_kt = props.globals.getNode("instrumentation/airspeed-indicator/indicated-speed-kt", 1);
-var ind_spd_mach = props.globals.getNode("instrumentation/airspeed-indicator/indicated-mach", 1);
-var at_mach_mode = props.globals.getNode("it-autoflight/input/kts-mach", 1);
-var at_input_spd_mach = props.globals.getNode("it-autoflight/input/spd-mach", 1);
-var at_input_spd_kts = props.globals.getNode("it-autoflight/input/spd-kts", 1);
-var fd_roll = props.globals.getNode("it-autoflight/fd/roll-bar", 1);
-var fd_pitch = props.globals.getNode("it-autoflight/fd/pitch-bar", 1);
-var decision = props.globals.getNode("instrumentation/mk-viii/inputs/arinc429/decision-height", 1);
-var slip_skid = props.globals.getNode("instrumentation/pfd/slip-skid", 1);
-var FMGCphase = props.globals.getNode("FMGC/status/phase", 1);
-var loc = props.globals.getNode("instrumentation/nav[0]/heading-needle-deflection-norm", 1);
-var gs = props.globals.getNode("instrumentation/nav[0]/gs-needle-deflection-norm", 1);
-var show_hdg = props.globals.getNode("it-autoflight/custom/show-hdg", 1);
-var ap_hdg = props.globals.getNode("it-autoflight/input/hdg", 1);
-var ap_trk_sw = props.globals.getNode("it-autoflight/custom/trk-fpa", 1);
-var ap_ils_mode = props.globals.getNode("modes/pfd/ILS1", 1);
-var ap_ils_mode2 = props.globals.getNode("modes/pfd/ILS2", 1);
-var loc_in_range = props.globals.getNode("instrumentation/nav[0]/in-range", 1);
-var gs_in_range = props.globals.getNode("instrumentation/nav[0]/gs-in-range", 1);
-var nav0_signalq = props.globals.getNode("instrumentation/nav[0]/signal-quality-norm", 1);
-var hasloc = props.globals.getNode("instrumentation/nav[0]/nav-loc", 1);
-var hasgs = props.globals.getNode("instrumentation/nav[0]/has-gs", 1);
-var pfdrate = props.globals.getNode("systems/acconfig/options/pfd-rate", 1);
-var managed_spd = props.globals.getNode("it-autoflight/input/spd-managed", 1);
-var at_tgt_ias = props.globals.getNode("FMGC/internal/target-ias-pfd", 1);
-var ap1 = props.globals.getNode("it-autoflight/output/ap1", 1);
-var ap2 = props.globals.getNode("it-autoflight/output/ap2", 1);
-var fd1 = props.globals.getNode("it-autoflight/output/fd1", 1);
-var fd2 = props.globals.getNode("it-autoflight/output/fd2", 1);
-var athr = props.globals.getNode("it-autoflight/output/athr", 1);
-var gear_agl = props.globals.getNode("position/gear-agl-ft", 1);
-var aileron_input = props.globals.getNode("controls/flight/aileron-input-fast", 1);
-var elevator_input = props.globals.getNode("controls/flight/elevator-input-fast", 1);
-var att_switch = props.globals.getNode("controls/switching/ATTHDG", 1);
-var air_switch = props.globals.getNode("controls/switching/AIRDATA", 1);
-var appr_enabled = props.globals.getNode("it-autoflight/output/appr-armed/", 1);
-var loc_enabled = props.globals.getNode("it-autoflight/output/loc-armed/", 1);
-var vert_gs = props.globals.getNode("it-autoflight/output/vert/", 1);
-var vert_state = props.globals.getNode("it-autoflight/output/vert/", 1);
-var ils_data1 = props.globals.getNode("FMGC/internal/ils1-mcdu/", 1);
+var state1 = props.globals.getNode("/systems/thrust/state1", 1);
+var state2 = props.globals.getNode("/systems/thrust/state2", 1);
+var throttle_mode = props.globals.getNode("/modes/pfd/fma/throttle-mode", 1);
+var pitch_mode = props.globals.getNode("/modes/pfd/fma/pitch-mode", 1);
+var pitch_mode_armed = props.globals.getNode("/modes/pfd/fma/pitch-mode-armed", 1);
+var pitch_mode2_armed = props.globals.getNode("/modes/pfd/fma/pitch-mode2-armed", 1);
+var pitch_mode_armed_box = props.globals.getNode("/modes/pfd/fma/pitch-mode-armed-box", 1);
+var pitch_mode2_armed_box = props.globals.getNode("/modes/pfd/fma/pitch-mode2-armed-box", 1);
+var roll_mode = props.globals.getNode("/modes/pfd/fma/roll-mode", 1);
+var roll_mode_armed = props.globals.getNode("/modes/pfd/fma/roll-mode-armed", 1);
+var roll_mode_box = props.globals.getNode("/modes/pfd/fma/roll-mode-box", 1);
+var roll_mode_armed_box = props.globals.getNode("/modes/pfd/fma/roll-mode-armed-box", 1);
+var thr1 = props.globals.getNode("/controls/engines/engine[0]/throttle-pos", 1);
+var thr2 = props.globals.getNode("/controls/engines/engine[1]/throttle-pos", 1);
+var wow0 = props.globals.getNode("/gear/gear[0]/wow");
+var wow1 = props.globals.getNode("/gear/gear[1]/wow");
+var wow2 = props.globals.getNode("/gear/gear[2]/wow");
+var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
+var roll = props.globals.getNode("/orientation/roll-deg", 1);
+var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
+var acess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
+var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
+var du1_lgt = props.globals.getNode("/controls/lighting/DU/du1", 1);
+var du6_lgt = props.globals.getNode("/controls/lighting/DU/du6", 1);
+var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
+var acconfig_mismatch = props.globals.getNode("/systems/acconfig/mismatch-code", 1);
+var cpt_du_xfr = props.globals.getNode("/modes/cpt-du-xfr", 1);
+var fo_du_xfr = props.globals.getNode("/modes/fo-du-xfr", 1);
+var eng_out = props.globals.getNode("/systems/thrust/eng-out", 1);
+var eng0_state = props.globals.getNode("/engines/engine[0]/state", 1);
+var eng1_state = props.globals.getNode("/engines/engine[1]/state", 1);
+var alpha_floor = props.globals.getNode("/systems/thrust/alpha-floor", 1);
+var toga_lk = props.globals.getNode("/systems/thrust/toga-lk", 1);
+var thrust_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
+var flex = props.globals.getNode("/FMGC/internal/flex", 1);
+var lvr_clb = props.globals.getNode("/systems/thrust/lvrclb", 1);
+var throt_box = props.globals.getNode("/modes/pfd/fma/throttle-mode-box", 1);
+var pitch_box = props.globals.getNode("/modes/pfd/fma/pitch-mode-box", 1);
+var ap_box = props.globals.getNode("/modes/pfd/fma/ap-mode-box", 1);
+var fd_box	= props.globals.getNode("/modes/pfd/fma/fd-mode-box", 1);
+var at_box = props.globals.getNode("/modes/pfd/fma/athr-mode-box", 1);
+var fbw_law = props.globals.getNode("/it-fbw/law", 1);
+var ap_mode = props.globals.getNode("/modes/pfd/fma/ap-mode", 1);
+var fd_mode = props.globals.getNode("/modes/pfd/fma/fd-mode", 1);
+var at_mode = props.globals.getNode("/modes/pfd/fma/at-mode", 1);
+var alt_std_mode = props.globals.getNode("/instrumentation/altimeter/std", 1);
+var alt_inhg_mode = props.globals.getNode("/instrumentation/altimeter/inhg", 1);
+var alt_hpa = props.globals.getNode("/instrumentation/altimeter/setting-hpa", 1);
+var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 1);
+var target_altitude = props.globals.getNode("/autopilot/settings/target-altitude-ft", 1);
+var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
+var altitude_pfd = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
+var trans_alt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
+var alt_diff = props.globals.getNode("/instrumentation/pfd/alt-diff", 1);
+var ground_diff = props.globals.getNode("/instrumentation/pfd/ground-diff", 1);
+var landing_diff = props.globals.getNode("/instrumentation/pfd/landing-diff", 1);
+var ap_alt = props.globals.getNode("/it-autoflight/internal/alt", 1);
+var alt_agl = props.globals.getNode("/position/altitude-agl-ft", 1);
+var vs_needle = props.globals.getNode("/instrumentation/pfd/vs-needle", 1);
+var vs_digit = props.globals.getNode("/instrumentation/pfd/vs-digit-trans", 1);
+var ap_vs_pfd = props.globals.getNode("/it-autoflight/internal/vert-speed-fpm-pfd", 1);
+var athr_arm = props.globals.getNode("/modes/pfd/fma/athr-armed", 1);
+var FMGC_max_spd = props.globals.getNode("/FMGC/internal/maxspeed", 1);
+var ind_spd_kt = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
+var ind_spd_mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
+var at_mach_mode = props.globals.getNode("/it-autoflight/input/kts-mach", 1);
+var at_input_spd_mach = props.globals.getNode("/it-autoflight/input/spd-mach", 1);
+var at_input_spd_kts = props.globals.getNode("/it-autoflight/input/spd-kts", 1);
+var fd_roll = props.globals.getNode("/it-autoflight/fd/roll-bar", 1);
+var fd_pitch = props.globals.getNode("/it-autoflight/fd/pitch-bar", 1);
+var decision = props.globals.getNode("/instrumentation/mk-viii/inputs/arinc429/decision-height", 1);
+var slip_skid = props.globals.getNode("/instrumentation/pfd/slip-skid", 1);
+var FMGCphase = props.globals.getNode("/FMGC/status/phase", 1);
+var loc = props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1);
+var gs = props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1);
+var show_hdg = props.globals.getNode("/it-autoflight/custom/show-hdg", 1);
+var ap_hdg = props.globals.getNode("/it-autoflight/input/hdg", 1);
+var ap_trk_sw = props.globals.getNode("/it-autoflight/custom/trk-fpa", 1);
+var ap_ils_mode = props.globals.getNode("/modes/pfd/ILS1", 1);
+var ap_ils_mode2 = props.globals.getNode("/modes/pfd/ILS2", 1);
+var loc_in_range = props.globals.getNode("/instrumentation/nav[0]/in-range", 1);
+var gs_in_range = props.globals.getNode("/instrumentation/nav[0]/gs-in-range", 1);
+var nav0_signalq = props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1);
+var hasloc = props.globals.getNode("/instrumentation/nav[0]/nav-loc", 1);
+var hasgs = props.globals.getNode("/instrumentation/nav[0]/has-gs", 1);
+var pfdrate = props.globals.getNode("/systems/acconfig/options/pfd-rate", 1);
+var managed_spd = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
+var at_tgt_ias = props.globals.getNode("/FMGC/internal/target-ias-pfd", 1);
+var ap1 = props.globals.getNode("/it-autoflight/output/ap1", 1);
+var ap2 = props.globals.getNode("/it-autoflight/output/ap2", 1);
+var fd1 = props.globals.getNode("/it-autoflight/output/fd1", 1);
+var fd2 = props.globals.getNode("/it-autoflight/output/fd2", 1);
+var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
+var gear_agl = props.globals.getNode("/position/gear-agl-ft", 1);
+var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast", 1);
+var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
+var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
+var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
+var appr_enabled = props.globals.getNode("/it-autoflight/output/appr-armed/", 1);
+var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
+var vert_gs = props.globals.getNode("/it-autoflight/output/vert/", 1);
+var vert_state = props.globals.getNode("/it-autoflight/output/vert/", 1);
+var ils_data1 = props.globals.getNode("/FMGC/internal/ils1-mcdu/", 1);
 # Independent MCDU ILS not implemented yet, use MCDU1 in the meantime
-# var ils_data2 = props.globals.getNode("FMGC/internal/ils2-mcdu/", 1);
-var dme_in_range = props.globals.getNode("instrumentation/nav[0]/dme-in-range", 1);
-var dme_data = props.globals.getNode("instrumentation/dme[0]/indicated-distance-nm", 1);
-var ils_crs = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg", 1);
-var ils1_crs_set = props.globals.getNode("FMGC/internal/ils1crs-set/", 1);
-var outer_marker = props.globals.getNode("instrumentation/marker-beacon/outer", 1);
-var middle_marker = props.globals.getNode("instrumentation/marker-beacon/middle", 1);
-var inner_marker = props.globals.getNode("instrumentation/marker-beacon/inner", 1);
-var v1 = props.globals.getNode("FMGC/internal/v1", 1);
-var v1_set = props.globals.getNode("FMGC/internal/v1-set", 1);
-var vr = props.globals.getNode("FMGC/internal/vr", 1);
-var vr_set = props.globals.getNode("FMGC/internal/vr-set", 1);
-var v2 = props.globals.getNode("FMGC/internal/v2", 1);
-var v2_set = props.globals.getNode("FMGC/internal/v2-set", 1);
-var flap_config = props.globals.getNode("controls/flight/flap-lever", 1);
+# var ils_data2 = props.globals.getNode("/FMGC/internal/ils2-mcdu/", 1);
+var dme_in_range = props.globals.getNode("/instrumentation/nav[0]/dme-in-range", 1);
+var dme_data = props.globals.getNode("/instrumentation/dme[0]/indicated-distance-nm", 1);
+var ils_crs = props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg", 1);
+var ils1_crs_set = props.globals.getNode("/FMGC/internal/ils1crs-set/", 1);
+var outer_marker = props.globals.getNode("/instrumentation/marker-beacon/outer", 1);
+var middle_marker = props.globals.getNode("/instrumentation/marker-beacon/middle", 1);
+var inner_marker = props.globals.getNode("/instrumentation/marker-beacon/inner", 1);
+var v1 = props.globals.getNode("/FMGC/internal/v1", 1);
+var v1_set = props.globals.getNode("/FMGC/internal/v1-set", 1);
+var vr = props.globals.getNode("/FMGC/internal/vr", 1);
+var vr_set = props.globals.getNode("/FMGC/internal/vr-set", 1);
+var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
+var v2_set = props.globals.getNode("/FMGC/internal/v2-set", 1);
+var flap_config = props.globals.getNode("/controls/flight/flap-lever", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
@@ -782,33 +782,33 @@ var canvas_PFD_base = {
 			if (gear_agl_cur <= 2500) {
 				me["AI_agl"].show();
 				me["FMA_dh_box"].hide(); #not implemented
-				if (int(getprop("FMGC/internal/radio")) != 99999) {
+				if (int(getprop("/FMGC/internal/radio")) != 99999) {
 					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
-					hundredAbove.setValue(getprop("FMGC/internal/radio") + 100);
-					minimum.setValue(getprop("FMGC/internal/radio"));
-					if (gear_agl_cur <= getprop("FMGC/internal/radio") + 100) {
+					hundredAbove.setValue(getprop("/FMGC/internal/radio") + 100);
+					minimum.setValue(getprop("/FMGC/internal/radio"));
+					if (gear_agl_cur <= getprop("/FMGC/internal/radio") + 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-				} else if (int(getprop("FMGC/internal/baro")) != 99999) {
+				} else if (int(getprop("/FMGC/internal/baro")) != 99999) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("/FMGC/internal/baro")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
-					hundredAbove.setValue(getprop("FMGC/internal/baro") + 100);
-					minimum.setValue(getprop("FMGC/internal/baro"));
-					if (gear_agl_cur <= getprop("FMGC/internal/baro") + 100) {
+					hundredAbove.setValue(getprop("/FMGC/internal/baro") + 100);
+					minimum.setValue(getprop("/FMGC/internal/baro"));
+					if (gear_agl_cur <= getprop("/FMGC/internal/baro") + 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-				} else if (getprop("FMGC/internal/radio-no")) {
+				} else if (getprop("/FMGC/internal/radio-no")) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
@@ -837,19 +837,19 @@ var canvas_PFD_base = {
 				me["AI_agl"].hide();
 				me["FMA_nodh"].hide();
 				me["FMA_dh_box"].hide(); #not implemented
-				if (int(getprop("FMGC/internal/radio")) != 99999) {
+				if (int(getprop("/FMGC/internal/radio")) != 99999) {
 					me["FMA_dh"].setText("RADIO");
 					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/radio")));
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
-				} else if (int(getprop("FMGC/internal/baro")) != 99999) {
+				} else if (int(getprop("/FMGC/internal/baro")) != 99999) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", getprop("FMGC/internal/baro")));
+					me["FMA_dhn"].setText(sprintf("%.0f", getprop("/FMGC/internal/baro")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
-				} else if (getprop("FMGC/internal/radio-no")) {
+				} else if (getprop("/FMGC/internal/radio-no")) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
@@ -1206,8 +1206,8 @@ var canvas_PFD_1 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
-				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
+			if (!getprop("/FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
+				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.FMGC_vls >= 420) {
@@ -1215,7 +1215,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
 				}
-				me.FMGC_prot = getprop("FMGC/internal/computed-speeds/alpha_prot");
+				me.FMGC_prot = getprop("/FMGC/internal/computed-speeds/alpha_prot");
 				if (me.FMGC_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
 				} else if (me.FMGC_prot >= 420) {
@@ -1223,7 +1223,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
 				}
-				me.FMGC_max = getprop("FMGC/internal/computed-speeds/alpha_max");
+				me.FMGC_max = getprop("/FMGC/internal/computed-speeds/alpha_max");
 				if (me.FMGC_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
 				} else if (me.FMGC_max >= 420) {
@@ -1231,7 +1231,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
-				me.FMGC_vsw = getprop("FMGC/internal/computed-speeds/vsw");
+				me.FMGC_vsw = getprop("/FMGC/internal/computed-speeds/vsw");
 				if (me.FMGC_vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
 				} else if (me.FMGC_vsw >= 420) {
@@ -1244,7 +1244,7 @@ var canvas_PFD_1 = {
 				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
 				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
 				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-				if (getprop("it-fbw/law") == 0) {
+				if (getprop("/it-fbw/law") == 0) {
 					me["ALPHA_PROT"].show();
 					me["ALPHA_MAX"].show();
 					me["ALPHA_SW"].hide();
@@ -1256,12 +1256,12 @@ var canvas_PFD_1 = {
 			}
 			
 			if (managed_spd.getValue() == 1) {
-				if (getprop("FMGC/internal/decel") == 1) {
-					vapp = getprop("FMGC/internal/computed-speeds/vapp");
+				if (getprop("/FMGC/internal/decel") == 1) {
+					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {
-					vapp = getprop("FMGC/internal/computed-speeds/clean");
+					vapp = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
 				} else {
@@ -1409,7 +1409,7 @@ var canvas_PFD_1 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = getprop("FMGC/internal/computed-speeds/slat");
+				tgt_S = getprop("/FMGC/internal/computed-speeds/slat");
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -1443,7 +1443,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = getprop("FMGC/internal/computed-speeds/flap2");
+				tgt_F = getprop("/FMGC/internal/computed-speeds/flap2");
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1477,7 +1477,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = getprop("FMGC/internal/computed-speeds/flap3");
+				tgt_F = getprop("/FMGC/internal/computed-speeds/flap3");
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1516,7 +1516,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = getprop("FMGC/internal/computed-speeds/clean");
+				tgt_clean = getprop("/FMGC/internal/computed-speeds/clean");
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
@@ -1692,13 +1692,13 @@ var canvas_PFD_1 = {
 				me["ground"].hide();
 			}
 			
-			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
+			if (!getprop("/ECAM/alt-alert-flash") and !getprop("/ECAM/alt-alert-steady")) {
 				alt_going1 = 0;
 				amber_going1 = 0;
 				me["ALT_box_flash"].hide();
 				me["ALT_box_amber"].hide();
 			} else {
-				if (getprop("ECAM/alt-alert-flash")) {
+				if (getprop("/ECAM/alt-alert-flash")) {
 					if (alt_going1 == 1) {
 						me["ALT_box_flash"].hide(); 
 						altTimer1.stop();
@@ -1716,7 +1716,7 @@ var canvas_PFD_1 = {
 					} else {
 						me["ALT_box_amber"].show(); 
 					}
-				} elsif (getprop("ECAM/alt-alert-steady")) {
+				} elsif (getprop("/ECAM/alt-alert-steady")) {
 					if (amber_going1 == 1) {
 						me["ALT_box"].show();
 						me["ALT_box_amber"].hide();
@@ -1944,8 +1944,8 @@ var canvas_PFD_2 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
-				me.FMGC_vls = getprop("FMGC/internal/computed-speeds/vls_min");
+			if (!getprop("/FMGC/status/to-state") and FMGCphase.getValue() >= 1 and !wow1.getValue() and !wow2.getValue()) {
+				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.FMGC_vls >= 420) {
@@ -1953,7 +1953,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
 				}
-				me.FMGC_prot = getprop("FMGC/internal/computed-speeds/alpha_prot");
+				me.FMGC_prot = getprop("/FMGC/internal/computed-speeds/alpha_prot");
 				if (me.FMGC_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
 				} else if (me.FMGC_prot >= 420) {
@@ -1961,7 +1961,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
 				}
-				me.FMGC_max = getprop("FMGC/internal/computed-speeds/alpha_max");
+				me.FMGC_max = getprop("/FMGC/internal/computed-speeds/alpha_max");
 				if (me.FMGC_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
 				} else if (me.FMGC_max >= 420) {
@@ -1969,7 +1969,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
-				me.FMGC_vsw = getprop("FMGC/internal/computed-speeds/vsw");
+				me.FMGC_vsw = getprop("/FMGC/internal/computed-speeds/vsw");
 				if (me.FMGC_vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
 				} else if (me.FMGC_vsw >= 420) {
@@ -1982,7 +1982,7 @@ var canvas_PFD_2 = {
 				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
 				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
 				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-				if (getprop("it-fbw/law") == 0) {
+				if (getprop("/it-fbw/law") == 0) {
 					me["ALPHA_PROT"].show();
 					me["ALPHA_MAX"].show();
 					me["ALPHA_SW"].hide();
@@ -1994,12 +1994,12 @@ var canvas_PFD_2 = {
 			}
 			
 			if (managed_spd.getValue() == 1) {
-				if (getprop("FMGC/internal/decel") == 1) {
-					vapp = getprop("FMGC/internal/computed-speeds/vapp");
+				if (getprop("/FMGC/internal/decel") == 1) {
+					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {
-					clean = getprop("FMGC/internal/computed-speeds/clean");
+					clean = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
 				} else {
@@ -2148,7 +2148,7 @@ var canvas_PFD_2 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = tgt_S = getprop("FMGC/internal/computed-speeds/slat");
+				tgt_S = tgt_S = getprop("/FMGC/internal/computed-speeds/slat");
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -2182,7 +2182,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = getprop("FMGC/internal/computed-speeds/flap2");
+				tgt_F = tgt_S = getprop("/FMGC/internal/computed-speeds/flap2");
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2216,7 +2216,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = getprop("FMGC/internal/computed-speeds/flap3");
+				tgt_F = tgt_S = getprop("/FMGC/internal/computed-speeds/flap3");
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2255,7 +2255,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = tgt_S = getprop("FMGC/internal/computed-speeds/clean");
+				tgt_clean = tgt_S = getprop("/FMGC/internal/computed-speeds/clean");
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
@@ -2430,13 +2430,13 @@ var canvas_PFD_2 = {
 				me["ground"].hide();
 			}
 			
-			if (!getprop("ECAM/alt-alert-flash") and !getprop("ECAM/alt-alert-steady")) {
+			if (!getprop("/ECAM/alt-alert-flash") and !getprop("/ECAM/alt-alert-steady")) {
 				alt_going2 = 0;
 				amber_going2 = 0;
 				me["ALT_box_flash"].hide();
 				me["ALT_box_amber"].hide();
 			} else {
-				if (getprop("ECAM/alt-alert-flash")) {
+				if (getprop("/ECAM/alt-alert-flash")) {
 					if (alt_going2 == 1) {
 						me["ALT_box_flash"].hide(); 
 						altTimer2.stop();
@@ -2454,7 +2454,7 @@ var canvas_PFD_2 = {
 					} else {
 						me["ALT_box_amber"].hide(); 
 					}
-				} elsif (getprop("ECAM/alt-alert-steady")) {
+				} elsif (getprop("/ECAM/alt-alert-steady")) {
 					if (amber_going2 == 1) {
 						me["ALT_box"].show();
 						me["ALT_box_amber"].hide();
@@ -2798,4 +2798,3 @@ var dhTimer = maketimer(0.50, func {
 		dh_count = dh_count + 1;
 	}
 });
-

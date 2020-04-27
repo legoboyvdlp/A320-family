@@ -1166,6 +1166,15 @@
 	</options>
 	
 	<instrumentation n="0">
+		<altimeter n="0">
+			<inhg type="bool">0</inhg>
+			<indicated-altitude-ft tyep="double">0</indicated-altitude-ft>
+			<indicated-altitude-ft-pfd tyep="double">0</indicated-altitude-ft-pfd>
+			<oldqnh type="double">29.92</oldqnh>
+			<serviceable type="bool">true</serviceable>
+			<std type="bool">0</std>
+		</altimeter>
+		
 		<altimeter n="1">
 			<serviceable type="bool">true</serviceable>
 		</altimeter>
@@ -1420,11 +1429,6 @@
 	</instrumentation>
 	
 	<modes>
-		<altimeter>
-			<inhg>0</inhg>
-			<std>0</std>
-			<oldqnh>29.92</oldqnh>
-		</altimeter>
 		<cpt-du-xfr>0</cpt-du-xfr>
 		<fo-du-xfr>0</fo-du-xfr>
 		<pfd>
