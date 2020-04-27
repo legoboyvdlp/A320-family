@@ -119,8 +119,8 @@ var ECAM = {
 		clrLight.setValue(0);
 	},
 	loop: func() {
-		stateL = pts.Engines.Engine1.state.getValue();
-		stateR = pts.Engines.Engine2.state.getValue();
+		stateL = pts.Engines.Engine.state[0].getValue();
+		stateR = pts.Engines.Engine.state[1].getValue();
 		wow = pts.Gear.wow[0].getValue();
 		elapsedTime = pts.Sim.Time.elapsedSec.getValue();
 		

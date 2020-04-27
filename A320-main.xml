@@ -176,6 +176,10 @@
 		<menubar>
 			<default>
 				<menu n="100">
+					<label>|</label>
+					<enabled type="bool">false</enabled>
+				</menu>
+				<menu n="101">
 					<label>A320-family</label>
 					<item>
 						<label>Aircraft Config</label>
@@ -196,7 +200,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="101">
+				<menu n="102">
 					<label>FMGC</label>
 					<item>
 						<label>FCU Autoflight</label>
@@ -206,7 +210,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="102">
+				<menu n="103">
 					<label>DU</label>
 					<item>
 						<label>Captain's PFD</label>
@@ -272,7 +276,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="103">
+				<menu n="104">
 					<label>Instruments</label>
 					<item>
 						<label>Left MCDU</label>
@@ -320,7 +324,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="104">
+				<menu n="105">
 					<label>Utilities</label>
 					<item>
 						<label>Select Livery</label>
@@ -3927,16 +3931,16 @@
 	
 	<nasal>
 		<pts>
-			<file>Aircraft/A320-family/Nasal/Sim/property-tree-setup.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/zoom-views.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/efis.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/efis.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>

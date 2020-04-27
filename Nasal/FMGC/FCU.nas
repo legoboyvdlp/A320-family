@@ -1,5 +1,4 @@
-# A3XX FCU by Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
-
+# A3XX FCU
 # Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
@@ -119,7 +118,7 @@ var FCUController = {
 		}
 	},
 	ATHR: func() {
-		if (me.FCUworking and !pts.FMGC.CasCompare.rejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
+		if (me.FCUworking and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!athr.getBoolValue()) {
 				athrInput.setValue(1);
 			} else {

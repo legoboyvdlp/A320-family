@@ -332,7 +332,7 @@ var calcAlignTime = func(latitude) {
 };
 
 setlistener("/systems/fmgc/cas-compare/cas-reject-all", func() {
-	if (pts.FMGC.CasCompare.rejectAll.getBoolValue()) {
+	if (pts.FMGC.CasCompare.casRejectAll.getBoolValue()) {
 		fcu.athrOff("hard");
 	}
 }, 0, 0);

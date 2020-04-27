@@ -8,6 +8,10 @@ if (getprop("options/eng") == "IAE") {
 	io.include("fadec-cfm.nas");
 }
 
+var Output = {
+	limFlex: props.globals.getNode("/systems/thrust/lim-flex"),
+};
+
 var thr1 = 0;
 var thr2 = 0;
 var state1 = 0;

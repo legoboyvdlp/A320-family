@@ -1,28 +1,27 @@
-# A3XX EFIS controller by Joshua Davidson (Octal450).
-
+# A3XX EFIS Controller
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
-setlistener("sim/signals/fdm-initialized", func {
-	setprop("instrumentation/efis[0]/nd/display-mode", "NAV");
-	setprop("instrumentation/efis[0]/mfd/pnl_mode-num", 2);
-	setprop("instrumentation/efis[0]/inputs/range-nm", 20);
-	setprop("instrumentation/efis[0]/inputs/tfc", 0);
-	setprop("instrumentation/efis[0]/inputs/CSTR", 0);
-	setprop("instrumentation/efis[0]/inputs/wpt", 0);
-	setprop("instrumentation/efis[0]/inputs/VORD", 0);
-	setprop("instrumentation/efis[0]/inputs/DME", 0);
-	setprop("instrumentation/efis[0]/inputs/NDB", 0);
-	setprop("instrumentation/efis[0]/inputs/arpt", 0);
-	setprop("instrumentation/efis[1]/nd/display-mode", "NAV");
-	setprop("instrumentation/efis[1]/mfd/pnl_mode-num", 2);
-	setprop("instrumentation/efis[1]/inputs/range-nm", 20);
-	setprop("instrumentation/efis[1]/inputs/tfc", 0);
-	setprop("instrumentation/efis[1]/inputs/CSTR", 0);
-	setprop("instrumentation/efis[1]/inputs/wpt", 0);
-	setprop("instrumentation/efis[1]/inputs/VORD", 0);
-	setprop("instrumentation/efis[1]/inputs/DME", 0);
-	setprop("instrumentation/efis[1]/inputs/NDB", 0);
-	setprop("instrumentation/efis[1]/inputs/arpt", 0);
+setlistener("/sim/signals/fdm-initialized", func {
+	setprop("/instrumentation/efis[0]/nd/display-mode", "NAV");
+	setprop("/instrumentation/efis[0]/mfd/pnl_mode-num", 2);
+	setprop("/instrumentation/efis[0]/inputs/range-nm", 20);
+	setprop("/instrumentation/efis[0]/inputs/tfc", 0);
+	setprop("/instrumentation/efis[0]/inputs/CSTR", 0);
+	setprop("/instrumentation/efis[0]/inputs/wpt", 0);
+	setprop("/instrumentation/efis[0]/inputs/VORD", 0);
+	setprop("/instrumentation/efis[0]/inputs/DME", 0);
+	setprop("/instrumentation/efis[0]/inputs/NDB", 0);
+	setprop("/instrumentation/efis[0]/inputs/arpt", 0);
+	setprop("/instrumentation/efis[1]/nd/display-mode", "NAV");
+	setprop("/instrumentation/efis[1]/mfd/pnl_mode-num", 2);
+	setprop("/instrumentation/efis[1]/inputs/range-nm", 20);
+	setprop("/instrumentation/efis[1]/inputs/tfc", 0);
+	setprop("/instrumentation/efis[1]/inputs/CSTR", 0);
+	setprop("/instrumentation/efis[1]/inputs/wpt", 0);
+	setprop("/instrumentation/efis[1]/inputs/VORD", 0);
+	setprop("/instrumentation/efis[1]/inputs/DME", 0);
+	setprop("/instrumentation/efis[1]/inputs/NDB", 0);
+	setprop("/instrumentation/efis[1]/inputs/arpt", 0);
 });
 
 var setCptND = func(d) {

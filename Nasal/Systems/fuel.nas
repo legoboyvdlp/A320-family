@@ -68,7 +68,7 @@ var FUEL = {
 };
 
 setlistener("/engines/engine[0]/state", func() {
-	if (pts.Engines.Engine1.state.getValue() == 3) {
+	if (pts.Engines.Engine.state[0].getValue() == 3) {
 		FUEL.timeEngStart = pts.Sim.Time.elapsedSec.getValue();
 		FUEL.cmdCtrOn.setValue(1);
 		ctrTkTimer.start();
@@ -76,7 +76,7 @@ setlistener("/engines/engine[0]/state", func() {
 }, 0, 0);
 
 setlistener("/engines/engine[1]/state", func() {
-	if (pts.Engines.Engine2.state.getValue() == 3) {
+	if (pts.Engines.Engine.state[1].getValue() == 3) {
 		FUEL.timeEngStart = pts.Sim.Time.elapsedSec.getValue();
 		FUEL.cmdCtrOn.setValue(1);
 		ctrTkTimer.start();

@@ -43,6 +43,7 @@ var flightPlanController = {
 	courseToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course", 0, "DOUBLE"),
 	courseMagToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course-mag", 0, "DOUBLE"),
 	distToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-dist", 0, "DOUBLE"),
+	wptType: nil,
 	wptTypeNoAdvanceDelete: 0,
 	
 	distanceToDest: [0, 0, 0],
@@ -150,7 +151,8 @@ var flightPlanController = {
 				}
 				me.deleteWP(0, 2, 0, 1);
 			} else {
-				me.wptTypeNoAdvanceDelete = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type == "radialIntercept" or me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type == "vectors" or me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type == "hdgToAlt";
+				me.wptType = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type;
+				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "hdgToAlt";
 				if (me.wptTypeNoAdvanceDelete) {
 					me.currentToWptIndex.setValue(2);
 				} else {
