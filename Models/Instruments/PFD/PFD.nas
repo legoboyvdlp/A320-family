@@ -1261,7 +1261,7 @@ var canvas_PFD_1 = {
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {
-					vapp = getprop("/FMGC/internal/computed-speeds/clean");
+					clean = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
 				} else {

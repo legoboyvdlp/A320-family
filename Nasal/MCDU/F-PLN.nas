@@ -71,10 +71,16 @@ var fplnItem = {
 		}
 	},
 	getBrg: func() {
-		return sprintf("%03.0f", math.round(fmgc.wpCourse[me.plan][me.index].getValue() - pts.Environment.magVar.getValue()));
+		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - pts.Environment.magVar.getValue();
+		if (me.brg < 0) { me.brg += 360; }
+		if (me.brg > 360) { me.brg -= 360; }
+		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		return sprintf("%03.0f", math.round(fmgc.wpCoursePrev[me.plan][me.index].getValue() - pts.Environment.magVar.getValue()));
+		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - pts.Environment.magVar.getValue();
+		if (me.trk < 0) { me.trk += 360; }
+		if (me.trk > 360) { me.trk -= 360; }
+		return sprintf("%03.0f", math.round(me.trk));
 	},
 	getSpd: func() {
 		return "---";
