@@ -209,6 +209,15 @@
 							<dialog-name>autopilot</dialog-name>
 						</binding>
 					</item>
+					<item>
+						<label>Load Flightplans</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							acconfig.loadflightplan_dlg.open();
+							</script>
+						</binding>
+					</item>
 				</menu>
 				<menu n="103">
 					<label>DU</label>
