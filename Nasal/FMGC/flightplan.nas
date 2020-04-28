@@ -100,10 +100,17 @@ var flightPlanController = {
 		me.flightplans[plan].departure = airportinfo(dep);
 		me.flightplans[plan].destination = airportinfo(arr);
 		if (plan == 2) {
+			destroyTemporaryFlightPlan(0, 0);
+			destroyTemporaryFlightPlan(1, 0);
 			me.currentToWptIndex.setValue(0);
 		}
 		
 		me.addDiscontinuity(1, plan);
+		# reset mcdu if it exists
+		if (canvas_mcdu.myArrival[0] != nil) { canvas_mcdu.myArrival[0].reset(); }
+		if (canvas_mcdu.myArrival[1] != nil) { canvas_mcdu.myArrival[1].reset(); }
+		if (canvas_mcdu.myDeparture[0] != nil) { canvas_mcdu.myDeparture[0].reset(); }
+		if (canvas_mcdu.myDeparture[1] != nil) { canvas_mcdu.myDeparture[1].reset(); }
 		#todo if plan = 2, kill any tmpy flightplan
 		me.flightPlanChanged(plan);
 	},

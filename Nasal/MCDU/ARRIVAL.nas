@@ -1,3 +1,5 @@
+var isNoStar = [0, 0];
+
 var arrivalPage = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
@@ -43,24 +45,32 @@ var arrivalPage = {
 	_stars: nil,
 	_transitions: nil,
 	new: func(icao, computer) {
-		var lr = {parents:[arrivalPage]};
-		lr.id = icao;
-		lr.computer = computer;
-		lr._setupPageWithData();
-		return lr;
+		var page = {parents:[arrivalPage]};
+		page.id = icao;
+		page.computer = computer;
+		page._setupFirstTime();
+		page._setupPageWithData();
+		return page;
 	},
 	del: func() {
 		return nil;
 	},
-	_setupPageWithData: func() {
-		me.title = ["ARRIVAL", " TO ", left(me.id, 4)];
-		
+	reset: func() {
+		isNoStar[me.computer] = 0;
+		me.selectedSTAR = nil;
+		me.hasPressNoTrans = 0;
+	},
+	_setupFirstTime: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
 			}
 			if (fmgc.flightPlanController.flightplans[2].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[2].star;
+				isNoStar[me.computer] = 0;
+			} elsif (isNoStar[me.computer] == 1) {
+				me.selectedSTAR = "NO STAR";
+				me.hasPressNoTrans = 1;
 			}
 		} else {
 			if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
@@ -70,10 +80,18 @@ var arrivalPage = {
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[me.computer].star;
+				isNoStar[me.computer] = 0;
 			} elsif (fmgc.flightPlanController.flightplans[2].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[2].star;
+				isNoStar[me.computer] = 0;
+			} elsif (isNoStar[me.computer] == 1) {
+				me.selectedSTAR = "NO STAR";
+				me.hasPressNoTrans = 1;
 			}
 		}
+	},
+	_setupPageWithData: func() {
+		me.title = ["ARRIVAL", " TO ", left(me.id, 4)];
 		
 		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
@@ -126,10 +144,10 @@ var arrivalPage = {
 	updateActiveApproach: func() {
 		if (me.apprIsRwyFlag) {
 			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-				if (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
-					me.L1 = [fmgc.flightPlanController.flightplans[2].destination_runway.id, " APPR", "grn"];
-				} elsif (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
+				if (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].destination_runway.id, " APPR", "yel"];
+				} elsif (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
+					me.L1 = [fmgc.flightPlanController.flightplans[2].destination_runway.id, " APPR", "grn"];
 				} else {
 					me.L1 = ["---", " APPR", "wht"];
 				}
@@ -142,10 +160,10 @@ var arrivalPage = {
 			}
 		} elsif (me.selectedApproach != nil) {
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
-				if (fmgc.flightPlanController.flightplans[2].approach == me.selectedApproach) {
-					me.L1 = [fmgc.flightPlanController.flightplans[2].approach.id, " APPR", "grn"];
-				} elsif (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
+				if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].approach.id, " APPR", "yel"];
+				} elsif (fmgc.flightPlanController.flightplans[2].approach.id == me.selectedApproach.id) {
+					me.L1 = [fmgc.flightPlanController.flightplans[2].approach.id, " APPR", "grn"];
 				} else {
 					me.L1 = ["---", " APPR", "wht"];
 				} 
@@ -160,7 +178,7 @@ var arrivalPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateActiveSTARs: func() {
-		if (me.selectedSTAR == " NO STAR") {
+		if (me.selectedSTAR == "NO STAR") {
 			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				me.C1 = ["NONE", "STAR", "grn"];
 			} else {
@@ -168,10 +186,10 @@ var arrivalPage = {
 			}
 		} elsif (me.selectedSTAR != nil) {
 			if (fmgc.flightPlanController.flightplans[2].star != nil) {
-				if (fmgc.flightPlanController.flightplans[2].star == me.selectedSTAR) {
-					me.C1 = [fmgc.flightPlanController.flightplans[2].star.id, "STAR", "grn"];
-				} elsif (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
+				if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
 					me.C1 = [fmgc.flightPlanController.flightplans[me.computer].star.id, "STAR", "yel"];
+				} elsif (fmgc.flightPlanController.flightplans[2].star.id == me.selectedSTAR.id) {
+					me.C1 = [fmgc.flightPlanController.flightplans[2].star.id, "STAR", "grn"];
 				} else {
 					me.C1 = ["------- ", "STAR", "wht"];
 				} 
@@ -189,10 +207,10 @@ var arrivalPage = {
 		if (!me.hasPressNoTrans) {
 			if (me.selectedTransition != nil) {
 				if (fmgc.flightPlanController.flightplans[2].star_trans != nil) {
-					if (fmgc.flightPlanController.flightplans[2].star_trans == me.selectedTransition) {
-						me.R1 = [fmgc.flightPlanController.flightplans[2].star_trans.id, "TRANS", "grn"];
-					} elsif (fmgc.flightPlanController.flightplans[me.computer].star_trans != nil) {
+					if (fmgc.flightPlanController.flightplans[me.computer].star_trans != nil) {
 						me.R1 = [fmgc.flightPlanController.flightplans[me.computer].star_trans.id, "TRANS", "yel"];
+					} elsif (fmgc.flightPlanController.flightplans[2].star_trans.id == me.selectedTransition.id) {
+						me.R1 = [fmgc.flightPlanController.flightplans[2].star_trans.id, "TRANS", "grn"];
 					} else {
 						me.R1 = ["-------", "TRANS ", "wht"];
 					} 
@@ -205,7 +223,11 @@ var arrivalPage = {
 				me.R1 = ["-------", "TRANS ", "wht"];
 			}
 		} else {
-			me.R1 = ["NONE", "TRANS ", "yel"];
+			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				me.R1 = ["NONE", "TRANS ", "grn"];
+			} else {
+				me.R1 = ["NONE", "TRANS ", "yel"];
+			}
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
@@ -337,9 +359,9 @@ var arrivalPage = {
 		
 		me.stars = sort(me._stars,func(a,b) cmp(a,b));
 		if (me.stars == nil) {
-			me.stars = [" NO STAR"];
+			me.stars = ["NO STAR"];
 		} else {
-			append(me.stars, " NO STAR");
+			append(me.stars, "NO STAR");
 		}
 		
 		if (size(me.stars) >= 1) {
@@ -418,6 +440,10 @@ var arrivalPage = {
 				me.arrowsMatrix[1][1] = 0;
 				me.arrowsColour[1][1] = "ack";
 			}
+			return;
+		}
+		if (me.selectedSTAR == "NO STAR") {
+		
 			return;
 		}
 		me._transitions = me.arrAirport[0].getStar(me.selectedSTAR).transitions;
@@ -499,7 +525,7 @@ var arrivalPage = {
 					me.scrollStars = 0;
 				}
 				me.updateSTARs();
-				if (me.selectedSTAR == nil or me.selectedSTAR == " NO STAR") {
+				if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
 					me.clearTransitions();
 				} else {
 					me.updateTransitions();
@@ -524,7 +550,7 @@ var arrivalPage = {
 					me.scrollStars = size(me.stars) - 4;
 				}
 				me.updateSTARs();
-				if (me.selectedSTAR == nil or me.selectedSTAR == " NO STAR") {
+				if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
 					me.clearTransitions();
 				} else {
 					me.updateTransitions();
@@ -545,6 +571,9 @@ var arrivalPage = {
 		if (me.activePage == 0) {
 			if (size(me.approaches) >= (index - 2) and index != 2) {
 				if (!dirToFlag) {
+					me.selectedSTAR = nil;
+					me.hasPressNoTrans = 0;
+					isNoStar[me.computer] = 0;
 					me.makeTmpy();
 					if (!me.apprIsRwyFlag) {
 						me.selectedApproach = me.arrAirport[0].getIAP(me.approaches[index - 3 + me.scrollApproach]);
@@ -573,9 +602,11 @@ var arrivalPage = {
 				if (!dirToFlag) {
 					me.selectedSTAR = me.stars[index - 2 + me.scrollStars];
 					me.makeTmpy();
-					if (me.selectedSTAR != " NO STAR") {
+					if (me.selectedSTAR != "NO STAR") {
+						isNoStar[me.computer] = 0;
 						fmgc.flightPlanController.flightplans[me.computer].star = me.arrAirport[0].getStar(me.selectedSTAR);
 					} else {
+						isNoStar[me.computer] = 1;
 						fmgc.flightPlanController.flightplans[me.computer].star = nil;
 						if (fmgc.flightPlanController.flightplans[me.computer].approach == nil) {
 							fmgc.flightPlanController.insertNOSTAR(me.computer);
@@ -583,7 +614,7 @@ var arrivalPage = {
 					}
 					me.updateActiveSTARs();
 					me.updateSTARs();
-					if (me.selectedSTAR != " NO STAR") {
+					if (me.selectedSTAR != "NO STAR") {
 						me.hasPressNoTrans = 0;
 						me.updateTransitions();
 					} else {
