@@ -100,8 +100,8 @@ var flightPlanController = {
 		me.flightplans[plan].departure = airportinfo(dep);
 		me.flightplans[plan].destination = airportinfo(arr);
 		if (plan == 2) {
-			destroyTemporaryFlightPlan(0, 0);
-			destroyTemporaryFlightPlan(1, 0);
+			me.destroyTemporaryFlightPlan(0, 0);
+			me.destroyTemporaryFlightPlan(1, 0);
 			me.currentToWptIndex.setValue(0);
 		}
 		

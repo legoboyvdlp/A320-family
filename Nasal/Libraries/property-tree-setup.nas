@@ -45,6 +45,10 @@ var Engines = {
 	},
 };
 
+var Environment = {
+	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
+};
+
 var Fdm = {
 	JSBsim: {
 		Fcs: {
