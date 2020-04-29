@@ -68,7 +68,7 @@
 				</or>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<value>0.8</value>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -85,7 +85,7 @@
 				</equals>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<value>0.8</value>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
