@@ -513,7 +513,7 @@ var flightPlanController = {
 		
 		if (text == "CLR") {
 			return me.deleteWP(index, thePlan, 0);
-		} elsif (size(text) == 16) {
+		} elsif (size(text) > 12) {
 			return me.insertLatLonFix(text, index, thePlan);
 		} elsif (size(text) == 5) {
 			return me.insertFix(text, index, thePlan);
