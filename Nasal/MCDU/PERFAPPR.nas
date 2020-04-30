@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Matthew Maring (hayden2000)
+# Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # APPR PERF
 var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 1);

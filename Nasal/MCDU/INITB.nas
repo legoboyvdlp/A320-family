@@ -1,6 +1,6 @@
-# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
+# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2020 Matthew Maring (hayden2000)
+# Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var zfwcg = props.globals.getNode("FMGC/internal/zfwcg", 1);
 var zfwcgSet = props.globals.getNode("FMGC/internal/zfwcg-set", 1);

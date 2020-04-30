@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Matthew Maring (hayden2000)
+# Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # uses universal values, will implement separately once FPLN is finished
 
