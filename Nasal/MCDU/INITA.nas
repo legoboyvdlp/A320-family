@@ -190,7 +190,7 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R3") {
 		setprop("MCDU[" ~ i ~ "]/page", "IRSINIT");
-	} else if (key == "R5") {
+	} else if (key == "R6") {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/tropo", 36090);
 			setprop("FMGC/internal/tropo-set", 0);
@@ -205,18 +205,6 @@ var initInputA = func(key, i) {
 			} else {
 				notAllowed(i);
 			}
-		}
-	} else if (key == "R6") {
-		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/gndtemp-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else if (int(scratchpad) != nil and getprop("FMGC/status/phase") == 0 and size(scratchpad) >= 1 and size(scratchpad) <= 3 and scratchpad >= -99 and scratchpad <= 99) {
-			setprop("FMGC/internal/gndtemp", scratchpad);
-			setprop("FMGC/internal/gndtemp-set", 1);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
-		} else {
-			notAllowed(i);
 		}
 	}
 }

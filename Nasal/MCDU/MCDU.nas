@@ -529,9 +529,7 @@ var rskbutton = func(btn, i) {
 			notAllowed(i);
 		}
 	} else if (btn == "5") {
-		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
-			initInputA("R5",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+		if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R5",i);
@@ -609,12 +607,6 @@ var arrowbutton = func(btn, i) {
 			setprop("MCDU[" ~ i ~ "]/page", "DATA2");
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA2") {
 			setprop("MCDU[" ~ i ~ "]/page", "DATA");
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
-			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
-				setprop("MCDU[" ~ i ~ "]/page", "INITB");
-			} else {
-				setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
-			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB" or getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
@@ -637,8 +629,6 @@ var arrowbutton = func(btn, i) {
 			} else {
 				setprop("MCDU[" ~ i ~ "]/page", "FUELPRED");
 			}
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB" or getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
-			setprop("MCDU[" ~ i ~ "]/page", "INITA");
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
 			setprop("MCDU[" ~ i ~ "]/page", "PRINTFUNC2");
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
