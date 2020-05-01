@@ -80,7 +80,7 @@ var ADIRU = {
 			ADIRS.Lights.adrOff[me.num].setValue(!ADIRS.Switches.adrSw[me.num].getValue());
 			ADIRS.Lights.adrFault[me.num].setValue(0);
 			ADIRS.Lights.irFault[me.num].setValue(0);
-			ADIRS.Lights.irOff[me.num].setValue(!ADIRS.Switches.irSw[me.num].getValue());
+			ADIRS.Lights.irOff[me.num].setValue(0);
 		}, 1.1);
 		
 		ADIRS.selfTest();
