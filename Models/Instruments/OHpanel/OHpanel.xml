@@ -538,8 +538,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[0].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRSnew.Switches.irModeSw[0].getValue() + 1);
+					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() + 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(0, 0);
 					}
@@ -557,8 +557,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[0].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRSnew.Switches.irModeSw[0].getValue() - 1);
+					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() - 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(0, 2);
 					}
@@ -634,8 +634,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[1].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRSnew.Switches.irModeSw[1].getValue() + 1);
+					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() + 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(1, 0);
 					}
@@ -653,8 +653,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[1].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRSnew.Switches.irModeSw[1].getValue() - 1);
+					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() - 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(1, 2);
 					}
@@ -730,8 +730,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[2].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRSnew.Switches.irModeSw[2].getValue() + 1);
+					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() + 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(2, 0);
 					}
@@ -749,8 +749,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[2].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRSnew.Switches.irModeSw[2].getValue() - 1);
+					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() - 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(2, 2);
 					}

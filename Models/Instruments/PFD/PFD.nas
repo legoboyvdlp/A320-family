@@ -1050,7 +1050,7 @@ var canvas_PFD_1 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if (systems.ADIRSnew.ADIRunits[0].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
+		if (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -1788,7 +1788,7 @@ var canvas_PFD_2 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if (systems.ADIRSnew.ADIRunits[1].aligned == 1 or (systems.ADIRSnew.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
+		if (systems.ADIRS.ADIRunits[1].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();

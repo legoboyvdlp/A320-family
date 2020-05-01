@@ -3957,7 +3957,6 @@
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADIRS.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>

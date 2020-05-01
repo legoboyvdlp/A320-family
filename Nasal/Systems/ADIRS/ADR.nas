@@ -61,34 +61,34 @@ var ADIRU = {
 	},
 	# BITE
 	selfTest: func() {
-		ADIRSnew._selfTest = 1;
+		ADIRS._selfTest = 1;
 		_selfTestTime = pts.Sim.Time.elapsedSec.getValue();
 		
-		ADIRSnew.Lights.adrOff[me.num].setValue(1);
-		ADIRSnew.Lights.adrFault[me.num].setValue(1);
+		ADIRS.Lights.adrOff[me.num].setValue(1);
+		ADIRS.Lights.adrFault[me.num].setValue(1);
 		settimer(func() {
-			ADIRSnew.Lights.adrOff[me.num].setValue(0);
-			ADIRSnew.Lights.adrFault[me.num].setValue(0);
+			ADIRS.Lights.adrOff[me.num].setValue(0);
+			ADIRS.Lights.adrFault[me.num].setValue(0);
 		}, 0.1);
 		settimer(func() {
-			ADIRSnew.Lights.adrOff[me.num].setValue(1);
-			ADIRSnew.Lights.adrFault[me.num].setValue(1);
-			ADIRSnew.Lights.irFault[me.num].setValue(1);
-			ADIRSnew.Lights.irOff[me.num].setValue(1);
+			ADIRS.Lights.adrOff[me.num].setValue(1);
+			ADIRS.Lights.adrFault[me.num].setValue(1);
+			ADIRS.Lights.irFault[me.num].setValue(1);
+			ADIRS.Lights.irOff[me.num].setValue(1);
 		}, 1.0);
 		settimer(func() {
-			ADIRSnew.Lights.adrOff[me.num].setValue(0);
-			ADIRSnew.Lights.adrFault[me.num].setValue(0);
-			ADIRSnew.Lights.irFault[me.num].setValue(0);
-			ADIRSnew.Lights.irOff[me.num].setValue(0);
+			ADIRS.Lights.adrOff[me.num].setValue(ADIRS.Switches.adrSw[me.num].getValue());
+			ADIRS.Lights.adrFault[me.num].setValue(0);
+			ADIRS.Lights.irFault[me.num].setValue(0);
+			ADIRS.Lights.irOff[me.num].setValue(ADIRS.Switches.irSw[me.num].getValue());
 		}, 1.1);
 		
-		ADIRSnew.selfTest();
+		ADIRS.selfTest();
 	},
 	# Alignment
 	align: func(time) {
-		ADIRSnew.Lights.irFault[me.num].setBoolValue(0);
-		if (!ADIRSnew.skip.getValue()) {
+		ADIRS.Lights.irFault[me.num].setBoolValue(0);
+		if (!ADIRS.skip.getValue()) {
 			if (time > 0 and me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + time;
 				me.inAlign = 1;
@@ -154,26 +154,26 @@ var ADIRU = {
 			if (me._voltageMain) {
 				me._noPowerTime = 0;
 				me.setOperative(1);
-				if (!ADIRSnew._selfTest) {
-					ADIRSnew.Lights.onBat.setBoolValue(0);
+				if (!ADIRS._selfTest) {
+					ADIRS.Lights.onBat.setBoolValue(0);
 				}
 			} elsif (((me._timeVar < me._noPowerTime + 300 and me._voltageLimitedTime) or !me._voltageLimitedTime) and me._voltageBackup) {
 				me.setOperative(1);
-				if (!ADIRSnew._selfTest) {
-					ADIRSnew.Lights.onBat.setBoolValue(1);
+				if (!ADIRS._selfTest) {
+					ADIRS.Lights.onBat.setBoolValue(1);
 				}
 			} else {
 				me._noPowerTime = 0;
 				me.setOperative(0);
-				if (!ADIRSnew._selfTest) {
-					ADIRSnew.Lights.onBat.setBoolValue(0);
+				if (!ADIRS._selfTest) {
+					ADIRS.Lights.onBat.setBoolValue(0);
 				}
 			}
 		} else {
 			me._noPowerTime = 0;
 			me.setOperative(0);
-			if (!ADIRSnew._selfTest) {
-				ADIRSnew.Lights.onBat.setBoolValue(0);
+			if (!ADIRS._selfTest) {
+				ADIRS.Lights.onBat.setBoolValue(0);
 			}
 		}
 	},
@@ -182,42 +182,42 @@ var ADIRU = {
 var ADIRSControlPanel = {
 	adrSw: func(n) { 
 		if (n < 0 or n > _NUMADIRU) { return; }
-		ADIRSnew._adrSwitchState = ADIRSnew.Switches.adrSw[n].getValue();
-		ADIRSnew.Switches.adrSw[n].setValue(!ADIRSnew._adrSwitchState);
-		if (ADIRSnew.ADIRunits[n] != nil) { 
-			ADIRSnew.ADIRunits[n].outputOn = !ADIRSnew._adrSwitchState;
+		ADIRS._adrSwitchState = ADIRS.Switches.adrSw[n].getValue();
+		ADIRS.Switches.adrSw[n].setValue(!ADIRS._adrSwitchState);
+		if (ADIRS.ADIRunits[n] != nil) { 
+			ADIRS.ADIRunits[n].outputOn = !ADIRS._adrSwitchState;
 		}
-		ADIRSnew.Lights.adrOff[n].setValue(ADIRSnew._adrSwitchState);
+		ADIRS.Lights.adrOff[n].setValue(ADIRS._adrSwitchState);
 	},
 	irSw: func(n) { 
 		if (n < 0 or n > _NUMADIRU) { return; }
-		ADIRSnew._irSwitchState = ADIRSnew.Switches.irSw[n].getValue();
-		ADIRSnew.Switches.irSw[n].setValue(!ADIRSnew._irSwitchState);
-		if (ADIRSnew.IRunits[n] != nil) { 
-			ADIRSnew.IRunits[n].outputOn = !ADIRSnew._irSwitchState;
+		ADIRS._irSwitchState = ADIRS.Switches.irSw[n].getValue();
+		ADIRS.Switches.irSw[n].setValue(!ADIRS._irSwitchState);
+		if (ADIRS.IRunits[n] != nil) { 
+			ADIRS.IRunits[n].outputOn = !ADIRS._irSwitchState;
 		}
-		ADIRSnew.Lights.irOff[n].setValue(ADIRSnew._adrSwitchState);
+		ADIRS.Lights.irOff[n].setValue(ADIRS._adrSwitchState);
 	},
 	irModeSw: func(n, mode) {
 		if (n < 0 or n > _NUMADIRU) { return; }
 		if (mode < 0 or mode > 2) { return; }
-		me._irModeSwitchState = ADIRSnew.Switches.irModeSw[n].getValue();
-		if (ADIRSnew.ADIRunits[n] != nil) { 
-			ADIRSnew.ADIRunits[n].mode = mode;
-			ADIRSnew.ADIRunits[n].updateEnergised(mode);
-			ADIRSnew.Switches.irModeSw[n].setValue(mode);
+		me._irModeSwitchState = ADIRS.Switches.irModeSw[n].getValue();
+		if (ADIRS.ADIRunits[n] != nil) { 
+			ADIRS.ADIRunits[n].mode = mode;
+			ADIRS.ADIRunits[n].updateEnergised(mode);
+			ADIRS.Switches.irModeSw[n].setValue(mode);
 			if (mode == 0) {
-				ADIRSnew.Lights.irFault[n].setBoolValue(0);
-				ADIRSnew.ADIRunits[n].stopAlignNoAlign();
-			} elsif (ADIRSnew.ADIRunits[n].aligned == 0) {
-				ADIRSnew.ADIRunits[n].update(); # update early so operative is set properly
-				ADIRSnew.ADIRunits[n].align(calcAlignTime(pts.Position.latitude.getValue())); # when you set NAV, it first acquires GPS position then acquires GPS. You then use IRS INIT > to set PPOS to align if you wish
+				ADIRS.Lights.irFault[n].setBoolValue(0);
+				ADIRS.ADIRunits[n].stopAlignNoAlign();
+			} elsif (ADIRS.ADIRunits[n].aligned == 0) {
+				ADIRS.ADIRunits[n].update(); # update early so operative is set properly
+				ADIRS.ADIRunits[n].align(calcAlignTime(pts.Position.latitude.getValue())); # when you set NAV, it first acquires GPS position then acquires GPS. You then use IRS INIT > to set PPOS to align if you wish
 			}
 		}
 	}
 };
 
-var ADIRSnew = {
+var ADIRS = {
 	# local vars
 	_adrSwitchState: 0,
 	_irSwitchState: 0,
@@ -275,17 +275,17 @@ var ADIRSnew = {
 				me._slatPos = pts.Fdm.JSBsim.Fcs.slatDeg.getValue();
 				
 				if (me._flapPos >= 23 and me._slatPos >= 25) {
-					ADIRSnew.overspeedVFE.setValue(181);
+					ADIRS.overspeedVFE.setValue(181);
 				} elsif (me._flapPos >= 18) {
-					ADIRSnew.overspeedVFE.setValue(189);
+					ADIRS.overspeedVFE.setValue(189);
 				} elsif (me._flapPos >= 13 or me._slatPos > 20) {
-					ADIRSnew.overspeedVFE.setValue(204);
+					ADIRS.overspeedVFE.setValue(204);
 				} elsif (me._slatPos <= 20 and me._flapPos > 2) {
-					ADIRSnew.overspeedVFE.setValue(219);
+					ADIRS.overspeedVFE.setValue(219);
 				} elsif (me._slatPos >= 2 and me._slatPos <= 20) {
-					ADIRSnew.overspeedVFE.setValue(234);
+					ADIRS.overspeedVFE.setValue(234);
 				} else {
-					ADIRSnew.overspeedVFE.setValue(1024);
+					ADIRS.overspeedVFE.setValue(1024);
 				}
 			}
 		),
@@ -321,7 +321,7 @@ var ADIRSnew = {
 		}
 	},
 	selfTest: func() {
-		ADIRSnew.Lights.onBat.setBoolValue(1);
+		ADIRS.Lights.onBat.setBoolValue(1);
 		selfTestLoop.start();
 	},
 	
@@ -338,10 +338,10 @@ setlistener("/systems/fmgc/cas-compare/cas-reject-all", func() {
 }, 0, 0);
 
 setlistener("/controls/adirs/skip", func() {
-	if (ADIRSnew.skip.getBoolValue()) {
+	if (ADIRS.skip.getBoolValue()) {
 		for (i = 0; i < 3; i = i + 1) {
-			if (ADIRSnew.ADIRunits[i].inAlign == 1) {
-				ADIRSnew.ADIRunits[i].stopAlignAligned();
+			if (ADIRS.ADIRunits[i].inAlign == 1) {
+				ADIRS.ADIRunits[i].stopAlignAligned();
 			}
 		}
 	}
@@ -349,8 +349,8 @@ setlistener("/controls/adirs/skip", func() {
 
 selfTestLoop = maketimer(0.2, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > _selfTestTime + 5) {
-		ADIRSnew.Lights.onBat.setBoolValue(0);
+		ADIRS.Lights.onBat.setBoolValue(0);
 		selfTestLoop.stop();
-		ADIRSnew._selfTest = 0;
+		ADIRS._selfTest = 0;
 	}
 });

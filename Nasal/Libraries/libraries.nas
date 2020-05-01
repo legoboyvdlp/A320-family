@@ -201,7 +201,6 @@ var systemsInit = func {
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
-	systems.ADIRSnew.init();
 	systems.eng_init();
 	systems.APUController.init();
 	systems.fire_init();
@@ -236,7 +235,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.PNEU.loop();
 	systems.HYD.loop();
 	systems.FUEL.loop();
-	systems.ADIRSnew.loop();
+	systems.ADIRS.loop();
 	libraries.ECAM.loop();
 	libraries.BUTTONS.update();
 	fadec.FADEC.loop();

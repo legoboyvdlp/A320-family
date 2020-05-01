@@ -1383,19 +1383,19 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
-			if (getprop("/systems/navigation/adr/operating-1") and systems.ADIRSnew.ADIRunits[0].inAlign == 0) {
+			if (getprop("/systems/navigation/adr/operating-1") and systems.ADIRS.ADIRunits[0].inAlign == 0) {
 				me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
 			} else {
 				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
 			}
 			
-			if (getprop("/systems/navigation/adr/operating-2") and systems.ADIRSnew.ADIRunits[1].inAlign == 0) {
+			if (getprop("/systems/navigation/adr/operating-2") and systems.ADIRS.ADIRunits[1].inAlign == 0) {
 				me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
 			} else {
 				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
 			}
 			
-			if (getprop("/systems/navigation/adr/operating-3") and systems.ADIRSnew.ADIRunits[2].inAlign == 0) {
+			if (getprop("/systems/navigation/adr/operating-3") and systems.ADIRS.ADIRunits[2].inAlign == 0) {
 				me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
 			} else {
 				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");

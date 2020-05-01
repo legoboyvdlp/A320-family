@@ -384,15 +384,15 @@ var beforestart_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
-	if (systems.ADIRSnew.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
-	if (systems.ADIRSnew.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
-	if (systems.ADIRSnew.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
+	if (systems.ADIRS.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
+	if (systems.ADIRS.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
+	if (systems.ADIRS.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
-	systems.ADIRSnew.ADIRunits[0].instAlign();
-	systems.ADIRSnew.ADIRunits[1].instAlign();
-	systems.ADIRSnew.ADIRunits[2].instAlign();
+	systems.ADIRS.ADIRunits[0].instAlign();
+	systems.ADIRS.ADIRunits[1].instAlign();
+	systems.ADIRS.ADIRunits[2].instAlign();
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
@@ -476,15 +476,15 @@ var taxi_b = func {
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
-	if (systems.ADIRSnew.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
-	if (systems.ADIRSnew.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
-	if (systems.ADIRSnew.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
+	if (systems.ADIRS.Switches.adrSw[0].getValue() != 1) { systems.ADIRSControlPanel.adrSw(0); }
+	if (systems.ADIRS.Switches.adrSw[1].getValue() != 1) { systems.ADIRSControlPanel.adrSw(1); }
+	if (systems.ADIRS.Switches.adrSw[2].getValue() != 1) { systems.ADIRSControlPanel.adrSw(2); }
 	systems.ADIRSControlPanel.irModeSw(0, 1);
 	systems.ADIRSControlPanel.irModeSw(1, 1);
 	systems.ADIRSControlPanel.irModeSw(2, 1);
-	systems.ADIRSnew.ADIRunits[0].instAlign();
-	systems.ADIRSnew.ADIRunits[1].instAlign();
-	systems.ADIRSnew.ADIRunits[2].instAlign();
+	systems.ADIRS.ADIRunits[0].instAlign();
+	systems.ADIRS.ADIRunits[1].instAlign();
+	systems.ADIRS.ADIRunits[2].instAlign();
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
