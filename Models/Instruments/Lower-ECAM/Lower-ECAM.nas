@@ -669,7 +669,7 @@ var canvas_lowerECAM_apu = {
 		me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 
 		# APU Bleed
-		if (systems.ADIRSnew.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
+		if (systems.ADIRS.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
 			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
 			me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
 		} else {

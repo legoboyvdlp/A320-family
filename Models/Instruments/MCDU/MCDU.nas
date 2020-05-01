@@ -107,6 +107,8 @@ var cruiseTemp = props.globals.getNode("/FMGC/internal/cruise-temp", 1);
 var cruiseTempSet = props.globals.getNode("/FMGC/internal/cruise-temp-set", 1);
 var tropo = props.globals.getNode("/FMGC/internal/tropo", 1);
 var tropoSet = props.globals.getNode("/FMGC/internal/tropo-set", 1);
+var gndtemp = props.globals.getNode("/FMGC/internal/gndtemp", 1);
+var gndtempSet = props.globals.getNode("/FMGC/internal/gndtemp-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
@@ -1105,16 +1107,16 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
+				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
 				me.showLeft(0, 1, 0, -1, 0, 1);
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, -1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
-				me.showRight(0, 0, 1, -1, 1, 1);
-				me.showRightS(1, 0, -1, -1, -1, 1);
-				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me.showRight(0, 0, 1, 1, 1, 1);
+				me.showRightS(1, 0, -1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, 1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1122,12 +1124,12 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, 0);
 				
 				me.colorLeft("blu", "wht", "blu", "blu", "ack", "ack");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("blu", "amb", "amb", "wht", "wht", "blu");
+				me.colorRight("blu", "amb", "amb", "wht", "blu", "blu");
 				me.colorRightS("wht", "amb", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
@@ -1192,7 +1194,7 @@ var canvas_MCDU_base = {
 				me["INITA_FromTo"].show();
 				me["Simple_L1"].hide();
 				me["Simple_L2"].setColor(1,1,1);
-				me["Simple_L2"].setText("----/------");
+				me["Simple_L2"].setText("----/----------");
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
 				me["INITA_InitRequest"].show();
@@ -1207,9 +1209,23 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			}
 			if (tropoSet.getValue() == 1) {
-				me["Simple_R6"].setFontSize(normal); 
+				me["Simple_R5"].setFontSize(normal); 
 			} else {
+				me["Simple_R5"].setFontSize(small); 
+			}
+			
+			me["Simple_R6S"].setText("GND TEMP");
+			if (getprop("/FMGC/status/phase") == 0 and !getprop("/FMGC/internal/gndtemp-set")) {
+				setprop("/FMGC/internal/gndtemp", 15 - (2 * getprop("/position/gear-agl-ft") / 1000));
+				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 				me["Simple_R6"].setFontSize(small); 
+			} else {
+				if (getprop("/FMGC/internal/gndtemp-set")) {
+					me["Simple_R6"].setFontSize(normal); 
+				} else {
+					me["Simple_R6"].setFontSize(small); 
+				}
+				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
 			}
 			
 			me["Simple_L1S"].setText(" CO RTE");
@@ -1221,13 +1237,13 @@ var canvas_MCDU_base = {
 			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
-			me["Simple_R6S"].setText("TROPO");
+			me["Simple_R5S"].setText("TROPO");
 			
 			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("IRS INIT ");
-			me["Simple_R5"].setText("WIND ");
-			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));
+			me["Simple_R4"].setText("WIND ");
+			me["Simple_R5"].setText(sprintf("%5.0f", tropo.getValue()));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -1340,17 +1356,17 @@ var canvas_MCDU_base = {
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
 			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			if (getprop("/systems/navigation/adr/operating-1") and getprop("/FMGC/internal/align1-done")) {
+			if (systems.ADIRS.ADIRunits[0].operative and getprop("/FMGC/internal/align1-done")) {
 				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C3"].setText("-----.--/-----.--");
 			}
-			if (getprop("/systems/navigation/adr/operating-2") and getprop("/FMGC/internal/align2-done")) {
+			if (systems.ADIRS.ADIRunits[1].operative and getprop("/FMGC/internal/align2-done")) {
 				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C4"].setText("-----.--/-----.--");
 			}
-			if (getprop("/systems/navigation/adr/operating-3") and getprop("/FMGC/internal/align3-done")) {
+			if (systems.ADIRS.ADIRunits[2].operative and getprop("/FMGC/internal/align3-done")) {
 				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
 			} else {
 				me["Simple_C5"].setText("-----.--/-----.--");
@@ -1367,20 +1383,32 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
-			if (getprop("/systems/navigation/adr/operating-1") and systems.ADIRSnew.ADIRunits[0].inAlign == 0) {
-				me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
+			if (systems.ADIRS.Operating.aligned[0].getValue()) {
+				if (systems.ADIRS.ADIRunits[0].mode == 2) {
+					me["Simple_C3S"].setText("IRS1 IN ATT");
+				} else {
+					me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
+				}
 			} else {
 				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
 			}
 			
-			if (getprop("/systems/navigation/adr/operating-2") and systems.ADIRSnew.ADIRunits[1].inAlign == 0) {
-				me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
+			if (systems.ADIRS.Operating.aligned[1].getValue()) {
+				if (systems.ADIRS.ADIRunits[1].mode == 2) {
+					me["Simple_C4S"].setText("IRS2 IN ATT");
+				} else {
+					me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
+				}
 			} else {
 				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
 			}
 			
-			if (getprop("/systems/navigation/adr/operating-3") and systems.ADIRSnew.ADIRunits[2].inAlign == 0) {
-				me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
+			if (systems.ADIRS.Operating.aligned[2].getValue()) {
+				if (systems.ADIRS.ADIRunits[2].mode == 2) {
+					me["Simple_C5S"].setText("IRS3 IN ATT");
+				} else {
+					me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
+				}
 			} else {
 				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
 			}
@@ -1465,7 +1493,7 @@ var canvas_MCDU_base = {
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
-				me["ArrowRight"].hide();
+				me["ArrowRight"].show();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
@@ -1602,7 +1630,7 @@ var canvas_MCDU_base = {
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
-				me["ArrowRight"].hide();
+				me["ArrowRight"].show();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();

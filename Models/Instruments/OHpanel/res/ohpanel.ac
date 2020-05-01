@@ -32096,13 +32096,13 @@ refs 4
 SURF 0X32
 mat 9
 refs 2
-129 0 0
-142 0 0
+128 0 0
+139 0 0
 SURF 0X32
 mat 9
 refs 2
-128 0 0
-139 0 0
+129 0 0
+142 0 0
 kids 0
 OBJECT poly
 name "Eng2FireTst"
@@ -43564,11 +43564,11 @@ refs 4
 4 0.5 0
 kids 0
 OBJECT poly
-name "IR1Btn2A"
+name "IR1Btn2O"
 data 9
 Cube.1025
 crease 30.0
-texture "buttons3.png"
+texture "buttons2.png"
 texrep 1 1
 numvert 8
 0.00773 0.19745 0.28598
@@ -44081,11 +44081,11 @@ refs 4
 6 0 0.5
 kids 0
 OBJECT poly
-name "IR2Btn2A"
+name "IR2Btn2O"
 data 9
 Cube.1029
 crease 30.0
-texture "buttons3.png"
+texture "buttons2.png"
 texrep 1 1
 numvert 8
 -0.00317 0.19745 0.19429
@@ -44690,11 +44690,11 @@ refs 4
 4 0.5 0
 kids 0
 OBJECT poly
-name "IR3Btn2A"
+name "IR3Btn2O"
 data 9
 Cube.1027
 crease 30.0
-texture "buttons3.png"
+texture "buttons2.png"
 texrep 1 1
 numvert 8
 -0.00046 0.20745 0.24088
