@@ -110,7 +110,7 @@ var ADIRU = {
 		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
-		setprop("systems/navigation/aligned-" ~ (me.num + 1), 0);
+		ADIRS.Operating.aligned[me.num].setValue(0);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
@@ -118,7 +118,7 @@ var ADIRU = {
 	stopAlignAligned: func() {
 		me.inAlign = 0;
 		me.aligned = 1;
-		setprop("systems/navigation/aligned-" ~ (me.num + 1), 1);
+		ADIRS.Operating.aligned[me.num].setValue(1);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
@@ -239,19 +239,20 @@ var ADIRS = {
 	
 	# PTS
 	Lights: {
-		adrFault: [props.globals.getNode("controls/navigation/adirscp/lights/adr-1-fault"), props.globals.getNode("controls/navigation/adirscp/lights/adr-2-fault"), props.globals.getNode("controls/navigation/adirscp/lights/adr-3-fault")],
-		adrOff: [props.globals.getNode("controls/navigation/adirscp/lights/adr-1-off"), props.globals.getNode("controls/navigation/adirscp/lights/adr-2-off"), props.globals.getNode("controls/navigation/adirscp/lights/adr-3-off")],
-		irFault: [props.globals.getNode("controls/navigation/adirscp/lights/ir-1-fault"), props.globals.getNode("controls/navigation/adirscp/lights/ir-2-fault"), props.globals.getNode("controls/navigation/adirscp/lights/ir-3-fault")],
-		irOff: [props.globals.getNode("controls/navigation/adirscp/lights/ir-1-off"), props.globals.getNode("controls/navigation/adirscp/lights/ir-2-off"), props.globals.getNode("controls/navigation/adirscp/lights/ir-3-off")],
-		onBat: props.globals.getNode("controls/navigation/adirscp/lights/on-bat"),
+		adrFault: [props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-fault")],
+		adrOff: [props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-off"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-off"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-off")],
+		irFault: [props.globals.getNode("/controls/navigation/adirscp/lights/ir-1-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-2-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-3-fault")],
+		irOff: [props.globals.getNode("/controls/navigation/adirscp/lights/ir-1-off"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-2-off"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-3-off")],
+		onBat: props.globals.getNode("/controls/navigation/adirscp/lights/on-bat"),
 	},
 	Switches: {
-		adrSw: [props.globals.getNode("controls/navigation/adirscp/switches/adr-1"), props.globals.getNode("controls/navigation/adirscp/switches/adr-2"), props.globals.getNode("controls/navigation/adirscp/switches/adr-3")],
-		irModeSw: [props.globals.getNode("controls/navigation/adirscp/switches/ir-1-mode"), props.globals.getNode("controls/navigation/adirscp/switches/ir-2-mode"), props.globals.getNode("controls/navigation/adirscp/switches/ir-3-mode")],
-		irSw: [props.globals.getNode("controls/navigation/adirscp/switches/ir-1"), props.globals.getNode("controls/navigation/adirscp/switches/ir-2"), props.globals.getNode("controls/navigation/adirscp/switches/ir-3")],
+		adrSw: [props.globals.getNode("/controls/navigation/adirscp/switches/adr-1"), props.globals.getNode("/controls/navigation/adirscp/switches/adr-2"), props.globals.getNode("/controls/navigation/adirscp/switches/adr-3")],
+		irModeSw: [props.globals.getNode("/controls/navigation/adirscp/switches/ir-1-mode"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-2-mode"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-3-mode")],
+		irSw: [props.globals.getNode("/controls/navigation/adirscp/switches/ir-1"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-2"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-3")],
 	},
 	Operating: {
-		adr: [props.globals.getNode("systems/navigation/adr/operating-1"), props.globals.getNode("systems/navigation/adr/operating-2"), props.globals.getNode("systems/navigation/adr/operating-3")],
+		adr: [props.globals.getNode("/systems/navigation/adr/operating-1"), props.globals.getNode("/systems/navigation/adr/operating-2"), props.globals.getNode("/systems/navigation/adr/operating-3")],
+		aligned: [props.globals.getNode("/systems/navigation/aligned-1"), props.globals.getNode("/systems/navigation/aligned-2"), props.globals.getNode("/systems/navigation/aligned-3")],
 	},
 	
 	# Nodes
