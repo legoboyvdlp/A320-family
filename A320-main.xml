@@ -576,42 +576,6 @@
 		<footrest-cpt n="1" type="double">0</footrest-cpt>
 		<footrest-fo n="0" type="double">0</footrest-fo>
 		<footrest-fo n="1" type="double">0</footrest-fo>
-		<adirs n="0">
-			<adr n="0">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<adr n="1">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<adr n="2">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<display>
-				<selected type="int">1</selected>
-				<dataknob type="int">5</dataknob>
-				<text type="string"></text>
-			</display>
-			<ir n="0">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<ir n="1">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<ir n="2">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<onbat type="bool">false</onbat>
-			<skip type="bool">0</skip>
-		</adirs>
 		<atc>
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
@@ -803,9 +767,9 @@
 		<navigation>
 			<adirscp>
 				<switches>
-					<adr-1 type="bool">0</adr-1>
-					<adr-2 type="bool">0</adr-2>
-					<adr-3 type="bool">0</adr-3>
+					<adr-1 type="bool">1</adr-1>
+					<adr-2 type="bool">1</adr-2>
+					<adr-3 type="bool">1</adr-3>
 					<ir-1 type="bool">0</ir-1>
 					<ir-2 type="bool">0</ir-2>
 					<ir-3 type="bool">0</ir-3>
@@ -817,9 +781,9 @@
 					<adr-1-fault type="bool">0</adr-1-fault>
 					<adr-2-fault type="bool">0</adr-2-fault>
 					<adr-3-fault type="bool">0</adr-3-fault>
-					<adr-1-off type="bool">1</adr-1-off>
-					<adr-2-off type="bool">1</adr-2-off>
-					<adr-3-off type="bool">1</adr-3-off>
+					<adr-1-off type="bool">0</adr-1-off>
+					<adr-2-off type="bool">0</adr-2-off>
+					<adr-3-off type="bool">0</adr-3-off>
 					<ir-1-fault type="bool">0</ir-1-fault>
 					<ir-2-fault type="bool">0</ir-2-fault>
 					<ir-3-fault type="bool">0</ir-3-fault>

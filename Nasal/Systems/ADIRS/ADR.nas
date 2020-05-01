@@ -22,7 +22,7 @@ var ADIRU = {
 	num: 0,
 	aligned: 0,
 	inAlign: 0,
-	outputOn: 0, # 0 = disc, 1 = normal
+	outputOn: 1, # 0 = disc, 1 = normal
 	mode: 0, # 0 = off, 1 = nav, 2 = att
 	energised: 0, # 0 = off, 1 = on
 	operative: 0, # 0 = off,
@@ -224,7 +224,7 @@ var ADIRS = {
 	_irModeSwitchState: 0,
 	_hasPower: 0,
 	_cacheOperative: [0, 0, 0],
-	_cacheOutputOn: [0, 0, 0],
+	_cacheOutputOn: [1, 1, 1],
 	_flapPos: nil,
 	_slatPos: nil,
 	_selfTest: 0,
