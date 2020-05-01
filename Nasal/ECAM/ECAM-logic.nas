@@ -1214,7 +1214,7 @@ var messages_priority_2 = func {
 	}
 	
 	# APU AUTO SHUT DOWN
-	if (apuEmerShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and !systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuAutoShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and !systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
 		apuAutoShutdown.active = 1;
 	} elsif (apuAutoShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuAutoShutdown);
