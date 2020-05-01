@@ -77,10 +77,10 @@ var ADIRU = {
 			ADIRS.Lights.irOff[me.num].setValue(1);
 		}, 1.0);
 		settimer(func() {
-			ADIRS.Lights.adrOff[me.num].setValue(ADIRS.Switches.adrSw[me.num].getValue());
+			ADIRS.Lights.adrOff[me.num].setValue(!ADIRS.Switches.adrSw[me.num].getValue());
 			ADIRS.Lights.adrFault[me.num].setValue(0);
 			ADIRS.Lights.irFault[me.num].setValue(0);
-			ADIRS.Lights.irOff[me.num].setValue(ADIRS.Switches.irSw[me.num].getValue());
+			ADIRS.Lights.irOff[me.num].setValue(!ADIRS.Switches.irSw[me.num].getValue());
 		}, 1.1);
 		
 		ADIRS.selfTest();
