@@ -156,7 +156,7 @@ var pri_efob = props.globals.getNode("/FMGC/internal/pri-efob", 1);
 var alt_efob = props.globals.getNode("/FMGC/internal/alt-efob", 1);
 var fob = props.globals.getNode("/FMGC/internal/fob", 1);
 var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
-var gw = props.globals.getNode("/FMGC/internal/gw", 1);
+var gw = props.globals.getNode("/FMGC/internal/fuel-pred-gw", 1);
 var cg = props.globals.getNode("/FMGC/internal/cg", 1);
 
 # PROG
@@ -1957,7 +1957,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
 				
 				setprop("/FMGC/internal/fob", num(getprop("/consumables/fuel/total-fuel-lbs") / 1000));
-				setprop("/FMGC/internal/gw", num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000));
+				setprop("/FMGC/internal/fuel-pred-gw", num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000));
 				setprop("/FMGC/internal/cg", num(getprop("/FMGC/internal/zfwcg")));
 				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fffq_sensor.getValue(), fob.getValue()));
 				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));

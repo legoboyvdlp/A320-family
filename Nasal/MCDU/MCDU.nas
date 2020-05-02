@@ -128,7 +128,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/pri-efob", 0);
 	setprop("/FMGC/internal/alt-efob", 0);
 	setprop("/FMGC/internal/fob", 0);
-	setprop("/FMGC/internal/gw", 0);
+	setprop("/FMGC/internal/fuel-pred-gw", 0);
 	setprop("/FMGC/internal/cg", 0);
 	
 	# PROG
