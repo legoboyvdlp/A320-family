@@ -1672,10 +1672,18 @@ var canvas_MCDU_base = {
 							me["Simple_C3"].hide();
 							me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
 							me["Simple_C4"].show();
-							if (num(alt_time.getValue()) > 9.9) {
-								me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+							if (alt_fuel_set.getValue() == 1) {
+								if (num(alt_fuel.getValue()) > 9.9) {
+									me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+								} else {
+									me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+								}
 							} else {
-								me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+								if (num(alt_fuel.getValue()) > 9.9) {
+									me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+								} else {
+									me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+								}
 							}
 							me["Simple_L5"].setText(sprintf("%.1f/" ~ final_time.getValue(), final_fuel.getValue()));
 							me["Simple_C5"].hide();
