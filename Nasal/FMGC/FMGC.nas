@@ -181,55 +181,77 @@ setlistener("/FMGC/internal/cruise-ft", func {
 ########
 
 var updateFuel = func {
-	var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
-	var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
-	var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
-	var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
-	var block = props.globals.getNode("/FMGC/internal/block", 1);
-	var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
-	var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
-	var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
-	var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
-	var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
-	var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
-	var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
-	var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
-	var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
-	var final_time = props.globals.getNode("/FMGC/internal/final-time", 1);
-	var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
-	var tow = props.globals.getNode("/FMGC/internal/tow", 1);
-	var lw = props.globals.getNode("/FMGC/internal/lw", 1);
-	var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
-	var fob = props.globals.getNode("/FMGC/internal/fob", 1);
-	var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
-	var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
-	var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
+	# var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
+# 	var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
+# 	var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
+# 	var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
+# 	var block = props.globals.getNode("/FMGC/internal/block", 1);
+# 	var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
+# 	var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
+# 	var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
+# 	var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
+# 	var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
+# 	var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
+# 	var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
+# 	var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
+# 	var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
+# 	var final_time = props.globals.getNode("/FMGC/internal/final-time", 1);
+# 	var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
+# 	var tow = props.globals.getNode("/FMGC/internal/tow", 1);
+# 	var lw = props.globals.getNode("/FMGC/internal/lw", 1);
+# 	var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
+# 	var fob = props.globals.getNode("/FMGC/internal/fob", 1);
+# 	var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
+# 	var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
+# 	var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
+	#setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+	#setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
 
-	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/block-set") and getprop("/FMGC/internal/zfw-set")) {
-		setprop("/FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
-		setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-		setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-		setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-		setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-			
-		# Calculate (final) holding fuel
-		
-		# Calculate alternate fuel
-		
-		# Calculate min dest fob (final + alternate)
-		
-		# Calculate trip fuel
-		
-		# Calculate taxi fuel
-		
-		# Calculate reserve fuel
-		
-		# Calcualte extra fuel
-		# block minus everthing above
-		
-	} else {
-		#handle idk what case here, prob just don't call it in the first place
+	# Calculate (final) holding fuel
+	if (!getprop("/FMGC/internal/final-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
+		#calc
+	} else if (!getprop("/FMGC/internal/final-fuel-set")) {
+		setprop("/FMGC/internal/final-fuel", 0.0); # need to calculate 30 min of fuel
 	}
+	if (!getprop("/FMGC/internal/final-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
+		#calc
+	} else if (!getprop("/FMGC/internal/final-fuel-set")) {
+		setprop("/FMGC/internal/final-time", "0030");
+	}
+	
+	# Calculate alternate fuel
+	if (!getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
+		#calc
+	} else if (!getprop("/FMGC/internal/alt-fuel-set")) {
+		setprop("/FMGC/internal/alt-fuel", 0.0);
+		setprop("/FMGC/internal/alt-time", "0000");
+	}
+	
+	# Calculate min dest fob (final + alternate)
+	if (!getprop("/FMGC/internal/min-dest-fob-set")) {
+		setprop("/FMGC/internal/min-dest-fob", num(getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel")));
+	}
+	
+	# Calculate trip fuel
+	if (!getprop("/FMGC/internal/trip-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
+		#calc
+	} else if (!getprop("/FMGC/internal/trip-fuel-set")) {
+		setprop("/FMGC/internal/trip-fuel", 0.0);
+	}
+	if (!getprop("/FMGC/internal/trip-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
+		#calc
+	} else if (!getprop("/FMGC/internal/trip-fuel-set")) {
+		setprop("/FMGC/internal/trip-time", "0000");
+	}
+	
+	# Calculate taxi fuel
+	setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/block") + getprop("/FMGC/internal/zfw") - getprop("/FMGC/internal/taxi-fuel")));
+	setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
+	
+	# Calculate reserve fuel
+	
+	# Calcualte extra fuel
+	setprop("/FMGC/internal/extra-fuel", num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv")));
 }
 
 ############################
@@ -978,7 +1000,11 @@ var timer3blockFuel = maketimer(1, func() {
 
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
-		# calcuate fuel here
+		if (!getprop("/FMGC/internal/zfw-set")) {
+			setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round((getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs")) / 1000, 0.1)));
+			setprop("/FMGC/internal/zfw-set", 1);
+		}
+		updateFuel();
 		setprop("/FMGC/internal/fuel-calculating", 0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
 		timer5fuelPred.stop();
