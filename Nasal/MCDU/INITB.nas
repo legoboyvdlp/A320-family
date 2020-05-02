@@ -113,6 +113,30 @@ var initInputB = func(key, i) {
 				notAllowed(i);
 			} 
 		}
+	} else if (key == "L6" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
+		if (scratchpad == "CLR") {
+			setprop("/FMGC/internal/min-dest-fob", 0);
+			setprop("/FMGC/internal/min-dest-fob-set", 0);
+			setprop("/FMGC/internal/fuel-calculating", 1);
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+		} else if (find(".", scratchpad) != -1) {
+			var tf = num(scratchpad);
+			var tfs = size(scratchpad);
+			if (tfs >= 3 and tfs <= 5 and tf != nil and tf >= 0 and tf <= 80.0) {
+				setprop("/FMGC/internal/min-dest-fob", tf);
+				setprop("/FMGC/internal/min-dest-fob-set", 1);
+				setprop("/FMGC/internal/fuel-calculating", 1);
+				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				if (num(getprop("/FMGC/internal/min-dest-fob")) < num(getprop("/FMGC/internal/final-fuel") + getprop("/FMGC/internal/alt-fuel"))) {
+					genericMessage(i, "CHECK MIN DEST FOB", "wht");
+				}
+			} else {
+				notAllowed(i);
+			}
+		} else {
+			notAllowed(i);
+		}
 	} else if (key == "R1" and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			notAllowed(i);
@@ -181,7 +205,7 @@ var initInputB = func(key, i) {
 			}
 		}
 	} else if (key == "R3") {
-		if (scratchpad == "" and getprop("/FMGC/internal/zfw-set") and !getprop("/FMGC/internal/fuel-request-set")) {
+		if (scratchpad == "" and !getprop("/FMGC/internal/fuel-request-set")) {
 			setprop("/FMGC/internal/fuel-request-set", 1);
 			setprop("/FMGC/internal/block-calculating", 1);
 		} else if (getprop("/FMGC/internal/fuel-request-set") and !getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/block-calculating")) {
