@@ -399,6 +399,8 @@ var lskbutton = func(btn, i) {
 			initInputA("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("L6",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+			fuelPredInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "ROUTESELECTION") {

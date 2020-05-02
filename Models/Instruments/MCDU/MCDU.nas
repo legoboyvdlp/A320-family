@@ -1752,7 +1752,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
-				me.fontSizeRight(normal, normal, small, small, small, small);
+				me.fontSizeRight(normal, normal, normal, small, small, small);
 				
 				me.colorLeft("grn", "grn", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -1796,12 +1796,19 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-				setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+			if (!getprop("/FMGC/internal/fuel-request-set") or !getprop("/FMGC/internal/block-confirmed") or getprop("/FMGC/internal/fuel-calculating")) {
+				me["Simple_L3"].setText(sprintf("---.-/%4.1f", rte_percent.getValue()));
+				me["Simple_L4"].setText("---.-/----");
+				me["Simple_L5"].setText("---.-/" ~ final_time.getValue());
+				me["Simple_L6"].setText("---.-");
 				
+				me["Simple_R4"].setText("---.-/FF+FQ");
+				me["Simple_R5"].setText("---.-/---.-");
+				me["Simple_R6"].setText("---.-/----");
+	
+				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");
+				me.colorRight("ack", "ack", "ack", "wht", "wht", "wht");
+			} else {
 				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
 				me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
 				me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
@@ -1816,15 +1823,6 @@ var canvas_MCDU_base = {
 				
 				me.colorLeft("ack", "ack", "blu", "blu", "blu", "blu");
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
-			} else {
-				me["Simple_L3"].setText("---.-/---.-");
-				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/0030");
-				me["Simple_L6"].setText("---.-");
-
-				me["Simple_R4"].setText("---.-/FF+FQ");
-				me["Simple_R5"].setText("---.-/---.-");
-				me["Simple_R6"].setText("---.-/----");
 			}
 			
 			me["Simple_R3S"].setText("ZFWCG/ZFW");
@@ -1847,6 +1845,30 @@ var canvas_MCDU_base = {
 				me["FUELPRED_ZFW"].show();
 				me["FUELPRED_ZFW_S"].hide();
 				me["Simple_R3"].hide(); 
+			}
+			
+			if (rte_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(normal);
+			} else {
+				me["Simple_L3"].setFontSize(small);
+			}
+			
+			if (alt_fuel_set.getValue() == 1) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
+			
+			if (final_fuel_set.getValue() == 1 or final_time_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+			} else {
+				me["Simple_L5"].setFontSize(small);
+			}
+			
+			if (min_dest_fob_set.getValue() == 1) {
+				me["Simple_L6"].setFontSize(normal);
+			} else {
+				me["Simple_L6"].setFontSize(small);
 			}
 			
 		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
