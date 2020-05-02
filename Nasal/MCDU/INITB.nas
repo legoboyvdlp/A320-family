@@ -34,7 +34,9 @@ var initInputB = func(key, i) {
 	} else if (key == "L3" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/rte-rsv", 0.05 * num(getprop("/FMGC/internal/trip-fuel")));
+			setprop("/FMGC/internal/rte-rsv-set", 0);
 			setprop("/FMGC/internal/rte-percent", 5.0);
+			setprop("/FMGC/internal/rte-percent-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
@@ -45,13 +47,17 @@ var initInputB = func(key, i) {
 				var perc = num(split("/", scratchpad)[1]);
 				if (perc != nil and perc >= 0.0 and perc <= 15.0) {
 					setprop("/FMGC/internal/rte-rsv", num(perc) / 100 * num(getprop("/FMGC/internal/trip-fuel")));
+					setprop("/FMGC/internal/rte-rsv-set", 0);
 					setprop("/FMGC/internal/rte-percent", perc);
+					setprop("/FMGC/internal/rte-percent-set", 1);
 					setprop("/FMGC/internal/fuel-calculating", 1);
 					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 				}
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7 and tf / num(getprop("/FMGC/internal/trip-fuel")) <= 0.15) {
 					setprop("/FMGC/internal/rte-rsv", scratchpad);
+					setprop("/FMGC/internal/rte-rsv-set", 1);
 					setprop("/FMGC/internal/rte-percent", scratchpad / num(getprop("/FMGC/internal/trip-fuel")) * 100);
+					setprop("/FMGC/internal/rte-percent-set", 0);
 					setprop("/FMGC/internal/fuel-calculating", 1);
 					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 			} else {
@@ -188,6 +194,29 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/block", 0.0);
 			setprop("/FMGC/internal/block-set", 0);
+			setprop("/FMGC/internal/taxi-fuel", 0.4);
+			setprop("/FMGC/internal/taxi-fuel-set", 0);
+			setprop("/FMGC/internal/trip-fuel", 0);
+			setprop("/FMGC/internal/trip-time", "0000");
+			setprop("/FMGC/internal/rte-rsv", 0);
+			setprop("/FMGC/internal/rte-rsv-set", 0);
+			setprop("/FMGC/internal/rte-percent", 5.0);
+			setprop("/FMGC/internal/rte-percent-set", 0);
+			setprop("/FMGC/internal/alt-fuel", 0);
+			setprop("/FMGC/internal/alt-fuel-set", 0);
+			setprop("/FMGC/internal/alt-time", "0000");
+			setprop("/FMGC/internal/final-fuel", 0);
+			setprop("/FMGC/internal/final-fuel-set", 0);
+			setprop("/FMGC/internal/final-time", "0030");
+			setprop("/FMGC/internal/final-time-set", 0);
+			setprop("/FMGC/internal/min-dest-fob", 0);
+			setprop("/FMGC/internal/min-dest-fob-set", 0);
+			setprop("/FMGC/internal/tow", 0);
+			setprop("/FMGC/internal/lw", 0);
+			setprop("/FMGC/internal/trip-wind", "HD000");
+			setprop("/FMGC/internal/fffq-sensor", "FF+FQ");
+			setprop("/FMGC/internal/extra-fuel", 0);
+			setprop("/FMGC/internal/extra-time", "0000");
 			setprop("/FMGC/internal/fuel-request-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 0);
 			setprop("/FMGC/internal/block-calculating", 0);

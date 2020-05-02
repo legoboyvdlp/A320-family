@@ -99,8 +99,9 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/trip-fuel", 0);
 	setprop("/FMGC/internal/trip-time", "0000");
 	setprop("/FMGC/internal/rte-rsv", 0);
+	setprop("/FMGC/internal/rte-rsv-set", 0);
 	setprop("/FMGC/internal/rte-percent", 5.0);
-	setprop("/FMGC/internal/rte-set", 0);
+	setprop("/FMGC/internal/rte-percent-set", 0);
 	setprop("/FMGC/internal/alt-fuel", 0);
 	setprop("/FMGC/internal/alt-fuel-set", 0);
 	setprop("/FMGC/internal/alt-time", "0000");
