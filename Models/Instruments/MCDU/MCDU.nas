@@ -1550,12 +1550,12 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("---.-/----");
 				me["Simple_L3"].setText("---.-");
 				me["Simple_C3"].show();
-				me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+				me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 				me["Simple_L4"].setText("---.-/----");
 				me["Simple_C4"].hide();
 				me["Simple_L5"].setText("---.-");
 				me["Simple_C5"].show();
-				me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+				me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
 				me["Simple_L6"].setText("---.-");
 				me["Simple_R2"].hide(); 
 				me["INITB_Block"].show();
@@ -1582,12 +1582,12 @@ var canvas_MCDU_base = {
 					me["Simple_L2"].setText("---.-/----");
 					me["Simple_L3"].setText("---.-");
 					me["Simple_C3"].show();
-					me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+					me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 					me["Simple_L4"].setText("---.-/----");
 					me["Simple_C4"].hide();
 					me["Simple_L5"].setText("---.-");
 					me["Simple_C5"].show();
-					me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
 					me["Simple_L6"].setText("---.-");
 					me["Simple_R2"].show();
 					me["Simple_R2"].setText("---.-");
@@ -1609,12 +1609,12 @@ var canvas_MCDU_base = {
 						me["Simple_L2"].setText("---.-/----");
 						me["Simple_L3"].setText("---.-");
 						me["Simple_C3"].show();
-						me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+						me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 						me["Simple_L4"].setText("---.-/----");
 						me["Simple_C4"].hide();
 						me["Simple_L5"].setText("---.-");
 						me["Simple_C5"].show();
-						me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
 						me["Simple_L6"].setText("---.-");
 						me["Simple_R2"].show(); 
 						me["INITB_Block"].hide();
@@ -1639,7 +1639,7 @@ var canvas_MCDU_base = {
 							if (rte_set.getValue() == 1) {
 								me["Simple_C3"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
 							} else {
-								me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+								me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 							}
 							me["Simple_L4"].setText("---.-/----");
 							me["Simple_C4"].hide();
@@ -1648,7 +1648,7 @@ var canvas_MCDU_base = {
 							if (final_fuel_set.getValue() == 1) {
 								me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
 							} else {
-								me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+								me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
 							}
 							me["Simple_L6"].setText("---.-");
 							me["Simple_R2"].show(); 
