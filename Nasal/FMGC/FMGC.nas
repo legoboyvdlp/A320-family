@@ -249,16 +249,14 @@ var updateFuel = func {
 	setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
 	
 	# Calculate reserve fuel
-	if (getprop("/FMGC/internal/rte-rsv-set")) {
+	if (getprop("/FMGC/internal/rte-percent-set")) {
+		setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * (100.0 - getprop("/FMGC/internal/rte-percent")) / 100.0));
+	} else {
 		if (num(getprop("/FMGC/internal/trip-fuel")) == 0.0) {
 			setprop("/FMGC/internal/rte-percent", 0.0);
 		} else {
 			setprop("/FMGC/internal/rte-percent", num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0));
 		}
-	} else if (getprop("/FMGC/internal/rte-percent-set")) {
-		setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * (100.0 - getprop("/FMGC/internal/rte-percent")) / 100.0));
-	} else {
-		#calc
 	}
 	
 	# Calcualte extra fuel
