@@ -139,6 +139,12 @@ var lw = props.globals.getNode("/FMGC/internal/lw", 1);
 var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
 var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
+var taxi_fuel_set = props.globals.getNode("/FMGC/internal/taxi-fuel-set", 1);
+var rte_set = props.globals.getNode("/FMGC/internal/rte-set", 1);
+var alt_fuel_set = props.globals.getNode("/FMGC/internal/alt-fuel-set", 1);
+var final_fuel_set = props.globals.getNode("/FMGC/internal/final-fuel-set", 1);
+var final_time_set = props.globals.getNode("/FMGC/internal/final-time-set", 1);
+var min_dest_fob_set = props.globals.getNode("/FMGC/internal/min-dest-fob-set", 1);
 
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
@@ -1532,51 +1538,127 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("MIN DEST FOB");
 			me["Simple_R2S"].setText("BLOCK");
-			me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
-			me["Simple_R3S"].setText("FUEL");
-			me["Simple_R3"].setText("PLANNING ");
 			me["Simple_R4S"].setText("TOW/   LW");
 			me["Simple_R5S"].setText("TRIP WIND");
 			me["Simple_R5"].setText(trip_wind.getValue());
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-				setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-				
-				me["Simple_L2"].setText(sprintf("%4.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
-				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
-				me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
-				me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
-				me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
-				me["Simple_R3S"].hide();
-				me["Simple_R3"].hide(); 
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_C4"].hide();
-				me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
-				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
-				
-				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
-				me["Simple_Title"].setColor(1, 1, 1);
-				
-				me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
-				me.colorRight("ack", "ack", "ack", "grn", "ack", "grn");
-			} else {
+			me["Simple_Title"].setColor(1, 1, 1);
+			
+			if (!getprop("/FMGC/internal/fuel-request-set")) {
 				me["Simple_L2"].setText("---.-/----");
-				me["Simple_L3"].setText("---.-/---.-");
+				me["Simple_L3"].setText(sprintf("---.-/%4.1f", rte_percent.getValue()));
 				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/0030");
+				me["Simple_L5"].setText("---.-/" ~ final_time.getValue());
 				me["Simple_L6"].setText("---.-");
+				me["Simple_R2"].hide(); 
+				me["INITB_Block"].show();
 				me["Simple_R3S"].show();
 				me["Simple_R3"].show(); 
+				me["Simple_R3S"].setText("FUEL");
+				me["Simple_R3"].setText("PLANNING ");
 				me["Simple_R3_Arrow"].show();
+				me["Simple_R3_Arrow"].setColor(AMBER);
 				me["Simple_R4"].setText("---.-/---.-");
 				me["Simple_R6"].setText("---.-/----");
 				
 				me["Simple_Title"].setText("INIT");
 				me["Simple_Title"].setColor(1, 1, 1);
+				
+				me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
+				me["Simple_R3S"].setColor(AMBER);
+			} else {
+			
+				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
+				
+				if (getprop("/FMGC/internal/block-calculating")) {
+					me["Simple_L2"].setText("---.-/----");
+					me["Simple_L3"].setText(sprintf("---.-/%4.1f", rte_percent.getValue()));
+					me["Simple_L4"].setText("---.-/----");
+					me["Simple_L5"].setText("---.-/" ~ final_time.getValue());
+					me["Simple_L6"].setText("---.-");
+					me["Simple_R2"].show();
+					me["Simple_R2"].setText("---.-");
+					me["INITB_Block"].hide();
+					me["Simple_R3S"].show();
+					me["Simple_R3"].show(); 
+					me["Simple_R3S"].setText("FUEL");
+					me["Simple_R3"].setText("PLANNING ");
+					me["Simple_R3_Arrow"].show();
+					me["Simple_R3_Arrow"].setColor(GREEN);
+					me["Simple_R4"].setText("---.-/---.-");
+					me["Simple_R6"].setText("---.-/----");
+				
+					me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+					me.colorRight("ack", "wht", "grn", "wht", "ack", "wht");
+					me["Simple_R3S"].setColor(GREEN);
+				} else {
+					if (!getprop("/FMGC/internal/block-confirmed")) {
+						me["Simple_L2"].setText("---.-/----");
+						me["Simple_L3"].setText(sprintf("---.-/%4.1f", rte_percent.getValue()));
+						me["Simple_L4"].setText("---.-/----");
+						me["Simple_L5"].setText("---.-/" ~ final_time.getValue());
+						me["Simple_L6"].setText("---.-");
+						me["Simple_R2"].show(); 
+						me["INITB_Block"].hide();
+						me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+						me["Simple_R3S"].show();
+						me["Simple_R3"].show(); 
+						me["Simple_R3S"].setText("BLOCK");
+						me["Simple_R3"].setText("CONFIRM ");
+						me["Simple_R3_Arrow"].show();
+						me["Simple_R3_Arrow"].setColor(AMBER);
+						me["Simple_R4"].setText("---.-/---.-");
+						me["Simple_R6"].setText("---.-/----");
+			
+						me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+						me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
+						me["Simple_R3S"].setColor(AMBER);
+					} else {
+						if (getprop("/FMGC/internal/fuel-calculating")) {
+							me["Simple_L2"].setText("---.-/----");
+							me["Simple_L3"].setText(sprintf("---.-/%4.1f", rte_percent.getValue()));
+							me["Simple_L4"].setText("---.-/----");
+							me["Simple_L5"].setText("---.-/" ~ final_time.getValue());
+							me["Simple_L6"].setText("---.-");
+							me["Simple_R2"].show(); 
+							me["INITB_Block"].hide();
+							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							me["Simple_R3S"].hide();
+							me["Simple_R3"].hide(); 
+							me["Simple_R3_Arrow"].hide();
+							me["Simple_R4"].setText("---.-/---.-");
+							me["Simple_R6"].setText("---.-/----");
+				
+							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+							me.colorRight("ack", "blu", "ack", "wht", "ack", "wht");
+						} else {
+							#setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
+							#setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+							#setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
+							#setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+				
+							me["Simple_L2"].setText(sprintf("%4.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
+							me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
+							me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
+							me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
+							me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
+							me["Simple_R2"].show(); 
+							me["INITB_Block"].hide();
+							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							me["Simple_R3S"].hide();
+							me["Simple_R3"].hide(); 
+							me["Simple_R3_Arrow"].hide();
+							me["Simple_C4"].hide();
+							me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
+							me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+				
+							me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
+							me.colorRight("ack", "blu", "ack", "grn", "ack", "grn");
+						}
+					}
+				}
 			}
 			
 			me["Simple_R1S"].setText("ZFWCG/   ZFW");
@@ -1601,12 +1683,34 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].hide(); 
 			}
 			
-			if (blockSet.getValue() == 1) {
-				me["Simple_R2"].show();
-				me["INITB_Block"].hide();			
+			if (taxi_fuel_set.getValue() == 1) {
+				me["Simple_L1"].setFontSize(normal);
 			} else {
-				me["Simple_R2"].hide(); 
-				me["INITB_Block"].show();
+				me["Simple_L1"].setFontSize(small);
+			}
+			
+			if (rte_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(normal);
+			} else {
+				me["Simple_L3"].setFontSize(small);
+			}
+			
+			if (alt_fuel_set.getValue() == 1) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
+			
+			if (final_fuel_set.getValue() == 1 or final_time_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+			} else {
+				me["Simple_L5"].setFontSize(small);
+			}
+			
+			if (min_dest_fob_set.getValue() == 1) {
+				me["Simple_L6"].setFontSize(normal);
+			} else {
+				me["Simple_L6"].setFontSize(small);
 			}
 			
 		} else if (page == "FUELPRED") {

@@ -401,6 +401,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (dirToFlag) { dirToFlag = 0; }
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+				# push update to fuel
+				if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 0);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				}
 			} else {
 				notAllowed(me.computer);
 			}

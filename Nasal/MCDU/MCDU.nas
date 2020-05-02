@@ -18,154 +18,164 @@ var MCDU_reset = func(i) {
 	setprop("MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 	
-	setprop("FMGC/keyboard-left", 0);
-	setprop("FMGC/keyboard-right", 0);
+	setprop("/FMGC/keyboard-left", 0);
+	setprop("/FMGC/keyboard-right", 0);
 	
 	#ACCONFIG
-	setprop("FMGC/internal/navdatabase", "01JAN-28JAN");
-	setprop("FMGC/internal/navdatabase2", "29JAN-26FEB");
-	setprop("FMGC/internal/navdatabasecode", "AB20170101");
-	setprop("FMGC/internal/navdatabasecode2", "AB20170102");
-	setprop("FMGC/print/mcdu/page1/L1auto", 0);
-	setprop("FMGC/print/mcdu/page1/L2auto", 0);
-	setprop("FMGC/print/mcdu/page1/L3auto", 0);
-	setprop("FMGC/print/mcdu/page1/R1req", 0);
-	setprop("FMGC/print/mcdu/page1/R2req", 0);
-	setprop("FMGC/print/mcdu/page1/R3req", 0);
-	setprop("FMGC/print/mcdu/page2/L1auto", 0);
-	setprop("FMGC/print/mcdu/page2/L2auto", 0);
-	setprop("FMGC/print/mcdu/page2/L3auto", 0);
-	setprop("FMGC/print/mcdu/page2/L4auto", 0);
-	setprop("FMGC/print/mcdu/page2/R1req", 0);
-	setprop("FMGC/print/mcdu/page2/R2req", 0);
-	setprop("FMGC/print/mcdu/page2/R3req", 0);
-	setprop("FMGC/print/mcdu/page2/R4req", 0);
+	setprop("/FMGC/internal/navdatabase", "01JAN-28JAN");
+	setprop("/FMGC/internal/navdatabase2", "29JAN-26FEB");
+	setprop("/FMGC/internal/navdatabasecode", "AB20170101");
+	setprop("/FMGC/internal/navdatabasecode2", "AB20170102");
+	setprop("/FMGC/print/mcdu/page1/L1auto", 0);
+	setprop("/FMGC/print/mcdu/page1/L2auto", 0);
+	setprop("/FMGC/print/mcdu/page1/L3auto", 0);
+	setprop("/FMGC/print/mcdu/page1/R1req", 0);
+	setprop("/FMGC/print/mcdu/page1/R2req", 0);
+	setprop("/FMGC/print/mcdu/page1/R3req", 0);
+	setprop("/FMGC/print/mcdu/page2/L1auto", 0);
+	setprop("/FMGC/print/mcdu/page2/L2auto", 0);
+	setprop("/FMGC/print/mcdu/page2/L3auto", 0);
+	setprop("/FMGC/print/mcdu/page2/L4auto", 0);
+	setprop("/FMGC/print/mcdu/page2/R1req", 0);
+	setprop("/FMGC/print/mcdu/page2/R2req", 0);
+	setprop("/FMGC/print/mcdu/page2/R3req", 0);
+	setprop("/FMGC/print/mcdu/page2/R4req", 0);
 	
 	#RADNAV
-	setprop("FMGC/internal/ils1freq-set", 0);
-	setprop("FMGC/internal/ils1crs-set", 0);
-	setprop("FMGC/internal/ils1freq-calculated", 0);
-	setprop("FMGC/internal/vor1freq-set", 0);
-	setprop("FMGC/internal/vor1crs-set", 0);
-	setprop("FMGC/internal/vor2freq-set", 0);
-	setprop("FMGC/internal/vor2crs-set", 0);
-	setprop("FMGC/internal/adf1freq-set", 0);
-	setprop("FMGC/internal/adf2freq-set", 0);
+	setprop("/FMGC/internal/ils1freq-set", 0);
+	setprop("/FMGC/internal/ils1crs-set", 0);
+	setprop("/FMGC/internal/ils1freq-calculated", 0);
+	setprop("/FMGC/internal/vor1freq-set", 0);
+	setprop("/FMGC/internal/vor1crs-set", 0);
+	setprop("/FMGC/internal/vor2freq-set", 0);
+	setprop("/FMGC/internal/vor2crs-set", 0);
+	setprop("/FMGC/internal/adf1freq-set", 0);
+	setprop("/FMGC/internal/adf2freq-set", 0);
 	
 	# INT-A
 	setprop("MCDUC/flight-num", "");
 	setprop("MCDUC/flight-num-set", 0);
-	setprop("FMGC/internal/dep-arpt", "");
-	setprop("FMGC/internal/arr-arpt", "");
-	setprop("FMGC/internal/tofrom-set", 0);
-	setprop("FMGC/internal/alt-airport", "");
-	setprop("FMGC/internal/alt-set", 0);
-	setprop("FMGC/internal/cost-index", "0");
-	setprop("FMGC/internal/cost-index-set", 0);
-	setprop("FMGC/internal/cruise-ft", 10000);
-	setprop("FMGC/internal/cruise-fl", 100);
-	setprop("FMGC/internal/cruise-lvl-set", 0);
-	setprop("FMGC/internal/tropo", 36090);
-	setprop("FMGC/internal/tropo-set", 0);
-	setprop("FMGC/internal/cruise-temp", 15);
-	setprop("FMGC/internal/cruise-temp-set", 0);
+	setprop("/FMGC/internal/dep-arpt", "");
+	setprop("/FMGC/internal/arr-arpt", "");
+	setprop("/FMGC/internal/tofrom-set", 0);
+	setprop("/FMGC/internal/alt-airport", "");
+	setprop("/FMGC/internal/alt-set", 0);
+	setprop("/FMGC/internal/cost-index", "0");
+	setprop("/FMGC/internal/cost-index-set", 0);
+	setprop("/FMGC/internal/cruise-ft", 10000);
+	setprop("/FMGC/internal/cruise-fl", 100);
+	setprop("/FMGC/internal/cruise-lvl-set", 0);
+	setprop("/FMGC/internal/tropo", 36090);
+	setprop("/FMGC/internal/tropo-set", 0);
+	setprop("/FMGC/internal/cruise-temp", 15);
+	setprop("/FMGC/internal/cruise-temp-set", 0);
 	
 	# IRSINIT
-	setprop("FMGC/internal/align-set", 0);
-	setprop("FMGC/internal/align-ref-lat-degrees", 0);
-	setprop("FMGC/internal/align-ref-lat-minutes", 0);
-	setprop("FMGC/internal/align-ref-lat-sign", "");
-	setprop("FMGC/internal/align-ref-long-degrees", 0);
-	setprop("FMGC/internal/align-ref-long-minutes", 0);
-	setprop("FMGC/internal/align-ref-long-sign", "");
-	setprop("FMGC/internal/align-ref-lat-edit", 0);
-	setprop("FMGC/internal/align-ref-long-edit", 0);
-	setprop("FMGC/internal/align1-done", 0);
-	setprop("FMGC/internal/align2-done", 0);
-	setprop("FMGC/internal/align3-done", 0);
+	setprop("/FMGC/internal/align-set", 0);
+	setprop("/FMGC/internal/align-ref-lat-degrees", 0);
+	setprop("/FMGC/internal/align-ref-lat-minutes", 0);
+	setprop("/FMGC/internal/align-ref-lat-sign", "");
+	setprop("/FMGC/internal/align-ref-long-degrees", 0);
+	setprop("/FMGC/internal/align-ref-long-minutes", 0);
+	setprop("/FMGC/internal/align-ref-long-sign", "");
+	setprop("/FMGC/internal/align-ref-lat-edit", 0);
+	setprop("/FMGC/internal/align-ref-long-edit", 0);
+	setprop("/FMGC/internal/align1-done", 0);
+	setprop("/FMGC/internal/align2-done", 0);
+	setprop("/FMGC/internal/align3-done", 0);
 
 	# ROUTE SELECTION
-	setprop("FMGC/internal/alt-selected", 0);
+	setprop("/FMGC/internal/alt-selected", 0);
 
 	# INT-B
-	setprop("FMGC/internal/zfw", 0);
-	setprop("FMGC/internal/zfw-set", 0);
-	setprop("FMGC/internal/zfwcg", 55.1);
-	setprop("FMGC/internal/zfwcg-set", 0);
-	setprop("FMGC/internal/block", 0.0);
-	setprop("FMGC/internal/block-set", 0);
-	setprop("FMGC/internal/taxi-fuel", 0.4);
-	setprop("FMGC/internal/trip-fuel", 0);
-	setprop("FMGC/internal/trip-time", "0000");
-	setprop("FMGC/internal/rte-rsv", 0);
-	setprop("FMGC/internal/rte-percent", 5.0);
-	setprop("FMGC/internal/alt-fuel", 0);
-	setprop("FMGC/internal/alt-time", "0000");
-	setprop("FMGC/internal/final-fuel", 0);
-	setprop("FMGC/internal/final-time", "0030");
-	setprop("FMGC/internal/min-dest-fob", 0);
-	setprop("FMGC/internal/tow", 0);
-	setprop("FMGC/internal/lw", 0);
-	setprop("FMGC/internal/trip-wind", "HD000");
-	setprop("FMGC/internal/fffq-sensor", "FF+FQ");
-	setprop("FMGC/internal/extra-fuel", 0);
-	setprop("FMGC/internal/extra-time", "0000");
+	setprop("/FMGC/internal/zfw", 0);
+	setprop("/FMGC/internal/zfw-set", 0);
+	setprop("/FMGC/internal/zfwcg", 55.1);
+	setprop("/FMGC/internal/zfwcg-set", 0);
+	setprop("/FMGC/internal/block", 0.0);
+	setprop("/FMGC/internal/block-set", 0);
+	setprop("/FMGC/internal/taxi-fuel", 0.4);
+	setprop("/FMGC/internal/taxi-fuel-set", 0);
+	setprop("/FMGC/internal/trip-fuel", 0);
+	setprop("/FMGC/internal/trip-time", "0000");
+	setprop("/FMGC/internal/rte-rsv", 0);
+	setprop("/FMGC/internal/rte-percent", 5.0);
+	setprop("/FMGC/internal/rte-set", 0);
+	setprop("/FMGC/internal/alt-fuel", 0);
+	setprop("/FMGC/internal/alt-fuel-set", 0);
+	setprop("/FMGC/internal/alt-time", "0000");
+	setprop("/FMGC/internal/final-fuel", 0);
+	setprop("/FMGC/internal/final-fuel-set", 0);
+	setprop("/FMGC/internal/final-time", "0030");
+	setprop("/FMGC/internal/final-time-set", 0);
+	setprop("/FMGC/internal/min-dest-fob", 0);
+	setprop("/FMGC/internal/min-dest-fob-set", 0);
+	setprop("/FMGC/internal/tow", 0);
+	setprop("/FMGC/internal/lw", 0);
+	setprop("/FMGC/internal/trip-wind", "HD000");
+	setprop("/FMGC/internal/fffq-sensor", "FF+FQ");
+	setprop("/FMGC/internal/extra-fuel", 0);
+	setprop("/FMGC/internal/extra-time", "0000");
+	setprop("/FMGC/internal/fuel-request-set", 0);
+	setprop("/FMGC/internal/block-calculating", 0);
+	setprop("/FMGC/internal/block-confirmed", 0);
+	setprop("/FMGC/internal/fuel-calculating", 0);
 	
 	# FUELPRED
-	setprop("FMGC/internal/alt-airport", "");
-	setprop("FMGC/internal/pri-utc", "0000");
-	setprop("FMGC/internal/alt-utc", "0000");
-	setprop("FMGC/internal/pri-efob", 0);
-	setprop("FMGC/internal/alt-efob", 0);
-	setprop("FMGC/internal/fob", 0);
-	setprop("FMGC/internal/gw", 0);
-	setprop("FMGC/internal/cg", 0);
+	setprop("/FMGC/internal/alt-airport", "");
+	setprop("/FMGC/internal/pri-utc", "0000");
+	setprop("/FMGC/internal/alt-utc", "0000");
+	setprop("/FMGC/internal/pri-efob", 0);
+	setprop("/FMGC/internal/alt-efob", 0);
+	setprop("/FMGC/internal/fob", 0);
+	setprop("/FMGC/internal/gw", 0);
+	setprop("/FMGC/internal/cg", 0);
 	
 	# PROG
-	setprop("FMGC/internal/cruise-fl-prog", 100);
+	setprop("/FMGC/internal/cruise-fl-prog", 100);
 	
 	# PERF
 	
 	#PERF TO
-	setprop("FMGC/internal/v1", 0);
-	setprop("FMGC/internal/v1-set", 0);
-	setprop("FMGC/internal/vr", 0);
-	setprop("FMGC/internal/vr-set", 0);
-	setprop("FMGC/internal/v2", 0);
-	setprop("FMGC/internal/v2-set", 0);
+	setprop("/FMGC/internal/v1", 0);
+	setprop("/FMGC/internal/v1-set", 0);
+	setprop("/FMGC/internal/vr", 0);
+	setprop("/FMGC/internal/vr-set", 0);
+	setprop("/FMGC/internal/v2", 0);
+	setprop("/FMGC/internal/v2-set", 0);
 	
-	setprop("FMGC/internal/accel-agl-ft", "1500"); #eventually set to 1500 above runway
+	setprop("/FMGC/internal/accel-agl-ft", "1500"); #eventually set to 1500 above runway
 	setprop("MCDUC/thracc-set", 0);
-	setprop("FMGC/internal/to-flap", 0);
-	setprop("FMGC/internal/to-ths", "0.0");
-	setprop("FMGC/internal/flap-ths-set", 0);
-	setprop("FMGC/internal/flex", 0);
-	setprop("FMGC/internal/flex-set", 0);
-	setprop("FMGC/internal/eng-out-reduc", "1500");
+	setprop("/FMGC/internal/to-flap", 0);
+	setprop("/FMGC/internal/to-ths", "0.0");
+	setprop("/FMGC/internal/flap-ths-set", 0);
+	setprop("/FMGC/internal/flex", 0);
+	setprop("/FMGC/internal/flex-set", 0);
+	setprop("/FMGC/internal/eng-out-reduc", "1500");
 	setprop("MCDUC/reducacc-set", 0);
-	setprop("FMGC/internal/trans-alt", 18000);
+	setprop("/FMGC/internal/trans-alt", 18000);
 	
 	# CLB PERF
-	setprop("FMGC/internal/activate-once", 0);
-	setprop("FMGC/internal/activate-twice", 0);
+	setprop("/FMGC/internal/activate-once", 0);
+	setprop("/FMGC/internal/activate-twice", 0);
 
 	# CRZ PERF
 
 	# DES PERF
 
 	# APPR PERF
-	setprop("FMGC/internal/dest-qnh", -1);
-	setprop("FMGC/internal/dest-temp", -999);
-	setprop("FMGC/internal/dest-mag", -1);
-	setprop("FMGC/internal/dest-wind", -1);
-	setprop("FMGC/internal/vapp-speed-set", 0);
-	setprop("FMGC/internal/final", "");
-	setprop("FMGC/internal/baro", 99999);
-	setprop("FMGC/internal/radio", 99999);
-	setprop("FMGC/internal/radio-no", 0);
-	setprop("FMGC/internal/ldg-elev", 0);
-	setprop("FMGC/internal/ldg-config-3-set", 0);
-	setprop("FMGC/internal/ldg-config-f-set", 1);
+	setprop("/FMGC/internal/dest-qnh", -1);
+	setprop("/FMGC/internal/dest-temp", -999);
+	setprop("/FMGC/internal/dest-mag", -1);
+	setprop("/FMGC/internal/dest-wind", -1);
+	setprop("/FMGC/internal/vapp-speed-set", 0);
+	setprop("/FMGC/internal/final", "");
+	setprop("/FMGC/internal/baro", 99999);
+	setprop("/FMGC/internal/radio", 99999);
+	setprop("/FMGC/internal/radio-no", 0);
+	setprop("/FMGC/internal/ldg-elev", 0);
+	setprop("/FMGC/internal/ldg-config-3-set", 0);
+	setprop("/FMGC/internal/ldg-config-f-set", 1);
 	
 	# GA PERF
 }
@@ -244,8 +254,6 @@ var lskbutton = func(btn, i) {
 	} else if (btn == "2") {
 		if (getprop("MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("L2",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
-			initInputB("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L2",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -681,33 +689,33 @@ var pagebutton = func(btn, i) {
 		if (btn == "radnav") {
 			setprop("MCDU[" ~ i ~ "]/page", "RADNAV");
 		} else if (btn == "prog") {
-			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
-			} else if (getprop("FMGC/status/phase") == 2) {
+			} else if (getprop("/FMGC/status/phase") == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
-			} else if (getprop("FMGC/status/phase") == 3) {
+			} else if (getprop("/FMGC/status/phase") == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
-			} else if (getprop("FMGC/status/phase") == 4 or getprop("FMGC/status/phase") == 5 or getprop("FMGC/status/phase") == 6) {
+			} else if (getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5 or getprop("/FMGC/status/phase") == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
 			}
 		} else if (btn == "perf") {
-			if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFTO");
-			} else if (getprop("FMGC/status/phase") == 2) {
+			} else if (getprop("/FMGC/status/phase") == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
-			} else if (getprop("FMGC/status/phase") == 3) {
+			} else if (getprop("/FMGC/status/phase") == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
-			} else if (getprop("FMGC/status/phase") == 4) {
+			} else if (getprop("/FMGC/status/phase") == 4) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
-			} else if (getprop("FMGC/status/phase") == 5) {
+			} else if (getprop("/FMGC/status/phase") == 5) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
-			} else if (getprop("FMGC/status/phase") == 6) {
+			} else if (getprop("/FMGC/status/phase") == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
-			} else if (getprop("FMGC/status/phase") == 7) {
+			} else if (getprop("/FMGC/status/phase") == 7) {
 				fmgc.reset_FMGC();
 			}
 		} else if (btn == "init") {
-			if (getprop("FMGC/status/phase") == 7) {
+			if (getprop("/FMGC/status/phase") == 7) {
 				fmgc.reset_FMGC();
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "INITA");

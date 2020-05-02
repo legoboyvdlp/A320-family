@@ -7,7 +7,7 @@ var perfGAInput = func(key, i) {
 	if (key == "L5") {
 		if (scratchpad == "CLR") {
 			setprop("systems/thrust/clbreduc-ft", "1500");
-			setprop("FMGC/internal/accel-agl-ft", "1500");
+			setprop("/FMGC/internal/accel-agl-ft", "1500");
 			setprop("MCDUC/thracc-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
@@ -19,7 +19,7 @@ var perfGAInput = func(key, i) {
 				var acc = size(thracc[1]);
 				if (int(thrred) != nil and int(acc) != nil and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)) {
 					setprop("systems/thrust/clbreduc-ft", thracc[0]);
-					setprop("FMGC/internal/accel-agl-ft", thracc[1]);
+					setprop("/FMGC/internal/accel-agl-ft", thracc[1]);
 					setprop("MCDUC/thracc-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
@@ -33,14 +33,14 @@ var perfGAInput = func(key, i) {
 		setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
-			setprop("FMGC/internal/eng-out-reduc", "1500");
+			setprop("/FMGC/internal/eng-out-reduc", "1500");
 			setprop("MCDUC/reducacc-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
 			if (int(scratchpad) != nil and tfs >= 3 and tfs <= 5) {
-				setprop("FMGC/internal/eng-out-reduc", scratchpad);
+				setprop("/FMGC/internal/eng-out-reduc", scratchpad);
 				setprop("MCDUC/reducacc-set", 1);
 				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 			} else {
