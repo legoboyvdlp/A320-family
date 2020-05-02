@@ -181,31 +181,10 @@ setlistener("/FMGC/internal/cruise-ft", func {
 ########
 
 var updateFuel = func {
-	# var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
-# 	var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
-# 	var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
-# 	var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
-# 	var block = props.globals.getNode("/FMGC/internal/block", 1);
-# 	var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
-# 	var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
-# 	var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
-# 	var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
-# 	var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
-# 	var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
-# 	var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
-# 	var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
-# 	var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
-# 	var final_time = props.globals.getNode("/FMGC/internal/final-time", 1);
-# 	var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
-# 	var tow = props.globals.getNode("/FMGC/internal/tow", 1);
-# 	var lw = props.globals.getNode("/FMGC/internal/lw", 1);
-# 	var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
-# 	var fob = props.globals.getNode("/FMGC/internal/fob", 1);
-# 	var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
-# 	var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
-# 	var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
-	#setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-	#setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
+	# Check engine status
+	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
+		setprop("/FMGC/internal/block", sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
+	}
 
 	# Calculate (final) holding fuel
 	if (!getprop("/FMGC/internal/final-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
@@ -283,6 +262,7 @@ var masterFMGC = maketimer(0.2, func {
 	phase = getprop("/FMGC/status/phase");
 	state1 = getprop("/systems/thrust/state1");
 	state2 = getprop("/systems/thrust/state2");
+	gear0 = getprop("/gear/gear[0]/wow");
 	wowl = getprop("/gear/gear[1]/wow");
 	wowr = getprop("/gear/gear[2]/wow");
 	targetalt = getprop("/it-autoflight/internal/alt");
@@ -302,9 +282,6 @@ var masterFMGC = maketimer(0.2, func {
 	newvertarm = getprop("/modes/pfd/fma/pitch-mode2-armed");
 	thr1 = getprop("/controls/engines/engine[0]/throttle-pos");
 	thr2 = getprop("/controls/engines/engine[1]/throttle-pos");
-	gear0 = getprop("/gear/gear[0]/wow");
-	state1 = getprop("/systems/thrust/state1");
-	state2 = getprop("/systems/thrust/state2");
 	altSel = getprop("/it-autoflight/input/alt");
 	crzFl = getprop("/FMGC/internal/cruise-fl");
 	
