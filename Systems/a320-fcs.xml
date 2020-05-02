@@ -2081,7 +2081,7 @@
 		
 		<switch name="fcs/steer-rate">
 			<default value="0"/>
-			<test logic="OR" value="75">
+			<test logic="OR" value="12">
 				hydraulics/tiller/hyd-pwr eq 1
 				/sim/model/autopush/connected eq 1
 				/systems/acconfig/autoconfig-running eq 1
