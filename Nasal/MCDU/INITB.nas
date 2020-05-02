@@ -186,7 +186,13 @@ var initInputB = func(key, i) {
 		}
 	} else if (key == "R2" and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
-			notAllowed(i);
+			setprop("/FMGC/internal/block", 0.0);
+			setprop("/FMGC/internal/block-set", 0);
+			setprop("/FMGC/internal/fuel-request-set", 0);
+			setprop("/FMGC/internal/fuel-calculating", 0);
+			setprop("/FMGC/internal/block-calculating", 0);
+			setprop("/FMGC/internal/block-confirmed", 0);
+			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
 			var maxblock = getprop("/options/maxblock");
