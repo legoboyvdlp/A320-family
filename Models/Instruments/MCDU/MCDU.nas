@@ -1643,9 +1643,9 @@ var canvas_MCDU_base = {
 							me["Simple_L2"].setText("---.-/----");
 							me["Simple_L3"].setText("---.-");
 							if (rte_rsv_set.getValue() == 1) {
-								me["Simple_C3"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+								me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
 							} else if (rte_percent_set.getValue() == 1) {
-								me["Simple_C3"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+								me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
 							} else {
 								me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 							}
@@ -1674,10 +1674,6 @@ var canvas_MCDU_base = {
 							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
 							me.colorRight("ack", "blu", "ack", "wht", "ack", "wht");
 						} else {
-							#setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-							#setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-							#setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-							#setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
 							me["Simple_L2"].setText(sprintf("%.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
 							me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
 							if (rte_rsv_set.getValue() == 1) {
@@ -1923,9 +1919,10 @@ var canvas_MCDU_base = {
 			
 			if (!getprop("/FMGC/internal/fuel-request-set") or !getprop("/FMGC/internal/block-confirmed") or getprop("/FMGC/internal/fuel-calculating")) {
 				me["Simple_L3"].setText("---.-");
-				me["Simple_C3B"].show();
-				if (rte_set.getValue() == 1) {
-					me["Simple_C3B"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+				if (rte_rsv_set.getValue() == 1) {
+					me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
+				} else if (rte_percent_set.getValue() == 1) {
+					me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
 				} else {
 					me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 				}
@@ -1946,8 +1943,38 @@ var canvas_MCDU_base = {
 				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");
 				me.colorRight("ack", "ack", "ack", "wht", "wht", "wht");
 			} else {
-				me["Simple_L3"].setText(sprintf("%.1f/", rte_rsv.getValue()) ~ sprintf("%.1f", rte_percent.getValue()));
-				me["Simple_C3B"].hide();
+				me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
+				if (rte_rsv_set.getValue() == 1) {
+					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+					} else if (num(rte_rsv.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					} else if (num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+					} else {
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+					}
+				} else if (rte_percent_set.getValue() == 1) {
+					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+					} else if (num(rte_rsv.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
+					} else if (num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+					} else {
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+					}
+				} else {
+					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+					} else if (num(rte_rsv.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+					} else if (num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+					} else {
+						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+					}
+				}
 				me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
 				me["Simple_C4"].show();
 				if (alt_fuel_set.getValue() == 1) {
@@ -2024,10 +2051,15 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].hide(); 
 			}
 			
-			if (rte_set.getValue() == 1) {
+			if (rte_rsv_set.getValue() == 1) {
 				me["Simple_L3"].setFontSize(normal);
+				me["Simple_C3B"].setFontSize(small);
+			} else if (rte_percent_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3B"].setFontSize(normal);
 			} else {
 				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3B"].setFontSize(small);
 			}
 			
 			if (alt_fuel_set.getValue() == 1) {
