@@ -904,7 +904,9 @@ setlistener("systems/navigation/adr/operating-3", func() {
 # Calculate Block Fuel
 setlistener("/FMGC/internal/block-calculating", func() {
 	if (timer3blockFuel.isRunning) {
-		timer3blockFuel.stop();
+		setprop("/FMGC/internal/block-fuel-time", -99);
+		timer3blockFuel.start();
+		setprop("/FMGC/internal/block-fuel-time", pts.Sim.Time.elapsedSec.getValue());
 	}
 	
 	if (getprop("/FMGC/internal/block-fuel-time") == -99) {
@@ -964,8 +966,10 @@ var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
 		setprop("/FMGC/internal/block", sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
 		setprop("/FMGC/internal/block-set", 1);
-		setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round((getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs")) / 1000, 0.1)));
-		setprop("/FMGC/internal/zfw-set", 1);
+		if (!getprop("/FMGC/internal/zfw-set")) {
+			setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round((getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs")) / 1000, 0.1)));
+			setprop("/FMGC/internal/zfw-set", 1);
+		}
 		setprop("/FMGC/internal/block-calculating", 0);
 		setprop("/FMGC/internal/block-fuel-time", -99); 
 		timer3blockFuel.stop();

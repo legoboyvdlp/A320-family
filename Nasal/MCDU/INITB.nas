@@ -10,6 +10,8 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/taxi-fuel-set", 0);
 			if (getprop("/FMGC/internal/block-confirmed")) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
+			} else if (getprop("/FMGC/internal/fuel-request-set")) {
+				setprop("/FMGC/internal/block-calculating", 1);
 			}
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
@@ -160,6 +162,8 @@ var initInputB = func(key, i) {
 					setprop("/FMGC/internal/zfw-set", 1);
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
+					} else if (getprop("/FMGC/internal/fuel-request-set")) {
+						setprop("/FMGC/internal/block-calculating", 1);
 					}
 				}
 				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
