@@ -29,6 +29,7 @@ var Controls = {
 	},
 	Gear: {
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
+		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 	},
 };
 

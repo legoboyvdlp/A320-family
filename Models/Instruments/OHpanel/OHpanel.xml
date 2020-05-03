@@ -7158,7 +7158,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.MechCall();</script>
+				<script>libraries.MechCallFunc();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7177,7 +7177,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CabinCall();</script>
+				<script>libraries.CabinCallFunc();</script>
 			</binding>
 		</action>
 	</animation>
