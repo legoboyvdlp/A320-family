@@ -951,15 +951,11 @@
 			<sources>
 				<bat-1>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-1>
 				<bat-2>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-2>
 			</sources>
 		</electrical>

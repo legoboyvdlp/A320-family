@@ -11,52 +11,332 @@
 		<!-- Battery 1 -->
 		<fcs_function name="/systems/electrical/sources/bat-1/volt">
 			<function>
-				<table>
-					<independentVar lookup="row">/systems/electrical/sources/bat-1/percent</independentVar>
-					<independentVar lookup="column">/systems/failures/electrical/bat-1</independentVar>
-					<tableData>
-						      0    1
-						  0   0.0  0.0
-						 10  24.0  4.0
-						 50  25.5  5.0
-						100  31.0  7.0
-					</tableData>
-				</table>
+				<product>
+					<difference>
+						<value>1</value>
+						<product>
+							<property>/systems/electrical/sources/bat-1/amps</property>
+							<value>0.00016666</value>
+						</product>
+					</difference>
+					<table>
+						<independentVar lookup="row">/systems/electrical/sources/bat-1/percent</independentVar>
+						<independentVar lookup="column">/systems/failures/electrical/bat-1</independentVar>
+						<tableData>
+								  0    1
+							  0   0.0  0.0
+							 10  24.0  4.0
+							 50  25.5  5.0
+							100  31.0  7.0
+						</tableData>
+					</table>
+				</product>
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/electrical/sources/bat-1/amp"> <!-- TODO: should relate to load -->
-			<default value="0"/>
-			<test logic="AND" value="3">
-				/systems/electrical/sources/bat-1/limiter eq 1
+		<switch name="/systems/electrical/sources/bat-1/contact">
+			<default value="/systems/electrical/sources/bat-1/contact"/>
+			<test logic="OR" value="0"> <!-- discharge protection or switch turned off -->
+				/controls/electrical/switches/bat-1 eq 0
+				/systems/electrical/sources/bat-1/volt lt 23
+				/systems/electrical/sources/bat-1/amps ge 100
+			</test>
+			<test logic="AND" value="1">  <!-- apu start -->
 				/controls/electrical/switches/bat-1 eq 1
-				/systems/electrical/sources/bat-1/volt ge 10
+				/systems/apu/start eq 1
+			</test>
+			<test logic="AND" value="1"> <!-- connect to dc-bat while no other power on the ground -->
+				/controls/electrical/switches/bat-1 eq 1
+				/systems/electrical/bus/ac-1 lt 110
+				/systems/electrical/bus/ac-2 lt 110
+				/gear/gear[1]/wow eq 1
+				/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
+			</test>
+			<test logic="AND" value="1"> <!-- start charging cycle -->
+				/systems/electrical/sources/bat-1/charge eq 1
+			</test>
+			<test logic="AND" value="1"> <!-- maintain charging cycle -->
+				/systems/electrical/sources/bat-1/charge eq 1
+				/controls/electrical/switches/bat-1 eq 1
+				/systems/electrical/sources/bat-1/contact eq 1
+				/systems/electrical/bus/dc-bat gt 27.5
+				/systems/electrical/sources/bat-1/percent-calc lt 99.9
+			</test>
+			<test logic="AND" value="0">
+				/systems/electrical/sources/bat-1/charge eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/bat-1/charge">
+			<default value="/systems/electrical/sources/bat-1/charge"/>
+			<test logic="AND" value="0"> <!-- end charging cycle -->
+				/systems/electrical/sources/bat-1/charge eq 1
+					<test logic="OR">
+					/controls/electrical/switches/bat-1 eq 0
+					/systems/electrical/bus/dc-bat lt 27.5
+					/systems/electrical/sources/bat-1/percent-calc ge 99.9
+				</test>
+			</test>
+			<test logic="AND" value="1"> <!-- start charging cycle -->
+				/controls/electrical/switches/bat-1 eq 1
+				/systems/electrical/sources/bat-1/contact eq 0
+				/systems/electrical/sources/bat-1/volt lt 26.5
+				/systems/electrical/bus/dc-bat gt 27.5
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/bat-1/direction">
+			<default value="0"/>
+			<test value="0">
+				/systems/electrical/sources/bat-1/contact eq 0
+			</test>
+			<test logic="AND" value="1"> <!-- drain -->
+				/systems/electrical/sources/bat-1/contact eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/electrical/bus/dc-bat-src ne 1
+						/systems/electrical/bus/dc-bat-src ne 2
+					</test>
+					/systems/apu/start eq 1
+				</test>
+			</test>
+			<test logic="AND" value="-1"> <!-- charge -->
+				/systems/electrical/sources/bat-1/contact eq 1
+				/systems/electrical/bus/dc-bat-src ne 3
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/electrical/sources/bat-1/percent-calc">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/electrical/sources/bat-1/direction</property>
+						<value>0</value>
+					</eq>
+					<property>/systems/electrical/sources/bat-1/percent-calc</property>
+					<ifthen>
+						<eq>
+							<property>/systems/electrical/sources/bat-1/direction</property>
+							<value>-1</value>
+						</eq>
+						<sum>
+							<property>/systems/electrical/sources/bat-1/percent</property>
+							<product>
+								<quotient>
+									<value>2.25</value>
+									<sum>
+										<property>/systems/electrical/sources/bat-1/percent</property>
+										<value>1</value>
+									</sum>
+								</quotient>
+								<property>simulation/channel-dt</property>
+							</product>
+						</sum>
+						<sum>
+							<property>/systems/electrical/sources/bat-1/percent</property>
+							<product>
+								<quotient>
+									<value>-0.75</value>
+									<sum>
+										<property>/systems/electrical/sources/bat-1/percent</property>
+										<value>1</value>
+									</sum>
+								</quotient>
+								<property>simulation/channel-dt</property>
+							</product>
+						</sum>
+					</ifthen>
+				</ifthen>
+            </function>
+            <output>/systems/electrical/sources/bat-1/percent</output>
+		</fcs_function>
+		
+		<switch name="/systems/electrical/sources/bat-1/load-kw">
+			<default value="0"/>
+			<test logic="AND" value="0.864">
+				/systems/apu/start eq 1
+				/systems/electrical/sources/bat-1/contact eq 1
+			</test>
+			<test logic="AND" value="1.15"> <!-- 60 amp * 0.8 * 24V = 1.15kw. Guess -->
+				/systems/electrical/bus/dc-bat-src ne 1
+				/systems/electrical/bus/dc-bat-src ne 2
+				/systems/electrical/sources/bat-1/contact eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/bat-1/amps">
+			<default value="0"/>
+			<test logic="AND" value="40">
+				/systems/electrical/sources/bat-1/load-kw ne 0
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/sources/bat-1/contact eq 1
 			</test>
 		</switch>
 		
 		<!-- Battery 2 -->
 		<fcs_function name="/systems/electrical/sources/bat-2/volt">
 			<function>
-				<table>
-					<independentVar lookup="row">/systems/electrical/sources/bat-2/percent</independentVar>
-					<independentVar lookup="column">/systems/failures/electrical/bat-2</independentVar>
-					<tableData>
-						      0    1
-						  0   0.0  0.0
-						 10  24.0  4.0
-						 50  25.5  5.0
-						100  31.0  7.0
-					</tableData>
-				</table>
+				<product>
+					<difference>
+						<value>1</value>
+						<product>
+							<property>/systems/electrical/sources/bat-2/amps</property>
+							<value>0.00016666</value>
+						</product>
+					</difference>
+					<table>
+						<independentVar lookup="row">/systems/electrical/sources/bat-2/percent</independentVar>
+						<independentVar lookup="column">/systems/failures/electrical/bat-2</independentVar>
+						<tableData>
+								  0    1
+							  0   0.0  0.0
+							 10  24.0  4.0
+							 50  25.5  5.0
+							100  31.0  7.0
+						</tableData>
+					</table>
+				</product>
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/electrical/sources/bat-2/amp"> <!-- TODO: should relate to load -->
-			<default value="0"/>
-			<test logic="AND" value="2">
-				/systems/electrical/sources/bat-2/limiter eq 1
+		<switch name="/systems/electrical/sources/bat-2/contact">
+			<default value="/systems/electrical/sources/bat-2/contact"/>
+			<test logic="OR" value="0"> <!-- discharge protection or switch turned off -->
+				/controls/electrical/switches/bat-2 eq 0
+				/systems/electrical/sources/bat-2/volt lt 23
+				/systems/electrical/sources/bat-2/amps ge 100
+			</test>
+			<test logic="AND" value="1">  <!-- apu start -->
 				/controls/electrical/switches/bat-2 eq 1
-				/systems/electrical/sources/bat-2/volt ge 10
+				/systems/apu/start eq 1
+			</test>
+			<test logic="AND" value="1"> <!-- connect to dc-bat while no other power on the ground -->
+				/controls/electrical/switches/bat-2 eq 1
+				/systems/electrical/bus/ac-1 lt 110
+				/systems/electrical/bus/ac-2 lt 110
+				/gear/gear[1]/wow eq 1
+				/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
+			</test>
+			<test logic="AND" value="1"> <!-- start charging cycle -->
+				/systems/electrical/sources/bat-2/charge eq 1
+			</test>
+			<test logic="AND" value="1"> <!-- maintain charging cycle -->
+				/systems/electrical/sources/bat-2/charge eq 1
+				/controls/electrical/switches/bat-2 eq 1
+				/systems/electrical/sources/bat-2/contact eq 1
+				/systems/electrical/bus/dc-bat gt 27.5
+				/systems/electrical/sources/bat-2/percent-calc lt 99.9
+			</test>
+			<test logic="AND" value="0">
+				/systems/electrical/sources/bat-2/charge eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/bat-2/charge">
+			<default value="/systems/electrical/sources/bat-2/charge"/>
+			<test logic="AND" value="0"> <!-- end charging cycle -->
+				/systems/electrical/sources/bat-2/charge eq 1
+				<test logic="OR">
+					/controls/electrical/switches/bat-2 eq 0
+					/systems/electrical/bus/dc-bat lt 27.5
+					/systems/electrical/sources/bat-2/percent-calc ge 99.9
+				</test>
+			</test>
+			<test logic="AND" value="1"> <!-- start charging cycle -->
+				/controls/electrical/switches/bat-2 eq 1
+				/systems/electrical/sources/bat-2/contact eq 0
+				/systems/electrical/sources/bat-2/volt lt 26.5
+				/systems/electrical/bus/dc-bat gt 27.5
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/bat-2/direction">
+			<default value="0"/>
+			<test value="0">
+				/systems/electrical/sources/bat-2/contact eq 0
+			</test>
+			<test logic="AND" value="1"> <!-- drain -->
+				/systems/electrical/sources/bat-2/contact eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/electrical/bus/dc-bat-src ne 1
+						/systems/electrical/bus/dc-bat-src ne 2
+					</test>
+					/systems/apu/start eq 1
+				</test>
+			</test>
+			<test logic="AND" value="-1"> <!-- charge -->
+				/systems/electrical/sources/bat-2/contact eq 1
+				/systems/electrical/bus/dc-bat-src ne 3
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/electrical/sources/bat-2/percent-calc">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/electrical/sources/bat-2/direction</property>
+						<value>0</value>
+					</eq>
+					<property>/systems/electrical/sources/bat-2/percent-calc</property>
+					<ifthen>
+						<eq>
+							<property>/systems/electrical/sources/bat-2/direction</property>
+							<value>-1</value>
+						</eq>
+						<sum>
+							<property>/systems/electrical/sources/bat-2/percent</property>
+							<product>
+								<quotient>
+									<value>2.25</value>
+									<sum>
+										<property>/systems/electrical/sources/bat-2/percent</property>
+										<value>1</value>
+									</sum>
+								</quotient>
+								<property>simulation/channel-dt</property>
+							</product>
+						</sum>
+						<sum>
+							<property>/systems/electrical/sources/bat-2/percent</property>
+							<product>
+								<quotient>
+									<value>-0.75</value>
+									<sum>
+										<property>/systems/electrical/sources/bat-2/percent</property>
+										<value>1</value>
+									</sum>
+								</quotient>
+								<property>simulation/channel-dt</property>
+							</product>
+						</sum>
+					</ifthen>
+				</ifthen>
+            </function>
+            <output>/systems/electrical/sources/bat-2/percent</output>
+		</fcs_function>
+		
+		<switch name="/systems/electrical/sources/bat-2/load-kw">
+			<default value="0"/>
+			<test logic="AND" value="0.864">
+				/systems/apu/start eq 1
+				/systems/electrical/sources/bat-2/contact eq 1
+			</test>
+			<test logic="AND" value="1.15"> <!-- 60 amp * 0.8 * 24V = 1.15kw. Guess -->
+				/systems/electrical/bus/dc-bat-src ne 1
+				/systems/electrical/bus/dc-bat-src ne 2
+				/systems/electrical/sources/bat-2/contact eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/bat-2/amps">
+			<default value="0"/>
+			<test logic="AND" value="40">
+				/systems/electrical/sources/bat-2/load-kw ne 0
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/sources/bat-2/contact eq 1
 			</test>
 		</switch>
 		
@@ -360,7 +640,7 @@
 		</fcs_function>
 		
 		<pure_gain name="/systems/electrical/sources/si-1/output-volt">
-			<input>/systems/electrical/sources/bat-1/volt</input>
+			<input>/systems/electrical/sources/bat-1/volt</input> <!-- inverter feeds directly from batteries -->
 			<gain>/systems/electrical/sources/si-1/inverter-gain</gain>
 		</pure_gain>
 		
@@ -1293,12 +1573,12 @@
 		
 		<!-- Hot Buses -->
 		<pure_gain name="/systems/electrical/bus/dc-hot-1">
-			<input>/systems/electrical/sources/bat-1/volt</input>
+			<input>/systems/electrical/sources/bat-1/volt</input> <!-- todo CB 12PB1 / 5PB1 -->
 			<gain>1.0</gain>
 		</pure_gain>
 		
 		<pure_gain name="/systems/electrical/bus/dc-hot-2">
-			<input>/systems/electrical/sources/bat-2/volt</input>
+			<input>/systems/electrical/sources/bat-2/volt</input> <!-- todo CB 12PB2 / 5PB2 -->
 			<gain>1.0</gain>
 		</pure_gain>
 	
