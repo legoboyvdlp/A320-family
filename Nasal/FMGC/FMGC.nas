@@ -212,14 +212,15 @@ var updateFuel = func {
 	}
 	
 	# Calculate trip fuel
-	if (!getprop("/FMGC/internal/trip-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
-		#calc
-	} else if (!getprop("/FMGC/internal/trip-fuel-set")) {
+	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set")) {
+		crz = getprop("/FMGC/internal/cruise-fl");
+		temp = getprop("/FMGC/internal/cruise-temp-set");
+		isa = 15 - (2 * num(crz) / 10);
+		dist = flightPlanController.arrivalDist + (0.03306933933 * (temp - isa) * flightPlanController.arrivalDist);
+		trip_fuel = 400.3 + (dist * -53.99) + (dist * dist * -0.07322) + (dist * dist * dist * 0.00001091) + (dist * dist * dist * dist * 0.00000000002962) + (dist * dist * dist * dist * dist * -0.0000000000001178) + (dist * dist * dist * dist * dist * dist * 0.000000000000000006322) + (crz * 53.87) + (dist * crz * 1.583) + (dist * dist * crz * 0.0007695) + (dist * dist * dist * crz * -0.0000001057) + (dist * dist * dist * dist * crz * 0.000000000001138) + (dist * dist * dist * dist * dist * crz * 0.0000000000000001736) + (crz * crz * -1.171) + (dist * crz * crz * -0.01219) + (dist * dist * crz * crz * -0.000002879) + (dist * dist * dist * crz * crz * 0.0000000003115) + (dist * dist * dist * dist * crz * crz * -0.000000000000004093) + (crz * crz * crz * 0.009160) + (dist * crz * crz * crz * 0.00004311) + (dist * dist * crz * crz * crz * 0.000000004532) + (dist * dist * dist * crz * crz * crz * -0.0000000000002879) + (crz * crz * crz * crz * -0.00003338) + (dist * crz * crz * crz * crz * -0.00000007340) + (dist * dist * crz * crz * crz * crz * -0.000000000002494) + (crz * crz * crz * crz * crz * 0.00000005849) + (dist * crz * crz * crz * crz * crz * 0.00000000004898) + (crz * crz * crz * crz * crz * crz * -0.00000000003999);
+		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
+	} else {
 		setprop("/FMGC/internal/trip-fuel", 0.0);
-	}
-	if (!getprop("/FMGC/internal/trip-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
-		#calc
-	} else if (!getprop("/FMGC/internal/trip-fuel-set")) {
 		setprop("/FMGC/internal/trip-time", "0000");
 	}
 	
@@ -235,12 +236,12 @@ var updateFuel = func {
 			setprop("/FMGC/internal/rte-percent", num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0));
 		}
 	} else if (getprop("/FMGC/internal/rte-percent-set")) {
-		setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * (100.0 - getprop("/FMGC/internal/rte-percent")) / 100.0));
+		setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * getprop("/FMGC/internal/rte-percent") / 100.0));
 	} else {
 		if (num(getprop("/FMGC/internal/trip-fuel")) == 0.0) {
 			setprop("/FMGC/internal/rte-percent", 5.0);
 		} else {
-			setprop("/FMGC/internal/rte-percent", num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0));
+			setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * getprop("/FMGC/internal/rte-percent") / 100.0));
 		}
 	}
 	
