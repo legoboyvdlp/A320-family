@@ -139,6 +139,7 @@ var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
 var tow = props.globals.getNode("/FMGC/internal/tow", 1);
 var lw = props.globals.getNode("/FMGC/internal/lw", 1);
 var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
+var trip_wind_value = props.globals.getNode("/FMGC/internal/trip-wind-value", 1);
 var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
 var taxi_fuel_set = props.globals.getNode("/FMGC/internal/taxi-fuel-set", 1);

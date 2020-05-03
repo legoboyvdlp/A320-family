@@ -224,16 +224,12 @@ var updateFuel = func {
 			dist = 0;
 		}
 		
-		# wind = getprop("/FMGC/internal/trip-wind");
-# 		if (find("TL", wind) != -1 or find("HD", wind) != -1) {
-# 			effwind = substr(wind, 2);
-# 			
-# 		} else if (find("-", wind) != -1 or find("+", wind) != -1 or find("T", wind) != -1 or find("H", wind) != -1) {
-# 			effwind = substr(wind, 1);
-# 			
-# 		} else {
-# 			#positive tail wind
-# 		}
+		wind = getprop("/FMGC/internal/trip-wind");
+		wind_value = getprop("/FMGC/internal/trip-wind-value");
+		if (find("HD", wind) != -1 or find("-", wind) != -1 or find("H", wind) != -1) {
+			wind_value = wind_value * -1;
+		}
+		dist = dist - (dist * wind_value * 0.002);
 		
 		trip_fuel = 4.003e+02 + (dist * -5.399e+01) + (dist * dist * -7.322e-02) + (dist * dist * dist * 1.091e-05) + (dist * dist * dist * dist * 2.962e-10) + (dist * dist * dist * dist * dist * -1.178e-13) + (dist * dist * dist * dist * dist * dist * 6.322e-18) + (crz * 5.387e+01) + (dist * crz * 1.583e+00) + (dist * dist * crz * 7.695e-04) + (dist * dist * dist * crz * -1.057e-07) + (dist * dist * dist * dist * crz * 1.138e-12) + (dist * dist * dist * dist * dist * crz * 1.736e-16) + (crz * crz * -1.171e+00) + (dist * crz * crz * -1.219e-02) + (dist * dist * crz * crz * -2.879e-06) + (dist * dist * dist * crz * crz * 3.115e-10) + (dist * dist * dist * dist * crz * crz * -4.093e-15) + (crz * crz * crz * 9.160e-03) + (dist * crz * crz * crz * 4.311e-05) + (dist * dist * crz * crz * crz * 4.532e-09) + (dist * dist * dist * crz * crz * crz * -2.879e-13) + (crz * crz * crz * crz * -3.338e-05) + (dist * crz * crz * crz * crz * -7.340e-08) + (dist * dist * crz * crz * crz * crz * -2.494e-12) + (crz * crz * crz * crz * crz * 5.849e-08) + (dist * crz * crz * crz * crz * crz * 4.898e-11) + (crz * crz * crz * crz * crz * crz * -3.999e-11);
 		if (trip_fuel < 400) {

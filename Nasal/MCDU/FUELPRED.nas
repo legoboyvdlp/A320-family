@@ -22,6 +22,7 @@ var min_dest_fob = props.globals.getNode("FMGC/internal/min-dest-fob", 1);
 var tow = props.globals.getNode("FMGC/internal/tow", 1);
 var lw = props.globals.getNode("FMGC/internal/lw", 1);
 var trip_wind = props.globals.getNode("FMGC/internal/trip-wind", 1);
+var trip_wind_value = props.globals.getNode("FMGC/internal/trip-wind", 1);
 var fob = props.globals.getNode("FMGC/internal/fob", 1);
 var fffq_sensor = props.globals.getNode("FMGC/internal/fffq-sensor", 1);
 var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);

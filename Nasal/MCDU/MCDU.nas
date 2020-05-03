@@ -114,6 +114,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/tow", 0);
 	setprop("/FMGC/internal/lw", 0);
 	setprop("/FMGC/internal/trip-wind", "HD000");
+	setprop("/FMGC/internal/trip-wind-value", 0);
 	setprop("/FMGC/internal/fffq-sensor", "FF+FQ");
 	setprop("/FMGC/internal/extra-fuel", 0);
 	setprop("/FMGC/internal/extra-time", "0000");

@@ -214,6 +214,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/tow", 0);
 			setprop("/FMGC/internal/lw", 0);
 			setprop("/FMGC/internal/trip-wind", "HD000");
+			setprop("/FMGC/internal/trip-wind-value", 0);
 			setprop("/FMGC/internal/fffq-sensor", "FF+FQ");
 			setprop("/FMGC/internal/extra-fuel", 0);
 			setprop("/FMGC/internal/extra-time", "0000");
@@ -256,6 +257,7 @@ var initInputB = func(key, i) {
 	} else if (key == "R5" and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/trip-wind", "HD000");
+			setprop("/FMGC/internal/trip-wind-value", 0);
 			if (getprop("/FMGC/internal/block-confirmed")) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
@@ -266,6 +268,7 @@ var initInputB = func(key, i) {
 				var effwind = substr(scratchpad, 2);
 				if (int(effwind) != nil and effwind >= 0 and effwind <= 500) {
 					setprop("/FMGC/internal/trip-wind", scratchpad);
+					setprop("/FMGC/internal/trip-wind-value", effwind);
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
@@ -277,6 +280,7 @@ var initInputB = func(key, i) {
 				var effwind = substr(scratchpad, 1);
 				if (int(effwind) != nil and effwind >= 0 and effwind <= 500) {
 					setprop("/FMGC/internal/trip-wind", scratchpad);
+					setprop("/FMGC/internal/trip-wind-value", effwind);
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
@@ -287,6 +291,7 @@ var initInputB = func(key, i) {
 			} else {
 				if (num(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 500) {
 					setprop("/FMGC/internal/trip-wind", scratchpad);
+					setprop("/FMGC/internal/trip-wind-value", scratchpad);
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
