@@ -415,21 +415,26 @@
 		</fcs_function>
 		
 		<switch name="/systems/hydraulic/sources/ptu/ptu-inhibited">
-			<default value="1"/>
-			<test logic="OR" value="0">
-				<test logic="AND">
-					/sim/model/autopush/enabled eq 0
-					/controls/gear/brake-parking eq 0
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[0]/compression-norm ne 0
+				<test logic="OR">
+					<test logic="AND">
+						/sim/model/autopush/enabled eq 1
+						/controls/gear/brake-parking eq 0
+					</test>
+					/controls/gear/brake-parking eq 1
 				</test>
-				<test logic="AND">
-					/controls/engines/engine[0]/cutoff-switch eq 0
-					/controls/engines/engine[1]/cutoff-switch eq 0
+				<test logic="OR">
+					<test logic="AND">
+						/controls/engines/engine[0]/cutoff-switch eq 0
+						/controls/engines/engine[1]/cutoff-switch eq 1
+					</test>
+					<test logic="AND">
+						/controls/engines/engine[0]/cutoff-switch eq 1
+						/controls/engines/engine[1]/cutoff-switch eq 0
+					</test>
 				</test>
-				<test logic="AND">
-					/controls/engines/engine[0]/cutoff-switch eq 1
-					/controls/engines/engine[1]/cutoff-switch eq 1
-				</test>
-				/gear/gear[0]/compression-norm eq 0
 			</test>
 		</switch>
 		

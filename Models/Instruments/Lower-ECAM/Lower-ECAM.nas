@@ -131,12 +131,14 @@ var apu_hz = props.globals.getNode("/systems/electrical/sources/apu/output-hertz
 var gen_apu = props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos", 1);
 var switch_bat1 = props.globals.getNode("/controls/electrical/switches/bat-1", 1);
 var switch_bat2 = props.globals.getNode("/controls/electrical/switches/bat-2", 1);
-var bat1_amps = props.globals.getNode("/systems/electrical/sources/bat-1/amp", 1);
-var bat2_amps = props.globals.getNode("/systems/electrical/sources/bat-2/amp", 1);
+var bat1_amps = props.globals.getNode("/systems/electrical/sources/bat-1/amps", 1);
+var bat2_amps = props.globals.getNode("/systems/electrical/sources/bat-2/amps", 1);
 var bat1_volts = props.globals.getNode("/systems/electrical/sources/bat-1/volt", 1);
 var bat2_volts = props.globals.getNode("/systems/electrical/sources/bat-2/volt", 1);
 var bat1_fault = props.globals.getNode("/systems/electrical/light/bat-1-fault", 1);
 var bat2_fault = props.globals.getNode("/systems/electrical/light/bat-2-fault", 1);
+var bat1_direction = props.globals.getNode("/systems/electrical/sources/bat-1/direction", 1);
+var bat2_direction = props.globals.getNode("/systems/electrical/sources/bat-2/direction", 1);
 var emerGenVolts = props.globals.getNode("/systems/electrical/relay/emer-glc/output", 1);
 var emerGenHz = props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz", 1);
 var tr1_volts = props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output", 1);
@@ -669,7 +671,7 @@ var canvas_lowerECAM_apu = {
 		me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 
 		# APU Bleed
-		if (systems.ADIRSnew.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
+		if (systems.ADIRS.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
 			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
 			me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
 		} else {
@@ -1210,7 +1212,7 @@ var canvas_lowerECAM_elec = {
 			me["Bat1Ampere"].setText(sprintf("%s", math.round(bat1_amps.getValue())));
 			me["Bat1Volt"].setText(sprintf("%s", math.round(bat1_volts.getValue())));
 
-			if (bat1_volts.getValue() >= 25 and bat1_volts.getValue() <= 31) {
+			if (bat1_volts.getValue() >= 24.95 and bat1_volts.getValue() <= 31.05) {
 				me["Bat1Volt"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Bat1Volt"].setColor(0.7333,0.3803,0);
@@ -1222,11 +1224,11 @@ var canvas_lowerECAM_elec = {
 				me["Bat1Ampere"].setColor(0.0509,0.7529,0.2941);
 			}
 
-			if (!systems.ELEC.Source.Bat1.limiter.getBoolValue()) {
+			if (bat1_direction.getValue() == 0) {
 				me["BAT1-discharge"].hide();
 				me["BAT1-charge"].hide();
 			} else {
-				if (systems.ELEC.Bus.dcBat.getValue() > 25) {
+				if (bat1_direction.getValue() == -1) {
 					me["BAT1-charge"].show();
 					me["BAT1-discharge"].hide();
 				} else {
@@ -1254,7 +1256,7 @@ var canvas_lowerECAM_elec = {
 			me["Bat2Ampere"].setText(sprintf("%s", math.round(bat2_amps.getValue())));
 			me["Bat2Volt"].setText(sprintf("%s", math.round(bat2_volts.getValue())));
 
-			if (bat2_volts.getValue() >= 25 and bat2_volts.getValue() <= 31) {
+			if (bat2_volts.getValue() >= 24.95 and bat2_volts.getValue() <= 31.05) {
 				me["Bat2Volt"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Bat2Volt"].setColor(0.7333,0.3803,0);
@@ -1266,11 +1268,11 @@ var canvas_lowerECAM_elec = {
 				me["Bat2Ampere"].setColor(0.0509,0.7529,0.2941);
 			}
 			
-			if (!systems.ELEC.Source.Bat2.limiter.getBoolValue()) {
+			if (bat2_direction.getValue() == 0) {
 				me["BAT2-discharge"].hide();
 				me["BAT2-charge"].hide();
 			} else {
-				if (systems.ELEC.Bus.dcBat.getValue() > 25) {
+				if (bat2_direction.getValue() == -1) {
 					me["BAT2-charge"].show();
 					me["BAT2-discharge"].hide();
 				} else {
@@ -2884,10 +2886,14 @@ var canvas_lowerECAM_wheel = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","lgctltext","NORMbrk","NWStext","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR","autobrk","autobrkind","NWS","NWSrect","normbrk-rect","altnbrk","normbrkhyd","spoiler1Rex","spoiler1Rrt","spoiler2Rex",
-		"spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf",
-		"spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf","ALTNbrk","altnbrkhyd","altnbrk-rect","antiskidtext","brakearrow","accupress_text","accuonlyarrow","accuonly","braketemp1","normbrkhyd",
-		"braketemp2","braketemp3","braketemp4","toparc1","toparc2","toparc3","toparc4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1","BSCUrect2","BSCU1","BSCU2"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","lgctltext","NORMbrk","NWStext","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR",
+		"autobrk","autobrkind","NWS","NWSrect","normbrk-rect","altnbrk","normbrkhyd","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex",
+		"spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt","spoiler2Lex","spoiler2Lrt",
+		"spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf",
+		"spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf","ALTNbrk","altnbrkhyd","altnbrk-rect","antiskidtext","brakearrow","accupress_text",
+		"accuonlyarrow","accuonly","braketemp1","normbrkhyd","braketemp2","braketemp3","braketemp4","toparc1","toparc2","toparc3","toparc4","leftuplock",
+		"noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1",
+		"BSCUrect2","BSCU1","BSCU2","tirepress1","tirepress2","tirepress3","tirepress4","tirepress5","tirepress6"];
 	},
 	update: func() {
 		blue_psi = systems.HYD.Psi.blue.getValue();
@@ -3402,6 +3408,12 @@ var canvas_lowerECAM_wheel = {
 		me["leftuplock"].hide();
 		me["noseuplock"].hide();
 		me["rightuplock"].hide();
+		me["tirepress1"].hide();
+		me["tirepress2"].hide();
+		me["tirepress3"].hide();
+		me["tirepress4"].hide();
+		me["tirepress5"].hide();
+		me["tirepress6"].hide();
 
 		me.updateBottomStatus();
 	},

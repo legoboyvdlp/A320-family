@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Matthew Maring (hayden2000)
+# Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var altSet = props.globals.getNode("it-autoflight/input/alt", 1);
 

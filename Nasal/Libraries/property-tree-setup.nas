@@ -29,6 +29,7 @@ var Controls = {
 	},
 	Gear: {
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
+		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 	},
 };
 
@@ -77,6 +78,7 @@ var Gear = {
 	compression: [props.globals.getNode("/gear/gear[0]/compression-norm"), props.globals.getNode("/gear/gear[1]/compression-norm"), props.globals.getNode("/gear/gear[2]/compression-norm")],
 	wow: [props.globals.getNode("/gear/gear[0]/wow"), props.globals.getNode("/gear/gear[1]/wow"), props.globals.getNode("/gear/gear[2]/wow")],
 	position: [props.globals.getNode("/gear/gear[0]/position-norm"), props.globals.getNode("/gear/gear[1]/position-norm"), props.globals.getNode("/gear/gear[2]/position-norm")],
+	rollspeed: [props.globals.getNode("/gear/gear[0]/rollspeed-ms"), props.globals.getNode("/gear/gear[1]/rollspeed-ms"), props.globals.getNode("/gear/gear[2]/rollspeed-ms")],
 };
 
 var Instrumentation = {

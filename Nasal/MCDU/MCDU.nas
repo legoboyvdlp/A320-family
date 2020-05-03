@@ -1,7 +1,7 @@
-# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
+# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
-# Copyright (c) 2020 Matthew Maring (hayden2000)
+# Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var MCDU_init = func(i) {
 	MCDU_reset(i); # Reset MCDU, clears data
@@ -118,7 +118,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/pri-efob", 0);
 	setprop("FMGC/internal/alt-efob", 0);
 	setprop("FMGC/internal/fob", 0);
-	setprop("FMGC/internal/gw", 0);
+	setprop("FMGC/internal/fuel-pred-gw", 0);
 	setprop("FMGC/internal/cg", 0);
 	
 	# PROG

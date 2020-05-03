@@ -34,11 +34,11 @@
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
 		<object-name>IR1Btn1F</object-name>
-		<object-name>IR1Btn2A</object-name>
+		<object-name>IR1Btn2O</object-name>
 		<object-name>IR2Btn1F</object-name>
-		<object-name>IR2Btn2A</object-name>
+		<object-name>IR2Btn2O</object-name>
 		<object-name>IR3Btn1F</object-name>
-		<object-name>IR3Btn2A</object-name>
+		<object-name>IR3Btn2O</object-name>
 		<object-name>RamAirBtn2O</object-name>
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
@@ -538,8 +538,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[0].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRSnew.Switches.irModeSw[0].getValue() + 1);
+					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() + 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(0, 0);
 					}
@@ -557,8 +557,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[0].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRSnew.Switches.irModeSw[0].getValue() - 1);
+					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() - 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(0, 2);
 					}
@@ -608,7 +608,7 @@
 	</animation>
 	<animation>
 		<type>select</type>
-		<object-name>IR1Btn2A</object-name>
+		<object-name>IR1Btn2O</object-name>
 		<condition>
 			<or>
 				<equals>
@@ -634,8 +634,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[1].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRSnew.Switches.irModeSw[1].getValue() + 1);
+					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() + 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(1, 0);
 					}
@@ -653,8 +653,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[1].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRSnew.Switches.irModeSw[1].getValue() - 1);
+					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() - 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(1, 2);
 					}
@@ -704,7 +704,7 @@
 	</animation>
 	<animation>
 		<type>select</type>
-		<object-name>IR2Btn2A</object-name>
+		<object-name>IR2Btn2O</object-name>
 		<condition>
 			<or>
 				<equals>
@@ -730,8 +730,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[2].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRSnew.Switches.irModeSw[2].getValue() + 1);
+					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() + 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(2, 0);
 					}
@@ -749,8 +749,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.ADIRSnew.Switches.irModeSw[2].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRSnew.Switches.irModeSw[2].getValue() - 1);
+					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() - 1);
 					} else {
 						systems.ADIRSControlPanel.irModeSw(2, 2);
 					}
@@ -800,7 +800,7 @@
 	</animation>
 	<animation>
 		<type>select</type>
-		<object-name>IR3Btn2A</object-name>
+		<object-name>IR3Btn2O</object-name>
 		<condition>
 			<or>
 				<equals>
@@ -6268,7 +6268,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.1f</format>
-		<property>systems/electrical/sources/bat-1/volt</property>
+		<property>systems/electrical/bus/dc-hot-1</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
@@ -6320,7 +6320,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.1f</format>
-		<property>systems/electrical/sources/bat-2/volt</property>
+		<property>systems/electrical/bus/dc-hot-2</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
@@ -7158,7 +7158,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.MechCall();</script>
+				<script>libraries.MechCallFunc();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7177,7 +7177,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CabinCall();</script>
+				<script>libraries.CabinCallFunc();</script>
 			</binding>
 		</action>
 	</animation>

@@ -158,17 +158,15 @@ var dmsToString = func(dms, type) {
 
 
 var stringToDegrees = func(string, type) {
-	if (type == "lat") {
-		var degrees = left(string, 2);
-		var minutesStr = right(string, 5);
-	} else {
-		var degrees = left(string, 3);
-		var minutesStr = right(string, 5);
-	}
+	var splitString = split(".", string);
 	
-	var minutes = left(minutesStr, 4);
-	var sign = right(minutesStr, 1);
-	var decimal = degrees + (minutes / 60);
+	var degrees = left(splitString[0], size(splitString[0]) - 2);
+	var minutes = right(splitString[0], 2);
+	var secondsSign = splitString[1];
+	
+	var minutesStr = minutes + (left(secondsSign, 1) / 10);
+	var sign = right(secondsSign, 1);
+	var decimal = degrees + (minutesStr / 60);
 	if (type == "lat") {
 		if (sign == "N") {
 			return decimal;

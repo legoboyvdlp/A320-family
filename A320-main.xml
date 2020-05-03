@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
-<!-- Copyright (c) 2020 Matthew Maring (hayden2000) -->
+<!-- Copyright (c) 2020 Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
 
-		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/hayden2000 (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
+		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
 		<status>Pre V1.0</status>
 		
@@ -585,42 +585,6 @@
 		<footrest-cpt n="1" type="double">0</footrest-cpt>
 		<footrest-fo n="0" type="double">0</footrest-fo>
 		<footrest-fo n="1" type="double">0</footrest-fo>
-		<adirs n="0">
-			<adr n="0">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<adr n="1">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<adr n="2">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<display>
-				<selected type="int">1</selected>
-				<dataknob type="int">5</dataknob>
-				<text type="string"></text>
-			</display>
-			<ir n="0">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<ir n="1">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<ir n="2">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<onbat type="bool">false</onbat>
-			<skip type="bool">0</skip>
-		</adirs>
 		<atc>
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
@@ -639,6 +603,13 @@
 			<brake-left type="double">0</brake-left>
 			<brake-right type="double">0</brake-right>
 		</autobrake>
+		<CVR>
+			<erase type="bool">0</erase>
+			<gndctl type="bool">0</gndctl>
+			<power type="bool">0</power>
+			<test type="bool">0</test>
+			<tone type="bool">0</tone>
+		</CVR>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
@@ -812,9 +783,9 @@
 		<navigation>
 			<adirscp>
 				<switches>
-					<adr-1 type="bool">0</adr-1>
-					<adr-2 type="bool">0</adr-2>
-					<adr-3 type="bool">0</adr-3>
+					<adr-1 type="bool">1</adr-1>
+					<adr-2 type="bool">1</adr-2>
+					<adr-3 type="bool">1</adr-3>
 					<ir-1 type="bool">0</ir-1>
 					<ir-2 type="bool">0</ir-2>
 					<ir-3 type="bool">0</ir-3>
@@ -826,9 +797,9 @@
 					<adr-1-fault type="bool">0</adr-1-fault>
 					<adr-2-fault type="bool">0</adr-2-fault>
 					<adr-3-fault type="bool">0</adr-3-fault>
-					<adr-1-off type="bool">1</adr-1-off>
-					<adr-2-off type="bool">1</adr-2-off>
-					<adr-3-off type="bool">1</adr-3-off>
+					<adr-1-off type="bool">0</adr-1-off>
+					<adr-2-off type="bool">0</adr-2-off>
+					<adr-3-off type="bool">0</adr-3-off>
 					<ir-1-fault type="bool">0</ir-1-fault>
 					<ir-2-fault type="bool">0</ir-2-fault>
 					<ir-3-fault type="bool">0</ir-3-fault>
@@ -877,6 +848,13 @@
 			<wing-lights type="bool">0</wing-lights>
 			<landing-lights-l type="float">0.0</landing-lights-l>
 			<landing-lights-r type="float">0.0</landing-lights-r>
+			<LrainRpt type="bool">0</LrainRpt>
+			<RrainRpt type="bool">0</RrainRpt>
+			<emerCallLtO type="bool">0</emerCallLtO>
+			<emerCallLtC type="bool">0</emerCallLtC>
+			<cabinCall type="bool">0</cabinCall>
+			<emerCall type="bool">0</emerCall>
+			<mechCall type="bool">0</mechCall>
 		</switches>
 		<tray n="0">
 			<lefttrayext type="double">0</lefttrayext>
@@ -996,15 +974,11 @@
 			<sources>
 				<bat-1>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-1>
 				<bat-2>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-2>
 			</sources>
 		</electrical>
@@ -3966,7 +3940,6 @@
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADIRS.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>

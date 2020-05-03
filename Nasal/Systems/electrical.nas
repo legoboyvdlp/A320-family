@@ -79,14 +79,16 @@ var ELEC = {
 	},
 	Source: {
 		Bat1: {
-			amps: props.globals.getNode("systems/electrical/sources/bat-1/amp"),
-			limiter: props.globals.getNode("systems/electrical/sources/bat-1/limiter"),
+			volt: props.globals.getNode("systems/electrical/sources/bat-1/volt"),
+			amps: props.globals.getNode("systems/electrical/sources/bat-1/amps"),
+			contact: props.globals.getNode("systems/electrical/sources/bat-1/contact"),
 			percent: props.globals.getNode("systems/electrical/sources/bat-1/percent"),
 			time: props.globals.getNode("systems/electrical/sources/bat-1/time"),
 		},
 		Bat2: {
-			amps: props.globals.getNode("systems/electrical/sources/bat-2/amp"),
-			limiter: props.globals.getNode("systems/electrical/sources/bat-2/limiter"),
+			volt: props.globals.getNode("systems/electrical/sources/bat-2/volt"),
+			amps: props.globals.getNode("systems/electrical/sources/bat-2/amps"),
+			contact: props.globals.getNode("systems/electrical/sources/bat-2/contact"),
 			percent: props.globals.getNode("systems/electrical/sources/bat-2/percent"),
 			time: props.globals.getNode("systems/electrical/sources/bat-2/time"),
 		},
@@ -159,74 +161,6 @@ var ELEC = {
 		me.Fail.tr2Fault.setBoolValue(0);
 	},
 	loop: func() {
-		battery1_sw = me.Switch.bat1.getValue();
-		battery2_sw = me.Switch.bat2.getValue();
-		batt1_fail = me.Fail.bat1Fault.getValue();
-		batt2_fail = me.Fail.bat2Fault.getValue();
-		battery1_percent = me.Source.Bat1.percent.getValue();
-		battery2_percent = me.Source.Bat2.percent.getValue();
-		battery1_amps = me.Source.Bat1.amps.getValue();
-		battery2_amps = me.Source.Bat2.amps.getValue();
-		battery1_time = me.Source.Bat1.time.getValue();
-		battery2_time = me.Source.Bat2.time.getValue();
-		dcbat = me.Bus.dcBat.getValue();
-		
-		if (battery1_percent < 100 and dcbat > 25 and battery1_sw and !batt1_fail) {
-			if (battery1_time + 5 < getprop("sim/time/elapsed-sec")) {
-				battery1_percent_calc = battery1_percent + 0.75; # Roughly 90 percent every 10 mins
-				if (battery1_percent_calc > 100) {
-					battery1_percent_calc = 100;
-				}
-				me.Source.Bat1.limiter.setBoolValue(1);
-				me.Source.Bat1.percent.setValue(battery1_percent_calc);
-				me.Source.Bat1.time.setValue(getprop("sim/time/elapsed-sec"));
-			}
-		} else if (battery1_percent == 100 and dcbat > 25 and battery1_sw and !batt1_fail) {
-			me.Source.Bat1.time.setValue(getprop("sim/time/elapsed-sec"));
-			me.Source.Bat1.limiter.setBoolValue(0);
-		} else if (battery1_amps > 0 and battery1_sw and !batt1_fail) {
-			if (battery1_time + 5 < getprop("sim/time/elapsed-sec")) {
-				battery1_percent_calc = battery1_percent - 0.25; # Roughly 90 percent every 30 mins
-				if (battery1_percent_calc < 5) {
-					battery1_percent_calc = 5;
-				}
-				me.Source.Bat1.limiter.setBoolValue(1);
-				me.Source.Bat1.percent.setValue(battery1_percent_calc);
-				me.Source.Bat1.time.setValue(getprop("sim/time/elapsed-sec"));
-			}
-		} else {
-			me.Source.Bat1.time.setValue(getprop("sim/time/elapsed-sec"));
-			me.Source.Bat1.limiter.setBoolValue(0);
-		}
-		
-		if (battery2_percent < 100 and dcbat > 25 and battery2_sw and !batt2_fail) {
-			if (battery2_time + 5 < getprop("sim/time/elapsed-sec")) {
-				battery2_percent_calc = battery2_percent + 0.75; # Roughly 90 percent every 10 mins
-				if (battery2_percent_calc > 100) {
-					battery2_percent_calc = 100;
-				}
-				me.Source.Bat2.limiter.setBoolValue(1);
-				me.Source.Bat2.percent.setValue(battery2_percent_calc);
-				me.Source.Bat2.time.setValue(getprop("sim/time/elapsed-sec"));
-			}
-		} else if (battery2_percent == 100 and dcbat > 25 and battery2_sw and !batt2_fail) {
-			me.Source.Bat2.time.setValue(getprop("sim/time/elapsed-sec"));
-			me.Source.Bat2.limiter.setBoolValue(0);
-		} else if (battery2_amps > 0 and battery2_sw and !batt1_fail) {
-			if (battery2_time + 5 < getprop("sim/time/elapsed-sec")) {
-				battery2_percent_calc = battery2_percent - 0.25; # Roughly 90 percent every 30 mins
-				if (battery2_percent_calc < 5) {
-					battery2_percent_calc = 5;
-				}
-				me.Source.Bat2.limiter.setBoolValue(1);
-				me.Source.Bat2.percent.setValue(battery2_percent_calc);
-				me.Source.Bat2.time.setValue(getprop("sim/time/elapsed-sec"));
-			}
-		} else {
-			me.Source.Bat2.time.setValue(getprop("sim/time/elapsed-sec"));
-			me.Source.Bat2.limiter.setBoolValue(0);
-		}
-		
 		# Autopilot Disconnection routines
 		if (me.Bus.dcEssShed.getValue() < 25) {
 			if (getprop("it-autoflight/output/ap1") == 1 and !me._timer1On) {
