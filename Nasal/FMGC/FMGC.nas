@@ -179,6 +179,9 @@ setlistener("/FMGC/internal/cruise-ft", func {
 ########
 # FUEL #
 ########
+# Calculations maintained at https://github.com/mattmaring/A320-family-fuel-model
+# Copyright (c) 2020 Matthew Maring (mattmaring)
+#
 
 var updateFuel = func {
 	# Check engine status
@@ -212,11 +215,43 @@ var updateFuel = func {
 	}
 	
 	# Calculate trip fuel
-	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set")) {
+	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set") and getprop("/FMGC/internal/zfw-set")) {
 		crz = getprop("/FMGC/internal/cruise-fl");
 		temp = getprop("/FMGC/internal/cruise-temp");
+		
 		dist = flightPlanController.arrivalDist + (0.03306933933 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
-		trip_fuel = 400.3 + (dist * -53.99) + (dist * dist * -0.07322) + (dist * dist * dist * 0.00001091) + (dist * dist * dist * dist * 0.00000000002962) + (dist * dist * dist * dist * dist * -0.0000000000001178) + (dist * dist * dist * dist * dist * dist * 0.000000000000000006322) + (crz * 53.87) + (dist * crz * 1.583) + (dist * dist * crz * 0.0007695) + (dist * dist * dist * crz * -0.0000001057) + (dist * dist * dist * dist * crz * 0.000000000001138) + (dist * dist * dist * dist * dist * crz * 0.0000000000000001736) + (crz * crz * -1.171) + (dist * crz * crz * -0.01219) + (dist * dist * crz * crz * -0.000002879) + (dist * dist * dist * crz * crz * 0.0000000003115) + (dist * dist * dist * dist * crz * crz * -0.000000000000004093) + (crz * crz * crz * 0.009160) + (dist * crz * crz * crz * 0.00004311) + (dist * dist * crz * crz * crz * 0.000000004532) + (dist * dist * dist * crz * crz * crz * -0.0000000000002879) + (crz * crz * crz * crz * -0.00003338) + (dist * crz * crz * crz * crz * -0.00000007340) + (dist * dist * crz * crz * crz * crz * -0.000000000002494) + (crz * crz * crz * crz * crz * 0.00000005849) + (dist * crz * crz * crz * crz * crz * 0.00000000004898) + (crz * crz * crz * crz * crz * crz * -0.00000000003999);
+		if (dist < 0) {
+			dist = 0;
+		}
+		
+		# wind = getprop("/FMGC/internal/trip-wind");
+# 		if (find("TL", wind) != -1 or find("HD", wind) != -1) {
+# 			effwind = substr(wind, 2);
+# 			
+# 		} else if (find("-", wind) != -1 or find("+", wind) != -1 or find("T", wind) != -1 or find("H", wind) != -1) {
+# 			effwind = substr(wind, 1);
+# 			
+# 		} else {
+# 			#positive tail wind
+# 		}
+		
+		trip_fuel = 4.003e+02 + (dist * -5.399e+01) + (dist * dist * -7.322e-02) + (dist * dist * dist * 1.091e-05) + (dist * dist * dist * dist * 2.962e-10) + (dist * dist * dist * dist * dist * -1.178e-13) + (dist * dist * dist * dist * dist * dist * 6.322e-18) + (crz * 5.387e+01) + (dist * crz * 1.583e+00) + (dist * dist * crz * 7.695e-04) + (dist * dist * dist * crz * -1.057e-07) + (dist * dist * dist * dist * crz * 1.138e-12) + (dist * dist * dist * dist * dist * crz * 1.736e-16) + (crz * crz * -1.171e+00) + (dist * crz * crz * -1.219e-02) + (dist * dist * crz * crz * -2.879e-06) + (dist * dist * dist * crz * crz * 3.115e-10) + (dist * dist * dist * dist * crz * crz * -4.093e-15) + (crz * crz * crz * 9.160e-03) + (dist * crz * crz * crz * 4.311e-05) + (dist * dist * crz * crz * crz * 4.532e-09) + (dist * dist * dist * crz * crz * crz * -2.879e-13) + (crz * crz * crz * crz * -3.338e-05) + (dist * crz * crz * crz * crz * -7.340e-08) + (dist * dist * crz * crz * crz * crz * -2.494e-12) + (crz * crz * crz * crz * crz * 5.849e-08) + (dist * crz * crz * crz * crz * crz * 4.898e-11) + (crz * crz * crz * crz * crz * crz * -3.999e-11);
+		if (trip_fuel < 400) {
+			trip_fuel = 400;
+		}
+		# if (low air conditioning) {
+		#	trip_fuel = trip_fuel * 0.995;
+		#}
+		# if (total anti-ice) {
+		#	trip_fuel = trip_fuel * 1.045;
+		#} else if (engine anti-ice) {
+		#	trip_fuel = trip_fuel * 1.02;
+		#}
+		
+		zfw = getprop("/FMGC/internal/zfw");
+		#landing_weight_correction = [model here];
+		#trip_fuel = trip_fuel + landing_weight_correction;
+		
 		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
 	} else {
 		setprop("/FMGC/internal/trip-fuel", 0.0);
