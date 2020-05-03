@@ -244,19 +244,23 @@ var updateFuel = func {
 		#	trip_fuel = trip_fuel * 1.02;
 		#}
 		
+		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
+		
+		setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/block") + getprop("/FMGC/internal/zfw") - getprop("/FMGC/internal/taxi-fuel")));
+		setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
+	
 		zfw = getprop("/FMGC/internal/zfw");
-		#landing_weight_correction = [model here];
-		#trip_fuel = trip_fuel + landing_weight_correction;
+		landing_weight_correction = 8.671e+00 + (dist * 4.435e-01) + (dist * dist * -1.222e-05) + (dist * dist * dist * 1.966e-10) + (crz * -4.042e-01) + (dist * crz * -3.114e-03) + (dist * dist * crz * 6.754e-08) + (crz * crz * 3.032e-03) + (dist * crz * crz * 5.989e-06) + (crz * crz * crz * -5.204e-06);
+		trip_fuel = trip_fuel + (landing_weight_correction * (getprop("/FMGC/internal/lw") * 1000 - 121254.24421) / 2204.622622);
 		
 		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
+		
+		setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
+		
 	} else {
 		setprop("/FMGC/internal/trip-fuel", 0.0);
 		setprop("/FMGC/internal/trip-time", "0000");
 	}
-	
-	# Calculate taxi fuel
-	setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/block") + getprop("/FMGC/internal/zfw") - getprop("/FMGC/internal/taxi-fuel")));
-	setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
 	
 	# Calculate reserve fuel
 	if (getprop("/FMGC/internal/rte-rsv-set")) {
