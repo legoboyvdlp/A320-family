@@ -524,16 +524,7 @@
 		<fcs_function name="fbw/roll/rollout-cmd">
 			<function>
 				<product>
-					<table>
-						<independentVar lookup="row">/orientation/roll-deg</independentVar>
-						<tableData>
-							-30 -30
-							 -1   0
-							  0   0
-							  1   0
-							 30  30
-						</tableData>
-					</table>
+					<property>/orientation/roll-deg</property>
 					<value>-0.1</value>
 				</product>
 			</function>
