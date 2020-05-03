@@ -235,6 +235,7 @@ var updateFuel = func {
 		if (trip_fuel < 400) {
 			trip_fuel = 400;
 		}
+		
 		# if (low air conditioning) {
 		#	trip_fuel = trip_fuel * 0.995;
 		#}
