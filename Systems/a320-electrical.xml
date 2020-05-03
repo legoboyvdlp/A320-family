@@ -87,8 +87,12 @@
 		
 		<switch name="/systems/electrical/sources/bat-1/direction">
 			<default value="0"/>
-			<test value="0">
+			<test logic="AND" value="0">
 				/systems/electrical/sources/bat-1/contact eq 0
+				/systems/electrical/sources/si-1/inverter-active eq 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/si-1/inverter-active eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- drain -->
 				/systems/electrical/sources/bat-1/contact eq 1
@@ -253,8 +257,12 @@
 		
 		<switch name="/systems/electrical/sources/bat-2/direction">
 			<default value="0"/>
-			<test value="0">
+			<test logic="AND" value="0">
 				/systems/electrical/sources/bat-2/contact eq 0
+				/systems/electrical/sources/si-1/inverter-active eq 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/si-1/inverter-active eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- drain -->
 				/systems/electrical/sources/bat-2/contact eq 1
