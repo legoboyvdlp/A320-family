@@ -373,6 +373,8 @@ var lskbutton = func(btn, i) {
 			printInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
 			printInput2("L5",i);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DATA") {
+			dataInput("L5",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
@@ -383,6 +385,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(5);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
+			canvas_mcdu.myClosestAirport[i].manAirportCall(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
 		} else {
 			notAllowed(i);
 		}
@@ -417,6 +421,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldL6();
+		} else if (getprop("MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
+			canvas_mcdu.myClosestAirport[i].freeze();
 		} else {
 			notAllowed(i);
 		}

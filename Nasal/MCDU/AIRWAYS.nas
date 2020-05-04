@@ -44,8 +44,8 @@ var airwaysPage = {
 		me.L1 = ["[    ]", "  VIA", "blu"];
 		me.R1 = [nil, "TO  ", "blu"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
-		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["blu", "blu", "ack", "ack", "ack", "ack"]];
-		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
@@ -65,5 +65,19 @@ var airwaysPage = {
 			me.arrowsColour[0][5] = "wht";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
-	}
+	},
+	updateAirways: func(index, airwayName) {
+		me.fontMatrix[0][index - 1] = 0;
+		if (index == 1) {
+			me.L1[0] = airwayName;
+		} elsif (index == 2) {
+			me.L2[0] = airwayName;
+		} elsif (index == 3) {
+			me.L3[0] = airwayName;
+		} elsif (index == 4) {
+			me.L4[0] = airwayName;
+		} elsif (index == 5) {
+			me.L5[0] = airwayName;
+		}
+	},
 };
