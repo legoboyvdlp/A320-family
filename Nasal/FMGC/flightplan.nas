@@ -77,6 +77,12 @@ var flightPlanController = {
 		if (canvas_mcdu.myDirTo[n] != nil) {
 			canvas_mcdu.myDirTo[n].updateTmpy();
 		}
+		if (canvas_mcdu.myHold[n] != nil) {
+			canvas_mcdu.myHold[n].updateTmpy();
+		}
+		if (canvas_mcdu.myAirways[n] != nil) {
+			canvas_mcdu.myAirways[n].updateTmpy();
+		}
 		me.flightPlanChanged(n);
 	},
 	

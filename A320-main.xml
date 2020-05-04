@@ -3973,6 +3973,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> <!-- dynamic page - init before MCDU -->	
 			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
