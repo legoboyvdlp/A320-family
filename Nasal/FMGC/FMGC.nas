@@ -279,7 +279,11 @@ var updateFuel = func {
 		if (num(getprop("/FMGC/internal/trip-fuel")) == 0.0) {
 			setprop("/FMGC/internal/rte-percent", 0.0);
 		} else {
-			setprop("/FMGC/internal/rte-percent", num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0));
+			if (num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0) <= 15.0) {
+				setprop("/FMGC/internal/rte-percent", num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0));
+			} else {
+				setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
+			}
 		}
 	} else if (getprop("/FMGC/internal/rte-percent-set")) {
 		setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * getprop("/FMGC/internal/rte-percent") / 100.0));

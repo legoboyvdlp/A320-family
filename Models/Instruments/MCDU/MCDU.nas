@@ -1983,20 +1983,27 @@ var canvas_MCDU_base = {
 						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
 					}
 				}
-				me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
-				me["Simple_C4"].show();
-				if (alt_fuel_set.getValue() == 1) {
-					if (num(alt_fuel.getValue()) > 9.9) {
-						me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+				if (altSet.getValue() == 1) {
+					me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+					me["Simple_L4"].setColor(BLUE);
+					me["Simple_C4"].show();
+					if (alt_fuel_set.getValue() == 1) {
+						if (num(alt_fuel.getValue()) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+						} else {
+							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						}
 					} else {
-						me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						if (num(alt_fuel.getValue()) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						} else {
+							me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+						}
 					}
 				} else {
-					if (num(alt_fuel.getValue()) > 9.9) {
-						me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
-					} else {
-						me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
-					}
+					me["Simple_L4"].setText("---.-/----");
+					me["Simple_L4"].setColor(WHITE);
+					me["Simple_C4"].hide();
 				}
 				me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
 				if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
@@ -2033,7 +2040,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
 				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
-				me.colorLeft("ack", "ack", "blu", "blu", "blu", "blu");
+				me.colorLeft("ack", "ack", "blu", "ack", "blu", "blu");
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
 			}
 			
@@ -2070,7 +2077,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1) {
+			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);

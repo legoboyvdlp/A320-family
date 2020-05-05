@@ -56,7 +56,7 @@ var initInputB = func(key, i) {
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7) {
 					setprop("/FMGC/internal/rte-rsv", scratchpad);
 					setprop("/FMGC/internal/rte-rsv-set", 1);
-					if (scratchpad / num(getprop("/FMGC/internal/trip-fuel")) * 100 > 15.0) {
+					if (scratchpad / num(getprop("/FMGC/internal/trip-fuel")) * 100 <= 15.0) {
 						setprop("/FMGC/internal/rte-percent", scratchpad / num(getprop("/FMGC/internal/trip-fuel")) * 100);
 					} else {
 						setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
