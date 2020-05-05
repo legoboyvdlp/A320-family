@@ -4246,7 +4246,7 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleedapu</property>
+				<property>controls/pneumatics/switches/apu</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4266,7 +4266,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleedapu</property>
+						<property>controls/pneumatics/switches/apu</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4284,7 +4284,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleedapu</property>
+					<property>controls/pneumatics/switches/apu</property>
 					<value>1</value>
 				</equals>
 				<equals>

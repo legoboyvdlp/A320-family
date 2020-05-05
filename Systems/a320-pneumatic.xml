@@ -3,6 +3,29 @@
 <system name="A320: Pneumatic">
 	<channel name="Valves">
 	
+		<!-- apu -->
+		<switch name="/systems/pneumatics/valves/apu-bleed-valve-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[2]/n1 ge 95
+				/controls/pneumatics/switches/apu eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/apu-bleed-valve-power">
+			<default value="0"/>
+			<test logic="OR" value="5">
+				/systems/electrical/bus/dc-ess-shed ge 25 
+				<!-- confirm, some a320 have it on dc-bat, but this makes sense, since x-bleed is on ess shed too. 
+				Definitely, some A320 have it on dc-ess-shed, but why is there any difference? -->
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/apu-bleed-valve">
+			<input>/systems/pneumatics/valves/apu-bleed-valve-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/apu-bleed-valve-power</rate_limit>
+		</actuator>
+		
 		<!-- Low Pressure valve -->
 		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-cmd">
 			<default value="1"/>
@@ -11,7 +34,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-cmd-power">
+		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="5">
 				/systems/electrical/bus/dc-ess-shed ge 25
@@ -20,7 +43,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-1-lp-valve">
 			<input>/systems/pneumatics/valves/engine-1-lp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-1-lp-valve-cmd-power</rate_limit>
+			<rate_limit>/systems/pneumatics/valves/engine-1-lp-valve-power</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-cmd">
@@ -30,7 +53,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-cmd-power">
+		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="5">
 				/systems/electrical/bus/dc-2 ge 25
@@ -39,7 +62,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-2-lp-valve">
 			<input>/systems/pneumatics/valves/engine-2-lp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-2-lp-valve-cmd-power</rate_limit>
+			<rate_limit>/systems/pneumatics/valves/engine-2-lp-valve-power</rate_limit>
 		</actuator>
 		
 		
@@ -59,7 +82,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-cmd-power">
+		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="3">
 				/systems/electrical/bus/dc-ess-shed ge 25
@@ -68,7 +91,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-1-hp-valve">
 			<input>/systems/pneumatics/valves/engine-1-hp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-1-hp-valve-cmd-power</rate_limit>
+			<rate_limit>/systems/pneumatics/valves/engine-1-hp-valve-power</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-cmd">
@@ -86,7 +109,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-cmd-power">
+		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="3">
 				/systems/electrical/bus/dc-2 ge 25
@@ -95,7 +118,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-2-hp-valve">
 			<input>/systems/pneumatics/valves/engine-2-hp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-2-hp-valve-cmd-power</rate_limit>
+			<rate_limit>/systems/pneumatics/valves/engine-2-hp-valve-power</rate_limit>
 		</actuator>
 		
 		<!-- Pressure regulation valve -->
@@ -112,7 +135,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-cmd-power">
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="5.0">
 				/systems/electrical/bus/dc-ess-shed ge 25
@@ -123,7 +146,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-1-prv-valve">
 			<input>/systems/pneumatics/valves/engine-1-prv-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-1-prv-valve-cmd-power</rate_limit>
+			<rate_limit>/systems/pneumatics/valves/engine-1-prv-valve-power</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-cmd">
@@ -142,7 +165,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-cmd-power">
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-power">
 			<default value="0"/>
 			<test logic="OR" value="5.0">
 				/systems/electrical/bus/dc-2 ge 25
@@ -153,7 +176,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-2-prv-valve">
 			<input>/systems/pneumatics/valves/engine-2-prv-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-2-prv-valve-cmd-power</rate_limit>
+			<rate_limit>/systems/pneumatics/valves/engine-2-prv-valve-power</rate_limit>
 		</actuator>
 		
 		<!-- Overpressure valve -->
@@ -490,6 +513,25 @@
 				/systems/pneumatics/precooler/calc/ovht-55-2 eq 1
 			</test>
 		</switch>
+	</channel>
+	
+	<channel name="ECAM">
+	
+		<switch name="/systems/pneumatics/warnings/apu-bleed-not-on-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/apu-bleed-valve eq 0
+				/controls/apu/master eq 1
+				/controls/pneumatics/switches/apu eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/warnings/apu-bleed-not-on">
+			<input>/systems/pneumatics/warnings/apu-bleed-not-on-cmd</input>
+			<rate_limit sense="incr">0.1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
 	</channel>
 	
 </system>

@@ -5,16 +5,16 @@
 
 var APUNodes = {
 	Controls: {
-		master: props.globals.getNode("controls/apu/master"),
-		fire: props.globals.getNode("controls/apu/fire-btn"),
-		bleed: props.globals.getNode("controls/pneumatic/switches/bleedapu"),
+		master: props.globals.getNode("/controls/apu/master"),
+		fire: props.globals.getNode("/controls/apu/fire-btn"),
+		bleed: props.globals.getNode("/controls/pneumatics/switches/apu"),
 	},
 	Oil: {
-		level: props.globals.getNode("systems/apu/oil/level-l"),
-		pressure: props.globals.getNode("systems/apu/oil/oil-pressure-psi"),
-		temperature: props.globals.getNode("systems/apu/oil/oil-temperature-degC"),
+		level: props.globals.getNode("/systems/apu/oil/level-l"),
+		pressure: props.globals.getNode("/systems/apu/oil/oil-pressure-psi"),
+		temperature: props.globals.getNode("/systems/apu/oil/oil-temperature-degC"),
 	},
-	masterElecThreeMin: props.globals.getNode("systems/apu/dc-bat-three-minutes"),
+	masterElecThreeMin: props.globals.getNode("/systems/apu/dc-bat-three-minutes"),
 };
 
 var APU = {
@@ -22,8 +22,8 @@ var APU = {
 	inletFlap: aircraft.door.new("controls/apu/inlet-flap", 12),
 	fuelValveCmd: props.globals.getNode("/systems/fuel/valves/apu-lp-valve-cmd"),
 	fuelValvePos: props.globals.getNode("/systems/fuel/valves/apu-lp-valve"),
-	inletFlapPos: props.globals.getNode("controls/apu/inlet-flap/position-norm"),
-	oilLevel: props.globals.getNode("systems/apu/oil/level-l"),
+	inletFlapPos: props.globals.getNode("/controls/apu/inlet-flap/position-norm"),
+	oilLevel: props.globals.getNode("/systems/apu/oil/level-l"),
 	listenSignals: 0,
 	listenStopSignal: 0,
 	bleedTime: 0,
@@ -34,16 +34,16 @@ var APU = {
 		lowOilLevel: 0,
 	},
 	GenericControls: {
-		starter: props.globals.getNode("controls/engines/engine[2]/starter"),
-		cutoff: props.globals.getNode("controls/engines/engine[2]/cutoff"),
-		throttle: props.globals.getNode("controls/engines/engine[2]/throttle"),
+		starter: props.globals.getNode("/controls/engines/engine[2]/starter"),
+		cutoff: props.globals.getNode("/controls/engines/engine[2]/cutoff"),
+		throttle: props.globals.getNode("/controls/engines/engine[2]/throttle"),
 	},
 	signals: {
-		startInProgress: props.globals.getNode("systems/apu/start"),
+		startInProgress: props.globals.getNode("/systems/apu/start"),
 		oilTestComplete: 0,
-		available: props.globals.getNode("systems/apu/available"),
+		available: props.globals.getNode("/systems/apu/available"),
 		bleedWasUsed: 0,
-		fault: props.globals.getNode("systems/apu/fault"),
+		fault: props.globals.getNode("/systems/apu/fault"),
 		autoshutdown: 0,
 		emer: 0,
 	},

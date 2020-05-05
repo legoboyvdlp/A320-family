@@ -80,6 +80,9 @@ var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/co
 var apu_master = props.globals.getNode("/controls/apu/master", 1);
 var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
 var switch_bleedapu = props.globals.getNode("/controls/pneumatic/switches/apu", 1);
+var apuBleedNotOn = props.globals.getNode("/systems/pneumatics/warnings/apu-bleed-not-on", 1);
+var apu_valve = props.globals.getNode("/systems/pneumatics/valves/apu-bleed-valve-cmd", 1);
+var apu_valve_state = props.globals.getNode("/systems/pneumatics/valves/apu-bleed-valve", 1);
 var pneumatic_xbleed_state = props.globals.getNode("/systems/pneumatics/xbleed-state", 1);
 var xbleed = props.globals.getNode("/systems/pneumatics/valves/crossbleed-valve", 1);
 var hp_valve1_state = props.globals.getNode("/systems/pneumatics/valves/engine-1-hp-valve", 1);
@@ -671,21 +674,29 @@ var canvas_lowerECAM_apu = {
 		me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 
 		# APU Bleed
-		if (systems.ADIRS.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
-			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
-			me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
-		} else {
+		#if (systems.ADIRS.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
+		#	me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
+		#	me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
+		#} else {
 			me["APUBleedPSI"].setColor(0.7333,0.3803,0);
 			me["APUBleedPSI"].setText(sprintf("%s", "XX"));
-		}
+		#}
 
-		if (switch_bleedapu.getValue() == 1) {
+		var apu_valve_state2 = apu_valve_state.getValue();
+		if (apu_valve_state2 == 1) {
 			me["APUBleedValve"].setRotation(90 * D2R);
-			me["APUBleedOnline"].show();
 		} else {
 			me["APUBleedValve"].setRotation(0);
+		}
+		
+		if (apu_valve_state2 == apu_valve_state.getValue()) {
+			me["APUBleedValve"].setColor(0.0509,0.7529,0.2941);
+			me["APUBleedOnline"].show();
+		} else {
+			me["APUBleedValve"].setColor(0.7333,0.3803,0);
 			me["APUBleedOnline"].hide();
 		}
+		
 
 		# APU N and EGT
 		if (apu_master.getValue() == 1) {
@@ -725,7 +736,7 @@ var canvas_lowerECAM_bleed = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1","BLEED-APU-LINES",
 		"BLEED-ENG-1", "BLEED-HP-Valve-2", "BLEED-ENG-2", "BLEED-Precooler-1-Inlet-Press", "BLEED-Precooler-1-Outlet-Temp",
 		"BLEED-Precooler-2-Inlet-Press", "BLEED-Precooler-2-Outlet-Temp", "BLEED-ENG-1-label", "BLEED-ENG-2-label",
 		"BLEED-GND", "BLEED-Pack-1-Flow-Valve", "BLEED-Pack-2-Flow-Valve", "BLEED-Pack-1-Out-Temp",
@@ -798,7 +809,26 @@ var canvas_lowerECAM_bleed = {
 		} else {
 			me["BLEED-ENG-1"].setColor(0.7333,0.3803,0);
 		}
-
+		
+		# APU BLEED valve
+		var apu_valve_state2 = apu_valve_state.getValue();
+		
+		if (apu_master.getValue()) {
+			me["BLEED-APU-LINES"].show();
+			if (apu_valve_state2 == 1) {
+				me["BLEED-APU"].setRotation(0);
+			} else {
+				me["BLEED-APU"].setRotation(90 * D2R);
+			}
+			if (apuBleedNotOn.getValue() != 1) {
+				me["BLEED-APU"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["BLEED-APU"].setColor(0.7333,0.3803,0);
+			}
+		} else {
+			me["BLEED-APU-LINES"].hide();
+		}
+			
 		# ENG BLEED valve 2
 		var eng_valve_state = eng_valve2_state.getValue();
 
