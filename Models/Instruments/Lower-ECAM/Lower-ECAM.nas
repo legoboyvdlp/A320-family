@@ -65,7 +65,7 @@ var oil_qt1 = props.globals.getNode("/ECAM/Lower/Oil-QT[0]", 1);
 var oil_qt2 = props.globals.getNode("/ECAM/Lower/Oil-QT[1]", 1);
 var oil_psi1 = props.globals.getNode("/ECAM/Lower/Oil-PSI[0]", 1);
 var oil_psi2 = props.globals.getNode("/ECAM/Lower/Oil-PSI[1]", 1);
-var bleedapu = props.globals.getNode("/systems/pneumatics/psi/apu", 1);
+var bleedapu = props.globals.getNode("/systems/pneumatics/source/apu-psi", 1);
 var oil_psi_actual1 = props.globals.getNode("/engines/engine[0]/oil-psi-actual", 1);
 var oil_psi_actual2 = props.globals.getNode("/engines/engine[1]/oil-psi-actual", 1);
 var aileron_ind_left = props.globals.getNode("/ECAM/Lower/aileron-ind-left", 1);
@@ -99,6 +99,8 @@ var precooler1_temp = props.globals.getNode("/systems/pneumatics/precooler/temp-
 var precooler2_temp = props.globals.getNode("/systems/pneumatics/precooler/temp-2", 1);
 var precooler1_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-1", 1);
 var precooler2_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-2", 1);
+var bmc1working = props.globals.getNode("/systems/pneumatics/indicating/bmc1-working", 1);
+var bmc2working = props.globals.getNode("/systems/pneumatics/indicating/bmc2-working", 1);
 var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
 var switch_wing_aice = props.globals.getNode("/controls/switches/wing", 1);
 var deice_wing = props.globals.getNode("/controls/deice/wing", 1);
@@ -674,13 +676,13 @@ var canvas_lowerECAM_apu = {
 		me["APUGenHz"].setText(sprintf("%s", math.round(apu_hz.getValue())));
 
 		# APU Bleed
-		#if (systems.ADIRS.Operating.adr[0].getValue() and (apu_master.getValue() == 1 or bleedapu.getValue() > 0)) {
-		#	me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
-		#	me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
-		#} else {
+		if (systems.ADIRS.Operating.adr[0].getValue() and (systems.APUNodes.Controls.bleed.getValue() == 1 or bleedapu.getValue() > 0)) {
+			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
+			me["APUBleedPSI"].setText(sprintf("%s", math.round(bleedapu.getValue())));
+		} else {
 			me["APUBleedPSI"].setColor(0.7333,0.3803,0);
 			me["APUBleedPSI"].setText(sprintf("%s", "XX"));
-		#}
+		}
 
 		var apu_valve_state2 = apu_valve_state.getValue();
 		if (apu_valve_state2 == 1) {
@@ -844,43 +846,63 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# Precooler inlet 1
-		var precooler_psi = precooler1_psi.getValue();
-		me["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", math.round(precooler_psi)));
-		if (precooler_psi < 4 or precooler_psi > 57) {
-			me["BLEED-Precooler-1-Inlet-Press"].setColor(0.7333,0.3803,0);
+		if (bmc1working.getValue()) {
+			var precooler_psi = precooler1_psi.getValue();
+			me["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", math.round(precooler_psi)));
+			if (precooler_psi < 4 or precooler_psi > 57) {
+				me["BLEED-Precooler-1-Inlet-Press"].setColor(0.7333,0.3803,0);
+			} else {
+				me["BLEED-Precooler-1-Inlet-Press"].setColor(0.0509,0.7529,0.2941);
+			}
 		} else {
-			me["BLEED-Precooler-1-Inlet-Press"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", "XX"));
+			me["BLEED-Precooler-1-Inlet-Press"].setColor(0.7333,0.3803,0);
 		}
 
 		# Precooler inlet 2
-		var precooler_psi = precooler2_psi.getValue();
-		me["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", math.round(precooler_psi)));
-		if (precooler_psi < 4 or precooler_psi > 57) {
-			me["BLEED-Precooler-2-Inlet-Press"].setColor(0.7333,0.3803,0);
+		if (bmc2working.getValue()) {
+			var precooler_psi = precooler2_psi.getValue();
+			me["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", math.round(precooler_psi)));
+			if (precooler_psi < 4 or precooler_psi > 57) {
+				me["BLEED-Precooler-2-Inlet-Press"].setColor(0.7333,0.3803,0);
+			} else {
+				me["BLEED-Precooler-2-Inlet-Press"].setColor(0.0509,0.7529,0.2941);
+			}
 		} else {
-			me["BLEED-Precooler-2-Inlet-Press"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", "XX"));
+			me["BLEED-Precooler-2-Inlet-Press"].setColor(0.7333,0.3803,0);
 		}
 
 		# Precooler outlet 1
-		var precooler_temp = precooler1_temp.getValue();
-		me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
-		if (precooler_temp < 150 or precooler1_ovht.getValue()) {
-			me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
+		if (bmc1working.getValue()) {
+			var precooler_temp = precooler1_temp.getValue();
+			me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
+			if (eng_valve1_state.getValue() == 1 and (precooler_temp < 150 or precooler1_ovht.getValue())) {
+				me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
+			} else {
+				me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
+			}
 		} else {
-			me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", "XX"));
+			me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
 		}
 
 		# Precooler outlet 2
-		var precooler_temp = precooler2_temp.getValue();
-		me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
-		if (precooler_temp < 150 or precooler2_ovht.getValue() == 1) {
-			me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
+		if (bmc2working.getValue()) {
+			var precooler_temp = precooler2_temp.getValue();
+			me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
+			if (eng_valve2_state.getValue() == 1 and (precooler_temp < 150 or precooler2_ovht.getValue())) {
+				me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
+			} else {
+				me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
+			}
 		} else {
-			me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", "XX"));
+			me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
 		}
 
 		# GND air
-		if (gs_kt.getValue() < 1) {
+		if (pts.Gear.wow[1].getValue()) {
 			me["BLEED-GND"].show();
 		} else {
 			me["BLEED-GND"].hide();

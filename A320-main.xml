@@ -837,6 +837,7 @@
 				<blower type="bool">0</blower>
 				<cabin-fans type="bool">0</cabin-fans>
 				<extract type="bool">0</extract>
+				<groundair type="bool">0</groundair>
 				<hot-air type="bool">0</hot-air>
 				<pack-1 type="bool">0</pack-1>
 				<pack-2 type="bool">0</pack-2>
@@ -1044,6 +1045,8 @@
 				<apu-valve type="bool">0</apu-valve>
 				<bleed-1-valve type="bool">0</bleed-1-valve>
 				<bleed-2-valve type="bool">0</bleed-2-valve>
+				<bmc-1 type="bool">0</bmc-1>
+				<bmc-2 type="bool">0</bmc-2>
 				<cabin-fans type="bool">0</cabin-fans>
 				<hot-air-valve type="bool">0</hot-air-valve>
 				<pack-1-valve type="bool">0</pack-1-valve>
@@ -1137,6 +1140,10 @@
 		</hydraulic>
 		
 		<pneumatics>
+			<indicating>
+				<bmc1-working type="bool">0</bmc1-working>
+				<bmc2-working type="bool">0</bmc2-working>
+			</indicating>
 			<pack-1-out-temp type="double">0</pack-1-out-temp>
 			<pack-2-out-temp type="double">0</pack-2-out-temp>
 			<pack-1-comp-out-temp type="double">0</pack-1-comp-out-temp>
@@ -1152,11 +1159,6 @@
 				<ovht-2 type="double">0</ovht-2>
 			</precooler>
 			<psi>
-				<apu type="double">0</apu>
-				<engine-1-lp-psi type="double">0</engine-1-lp-psi>
-				<engine-2-lp-psi type="double">0</engine-2-lp-psi>
-				<engine-1-hp-psi type="double">0</engine-1-hp-psi>
-				<engine-2-hp-psi type="double">0</engine-2-hp-psi>
 				<engine-1-psi type="double">0</engine-1-psi>
 				<engine-2-psi type="double">0</engine-2-psi>
 				<engine-1-upstream-prv type="double">0</engine-1-upstream-prv>
@@ -1164,6 +1166,13 @@
 				<engine-1-upstream-src type="double">0</engine-1-upstream-src>
 				<engine-2-upstream-src type="double">0</engine-2-upstream-src>
 			</psi>
+			<source>
+				<apu-psi type="double">0</apu-psi>
+				<engine-1-lp-psi type="double">0</engine-1-lp-psi>
+				<engine-2-lp-psi type="double">0</engine-2-lp-psi>
+				<engine-1-hp-psi type="double">0</engine-1-hp-psi>
+				<engine-2-hp-psi type="double">0</engine-2-hp-psi>
+			</source>
 			<valves>
 				<apu-bleed-valve type="bool">0</apu-bleed-valve>
 				<crossbleed-valve type="bool">0</crossbleed-valve>

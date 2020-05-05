@@ -9,6 +9,8 @@ var PNEU = {
 		apu: props.globals.getNode("/systems/failures/pneumatics/apu-valve"),
 		bleed1: props.globals.getNode("/systems/failures/pneumatics/bleed-1-valve"),
 		bleed2: props.globals.getNode("/systems/failures/pneumatics/bleed-2-valve"),
+		bmc1: props.globals.getNode("/systems/failures/pneumatics/bmc-1"),
+		bmc2: props.globals.getNode("/systems/failures/pneumatics/bmc-2"),
 		cabinFans: props.globals.getNode("/systems/failures/pneumatics/cabin-fans"),
 		hotAir: props.globals.getNode("/systems/failures/pneumatics/hot-air-valve"),
 		pack1: props.globals.getNode("/systems/failures/pneumatics/pack-1-valve"),

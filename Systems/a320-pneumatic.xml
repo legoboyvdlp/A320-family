@@ -240,6 +240,80 @@
 	
 	<channel name="Source PSI">
 	
+        <fcs_function name="/systems/pneumatics/source/apu-psi">
+            <function>
+				<ifthen>
+					<gt>
+						<property>/position/altitude-ft</property>
+						<value>20000</value>
+					</gt>
+					<value>0</value>
+					<ifthen>
+						<gt>
+							<property>/engines/engine[2]/n1</property>
+							<value>92</value>
+						</gt>
+						<difference>
+							<interpolate1d>
+								<property>/position/altitude-ft</property>
+								<value>0</value>
+								<table>
+									<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+									<independentVar lookup="column">/systems/pneumatics/valves/apu-bleed-valve</independentVar>
+									<tableData>
+											  0    1 
+										92    0    0 
+										95   16.7  2.7
+										100  58.7  50.7
+									</tableData>
+								</table>
+								<value>10000</value>
+								<table>
+									<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+									<independentVar lookup="column">/systems/pneumatics/valves/apu-bleed-valve</independentVar>
+									<tableData>
+											  0    1 
+										92    0    0 
+										95    6.7  0.1
+										100  48.7  40.7
+									</tableData>
+								</table>
+								<value>15000</value>
+								<table>
+									<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+									<independentVar lookup="column">/systems/pneumatics/valves/apu-bleed-valve</independentVar>
+									<tableData>
+											  0    1 
+										92    0    0 
+										95    2.7  0
+										100  37.7  32.7
+									</tableData>
+								</table>
+							</interpolate1d>
+							<quotient>
+								<property>/systems/navigation/probes/static-1</property>
+								<value>2.036</value>
+							</quotient>
+						</difference>
+						<value>0</value>
+					</ifthen>
+				</ifthen>
+            </function>
+			<clipto>
+				<min>0</min>
+				<max>99999999</max>
+			</clipto>
+        </fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/source/gnd-psi">
+			<function>
+				<product>
+					<property>/controls/pneumatics/switches/groundair</property>
+					<value>34</value>
+				</product>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/systems/pneumatics/source/engine-1-hp-psi">
 			<function>
 				<table>
@@ -355,7 +429,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pneumatics/psi/engine-1-upstream-prv">
+		<fcs_function name="/systems/pneumatics/psi/engine-1-downstream-prv">
 			<function>
 				<product>
 					<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
@@ -364,7 +438,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pneumatics/psi/engine-2-upstream-prv">
+		<fcs_function name="/systems/pneumatics/psi/engine-2-downstream-prv">
 			<function>
 				<product>
 					<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
@@ -373,47 +447,72 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pneumatics/psi/engine-1-psi">
+		<fcs_function name="/systems/pneumatics/psi/engine-1-psi"> <!-- measured pressure. Is essentially pressure of the entire left system -->
 			<function>
-				<product>
-					<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
-					<property>/systems/pneumatics/psi/engine-1-upstream-prv</property>
-				</product>
+				<max>
+					<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
+					<product>
+						<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+						<property>/systems/pneumatics/psi/engine-1-downstream-prv</property>
+					</product>
+				</max>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="/systems/pneumatics/psi/engine-2-psi">
 			<function>
-				<product>
-					<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
-					<property>/systems/pneumatics/psi/engine-2-upstream-prv</property>
+				<max>
+					<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
+					<product>
+						<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+						<property>/systems/pneumatics/psi/engine-2-downstream-prv</property>
+					</product>
+				</max>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-left">
+			<function>
+				<max>
+					<product>
+						<property>/systems/pneumatics/source/apu-psi</property>
+						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+					</product>
+					<property>/systems/pneumatics/source/gnd-psi</property>
+				</max>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-right">
+			<function>
+				<product>	
+					<property>/systems/pneumatics/valves/crossbleed-valve</property>
+					<max>
+						<product>
+							<property>/systems/pneumatics/source/apu-psi</property>
+							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+						</product>
+						<property>/systems/pneumatics/source/gnd-psi</property>
+					</max>
 				</product>
 			</function>
 		</fcs_function>
 		
 	</channel>
 	
-	<channel name="Precooler">
+	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
 	
 		<fcs_function name="/systems/pneumatics/precooler/temp-1">
 			<function>
-				<product>
-					<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
-					<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
-					<property>/engines/engine[0]/egt-actual</property>
-					<value>0.35</value>
-				</product>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/systems/pneumatics/precooler/temp-2">
-			<function>
-				<product>
-					<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
-					<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
-					<property>/engines/engine[1]/egt-actual</property>
-					<value>0.35</value>
-				</product>
+				<sum>
+					<property>/environment/temperature-degc</property>
+					<product>
+						<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
+						<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+						<property>/engines/engine[0]/egt-actual</property>
+						<value>0.35</value>
+					</product>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -456,6 +555,32 @@
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
 		
+		<switch name="/systems/pneumatics/precooler/ovht-1">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/precooler/calc/ovht-5 eq 1
+				/systems/pneumatics/precooler/calc/ovht-15 eq 1
+				/systems/pneumatics/precooler/calc/ovht-55 eq 1
+			</test>
+		</switch>
+		
+	</channel>
+	 
+	<channel name="Precooler Right" execute="/systems/pneumatics/indicating/bmc2-working">  <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
+		
+		<fcs_function name="/systems/pneumatics/precooler/temp-2">
+			<function>
+				<sum>
+					<property>/environment/temperature-degc</property>
+					<product>
+						<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
+						<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+						<property>/engines/engine[1]/egt-actual</property>
+						<value>0.35</value>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
 		
 		<switch name="/systems/pneumatics/precooler/calc/ovht-5-true-2">
 			<default value="0"/>
@@ -495,16 +620,7 @@
 			<rate_limit sense="incr">0.018182</rate_limit>
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
-	
-		<switch name="/systems/pneumatics/precooler/ovht-1">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/pneumatics/precooler/calc/ovht-5 eq 1
-				/systems/pneumatics/precooler/calc/ovht-15 eq 1
-				/systems/pneumatics/precooler/calc/ovht-55 eq 1
-			</test>
-		</switch>
-	
+		
 		<switch name="/systems/pneumatics/precooler/ovht-2">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -516,6 +632,22 @@
 	</channel>
 	
 	<channel name="ECAM">
+		
+		<switch name="/systems/pneumatics/indicating/bmc1-working">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/failures/pneumatics/bmc-1 ne 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/indicating/bmc2-working">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/pneumatics/bmc-2 ne 1
+			</test>
+		</switch>
 	
 		<switch name="/systems/pneumatics/warnings/apu-bleed-not-on-cmd">
 			<default value="0"/>
