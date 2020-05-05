@@ -829,13 +829,25 @@
 				<ratman type="bool">0</ratman>
 			</protectors>
 		</OH>
-		<pneumatic n="0">
+		<pneumatics n="0">
 			<switches n="0">
-				<aft-temp type="double">0.5</aft-temp>
-				<cockpit-temp type="double">0.5</cockpit-temp>
-				<fwd-temp type="double">0.5</fwd-temp>
+				<apu type="bool">0</apu>
+				<bleed-1 type="bool">0</bleed-1>
+				<bleed-2 type="bool">0</bleed-2>
+				<blower type="bool">0</blower>
+				<cabin-fans type="bool">0</cabin-fans>
+				<extract type="bool">0</extract>
+				<hot-air type="bool">0</hot-air>
+				<pack-1 type="bool">0</pack-1>
+				<pack-2 type="bool">0</pack-2>
+				<pack-flow type="bool">0</pack-flow>
+				<ram-air type="bool">0</ram-air>
+				<temp-cabin-aft type="double">0.5</temp-cabin-aft>
+				<temp-cabin-fwd type="double">0.5</temp-cabin-fwd>
+				<temp-cockpit type="double">0.5</temp-cockpit>
+				<x-bleed type="bool">0</x-bleed>
 			</switches>
-		</pneumatic>
+		</pneumatics>
 		<switches>
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
@@ -1028,6 +1040,20 @@
 				<yellow-elec type="bool">0</yellow-elec>
 				<yellow-leak type="bool">0</yellow-leak>
 			</hydraulic>
+			<pneumatics>
+				<apu-valve type="bool">0</apu-valve>
+				<bleed-1-valve type="bool">0</bleed-1-valve>
+				<bleed-2-valve type="bool">0</bleed-2-valve>
+				<cabin-fans type="bool">0</cabin-fans>
+				<hot-air-valve type="bool">0</hot-air-valve>
+				<pack-1-valve type="bool">0</pack-1-valve>
+				<pack-2-valve type="bool">0</pack-2-valve>
+				<ram-air-valve type="bool">0</ram-air-valve>
+				<trim-valve-cockpit type="bool">0</trim-valve-cockpit>
+				<trim-valve-cabin-aft type="bool">0</trim-valve-cabin-aft>
+				<trim-valve-cabin-fwd type="bool">0</trim-valve-cabin-fwd>
+				<x-bleed-valve type="bool">0</x-bleed-valve>
+			</pneumatics>
 			<rudder type="bool">0</rudder>
 			<spoiler-l1 type="bool">0</spoiler-l1>
 			<spoiler-l2 type="bool">0</spoiler-l2>
@@ -1109,6 +1135,44 @@
 			<green-psi>0</green-psi>
 			<yellow-psi>0</yellow-psi>
 		</hydraulic>
+		
+		<pneumatics>
+			<pack-1-out-temp type="double">0</pack-1-out-temp>
+			<pack-2-out-temp type="double">0</pack-2-out-temp>
+			<pack-1-comp-out-temp type="double">0</pack-1-comp-out-temp>
+			<pack-2-comp-out-temp type="double">0</pack-2-comp-out-temp>
+			<pack-1-bypass type="bool">0</pack-1-bypass>
+			<pack-2-bypass type="bool">0</pack-2-bypass>
+			<pack-1-flow type="double">0</pack-1-flow>
+			<pack-2-flow type="double">0</pack-2-flow>
+			<precooler>
+				<temp-1 type="double">0</temp-1>
+				<temp-2 type="double">0</temp-2>
+				<ovht-1 type="double">0</ovht-1>
+				<ovht-2 type="double">0</ovht-2>
+			</precooler>
+			<psi>
+				<apu type="double">0</apu>
+				<engine-1-lp-psi type="double">0</engine-1-lp-psi>
+				<engine-2-lp-psi type="double">0</engine-2-lp-psi>
+				<engine-1-hp-psi type="double">0</engine-1-hp-psi>
+				<engine-2-hp-psi type="double">0</engine-2-hp-psi>
+				<engine-1-psi type="double">0</engine-1-psi>
+				<engine-2-psi type="double">0</engine-2-psi>
+				<engine-1-upstream-prv type="double">0</engine-1-upstream-prv>
+				<engine-2-upstream-prv type="double">0</engine-2-upstream-prv>
+				<engine-1-upstream-src type="double">0</engine-1-upstream-src>
+				<engine-2-upstream-src type="double">0</engine-2-upstream-src>
+			</psi>
+			<valves>
+				<apu-bleed-valve type="bool">0</apu-bleed-valve>
+				<crossbleed-valve type="bool">0</crossbleed-valve>
+				<pack-1 type="bool">0</pack-1>
+				<pack-2 type="bool">0</pack-2>
+				<starter-valve-1 type="bool">0</starter-valve-1>
+				<starter-valve-2 type="bool">0</starter-valve-2>
+			</valves>
+		</pneumatics>
 		
 		<pitot n="1">
             <serviceable>1</serviceable>
@@ -3922,7 +3986,6 @@
 		</pts>
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
@@ -3932,17 +3995,21 @@
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
+		<effects>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/icing.nas</file>
+		</effects>
 		<systems>
 			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
@@ -3950,7 +4017,7 @@
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
-			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/clock.nas</file>
 		</systems>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
@@ -4020,9 +4087,6 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
-		<icing>
-			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
-		</icing>
 		<autopush>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>

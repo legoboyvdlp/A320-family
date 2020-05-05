@@ -4173,7 +4173,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleed1</property>
+				<property>controls/pneumatics/switches/bleed-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4193,7 +4193,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleed1</property>
+						<property>controls/pneumatics/switches/bleed-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4211,7 +4211,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleed1</property>
+					<property>controls/pneumatics/switches/bleed-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4313,7 +4313,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleed2</property>
+				<property>controls/pneumatics/switches/bleed-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4333,7 +4333,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleed2</property>
+						<property>controls/pneumatics/switches/bleed-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4351,7 +4351,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleed2</property>
+					<property>controls/pneumatics/switches/bleed-2</property>
 					<value>0</value>
 				</equals>
 				<equals>

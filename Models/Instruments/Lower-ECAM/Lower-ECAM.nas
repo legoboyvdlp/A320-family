@@ -65,7 +65,7 @@ var oil_qt1 = props.globals.getNode("/ECAM/Lower/Oil-QT[0]", 1);
 var oil_qt2 = props.globals.getNode("/ECAM/Lower/Oil-QT[1]", 1);
 var oil_psi1 = props.globals.getNode("/ECAM/Lower/Oil-PSI[0]", 1);
 var oil_psi2 = props.globals.getNode("/ECAM/Lower/Oil-PSI[1]", 1);
-var bleedapu = props.globals.getNode("/systems/pneumatic/bleedapu", 1);
+var bleedapu = props.globals.getNode("/systems/pneumatics/psi/apu", 1);
 var oil_psi_actual1 = props.globals.getNode("/engines/engine[0]/oil-psi-actual", 1);
 var oil_psi_actual2 = props.globals.getNode("/engines/engine[1]/oil-psi-actual", 1);
 var aileron_ind_left = props.globals.getNode("/ECAM/Lower/aileron-ind-left", 1);
@@ -79,40 +79,40 @@ var gw = props.globals.getNode("/FMGC/internal/gw", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
 var apu_master = props.globals.getNode("/controls/apu/master", 1);
 var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
-var switch_bleedapu = props.globals.getNode("/controls/pneumatic/switches/bleedapu", 1);
-var pneumatic_xbleed_state = props.globals.getNode("/systems/pneumatic/xbleed-state", 1);
-var xbleed = props.globals.getNode("/systems/pneumatic/xbleed", 1);
-var hp_valve1_state = props.globals.getNode("/systems/pneumatic/hp-valve-1-state", 1);
-var hp_valve2_state = props.globals.getNode("/systems/pneumatic/hp-valve-2-state", 1);
-var hp_valve1 = props.globals.getNode("/systems/pneumatic/hp-valve-1", 1);
-var hp_valve2 = props.globals.getNode("/systems/pneumatic/hp-valve-2", 1);
-var eng_valve1_state = props.globals.getNode("/systems/pneumatic/eng-valve-1-state", 1);
-var eng_valve2_state = props.globals.getNode("/systems/pneumatic/eng-valve-2-state", 1);
-var eng_valve1 = props.globals.getNode("/systems/pneumatic/eng-valve-1", 1);
-var eng_valve2 = props.globals.getNode("/systems/pneumatic/eng-valve-2", 1);
-var precooler1_psi = props.globals.getNode("/systems/pneumatic/precooler-1-psi", 1);
-var precooler2_psi = props.globals.getNode("/systems/pneumatic/precooler-2-psi", 1);
-var precooler1_temp = props.globals.getNode("/systems/pneumatic/precooler-1-temp", 1);
-var precooler2_temp = props.globals.getNode("/systems/pneumatic/precooler-2-temp", 1);
-var precooler1_ovht = props.globals.getNode("/systems/pneumatic/precooler-1-ovht", 1);
-var precooler2_ovht = props.globals.getNode("/systems/pneumatic/precooler-2-ovht", 1);
+var switch_bleedapu = props.globals.getNode("/controls/pneumatic/switches/apu", 1);
+var pneumatic_xbleed_state = props.globals.getNode("/systems/pneumatics/xbleed-state", 1);
+var xbleed = props.globals.getNode("/systems/pneumatics/valves/crossbleed-valve", 1);
+var hp_valve1_state = props.globals.getNode("/systems/pneumatics/valves/engine-1-hp-valve", 1);
+var hp_valve2_state = props.globals.getNode("/systems/pneumatics/valves/engine-2-hp-valve", 1);
+var hp_valve1 = props.globals.getNode("/systems/pneumatics/valves/engine-1-hp-valve-cmd", 1);
+var hp_valve2 = props.globals.getNode("/systems/pneumatics/valves/engine-2-hp-valve-cmd", 1);
+var eng_valve1_state = props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve-cmd", 1);
+var eng_valve2_state = props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve-cmd", 1);
+var eng_valve1 = props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve", 1);
+var eng_valve2 = props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve", 1);
+var precooler1_psi = props.globals.getNode("/systems/pneumatics/psi/engine-1-psi", 1);
+var precooler2_psi = props.globals.getNode("/systems/pneumatics/psi/engine-2-psi", 1);
+var precooler1_temp = props.globals.getNode("/systems/pneumatics/precooler/temp-1", 1);
+var precooler2_temp = props.globals.getNode("/systems/pneumatics/precooler/temp-2", 1);
+var precooler1_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-1", 1);
+var precooler2_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-2", 1);
 var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
 var switch_wing_aice = props.globals.getNode("/controls/switches/wing", 1);
 var deice_wing = props.globals.getNode("/controls/deice/wing", 1);
 var eng1_n2_actual = props.globals.getNode("/engines/engine[0]/n2-actual", 1);
 var eng2_n2_actual = props.globals.getNode("/engines/engine[1]/n2-actual", 1);
-var pack1_out_temp = props.globals.getNode("/systems/pressurization/pack-1-out-temp", 1);
-var pack2_out_temp = props.globals.getNode("/systems/pressurization/pack-2-out-temp", 1);
-var pack1_comp_out_temp = props.globals.getNode("/systems/pressurization/pack-1-comp-out-temp", 1);
-var pack2_comp_out_temp = props.globals.getNode("/systems/pressurization/pack-2-comp-out-temp", 1);
-var pack1_bypass = props.globals.getNode("/systems/pressurization/pack-1-bypass", 1);
-var pack2_bypass = props.globals.getNode("/systems/pressurization/pack-2-bypass", 1);
-var pack1_flow = props.globals.getNode("/systems/pressurization/pack-1-flow", 1);
-var pack2_flow = props.globals.getNode("/systems/pressurization/pack-2-flow", 1);
-var pack1_valve = props.globals.getNode("/systems/pressurization/pack-1-valve", 1);
-var pack2_valve = props.globals.getNode("/systems/pressurization/pack-2-valve", 1);
-var switch_pack1 = props.globals.getNode("/controls/pneumatic/switches/pack1", 1);
-var switch_pack2 = props.globals.getNode("/controls/pneumatic/switches/pack2", 1);
+var pack1_out_temp = props.globals.getNode("/systems/pneumatics/pack-1-out-temp", 1);
+var pack2_out_temp = props.globals.getNode("/systems/pneumatics/pack-2-out-temp", 1);
+var pack1_comp_out_temp = props.globals.getNode("/systems/pneumatics/pack-1-comp-out-temp", 1);
+var pack2_comp_out_temp = props.globals.getNode("/systems/pneumatics/pack-2-comp-out-temp", 1);
+var pack1_bypass = props.globals.getNode("/systems/pneumatics/pack-1-bypass", 1);
+var pack2_bypass = props.globals.getNode("/systems/pneumatics/pack-2-bypass", 1);
+var pack1_flow = props.globals.getNode("/systems/pneumatics/pack-1-flow", 1);
+var pack2_flow = props.globals.getNode("/systems/pneumatics/pack-2-flow", 1);
+var pack1_valve = props.globals.getNode("/systems/pneumatics/valves/pack-1", 1);
+var pack2_valve = props.globals.getNode("/systems/pneumatics/valves/pack-1", 1);
+var switch_pack1 = props.globals.getNode("/controls/pneumatics/switches/pack-1", 1);
+var switch_pack2 = props.globals.getNode("/controls/pneumatics/switches/pack-2", 1);
 var oil_qt1_actual = props.globals.getNode("/engines/engine[0]/oil-qt-actual", 1);
 var oil_qt2_actual = props.globals.getNode("/engines/engine[1]/oil-qt-actual", 1);
 var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
@@ -193,7 +193,7 @@ var R4BrakeTempc = props.globals.getNode("/gear/gear[2]/R4brake-temp-degc", 1);
 var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
 var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
 var switch_cart = props.globals.getNode("/controls/electrical/ground-cart", 1);
-var total_psi = props.globals.getNode("/systems/pneumatic/total-psi", 1);
+var total_psi = props.globals.getNode("/systems/pneumatics/total-psi", 1);
 var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l1/final-deg", 1);
 var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l2/final-deg", 1);
 var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l3/final-deg", 1);
@@ -833,7 +833,7 @@ var canvas_lowerECAM_bleed = {
 
 		# Precooler outlet 1
 		var precooler_temp = precooler1_temp.getValue();
-		me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp)));
+		me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
 		if (precooler_temp < 150 or precooler1_ovht.getValue()) {
 			me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
 		} else {
@@ -842,7 +842,7 @@ var canvas_lowerECAM_bleed = {
 
 		# Precooler outlet 2
 		var precooler_temp = precooler2_temp.getValue();
-		me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp)));
+		me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
 		if (precooler_temp < 150 or precooler2_ovht.getValue() == 1) {
 			me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
 		} else {
@@ -864,13 +864,13 @@ var canvas_lowerECAM_bleed = {
 			if (deice_wing.getValue()) {
 				me["BLEED-ANTI-ICE-ARROW-LEFT"].show();
 				me["BLEED-ANTI-ICE-ARROW-RIGHT"].show();
-				if (total_psi.getValue() < 4 or total_psi.getValue() > 57) {
-					me["BLEED-ANTI-ICE-ARROW-LEFT"].setColor(0.7333,0.3803,0);
-					me["BLEED-ANTI-ICE-ARROW-RIGHT"].setColor(0.7333,0.3803,0);
-				} else {
-					me["BLEED-ANTI-ICE-ARROW-LEFT"].setColor(0.0509,0.7529,0.2941);
-					me["BLEED-ANTI-ICE-ARROW-RIGHT"].setColor(0.0509,0.7529,0.2941);
-				}
+				#if (total_psi.getValue() < 4 or total_psi.getValue() > 57) {
+				#	me["BLEED-ANTI-ICE-ARROW-LEFT"].setColor(0.7333,0.3803,0);
+				#	me["BLEED-ANTI-ICE-ARROW-RIGHT"].setColor(0.7333,0.3803,0);
+				#} else {
+				#	me["BLEED-ANTI-ICE-ARROW-LEFT"].setColor(0.0509,0.7529,0.2941);
+				#	me["BLEED-ANTI-ICE-ARROW-RIGHT"].setColor(0.0509,0.7529,0.2941);
+				#}
 			} else {
 				me["BLEED-ANTI-ICE-ARROW-LEFT"].hide();
 				me["BLEED-ANTI-ICE-ARROW-RIGHT"].hide();

@@ -195,7 +195,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 
 var systemsInit = func {
 	fbw.FBW.init();
-	light_manager.init();
+	effects.light_manager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.HYD.init();
@@ -212,7 +212,7 @@ var systemsInit = func {
 	mcdu.MCDU_init(0);
 	mcdu.MCDU_init(1);
 	systemsLoop.start();
-	icing.icingInit();
+	effects.icingInit();
 	lightsLoop.start();
 	libraries.ECAM.init();
 	libraries.variousReset();

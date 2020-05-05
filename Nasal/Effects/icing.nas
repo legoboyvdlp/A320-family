@@ -152,7 +152,7 @@ var icingModel = func {
 	wingBtn = getprop("controls/switches/wing");
 	wingFault = getprop("controls/switches/wingfault");
 	wingAnti = getprop("controls/deice/wing");
-	PSI = getprop("systems/pneumatic/total-psi");
+	#PSI = getprop("systems/pneumatic/total-psi");
 	wowl = getprop("gear/gear[1]/wow");
 	wowr = getprop("gear/gear[2]/wow");
 	PitotIcing = getprop("systems/pitot/icing");
@@ -179,17 +179,17 @@ var icingModel = func {
 	}
 
 	# If we have low pressure we have a fault
-	if (PSI < 10) {
-		setprop("controls/switches/wingfault", 1);
-		setprop("controls/deice/wing", 0);
-	} 
+	#if (PSI < 10) {
+	#	setprop("controls/switches/wingfault", 1);
+	#	setprop("controls/deice/wing", 0);
+	#} 
 	
-	if (PSI > 10 and wingFault) {
-		setprop("controls/switches/wingfault", 0);
-		if (wingBtn) { 
-			setprop("controls/deice/wing", 1);
-		}
-	}
+	#if (PSI > 10 and wingFault) {
+	#	setprop("controls/switches/wingfault", 0);
+	#	if (wingBtn) { 
+	#		setprop("controls/deice/wing", 1);
+	#	}
+	#}
 	
 	if (PitotIcing > 0.03) {
 		if (!PitotFailed) {
