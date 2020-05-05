@@ -262,28 +262,12 @@ var updateFuel = func {
 		}
 
 		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
-		if (trip_time >= 60) {
+		if (num(trip_time) >= 60) {
 			trip_min = int(math.mod(trip_time, 60));
 			trip_hour = int((trip_time - trip_min) / 60);
-			if (trip_hour < 10) {
-				if (trip_min < 10) {
-					setprop("/FMGC/internal/trip-time", "0" ~ trip_hour ~ "0" ~ trip_min);
-				} else {
-					setprop("/FMGC/internal/trip-time", "0" ~ trip_hour ~ trip_min);
-				}
-			} else {
-				if (trip_min < 10) {
-					setprop("/FMGC/internal/trip-time", trip_hour ~ "0" ~ trip_min);
-				} else {
-					setprop("/FMGC/internal/trip-time", trip_hour ~ trip_min);
-				}
-			}
+			setprop("/FMGC/internal/trip-time", sprintf("%02d", trip_hour) ~ sprintf("%02d", trip_min));
 		} else {
-			if (trip_time < 10) {
-				setprop("/FMGC/internal/trip-time", "000" ~ int(trip_fuel));
-			} else {
-				setprop("/FMGC/internal/trip-time", "00" ~ int(trip_fuel));
-			}
+			setprop("/FMGC/internal/trip-time", sprintf("%04d", trip_time));
 		}
 	} else {
 		setprop("/FMGC/internal/trip-fuel", 0.0);
