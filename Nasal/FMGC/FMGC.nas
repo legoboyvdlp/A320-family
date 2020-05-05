@@ -227,7 +227,7 @@ var updateFuel = func {
 		if (dist < 0) {
 			dist = 0;
 		}
-
+		
 		wind = getprop("/FMGC/internal/trip-wind");
 		wind_value = getprop("/FMGC/internal/trip-wind-value");
 		if (find("HD", wind) != -1 or find("-", wind) != -1 or find("H", wind) != -1) {

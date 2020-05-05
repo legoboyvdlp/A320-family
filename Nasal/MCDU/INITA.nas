@@ -102,6 +102,10 @@ var initInputA = func(key, i) {
 			if (crzs == 0 and temps >= 1 and temps <= 3 and temp != nil and getprop("/FMGC/internal/cruise-lvl-set")) {
 				if (temp >= -99 and temp <= 99) {
 					setprop("/FMGC/internal/cruise-temp", temp);
+					if (getprop("/FMGC/internal/block-confirmed")) {
+						setprop("/FMGC/internal/fuel-calculating", 0);
+						setprop("/FMGC/internal/fuel-calculating", 1);
+					}
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
@@ -112,12 +116,12 @@ var initInputA = func(key, i) {
 					setprop("/FMGC/internal/cruise-fl", crz);
 					setprop("/FMGC/internal/cruise-fl-prog", crz);
 					setprop("/FMGC/internal/cruise-lvl-set", 1);
+					setprop("/FMGC/internal/cruise-temp", temp);
+					setprop("/FMGC/internal/cruise-temp-set", 1);
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					setprop("/FMGC/internal/cruise-temp", temp);
-					setprop("/FMGC/internal/cruise-temp-set", 1);
 					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 				} else {
 					notAllowed(i);
