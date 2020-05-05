@@ -1757,7 +1757,7 @@ var canvas_MCDU_base = {
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
-							me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+							me["Simple_R6"].setText(sprintf("%.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
 							me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
 							me.colorRight("ack", "blu", "ack", "grn", "ack", "grn");

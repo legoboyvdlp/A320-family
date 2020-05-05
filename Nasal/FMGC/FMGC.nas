@@ -214,28 +214,37 @@ var updateFuel = func {
 		setprop("/FMGC/internal/min-dest-fob", num(getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel")));
 	}
 	
+	if (getprop("/FMGC/internal/zfw-set")) {
+		setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel")));
+	}
+	
 	# Calculate trip fuel
 	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set") and getprop("/FMGC/internal/zfw-set")) {
 		crz = getprop("/FMGC/internal/cruise-fl");
 		temp = getprop("/FMGC/internal/cruise-temp");
 		
-		dist = flightPlanController.arrivalDist + (0.03306933933 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
+		dist = flightPlanController.arrivalDist + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
 		if (dist < 0) {
 			dist = 0;
 		}
-		
+
 		wind = getprop("/FMGC/internal/trip-wind");
 		wind_value = getprop("/FMGC/internal/trip-wind-value");
 		if (find("HD", wind) != -1 or find("-", wind) != -1 or find("H", wind) != -1) {
 			wind_value = wind_value * -1;
 		}
 		dist = dist - (dist * wind_value * 0.002);
-		
-		trip_fuel = 4.003e+02 + (dist * -5.399e+01) + (dist * dist * -7.322e-02) + (dist * dist * dist * 1.091e-05) + (dist * dist * dist * dist * 2.962e-10) + (dist * dist * dist * dist * dist * -1.178e-13) + (dist * dist * dist * dist * dist * dist * 6.322e-18) + (crz * 5.387e+01) + (dist * crz * 1.583e+00) + (dist * dist * crz * 7.695e-04) + (dist * dist * dist * crz * -1.057e-07) + (dist * dist * dist * dist * crz * 1.138e-12) + (dist * dist * dist * dist * dist * crz * 1.736e-16) + (crz * crz * -1.171e+00) + (dist * crz * crz * -1.219e-02) + (dist * dist * crz * crz * -2.879e-06) + (dist * dist * dist * crz * crz * 3.115e-10) + (dist * dist * dist * dist * crz * crz * -4.093e-15) + (crz * crz * crz * 9.160e-03) + (dist * crz * crz * crz * 4.311e-05) + (dist * dist * crz * crz * crz * 4.532e-09) + (dist * dist * dist * crz * crz * crz * -2.879e-13) + (crz * crz * crz * crz * -3.338e-05) + (dist * crz * crz * crz * crz * -7.340e-08) + (dist * dist * crz * crz * crz * crz * -2.494e-12) + (crz * crz * crz * crz * crz * 5.849e-08) + (dist * crz * crz * crz * crz * crz * 4.898e-11) + (crz * crz * crz * crz * crz * crz * -3.999e-11);
+
+		#trip_fuel = 4.003e+02 + (dist * -5.399e+01) + (dist * dist * -7.322e-02) + (dist * dist * dist * 1.091e-05) + (dist * dist * dist * dist * 2.962e-10) + (dist * dist * dist * dist * dist * -1.178e-13) + (dist * dist * dist * dist * dist * dist * 6.322e-18) + (crz * 5.387e+01) + (dist * crz * 1.583e+00) + (dist * dist * crz * 7.695e-04) + (dist * dist * dist * crz * -1.057e-07) + (dist * dist * dist * dist * crz * 1.138e-12) + (dist * dist * dist * dist * dist * crz * 1.736e-16) + (crz * crz * -1.171e+00) + (dist * crz * crz * -1.219e-02) + (dist * dist * crz * crz * -2.879e-06) + (dist * dist * dist * crz * crz * 3.115e-10) + (dist * dist * dist * dist * crz * crz * -4.093e-15) + (crz * crz * crz * 9.160e-03) + (dist * crz * crz * crz * 4.311e-05) + (dist * dist * crz * crz * crz * 4.532e-09) + (dist * dist * dist * crz * crz * crz * -2.879e-13) + (crz * crz * crz * crz * -3.338e-05) + (dist * crz * crz * crz * crz * -7.340e-08) + (dist * dist * crz * crz * crz * crz * -2.494e-12) + (crz * crz * crz * crz * crz * 5.849e-08) + (dist * crz * crz * crz * crz * crz * 4.898e-11) + (crz * crz * crz * crz * crz * crz * -3.999e-11);
+		trip_fuel = 4.018e+02 + (dist*3.575e+01) + (dist*dist*-4.260e-02) + (dist*dist*dist*-1.446e-05) + (dist*dist*dist*dist*4.101e-09) + (dist*dist*dist*dist*dist*-6.753e-13) + (dist*dist*dist*dist*dist*dist*5.074e-17) + (crz*-2.573e+01) + (dist*crz*-1.583e-01) + (dist*dist*crz*8.147e-04) + (dist*dist*dist*crz*4.485e-08) + (dist*dist*dist*dist*crz*-7.656e-12) + (dist*dist*dist*dist*dist*crz*4.503e-16) + (crz*crz*4.427e-01) + (dist*crz*crz*-1.137e-03) + (dist*dist*crz*crz*-4.409e-06) + (dist*dist*dist*crz*crz*-3.345e-11) + (dist*dist*dist*dist*crz*crz*4.985e-15) + (crz*crz*crz*-2.471e-03) + (dist*crz*crz*crz*1.223e-05) + (dist*dist*crz*crz*crz*9.660e-09) + (dist*dist*dist*crz*crz*crz*-2.127e-14) + (crz*crz*crz*crz*5.714e-06) + (dist*crz*crz*crz*crz*-3.546e-08) + (dist*dist*crz*crz*crz*crz*-7.536e-12) + (crz*crz*crz*crz*crz*-4.061e-09) + (dist*crz*crz*crz*crz*crz*3.355e-11) + (crz*crz*crz*crz*crz*crz*-1.451e-12);
 		if (trip_fuel < 400) {
 			trip_fuel = 400;
 		}
 		
+		trip_time = 1.008e+01 + (dist*-4.109e-02) + (dist*dist*4.261e-04) + (dist*dist*dist*1.972e-07) + (dist*dist*dist*dist*-6.899e-11) + (dist*dist*dist*dist*dist*1.437e-14) + (dist*dist*dist*dist*dist*dist*-1.180e-18) + (crz*4.430e-01) + (dist*crz*3.352e-03) + (dist*dist*crz*-8.605e-06) + (dist*dist*dist*crz*-3.888e-10) + (dist*dist*dist*dist*crz*5.677e-14) + (dist*dist*dist*dist*dist*crz*-6.455e-18) + (crz*crz*-1.112e-02) + (dist*crz*crz*-8.012e-06) + (dist*dist*crz*crz*4.464e-08) + (dist*dist*dist*crz*crz*2.735e-13) + (dist*dist*dist*dist*crz*crz*8.992e-18) + (crz*crz*crz*9.100e-05) + (dist*crz*crz*crz*-3.865e-08) + (dist*dist*crz*crz*crz*-9.475e-11) + (dist*dist*dist*crz*crz*crz*-6.492e-17) + (crz*crz*crz*crz*-3.498e-07) + (dist*crz*crz*crz*crz*1.772e-10) + (dist*dist*crz*crz*crz*crz*7.284e-14) + (crz*crz*crz*crz*crz*6.530e-10) + (dist*crz*crz*crz*crz*crz*-1.871e-13) + (crz*crz*crz*crz*crz*crz*-4.787e-13);
+		if (trip_time < 10) {
+			trip_time = 10;
+		}
 		# if (low air conditioning) {
 		#	trip_fuel = trip_fuel * 0.995;
 		#}
@@ -245,19 +254,37 @@ var updateFuel = func {
 		#	trip_fuel = trip_fuel * 1.02;
 		#}
 		
-		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
-		
-		setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/block") + getprop("/FMGC/internal/zfw") - getprop("/FMGC/internal/taxi-fuel")));
-		setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
-	
 		zfw = getprop("/FMGC/internal/zfw");
-		landing_weight_correction = 8.671e+00 + (dist * 4.435e-01) + (dist * dist * -1.222e-05) + (dist * dist * dist * 1.966e-10) + (crz * -4.042e-01) + (dist * crz * -3.114e-03) + (dist * dist * crz * 6.754e-08) + (crz * crz * 3.032e-03) + (dist * crz * crz * 5.989e-06) + (crz * crz * crz * -5.204e-06);
+		landing_weight_correction = 9.951e+00 + (dist*-2.064e+00) + (dist*dist*2.030e-03) + (dist*dist*dist*8.179e-08) + (dist*dist*dist*dist*-3.941e-11) + (dist*dist*dist*dist*dist*2.443e-15) + (crz*2.771e+00) + (dist*crz*3.067e-02) + (dist*dist*crz*-1.861e-05) + (dist*dist*dist*crz*2.516e-10) + (dist*dist*dist*dist*crz*5.452e-14) + (crz*crz*-4.483e-02) + (dist*crz*crz*-1.645e-04) + (dist*dist*crz*crz*5.212e-08) + (dist*dist*dist*crz*crz*-8.721e-13) + (crz*crz*crz*2.609e-04) + (dist*crz*crz*crz*3.898e-07) + (dist*dist*crz*crz*crz*-4.617e-11) + (crz*crz*crz*crz*-6.488e-07) + (dist*crz*crz*crz*crz*-3.390e-10) + (crz*crz*crz*crz*crz*5.835e-10);
 		trip_fuel = trip_fuel + (landing_weight_correction * (getprop("/FMGC/internal/lw") * 1000 - 121254.24421) / 2204.622622);
-		
+		if (trip_fuel < 400) {
+			trip_fuel = 400;
+		}
+
 		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
-		
-		setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/tow") - getprop("/FMGC/internal/trip-fuel")));
-		
+		if (trip_time >= 60) {
+			trip_min = int(math.mod(trip_time, 60));
+			trip_hour = int((trip_time - trip_min) / 60);
+			if (trip_hour < 10) {
+				if (trip_min < 10) {
+					setprop("/FMGC/internal/trip-time", "0" ~ trip_hour ~ "0" ~ trip_min);
+				} else {
+					setprop("/FMGC/internal/trip-time", "0" ~ trip_hour ~ trip_min);
+				}
+			} else {
+				if (trip_min < 10) {
+					setprop("/FMGC/internal/trip-time", trip_hour ~ "0" ~ trip_min);
+				} else {
+					setprop("/FMGC/internal/trip-time", trip_hour ~ trip_min);
+				}
+			}
+		} else {
+			if (trip_time < 10) {
+				setprop("/FMGC/internal/trip-time", "000" ~ int(trip_fuel));
+			} else {
+				setprop("/FMGC/internal/trip-time", "00" ~ int(trip_fuel));
+			}
+		}
 	} else {
 		setprop("/FMGC/internal/trip-fuel", 0.0);
 		setprop("/FMGC/internal/trip-time", "0000");
@@ -280,8 +307,18 @@ var updateFuel = func {
 		}
 	}
 	
-	# Calcualte extra fuel
-	setprop("/FMGC/internal/extra-fuel", num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv")));
+	if (getprop("/FMGC/internal/block-set")) {
+		# Calcualte extra fuel
+		setprop("/FMGC/internal/extra-fuel", num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv")));
+		if (getprop("/FMGC/internal/extra-fuel") > -0.1 and getprop("/FMGC/internal/extra-fuel") < 0.1) {
+			setprop("/FMGC/internal/extra-fuel", 0.0);
+		}
+	} else {
+		setprop("/FMGC/internal/block", num(getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel") + getprop("/FMGC/internal/trip-fuel") + getprop("/FMGC/internal/rte-rsv") + getprop("/FMGC/internal/taxi-fuel")));
+		setprop("/FMGC/internal/block-set", 1);
+	}
+	
+	setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
 }
 
 ############################
@@ -1014,12 +1051,11 @@ var timer48gpsAlign3 = maketimer(1, func() {
 
 var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
-		setprop("/FMGC/internal/block", sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
-		setprop("/FMGC/internal/block-set", 1);
 		if (!getprop("/FMGC/internal/zfw-set")) {
 			setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round((getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs")) / 1000, 0.1)));
 			setprop("/FMGC/internal/zfw-set", 1);
 		}
+		updateFuel();
 		setprop("/FMGC/internal/block-calculating", 0);
 		setprop("/FMGC/internal/block-fuel-time", -99); 
 		timer3blockFuel.stop();
