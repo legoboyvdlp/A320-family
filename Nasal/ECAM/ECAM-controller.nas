@@ -30,7 +30,12 @@ var noMainMsg = 0;
 var storeFirstWarning = nil;
 
 var warningNodes = {
+	Logic: {
+		crossbleedFault: props.globals.initNode("/ECAM/warnings/logic/crossbleed-fault"),
+		crossbleedWai: props.globals.initNode("/ECAM/warnings/logic/crossbleed-wai"),
+	},
 	Timers: {
+		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
 		bleed1Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault"),
 		bleed1FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault-output"),
 		bleed2Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault"),

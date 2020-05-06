@@ -1049,6 +1049,8 @@
 				<bmc-2 type="bool">0</bmc-2>
 				<cabin-fans type="bool">0</cabin-fans>
 				<hot-air-valve type="bool">0</hot-air-valve>
+				<hp-1-valve type="bool">0</hp-1-valve>
+				<hp-2-valve type="bool">0</hp-2-valve>
 				<pack-1-valve type="bool">0</pack-1-valve>
 				<pack-2-valve type="bool">0</pack-2-valve>
 				<ram-air-valve type="bool">0</ram-air-valve>

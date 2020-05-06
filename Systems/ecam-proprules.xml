@@ -413,4 +413,30 @@
         <output>/ECAM/phases/wing-anti-ice-pulse</output>
     </flipflop>
 	
+	<!-- falling edge detectors -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>10.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/timer/xbleed-fault-output</property>
+		</S>
+		<output>/ECAM/warnings/timer/xbleed-fault-output-10</output>
+	</flipflop>
+	
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>15.0</value>
+		</time>
+		<S>
+			<property>/controls/engines/engine[0]/fire-btn</property>
+		</S>
+		<output>/ECAM/warnings/timer/xbleed-fault-output-15</output>
+	</flipflop>
+	
 </PropertyList>

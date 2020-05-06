@@ -14,7 +14,8 @@
 		
 		<switch name="/systems/pneumatics/valves/apu-bleed-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="5">
+			<test logic="AND" value="5">
+				/systems/failures/pneumatics/apu-valve eq 0
 				/systems/electrical/bus/dc-ess-shed ge 25 
 				<!-- confirm, some a320 have it on dc-bat, but this makes sense, since x-bleed is on ess shed too. 
 				Definitely, some A320 have it on dc-ess-shed, but why is there any difference? -->
@@ -53,9 +54,12 @@
 		
 		<switch name="/systems/pneumatics/valves/crossbleed-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="0.2">
-				/systems/electrical/bus/dc-ess-shed ge 25 
-				/systems/electrical/bus/dc-2 ge 25 
+			<test logic="AND" value="0.2">
+				/systems/failures/pneumatics/x-bleed-valve eq 0
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed ge 25 
+					/systems/electrical/bus/dc-2 ge 25 
+				</test>
 			</test>
 		</switch>
 		
@@ -122,8 +126,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="3">
+			<test logic="AND" value="3">
 				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/failures/pneumatics/hp-1-valve eq 0
 			</test>
 		</switch>
 		
@@ -149,8 +154,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="3">
+			<test logic="AND" value="3">
 				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/pneumatics/hp-2-valve eq 0
 			</test>
 		</switch>
 		
@@ -175,7 +181,7 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="5.0">
+			<test logic="AND" value="5.0">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/pneumatics/psi/engine-1-upstream-src ge 8
 				/systems/failures/pneumatics/bleed-1-valve eq 0
@@ -217,7 +223,7 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="5.0">
+			<test logic="AND" value="5.0">
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/pneumatics/psi/engine-2-upstream-src ge 8
 				/systems/failures/pneumatics/bleed-2-valve eq 0
@@ -725,6 +731,32 @@
 			<rate_limit sense="incr">0.1</rate_limit>
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
+		
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/crossbleed-valve-cmd eq 1
+				/systems/pneumatics/valves/crossbleed-valve ne 1
+				/controls/pneumatics/switches/x-bleed eq 2
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/crossbleed-valve-cmd eq 1
+				/systems/pneumatics/valves/crossbleed-valve ne 1
+				/controls/pneumatics/switches/x-bleed eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+	
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/crossbleed-valve-cmd eq 0
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/crossbleed-disag-open eq 1
+			</test>
+		</switch>
 		
 	</channel>
 	

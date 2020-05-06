@@ -13,6 +13,8 @@ var PNEU = {
 		bmc2: props.globals.getNode("/systems/failures/pneumatics/bmc-2"),
 		cabinFans: props.globals.getNode("/systems/failures/pneumatics/cabin-fans"),
 		hotAir: props.globals.getNode("/systems/failures/pneumatics/hot-air-valve"),
+		hp1Valve: props.globals.getNode("/systems/failures/pneumatics/hp-1-valve"),
+		hp2Valve: props.globals.getNode("/systems/failures/pneumatics/hp-2-valve"),
 		pack1: props.globals.getNode("/systems/failures/pneumatics/pack-1-valve"),
 		pack2: props.globals.getNode("/systems/failures/pneumatics/pack-2-valve"),
 		ramAir: props.globals.getNode("/systems/failures/pneumatics/ram-air-valve"),
@@ -51,6 +53,7 @@ var PNEU = {
 		prv2Disag: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve-disag"),
 	},
 	Valves: {
+		apu: props.globals.getNode("/systems/pneumatics/valves/apu-bleed-valve"),
 		crossbleed: props.globals.getNode("/systems/pneumatics/valves/crossbleed-valve"),
 		prv1: props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve"),
 		prv2: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve"),
@@ -64,6 +67,8 @@ var PNEU = {
 		me.Fail.bleed2.setBoolValue(0);
 		me.Fail.cabinFans.setBoolValue(0);
 		me.Fail.hotAir.setBoolValue(0);
+		me.Fail.hp1Valve.setBoolValue(0);
+		me.Fail.hp2Valve.setBoolValue(0);
 		me.Fail.pack1.setBoolValue(0);
 		me.Fail.pack2.setBoolValue(0);
 		me.Fail.ramAir.setBoolValue(0);

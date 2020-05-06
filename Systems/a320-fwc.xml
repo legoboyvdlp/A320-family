@@ -55,6 +55,70 @@
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
         </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/apu-fault-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/apu-bleed-fault</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/xbleed-fault-output">
+            <description>Timer for the ECAM system</description>
+            <input>/systems/pneumatics/warnings/crossbleed-disag</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+        </actuator>
+	</channel>
+	
+	<channel name="ECAM">
+		
+		<switch name="/ECAM/warnings/logic/apu-bleed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 1
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/systems/apu/available eq 1
+						/controls/apu/master eq 1
+						/controls/pneumatics/switches/apu eq 0
+						/systems/pneumatics/valves/apu-bleed-valve ne 0
+					</test>
+					<test logic="AND">
+						/systems/apu/available eq 1
+						/controls/apu/master eq 1
+						/controls/pneumatics/switches/apu eq 1
+						/systems/pneumatics/valves/apu-bleed-valve ne 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/crossbleed-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/xbleed-fault-output eq 1
+				<test logic="AND">
+					/ECAM/warnings/timer/xbleed-fault-output-10 eq 1
+					/ECAM/warnings/timer/xbleed-fault-output-15 eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/crossbleed-wai">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/apu/available eq 1
+				/controls/pneumatics/switches/apu eq 1
+				/systems/pneumatics/valves/engine-1-prv-valve eq 0
+				/systems/pneumatics/valves/engine-2-prv-valve eq 0
+				/systems/pneumatics/warnings/crossbleed-disag-open eq 1
+			</test>
+		</switch>
+		
 	</channel>
 
 </system>
