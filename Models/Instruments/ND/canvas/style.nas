@@ -472,8 +472,8 @@ canvas.NDStyles["Airbus"] = {
 			},
 			style: {
 				line_width: 5,
-				#inactive_color: [0.95,0.95,0.21],
-				#active_color: [0.4,0.7,0.4],
+				inactive_color: [0.95,0.95,0.21],
+				active_color: [0.4,0.7,0.4],
 				color: func{
 					if(!contains(me, "inactive_color")){
 						me.inactive_color = me.getStyle("inactive_color");
