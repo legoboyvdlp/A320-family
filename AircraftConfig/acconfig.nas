@@ -129,6 +129,7 @@ var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
+setprop("/systems/acconfig/options/fo-view", 0);
 
 setlistener("/systems/acconfig/new-revision", func {
 	if (getprop("/systems/acconfig/new-revision") > current_revision) {

@@ -406,26 +406,6 @@
 				</binding>
 				<live>true</live>
 			</checkbox -->
-			
-			<checkbox>
-				<label>Default First-Officer view</label>
-				<halign>left</halign>
-				<property>/options/system/fo-view</property>
-				<binding>
-					<command>property-toggle</command>
-					<property>/options/system/fo-view</property>
-				</binding>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<binding>
-					<command>nasal</command>
-					<script>
-					acconfig.writeSettings();
-					</script>
-				</binding>
-				<live>true</live>
-			</checkbox>
 
 			<checkbox>
 				<label>ADIRS Aligns Instantly</label>
@@ -454,6 +434,26 @@
 				<binding>
 					<command>property-toggle</command>
 					<property>/systems/apu/oil/allow-oil-consumption</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Default view First Officer</label>
+				<halign>left</halign>
+				<property>/options/system/fo-view</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/fo-view</property>
 				</binding>
 				<binding>
 					<command>dialog-apply</command>
