@@ -846,7 +846,7 @@
 				<temp-cabin-aft type="double">0.5</temp-cabin-aft>
 				<temp-cabin-fwd type="double">0.5</temp-cabin-fwd>
 				<temp-cockpit type="double">0.5</temp-cockpit>
-				<x-bleed type="bool">0</x-bleed>
+				<x-bleed type="int">1</x-bleed> <!-- auto -->
 			</switches>
 		</pneumatics>
 		<switches>
@@ -1174,12 +1174,18 @@
 				<engine-2-hp-psi type="double">0</engine-2-hp-psi>
 			</source>
 			<valves>
-				<apu-bleed-valve type="bool">0</apu-bleed-valve>
-				<crossbleed-valve type="bool">0</crossbleed-valve>
-				<pack-1 type="bool">0</pack-1>
-				<pack-2 type="bool">0</pack-2>
-				<starter-valve-1 type="bool">0</starter-valve-1>
-				<starter-valve-2 type="bool">0</starter-valve-2>
+				<apu-bleed-valve type="double">0</apu-bleed-valve>
+				<crossbleed-valve type="double">0</crossbleed-valve>
+				<engine-1-prv-valve type="double">0</engine-1-prv-valve>
+				<engine-2-prv-valve type="double">0</engine-2-prv-valve>
+				<engine-1-prv-valve-disag type="bool">0</engine-1-prv-valve-disag>
+				<engine-2-prv-valve-disag type="bool">0</engine-2-prv-valve-disag>
+				<engine-1-opv-valve type="double">0</engine-1-opv-valve>
+				<engine-2-opv-valve type="double">0</engine-2-opv-valve>
+				<pack-1 type="double">0</pack-1>
+				<pack-2 type="double">0</pack-2>
+				<starter-valve-1 type="double">0</starter-valve-1>
+				<starter-valve-2 type="double">0</starter-valve-2>
 			</valves>
 		</pneumatics>
 		

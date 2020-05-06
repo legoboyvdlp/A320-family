@@ -1221,13 +1221,89 @@ var messages_priority_2 = func {
 		apuAutoShutdown.isMainMsg = 1;
 	}
 	
-	if (apuAutoShutdownMast.clearFlag == 0 and getprop("controls/apu/master") and apuAutoShutdown.active == 1) {
+	if (apuAutoShutdownMast.clearFlag == 0 and pts.APU.masterSw.getValue() and apuAutoShutdown.active == 1) {
 		apuAutoShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuAutoShutdownMast);
 		apuAutoShutdown.isMainMsg = 0;
 	}
 	
+	# Bleed
+	# BLEED 1 FAULT
+	if ((FWC.Timer.eng1idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) and (systems.PNEU.Psi.engine1.getValue() >= 57 or systems.PNEU.Ovht.ovht1.getValue())) {
+		warningNodes.Timers.bleed1Fault.setValue(1);
+	} else {
+		warningNodes.Timers.bleed1Fault.setValue(0);
+	}
+	
+	if (bleed1Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() and (!systems.PNEU.Switch.pack1.getValue() or !systems.PNEU.Switch.pack2.getValue() or getprop("/ECAM/phases/wing-anti-ice-pulse"))) { # inverse pulse
+		bleed1Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleed1Fault);
+	}
+	
+	if (bleed1Fault.active) {
+		if (bleed1FaultOff.clearFlag == 0 and (systems.PNEU.Switch.bleed1.getValue() or systems.PNEU.Switch.bleed2.getValue()) and (systems.PNEU.Warnings.prv1Disag.getValue() or systems.PNEU.Warnings.prv2Disag.getValue())) {
+			bleed1FaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(bleed1FaultOff);
+		}
+		
+		if (bleed1FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue() and getprop("/controls/switches/wing")) {
+			bleed1FaultPack.active = 1;
+		} else {
+			ECAM_controller.warningReset(bleed1FaultPack);
+		}
+		
+		if (bleed1FaultXBleed.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() == 0) {
+			bleed1FaultXBleed.active = 1;
+		} else {
+			ECAM_controller.warningReset(bleed1FaultXBleed);
+		}
+	} else {
+		ECAM_controller.warningReset(bleed1FaultOff);
+		ECAM_controller.warningReset(bleed1FaultPack);
+		ECAM_controller.warningReset(bleed1FaultXBleed);
+	}
+	
+	# BLEED 2 FAULT
+	if ((FWC.Timer.eng2idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[1].getValue()) and (systems.PNEU.Psi.engine2.getValue() >= 57 or systems.PNEU.Ovht.ovht2.getValue())) {
+		warningNodes.Timers.bleed2Fault.setValue(1);
+	} else {
+		warningNodes.Timers.bleed2Fault.setValue(0);
+	}
+	
+	if (bleed2Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() and (!systems.PNEU.Switch.pack1.getValue() or !systems.PNEU.Switch.pack2.getValue() or getprop("/ECAM/phases/wing-anti-ice-pulse"))) { # inverse pulse
+		bleed2Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleed2Fault);
+	}
+	
+	if (bleed2Fault.active) {
+		if (bleed2FaultOff.clearFlag == 0 and (systems.PNEU.Switch.bleed1.getValue() or systems.PNEU.Switch.bleed2.getValue()) and (systems.PNEU.Warnings.prv1Disag.getValue() or systems.PNEU.Warnings.prv2Disag.getValue())) {
+			bleed2FaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(bleed2FaultOff);
+		}
+		
+		if (bleed2FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue() and getprop("/controls/switches/wing")) {
+			bleed2FaultPack.active = 1;
+		} else {
+			ECAM_controller.warningReset(bleed2FaultPack);
+		}
+		
+		if (bleed2FaultXBleed.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() == 0) {
+			bleed2FaultXBleed.active = 1;
+		} else {
+			ECAM_controller.warningReset(bleed2FaultXBleed);
+		}
+	} else {
+		ECAM_controller.warningReset(bleed2FaultOff);
+		ECAM_controller.warningReset(bleed2FaultPack);
+		ECAM_controller.warningReset(bleed2FaultXBleed);
+	}
+	
+	# Eng fire
 	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
 		eng1FireDetFault.active = 1;
 	} else {

@@ -26,6 +26,44 @@
 			<rate_limit>/systems/pneumatics/valves/apu-bleed-valve-power</rate_limit>
 		</actuator>
 		
+		<!-- Crossbleed -->
+		<switch name="/systems/pneumatics/valves/crossbleed-valve-cmd">
+			<default value="/systems/pneumatics/valves/crossbleed-valve-cmd"/>
+			<test logic="AND" value="0">  <!-- CB 2HV -->
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/controls/pneumatics/switches/x-bleed eq 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/controls/pneumatics/switches/x-bleed eq 2
+			</test>
+			<test logic="AND" value="0"> <!-- CB 1HV, 4HV -->
+				/systems/electrical/bus/dc-2 ge 25
+				<test logic="OR">
+					/controls/pneumatics/switches/apu eq 0
+					/systems/pneumatics/valves/apu-bleed-valve eq 0
+				</test>
+			</test>
+			<test logic="AND" value="1"> <!-- CB 1HV, 4HV -->
+				/systems/electrical/bus/dc-2 ge 25
+				/controls/pneumatics/switches/apu eq 1
+				/systems/pneumatics/valves/apu-bleed-valve ne 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/crossbleed-valve-power">
+			<default value="0"/>
+			<test logic="OR" value="0.2">
+				/systems/electrical/bus/dc-ess-shed ge 25 
+				/systems/electrical/bus/dc-2 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/crossbleed-valve">
+			<input>/systems/pneumatics/valves/crossbleed-valve-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/crossbleed-valve-power</rate_limit>
+		</actuator>
+		
 		<!-- Low Pressure valve -->
 		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-cmd">
 			<default value="1"/>
@@ -149,6 +187,18 @@
 			<rate_limit>/systems/pneumatics/valves/engine-1-prv-valve-power</rate_limit>
 		</actuator>
 		
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-disag">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-cmd eq 0
+				/systems/pneumatics/valves/engine-1-prv-valve ne 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-cmd eq 1
+				/systems/pneumatics/valves/engine-1-prv-valve ne 1
+			</test>
+		</switch>
+		
 		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-cmd">
 			<default value="0"/>
 			<test logic="OR" value="0">
@@ -171,6 +221,18 @@
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/pneumatics/psi/engine-2-upstream-src ge 8
 				/systems/failures/pneumatics/bleed-2-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-disag">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-cmd eq 0
+				/systems/pneumatics/valves/engine-2-prv-valve ne 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-cmd eq 1
+				/systems/pneumatics/valves/engine-2-prv-valve ne 1
 			</test>
 		</switch>
 		

@@ -29,6 +29,15 @@ var counter = 0;
 var noMainMsg = 0;
 var storeFirstWarning = nil;
 
+var warningNodes = {
+	Timers: {
+		bleed1Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault"),
+		bleed1FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault-output"),
+		bleed2Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault"),
+		bleed2FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault-output"),
+	},
+};
+
 var warning = {
 	new: func(msg,colour = "g",aural = 9,light = 9,isMainMsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
 		var t = {parents:[warning]};

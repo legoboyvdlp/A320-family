@@ -40,6 +40,21 @@
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
         </actuator>
+		
+		
+		<actuator name="/ECAM/warnings/timer/bleed-1-fault-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/timer/bleed-1-fault</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/bleed-2-fault-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/timer/bleed-2-fault</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+        </actuator>
 	</channel>
 
 </system>

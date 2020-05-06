@@ -4033,7 +4033,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/xbleed</property>
+				<property>/controls/pneumatics/switches/x-bleed</property>
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
@@ -4049,7 +4049,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/xbleed</property>
+				<property>/controls/pneumatics/switches/x-bleed</property>
 				<value>2</value>
 				<value>1</value>
 				<value>0</value>
@@ -4064,7 +4064,7 @@
 		<name>X-Bleed rotate</name>
 		<type>rotate</type>
 		<object-name>XbleedKnb</object-name>
-		<property>controls/pneumatic/switches/xbleed</property>
+		<property>/controls/pneumatics/switches/x-bleed</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 55</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
@@ -4106,7 +4106,7 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/pack1</property>
+				<property>controls/pneumatics/switches/pack-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4126,7 +4126,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/pack1</property>
+						<property>controls/pneumatics/switches/pack-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4144,7 +4144,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/pack1</property>
+					<property>controls/pneumatics/switches/pack-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4452,7 +4452,7 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/pack2</property>
+				<property>controls/pneumatics/switches/pack-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4472,7 +4472,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/pack2</property>
+						<property>controls/pneumatics/switches/pack-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4490,7 +4490,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/pack2</property>
+					<property>controls/pneumatics/switches/pack-2</property>
 					<value>0</value>
 				</equals>
 				<equals>

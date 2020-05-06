@@ -22,6 +22,12 @@ var PNEU = {
 		xbleed: props.globals.getNode("/systems/failures/pneumatics/x-bleed-valve"),
 	},
 	Psi: {
+		engine1: props.globals.getNode("/systems/pneumatics/psi/engine-1-psi"),
+		engine2: props.globals.getNode("/systems/pneumatics/psi/engine-2-psi"),
+	},
+	Ovht: {
+		ovht1: props.globals.getNode("/systems/pneumatics/precooler/ovht-1"),
+		ovht2: props.globals.getNode("/systems/pneumatics/precooler/ovht-2"),
 	},
 	Switch: {
 		apu: props.globals.getNode("/controls/pneumatics/switches/apu"),
@@ -39,6 +45,15 @@ var PNEU = {
 		tempFwd: props.globals.getNode("/controls/pneumatics/switches/temp-cabin-fwd"),
 		tempCockpit: props.globals.getNode("/controls/pneumatics/switches/temp-cockpit"),
 		xbleed: props.globals.getNode("/controls/pneumatics/switches/x-bleed"),
+	},
+	Warnings: {
+		prv1Disag: props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve-disag"),
+		prv2Disag: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve-disag"),
+	},
+	Valves: {
+		crossbleed: props.globals.getNode("/systems/pneumatics/valves/crossbleed-valve"),
+		prv1: props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve"),
+		prv2: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve"),
 	},
 	init: func() {
 		me.resetFail();

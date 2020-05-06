@@ -78,8 +78,8 @@ var PNEU = {
 		setprop("controls/pneumatic/switches/bleed2", 1);
 		setprop("controls/pneumatic/switches/bleedapu", 0);
 		setprop("controls/pneumatic/switches/groundair", 0);
-		setprop("controls/pneumatic/switches/pack1", 1);
-		setprop("controls/pneumatic/switches/pack2", 1);
+		setprop("controls/pneumatics/switches/pack-1", 1);
+		setprop("controls/pneumatics/switches/pack-2", 1);
 		setprop("controls/pneumatic/switches/hot-air", 1);
 		setprop("controls/pneumatic/switches/ram-air", 0);
 		setprop("controls/pneumatic/switches/pack-flo", 9); # LO: 7, NORM: 9, HI: 11.
@@ -168,8 +168,8 @@ var PNEU = {
 		bleed1_sw = getprop("controls/pneumatic/switches/bleed1");
 		bleed2_sw = getprop("controls/pneumatic/switches/bleed2");
 		bleedapu_sw = getprop("controls/pneumatic/switches/bleedapu");
-		pack1_sw = getprop("controls/pneumatic/switches/pack1");
-		pack2_sw = getprop("controls/pneumatic/switches/pack2");
+		pack1_sw = getprop("controls/pneumatics/switches/pack-1");
+		pack2_sw = getprop("controls/pneumatics/switches/pack-2");
 		hot_air_sw = getprop("controls/pneumatic/switches/hot-air");
 		ram_air_sw	= getprop("controls/pneumatic/switches/ram-air");
 		pack_flo_sw = getprop("controls/pneumatic/switches/pack-flo");
@@ -417,15 +417,15 @@ var PNEU = {
 	},
 };
 
-setlistener("/controls/pneumatic/switches/pack1", func {
-	pack1_sw = getprop("controls/pneumatic/switches/pack1");
+setlistener("/controls/pneumatics/switches/pack-1", func {
+	pack1_sw = getprop("controls/pneumatics/switches/pack-1");
 	if (pack1_sw) {
 		setprop("systems/pneumatic/pack1-fault", 1);
 	}
 });
 
-setlistener("/controls/pneumatic/switches/pack2", func {
-	pack2_sw = getprop("controls/pneumatic/switches/pack2");
+setlistener("/controls/pneumatics/switches/pack-2", func {
+	pack2_sw = getprop("controls/pneumatics/switches/pack-2");
 	if (pack2_sw) {
 		setprop("systems/pneumatic/pack2-fault", 1);
 	}

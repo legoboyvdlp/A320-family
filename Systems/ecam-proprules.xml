@@ -400,4 +400,17 @@
 		<output>ECAM/phases/monostable/to-power-set-output</output>
 	</flipflop>
 	
+	<!-- take inverse of this for rising pulse -->
+	<flipflop>
+        <type>monostable</type>
+        <inverted type="bool">true</inverted>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+            <property>/controls/switches/wing</property>
+        </S>
+        <output>/ECAM/phases/wing-anti-ice-pulse</output>
+    </flipflop>
+	
 </PropertyList>
