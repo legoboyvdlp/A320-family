@@ -195,7 +195,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 		save.restore(save.default, getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
 	}
 	
-	if (getprop("/options/system/fo-view") {
+	if (getprop("/options/system/fo-view")) {
 		setprop("/sim/current-view/name", "Copilot View");
 	}
 	
