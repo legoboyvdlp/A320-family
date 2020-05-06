@@ -92,7 +92,7 @@ var flightPlanController = {
 			print(err[0]);
 			print("Load failed.");
 		}
-		me.flightplans[3].departure = airportinfo(getprop("FMGC/internal/dep-arpt"));
+		# try to fix fgfp
 		me.flightplans[3].destination = airportinfo(getprop("FMGC/internal/arr-arpt"));
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
