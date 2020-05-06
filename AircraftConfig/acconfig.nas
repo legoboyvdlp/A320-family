@@ -197,6 +197,8 @@ setlistener("/sim/signals/fdm-initialized", func {
 	
 	if (getprop("/options/system/fo-view") == 1) {
 		setprop("/sim/current-view/name", "Copilot View");
+		view.stepView(1);
+		view.stepView(-1);
 	}
 	
 	spinning.stop();
