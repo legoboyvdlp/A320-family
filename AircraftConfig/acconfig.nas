@@ -197,7 +197,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	}
 	
 	if (getprop("/options/system/fo-view") == 1) {
-		setprop("/sim/current-view/view-number", 8);
+		view.setViewByIndex(100);
 	}
 	
 	spinning.stop();

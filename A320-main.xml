@@ -3904,6 +3904,30 @@
                     </binding>
                 </mod-shift>
             </key>
+            <key n="22">
+                <name>Ctrl-V</name>
+                <desc>Select default view (pilot or copilot)</desc>
+                <binding>
+				    <condition>
+                        <equals>
+				            <property>/options/system/fo-view</property>
+                            <value type="double">1</value>
+						</equals>
+					</condition>
+					<command>nasal</command>
+					<script>view.setViewByIndex(100);</script>
+				</binding>
+                <binding>
+				    <condition>
+                        <equals>
+				            <property>/options/system/fo-view</property>
+                            <value type="double">0</value>
+						</equals>
+					</condition>
+					<command>nasal</command>
+					<script>view.setViewByIndex(0);</script>
+				</binding>
+            </key>
 		</keyboard>
 	</input>
 	
