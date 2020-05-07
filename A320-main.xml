@@ -209,6 +209,15 @@
 							<dialog-name>autopilot</dialog-name>
 						</binding>
 					</item>
+					<item>
+						<label>Load Flightplan</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							acconfig.loadflightplan_dlg.open();
+							</script>
+						</binding>
+					</item>
 				</menu>
 				<menu n="103">
 					<label>DU</label>
@@ -594,6 +603,13 @@
 			<brake-left type="double">0</brake-left>
 			<brake-right type="double">0</brake-right>
 		</autobrake>
+		<CVR>
+			<erase type="bool">0</erase>
+			<gndctl type="bool">0</gndctl>
+			<power type="bool">0</power>
+			<test type="bool">0</test>
+			<tone type="bool">0</tone>
+		</CVR>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
@@ -832,6 +848,13 @@
 			<wing-lights type="bool">0</wing-lights>
 			<landing-lights-l type="float">0.0</landing-lights-l>
 			<landing-lights-r type="float">0.0</landing-lights-r>
+			<LrainRpt type="bool">0</LrainRpt>
+			<RrainRpt type="bool">0</RrainRpt>
+			<emerCallLtO type="bool">0</emerCallLtO>
+			<emerCallLtC type="bool">0</emerCallLtC>
+			<cabinCall type="bool">0</cabinCall>
+			<emerCall type="bool">0</emerCall>
+			<mechCall type="bool">0</mechCall>
 		</switches>
 		<tray n="0">
 			<lefttrayext type="double">0</lefttrayext>
@@ -951,15 +974,11 @@
 			<sources>
 				<bat-1>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-1>
 				<bat-2>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-2>
 			</sources>
 		</electrical>
@@ -3916,6 +3935,7 @@
 		<systems>
 			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
@@ -3954,6 +3974,8 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> <!-- dynamic page - init before MCDU -->	
 			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>

@@ -215,7 +215,6 @@ var systemsInit = func {
 	icing.icingInit();
 	lightsLoop.start();
 	libraries.ECAM.init();
-	libraries.BUTTONS.init();
 	libraries.variousReset();
 	rmp.init();
 	acp.init();

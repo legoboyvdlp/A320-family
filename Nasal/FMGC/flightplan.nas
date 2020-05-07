@@ -30,7 +30,7 @@ var wpCoursePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course-fr
 var wpDistancePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance-from-prev", 0, "DOUBLE")]];
 
 var flightPlanController = {
-	flightplans: [createFlightplan(), createFlightplan(), createFlightplan()],
+	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
 	temporaryFlag: [0, 0],
 	
 	# These flags are only for the main flgiht-plan
@@ -77,7 +77,24 @@ var flightPlanController = {
 		if (canvas_mcdu.myDirTo[n] != nil) {
 			canvas_mcdu.myDirTo[n].updateTmpy();
 		}
+		if (canvas_mcdu.myHold[n] != nil) {
+			canvas_mcdu.myHold[n].updateTmpy();
+		}
+		if (canvas_mcdu.myAirways[n] != nil) {
+			canvas_mcdu.myAirways[n].updateTmpy();
+		}
 		me.flightPlanChanged(n);
+	},
+	
+	loadFlightPlan: func(path) {
+		call(func {me.flightplans[3] = createFlightplan(path);}, nil, var err = []);	
+		if (size(err) or me.flightplans[3] == nil) {
+			print(err[0]);
+			print("Load failed.");
+		}
+		# try to fix fgfp
+		me.flightplans[3].destination = airportinfo(getprop("FMGC/internal/arr-arpt"));
+		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
 	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase
@@ -88,6 +105,7 @@ var flightPlanController = {
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
+		if (n == 3) { return; }
 		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
 		if (canvas_mcdu.myDirTo[n] != nil) {

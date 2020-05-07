@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+
+<!-- A3XX Load Flightplans -->
+
+<PropertyList>
+
+    <name>load-flightplans</name>
+    <layout>vbox</layout>
+    
+    <nasal>
+        <open><![CDATA[
+            var loadfpl = func(path) {
+                fmgc.flightPlanController.loadFlightPlan(path.getValue());
+            }
+
+            var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+
+            var file_selector = gui.FileSelector.new(
+              callback: loadfpl, title: "Load flightplan", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.xml","*.gpx","*.fgfp"]);
+
+        ]]></open>
+
+        <close><![CDATA[
+            file_selector.del();
+        ]]></close>
+    </nasal>
+    
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Load Flightplans</label>
+        </text>
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+        
+    <hrule/>
+        
+    <group>
+		<layout>vbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>This dialog allows users to load their own .gpx / .fgfp flightplans.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>Follow these guidelines. Not doing so will cause problems!</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>1. You must have a departure and destination airport set on MCDU INIT A</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>2. Your file's destination / departure must match exactly the one set in INITA</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>3. If your file includes SIDS / STARS you CANNOT change them in the MCDU.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>If you have a NAVIGRAPH subcription, we reccomend to load them in the MCDU instead of here.</label>
+		</text>
+		<group>
+			<layout>hbox</layout>
+			<text>
+				<halign>left</halign>
+				<label>Load a flightplan</label>
+			</text>
+			
+			<button>
+				<legend>Load flightplan</legend>
+				<equal>true</equal>
+				<enable>
+					<property>FMGC/internal/tofrom-set</property>
+				</enable>
+				<binding>
+					<command>nasal</command>
+					<script>file_selector.open()</script>
+				</binding>
+			</button>
+		</group>
+	</group>
+    
+</PropertyList>

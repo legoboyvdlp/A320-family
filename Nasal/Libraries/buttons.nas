@@ -3,6 +3,19 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
+var wow = nil;
+var wowr = nil;
+var Lrain = props.globals.getNode("/controls/switches/LrainRpt");
+var Rrain = props.globals.getNode("/controls/switches/RrainRpt");
+var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
+var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
+var EmerCall = props.globals.getNode("/controls/switches/emerCall");
+var CabinCall = props.globals.getNode("/controls/switches/cabinCall");
+var MechCall = props.globals.getNode("/controls/switches/mechCall");	
+var cvr_gndCtl = props.globals.getNode("/controls/CVR/gndctl");
+var cvr_power = props.globals.getNode("/controls/CVR/power");
+var cvr_tone = props.globals.getNode("/controls/CVR/tone");
+
 # Resets buttons to the default values
 var variousReset = func {
 	setprop("modes/cpt-du-xfr", 0);
@@ -60,23 +73,10 @@ var variousReset = func {
 }
 
 var BUTTONS = {
-	init: func() {
-		var stateL = getprop("engines/engine[0]/state");
-		var stateR = getprop("engines/engine[1]/state");
-		var Lrain = getprop("controls/switches/LrainRpt");
-		var Rrain = getprop("controls/switches/RrainRpt");
-		var OnLt = getprop("controls/switches/emerCallLtO");
-		var CallLt = getprop("controls/switches/emerCallLtC");
-		var EmerCall = getprop("controls/switches/emerCall");
-		var wow = getprop("gear/gear[1]/wow");
-		var wowr = getprop("gear/gear[2]/wow");
-		var gndCtl = getprop("systems/CVR/gndctl");
-		var acPwr = getprop("systems/electrical/bus/ac-ess");
-	},
 	update: func() {
 		rainRepel();
 		CVR_master();
-		if (getprop("controls/switches/emerCall")) {
+		if (EmerCall.getValue()) {
 			EmerCallOnLight();
 			EmerCallLight();
 		}
@@ -84,88 +84,86 @@ var BUTTONS = {
 };
 
 var rainRepel = func() {
-	Lrain = getprop("controls/switches/LrainRpt");
-	Rrain = getprop("controls/switches/RrainRpt");
-	wow = getprop("gear/gear[1]/wow");
-	stateL = getprop("engines/engine[0]/state");
-	stateR = getprop("engines/engine[1]/state");
-	if (Lrain and (stateL != 3 and stateR != 3 and wow)) {	
-		setprop("controls/switches/LrainRpt", 0);
-	}
-	if (Rrain and (stateL != 3 and stateR != 3 and wow)) { 
-		setprop("controls/switches/RrainRpt", 0);
+	if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3 and pts.Gear.wow[0].getValue()) { 
+		if (Lrain.getValue()) {
+			Lrain.setValue(0);
+		}
+		if (Rrain.getValue()) {
+			Rrain.setValue(0);
+		}
 	}
 }
+
+var _OnLt = nil;
+var _EmerCall = nil;
 
 var EmerCallOnLight = func() {
-	OnLt = getprop("controls/switches/emerCallLtO");
-	EmerCall = getprop("controls/switches/emerCall");
-	if ((OnLt and EmerCall) or !EmerCall) { 
-		setprop("controls/switches/emerCallLtO", 0);
-	} else if (!OnLt and EmerCall) { 
-		setprop("controls/switches/emerCallLtO", 1);
+	_OnLt = OnLt.getValue();
+	_EmerCall = EmerCall.getValue();
+	if ((_OnLt and _EmerCall) or !_EmerCall) { 
+		OnLt.setValue(0);
+	} else if (!_OnLt and _EmerCall) { 
+		OnLt.setValue(1);
 	}
 }
 
+var _CallLt = nil;
+var _EmerCall2 = nil;
+
 var EmerCallLight = func() {
-	CallLt = getprop("controls/switches/emerCallLtC");
-	EmerCall = getprop("controls/switches/emerCall");
-	if ((CallLt and EmerCall) or !EmerCall) { 
-		setprop("controls/switches/emerCallLtC", 0);
-	} else if (!CallLt and EmerCall) { 
-		setprop("controls/switches/emerCallLtC", 1);
+	_CallLt = CallLt.getValue();
+	_EmerCall2 = EmerCall.getValue();
+	if ((_CallLt and _EmerCall2) or !_EmerCall2) { 
+		CallLt.setValue(0);
+	} else if (!_CallLt and _EmerCall2) { 
+		CallLt.setValue(1);
 	}
 }
 
 var CVR_master = func() {
-	stateL = getprop("engines/engine[0]/state");
-	stateR = getprop("engines/engine[1]/state");
-	wow = getprop("gear/gear[1]/wow");
-	wowr = getprop("gear/gear[2]/wow");
-	gndCtl = getprop("systems/CVR/gndctl");
-	acPwr = getprop("systems/electrical/bus/ac-ess");
-	if (acPwr > 0 and wow and wowr and (gndCtl or (stateL == 3 or stateR == 3))) {
-		setprop("controls/CVR/power", 1);
-	} else if (!wow and !wowr and acPwr > 0) {
-		setprop("controls/CVR/power", 1);
+	wow = pts.Gear.wow[0].getValue();
+	wowr = pts.Gear.wow[1].getValue();
+	if (systems.ELEC.Bus.acEss.getValue() > 0 and wow and wowr and (cvr_gndCtl.getValue() or (pts.Engines.Engine.state[0].getValue() == 3 or pts.Engines.Engine.state[1].getValue() == 3))) {
+		cvr_power.setValue(1);
+	} else if (!wow and !wowr and systems.ELEC.Bus.acEss.getValue() > 0) {
+		cvr_power.setValue(1);
 	} else {
-		setprop("controls/CVR/power", 0);
+		cvr_power.setValue(0);
 	}
 }
 
-var EmerCall = func {
-	setprop("controls/switches/emerCall", 1);
+var EmerCallFunc = func {
+	EmerCall.setValue(1);
 	settimer(func() {
-		setprop("controls/switches/emerCall", 0);
+		EmerCall.setValue(0);
 	}, 10);
 }
 
-var CabinCall = func {
-	setprop("controls/switches/cabinCall", 0);
+var CabinCallFunc = func {
+	CabinCall.setValue(1);
 	settimer(func() {
-		setprop("controls/switches/cabinCall", 0);
+		CabinCall.setValue(0);
 	}, 15);
 }
 		
-var MechCall = func {
-	setprop("controls/switches/mechCall", 1);
+var MechCallFunc = func {
+	MechCall.setValue(1);
 	settimer(func() {
-		setprop("controls/switches/mechCall", 0);
+		MechCall.setValue(0);
 	}, 15);
 }
 
 var CVR_test = func {
-	var parkBrake = getprop("controls/gear/brake-parking");
-	if (parkBrake) {
-		setprop("controls/CVR/tone", 1);
+	if (pts.Controls.Gear.parkingBrake.getValue()) {
+		cvr_tone.setValue(1);
 		settimer(func() {
-			setprop("controls/CVR/tone", 0);
+			cvr_tone.setValue(0);
 		}, 15);
 	}
 }
 
 setlistener("/controls/apu/master", func() { # poor mans set-reset latch 
-	if (!getprop("controls/apu/master") and (systems.APUController.APU.signals.emer or systems.APUController.APU.signals.autoshutdown)) {
+	if (!systems.APUNodes.Controls.master.getValue() and (systems.APUController.APU.signals.emer or systems.APUController.APU.signals.autoshutdown)) {
 		systems.APUController.APU.signals.emer = 0;
 		systems.APUController.APU.signals.autoshutdown = 0;
 	}

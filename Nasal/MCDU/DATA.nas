@@ -9,6 +9,14 @@ var dataInput = func(key, i) {
 	if (key == "L2") {
 		setprop("MCDU[" ~ i ~ "]/page", "IRSMON");
 	}
+	if (key == "L5") {
+		if (canvas_mcdu.myClosestAirport[i] != nil) {
+					canvas_mcdu.myClosestAirport[i].del();
+		}
+		canvas_mcdu.myClosestAirport[i] = nil;
+		canvas_mcdu.myClosestAirport[i] = closestAirportPage.new(i);
+		setprop("MCDU[" ~ i ~ "]/page", "CLOSESTAIRPORT");
+	}
 	if (key == "R5") {
 		setprop("MCDU[" ~ i ~ "]/page", "PRINTFUNC");
 	}

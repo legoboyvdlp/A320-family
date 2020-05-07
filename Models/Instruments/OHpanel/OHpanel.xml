@@ -6268,7 +6268,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.1f</format>
-		<property>systems/electrical/sources/bat-1/volt</property>
+		<property>systems/electrical/bus/dc-hot-1</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
@@ -6320,7 +6320,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.1f</format>
-		<property>systems/electrical/sources/bat-2/volt</property>
+		<property>systems/electrical/bus/dc-hot-2</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
@@ -7158,7 +7158,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.MechCall();</script>
+				<script>libraries.MechCallFunc();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7177,7 +7177,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CabinCall();</script>
+				<script>libraries.CabinCallFunc();</script>
 			</binding>
 		</action>
 	</animation>

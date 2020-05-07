@@ -119,6 +119,7 @@ var updated_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/updated/dialog", "Ai
 var error_mismatch = gui.Dialog.new("/sim/gui/dialogs/acconfig/error/mismatch/dialog", "Aircraft/A320-family/AircraftConfig/error-mismatch.xml");
 var fuel_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/fuel/dialog", "Aircraft/A320-family/AircraftConfig/fuel.xml");
 var groundservices_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/groundsrvc/dialog", "Aircraft/A320-family/AircraftConfig/groundservices.xml");
+var loadflightplan_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/loadfpln/dialog","Aircraft/A320-family/AircraftConfig/load-flightplan.xml");
 var du_quality = gui.Dialog.new("/sim/gui/dialogs/acconfig/du-quality/dialog", "Aircraft/A320-family/AircraftConfig/du-quality.xml");
 var rendering_dlg = gui.Dialog.new("/sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
 spinning.start();

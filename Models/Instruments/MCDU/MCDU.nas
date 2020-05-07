@@ -14,7 +14,9 @@ var myArrival = [nil, nil];
 var myFpln = [nil, nil];
 var myDirTo = [nil, nil];
 var myHold = [nil, nil];
+var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
+var myClosestAirport = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
@@ -813,8 +815,8 @@ var canvas_MCDU_base = {
 				
 				me.showLeft(1, 1, 1, 1, -1, -1);
 				me["Simple_L0S"].hide();
-				me.showLeftS(1, 1, 1, -1, -1, -1);
-				me.showLeftArrow(1, 1, 1, 1, -1, -1);
+				me.showLeftS(1, 1, 1, -1, 1, -1);
+				me.showLeftArrow(1, 1, 1, 1, 1, -1);
 				me.showRight(-1, -1, -1, -1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, 1);
@@ -835,20 +837,24 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				# why is this needed?
+				me["Simple_L5"].show();
+				
+				me["Simple_L1"].setText(" MONITOR");
+				me["Simple_L2"].setText(" MONITOR");
+				me["Simple_L3"].setText(" MONITOR");
+				me["Simple_L4"].setText(" A/C STATUS");
+				me["Simple_L5"].setText(" AIRPORTS");
+				me["Simple_L1S"].setText(" POSITION");
+				me["Simple_L2S"].setText(" IRS");
+				me["Simple_L3S"].setText(" GPS");
+				me["Simple_L5S"].setText(" CLOSEST");
+				me["Simple_R5"].setText("FUNCTION ");
+				me["Simple_R6"].setText("FUNCTION ");
+				me["Simple_R5S"].setText("PRINT ");
+				me["Simple_R6S"].setText("AOC ");
 				pageSwitch[i].setBoolValue(1);
 			}
-			
-			me["Simple_L1"].setText(" MONITOR");
-			me["Simple_L2"].setText(" MONITOR");
-			me["Simple_L3"].setText(" MONITOR");
-			me["Simple_L4"].setText(" A/C STATUS");
-			me["Simple_L1S"].setText(" POSITION");
-			me["Simple_L2S"].setText(" IRS");
-			me["Simple_L3S"].setText(" GPS");
-			me["Simple_R5"].setText("FUNCTION ");
-			me["Simple_R6"].setText("FUNCTION ");
-			me["Simple_R5S"].setText("PRINT ");
-			me["Simple_R6S"].setText("AOC ");
 		} else if (page == "DATA2") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -4693,8 +4699,8 @@ var canvas_MCDU_base = {
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
-				me["ArrowLeft"].show();
-				me["ArrowRight"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
 				me["arrowsDepArr"].show();
 				me["Simple_L1_Arrow"].hide();
 				me["Simple_L2_Arrow"].hide();
@@ -4727,6 +4733,7 @@ var canvas_MCDU_base = {
 				
 				if (myHold[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myHold[i].title[0] ~ myHold[i].title[1] ~ myHold[i].title[2]));
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/b"));
 					
 					forindex (var matrixArrow; myHold[i].arrowsMatrix) {
 						if (matrixArrow == 0) { 
@@ -5008,6 +5015,653 @@ var canvas_MCDU_base = {
 						}
 					}
 					me.colorRight(myHold[i].R1[2],myHold[i].R2[2],myHold[i].R3[2],myHold[i].R4[2],myHold[i].R5[2],myHold[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "AIRWAYS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				me["arrowsDepArr"].show();
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L4_Arrow"].hide();
+				me["Simple_L5_Arrow"].hide();
+				me["Simple_L6_Arrow"].show();
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R4_Arrow"].hide();
+				me["Simple_R5_Arrow"].hide();
+				me["Simple_R6_Arrow"].hide();
+				
+				me["Simple_L0S"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, small, normal, normal); # if updating watch out - this is needed
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				
+				if (myAirways[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myAirways[i].title[0] ~ myAirways[i].title[1] ~ myAirways[i].title[2]));
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/b"));
+					
+					forindex (var matrixArrow; myAirways[i].arrowsMatrix) {
+						if (matrixArrow == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myAirways[i].arrowsMatrix[matrixArrow]) {
+							if (item == 5) { 
+								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[0][5] ~ "/b"));
+								continue;
+							}
+							if (myAirways[i].arrowsMatrix[matrixArrow][item] == 1) {
+								me["arrow" ~ (item + 1) ~ sign].show();
+								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[matrixArrow][item] ~ "/b"));
+							} else {
+								me["arrow" ~ (item + 1) ~ sign].hide();
+							}
+						}
+					}
+					
+					forindex (var matrixFont; myAirways[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myAirways[i].fontMatrix[matrixFont]) {
+							if (myAirways[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					if (myAirways[i].L1[0] == nil) {
+						me["Simple_L1"].hide();
+						me["Simple_L1S"].hide();
+					} else {
+						me["Simple_L1"].show();
+						me["Simple_L1"].setText(myAirways[i].L1[0]);
+						if (myAirways[i].L1[1] != nil) {
+							me["Simple_L1S"].show();
+							me["Simple_L1S"].setText(myAirways[i].L1[1]);
+						} else {
+							me["Simple_L1S"].hide();
+						}
+					}
+					
+					if (myAirways[i].L2[0] == nil) {
+						me["Simple_L2"].hide();
+						me["Simple_L2S"].hide();
+					} else {
+						me["Simple_L2"].show();
+						me["Simple_L2"].setText(myAirways[i].L2[0]);
+						if (myAirways[i].L2[1] != nil) {
+							me["Simple_L2S"].show();
+							me["Simple_L2S"].setText(myAirways[i].L2[1]);
+						} else {
+							me["Simple_L2S"].hide();
+						}
+					}
+					
+					if (myAirways[i].L3[0] == nil) {
+						me["Simple_L3"].hide();
+						me["Simple_L3S"].hide();
+					} else {
+						me["Simple_L3"].show();
+						me["Simple_L3"].setText(myAirways[i].L3[0]);
+						if (myAirways[i].L3[1] != nil) {
+							me["Simple_L3S"].show();
+							me["Simple_L3S"].setText(myAirways[i].L3[1]);
+						} else {
+							me["Simple_L3S"].hide();
+						}
+					}
+					
+					if (myAirways[i].L4[0] == nil) {
+						me["Simple_L4"].hide();
+						me["Simple_L4S"].hide();
+					} else {
+						me["Simple_L4"].show();
+						me["Simple_L4"].setText(myAirways[i].L4[0]);
+						if (myAirways[i].L4[1] != nil) {
+							me["Simple_L4S"].show();
+							me["Simple_L4S"].setText(myAirways[i].L4[1]);
+						} else {
+							me["Simple_L4S"].hide();
+						}
+					}
+					
+					if (myAirways[i].L5[0] == nil) {
+						me["Simple_L5"].hide();
+						me["Simple_L5S"].hide();
+					} else {
+						me["Simple_L5"].show();
+						me["Simple_L5"].setText(myAirways[i].L5[0]);
+						if (myAirways[i].L5[1] != nil) {
+							me["Simple_L5S"].show();
+							me["Simple_L5S"].setText(myAirways[i].L5[1]);
+						} else {
+							me["Simple_L5S"].hide();
+						}
+					}
+					
+					if (myAirways[i].L6[0] == nil) {
+						me["Simple_L6"].hide();
+						me["Simple_L6S"].hide();
+					} else {
+						me["Simple_L6"].show();
+						me["Simple_L6"].setText(myAirways[i].L6[0]);
+						if (myAirways[i].L6[1] != nil) {
+							me["Simple_L6S"].show();
+							me["Simple_L6S"].setText(myAirways[i].L6[1]);
+						} else {
+							me["Simple_L6S"].hide();
+						}
+					}
+					me.colorLeft(myAirways[i].L1[2],myAirways[i].L2[2],myAirways[i].L3[2],myAirways[i].L4[2],myAirways[i].L5[2],myAirways[i].L6[2]);
+					
+					if (myAirways[i].C1[0] == nil) {
+						me["Simple_C1"].hide();
+						me["Simple_C1S"].hide();
+					} else {
+						me["Simple_C1"].show();
+						me["Simple_C1"].setText(myAirways[i].C1[0]);
+						if (myAirways[i].C1[1] != nil) {
+							me["Simple_C1S"].show();
+							me["Simple_C1S"].setText(myAirways[i].C1[1]);
+						} else {
+							me["Simple_C1S"].hide();
+						}
+					}
+					
+					if (myAirways[i].C2[0] == nil) {
+						me["Simple_C2"].hide();
+						me["Simple_C2S"].hide();
+					} else {
+						me["Simple_C2"].show();
+						me["Simple_C2"].setText(myAirways[i].C2[0]);
+						if (myAirways[i].C2[1] != nil) {
+							me["Simple_C2S"].show();
+							me["Simple_C2S"].setText(myAirways[i].C2[1]);
+						} else {
+							me["Simple_C2S"].hide();
+						}
+					}
+					
+					if (myAirways[i].C3[0] == nil) {
+						me["Simple_C3"].hide();
+						me["Simple_C3S"].hide();
+					} else {
+						me["Simple_C3"].show();
+						me["Simple_C3"].setText(myAirways[i].C3[0]);
+						if (myAirways[i].C3[1] != nil) {
+							me["Simple_C3S"].show();
+							me["Simple_C3S"].setText(myAirways[i].C3[1]);
+						} else {
+							me["Simple_C3S"].hide();
+						}
+					}
+					
+					if (myAirways[i].C4[0] == nil) {
+						me["Simple_C4"].hide();
+						me["Simple_C4S"].hide();
+					} else {
+						me["Simple_C4"].show();
+						me["Simple_C4"].setText(myAirways[i].C4[0]);
+						if (myAirways[i].C4[1] != nil) {
+							me["Simple_C4S"].show();
+							me["Simple_C4S"].setText(myAirways[i].C4[1]);
+						} else {
+							me["Simple_C4S"].hide();
+						}
+					}
+					
+					if (myAirways[i].C5[0] == nil) {
+						me["Simple_C5"].hide();
+						me["Simple_C5S"].hide();
+					} else {
+						me["Simple_C5"].show();
+						me["Simple_C5"].setText(myAirways[i].C5[0]);
+						if (myAirways[i].C5[1] != nil) {
+							me["Simple_C5S"].show();
+							me["Simple_C5S"].setText(myAirways[i].C5[1]);
+						} else {
+							me["Simple_C5S"].hide();
+						}
+					}
+					me.colorCenter(myAirways[i].C1[2],myAirways[i].C2[2],myAirways[i].C3[2],myAirways[i].C4[2],myAirways[i].C5[2],myAirways[i].C6[2]);
+					
+					me["Simple_C6"].hide();
+					me["Simple_C6S"].hide();
+						
+					if (myAirways[i].R1[0] == nil) {
+						me["Simple_R1"].hide();
+						me["Simple_R1S"].hide();
+					} else {
+						me["Simple_R1"].show();
+						me["Simple_R1"].setText(myAirways[i].R1[0]);
+						if (myAirways[i].R1[1] != nil) {
+							me["Simple_R1S"].show();
+							me["Simple_R1S"].setText(myAirways[i].R1[1]);
+						} else {
+							me["Simple_R1S"].hide();
+						}
+					}
+					
+					if (myAirways[i].R2[0] == nil) {
+						me["Simple_R2"].hide();
+						me["Simple_R2S"].hide();
+					} else {
+						me["Simple_R2"].show();
+						me["Simple_R2"].setText(myAirways[i].R2[0]);
+						if (myAirways[i].R2[1] != nil) {
+							me["Simple_R2S"].show();
+							me["Simple_R2S"].setText(myAirways[i].R2[1]);
+						} else {
+							me["Simple_R2S"].hide();
+						}
+					}
+					
+					if (myAirways[i].R3[0] == nil) {
+						me["Simple_R3"].hide();
+						me["Simple_R3S"].hide();
+					} else {
+						me["Simple_R3"].show();
+						me["Simple_R3"].setText(myAirways[i].R3[0]);
+						if (myAirways[i].R3[1] != nil) {
+							me["Simple_R3S"].show();
+							me["Simple_R3S"].setText(myAirways[i].R3[1]);
+						} else {
+							me["Simple_R3S"].hide();
+						}
+					}
+					
+					if (myAirways[i].R4[0] == nil) {
+						me["Simple_R4"].hide();
+						me["Simple_R4S"].hide();
+					} else {
+						me["Simple_R4"].show();
+						me["Simple_R4"].setText(myAirways[i].R4[0]);
+						if (myAirways[i].R4[1] != nil) {
+							me["Simple_R4S"].show();
+							me["Simple_R4S"].setText(myAirways[i].R4[1]);
+						} else {
+							me["Simple_R4S"].hide();
+						}
+					}
+					
+					if (myAirways[i].R5[0] == nil) {
+						me["Simple_R5"].hide();
+						me["Simple_R5S"].hide();
+					} else {
+						me["Simple_R5"].show();
+						me["Simple_R5"].setText(myAirways[i].R5[0]);
+						if (myAirways[i].R5[1] != nil) {
+							me["Simple_R5S"].show();
+							me["Simple_R5S"].setText(myAirways[i].R5[1]);
+						} else {
+							me["Simple_R5S"].hide();
+						}
+					}
+					
+					if (myAirways[i].R6[0] == nil) {
+						me["Simple_R6"].hide();
+						me["Simple_R6S"].hide();
+					} else {
+						me["Simple_R6"].show();
+						me["Simple_R6"].setText(myAirways[i].R6[0]);
+						if (myAirways[i].R6[1] != nil) {
+							me["Simple_R6S"].show();
+							me["Simple_R6S"].setText(myAirways[i].R6[1]);
+						} else {
+							me["Simple_R6S"].hide();
+						}
+					}
+					me.colorRight(myAirways[i].R1[2],myAirways[i].R2[2],myAirways[i].R3[2],myAirways[i].R4[2],myAirways[i].R5[2],myAirways[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "CLOSESTAIRPORT") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				me["arrowsDepArr"].hide();
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L4_Arrow"].hide();
+				me["Simple_L5_Arrow"].hide();
+				me["Simple_L6_Arrow"].show();
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R4_Arrow"].hide();
+				me["Simple_R5_Arrow"].hide();
+				me["Simple_R6_Arrow"].show();
+				
+				me["Simple_L0S"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				if (myClosestAirport[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myClosestAirport[i].title));
+				
+					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[0][5] ~ "/b"));
+					me["Simple_R6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[1][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[1][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[1][5] ~ "/b"));
+					
+					forindex (var matrixFont; myClosestAirport[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myClosestAirport[i].fontMatrix[matrixFont]) {
+							if (myClosestAirport[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					if (myClosestAirport[i].L1[0] == nil) {
+						me["Simple_L1"].hide();
+						me["Simple_L1S"].hide();
+					} else {
+						me["Simple_L1"].show();
+						me["Simple_L1"].setText(myClosestAirport[i].L1[0]);
+						if (myClosestAirport[i].L1[1] != nil) {
+							me["Simple_L1S"].show();
+							me["Simple_L1S"].setText(myClosestAirport[i].L1[1]);
+						} else {
+							me["Simple_L1S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].L2[0] == nil) {
+						me["Simple_L2"].hide();
+						me["Simple_L2S"].hide();
+					} else {
+						me["Simple_L2"].show();
+						me["Simple_L2"].setText(myClosestAirport[i].L2[0]);
+						if (myClosestAirport[i].L2[1] != nil) {
+							me["Simple_L2S"].show();
+							me["Simple_L2S"].setText(myClosestAirport[i].L2[1]);
+						} else {
+							me["Simple_L2S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].L3[0] == nil) {
+						me["Simple_L3"].hide();
+						me["Simple_L3S"].hide();
+					} else {
+						me["Simple_L3"].show();
+						me["Simple_L3"].setText(myClosestAirport[i].L3[0]);
+						if (myClosestAirport[i].L3[1] != nil) {
+							me["Simple_L3S"].show();
+							me["Simple_L3S"].setText(myClosestAirport[i].L3[1]);
+						} else {
+							me["Simple_L3S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].L4[0] == nil) {
+						me["Simple_L4"].hide();
+						me["Simple_L4S"].hide();
+					} else {
+						me["Simple_L4"].show();
+						me["Simple_L4"].setText(myClosestAirport[i].L4[0]);
+						if (myClosestAirport[i].L4[1] != nil) {
+							me["Simple_L4S"].show();
+							me["Simple_L4S"].setText(myClosestAirport[i].L4[1]);
+						} else {
+							me["Simple_L4S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].L5[0] == nil) {
+						me["Simple_L5"].hide();
+						me["Simple_L5S"].hide();
+					} else {
+						me["Simple_L5"].show();
+						me["Simple_L5"].setText(myClosestAirport[i].L5[0]);
+						if (myClosestAirport[i].L5[1] != nil) {
+							me["Simple_L5S"].show();
+							me["Simple_L5S"].setText(myClosestAirport[i].L5[1]);
+						} else {
+							me["Simple_L5S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].L6[0] == nil) {
+						me["Simple_L6"].hide();
+						me["Simple_L6S"].hide();
+					} else {
+						me["Simple_L6"].show();
+						me["Simple_L6"].setText(myClosestAirport[i].L6[0]);
+						if (myClosestAirport[i].L6[1] != nil) {
+							me["Simple_L6S"].show();
+							me["Simple_L6S"].setText(myClosestAirport[i].L6[1]);
+						} else {
+							me["Simple_L6S"].hide();
+						}
+					}
+					me.colorLeft(myClosestAirport[i].L1[2],myClosestAirport[i].L2[2],myClosestAirport[i].L3[2],myClosestAirport[i].L4[2],myClosestAirport[i].L5[2],myClosestAirport[i].L6[2]);
+					
+					if (myClosestAirport[i].C1[0] == nil) {
+						me["Simple_C1"].hide();
+						me["Simple_C1S"].hide();
+					} else {
+						me["Simple_C1"].show();
+						me["Simple_C1"].setText(myClosestAirport[i].C1[0]);
+						if (myClosestAirport[i].C1[1] != nil) {
+							me["Simple_C1S"].show();
+							me["Simple_C1S"].setText(myClosestAirport[i].C1[1]);
+						} else {
+							me["Simple_C1S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].C2[0] == nil) {
+						me["Simple_C2"].hide();
+						me["Simple_C2S"].hide();
+					} else {
+						me["Simple_C2"].show();
+						me["Simple_C2"].setText(myClosestAirport[i].C2[0]);
+						if (myClosestAirport[i].C2[1] != nil) {
+							me["Simple_C2S"].show();
+							me["Simple_C2S"].setText(myClosestAirport[i].C2[1]);
+						} else {
+							me["Simple_C2S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].C3[0] == nil) {
+						me["Simple_C3"].hide();
+						me["Simple_C3S"].hide();
+					} else {
+						me["Simple_C3"].show();
+						me["Simple_C3"].setText(myClosestAirport[i].C3[0]);
+						if (myClosestAirport[i].C3[1] != nil) {
+							me["Simple_C3S"].show();
+							me["Simple_C3S"].setText(myClosestAirport[i].C3[1]);
+						} else {
+							me["Simple_C3S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].C4[0] == nil) {
+						me["Simple_C4"].hide();
+						me["Simple_C4S"].hide();
+					} else {
+						me["Simple_C4"].show();
+						me["Simple_C4"].setText(myClosestAirport[i].C4[0]);
+						if (myClosestAirport[i].C4[1] != nil) {
+							me["Simple_C4S"].show();
+							me["Simple_C4S"].setText(myClosestAirport[i].C4[1]);
+						} else {
+							me["Simple_C4S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].C5[0] == nil) {
+						me["Simple_C5"].hide();
+						me["Simple_C5S"].hide();
+					} else {
+						me["Simple_C5"].show();
+						me["Simple_C5"].setText(myClosestAirport[i].C5[0]);
+						if (myClosestAirport[i].C5[1] != nil) {
+							me["Simple_C5S"].show();
+							me["Simple_C5S"].setText(myClosestAirport[i].C5[1]);
+						} else {
+							me["Simple_C5S"].hide();
+						}
+					}
+					me.colorCenter(myClosestAirport[i].C1[2],myClosestAirport[i].C2[2],myClosestAirport[i].C3[2],myClosestAirport[i].C4[2],myClosestAirport[i].C5[2],myClosestAirport[i].C6[2]);
+					
+					me["Simple_C6"].hide();
+					me["Simple_C6S"].hide();
+						
+					if (myClosestAirport[i].R1[0] == nil) {
+						me["Simple_R1"].hide();
+						me["Simple_R1S"].hide();
+					} else {
+						me["Simple_R1"].show();
+						me["Simple_R1"].setText(myClosestAirport[i].R1[0]);
+						if (myClosestAirport[i].R1[1] != nil) {
+							me["Simple_R1S"].show();
+							me["Simple_R1S"].setText(myClosestAirport[i].R1[1]);
+						} else {
+							me["Simple_R1S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].R2[0] == nil) {
+						me["Simple_R2"].hide();
+						me["Simple_R2S"].hide();
+					} else {
+						me["Simple_R2"].show();
+						me["Simple_R2"].setText(myClosestAirport[i].R2[0]);
+						if (myClosestAirport[i].R2[1] != nil) {
+							me["Simple_R2S"].show();
+							me["Simple_R2S"].setText(myClosestAirport[i].R2[1]);
+						} else {
+							me["Simple_R2S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].R3[0] == nil) {
+						me["Simple_R3"].hide();
+						me["Simple_R3S"].hide();
+					} else {
+						me["Simple_R3"].show();
+						me["Simple_R3"].setText(myClosestAirport[i].R3[0]);
+						if (myClosestAirport[i].R3[1] != nil) {
+							me["Simple_R3S"].show();
+							me["Simple_R3S"].setText(myClosestAirport[i].R3[1]);
+						} else {
+							me["Simple_R3S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].R4[0] == nil) {
+						me["Simple_R4"].hide();
+						me["Simple_R4S"].hide();
+					} else {
+						me["Simple_R4"].show();
+						me["Simple_R4"].setText(myClosestAirport[i].R4[0]);
+						if (myClosestAirport[i].R4[1] != nil) {
+							me["Simple_R4S"].show();
+							me["Simple_R4S"].setText(myClosestAirport[i].R4[1]);
+						} else {
+							me["Simple_R4S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].R5[0] == nil) {
+						me["Simple_R5"].hide();
+						me["Simple_R5S"].hide();
+					} else {
+						me["Simple_R5"].show();
+						me["Simple_R5"].setText(myClosestAirport[i].R5[0]);
+						if (myClosestAirport[i].R5[1] != nil) {
+							me["Simple_R5S"].show();
+							me["Simple_R5S"].setText(myClosestAirport[i].R5[1]);
+						} else {
+							me["Simple_R5S"].hide();
+						}
+					}
+					
+					if (myClosestAirport[i].R6[0] == nil) {
+						me["Simple_R6"].hide();
+						me["Simple_R6S"].hide();
+					} else {
+						me["Simple_R6"].show();
+						me["Simple_R6"].setText(myClosestAirport[i].R6[0]);
+						if (myClosestAirport[i].R6[1] != nil) {
+							me["Simple_R6S"].show();
+							me["Simple_R6S"].setText(myClosestAirport[i].R6[1]);
+						} else {
+							me["Simple_R6S"].hide();
+						}
+					}
+					me.colorRight(myClosestAirport[i].R1[2],myClosestAirport[i].R2[2],myClosestAirport[i].R3[2],myClosestAirport[i].R4[2],myClosestAirport[i].R5[2],myClosestAirport[i].R6[2]);
 				}
 				pageSwitch[i].setBoolValue(1);
 			}

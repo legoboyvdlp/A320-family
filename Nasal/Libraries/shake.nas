@@ -4,20 +4,18 @@
 
 var shakeEffectA3XX = props.globals.initNode("/systems/shake/effect", 0, "BOOL");
 var shakeA3XX = props.globals.initNode("/systems/shake/shaking", 0, "DOUBLE");
-var rSpeed = 0;
 var sf = 0;
 var n_g_c = 0;
 var n_g_l = 0;
 var n_g_r = 0;
 
 var theShakeEffect = func {
-	n_g_c = getprop("gear/gear[0]/compression-norm") or 0;
-	n_g_l = getprop("gear/gear[1]/compression-norm") or 0;
-	n_g_r = getprop("gear/gear[2]/compression-norm") or 0;
-	rSpeed = getprop("gear/gear[0]/rollspeed-ms") or 0;
-	sf = rSpeed / 94000;
+	n_g_c = pts.Gear.compression[0].getValue() or 0;
+	n_g_l = pts.Gear.compression[1].getValue() or 0;
+	n_g_r = pts.Gear.compression[2].getValue() or 0;
 
 	if (shakeEffectA3XX.getBoolValue() and (n_g_c > 0 or n_g_l > 0 or n_g_r > 0)) {
+		sf = pts.Gear.rollspeed[0].getValue() / 94000;
 		interpolate("/systems/shake/shaking", sf, 0.03);
 		settimer(func {
 			interpolate("/systems/shake/shaking", -sf * 2, 0.03); 
@@ -27,13 +25,13 @@ var theShakeEffect = func {
 		}, 0.12);
 		settimer(theShakeEffect, 0.09);	
 	} else {
-		setprop("systems/shake/shaking", 0);
-		setprop("systems/shake/effect", 0);		
+		shakeA3XX.setValue(0);
+		shakeEffectA3XX.setBoolValue(0);
 	}	    
 }
 
-setlistener("/systems/shake/effect", func(state) {
-	if(state.getBoolValue()) {
+setlistener("/systems/shake/effect", func {
+	if (shakeEffectA3XX.getBoolValue()) {
 		theShakeEffect();
 	}
-}, 1, 0);
+}, 0, 0);

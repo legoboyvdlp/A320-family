@@ -44,7 +44,10 @@ var default = [
 	"/instrumentation/efis[1]/input/lh-vor-adf",
 	"/instrumentation/efis[1]/input/rh-vor-adf",
 	# parking brake
-	"/controls/gear/brake-parking"
+	"/controls/gear/brake-parking",
+	# electrics
+	"/systems/electrical/sources/bat-1/percent-calc",
+	"/systems/electrical/sources/bat-2/percent-calc"
 ];
 
 var save = func (saved_props, file) {

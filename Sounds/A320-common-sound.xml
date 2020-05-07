@@ -1563,12 +1563,7 @@
 			<name>RelayBatt1</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
-			<condition>
-				<greater-than>
-					<property>/systems/electrical/battery1-amps</property>
-					<value>25</value>
-				</greater-than>
-			</condition>
+			<property>/systems/electrical/sources/bat-1/contact</property>
 			<volume>
 				<factor>0.8</factor>
 			</volume>
@@ -1578,12 +1573,7 @@
 			<name>RelayBatt2</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
-			<condition>
-				<greater-than>
-					<property>/systems/electrical/battery2-amps</property>
-					<value>25</value>
-				</greater-than>
-			</condition>
+			<property>/systems/electrical/sources/bat-2/contact</property>
 			<volume>
 				<factor>0.8</factor>
 			</volume>
@@ -1593,18 +1583,7 @@
 			<name>RelayEXT</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-external.wav</path>
-			<condition>
-				<and>
-					<equals>
-						<property>/controls/electrical/ground-cart</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/controls/electrical/switches/ext-pwr</property>
-						<value>1</value>
-					</equals>
-				</and>
-			</condition>
+			<property>/systems/electrical/relay/ext-epc/contact-pos</property>
 			<volume>
 				<factor>0.6</factor>
 			</volume>
@@ -1614,12 +1593,7 @@
 			<name>RelayAPU</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-apu.wav</path>
-			<condition>
-				<equals>
-					<property>/systems/electrical/gen-apu</property>
-					<value>1</value>
-				</equals>
-			</condition>
+			<property>/systems/electrical/relay/apu-glc/contact-pos</property>
 			<volume>
 				<factor>0.6</factor>
 			</volume>
@@ -1820,5 +1794,143 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100.0</max-dist>
 		</stall-voice>
+		
+		<rain>
+			<name>RainInside</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/rain.wav</path>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<greater-than>
+					<property>/environment/rain-norm</property>
+					<value>0</value>
+				</greater-than>
+			</condition>
+			<volume>
+				<property>/environment/rain-norm</property>
+				<factor>0.095</factor>
+			</volume>
+		</rain>
+
+		<rain-windshield>
+			<name>RainWindshieldInside</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/rain-windshield.wav</path>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<greater-than>
+					<property>/environment/rain-norm</property>
+					<value>0</value>
+				</greater-than>
+			</condition>
+			<volume>
+				<property>velocities/airspeed-kt</property>
+				<factor>0.0075</factor>
+				<min>0.04</min>
+				<max>0.38</max>
+			</volume>
+		</rain-windshield>
+
+		<thunder1>
+			<name>thunder1</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/thunder1.wav</path>
+			<type>avionics</type>
+			<property>sim/sound/thunder1</property>
+			<pitch>
+				<property>sim/sound/dist-thunder1</property>
+				<factor>2</factor>
+				<offset>0.50</offset>
+				<min>1.00</min>
+				<max>2.00</max>
+			</pitch>
+			<volume>
+				<property>sim/sound/dist-thunder1</property>
+			</volume>
+		</thunder1>
+
+		<thunder2>
+			<name>thunder2</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/thunder2.wav</path>
+			<type>avionics</type>
+			<property>sim/sound/thunder2</property>
+			<pitch>
+				<property>sim/sound/dist-thunder2</property>
+				<factor>2</factor>
+				<offset>0.50</offset>
+				<min>1.00</min>
+				<max>2.00</max>
+			</pitch>
+			<volume>
+				<property>sim/sound/dist-thunder2</property>
+			</volume>
+		</thunder2>
+		<thunder3>
+			<name>thunder3</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/thunder3.wav</path>
+			<type>avionics</type>
+			<property>sim/sound/thunder3</property>
+			<pitch>
+				<property>sim/sound/dist-thunder3</property>
+				<factor>1</factor>
+				<offset>0.50</offset>
+				<min>1.00</min>
+				<max>2.00</max>
+			</pitch>
+			<volume>
+				<property>sim/sound/dist-thunder3</property>
+			</volume>
+		</thunder3>
+		<thunder4>
+			<name>thunder4</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/thunder4.wav</path>
+			<type>avionics</type>
+			<property>sim/sound/thunder4</property>
+			<pitch>
+				<property>sim/sound/dist-thunder4</property>
+				<factor>1</factor>
+				<offset>0.50</offset>
+				<min>1.00</min>
+				<max>2.00</max>
+			</pitch>
+			<volume>
+				<property>sim/sound/dist-thunder4</property>
+			</volume>
+		</thunder4>
+
+		<pushback>
+			<name>Pushback_outside</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/pushback.wav</path>
+			<condition>
+				<and>
+					<not>
+						<property>/sim/current-view/internal</property>
+					</not>
+					<property>/sim/model/autopush/enabled</property>
+				</and>
+			</condition>
+			<volume>
+				<value>0.35</value>
+			</volume>
+		</pushback>
+
+		<pushback>
+			<name>Pushback_inside</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/pushback.wav</path>
+			<condition>
+				<and>
+					<property>/sim/current-view/internal</property>	
+					<property>/sim/model/autopush/enabled</property>
+	   		 	</and>
+			</condition>
+			<volume>
+				<value>0.15</value>
+			</volume>
+		</pushback>
 	  </fx>
 </PropertyList>
