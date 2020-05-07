@@ -518,7 +518,14 @@
 		<fcs_function name="/systems/pneumatics/psi/engine-1-psi"> <!-- measured pressure. Is essentially pressure of the entire left system -->
 			<function>
 				<max>
-					<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
+					<ifthen>
+						<nq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
+							<value>4</value>
+						</nq>
+						<v>-9999</v> <!-- ignore -->
+						<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
+					</ifthen>
 					<product>
 						<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
 						<property>/systems/pneumatics/psi/engine-1-downstream-prv</property>
@@ -530,7 +537,14 @@
 		<fcs_function name="/systems/pneumatics/psi/engine-2-psi">
 			<function>
 				<max>
-					<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
+					<ifthen>
+						<nq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
+							<value>4</value>
+						</nq>
+						<v>-9999</v> <!-- ignore -->
+						<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
+					</ifthen>
 					<product>
 						<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
 						<property>/systems/pneumatics/psi/engine-2-downstream-prv</property>
@@ -539,30 +553,92 @@
 			</function>
 		</fcs_function>
 		
+		<switch name="/systems/pneumatics/psi/crossbleed-duct-left-src">
+			<default value="0"/>
+			<test logic="AND" value="1"> <!-- gnd -->
+				/systems/pneumatics/source/gnd-psi ne 0
+			</test>
+			<test logic="AND" value="2"> <!-- apu -->
+				/systems/pneumatics/source/apu-psi ne 0
+			</test>
+			<test logic="AND" value="3"> <!-- left prv -->
+				/systems/pneumatics/psi/engine-1-psi ne 0
+			</test>
+			<test logic="AND" value="4"> <!-- right crossbleed -->
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/psi/crossbleed-duct-right ne 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/psi/crossbleed-duct-right-src">
+			<default value="0"/>
+			<test logic="AND" value="1"> <!-- gnd -->
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/source/gnd-psi ne 0
+			</test>
+			<test logic="AND" value="2"> <!-- apu -->
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve ne 0
+			</test>
+			<test logic="AND" value="3"> <!-- right prv -->
+				/systems/pneumatics/psi/engine-2-psi ne 0
+			</test>
+			<test logic="AND" value="4"> <!-- left crossbleed -->
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/psi/crossbleed-duct-left ne 0
+			</test>
+		</switch>
+		
 		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-left">
 			<function>
 				<max>
+					<property>/systems/pneumatics/source/gnd-psi</property>
 					<product>
 						<property>/systems/pneumatics/source/apu-psi</property>
 						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
 					</product>
-					<property>/systems/pneumatics/source/gnd-psi</property>
+					<property>/systems/pneumatics/psi/engine-1-psi</property>
+					<ifthen>
+						<eq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
+							<value>4</value>
+						</eq>
+						<v>-9999</v> <!-- ignore -->
+						<product>
+							<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
+							<property>/systems/pneumatics/valves/crossbleed-valve</property>
+						</product>
+					</ifthen>
 				</max>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-right">
 			<function>
-				<product>	
-					<property>/systems/pneumatics/valves/crossbleed-valve</property>
-					<max>
-						<product>
-							<property>/systems/pneumatics/source/apu-psi</property>
-							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
-						</product>
+				<max>
+					<product>
+						<property>/systems/pneumatics/valves/crossbleed-valve</property>
 						<property>/systems/pneumatics/source/gnd-psi</property>
-					</max>
-				</product>
+					</product>
+					<product>
+						<property>/systems/pneumatics/valves/crossbleed-valve</property>
+						<property>/systems/pneumatics/source/apu-psi</property>
+						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+					</product>
+					<ifthen>
+						<eq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
+							<value>4</value>
+						</eq>
+						<v>-9999</v> <!-- ignore -->
+						<product>
+							<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
+							<property>/systems/pneumatics/valves/crossbleed-valve</property>
+						</product>
+					</ifthen>
+					<property>/systems/pneumatics/psi/engine-2-psi</property>
+				</max>
 			</function>
 		</fcs_function>
 		
