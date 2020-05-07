@@ -117,27 +117,331 @@
 	</model>
 
 	<!-- DDRMI Instrument -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/DDRMI/DDRMI.xml</path>
-		<offsets>
-			<x-m>-0.516286</x-m>
-			<y-m>-0.142488</y-m>
-			<z-m>0.098057</z-m>
-			<heading-deg>90</heading-deg>
-			<roll-deg>73.5</roll-deg>
-		</offsets>
-	</model>
+	<animation>
+		<name>Heading rotate</name>
+		<type>rotate</type>
+		<object-name>ddrmi_hdg</object-name>
+		<property>instrumentation/ddrmi/heading</property>
+		<axis>
+			<object-name>ddrmi_hdg.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>VOR1 rotate</name>
+		<object-name>ddrmi_pointer_1</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/needle-1</property>
+		<axis>
+			<object-name>ddrmi_hdg.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>VOR2 rotate</name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/needle-2</property>
+		<axis>
+			<object-name>ddrmi_hdg.axis</object-name>
+		</axis>
+	</animation>
+	
+	<!-- Knobs -->
+	<animation>
+		<type>pick</type>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-1</property>
+				<value>0</value> <!-- OFF -->
+				<value>1</value> <!-- VOR -->
+				<value>-1</value> <!-- ADF -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-1</property>
+				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Knob 1 rotate</name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/vor-adf-1</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>90</dep></entry>
+			<entry><ind> 0</ind><dep>45</dep></entry>
+			<entry><ind> 1</ind><dep> 0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-2</property>
+				<value>0</value> <!-- OFF -->
+				<value>1</value> <!-- VOR -->
+				<value>-1</value> <!-- ADF -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-2</property>
+				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Knob 2 rotate</name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/vor-adf-2</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>-90</dep></entry>
+			<entry><ind> 0</ind><dep>-45</dep></entry>
+			<entry><ind> 1</ind><dep>  0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
+		</axis>
+	</animation>
+	
+	<!-- Flags -->
+	
+	<animation>
+		<name>Flag 1 rotate</name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/flag-1</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>45</dep></entry>
+			<entry><ind>1</ind><dep> 0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_flag_1.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Flag 2 rotate</name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/flag-2</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>-45</dep></entry>
+			<entry><ind>1</ind><dep>  0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_flag_2.axis</object-name>
+		</axis>
+	</animation>
 
+	<!-- Lighting -->
+	<animation>
+		<name>DDRMI inside illumination</name>
+		<type>material</type>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_pointer_1_vor</object-name>
+		<object-name>ddrmi_pointer_1_adf</object-name>
+		<object-name>ddrmi_pointer_2_vor</object-name>
+		<object-name>ddrmi_pointer_2_adf</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg</object-name>
+		<!-- <emission>
+			<red>0.50</red>
+			<green>0.35</green>
+			<blue>0.2</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission> -->
+		<condition>
+			<not>
+				<and>
+					<greater-than>
+						<property>sim/model/lights/dome-light</property>
+						<value>0</value>
+					</greater-than>
+					<less-than>
+						<property>controls/lighting/main-panel-norm</property>
+						<value>0.25</value>
+					</less-than>
+				</and>
+			</not>
+		</condition>
+		<emission>
+			<red>0.50</red>
+			<green>0.35</green>
+			<blue>0.2</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission>
+	</animation>
+
+	<animation>
+		<name>Panel lighting (dome)</name>
+		<type>material</type>
+<!--		<object-name>ddrmi_dme1_screen</object-name>-->
+<!--		<object-name>ddrmi_dme2_screen</object-name>-->
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_pointer_1_vor</object-name>
+		<object-name>ddrmi_pointer_1_adf</object-name>
+		<object-name>ddrmi_pointer_2_vor</object-name>
+		<object-name>ddrmi_pointer_2_adf</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg</object-name>
+		<!-- <emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission> -->
+		<condition>
+			<and>
+				<not>
+					<greater-than>
+						<property>controls/lighting/main-panel-norm</property>
+						<value>0.25</value>
+					</greater-than>
+				</not>
+				<greater-than>
+					<property>sim/model/lights/dome-light</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+		<emission>
+			<red>0.20</red>
+			<green>0.20</green>
+			<blue>0.20</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<animation>
+		<name>DDRMI body lighting</name>
+		<type>material</type>
+		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<emission>
+			<red>0.2</red>
+			<green>0.2</green>
+			<blue>0.2</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/ddrmi</inherits-from>
+		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+	</effect>
+	
 	<!-- Brakes Pressure Indicator -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Brakes/Brakes.xml</path>
-		<offsets>
-			<x-m>-0.5131</x-m>
-			<y-m>0.21535</y-m>
-			<z-m>0.083</z-m>
-			<pitch-deg>73.466</pitch-deg>
-		</offsets>
-	</model>
+	<animation>
+    	<type>rotate</type>
+    	<object-name>brakes_lb_psi</object-name>
+    	<property>systems/hydraulic/brakes/pressure-left-psi</property>
+    	<factor>0.03</factor>
+		<condition>
+			<equals>
+				<property>systems/hydraulic/brakes/mode</property>
+				<value>2</value>
+			</equals>
+		</condition>
+    	<axis>
+			<object-name>brakes_lb_psi.axis</object-name>
+    	</axis>
+    </animation>
+    
+    <animation>
+    	<type>rotate</type>
+    	<object-name>brakes_rb_psi</object-name>
+    	<property>systems/hydraulic/brakes/pressure-right-psi</property>
+    	<factor>-0.03</factor>
+		<condition>
+			<equals>
+				<property>systems/hydraulic/brakes/mode</property>
+				<value>2</value>
+			</equals>
+		</condition>
+    	<axis>
+			<object-name>brakes_rb_psi.axis</object-name>
+    	</axis>
+    </animation>
+    
+    <animation>
+    	<type>rotate</type>
+    	<object-name>brakes_accum_psi</object-name>
+    	<property>systems/hydraulic/brakes/accumulator-pressure-psi</property>
+    	<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>700</ind><dep>66</dep></entry>
+			<entry><ind>2000</ind><dep>78</dep></entry>
+			<entry><ind>3000</ind><dep>90</dep></entry>
+		</interpolation>
+    	<axis>
+			<object-name>brakes_accum_psi.axis</object-name>
+    	</axis>
+    </animation>
+	
+	<animation>
+		<name>Panel lighting</name>
+		<type>material</type>
+		<object-name>brakes_body</object-name>
+		<emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/brake</inherits-from>
+		<object-name>brakes_body</object-name>
+	</effect>
 
 	<!-- Multi-purpose Control and Display Units -->
 	<model>
@@ -163,41 +467,19 @@
 	<!-- Radio -->
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio1.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
+	
 	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio2.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.3651</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
+		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio2.xml</path>>
 	</model>
 
 	<!-- Audio -->
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Audio/Audio1.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
+	
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Audio/Audio2.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.3651</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Upper Pedestal Panels -->

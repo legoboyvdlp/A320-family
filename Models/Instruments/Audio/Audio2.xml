@@ -4,20 +4,20 @@
 
 <PropertyList>
 
-	<path>res/Audio.ac</path>
+	<path>res/Audio1.ac</path>
 
 	<!-- Headset show/hide on Audio Control Panel(click on body) -->
-<animation>
-	<type>pick</type>
-	<object-name>audio_body</object-name>
-	<action>
-		<button>0</button>
-		<binding>
-			<command>property-toggle</command>
-			<property>controls/audio/headset-toggle</property>
-		</binding>
-	</action>
-</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>audio_body</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/audio/headset-toggle</property>
+			</binding>
+		</action>
+	</animation>
 
 	<!-- INT/RAD switch -->
 	<animation>
