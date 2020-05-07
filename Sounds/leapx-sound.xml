@@ -6,7 +6,7 @@
 	<engine>
 		<name>a320_startup_left</name>
 		<mode>once</mode>
-		<path>Aircraft/A320-family/Sounds/SASA/CFM56/start/A320_cockpit_starter.wav</path>
+		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_starter.wav</path>
 		<condition>
 			<and>
 				<equals>
