@@ -360,13 +360,6 @@
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
 	</effect>
 	
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
-		<object-name>ddrmi_inside</object-name>
-		<object-name>ddrmi_vor_adf_flag_1</object-name>
-		<object-name>ddrmi_vor_adf_flag_2</object-name>
-	</effect>
-	
 	<!-- Brakes Pressure Indicator -->
 	<animation>
     	<type>rotate</type>
@@ -549,33 +542,6 @@
 		<object-name>radar_glare</object-name>
 	</effect>
 
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
-		<object-name>ecam_body</object-name>
-		<object-name>ecam_switch_body</object-name>
-		<object-name>vu111_body</object-name>
-		<object-name>vu112_body</object-name>
-		<object-name>vu111_glare</object-name>
-		<object-name>vu112_glare</object-name>
-		<object-name>throttle_1_label</object-name>
-		<object-name>dummy_2</object-name>
-		<object-name>ecam_glare_down</object-name>
-		<object-name>ecam_glare_up</object-name>
-		<object-name>ecam_att_hdg</object-name>
-		<object-name>ecam_air_data</object-name>
-		<object-name>ecam_eis_dmc</object-name>
-		<object-name>ecam_nd_xfr</object-name>
-		<object-name>ecam_brt_upper</object-name>
-		<object-name>ecam_brt_lower</object-name>
-		<object-name>flood_lt_main</object-name>
-		<object-name>integ_lt</object-name>
-		<object-name>flood_lt_ped</object-name>
-		<object-name>radar_gain</object-name>
-		<object-name>ecam_emer_canc_lit</object-name>
-		<object-name>vu112_aids</object-name>
-		<object-name>vu112_dfdr</object-name>
-	</effect>
-
 	<animation>
 		<type>select</type>
 		<object-name>engine_fault_1</object-name>
@@ -633,28 +599,7 @@
 			<blue>1.0</blue>
 		</emission>
 	</animation>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
-		<object-name>atc_0</object-name>
-		<object-name>atc_1</object-name>
-		<object-name>atc_2</object-name>
-		<object-name>atc_3</object-name>
-		<object-name>atc_4</object-name>
-		<object-name>atc_5</object-name>
-		<object-name>atc_6</object-name>
-		<object-name>atc_7</object-name>
-		<object-name>atc_abv</object-name>
-		<object-name>atc_body</object-name>
-		<object-name>atc_clr</object-name>
-		<object-name>atc_fail</object-name>
-		<object-name>atc_ident</object-name>
-		<object-name>atc_screen</object-name>
-		<object-name>atc_stby</object-name>
-		<object-name>atc_sys</object-name>
-		<object-name>atc_thrt</object-name>
-	</effect>
-
+	
 	<text>
 		<name>atc-code</name>
 		<offsets>
@@ -7351,12 +7296,44 @@
 		<object-name>ceiling</object-name>
 		<object-name>compass_box</object-name>
 		<object-name>DoorC</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>dummy_2</object-name>
+		<object-name>ecam_att_hdg</object-name>
+		<object-name>ecam_air_data</object-name>
+		<object-name>ecam_body</object-name>
+		<object-name>ecam_brt_upper</object-name>
+		<object-name>ecam_brt_lower</object-name>
+		<object-name>ecam_eis_dmc</object-name>
+		<object-name>ecam_emer_canc_lit</object-name>
+		<object-name>ecam_glare_down</object-name>
+		<object-name>ecam_glare_up</object-name>
+		<object-name>ecam_nd_xfr</object-name>
+		<object-name>ecam_switch_body</object-name>
+		<object-name>vu112_aids</object-name>
+		<object-name>vu112_dfdr</object-name>
+		<object-name>vu111_body</object-name>
+		<object-name>vu112_body</object-name>
+		<object-name>vu111_glare</object-name>
+		<object-name>vu112_glare</object-name>
 		<object-name>efis_box_1</object-name>
 		<object-name>efis_box_2</object-name>
 		<object-name>efis_box_2.001</object-name>
 		<object-name>efis_box_3</object-name>
 		<object-name>efis_box_4</object-name>
 		<object-name>extinguisher</object-name>
+		<object-name>fcu_panel</object-name>
+		<object-name>fcu_labels</object-name>
+		<object-name>spd-sel</object-name>
+		<object-name>hdg-sel</object-name>
+		<object-name>alt-sel</object-name>
+		<object-name>vs-sel</object-name>
+		<object-name>nd_range</object-name>
+		<object-name>nd_mode</object-name>
+		<object-name>nd_range_fo</object-name>
+		<object-name>nd_mode_fo</object-name>
+		<object-name>flood_lt_main</object-name>
 		<object-name>cylinder30</object-name>
 		<object-name>cylinder30.002</object-name>
 		<object-name>cylinder30.003</object-name>
@@ -7585,6 +7562,10 @@
 		<object-name>WindowGlassFo</object-name>
 		<object-name>WindowOpenerFo</object-name>
 		<object-name>WX</object-name>
+		<object-name>integ_lt</object-name>
+		<object-name>flood_lt_ped</object-name>
+		<object-name>radar_gain</object-name>
+		<object-name>throttle_1_label</object-name>
 	</effect>
 	
 	<animation>
