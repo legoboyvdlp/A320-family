@@ -57,17 +57,6 @@
 	</model-->
 
 	<!-- Overhead Panel -->
-	<!-- New OH not ready yet -->
-	<!--model>
-		<path>Aircraft/A320-family/Models/Instruments/OHpanel.new/OHpanel.xml</path>
-		<offsets>
-			<x-m>0.128</x-m>
-			<y-m>0</y-m>
-			<z-m>0.997</z-m>
-			<pitch-deg>69.547</pitch-deg>
-		</offsets>
-	</model-->
-
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/OHpanel/OHpanel.xml</path>
 		<offsets>
@@ -446,22 +435,10 @@
 	<!-- Multi-purpose Control and Display Units -->
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU1.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU2.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.3651</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Radio -->
@@ -968,12 +945,6 @@
 	<model>
 		<name>PFD1</name>
 		<path>Aircraft/A320-family/Models/Instruments/PFD/PFD1.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>-0.5526</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -991,12 +962,6 @@
 	<model>
 		<name>PFD2</name>
 		<path>Aircraft/A320-family/Models/Instruments/PFD/PFD2.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>0.5526</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -1015,12 +980,6 @@
 	<model>
 		<name>ND1</name>
 		<path>Aircraft/A320-family/Models/Instruments/ND/ND_L.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>-0.35198</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -1038,12 +997,6 @@
 	<model>
 		<name>ND2</name>
 		<path>Aircraft/A320-family/Models/Instruments/ND/ND_R.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>0.35198</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -1063,24 +1016,12 @@
 	<model>
 		<name>UECAM</name>
 		<path>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.xml</path>
-		<offsets>
-			<x-m>-0.55694</x-m>
-			<y-m>0.01204</y-m>
-			<z-m>0.22568</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Lower ECAM -->
 	<model>
 		<name>LECAM</name>
 		<path>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.xml</path>
-		<offsets>
-			<x-m>-0.49881</x-m>
-			<y-m>0.01191</y-m>
-			<z-m>0.04972</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Standby Indicator -->

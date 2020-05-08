@@ -7,13 +7,6 @@
 	<path>res/PFD1.ac</path>
 	
 	<animation>
-		<type>scale</type>
-		<x-offset>1.05</x-offset>
-		<y-offset>1.05</y-offset>
-		<z-offset>1.05</z-offset>
-	</animation>
-	
-	<animation>
 		<type>pick</type>
 		<object-name>pfd1.screen</object-name>
 		<action>
