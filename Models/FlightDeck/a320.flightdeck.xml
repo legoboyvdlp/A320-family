@@ -660,11 +660,11 @@
 		<offsets>
 			<x-m>-0.01247</x-m>
 			<y-m>0.213195</y-m>
-			<z-m>-0.135075</z-m>
+			<z-m>-0.13500</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>9.4</roll-deg>
 		</offsets>
-		<alignment>left-center</alignment>
+		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<property type="string">/systems/atc/transponder-code</property>
@@ -686,11 +686,11 @@
 		<offsets>
 			<x-m>-0.01247</x-m>
 			<y-m>0.213195</y-m>
-			<z-m>-0.135075</z-m>
+			<z-m>-0.13500</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>9.4</roll-deg>
 		</offsets>
-		<alignment>left-center</alignment>
+		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">literal</type>
 		<text type="string">8888</text>
