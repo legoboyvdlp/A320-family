@@ -1611,7 +1611,7 @@
 		<name>rmp-active</name>
 		<offsets>
 			<x-m>-0.22756</x-m>
-			<y-m>-0.148955</y-m>
+			<y-m>-0.216245</y-m>
 			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>9.4</roll-deg>
@@ -1659,7 +1659,7 @@
 		<name>rmp-active-test</name>
 		<offsets>
 			<x-m>-0.22756</x-m>
-			<y-m>-0.148955</y-m>
+			<y-m>-0.216245</y-m>
 			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>9.4</roll-deg>
@@ -1707,7 +1707,7 @@
 		<name>rmp-standby</name>
 		<offsets>
 			<x-m>-0.22756</x-m>
-			<y-m>-0.216245</y-m>
+			<y-m>-0.148955</y-m>
 			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>9.4</roll-deg>
@@ -1755,7 +1755,7 @@
 		<name>rmp-standby-test</name>
 		<offsets>
 			<x-m>-0.22756</x-m>
-			<y-m>-0.216245</y-m>
+			<y-m>-0.148955</y-m>
 			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>9.4</roll-deg>
