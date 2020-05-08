@@ -446,6 +446,26 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
+			
+			<checkbox>
+				<label>First Officer is the Pilot Flying</label>
+				<halign>left</halign>
+				<property>/options/system/fo-view</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/fo-view</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
 
 			<checkbox>
 				<!-- TODO there might be a better way to formulate this. -->
