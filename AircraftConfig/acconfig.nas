@@ -117,6 +117,7 @@ var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
+setprop("/systems/acconfig/options/fo-view", 0);
 
 setlistener("/systems/acconfig/new-revision", func {
 	if (getprop("/systems/acconfig/new-revision") > current_revision) {
@@ -182,6 +183,11 @@ setlistener("/sim/signals/fdm-initialized", func {
 	{
 		save.restore(save.default, getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
 	}
+	
+	if (getprop("/options/system/fo-view") == 1) {
+		view.setViewByIndex(100);
+	}
+	
 	spinning.stop();
 });
 
@@ -227,7 +233,7 @@ var readSettings = func {
 	setprop("/systems/apu/oil/allow-oil-consumption", getprop("/systems/acconfig/options/allow-oil-consumption"));
 	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
-	
+	setprop("/options/system/fo-view", getprop("/systems/acconfig/options/fo-view"));
 }
 
 var writeSettings = func {
@@ -238,6 +244,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/allow-oil-consumption", getprop("/systems/apu/oil/allow-oil-consumption"));
 	setprop("/systems/acconfig/options/autopush/show-route", getprop("/sim/model/autopush/route/show"));
 	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
+	setprop("/systems/acconfig/options/fo-view", getprop("/options/system/fo-view"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 

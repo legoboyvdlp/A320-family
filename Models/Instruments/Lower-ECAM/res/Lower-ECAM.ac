@@ -1,23 +1,26 @@
 AC3Db
-MATERIAL "buttonlights" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 0  trans 0
+MATERIAL "buttonlights.001" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 1.000 1.000 1.000  spec 0.000 0.000 0.000  shi 0 trans 0.000
 OBJECT world
+name "Blender_exporter_v2.26__Lower-ECAM.ac"
 kids 1
 OBJECT poly
 name "lecam.screen"
-loc -0.00227174 0.00206637 0.000124912
+data 17
+lecam.screen.mesh
+crease 30.0
 texture "screen.png"
-crease 30.000000
+texrep 1 1
 numvert 4
-0 0.0804743 -0.0774588
-0 -0.0742105 -0.0774588
-0 -0.0742105 0.077209
-0 0.0804743 0.077209
+-0.52782 0.1303 -0.0937
+-0.4816 -0.02541 -0.0937
+-0.4816 -0.02541 0.06869
+-0.52782 0.1303 0.06869
 numsurf 1
-SURF 0x0
+SURF 0X0
 mat 0
 refs 4
 0 1.00067 0.999407
-3 4.45843e-005 0.999407
-2 4.45843e-005 0.000756443
-1 1.00067 0.000756443
+3 0.000045 0.999407
+2 0.000045 0.000756
+1 1.00067 0.000756
 kids 0

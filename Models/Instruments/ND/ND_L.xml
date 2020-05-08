@@ -6,13 +6,6 @@
 
 	<path>res/ND.ac</path>
 	
-	<animation>
-		<type>scale</type>
-		<x-offset>1.05</x-offset>
-		<y-offset>1.05</y-offset>
-		<z-offset>1.05</z-offset>
-	</animation>
-	
     <animation>
         <type>pick</type>
         <object-name>ND.screen</object-name>
