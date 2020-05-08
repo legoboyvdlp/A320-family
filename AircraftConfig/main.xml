@@ -448,7 +448,7 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>Default view First Officer</label>
+				<label>First Officer is the Pilot Flying</label>
 				<halign>left</halign>
 				<property>/options/system/fo-view</property>
 				<binding>
