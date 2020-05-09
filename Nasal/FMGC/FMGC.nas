@@ -294,9 +294,21 @@ var updateFuel = func {
 		}
 	}
 	
+	# Calcualte extra fuel
 	if (getprop("/FMGC/internal/block-set")) {
-		# Calcualte extra fuel
-		setprop("/FMGC/internal/extra-fuel", num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv")));
+		extra_fuel = 1000 * num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv"));
+		setprop("/FMGC/internal/extra-fuel", extra_fuel / 1000);
+		extra_time = 1.000e-02 + (extra_fuel*8.542e-03) + (extra_fuel*extra_fuel*2.976e-06) + (extra_fuel*extra_fuel*extra_fuel*-1.363e-09) + (extra_fuel*extra_fuel*extra_fuel*extra_fuel*2.971e-13) + (extra_fuel*extra_fuel*extra_fuel*extra_fuel*extra_fuel*-2.950e-17) + (extra_fuel*extra_fuel*extra_fuel*extra_fuel*extra_fuel*extra_fuel*1.063e-21);
+		if (extra_time < 0) {
+			extra_time = 0;
+		}
+		if (num(extra_time) >= 60) {
+			extra_min = int(math.mod(extra_time, 60));
+			extra_hour = int((extra_time - extra_min) / 60);
+			setprop("/FMGC/internal/extra-time", sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min));
+		} else {
+			setprop("/FMGC/internal/extra-time", sprintf("%04d", extra_time));
+		}
 		if (getprop("/FMGC/internal/extra-fuel") > -0.1 and getprop("/FMGC/internal/extra-fuel") < 0.1) {
 			setprop("/FMGC/internal/extra-fuel", 0.0);
 		}
