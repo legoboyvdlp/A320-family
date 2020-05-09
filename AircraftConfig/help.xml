@@ -127,6 +127,10 @@
 				<halign>left</halign>
 				<label>CTRL + K - Disable MCDU keyboard input</label>
 			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + V - Select Pilot Flying view (See Aircraft Configuration dialog)</label>
+			</text>
 			
 		</group>
 	

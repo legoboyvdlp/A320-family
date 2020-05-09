@@ -1610,10 +1610,11 @@
 	<text>
 		<name>rmp-active</name>
 		<offsets>
-			<x-m>-0.23205</x-m>
-			<y-m>-0.21625</y-m>
-			<z-m>-0.12582</z-m>
+			<x-m>-0.22756</x-m>
+			<y-m>-0.216245</y-m>
+			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
+			<roll-deg>9.4</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -1657,10 +1658,11 @@
 	<text>
 		<name>rmp-active-test</name>
 		<offsets>
-			<x-m>-0.23205</x-m>
-			<y-m>-0.21625</y-m>
-			<z-m>-0.12582</z-m>
+			<x-m>-0.22756</x-m>
+			<y-m>-0.216245</y-m>
+			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
+			<roll-deg>9.4</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -1704,10 +1706,11 @@
 	<text>
 		<name>rmp-standby</name>
 		<offsets>
-			<x-m>-0.23205</x-m>
-			<y-m>-0.14896</y-m>
-			<z-m>-0.12582</z-m>
+			<x-m>-0.22756</x-m>
+			<y-m>-0.148955</y-m>
+			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
+			<roll-deg>9.4</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -1751,10 +1754,11 @@
 	<text>
 		<name>rmp-standby-test</name>
 		<offsets>
-			<x-m>-0.23205</x-m>
-			<y-m>-0.14896</y-m>
-			<z-m>-0.12582</z-m>
+			<x-m>-0.22756</x-m>
+			<y-m>-0.148955</y-m>
+			<z-m>-0.091845</z-m>
 			<heading-deg>90</heading-deg>
+			<roll-deg>9.4</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>

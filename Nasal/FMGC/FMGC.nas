@@ -497,9 +497,13 @@ var masterFMGC = maketimer(0.2, func {
 	aoa_0 = -5;
 	aoa = getprop("/systems/navigation/adr/output/aoa-1");
 	cas = getprop("/systems/navigation/adr/output/cas-1");
-	
-	alpha_prot = cas * math.sqrt((aoa - aoa_0)/(aoa_prot - aoa_0));
-	alpha_max = cas * math.sqrt((aoa - aoa_0)/(aoa_max - aoa_0));
+	if (aoa > -5) {
+		alpha_prot = cas * math.sqrt((aoa - aoa_0)/(aoa_prot - aoa_0));
+		alpha_max = cas * math.sqrt((aoa - aoa_0)/(aoa_max - aoa_0));
+	} else {
+		alpha_prot = 0;
+		alpha_max = 0;
+	}
 	
 	# predicted to speeds
 	clean_to = 2 * tow * 0.45359237 + 85;

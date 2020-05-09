@@ -1111,19 +1111,19 @@
 		</hydraulic>
 		
 		<pitot n="1">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</pitot>
 		
 		<pitot n="2">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</pitot>
 		
 		<static n="1">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</static>
 		
 		<static n="2">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</static>
 		
 		<navigation>
@@ -1479,23 +1479,23 @@
 				</binding>
 			</key>
 			<key n="8">
-                <name>Del</name>
-                <desc>CLR</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>Del</name>
+				<desc>CLR</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("CLR", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("CLR", 1);</script>
 				</binding>
-            </key>
+			</key>
 			<key n="11">
 				<name>Disable MCDU keyboard mode</name>
 				<desc>Ctrl+k</desc>
@@ -1519,29 +1519,29 @@
 				</binding>
 			</key>
 			<key n="32">
-                <name>SPACE</name>
-                <desc>PTT - Push To Talk (via FGCom)</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>SPACE</name>
+				<desc>PTT - Push To Talk (via FGCom)</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("SP", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("SP", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>
+					<command>nasal</command>
+					<script>
 						space(1, modifiers.getValue());
 						if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
 							systems.HFS[0].pttToggle();
@@ -1549,15 +1549,15 @@
 							systems.HFS[1].pttToggle();
 						}
 					</script>
-                </binding>
-                <mod-up>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>nasal</command>
-                        <script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>
 							space(0, modifiers.getValue());
 							if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
 								systems.HFS[0].pttToggle();
@@ -1565,167 +1565,167 @@
 								systems.HFS[1].pttToggle();
 							}
 						</script>
-                    </binding>
-                </mod-up>
-                <mod-shift>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>nasal</command>
-                        <script>space(1, modifiers.getValue())</script>
-                    </binding>
-                    <mod-up>
-                        <binding>
-                            <condition>
-				            	<not><property>/FMGC/keyboard-left</property></not>
-					        	<not><property>/FMGC/keyboard-right</property></not>
-					        </condition>
-                            <command>nasal</command>
-                            <script>space(0, modifiers.getValue())</script>
-                        </binding>
-                    </mod-up>
-                </mod-shift>
-            </key>
+					</binding>
+				</mod-up>
+				<mod-shift>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>space(1, modifiers.getValue())</script>
+					</binding>
+					<mod-up>
+						<binding>
+							<condition>
+								<not><property>/FMGC/keyboard-left</property></not>
+								<not><property>/FMGC/keyboard-right</property></not>
+							</condition>
+							<command>nasal</command>
+							<script>space(0, modifiers.getValue())</script>
+						</binding>
+					</mod-up>
+				</mod-shift>
+			</key>
 			<key n="45">
-                <name>-</name>
-                <desc>Chat Menu</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>-</name>
+				<desc>Chat Menu</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("PLUSMINUS", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("PLUSMINUS", 1);</script>
 				</binding>
 				<repeatable type="bool">false</repeatable>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>dialog-show</command>
-                    <dialog-name>chat-menu</dialog-name>
-                </binding>
-            </key>
+					<command>dialog-show</command>
+					<dialog-name>chat-menu</dialog-name>
+				</binding>
+			</key>
 			<key n="46">
-                <name>.</name>
-                <desc>Right brake</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>.</name>
+				<desc>Right brake</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("DOT", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("DOT", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>controls.applyBrakes(1, 1)</script>
-                </binding>
-                <mod-up>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>nasal</command>
-                        <script>controls.applyBrakes(0, 1)</script>
-                    </binding>
-                </mod-up>
-            </key>
-            <key n="47">
-                <name>SLASH</name>
-                <desc>Open property browser</desc>
+					<command>nasal</command>
+					<script>controls.applyBrakes(1, 1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.applyBrakes(0, 1)</script>
+					</binding>
+				</mod-up>
+			</key>
+			<key n="47">
+				<name>SLASH</name>
+				<desc>Open property browser</desc>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
-                    </condition>
-                    <command>nasal</command>
-                    <script>gui.property_browser();</script>
-                </binding>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>gui.property_browser();</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("SLASH", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("SLASH", 1);</script>
 				</binding>
-            </key>
+			</key>
 			<key n="48">
 				<name>0</name>
-                <desc>Move rudder left</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<desc>Move rudder left</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("0", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("0", 1);</script>
 				</binding>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>property-adjust</command>
-                    <property>/controls/flight/rudder</property>
-                    <step type="double">-0.05</step>
-                </binding>
+					<command>property-adjust</command>
+					<property>/controls/flight/rudder</property>
+					<step type="double">-0.05</step>
+				</binding>
 			</key>
 			<key n="49">
 				<name>1</name>
 				<desc>Captain View/Elevator Trim Up</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("1", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("1", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1733,9 +1733,9 @@
 					<value>0</value>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>property-adjust</command>
@@ -1747,15 +1747,15 @@
 				<name>2</name>
 				<desc>First Officer View/Elevator Up</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("2", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("2", 1);</script>
@@ -1763,7 +1763,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1773,7 +1773,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1786,15 +1786,15 @@
 				<name>3</name>
 				<desc>Overhead View/Throttle Decrease</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("3", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("3", 1);</script>
@@ -1802,7 +1802,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1812,7 +1812,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1825,15 +1825,15 @@
 				<name>4</name>
 				<desc>Forward Pedestal/Aileron Left</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("4", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("4", 1);</script>
@@ -1841,7 +1841,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1851,7 +1851,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1864,15 +1864,15 @@
 				<name>5</name>
 				<desc>Aft Pedestal/Center Controls</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("5", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("5", 1);</script>
@@ -1880,7 +1880,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1890,7 +1890,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1905,15 +1905,15 @@
 				<name>6</name>
 				<desc>FCU Panel/Aileron Right</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("6", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("6", 1);</script>
@@ -1921,7 +1921,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1931,7 +1931,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1944,15 +1944,15 @@
 				<name>7</name>
 				<desc>Elevator Trim Down</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("7", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("7", 1);</script>
@@ -1960,7 +1960,7 @@
 				<!--binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1970,7 +1970,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>property-adjust</command>
@@ -1982,15 +1982,15 @@
 				<name>8</name>
 				<desc>Elevator Down</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("8", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("8", 1);</script>
@@ -1998,7 +1998,7 @@
 				<!--binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -2008,7 +2008,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -2021,15 +2021,15 @@
 				<name>9</name>
 				<desc>Throttle Increase</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("9", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("9", 1);</script>
@@ -2037,7 +2037,7 @@
 				<!--binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -2047,7 +2047,7 @@
 				<binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -2068,8 +2068,8 @@
 				<binding n="0">
 					<condition>
 						<and>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<or>
 						<equals>
 							<property>sim/current-view/name</property>
@@ -2088,8 +2088,8 @@
 				</binding>
 				<binding n="1">
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>sim/walker/key-triggers/speed</property>
@@ -2097,8 +2097,8 @@
 				</binding>
 				<binding n="2">
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>property-multiply</command>
 					<property>sim/walker/key-triggers/speed</property>
@@ -2107,8 +2107,8 @@
 				<binding n="3">
 					<condition>
 						<and>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not-equals>
 							<property>sim/current-view/name</property>
 							<value>Walk View</value>
@@ -2125,8 +2125,8 @@
 				<mod-up>
 					<binding n="0">
 						<condition>
-				        	<not><property>/FMGC/keyboard-left</property></not>
-				        	<not><property>/FMGC/keyboard-right</property></not>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
 						</condition>
 						<command>property-assign</command>
 						<property>sim/walker/key-triggers/slide</property>
@@ -2134,8 +2134,8 @@
 					</binding>
 					<binding n="1">
 						<condition>
-				        	<not><property>/FMGC/keyboard-left</property></not>
-				        	<not><property>/FMGC/keyboard-right</property></not>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
 						</condition>
 						<command>property-assign</command>
 						<property>sim/walker/key-triggers/speed</property>
@@ -2143,15 +2143,15 @@
 					</binding>
 				</mod-up>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("A", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("A", 1);</script>
@@ -2161,23 +2161,23 @@
 				<name>SHIFT-b</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("B", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("B", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
    					<command>nasal</command>
    					<script>controls.applyParkingBrake(1)</script>
@@ -2185,11 +2185,11 @@
   				<mod-up>
    					<binding>
    						<condition>
-				        	<not><property>/FMGC/keyboard-left</property></not>
-				        	<not><property>/FMGC/keyboard-right</property></not>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
 						</condition>
-    					<command>nasal</command>
-    					<script>controls.applyParkingBrake(0)</script>
+						<command>nasal</command>
+						<script>controls.applyParkingBrake(0)</script>
    					</binding>
   				</mod-up>
 			</key>
@@ -2197,15 +2197,15 @@
 				<name>SHIFT-c</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("C", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("C", 1);</script>
@@ -2215,23 +2215,23 @@
 				<name>SHIFT-d</name>
 				<desc>Autopilot Disconnect</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("D", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("D", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>
@@ -2243,15 +2243,15 @@
 				<name>SHIFT-e</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("E", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("E", 1);</script>
@@ -2261,23 +2261,23 @@
 				<name>SHIFT-f</name>
 				<desc>CL power</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("F", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("F", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>
@@ -2289,23 +2289,23 @@
 				<name>SHIFT-g</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("G", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("G", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
    					<command>nasal</command>
    					<script>controls.gearDown(1)</script>
@@ -2313,8 +2313,8 @@
 			  	<mod-up>
 			   		<binding>
 			   			<condition>
-				        	<not><property>/FMGC/keyboard-left</property></not>
-				        	<not><property>/FMGC/keyboard-right</property></not>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
 						</condition>
 						<command>nasal</command>
 						<script>controls.gearDown(0)</script>
@@ -2325,23 +2325,23 @@
 				<name>SHIFT-h</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("H", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("H", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
    					<command>nasal</command>
    					<script>aircraft.HUD.cycle_brightness()</script>
@@ -2351,23 +2351,23 @@
 				<name>SHIFT-i</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("I", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("I", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
   					<command>nasal</command>
    					<script>aircraft.HUD.cycle_type()</script>
@@ -2377,15 +2377,15 @@
 				<name>SHIFT-j</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("J", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("J", 1);</script>
@@ -2395,15 +2395,15 @@
 				<name>SHIFT-k</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("K", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("K", 1);</script>
@@ -2413,15 +2413,15 @@
 				<name>SHIFT-l</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("L", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("L", 1);</script>
@@ -2431,15 +2431,15 @@
 				<name>SHIFT-m</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("M", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("M", 1);</script>
@@ -2449,15 +2449,15 @@
 				<name>SHIFT-n</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("N", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("N", 1);</script>
@@ -2467,15 +2467,15 @@
 				<name>SHIFT-o</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("O", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("O", 1);</script>
@@ -2485,23 +2485,23 @@
 				<name>SHIFT-p</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("P", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("P", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
    					<command>property-toggle</command>
    					<property>/sim/panel/visibility</property>
@@ -2511,15 +2511,15 @@
 				<name>SHIFT-q</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Q", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Q", 1);</script>
@@ -2529,15 +2529,15 @@
 				<name>SHIFT-r</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("R", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("R", 1);</script>
@@ -2547,15 +2547,15 @@
 				<name>SHIFT-s</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("S", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("S", 1);</script>
@@ -2565,15 +2565,15 @@
 				<name>SHIFT-t</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("T", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("T", 1);</script>
@@ -2583,15 +2583,15 @@
 				<name>SHIFT-u</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("U", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("U", 1);</script>
@@ -2601,23 +2601,23 @@
 				<name>SHIFT-v</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("V", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("V", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
    					<command>nasal</command>
    					<script>view.stepView(-1)</script>
@@ -2627,15 +2627,15 @@
 				<name>SHIFT-w</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("W", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("W", 1);</script>
@@ -2645,15 +2645,15 @@
 				<name>SHIFT-x</name>
 				<desc>Increase field of view</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("X", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("X", 1);</script>
@@ -2661,8 +2661,8 @@
 				<repeatable type="bool">true</repeatable>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.fovZoom(1);</script>
@@ -2672,15 +2672,15 @@
 				<name>SHIFT-y</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Y", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Y", 1);</script>
@@ -2690,181 +2690,181 @@
 				<name>SHIFT-z</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Z", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Z", 1);</script>
 				</binding>
 				<binding>
 					<condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
    					<command>nasal</command>
    					<script>environment.decreaseVisibility()</script>
   				</binding>
 			</key>
 			<key n="97">
-                <name>a</name>
-                <desc>Slide left</desc>
-                <repeatable>false</repeatable>
-                <binding n="0">
-                    <condition>
-                        <not><property>/FMGC/keyboard-left</property></not>
-                        <not><property>/FMGC/keyboard-right</property></not>
-                        <equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walk View</value>
-                        </equals>
-                     </condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/slide</property>
-                    <value>-1</value>
-                </binding>
-                <binding n="1">
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<name>a</name>
+				<desc>Slide left</desc>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
+					 </condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>-1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/speed</property>
-                    <property>sim/walker/speed-mps</property>
-                </binding>
-                <binding n="2">
-                    <condition>
-                        <and>
-                        <not><property>/FMGC/keyboard-left</property></not>
-                        <not><property>/FMGC/keyboard-right</property></not>
-                        <not-equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walk View</value>
-                        </not-equals>
-                        <not-equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walker Orbit View</value>
-                        </not-equals>
-                        </and>
-                    </condition>
-                    <command>nasal</command>
-                    <script>controls.speedup(1);</script>
-                </binding>
-                <binding n="3">
-                    <condition>
-                        <not><property>/FMGC/keyboard-left</property></not>
-                        <not><property>/FMGC/keyboard-right</property></not>
-                        <equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walker Orbit View</value>
-                        </equals>
-                    </condition>
-                     <command>property-adjust</command>
-                    <property>/sim/walker/model-heading-deg</property>
-                    <min>0</min>
-                    <max>360</max>
-                    <wrap type="bool">true</wrap>
-                    <step type="int">-10</step>
-                </binding>
-                <mod-up>
-                    <binding n="0">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/slide</property>
-                        <value>0</value>
-                    </binding>
-                    <binding n="1">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/speed</property>
-                        <property>sim/walker/speed-mps</property>
-                    </binding>
-                </mod-up>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</not-equals>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</not-equals>
+						</and>
+					</condition>
+					<command>nasal</command>
+					<script>controls.speedup(1);</script>
+				</binding>
+				<binding n="3">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+					</condition>
+					 <command>property-adjust</command>
+					<property>/sim/walker/model-heading-deg</property>
+					<min>0</min>
+					<max>360</max>
+					<wrap type="bool">true</wrap>
+					<step type="int">-10</step>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/slide</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("A", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("A", 1);</script>
 				</binding>
-            </key>
-            <key n="98">
-                <name>b</name>
-                <desc>Apply all brakes</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+			</key>
+			<key n="98">
+				<name>b</name>
+				<desc>Apply all brakes</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("B", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("B", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>controls.applyBrakes(1)</script>
-                </binding>
-                <mod-up>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>nasal</command>
-                        <script>controls.applyBrakes(0)</script>
-                    </binding>
-                </mod-up>
-            </key>
+					<command>nasal</command>
+					<script>controls.applyBrakes(1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.applyBrakes(0)</script>
+					</binding>
+				</mod-up>
+			</key>
 			<key n="99">
 				<name>c</name>
 				<desc>Reset view to center</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("C", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("C", 1);</script>
 				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.resetView();</script>
@@ -2872,102 +2872,102 @@
 			</key>
 			<key n="100">
 				<name>d</name>
-			    <desc>Slide right</desc>
-                <repeatable>false</repeatable>
-                <binding n="0">
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
-					    <equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walk View</value>
-                        </equals>
-                    </condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/slide</property>
-                    <value>1</value>
-                </binding>
-                <binding n="1">
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<desc>Slide right</desc>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
 					</condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/speed</property>
-                    <property>sim/walker/speed-mps</property>
-                </binding>
-                <binding n="2">
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
-                        <equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walker Orbit View</value>
-                        </equals>
-                    </condition>
-                    <command>property-adjust</command>
-                    <property>/sim/walker/model-heading-deg</property>
-                    <min>0</min>
-                    <max>360</max>
-                    <wrap type="bool">true</wrap>
-                    <step type="int">10</step>
-                </binding>
-                <mod-up>
-                    <binding n="0">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/slide</property>
-                        <value>0</value>
-                    </binding>
-                    <binding n="1">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/speed</property>
-                        <property>sim/walker/speed-mps</property>
-                    </binding>
-                </mod-up>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+					</condition>
+					<command>property-adjust</command>
+					<property>/sim/walker/model-heading-deg</property>
+					<min>0</min>
+					<max>360</max>
+					<wrap type="bool">true</wrap>
+					<step type="int">10</step>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/slide</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("D", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("D", 1);</script>
 				</binding>
-            </key>
-            <key n="101">
+			</key>
+			<key n="101">
 				<name>e</name>
 				<desc>Thrust Levers Idle</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("E", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("E", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>
@@ -2979,23 +2979,23 @@
 				<name>f</name>
 				<desc>TOGA power</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("F", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("F", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>
@@ -3004,167 +3004,167 @@
 				</binding>
 			</key>
 			<key n="103">
-                <name>g</name>
-                <desc>Gear Up</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>g</name>
+				<desc>Gear Up</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("G", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("G", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>controls.gearDown(-1)</script>
-                </binding>
-                <mod-up>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>nasal</command>
-                        <script>controls.gearDown(0)</script>
-                    </binding>
-                </mod-up>
-            </key>
+					<command>nasal</command>
+					<script>controls.gearDown(-1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.gearDown(0)</script>
+					</binding>
+				</mod-up>
+			</key>
 			<key n="104">
 				<name>h</name>
 				<desc>HUD Master Switch</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("H", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("H", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>aircraft.HUD.cycle_color()</script>
-                </binding>
+					<command>nasal</command>
+					<script>aircraft.HUD.cycle_color()</script>
+				</binding>
 			</key>
 			<key n="105">
 				<name>i</name>
 				<desc>Change view to lights</desc>
 				<repeatable type="bool">true</repeatable>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("I", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("I", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.lightsView();</script>
 				</binding>
 			</key>
 			<key n="106">
-                <name>j</name>
-                <desc>Decrease spoilers</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>j</name>
+				<desc>Decrease spoilers</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("J", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("J", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>controls.stepSpoilers(-1)</script>
-                </binding>
-            </key>
-            <key n="107">
-                <name>k</name>
-                <desc>Increase spoilers</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>nasal</command>
+					<script>controls.stepSpoilers(-1)</script>
+				</binding>
+			</key>
+			<key n="107">
+				<name>k</name>
+				<desc>Increase spoilers</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("K", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("K", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>controls.stepSpoilers(1)</script>
-                </binding>
-            </key>
-            <key n="108">
+					<command>nasal</command>
+					<script>controls.stepSpoilers(1)</script>
+				</binding>
+			</key>
+			<key n="108">
 				<name>l</name>
 				<desc>Flashlight</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("L", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("L", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>property-cycle</command>
 					<property>sim/rendering/als-secondary-lights/use-flashlight</property>
@@ -3172,9 +3172,9 @@
 					<value>1</value>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>property-cycle</command>
 					<property>sim/rendering/als-secondary-lights/use-searchlight</property>
@@ -3186,15 +3186,15 @@
 				<name>m</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("M", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("M", 1);</script>
@@ -3204,15 +3204,15 @@
 				<name>n</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("N", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("N", 1);</script>
@@ -3222,67 +3222,67 @@
 				<name>o</name>
 				<desc>Change view to overhead</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("O", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("O", 1);</script>
 				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.overheadView();</script>
 				</binding>
 			</key>
 			<key n="112">
-                <name>p</name>
-                <desc>Toggle the pause state of the sim</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>p</name>
+				<desc>Toggle the pause state of the sim</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("P", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("P", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>pause</command>
-                </binding>
-            </key>
-            <key n="113">
+					<command>pause</command>
+				</binding>
+			</key>
+			<key n="113">
 				<name>q</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Q", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Q", 1);</script>
@@ -3292,269 +3292,269 @@
 				<name>r</name>
 				<desc>MCDU</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("R", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("R", 1);</script>
 				</binding>
 			</key>
-            <key n="115">
-                <name>s</name>
-                <desc>Walk backward</desc>
-                <repeatable>false</repeatable>
-                <binding n="0">
-                    <condition>
-                        <and>
-                        <not><property>/FMGC/keyboard-left</property></not>
-                        <not><property>/FMGC/keyboard-right</property></not>
-                        <or>
-                        <equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walk View</value>
-                        </equals>
-                        <equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walker Orbit View</value>
-                        </equals>
-                        </or>
-                        </and>
-                    </condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/forward</property>
-                    <value>-1</value>
-                </binding>
-                <binding n="1">
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+			<key n="115">
+				<name>s</name>
+				<desc>Walk backward</desc>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<or>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+						</or>
+						</and>
 					</condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/speed</property>
-                    <property>sim/walker/speed-mps</property>
-                </binding>
-                <binding n="2">
-                    <condition>
-                        <and>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
-                        <not-equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walk View</value>
-                        </not-equals>
-                        <not-equals>
-                            <property>sim/current-view/name</property>
-                            <value>Walker Orbit View</value>
-                        </not-equals>
-                        </and>
-                    </condition>
-                    <command>nasal</command>
-                    <script>controls.startEngine(1)</script>
-                </binding>
-                <mod-up>
-                    <binding n="0">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/forward</property>
-                        <value>0</value>
-                    </binding>
-                    <binding n="1">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/speed</property>
-                        <property>sim/walker/speed-mps</property>
-                    </binding>
-                    <binding n="2">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>nasal</command>
-                        <script>controls.startEngine(0)</script>
-                    </binding>
-                </mod-up>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>-1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</not-equals>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</not-equals>
+						</and>
+					</condition>
+					<command>nasal</command>
+					<script>controls.startEngine(1)</script>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/forward</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+					<binding n="2">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.startEngine(0)</script>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("S", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("S", 1);</script>
 				</binding>
-            </key>
+			</key>
 			<key n="116">
-                <name>t</name>
-                <desc>Warp time forwards</desc>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>t</name>
+				<desc>Warp time forwards</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("T", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("T", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>property-adjust</command>
-                    <property>/sim/time/warp-delta</property>
-                    <step type="int">30</step>
-                    <max type="int">720</max>
-                </binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<command>property-adjust</command>
+					<property>/sim/time/warp-delta</property>
+					<step type="int">30</step>
+					<max type="int">720</max>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>show-message</command>
-                    <id>warp-feedback</id>
-                    <label>Current time: %s</label>
-                    <property>/instrumentation/clock/local-short-string</property>
-                </binding>
-                <mod-up>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>/sim/time/warp-delta</property>
-                        <value type="int">0</value>
-                    </binding>
-                </mod-up>
-            </key>
-            <key n="117">
+					<command>show-message</command>
+					<id>warp-feedback</id>
+					<label>Current time: %s</label>
+					<property>/instrumentation/clock/local-short-string</property>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/time/warp-delta</property>
+						<value type="int">0</value>
+					</binding>
+				</mod-up>
+			</key>
+			<key n="117">
 				<name>u</name>
 				<desc>Change view to pedestal</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("U", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("U", 1);</script>
 				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.pedestalView();</script>
 				</binding>
 			</key>
 			<key n="118">
-                <name>v</name>
-                <desc>Scroll through views</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>v</name>
+				<desc>Scroll through views</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("V", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("V", 1);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>view.stepView(1)</script>
-                </binding>
-            </key>
-            <key n="119">
+					<command>nasal</command>
+					<script>view.stepView(1)</script>
+				</binding>
+			</key>
+			<key n="119">
 				<name>w</name>
 				<desc>Walk forward</desc>
 				<binding n="0">
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/forward</property>
-                    <value>1</value>
-                </binding>
-                <binding n="1">
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>property-assign</command>
-                    <property>sim/walker/key-triggers/speed</property>
-                    <property>sim/walker/speed-mps</property>
-                </binding>
-                <mod-up>
-                    <binding n="0">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/forward</property>
-                        <value>0</value>
-                    </binding>
-                    <binding n="1">
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>sim/walker/key-triggers/speed</property>
-                        <property>sim/walker/speed-mps</property>
-                    </binding>
-                </mod-up>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/forward</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("W", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("W", 1);</script>
@@ -3564,24 +3564,24 @@
 				<name>x</name>
 				<desc>Decrease field of view</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("X", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("X", 1);</script>
 				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.fovZoom(-1);</script>
@@ -3591,56 +3591,56 @@
 				<name>y</name>
 				<desc>Change view to autopilot</desc>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Y", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Y", 1);</script>
 				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
-				    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
 					<script>libraries.autopilotView();</script>
 				</binding>
 			</key>
 			<key n="122">
-                <name>z</name>
-                <desc>Increase Visibility</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>z</name>
+				<desc>Increase Visibility</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Z", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("Z", 1);</script>
 				</binding>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>environment.increaseVisibility()</script>
-                </binding>
-            </key>
+					<command>nasal</command>
+					<script>environment.increaseVisibility()</script>
+				</binding>
+			</key>
 			<key n="127">
 				<name>DEL</name>
 				<desc>Simple Engage/Disengage reversers</desc>
@@ -3728,182 +3728,206 @@
 				</binding>
 			</key>
 			<key n="356">
-                <name>Left</name>
-                <desc>Move aileron left (or adjust AP heading.)</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+				<name>Left</name>
+				<desc>Move aileron left (or adjust AP heading.)</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("left", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("left", 1);</script>
 				</binding>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>
-                        if (getprop("/sim/freeze/replay-state"))
-                            controls.replaySkip(-5);
-                        else
-                            controls.incAileron(-0.05, -1.0)
-                    </script>
-                </binding>
-                <mod-shift>
-                    <desc>Look left</desc>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>/sim/current-view/goal-heading-offset-deg</property>
-                        <property>/sim/view/config/left-direction-deg</property>
-                    </binding>
-                </mod-shift>
-            </key>
-            <key n="357">
-                <name>Up</name>
-                <desc>Elevator down or decrease autopilot altitude</desc>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.replaySkip(-5);
+						else
+							controls.incAileron(-0.05, -1.0)
+					</script>
+				</binding>
+				<mod-shift>
+					<desc>Look left</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/left-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="357">
+				<name>Up</name>
+				<desc>Elevator down or decrease autopilot altitude</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("up", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("up", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>
-                        if (getprop("/sim/freeze/replay-state"))
-                            controls.speedup(1);
-                        else
-                            controls.incElevator(0.05, -100)
-                    </script>
-                </binding>
-                <mod-shift>
-                    <desc>Look forward</desc>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>/sim/current-view/goal-heading-offset-deg</property>
-                        <property>/sim/view/config/front-direction-deg</property>
-                    </binding>
-                </mod-shift>
-            </key>
-            <key n="358">
-                <name>Right</name>
-                <desc>Move aileron right (or adjust AP heading.)</desc>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.speedup(1);
+						else
+							controls.incElevator(0.05, -100)
+					</script>
+				</binding>
+				<mod-shift>
+					<desc>Look forward</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/front-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="358">
+				<name>Right</name>
+				<desc>Move aileron right (or adjust AP heading.)</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("right", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("right", 1);</script>
 				</binding>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>
-                        if (getprop("/sim/freeze/replay-state"))
-                            controls.replaySkip(5);
-                        else
-                            controls.incAileron(0.05, 1.0)
-                    </script>
-                    <step type="double">0.05</step>
-                </binding>
-                <mod-shift>
-                    <desc>Look right</desc>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>/sim/current-view/goal-heading-offset-deg</property>
-                        <property>/sim/view/config/right-direction-deg</property>
-                    </binding>
-                </mod-shift>
-            </key>
-            <key n="359">
-                <name>Down</name>
-                <desc>Elevator up or increase autopilot altitude</desc>
-                <binding>
-				    <condition>
-				        <property>/FMGC/keyboard-left</property>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.replaySkip(5);
+						else
+							controls.incAileron(0.05, 1.0)
+					</script>
+					<step type="double">0.05</step>
+				</binding>
+				<mod-shift>
+					<desc>Look right</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/right-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="359">
+				<name>Down</name>
+				<desc>Elevator up or increase autopilot altitude</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("down", 0);</script>
 				</binding>
 				<binding>
-				    <condition>
-				        <property>/FMGC/keyboard-right</property>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.arrowbutton("down", 1);</script>
 				</binding>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-                    <condition>
-				        <not><property>/FMGC/keyboard-left</property></not>
-				        <not><property>/FMGC/keyboard-right</property></not>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-                    <command>nasal</command>
-                    <script>
-                        if (getprop("/sim/freeze/replay-state"))
-                            controls.speedup(-1);
-                        else
-                            controls.incElevator(-0.05, 100)
-                    </script>
-                </binding>
-                <mod-shift>
-                    <desc>Look backwards</desc>
-                    <binding>
-                        <condition>
-				            <not><property>/FMGC/keyboard-left</property></not>
-					        <not><property>/FMGC/keyboard-right</property></not>
-					    </condition>
-                        <command>property-assign</command>
-                        <property>/sim/current-view/goal-heading-offset-deg</property>
-                        <property>/sim/view/config/back-direction-deg</property>
-                    </binding>
-                </mod-shift>
-            </key>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.speedup(-1);
+						else
+							controls.incElevator(-0.05, 100)
+					</script>
+				</binding>
+				<mod-shift>
+					<desc>Look backwards</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/back-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="22">
+				<name>Ctrl-V</name>
+				<desc>Select default view (pilot or copilot)</desc>
+				<binding>
+					<condition>
+						<equals>
+							<property>/options/system/fo-view</property>
+							<value type="double">1</value>
+						</equals>
+					</condition>
+					<command>nasal</command>
+					<script>view.setViewByIndex(100);</script>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>/options/system/fo-view</property>
+							<value type="double">0</value>
+						</equals>
+					</condition>
+					<command>nasal</command>
+					<script>view.setViewByIndex(0);</script>
+				</binding>
+			</key>
 		</keyboard>
 	</input>
 	
