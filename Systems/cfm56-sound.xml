@@ -852,7 +852,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[0]</property>
+					<property>/engines/engine[0]/n1-actual</property>
 					<entry><ind>14.0</ind> <dep>0.000</dep></entry>
 					<entry><ind>15.0</ind> <dep>0.010</dep></entry>
 					<entry><ind>19.0</ind> <dep>0.900</dep></entry>
@@ -875,7 +875,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[0]</property>
+					<property>/engines/engine[0]/n1-actual</property>
 					<entry><ind>19.0</ind> <dep>1.00</dep></entry>
 					<entry><ind>42.5</ind> <dep>1.50</dep></entry>
 				</table>
@@ -894,11 +894,11 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[0]</property>
+					<property>/engines/engine[0]/n1-actual</property>
 					<entry><ind>14.0</ind> <dep>0.000</dep></entry>
                     <entry><ind>15.0</ind> <dep>0.010</dep></entry>
-					<entry><ind>19.0</ind> <dep>0.900</dep></entry>
-					<entry><ind>41.7</ind> <dep>0.310</dep></entry>
+					<entry><ind>19.0</ind> <dep>1.000</dep></entry>
+					<entry><ind>41.7</ind> <dep>0.410</dep></entry>
 					<entry><ind>55.0</ind> <dep>0.240</dep></entry>
 					<entry><ind>57.2</ind> <dep>0.100</dep></entry>
 					<entry><ind>70.0</ind> <dep>0.018</dep></entry>
@@ -919,7 +919,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[0]</property>
+					<property>/engines/engine[0]/n1-actual</property>
                     <entry><ind>14.0</ind> <dep>0.000</dep></entry>
                     <entry><ind>15.0</ind> <dep>0.010</dep></entry>
 					<entry><ind>19.0</ind> <dep>1.000</dep></entry>
@@ -1132,7 +1132,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[1]</property>
+					<property>/engines/engine[1]/n1-actual</property>
 					<entry><ind>14.0</ind> <dep>0.000</dep></entry>
 					<entry><ind>15.0</ind> <dep>0.010</dep></entry>
 					<entry><ind>19.0</ind> <dep>0.900</dep></entry>
@@ -1155,7 +1155,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[1]</property>
+					<property>/engines/engine[1]/n1-actual</property>
 					<entry><ind>19.0</ind> <dep>1.00</dep></entry>
 					<entry><ind>42.5</ind> <dep>1.50</dep></entry>
 				</table>
@@ -1174,11 +1174,11 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[1]</property>
+					<property>/engines/engine[1]/n1-actual</property>
 					<entry><ind>14.0</ind> <dep>0.000</dep></entry>
                     <entry><ind>15.0</ind> <dep>0.010</dep></entry>
-					<entry><ind>19.0</ind> <dep>0.900</dep></entry>
-					<entry><ind>41.7</ind> <dep>0.310</dep></entry>
+					<entry><ind>19.0</ind> <dep>1.000</dep></entry>
+					<entry><ind>41.7</ind> <dep>0.410</dep></entry>
 					<entry><ind>55.0</ind> <dep>0.240</dep></entry>
 					<entry><ind>57.2</ind> <dep>0.100</dep></entry>
 					<entry><ind>70.0</ind> <dep>0.018</dep></entry>
@@ -1199,7 +1199,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/sim/sound/fake-n2[1]</property>
+					<property>/engines/engine[1]/n1-actual</property>
                     <entry><ind>14.0</ind> <dep>0.000</dep></entry>
                     <entry><ind>15.0</ind> <dep>0.010</dep></entry>
 					<entry><ind>19.0</ind> <dep>1.000</dep></entry>
