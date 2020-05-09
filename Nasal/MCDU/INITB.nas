@@ -253,7 +253,7 @@ var initInputB = func(key, i) {
 		if (scratchpad == "" and !getprop("/FMGC/internal/fuel-request-set")) {
 			setprop("/FMGC/internal/fuel-request-set", 1);
 			setprop("/FMGC/internal/block-calculating", 1);
-		} else if (getprop("/FMGC/internal/fuel-request-set") and !getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/block-calculating")) {
+		} else if (scratchpad == "" and getprop("/FMGC/internal/fuel-request-set") and !getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/block-calculating")) {
 			setprop("/FMGC/internal/block-confirmed", 1);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 		} else {
