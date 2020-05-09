@@ -193,7 +193,7 @@ var updateFuel = func {
 	if (getprop("/FMGC/internal/final-fuel-set")) {
 		final_fuel = 1000 * getprop("/FMGC/internal/final-fuel");
 		zfw = 1000 * getprop("/FMGC/internal/zfw");
-		final_time = final_fuel / ((zfw*zfw*7e-10) + (zfw*4e-05) + 17.024);
+		final_time = final_fuel / 2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903); # x2 for 2 engines
 		if (final_time < 0) {
 			final_time = 0;
 		}
@@ -213,7 +213,7 @@ var updateFuel = func {
 			final_time = final_time - 100 + 60; # can't be set above 90 (0130)
 		}
 		zfw = 1000 * getprop("/FMGC/internal/zfw");
-		final_fuel = final_time * ((zfw*zfw*7e-10) + (zfw*4e-05) + 17.024);
+		final_fuel = final_time * 2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903); # x2 for 2 engines
 		if (final_fuel < 0) {
 			final_fuel = 0;
 		}
@@ -317,8 +317,8 @@ var updateFuel = func {
 	if (getprop("/FMGC/internal/block-set")) {
 		extra_fuel = 1000 * num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv"));
 		setprop("/FMGC/internal/extra-fuel", extra_fuel / 1000);
-		lw = getprop("/FMGC/internal/lw");
-		extra_time = extra_fuel / ((lw*lw*7e-10) + (lw*4e-05) + 17.024);
+		lw = 1000 * getprop("/FMGC/internal/lw");
+		extra_time = extra_fuel / 2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903); # x2 for 2 engines
 		if (extra_time < 0) {
 			extra_time = 0;
 		}
