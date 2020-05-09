@@ -1913,9 +1913,7 @@
 					<property>/sim/model/autopush/enabled</property>
 				</and>
 			</condition>
-			<volume>
-				<value>0.35</value>
-			</volume>
+			<volume>0.15</volume>
 		</pushback>
 
 		<pushback>
@@ -1928,9 +1926,7 @@
 					<property>/sim/model/autopush/enabled</property>
 	   		 	</and>
 			</condition>
-			<volume>
-				<value>0.15</value>
-			</volume>
+			<volume>0.05</volume>
 		</pushback>
 	  </fx>
 </PropertyList>
