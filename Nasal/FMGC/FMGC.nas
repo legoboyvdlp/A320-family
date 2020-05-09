@@ -190,15 +190,34 @@ var updateFuel = func {
 	}
 
 	# Calculate (final) holding fuel
-	if (!getprop("/FMGC/internal/final-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
-		#calc
-	} else if (!getprop("/FMGC/internal/final-fuel-set")) {
-		setprop("/FMGC/internal/final-fuel", 0.0); # need to calculate 30 min of fuel
-	}
-	if (!getprop("/FMGC/internal/final-fuel-set") and getprop("/FMGC/internal/tofrom-set")) {
-		#calc
-	} else if (!getprop("/FMGC/internal/final-fuel-set")) {
-		setprop("/FMGC/internal/final-time", "0030");
+	if (getprop("/FMGC/internal/final-fuel-set")) {
+		final_fuel = 1000 * getprop("/FMGC/internal/final-fuel");
+		zfw = 1000 * getprop("/FMGC/internal/zfw");
+		final_time = final_fuel / ((zfw*zfw*7e-10) + (zfw*4e-05) + 17.024);
+		if (final_time < 0) {
+			final_time = 0;
+		}
+		if (num(final_time) >= 60) {
+			final_min = int(math.mod(final_time, 60));
+			final_hour = int((final_time - final_min) / 60);
+			setprop("/FMGC/internal/final-time", sprintf("%02d", final_hour) ~ sprintf("%02d", final_min));
+		} else {
+			setprop("/FMGC/internal/final-time", sprintf("%04d", final_time));
+		}	
+	} else {
+		if (!getprop("/FMGC/internal/final-time-set")) {
+			setprop("/FMGC/internal/final-time", "0030");
+		}
+		final_time = int(getprop("/FMGC/internal/final-time"));
+		if (final_time >= 100) {
+			final_time = final_time - 100 + 60; # can't be set above 90 (0130)
+		}
+		zfw = 1000 * getprop("/FMGC/internal/zfw");
+		final_fuel = final_time * ((zfw*zfw*7e-10) + (zfw*4e-05) + 17.024);
+		if (final_fuel < 0) {
+			final_fuel = 0;
+		}
+		setprop("/FMGC/internal/final-fuel", final_fuel / 1000);
 	}
 	
 	# Calculate alternate fuel
@@ -298,7 +317,8 @@ var updateFuel = func {
 	if (getprop("/FMGC/internal/block-set")) {
 		extra_fuel = 1000 * num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv"));
 		setprop("/FMGC/internal/extra-fuel", extra_fuel / 1000);
-		extra_time = 1.000e-02 + (extra_fuel*8.542e-03) + (extra_fuel*extra_fuel*2.976e-06) + (extra_fuel*extra_fuel*extra_fuel*-1.363e-09) + (extra_fuel*extra_fuel*extra_fuel*extra_fuel*2.971e-13) + (extra_fuel*extra_fuel*extra_fuel*extra_fuel*extra_fuel*-2.950e-17) + (extra_fuel*extra_fuel*extra_fuel*extra_fuel*extra_fuel*extra_fuel*1.063e-21);
+		lw = getprop("/FMGC/internal/lw");
+		extra_time = extra_fuel / ((lw*lw*7e-10) + (lw*4e-05) + 17.024);
 		if (extra_time < 0) {
 			extra_time = 0;
 		}
