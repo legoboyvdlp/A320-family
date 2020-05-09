@@ -222,11 +222,7 @@ var updateFuel = func {
 	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set") and getprop("/FMGC/internal/zfw-set")) {
 		crz = getprop("/FMGC/internal/cruise-fl");
 		temp = getprop("/FMGC/internal/cruise-temp");
-		
-		dist = flightPlanController.arrivalDist + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
-		if (dist < 0) {
-			dist = 0;
-		}
+		dist = flightPlanController.arrivalDist;
 		
 		wind = getprop("/FMGC/internal/trip-wind");
 		wind_value = getprop("/FMGC/internal/trip-wind-value");
@@ -240,6 +236,9 @@ var updateFuel = func {
 		if (trip_fuel < 400) {
 			trip_fuel = 400;
 		}
+		
+		# cruize temp correction
+		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
 		
 		trip_time = 1.008e+01 + (dist*-4.109e-02) + (dist*dist*4.261e-04) + (dist*dist*dist*1.972e-07) + (dist*dist*dist*dist*-6.899e-11) + (dist*dist*dist*dist*dist*1.437e-14) + (dist*dist*dist*dist*dist*dist*-1.180e-18) + (crz*4.430e-01) + (dist*crz*3.352e-03) + (dist*dist*crz*-8.605e-06) + (dist*dist*dist*crz*-3.888e-10) + (dist*dist*dist*dist*crz*5.677e-14) + (dist*dist*dist*dist*dist*crz*-6.455e-18) + (crz*crz*-1.112e-02) + (dist*crz*crz*-8.012e-06) + (dist*dist*crz*crz*4.464e-08) + (dist*dist*dist*crz*crz*2.735e-13) + (dist*dist*dist*dist*crz*crz*8.992e-18) + (crz*crz*crz*9.100e-05) + (dist*crz*crz*crz*-3.865e-08) + (dist*dist*crz*crz*crz*-9.475e-11) + (dist*dist*dist*crz*crz*crz*-6.492e-17) + (crz*crz*crz*crz*-3.498e-07) + (dist*crz*crz*crz*crz*1.772e-10) + (dist*dist*crz*crz*crz*crz*7.284e-14) + (crz*crz*crz*crz*crz*6.530e-10) + (dist*crz*crz*crz*crz*crz*-1.871e-13) + (crz*crz*crz*crz*crz*crz*-4.787e-13);
 		if (trip_time < 10) {

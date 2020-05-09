@@ -226,6 +226,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/fuel-calculating", 0);
 			setprop("/FMGC/internal/block-calculating", 0);
 			setprop("/FMGC/internal/block-confirmed", 0);
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
