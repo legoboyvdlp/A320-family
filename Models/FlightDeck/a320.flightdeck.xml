@@ -7295,10 +7295,6 @@
 		<object-name>carpet</object-name>
 		<object-name>ceiling</object-name>
 		<object-name>compass_box</object-name>
-		<object-name>DoorC</object-name>
-		<object-name>ddrmi_inside</object-name>
-		<object-name>ddrmi_vor_adf_flag_1</object-name>
-		<object-name>ddrmi_vor_adf_flag_2</object-name>
 		<object-name>dummy_2</object-name>
 		<object-name>ecam_att_hdg</object-name>
 		<object-name>ecam_air_data</object-name>
@@ -7323,23 +7319,16 @@
 		<object-name>efis_box_3</object-name>
 		<object-name>efis_box_4</object-name>
 		<object-name>extinguisher</object-name>
-		<object-name>fcu_panel</object-name>
-		<object-name>fcu_labels</object-name>
-		<object-name>spd-sel</object-name>
-		<object-name>hdg-sel</object-name>
-		<object-name>alt-sel</object-name>
-		<object-name>vs-sel</object-name>
-		<object-name>nd_range</object-name>
-		<object-name>nd_mode</object-name>
-		<object-name>nd_range_fo</object-name>
-		<object-name>nd_mode_fo</object-name>
 		<object-name>flood_lt_main</object-name>
 		<object-name>cylinder30</object-name>
 		<object-name>cylinder30.002</object-name>
 		<object-name>cylinder30.003</object-name>
 		<object-name>cylinder30.004</object-name>
-		<object-name>rear_breakers</object-name>
 		<object-name>efis_display_foil</object-name>
+		<object-name>spd-sel</object-name>
+		<object-name>hdg-sel</object-name>
+		<object-name>alt-sel</object-name>
+		<object-name>vs-sel</object-name>
 		<object-name>fcu_integ_knb</object-name>
 		<object-name>hud_brt</object-name>
 		<object-name>hud_brt.mark</object-name>
@@ -7347,10 +7336,6 @@
 		<object-name>hud_norm_sw</object-name>
 		<object-name>lt_knb_1</object-name>
 		<object-name>lt_knb_1.001</object-name>
-		<object-name>master_caution</object-name>
-		<object-name>master_caution_on</object-name>
-		<object-name>master_warning</object-name>
-		<object-name>master_warning_on</object-name>
 		<object-name>metric_alt</object-name>
 		<object-name>nd_mode</object-name>
 		<object-name>nd_mode.mark</object-name>
@@ -7398,9 +7383,7 @@
 		<object-name>level3</object-name>
 		<object-name>level3_2</object-name>
 		<object-name>light_console_cpt_sw</object-name>
-		<object-name>light_console_cpt_sw.axis</object-name>
 		<object-name>light_console_fo_sw</object-name>
-		<object-name>light_console_fo_sw.axis</object-name>
 		<object-name>LRudderPedalL</object-name>
 		<object-name>LRudderPedalR</object-name>
 		<object-name>Main-Panel</object-name>
@@ -7410,28 +7393,10 @@
 		<object-name>abs_max_on</object-name>
 		<object-name>abs_med</object-name>
 		<object-name>abs_med_on</object-name>
-		<object-name>brightness_nd_1_cpt</object-name>
-		<object-name>brightness_nd_1_fo</object-name>
-		<object-name>brightness_nd_1_fo.mark</object-name>
-		<object-name>brightness_nd_2_cpt</object-name>
-		<object-name>brightness_nd_2_cpt.mark</object-name>
-		<object-name>brightness_nd_2_fo</object-name>
-		<object-name>brightness_nd_2_fo.mark</object-name>
-		<object-name>brightness_panel_emit</object-name>
-		<object-name>brk_fan</object-name>
-		<object-name>brk_fan_on</object-name>
-		<object-name>brk_hot_on</object-name>
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_max_on</object-name>
 		<object-name>dec_med_on</object-name>
-		<object-name>foot_warmer_cpt_sw</object-name>
-		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<object-name>foot_warmer_fo_sw</object-name>
-		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<object-name>gear_lever_slot</object-name>
 		<object-name>gpws_gs_sw</object-name>
-		<object-name>iesi_labels</object-name>
-		<object-name>iesi_screen</object-name>
 		<object-name>lgear</object-name>
 		<object-name>lgear_down</object-name>
 		<object-name>lgear_unlk</object-name>
@@ -7566,6 +7531,40 @@
 		<object-name>flood_lt_ped</object-name>
 		<object-name>radar_gain</object-name>
 		<object-name>throttle_1_label</object-name>
+	</effect>
+	
+	<!-- Panels that are vertical -->
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance-vertical</inherits-from>
+		<object-name>brightness_nd_1_cpt</object-name>
+		<object-name>brightness_nd_1_fo</object-name>
+		<object-name>brightness_nd_1_fo.mark</object-name>
+		<object-name>brightness_nd_2_cpt</object-name>
+		<object-name>brightness_nd_2_cpt.mark</object-name>
+		<object-name>brightness_nd_2_fo</object-name>
+		<object-name>brightness_nd_2_fo.mark</object-name>
+		<object-name>brightness_panel_emit</object-name>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<object-name>fcu_labels</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>master_caution</object-name>
+		<object-name>master_caution_on</object-name>
+		<object-name>master_warning</object-name>
+		<object-name>master_warning_on</object-name>
+		<object-name>iesi_labels</object-name>
+		<object-name>iesi_screen</object-name>
+		<object-name>brk_fan</object-name>
+		<object-name>brk_fan_on</object-name>
+		<object-name>brk_hot_on</object-name>
+		<object-name>gear_lever_slot</object-name>
+		<object-name>fcu_panel</object-name>
+		<object-name>rear_breakers</object-name>
+		<object-name>DoorC</object-name>
+		<object-name>ddrmi_inside</object-name>
 	</effect>
 	
 	<animation>
