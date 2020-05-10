@@ -31,12 +31,8 @@
 	</animation>
 
 	<effect>
-		<inherits-from>Effects/model-interior-display</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/display</inherits-from>
 		<object-name>uecam.screen</object-name>
-		<parameters>
-			<contrast>0.7</contrast>
-			<dirt-factor><use>/maintainance/cockpit-cleaness-factor</use></dirt-factor>
-		</parameters>
 	</effect>
 
 </PropertyList>
