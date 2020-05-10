@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="bleed.svg">
   <metadata
      id="metadata375">
@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="false"
-     inkscape:zoom="1.4773733"
-     inkscape:cx="843.6625"
-     inkscape:cy="621.84897"
+     inkscape:zoom="0.73868665"
+     inkscape:cx="546.41121"
+     inkscape:cy="680.16775"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -70,14 +70,6 @@
        id="rect5105-2"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:4.09363317;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-5"
-     width="5.3955846"
-     height="367.33694"
-     x="463.6044"
-     y="-581.08691"
-     transform="rotate(90)" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.18700027px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:2.68228626px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
@@ -359,14 +351,26 @@
        d="m 394.46275,504.39542 h 29.17835 v 0 L 409.59225,480.539 v 0 z"
        style="fill:none;stroke:#cecdce;stroke-width:2.87359571;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.66503072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-5-7"
-     width="4.7754087"
-     height="175.90536"
-     x="464.18976"
-     y="-813.75"
-     transform="rotate(90)" />
+  <g
+     id="BLEED-XFEEDLines"
+     inkscape:label="#g1014">
+    <rect
+       transform="rotate(90)"
+       y="-581.08691"
+       x="463.6044"
+       height="367.33694"
+       width="5.3955846"
+       id="rect5105-5"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:4.09363317;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       transform="rotate(90)"
+       y="-813.75"
+       x="464.18976"
+       height="175.90536"
+       width="4.7754087"
+       id="rect5105-5-7"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.66503072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
   <g
      id="BLEED-Pack-1-Flow-Valve"
      inkscape:label="#g3445"
