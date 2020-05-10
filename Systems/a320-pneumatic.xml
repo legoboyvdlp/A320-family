@@ -251,7 +251,7 @@
 		<fcs_function name="/systems/pneumatics/valves/engine-1-opv-valve-cmd-schedule">
 			<function>
 				<table>
-					<independentVar lookup="row">/systems/pneumatics/psi/engine-1-upstream-prv</independentVar>
+					<independentVar lookup="row">/systems/pneumatics/psi/engine-1-downstream-prv</independentVar>
 					<tableData>
 						79   1.0
 						85   0.0
@@ -264,7 +264,7 @@
 			<default value="1"/>
 			<test logic="AND" value="0">
 				/systems/pneumatics/valves/engine-1-opv-valve-cmd eq 0.0
-				/systems/pneumatics/psi/engine-1-upstream-prv ge 35
+				/systems/pneumatics/psi/engine-1-downstream-prv ge 35
 			</test>
 			<test logic="OR" value="/systems/pneumatics/valves/engine-1-opv-valve-cmd-schedule">
 				/systems/pneumatics/valves/engine-1-opv-valve-cmd-schedule ne 0
@@ -279,7 +279,7 @@
 		<fcs_function name="/systems/pneumatics/valves/engine-2-opv-valve-cmd-schedule">
 			<function>
 				<table>
-					<independentVar lookup="row">/systems/pneumatics/psi/engine-2-upstream-prv</independentVar>
+					<independentVar lookup="row">/systems/pneumatics/psi/engine-2-downstream-prv</independentVar>
 					<tableData>
 						79   1.0
 						85   0.0
@@ -292,7 +292,7 @@
 			<default value="1"/>
 			<test logic="AND" value="0">
 				/systems/pneumatics/valves/engine-2-opv-valve-cmd eq 0.0
-				/systems/pneumatics/psi/engine-2-upstream-prv ge 35
+				/systems/pneumatics/psi/engine-2-downstream-prv ge 35
 			</test>
 			<test logic="OR" value="/systems/pneumatics/valves/engine-2-opv-valve-cmd-schedule">
 				/systems/pneumatics/valves/engine-2-opv-valve-cmd-schedule ne 0
@@ -515,21 +515,29 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/systems/pneumatics/psi/engine-1-downstream-opv">
+			<function>
+				<product>
+					<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+					<property>/systems/pneumatics/psi/engine-1-downstream-prv</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-2-downstream-opv">
+			<function>
+				<product>
+					<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+					<property>/systems/pneumatics/psi/engine-2-downstream-prv</property>
+				</product>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/systems/pneumatics/psi/engine-1-psi"> <!-- measured pressure. Is essentially pressure of the entire left system -->
 			<function>
 				<max>
-					<ifthen>
-						<nq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
-							<value>4</value>
-						</nq>
-						<v>-9999</v> <!-- ignore -->
-						<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
-					</ifthen>
-					<product>
-						<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
-						<property>/systems/pneumatics/psi/engine-1-downstream-prv</property>
-					</product>
+					<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
+					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
 				</max>
 			</function>
 		</fcs_function>
@@ -537,18 +545,8 @@
 		<fcs_function name="/systems/pneumatics/psi/engine-2-psi">
 			<function>
 				<max>
-					<ifthen>
-						<nq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
-							<value>4</value>
-						</nq>
-						<v>-9999</v> <!-- ignore -->
-						<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
-					</ifthen>
-					<product>
-						<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
-						<property>/systems/pneumatics/psi/engine-2-downstream-prv</property>
-					</product>
+					<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
+					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
 				</max>
 			</function>
 		</fcs_function>
@@ -562,7 +560,7 @@
 				/systems/pneumatics/source/apu-psi ne 0
 			</test>
 			<test logic="AND" value="3"> <!-- left prv -->
-				/systems/pneumatics/psi/engine-1-psi ne 0
+				/systems/pneumatics/psi/engine-1-downstream-opv ne 0
 			</test>
 			<test logic="AND" value="4"> <!-- right crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
@@ -582,7 +580,7 @@
 				/systems/pneumatics/valves/apu-bleed-valve ne 0
 			</test>
 			<test logic="AND" value="3"> <!-- right prv -->
-				/systems/pneumatics/psi/engine-2-psi ne 0
+				/systems/pneumatics/psi/engine-2-downstream-opv ne 0
 			</test>
 			<test logic="AND" value="4"> <!-- left crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
@@ -598,7 +596,7 @@
 						<property>/systems/pneumatics/source/apu-psi</property>
 						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
 					</product>
-					<property>/systems/pneumatics/psi/engine-1-psi</property>
+					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
 					<ifthen>
 						<eq>
 							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
@@ -626,6 +624,7 @@
 						<property>/systems/pneumatics/source/apu-psi</property>
 						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
 					</product>
+					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
 					<ifthen>
 						<eq>
 							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
@@ -637,7 +636,6 @@
 							<property>/systems/pneumatics/valves/crossbleed-valve</property>
 						</product>
 					</ifthen>
-					<property>/systems/pneumatics/psi/engine-2-psi</property>
 				</max>
 			</function>
 		</fcs_function>

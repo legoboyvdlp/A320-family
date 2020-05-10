@@ -203,6 +203,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	<system file="a320-spoiler"/>
 	<system file="a320-electrical"/>
 	<system file="a320-hydraulic"/>
+    <system file="a320-pneumatic"/>
 	<system file="a320-lights"/>
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>
@@ -210,7 +211,6 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	<system file="a320-fmgc"/>
 	
 	<flight_control name="none"/>
-	
 	<aerodynamics file="Systems/a320-aerodynamics.xml"/>
 	<external_reactions file="Systems/a320-external-reactions"/>
 

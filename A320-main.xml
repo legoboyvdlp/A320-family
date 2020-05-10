@@ -1171,8 +1171,10 @@
 			<psi>
 				<engine-1-psi type="double">0</engine-1-psi>
 				<engine-2-psi type="double">0</engine-2-psi>
-				<engine-1-upstream-prv type="double">0</engine-1-upstream-prv>
-				<engine-2-upstream-prv type="double">0</engine-2-upstream-prv>
+				<engine-1-downstream-prv type="double">0</engine-1-downstream-prv>
+				<engine-2-downstream-prv type="double">0</engine-2-downstream-prv>
+				<engine-1-downstream-opv type="double">0</engine-1-downstream-opv>
+				<engine-2-downstream-opv type="double">0</engine-2-downstream-opv>
 				<engine-1-upstream-src type="double">0</engine-1-upstream-src>
 				<engine-2-upstream-src type="double">0</engine-2-upstream-src>
 			</psi>
