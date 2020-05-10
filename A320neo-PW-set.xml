@@ -5,11 +5,6 @@
 <PropertyList include="A320-main.xml">
 
 	<sim>
-	
-		<sound>
-			<path>Aircraft/A320-family/Sounds/leapx-sound.xml</path>
-		</sound>
-		<checklists include="A32X-Checklists.xml"/>
 		<description>Airbus A320-271N (PurePower 1127G)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A320neo-PW</aero>
@@ -27,6 +22,10 @@
 			<cockpit type="int">5</cockpit>
 			<model type="int">4</model>
 		</rating>
+		
+		<sound>
+			<path>Aircraft/A320-family/Sounds/leapx-sound.xml</path>
+		</sound>
 		
 		<previews>
 			<preview>
@@ -163,25 +162,17 @@
 			</config>
 		</view>
 		
-		<systems>
-      <wingflexer include="Systems/wingflexer-params.xml"/>
-      <property-rule n="100">
-        <name>wing flexer property rule</name>
-        <path>Aircraft/Generic/wingflexer.xml</path>
-      </property-rule>
-    </systems>
-		
 		<systems n="0">
-            <autopilot n="0"> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM FADEC -->
-                <path>Aircraft/A320-family/Systems/fadec-cfm.xml</path>
-            </autopilot>
+			<autopilot n="0"> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM FADEC -->
+				<path>Aircraft/A320-family/Systems/fadec-cfm.xml</path>
+			</autopilot>
 			<autopilot n="10">
 				<path>Aircraft/A320-family/Systems/leapx-sound.xml</path>
 			</autopilot>
 		</systems>
 
 	</sim>
-        
+		
 	<limits>
 		<mass-and-balance> <!--Data source: TCDS WV 55 -->
 			<maximum-takeoff-mass-lbs>174200</maximum-takeoff-mass-lbs>
