@@ -19,6 +19,7 @@
 			<fallback-model-index>212</fallback-model-index>
 
 			<autopush include="AircraftConfig/autopush-config.xml"/>
+			<display-contrast type="double">0.7</display-contrast>
 			<icing>
 				<iceable>
 					<name>Wing</name>
