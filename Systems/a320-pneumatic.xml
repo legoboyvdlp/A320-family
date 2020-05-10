@@ -764,7 +764,7 @@
 							<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
 							<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
 							<property>/engines/engine[1]/egt-actual</property>
-							<value>0.36</value>
+							<value>2.45</value>
 						</product>
 						<product>
 							<property>/systems/pneumatics/valves/apu-bleed-valve</property>

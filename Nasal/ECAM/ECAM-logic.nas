@@ -1535,7 +1535,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2BleedLowTempIcing);
 	}
 	
-	if (eng1BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed1NotShutOutput.getBoolValue()) {
+	if (eng1BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed1NotShutOutput.getValue() == 1) {
 		eng1BleedNotClsd.active = 1;
 		if (systems.PNEU.Switch.bleed1.getBoolValue()) {
 			eng1BleedNotClsdOff.active = 1;
@@ -1547,7 +1547,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1BleedNotClsdOff);
 	}
 	
-	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed2NotShutOutput.getBoolValue()) {
+	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed2NotShutOutput.getValue == 1) {
 		eng2BleedNotClsd.active = 1;
 		if (systems.PNEU.Switch.bleed2.getBoolValue()) {
 			eng2BleedNotClsdOff.active = 1;
