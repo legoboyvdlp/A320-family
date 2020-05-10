@@ -17,7 +17,7 @@ var wowNode    = props.globals.getNode("fdm/jsbsim/position/wow", 1);
 var apu_rpm    = props.globals.getNode("engines/engine[2]/n1", 1);
 var wing_pb    = props.globals.getNode("controls/switches/wing", 1);
 var apumaster  = props.globals.getNode("controls/apu/master", 1);
-var apu_bleedSw   = props.globals.getNode("controls/pneumatic/switches/bleedapu", 1);
+var apu_bleedSw   = props.globals.getNode("controls/pneumatics/switches/apu", 1);
 var gear       = props.globals.getNode("gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("controls/engines/engine[0]/cutoff-switch", 1);
 var cutoff2    = props.globals.getNode("controls/engines/engine[1]/cutoff-switch", 1);
@@ -1834,7 +1834,7 @@ var messages_right_memo = func {
 		ignition.active = 0;
 	}
 	
-	if (getprop("controls/pneumatic/switches/bleedapu") == 1 and getprop("engines/engine[2]/n1") >= 95) {
+	if (getprop("controls/pneumatics/switches/apu") == 1 and getprop("engines/engine[2]/n1") >= 95) {
 		apu_bleed.active = 1;
 	} else {
 		apu_bleed.active = 0;

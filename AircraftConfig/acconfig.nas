@@ -372,9 +372,9 @@ var beforestart_b = func {
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
 	setprop("/controls/electrical/switches/gen-2", 1);
-	setprop("/controls/pneumatic/switches/bleedapu", 1);
-	setprop("/controls/pneumatic/switches/bleed1", 1);
-	setprop("/controls/pneumatic/switches/bleed2", 1);
+	setprop("/controls/pneumatics/switches/apu", 1);
+	setprop("/controls/pneumatics/switches/bleed-1", 1);
+	setprop("/controls/pneumatics/switches/bleed-2", 1);
 	setprop("/controls/pneumatics/switches/pack-1", 1);
 	setprop("/controls/pneumatics/switches/pack-2", 1);
 	setprop("/controls/adirs/ir[0]/knob","1");
@@ -464,9 +464,9 @@ var taxi_b = func {
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
 	setprop("/controls/electrical/switches/gen-2", 1);
-	setprop("/controls/pneumatic/switches/bleedapu", 1);
-	setprop("/controls/pneumatic/switches/bleed1", 1);
-	setprop("/controls/pneumatic/switches/bleed2", 1);
+	setprop("/controls/pneumatics/switches/apu", 1);
+	setprop("/controls/pneumatics/switches/bleed-1", 1);
+	setprop("/controls/pneumatics/switches/bleed-2", 1);
 	setprop("/controls/pneumatics/switches/pack-1", 1);
 	setprop("/controls/pneumatics/switches/pack-2", 1);
 	setprop("/controls/adirs/ir[0]/knob","1");
@@ -514,7 +514,7 @@ var taxi_d = func {
 	# After Start items.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);
-	setprop("/controls/pneumatic/switches/bleedapu", 0);
+	setprop("/controls/pneumatics/switches/apu", 0);
 	setprop("/controls/gear/brake-left", 0);
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);

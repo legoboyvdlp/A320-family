@@ -304,7 +304,7 @@ setlistener("controls/apu/master", func() {
 	}
 }, 0, 0);
 
-setlistener("controls/pneumatic/switches/bleedapu", func() {
+setlistener("controls/pneumatics/switches/apu", func() {
 	if (APUController.APU != nil) {
 		if (APUNodes.Controls.bleed.getValue()) {
 			APUController.APU.signals.bleedWasUsed = 1;

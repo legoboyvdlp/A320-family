@@ -74,9 +74,9 @@ var guard = 0;
 
 var PNEU = {
 	init: func() {
-		setprop("controls/pneumatic/switches/bleed1", 1);
-		setprop("controls/pneumatic/switches/bleed2", 1);
-		setprop("controls/pneumatic/switches/bleedapu", 0);
+		setprop("controls/pneumatics/switches/bleed-1", 1);
+		setprop("controls/pneumatics/switches/bleed-2", 1);
+		setprop("controls/pneumatics/switches/apu", 0);
 		setprop("controls/pneumatic/switches/groundair", 0);
 		setprop("controls/pneumatics/switches/pack-1", 1);
 		setprop("controls/pneumatics/switches/pack-2", 1);
@@ -165,9 +165,9 @@ var PNEU = {
 		setprop("systems/pneumatic/precooler-2-ovht", 0);
 	},
 	loop: func() {
-		bleed1_sw = getprop("controls/pneumatic/switches/bleed1");
-		bleed2_sw = getprop("controls/pneumatic/switches/bleed2");
-		bleedapu_sw = getprop("controls/pneumatic/switches/bleedapu");
+		bleed1_sw = getprop("controls/pneumatics/switches/bleed-1");
+		bleed2_sw = getprop("controls/pneumatics/switches/bleed-2");
+		bleedapu_sw = getprop("controls/pneumatics/switches/apu");
 		pack1_sw = getprop("controls/pneumatics/switches/pack-1");
 		pack2_sw = getprop("controls/pneumatics/switches/pack-2");
 		hot_air_sw = getprop("controls/pneumatic/switches/hot-air");

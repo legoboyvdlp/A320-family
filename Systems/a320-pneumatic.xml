@@ -560,7 +560,7 @@
 				/systems/pneumatics/source/apu-psi ne 0
 			</test>
 			<test logic="AND" value="3"> <!-- left prv -->
-				/systems/pneumatics/psi/engine-1-downstream-opv lt /systems/pneumatics/psi/crossbleed-duct-right
+				/systems/pneumatics/psi/engine-1-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-right
 			</test>
 			<test logic="AND" value="4"> <!-- right crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
@@ -580,7 +580,7 @@
 				/systems/pneumatics/valves/apu-bleed-valve ne 0
 			</test>
 			<test logic="AND" value="3"> <!-- right prv -->
-				/systems/pneumatics/psi/engine-2-downstream-opv lt /systems/pneumatics/psi/crossbleed-duct-left
+				/systems/pneumatics/psi/engine-2-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-left
 			</test>
 			<test logic="AND" value="4"> <!-- left crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
@@ -598,10 +598,10 @@
 					</product>
 					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
 					<ifthen>
-						<eq>
+						<nq>
 							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
 							<value>4</value>
-						</eq>
+						</nq>
 						<v>-9999</v> <!-- ignore -->
 						<product>
 							<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
@@ -626,10 +626,10 @@
 					</product>
 					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
 					<ifthen>
-						<eq>
+						<nq>
 							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
 							<value>4</value>
-						</eq>
+						</nq>
 						<v>-9999</v> <!-- ignore -->
 						<product>
 							<property>/systems/pneumatics/psi/crossbleed-duct-left</property>

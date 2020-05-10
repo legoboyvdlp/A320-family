@@ -1169,6 +1169,10 @@
 				<ovht-2 type="double">0</ovht-2>
 			</precooler>
 			<psi>
+				<crossbleed-duct-left type="double">0</crossbleed-duct-left>
+				<crossbleed-duct-right type="double">0</crossbleed-duct-right>
+				<crossbleed-duct-left-src type="int">0</crossbleed-duct-left-src>
+				<crossbleed-duct-right-src type="int">0</crossbleed-duct-right-src>
 				<engine-1-psi type="double">0</engine-1-psi>
 				<engine-2-psi type="double">0</engine-2-psi>
 				<engine-1-downstream-prv type="double">0</engine-1-downstream-prv>
@@ -1180,6 +1184,7 @@
 			</psi>
 			<source>
 				<apu-psi type="double">0</apu-psi>
+				<gnd-psi type="double">0</gnd-psi>
 				<engine-1-lp-psi type="double">0</engine-1-lp-psi>
 				<engine-2-lp-psi type="double">0</engine-2-lp-psi>
 				<engine-1-hp-psi type="double">0</engine-1-hp-psi>
@@ -1188,18 +1193,24 @@
 			<valves>
 				<apu-bleed-valve type="double">0</apu-bleed-valve>
 				<crossbleed-valve type="double">0</crossbleed-valve>
+				<engine-1-lp-valve type="double">0</engine-1-lp-valve>
+				<engine-2-lp-valve type="double">0</engine-2-lp-valve>
+				<engine-1-hp-valve type="double">0</engine-1-hp-valve>
+				<engine-2-hp-valve type="double">0</engine-2-hp-valve>
+				<engine-1-opv-valve type="double">0</engine-1-opv-valve>
+				<engine-2-opv-valve type="double">0</engine-2-opv-valve>
 				<engine-1-prv-valve type="double">0</engine-1-prv-valve>
 				<engine-2-prv-valve type="double">0</engine-2-prv-valve>
 				<engine-1-prv-valve-disag type="bool">0</engine-1-prv-valve-disag>
 				<engine-2-prv-valve-disag type="bool">0</engine-2-prv-valve-disag>
-				<engine-1-opv-valve type="double">0</engine-1-opv-valve>
-				<engine-2-opv-valve type="double">0</engine-2-opv-valve>
 				<pack-1 type="double">0</pack-1>
 				<pack-2 type="double">0</pack-2>
 				<starter-valve-1 type="double">0</starter-valve-1>
 				<starter-valve-2 type="double">0</starter-valve-2>
 			</valves>
 			<warnings>
+				<apu-bleed-not-on-cmd type="bool">0</apu-bleed-not-on-cmd>
+				<apu-bleed-not-on type="double">0</apu-bleed-not-on>
 				<crossbleed-disag type="bool">0</crossbleed-disag>
 				<crossbleed-disag-open type="bool">0</crossbleed-disag-open>
 			</warnings>
