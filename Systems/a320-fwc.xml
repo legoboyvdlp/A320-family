@@ -41,7 +41,6 @@
             <rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
         </actuator>
 		
-		
 		<actuator name="/ECAM/warnings/timer/bleed-1-fault-output">
             <description>Timer for the ECAM system</description>
             <input>/ECAM/warnings/timer/bleed-1-fault</input>
@@ -68,6 +67,55 @@
             <input>/systems/pneumatics/warnings/crossbleed-disag</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-apu-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/prv-1-not-shut-apu</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/prv-2-not-shut-apu-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/prv-2-not-shut-apu</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/prv-1-not-shut</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/prv-2-not-shut-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/prv-2-not-shut</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/bleed-1-and-2-low-temp-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/timer/bleed-1-and-2-low-temp</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.00185185</rate_limit> <!-- 540 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/bleed-1-low-temp-output">
+            <description>Timer for the ECAM system</description>
+            <input>/systems/pneumatics/warnings/lowtemp-1</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/bleed-2-low-temp-output">
+            <description>Timer for the ECAM system</description>
+            <input>/systems/pneumatics/warnings/lowtemp-2</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
         </actuator>
 	</channel>
 	
@@ -97,6 +145,90 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/prv-1-not-shut-apu">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/apu/available eq 1
+				/controls/pneumatics/switches/apu eq 1
+				/systems/pneumatics/valves/engine-1-prv-valve-disag eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/prv-2-not-shut-apu">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/apu/available eq 1
+				/controls/pneumatics/switches/apu eq 1
+				/systems/pneumatics/valves/engine-2-prv-valve-disag eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/prv-1-not-shut-apu-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/controls/pneumatics/switches/bleed-1 eq 0
+					/ECAM/warnings/logic/engine-1-prv-valve-falling-pulse eq 0 <!-- inverse -->
+				</test>
+				/ECAM/warning-phase eq 1
+				<test logic="AND">
+					/engines/engine[0]/state eq 3
+					<test logic="AND">
+						/ECAM/warnings/logic/apu-bleed-sw-pulse eq 1
+						/controls/pneumatics/switches/apu eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/prv-2-not-shut-apu-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/controls/pneumatics/switches/bleed-2 eq 0
+					/ECAM/warnings/logic/engine-2-prv-valve-falling-pulse eq 0 <!-- inverse -->
+				</test>
+				/ECAM/warning-phase eq 1
+				<test logic="AND">
+					/engines/engine[1]/state eq 3
+					<test logic="AND">
+						/ECAM/warnings/logic/apu-bleed-sw-pulse eq 1
+						/controls/pneumatics/switches/apu eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/prv-1-not-shut">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/prv-1-not-shut-apu-flipflop-output eq 1
+				<test logic="AND">
+					/engines/engine[0]/state ne 3
+					/systems/pneumatics/valves/engine-1-prv-valve-disag eq 1
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/starter-valve-1 ne 0
+					/systems/pneumatics/valves/engine-1-prv-valve-disag eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/prv-2-not-shut">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/prv-2-not-shut-apu-flipflop-output eq 1
+				<test logic="AND">
+					/engines/engine[1]/state ne 3
+					/systems/pneumatics/valves/engine-2-prv-valve-disag eq 1
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/starter-valve-2 ne 0
+					/systems/pneumatics/valves/engine-2-prv-valve-disag eq 1
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/crossbleed-fault">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -119,6 +251,162 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/bleed-low-temp-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/controls/switches/wing eq 0
+					/ECAM/warnings/logic/wai-falling-pulse eq 0
+				</test>
+				/gear/gear[1]/wow eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-not-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/state ne 3
+				/controls/pneumatics/switches/bleed-1 eq 0
+				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-not-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[1]/state ne 3
+				/controls/pneumatics/switches/bleed-2 eq 0
+				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-or-2-not-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/bleed-1-not-avail eq 1
+				/ECAM/warnings/logic/bleed-2-not-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-apu-is-in-use">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/apu/available eq 1
+				/controls/pneumatics/switches/apu eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/bleed-1-not-avail eq 0
+				/ECAM/warnings/logic/bleed-apu-is-in-use eq 1
+				<test logic="AND">
+					/systems/pneumatics/valves/crossbleed-valve eq 1
+					/ECAM/warnings/logic/bleed-2-not-avail eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/bleed-2-not-avail eq 0
+				<test logic="AND">
+					/systems/pneumatics/valves/crossbleed-valve eq 1
+					<test logic="OR">
+						/ECAM/warnings/logic/bleed-1-not-avail eq 0
+						/ECAM/warnings/logic/bleed-apu-is-in-use eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-wai-avail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-apu-is-in-use eq 0
+				/ECAM/warnings/logic/bleed-1-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-wai-avail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-apu-is-in-use eq 0
+				/ECAM/warnings/logic/bleed-2-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-lo-temp-xbleed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-2-wai-avail eq 1  <!-- deliberate -->
+				/systems/pneumatics/valves/crossbleed-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-lo-temp-bleed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-2-wai-avail eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-lo-temp-pack">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-2-wai-avail eq 1
+				/controls/pneumatics/switches/pack-1 eq 1
+				/controls/pneumatics/switches/pack-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-lo-temp-unsucc">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/bleed-2-wai-avail eq 0
+				/ECAM/warnings/logic/bleed-1-lo-temp-xbleed eq 1
+				/ECAM/warnings/logic/bleed-1-lo-temp-bleed eq 1
+				/ECAM/warnings/logic/bleed-1-lo-temp-pack eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-lo-temp-xbleed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-1-wai-avail eq 1 <!-- deliberate -->
+				/systems/pneumatics/valves/crossbleed-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-lo-temp-bleed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-1-wai-avail eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-lo-temp-pack">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-1-wai-avail eq 1
+				/controls/pneumatics/switches/pack-1 eq 1
+				/controls/pneumatics/switches/pack-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-lo-temp-unsucc">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/bleed-1-wai-avail eq 0
+				/ECAM/warnings/logic/bleed-2-lo-temp-xbleed eq 1
+				/ECAM/warnings/logic/bleed-2-lo-temp-bleed eq 1
+				/ECAM/warnings/logic/bleed-2-lo-temp-pack eq 1
+			</test>
+		</switch>
 	</channel>
 
 </system>

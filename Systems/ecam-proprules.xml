@@ -400,15 +400,14 @@
 		<output>ECAM/phases/monostable/to-power-set-output</output>
 	</flipflop>
 	
-	<!-- take inverse of this for rising pulse -->
+	<!-- when -pulse is true and switch is true -->
 	<flipflop>
         <type>monostable</type>
-        <inverted type="bool">true</inverted>
         <time>
             <value>1.0</value>
         </time>
         <S>
-            <property>/controls/switches/wing</property>
+            <not><property>/controls/switches/wing</property></not>
         </S>
         <output>/ECAM/phases/wing-anti-ice-pulse</output>
     </flipflop>
@@ -426,7 +425,6 @@
 		<output>/ECAM/warnings/timer/xbleed-fault-output-10</output>
 	</flipflop>
 	
-	
 	<flipflop>
 		<type>monostable</type>
 		<inverted type="bool">true</inverted>
@@ -437,6 +435,135 @@
 			<property>/controls/engines/engine[0]/fire-btn</property>
 		</S>
 		<output>/ECAM/warnings/timer/xbleed-fault-output-15</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/prv-1-not-shut-apu-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/prv-1-not-shut-apu-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/prv-1-not-shut-apu-flipflop-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/prv-2-not-shut-apu-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/prv-2-not-shut-apu-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/prv-2-not-shut-apu-flipflop-output</output>
+	</flipflop>
+	
+	<!-- falling edge detector, take inverse -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/systems/pneumatics/valves/engine-1-prv-valve-disag</property>
+		</S>
+		<output>/ECAM/warnings/logic/engine-1-prv-valve-falling-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/systems/pneumatics/valves/engine-2-prv-valve-disag</property>
+		</S>
+		<output>/ECAM/warnings/logic/engine-2-prv-valve-falling-pulse</output>
+	</flipflop>
+	
+	<!-- rising detector: when -pulse is true and switch is true -->
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/bleed-1</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/bleed-sw1-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/bleed-2</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/bleed-sw2-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/apu</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/apu-bleed-sw-pulse</output>
+    </flipflop>
+	
+	<!-- Bleed Low Temp -->
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/bleed-1-low-temp-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-low-temp-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/bleed-2-low-temp-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-low-temp-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output</output>
+	</flipflop>
+	
+	<!-- falling detector, when this is false, and switch is false -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/controls/switches/wing</property>
+		</S>
+		<output>/ECAM/warnings/logic/wai-falling-pulse</output>
 	</flipflop>
 	
 </PropertyList>

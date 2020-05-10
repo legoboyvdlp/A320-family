@@ -1273,7 +1273,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed2Fault.setValue(0);
 	}
 	
-	if (bleed2Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or getprop("/ECAM/phases/wing-anti-ice-pulse"))) { # inverse pulse
+	if (bleed2Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/switches/wing")))) { # inverse pulse
 		bleed2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed2Fault);
@@ -1370,6 +1370,193 @@ var messages_priority_2 = func {
 		bleedMon2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleedMon2Fault);
+	}
+	
+	if (warningNodes.Flipflops.bleed1LowTemp.getValue() and warningNodes.Flipflops.bleed2LowTemp.getValue()) {
+		warningNodes.Timers.bleed1And2LoTemp.setValue(1);
+	} else {
+		warningNodes.Timers.bleed1And2LoTemp.setValue(0);
+	}	
+	
+	if (engBleedLowTemp.clearFlag == 0 and warningNodes.Timers.bleed1And2LoTempOutput.getValue() == 1 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6 or phaseVar == 7)) {
+		engBleedLowTemp.active = 1;
+		
+		if (engBleedLowTempAthr.clearFlag == 0 and fmgc.Output.athr.getValue()) {
+			engBleedLowTempAthr.active = 1;
+		} else {
+			ECAM_controller.warningReset(engBleedLowTempAthr);
+		}
+		
+		if (engBleedLowTempAdv.clearFlag == 0) {
+			engBleedLowTempAdv.active = 1;
+		} else {
+			ECAM_controller.warningReset(engBleedLowTempAdv);
+		}
+		
+		if (engBleedLowTempSucc.clearFlag == 0) {
+			engBleedLowTempSucc.active = 1;
+		} else {
+			ECAM_controller.warningReset(engBleedLowTempSucc);
+		}
+		
+		if (engBleedLowTempIce.clearFlag == 0) {
+			engBleedLowTempIce.active = 1;
+		} else {
+			ECAM_controller.warningReset(engBleedLowTempIce);
+		}
+		
+		if (engBleedLowTempIcing.clearFlag == 0) {
+			engBleedLowTempIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(engBleedLowTempIcing);
+		}
+	} else {
+		ECAM_controller.warningReset(engBleedLowTemp);
+		ECAM_controller.warningReset(engBleedLowTempAthr);
+		ECAM_controller.warningReset(engBleedLowTempAdv);
+		ECAM_controller.warningReset(engBleedLowTempSucc);
+		ECAM_controller.warningReset(engBleedLowTempIce);
+		ECAM_controller.warningReset(engBleedLowTempIcing);
+	}
+	
+	if (eng1BleedLowTemp.clearFlag == 0 and warningNodes.Flipflops.bleed1LowTemp.getValue() == 1 and warningNodes.Flipflops.bleed2LowTemp.getValue() == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6 or phaseVar == 7)) {
+		eng1BleedLowTemp.active = 1;
+		
+		if (eng1BleedLowTempAthr.clearFlag == 0 and fmgc.Output.athr.getValue()) {
+			eng1BleedLowTempAthr.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1BleedLowTempAthr);
+		}
+		
+		if (eng1BleedLowTempAdv.clearFlag == 0) {
+			eng1BleedLowTempAdv.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1BleedLowTempAdv);
+		}
+		
+		if (eng1BleedLowTempSucc.clearFlag == 0 and warningNodes.Logic.bleed1LoTempUnsuc.getValue()) {
+			eng1BleedLowTempSucc.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng1BleedLowTempSucc);
+		}
+		
+		if (eng1BleedLowTempXBld.clearFlag == 0 and warningNodes.Logic.bleed1LoTempXbleed.getValue()) {
+			eng1BleedLowTempXBld.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng1BleedLowTempXBld);
+		}
+		
+		if (eng1BleedLowTempOff.clearFlag == 0 and warningNodes.Logic.bleed1LoTempBleed.getValue()) {
+			eng1BleedLowTempOff.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng1BleedLowTempOff);
+		}
+		
+		if (eng1BleedLowTempPack.clearFlag == 0 and warningNodes.Logic.bleed1LoTempPack.getValue()) {
+			eng1BleedLowTempPack.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng1BleedLowTempPack);
+		}
+		
+		if (eng1BleedLowTempIce.clearFlag == 0 and !warningNodes.Logic.bleed2WaiAvail.getValue()) { # on purpose
+			eng1BleedLowTempIce.active = 1;
+			eng1BleedLowTempIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1BleedLowTempIce);
+			ECAM_controller.warningReset(eng1BleedLowTempIcing);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1BleedLowTemp);
+		ECAM_controller.warningReset(eng1BleedLowTempAthr);
+		ECAM_controller.warningReset(eng1BleedLowTempAdv);
+		ECAM_controller.warningReset(eng1BleedLowTempSucc);
+		ECAM_controller.warningReset(eng1BleedLowTempXBld);
+		ECAM_controller.warningReset(eng1BleedLowTempOff);
+		ECAM_controller.warningReset(eng1BleedLowTempPack);
+		ECAM_controller.warningReset(eng1BleedLowTempIce);
+		ECAM_controller.warningReset(eng1BleedLowTempIcing);
+	}
+	
+	if (eng2BleedLowTemp.clearFlag == 0 and warningNodes.Flipflops.bleed1LowTemp.getValue() == 0 and warningNodes.Flipflops.bleed2LowTemp.getValue() == 1 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6 or phaseVar == 7)) {
+		eng2BleedLowTemp.active = 1;
+		
+		if (eng2BleedLowTempAthr.clearFlag == 0 and fmgc.Output.athr.getValue()) {
+			eng2BleedLowTempAthr.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2BleedLowTempAthr);
+		}
+		
+		if (eng2BleedLowTempAdv.clearFlag == 0) {
+			eng2BleedLowTempAdv.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2BleedLowTempAdv);
+		}
+		
+		if (eng2BleedLowTempSucc.clearFlag == 0 and warningNodes.Logic.bleed2LoTempUnsuc.getValue()) {
+			eng2BleedLowTempSucc.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng2BleedLowTempSucc);
+		}
+		
+		if (eng2BleedLowTempXBld.clearFlag == 0 and warningNodes.Logic.bleed2LoTempXbleed.getValue()) {
+			eng2BleedLowTempXBld.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng2BleedLowTempXBld);
+		}
+		
+		if (eng2BleedLowTempOff.clearFlag == 0 and warningNodes.Logic.bleed2LoTempBleed.getValue()) {
+			eng2BleedLowTempOff.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng2BleedLowTempOff);
+		}
+		
+		if (eng2BleedLowTempPack.clearFlag == 0 and warningNodes.Logic.bleed2LoTempPack.getValue()) {
+			eng2BleedLowTempPack.active = 1;
+		} else {	
+			ECAM_controller.warningReset(eng2BleedLowTempPack);
+		}
+		
+		if (eng2BleedLowTempIce.clearFlag == 0 and !warningNodes.Logic.bleed1WaiAvail.getValue()) { # on purpose
+			eng2BleedLowTempIce.active = 1;
+			eng2BleedLowTempIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2BleedLowTempIce);
+			ECAM_controller.warningReset(eng2BleedLowTempIcing);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2BleedLowTemp);
+		ECAM_controller.warningReset(eng2BleedLowTempAthr);
+		ECAM_controller.warningReset(eng2BleedLowTempAdv);
+		ECAM_controller.warningReset(eng2BleedLowTempSucc);
+		ECAM_controller.warningReset(eng2BleedLowTempXBld);
+		ECAM_controller.warningReset(eng2BleedLowTempOff);
+		ECAM_controller.warningReset(eng2BleedLowTempPack);
+		ECAM_controller.warningReset(eng2BleedLowTempIce);
+		ECAM_controller.warningReset(eng2BleedLowTempIcing);
+	}
+	
+	if (eng1BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed1NotShutOutput.getBoolValue()) {
+		eng1BleedNotClsd.active = 1;
+		if (systems.PNEU.Switch.bleed1.getBoolValue()) {
+			eng1BleedNotClsdOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1BleedNotClsdOff);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1BleedNotClsd);
+		ECAM_controller.warningReset(eng1BleedNotClsdOff);
+	}
+	
+	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed2NotShutOutput.getBoolValue()) {
+		eng2BleedNotClsd.active = 1;
+		if (systems.PNEU.Switch.bleed2.getBoolValue()) {
+			eng2BleedNotClsdOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2BleedNotClsdOff);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2BleedNotClsd);
+		ECAM_controller.warningReset(eng2BleedNotClsdOff);
 	}
 	
 	# Eng fire

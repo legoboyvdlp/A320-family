@@ -33,6 +33,16 @@ var warningNodes = {
 	Logic: {
 		crossbleedFault: props.globals.initNode("/ECAM/warnings/logic/crossbleed-fault"),
 		crossbleedWai: props.globals.initNode("/ECAM/warnings/logic/crossbleed-wai"),
+		bleed1LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-unsucc"),
+		bleed1LoTempXbleed: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-xbleed"),
+		bleed1LoTempBleed: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-bleed"),
+		bleed1LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-pack"),
+		bleed1WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-1-wai-avail"),
+		bleed2LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-unsucc"),
+		bleed2LoTempXbleed: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-xbleed"),
+		bleed2LoTempBleed: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-bleed"),
+		bleed2LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-pack"),
+		bleed2WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-2-wai-avail"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -40,6 +50,14 @@ var warningNodes = {
 		bleed1FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault-output"),
 		bleed2Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault"),
 		bleed2FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault-output"),
+		bleed1NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-1-not-shut-output"),
+		bleed2NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-2-not-shut-output"),
+		bleed1And2LoTemp: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp"),
+		bleed1And2LoTempOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp-output"),
+	},
+	Flipflops: {
+		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
+		bleed2LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output"),
 	},
 };
 

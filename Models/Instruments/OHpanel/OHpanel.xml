@@ -116,11 +116,7 @@
 		<object-name>Eng1AntiIceBtn2O</object-name>
 		<object-name>Eng2AntiIceBtn1F</object-name>
 		<object-name>Eng2AntiIceBtn2O</object-name>
-		<object-name>Eng1BleedBtn1F</object-name>
-		<object-name>Eng1BleedBtn2O</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
-		<object-name>Eng2BleedBtn1F</object-name>
-		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<object-name>EvacCommandBtn1E</object-name>
 		<object-name>EvacCommandBtn2O</object-name>
@@ -179,6 +175,30 @@
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
+				<value>25</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng1BleedBtn1F</object-name>
+		<object-name>Eng1BleedBtn2O</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>systems/electrical/bus/dc-ess-shed</property>
+				<value>25</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng2BleedBtn1F</object-name>
+		<object-name>Eng2BleedBtn2O</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>systems/electrical/bus/dc-2</property>
 				<value>25</value>
 			</greater-than-equals>
 		</condition>
@@ -4168,7 +4188,7 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-ess-shed</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
@@ -4189,7 +4209,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/bleed1-fault</property>
+						<property>systems/pneumatics/warnings/bleed1-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -4308,7 +4328,7 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
@@ -4329,7 +4349,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/bleed2-fault</property>
+						<property>systems/pneumatics/warnings/bleed2-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>

@@ -1211,6 +1211,8 @@
 			<warnings>
 				<apu-bleed-not-on-cmd type="bool">0</apu-bleed-not-on-cmd>
 				<apu-bleed-not-on type="double">0</apu-bleed-not-on>
+				<bleed1-fault type="bool">0</bleed1-fault>
+				<bleed2-fault type="bool">0</bleed2-fault>
 				<crossbleed-disag type="bool">0</crossbleed-disag>
 				<crossbleed-disag-open type="bool">0</crossbleed-disag-open>
 			</warnings>
