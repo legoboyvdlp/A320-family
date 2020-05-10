@@ -44,17 +44,12 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/yellowHydPump.wav</path>
 			<condition>
-				<and>
-					<equals>
-						<property>/sim/current-view/internal</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/elec-pump-yellow</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>controls/hydraulic/elec-pump-yellow</property>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>0.8</factor>
+			</volume>
 		</hyd-yellow>
 		
 		<hyd>
@@ -68,7 +63,8 @@
 				</or>
 			</condition>
 			<volume>
-				<value>0.8</value>
+				<property>/sim/current-view/internal</property>
+				<factor>0.8</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -85,7 +81,8 @@
 				</equals>
 			</condition>
 			<volume>
-				<value>0.8</value>
+				<property>/sim/current-view/internal</property>
+				<factor>0.8</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -102,7 +99,8 @@
 				</equals>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -119,7 +117,8 @@
 				</equals>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -136,7 +135,8 @@
 				</equals>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -171,7 +171,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -215,7 +216,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -257,7 +259,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -299,7 +302,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -341,7 +345,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -383,7 +388,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -425,7 +431,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -467,7 +474,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -509,7 +517,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -547,7 +556,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -585,7 +595,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -623,7 +634,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -661,7 +673,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -713,7 +726,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -763,7 +777,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -797,7 +812,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -831,7 +847,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -911,7 +928,8 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>8</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
 			</volume>
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -942,6 +960,7 @@
 				</and>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>40.0</factor>
 			</volume>
 		</apoff>
@@ -971,6 +990,7 @@
 				</and>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>40.0</factor>
 			</volume>
 		</apoff>
@@ -1163,6 +1183,9 @@
 					<value>IDLE</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1175,6 +1198,9 @@
 					<value>IDLE</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1187,6 +1213,9 @@
 					<value>MAN</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1199,6 +1228,9 @@
 					<value>MAN</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1211,6 +1243,9 @@
 					<value>CL</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1223,6 +1258,9 @@
 					<value>CL</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1235,6 +1273,9 @@
 					<value>MAN THR</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1247,6 +1288,9 @@
 					<value>MAN THR</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1259,6 +1303,9 @@
 					<value>MCT</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1271,6 +1318,9 @@
 					<value>MCT</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1283,6 +1333,9 @@
 					<value>TOGA</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1295,6 +1348,9 @@
 					<value>TOGA</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1307,6 +1363,9 @@
 					<value>0</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1319,6 +1378,9 @@
 					<value>0</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<detenta>
@@ -1331,6 +1393,9 @@
 					<value>1</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detenta>
 		
 		<detentb>
@@ -1343,6 +1408,9 @@
 					<value>1</value>
 				</equals>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</detentb>
 		
 		<sb>
@@ -1358,7 +1426,11 @@
 					<property>/sim/sounde/seatbelt-sign</property>
 				</and>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</sb>
+		
 		<ns>
 			<mode>once</mode>
 			<name>ns</name>
@@ -1372,6 +1444,9 @@
 					<property>/sim/sounde/no-smoking-sign</property>
 				</and>
 			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
 		</ns>
 		
 		<switch>
@@ -1382,6 +1457,7 @@
 				<property>/sim/sounde/btn1</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1394,6 +1470,7 @@
 				<property>/sim/sounde/apdiscbtn</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1406,6 +1483,7 @@
 				<property>/sim/sounde/oh-btn</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1418,6 +1496,7 @@
 				<property>/sim/sounde/btn3</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1430,6 +1509,7 @@
 				<property>/sim/sounde/knb1</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</switch>
@@ -1442,6 +1522,7 @@
 				<property>/sim/sounde/switch1</property>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1453,10 +1534,10 @@
 			<condition>
 				<and>
 					<property>/sim/sounde/flaps-click</property>
-					<property>/sim/current-view/internal</property>
 				</and>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1565,6 +1646,7 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
 			<property>/systems/electrical/sources/bat-1/contact</property>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>
 			</volume>
 		</relay>
@@ -1575,6 +1657,7 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
 			<property>/systems/electrical/sources/bat-2/contact</property>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>
 			</volume>
 		</relay>
@@ -1585,7 +1668,8 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-external.wav</path>
 			<property>/systems/electrical/relay/ext-epc/contact-pos</property>
 			<volume>
-				<factor>0.6</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>0.8</factor>
 			</volume>
 		</relay>
 		
@@ -1595,7 +1679,8 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-apu.wav</path>
 			<property>/systems/electrical/relay/apu-glc/contact-pos</property>
 			<volume>
-				<factor>0.6</factor>
+				<property>/sim/current-view/internal</property>
+				<factor>0.8</factor>
 			</volume>
 		</relay>
 	
@@ -1634,6 +1719,7 @@
 				</equals>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
@@ -1649,6 +1735,7 @@
 				</equals>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
@@ -1664,6 +1751,7 @@
 				</equals>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
@@ -1679,6 +1767,7 @@
 				</equals>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
@@ -1694,6 +1783,7 @@
 				</equals>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
@@ -1709,6 +1799,7 @@
 				</equals>
 			</condition>
 			<volume>
+				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
