@@ -739,13 +739,14 @@ var canvas_lowerECAM_bleed = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1","BLEED-APU-LINES",
-		"BLEED-ENG-1", "BLEED-HP-Valve-2", "BLEED-ENG-2", "BLEED-Precooler-1-Inlet-Press", "BLEED-Precooler-1-Outlet-Temp","BLEED-XFEEDLines",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1",
+		"BLEED-APU-LINES","BLEED-ENG-1", "BLEED-HP-Valve-2", "BLEED-ENG-2", "BLEED-Precooler-1-Inlet-Press", "BLEED-Precooler-1-Outlet-Temp",
 		"BLEED-Precooler-2-Inlet-Press", "BLEED-Precooler-2-Outlet-Temp", "BLEED-ENG-1-label", "BLEED-ENG-2-label",
-		"BLEED-GND", "BLEED-Pack-1-Flow-Valve", "BLEED-Pack-2-Flow-Valve", "BLEED-Pack-1-Out-Temp",
+		"BLEED-GND", "BLEED-Pack-1-Flow-Valve", "BLEED-Pack-2-Flow-Valve", "BLEED-Pack-1-Out-Temp","BLEED-APU-connectionTop",
 		"BLEED-Pack-1-Comp-Out-Temp", "BLEED-Pack-1-Packflow-needel", "BLEED-Pack-1-Bypass-needel", "BLEED-Pack-2-Out-Temp",
 		"BLEED-Pack-2-Bypass-needel", "BLEED-Pack-2-Comp-Out-Temp", "BLEED-Pack-2-Packflow-needel", "BLEED-Anti-Ice-Left",
-		"BLEED-Anti-Ice-Right", "BLEED-HP-2-connection", "BLEED-HP-1-connection", "BLEED-ANTI-ICE-ARROW-LEFT", "BLEED-ANTI-ICE-ARROW-RIGHT"];
+		"BLEED-Anti-Ice-Right", "BLEED-HP-2-connection", "BLEED-HP-1-connection", "BLEED-ANTI-ICE-ARROW-LEFT", "BLEED-ANTI-ICE-ARROW-RIGHT",
+		"BLEED-xbleedLeft","BLEED-xbleedCenter","BLEED-xbleedRight"];
 	},
 	update: func() {
 		# X BLEED
@@ -766,10 +767,12 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-XFEED"].setRotation(45 * D2R);
 		}
 		
-		if (xbleedstate != 0) {
-			me["BLEED-XFEEDLines"].show();
+		if (xbleedstate == 1) {
+			me["BLEED-xbleedCenter"].show();
+			me["BLEED-xbleedRight"].show();
 		} else {
-			me["BLEED-XFEEDLines"].hide();
+			me["BLEED-xbleedCenter"].hide();
+			me["BLEED-xbleedRight"].hide();
 		}
 
 		# HP valve 1
@@ -824,8 +827,16 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-APU-LINES"].show();
 			if (apu_valve_state2 == 1) {
 				me["BLEED-APU"].setRotation(0);
+				me["BLEED-APU-connectionTop"].show();
+				me["BLEED-xbleedLeft"].show();
 			} else {
 				me["BLEED-APU"].setRotation(90 * D2R);
+				me["BLEED-APU-connectionTop"].hide();
+				if (xbleed.getValue() != 1) {
+					me["BLEED-xbleedLeft"].hide();
+				} else {
+					me["BLEED-xbleedLeft"].show();
+				}
 			}
 			if (apuBleedNotOn.getValue() != 1) {
 				me["BLEED-APU"].setColor(0.0509,0.7529,0.2941);
@@ -833,7 +844,13 @@ var canvas_lowerECAM_bleed = {
 				me["BLEED-APU"].setColor(0.7333,0.3803,0);
 			}
 		} else {
+			if (xbleed.getValue() != 1) {
+				me["BLEED-xbleedLeft"].hide();
+			} else {
+				me["BLEED-xbleedLeft"].show();
+			}
 			me["BLEED-APU-LINES"].hide();
+			me["BLEED-APU-connectionTop"].hide();
 		}
 			
 		# ENG BLEED valve 2

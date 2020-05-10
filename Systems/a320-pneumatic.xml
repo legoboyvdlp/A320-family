@@ -648,12 +648,26 @@
 			<function>
 				<sum>
 					<property>/environment/temperature-degc</property>
-					<product>
-						<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
-						<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
-						<property>/engines/engine[0]/egt-actual</property>
-						<value>0.35</value>
-					</product>
+					<ifthen>
+						<nq>
+							<product>
+								<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
+								<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+							</product>
+							<value>0</value>
+						</nq>
+						<product>
+							<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
+							<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+							<property>/engines/engine[0]/egt-actual</property>
+							<value>0.35</value>
+						</product>
+						<product>
+							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+							<property>/systems/apu/egt-degC</property>
+							<value>0.40</value>
+						</product>
+					</ifthen>
 				</sum>
 			</function>
 		</fcs_function>
@@ -714,12 +728,26 @@
 			<function>
 				<sum>
 					<property>/environment/temperature-degc</property>
-					<product>
-						<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
-						<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
-						<property>/engines/engine[1]/egt-actual</property>
-						<value>0.35</value>
-					</product>
+					<ifthen>
+						<nq>
+							<product>
+								<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
+								<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+							</product>
+							<value>0</value>
+						</nq>
+						<product>
+							<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
+							<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+							<property>/engines/engine[1]/egt-actual</property>
+							<value>0.35</value>
+						</product>
+						<product>
+							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+							<property>/systems/apu/egt-degC</property>
+							<value>0.40</value>
+						</product>
+					</ifthen>
 				</sum>
 			</function>
 		</fcs_function>

@@ -42,8 +42,8 @@
      id="namedview371"
      showgrid="false"
      inkscape:zoom="0.73868665"
-     inkscape:cx="546.41121"
-     inkscape:cy="680.16775"
+     inkscape:cx="667.77011"
+     inkscape:cy="792.63918"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -293,26 +293,27 @@
      transform="rotate(90)"
      inkscape:label="#rect5105-6-4-5-0" />
   <g
+     id="BLEED-APU"
+     inkscape:label="#g3445"
+     transform="rotate(-90,880.67779,539.2177)" />
+  <g
      id="BLEED-APU-LINES"
-     inkscape:label="#g4686">
-    <g
-       transform="rotate(-90,880.67779,539.2177)"
-       inkscape:label="#g3445"
-       id="BLEED-APU">
-      <path
-         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
-         id="path5107-1-44-0"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="zzzzz" />
-      <rect
-         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect5105-2-5-3-6"
-         width="53.195583"
-         height="5.1203089"
-         x="817.61298"
-         y="169.28328" />
-    </g>
+     inkscape:label="#g1035">
+    <path
+       style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
+       id="path5107-1-44-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="zzzzz"
+       transform="rotate(-90,880.67777,539.21767)" />
+    <rect
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5105-2-5-3-6"
+       width="53.195583"
+       height="5.1203089"
+       x="817.61298"
+       y="169.28328"
+       transform="rotate(-90,880.67777,539.21767)" />
     <rect
        y="602.28253"
        x="510.74338"
@@ -320,14 +321,6 @@
        width="5.3955846"
        id="rect5105-6-4-5-1"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.27201295;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       inkscape:label="#rect5105-6-4-5-3"
-       y="465.25"
-       x="510.46811"
-       height="83.83696"
-       width="5.3955846"
-       id="BLEED-APU-connection"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.95566499;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
      id="BLEED-GND"
@@ -351,26 +344,32 @@
        d="m 394.46275,504.39542 h 29.17835 v 0 L 409.59225,480.539 v 0 z"
        style="fill:none;stroke:#cecdce;stroke-width:2.87359571;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
-  <g
-     id="BLEED-XFEEDLines"
-     inkscape:label="#g1014">
-    <rect
-       transform="rotate(90)"
-       y="-581.08691"
-       x="463.6044"
-       height="367.33694"
-       width="5.3955846"
-       id="rect5105-5"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:4.09363317;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-813.75"
-       x="464.18976"
-       height="175.90536"
-       width="4.7754087"
-       id="rect5105-5-7"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.66503072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
+  <rect
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.91679168;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="BLEED-APU-connectionTop"
+     width="5.3955846"
+     height="80.537186"
+     x="510.46811"
+     y="465.25"
+     inkscape:label="#rect5105-6-4-5-3" />
+  <rect
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:3.71239424;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="BLEED-xbleedLeft"
+     width="5.3955846"
+     height="302.10294"
+     x="463.6044"
+     y="-515.85291"
+     transform="rotate(90)"
+     inkscape:label="#rect5105-5" />
+  <rect
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.64573288;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="BLEED-xbleedRight"
+     width="4.7754087"
+     height="173.36708"
+     x="464.18976"
+     y="-813.75"
+     transform="rotate(90)"
+     inkscape:label="#rect5105-5-7" />
   <g
      id="BLEED-Pack-1-Flow-Valve"
      inkscape:label="#g3445"
@@ -1350,4 +1349,13 @@
        x="560.88452"
        y="976.25214"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#0dc04b">00</tspan></text>
+  <rect
+     transform="rotate(90)"
+     y="-580.51971"
+     x="463.6044"
+     height="64.666832"
+     width="5.3955846"
+     id="BLEED-xbleedCenter"
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.71758175;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:label="#rect1024" />
 </svg>
