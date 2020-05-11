@@ -2623,7 +2623,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L3S"].setText("MAG WIND");
 			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
-				me["Simple_L3"].setText(sprintf("%3.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
+				me["Simple_L3"].setText(sprintf("%03.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
 			} else {
 				me["Simple_L3"].setText("---g/---");;
 			}
