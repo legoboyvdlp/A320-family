@@ -78,15 +78,17 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="100"> <!-- pneumatic, so instant nearly -->
+			<test logic="OR" value="1"> <!-- pneumatic, so instant nearly -->
 				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
 		</switch>
 		
-		<actuator name="/systems/pneumatics/valves/engine-1-lp-valve">
-			<input>/systems/pneumatics/valves/engine-1-lp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-1-lp-valve-power</rate_limit>
-		</actuator>
+		<switch name="/systems/pneumatics/valves/engine-1-lp-valve">
+			<default value="/systems/pneumatics/valves/engine-1-lp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-1-lp-valve">
+				/systems/pneumatics/valves/engine-1-lp-valve-power eq 0
+			</test>
+		</switch>
 		
 		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-cmd">
 			<default value="1"/>
@@ -97,16 +99,17 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="100"> <!-- pneumatic, so instant nearly -->
+			<test logic="OR" value="1"> <!-- pneumatic, so instant nearly -->
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
 		
-		<actuator name="/systems/pneumatics/valves/engine-2-lp-valve">
-			<input>/systems/pneumatics/valves/engine-2-lp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-2-lp-valve-power</rate_limit>
-		</actuator>
-		
+		<switch name="/systems/pneumatics/valves/engine-2-lp-valve">
+			<default value="/systems/pneumatics/valves/engine-2-lp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-2-lp-valve">
+				/systems/pneumatics/valves/engine-2-lp-valve-power eq 0
+			</test>
+		</switch>
 		
 		<!-- High Pressure valve -->
 		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-cmd">
@@ -126,16 +129,18 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-power">
 			<default value="0"/>
-			<test logic="AND" value="3">
+			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/failures/pneumatics/hp-1-valve eq 0
 			</test>
 		</switch>
 		
-		<actuator name="/systems/pneumatics/valves/engine-1-hp-valve">
-			<input>/systems/pneumatics/valves/engine-1-hp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-1-hp-valve-power</rate_limit>
-		</actuator>
+		<switch name="/systems/pneumatics/valves/engine-1-hp-valve">
+			<default value="/systems/pneumatics/valves/engine-1-hp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-1-hp-valve">
+				/systems/pneumatics/valves/engine-1-hp-valve-power eq 0
+			</test>
+		</switch>
 		
 		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-cmd">
 			<default value="1"/>
@@ -154,16 +159,18 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-power">
 			<default value="0"/>
-			<test logic="AND" value="3">
+			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/pneumatics/hp-2-valve eq 0
 			</test>
 		</switch>
 		
-		<actuator name="/systems/pneumatics/valves/engine-2-hp-valve">
-			<input>/systems/pneumatics/valves/engine-2-hp-valve-cmd</input>
-			<rate_limit>/systems/pneumatics/valves/engine-2-hp-valve-power</rate_limit>
-		</actuator>
+		<switch name="/systems/pneumatics/valves/engine-2-hp-valve">
+			<default value="/systems/pneumatics/valves/engine-2-hp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-2-hp-valve">
+				/systems/pneumatics/valves/engine-2-hp-valve-power eq 0
+			</test>
+		</switch>
 		
 		<!-- Pressure regulation valve -->
 		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi-cmd">
