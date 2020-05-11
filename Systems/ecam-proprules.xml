@@ -566,4 +566,26 @@
 		<output>/ECAM/warnings/logic/wai-falling-pulse</output>
 	</flipflop>
 	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/bleed-1-off-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-1-off-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-1-off-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/bleed-2-off-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-2-off-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-2-off-flipflop</output>
+	</flipflop>
+	
 </PropertyList>

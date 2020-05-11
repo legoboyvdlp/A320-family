@@ -830,6 +830,16 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/pneumatics/warnings/lowtemp-1-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-1-mem eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-1 eq 1
+			</test>
+		</switch>
 	</channel>
 	 
 	<channel name="Precooler Right" execute="/systems/pneumatics/indicating/bmc2-working">  <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
@@ -930,6 +940,17 @@
 				/systems/pneumatics/precooler/temp-2 lt 150
 				/controls/deice/wing eq 1
 				/gear/gear[1]/wow eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/lowtemp-2-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-2-mem eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-2 eq 1
 			</test>
 		</switch>
 	</channel>

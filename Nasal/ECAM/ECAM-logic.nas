@@ -1353,6 +1353,18 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(xBleedIcing);
 	}
 	
+	if (bleed1Off.clearFlag == 0 and (warningNodes.Timers.bleed1Off60Output.getValue() == 1 or warningNodes.Timers.bleed1Off5Output.getValue() == 1) and FWC.Timer.eng1idleOutput.getBoolValue()) {
+		bleed1Off.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleed1Off);
+	}
+	
+	if (bleed2Off.clearFlag == 0 and (warningNodes.Timers.bleed2Off60Output.getValue() == 1 or warningNodes.Timers.bleed2Off5Output.getValue() == 1) and FWC.Timer.eng2idleOutput.getBoolValue()) {
+		bleed2Off.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleed2Off);
+	}
+	
 	# BMC
 	if (bleedMonFault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue()) {
 		bleedMonFault.active = 1;

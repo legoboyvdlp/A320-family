@@ -106,16 +106,44 @@
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-low-temp-output">
             <description>Timer for the ECAM system</description>
-            <input>/systems/pneumatics/warnings/lowtemp-1</input>
+            <input>/systems/pneumatics/warnings/lowtemp-1-mem</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
         </actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-low-temp-output">
             <description>Timer for the ECAM system</description>
-            <input>/systems/pneumatics/warnings/lowtemp-2</input>
+            <input>/systems/pneumatics/warnings/lowtemp-2-mem</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/logic/bleed-1-off-60-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/bleed-1-off-60</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/logic/bleed-2-off-60-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/bleed-2-off-60</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/logic/bleed-1-off-5-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/bleed-1-off-5</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+        </actuator>
+		
+		<actuator name="/ECAM/warnings/logic/bleed-2-off-5-output">
+            <description>Timer for the ECAM system</description>
+            <input>/ECAM/warnings/logic/bleed-2-off-5</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
         </actuator>
 	</channel>
 	
@@ -398,13 +426,81 @@
 			</test>
 		</switch>
 		
-		<switch name="/ECAM/warnings/logic/bleed-2-lo-temp-unsucc">
+		<switch name="/ECAM/warnings/logic/bleed-1-off-60">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-1-mem eq 0
+				/ECAM/warning-phase eq 6
+				/controls/pneumatics/switches/bleed-1 eq 0
+				/ECAM/warnings/logic/prv-1-not-shut eq 0
+				/ECAM/warnings/logic/bleed-1-off-flipflop eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-off-5">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-1-mem eq 0
+				/ECAM/warning-phase eq 2
+				/controls/pneumatics/switches/bleed-1 eq 0
+				/ECAM/warnings/logic/prv-1-not-shut eq 0
+				/ECAM/warnings/logic/bleed-1-off-flipflop eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-off-flipflop-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-disag eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-1-off-flipflop-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/ECAM/warnings/logic/bleed-1-wai-avail eq 0
-				/ECAM/warnings/logic/bleed-2-lo-temp-xbleed eq 1
-				/ECAM/warnings/logic/bleed-2-lo-temp-bleed eq 1
-				/ECAM/warnings/logic/bleed-2-lo-temp-pack eq 1
+				/ECAM/warning-phase eq 1
+				/ECAM/warning-phase eq 3
+				/ECAM/warning-phase eq 7
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-off-60">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-2-mem eq 0
+				/ECAM/warning-phase eq 6
+				/controls/pneumatics/switches/bleed-2 eq 0
+				/ECAM/warnings/logic/prv-2-not-shut eq 0
+				/ECAM/warnings/logic/bleed-2-off-flipflop eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-off-5">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-2-mem eq 0
+				/ECAM/warning-phase eq 2
+				/controls/pneumatics/switches/bleed-2 eq 0
+				/ECAM/warnings/logic/prv-2-not-shut eq 0
+				/ECAM/warnings/logic/bleed-2-off-flipflop eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-off-flipflop-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-disag eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/bleed-2-off-flipflop-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 1
+				/ECAM/warning-phase eq 3
+				/ECAM/warning-phase eq 7
 			</test>
 		</switch>
 	</channel>

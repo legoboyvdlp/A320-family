@@ -54,6 +54,10 @@ var warningNodes = {
 		bleed2NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-2-not-shut-output"),
 		bleed1And2LoTemp: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp"),
 		bleed1And2LoTempOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp-output"),
+		bleed1Off60Output: props.globals.initNode("/ECAM/warnings/logic/bleed-1-off-60-output"),
+		bleed1Off5Output: props.globals.initNode("/ECAM/warnings/logic/bleed-1-off-5-output"),
+		bleed2Off60Output: props.globals.initNode("/ECAM/warnings/logic/bleed-2-off-60-output"),
+		bleed2Off5Output: props.globals.initNode("/ECAM/warnings/logic/bleed-2-off-5-output"),
 	},
 	Flipflops: {
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),

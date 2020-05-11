@@ -53,8 +53,6 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>APUBleedBtn1F</object-name>
-		<object-name>APUBleedBtn2O</object-name>
 		<object-name>APUGenBtn1F</object-name>
 		<object-name>APUGenBtn2O</object-name>
 		<object-name>APUMasterBtn1F</object-name>
@@ -184,23 +182,21 @@
 		<type>select</type>
 		<object-name>Eng1BleedBtn1F</object-name>
 		<object-name>Eng1BleedBtn2O</object-name>
-		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-ess-shed</property>
-				<value>25</value>
-			</greater-than-equals>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
 		<object-name>Eng2BleedBtn1F</object-name>
 		<object-name>Eng2BleedBtn2O</object-name>
+		<object-name>APUBleedBtn1F</object-name>
+		<object-name>APUBleedBtn2O</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-2</property>
-				<value>25</value>
-			</greater-than-equals>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-2</property>
+					<value>25</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess-shed</property>
+					<value>25</value>
+				</greater-than-equals>
+			</or>
 		</condition>
 	</animation>
 	
@@ -4187,10 +4183,16 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess-shed</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess-shed</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/pneumatics/switches/bleed-1</property>
@@ -4256,11 +4258,11 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
+							<property>systems/electrical/bus/dc-2</property>
 							<value>25</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>systems/electrical/bus/dc-ess-shed</property>
 							<value>25</value>
 						</greater-than-equals>
 					</or>
@@ -4327,10 +4329,16 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-2</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess-shed</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/pneumatics/switches/bleed-2</property>
