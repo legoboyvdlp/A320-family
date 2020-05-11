@@ -1541,6 +1541,21 @@
 				<factor>0.75</factor>
 			</volume>
 		</switch>
+
+		<switch>
+			<name>Speedbrake Lever</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/SASA/A320_flaplever.wav</path>
+			<condition>
+				<and>
+					<property>/sim/sounde/spdbrk-click</property>
+					<property>/sim/current-view/internal</property>
+				</and>
+			</condition>
+			<volume>
+				<factor>0.75</factor>
+			</volume>
+		</switch>
 		
 		<switch>
 			<name>Flaps Motor</name>

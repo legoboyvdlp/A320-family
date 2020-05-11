@@ -136,18 +136,35 @@ setlistener("/controls/lighting/no-smoking-sign", func {
 	}, 1);
 }, 0, 0);
 
+
+var flaps_click = props.globals.getNode("/sim/sounde/flaps-click");
 setlistener("/controls/flight/flap-lever", func {
-	props.globals.getNode("sim/sounde/flaps-click").setBoolValue(1);
+	flaps_click.setBoolValue(1);
 }, 0, 0);
 
 setlistener("/sim/sounde/flaps-click", func {
-	if (!getprop("sim/sounde/flaps-click")) {
+	if (!flaps_click.getValue()) {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/flaps-click").setBoolValue(0);
+		flaps_click.setBoolValue(0);
 	}, 0.4);
 });
+
+var spdbrk_click = props.globals.getNode("/sim/sounde/spdbrk-click");
+setlistener("/controls/flight/speedbrake", func {
+	spdbrk_click.setBoolValue(1);
+}, 0, 0);
+
+setlistener("/sim/sounde/spdbrk-click", func {
+	if (!spdbrk_click.getValue()) {
+		return;
+	}
+	settimer(func {
+		spdbrk_click.setBoolValue(0);
+	}, 0.4);
+});
+
 #########
 # Doors #
 #########
