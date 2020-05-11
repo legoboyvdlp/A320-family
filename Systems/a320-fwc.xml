@@ -283,7 +283,7 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
-					/controls/switches/wing eq 0
+					/controls/ice-protection/wing eq 0
 					/ECAM/warnings/logic/wai-falling-pulse eq 0
 				</test>
 				/gear/gear[1]/wow eq 1

@@ -15,7 +15,7 @@ var state1Node = props.globals.getNode("engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("fdm/jsbsim/position/wow", 1);
 var apu_rpm    = props.globals.getNode("engines/engine[2]/n1", 1);
-var wing_pb    = props.globals.getNode("controls/switches/wing", 1);
+var wing_pb    = props.globals.getNode("controls/ice-protection/wing", 1);
 var apumaster  = props.globals.getNode("controls/apu/master", 1);
 var apu_bleedSw   = props.globals.getNode("controls/pneumatics/switches/apu", 1);
 var gear       = props.globals.getNode("gear/gear-pos-norm", 1);
@@ -1236,7 +1236,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed1Fault.setValue(0);
 	}
 	
-	if (bleed1Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/switches/wing")))) { # inverse pulse
+	if (bleed1Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
 		bleed1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed1Fault);
@@ -1249,7 +1249,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(bleed1FaultOff);
 		}
 		
-		if (bleed1FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getBoolValue() and systems.PNEU.Switch.pack2.getBoolValue() and getprop("/controls/switches/wing")) {
+		if (bleed1FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getBoolValue() and systems.PNEU.Switch.pack2.getBoolValue() and getprop("/controls/ice-protection/wing")) {
 			bleed1FaultPack.active = 1;
 		} else {
 			ECAM_controller.warningReset(bleed1FaultPack);
@@ -1273,7 +1273,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed2Fault.setValue(0);
 	}
 	
-	if (bleed2Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/switches/wing")))) { # inverse pulse
+	if (bleed2Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
 		bleed2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed2Fault);
@@ -1286,7 +1286,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(bleed2FaultOff);
 		}
 		
-		if (bleed2FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue() and getprop("/controls/switches/wing")) {
+		if (bleed2FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue() and getprop("/controls/ice-protection/wing")) {
 			bleed2FaultPack.active = 1;
 		} else {
 			ECAM_controller.warningReset(bleed2FaultPack);
@@ -1337,7 +1337,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (warningNodes.Logic.crossbleedWai.getValue()) {
-			if (getprop("/controls/switches/wing")) {
+			if (getprop("/controls/ice-protection/wing")) {
 				xBleedOff.active = 1;
 			} else {	
 				ECAM_controller.warningReset(xBleedOff);
@@ -2051,13 +2051,13 @@ var messages_right_memo = func {
 		ldg_lt.active = 0;
 	}
 
-	if (getprop("controls/switches/leng") == 1 or getprop("controls/switches/reng") == 1 or getprop("systems/electrical/bus/dc-1") == 0 or getprop("systems/electrical/bus/dc-2") == 0) {
+	if (getprop("controls/ice-protection/leng") == 1 or getprop("controls/ice-protection/reng") == 1 or getprop("systems/electrical/bus/dc-1") == 0 or getprop("systems/electrical/bus/dc-2") == 0) {
 		eng_aice.active = 1;
 	} else {
 		eng_aice.active = 0;
 	}
 	
-	if (getprop("controls/switches/wing") == 1) {
+	if (getprop("controls/ice-protection/wing") == 1) {
 		wing_aice.active = 1;
 	} else {
 		wing_aice.active = 0;

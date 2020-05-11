@@ -115,7 +115,7 @@
 				/systems/pneumatics/source/engine-1-hp-psi lt 8
 				/systems/pneumatics/source/engine-1-hp-psi ge 120
 				<test logic="AND">
-					/controls/deice/wing eq 0
+					/systems/pneumatics/valves/wing-ice-1 eq 0
 					/systems/pneumatics/source/engine-1-hp-psi ge 110
 					/position/altitude-ft ge 15000
 					/systems/pneumatics/valves/engine-1-prv-valve eq 1
@@ -143,7 +143,7 @@
 				/systems/pneumatics/source/engine-2-hp-psi lt 8
 				/systems/pneumatics/source/engine-2-hp-psi ge 120
 				<test logic="AND">
-					/controls/deice/wing eq 0
+					/systems/pneumatics/valves/wing-ice-2 eq 0
 					/systems/pneumatics/source/engine-2-hp-psi ge 110
 					/position/altitude-ft ge 15000
 					/systems/pneumatics/valves/engine-1-prv-valve eq 1
@@ -377,6 +377,158 @@
 			<rate_limit>1.0</rate_limit> <!-- pneumatically controlled -->
 		</actuator>
 		
+		<!-- Wing Anti Ice -->
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-gnd-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[1]/wow eq 1
+				/controls/ice-protection/wing eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/wing-ice-gnd">
+			<input>/systems/pneumatics/valves/wing-ice-gnd-cmd</input>
+			<rate_limit sense="incr">0.033333</rate_limit> <!-- 30 seconds -->
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="overwrite-wing-ice-sw">
+			<default value="/controls/ice-protection/wing"/>
+			<test logic="OR" value="0">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-gnd eq 1
+					/gear/gear[1]/wow eq 1
+					/controls/ice-protection/wing eq 1
+				</test>
+			</test>
+			<output>/controls/ice-protection/wing</output>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-1-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/wing eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-1-power">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/failures/icing/wing-left-valve eq 1
+				/systems/pneumatics/psi/engine-1-psi lt 7
+			</test>
+			<test logic="AND" value="0.5">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+				/systems/pneumatics/valves/wing-ice-1-cmd eq 0
+				/systems/pneumatics/valves/wing-ice-1 ne 0
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/bus/dc-ess-shed ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/wing-ice-1">
+			<input>/systems/pneumatics/valves/wing-ice-1-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/wing-ice-1-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-2-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/wing eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-2-power">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/failures/icing/wing-right-valve eq 1
+				/systems/pneumatics/psi/engine-2-psi lt 7
+			</test>
+			<test logic="AND" value="0.5">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+				/systems/pneumatics/valves/wing-ice-2-cmd eq 0
+				/systems/pneumatics/valves/wing-ice-2 ne 0
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/bus/dc-ess-shed ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/wing-ice-2">
+			<input>/systems/pneumatics/valves/wing-ice-2-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/wing-ice-2-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-1-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 lt 25 
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/leng eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-1-power">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/failures/icing/engine-left-valve eq 1
+				/systems/pneumatics/source/engine-1-hp-psi lt 7
+			</test>
+			<test logic="AND" value="0.5">
+				/systems/electrical/bus/dc-1 lt 25 
+				/systems/pneumatics/valves/engine-ice-1-cmd eq 1
+				/systems/pneumatics/valves/engine-ice-1 ne 1
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/bus/dc-1 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-ice-1">
+			<input>/systems/pneumatics/valves/engine-ice-1-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/engine-ice-1-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-2-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 lt 25 
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/reng eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-2-power">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/failures/icing/engine-right-valve eq 1
+				/systems/pneumatics/source/engine-1-hp-psi lt 7
+			</test>
+			<test logic="AND" value="0.5">
+				/systems/electrical/bus/dc-2 lt 25 
+				/systems/pneumatics/valves/engine-ice-2-cmd eq 1
+				/systems/pneumatics/valves/engine-ice-2 ne 1
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/bus/dc-2 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-ice-2">
+			<input>/systems/pneumatics/valves/engine-ice-2-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/engine-ice-2-power</rate_limit>
+		</actuator>
 	</channel>
 	
 	<channel name="Source PSI">
@@ -825,7 +977,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatics/precooler/temp-1 lt 150
-				/controls/deice/wing eq 1
+				/systems/pneumatics/valves/wing-ice-1 eq 1
 				/gear/gear[1]/wow eq 0
 			</test>
 		</switch>
@@ -938,7 +1090,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatics/precooler/temp-2 lt 150
-				/controls/deice/wing eq 1
+				/systems/pneumatics/valves/wing-ice-2 eq 1
 				/gear/gear[1]/wow eq 0
 			</test>
 		</switch>
@@ -1071,6 +1223,29 @@
 			</test>
 			<test logic="AND" value="1">
 				/systems/pneumatics/psi/engine-2-downstream-prv gt 57
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/wingfault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/wing-ice-1 ne /systems/pneumatics/valves/wing-ice-1-cmd
+				/systems/pneumatics/valves/wing-ice-2 ne /systems/pneumatics/valves/wing-ice-2-cmd
+				/systems/electrical/bus/dc-ess-shed lt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/lengfault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-ice-1 ne /systems/pneumatics/valves/engine-ice-1-cmd
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/rengfault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-ice-2 ne /systems/pneumatics/valves/engine-ice-2-cmd
 			</test>
 		</switch>
 	</channel>

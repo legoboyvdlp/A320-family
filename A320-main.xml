@@ -24,23 +24,30 @@
 			<display-contrast type="double">0.7</display-contrast>
 			<icing>
 				<iceable>
-					<name>Wing</name>
+					<name>WingLeft</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/wing</salvage-control>
+					<salvage-control>/systems/pneumatics/valves/wing-ice-1</salvage-control>
 					<sensitivity type="double">0.8</sensitivity>
-					<output-property>/fdm/jsbsim/ice/wing</output-property>
+					<output-property>/fdm/jsbsim/ice/wingL</output-property>
+				</iceable>
+				<iceable>
+					<name>WingRight</name>
+					<ice-inches>0.0</ice-inches>
+					<salvage-control>/systems/pneumatics/valves/wing-ice-2</salvage-control>
+					<sensitivity type="double">0.8</sensitivity>
+					<output-property>/fdm/jsbsim/ice/wingR</output-property>
 				</iceable>
 				<iceable>
 					<name>LeftEngine</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/lengine</salvage-control>
+					<salvage-control>/systems/pneumatics/valves/engine-ice-1</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
 					<output-property>/fdm/jsbsim/ice/lengine</output-property>
 				</iceable>
 				<iceable>
 					<name>RightEngine</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/rengine</salvage-control>
+					<salvage-control>/systems/pneumatics/valves/engine-ice-2</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
 					<output-property>/fdm/jsbsim/ice/rengine</output-property>
 				</iceable>
@@ -1049,6 +1056,12 @@
 				<yellow-elec type="bool">0</yellow-elec>
 				<yellow-leak type="bool">0</yellow-leak>
 			</hydraulic>
+			<icing>
+				<wing-left-valve type="bool">0</wing-left-valve>
+				<wing-right-valve type="bool">0</wing-right-valve>
+				<engine-left-valve type="bool">0</engine-left-valve>
+				<engine-right-valve type="bool">0</engine-right-valve>
+			</icing>
 			<pneumatics>
 				<apu-valve type="bool">0</apu-valve>
 				<bleed-1-valve type="bool">0</bleed-1-valve>
@@ -1205,6 +1218,8 @@
 				<engine-2-prv-valve type="double">0</engine-2-prv-valve>
 				<engine-1-prv-valve-disag type="bool">0</engine-1-prv-valve-disag>
 				<engine-2-prv-valve-disag type="bool">0</engine-2-prv-valve-disag>
+				<wing-ice-1 type="double">0</wing-ice-1>
+				<wing-ice-2 type="double">0</wing-ice-2>
 				<pack-1 type="double">0</pack-1>
 				<pack-2 type="double">0</pack-2>
 				<starter-valve-1 type="double">0</starter-valve-1>

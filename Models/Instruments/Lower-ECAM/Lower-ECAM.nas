@@ -103,8 +103,7 @@ var precooler2_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-
 var bmc1working = props.globals.getNode("/systems/pneumatics/indicating/bmc1-working", 1);
 var bmc2working = props.globals.getNode("/systems/pneumatics/indicating/bmc2-working", 1);
 var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
-var switch_wing_aice = props.globals.getNode("/controls/switches/wing", 1);
-var deice_wing = props.globals.getNode("/controls/deice/wing", 1);
+var switch_wing_aice = props.globals.getNode("/controls/ice-protection/wing", 1);
 var eng1_n2_actual = props.globals.getNode("/engines/engine[0]/n2-actual", 1);
 var eng2_n2_actual = props.globals.getNode("/engines/engine[1]/n2-actual", 1);
 var pack1_out_temp = props.globals.getNode("/systems/pneumatics/pack-1-out-temp", 1);
@@ -935,21 +934,6 @@ var canvas_lowerECAM_bleed = {
 		if (switch_wing_aice.getValue() == 1) {
 			me["BLEED-Anti-Ice-Left"].show();
 			me["BLEED-Anti-Ice-Right"].show();
-			# TODO when seperated valves for left and right wing are implemented, do the following `if` and `else` clause for each wing.
-			if (deice_wing.getValue()) {
-				me["BLEED-ANTI-ICE-ARROW-LEFT"].show();
-				me["BLEED-ANTI-ICE-ARROW-RIGHT"].show();
-				#if (total_psi.getValue() < 4 or total_psi.getValue() > 57) {
-				#	me["BLEED-ANTI-ICE-ARROW-LEFT"].setColor(0.7333,0.3803,0);
-				#	me["BLEED-ANTI-ICE-ARROW-RIGHT"].setColor(0.7333,0.3803,0);
-				#} else {
-				#	me["BLEED-ANTI-ICE-ARROW-LEFT"].setColor(0.0509,0.7529,0.2941);
-				#	me["BLEED-ANTI-ICE-ARROW-RIGHT"].setColor(0.0509,0.7529,0.2941);
-				#}
-			} else {
-				me["BLEED-ANTI-ICE-ARROW-LEFT"].hide();
-				me["BLEED-ANTI-ICE-ARROW-RIGHT"].hide();
-			}
 		} else {
 			me["BLEED-Anti-Ice-Left"].hide();
 			me["BLEED-Anti-Ice-Right"].hide();

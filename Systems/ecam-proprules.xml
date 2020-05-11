@@ -407,7 +407,7 @@
             <value>1.0</value>
         </time>
         <S>
-            <not><property>/controls/switches/wing</property></not>
+            <not><property>/controls/ice-protection/wing</property></not>
         </S>
         <output>/ECAM/phases/wing-anti-ice-pulse</output>
     </flipflop>
@@ -561,7 +561,7 @@
 			<value>1.0</value>
 		</time>
 		<S>
-			<property>/controls/switches/wing</property>
+			<property>/controls/ice-protection/wing</property>
 		</S>
 		<output>/ECAM/warnings/logic/wai-falling-pulse</output>
 	</flipflop>

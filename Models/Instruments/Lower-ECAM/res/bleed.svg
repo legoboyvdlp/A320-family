@@ -40,9 +40,9 @@
      inkscape:window-width="1366"
      inkscape:window-height="705"
      id="namedview371"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="0.73868665"
-     inkscape:cx="667.77011"
+     inkscape:cx="712.19908"
      inkscape:cy="792.63918"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -1141,12 +1141,12 @@
        transform="scale(0.94655352,1.0564643)"
        inkscape:label="#text3720"
        id="APUGentext-7-2-1-3-6-1"
-       y="426.34195"
-       x="148.62262"
+       y="417.6925"
+       x="130.38766"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.18700027px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         y="426.34195"
-         x="148.62262"
+         y="417.6925"
+         x="130.38766"
          id="tspan5816-7"
          sodipodi:role="line">ANTI</tspan></text>
     <path
@@ -1159,12 +1159,12 @@
        transform="scale(0.94655352,1.0564643)"
        inkscape:label="#text3720"
        id="APUGentext-7-2-1-3-6-7-5"
-       y="457.41693"
-       x="171.19373"
+       y="448.76749"
+       x="152.95877"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.18700027px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         y="457.41693"
-         x="171.19373"
+         y="448.76749"
+         x="152.95877"
          id="tspan5836-7"
          sodipodi:role="line">ICE</tspan></text>
   </g>

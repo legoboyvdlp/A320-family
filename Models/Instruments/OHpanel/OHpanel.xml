@@ -30,6 +30,10 @@
 		<object-name>ELAC1Btn1F</object-name>
 		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerExtLtBtn2O</object-name>
+		<object-name>Eng1AntiIceBtn1F</object-name>
+		<object-name>Eng1AntiIceBtn2O</object-name>
+		<object-name>Eng2AntiIceBtn1F</object-name>
+		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
@@ -42,6 +46,8 @@
 		<object-name>RamAirBtn2O</object-name>
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
+		<object-name>WingAntiIceBtn1F</object-name>
+		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
 		<condition>
 			<greater-than-equals>
@@ -110,10 +116,6 @@
 		<object-name>EmerCallBtn1C</object-name>
 		<object-name>EmerCallBtn2O</object-name>
 		<object-name>EmerGenInd1F</object-name>
-		<object-name>Eng1AntiIceBtn1F</object-name>
-		<object-name>Eng1AntiIceBtn2O</object-name>
-		<object-name>Eng2AntiIceBtn1F</object-name>
-		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<object-name>EvacCommandBtn1E</object-name>
@@ -164,8 +166,6 @@
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
-		<object-name>WingAntiIceBtn1F</object-name>
-		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>YellowElecPump1F</object-name>
 		<object-name>YellowElecPump2O</object-name>
 		<object-name>YellowEngPump1F</object-name>
@@ -5335,12 +5335,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-ess-shed</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/wing</property>
+				<property>controls/ice-protection/wing</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5355,7 +5355,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/wingfault</property>
+					<property>controls/ice-protection/wingfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5372,7 +5372,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/wing</property>
+					<property>controls/ice-protection/wing</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5396,12 +5396,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-1</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/leng</property>
+				<property>controls/ice-protection/leng</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5416,7 +5416,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/lengfault</property>
+					<property>controls/ice-protection/lengfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5433,7 +5433,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/leng</property>
+					<property>controls/ice-protection/leng</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5457,12 +5457,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/reng</property>
+				<property>controls/ice-protection/reng</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5477,7 +5477,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/rengfault</property>
+					<property>controls/ice-protection/rengfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5494,7 +5494,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/reng</property>
+					<property>controls/ice-protection/reng</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5525,7 +5525,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-cycle</command>
-				<property>controls/switches/windowprobeheat</property>
+				<property>controls/ice-protection/windowprobeheat</property>
 				<value>0.5</value>
 				<value>1</value>
 			</binding>
@@ -5542,7 +5542,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/windowprobeheat</property>
+					<property>controls/ice-protection/windowprobeheat</property>
 					<value>1</value>
 				</equals>
 				<equals>
