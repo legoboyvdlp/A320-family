@@ -27,10 +27,6 @@ var PNEU = {
 		engine1: props.globals.getNode("/systems/pneumatics/psi/engine-1-psi"),
 		engine2: props.globals.getNode("/systems/pneumatics/psi/engine-2-psi"),
 	},
-	Ovht: {
-		ovht1: props.globals.getNode("/systems/pneumatics/precooler/ovht-1"),
-		ovht2: props.globals.getNode("/systems/pneumatics/precooler/ovht-2"),
-	},
 	Switch: {
 		apu: props.globals.getNode("/controls/pneumatics/switches/apu"),
 		bleed1: props.globals.getNode("/controls/pneumatics/switches/bleed-1"),
@@ -51,6 +47,10 @@ var PNEU = {
 	Warnings: {
 		prv1Disag: props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve-disag"),
 		prv2Disag: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve-disag"),
+		ovht1: props.globals.getNode("/systems/pneumatics/warnings/ovht-1-mem"),
+		ovht2: props.globals.getNode("/systems/pneumatics/warnings/ovht-2-mem"),
+		overpress1: props.globals.getNode("/systems/pneumatics/warnings/overpress-1-mem"),
+		overpress2: props.globals.getNode("/systems/pneumatics/warnings/overpress-2-mem"),
 	},
 	Valves: {
 		apu: props.globals.getNode("/systems/pneumatics/valves/apu-bleed-valve"),

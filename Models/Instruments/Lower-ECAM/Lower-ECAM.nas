@@ -808,10 +808,10 @@ var canvas_lowerECAM_bleed = {
 		# ENG BLEED valve 1
 		var eng_valve_state = eng_valve1_state.getValue();
 
-		if (eng_valve_state == 1) {
-			me["BLEED-ENG-1"].setRotation(90 * D2R);
-		} else {
+		if (eng_valve_state == 0) {
 			me["BLEED-ENG-1"].setRotation(0);
+		} else {
+			me["BLEED-ENG-1"].setRotation(90 * D2R);
 		}
 		
 		if (eng_valve_state == eng_valve1.getValue()) {
@@ -856,10 +856,10 @@ var canvas_lowerECAM_bleed = {
 		# ENG BLEED valve 2
 		var eng_valve_state = eng_valve2_state.getValue();
 
-		if (eng_valve_state == 1) {
-			me["BLEED-ENG-2"].setRotation(90 * D2R);
-		} else {
+		if (eng_valve_state == 0) {
 			me["BLEED-ENG-2"].setRotation(0);
+		} else {
+			me["BLEED-ENG-2"].setRotation(90 * D2R);
 		}
 		
 		if (eng_valve_state == eng_valve2.getValue()) {

@@ -1230,20 +1230,20 @@ var messages_priority_2 = func {
 	
 	# Bleed
 	# BLEED 1 FAULT
-	if ((FWC.Timer.eng1idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) and (systems.PNEU.Psi.engine1.getValue() >= 57 or systems.PNEU.Ovht.ovht1.getValue())) {
+	if ((FWC.Timer.eng1idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) and (systems.PNEU.Warnings.overpress1.getValue() or systems.PNEU.Warnings.ovht1.getValue())) {
 		warningNodes.Timers.bleed1Fault.setValue(1);
 	} else {
 		warningNodes.Timers.bleed1Fault.setValue(0);
 	}
 	
-	if (bleed1Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or getprop("/ECAM/phases/wing-anti-ice-pulse"))) { # inverse pulse
+	if (bleed1Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/switches/wing")))) { # inverse pulse
 		bleed1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed1Fault);
 	}
 	
 	if (bleed1Fault.active) {
-		if (bleed1FaultOff.clearFlag == 0 and (systems.PNEU.Switch.bleed1.getBoolValue() or systems.PNEU.Switch.bleed2.getBoolValue()) and (systems.PNEU.Warnings.prv1Disag.getValue() or systems.PNEU.Warnings.prv2Disag.getValue())) {
+		if (bleed1FaultOff.clearFlag == 0 and systems.PNEU.Switch.bleed1.getBoolValue() and systems.PNEU.Warnings.prv1Disag.getValue()) {
 			bleed1FaultOff.active = 1;
 		} else {
 			ECAM_controller.warningReset(bleed1FaultOff);
@@ -1267,7 +1267,7 @@ var messages_priority_2 = func {
 	}
 	
 	# BLEED 2 FAULT
-	if ((FWC.Timer.eng2idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[1].getValue()) and (systems.PNEU.Psi.engine2.getValue() >= 57 or systems.PNEU.Ovht.ovht2.getValue())) {
+	if ((FWC.Timer.eng2idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[1].getValue()) and (systems.PNEU.Warnings.overpress2.getValue() or systems.PNEU.Warnings.ovht2.getValue())) {
 		warningNodes.Timers.bleed2Fault.setValue(1);
 	} else {
 		warningNodes.Timers.bleed2Fault.setValue(0);
@@ -1280,7 +1280,7 @@ var messages_priority_2 = func {
 	}
 	
 	if (bleed2Fault.active) {
-		if (bleed2FaultOff.clearFlag == 0 and (systems.PNEU.Switch.bleed1.getBoolValue() or systems.PNEU.Switch.bleed2.getBoolValue()) and (systems.PNEU.Warnings.prv1Disag.getValue() or systems.PNEU.Warnings.prv2Disag.getValue())) {
+		if (bleed2FaultOff.clearFlag == 0 and systems.PNEU.Switch.bleed2.getBoolValue() and systems.PNEU.Warnings.prv2Disag.getValue()) {
 			bleed2FaultOff.active = 1;
 		} else {
 			ECAM_controller.warningReset(bleed2FaultOff);

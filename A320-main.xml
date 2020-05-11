@@ -1150,6 +1150,8 @@
 		</hydraulic>
 		
 		<pneumatics>
+			<egt-1-factor type="double">0.36</egt-1-factor>
+			<egt-2-factor type="double">0.36</egt-2-factor>
 			<indicating>
 				<bmc1-working type="bool">0</bmc1-working>
 				<bmc2-working type="bool">0</bmc2-working>

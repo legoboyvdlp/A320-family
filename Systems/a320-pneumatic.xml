@@ -166,24 +166,53 @@
 		</actuator>
 		
 		<!-- Pressure regulation valve -->
-		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd">
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi-cmd">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/pneumatics/psi/engine-1-upstream-src gt 85
-				/systems/pneumatics/precooler/ovht-1 eq 1
-				/systems/pneumatics/valves/apu-bleed-valve eq 1
-				/systems/pneumatics/valves/starter-valve-1 eq 1
+			<test value="1">
+				/systems/pneumatics/psi/engine-1-downstream-prv gt 57
 			</test>
 		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi">
+            <input>/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi-cmd</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.0666</rate_limit> <!-- 15 seconds -->
+        </actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi eq 1
+				/systems/pneumatics/precooler/ovht-1 eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pneumatics/valves/engine-1-prv-valve-temp-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pneumatics/precooler/temp-1</independentVar>
+					<tableData>
+						235    1.0
+					    245    0.397
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 		
 		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-cmd">
 			<default value="0"/>
 			<test logic="OR" value="0">
 				/controls/engines/engine[0]/fire-btn eq 1
 				/controls/pneumatics/switches/bleed-1 eq 0
+				/systems/pneumatics/valves/apu-bleed-valve ne 0
+				/systems/pneumatics/valves/starter-valve-1 ne 0
 				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="/systems/pneumatics/valves/engine-1-prv-valve-temp-gain">
 				/controls/pneumatics/switches/bleed-1 eq 1
 			</test>
 		</switch>
@@ -214,28 +243,56 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd">
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi-cmd">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/pneumatics/psi/engine-2-upstream-src gt 85
-				/systems/pneumatics/precooler/ovht-2 eq 1
-				/systems/pneumatics/valves/apu-bleed-valve eq 1
-				/systems/pneumatics/valves/starter-valve-2 eq 1
+			<test value="1">
+				/systems/pneumatics/psi/engine-2-downstream-prv gt 57
 			</test>
 		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi">
+            <input>/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi-cmd</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.0666</rate_limit> <!-- 15 seconds -->
+        </actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi eq 1
+				/systems/pneumatics/precooler/ovht-2 eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pneumatics/valves/engine-2-prv-valve-temp-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pneumatics/precooler/temp-2</independentVar>
+					<tableData>
+						235    1.0
+					    245    0.397
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 		
 		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-cmd">
 			<default value="0"/>
 			<test logic="OR" value="0">
 				/controls/engines/engine[1]/fire-btn eq 1
 				/controls/pneumatics/switches/bleed-2 eq 0
+				/systems/pneumatics/valves/apu-bleed-valve ne 0
+				/systems/pneumatics/valves/starter-valve-2 ne 0
 				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="/systems/pneumatics/valves/engine-2-prv-valve-temp-gain">
 				/controls/pneumatics/switches/bleed-2 eq 1
 			</test>
 		</switch>
-		
 		
 		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-power">
 			<default value="0"/>
@@ -569,9 +626,6 @@
 		
 		<switch name="/systems/pneumatics/psi/crossbleed-duct-left-src">
 			<default value="0"/>
-			<test logic="AND" value="1"> <!-- gnd -->
-				/systems/pneumatics/source/gnd-psi ne 0
-			</test>
 			<test logic="AND" value="2"> <!-- apu -->
 				/systems/pneumatics/source/apu-psi ne 0
 			</test>
@@ -582,14 +636,13 @@
 				/systems/pneumatics/valves/crossbleed-valve ne 0
 				/systems/pneumatics/psi/crossbleed-duct-right ge /systems/pneumatics/psi/engine-1-downstream-opv
 			</test>
+			<test logic="AND" value="1"> <!-- gnd -->
+				/systems/pneumatics/source/gnd-psi ne 0
+			</test>
 		</switch>
 		
 		<switch name="/systems/pneumatics/psi/crossbleed-duct-right-src">
 			<default value="0"/>
-			<test logic="AND" value="1"> <!-- gnd -->
-				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/source/gnd-psi ne 0
-			</test>
 			<test logic="AND" value="2"> <!-- apu -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
 				/systems/pneumatics/source/apu-psi ne 0
@@ -602,12 +655,23 @@
 				/systems/pneumatics/valves/crossbleed-valve ne 0
 				/systems/pneumatics/psi/crossbleed-duct-left ge /systems/pneumatics/psi/engine-2-downstream-opv
 			</test>
+			<test logic="AND" value="1"> <!-- gnd -->
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/source/gnd-psi ne 0
+			</test>
 		</switch>
 		
 		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-left">
 			<function>
 				<max>
-					<property>/systems/pneumatics/source/gnd-psi</property>
+					<ifthen>
+						<eq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
+							<value>1</value>
+						</eq>
+						<property>/systems/pneumatics/source/gnd-psi</property>
+						<v>-9999</v> <!-- ignore -->
+					</ifthen>
 					<product>
 						<property>/systems/pneumatics/source/apu-psi</property>
 						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
@@ -631,10 +695,17 @@
 		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-right">
 			<function>
 				<max>
-					<product>
-						<property>/systems/pneumatics/valves/crossbleed-valve</property>
-						<property>/systems/pneumatics/source/gnd-psi</property>
-					</product>
+					<ifthen>
+						<eq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
+							<value>1</value>
+						</eq>
+						<product>
+							<property>/systems/pneumatics/valves/crossbleed-valve</property>
+							<property>/systems/pneumatics/source/gnd-psi</property>
+						</product>
+						<v>-9999</v> <!-- ignore -->
+					</ifthen>
 					<product>
 						<property>/systems/pneumatics/valves/crossbleed-valve</property>
 						<property>/systems/pneumatics/source/apu-psi</property>
@@ -660,7 +731,7 @@
 	
 	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
 	
-		<fcs_function name="/systems/pneumatics/precooler/temp-1">
+		<fcs_function name="/systems/pneumatics/precooler/calc/temp-1">
 			<function>
 				<sum>
 					<value>15</value>
@@ -673,10 +744,8 @@
 							<value>0</value>
 						</nq>
 						<product>
-							<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
-							<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
 							<property>/engines/engine[0]/egt-actual</property>
-							<value>0.36</value>
+							<property>/systems/pneumatics/egt-1-factor</property>
 						</product>
 						<product>
 							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
@@ -687,6 +756,11 @@
 				</sum>
 			</function>
 		</fcs_function>
+		
+		<lag_filter name="/systems/pneumatics/precooler/temp-1">
+			<input>/systems/pneumatics/precooler/calc/temp-1</input>
+			<c1>0.8</c1>
+		</lag_filter>
 		
 		<switch name="/systems/pneumatics/precooler/calc/ovht-5-true">
 			<default value="0"/>
@@ -736,6 +810,17 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/pneumatics/warnings/ovht-1-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/ovht-1-mem eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/precooler/ovht-1 eq 1
+			</test>
+		</switch>
+		
 		<switch name="/systems/pneumatics/warnings/lowtemp-1">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -749,9 +834,10 @@
 	 
 	<channel name="Precooler Right" execute="/systems/pneumatics/indicating/bmc2-working">  <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
 		
-		<fcs_function name="/systems/pneumatics/precooler/temp-2">
+		<fcs_function name="/systems/pneumatics/precooler/calc/temp-2">
 			<function>
 				<sum>
+					<value>15</value>
 					<ifthen>
 						<nq>
 							<product>
@@ -761,10 +847,8 @@
 							<value>0</value>
 						</nq>
 						<product>
-							<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
-							<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
 							<property>/engines/engine[1]/egt-actual</property>
-							<value>2.45</value>
+							<property>/systems/pneumatics/egt-2-factor</property>
 						</product>
 						<product>
 							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
@@ -775,6 +859,11 @@
 				</sum>
 			</function>
 		</fcs_function>
+		
+		<lag_filter name="/systems/pneumatics/precooler/temp-2">
+			<input>/systems/pneumatics/precooler/calc/temp-2</input>
+			<c1>0.8</c1>
+		</lag_filter>
 		
 		<switch name="/systems/pneumatics/precooler/calc/ovht-5-true-2">
 			<default value="0"/>
@@ -821,6 +910,17 @@
 				/systems/pneumatics/precooler/calc/ovht-5-2 eq 1
 				/systems/pneumatics/precooler/calc/ovht-15-2 eq 1
 				/systems/pneumatics/precooler/calc/ovht-55-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/ovht-2-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/ovht-2-mem eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/precooler/ovht-2 eq 1
 			</test>
 		</switch>
 		
@@ -908,6 +1008,7 @@
 			<test logic="OR" value="1">
 				/ECAM/warnings/timer/bleed-1-fault-output eq 1
 				/ECAM/warnings/timer/prv-1-not-shut-output eq 1
+				/systems/pneumatics/warnings/ovht-1-mem eq 1
 			</test>
 		</switch>
 		
@@ -926,6 +1027,29 @@
 			<test logic="OR" value="1">
 				/ECAM/warnings/timer/bleed-2-fault-output eq 1
 				/ECAM/warnings/timer/prv-2-not-shut-output eq 1
+				/systems/pneumatics/warnings/ovht-2-mem eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/overpress-1-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/overpress-1-mem eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/psi/engine-1-downstream-prv gt 57
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/overpress-2-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/overpress-2-mem eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/psi/engine-2-downstream-prv gt 57
 			</test>
 		</switch>
 	</channel>
