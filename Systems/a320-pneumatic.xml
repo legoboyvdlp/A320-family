@@ -780,13 +780,21 @@
 			<default value="0"/>
 			<test logic="AND" value="2"> <!-- apu -->
 				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve eq 1
 			</test>
-			<test logic="AND" value="3"> <!-- left prv -->
-				/systems/pneumatics/psi/engine-1-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-right
+			<test logic="OR" value="3"> <!-- left prv -->
+				<test logic="AND">
+					/systems/pneumatics/valves/crossbleed-valve eq 0
+					/systems/pneumatics/psi/engine-1-downstream-opv gt 0
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/crossbleed-valve ne 0
+					/systems/pneumatics/psi/engine-1-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-right
+				</test>
 			</test>
 			<test logic="AND" value="4"> <!-- right crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/psi/crossbleed-duct-right ge /systems/pneumatics/psi/engine-1-downstream-opv
+				/systems/pneumatics/psi/crossbleed-duct-right gt /systems/pneumatics/psi/engine-1-downstream-opv
 			</test>
 			<test logic="AND" value="1"> <!-- gnd -->
 				/systems/pneumatics/source/gnd-psi ne 0
@@ -797,15 +805,22 @@
 			<default value="0"/>
 			<test logic="AND" value="2"> <!-- apu -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/valves/apu-bleed-valve eq 1
 				/systems/pneumatics/source/apu-psi ne 0
-				/systems/pneumatics/valves/apu-bleed-valve ne 0
 			</test>
-			<test logic="AND" value="3"> <!-- right prv -->
-				/systems/pneumatics/psi/engine-2-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-left
+			<test logic="OR" value="3"> <!-- right prv -->
+				<test logic="AND">
+					/systems/pneumatics/valves/crossbleed-valve eq 0
+					/systems/pneumatics/psi/engine-2-downstream-opv gt 0
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/crossbleed-valve ne 0
+					/systems/pneumatics/psi/engine-2-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-left
+				</test>
 			</test>
-			<test logic="AND" value="4"> <!-- left crossbleed -->
+			<test logic="AND" value="4"> <!-- right crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/psi/crossbleed-duct-left ge /systems/pneumatics/psi/engine-2-downstream-opv
+				/systems/pneumatics/psi/crossbleed-duct-left gt /systems/pneumatics/psi/engine-2-downstream-opv
 			</test>
 			<test logic="AND" value="1"> <!-- gnd -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
@@ -828,17 +843,24 @@
 						<property>/systems/pneumatics/source/apu-psi</property>
 						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
 					</product>
-					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
+					<ifthen>
+						<nq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
+							<value>3</value>
+						</nq>
+						<v>-9999</v> <!-- ignore -->
+						<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
+					</ifthen>
 					<ifthen>
 						<nq>
 							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
 							<value>4</value>
 						</nq>
-						<v>-9999</v> <!-- ignore -->
 						<product>
 							<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
 							<property>/systems/pneumatics/valves/crossbleed-valve</property>
 						</product>
+						<v>-9999</v> <!-- ignore -->
 					</ifthen>
 				</max>
 			</function>
@@ -863,17 +885,24 @@
 						<property>/systems/pneumatics/source/apu-psi</property>
 						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
 					</product>
-					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
+					<ifthen>
+						<nq>
+							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
+							<value>3</value>
+						</nq>
+						<v>-9999</v> <!-- ignore -->
+						<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
+					</ifthen>
 					<ifthen>
 						<nq>
 							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
 							<value>4</value>
 						</nq>
-						<v>-9999</v> <!-- ignore -->
 						<product>
 							<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
 							<property>/systems/pneumatics/valves/crossbleed-valve</property>
 						</product>
+						<v>-9999</v> <!-- ignore -->
 					</ifthen>
 				</max>
 			</function>
