@@ -1316,7 +1316,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(hpValve1Fault);
 	}
 	
-	if (hpValve2Fault.clearFlag == 0and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and systems.PNEU.Fail.hp2Valve.getValue() and systems.ELEC.Bus.dc2.getValue() >= 25) {
+	if (hpValve2Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and systems.PNEU.Fail.hp2Valve.getValue() and systems.ELEC.Bus.dc2.getValue() >= 25) {
 		hpValve2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(hpValve2Fault);
@@ -1353,35 +1353,16 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(xBleedIcing);
 	}
 	
-	if (bleed1Off.clearFlag == 0 and (warningNodes.Timers.bleed1Off60Output.getValue() == 1 or warningNodes.Timers.bleed1Off5Output.getValue() == 1) and FWC.Timer.eng1idleOutput.getBoolValue()) {
+	if (bleed1Off.clearFlag == 0 and (warningNodes.Timers.bleed1Off60Output.getValue() == 1 or warningNodes.Timers.bleed1Off5Output.getValue() == 1) and FWC.Timer.eng1idleOutput.getBoolValue() and (phaseVar == 2 or phaseVar == 6)) {
 		bleed1Off.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed1Off);
 	}
 	
-	if (bleed2Off.clearFlag == 0 and (warningNodes.Timers.bleed2Off60Output.getValue() == 1 or warningNodes.Timers.bleed2Off5Output.getValue() == 1) and FWC.Timer.eng2idleOutput.getBoolValue()) {
+	if (bleed2Off.clearFlag == 0 and (warningNodes.Timers.bleed2Off60Output.getValue() == 1 or warningNodes.Timers.bleed2Off5Output.getValue() == 1) and FWC.Timer.eng2idleOutput.getBoolValue() and (phaseVar == 2 or phaseVar == 6)) {
 		bleed2Off.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed2Off);
-	}
-	
-	# BMC
-	if (bleedMonFault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue()) {
-		bleedMonFault.active = 1;
-	} else {
-		ECAM_controller.warningReset(bleedMonFault);
-	}
-	
-	if (bleedMon1Fault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and !systems.PNEU.Fail.bmc2.getValue()) {
-		bleedMon1Fault.active = 1;
-	} else {
-		ECAM_controller.warningReset(bleedMon1Fault);
-	}
-	
-	if (bleedMon2Fault.clearFlag == 0 and !systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue()) {
-		bleedMon2Fault.active = 1;
-	} else {
-		ECAM_controller.warningReset(bleedMon2Fault);
 	}
 	
 	if (warningNodes.Flipflops.bleed1LowTemp.getValue() and warningNodes.Flipflops.bleed2LowTemp.getValue()) {
@@ -1569,6 +1550,25 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(eng2BleedNotClsd);
 		ECAM_controller.warningReset(eng2BleedNotClsdOff);
+	}
+	
+	# BMC
+	if (bleedMonFault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue() and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6)) {
+		bleedMonFault.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleedMonFault);
+	}
+	
+	if (bleedMon1Fault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and !systems.PNEU.Fail.bmc2.getValue() and (phaseVar <= 2 or phaseVar >= 9)) {
+		bleedMon1Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleedMon1Fault);
+	}
+	
+	if (bleedMon2Fault.clearFlag == 0 and !systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue() and (phaseVar <= 2 or phaseVar >= 9)) {
+		bleedMon2Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(bleedMon2Fault);
 	}
 	
 	# Eng fire
