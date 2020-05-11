@@ -78,7 +78,7 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="5">
+			<test logic="OR" value="100"> <!-- pneumatic, so instant nearly -->
 				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
 		</switch>
@@ -97,7 +97,7 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-power">
 			<default value="0"/>
-			<test logic="OR" value="5">
+			<test logic="OR" value="100"> <!-- pneumatic, so instant nearly -->
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
@@ -787,14 +787,11 @@
 					/systems/pneumatics/valves/crossbleed-valve eq 0
 					/systems/pneumatics/psi/engine-1-downstream-opv gt 0
 				</test>
-				<test logic="AND">
-					/systems/pneumatics/valves/crossbleed-valve ne 0
-					/systems/pneumatics/psi/engine-1-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-right
-				</test>
 			</test>
 			<test logic="AND" value="4"> <!-- right crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/psi/crossbleed-duct-right gt /systems/pneumatics/psi/engine-1-downstream-opv
+				/systems/pneumatics/psi/crossbleed-duct-right ne 0
+				/systems/pneumatics/psi/crossbleed-duct-right-src ne 4
 			</test>
 			<test logic="AND" value="1"> <!-- gnd -->
 				/systems/pneumatics/source/gnd-psi ne 0
@@ -813,14 +810,11 @@
 					/systems/pneumatics/valves/crossbleed-valve eq 0
 					/systems/pneumatics/psi/engine-2-downstream-opv gt 0
 				</test>
-				<test logic="AND">
-					/systems/pneumatics/valves/crossbleed-valve ne 0
-					/systems/pneumatics/psi/engine-2-downstream-opv gt /systems/pneumatics/psi/crossbleed-duct-left
-				</test>
 			</test>
-			<test logic="AND" value="4"> <!-- right crossbleed -->
+			<test logic="AND" value="4"> <!-- left crossbleed -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/psi/crossbleed-duct-left gt /systems/pneumatics/psi/engine-2-downstream-opv
+				/systems/pneumatics/psi/crossbleed-duct-left ne 0
+				/systems/pneumatics/psi/crossbleed-duct-left-src ne 4
 			</test>
 			<test logic="AND" value="1"> <!-- gnd -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
