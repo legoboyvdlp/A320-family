@@ -98,7 +98,7 @@ var start_one_mancheck = func {
 }
 
 var start_one_mancheck_b = func {
-	if (systems.PNEU.Psi.engine1.getValue() >= 28) {
+	if (systems.PNEU.Psi.engine1.getValue() >= 25) {
 		setprop("/engines/engine[0]/state", 1);
 		setprop("/controls/engines/engine[0]/starter", 1);
 	}
@@ -181,7 +181,7 @@ var start_two_mancheck = func {
 }
 
 var start_two_mancheck_b = func {
-	if (systems.PNEU.Psi.engine1.getValue() >= 28) {
+	if (systems.PNEU.Psi.engine1.getValue() >= 25) {
 		setprop("/engines/engine[1]/state", 1);
 		setprop("/controls/engines/engine[1]/starter", 1);
 	}
@@ -195,7 +195,7 @@ var start_two_check = func {
 }
 
 var start_two_check_b = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine2.getValue() >= 28 and !getprop("/controls/engines/engine[1]/cutoff-switch")) { {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine2.getValue() >= 25 and !getprop("/controls/engines/engine[1]/cutoff-switch")) { {
 		auto_start_two();
 	}
 }
@@ -355,7 +355,7 @@ setlistener("/controls/engines/engine-start-switch", func {
 });
 
 setlistener("/systems/pneumatics/psi/engine-1-psi", func {
-	if (systems.PNEU.Psi.engine1.getValue() <= 22) {
+	if (systems.PNEU.Psi.engine1.getValue() < 24.5) {
 		if (getprop("/engines/engine[0]/state") == 1 or getprop("/engines/engine[0]/state") == 2) {
 			setprop("/controls/engines/engine[0]/starter", 0);
 			setprop("/controls/engines/engine[0]/cutoff", 1);
@@ -367,7 +367,7 @@ setlistener("/systems/pneumatics/psi/engine-1-psi", func {
 }, 0, 0);
 
 setlistener("/systems/pneumatics/psi/engine-2-psi", func {
-	if (systems.PNEU.Psi.engine2.getValue() <= 22) {
+	if (systems.PNEU.Psi.engine2.getValue() < 24.5) {
 		if (getprop("/engines/engine[1]/state") == 1 or getprop("/engines/engine[1]/state") == 2) {
 			setprop("/controls/engines/engine[1]/starter", 0);
 			setprop("/controls/engines/engine[1]/cutoff", 1);
