@@ -1249,7 +1249,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(bleed1FaultOff);
 		}
 		
-		if (bleed1FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getBoolValue() and systems.PNEU.Switch.pack2.getBoolValue() and getprop("/controls/ice-protection/wing")) {
+		if (bleed1FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getBoolValue() and systems.PNEU.Switch.pack2.getBoolValue() and getprop("/ECAM/warnings/logic/wai-on")) {
 			bleed1FaultPack.active = 1;
 		} else {
 			ECAM_controller.warningReset(bleed1FaultPack);
@@ -1286,7 +1286,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(bleed2FaultOff);
 		}
 		
-		if (bleed2FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue() and getprop("/controls/ice-protection/wing")) {
+		if (bleed2FaultPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue() and getprop("/ECAM/warnings/logic/wai-on")) {
 			bleed2FaultPack.active = 1;
 		} else {
 			ECAM_controller.warningReset(bleed2FaultPack);
@@ -1602,6 +1602,62 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(eng2IceOpen);
 		ECAM_controller.warningReset(eng2IceOpenThrust);
+	}
+	
+	# Wing anti ice
+	if (wingIceSysFault.clearFlag == 0 and warningNodes.Logic.waiSysfault.getBoolValue() and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6)) {
+		wingIceSysFault.active = 1;
+		
+		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and warningNodes.Logic.procWaiShutdown.getValue() == 1) {
+			wingIceSysFaultXbld.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceSysFaultXbld);
+		}
+		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and getprop("/controls/ice-protection/wing")) {
+			wingIceSysFaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceSysFaultOff);
+		}
+		
+		if (warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) {
+			wingIceSysFaultIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceSysFaultIcing);
+		}
+	} else {
+		ECAM_controller.warningReset(wingIceSysFault);
+		ECAM_controller.warningReset(wingIceSysFaultXbld);
+		ECAM_controller.warningReset(wingIceSysFaultOff);
+		ECAM_controller.warningReset(wingIceSysFaultIcing);
+	}
+	
+	if (wingIceOpenGnd.clearFlag == 0 and warningNodes.Logic.waiGndFlight.getValue() and (phaseVar <= 2  or phaseVar >= 9)) {
+		wingIceOpenGnd.active = 1;
+		
+		if (pts.Gear.wow[1].getValue() and getprop("/controls/ice-protection/wing")) {
+			wingIceOpenGndShut.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceOpenGndShut);
+		}
+	} else {
+		ECAM_controller.warningReset(wingIceOpenGnd);
+		ECAM_controller.warningReset(wingIceOpenGndShut);
+	}
+	
+	if (wingIceLHiPr.clearFlag == 0 and warningNodes.Timers.waiLhiPr.getValue() == 1 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6)) {
+		wingIceLHiPr.active = 1;
+		wingIceLHiPrThrust.active = 1;
+	} else {
+		ECAM_controller.warningReset(wingIceLHiPr);
+		ECAM_controller.warningReset(wingIceLHiPrThrust);
+	}
+	
+	if (wingIceRHiPr.clearFlag == 0 and warningNodes.Timers.waiRhiPr.getValue() == 1 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6)) {
+		wingIceRHiPr.active = 1;
+		wingIceRHiPrThrust.active = 1;
+	} else {
+		ECAM_controller.warningReset(wingIceRHiPr);
+		ECAM_controller.warningReset(wingIceRHiPrThrust);
 	}
 	
 	# Eng fire

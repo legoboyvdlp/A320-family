@@ -400,24 +400,16 @@
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
 		
-		<switch name="overwrite-wing-ice-sw">
-			<default value="/controls/ice-protection/wing"/>
-			<test logic="OR" value="0">
-				/systems/electrical/bus/dc-ess-shed lt 25 
-				<test logic="AND">
-					/systems/pneumatics/valves/wing-ice-gnd eq 1
-					/gear/gear[1]/wow eq 1
-					/controls/ice-protection/wing eq 1
-				</test>
-			</test>
-			<output>/controls/ice-protection/wing</output>
-		</switch>
-		
 		<switch name="/systems/pneumatics/valves/wing-ice-1-cmd">
 			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/valves/wing-ice-gnd eq 1
+				/gear/gear[1]/wow eq 1
+				/controls/ice-protection/wing eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/electrical/bus/dc-ess-shed lt 25 
-				/systems/pneumatics/psi/engine-1-psi lt 7
+				/systems/pneumatics/psi/engine-1-psi le 1
 			</test>
 			<test logic="AND" value="1">
 				/controls/ice-protection/wing eq 1
@@ -432,7 +424,7 @@
 			<test logic="AND" value="0.5">
 				<test logic="OR">
 					/systems/electrical/bus/dc-ess-shed lt 25 
-					/systems/pneumatics/psi/engine-1-psi lt 7
+					/systems/pneumatics/psi/engine-1-psi le 1
 				</test>
 				/systems/pneumatics/valves/wing-ice-1-cmd eq 0
 				/systems/pneumatics/valves/wing-ice-1 ne 0
@@ -449,9 +441,14 @@
 		
 		<switch name="/systems/pneumatics/valves/wing-ice-2-cmd">
 			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/valves/wing-ice-gnd eq 1
+				/gear/gear[1]/wow eq 1
+				/controls/ice-protection/wing eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/electrical/bus/dc-ess-shed lt 25 
-				/systems/pneumatics/psi/engine-2-psi lt 7
+				/systems/pneumatics/psi/engine-2-psi le 1
 			</test>
 			<test logic="AND" value="1">
 				/controls/ice-protection/wing eq 1
@@ -466,7 +463,7 @@
 			<test logic="AND" value="0.5">
 				<test logic="OR">
 					/systems/electrical/bus/dc-ess-shed lt 25 
-					/systems/pneumatics/psi/engine-2-psi lt 7
+					/systems/pneumatics/psi/engine-2-psi le 1
 				</test>
 				/systems/pneumatics/valves/wing-ice-2-cmd eq 0
 				/systems/pneumatics/valves/wing-ice-2 ne 0
