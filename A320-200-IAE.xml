@@ -7,183 +7,161 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 
-    <fileheader>
-        <author>Joshua Davidson (Octal450)</author>
-        <version>Pre V1.0</version>
-        <description>A32X FDE</description>
-    </fileheader>
-    
-    <metrics file="Systems/a320-metrics"/>
-    <mass_balance file="Systems/a320-mass-balance"/>
-    <ground_reactions file="Systems/a320-ground-reactions"/>
-    
-    <propulsion>
-        <engine file="v2527_a5_1">
-            <location unit="M">
-                <x> 14.3962788 </x>
-                <y> -5.755 </y>
-                <z> -1.04768 </z>
-            </location>
-            <orient unit="DEG">
-                <roll> 0.0 </roll>
-                <pitch> 2.2 </pitch>
-                <yaw> 1 </yaw>
-            </orient>
-            <feed>5</feed>
-            <thruster file="direct">
-                <location unit="M">
-                    <x> 14.3962788 </x>
-                    <y> -5.755 </y>
-                    <z> -1.04768 </z>
-                </location>
-                <orient unit="DEG">
-                    <roll> 0.0 </roll>
-                    <pitch> 2.2 </pitch>
-                    <yaw> 1 </yaw>
-                </orient>
-            </thruster>
-        </engine>
-        
-        <engine file="v2527_a5_2">
-            <location unit="M">
-                <x> 14.3962788 </x>
-                <y> 5.755 </y>
-                <z> -1.04768 </z>
-            </location>
-            <orient unit="DEG">
-                <roll> 0.0 </roll>
-                <pitch> 2.2 </pitch>
-                <yaw> -1 </yaw>
-            </orient>
-            <feed>6</feed>
-            <thruster file="direct">
-                <location unit="M">
-                    <x> 14.3962788 </x>
-                    <y> 5.755 </y>
-                    <z> -1.04768 </z>
-                </location>
-                <orient unit="DEG">
-                    <roll> 0.0 </roll>
-                    <pitch> 2.2 </pitch>
-                    <yaw> -1 </yaw>
-                </orient>
-            </thruster>
-        </engine>
-        
-        <engine file="APS3200">
-            <location unit="M">
-                <x> 38.9 </x>
-                <y> 0 </y>
-                <z> 0.95 </z>
-            </location>
-            <orient unit="DEG">
-                <roll> 0.0 </roll>
-                <pitch> 0.0 </pitch>
-                <yaw> 0.0 </yaw>
-            </orient>
-            <feed>7</feed>
-            <thruster file="direct">
-                <location unit="M">
-                    <x> 38.9 </x>
-                    <y> 0 </y>
-                    <z> 0.95 </z>
-                </location>
-                <orient unit="DEG">
-                    <roll> 0.0 </roll>
-                    <pitch> 0.0 </pitch>
-                    <yaw> 0.0 </yaw>
-                </orient>
-            </thruster>
-        </engine>
-        
-        <tank type="FUEL">    <!-- Outer Left Wing Tank -->
-            <location unit="M">
-                <x> 18.9231 </x>
-                <y> -5.1104 </y>
-                <z> -0.61182 </z>
-            </location>
-            <capacity unit="LBS"> 1523.00 </capacity>
-            <contents unit="LBS"> 1523.00 </contents>
-            <unusable-volume unit="LTR"> 4.0 </unusable-volume>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-            <temperature>50</temperature>
-        </tank>
-        <tank type="FUEL">    <!-- Inner Left Wing Tank -->
-            <location unit="M">
-                <x> 18.9231 </x>
-                <y> -5.1104 </y>
-                <z> -0.61182 </z>
-            </location>
-            <capacity unit="LBS"> 12272.90 </capacity>
-            <contents unit="LBS">  6000.00 </contents>
-            <unusable-volume unit="LTR"> 28.0 </unusable-volume>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-            <temperature>50</temperature>
-        </tank>
-        <tank type="FUEL">    <!-- Center Tank -->
-            <location unit="M">
-                <x> 18.9731 </x>
-                <y> 0 </y>
-                <z> -0.61182 </z>
-            </location>
-            <capacity unit="LBS"> 14623.00 </capacity>
-            <contents unit="LBS"> 42 </contents>
-            <unusable-volume unit="LTR"> 23.20 </unusable-volume>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-            <temperature>50</temperature>
-        </tank>
-        <tank type="FUEL">    <!-- Inner Right Wing Tank -->
-            <location unit="M">
-                <x> 18.9231 </x>
-                <y> 5.1104 </y>
-                <z> -0.61182 </z>
-            </location>
-            <capacity unit="LBS"> 12272.90 </capacity>
-            <contents unit="LBS">  6000.00 </contents>
-            <unusable-volume unit="LTR"> 28.0 </unusable-volume>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-            <temperature>50</temperature>
-        </tank>
-        <tank type="FUEL">    <!-- Outer Right Wing Tank -->
-            <location unit="M">
-                <x> 18.9231 </x>
-                <y> 5.1104 </y>
-                <z> -0.61182 </z>
-            </location>
-            <capacity unit="LBS"> 1523.00 </capacity>
-            <contents unit="LBS"> 1523.00 </contents>
-            <unusable-volume unit="LTR"> 4.0 </unusable-volume>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-            <temperature>50</temperature>
-        </tank>
-        <tank type="FUEL">    <!-- Engine 1 Pipes -->
-            <location unit="M">
-                <x> 18.8231 </x>
-                <y> 0 </y>
-                <z> 0.19249 </z>
-            </location>
-            <capacity unit="LBS">10</capacity>
-            <contents unit="LBS">0</contents>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-        </tank>
-        <tank type="FUEL">    <!-- Engine 2 Pipes -->
-            <location unit="M">
-                <x> 18.8231 </x>
-                <y> 0 </y>
-                <z> 0.19249 </z>
-            </location>
-            <capacity unit="LBS">10</capacity>
-            <contents unit="LBS">0</contents>
-            <priority>1</priority>
-            <density unit="LBS/GAL">6.71</density>
-        </tank>
-		<tank type="FUEL">    <!-- APU Pipes -->
+	<fileheader>
+		<author>Joshua Davidson (Octal450)</author>
+		<version>Pre V1.0</version>
+		<description>A32X FDE</description>
+	</fileheader>
+	
+	<metrics file="Systems/a320-metrics"/>
+	<mass_balance file="Systems/a320-mass-balance"/>
+	<ground_reactions file="Systems/a320-ground-reactions"/>
+	
+	<propulsion>
+		<engine file="v2527_a5_1">
+			<location unit="M">
+				<x> 14.3962788 </x>
+				<y> -5.755 </y>
+				<z> -1.04768 </z>
+			</location>
+			<orient unit="DEG">
+				<roll> 0.0 </roll>
+				<pitch> 2.2 </pitch>
+				<yaw> 1 </yaw>
+			</orient>
+			<feed>5</feed>
+			<thruster file="direct">
+				<location unit="M">
+					<x> 14.3962788 </x>
+					<y> -5.755 </y>
+					<z> -1.04768 </z>
+				</location>
+				<orient unit="DEG">
+					<roll> 0.0 </roll>
+					<pitch> 2.2 </pitch>
+					<yaw> 1 </yaw>
+				</orient>
+			</thruster>
+		</engine>
+		
+		<engine file="v2527_a5_2">
+			<location unit="M">
+				<x> 14.3962788 </x>
+				<y> 5.755 </y>
+				<z> -1.04768 </z>
+			</location>
+			<orient unit="DEG">
+				<roll> 0.0 </roll>
+				<pitch> 2.2 </pitch>
+				<yaw> -1 </yaw>
+			</orient>
+			<feed>6</feed>
+			<thruster file="direct">
+				<location unit="M">
+					<x> 14.3962788 </x>
+					<y> 5.755 </y>
+					<z> -1.04768 </z>
+				</location>
+				<orient unit="DEG">
+					<roll> 0.0 </roll>
+					<pitch> 2.2 </pitch>
+					<yaw> -1 </yaw>
+				</orient>
+			</thruster>
+		</engine>
+		
+		<engine file="APS3200">
+			<location unit="M">
+				<x> 38.9 </x>
+				<y> 0 </y>
+				<z> 0.95 </z>
+			</location>
+			<orient unit="DEG">
+				<roll> 0.0 </roll>
+				<pitch> 0.0 </pitch>
+				<yaw> 0.0 </yaw>
+			</orient>
+			<feed>7</feed>
+			<thruster file="direct">
+				<location unit="M">
+					<x> 38.9 </x>
+					<y> 0 </y>
+					<z> 0.95 </z>
+				</location>
+				<orient unit="DEG">
+					<roll> 0.0 </roll>
+					<pitch> 0.0 </pitch>
+					<yaw> 0.0 </yaw>
+				</orient>
+			</thruster>
+		</engine>
+		
+		<tank type="FUEL">	  <!-- Outer Left Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> -5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 1523.00 </capacity>
+			<contents unit="LBS"> 1523.00 </contents>
+			<unusable-volume unit="LTR"> 4.0 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">	  <!-- Inner Left Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> -5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 12272.90 </capacity>
+			<contents unit="LBS">  6000.00 </contents>
+			<unusable-volume unit="LTR"> 28.0 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">	  <!-- Center Tank -->
+			<location unit="M">
+				<x> 18.9731 </x>
+				<y> 0 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 14623.00 </capacity>
+			<contents unit="LBS"> 42 </contents>
+			<unusable-volume unit="LTR"> 23.20 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">	  <!-- Inner Right Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> 5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 12272.90 </capacity>
+			<contents unit="LBS">  6000.00 </contents>
+			<unusable-volume unit="LTR"> 28.0 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">	  <!-- Outer Right Wing Tank -->
+			<location unit="M">
+				<x> 18.9231 </x>
+				<y> 5.1104 </y>
+				<z> -0.61182 </z>
+			</location>
+			<capacity unit="LBS"> 1523.00 </capacity>
+			<contents unit="LBS"> 1523.00 </contents>
+			<unusable-volume unit="LTR"> 4.0 </unusable-volume>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+			<temperature>50</temperature>
+		</tank>
+		<tank type="FUEL">	  <!-- Engine 1 Pipes -->
 			<location unit="M">
 				<x> 18.8231 </x>
 				<y> 0 </y>
@@ -194,25 +172,47 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
 		</tank>
-    </propulsion>
-    
-    <system file="glass-effect"/>
+		<tank type="FUEL">	  <!-- Engine 2 Pipes -->
+			<location unit="M">
+				<x> 18.8231 </x>
+				<y> 0 </y>
+				<z> 0.19249 </z>
+			</location>
+			<capacity unit="LBS">10</capacity>
+			<contents unit="LBS">0</contents>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+		</tank>
+		<tank type="FUEL">	  <!-- APU Pipes -->
+			<location unit="M">
+				<x> 18.8231 </x>
+				<y> 0 </y>
+				<z> 0.19249 </z>
+			</location>
+			<capacity unit="LBS">10</capacity>
+			<contents unit="LBS">0</contents>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+		</tank>
+	</propulsion>
+	
+	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
-    <system file="a320-fcs"/>
-    <system file="a320-fuel"/>
-    <system file="a320-fwc"/>
-    <system file="a320-spoiler"/>
-    <system file="a320-electrical"/>
-    <system file="a320-hydraulic"/>
-    <system file="a320-pneumatic"/>
-    <system file="a320-lights"/>
-    <system file="a320-engine-fire"/>
-    <system file="a320-adr"/>
+	<system file="a320-fcs"/>
+	<system file="a320-fuel"/>
+	<system file="a320-fwc"/>
+	<system file="a320-spoiler"/>
+	<system file="a320-electrical"/>
+	<system file="a320-hydraulic"/>
+	<system file="a320-pneumatic"/>
+	<system file="a320-lights"/>
+	<system file="a320-engine-fire"/>
+	<system file="a320-adr"/>
 	<system file="a320-apu"/>
-    <system file="a320-fmgc"/>
-    
-    <flight_control name="none"/>
-    <aerodynamics file="Systems/a320-aerodynamics.xml"/>
-    <external_reactions file="Systems/a320-external-reactions"/>
+	<system file="a320-fmgc"/>
+	
+	<flight_control name="none"/>
+	<aerodynamics file="Systems/a320-aerodynamics.xml"/>
+	<external_reactions file="Systems/a320-external-reactions"/>
 
 </fdm_config>
