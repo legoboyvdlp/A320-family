@@ -848,7 +848,7 @@
 				<hot-air type="bool">0</hot-air>
 				<pack-1 type="bool">0</pack-1>
 				<pack-2 type="bool">0</pack-2>
-				<pack-flow type="bool">0</pack-flow>
+				<pack-flow type="double">1.0</pack-flow>
 				<ram-air type="bool">0</ram-air>
 				<temp-cabin-aft type="double">0.5</temp-cabin-aft>
 				<temp-cabin-fwd type="double">0.5</temp-cabin-fwd>
@@ -952,6 +952,18 @@
 		<acconfig n="0">
 			<autoconfig-running>0</autoconfig-running>
 		</acconfig>
+		<air-conditioning>
+			<temperatures>
+				<cabin-overall-temp-kelvin type="double">297</cabin-overall-temp-kelvin>
+			</temperatures>
+			<recirc>
+				<recirc-fans type="bool">0</recirc-fans>
+			</recirc>
+			<valves>
+				<flow-control-valve-1 type="double">0</flow-control-valve-1>
+				<flow-control-valve-2 type="double">0</flow-control-valve-2>
+			</valves>
+		</air-conditioning>
 		<atc>
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
@@ -1226,6 +1238,11 @@
 				<crossbleed-disag-open type="bool">0</crossbleed-disag-open>
 			</warnings>
 		</pneumatics>
+		
+		<pressurization>
+			<cabinpsi type="double">14.7</cabinpsi>
+			<ditchingpb type="double">14.7</ditchingpb>
+		</pressurization>
 		
 		<pitot n="1">
 			<serviceable>1</serviceable>

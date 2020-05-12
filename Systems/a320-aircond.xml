@@ -1,0 +1,196 @@
+<!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp) -->
+
+<system name="A320: Air Conditioning">
+	<channel name="Valves">
+	
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-1-cmd">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/controls/engines/engine[0]/fire-btn eq 1
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-1 ne 0
+							/systems/pneumatics/valves/starter-valve-2 ne 0
+						</test>
+						/gear/gear[1]/wow eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-1 ne 0
+							<test logic="AND">
+								/systems/pneumatics/valves/crossbleed-valve eq 1
+								/systems/pneumatics/valves/starter-valve-2 ne 0
+							</test>
+						</test>
+						/gear/gear[1]/wow eq 0
+					</test>
+				</test>
+				/systems/pressurization/ditchingpb eq 1
+				/systems/pneumatics/psi/engine-1-psi le 13.8
+			</test>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-1-power">
+			<default value="0"/>
+			<test logic="AND" value="5">
+				/systems/failures/pneumatics/pack-1-valve eq 0
+				/systems/electrical/bus/dc-ess-shed ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/flow-control-valve-1">
+			<input>/systems/air-conditioning/valves/flow-control-valve-1-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/flow-control-valve-1-power</rate_limit>
+		</actuator>
+		
+	
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-2-cmd">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/controls/engines/engine[1]/fire-btn eq 1
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-1 ne 0
+							/systems/pneumatics/valves/starter-valve-2 ne 0
+						</test>
+						/gear/gear[1]/wow eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-2 ne 0
+							<test logic="AND">
+								/systems/pneumatics/valves/crossbleed-valve eq 1
+								/systems/pneumatics/valves/starter-valve-1 ne 0
+							</test>
+						</test>
+						/gear/gear[1]/wow eq 0
+					</test>
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-2-power">
+			<default value="0"/>
+			<test logic="AND" value="5">
+				/systems/failures/pneumatics/pack-2-valve eq 0
+				/systems/electrical/bus/dc-2 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/flow-control-valve-2">
+			<input>/systems/air-conditioning/valves/flow-control-valve-2-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/flow-control-valve-2-power</rate_limit>
+		</actuator>
+		
+	</channel>
+	
+	<channel name="Packs">
+		
+		<switch name="/systems/air-conditioning/packs/single-pack">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+					/systems/air-conditioning/valves/flow-control-valve-2 eq 1
+				</test>
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 eq 1
+					/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+				</test>
+			</test>
+		</switch>
+	
+		<switch name="/systems/air-conditioning/packs/pack-flow">
+			<default value="/controls/pneumatics/switches/pack-flow"/>
+			<test logic="OR" value="1.2">
+				/systems/pneumatics/valves/apu-bleed-valve eq 1
+				/systems/air-conditioning/packs/single-pack eq 1
+			</test>
+		</switch>
+	
+		<switch name="/systems/air-conditioning/packs/pack-factor">
+			<default value="0"/>
+			<test logic="AND" value="0.0">
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+			</test>
+			<test logic="OR" value="0.6">
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+			</test>
+			<test logic="AND" value="1.0">
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 1
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 1
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="Mass flow">
+		
+		<fcs_function name="/systems/air-conditioning/mass-flow-fresh-kg_s">
+			<function>
+				<quotient>
+					<product>
+						<property>/systems/air-conditioning/packs/pack-factor</property>
+						<property>/systems/air-conditioning/packs/pack-flow</property>
+						<product>
+							<property>/systems/pressurization/cabinpsi</property>
+							<value>68.9476</value>
+						</product>
+						<value>0.928</value>
+					</product>
+					<product>
+						<value>2.87</value>
+						<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
+					</product>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/air-conditioning/recirc/recirc-factor">
+			<default value="0"/>
+			<test logic="AND" value="0.738095">
+				/systems/air-conditioning/packs/pack-flow eq 1.0
+			</test>
+			<test logic="OR" value="0.5686275">
+				/systems/air-conditioning/packs/pack-flow eq 1.2
+			</test>
+			<test logic="AND" value="0.93998">
+				/systems/air-conditioning/packs/pack-flow eq 0.8
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/mass-flow-total-kg_s">
+			<function>
+				<sum>
+					<product>
+						<property>/systems/air-conditioning/recirc/recirc-factor</property>
+						<property>/systems/air-conditioning/recirc/recirc-fans</property>
+						<property>/systems/air-conditioning/mass-flow-fresh-kg_s</property>
+					</product>
+					<property>/systems/air-conditioning/mass-flow-fresh-kg_s</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/mass-flow-cockpit-kg_s">
+			<function>
+				<product>
+					<value>0.14</value>
+					<property>/systems/air-conditioning/mass-flow-total-kg_s</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+</system>

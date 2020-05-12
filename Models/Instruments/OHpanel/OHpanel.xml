@@ -3840,10 +3840,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/pack-flo</property>
-				<value>7</value>
-				<value>9</value>
-				<value>11</value>
+				<property>controls/pneumatics/switches/pack-flow</property>
+				<value>0.8</value>
+				<value>1.0</value>
+				<value>1.2</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3856,10 +3856,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/pack-flo</property>
-				<value>11</value>
-				<value>9</value>
-				<value>7</value>
+				<property>controls/pneumatics/switches/pack-flow</property>
+				<value>1.2</value>
+				<value>1.0</value>
+				<value>0.8</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3871,11 +3871,11 @@
 		<name>AC pack flow rotate</name>
 		<type>rotate</type>
 		<object-name>ACFlowKnb</object-name>
-		<property>controls/pneumatic/switches/pack-flo</property>
+		<property>controls/pneumatics/switches/pack-flow</property>
 		<interpolation>
-			<entry><ind> 7</ind><dep> 55</dep></entry>
-			<entry><ind> 9</ind><dep>  0</dep></entry>
-			<entry><ind>11</ind><dep>-55</dep></entry>
+			<entry><ind>0.8</ind><dep> 55</dep></entry>
+			<entry><ind>1.0</ind><dep>  0</dep></entry>
+			<entry><ind>1.2</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>

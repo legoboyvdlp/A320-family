@@ -205,6 +205,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	<system file="a320-electrical"/>
 	<system file="a320-hydraulic"/>
     <system file="a320-pneumatic"/>
+    <system file="a320-aircond"/> <!-- after pneu -->
 	<system file="a320-lights"/>
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>
