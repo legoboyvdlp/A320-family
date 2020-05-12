@@ -292,7 +292,10 @@
 			<test logic="OR" value="0">
 				/controls/engines/engine[1]/fire-btn eq 1
 				/controls/pneumatics/switches/bleed-2 eq 0
-				/systems/pneumatics/valves/apu-bleed-valve ne 0
+				<test logic="AND">
+					/systems/pneumatics/valves/apu-bleed-valve ne 0
+					/systems/pneumatics/valves/crossbleed-valve ne 0
+				</test>
 				/systems/pneumatics/valves/starter-valve-2 ne 0
 				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
 			</test>

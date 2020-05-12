@@ -4282,7 +4282,7 @@
 		<object-name>APUBleedBtn1F</object-name>
 		<condition>
 			<or>
-				<and>
+				<!--<and>
 					<equals>
 						<property>systems/pneumatic/bleedapu-fault</property>
 						<value>1</value>
@@ -4291,7 +4291,7 @@
 						<property>controls/pneumatics/switches/apu</property>
 						<value>1</value>
 					</equals>
-				</and>
+				</and> leak not simulated yet -->
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>

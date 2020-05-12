@@ -1214,8 +1214,8 @@
 				<wing-ice-2 type="double">0</wing-ice-2>
 				<pack-1 type="double">0</pack-1>
 				<pack-2 type="double">0</pack-2>
-				<starter-valve-1 type="double">0</starter-valve-1>
-				<starter-valve-2 type="double">0</starter-valve-2>
+				<starter-valve-1 type="bool">0</starter-valve-1>
+				<starter-valve-2 type="bool">0</starter-valve-2>
 			</valves>
 			<warnings>
 				<apu-bleed-not-on-cmd type="bool">0</apu-bleed-not-on-cmd>
