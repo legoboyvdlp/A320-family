@@ -2,7 +2,29 @@
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
 # Local vars
-
+var cabinalt = nil;
+var targetalt = nil;
+var ambient = nil;
+var cabinpsi = nil;
+var state1 = nil;
+var state2 = nil;
+var stateL = nil;
+var stateR = nil;
+var pressmode = nil;
+var wowc = nil;
+var wowl = nil;
+var wowr = nil;
+var vs = nil;
+var manvs = nil;
+var pause = nil;
+var auto = nil;
+var speed = nil;
+var ditch = nil;
+var outflowpos = nil;
+var targetvs = nil; 
+var eng1_starter = nil;
+var eng2_starter = nil;
+		
 # Main class
 var PNEU = {
 	Fail: {
@@ -60,6 +82,48 @@ var PNEU = {
 	},
 	init: func() {
 		me.resetFail();
+		
+		# Legacy shit
+		setprop("systems/pressurization/mode", "GN");
+		setprop("systems/pressurization/vs", "0");
+		setprop("systems/pressurization/targetvs", "0");
+		setprop("systems/pressurization/vs-norm", "0");
+		setprop("systems/pressurization/auto", 1);
+		setprop("systems/pressurization/deltap", "0");
+		setprop("systems/pressurization/outflowpos", "0");
+		setprop("systems/pressurization/deltap-norm", "0");
+		setprop("systems/pressurization/outflowpos-norm", "0");
+		setprop("systems/pressurization/outflowpos-man", "0.5");
+		setprop("systems/pressurization/outflowpos-man-sw", "0");
+		setprop("systems/pressurization/outflowpos-norm-cmd", "0");
+		setprop("systems/pressurization/cabinalt", getprop("instrumentation/altimeter/indicated-altitude-ft"));
+		setprop("systems/pressurization/targetalt", getprop("instrumentation/altimeter/indicated-altitude-ft")); 
+		setprop("systems/pressurization/diff-to-target", "0");
+		setprop("systems/pressurization/ditchingpb", 0);
+		setprop("systems/pressurization/targetvs", "0");
+		setprop("systems/pressurization/ambientpsi", "0");
+		setprop("systems/pressurization/cabinpsi", "0");
+		setprop("systems/pressurization/manvs-cmd", "0");
+		setprop("systems/pressurization/pack-1-out-temp", 0);
+		setprop("systems/pressurization/pack-2-out-temp", 0);
+		setprop("systems/pressurization/pack-1-bypass", 0);
+		setprop("systems/pressurization/pack-2-bypass", 0);
+		setprop("systems/pressurization/pack-1-flow", 0);
+		setprop("systems/pressurization/pack-2-flow", 0);
+		setprop("systems/pressurization/pack-1-comp-out-temp", 0);
+		setprop("systems/pressurization/pack-2-comp-out-temp", 0);
+		setprop("systems/pressurization/pack-1-valve", 0);
+		setprop("systems/pressurization/pack-2-valve", 0);
+		setprop("systems/ventilation/cabin/fans", 0); # aircon fans
+		setprop("systems/ventilation/avionics/fan", 0);
+		setprop("systems/ventilation/avionics/extractvalve", "0");
+		setprop("systems/ventilation/avionics/inletvalve", "0");
+		setprop("systems/ventilation/lavatory/extractfan", 0);
+		setprop("systems/ventilation/lavatory/extractvalve", "0");
+		setprop("controls/oxygen/masksDeploy", 0);
+		setprop("controls/oxygen/masksDeployMan", 0);
+		setprop("controls/oxygen/masksReset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
+		setprop("controls/oxygen/masksSys", 0);
 	},
 	resetFail: func() {
 		me.Fail.apu.setBoolValue(0);
@@ -78,6 +142,114 @@ var PNEU = {
 		me.Fail.xbleed.setBoolValue(0);
 	},
 	loop: func() {
+		stateL = getprop("engines/engine[0]/state");
+		stateR = getprop("engines/engine[1]/state");
+		wowc = getprop("gear/gear[0]/wow");
+		wowl = getprop("gear/gear[1]/wow");
+		wowr = getprop("gear/gear[2]/wow");
+		eng1_starter = getprop("systems/pneumatics/valves/starter-valve-1");
+		eng2_starter = getprop("systems/pneumatics/valves/starter-valve-2");
+		if (stateL == 1 or stateR == 1 or stateL == 2 or stateR == 2) {
+			setprop("systems/pneumatics/start-psi", 18);
+		} else {
+			setprop("systems/pneumatics/start-psi", 0);
+		}
 		
+		if (getprop("controls/engines/engine-start-switch") == 2 and wowc == 1 and (stateL != 3 or stateR != 3)) {
+			setprop("systems/pneumatics/starting", 1);
+		} else if (wowc == 1 and eng1_starter == 1 or eng2_starter == 1) {
+			setprop("systems/pneumatics/starting", 1);
+		} else {
+			setprop("systems/pneumatics/starting", 0);
+		}
+		
+		# Legacy pressurization
+		cabinalt = getprop("systems/pressurization/cabinalt");
+		targetalt = getprop("systems/pressurization/targetalt");
+		ambient = getprop("systems/pressurization/ambientpsi");
+		cabinpsi = getprop("systems/pressurization/cabinpsi");
+		state1 = getprop("systems/thrust/state1");
+		state2 = getprop("systems/thrust/state2");
+		pressmode = getprop("systems/pressurization/mode");
+		vs = getprop("systems/pressurization/vs-norm");
+		manvs = getprop("systems/pressurization/manvs-cmd");
+		pause = getprop("sim/freeze/master");
+		auto = getprop("systems/pressurization/auto");
+		speed = getprop("velocities/groundspeed-kt");
+		ditch = getprop("systems/pressurization/ditchingpb");
+		outflowpos = getprop("systems/pressurization/outflowpos");
+		targetvs = getprop("systems/pressurization/targetvs");
+		
+		setprop("systems/pressurization/diff-to-target", targetalt - cabinalt); 
+		setprop("systems/pressurization/deltap", cabinpsi - ambient); 
+
+		if ((pressmode == "GN") and (pressmode != "CL") and (wowl and wowr) and ((state1 == "MCT") or (state1 == "TOGA")) and ((state2 == "MCT") or (state2 == "TOGA"))) {
+			setprop("systems/pressurization/mode", "TO");
+		} else if (((!wowl) or (!wowr)) and (speed > 100) and (pressmode == "TO")) {
+			setprop("systems/pressurization/mode", "CL");	
+		}
+		
+		if (vs != targetvs and !wowl and !wowr) {
+			setprop("systems/pressurization/vs", targetvs);
+		}
+		
+		if (cabinalt != targetalt and !wowl and !wowr and !pause and auto) {
+			setprop("systems/pressurization/cabinalt", cabinalt + ((vs / 60) / 10));
+		} else if (!auto and !pause) {
+			setprop("systems/pressurization/cabinalt", cabinalt + ((manvs / 60) / 10));
+		}
+		
+		if (ditch and auto) {
+			setprop("systems/pressurization/outflowpos", "1");
+			setprop("systems/ventilation/avionics/extractvalve", "1");
+			setprop("systems/ventilation/avionics/inletvalve", "1");
+		}
+		
+		if (systems.ELEC.Bus.dcEss.getValue() >= 25 or systems.ELEC.Bus.acEss.getValue() > 110) {
+			setprop("systems/ventilation/avionics/fan", 1);
+			setprop("systems/ventilation/lavatory/extractfan", 1);
+		} else {
+			setprop("systems/ventilation/avionics/fan", 0);
+			setprop("systems/ventilation/lavatory/extractfan", 0);
+		}
+		
+		
+		# Oxygen
+		if (cabinalt > 13500) { 
+			setprop("controls/oxygen/masksDeploy", 1);
+			setprop("controls/oxygen/masksSys", 1);
+		}
 	},
-}
+};
+
+
+# Oxygen (Cabin)
+
+setlistener("/controls/oxygen/masksDeployMan", func {
+	guard = getprop("controls/oxygen/masksGuard");
+	masks = getprop("controls/oxygen/masksDeployMan");
+	
+	if (guard and masks) {
+		setprop("controls/oxygen/masksDeployMan", 0);
+	} else if (!guard and masks) {
+		setprop("controls/oxygen/masksDeployMan", 1);
+		setprop("controls/oxygen/masksDeploy", 1);
+		setprop("controls/oxygen/masksSys", 1);
+	}
+}, 0, 0);
+
+setlistener("/controls/oxygen/masksDeployMan", func {
+	masks = getprop("controls/oxygen/masksDeployMan");
+	autoMasks = getprop("controls/oxygen/masksDeploy");
+	if (!masks) { 
+		setprop("controls/oxygen/masksDeployMan", 1);
+	}
+}, 0, 0);
+
+setlistener("/controls/oxygen/masksDeploy", func {
+	masks = getprop("controls/oxygen/masksDeployMan");
+	autoMasks = getprop("controls/oxygen/masksDeploy");
+	if (!autoMasks) { 
+		setprop("controls/oxygen/masksDeploy", 1);
+	}
+}, 0, 0);
