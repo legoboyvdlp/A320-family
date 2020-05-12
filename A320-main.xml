@@ -158,7 +158,7 @@
 			<no-smoking-sign type="bool">0</no-smoking-sign>
 			<btn1 type="bool">0</btn1>
 			<btn3 type="bool">0</btn3>
-			<gear-vol type="double">0.25</gear-vol>
+			<gear-vol type="double">0.40</gear-vol>
 			<knb1 type="bool">0</knb1>
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
@@ -1368,7 +1368,7 @@
 			</inputs>
 			<speaker>
 				<max-dist type="double">2</max-dist>
-				<reference-dist type="double">1</reference-dist>
+				<reference-dist type="double">5</reference-dist>
 				<volume type="double">2</volume>
 			</speaker>
 			<voice>
