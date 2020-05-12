@@ -183,8 +183,9 @@
 	
 	<options n="0">
 		<EIS2 type="bool">1</EIS2>
-		<eng>CFM</eng> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM ECAM, and no N1 mode switches -->
-		<maxblock>52.3</maxblock>
+		<eng type="string">CFM</eng> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM ECAM, and no N1 mode switches -->
+		<maxblock type="double">52.3</maxblock>
+		<maxflap type="int">35</maxflap>
 	</options>
 	
 	<sharklet type="bool">1</sharklet>

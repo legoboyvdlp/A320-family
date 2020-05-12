@@ -7,33 +7,33 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
-setprop("sim/replay/was-active", 0);
+setprop("/sim/replay/was-active", 0);
 
-setprop("sim/menubar/default/menu[0]/item[0]/enabled", 0);
-setprop("sim/menubar/default/menu[2]/item[0]/enabled", 0);
-setprop("sim/menubar/default/menu[2]/item[2]/enabled", 0);
-setprop("sim/menubar/default/menu[3]/enabled", 0);
-setprop("sim/menubar/default/menu[5]/item[9]/enabled", 0);
-setprop("sim/menubar/default/menu[5]/item[10]/enabled", 0);
-setprop("sim/menubar/default/menu[5]/item[11]/enabled", 0);
+setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
+setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
+setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
+setprop("/sim/menubar/default/menu[3]/enabled", 0);
+setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
+setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
+setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);
 
 # Dimmers
-setprop("controls/lighting/ndl-norm", 1);
-setprop("controls/lighting/ndr-norm", 1);
-setprop("controls/lighting/upper-norm", 1);
+setprop("/controls/lighting/ndl-norm", 1);
+setprop("/controls/lighting/ndr-norm", 1);
+setprop("/controls/lighting/upper-norm", 1);
 
 # Lights
-setprop("sim/model/lights/nose-lights", 0);
-setprop("sim/model/lights/turnoffsw", 0);
-setprop("controls/lighting/turnoff-light-switch", 0);
-setprop("controls/lighting/leftturnoff", 0);
-setprop("controls/lighting/rightturnoff", 0);
+setprop("/sim/model/lights/nose-lights", 0);
+setprop("/sim/model/lights/turnoffsw", 0);
+setprop("/controls/lighting/turnoff-light-switch", 0);
+setprop("/controls/lighting/leftturnoff", 0);
+setprop("/controls/lighting/rightturnoff", 0);
 
 # Oil Qty
 var qty1 = math.round((rand() * 5 ) + 20, 0.1);
 var qty2 = math.round((rand() * 5 ) + 20, 0.1);
-setprop("engines/engine[0]/oil-qt-actual", qty1);
-setprop("engines/engine[1]/oil-qt-actual", qty2);
+setprop("/engines/engine[0]/oil-qt-actual", qty1);
+setprop("/engines/engine[1]/oil-qt-actual", qty2);
 
 ##########
 # Lights #
@@ -46,21 +46,21 @@ var strobe_switch = props.globals.getNode("controls/switches/strobe", 1);
 var strobe_light = props.globals.getNode("controls/lighting/strobe", 1);
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
-var logo_lights = getprop("sim/model/lights/logo-lights");
+var logo_lights = getprop("/sim/model/lights/logo-lights");
 var nav_lights = props.globals.getNode("sim/model/lights/nav-lights");
 var wing_switch = props.globals.getNode("controls/switches/wing-lights", 1);
 var wing_ctl = props.globals.getNode("controls/lighting/wing-lights", 1);
 var dome_light = props.globals.initNode("/sim/model/lights/dome-light", 0.0, "DOUBLE");
-var wow = getprop("gear/gear[2]/wow");
-var slats = getprop("controls/flight/slats");
-var gear = getprop("gear/gear[0]/position-norm");
-var nose_lights = getprop("sim/model/lights/nose-lights");
+var wow = getprop("/gear/gear[2]/wow");
+var slats = getprop("/controls/flight/slats");
+var gear = getprop("/gear/gear[0]/position-norm");
+var nose_lights = getprop("/sim/model/lights/nose-lights");
 var left_turnoff_light = props.globals.getNode("controls/lighting/leftturnoff");
 var right_turnoff_light = props.globals.getNode("controls/lighting/rightturnoff");
-var settingT = getprop("controls/lighting/taxi-light-switch");
-var settingTurnoff = getprop("controls/lighting/turnoff-light-switch");
-var setting = getprop("controls/lighting/nav-lights-switch");
-var domeSetting = getprop("controls/lighting/dome-norm");
+var settingT = getprop("/controls/lighting/taxi-light-switch");
+var settingTurnoff = getprop("/controls/lighting/turnoff-light-switch");
+var setting = getprop("/controls/lighting/nav-lights-switch");
+var domeSetting = getprop("/controls/lighting/dome-norm");
 var landL = props.globals.getNode("controls/lighting/landing-lights[1]", 1);
 var landR = props.globals.getNode("controls/lighting/landing-lights[2]", 1);
 var landlSw = props.globals.getNode("controls/switches/landing-lights-l", 1);
@@ -78,7 +78,7 @@ aircraft.rain.init();
 ##########
 
 setlistener("/sim/sounde/btn1", func {
-	if (!getprop("sim/sounde/btn1")) {
+	if (!getprop("/sim/sounde/btn1")) {
 		return;
 	}
 	settimer(func {
@@ -87,7 +87,7 @@ setlistener("/sim/sounde/btn1", func {
 });
 
 setlistener("/sim/sounde/oh-btn", func {
-	if (!getprop("sim/sounde/oh-btn")) {
+	if (!getprop("/sim/sounde/oh-btn")) {
 		return;
 	}
 	settimer(func {
@@ -96,7 +96,7 @@ setlistener("/sim/sounde/oh-btn", func {
 });
 
 setlistener("/sim/sounde/btn3", func {
-	if (!getprop("sim/sounde/btn3")) {
+	if (!getprop("/sim/sounde/btn3")) {
 		return;
 	}
 	settimer(func {
@@ -105,7 +105,7 @@ setlistener("/sim/sounde/btn3", func {
 });
 
 setlistener("/sim/sounde/knb1", func {
-	if (!getprop("sim/sounde/knb1")) {
+	if (!getprop("/sim/sounde/knb1")) {
 		return;
 	}
 	settimer(func {
@@ -114,7 +114,7 @@ setlistener("/sim/sounde/knb1", func {
 });
 
 setlistener("/sim/sounde/switch1", func {
-	if (!getprop("sim/sounde/switch1")) {
+	if (!getprop("/sim/sounde/switch1")) {
 		return;
 	}
 	settimer(func {
@@ -136,9 +136,9 @@ setlistener("/controls/lighting/no-smoking-sign", func {
 	}, 1);
 }, 0, 0);
 
-
 var flaps_click = props.globals.getNode("/sim/sounde/flaps-click");
-setlistener("/controls/flight/flap-lever", func {
+
+setlistener("/controls/flight/flaps-input", func {
 	flaps_click.setBoolValue(1);
 }, 0, 0);
 
@@ -152,6 +152,7 @@ setlistener("/sim/sounde/flaps-click", func {
 });
 
 var spdbrk_click = props.globals.getNode("/sim/sounde/spdbrk-click");
+
 setlistener("/controls/flight/speedbrake", func {
 	spdbrk_click.setBoolValue(1);
 }, 0, 0);
@@ -193,11 +194,11 @@ var armrests = aircraft.door.new("/sim/model/door-positions/armrests", 2);
 
 # door opener/closer
 var triggerDoor = func(door, doorName, doorDesc) {
-	if (getprop("sim/model/door-positions/" ~ doorName ~ "/position-norm") > 0) {
+	if (getprop("/sim/model/door-positions/" ~ doorName ~ "/position-norm") > 0) {
 		gui.popupTip("Closing " ~ doorDesc ~ " door");
 		door.toggle();
 	} else {
-		if (getprop("velocities/groundspeed-kt") > 5) {
+		if (getprop("/velocities/groundspeed-kt") > 5) {
 			gui.popupTip("You cannot open the doors while the aircraft is moving!");
 		} else {
 			gui.popupTip("Opening " ~ doorDesc ~ " door");
@@ -261,56 +262,56 @@ var systemsLoop = maketimer(0.1, func {
 	systems.APUController.loop();
 	systems.HFLoop();
 	
-	if ((getprop("controls/pneumatic/switches/groundair") or getprop("controls/electrical/ground-cart")) and ((getprop("velocities/groundspeed-kt") > 2) or (getprop("controls/gear/brake-parking") == 0 and getprop("services/chocks/nose") == 0 and getprop("services/chocks/left") == 0 and getprop("services/chocks/right") == 0))) {
-		setprop("controls/electrical/ground-cart", 0);
-		setprop("controls/pneumatic/switches/groundair", 0);
+	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/nose") == 0 and getprop("/services/chocks/left") == 0 and getprop("/services/chocks/right") == 0))) {
+		setprop("/controls/electrical/ground-cart", 0);
+		setprop("/controls/pneumatic/switches/groundair", 0);
 	}
 	
-	if (getprop("velocities/groundspeed-kt") > 15) {
-		setprop("systems/shake/effect", 1);
+	if (getprop("/velocities/groundspeed-kt") > 15) {
+		setprop("/systems/shake/effect", 1);
 	} else {
-		setprop("systems/shake/effect", 0);
+		setprop("/systems/shake/effect", 0);
 	}
 	
-	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1 or (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override") == 1 and getprop("controls/flight/flap-pos") >= 4)) {
-		setprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-override", 1);
+	if (getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1 or (getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override") == 1 and getprop("/controls/flight/flaps-pos") >= 4)) {
+		setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override", 1);
 	} else {
-		setprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-override", 0);
+		setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override", 0);
 	}
 	
-	if (getprop("instrumentation/mk-viii/inputs/discretes/gpws-inhibit") == 1) {
-		setprop("instrumentation/mk-viii/speaker/volume", 0);
+	if (getprop("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit") == 1) {
+		setprop("/instrumentation/mk-viii/speaker/volume", 0);
 	} else {
-		setprop("instrumentation/mk-viii/speaker/volume", 2);
+		setprop("/instrumentation/mk-viii/speaker/volume", 2);
 	}
 	
-	if (getprop("engines/engine[0]/state") == 3 and getprop("engines/engine[1]/state") == 3) {
-		setprop("engines/ready", 1);
+	if (getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") == 3) {
+		setprop("/engines/ready", 1);
 	} else {
-		setprop("engines/ready", 0);
+		setprop("/engines/ready", 0);
 	}
 	
-	if ((getprop("engines/engine[0]/state") == 2 or getprop("engines/engine[0]/state") == 3) and getprop("fdm/jsbsim/propulsion/tank[5]/contents-lbs") < 1) {
+	if ((getprop("/engines/engine[0]/state") == 2 or getprop("/engines/engine[0]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[5]/contents-lbs") < 1) {
 		systems.cutoff_one();
 	}
-	if ((getprop("engines/engine[1]/state") == 2 or getprop("engines/engine[1]/state") == 3) and getprop("fdm/jsbsim/propulsion/tank[6]/contents-lbs") < 1) {
+	if ((getprop("/engines/engine[1]/state") == 2 or getprop("/engines/engine[1]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[6]/contents-lbs") < 1) {
 		systems.cutoff_two();
 	}
 	
-	if (getprop("sim/replay/replay-state") == 1) {
-		setprop("sim/replay/was-active", 1);
-	} else if (getprop("sim/replay/replay-state") == 0 and getprop("sim/replay/was-active") == 1) {
-		setprop("sim/replay/was-active", 0);
+	if (getprop("/sim/replay/replay-state") == 1) {
+		setprop("/sim/replay/was-active", 1);
+	} else if (getprop("/sim/replay/replay-state") == 0 and getprop("/sim/replay/was-active") == 1) {
+		setprop("/sim/replay/was-active", 0);
 		acconfig.colddark();
 		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
 	}
 });
 
 setlistener("/options/steep-ils", func {
-	if (getprop("options/steep-ils") == 1) {
-		setprop("instrumentation/mk-viii/inputs/discretes/steep-approach", 1);
+	if (getprop("/options/steep-ils") == 1) {
+		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 1);
 	} else {
-		setprop("instrumentation/mk-viii/inputs/discretes/steep-approach", 0);
+		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 0);
 	}
 });
 
@@ -337,120 +338,8 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
-
-# In air, flaps 1 is slats only. On ground, it is slats and flaps.
-
-setprop("controls/flight/flap-lever", 0);
-setprop("controls/flight/flap-pos", 0);
-setprop("controls/flight/flap-txt", " ");
-
-controls.flapsDown = func(step) {
-	if (step == 1) {
-		if (getprop("controls/flight/flap-lever") == 0) {
-			if (getprop("velocities/airspeed-kt") <= 100) {
-				setprop("controls/flight/flaps", 0.2857);
-				setprop("controls/flight/slats", 0.6666);
-				setprop("controls/flight/flap-lever", 1);
-				setprop("controls/flight/flap-pos", 2);
-				setprop("controls/flight/flap-txt", "1+F");
-				flaptimer.start();
-				return;
-			} else {
-				setprop("controls/flight/flaps", 0.000);
-				setprop("controls/flight/slats", 0.6666);
-				setprop("controls/flight/flap-lever", 1);
-				setprop("controls/flight/flap-pos", 1);
-				setprop("controls/flight/flap-txt", "1");
-				flaptimer.stop();
-				return;
-			}
-		} else if (getprop("controls/flight/flap-lever") == 1) {
-			setprop("controls/flight/flaps", 0.4286);
-			setprop("controls/flight/slats", 0.8148);
-			setprop("controls/flight/flap-lever", 2);
-			setprop("controls/flight/flap-pos", 3);
-			setprop("controls/flight/flap-txt", "2");
-			flaptimer.stop();
-			return;
-		} else if (getprop("controls/flight/flap-lever") == 2) {
-			setprop("controls/flight/flaps", 0.5714);
-			setprop("controls/flight/slats", 0.8148);
-			setprop("controls/flight/flap-lever", 3);
-			setprop("controls/flight/flap-pos", 4);
-			setprop("controls/flight/flap-txt", "3");
-			flaptimer.stop();
-			return;
-		} else if (getprop("controls/flight/flap-lever") == 3) {
-			setprop("controls/flight/flaps", 1.000);
-			setprop("controls/flight/slats", 1.000);
-			setprop("controls/flight/flap-lever", 4);
-			setprop("controls/flight/flap-pos", 5);
-			setprop("controls/flight/flap-txt", "FULL");
-			flaptimer.stop();
-			return;
-		}
-	} else if (step == -1) {
-		if (getprop("controls/flight/flap-lever") == 4) {
-			setprop("controls/flight/flaps", 0.5714);
-			setprop("controls/flight/slats", 0.8148);
-			setprop("controls/flight/flap-lever", 3);
-			setprop("controls/flight/flap-pos", 4);
-			setprop("controls/flight/flap-txt", "3");
-			flaptimer.stop();
-			return;
-		} else if (getprop("controls/flight/flap-lever") == 3) {
-			setprop("controls/flight/flaps", 0.4286);
-			setprop("controls/flight/slats", 0.8148);
-			setprop("controls/flight/flap-lever", 2);
-			setprop("controls/flight/flap-pos", 3);
-			setprop("controls/flight/flap-txt", "2");
-			flaptimer.stop();
-			return;
-		} else if (getprop("controls/flight/flap-lever") == 2) {
-			if (getprop("velocities/airspeed-kt") <= 100) {
-				setprop("controls/flight/flaps", 0.2857);
-				setprop("controls/flight/slats", 0.6666);
-				setprop("controls/flight/flap-lever", 1);
-				setprop("controls/flight/flap-pos", 2);
-				setprop("controls/flight/flap-txt", "1+F");
-				flaptimer.start();
-				return;
-			} else {
-				setprop("controls/flight/flaps", 0.000);
-				setprop("controls/flight/slats", 0.6666);
-				setprop("controls/flight/flap-lever", 1);
-				setprop("controls/flight/flap-pos", 1);
-				setprop("controls/flight/flap-txt", "1");
-				flaptimer.stop();
-				return;
-			}
-		} else if (getprop("controls/flight/flap-lever") == 1) {
-			setprop("controls/flight/flaps", 0.000);
-			setprop("controls/flight/slats", 0.000);
-			setprop("controls/flight/flap-lever", 0);
-			setprop("controls/flight/flap-pos", 0);
-			setprop("controls/flight/flap-txt", " ");
-			flaptimer.stop();
-			return;
-		}
-	} else {
-		return 0;
-	}
-}
-
-var flaptimer = maketimer(0.5, func {
-	if (getprop("controls/flight/flap-pos") == 2 and getprop("velocities/airspeed-kt") >= 208) {
-		setprop("controls/flight/flaps", 0.000);
-		setprop("controls/flight/slats", 0.666);
-		setprop("controls/flight/flap-lever", 1);
-		setprop("controls/flight/flap-pos", 1);
-		setprop("controls/flight/flap-txt", "1");
-		flaptimer.stop();
-	}
-});
-
 controls.stepSpoilers = func(step) {
-	setprop("controls/flight/speedbrake-arm", 0);
+	setprop("/controls/flight/speedbrake-arm", 0);
 	if (step == 1) {
 		deploySpeedbrake();
 	} else if (step == -1) {
@@ -459,100 +348,128 @@ controls.stepSpoilers = func(step) {
 }
 
 var deploySpeedbrake = func {
-	if (getprop("gear/gear[1]/wow") == 1 or getprop("gear/gear[2]/wow") == 1) {
-		if (getprop("controls/flight/speedbrake") < 1.0) {
-			setprop("controls/flight/speedbrake", 1.0);
+	if (getprop("/gear/gear[1]/wow") == 1 or getprop("/gear/gear[2]/wow") == 1) {
+		if (getprop("/controls/flight/speedbrake") < 1.0) {
+			setprop("/controls/flight/speedbrake", 1.0);
 		}
 	} else {
-		if (getprop("controls/flight/speedbrake") < 0.5) {
-			setprop("controls/flight/speedbrake", 0.5);
-		} else if (getprop("controls/flight/speedbrake") < 1.0) {
-			setprop("controls/flight/speedbrake", 1.0);
+		if (getprop("/controls/flight/speedbrake") < 0.5) {
+			setprop("/controls/flight/speedbrake", 0.5);
+		} else if (getprop("/controls/flight/speedbrake") < 1.0) {
+			setprop("/controls/flight/speedbrake", 1.0);
 		}
 	}
 }
 
 var retractSpeedbrake = func {
-	if (getprop("gear/gear[1]/wow") == 1 or getprop("gear/gear[2]/wow") == 1) {
-		if (getprop("controls/flight/speedbrake") > 0.0) {
-			setprop("controls/flight/speedbrake", 0.0);
+	if (getprop("/gear/gear[1]/wow") == 1 or getprop("/gear/gear[2]/wow") == 1) {
+		if (getprop("/controls/flight/speedbrake") > 0.0) {
+			setprop("/controls/flight/speedbrake", 0.0);
 		}
 	} else {
-		if (getprop("controls/flight/speedbrake") > 0.5) {
-			setprop("controls/flight/speedbrake", 0.5);
-		} else if (getprop("controls/flight/speedbrake") > 0.0) {
-			setprop("controls/flight/speedbrake", 0.0);
+		if (getprop("/controls/flight/speedbrake") > 0.5) {
+			setprop("/controls/flight/speedbrake", 0.5);
+		} else if (getprop("/controls/flight/speedbrake") > 0.0) {
+			setprop("/controls/flight/speedbrake", 0.0);
 		}
 	}
 }
 
 var slewProp = func(prop, delta) {
-	delta *= getprop("sim/time/delta-realtime-sec");
+	delta *= getprop("/sim/time/delta-realtime-sec");
 	setprop(prop, getprop(prop) + delta);
 	return getprop(prop);
 }
 
+controls.flapsDown = func(step) {
+	pts.Controls.Flight.flapsTemp = pts.Controls.Flight.flaps.getValue();
+	if (step == 1) {
+		if (pts.Controls.Flight.flapsTemp < 0.2) {
+			pts.Controls.Flight.flaps.setValue(0.2);
+		} else if (pts.Controls.Flight.flapsTemp < 0.4) {
+			pts.Controls.Flight.flaps.setValue(0.4);
+		} else if (pts.Controls.Flight.flapsTemp < 0.6) {
+			pts.Controls.Flight.flaps.setValue(0.6);
+		} else if (pts.Controls.Flight.flapsTemp < 0.8) {
+			pts.Controls.Flight.flaps.setValue(0.8);
+		}
+	} else if (step == -1) {
+		if (pts.Controls.Flight.flapsTemp > 0.6) {
+			pts.Controls.Flight.flaps.setValue(0.6);
+		} else if (pts.Controls.Flight.flapsTemp > 0.4) {
+			pts.Controls.Flight.flaps.setValue(0.4);
+		} else if (pts.Controls.Flight.flapsTemp > 0.2) {
+			pts.Controls.Flight.flaps.setValue(0.2);
+		} else if (pts.Controls.Flight.flapsTemp > 0) {
+			pts.Controls.Flight.flaps.setValue(0);
+		}
+	}
+}
+
+
 controls.elevatorTrim = func(speed) {
-	if (getprop("systems/hydraulic/green-psi") >= 1500) {
-		slewProp("/controls/flight/elevator-trim", speed * 0.045);
+	if (getprop("/systems/hydraulic/green-psi") >= 1500) {
+		slewprop("/controls/flight/elevator-trim", speed * 0.0185);  # Rate in JSB normalized (0.25 / 13.5)
+	} else {
+		slewprop("/controls/flight/elevator-trim", speed * 0.0092);  # Rate in JSB normalized (0.125 / 13.5)
 	}
 }
 
 setlistener("/controls/flight/elevator-trim", func {
-	if (getprop("controls/flight/elevator-trim") > 0.32) {
-		setprop("controls/flight/elevator-trim", 0.32);
+	if (getprop("/controls/flight/elevator-trim") > 0.296296) {
+		setprop("/controls/flight/elevator-trim", 0.296296);
 	}
 });
 
 var lightsLoop = maketimer(0.2, func {
-	gear = getprop("gear/gear[0]/position-norm");
-	nose_lights = getprop("sim/model/lights/nose-lights");
-	settingT = getprop("controls/lighting/taxi-light-switch");
-	domeSetting = getprop("controls/lighting/dome-norm");
+	gear = getprop("/gear/gear[0]/position-norm");
+	nose_lights = getprop("/sim/model/lights/nose-lights");
+	settingT = getprop("/controls/lighting/taxi-light-switch");
+	domeSetting = getprop("/controls/lighting/dome-norm");
 	
 	# nose lights
 	
-	if (settingT == 0.5 and gear > 0.9 and (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0)) {
-		setprop("sim/model/lights/nose-lights", 0.85);
-	} else if (settingT == 1 and gear > 0.9 and (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0)) {
-		setprop("sim/model/lights/nose-lights", 1);
+	if (settingT == 0.5 and gear > 0.9 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
+		setprop("/sim/model/lights/nose-lights", 0.85);
+	} else if (settingT == 1 and gear > 0.9 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
+		setprop("/sim/model/lights/nose-lights", 1);
 	} else {
-		setprop("sim/model/lights/nose-lights", 0);
+		setprop("/sim/model/lights/nose-lights", 0);
 	}
 	
 	# turnoff lights
-	settingTurnoff = getprop("controls/lighting/turnoff-light-switch");
+	settingTurnoff = getprop("/controls/lighting/turnoff-light-switch");
 	left_turnoff_light = props.globals.getNode("controls/lighting/leftturnoff");
 	right_turnoff_light = props.globals.getNode("controls/lighting/rightturnoff");
 	
-	if (settingTurnoff == 1 and gear > 0.9 and getprop("systems/electrical/bus/ac-1") > 0) {
+	if (settingTurnoff == 1 and gear > 0.9 and getprop("/systems/electrical/bus/ac-1") > 0) {
 		left_turnoff_light.setBoolValue(1);
 	} else {
 		left_turnoff_light.setBoolValue(0);
 	}
 	
-	if (settingTurnoff == 1 and gear > 0.9 and getprop("systems/electrical/bus/ac-2") > 0) {
+	if (settingTurnoff == 1 and gear > 0.9 and getprop("/systems/electrical/bus/ac-2") > 0) {
 		right_turnoff_light.setBoolValue(1);
 	} else {
 		right_turnoff_light.setBoolValue(0);
 	}
 	
 	# logo and navigation lights
-	setting = getprop("controls/lighting/nav-lights-switch");
+	setting = getprop("/controls/lighting/nav-lights-switch");
 	nav_lights = props.globals.getNode("sim/model/lights/nav-lights");
 	logo_lights = props.globals.getNode("sim/model/lights/logo-lights");
-	wow = getprop("gear/gear[2]/wow");
-	slats = getprop("controls/flight/slats");
+	wow = getprop("/gear/gear[2]/wow");
+	slats = getprop("/controls/flight/slats");
 	
-	if (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0  or getprop("systems/electrical/bus/dc-1") > 0 or getprop("systems/electrical/bus/dc-2") > 0) {
-		setprop("systems/electrical/nav-lights-power", 1);
+	if (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0  or getprop("/systems/electrical/bus/dc-1") > 0 or getprop("/systems/electrical/bus/dc-2") > 0) {
+		setprop("/systems/electrical/nav-lights-power", 1);
 	} else { 
-		setprop("systems/electrical/nav-lights-power", 0);
+		setprop("/systems/electrical/nav-lights-power", 0);
 	}
 	
 	if (setting == 0 and logo_lights == 1) {
 		 logo_lights.setBoolValue(0);
-	} else if (setting == 1 or setting == 2 and (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0)) {
+	} else if (setting == 1 or setting == 2 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
 		if ((wow) or (!wow and slats > 0)) {
 			logo_lights.setBoolValue(1);
 		} else {
@@ -562,15 +479,15 @@ var lightsLoop = maketimer(0.2, func {
 		logo_lights.setBoolValue(0);
 	}
 
-	if (setting == 1 or setting == 2 and (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0 or getprop("systems/electrical/bus/dc-1") > 0 or getprop("systems/electrical/bus/dc-2") > 0)) {
+	if (setting == 1 or setting == 2 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0 or getprop("/systems/electrical/bus/dc-1") > 0 or getprop("/systems/electrical/bus/dc-2") > 0)) {
 		nav_lights.setBoolValue(1);
 	} else {
 		nav_lights.setBoolValue(0);
 	}
 	
-	if (domeSetting == 0.5 and getprop("systems/electrical/bus/dc-ess") > 0) {
+	if (domeSetting == 0.5 and getprop("/systems/electrical/bus/dc-ess") > 0) {
 		dome_light.setValue(0.5);
-	} elsif (domeSetting == 1 and getprop("systems/electrical/bus/dc-ess") > 0) {
+	} elsif (domeSetting == 1 and getprop("/systems/electrical/bus/dc-ess") > 0) {
 		dome_light.setValue(1);
 	} else {
 		dome_light.setValue(0);
@@ -579,9 +496,9 @@ var lightsLoop = maketimer(0.2, func {
 	# strobe
 	strobe_sw = strobe_switch.getValue();
 	
-	if (strobe_sw == 1 and getprop("systems/electrical/bus/ac-2") > 0) {
+	if (strobe_sw == 1 and getprop("/systems/electrical/bus/ac-2") > 0) {
 		strobe_light.setValue(1);
-	} elsif (strobe_sw == 0.5 and getprop("gear/gear[1]/wow") == 0 and getprop("gear/gear[2]/wow") == 0 and getprop("systems/electrical/bus/ac-2") > 0) {
+	} elsif (strobe_sw == 0.5 and getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0 and getprop("/systems/electrical/bus/ac-2") > 0) {
 		# todo: use lgciu output 5
 		strobe_light.setValue(1);
 	} else {
@@ -590,7 +507,7 @@ var lightsLoop = maketimer(0.2, func {
 	
 	# beacon
 	
-	if (beacon_switch.getValue() == 1 and (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0)) {
+	if (beacon_switch.getValue() == 1 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
 		beacon_ctl.setValue(1);
 	} else {
 		beacon_ctl.setValue(0);
@@ -598,7 +515,7 @@ var lightsLoop = maketimer(0.2, func {
 	
 	# wing
 	
-	if (wing_switch.getValue() == 1 and (getprop("systems/electrical/bus/ac-1") > 0 or getprop("systems/electrical/bus/ac-2") > 0)) {
+	if (wing_switch.getValue() == 1 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
 		wing_ctl.setValue(1);
 	} else {
 		wing_ctl.setValue(0);
@@ -606,13 +523,13 @@ var lightsLoop = maketimer(0.2, func {
 	
 	# landL
 	
-	if (landlSw.getValue() == 1 and getprop("systems/electrical/bus/ac-1") > 0) {
+	if (landlSw.getValue() == 1 and getprop("/systems/electrical/bus/ac-1") > 0) {
 		landL.setValue(1);
 	} else {
 		landL.setValue(0);
 	}
 	
-	if (landrSw.getValue() == 1 and getprop("systems/electrical/bus/ac-2") > 0) {
+	if (landrSw.getValue() == 1 and getprop("/systems/electrical/bus/ac-2") > 0) {
 		landR.setValue(1);
 	} else {
 		landR.setValue(0);
@@ -620,48 +537,48 @@ var lightsLoop = maketimer(0.2, func {
 	
 	# signs
 	
-	if (getprop("systems/pressurization/cabinalt-norm") > 11300) {
-		setprop("controls/lighting/seatbelt-sign", 1);
-		setprop("controls/lighting/no-smoking-sign", 1);
+	if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
+		setprop("/controls/lighting/seatbelt-sign", 1);
+		setprop("/controls/lighting/no-smoking-sign", 1);
 	} else {
-		if (getprop("controls/switches/seatbelt-sign") == 1) {
-			 if (getprop("controls/lighting/seatbelt-sign") == 0) {
-				setprop("controls/lighting/seatbelt-sign", 1);
+		if (getprop("/controls/switches/seatbelt-sign") == 1) {
+			 if (getprop("/controls/lighting/seatbelt-sign") == 0) {
+				setprop("/controls/lighting/seatbelt-sign", 1);
 			}
-		} elsif (getprop("controls/switches/seatbelt-sign") == 0) {
-			 if (getprop("controls/lighting/seatbelt-sign") == 1) {
-				setprop("controls/lighting/seatbelt-sign", 0);
+		} elsif (getprop("/controls/switches/seatbelt-sign") == 0) {
+			 if (getprop("/controls/lighting/seatbelt-sign") == 1) {
+				setprop("/controls/lighting/seatbelt-sign", 0);
 			}
 		}
 		
-		if (getprop("controls/switches/no-smoking-sign") == 1) {
-			if (getprop("controls/lighting/no-smoking-sign") == 0) {
-				setprop("controls/lighting/no-smoking-sign", 1);
+		if (getprop("/controls/switches/no-smoking-sign") == 1) {
+			if (getprop("/controls/lighting/no-smoking-sign") == 0) {
+				setprop("/controls/lighting/no-smoking-sign", 1);
 			}
-		} elsif (getprop("controls/switches/no-smoking-sign") == 0.5 and getprop("gear/gear[0]/position-norm") != 0) { # todo: should be when uplocks not engaged
-			if (getprop("controls/lighting/no-smoking-sign") == 0) {
-				setprop("controls/lighting/no-smoking-sign", 1);
+		} elsif (getprop("/controls/switches/no-smoking-sign") == 0.5 and getprop("/gear/gear[0]/position-norm") != 0) { # todo: should be when uplocks not engaged
+			if (getprop("/controls/lighting/no-smoking-sign") == 0) {
+				setprop("/controls/lighting/no-smoking-sign", 1);
 			}
 		} else {
-			setprop("controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
+			setprop("/controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
 		}
 	}
 	
-	if (getprop("controls/lighting/landing-lights[1]") >= 0.5) {
-		setprop("fdm/jsbsim/rubbish/landL", 1);
+	if (getprop("/controls/lighting/landing-lights[1]") >= 0.5) {
+		setprop("/fdm/jsbsim/rubbish/landL", 1);
 	} else {
-		setprop("fdm/jsbsim/rubbish/landL", 0);
+		setprop("/fdm/jsbsim/rubbish/landL", 0);
 	}
 	
-	if (getprop("controls/lighting/landing-lights[2]") >= 0.5) {
-		setprop("fdm/jsbsim/rubbish/landR", 1);
+	if (getprop("/controls/lighting/landing-lights[2]") >= 0.5) {
+		setprop("/fdm/jsbsim/rubbish/landR", 1);
 	} else {
-		setprop("fdm/jsbsim/rubbish/landR", 0);
+		setprop("/fdm/jsbsim/rubbish/landR", 0);
 	}
 });
 
 var lTray = func {
-	var lTrayCMD = getprop("controls/tray/lefttrayext");
+	var lTrayCMD = getprop("/controls/tray/lefttrayext");
 	if (lTrayCMD < 0.5) {
 		interpolate("/controls/tray/lefttrayext", 0.5, 0.5);
 	} else if (lTrayCMD == 0.5) {
@@ -672,7 +589,7 @@ var lTray = func {
 }
 
 var rTray = func {
-	var rTrayCMD = getprop("controls/tray/righttrayext");
+	var rTrayCMD = getprop("/controls/tray/righttrayext");
 	if (rTrayCMD < 0.5) {
 		interpolate("/controls/tray/righttrayext", 0.5, 0.5);
 	} else if (rTrayCMD == 0.5) {
@@ -683,7 +600,7 @@ var rTray = func {
 }
 
 var l1Pedal = func {
-	var lPedalCMD = getprop("controls/footrest-cpt[0]");
+	var lPedalCMD = getprop("/controls/footrest-cpt[0]");
 	if (lPedalCMD < 1.0) {
 		interpolate("/controls/footrest-cpt[0]", 1.0, 0.5);
 	} else {
@@ -692,7 +609,7 @@ var l1Pedal = func {
 }
 
 var l2Pedal = func {
-	var l2PedalCMD = getprop("controls/footrest-cpt[1]");
+	var l2PedalCMD = getprop("/controls/footrest-cpt[1]");
 	if (l2PedalCMD < 1.0) {
 		interpolate("/controls/footrest-cpt[1]", 1.0, 0.5);
 	} else {
@@ -701,7 +618,7 @@ var l2Pedal = func {
 }
 
 var r1Pedal = func {
-	var rPedalCMD = getprop("controls/footrest-fo[0]");
+	var rPedalCMD = getprop("/controls/footrest-fo[0]");
 	if (rPedalCMD < 1.0) {
 		interpolate("/controls/footrest-fo[0]", 1.0, 0.5);
 	} else {
@@ -710,7 +627,7 @@ var r1Pedal = func {
 }
 
 var r2Pedal = func {
-	var r2PedalCMD = getprop("controls/footrest-fo[1]");
+	var r2PedalCMD = getprop("/controls/footrest-fo[1]");
 	if (r2PedalCMD < 1.0) {
 		interpolate("/controls/footrest-fo[1]", 1.0, 0.5);
 	} else {
@@ -718,13 +635,13 @@ var r2Pedal = func {
 	}
 }
 
-if (getprop("controls/flight/auto-coordination") == 1) {
-	setprop("controls/flight/auto-coordination", 0);
+if (getprop("/controls/flight/auto-coordination") == 1) {
+	setprop("/controls/flight/auto-coordination", 0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
 } 
 
-setprop("controls/flight/aileron-drives-tiller", 0);
+setprop("/controls/flight/aileron-drives-tiller", 0);
 
 var APPanel = {
 	APDisc: func() {
@@ -736,15 +653,15 @@ var APPanel = {
 };
 
 var resetView = func() {
-	if (getprop("sim/current-view/view-number") == 0) {
-		if (getprop("sim/rendering/headshake/enabled")) {
+	if (getprop("/sim/current-view/view-number") == 0) {
+		if (getprop("/sim/rendering/headshake/enabled")) {
 			var _shakeFlag = 1;
-			setprop("sim/rendering/headshake/enabled", 0);
+			setprop("/sim/rendering/headshake/enabled", 0);
 		} else {
 			var _shakeFlag = 0;
 		}
 		
-		var hd = getprop("sim/current-view/heading-offset-deg");
+		var hd = getprop("/sim/current-view/heading-offset-deg");
 		var hd_t = 360;
 		if (hd < 180) {
 		  hd_t = hd_t - 360;
@@ -759,21 +676,21 @@ var resetView = func() {
 		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
 		
 		if (_shakeFlag) {
-			setprop("sim/rendering/headshake/enabled", 1);
+			setprop("/sim/rendering/headshake/enabled", 1);
 		}
 	} 
 }
 
 var autopilotView = func() {
-	if (getprop("sim/current-view/view-number") == 0) {
-		if (getprop("sim/rendering/headshake/enabled")) {
+	if (getprop("/sim/current-view/view-number") == 0) {
+		if (getprop("/sim/rendering/headshake/enabled")) {
 			var _shakeFlag = 1;
-			setprop("sim/rendering/headshake/enabled", 0);
+			setprop("/sim/rendering/headshake/enabled", 0);
 		} else {
 			var _shakeFlag = 0;
 		}
 		
-		var hd = getprop("sim/current-view/heading-offset-deg");
+		var hd = getprop("/sim/current-view/heading-offset-deg");
 		var hd_t = 341.7;
 		if (hd < 180) {
 		  hd_t = hd_t - 360;
@@ -788,21 +705,21 @@ var autopilotView = func() {
 		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
 		
 		if (_shakeFlag) {
-			setprop("sim/rendering/headshake/enabled", 1);
+			setprop("/sim/rendering/headshake/enabled", 1);
 		}
 	} 
 }
 
 var overheadView = func() {
-	if (getprop("sim/current-view/view-number") == 0) {
-		if (getprop("sim/rendering/headshake/enabled")) {
+	if (getprop("/sim/current-view/view-number") == 0) {
+		if (getprop("/sim/rendering/headshake/enabled")) {
 			var _shakeFlag = 1;
-			setprop("sim/rendering/headshake/enabled", 0);
+			setprop("/sim/rendering/headshake/enabled", 0);
 		} else {
 			var _shakeFlag = 0;
 		}
 		
-		var hd = getprop("sim/current-view/heading-offset-deg");
+		var hd = getprop("/sim/current-view/heading-offset-deg");
 		var hd_t = 348;
 		if (hd < 180) {
 		  hd_t = hd_t - 360;
@@ -817,21 +734,21 @@ var overheadView = func() {
 		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
 		
 		if (_shakeFlag) {
-			setprop("sim/rendering/headshake/enabled", 1);
+			setprop("/sim/rendering/headshake/enabled", 1);
 		}
 	} 
 }
 
 var pedestalView = func() {
-	if (getprop("sim/current-view/view-number") == 0) {
-		if (getprop("sim/rendering/headshake/enabled")) {
+	if (getprop("/sim/current-view/view-number") == 0) {
+		if (getprop("/sim/rendering/headshake/enabled")) {
 			var _shakeFlag = 1;
-			setprop("sim/rendering/headshake/enabled", 0);
+			setprop("/sim/rendering/headshake/enabled", 0);
 		} else {
 			var _shakeFlag = 0;
 		}
 		
-		var hd = getprop("sim/current-view/heading-offset-deg");
+		var hd = getprop("/sim/current-view/heading-offset-deg");
 		var hd_t = 315;
 		if (hd < 180) {
 		  hd_t = hd_t - 360;
@@ -846,21 +763,21 @@ var pedestalView = func() {
 		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
 		
 		if (_shakeFlag) {
-			setprop("sim/rendering/headshake/enabled", 1);
+			setprop("/sim/rendering/headshake/enabled", 1);
 		}
 	} 
 }
 
 var lightsView = func() {
-	if (getprop("sim/current-view/view-number") == 0) {
-		if (getprop("sim/rendering/headshake/enabled")) {
+	if (getprop("/sim/current-view/view-number") == 0) {
+		if (getprop("/sim/rendering/headshake/enabled")) {
 			var _shakeFlag = 1;
-			setprop("sim/rendering/headshake/enabled", 0);
+			setprop("/sim/rendering/headshake/enabled", 0);
 		} else {
 			var _shakeFlag = 0;
 		}
 		
-		var hd = getprop("sim/current-view/heading-offset-deg");
+		var hd = getprop("/sim/current-view/heading-offset-deg");
 		var hd_t = 329;
 		if (hd < 180) {
 		  hd_t = hd_t - 360;
@@ -875,9 +792,9 @@ var lightsView = func() {
 		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
 		
 		if (_shakeFlag) {
-			setprop("sim/rendering/headshake/enabled", 1);
+			setprop("/sim/rendering/headshake/enabled", 1);
 		}
 	} 
 }
 
-setprop("systems/acconfig/libraries-loaded", 1);
+setprop("/systems/acconfig/libraries-loaded", 1);

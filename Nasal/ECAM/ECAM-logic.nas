@@ -86,7 +86,7 @@ var messages_priority_3 = func {
 	}
 	
 	# FCTL FLAPS NOT ZERO
-	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("controls/flight/flap-lever") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
+	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("controls/flight/flaps-input") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
 		flap_not_zero.active = 1;
 	} else {
 		ECAM_controller.warningReset(flap_not_zero);
@@ -697,7 +697,7 @@ var messages_priority_3 = func {
 	}
 	
 	# CONFIG
-	if ((slats_config.clearFlag == 0) and (getprop("controls/flight/flap-lever") == 0 or getprop("controls/flight/flap-lever")) == 4 and phaseVar >= 3 and phaseVar <= 4) {
+	if ((slats_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input")) == 4 and phaseVar >= 3 and phaseVar <= 4) {
 		slats_config.active = 1;
 		slats_config_1.active = 1;
 	} else {
@@ -705,7 +705,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(slats_config_1);
 	}
 	
-	if ((flaps_config.clearFlag == 0) and (getprop("controls/flight/flap-lever") == 0 or getprop("controls/flight/flap-lever") == 4) and phaseVar >= 3 and phaseVar <= 4) {
+	if ((flaps_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4) and phaseVar >= 3 and phaseVar <= 4) {
 		flaps_config.active = 1;
 		flaps_config_1.active = 1;
 	} else {
@@ -1668,7 +1668,7 @@ var messages_priority_0 = func {
 
 var messages_config_memo = func {
 	phaseVar = phaseNode.getValue();
-	if (getprop("controls/flight/flap-lever") == 0 or getprop("controls/flight/flap-lever") == 4 or getprop("controls/flight/speedbrake") != 0 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+	if (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4 or getprop("controls/flight/speedbrake") != 0 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("ECAM/to-config-normal", 0);
 	} else {
 		setprop("ECAM/to-config-normal", 1);
@@ -1710,7 +1710,7 @@ var messages_config_memo = func {
 		toMemoLine3.colour = "c";
 	}
 	
-	if (getprop("controls/flight/flap-pos") > 0 and getprop("controls/flight/flap-pos") < 5) {
+	if (getprop("controls/flight/flaps-pos") > 0 and getprop("controls/flight/flaps-pos") < 5) {
 		toMemoLine4.msg = "    FLAPS T.O";
 		toMemoLine4.colour = "g";
 	} else {
@@ -1777,7 +1777,7 @@ var messages_config_memo = func {
 	}
 	
 	if (getprop("it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
-		if (getprop("controls/flight/flap-pos") == 4) {
+		if (getprop("controls/flight/flaps-pos") == 4) {
 			ldgMemoLine4.msg = "    FLAPS CONF 3";
 			ldgMemoLine4.colour = "g";
 		} else {
@@ -1785,7 +1785,7 @@ var messages_config_memo = func {
 			ldgMemoLine4.colour = "c";
 		}
 	} else {
-		if (getprop("controls/flight/flap-pos") == 5) {
+		if (getprop("controls/flight/flaps-pos") == 5) {
 			ldgMemoLine4.msg = "    FLAPS FULL";
 			ldgMemoLine4.colour = "g";
 		} else {
