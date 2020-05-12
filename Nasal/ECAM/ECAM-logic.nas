@@ -1230,7 +1230,7 @@ var messages_priority_2 = func {
 	
 	# Bleed
 	# BLEED 1 FAULT
-	if ((FWC.Timer.eng1idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) and (systems.PNEU.Warnings.overpress1.getValue() or systems.PNEU.Warnings.ovht1.getValue())) {
+	if ((FWC.Timer.eng1idleOutput.getBoolValue() == 1 and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) and (systems.PNEU.Warnings.overpress1.getValue() or systems.PNEU.Warnings.ovht1.getValue())) {
 		warningNodes.Timers.bleed1Fault.setValue(1);
 	} else {
 		warningNodes.Timers.bleed1Fault.setValue(0);
@@ -1267,7 +1267,7 @@ var messages_priority_2 = func {
 	}
 	
 	# BLEED 2 FAULT
-	if ((FWC.Timer.eng2idleOutput.getBoolValue() and !pts.Controls.Engines.Engine.cutoffSw[1].getValue()) and (systems.PNEU.Warnings.overpress2.getValue() or systems.PNEU.Warnings.ovht2.getValue())) {
+	if ((FWC.Timer.eng2idleOutput.getBoolValue() == 1 and !pts.Controls.Engines.Engine.cutoffSw[1].getValue()) and (systems.PNEU.Warnings.overpress2.getValue() or systems.PNEU.Warnings.ovht2.getValue())) {
 		warningNodes.Timers.bleed2Fault.setValue(1);
 	} else {
 		warningNodes.Timers.bleed2Fault.setValue(0);
@@ -1569,6 +1569,39 @@ var messages_priority_2 = func {
 		bleedMon2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleedMon2Fault);
+	}
+	
+	# ENG AICE
+	if (eng1IceClosed.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotOpen.getValue() == 1) {
+		eng1IceClosed.active = 1;
+		eng1IceClosedIcing.active = 1;
+	} else {
+		ECAM_controller.warningReset(eng1IceClosed);
+		ECAM_controller.warningReset(eng1IceClosedIcing);
+	}
+	
+	if (eng2IceClosed.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotOpen.getValue() == 1) {
+		eng2IceClosed.active = 1;
+		eng2IceClosedIcing.active = 1;
+	} else {
+		ECAM_controller.warningReset(eng2IceClosed);
+		ECAM_controller.warningReset(eng2IceClosedIcing);
+	}
+	
+	if (eng1IceOpen.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotClsd.getValue() == 1) {
+		eng1IceOpen.active = 1;
+		eng1IceOpenThrust.active = 1;
+	} else {
+		ECAM_controller.warningReset(eng1IceOpen);
+		ECAM_controller.warningReset(eng1IceOpenThrust);
+	}
+	
+	if (eng2IceOpen.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotClsd.getValue() == 1) {
+		eng2IceOpen.active = 1;
+		eng2IceOpenThrust.active = 1;
+	} else {
+		ECAM_controller.warningReset(eng2IceOpen);
+		ECAM_controller.warningReset(eng2IceOpenThrust);
 	}
 	
 	# Eng fire

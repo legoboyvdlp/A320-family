@@ -139,12 +139,40 @@
             <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
         </actuator>
 		
-		<actuator name="/ECAM/warnings/logic/bleed-2-off-5-output">
+		<actuator name="/ECAM/warnings/timer/bleed-2-off-5-output">
             <description>Timer for the ECAM system</description>
             <input>/ECAM/warnings/logic/bleed-2-off-5</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
         </actuator>
+		
+		<actuator name="/ECAM/warnings/timer/eng-aice-1-open-output">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/eng-aice-1-open</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/eng-aice-2-open-output">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/eng-aice-2-open</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/eng-aice-1-closed-output">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/eng-aice-1-closed</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/eng-aice-2-closed-output">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/eng-aice-2-closed</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 5 seconds -->
+		</actuator>
 	</channel>
 	
 	<channel name="ECAM">
@@ -501,6 +529,44 @@
 				/ECAM/warning-phase eq 1
 				/ECAM/warning-phase eq 3
 				/ECAM/warning-phase eq 7
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng-aice-1-open">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/timer/eng1idle-output ne 0
+				/systems/electrical/bus/dc-1 ge 25
+				/controls/ice-protection/lengfault eq 1
+				/controls/ice-protection/leng eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng-aice-2-open">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/timer/eng2idle-output ne 0
+				/systems/electrical/bus/dc-2 ge 25
+				/controls/ice-protection/rengfault eq 1
+				/controls/ice-protection/reng eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng-aice-1-closed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/timer/eng1idle-output ne 0
+				/controls/ice-protection/lengfault eq 1
+				/controls/ice-protection/leng eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng-aice-2-closed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/timer/eng2idle-output ne 0
+				/controls/ice-protection/rengfault eq 1
+				/controls/ice-protection/reng eq 1
 			</test>
 		</switch>
 	</channel>

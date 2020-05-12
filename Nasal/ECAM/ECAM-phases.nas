@@ -110,13 +110,13 @@ var phaseLoop = func() {
 		gnd = 0;
 	}
 	
-	if (eng1n2 >= 59.4) {
+	if (eng1n2 >= 59.4 and !master1) {
 		FWC.Timer.eng1idle.setValue(1);
 	} else {
 		FWC.Timer.eng1idle.setValue(0);
 	}
 	
-	if (eng2n2 >= 59.4) {
+	if (eng2n2 >= 59.4 and !master2) {
 		FWC.Timer.eng2idle.setValue(1);
 	} else {
 		FWC.Timer.eng2idle.setValue(0);
@@ -128,7 +128,7 @@ var phaseLoop = func() {
 		FWC.Timer.eng1or2.setValue(0);
 	}
 	
-	if ((!FWC.Timer.eng1idleOutput.getBoolValue() or master1) and (!FWC.Timer.eng2idleOutput.getBoolValue() or master2)) {
+	if ((FWC.Timer.eng1idleOutput.getBoolValue() == 0 or master1) and (FWC.Timer.eng2idleOutput.getBoolValue() == 0 or master2)) {
 		twoEngOff = 1;
 	} else {
 		twoEngOff = 0;
