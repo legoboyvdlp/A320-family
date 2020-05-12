@@ -13,6 +13,8 @@ var rightmsg = "XX";
 # Conversion factor pounds to kilogram
 LBS2KGS = 0.4535924;
 
+var flapsPos = 0;
+
 # Create Nodes:
 var fuel_1 = props.globals.initNode("/engines/engine[0]/fuel-flow_actual", 0);
 var fuel_2 = props.globals.initNode("/engines/engine[1]/fuel-flow_actual", 0);
@@ -48,8 +50,6 @@ var eng2_n1mode = props.globals.getNode("/systems/fadec/eng2/n1", 1);
 var eng2_eprmode = props.globals.getNode("/systems/fadec/eng2/epr", 1);
 var eng1_n2mode = props.globals.getNode("/systems/fadec/eng1/n2", 1);
 var eng2_n2mode = props.globals.getNode("/systems/fadec/eng2/n2", 1);
-var flap_text = props.globals.getNode("/controls/flight/flap-txt", 1);
-var flap_pos = props.globals.getNode("/controls/flight/flap-pos", 1);
 var fuel = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
 var modeautobrake = props.globals.getNode("/controls/autobrake/mode", 1);
 var speedbrakearm = props.globals.getNode("/controls/flight/speedbrake-arm", 1);
@@ -232,9 +232,22 @@ var canvas_upperECAM_base = {
 		}
 		
 		# Flap Indicator
-		me["FlapTxt"].setText(sprintf("%s", flap_text.getValue()));
+		flapsPos = pts.Controls.Flight.flapsPos.getValue();
+		if (flapsPos == 1) {
+			me["FlapTxt"].setText("1");
+		} else if (flapsPos == 2) {
+			me["FlapTxt"].setText("1+F");
+		} else if (flapsPos == 3) {
+			me["FlapTxt"].setText("2");
+		} else if (flapsPos == 4) {
+			me["FlapTxt"].setText("3");
+		} else if (flapsPos == 5) {
+			me["FlapTxt"].setText("FULL");
+		} else {
+			me["FlapTxt"].setText(" "); # More efficient then hide/show
+		}
 		
-		if (flap_pos.getValue() > 0) {
+		if (flapsPos > 0) {
 			me["FlapDots"].show();
 		} else {
 			me["FlapDots"].hide();
@@ -397,7 +410,7 @@ var canvas_upperECAM_base = {
 				me["TO_Spoilers_B"].show();
 			}
 			
-			if (flap_pos.getValue() > 0 and flap_pos.getValue() < 5) {
+			if (flapsPos > 0 and flapsPos < 5) {
 				me["TO_Flaps"].setText("FLAPS T.O");
 				me["TO_Flaps_B"].hide();
 			} else {
@@ -442,12 +455,11 @@ var canvas_upperECAM_base = {
 			}
 			
 			flaps3 = flaps3_ovr.getValue();
-			flaps_position = flap_pos.getValue();
-			if (flaps3 != 1 and flaps_position == 5) {
+			if (flaps3 != 1 and flapsPos == 5) {
 				me["LDG_Flaps"].setText("FLAPS FULL");
 				me["LDG_Flaps_B"].hide();
 				me["LDG_Flaps_B3"].hide();
-			} else if (flaps3 == 1 and flaps_position >= 4) {
+			} else if (flaps3 == 1 and flapsPos >= 4) {
 				me["LDG_Flaps"].setText("FLAPS 3");
 				me["LDG_Flaps_B"].hide();
 				me["LDG_Flaps_B3"].hide();

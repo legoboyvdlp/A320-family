@@ -135,7 +135,7 @@ var vr = props.globals.getNode("/FMGC/internal/vr", 1);
 var vr_set = props.globals.getNode("/FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
 var v2_set = props.globals.getNode("/FMGC/internal/v2-set", 1);
-var flap_config = props.globals.getNode("/controls/flight/flap-lever", 1);
+var flap_config = props.globals.getNode("/controls/flight/flaps-input", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 

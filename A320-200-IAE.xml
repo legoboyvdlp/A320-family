@@ -197,6 +197,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
     </propulsion>
     
     <system file="glass-effect"/>
+	<system file="a320-fbw"/>
     <system file="a320-fcs"/>
     <system file="a320-fuel"/>
     <system file="a320-fwc"/>

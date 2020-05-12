@@ -99,14 +99,6 @@
 			<tag>2-engine</tag>
 		</tags>
 		
-		<flaps>
-			<setting>0.000</setting>
-			<setting>0.290</setting>
-			<setting>0.596</setting>
-			<setting>0.645</setting>
-			<setting>1.000</setting>
-		</flaps>
-
 		<systems n="0">
 			<electrical>
 				<path></path>
@@ -704,11 +696,10 @@
 		</fire>
 		<flight>
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
-			<aileron-input>0</aileron-input>
-			<elevator-input>0</elevator-input>
-			<flap-pos type="int">0</flap-pos>
-			<speedbrake-arm>0</speedbrake-arm>
-			<slats>0</slats>
+			<aileron-input type="double">0</aileron-input>
+			<elevator-input type="double">0</elevator-input>
+			<speedbrake-arm type="bool">0</speedbrake-arm>
+			<slats type="double">0</slats>
 		</flight>
 		<fuel>
 			<switches>

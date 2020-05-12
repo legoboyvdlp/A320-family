@@ -148,7 +148,7 @@ setlistener("/gear/gear[0]/wow-fmgc", func {
 
 var trimReset = func {
 	gear0 = getprop("/gear/gear[0]/wow");
-	flaps = getprop("/controls/flight/flap-pos");
+	flaps = getprop("/controls/flight/flaps-pos");
 	if (gear0 == 1 and getprop("/FMGC/status/to-state") == 0 and (flaps >= 5 or (flaps >= 4 and getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override") == 1))) {
 		interpolate("/controls/flight/elevator-trim", 0.0, 1.5);
 	}
@@ -181,7 +181,7 @@ setlistener("/FMGC/internal/cruise-ft", func {
 var masterFMGC = maketimer(0.2, func {
 	n1_left = getprop("/engines/engine[0]/n1-actual");
 	n1_right = getprop("/engines/engine[1]/n1-actual");
-	flaps = getprop("/controls/flight/flap-pos");
+	flaps = getprop("/controls/flight/flaps-pos");
 	modelat = getprop("/modes/pfd/fma/roll-mode");
 	mode = getprop("/modes/pfd/fma/pitch-mode");
 	modeI = getprop("/it-autoflight/mode/vert");
@@ -284,7 +284,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# calculate speeds
-	flap = getprop("/controls/flight/flap-pos");
+	flap = getprop("/controls/flight/flaps-pos");
 	weight_lbs = getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000;
 	tow = getprop("/FMGC/internal/tow");
 	lw = getprop("/FMGC/internal/lw");
@@ -673,7 +673,7 @@ var ManagedSPD = maketimer(0.25, func {
 			mach_sel = getprop("/it-autoflight/input/spd-mach");
 			srsSPD = getprop("/it-autoflight/settings/togaspd");
 			phase = getprop("/FMGC/status/phase"); # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
-			flap = getprop("/controls/flight/flap-pos");
+			flap = getprop("/controls/flight/flaps-pos");
 			maxspeed = getprop("/FMGC/internal/maxspeed");
 			minspeed = getprop("/FMGC/internal/minspeed");
 			mach_switchover = getprop("/FMGC/internal/mach-switchover");

@@ -183,8 +183,9 @@
 	
 	<options n="0">
 		<EIS2 type="bool">0</EIS2>
-		<eng>IAE</eng>
-		<maxblock>52.3</maxblock>
+		<eng type="string">IAE</eng>
+		<maxblock type="double">52.3</maxblock>
+		<maxflap type="int">40</maxflap>
 	</options>
 	
 	<sharklet type="bool">0</sharklet>

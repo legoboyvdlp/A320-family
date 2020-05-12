@@ -151,7 +151,7 @@
 					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
 					<entry><ind>-30</ind><dep>-1.03</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 17</ind><dep> 0.63</dep></entry>
+					<entry><ind> 15</ind><dep> 0.63</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -168,7 +168,7 @@
 					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
 					<entry><ind>-30</ind><dep>-1.03</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 17</ind><dep> 0.63</dep></entry>
+					<entry><ind> 15</ind><dep> 0.63</dep></entry>
 				</table>
 			</expression>
 		</input>
