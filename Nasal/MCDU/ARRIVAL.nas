@@ -513,7 +513,7 @@ var arrivalPage = {
 		if (me.activePage == 0) {
 			if (me.enableScrollApproach) {
 				me.scrollApproach += 1;
-				if (me.scrollApproach > size(me.approaches) - 4) {
+				if (me.scrollApproach > size(me.approaches) - 3) {
 					me.scrollApproach = 0;
 				}
 				me.updateApproaches();
@@ -539,7 +539,7 @@ var arrivalPage = {
 			if (me.enableScrollApproach) {
 				me.scrollApproach -= 1;
 				if (me.scrollApproach < 0) {
-					me.scrollApproach = size(me.approaches) - 4;
+					me.scrollApproach = size(me.approaches) - 3;
 				}
 				me.updateApproaches();
 			}
