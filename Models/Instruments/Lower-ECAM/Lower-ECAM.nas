@@ -90,8 +90,8 @@ var hp_valve1_state = props.globals.getNode("/systems/pneumatics/valves/engine-1
 var hp_valve2_state = props.globals.getNode("/systems/pneumatics/valves/engine-2-hp-valve", 1);
 var hp_valve1 = props.globals.getNode("/systems/pneumatics/valves/engine-1-hp-valve-cmd", 1);
 var hp_valve2 = props.globals.getNode("/systems/pneumatics/valves/engine-2-hp-valve-cmd", 1);
-var eng_valve1_state = props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve-cmd", 1);
-var eng_valve2_state = props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve-cmd", 1);
+var eng_valve1_cmd = props.globals.getNode("/controls/pneumatics/switches/bleed-1", 1);
+var eng_valve2_cmd = props.globals.getNode("/controls/pneumatics/switches/bleed-2", 1);
 var eng_valve1 = props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve", 1);
 var eng_valve2 = props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve", 1);
 var precooler1_psi = props.globals.getNode("/systems/pneumatics/psi/engine-1-psi", 1);
@@ -805,9 +805,9 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# ENG BLEED valve 1
-		var eng_valve_state = eng_valve1_state.getValue();
+		var eng_valve_state = eng_valve1_cmd.getValue();
 
-		if (eng_valve_state == 0) {
+		if (eng_valve1.getValue() == 0) {
 			me["BLEED-ENG-1"].setRotation(0);
 		} else {
 			me["BLEED-ENG-1"].setRotation(90 * D2R);
@@ -853,15 +853,15 @@ var canvas_lowerECAM_bleed = {
 		}
 			
 		# ENG BLEED valve 2
-		var eng_valve_state = eng_valve2_state.getValue();
+		eng_valve_state = eng_valve2_cmd.getValue();
 
-		if (eng_valve_state == 0) {
+		if (eng_valve2.getValue() == 0) {
 			me["BLEED-ENG-2"].setRotation(0);
 		} else {
 			me["BLEED-ENG-2"].setRotation(90 * D2R);
 		}
 		
-		if (eng_valve_state == eng_valve2.getValue()) {
+		if (eng_valve_state == eng_valve1.getValue()) {
 			me["BLEED-ENG-2"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["BLEED-ENG-2"].setColor(0.7333,0.3803,0);
