@@ -342,23 +342,31 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		#me.basePage();
 	},
 	scrollUp: func() {
-		if (size(me.planList) > 5) {
+		if (size(me.planList) > 1) {
 			me.scroll += 1;
-			if (me.scroll > size(me.planList) - 5) {
+			if (me.scroll > size(me.planList) - 3) {
 				me.scroll = 0;
+			}
+			if (me.scroll < me.plan.getPlanSize()) {
+				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll);
 			}
 		} else {
 			me.scroll = 0;
+			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", -1);
 		}
 	},
 	scrollDn: func() {
-		if (size(me.planList) > 5) {
+		if (size(me.planList) > 1) {
 			me.scroll -= 1;
 			if (me.scroll < 0) {
-				me.scroll = size(me.planList) - 5;
+				me.scroll = size(me.planList) - 3;
+			}
+			if (me.scroll < me.plan.getPlanSize()) {
+				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll);
 			}
 		} else {
 			me.scroll = 0;
+			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", -1);
 		}
 	},
 	pushButtonLeft: func(index) {

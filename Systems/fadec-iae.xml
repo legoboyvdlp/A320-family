@@ -51,7 +51,7 @@
 			<condition>
 				<and>
 					<not-equals>
-						<property>/controls/flight/flap-lever</property>
+						<property>/controls/flight/flaps-input</property>
 						<value>0</value>
 					</not-equals>
 					<equals>

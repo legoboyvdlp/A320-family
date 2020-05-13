@@ -26,6 +26,9 @@ var Controls = {
 	},
 	Flight: {
 		aileron: props.globals.getNode("/controls/flight/aileron"),
+		flaps: props.globals.getNode("/controls/flight/flaps"),
+		flapsTemp: 0,
+		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
 	},
 	Gear: {
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),

@@ -393,9 +393,9 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.vorR.setColor(0,0.6,0.85);
 		me.symbols.dmeR.setText("");
 		me.symbols.dmeR.setColor(0,0.6,0.85);
-		if((var navident=getprop("instrumentation/adf[1]/ident")) != "")
+		if((var navident=getprop("/instrumentation/adf[1]/ident")) != "")
 			me.symbols.vorRId.setText(navident);
-		else me.symbols.vorRId.setText(sprintf("%3d",getprop("instrumentation/adf[1]/frequencies/selected-khz")));
+		else me.symbols.vorRId.setText(sprintf("%3d",getprop("/instrumentation/adf[1]/frequencies/selected-khz")));
 			me.symbols.vorRId.setColor(0,0.6,0.85);
 		me.symbols.dmeRDist.setText("");
 		me.symbols.dmeRDist.setColor(0,0.6,0.85);
@@ -407,8 +407,8 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	}
 
 	# Hide heading bug 10 secs after change
-	var vhdg_bug = getprop("it-autoflight/input/hdg") or 0;
-	var hdg_bug_active = getprop("it-autoflight/custom/show-hdg");
+	var vhdg_bug = getprop("/it-autoflight/input/hdg") or 0;
+	var hdg_bug_active = getprop("/it-autoflight/custom/show-hdg");
 	if (hdg_bug_active == nil)
 		hdg_bug_active = 1;
 
@@ -445,31 +445,31 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		var vorheading = userHdgTru;
 		var adfheading = userHdgMag;
 	}
-	if (getprop("instrumentation/nav[2]/heading-deg") != nil) {
-		var nav0hdg = getprop("instrumentation/nav[2]/heading-deg") - getprop("orientation/heading-deg");
+	if (getprop("/instrumentation/nav[2]/heading-deg") != nil) {
+		var nav0hdg = getprop("/instrumentation/nav[2]/heading-deg") - getprop("orientation/heading-deg");
 	} else {
 		var nav0hdg = 0;
 	}
-	if (getprop("instrumentation/nav[3]/heading-deg") != nil) {
-		var nav1hdg = getprop("instrumentation/nav[3]/heading-deg") - getprop("orientation/heading-deg");
+	if (getprop("/instrumentation/nav[3]/heading-deg") != nil) {
+		var nav1hdg = getprop("/instrumentation/nav[3]/heading-deg") - getprop("orientation/heading-deg");
 	} else {
 		var nav1hdg = 0;
 	}
-	var adf0hdg = getprop("instrumentation/adf/indicated-bearing-deg");
-	var adf1hdg = getprop("instrumentation/adf[1]/indicated-bearing-deg");
+	var adf0hdg = getprop("/instrumentation/adf/indicated-bearing-deg");
+	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
 		if(me.in_mode("toggle_display_mode", ["PLAN"]))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();
-		if((getprop("instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
 			me.symbols.staArrowL.setVisible(staPtrVis);
 			me.symbols.staToL.setColor(0.195,0.96,0.097);
 			me.symbols.staFromL.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowL.setRotation(nav0hdg*D2R);
 		}
-		elsif(getprop("instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
+		elsif(getprop("/instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
 			me.symbols.staArrowL.setVisible(staPtrVis);
 			me.symbols.staToL.setColor(0,0.6,0.85);
 			me.symbols.staFromL.setColor(0,0.6,0.85);
@@ -477,12 +477,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		} else {
 			me.symbols.staArrowL.hide();
 		}
-		if((getprop("instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
 			me.symbols.staArrowR.setVisible(staPtrVis);
 			me.symbols.staToR.setColor(0.195,0.96,0.097);
 			me.symbols.staFromR.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowR.setRotation(nav1hdg*D2R);
-		} elsif(getprop("instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
+		} elsif(getprop("/instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
 			me.symbols.staArrowR.setVisible(staPtrVis);
 			me.symbols.staToR.setColor(0,0.6,0.85);
 			me.symbols.staFromR.setColor(0,0.6,0.85);
@@ -517,12 +517,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine.setVisible(staPtrVis and hdg_bug_active);
 	} else {
 		me.symbols.trkInd.hide();
-		if((getprop("instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
 			me.symbols.staArrowL2.setVisible(staPtrVis);
 			me.symbols.staFromL2.setColor(0.195,0.96,0.097);
 			me.symbols.staToL2.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowL2.setRotation(nav0hdg*D2R);
-		} elsif(getprop("instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
+		} elsif(getprop("/instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
 			me.symbols.staArrowL2.setVisible(staPtrVis);
 			me.symbols.staFromL2.setColor(0,0.6,0.85);
 			me.symbols.staToL2.setColor(0,0.6,0.85);
@@ -530,12 +530,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		} else {
 			me.symbols.staArrowL2.hide();
 		}
-		if((getprop("instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
 			me.symbols.staArrowR2.setVisible(staPtrVis);
 			me.symbols.staFromR2.setColor(0.195,0.96,0.097);
 			me.symbols.staToR2.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowR2.setRotation(nav1hdg*D2R);
-		} elsif(getprop("instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
+		} elsif(getprop("/instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
 			me.symbols.staArrowR2.setVisible(staPtrVis);
 			me.symbols.staFromR2.setColor(0,0.6,0.85);
 			me.symbols.staToR2.setColor(0,0.6,0.85);

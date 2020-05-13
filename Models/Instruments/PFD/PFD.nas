@@ -135,7 +135,7 @@ var vr = props.globals.getNode("/FMGC/internal/vr", 1);
 var vr_set = props.globals.getNode("/FMGC/internal/vr-set", 1);
 var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
 var v2_set = props.globals.getNode("/FMGC/internal/v2-set", 1);
-var flap_config = props.globals.getNode("/controls/flight/flap-lever", 1);
+var flap_config = props.globals.getNode("/controls/flight/flaps-input", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
@@ -219,14 +219,14 @@ var canvas_PFD_base = {
 		return me;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
-		"FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box","FMA_Middle1",
-		"FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_clip","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank",
-		"AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber",
-		"ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting",
-		"QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame",
-		"TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","flap_max","clean_speed",
-		"ground","ground_ref"];
+		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
+		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
+		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
+		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
+		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
+		"ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
+		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -962,7 +962,7 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		me["TRK_pointer"].setTranslation((track_diff.getValue() / 10) * 98.5416, 0);
+		me["TRK_pointer"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, 0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
@@ -1255,6 +1255,10 @@ var canvas_PFD_1 = {
 				}
 			}
 			
+			tgt_ias = at_tgt_ias.getValue();
+			tgt_mach = at_input_spd_mach.getValue();
+			tgt_kts = at_input_spd_kts.getValue();
+			
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
@@ -1264,10 +1268,6 @@ var canvas_PFD_1 = {
 					clean = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
-				} else {
-					tgt_ias = at_tgt_ias.getValue();
-					tgt_mach = at_input_spd_mach.getValue();
-					tgt_kts = at_input_spd_kts.getValue();
 				}
 				
 				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -1276,10 +1276,6 @@ var canvas_PFD_1 = {
 				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
 			} else {
-				tgt_ias = at_tgt_ias.getValue();
-				tgt_mach = at_input_spd_mach.getValue();
-				tgt_kts = at_input_spd_kts.getValue();
-				
 				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
@@ -1993,6 +1989,10 @@ var canvas_PFD_2 = {
 				}
 			}
 			
+			tgt_ias = at_tgt_ias.getValue();
+			tgt_mach = at_input_spd_mach.getValue();
+			tgt_kts = at_input_spd_kts.getValue();
+				
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
@@ -2002,10 +2002,6 @@ var canvas_PFD_2 = {
 					clean = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
-				} else {
-					tgt_ias = at_tgt_ias.getValue();
-					tgt_mach = at_input_spd_mach.getValue();
-					tgt_kts = at_input_spd_kts.getValue();
 				}
 				
 				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -2014,10 +2010,6 @@ var canvas_PFD_2 = {
 				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
 			} else {
-				tgt_ias = at_tgt_ias.getValue();
-				tgt_mach = at_input_spd_mach.getValue();
-				tgt_kts = at_input_spd_kts.getValue();
-				
 				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);

@@ -7519,6 +7519,7 @@
 		<object-name>wall_1</object-name>
 		<object-name>wall_2</object-name>
 		<object-name>window_frame</object-name>
+		<object-name>WindowCpt</object-name>
 		<object-name>HeadsetCpt</object-name>
 		<object-name>WindowGlassCpt</object-name>
 		<object-name>WindowOpenerCpt</object-name>

@@ -330,7 +330,7 @@ var arrivalPage = {
 				}
 				me.R5 = ["CRS" ~ math.round(me._approaches[me.approaches[2 + me.scrollApproach]].heading), nil, "blu"];
 				if (me._approaches[me.approaches[2 + me.scrollApproach]].ils != nil) {
-					me.C6[1] = me._approaches[me.approaches[1 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me._approaches[me.approaches[1 + me.scrollApproach]].ils_frequency_mhz);
+					me.C6[1] = me._approaches[me.approaches[2 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me._approaches[me.approaches[2 + me.scrollApproach]].ils_frequency_mhz);
 				}
 				if (me.approaches[2 + me.scrollApproach] != me.selectedApproach) {
 					me.arrowsMatrix[0][4] = 1;
@@ -513,7 +513,7 @@ var arrivalPage = {
 		if (me.activePage == 0) {
 			if (me.enableScrollApproach) {
 				me.scrollApproach += 1;
-				if (me.scrollApproach > size(me.approaches) - 4) {
+				if (me.scrollApproach > size(me.approaches) - 3) {
 					me.scrollApproach = 0;
 				}
 				me.updateApproaches();
@@ -539,7 +539,7 @@ var arrivalPage = {
 			if (me.enableScrollApproach) {
 				me.scrollApproach -= 1;
 				if (me.scrollApproach < 0) {
-					me.scrollApproach = size(me.approaches) - 4;
+					me.scrollApproach = size(me.approaches) - 3;
 				}
 				me.updateApproaches();
 			}
