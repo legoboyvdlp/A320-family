@@ -1255,6 +1255,10 @@ var canvas_PFD_1 = {
 				}
 			}
 			
+			tgt_ias = at_tgt_ias.getValue();
+			tgt_mach = at_input_spd_mach.getValue();
+			tgt_kts = at_input_spd_kts.getValue();
+			
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
@@ -1264,10 +1268,6 @@ var canvas_PFD_1 = {
 					clean = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
-				} else {
-					tgt_ias = at_tgt_ias.getValue();
-					tgt_mach = at_input_spd_mach.getValue();
-					tgt_kts = at_input_spd_kts.getValue();
 				}
 				
 				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -1276,10 +1276,6 @@ var canvas_PFD_1 = {
 				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
 			} else {
-				tgt_ias = at_tgt_ias.getValue();
-				tgt_mach = at_input_spd_mach.getValue();
-				tgt_kts = at_input_spd_kts.getValue();
-				
 				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
@@ -1993,6 +1989,10 @@ var canvas_PFD_2 = {
 				}
 			}
 			
+			tgt_ias = at_tgt_ias.getValue();
+			tgt_mach = at_input_spd_mach.getValue();
+			tgt_kts = at_input_spd_kts.getValue();
+				
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
@@ -2002,10 +2002,6 @@ var canvas_PFD_2 = {
 					clean = getprop("/FMGC/internal/computed-speeds/clean");
 					tgt_ias = clean;
 					tgt_kts = clean;
-				} else {
-					tgt_ias = at_tgt_ias.getValue();
-					tgt_mach = at_input_spd_mach.getValue();
-					tgt_kts = at_input_spd_kts.getValue();
 				}
 				
 				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -2014,10 +2010,6 @@ var canvas_PFD_2 = {
 				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
 				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
 			} else {
-				tgt_ias = at_tgt_ias.getValue();
-				tgt_mach = at_input_spd_mach.getValue();
-				tgt_kts = at_input_spd_kts.getValue();
-				
 				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
 				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
