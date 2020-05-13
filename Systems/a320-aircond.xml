@@ -115,6 +115,24 @@
 				/systems/air-conditioning/packs/single-pack eq 1
 			</test>
 		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-1">
+			<function>
+				<product>
+					<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+					<property>/systems/air-conditioning/packs/pack-flow</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-2">
+			<function>
+				<product>
+					<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+					<property>/systems/air-conditioning/packs/pack-flow</property>
+				</product>
+			</function>
+		</fcs_function>
 	
 		<switch name="/systems/air-conditioning/packs/pack-factor">
 			<default value="0"/>
@@ -130,6 +148,70 @@
 				/systems/air-conditioning/valves/flow-control-valve-1 eq 1
 				/systems/air-conditioning/valves/flow-control-valve-2 eq 1
 			</test>
+		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-1-outlet-temp">
+			<function>
+				<product>
+					<value>0.6363636</value>
+					<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+					<property>/systems/pneumatics/precooler/temp-1</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-2-outlet-temp">
+			<function>
+				<product>
+					<value>0.6363636</value>
+					<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+					<property>/systems/pneumatics/precooler/temp-2</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-1-output-temp">
+			<function>
+				<sum>
+					<product>
+						<value>-1</value>
+						<sum>
+							<product>
+								<value>0.76</value>
+								<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
+							</product>
+							<value>37.5</value>
+						</sum>
+					</product>
+					<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-2-output-temp">
+			<function>
+				<sum>
+					<product>
+						<value>-1</value>
+						<sum>
+							<product>
+								<value>0.76</value>
+								<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
+							</product>
+							<value>37.5</value>
+						</sum>
+					</product>
+					<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+	<channel name="Recirculation">
+	
+		<switch name="/systems/air-conditioning/recirc/recirc-fans">
+		
 		</switch>
 		
 	</channel>

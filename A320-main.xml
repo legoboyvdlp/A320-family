@@ -953,6 +953,14 @@
 			<autoconfig-running>0</autoconfig-running>
 		</acconfig>
 		<air-conditioning>
+			<packs>
+				<pack-1-output-temp type="double">0</pack-1-output-temp>
+				<pack-2-output-temp type="double">0</pack-2-output-temp>
+				<pack-1-outlet-temp type="double">0</pack-1-outlet-temp>
+				<pack-2-outlet-temp type="double">0</pack-2-outlet-temp>
+				<pack-flow-1 type="double">0</pack-flow-1>
+				<pack-flow-2 type="double">0</pack-flow-2>
+			</packs>
 			<temperatures>
 				<cabin-overall-temp-kelvin type="double">297</cabin-overall-temp-kelvin>
 			</temperatures>
@@ -1173,10 +1181,6 @@
 				<bmc1-working type="bool">0</bmc1-working>
 				<bmc2-working type="bool">0</bmc2-working>
 			</indicating>
-			<pack-1-out-temp type="double">0</pack-1-out-temp>
-			<pack-2-out-temp type="double">0</pack-2-out-temp>
-			<pack-1-comp-out-temp type="double">0</pack-1-comp-out-temp>
-			<pack-2-comp-out-temp type="double">0</pack-2-comp-out-temp>
 			<pack-1-bypass type="bool">0</pack-1-bypass>
 			<pack-2-bypass type="bool">0</pack-2-bypass>
 			<pack-1-flow type="double">0</pack-1-flow>

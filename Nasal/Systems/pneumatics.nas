@@ -45,6 +45,14 @@ var PNEU = {
 		trimValveFwd: props.globals.getNode("/systems/failures/pneumatics/trim-valve-cabin-fwd"),
 		xbleed: props.globals.getNode("/systems/failures/pneumatics/x-bleed-valve"),
 	},
+	Packs: {
+		packFlow1: props.globals.getNode("/systems/air-conditioning/packs/pack-flow-1"),
+		packFlow2: props.globals.getNode("/systems/air-conditioning/packs/pack-flow-2"),
+		pack1OutTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-1-output-temp"),
+		pack2OutTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-2-output-temp"),
+		pack1OutletTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-1-outlet-temp"),
+		pack2OutletTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-2-outlet-temp"),
+	},
 	Psi: {
 		engine1: props.globals.getNode("/systems/pneumatics/psi/engine-1-psi"),
 		engine2: props.globals.getNode("/systems/pneumatics/psi/engine-2-psi"),
@@ -79,6 +87,8 @@ var PNEU = {
 		crossbleed: props.globals.getNode("/systems/pneumatics/valves/crossbleed-valve"),
 		prv1: props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve"),
 		prv2: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve"),
+		pack1: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-1"),
+		pack2: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-2"),
 	},
 	init: func() {
 		me.resetFail();
