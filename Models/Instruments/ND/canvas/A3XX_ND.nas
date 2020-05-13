@@ -29,10 +29,8 @@ var SymbolCache32x32 = canvas.SymbolCache32x32;
 var SymbolCache = canvas.SymbolCache;
 var Text = canvas.Text;
 
-io.include("ND_config.nas");
 io.include("framework/canvas.nas");
 io.include("framework/navdisplay.nas");
-io.include("framework/MapDrivers.nas");
 io.include("loaders.nas");
 io.include("helpers.nas");
 io.include("style.nas");
