@@ -223,6 +223,21 @@ var updateFuel = func {
 	# Calculate alternate fuel
 	if (!getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
 		#calc
+	} else if (getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
+		#dummy calc for now
+		alt_fuel = 1000 * num(getprop("/FMGC/internal/alt-fuel"));
+		zfw = 1000 * getprop("/FMGC/internal/zfw");
+		alt_time = alt_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
+		if (alt_time < 0) {
+			alt_time = 0;
+		}
+		if (num(alt_time) >= 60) {
+			alt_min = int(math.mod(alt_time, 60));
+			alt_hour = int((alt_time - alt_min) / 60);
+			setprop("/FMGC/internal/alt-time", sprintf("%02d", alt_hour) ~ sprintf("%02d", alt_min));
+		} else {
+			setprop("/FMGC/internal/alt-time", sprintf("%04d", alt_time));
+		}
 	} else if (!getprop("/FMGC/internal/alt-fuel-set")) {
 		setprop("/FMGC/internal/alt-fuel", 0.0);
 		setprop("/FMGC/internal/alt-time", "0000");
