@@ -1495,6 +1495,12 @@
 				<category-13 type="int">7</category-13>
 				<category-14 type="int">0</category-14>
 			</configuration-module>
+			<input-feeders>
+				<discretes>
+					<!-- disable the built-in input feeder -->
+					<landing-flaps type="bool">false</landing-flaps>
+				</discretes>
+			</input-feeders>
 			<inputs>
 				<arinc429>
 					<decision-height-ncd type="bool">0</decision-height-ncd>
@@ -1520,8 +1526,8 @@
 			<antenna>
 				<x-offset-m type="double">-1</x-offset-m>
 				<y-offset-m type="double">0</y-offset-m>
- 				<z-offset-m type="double">2.52</z-offset-m>
- 			</antenna>
+				<z-offset-m type="double">2.52</z-offset-m>
+			</antenna>
 			<az-step-deg type="int">10</az-step-deg>
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
@@ -1534,8 +1540,8 @@
 			<antenna>
 				<x-offset-m type="double">-1</x-offset-m>
 				<y-offset-m type="double">0</y-offset-m>
- 				<z-offset-m type="double">2.52</z-offset-m>
- 			</antenna>
+				<z-offset-m type="double">2.52</z-offset-m>
+			</antenna>
 			<az-step-deg type="int">10</az-step-deg>
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
@@ -2313,19 +2319,19 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-   					<command>nasal</command>
-   					<script>controls.applyParkingBrake(1)</script>
-  				</binding>
-  				<mod-up>
-   					<binding>
-   						<condition>
+					<command>nasal</command>
+					<script>controls.applyParkingBrake(1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
 							<not><property>/FMGC/keyboard-left</property></not>
 							<not><property>/FMGC/keyboard-right</property></not>
 						</condition>
 						<command>nasal</command>
 						<script>controls.applyParkingBrake(0)</script>
-   					</binding>
-  				</mod-up>
+					</binding>
+				</mod-up>
 			</key>
 			<key n="67">
 				<name>SHIFT-c</name>
@@ -2441,9 +2447,9 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-   					<command>nasal</command>
-   					<script>controls.gearDown(1)</script>
-  				</binding>
+					<command>nasal</command>
+					<script>controls.gearDown(1)</script>
+				</binding>
 			  	<mod-up>
 			   		<binding>
 			   			<condition>
@@ -2477,9 +2483,9 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-   					<command>nasal</command>
-   					<script>aircraft.HUD.cycle_brightness()</script>
-  				</binding>
+					<command>nasal</command>
+					<script>aircraft.HUD.cycle_brightness()</script>
+				</binding>
 			</key>
 			<key n="73">
 				<name>SHIFT-i</name>
@@ -2503,9 +2509,9 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-  					<command>nasal</command>
-   					<script>aircraft.HUD.cycle_type()</script>
-  				</binding>
+					<command>nasal</command>
+					<script>aircraft.HUD.cycle_type()</script>
+				</binding>
 			</key>
 			<key n="74">
 				<name>SHIFT-j</name>
@@ -2637,9 +2643,9 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-   					<command>property-toggle</command>
-   					<property>/sim/panel/visibility</property>
-  				</binding>
+					<command>property-toggle</command>
+					<property>/sim/panel/visibility</property>
+				</binding>
 			</key>
 			<key n="81">
 				<name>SHIFT-q</name>
@@ -2753,9 +2759,9 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-   					<command>nasal</command>
-   					<script>view.stepView(-1)</script>
-  				</binding>
+					<command>nasal</command>
+					<script>view.stepView(-1)</script>
+				</binding>
 			</key>
 			<key n="87">
 				<name>SHIFT-w</name>
@@ -2842,9 +2848,9 @@
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
-   					<command>nasal</command>
-   					<script>environment.decreaseVisibility()</script>
-  				</binding>
+					<command>nasal</command>
+					<script>environment.decreaseVisibility()</script>
+				</binding>
 			</key>
 			<key n="97">
 				<name>a</name>
