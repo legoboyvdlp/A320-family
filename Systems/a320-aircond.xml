@@ -198,7 +198,7 @@
 			<function>
 				<ifthen>
 					<gt>
-						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
 						<value>0.5</value>
 					</gt>
 					<sum>
@@ -214,7 +214,7 @@
 						</product>
 						<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
 					</sum>
-					<property>/systems/navigation/probes/tat-2/compute-tat</property>
+					<property>/systems/navigation/probes/tat-1/compute-tat</property>
 				</ifthen>
 			</function>
 		</fcs_function>
