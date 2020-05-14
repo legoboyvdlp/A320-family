@@ -150,69 +150,113 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/air-conditioning/packs/pack-1-outlet-temp">
+		<fcs_function name="/systems/air-conditioning/packs/pack-1-outlet-temp-calc">
 			<function>
-				<product>
-					<value>0.6363636</value>
-					<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
-					<property>/systems/pneumatics/precooler/temp-1</property>
-				</product>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/systems/air-conditioning/packs/pack-2-outlet-temp">
-			<function>
-				<product>
-					<value>0.6363636</value>
-					<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
-					<property>/systems/pneumatics/precooler/temp-2</property>
-				</product>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/systems/air-conditioning/packs/pack-1-output-temp">
-			<function>
-				<sum>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+						<value>0.5</value>
+					</gt>
 					<product>
-						<value>-1</value>
-						<sum>
-							<product>
-								<value>0.76</value>
-								<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
-							</product>
-							<value>37.5</value>
-						</sum>
+						<value>0.6363636</value>
+						<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+						<property>/systems/pneumatics/precooler/temp-1</property>
 					</product>
-					<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
-				</sum>
+					<property>/systems/navigation/probes/tat-1/compute-tat</property>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/air-conditioning/packs/pack-2-output-temp">
+		<lag_filter name="/systems/air-conditioning/packs/pack-1-outlet-temp">
+			<input>/systems/air-conditioning/packs/pack-1-outlet-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-2-outlet-temp-calc">
 			<function>
-				<sum>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<value>0.5</value>
+					</gt>
 					<product>
-						<value>-1</value>
-						<sum>
-							<product>
-								<value>0.76</value>
-								<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
-							</product>
-							<value>37.5</value>
-						</sum>
+						<value>0.6363636</value>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<property>/systems/pneumatics/precooler/temp-2</property>
 					</product>
-					<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
-				</sum>
+					<property>/systems/navigation/probes/tat-2/compute-tat</property>
+				</ifthen>
 			</function>
 		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-2-outlet-temp">
+			<input>/systems/air-conditioning/packs/pack-2-outlet-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-1-output-temp-calc">
+			<function>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<value>0.5</value>
+					</gt>
+					<sum>
+						<product>
+							<value>-1</value>
+							<sum>
+								<product>
+									<value>0.76</value>
+									<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
+								</product>
+								<value>37.5</value>
+							</sum>
+						</product>
+						<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
+					</sum>
+					<property>/systems/navigation/probes/tat-2/compute-tat</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-1-output-temp">
+			<input>/systems/air-conditioning/packs/pack-1-output-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-2-output-temp-calc">
+			<function>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<value>0.5</value>
+					</gt>
+					<sum>
+						<product>
+							<value>-1</value>
+							<sum>
+								<product>
+									<value>0.76</value>
+									<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
+								</product>
+								<value>37.5</value>
+							</sum>
+						</product>
+						<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
+					</sum>
+					<property>/systems/navigation/probes/tat-2/compute-tat</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-2-output-temp">
+			<input>/systems/air-conditioning/packs/pack-2-output-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
 		
 	</channel>
 	
 	<channel name="Recirculation">
-	
-		<switch name="/systems/air-conditioning/recirc/recirc-fans">
-		
-		</switch>
 		
 	</channel>
 	
