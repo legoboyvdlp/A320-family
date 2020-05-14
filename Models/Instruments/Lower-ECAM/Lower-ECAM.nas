@@ -769,8 +769,10 @@ var canvas_lowerECAM_bleed = {
 
 		if (hp_valve_state == 1) {
 			me["BLEED-HP-Valve-1"].setRotation(90 * D2R);
+			me["BLEED-HP-1-connection"].show();
 		} else {
 			me["BLEED-HP-Valve-1"].setRotation(0);
+			me["BLEED-HP-1-connection"].hide();
 		}
 		
 		if (hp_valve_state == hp_valve1.getValue()) {
@@ -784,8 +786,10 @@ var canvas_lowerECAM_bleed = {
 
 		if (hp_valve_state == 1) {
 			me["BLEED-HP-Valve-2"].setRotation(90 * D2R);
+			me["BLEED-HP-2-connection"].show();
 		} else {
 			me["BLEED-HP-Valve-2"].setRotation(0);
+			me["BLEED-HP-2-connection"].hide();
 		}
 		
 		if (hp_valve_state == hp_valve2.getValue()) {
