@@ -46,8 +46,8 @@ var PNEU = {
 		xbleed: props.globals.getNode("/systems/failures/pneumatics/x-bleed-valve"),
 	},
 	Packs: {
-		packFlow1: props.globals.getNode("/systems/air-conditioning/packs/pack-flow-1"),
-		packFlow2: props.globals.getNode("/systems/air-conditioning/packs/pack-flow-2"),
+		packFlow1: props.globals.getNode("/ECAM/Lower/pack-1-flow-output"),
+		packFlow2: props.globals.getNode("/ECAM/Lower/pack-2-flow-output"),
 		pack1OutTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-1-output-temp"),
 		pack2OutTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-2-output-temp"),
 		pack1OutletTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-1-outlet-temp"),

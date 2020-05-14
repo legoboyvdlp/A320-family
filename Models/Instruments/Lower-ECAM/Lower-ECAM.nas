@@ -963,14 +963,13 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-1-Comp-Out-Temp"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		var flow_pos = systems.PNEU.Packs.packFlow1.getValue() - 50; # `-50` cause the middel position from where we move the needle is at 50
-		flow_pos = flow_pos * D2R;
+		var flow_pos = systems.PNEU.Packs.packFlow1.getValue() * D2R;
 		me["BLEED-Pack-1-Packflow-needle"].setRotation(flow_pos);
 
 		if (systems.PNEU.Valves.pack1.getValue() == 0) {
-			me["BLEED-Pack-1-Packflow-needle"].setColor(0.7333,0.3803,0);
+			me["BLEED-Pack-1-Packflow-needle"].setColorFill(0.7333,0.3803,0);
 		} else {
-			me["BLEED-Pack-1-Packflow-needle"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Pack-1-Packflow-needle"].setColorFill(0.0509,0.7529,0.2941);
 		}
 		
 		var pack_state = systems.PNEU.Valves.pack1.getValue();
@@ -1006,14 +1005,13 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-2-Comp-Out-Temp"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		var flow_pos = systems.PNEU.Packs.packFlow2.getValue() - 50; # `-50` cause the middel position from where we move the needle is at 50
-		flow_pos = flow_pos * D2R;
+		flow_pos = systems.PNEU.Packs.packFlow2.getValue() * D2R;
 		me["BLEED-Pack-2-Packflow-needle"].setRotation(flow_pos);
 
 		if (systems.PNEU.Valves.pack2.getValue() == 0) {
-			me["BLEED-Pack-2-Packflow-needle"].setColor(0.7333,0.3803,0);
+			me["BLEED-Pack-2-Packflow-needle"].setColorFill(0.7333,0.3803,0);
 		} else {
-			me["BLEED-Pack-2-Packflow-needle"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Pack-2-Packflow-needle"].setColorFill(0.0509,0.7529,0.2941);
 		}
 
 		var pack_state = systems.PNEU.Valves.pack2.getValue();

@@ -182,5 +182,40 @@
 		<input>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</input>
 		<output>/ECAM/Lower/elevator-trim-deg</output>
 	</filter>
+	
+	<filter>
+		<name>Pack 1 Flow Output</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/packs/pack-flow-1</property>
+					<entry><ind>0.8</ind><dep>-80</dep></entry>
+					<entry><ind>1.0</ind><dep>  0</dep></entry>
+					<entry><ind>1.2</ind><dep> 80</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/pack-1-flow-output</output>
+	</filter>
+	
+	
+	<filter>
+		<name>Pack 1 Flow Output</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/packs/pack-flow-2</property>
+					<entry><ind>0.8</ind><dep>-80</dep></entry>
+					<entry><ind>1.0</ind><dep>  0</dep></entry>
+					<entry><ind>1.2</ind><dep> 80</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/pack-2-flow-output</output>
+	</filter>
 
 </PropertyList>

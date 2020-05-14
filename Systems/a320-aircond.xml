@@ -116,7 +116,7 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/air-conditioning/packs/pack-flow-1">
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-1-calc">
 			<function>
 				<product>
 					<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
@@ -125,7 +125,12 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/air-conditioning/packs/pack-flow-2">
+		<lag_filter name="/systems/air-conditioning/packs/pack-flow-1">
+			<input>/systems/air-conditioning/packs/pack-flow-1-calc</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-2-calc">
 			<function>
 				<product>
 					<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
@@ -133,6 +138,11 @@
 				</product>
 			</function>
 		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-flow-2">
+			<input>/systems/air-conditioning/packs/pack-flow-2-calc</input>
+			<c1>5</c1>
+		</lag_filter>
 	
 		<switch name="/systems/air-conditioning/packs/pack-factor">
 			<default value="0"/>
