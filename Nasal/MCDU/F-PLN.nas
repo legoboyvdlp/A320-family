@@ -71,13 +71,14 @@ var fplnItem = {
 		}
 	},
 	getBrg: func() {
-		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - pts.Environment.magVar.getValue();
+		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - magvar();
 		if (me.brg < 0) { me.brg += 360; }
 		if (me.brg > 360) { me.brg -= 360; }
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - pts.Environment.magVar.getValue();
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(wp.lat, wp.lon);
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
