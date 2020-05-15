@@ -1064,6 +1064,7 @@
 			</condition>
 			<volume>
 				<property>/sim/sound/other/air-con</property>
+				<factor>6</factor>
 			</volume>
 		</ac>
 		

@@ -839,8 +839,8 @@
 		<pneumatics n="0">
 			<switches n="0">
 				<apu type="bool">0</apu>
-				<bleed-1 type="bool">0</bleed-1>
-				<bleed-2 type="bool">0</bleed-2>
+				<bleed-1 type="bool">1</bleed-1>
+				<bleed-2 type="bool">1</bleed-2>
 				<blower type="bool">0</blower>
 				<cabin-fans type="bool">0</cabin-fans>
 				<extract type="bool">0</extract>

@@ -1540,7 +1540,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1BleedNotClsdOff);
 	}
 	
-	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed2NotShutOutput.getValue == 1) {
+	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed2NotShutOutput.getValue() == 1) {
 		eng2BleedNotClsd.active = 1;
 		if (systems.PNEU.Switch.bleed2.getBoolValue()) {
 			eng2BleedNotClsdOff.active = 1;

@@ -71,6 +71,8 @@
 						/gear/gear[1]/wow eq 0
 					</test>
 				</test>
+				/systems/pressurization/ditchingpb eq 1
+				/systems/pneumatics/psi/engine-2-psi le 13.8
 			</test>
 			<test logic="AND" value="1">
 				/controls/pneumatics/switches/pack-2 eq 1
