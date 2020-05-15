@@ -28,15 +28,18 @@ var duplicateNamesPage = {
 	enableScroll: 0,
 	scroll: 0,
 	distances: nil,
-	new: func(vector, index, type, computer) {
-		var fp = {parents:[duplicateNamesPage]};
-		fp.vector = vector;
-		fp.index = index;
-		fp.type = type; # 0 = other, 1 = navaid
-		fp.computer = computer;
-		fp._setupPageWithData();
-		fp.distances = [];
-		return fp;
+	new: func(vector, index, type, computer, flagPBD = 0, pbdBrg = -999, pbdDist = -99) {
+		var dn = {parents:[duplicateNamesPage]};
+		dn.vector = vector;
+		dn.index = index;
+		dn.type = type; # 0 = other, 1 = navaid
+		dn.flagPBD = flagPBD;
+		dn.bearing = pbdBrg;
+		dn.distance = pbdDist;
+		dn.computer = computer;
+		dn._setupPageWithData();
+		dn.distances = [];
+		return dn;
 	},
 	del: func() {
 		return nil;
@@ -131,14 +134,19 @@ var duplicateNamesPage = {
 	},
 	pushButtonLeft: func(indexSelect) {
 		if (!dirToFlag) {
-			if (size(me.vector[0].id) == 5) {
-				fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
-			} elsif (size(me.vector[0].id) == 4) {
-				fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
-			} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
-				fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+			if (!me.flagPBD) {
+				if (size(me.vector[0].id) == 5) {
+					fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+				} elsif (size(me.vector[0].id) == 4) {
+					fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+				} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
+					fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
+					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+				}
+			} else {
+				fmgc.flightPlanController.getWPforPBD(me.vector[0].id ~ "/" ~ me.bearing ~ "/" ~ me.distance, me.index, me.computer, 1, indexSelect - 1);
 				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 			}
 		} else {
