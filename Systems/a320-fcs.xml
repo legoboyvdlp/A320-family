@@ -748,15 +748,10 @@
 				/systems/hydraulic/yellow-psi ge 1500
 				/sim/model/autopush/connected eq 0
 				/controls/gear/nws-switch eq 1
-				/engines/engine[0]/state eq 3
-			</test>
-			<test logic="AND" value="1">
-				position/wow eq 1
-				hydraulics/tiller/elec-pwr eq 1
-				/systems/hydraulic/yellow-psi ge 1500
-				/sim/model/autopush/connected eq 0
-				/controls/gear/nws-switch eq 1
-				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					/engines/engine[0]/state eq 3
+					/engines/engine[1]/state eq 3
+				</test>
 			</test>
 		</switch>
 		
@@ -789,10 +784,12 @@
 		
 		<switch name="fcs/steer-rate">
 			<default value="0"/>
-			<test logic="OR" value="12">
-				hydraulics/tiller/hyd-pwr eq 1
+			<test logic="OR" value="75">
 				/sim/model/autopush/connected eq 1
 				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test logic="OR" value="12">
+				hydraulics/tiller/hyd-pwr eq 1
 			</test>
 		</switch>
 		
