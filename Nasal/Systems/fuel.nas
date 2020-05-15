@@ -1,7 +1,7 @@
 # A3XX Fuel System
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var FUEL = {
 	offset1: 0,
@@ -27,6 +27,7 @@ var FUEL = {
 		allOff: props.globals.getNode("systems/fuel/pumps/all-eng-pump-off"),
 	},
 	Valves: {
+		apu: props.globals.getNode("systems/fuel/valves/apu-lp-valve"),
 		crossfeed: props.globals.getNode("systems/fuel/valves/crossfeed-valve"),
 		lpValve1: props.globals.getNode("systems/fuel/valves/engine-1-lp-valve"),
 		lpValve2: props.globals.getNode("systems/fuel/valves/engine-2-lp-valve"),
@@ -57,17 +58,17 @@ var FUEL = {
 	
 	},
 	loop: func() {
-		systems.FUEL.Quantity.usedLeft.setValue(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue() + me.offset1);
-		systems.FUEL.Quantity.usedRight.setValue(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue() + me.offset2);
+		systems.FUEL.Quantity.usedLeft.setValue(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue() + me.offset1);
+		systems.FUEL.Quantity.usedRight.setValue(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[1].getValue() + me.offset2);
 	},
 	setOffset: func() {
-		me.offset1 = me.offset1 -(pts.JSBSim.Propulsion.Engine1.fuelUsed.getValue());
-		me.offset2 = me.offset2 -(pts.JSBSim.Propulsion.Engine2.fuelUsed.getValue());
+		me.offset1 = me.offset1 -(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue());
+		me.offset2 = me.offset2 -(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[1].getValue());
 	}
 };
 
 setlistener("/engines/engine[0]/state", func() {
-	if (pts.Engines.Engine1.state.getValue() == 3) {
+	if (pts.Engines.Engine.state[0].getValue() == 3) {
 		FUEL.timeEngStart = pts.Sim.Time.elapsedSec.getValue();
 		FUEL.cmdCtrOn.setValue(1);
 		ctrTkTimer.start();
@@ -75,7 +76,7 @@ setlistener("/engines/engine[0]/state", func() {
 }, 0, 0);
 
 setlistener("/engines/engine[1]/state", func() {
-	if (pts.Engines.Engine2.state.getValue() == 3) {
+	if (pts.Engines.Engine.state[1].getValue() == 3) {
 		FUEL.timeEngStart = pts.Sim.Time.elapsedSec.getValue();
 		FUEL.cmdCtrOn.setValue(1);
 		ctrTkTimer.start();

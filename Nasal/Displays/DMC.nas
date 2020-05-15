@@ -47,7 +47,7 @@ var DMC = {
 		me.outputs[6] = nil;
 	},
 	update: func() {
-		if (systems.ADIRSnew.ADIRunits[me.activeADIRS].operative and systems.ADIRSnew.ADIRunits[me.activeADIRS].outputOn) {
+		if (systems.ADIRS.ADIRunits[me.activeADIRS].operative and systems.ADIRS.ADIRunits[me.activeADIRS].outputOn) {
 			if (me._set != 1) {
 				me._setNil = 0;
 				me.setOutputs(me.activeADIRS);

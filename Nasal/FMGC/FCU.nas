@@ -1,6 +1,5 @@
-# A3XX FCU by Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
-
-# Copyright (c) 2019 Joshua Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
+# A3XX FCU
+# Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
 var fd1 = props.globals.getNode("it-autoflight/output/fd1", 1);
@@ -119,7 +118,7 @@ var FCUController = {
 		}
 	},
 	ATHR: func() {
-		if (me.FCUworking and !pts.FMGC.CasCompare.rejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
+		if (me.FCUworking and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!athr.getBoolValue()) {
 				athrInput.setValue(1);
 			} else {
@@ -146,6 +145,12 @@ var FCUController = {
 		}
 	},
 	APDisc: func() {
+		# physical button sound - so put it outside here as you get a sound even if it doesn't work!
+		setprop("/sim/sounde/apdiscbtn", 1);
+		settimer(func {
+			setprop("/sim/sounde/apdiscbtn", 0);
+		}, 0.5);
+		
 		if (me.FCUworking) {
 			if (ap1.getBoolValue() or ap2.getBoolValue()) {
 				apOff("soft", 0);
@@ -162,6 +167,12 @@ var FCUController = {
 		}
 	},
 	ATDisc: func() {
+		# physical button sound - so put it outside here as you get a sound even if it doesn't work!
+		setprop("/sim/sounde/apdiscbtn", 1);
+		settimer(func {
+			setprop("/sim/sounde/apdiscbtn", 0);
+		}, 0.5);
+		
 		if (me.FCUworking) {
 			if (athr.getBoolValue()) {
 				athrOff("soft");

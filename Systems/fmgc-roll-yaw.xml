@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- IT-AUTOFLIGHT -->
 
@@ -69,7 +69,15 @@
 		<name>IT-CONTROLLER: VORLOC ROLL</name>
 		<debug>false</debug>
 		<type>gain</type>
-		<gain>2.8</gain>
+		<gain>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<entry><ind>140</ind><dep>1.8</dep></entry>
+					<entry><ind>360</ind><dep>2.8</dep></entry>
+				</table>
+			</expression>
+		</gain>
 		<enable>
 			<condition>
 				<and>

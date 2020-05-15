@@ -45,35 +45,49 @@ var vertRev = {
 			me.title = ["VERT REV", " AT ", "PPOS"];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
-			me.L2 = ["  250/10000", "  CLB SPD LIM", "mag"];
+			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
-			me.R5 = ["STEP ALTS ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "wht"]];
+			me.R2 = ["RTA ", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} if (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
-			me.L2 = ["  250/10000", "  CLB SPD LIM", "mag"];
+			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
 			me.L3 = [" [    ]", " SPD CSTR", "blu"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" CLB", nil, "wht"];
-			me.R2 = ["[    ] ", "UTC CSTR  ", "blu"];
+			me.R2 = ["RTA ", nil, "wht"];
 			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
-			me.R5 = ["STEP ALTS ", nil, "wht"];
 			me.R6 = ["DES ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "wht"]];
-			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
+			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 		} else {
 			me.title = ["VERT REV", " AT ", me.id];
 			
 			if (me.type == 0) {	
-				# dunno
+				if (size(me.id) > 4) {
+					me.arrAirport = findAirportsByICAO(left(me.id, 4));
+				} else {
+					me.arrAirport = findAirportsByICAO(me.id);
+				}
+				me.L1 = ["", "  EFOB ---.-", "wht"];
+				me.R1 = ["", "EXTRA ---.- ", "wht"];
+				me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
+				me.L4 = [" CONSTANT MACH", nil, "wht"];
+				me.L5 = [" WIND DATA", nil, "wht"];
+				me.L6 = [" RETURN", nil, "wht"];
+				me.R2 = ["RTA ", nil, "wht"];
+				me.R6 = ["DES ", nil, "wht"];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
+				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			} elsif (me.type == 1) {
 				if (size(me.id) > 4) {
 					me.arrAirport = findAirportsByICAO(left(me.id, 4));
@@ -82,19 +96,19 @@ var vertRev = {
 				}
 				me.L1 = ["", "  EFOB ---.-", "wht"];
 				me.R1 = ["", "EXTRA ---.- ", "wht"];
-				me.L2 = ["  250/10000", "  DES SPD LIM", "mag"];
+				me.L2 = ["250/10000", " DES SPD LIM", "mag"];
 				me.L4 = [" CONSTANT MACH", nil, "wht"];
 				me.L5 = [" WIND DATA", nil, "wht"];
-				me.L6 = [" CLB", nil, "wht"];
-				me.R2 = ["[    ] ", "UTC CSTR  ", "blu"];
-				me.R3 = ["[   ]", "G/S INTCPT ", "grn"];
-				me.R5 = ["STEP ALTS ", nil, "wht"];
+				me.L6 = [" RETURN", nil, "wht"];
+				me.R2 = ["RTA ", nil, "wht"];
+				me.R3 = ["3000", "G/S INTCP", "grn"];
 				me.R6 = ["DES ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1]];
-				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "wht", "wht"]];
-				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0]];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
+				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			}
 		}
+		me.updateR5();
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
@@ -107,4 +121,33 @@ var vertRev = {
 			me._checkTmpy();
 		}
 	},
+	updateR5: func() {
+		if (getprop("FMGC/internal/cruise-lvl-set") and (getprop("FMGC/status/phase") < 4 or getprop("FMGC/status/phase") == 7)) {
+			me.R5 = ["STEP ALTS ", nil, "wht"];
+			me.arrowsMatrix[1][4] = 1;
+		} else {
+			me.R5 = [nil, nil, "ack"];
+			me.arrowsMatrix[1][4] = 0;
+		}
+	},
 };
+
+setlistener("FMGC/internal/cruise-lvl-set", func() {
+	if (canvas_mcdu.myVertRev[0] != nil) { 
+		canvas_mcdu.myVertRev[0].updateR5();
+	}
+	
+	if (canvas_mcdu.myVertRev[1] != nil) { 
+		canvas_mcdu.myVertRev[1].updateR5();
+	}
+}, 0, 0);
+
+setlistener("FMGC/status/phase", func() {
+	if (canvas_mcdu.myVertRev[0] != nil) { 
+		canvas_mcdu.myVertRev[0].updateR5();
+	}
+	
+	if (canvas_mcdu.myVertRev[1] != nil) { 
+		canvas_mcdu.myVertRev[1].updateR5();
+	}
+}, 0, 0);

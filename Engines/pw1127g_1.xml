@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <turbine_engine name="PW1127G">
 	
-	<milthrust>     26345 </milthrust>
+	<milthrust>     27075 </milthrust>
 	<tsfc>          0.445 </tsfc>
 	<bleed>          0.03 </bleed>
 	<ignitionn1>	  0.6 </ignitionn1>

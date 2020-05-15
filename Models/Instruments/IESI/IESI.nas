@@ -1,6 +1,6 @@
 # A3XX IESI
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var IESI = nil;
 var IESI_display = nil;
@@ -14,24 +14,24 @@ var mach_act = 0;
 # props.nas nodes
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
 var iesi_time = props.globals.initNode("/instrumentation/iesi/iesi-init-time", 0.0, "DOUBLE");
-var iesi_rate = props.globals.getNode("systems/acconfig/options/iesi-rate");
-var et = props.globals.getNode("sim/time/elapsed-sec");
-var aconfig = props.globals.getNode("systems/acconfig/autoconfig-running");
+var iesi_rate = props.globals.getNode("/systems/acconfig/options/iesi-rate", 1);
+var et = props.globals.getNode("/sim/time/elapsed-sec", 1);
+var aconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 
 var dcess = 0;
 var dchot1 = 0;
 
-var airspeed = props.globals.getNode("instrumentation/airspeed-indicator/indicated-speed-kt");
-var mach = props.globals.getNode("instrumentation/airspeed-indicator/indicated-mach");
-var pitch = props.globals.getNode("orientation/pitch-deg");
-var roll =  props.globals.getNode("orientation/roll-deg");
-var skid = props.globals.getNode("instrumentation/slip-skid-ball/indicated-slip-skid");
-var altitude = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft");
-var altitude_ind = props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft-pfd");
+var airspeed = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
+var mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
+var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
+var roll =  props.globals.getNode("/orientation/roll-deg", 1);
+var skid = props.globals.getNode("/instrumentation/slip-skid-ball/indicated-slip-skid", 1);
+var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
+var altitude_ind = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
 
-var altimeter_mode = props.globals.getNode("modes/altimeter/std");
-var qnh_hpa = props.globals.getNode("instrumentation/altimeter/setting-hpa");
-var qnh_inhg = props.globals.getNode("instrumentation/altimeter/setting-inhg");
+var altimeter_mode = props.globals.getNode("/modes/altimeter/std", 1);
+var qnh_hpa = props.globals.getNode("/instrumentation/altimeter/setting-hpa", 1);
+var qnh_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 1);
 
 var canvas_IESI_base = {
 	init: func(canvas_group, file) {

@@ -80,14 +80,14 @@ var phaseLoop = func() {
 	gear_comp = pts.Gear.compression[1].getValue();
 	myPhase = pts.ECAM.fwcWarningPhase.getValue();
 	eng = pts.Options.eng.getValue();
-	eng1epr = pts.Engines.Engine1.epractual.getValue();
-	eng2epr = pts.Engines.Engine2.epractual.getValue();
-	eng1n1 = pts.Engines.Engine1.n1actual.getValue();
-	eng2n1 = pts.Engines.Engine2.n1actual.getValue();
-	eng1n2 = pts.Engines.Engine1.n2actual.getValue();
-	eng2n2 = pts.Engines.Engine2.n2actual.getValue();
-	master1 = pts.Controls.Engines.Engine1.cutoffSw.getBoolValue();
-	master2 = pts.Controls.Engines.Engine2.cutoffSw.getBoolValue();
+	eng1epr = pts.Engines.Engine.eprActual[0].getValue();
+	eng2epr = pts.Engines.Engine.eprActual[1].getValue();
+	eng1n1 = pts.Engines.Engine.n1Actual[0].getValue();
+	eng2n1 = pts.Engines.Engine.n1Actual[1].getValue();
+	eng1n2 = pts.Engines.Engine.n2Actual[0].getValue();
+	eng2n2 = pts.Engines.Engine.n2Actual[1].getValue();
+	master1 = pts.Controls.Engines.Engine.cutoffSw[0].getBoolValue();
+	master2 = pts.Controls.Engines.Engine.cutoffSw[1].getBoolValue();
 	
 	FWC.Flipflop.recallReset.setValue(0);
 		
@@ -136,14 +136,14 @@ var phaseLoop = func() {
 	
 	if (eng == "IAE") {
 		eprlim = getprop("controls/engines/epr-limit");
-		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.78 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.78) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.78 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.78) and fadec.Output.limFlex.getBoolValue()) or (pts.Controls.Engines.Engine.throttle[0].getValue() == 1.0 or pts.Controls.Engines.Engine.throttle[1].getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
 		}
 	} else {
 		n1lim = getprop("controls/engines/n1-limit");
-		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine1.throttle.getValue() >= 0.78 or pts.Controls.Engines.Engine2.throttle.getValue() >= 0.78) and pts.PTSSystems.Thrust.flex.getBoolValue()) or (pts.Controls.Engines.Engine1.throttle.getValue() == 1.0 or pts.Controls.Engines.Engine2.throttle.getValue() == 1.0))) {
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.78 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.78) and fadec.Output.limFlex.getBoolValue()) or (pts.Controls.Engines.Engine.throttle[0].getValue() == 1.0 or pts.Controls.Engines.Engine.throttle[1].getValue() == 1.0))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
@@ -169,7 +169,7 @@ var phaseLoop = func() {
 		FWC.Flipflop.phase10Set.setBoolValue(0);
 	}
 	
-	if (gnd and pts.Controls.Engines.Engine1.firePb.getBoolValue()) {
+	if (gnd and pts.Controls.Engines.Engine.firePb[0].getBoolValue()) {
 		FWC.Flipflop.phase10Reset.setBoolValue(1);
 	} else {
 		FWC.Flipflop.phase10Reset.setBoolValue(0);

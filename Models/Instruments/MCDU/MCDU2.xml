@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -18,6 +18,24 @@
 			</binding>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>KBMode.Toggle</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/FMGC/keyboard-left</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/FMGC/keyboard-right</property>
+			</binding>
+		</action>
+	</animation>
 
 	<animation>
  		<type>material</type>
@@ -31,12 +49,8 @@
  	</animation>
 
 	<effect>
-		<inherits-from>Effects/model-interior-display</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/display</inherits-from>
 		<object-name>mcdu2.screen</object-name>
-		<parameters>
-			<contrast>0.7</contrast>
-			<dirt-factor><use>/maintainance/cockpit-cleaness-factor</use></dirt-factor>
-		</parameters>
 	</effect>
 
 	<animation>

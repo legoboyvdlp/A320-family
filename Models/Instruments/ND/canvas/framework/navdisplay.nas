@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 # Override FGDATA/Nasal/canvas/map/navdisplay.mfd
 
@@ -170,7 +170,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 		if(!layer["isMapStructure"]) # set up an old INEFFICIENT and SLOW layer
 			the_layer = me.layers[layer.name] = canvas.MAP_LAYERS[layer.name].new( me.map, layer.name, controller );
 		else {
-			printlog(_MP_dbg_lvl, "Setting up MapStructure-based layer for ND, name:", layer.name);
+			logprint(_MP_dbg_lvl, "Setting up MapStructure-based layer for ND, name:", layer.name);
 			var opt = me.options != nil and me.options[layer.name] != nil ? me.options[layer.name] :nil;
 			if(opt == nil and contains(layer, "options"))
 				opt = layer.options;
@@ -205,7 +205,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 				l.predicate = func {
 					var t = systime();
 					call(_predicate, arg, me);
-					printlog(_MP_dbg_lvl, "Took "~((systime()-t)*1000)~"ms to update layer "~l.name);
+					logprint(_MP_dbg_lvl, "Took "~((systime()-t)*1000)~"ms to update layer "~l.name);
 				}
 			})();
 		}
@@ -393,9 +393,9 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.vorR.setColor(0,0.6,0.85);
 		me.symbols.dmeR.setText("");
 		me.symbols.dmeR.setColor(0,0.6,0.85);
-		if((var navident=getprop("instrumentation/adf[1]/ident")) != "")
+		if((var navident=getprop("/instrumentation/adf[1]/ident")) != "")
 			me.symbols.vorRId.setText(navident);
-		else me.symbols.vorRId.setText(sprintf("%3d",getprop("instrumentation/adf[1]/frequencies/selected-khz")));
+		else me.symbols.vorRId.setText(sprintf("%3d",getprop("/instrumentation/adf[1]/frequencies/selected-khz")));
 			me.symbols.vorRId.setColor(0,0.6,0.85);
 		me.symbols.dmeRDist.setText("");
 		me.symbols.dmeRDist.setColor(0,0.6,0.85);
@@ -407,8 +407,8 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	}
 
 	# Hide heading bug 10 secs after change
-	var vhdg_bug = getprop("it-autoflight/input/hdg") or 0;
-	var hdg_bug_active = getprop("it-autoflight/custom/show-hdg");
+	var vhdg_bug = getprop("/it-autoflight/input/hdg") or 0;
+	var hdg_bug_active = getprop("/it-autoflight/custom/show-hdg");
 	if (hdg_bug_active == nil)
 		hdg_bug_active = 1;
 
@@ -445,31 +445,31 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		var vorheading = userHdgTru;
 		var adfheading = userHdgMag;
 	}
-	if (getprop("instrumentation/nav[2]/heading-deg") != nil) {
-		var nav0hdg = getprop("instrumentation/nav[2]/heading-deg") - getprop("orientation/heading-deg");
+	if (getprop("/instrumentation/nav[2]/heading-deg") != nil) {
+		var nav0hdg = getprop("/instrumentation/nav[2]/heading-deg") - getprop("orientation/heading-deg");
 	} else {
 		var nav0hdg = 0;
 	}
-	if (getprop("instrumentation/nav[3]/heading-deg") != nil) {
-		var nav1hdg = getprop("instrumentation/nav[3]/heading-deg") - getprop("orientation/heading-deg");
+	if (getprop("/instrumentation/nav[3]/heading-deg") != nil) {
+		var nav1hdg = getprop("/instrumentation/nav[3]/heading-deg") - getprop("orientation/heading-deg");
 	} else {
 		var nav1hdg = 0;
 	}
-	var adf0hdg = getprop("instrumentation/adf/indicated-bearing-deg");
-	var adf1hdg = getprop("instrumentation/adf[1]/indicated-bearing-deg");
+	var adf0hdg = getprop("/instrumentation/adf/indicated-bearing-deg");
+	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
 		if(me.in_mode("toggle_display_mode", ["PLAN"]))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();
-		if((getprop("instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
 			me.symbols.staArrowL.setVisible(staPtrVis);
 			me.symbols.staToL.setColor(0.195,0.96,0.097);
 			me.symbols.staFromL.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowL.setRotation(nav0hdg*D2R);
 		}
-		elsif(getprop("instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
+		elsif(getprop("/instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
 			me.symbols.staArrowL.setVisible(staPtrVis);
 			me.symbols.staToL.setColor(0,0.6,0.85);
 			me.symbols.staFromL.setColor(0,0.6,0.85);
@@ -477,12 +477,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		} else {
 			me.symbols.staArrowL.hide();
 		}
-		if((getprop("instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
 			me.symbols.staArrowR.setVisible(staPtrVis);
 			me.symbols.staToR.setColor(0.195,0.96,0.097);
 			me.symbols.staFromR.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowR.setRotation(nav1hdg*D2R);
-		} elsif(getprop("instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
+		} elsif(getprop("/instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
 			me.symbols.staArrowR.setVisible(staPtrVis);
 			me.symbols.staToR.setColor(0,0.6,0.85);
 			me.symbols.staFromR.setColor(0,0.6,0.85);
@@ -517,12 +517,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine.setVisible(staPtrVis and hdg_bug_active);
 	} else {
 		me.symbols.trkInd.hide();
-		if((getprop("instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[2]/in-range") and me.get_switch("toggle_lh_vor_adf") == 1)) {
 			me.symbols.staArrowL2.setVisible(staPtrVis);
 			me.symbols.staFromL2.setColor(0.195,0.96,0.097);
 			me.symbols.staToL2.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowL2.setRotation(nav0hdg*D2R);
-		} elsif(getprop("instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
+		} elsif(getprop("/instrumentation/adf/in-range") and (me.get_switch("toggle_lh_vor_adf") == -1)) {
 			me.symbols.staArrowL2.setVisible(staPtrVis);
 			me.symbols.staFromL2.setColor(0,0.6,0.85);
 			me.symbols.staToL2.setColor(0,0.6,0.85);
@@ -530,12 +530,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		} else {
 			me.symbols.staArrowL2.hide();
 		}
-		if((getprop("instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
+		if((getprop("/instrumentation/nav[3]/in-range") and me.get_switch("toggle_rh_vor_adf") == 1)) {
 			me.symbols.staArrowR2.setVisible(staPtrVis);
 			me.symbols.staFromR2.setColor(0.195,0.96,0.097);
 			me.symbols.staToR2.setColor(0.195,0.96,0.097);
 			me.symbols.staArrowR2.setRotation(nav1hdg*D2R);
-		} elsif(getprop("instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
+		} elsif(getprop("/instrumentation/adf[1]/in-range") and (me.get_switch("toggle_rh_vor_adf") == -1)) {
 			me.symbols.staArrowR2.setVisible(staPtrVis);
 			me.symbols.staFromR2.setColor(0,0.6,0.85);
 			me.symbols.staToR2.setColor(0,0.6,0.85);
@@ -594,6 +594,6 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	me.symbols["status.arpt"].setVisible( me.get_switch("toggle_airports") and me.in_mode("toggle_display_mode", ["MAP"]));
 	me.symbols["status.sta"].setVisible( me.get_switch("toggle_stations") and  me.in_mode("toggle_display_mode", ["MAP"]));
 	# Okay, _how_ do we hook this up with FGPlot?
-	printlog(_MP_dbg_lvl, "Total ND update took "~((systime()-_time)*100)~"ms");
+	logprint(_MP_dbg_lvl, "Total ND update took "~((systime()-_time)*100)~"ms");
 	setprop("instrumentation/navdisplay["~ canvas.NavDisplay.id ~"]/update-ms", systime() - _time);
 };

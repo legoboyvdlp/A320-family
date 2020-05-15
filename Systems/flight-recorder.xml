@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- A3XX Flight Recorder -->
 
@@ -133,6 +133,22 @@
 			<signal>
 				<type>float</type>
 				<property>/fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/gear/gear[1]/L1brake-temp-degc</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/gear/gear[1]/L2brake-temp-degc</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/gear/gear[2]/R3brake-temp-degc</property>
+			</signal>
+			<signal>
+				<type>float</type>
+				<property>/gear/gear[2]/R4brake-temp-degc</property>
 			</signal>
 		</signals>
 	</config>

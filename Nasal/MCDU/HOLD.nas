@@ -30,18 +30,17 @@ var holdPage = {
 		var hp = {parents:[holdPage]};
 		hp.computer = computer;
 		hp.waypoint = waypoint;
-		hp.updateTmpy();
 		hp._setupPageWithData();
+		hp.updateTmpy();
 		return hp;
 	},
 	del: func() {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		# me.title = ["LAT REV", " AT ", me.waypoint.wp_name]; TODO FIXME LATREV
-		me.title = ["HOLD", " AT ", me.waypoint];
+		me.title = ["HOLD", " AT ", me.waypoint.wp_name];
 		me.titleColour = "wht";
-		me.L1 = [" [   ]", " INB CRS", "blu"];
+		me.L1 = [" [   ]", "INB CRS", "blu"];
 		me.L2 = [" R", " TURN", "blu"];
 		if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 14000) {
 			me.L2 = [" 1.5/----", "TIME/DIST", "blu"];
@@ -51,10 +50,10 @@ var holdPage = {
 		me.L6 = [" RETURN", nil, "wht"];
 		me.C4 = ["LAST EXIT", nil, "wht"];
 		me.C5 = ["----  ---.-", "UTC    FUEL", "wht"];
-		me.R1 = ["COMPUTED ", nil, "blu"];
-		me.R2 = ["DATABASE ", nil, "blu"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0]];
-		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["blu", "blu", "ack", "ack", "ack", "ack"]];
+		me.R1 = ["COMPUTED ", nil, "wht"];
+		me.R2 = ["DATABASE ", nil, "wht"];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 1, 0, 0, 0, 0]];
+		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["wht", "wht", "ack", "ack", "ack", "ack"]];
 		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
@@ -65,11 +64,20 @@ var holdPage = {
 	},
 	updateTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			me.L1[2] = "yel";
+			me.L2[2] = "yel";
 			me.L6 = [" F-PLN", " TMPY", "yel"];
+			me.R6 = ["INSERT* ", " TMPY", "yel"];
 			me.arrowsColour[0][5] = "yel";
-			me.R2[2] = "yel";
-			me.R3[2] = "yel";
-			me.R4[2] = "yel";
+			me.titleColour = "yel";
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+		} else {
+			me.L1[2] = "blu";
+			me.L2[2] = "blu";
+			me.L6 = [" RETURN", nil, "wht"];
+			me.R6 = [nil, nil, "ack"];
+			me.arrowsColour[0][5] = "wht";
+			me.titleColour = "wht";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	}

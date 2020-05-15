@@ -1,12 +1,16 @@
 # A3XX FADEC/Throttle Control System
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 if (getprop("options/eng") == "IAE") {
 	io.include("fadec-iae.nas");
 } else {
 	io.include("fadec-cfm.nas");
 }
+
+var Output = {
+	limFlex: props.globals.getNode("/systems/thrust/lim-flex"),
+};
 
 var thr1 = 0;
 var thr2 = 0;
@@ -267,7 +271,7 @@ var thrust_loop = maketimer(0.04, func {
 	}
 	
 	alpha = getprop("fdm/jsbsim/aero/alpha-deg");
-	flaps = getprop("controls/flight/flap-pos");
+	flaps = getprop("controls/flight/flaps-pos");
 	if (flaps == 0) {
 		alphaProt = 9.5;
 	} else if (flaps == 1 or flaps == 2 or flaps == 3) {

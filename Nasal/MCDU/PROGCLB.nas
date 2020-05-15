@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Matthew Maring (hayden2000)
+# Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var progCLBInput = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
@@ -11,6 +11,8 @@ var progCLBInput = func(key, i) {
 				setprop("FMGC/internal/activate-twice", 0);
 				setprop("FMGC/internal/decel", 0);
 			}
+			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
 		} else if (int(scratchpad) != nil) {
 			var crzs = size(scratchpad);
 			if (crzs >= 1 and crzs <= 3 and scratchpad > 0 and scratchpad <= 430 and altSet.getValue() <= scratchpad * 100) {

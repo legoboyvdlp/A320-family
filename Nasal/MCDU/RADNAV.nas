@@ -1,6 +1,6 @@
-# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (hayden2000)
+# A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450)
 
 var radnavInput = func(key, i) {
 	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
@@ -69,6 +69,9 @@ var radnavInput = func(key, i) {
 						setprop("instrumentation/nav[0]/frequencies/selected-mhz", scratchpad);
 						setprop("FMGC/internal/ils1freq-set", 1);
 						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+						if (num(getprop("FMGC/internal/ils1freq-calculated")) != 0 and num(getprop("FMGC/internal/ils1freq-calculated")) != num(getprop("instrumentation/nav[0]/frequencies/selected-mhz"))) {
+							genericMessage(i, "RWY/LS MISMATCH", "amb");
+						}
 					} else {
 						notAllowed(i);
 					}

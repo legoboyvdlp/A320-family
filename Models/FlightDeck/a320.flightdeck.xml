@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -57,17 +57,6 @@
 	</model-->
 
 	<!-- Overhead Panel -->
-	<!-- New OH not ready yet -->
-	<!--model>
-		<path>Aircraft/A320-family/Models/Instruments/OHpanel.new/OHpanel.xml</path>
-		<offsets>
-			<x-m>0.128</x-m>
-			<y-m>0</y-m>
-			<z-m>0.997</z-m>
-			<pitch-deg>69.547</pitch-deg>
-		</offsets>
-	</model-->
-
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/OHpanel/OHpanel.xml</path>
 		<offsets>
@@ -117,110 +106,790 @@
 	</model>
 
 	<!-- DDRMI Instrument -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/DDRMI/DDRMI.xml</path>
-		<offsets>
-			<x-m>-0.516286</x-m>
-			<y-m>-0.142488</y-m>
-			<z-m>0.098057</z-m>
-			<heading-deg>90</heading-deg>
-			<roll-deg>73.5</roll-deg>
-		</offsets>
-	</model>
+	<animation>
+		<name>Heading rotate</name>
+		<type>rotate</type>
+		<object-name>ddrmi_hdg</object-name>
+		<property>instrumentation/ddrmi/heading</property>
+		<axis>
+			<object-name>ddrmi_hdg.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>VOR1 rotate</name>
+		<object-name>ddrmi_pointer_1</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/needle-1</property>
+		<axis>
+			<object-name>ddrmi_hdg.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>VOR2 rotate</name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/needle-2</property>
+		<axis>
+			<object-name>ddrmi_hdg.axis</object-name>
+		</axis>
+	</animation>
+	
+	<!-- Knobs -->
+	<animation>
+		<type>pick</type>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-1</property>
+				<value>0</value> <!-- OFF -->
+				<value>1</value> <!-- VOR -->
+				<value>-1</value> <!-- ADF -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-1</property>
+				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Knob 1 rotate</name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/vor-adf-1</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>90</dep></entry>
+			<entry><ind> 0</ind><dep>45</dep></entry>
+			<entry><ind> 1</ind><dep> 0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-2</property>
+				<value>0</value> <!-- OFF -->
+				<value>1</value> <!-- VOR -->
+				<value>-1</value> <!-- ADF -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/ddrmi/vor-adf-2</property>
+				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Knob 2 rotate</name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/vor-adf-2</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>-90</dep></entry>
+			<entry><ind> 0</ind><dep>-45</dep></entry>
+			<entry><ind> 1</ind><dep>  0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
+		</axis>
+	</animation>
+	
+	<!-- Flags -->
+	
+	<animation>
+		<name>Flag 1 rotate</name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/flag-1</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>45</dep></entry>
+			<entry><ind>1</ind><dep> 0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_flag_1.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Flag 2 rotate</name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/flag-2</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>-45</dep></entry>
+			<entry><ind>1</ind><dep>  0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>ddrmi_vor_adf_flag_2.axis</object-name>
+		</axis>
+	</animation>
 
+	<!-- Lighting -->
+	<animation>
+		<name>DDRMI inside illumination</name>
+		<type>material</type>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_pointer_1_vor</object-name>
+		<object-name>ddrmi_pointer_1_adf</object-name>
+		<object-name>ddrmi_pointer_2_vor</object-name>
+		<object-name>ddrmi_pointer_2_adf</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg</object-name>
+		<!-- <emission>
+			<red>0.50</red>
+			<green>0.35</green>
+			<blue>0.2</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission> -->
+		<condition>
+			<not>
+				<and>
+					<greater-than>
+						<property>sim/model/lights/dome-light</property>
+						<value>0</value>
+					</greater-than>
+					<less-than>
+						<property>controls/lighting/main-panel-norm</property>
+						<value>0.25</value>
+					</less-than>
+				</and>
+			</not>
+		</condition>
+		<emission>
+			<red>0.50</red>
+			<green>0.35</green>
+			<blue>0.2</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission>
+	</animation>
+
+	<animation>
+		<name>Panel lighting (dome)</name>
+		<type>material</type>
+<!--		<object-name>ddrmi_dme1_screen</object-name>-->
+<!--		<object-name>ddrmi_dme2_screen</object-name>-->
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_pointer_1_vor</object-name>
+		<object-name>ddrmi_pointer_1_adf</object-name>
+		<object-name>ddrmi_pointer_2_vor</object-name>
+		<object-name>ddrmi_pointer_2_adf</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg</object-name>
+		<!-- <emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission> -->
+		<condition>
+			<and>
+				<not>
+					<greater-than>
+						<property>controls/lighting/main-panel-norm</property>
+						<value>0.25</value>
+					</greater-than>
+				</not>
+				<greater-than>
+					<property>sim/model/lights/dome-light</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+		<emission>
+			<red>0.20</red>
+			<green>0.20</green>
+			<blue>0.20</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<animation>
+		<name>DDRMI body lighting</name>
+		<type>material</type>
+		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<emission>
+			<red>0.2</red>
+			<green>0.2</green>
+			<blue>0.2</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/ddrmi</inherits-from>
+		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+	</effect>
+	
 	<!-- Brakes Pressure Indicator -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Brakes/Brakes.xml</path>
-		<offsets>
-			<x-m>-0.5131</x-m>
-			<y-m>0.21535</y-m>
-			<z-m>0.083</z-m>
-			<pitch-deg>73.466</pitch-deg>
-		</offsets>
-	</model>
+	<animation>
+    	<type>rotate</type>
+    	<object-name>brakes_lb_psi</object-name>
+    	<property>systems/hydraulic/brakes/pressure-left-psi</property>
+    	<factor>0.03</factor>
+		<condition>
+			<equals>
+				<property>systems/hydraulic/brakes/mode</property>
+				<value>2</value>
+			</equals>
+		</condition>
+    	<axis>
+			<object-name>brakes_lb_psi.axis</object-name>
+    	</axis>
+    </animation>
+    
+    <animation>
+    	<type>rotate</type>
+    	<object-name>brakes_rb_psi</object-name>
+    	<property>systems/hydraulic/brakes/pressure-right-psi</property>
+    	<factor>-0.03</factor>
+		<condition>
+			<equals>
+				<property>systems/hydraulic/brakes/mode</property>
+				<value>2</value>
+			</equals>
+		</condition>
+    	<axis>
+			<object-name>brakes_rb_psi.axis</object-name>
+    	</axis>
+    </animation>
+    
+    <animation>
+    	<type>rotate</type>
+    	<object-name>brakes_accum_psi</object-name>
+    	<property>systems/hydraulic/brakes/accumulator-pressure-psi</property>
+    	<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>700</ind><dep>66</dep></entry>
+			<entry><ind>2000</ind><dep>78</dep></entry>
+			<entry><ind>3000</ind><dep>90</dep></entry>
+		</interpolation>
+    	<axis>
+			<object-name>brakes_accum_psi.axis</object-name>
+    	</axis>
+    </animation>
+	
+	<animation>
+		<name>Panel lighting</name>
+		<type>material</type>
+		<object-name>brakes_body</object-name>
+		<emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/brake</inherits-from>
+		<object-name>brakes_body</object-name>
+	</effect>
 
 	<!-- Multi-purpose Control and Display Units -->
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU1.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU2.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.3651</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Radio -->
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio1.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
+	
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio2.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.3651</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Audio -->
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Audio/Audio1.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
+	
 	<model>
 		<path>Aircraft/A320-family/Models/Instruments/Audio/Audio2.xml</path>
-		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.3651</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Upper Pedestal Panels -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Pedestal_up/Pedestal_up.xml</path>
+	<animation>
+		<name>Panel lighting</name>
+		<type>material</type>
+		<object-name>atc_0</object-name>
+		<object-name>atc_1</object-name>
+		<object-name>atc_2</object-name>
+		<object-name>atc_3</object-name>
+		<object-name>atc_4</object-name>
+		<object-name>atc_5</object-name>
+		<object-name>atc_6</object-name>
+		<object-name>atc_7</object-name>
+		<object-name>atc_abv</object-name>
+		<object-name>atc_body</object-name>
+		<object-name>atc_clr</object-name>
+		<object-name>atc_fail</object-name>
+		<object-name>atc_ident</object-name>
+		<object-name>atc_screen</object-name>
+		<object-name>atc_stby</object-name>
+		<object-name>atc_sys</object-name>
+		<object-name>atc_thrt</object-name>
+		<object-name>ecam_body</object-name>
+		<object-name>ecam_switch_body</object-name>
+		<object-name>engine_body</object-name>
+		<object-name>radar_body</object-name>
+		<object-name>vu111_body</object-name>
+		<object-name>vu112_body</object-name>
+		<object-name>throttle_1</object-name>
+		<object-name>throttle_1_label</object-name>
+		<object-name>dummy_1</object-name>
+		<object-name>dummy_2</object-name>
+		<object-name>Lcutoff</object-name>
+		<object-name>Rcutoff</object-name>
+		<object-name>eng_mode</object-name>
+		<object-name>radar_gain</object-name>
+		<object-name>radar_tilt</object-name>
+		<object-name>radar_mode</object-name>
+		<object-name>radar_gain</object-name>
+		<object-name>radio_rot1</object-name>
+		<object-name>vu112_aids</object-name>
+		<object-name>vu112_dfdr</object-name>
+		<emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-upper</inherits-from>
+		<object-name>throttle_1</object-name>
+	</effect>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-atc</inherits-from>
+		<object-name>atc_glare</object-name>
+		<object-name>atc_body</object-name>
+	</effect>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-engine</inherits-from>
+		<object-name>engine_body</object-name>
+		<object-name>engine_glare</object-name>
+		<object-name>eng_mode</object-name>
+		<object-name>Lcutoff</object-name>
+		<object-name>Rcutoff</object-name>
+	</effect>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/brightness-panel-ped</inherits-from>
+		<object-name>vu111_body</object-name>
+		<object-name>vu112_body</object-name>
+		<object-name>vu111_glare</object-name>
+		<object-name>vu112_glare</object-name>
+	</effect>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/dummy-gap</inherits-from>
+		<object-name>dummy_1</object-name>
+	</effect>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-radar</inherits-from>
+		<object-name>radar_mode</object-name>
+		<object-name>radar_tilt</object-name>
+		<object-name>radar_body</object-name>
+		<object-name>radar_glare</object-name>
+	</effect>
+
+	<animation>
+		<type>select</type>
+		<object-name>engine_fault_1</object-name>
+		<condition>
+			<property>systems/unused/unused-ped</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>engine_fire_1</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/engine1/warning-active</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<object-name>engine_fire_1</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>engine_fault_2</object-name>
+		<condition>
+			<property>systems/unused/unused-ped</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>engine_fire_2</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/engine2/warning-active</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<object-name>engine_fire_2</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
+	
+	<text>
+		<name>atc-code</name>
 		<offsets>
-			<x-m>0.022</x-m>
-			<y-m>0.0</y-m>
-			<z-m>-0.00515</z-m>
-			<pitch-deg>9.4</pitch-deg>
+			<x-m>-0.01247</x-m>
+			<y-m>0.213195</y-m>
+			<z-m>-0.13500</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>9.4</roll-deg>
 		</offsets>
-	</model>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<property type="string">/systems/atc/transponder-code</property>
+		<format>%s</format>
+		<truncate type="bool">false</truncate>
+		<font type="string">led.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.009</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+
+	<text>
+		<name>atc-test</name>
+		<offsets>
+			<x-m>-0.01247</x-m>
+			<y-m>0.213195</y-m>
+			<z-m>-0.13500</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>9.4</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">literal</type>
+		<text type="string">8888</text>
+		<font type="string">led.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.009</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_0</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(0);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(2);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_3</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(3);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_4</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(4);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_5</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(5);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_6</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(6);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_7</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.keypad(7);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_clr</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>atc.transponderPanel.clearKey();</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>atc_sys</object-name>
+		<factor>-30</factor>
+		<offset-deg>30</offset-deg>
+		<center>
+            <x-m>-0.003352</x-m>
+			<y-m>0.131446</y-m>
+			<z-m>-0.13275</z-m>
+        </center>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<property>controls/atc/system-knob</property>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_sys</object-name>
+		<action>
+			<button>0</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/system-knob</property>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+			<binding>
+                <command>nasal</command>
+                <script>atc.transponderPanel.atcSwitch(getprop("controls/atc/system-knob") + 1);</script>
+            </binding>
+        </action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>atc_stby</object-name>
+		<factor>-35</factor>
+		<offset-deg>70</offset-deg>
+		<center>
+            <x-m>0.01146</x-m>
+			<y-m>0.213663</y-m>
+			<z-m>-0.13086</z-m>
+        </center>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<property>controls/atc/mode-knob</property>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_stby</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/mode-knob</property>
+                <value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+				<value>4</value>
+            </binding>
+			<binding>
+                <command>nasal</command>
+                <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
+            </binding>
+        </action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/mode-knob</property>
+				<value>4</value>
+				<value>3</value>
+				<value>2</value>
+				<value>1</value>
+                <value>0</value>
+            </binding>
+			<binding>
+                <command>nasal</command>
+                <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
+            </binding>
+        </action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_ident</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+                <command>nasal</command>
+                <script>atc.transponderPanel.identSwitch();</script>
+            </binding>
+        </action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>atc_fail</object-name>
+		<condition>
+			<and>
+				<property>systems/atc/failed</property>
+				<greater-than>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
 
 	<!-- Primary Flight Displays -->
 	<model>
 		<name>PFD1</name>
 		<path>Aircraft/A320-family/Models/Instruments/PFD/PFD1.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>-0.5526</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -238,12 +907,6 @@
 	<model>
 		<name>PFD2</name>
 		<path>Aircraft/A320-family/Models/Instruments/PFD/PFD2.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>0.5526</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -262,12 +925,6 @@
 	<model>
 		<name>ND1</name>
 		<path>Aircraft/A320-family/Models/Instruments/ND/ND_L.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>-0.35198</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -285,12 +942,6 @@
 	<model>
 		<name>ND2</name>
 		<path>Aircraft/A320-family/Models/Instruments/ND/ND_R.xml</path>
-		<offsets>
-			<x-m>-0.55415</x-m>
-			<y-m>0.35198</y-m>
-			<z-m>0.22256</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<animation>
@@ -310,24 +961,12 @@
 	<model>
 		<name>UECAM</name>
 		<path>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.xml</path>
-		<offsets>
-			<x-m>-0.55694</x-m>
-			<y-m>0.01204</y-m>
-			<z-m>0.22568</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Lower ECAM -->
 	<model>
 		<name>LECAM</name>
 		<path>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.xml</path>
-		<offsets>
-			<x-m>-0.49881</x-m>
-			<y-m>0.01191</y-m>
-			<z-m>0.04972</z-m>
-			<pitch-deg>-16.534</pitch-deg>
-		</offsets>
 	</model>
 
 	<!-- Standby Indicator -->
@@ -370,6 +1009,7 @@
 		<object-name>autoland_light_on</object-name>
 		<object-name>brk_fan_on</object-name>
 		<object-name>brk_hot_on</object-name>
+<!--		<object-name>clock_glare</object-name>-->
 		<object-name>cstr_led</object-name>
 		<object-name>cstr_led.001</object-name>
 		<object-name>dec_low_on</object-name>
@@ -429,19 +1069,34 @@
 		<object-name>radio_vor_led</object-name>
 		<object-name>rgear_down</object-name>
 		<object-name>rgear_unlk</object-name>
-		<object-name>rudder-trim</object-name>
 		<object-name>spd-text</object-name>
 		<object-name>spd-text-test</object-name>
-		<object-name>terr_on_nd_on</object-name>
+		<object-name>terr_on_nd_label</object-name>
+		<object-name>terr_on_nd_on_l</object-name>
+		<object-name>terr_on_nd_on_r</object-name>
 		<object-name>vord_led</object-name>
 		<object-name>vord_led.001</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
+		<object-name>terr_on_nd_label</object-name>
+<!--		<object-name>clock_glare</object-name>-->
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
+				<value>25</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>rudder-trim-letter</object-name>
+		<object-name>rudder-trim</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>systems/electrical/bus/dc-2</property>
 				<value>25</value>
 			</greater-than-equals>
 		</condition>
@@ -481,14 +1136,12 @@
 		<object-name>exped_led</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>radio_opt_led</object-name>
-		<object-name>rudder-trim-test</object-name>
-		<object-name>terr_on_nd_on</object-name>
 		<object-name>ver.fmgc</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>alt-text-test</object-name>
@@ -513,10 +1166,16 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -539,10 +1198,16 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -579,10 +1244,16 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -593,67 +1264,60 @@
 	</animation>
 
 	<text>
-		<name>rudder-trim</name>
+		<name>rudder-trim-letter</name>
 		<offsets>
-			<x-m>0.118</x-m>
-			<y-m>-0.016</y-m>
-			<z-m>-0.134</z-m>
+			<x-m>0.108</x-m>
+			<y-m>-0.032</y-m>
+			<z-m>-0.133</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>0</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>left-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
-		<property>fdm/jsbsim/hydraulics/rudder/trim-cmd-deg</property>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>controls/flight/rudder-trim-letter-display</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<layout>left-to-right</layout>
+		<font type="string">DSEG/DSEG14/Classic/DSEG14Classic-Bold.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
-		<character-size>0.009</character-size>
+		<character-size>0.007</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
 		</font-resolution>
+		<kerning>default</kerning>
 	</text>
 
 	<text>
-		<name>rudder-trim-test</name>
+		<name>rudder-trim</name>
 		<offsets>
-			<x-m>0.12323</x-m>
-			<y-m>-0.01972</y-m>
-			<z-m>-0.137</z-m>
+			<x-m>0.108</x-m>
+			<y-m>-0.008</y-m>
+			<z-m>-0.133</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>0</roll-deg>
 		</offsets>
-		<alignment>center-center</alignment>
+		<alignment>right-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
-		<format type="string">-88.8</format>
-		<property>autopilot/servicable</property>
+		<format type="string">%s</format>
+		<property>controls/flight/rudder-trim-display</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<layout>left-to-right</layout>
+		<font>led.txf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
-		<character-size>0.009</character-size>
+		<character-size>0.007</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
 		</font-resolution>
+		<kerning>default</kerning>
 	</text>
-
-	<animation>
-		<type>select</type>
-		<object-name>rudder-trim</object-name>
-		<condition>
-			<not-equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</not-equals>
-		</condition>
-	</animation>
 
 	<animation>
 		<type>rotate</type>
@@ -676,6 +1340,89 @@
 				<property>controls/gear/brake-parking</property>
 			</binding>
 		</action>
+	</animation>
+
+	<!-- Terr on ND -->
+	<animation>
+		<type>pick</type>
+		<object-name>terr_on_nd_l</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/switches/terr_on_nd_l</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>terr_on_nd_on_l</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/terr_on_nd_l</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>terr_on_nd_r</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/switches/terr_on_nd_r</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>terr_on_nd_on_r</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/terr_on_nd_r</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
+		</condition>
 	</animation>
 
 	<!-- Brake's fans -->
@@ -713,7 +1460,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>brk_hot_on</object-name>
@@ -1729,7 +2476,7 @@
 			</or>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>ecam_sts_led</object-name>
@@ -1897,9 +2644,9 @@
 		<object-name>eng_mode.mark</object-name>
 		<property>controls/engines/engine-start-switch</property>
 		<interpolation>
-			<entry><ind>0</ind><dep> 53</dep></entry>
+			<entry><ind>0</ind><dep>-53</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
-			<entry><ind>2</ind><dep>-53</dep></entry>
+			<entry><ind>2</ind><dep>53</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>eng_mode.axis</object-name>
@@ -1911,6 +2658,7 @@
 		<type>pick</type>
 		<object-name>qnh_cpt_knb</object-name>
 		<object-name>qnh_fo_knb</object-name>
+		<object-name>iesi_baro_knb</object-name>
 		<action>
 			<button>0</button>
 			<button>1</button>
@@ -1939,11 +2687,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -1961,11 +2709,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -1995,11 +2743,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -2017,11 +2765,11 @@
 				<condition>
 					<and>
 						<equals>
-							<property>modes/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg</property>
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>modes/altimeter/std</property>
+							<property>instrumentation/altimeter/std</property>
 							<value>0</value>
 						</equals>
 						<greater-than-equals>
@@ -2054,7 +2802,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>modes/altimeter/inhg</property>
+				<property>instrumentation/altimeter/inhg</property>
 				<value>0</value>
 				<value>1</value>
 			</binding>
@@ -2084,7 +2832,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_cpt_sw</object-name>
-		<property>modes/altimeter/inhg</property>
+		<property>instrumentation/altimeter/inhg</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>40</dep></entry>
 			<entry><ind>1</ind><dep>-3</dep></entry>
@@ -2097,7 +2845,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_fo_sw</object-name>
-		<property>modes/altimeter/inhg</property>
+		<property>instrumentation/altimeter/inhg</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>40</dep></entry>
 			<entry><ind>1</ind><dep>-3</dep></entry>
@@ -2224,7 +2972,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">STD</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2250,7 +2998,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">STD</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2276,7 +3024,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">88.88</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2302,7 +3050,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">88.88</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -2325,11 +3073,11 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>modes/altimeter/inhg</property>
+					<property>instrumentation/altimeter/inhg</property>
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>modes/altimeter/std</property>
+					<property>instrumentation/altimeter/std</property>
 					<value>0</value>
 				</equals>
 			</and>
@@ -2346,11 +3094,11 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>modes/altimeter/inhg</property>
+					<property>instrumentation/altimeter/inhg</property>
 					<value>0</value>
 				</equals>
 				<equals>
-					<property>modes/altimeter/std</property>
+					<property>instrumentation/altimeter/std</property>
 					<value>0</value>
 				</equals>
 			</and>
@@ -2367,7 +3115,7 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>modes/altimeter/std</property>
+					<property>instrumentation/altimeter/std</property>
 					<value>1</value>
 				</equals>
 			</and>
@@ -3640,7 +4388,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">.888</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -3692,7 +4440,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">888</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -3744,7 +4492,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">88888</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -3822,7 +4570,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">-8888</format>
-		<property>autopilot/servicable</property>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -5014,7 +5762,7 @@
 		<object-name>brakes_accum_psi.mark</object-name>
 		<object-name>brakes_lb_psi.mark</object-name>
 		<object-name>brakes_rb_psi.mark</object-name>
-		<object-name>clock_glare</object-name>
+<!--		<object-name>clock_glare</object-name>-->
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>integ_lt.mark</object-name>
@@ -5115,7 +5863,13 @@
 		<object-name>brakes_accum_psi.mark</object-name>
 		<object-name>brakes_lb_psi.mark</object-name>
 		<object-name>brakes_rb_psi.mark</object-name>
-		<object-name>clock_glare</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+<!--		<object-name>clock_display</object-name>-->
+<!--		<object-name>clock_glare</object-name>-->
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>integ_lt.mark</object-name>
@@ -5310,7 +6064,7 @@
 					if (getprop("sim/sound/warnings/cchord")) {
 						setprop("sim/sound/warnings/cchord-inhibit", 1);
 					}
-					
+
 					if (getprop("it-autoflight/output/ap-warning") == 1) {
 						setprop("it-autoflight/output/ap-warning", 0);
 					}
@@ -6165,7 +6919,7 @@
 			</binding>
 		</action>
     </animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>ecam_air_data</object-name>
@@ -6181,7 +6935,7 @@
 			<z2-m>-0.060321</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>ecam_air_data</object-name>
@@ -6224,7 +6978,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<!-- Z Colors/Effects -->
 	<animation>
 		<type>material</type>
@@ -6245,7 +6999,7 @@
 		<object-name>qnh-std</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>rudder-trim</object-name>
-		<object-name>rudder-trim-test</object-name>
+		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
 			<red>0.89</red>
 			<green>0.37</green>
@@ -6269,12 +7023,60 @@
 	</animation>
 
 	<animation>
+		<type>material</type>
+		<object-name>chrono1</object-name>
+		<object-name>chrono2_1</object-name>
+		<object-name>chrono2_2</object-name>
+		<object-name>chrono3</object-name>
+		<object-name>UTC_1</object-name>
+		<object-name>UTC_2</object-name>
+		<object-name>UTC_3</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
+
+	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
-		<object-name>ceiling</object-name>
+		<object-name>atc_0</object-name>
+		<object-name>atc_1</object-name>
+		<object-name>atc_2</object-name>
+		<object-name>atc_3</object-name>
+		<object-name>atc_4</object-name>
+		<object-name>atc_5</object-name>
+		<object-name>atc_6</object-name>
+		<object-name>atc_7</object-name>
+		<object-name>atc_abv</object-name>
+		<object-name>atc_body</object-name>
+		<object-name>atc_clr</object-name>
+		<object-name>atc_fail</object-name>
+		<object-name>atc_ident</object-name>
+		<object-name>atc_screen</object-name>
+		<object-name>atc_stby</object-name>
+		<object-name>atc_sys</object-name>
+		<object-name>atc_thrt</object-name>
 		<object-name>beam</object-name>
 		<object-name>beam_a</object-name>
 		<object-name>beam_f</object-name>
+		<object-name>ceiling</object-name>
 		<object-name>sfl.001</object-name>
 		<object-name>sfl.011</object-name>
 		<object-name>sfl.012</object-name>
@@ -6317,7 +7119,12 @@
 		<object-name>compass_box</object-name>
 		<object-name>iesi</object-name>
 		<object-name>clock_body</object-name>
-		<object-name>clock.001</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+<!--		<object-name>clock_glare</object-name>-->
 		<object-name>gear_lever_body</object-name>
 		<object-name>ParkBrk</object-name>
 		<object-name>RudderTrim</object-name>
@@ -6431,6 +7238,11 @@
 		<object-name>SpdBrk</object-name>
 	</effect>
 
+<!--	<effect>-->
+<!--		<inherits-from>Aircraft/A320-family/Models/Effects/clock-glare</inherits-from>-->
+<!--		<object-name>clock_glare</object-name>-->
+<!--	</effect>-->
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/iesi</inherits-from>
 		<object-name>iesi</object-name>
@@ -6444,20 +7256,37 @@
 
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
-		<object-name>clock</object-name>
-		<object-name>clock.001</object-name>
+<!--		<object-name>clock</object-name>-->
 		<object-name>clock_body</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/clock-glare</inherits-from>
-		<object-name>clock_glare</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
+<!--		<object-name>clock_display</object-name>-->
 	</effect>
 
 	<!-- move any objects requiring lightmap to another effect file -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>ACP</object-name>
+		<object-name>atc_0</object-name>
+		<object-name>atc_1</object-name>
+		<object-name>atc_2</object-name>
+		<object-name>atc_3</object-name>
+		<object-name>atc_4</object-name>
+		<object-name>atc_5</object-name>
+		<object-name>atc_6</object-name>
+		<object-name>atc_7</object-name>
+		<object-name>atc_abv</object-name>
+		<object-name>atc_body</object-name>
+		<object-name>atc_clr</object-name>
+		<object-name>atc_fail</object-name>
+		<object-name>atc_ident</object-name>
+		<object-name>atc_screen</object-name>
+		<object-name>atc_stby</object-name>
+		<object-name>atc_sys</object-name>
+		<object-name>atc_thrt</object-name>
 		<object-name>beam</object-name>
 		<object-name>beam_a</object-name>
 		<object-name>beam_f</object-name>
@@ -6466,19 +7295,40 @@
 		<object-name>carpet</object-name>
 		<object-name>ceiling</object-name>
 		<object-name>compass_box</object-name>
-		<object-name>DoorC</object-name>
+		<object-name>dummy_2</object-name>
+		<object-name>ecam_att_hdg</object-name>
+		<object-name>ecam_air_data</object-name>
+		<object-name>ecam_body</object-name>
+		<object-name>ecam_brt_upper</object-name>
+		<object-name>ecam_brt_lower</object-name>
+		<object-name>ecam_eis_dmc</object-name>
+		<object-name>ecam_emer_canc_lit</object-name>
+		<object-name>ecam_glare_down</object-name>
+		<object-name>ecam_glare_up</object-name>
+		<object-name>ecam_nd_xfr</object-name>
+		<object-name>ecam_switch_body</object-name>
+		<object-name>vu112_aids</object-name>
+		<object-name>vu112_dfdr</object-name>
+		<object-name>vu111_body</object-name>
+		<object-name>vu112_body</object-name>
+		<object-name>vu111_glare</object-name>
+		<object-name>vu112_glare</object-name>
 		<object-name>efis_box_1</object-name>
 		<object-name>efis_box_2</object-name>
 		<object-name>efis_box_2.001</object-name>
 		<object-name>efis_box_3</object-name>
 		<object-name>efis_box_4</object-name>
 		<object-name>extinguisher</object-name>
+		<object-name>flood_lt_main</object-name>
 		<object-name>cylinder30</object-name>
 		<object-name>cylinder30.002</object-name>
 		<object-name>cylinder30.003</object-name>
 		<object-name>cylinder30.004</object-name>
-		<object-name>rear_breakers</object-name>
 		<object-name>efis_display_foil</object-name>
+		<object-name>spd-sel</object-name>
+		<object-name>hdg-sel</object-name>
+		<object-name>alt-sel</object-name>
+		<object-name>vs-sel</object-name>
 		<object-name>fcu_integ_knb</object-name>
 		<object-name>hud_brt</object-name>
 		<object-name>hud_brt.mark</object-name>
@@ -6486,10 +7336,6 @@
 		<object-name>hud_norm_sw</object-name>
 		<object-name>lt_knb_1</object-name>
 		<object-name>lt_knb_1.001</object-name>
-		<object-name>master_caution</object-name>
-		<object-name>master_caution_on</object-name>
-		<object-name>master_warning</object-name>
-		<object-name>master_warning_on</object-name>
 		<object-name>metric_alt</object-name>
 		<object-name>nd_mode</object-name>
 		<object-name>nd_mode.mark</object-name>
@@ -6537,9 +7383,7 @@
 		<object-name>level3</object-name>
 		<object-name>level3_2</object-name>
 		<object-name>light_console_cpt_sw</object-name>
-		<object-name>light_console_cpt_sw.axis</object-name>
 		<object-name>light_console_fo_sw</object-name>
-		<object-name>light_console_fo_sw.axis</object-name>
 		<object-name>LRudderPedalL</object-name>
 		<object-name>LRudderPedalR</object-name>
 		<object-name>Main-Panel</object-name>
@@ -6549,28 +7393,10 @@
 		<object-name>abs_max_on</object-name>
 		<object-name>abs_med</object-name>
 		<object-name>abs_med_on</object-name>
-		<object-name>brightness_nd_1_cpt</object-name>
-		<object-name>brightness_nd_1_fo</object-name>
-		<object-name>brightness_nd_1_fo.mark</object-name>
-		<object-name>brightness_nd_2_cpt</object-name>
-		<object-name>brightness_nd_2_cpt.mark</object-name>
-		<object-name>brightness_nd_2_fo</object-name>
-		<object-name>brightness_nd_2_fo.mark</object-name>
-		<object-name>brightness_panel_emit</object-name>
-		<object-name>brk_fan</object-name>
-		<object-name>brk_fan_on</object-name>
-		<object-name>brk_hot_on</object-name>		
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_max_on</object-name>
 		<object-name>dec_med_on</object-name>
-		<object-name>foot_warmer_cpt_sw</object-name>
-		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<object-name>foot_warmer_fo_sw</object-name>
-		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<object-name>gear_lever_slot</object-name>
 		<object-name>gpws_gs_sw</object-name>
-		<object-name>iesi_labels</object-name>
-		<object-name>iesi_screen</object-name>
 		<object-name>lgear</object-name>
 		<object-name>lgear_down</object-name>
 		<object-name>lgear_unlk</object-name>
@@ -6662,6 +7488,7 @@
 		<object-name>sts.007</object-name>
 		<object-name>thr_l</object-name>
 		<object-name>rev_l</object-name>
+		<object-name>terr_on_nd_label</object-name>
 		<object-name>thr_l_body</object-name>
 		<object-name>thr_l_button</object-name>
 		<object-name>thr_l_screw</object-name>
@@ -6692,6 +7519,7 @@
 		<object-name>wall_1</object-name>
 		<object-name>wall_2</object-name>
 		<object-name>window_frame</object-name>
+		<object-name>WindowCpt</object-name>
 		<object-name>HeadsetCpt</object-name>
 		<object-name>WindowGlassCpt</object-name>
 		<object-name>WindowOpenerCpt</object-name>
@@ -6700,8 +7528,46 @@
 		<object-name>WindowGlassFo</object-name>
 		<object-name>WindowOpenerFo</object-name>
 		<object-name>WX</object-name>
+		<object-name>integ_lt</object-name>
+		<object-name>flood_lt_ped</object-name>
+		<object-name>radar_gain</object-name>
+		<object-name>throttle_1_label</object-name>
 	</effect>
-
+	
+	<!-- Panels that are vertical -->
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance-vertical</inherits-from>
+		<object-name>brightness_nd_1_cpt</object-name>
+		<object-name>brightness_nd_1_fo</object-name>
+		<object-name>brightness_nd_1_fo.mark</object-name>
+		<object-name>brightness_nd_2_cpt</object-name>
+		<object-name>brightness_nd_2_cpt.mark</object-name>
+		<object-name>brightness_nd_2_fo</object-name>
+		<object-name>brightness_nd_2_fo.mark</object-name>
+		<object-name>brightness_panel_emit</object-name>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<object-name>fcu_labels</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>master_caution</object-name>
+		<object-name>master_caution_on</object-name>
+		<object-name>master_warning</object-name>
+		<object-name>master_warning_on</object-name>
+		<object-name>iesi_labels</object-name>
+		<object-name>iesi_screen</object-name>
+		<object-name>brk_fan</object-name>
+		<object-name>brk_fan_on</object-name>
+		<object-name>brk_hot_on</object-name>
+		<object-name>gear_lever_slot</object-name>
+		<object-name>fcu_panel</object-name>
+		<object-name>rear_breakers</object-name>
+		<object-name>DoorC</object-name>
+		<object-name>ddrmi_inside</object-name>
+	</effect>
+	
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
@@ -6715,7 +7581,65 @@
 		</emission>
 	</animation>
 
-<!-- headset show/hide -->
+	<animation>
+		<type>select</type>
+		<object-name>clock_display_illuminated</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_display</object-name>
+		<condition>
+			<less-than>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</less-than>
+		</condition>
+	</animation>
+
+	<animation>
+		<name>Clock lighting</name>
+		<type>material</type>
+		<object-name>clock_display_illuminated</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</greater-than-equals>
+		</condition>
+		<emission>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/main-panel-norm</factor-prop>
+		</emission>
+	</animation>
+
+	<animation>
+		<name>Clock lighting (dome)</name>
+		<type>material</type>
+		<object-name>clock_display</object-name>
+		<condition>
+			<less-than>
+				<property>controls/lighting/main-panel-norm</property>
+				<value>0.25</value>
+			</less-than>
+		</condition>
+		<emission>
+			<red>0.20</red>
+			<green>0.20</green>
+			<blue>0.20</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+
+	<!-- headset show/hide -->
 	<animation>
 		<type>select</type>
 		<object-name>HeadsetFo</object-name>
@@ -6725,6 +7649,817 @@
 				<property>controls/audio/headset-toggle</property>
 			</not>
 		</condition>
+	</animation>
+
+	<!-- Chrono -->
+	<animation>
+		<type>select</type>
+		<object-name>chrono1</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>instrumentation/chrono/chrono-reset</property>
+						<value>0</value>
+					</equals>
+					<and>
+						<equals>
+							<property>instrumentation/chrono/chrono-reset</property>
+							<value>1</value>
+						</equals>
+						<greater-than>
+							<property>instrumentation/chrono/elapsetime-sec</property>
+							<value>0</value>
+						</greater-than>
+					</and>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>chrono2_1</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<or>
+					<equals>
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+					<and>
+						<equals>
+							<property>instrumentation/clock/set-knob</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+					</and>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>chrono2_2</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<not-equals>
+					<property>instrumentation/chrono[0]/chrono-reset</property>
+					<value>2</value>
+				</not-equals>
+				<or>
+					<equals>
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+					<and>
+						<equals>
+							<property>instrumentation/clock/set-knob</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+					</and>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>UTC_1</object-name>
+		<object-name>UTC_2</object-name>
+		<object-name>UTC_3</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<not>
+					<and>
+						<property>instrumentation/clock/serviceable</property>
+						<or>
+							<equals>
+								<property>instrumentation/clock/set-knob</property>
+								<value>0</value>
+							</equals>
+							<and>
+								<equals>
+									<property>instrumentation/clock/set-knob</property>
+									<value>1</value>
+								</equals>
+								<equals>
+									<property>instrumentation/clock/utc-selector</property>
+									<value>2</value>
+								</equals>
+							</and>
+						</or>
+					</and>
+				</not>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>chrono3</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+			</and>
+		</condition>
+	</animation>
+
+	<text>
+		<name>chrono1</name>
+		<offsets>
+			<x-m>-0.553</x-m>
+			<y-m>0.160</y-m>
+			<z-m>0.2155</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/chrono/chr-et-string</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.050</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>chrono2_1</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.167</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/clock_hh_mm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>chrono2_2</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.175</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/indicated-seconds</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>UTC_1</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.146</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/utc-date1</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>UTC_2</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.160</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/utc-date2</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>UTC_3</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.175</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/utc-date3</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>chrono3</name>
+		<offsets>
+			<x-m>-0.54</x-m>
+			<y-m>0.1595</y-m>
+			<z-m>0.1785</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/elapsed-string</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_reset</object-name>
+		<property>instrumentation/chrono/chrono-reset</property>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/chrono/chrono-reset</property>
+				<value>2</value>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_btn</object-name>
+		<property>instrumentation/chrono/chrono-reset</property>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/chrono/chrono-reset</property>
+				<value>1</value><!-- Start Timer -->
+				<value>0</value><!-- Stop Timer -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/chrono/started</property>
+				<value>0</value><!-- Stop Timer -->
+				<value>1</value><!-- Start Timer -->
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>clock_set</object-name>
+		<property>instrumentation/clock/set-knob</property>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/set-knob</property>
+				<value>0</value><!-- Date Mode -->
+				<value>1</value><!-- Time Mode -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/set-knob</property>
+				<value>1</value><!-- Time Mode -->
+				<value>0</value><!-- Date Mode -->
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>UTC selector rotate</name>
+		<type>pick</type>
+		<object-name>clock_knob</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/utc-selector</property>
+				<value>0</value><!-- GPS -->
+				<value>1</value><!-- INT -->
+				<value>2</value><!-- SET -->
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/clock/utc-selector</property>
+				<value>2</value><!-- SET -->
+				<value>1</value><!-- INT -->
+				<value>0</value><!-- GPS -->
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<name>UTC selector rotate</name>
+		<type>rotate</type>
+		<object-name>clock_knob</object-name>
+		<property>instrumentation/clock/utc-selector</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>45</dep></entry>
+			<entry><ind>2</ind><dep>90</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>clock_knob.axis</object-name>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>et_knob</object-name>
+		<property>instrumentation/clock/et-selector</property>
+		<axis>
+			<object-name>et_knob.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/et-selector</property>
+				<min>0</min>
+				<max>2</max>
+			</binding>
+       </action>
+
+        <!-- Release action, limit to 0 and 1. 2 is spring loaded reset position -->
+		<release>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/clock/et-selector</property>
+                <step>0</step>
+                <min>0</min>
+                <max>1</max>
+            </binding>
+        </release>
+	</animation>
+
+	<animation>
+		<name>ET selector rotate</name>
+		<type>rotate</type>
+		<object-name>et_knob</object-name>
+		<property>instrumentation/clock/et-selector</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>45</dep></entry>
+			<entry><ind>2</ind><dep>90</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>et_knob.axis</object-name>
+		</axis>
+	</animation>
+	
+	<!-- DME -->
+
+	<text>
+		<name>dme_0</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.153</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%3.0f.</format>
+		<property>instrumentation/dme[2]/indicated-distance-nm</property>
+		<truncate>true</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<font>led.txf</font>
+		<character-size type="double">0.007</character-size>
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height>
+		<max-width>0.040</max-width>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<text>
+		<name>dme</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.149</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%3.1f</format>
+		<property>instrumentation/dme[2]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+
+	
+	<text>
+		<name>dme1_0</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.120</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%3.0f.</format>
+		<property>instrumentation/dme[3]/indicated-distance-nm</property>
+		<truncate>true</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<text>
+		<name>dme1</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.116</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%3.1f</format>
+		<property>instrumentation/dme[3]/indicated-distance-nm</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<animation>
+		<type>material</type>
+		<object-name>dme_0</object-name>
+		<object-name>dme</object-name>
+<!--		<object-name>dme_20</object-name>-->
+		<object-name>dme1_0</object-name>
+		<object-name>dme1</object-name>
+<!--		<object-name>dme1_20</object-name>-->
+		<diffuse>
+			<red>0.89</red>
+			<green>0.37</green>
+			<blue>0.08</blue>
+		</diffuse>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>0.89</red>
+			<green>0.37</green>
+			<blue>0.08</blue>
+		</emission>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme_0</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<property>instrumentation/dme[2]/in-range</property>
+				<or>
+					<less-than-equals>
+						<property>instrumentation/dme[2]/indicated-distance-nm</property>
+						<value>1</value>
+					</less-than-equals>
+					<greater-than>
+						<property>instrumentation/dme[2]/indicated-distance-nm</property>
+						<value>20</value>
+					</greater-than>
+				</or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<property>instrumentation/dme[2]/in-range</property>
+				<greater-than>
+					<property>instrumentation/dme[2]/indicated-distance-nm</property>
+					<value>1</value>
+				</greater-than>
+				<less-than-equals>
+					<property>instrumentation/dme[2]/indicated-distance-nm</property>
+					<value>20</value>
+				</less-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme1_0</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<property>instrumentation/dme[3]/in-range</property>
+				<or>
+					<less-than-equals>
+						<property>instrumentation/dme[3]/indicated-distance-nm</property>
+						<value>1</value>
+					</less-than-equals>
+					<greater-than>
+						<property>instrumentation/dme[3]/indicated-distance-nm</property>
+						<value>20</value>
+					</greater-than>
+				</or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<equals>
+					<property>instrumentation/ddrmi/vor-adf-2</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme1</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<property>instrumentation/dme[3]/in-range</property>
+				<greater-than>
+					<property>instrumentation/dme[3]/indicated-distance-nm</property>
+					<value>1.0</value>
+				</greater-than>
+				<less-than-equals>
+					<property>instrumentation/dme[3]/indicated-distance-nm</property>
+					<value>20.0</value>
+				</less-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25.0</value>
+				</greater-than-equals>
+				<equals>
+					<property>instrumentation/ddrmi/vor-adf-2</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<!-- torch -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>torch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>sim/rendering/als-secondary-lights/use-flashlight</property>
+				<value>0</value>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-cycle</command>
+				<property>sim/rendering/als-secondary-lights/use-searchlight</property>
+				<value>0</value>
+				<value>1</value>
+			</binding>
+		</action>
 	</animation>
 
 </PropertyList>

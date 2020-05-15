@@ -48,7 +48,7 @@ var last_result = [];
 
 var searchCmd = func {
 	# FIXME: do we return the active route even if it isn't active?
-	printlog(_MP_dbg_lvl, "Running query: ", name);
+	logprint(_MP_dbg_lvl, "Running query: ", name);
 	var plans = [];
 	var driver = me.route_driver;
 	if(!driver.shouldUpdate()) return me.last_result;

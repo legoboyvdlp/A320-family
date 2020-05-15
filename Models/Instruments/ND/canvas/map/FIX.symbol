@@ -37,7 +37,7 @@ var init = func {
 	var draw_fn = me.getOption('draw_function');
 	if(typeof(draw_fn) != 'func')
 		draw_fn = drawFIX;
-	debug.dump(name);
+	#debug.dump(name);
 	var cache = StyleableCacheable.new(
 		name:_name,
 		draw_func: draw_fn,
