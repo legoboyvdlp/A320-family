@@ -5307,6 +5307,8 @@ var canvas_MCDU_base = {
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].show();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
