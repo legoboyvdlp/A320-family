@@ -403,12 +403,9 @@ var ITAF = {
 				if (FPLN.wpFlyFrom < 0) {
 					FPLN.wpFlyFrom = 0;
 				}
-				FPLN.currentCourse = getprop("/FMGC/flightplan[2]/wp[" ~ FPLN.wpFlyFrom ~ "]/course"); # Best left at getprop
+				FPLN.currentCourse = fmgc.wpCourse[2][FPLN.wpFlyFrom].getValue();
 				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
-				if (FPLN.wpFlyTo < 0) {
-					FPLN.wpFlyTo = 0;
-				}
-				FPLN.nextCourse = getprop("/FMGC/flightplan[2]/wp[" ~ FPLN.wpFlyTo ~ "]/course"); # Best left at getprop
+				FPLN.nextCourse = fmgc.wpCourse[2][FPLN.wpFlyTo].getValue();
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
 				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
@@ -430,7 +427,7 @@ var ITAF = {
 				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
 				# Advance logic done by flightplan controller
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist) {
+				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue()) {
 					flightPlanController.autoSequencing();
 				}
 			}
