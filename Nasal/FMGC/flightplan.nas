@@ -306,9 +306,9 @@ var flightPlanController = {
 			me.insertTP(plan, 1);
 		}
 		me.deleteWP(0, plan);
-		me.flightPlanChanged(plan);
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		me.flightPlanChanged(plan);
 	},
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
