@@ -62,11 +62,7 @@ var fplnItem = {
 				me.spd = me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				if (canvas_mcdu.myFpln[me.computer].scroll - me.index == 0) {
-					return [me.spd ~ "/" ~ me.alt, " " ~ me.dist ~ "NM    ", me.colour];
-				} else {
-					return [me.spd ~ "/" ~ me.alt, " " ~ me.dist ~ "      ", me.colour];
-				}
+				return [me.spd ~ "/" ~ me.alt, " " ~ me.dist ~ "NM    ", me.colour];
 			} else {
 				return [nil, nil, "ack"];
 			}
@@ -345,7 +341,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (size(destName) == 2) {
 				me.L6 = [destName[0] ~ destName[1], " DEST", "wht"];
 			} else {
-				me.L6 = [destName, " DEST", "wht"];
+				me.L6 = [destName[0], " DEST", "wht"];
 			}
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
