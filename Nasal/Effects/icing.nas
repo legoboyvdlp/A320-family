@@ -143,7 +143,6 @@ var icingModel = func {
 	windowprobe = getprop("/controls/deice/windowprobeheat");
 	wingBtn = getprop("/controls/ice-protection/wing");
 	wingFault = getprop("/controls/ice-protection/wingfault");
-	#PSI = getprop("/systems/pneumatic/total-psi");
 	wowl = getprop("gear/gear[1]/wow");
 	wowr = getprop("gear/gear[2]/wow");
 	PitotIcing = getprop("/systems/pitot/icing");

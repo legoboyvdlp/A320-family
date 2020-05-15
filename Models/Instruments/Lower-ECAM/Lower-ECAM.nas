@@ -188,7 +188,6 @@ var R4BrakeTempc = props.globals.getNode("/gear/gear[2]/R4brake-temp-degc", 1);
 var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
 var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
 var switch_cart = props.globals.getNode("/controls/electrical/ground-cart", 1);
-var total_psi = props.globals.getNode("/systems/pneumatics/total-psi", 1);
 var spoiler_L1 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l1/final-deg", 1);
 var spoiler_L2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l2/final-deg", 1);
 var spoiler_L3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-l3/final-deg", 1);
