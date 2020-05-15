@@ -11,7 +11,7 @@ var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
 
-var DEBUG_DISCONT = 1;
+var DEBUG_DISCONT = 0;
 
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
