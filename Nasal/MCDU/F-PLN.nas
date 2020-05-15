@@ -16,12 +16,12 @@ var fplnItem = {
 			} elsif (me.wp.wp_name != "DISCONTINUITY") {
 				var wptName = split("-", me.wp.wp_name);
 				if (wptName[0] == "VECTORS") {
-					return ["MANUAL", nil, me.colour];
+					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
 					if (size(wptName) == 2) {
-						return[wptName[0] ~ wptName[1], nil, me.colour];
+						return[wptName[0] ~ wptName[1], me.getSubText(), me.colour];
 					} else {
-						return [me.wp.wp_name, nil, me.colour];
+						return [me.wp.wp_name, me.getSubText(), me.colour];
 					}
 				}
 			} else {
@@ -30,6 +30,9 @@ var fplnItem = {
 		} else {
 			return ["problem", nil, "ack"];
 		}
+	},
+	getSubText: func() {
+		return nil;
 	},
 	updateCenterText: func() {
 		if (me.wp != nil) { 
