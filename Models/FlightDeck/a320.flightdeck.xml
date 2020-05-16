@@ -808,15 +808,8 @@
 		<object-name>atc_stby</object-name>
 		<factor>-35</factor>
 		<offset-deg>70</offset-deg>
-		<center>
-            <x-m>0.01146</x-m>
-			<y-m>0.213663</y-m>
-			<z-m>-0.13086</z-m>
-        </center>
 		<axis>
-			<x>0</x>
-			<y>0</y>
-			<z>1</z>
+			<object-name>atc_stby.axis</object-name>
 		</axis>
 		<property>controls/atc/mode-knob</property>
 	</animation>
