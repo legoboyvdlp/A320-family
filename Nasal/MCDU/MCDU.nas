@@ -5,6 +5,7 @@
 
 var MCDU_init = func(i) {
 	MCDU_reset(i); # Reset MCDU, clears data
+	setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 }
 
 var MCDU_reset = func(i) {
@@ -14,7 +15,7 @@ var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/last-page", "NONE");
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
+	setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 	
