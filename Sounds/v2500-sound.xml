@@ -6,7 +6,7 @@
 	<engine>
 		<name>a320_startup_left</name>
 		<mode>once</mode>
-		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500start1.wav</path>
+		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start1.wav</path>
 		<condition>
 			<equals>
 				<property>/engines/engine[0]/state</property>
@@ -27,7 +27,7 @@
 	<engine>
 		<name>a320_startup_right</name>
 		<mode>once</mode>
-		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500start1.wav</path>
+		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start1.wav</path>
 		<condition>
 			<equals>
 				<property>/engines/engine[1]/state</property>
@@ -48,7 +48,7 @@
 	<engine>
 		<name>a320_startup_left_2</name>
 		<mode>once</mode>
-		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500start2.wav</path>
+		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start2.wav</path>
 		<condition>
 			<equals>
 				<property>/engines/engine[0]/state</property>
@@ -69,7 +69,7 @@
 	<engine>
 		<name>a320_startup_right_2</name>
 		<mode>once</mode>
-		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500start2.wav</path>
+		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start2.wav</path>
 		<condition>
 			<equals>
 				<property>/engines/engine[1]/state</property>
