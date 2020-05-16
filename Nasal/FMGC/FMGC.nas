@@ -138,6 +138,11 @@ var FMGCinit = func {
 	various2.start();
 }
 
+var FMGCInternal = {
+	transAlt: 18000,
+	transAltSet: 0,
+};
+
 ############
 # FBW Trim #
 ############
@@ -799,7 +804,7 @@ var switchDatabase = func {
 }
 
 # Landing to phase 7
-getlistener("/gear/gear[1]/wow", func() {
+setlistener("/gear/gear[1]/wow", func() {
 	if (getprop("/gear/gear[1]/wow") == 0 and timer30secLanding.isRunning) {
 		timer30secLanding.stop();
 		setprop("/FMGC/internal/landing-time", -99);
@@ -812,7 +817,7 @@ getlistener("/gear/gear[1]/wow", func() {
 }, 0, 0);
 
 # Align IRS 1
-getlistener("/systems/navigation/adr/operating-1", func() {
+setlistener("/systems/navigation/adr/operating-1", func() {
 	if (timer48gpsAlign1.isRunning) {
 		timer48gpsAlign1.stop();
 	}
@@ -824,7 +829,7 @@ getlistener("/systems/navigation/adr/operating-1", func() {
 }, 0, 0);
 
 # Align IRS 2
-getlistener("/systems/navigation/adr/operating-2", func() {
+setlistener("/systems/navigation/adr/operating-2", func() {
 	if (timer48gpsAlign2.isRunning) {
 		timer48gpsAlign2.stop();
 	}
@@ -836,7 +841,7 @@ getlistener("/systems/navigation/adr/operating-2", func() {
 }, 0, 0);
 
 # Align IRS 3
-getlistener("/systems/navigation/adr/operating-3", func() {
+setlistener("/systems/navigation/adr/operating-3", func() {
 	if (timer48gpsAlign3.isRunning) {
 		timer48gpsAlign3.stop();
 	}

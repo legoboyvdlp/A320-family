@@ -179,7 +179,6 @@ var flex = props.globals.getNode("/FMGC/internal/flex", 1);
 var flexSet = props.globals.getNode("/FMGC/internal/flex-set", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
-var transAlt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
 
 # CLB PERF
@@ -1949,7 +1948,7 @@ var canvas_MCDU_base = {
 			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
 			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
 			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
 			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
@@ -1967,6 +1966,12 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("FLEX TO TEMP");
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
+			
+			if (fmgc.FMGCInternal.transAltSet) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
 			
 			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
 				me["Simple_L6_Arrow"].show(); 
@@ -2628,8 +2633,14 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].setText("---g/---");;
 			}
 			
-			me["Simple_L4S"].setText("TRANS ALT");
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			me["Simple_L4S"].setText("TRANS FL");
+			me["Simple_L4"].setText("FL" ~ sprintf("%2.0f", (fmgc.FMGCInternal.transAlt / 100)));
+			
+			if (fmgc.FMGCInternal.transAltSet) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
 			
 			me["Simple_R1S"].setText("FINAL");
 			if (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {

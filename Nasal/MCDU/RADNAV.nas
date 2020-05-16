@@ -8,7 +8,7 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/vor1freq-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 3 or tfs == 5 or tfs == 6) {
@@ -21,12 +21,12 @@ var radnavInput = func(key, i) {
 					} else {
 						setprop("instrumentation/nav[2]/frequencies/selected-mhz", scratchpad);
 						setprop("FMGC/internal/vor1freq-set", 1);
-						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+						mcdu.clearScratchpad(i);
 					}
 				} else if (scratchpad >= 112.00 and scratchpad <= 117.95) {
 					setprop("instrumentation/nav[2]/frequencies/selected-mhz", scratchpad);
 					setprop("FMGC/internal/vor1freq-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -38,14 +38,14 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/vor1crs-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 3) {
 				if (scratchpad >= 0 and scratchpad <= 360) {
 					setprop("instrumentation/nav[2]/radials/selected-deg", scratchpad);
 					setprop("FMGC/internal/vor1crs-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -57,7 +57,7 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/ils1freq-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 3 or tfs == 5 or tfs == 6) {
@@ -68,7 +68,7 @@ var radnavInput = func(key, i) {
 					or scratchpad == 111.10 or scratchpad == 111.15 or scratchpad == 111.30 or scratchpad == 111.35 or scratchpad == 111.50 or scratchpad == 111.55 or scratchpad == 111.70 or scratchpad == 111.75 or scratchpad == 111.90 or scratchpad == 111.95) {
 						setprop("instrumentation/nav[0]/frequencies/selected-mhz", scratchpad);
 						setprop("FMGC/internal/ils1freq-set", 1);
-						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+						mcdu.clearScratchpad(i);
 						if (num(getprop("FMGC/internal/ils1freq-calculated")) != 0 and num(getprop("FMGC/internal/ils1freq-calculated")) != num(getprop("instrumentation/nav[0]/frequencies/selected-mhz"))) {
 							genericMessage(i, "RWY/LS MISMATCH", "amb");
 						}
@@ -86,14 +86,14 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/ils1crs-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 3) {
 				if (scratchpad >= 0 and scratchpad <= 360) {
 					setprop("instrumentation/nav[0]/radials/selected-deg", scratchpad);
 					setprop("FMGC/internal/ils1crs-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -105,14 +105,14 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/adf1freq-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 3 or tfs == 4) {
 				if (scratchpad >= 190 and scratchpad <= 1750) {
 					setprop("instrumentation/adf[0]/frequencies/selected-khz", scratchpad);
 					setprop("FMGC/internal/adf1freq-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -124,7 +124,7 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/vor2freq-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 3 or tfs == 5 or tfs == 6) {
@@ -137,12 +137,12 @@ var radnavInput = func(key, i) {
 					} else {
 						setprop("instrumentation/nav[3]/frequencies/selected-mhz", scratchpad);
 						setprop("FMGC/internal/vor2freq-set", 1);
-						setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+						mcdu.clearScratchpad(i);
 					}
 				} else if (scratchpad >= 112.00 and scratchpad <= 117.95) {
 					setprop("instrumentation/nav[3]/frequencies/selected-mhz", scratchpad);
 					setprop("FMGC/internal/vor2freq-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -154,14 +154,14 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/vor2crs-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 3) {
 				if (scratchpad >= 0 and scratchpad <= 360) {
 					setprop("instrumentation/nav[3]/radials/selected-deg", scratchpad);
 					setprop("FMGC/internal/vor2crs-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -173,14 +173,14 @@ var radnavInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/adf2freq-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 3 or tfs == 4) {
 				if (scratchpad >= 190 and scratchpad <= 1750) {
 					setprop("instrumentation/adf[1]/frequencies/selected-khz", scratchpad);
 					setprop("FMGC/internal/adf2freq-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}

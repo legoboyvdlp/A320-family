@@ -3,7 +3,9 @@
 # Copyright (c) 2020 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
+var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
+	scratchpadNode = [props.globals.initNode("/MCDU[0]/scratchpad", "", "STRING"), props.globals.initNode("/MCDU[1]/scratchpad", "", "STRING")];
 	MCDU_reset(i); # Reset MCDU, clears data
 	setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 }
@@ -15,7 +17,7 @@ var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/last-page", "NONE");
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+	mcdu.clearScratchpad(i);
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 	
@@ -144,7 +146,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/flex-set", 0);
 	setprop("FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
-	setprop("FMGC/internal/trans-alt", 18000);
+	fmgc.FMGCInternal.transAlt = 18000;
 	
 	# CLB PERF
 	setprop("FMGC/internal/activate-once", 0);
@@ -189,13 +191,13 @@ var lskbutton = func(btn, i) {
 				setprop("/MCDU[" ~ i ~ "]/active", 1);
 				settimer(func(){
 					setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 					setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 					setprop("/MCDU[" ~ i ~ "]/active", 2);
 				}, 2);
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
@@ -570,7 +572,7 @@ var rskbutton = func(btn, i) {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "MCDU") {
 			if (getprop("/MCDU[" ~ i ~ "]/last-page") != "NONE") {
 				setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-page"));
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			} else {
 				notAllowed(i);
@@ -784,7 +786,7 @@ var button = func(btn, i) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
 			} else if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			} else if (size(scratchpad) > 0) {
 				setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
@@ -854,6 +856,10 @@ var formatError = func(i) {
 	}
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 	setprop("/MCDU[" ~ i ~ "]/scratchpad", "FORMAT ERROR");
+}
+
+var clearScratchpad = func(i) {
+	scratchpadNode[i].setValue("");
 }
 
 var screenFlash = func(time, i) {

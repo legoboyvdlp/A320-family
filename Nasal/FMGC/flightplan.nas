@@ -93,7 +93,7 @@ var flightPlanController = {
 			print("Load failed.");
 		}
 		# try to fix fgfp
-		me.flightplans[3].destination = airportinfo(getprop("FMGC/internal/arr-arpt"));
+		me.flightplans[3].destination = airportinfo(getprop("/FMGC/internal/arr-arpt"));
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
@@ -135,7 +135,7 @@ var flightPlanController = {
 		me.flightPlanChanged(plan);
 	},
 	
-	autoSequencing: func() {
+	calculateTimeAltitudeOnSequence: func() {
 		me._timeTemp = math.round(getprop("/sim/time/utc/minute") + (getprop("/sim/time/utc/second") / 60));
 		if (me._timeTemp < 10) {
 			me._timeTemp = "0" ~ me._timeTemp;
@@ -143,7 +143,7 @@ var flightPlanController = {
 		me.fromWptTime = getprop("/sim/time/utc/hour") ~ me._timeTemp;
 		me._altTemp = getprop("/systems/navigation/adr/output/baro-alt-corrected-1-capt");
 		
-		if (me._altTemp > getprop("FMGC/internal/trans-alt")) {
+		if (me._altTemp > fmgc.FMGCInternal.transAlt) {
 			me.fromWptAlt = "FL" ~ math.round(me._altTemp / 100);
 		} else {
 			if (me._altTemp > 0) {
@@ -152,6 +152,10 @@ var flightPlanController = {
 				me.fromWptAlt = "M" ~ math.round(me._altTemp);
 			}
 		}
+	},
+	
+	autoSequencing: func() {
+		me.calculateTimeAltitudeOnSequence();
 		
 		# todo setlistener on sim/time/warp to recompute predictions
 		

@@ -30,13 +30,13 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/taxi-fuel", 0.4);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 4) {
 				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 9.9) {
 					setprop("FMGC/internal/taxi-fuel", scratchpad);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 					
 					setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
 					setprop("FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
@@ -60,7 +60,7 @@ var initInputB = func(key, i) {
 #				var temp_rte = num(scratchpad * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100));
 #				if (scratchpad >= 0.0 and scratchpad <= block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - temp_rte) {
 #					setprop("FMGC/internal/trip-fuel", scratchpad);
-#					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+#					mcdu.clearScratchpad(i);
 #					
 #					setprop("FMGC/internal/rte-rsv", temp_rte);
 #					  setprop("FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
@@ -80,7 +80,7 @@ var initInputB = func(key, i) {
 			setprop("FMGC/internal/rte-rsv", 0.05 * num(trip_fuel.getValue()));
 			setprop("FMGC/internal/rte-percent", 5.0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 			setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
@@ -95,12 +95,12 @@ var initInputB = func(key, i) {
 				if (perc != nil and perc >= 0.0 and perc <= 15.0) {
 					setprop("FMGC/internal/rte-rsv", num(perc) / 100 * num(trip_fuel.getValue()));
 					setprop("FMGC/internal/rte-percent", perc);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				}
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7 and tf / num(trip_fuel.getValue()) <= 0.15) {
 					setprop("FMGC/internal/rte-rsv", scratchpad);
 					setprop("FMGC/internal/rte-percent", scratchpad / num(trip_fuel.getValue()) * 100);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			}
@@ -112,7 +112,7 @@ var initInputB = func(key, i) {
 			setprop("FMGC/internal/alt-fuel", 0.0);
 			setprop("FMGC/internal/alt-time", "0000");
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 			setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
@@ -124,7 +124,7 @@ var initInputB = func(key, i) {
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 10.0 and tf < trip_fuel.getValue() + alt_fuel.getValue()) {
 				setprop("FMGC/internal/alt-fuel", tf);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 				
 				setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 				setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
@@ -139,7 +139,7 @@ var initInputB = func(key, i) {
 			var tfs = size(scratchpad);
 			if (tfs == 4 and tf != nil and ((tf >= 0 and tf <= 59) or (tf >= 100 and tf <= 130))) {
 				setprop("FMGC/internal/alt-time", scratchpad);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			} 
@@ -149,7 +149,7 @@ var initInputB = func(key, i) {
 			setprop("FMGC/internal/final-fuel", 0.0);
 			setprop("FMGC/internal/final-time", "0030");
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 			
 			setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 			setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
@@ -161,7 +161,7 @@ var initInputB = func(key, i) {
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 10.0 and tf < trip_fuel.getValue() + final_fuel.getValue()) {
 				setprop("FMGC/internal/final-fuel", tf);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 				
 				setprop("FMGC/internal/min-dest-fob", num(alt_fuel.getValue() + final_fuel.getValue()));
 				setprop("FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
@@ -176,7 +176,7 @@ var initInputB = func(key, i) {
 			var tfs = size(scratchpad);
 			if (tfs == 4 and tf != nil and ((tf >= 0 and tf <= 59) or (tf >= 100 and tf <= 130))) {
 				setprop("FMGC/internal/final-time", scratchpad);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			} 
@@ -204,7 +204,7 @@ var initInputB = func(key, i) {
 					setprop("FMGC/internal/zfw-set", 1);
 				}
 				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -213,7 +213,7 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and zfwcg >= 1 and zfwcg <= 5 and scratchpad > 0 and scratchpad <= 99.9) {
 					setprop("FMGC/internal/zfwcg", scratchpad);
 					setprop("FMGC/internal/zfwcg-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -236,7 +236,7 @@ var initInputB = func(key, i) {
 			setprop("FMGC/internal/extra-time", "0000");
 			setprop("FMGC/internal/min-dest-fob", 0.0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			var maxblock = getprop("options/maxblock");
@@ -256,7 +256,7 @@ var initInputB = func(key, i) {
 					setprop("FMGC/internal/extra-fuel", 0.0);
 					setprop("FMGC/internal/extra-time", "0000");
 					setprop("FMGC/internal/min-dest-fob", 0.0);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -277,13 +277,13 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("FMGC/internal/trip-wind", "HD000");
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			if (find("TL", scratchpad) != -1 or find("HD", scratchpad) != -1) {
 				var effwind = substr(scratchpad, 2);
 				if (int(effwind) != nil and effwind >= 0 and effwind <= 500) {
 					setprop("FMGC/internal/trip-wind", scratchpad);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -291,14 +291,14 @@ var initInputB = func(key, i) {
 				var effwind = substr(scratchpad, 1);
 				if (int(effwind) != nil and effwind >= 0 and effwind <= 500) {
 					setprop("FMGC/internal/trip-wind", scratchpad);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
 			} else {
 				if (num(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 500) {
 					setprop("FMGC/internal/trip-wind", scratchpad);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
