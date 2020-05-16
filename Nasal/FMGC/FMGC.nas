@@ -788,7 +788,7 @@ var ManagedSPD = maketimer(0.25, func {
 		}
 	} else {
 		ManagedSPD.stop();
-		libraries.mcpSPDKnbPull();
+		fcu.FCUController.SPDPull();
 	}
 });
 
