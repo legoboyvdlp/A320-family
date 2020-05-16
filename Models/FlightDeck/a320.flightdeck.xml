@@ -806,8 +806,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>atc_stby</object-name>
-		<factor>-35</factor>
-		<offset-deg>70</offset-deg>
+		<factor>35</factor>
+		<offset-deg>-70</offset-deg>
 		<axis>
 			<object-name>atc_stby.axis</object-name>
 		</axis>
