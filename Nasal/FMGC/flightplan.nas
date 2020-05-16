@@ -179,7 +179,7 @@ var flightPlanController = {
 				me.deleteWP(0, 2, 0, 1);
 			} else {
 				me.wptType = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type;
-				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "hdgToAlt";
+				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "dmeIntercept" or me.wptType == "hdgToAlt";
 				if (me.wptTypeNoAdvanceDelete) {
 					me.currentToWptIndex.setValue(2);
 				} else {
