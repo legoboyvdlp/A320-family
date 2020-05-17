@@ -201,6 +201,13 @@ var flightPlanController = {
 	
 	# for these two remember to call flightPlanChanged. We are assuming this is called from a function which will all flightPlanChanged itself.
 	
+	# addDiscontinuity - insert discontinuity at passed index
+	# args: index, plan
+	#    index: index to add at
+	#    plan: plan to add to
+	# Check if a discontinuity already exists either immediately before or at that index
+	# If it does, don't add another one
+	# Optional flag DEBUG_DISCONT to disable discontinuities totally
 	addDiscontinuity: func(index, plan) {
 		if (DEBUG_DISCONT) { return; }
 		if (index > 0) {
@@ -289,7 +296,10 @@ var flightPlanController = {
 	directTo: func(waypointGhost, plan) {
 		if (me.flightplans[plan].indexOfWP(waypointGhost) == -1) {
 			me.insertTP(plan, 1);
-			me.flightplans[plan].insertWP(createWPFrom(waypointGhost), 2);
+			
+			# use createWP here as createWPFrom doesn't accept waypoints
+			# createWPFrom worked before... but be sure!
+			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.wp_name), 2);
 			me.addDiscontinuity(3, plan);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
@@ -332,6 +342,18 @@ var flightPlanController = {
 		}
 	},
 	
+	# deleteTillIndex - helper that deletes waypoints up to a passed waypoint already in flightplan
+	# uses a while loop to delete a certain number of waypoints between passed index and 
+	# index of waypoint alredy in flightplan
+	deleteTillIndex: func(wpGhost, index, plan) {
+		var numToDel = me.flightplans[plan].indexOfWP(wpGhost) - index;
+		while (numToDel > 0) {
+			me.deleteWP(index, plan, 1);
+			numToDel -= 1;
+		}
+		return 2;
+	},
+	
 	# createDuplicateNames - helper to spawn DUPLICATENAMES page
 	# args: ghostContainer, index, flag, plan
 	#    ghostContainer: vector of fgPositioned ghosts
@@ -367,12 +389,7 @@ var flightPlanController = {
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(airport[0]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
+					return me.deleteTillIndex(airport[0], index, plan);
 				}
 			} else {
 				if (me.flightplans[plan].indexOfWP(airport[overrideIndex]) == -1) {
@@ -381,12 +398,7 @@ var flightPlanController = {
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(airport[overrideIndex]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
+					return me.deleteTillIndex(airport[overrideIndex], index, plan);
 				}
 			}
 		} elsif (size(airport) >= 1) {
@@ -413,12 +425,7 @@ var flightPlanController = {
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
+					return me.deleteTillIndex(fix[0], index, plan);
 				}
 			} else {
 				if (me.flightplans[plan].indexOfWP(fix[overrideIndex]) == -1) {
@@ -427,12 +434,7 @@ var flightPlanController = {
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(fix[overrideIndex]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
+					return me.deleteTillIndex(fix[overrideIndex], index, plan);
 				}
 			}
 		} elsif (size(fix) >= 1) {
@@ -483,12 +485,7 @@ var flightPlanController = {
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(navaid[0]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
+					return me.deleteTillIndex(navaid[0], index, plan);
 				}
 			} else {
 				if (me.flightplans[plan].indexOfWP(navaid[overrideIndex]) == -1) {
@@ -497,17 +494,28 @@ var flightPlanController = {
 					me.flightPlanChanged(plan);
 					return 2;
 				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(navaid[overrideIndex]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
+					return me.deleteTillIndex(navaid[overrideIndex], index, plan);
 				}
 			}
 		} elsif (size(navaid) >= 1) {
 			me.createDuplicateNames(navaid, index, 1, plan);
 			return 2;
+		}
+	},
+	
+	insertDBWP: func(wpGhost, index, plan) {
+		if (index == 0 or wpGhost == nil) {
+			return 1;
+		}
+		
+		if (me.flightplans[plan].indexOfWP(wpGhost) == -1) {
+			# use createWP here as createWPFrom doesn't accept waypoints
+			me.flightplans[plan].insertWP(createWP(wpGhost, wpGhost.wp_name), index);
+			me.addDiscontinuity(index + 1, plan);
+			me.flightPlanChanged(plan);
+			return 2;
+		} else {
+			return me.deleteTillIndex(wpGhost, index, plan);
 		}
 	},
 	
@@ -614,6 +622,10 @@ var flightPlanController = {
 		}
 		
 		# check waypoints database here
+		var wpFromDB = WaypointDatabase.getWP(text);
+		if (wpFromDB != nil) { 
+			return me.insertDBWP(wpFromDB, index, thePlan);
+		}
 		
 		if (size(split("/", text)) == 3) {
 			return me.getWPforPBD(text, index, thePlan);

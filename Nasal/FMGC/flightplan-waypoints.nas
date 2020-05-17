@@ -22,15 +22,15 @@ var WaypointDatabase = {
 		
 		if (wpObj.index >= me.getSize()) {
 			# add to end, since index doesn't exist
-			append(me.waypointsVec, wpObj.wpGhost);
+			append(me.waypointsVec, wpObj);
 			return 2;
 		} elsif (me.waypointsVec[wpObj.index] == nil) {
 			# add at passed index
-			me.waypointsVec[wpObj.index] = wpObj.wpGhost;
+			me.waypointsVec[wpObj.index] = wpObj;
 		} else {
 			# fall back to end
 			logprint(4, "pilotWaypoint constructor claims index " ~ wpObj.index ~ " is nil, but it isn't!");
-			append(me.waypointsVec, wpObj.wpGhost);
+			append(me.waypointsVec, wpObj);
 			return 2;
 		}
 	},
@@ -70,7 +70,7 @@ var WaypointDatabase = {
 	getSize: func() {
 		return size(me.waypointsVec);
 	},
-	# 
+	# getWP - try to find waypoint whose name matches passed argument
 	getWP: func(text) {
 		for (var i = 0; i < me.getSize(); i = i + 1) {
 			if (me.waypointsVec[i] == nil) {
@@ -82,10 +82,34 @@ var WaypointDatabase = {
 		}
 		return nil;
 	},
+	# write - write to file, as a delimited string
+	write: func() {
+		var path = getprop("/sim/fg-home") ~ "/Export/savedWaypoints.txt";
+		var file = io.open(path, "wb"); # open in write mode
+		
+		var tree = {
+			"waypoints": {
+			
+			},
+		};
+		
+		var node = props.Node.new(tree);
+		
+		for (var i = 0; i < me.getSize(); i = i + 1) {
+			if (me.waypointsVec[i] != nil) {
+				node.getChild("waypoints").addChild(me.waypointsVec[i].tree);
+				debug.dump(me.waypointsVec[i].tree);
+			}
+		}
+		debug.dump(node);
+		
+		io.writexml(file, node); # write the data
+		io.close(file); # close (and flush) the file stream
+	},
 };
 
 var pilotWaypoint = {
-	new: func(positioned, typeStr, wpGhostType = "") {
+	new: func(positioned, typeStr) {
 		var pilotWp = { parents:[pilotWaypoint] };
 		
 		# Figure out what the first index is we can use
@@ -102,11 +126,15 @@ var pilotWaypoint = {
 		pilotWp.index = position - 1;
 		
 		# set ghost to created waypoint
-		if (wpGhostType != "") {
-			pilotWp.wpGhost = createWP(positioned, pilotWp.id, wpGhostType);
-		} else {
-			pilotWp.wpGhost = createWP(positioned, pilotWp.id);
-		}
+		pilotWp.wpGhost = createWP(positioned, pilotWp.id);
+		
+		pilotWp.tree = {
+			"waypoint": {
+				"latitude": pilotWp.wpGhost.wp_lat,
+				"longitude": pilotWp.wpGhost.wp_lon,
+				"ident": pilotWp.id,
+			},
+		};
 		
 		return pilotWp;
 	},
