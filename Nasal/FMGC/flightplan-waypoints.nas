@@ -100,24 +100,20 @@ var WaypointDatabase = {
 	write: func() {
 		var path = getprop("/sim/fg-home") ~ "/Export/savedWaypoints.xml";
 		var tree = {
-			"waypoints": {
+			waypoints: {
 			
 			},
 		};
 		
-		var node = props.Node.new(tree);
-		
 		for (var i = 0; i < me.getSize(); i = i + 1) {
 			if (me.waypointsVec[i] != nil) {
-				node.getChild("waypoints").addChild(me.waypointsVec[i].tree);
-				debug.dump(me.waypointsVec[i].tree);
+				tree.waypoints["waypoint" ~ i] = me.waypointsVec[i].tree;
 			} else {
-				node.getChild("waypoints").addChild(nilTree);
+				tree.waypoints["waypoint" ~ i] = nilTree;
 			}
 		}
-		debug.dump(node);
 		
-		io.writexml(path, node); # write the data
+		io.writexml(path, props.Node.new(tree)); # write the data
 	},
 };
 
@@ -142,11 +138,9 @@ var pilotWaypoint = {
 		pilotWp.wpGhost = createWP(positioned, pilotWp.id);
 		
 		pilotWp.tree = {
-			"waypoint": {
-				"latitude": pilotWp.wpGhost.wp_lat,
-				"longitude": pilotWp.wpGhost.wp_lon,
-				"ident": pilotWp.id,
-			},
+			"latitude": pilotWp.wpGhost.wp_lat,
+			"longitude": pilotWp.wpGhost.wp_lon,
+			"ident": pilotWp.id,
 		};
 		
 		return pilotWp;
