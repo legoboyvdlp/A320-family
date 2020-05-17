@@ -232,13 +232,9 @@ var flightPlanController = {
 	#    name: name of waypoint to be created
 	#    typeStr: optional argument to be passed to createWP, must be one of "sid", "star" "approach" "missed" or "pseudo"
 	
-	childWPBearingDistance: func(wpt, bearing, dist, name, typeStr = "") {
+	childWPBearingDistance: func(wpt, bearing, dist) {
 		var coordinates = greatCircleMove(wpt.lat, wpt.lon, num(bearing), num(dist));
-		if (typeStr != "") {
-			return createWP(coordinates, name, typeStr);
-		} else {
-			return createWP(coordinates, name);
-		}
+		return coordinates;
 	},
 	
 	# insertNOSID - create default SID and add to flightplan
@@ -254,7 +250,7 @@ var flightPlanController = {
 			}
 			
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
-			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5, "1500", "sid"), 1);
+			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5), "1500", "sid"), 1);
 		}
 		me.flightPlanChanged(n);
 	},
@@ -274,7 +270,7 @@ var flightPlanController = {
 			if (hdg > 360) {
 				hdg = hdg - 360;
 			}
-			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, hdg, 5, "CF", "star"), me.arrivalIndex[n]);
+			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, hdg, 5), "CF", "star"), me.arrivalIndex[n]);
 		}
 		me.flightPlanChanged(n);
 	},
@@ -458,21 +454,15 @@ var flightPlanController = {
 		if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
 			return 1;
 		}
-		
-		var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ index);
-		if (me.flightplans[plan].indexOfWP(myWpLatLon) == -1) {
-			me.flightplans[plan].insertWP(myWpLatLon, index);
-			me.addDiscontinuity(index + 1, plan);
-			me.flightPlanChanged(plan);
-			return 2;
-		} else {
-			var numToDel = me.flightplans[plan].indexOfWP(myWpLatLon) - index;
-			while (numToDel > 0) {
-				me.deleteWP(index, plan, 1);
-				numToDel -= 1;
-			}
-			return 2;
+		var waypoint = pilotWaypoint.new({lat: latDecimal, lon: lonDecimal}, "LL");
+		var addDb = WaypointDatabase.addWP(waypoint);
+		if (addDb != 2) {
+			return addDb;
 		}
+		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
+		me.addDiscontinuity(index + 1, plan);
+		me.flightPlanChanged(plan);
+		return 2;
 	},
 	
 	insertNavaid: func(text, index, plan, override = 0, overrideIndex = -1) {
@@ -568,7 +558,7 @@ var flightPlanController = {
 			return 1;
 		}
 		
-		if (size(wpGhostContainer) == 0 or override) {
+		if (size(wpGhostContainer) == 1 or override) {
 			if (!override) {
 				wpGhost = wpGhostContainer[0];
 			} else {
@@ -584,8 +574,7 @@ var flightPlanController = {
 		}
 		
 		var localMagvar = magvar(wpGhost.lat, wpGhost.lon);
-		me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan);
-		return 2;
+		return me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan);
 	},
 	
 	
@@ -597,12 +586,18 @@ var flightPlanController = {
 	#    plan: plan to insert to
 	
 	insertPlaceBearingDistance: func(wp, bearing, distance, index, plan) {
-		me.flightplans[plan].insertWP(me.childWPBearingDistance(wp, bearing, distance, "PBD" ~ index), index);
+		var waypoint = pilotWaypoint.new(me.childWPBearingDistance(wp, bearing, distance), "PBD");
+		var addDb = WaypointDatabase.addWP(waypoint);
+		if (addDb != 2) {
+			return addDb;
+		}
+		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
 		me.addDiscontinuity(index + 1, plan);
 		me.flightPlanChanged(plan);
+		return 2;
 	},
 	
-	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success, 3 = not allowed due to dir to
+	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success, 3 = not allowed due to dir to, 4 = database full
 		if (mcdu.dirToFlag) {
 			return 3;
 		}
@@ -617,6 +612,8 @@ var flightPlanController = {
 		} else {
 			var thePlan = plan;
 		}
+		
+		# check waypoints database here
 		
 		if (size(split("/", text)) == 3) {
 			return me.getWPforPBD(text, index, thePlan);

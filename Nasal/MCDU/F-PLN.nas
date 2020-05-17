@@ -410,6 +410,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 						notInDataBase(me.computer);
 					} elsif (returny == 1) {
 						notAllowed(me.computer);
+					} elsif (returny == 4) {
+						databaseFull(me.computer);
 					} else {
 						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
 						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
@@ -445,13 +447,23 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 };
 
 var notInDataBase = func(i) {
-		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			setprop("MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
-		} else {
-			setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
-		}
+	if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+		setprop("MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
+	} else {
+		setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+	}
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
+}
+
+var databaseFull = func(i) {
+	if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
+		setprop("MCDU[" ~ i ~ "]/last-scratchpad", "LIST OF 20 IN USE");
+	} else {
+		setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+	}
+	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
+	setprop("MCDU[" ~ i ~ "]/scratchpad", "LIST OF 20 IN USE");
 }
 
 var decimalToShortString = func(dms, type) {
