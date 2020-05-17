@@ -575,7 +575,7 @@ var flightPlanController = {
 		}
 		
 		var localMagvar = magvar(wpGhost.lat, wpGhost.lon);
-		return me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan);
+		return me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan); # magnetic to true? I don't know. But this works!
 	},
 	
 	
@@ -592,6 +592,7 @@ var flightPlanController = {
 		if (addDb != 2) {
 			return addDb;
 		}
+		
 		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
 		me.addDiscontinuity(index + 1, plan);
 		me.flightPlanChanged(plan);

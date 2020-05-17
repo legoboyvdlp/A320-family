@@ -390,6 +390,7 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].manAirportCall(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			notAllowed(i);
 		}

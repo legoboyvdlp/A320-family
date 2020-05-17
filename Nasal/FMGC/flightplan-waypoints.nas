@@ -33,6 +33,7 @@ var WaypointDatabase = {
 		} elsif (me.waypointsVec[wpObj.index] == nil) {
 			# add at passed index
 			me.waypointsVec[wpObj.index] = wpObj;
+			return 2;
 		} else {
 			# fall back to end
 			logprint(4, "pilotWaypoint constructor claims index " ~ wpObj.index ~ " is nil, but it isn't!");
