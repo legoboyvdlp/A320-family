@@ -1,6 +1,12 @@
 # A3XX FMGC Waypoint database
 # Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
+var nilTree = {
+	"latitude": 0,
+	"longitude": 0,
+	"ident": "",
+};
+
 var WaypointDatabase = {
 	waypointsVec: [],
 	# addWP - adds pilot waypoint to waypoints vector
@@ -36,7 +42,14 @@ var WaypointDatabase = {
 	},
 	# delete - empties waypoints vector
 	delete: func() {
-		me.waypointsVec = [];
+		var noDel = 0;
+		for (var i = 0; i < me.getSize(); i = i + 1) {
+			if (me.waypointsVec[i] != nil) {
+				if (fmgc.flightPlanController.flightplans[2].indexOfWP(me.waypointsVec[i].wpGhost) == -1) { # docs says only checks active and secondary
+					me.waypointsVec[i] = nil;
+				}
+			}
+		}
 	},
 	# deleteAtIndex - delete at specific index. Set to nil, so it still exists in vector
 	deleteAtIndex: func(index) {
@@ -84,9 +97,7 @@ var WaypointDatabase = {
 	},
 	# write - write to file, as a delimited string
 	write: func() {
-		var path = getprop("/sim/fg-home") ~ "/Export/savedWaypoints.txt";
-		var file = io.open(path, "wb"); # open in write mode
-		
+		var path = getprop("/sim/fg-home") ~ "/Export/savedWaypoints.xml";
 		var tree = {
 			"waypoints": {
 			
@@ -99,12 +110,13 @@ var WaypointDatabase = {
 			if (me.waypointsVec[i] != nil) {
 				node.getChild("waypoints").addChild(me.waypointsVec[i].tree);
 				debug.dump(me.waypointsVec[i].tree);
+			} else {
+				node.getChild("waypoints").addChild(nilTree);
 			}
 		}
 		debug.dump(node);
 		
-		io.writexml(file, node); # write the data
-		io.close(file); # close (and flush) the file stream
+		io.writexml(path, node); # write the data
 	},
 };
 

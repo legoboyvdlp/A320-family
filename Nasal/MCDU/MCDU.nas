@@ -538,6 +538,8 @@ var rskbutton = func(btn, i) {
 			initInputA("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
+			statusInput("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {

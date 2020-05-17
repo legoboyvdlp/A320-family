@@ -727,7 +727,18 @@ var canvas_MCDU_base = {
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].hide();
+				me["arrow2L"].hide();
+				me["arrow3L"].hide();
+				me["arrow4L"].hide();
+				me["arrow5L"].hide();
+				me["arrow1R"].hide();
+				me["arrow2R"].hide();
+				me["arrow3R"].hide();
+				me["arrow4R"].hide();
+				me["arrow5R"].show();
+				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
@@ -742,8 +753,8 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, -1, 1, 1);
 				me.showLeftArrow(-1, -1, 1, -1, -1, -1);
-				me.showRight(-1, 1, -1, -1, -1, 1);
-				me.showRightS(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, 1, -1, 1, 1, 1);
+				me.showRightS(-1, -1, -1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, default, default, symbol, default);
@@ -752,31 +763,59 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, small, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, small, normal, normal);
 				
 				me.colorLeft("grn", "blu", "blu", "wht", "blu", "grn");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "blu", "blu", "wht", "wht", "wht");
-				me.colorRight("wht", "grn", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "grn", "wht", "grn", "blu", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "grn", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				
+				me["Simple_L5"].setText("[   ]");
+				me["Simple_L6"].setText("+4.0/+0.0");
+				me["Simple_L1S"].setText(" ENG");
+				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
+				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
+				me["Simple_L5S"].setText("CHG CODE");
+				me["Simple_L6S"].setText("IDLE/PERF");
+				me["Simple_R6"].setText("STATUS/XLOAD ");
+				me["Simple_R6S"].setText("SOFTWARE ");
+				me["Simple_R4S"].setText("PILOT STORED  ");
+				me["Simple_R4"].setText("00RTES 00RWYS ");
+				me["Simple_R5"].setText("DELETE ALL ");
+			
 				pageSwitch[i].setBoolValue(1);
 			}
 			
 			me["Simple_L1"].setText(sprintf("%s", engType.getValue()));
 			me["Simple_L2"].setText(sprintf("%s", " " ~ database1.getValue()));
 			me["Simple_L3"].setText(sprintf("%s", " " ~ database2.getValue()));
-			me["Simple_L5"].setText("[   ]");
-			me["Simple_L6"].setText("+4.0/+0.0");
-			me["Simple_L1S"].setText(" ENG");
-			me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
-			me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
-			me["Simple_L5S"].setText("CHG CODE");
-			me["Simple_L6S"].setText("IDLE/PERF");
 			me["Simple_R2"].setText(sprintf("%s", databaseCode.getValue() ~ " "));
-			me["Simple_R6"].setText("STATUS/XLOAD ");
-			me["Simple_R6S"].setText("SOFTWARE ");
+			
+			if (fmgc.WaypointDatabase.getCount() >= 1) {
+				me["Simple_R4"].show();
+				me["Simple_R5"].show();
+				me["Simple_R4S"].show();
+				me["Simple_R5S"].show();
+				me["arrow5R"].show();
+				me["Simple_R5S"].setText(sprintf("%02.0f", fmgc.WaypointDatabase.getCount()) ~ "WPTS 00NAVS ");
+			} else {
+				me["Simple_R4"].hide();
+				me["Simple_R5"].hide();
+				me["Simple_R4S"].hide();
+				me["Simple_R5S"].hide();
+				me["arrow5R"].hide();
+			}
+			
+			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
+				me["Simple_L5"].show();
+				me["Simple_L5S"].show();
+			} else {
+				me["Simple_L5"].hide();
+				me["Simple_L5S"].hide();
+			}
 		} else if (page == "DATA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();

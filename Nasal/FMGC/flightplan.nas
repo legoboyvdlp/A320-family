@@ -404,7 +404,7 @@ var flightPlanController = {
 		}
 	},
 	
-	insertFix: func(text, index, plan, override = 0, overrideIndex = -1) { # override - means always choose [0]
+	insertFix: func(text, index, plan, override = 0, overrideIndex = -1) {
 		if (index == 0) {
 			return 1;
 		}
@@ -435,30 +435,6 @@ var flightPlanController = {
 			me.createDuplicateNames(fix, index, 0, plan);
 			return 2;
 		}
-	},
-	
-	insertLatLonFix: func(text, index, plan) {
-		if (index == 0) {
-			return 1;
-		}
-		
-		var lat = split("/", text)[0];
-		var lon = split("/", text)[1];
-		var latDecimal = mcdu.stringToDegrees(lat, "lat");
-		var lonDecimal = mcdu.stringToDegrees(lon, "lon");
-		
-		if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
-			return 1;
-		}
-		var waypoint = pilotWaypoint.new({lat: latDecimal, lon: lonDecimal}, "LL");
-		var addDb = WaypointDatabase.addWP(waypoint);
-		if (addDb != 2) {
-			return addDb;
-		}
-		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
-		me.addDiscontinuity(index + 1, plan);
-		me.flightPlanChanged(plan);
-		return 2;
 	},
 	
 	insertNavaid: func(text, index, plan, override = 0, overrideIndex = -1) {
@@ -508,6 +484,32 @@ var flightPlanController = {
 		} else {
 			return me.deleteTillIndex(wpGhost, index, plan);
 		}
+	},
+	
+	insertLatLonFix: func(text, index, plan) {
+		if (index == 0) {
+			return 1;
+		}
+		
+		var lat = split("/", text)[0];
+		var lon = split("/", text)[1];
+		var latDecimal = mcdu.stringToDegrees(lat, "lat");
+		var lonDecimal = mcdu.stringToDegrees(lon, "lon");
+		
+		if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
+			return 1;
+		}
+		
+		var waypoint = pilotWaypoint.new({lat: latDecimal, lon: lonDecimal}, "LL");
+		var addDb = WaypointDatabase.addWP(waypoint);
+		if (addDb != 2) {
+			return addDb;
+		}
+		
+		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
+		me.addDiscontinuity(index + 1, plan);
+		me.flightPlanChanged(plan);
+		return 2;
 	},
 	
 	# getWPforPBD - parse scratchpad text to find waypoint ghost for PBD

@@ -5,5 +5,7 @@
 var statusInput = func(key, i) {
 	if (key == "L3") {
 		fmgc.switchDatabase();
+	} elsif (key == "R5") {
+		fmgc.WaypointDatabase.delete();
 	}
 }
