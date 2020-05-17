@@ -50,7 +50,7 @@ var vertRev = {
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R2 = ["RTA ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} if (me.type == 2) { 
@@ -61,11 +61,10 @@ var vertRev = {
 			me.L3 = [" [    ]", " SPD CSTR", "blu"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
-			me.L6 = [" CLB", nil, "wht"];
+			me.L6 = [" RETURN", nil, "wht"];
 			me.R2 = ["RTA ", nil, "wht"];
 			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
-			me.R6 = ["DES ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 		} else {
@@ -84,8 +83,7 @@ var vertRev = {
 				me.L5 = [" WIND DATA", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R2 = ["RTA ", nil, "wht"];
-				me.R6 = ["DES ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			} elsif (me.type == 1) {
@@ -102,8 +100,7 @@ var vertRev = {
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R2 = ["RTA ", nil, "wht"];
 				me.R3 = ["3000", "G/S INTCP", "grn"];
-				me.R6 = ["DES ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			}
