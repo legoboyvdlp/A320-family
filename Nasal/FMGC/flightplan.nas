@@ -382,24 +382,21 @@ var flightPlanController = {
 		}
 		
 		if (size(airport) == 1 or override) {
-			if (!override) {
-				if (me.flightplans[plan].indexOfWP(airport[0]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(airport[0]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					return me.deleteTillIndex(airport[0], index, plan);
-				}
+			var indexToInsert = -1;
+			if (override) {
+				indexToInsert = overrideIndex;
 			} else {
-				if (me.flightplans[plan].indexOfWP(airport[overrideIndex]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(airport[overrideIndex]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					return me.deleteTillIndex(airport[overrideIndex], index, plan);
-				}
+				indexToInsert = 0;
+			}
+			
+			var indexPresent = me.flightplans[plan].indexOfWP(airport[indexToInsert]);
+			if (me.flightplans[plan].indexOfWP(airport[indexToInsert]) == -1) {
+				me.flightplans[plan].insertWP(createWPFrom(airport[indexToInsert]), index);
+				me.addDiscontinuity(index + 1, plan);
+				me.flightPlanChanged(plan);
+				return 2;
+			} else {
+				return me.deleteTillIndex(airport[indexToInsert], index, plan);
 			}
 		} elsif (size(airport) >= 1) {
 			me.createDuplicateNames(airport, index, 0, plan);
@@ -418,24 +415,21 @@ var flightPlanController = {
 		}
 		
 		if (size(fix) == 1 or override) {
-			if (!override) {
-				if (me.flightplans[plan].indexOfWP(fix[0]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(fix[0]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					return me.deleteTillIndex(fix[0], index, plan);
-				}
+			var indexToInsert = -1;
+			if (override) {
+				indexToInsert = overrideIndex;
 			} else {
-				if (me.flightplans[plan].indexOfWP(fix[overrideIndex]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(fix[overrideIndex]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					return me.deleteTillIndex(fix[overrideIndex], index, plan);
-				}
+				indexToInsert = 0;
+			}
+			
+			var indexPresent = me.flightplans[plan].indexOfWP(fix[indexToInsert]);
+			if (me.flightplans[plan].indexOfWP(fix[indexToInsert]) == -1) {
+				me.flightplans[plan].insertWP(createWPFrom(fix[indexToInsert]), index);
+				me.addDiscontinuity(index + 1, plan);
+				me.flightPlanChanged(plan);
+				return 2;
+			} else {
+				return me.deleteTillIndex(fix[indexToInsert], index, plan);
 			}
 		} elsif (size(fix) >= 1) {
 			me.createDuplicateNames(fix, index, 0, plan);
@@ -478,24 +472,21 @@ var flightPlanController = {
 		}
 		
 		if (size(navaid) == 1 or override) {
-			if (!override) {
-				if (me.flightplans[plan].indexOfWP(navaid[0]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(navaid[0]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					return me.deleteTillIndex(navaid[0], index, plan);
-				}
+			var indexToInsert = -1;
+			if (override) {
+				indexToInsert = overrideIndex;
 			} else {
-				if (me.flightplans[plan].indexOfWP(navaid[overrideIndex]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(navaid[overrideIndex]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					return me.deleteTillIndex(navaid[overrideIndex], index, plan);
-				}
+				indexToInsert = 0;
+			}
+			
+			var indexPresent = me.flightplans[plan].indexOfWP(navaid[indexToInsert]);
+			if (me.flightplans[plan].indexOfWP(navaid[indexToInsert]) == -1) {
+				me.flightplans[plan].insertWP(createWPFrom(navaid[indexToInsert]), index);
+				me.addDiscontinuity(index + 1, plan);
+				me.flightPlanChanged(plan);
+				return 2;
+			} else {
+				return me.deleteTillIndex(navaid[indexToInsert], index, plan);
 			}
 		} elsif (size(navaid) >= 1) {
 			me.createDuplicateNames(navaid, index, 1, plan);
