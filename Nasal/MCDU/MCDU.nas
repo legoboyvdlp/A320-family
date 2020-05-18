@@ -606,7 +606,7 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV") {
-			setprop("/MCDU/[" ~ i ~ "]/page", "F-PLNA");
+			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldR6();
 		} else {
