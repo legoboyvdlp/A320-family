@@ -201,6 +201,8 @@ var updateFuel = func {
 		final_time = final_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
 		if (final_time < 0) {
 			final_time = 0;
+		} else if (final_time > 480) {
+			final_time = 480;
 		}
 		if (num(final_time) >= 60) {
 			final_min = int(math.mod(final_time, 60));
@@ -221,6 +223,8 @@ var updateFuel = func {
 		final_fuel = final_time * 2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903); # x2 for 2 engines
 		if (final_fuel < 0) {
 			final_fuel = 0;
+		} else if (final_fuel > 80000) {
+			final_fuel = 80000;
 		}
 		setprop("/FMGC/internal/final-fuel", final_fuel / 1000);
 	}
@@ -235,6 +239,8 @@ var updateFuel = func {
 		alt_time = alt_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
 		if (alt_time < 0) {
 			alt_time = 0;
+		} else if (alt_time > 480) {
+			alt_time = 480;
 		}
 		if (num(alt_time) >= 60) {
 			alt_min = int(math.mod(alt_time, 60));
@@ -274,6 +280,8 @@ var updateFuel = func {
 		trip_fuel = 4.018e+02 + (dist*3.575e+01) + (dist*dist*-4.260e-02) + (dist*dist*dist*-1.446e-05) + (dist*dist*dist*dist*4.101e-09) + (dist*dist*dist*dist*dist*-6.753e-13) + (dist*dist*dist*dist*dist*dist*5.074e-17) + (crz*-2.573e+01) + (dist*crz*-1.583e-01) + (dist*dist*crz*8.147e-04) + (dist*dist*dist*crz*4.485e-08) + (dist*dist*dist*dist*crz*-7.656e-12) + (dist*dist*dist*dist*dist*crz*4.503e-16) + (crz*crz*4.427e-01) + (dist*crz*crz*-1.137e-03) + (dist*dist*crz*crz*-4.409e-06) + (dist*dist*dist*crz*crz*-3.345e-11) + (dist*dist*dist*dist*crz*crz*4.985e-15) + (crz*crz*crz*-2.471e-03) + (dist*crz*crz*crz*1.223e-05) + (dist*dist*crz*crz*crz*9.660e-09) + (dist*dist*dist*crz*crz*crz*-2.127e-14) + (crz*crz*crz*crz*5.714e-06) + (dist*crz*crz*crz*crz*-3.546e-08) + (dist*dist*crz*crz*crz*crz*-7.536e-12) + (crz*crz*crz*crz*crz*-4.061e-09) + (dist*crz*crz*crz*crz*crz*3.355e-11) + (crz*crz*crz*crz*crz*crz*-1.451e-12);
 		if (trip_fuel < 400) {
 			trip_fuel = 400;
+		} else if (trip_fuel > 80000) {
+			trip_fuel = 80000;
 		}
 		
 		# cruize temp correction
@@ -282,6 +290,8 @@ var updateFuel = func {
 		trip_time = 9.095e-02 + (dist*-3.968e-02) + (dist*dist*4.302e-04) + (dist*dist*dist*2.005e-07) + (dist*dist*dist*dist*-6.876e-11) + (dist*dist*dist*dist*dist*1.432e-14) + (dist*dist*dist*dist*dist*dist*-1.177e-18) + (crz*7.348e-01) + (dist*crz*3.310e-03) + (dist*dist*crz*-8.700e-06) + (dist*dist*dist*crz*-4.214e-10) + (dist*dist*dist*dist*crz*5.652e-14) + (dist*dist*dist*dist*dist*crz*-6.379e-18) + (crz*crz*-1.449e-02) + (dist*crz*crz*-7.508e-06) + (dist*dist*crz*crz*4.529e-08) + (dist*dist*dist*crz*crz*3.699e-13) + (dist*dist*dist*dist*crz*crz*8.466e-18) + (crz*crz*crz*1.108e-04) + (dist*crz*crz*crz*-4.126e-08) + (dist*dist*crz*crz*crz*-9.645e-11) + (dist*dist*dist*crz*crz*crz*-1.544e-16) + (crz*crz*crz*crz*-4.123e-07) + (dist*crz*crz*crz*crz*1.831e-10) + (dist*dist*crz*crz*crz*crz*7.438e-14) + (crz*crz*crz*crz*crz*7.546e-10) + (dist*crz*crz*crz*crz*crz*-1.921e-13) + (crz*crz*crz*crz*crz*crz*-5.453e-13);
 		if (trip_time < 10) {
 			trip_time = 10;
+		} else if (trip_time > 480) {
+			trip_time = 480;
 		}
 		# if (low air conditioning) {
 		#	trip_fuel = trip_fuel * 0.995;
@@ -297,6 +307,8 @@ var updateFuel = func {
 		trip_fuel = trip_fuel + (landing_weight_correction * (getprop("/FMGC/internal/lw") * 1000 - 121254.24421) / 2204.622622);
 		if (trip_fuel < 400) {
 			trip_fuel = 400;
+		} else if (trip_fuel > 80000) {
+			trip_fuel = 80000;
 		}
 
 		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
@@ -341,6 +353,8 @@ var updateFuel = func {
 		extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
 		if (extra_time < 0) {
 			extra_time = 0;
+		} else if (extra_time > 480) {
+			extra_time = 480;
 		}
 		if (num(extra_time) >= 60) {
 			extra_min = int(math.mod(extra_time, 60));
