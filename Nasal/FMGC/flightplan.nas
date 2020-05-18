@@ -11,7 +11,7 @@ var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
 
-var DEBUG_DISCONT = 1;
+var DEBUG_DISCONT = 0;
 
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
@@ -93,7 +93,7 @@ var flightPlanController = {
 			print("Load failed.");
 		}
 		# try to fix fgfp
-		me.flightplans[3].destination = airportinfo(getprop("FMGC/internal/arr-arpt"));
+		me.flightplans[3].destination = airportinfo(getprop("/FMGC/internal/arr-arpt"));
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
@@ -125,6 +125,8 @@ var flightPlanController = {
 		
 		me.addDiscontinuity(1, plan);
 		# reset mcdu if it exists
+		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }
+		if (canvas_mcdu.myFpln[1] != nil) { canvas_mcdu.myFpln[1].scroll = 0; }
 		if (canvas_mcdu.myArrival[0] != nil) { canvas_mcdu.myArrival[0].reset(); }
 		if (canvas_mcdu.myArrival[1] != nil) { canvas_mcdu.myArrival[1].reset(); }
 		if (canvas_mcdu.myDeparture[0] != nil) { canvas_mcdu.myDeparture[0].reset(); }
@@ -133,7 +135,7 @@ var flightPlanController = {
 		me.flightPlanChanged(plan);
 	},
 	
-	autoSequencing: func() {
+	calculateTimeAltitudeOnSequence: func() {
 		me._timeTemp = math.round(getprop("/sim/time/utc/minute") + (getprop("/sim/time/utc/second") / 60));
 		if (me._timeTemp < 10) {
 			me._timeTemp = "0" ~ me._timeTemp;
@@ -141,7 +143,7 @@ var flightPlanController = {
 		me.fromWptTime = getprop("/sim/time/utc/hour") ~ me._timeTemp;
 		me._altTemp = getprop("/systems/navigation/adr/output/baro-alt-corrected-1-capt");
 		
-		if (me._altTemp > getprop("FMGC/internal/trans-alt")) {
+		if (me._altTemp > fmgc.FMGCInternal.transAlt) {
 			me.fromWptAlt = "FL" ~ math.round(me._altTemp / 100);
 		} else {
 			if (me._altTemp > 0) {
@@ -150,6 +152,10 @@ var flightPlanController = {
 				me.fromWptAlt = "M" ~ math.round(me._altTemp);
 			}
 		}
+	},
+	
+	autoSequencing: func() {
+		me.calculateTimeAltitudeOnSequence();
 		
 		# todo setlistener on sim/time/warp to recompute predictions
 		
@@ -177,7 +183,7 @@ var flightPlanController = {
 				me.deleteWP(0, 2, 0, 1);
 			} else {
 				me.wptType = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type;
-				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "hdgToAlt";
+				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "dmeIntercept" or me.wptType == "hdgToAlt";
 				if (me.wptTypeNoAdvanceDelete) {
 					me.currentToWptIndex.setValue(2);
 				} else {
@@ -227,11 +233,11 @@ var flightPlanController = {
 	#    typeStr: optional argument to be passed to createWP, must be one of "sid", "star" "approach" "missed" or "pseudo"
 	
 	childWPBearingDistance: func(wpt, bearing, dist, name, typeStr = "") {
-		var coordinates = greatCircleMove(wpt.lat, wpt.lon, bearing, dist);
+		var coordinates = greatCircleMove(wpt.lat, wpt.lon, num(bearing), num(dist));
 		if (typeStr != "") {
-			return createWP(coordinates, name);
-		} else {
 			return createWP(coordinates, name, typeStr);
+		} else {
+			return createWP(coordinates, name);
 		}
 	},
 	
@@ -304,9 +310,9 @@ var flightPlanController = {
 			me.insertTP(plan, 1);
 		}
 		me.deleteWP(0, plan);
-		me.flightPlanChanged(plan);
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		me.flightPlanChanged(plan);
 	},
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
@@ -328,6 +334,23 @@ var flightPlanController = {
 		} else {
 			return 1;
 		}
+	},
+	
+	# createDuplicateNames - helper to spawn DUPLICATENAMES page
+	# args: ghostContainer, index, flag, plan
+	#    ghostContainer: vector of fgPositioned ghosts
+	#    index: index
+	#    flag: is it a navaids DUPLICATENAMES page or not?
+	#    plan: plan
+	#    flagPBD: do we return back to PBD handler or to default waypoint handler?
+	
+	createDuplicateNames: func(ghostContainer, index, flag, plan, flagPBD = 0, bearing = -999, distance = -99) {
+		if (canvas_mcdu.myDuplicate[plan] != nil) {
+			canvas_mcdu.myDuplicate[plan].del();
+		}
+		canvas_mcdu.myDuplicate[plan] = nil;
+		canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(ghostContainer, index, flag, plan, flagPBD, bearing, distance);
+		setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 	},
 	
 	insertAirport: func(text, index, plan, override = 0, overrideIndex = -1) {
@@ -371,12 +394,7 @@ var flightPlanController = {
 				}
 			}
 		} elsif (size(airport) >= 1) {
-			if (canvas_mcdu.myDuplicate[plan] != nil) {
-				canvas_mcdu.myDuplicate[plan].del();
-			}
-			canvas_mcdu.myDuplicate[plan] = nil;
-			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(airport, index, 0, plan);
-			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			me.createDuplicateNames(airport, index, 0, plan);
 			return 2;
 		}
 	},
@@ -422,12 +440,7 @@ var flightPlanController = {
 				}
 			}
 		} elsif (size(fix) >= 1) {
-			if (canvas_mcdu.myDuplicate[plan] != nil) {
-				canvas_mcdu.myDuplicate[plan].del();
-			}
-			canvas_mcdu.myDuplicate[plan] = nil;
-			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(fix, index, 0, plan);
-			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			me.createDuplicateNames(fix, index, 0, plan);
 			return 2;
 		}
 	},
@@ -503,14 +516,90 @@ var flightPlanController = {
 				}
 			}
 		} elsif (size(navaid) >= 1) {
-			if (canvas_mcdu.myDuplicate[plan] != nil) {
-				canvas_mcdu.myDuplicate[plan].del();
-			}
-			canvas_mcdu.myDuplicate[plan] = nil;
-			canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(navaid, index, 1, plan);
-			setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
+			me.createDuplicateNames(navaid, index, 1, plan);
 			return 2;
 		}
+	},
+	
+	# getWPforPBD - parse scratchpad text to find waypoint ghost for PBD
+	# args: text, index, plan
+	#    text: scratchpad text
+	#    index: index at which waypoint will be inserted
+	#    plan: plan to which waypoint will be inserted
+	# return: 
+	#    0: not in database
+	#    1: notAllowed
+	#    2: o.k.
+	
+	getWPforPBD: func(text, index, plan, override = 0, overrideIndex = -1) {
+		if (index == 0) {
+			return 1;
+		}
+		
+		var textSplit = split("/", text);
+		
+		if (size(split(".", textSplit[2])) != 1 or size(textSplit[1]) < 2 or size(textSplit[1]) > 3) {
+			return 1;
+		}
+		
+		var wpGhost = nil;
+		var wpGhostContainer = nil;
+		var type = nil;
+		
+		if (size(textSplit[0]) == 5) {
+			wpGhostContainer = findFixesByID(textSplit[0]);
+			if (size(wpGhostContainer) == 0) {
+				return 0;
+			}
+			type = "fix";
+		} elsif (size(textSplit[0]) == 4) {
+			wpGhostContainer = findAirportsByICAO(textSplit[0]);
+			if (size(wpGhostContainer) == 0) {
+				return 0;
+			}
+			type = "airport";
+		} elsif (size(textSplit[0]) == 3 or size(textSplit[0]) == 2) {
+			wpGhostContainer = findNavaidsByID(textSplit[0]);
+			if (size(wpGhostContainer) == 0) {
+				return 0;
+			}
+			type = "navaid";
+		} else {
+			return 1;
+		}
+		
+		if (size(wpGhostContainer) == 0 or override) {
+			if (!override) {
+				wpGhost = wpGhostContainer[0];
+			} else {
+				wpGhost = wpGhostContainer[overrideIndex];
+			}
+		} else {
+			if (type == "navaid") {
+				me.createDuplicateNames(wpGhostContainer, index, 1, plan, 1, num(textSplit[1]), num(textSplit[2]));
+			} else {
+				me.createDuplicateNames(wpGhostContainer, index, 0, plan, 1, num(textSplit[1]), num(textSplit[2]));
+			}
+			return 2;
+		}
+		
+		var localMagvar = magvar(wpGhost.lat, wpGhost.lon);
+		me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan);
+		return 2;
+	},
+	
+	
+	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
+	# at some specified bearing, distance from a specified location
+	# args: wp, index, plan
+	#    wpt: waypoint ghost
+	#    index: index to insert at in plan
+	#    plan: plan to insert to
+	
+	insertPlaceBearingDistance: func(wp, bearing, distance, index, plan) {
+		me.flightplans[plan].insertWP(me.childWPBearingDistance(wp, bearing, distance, "PBD" ~ index), index);
+		me.addDiscontinuity(index + 1, plan);
+		me.flightPlanChanged(plan);
 	},
 	
 	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success, 3 = not allowed due to dir to
@@ -529,7 +618,9 @@ var flightPlanController = {
 			var thePlan = plan;
 		}
 		
-		if (text == "CLR") {
+		if (size(split("/", text)) == 3) {
+			return me.getWPforPBD(text, index, thePlan);
+		} elsif (text == "CLR") {
 			return me.deleteWP(index, thePlan, 0);
 		} elsif (size(text) > 12) {
 			return me.insertLatLonFix(text, index, thePlan);

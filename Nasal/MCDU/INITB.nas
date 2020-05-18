@@ -14,7 +14,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/block-calculating", 1);
 			}
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 1 and tfs <= 4) {
@@ -22,7 +22,7 @@ var initInputB = func(key, i) {
 					setprop("/FMGC/internal/taxi-fuel", scratchpad);
 					setprop("/FMGC/internal/taxi-fuel-set", 1);
 					setprop("/FMGC/internal/fuel-calculating", 1);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 					fmgc.updateFuel();
 				} else {
 					notAllowed(i);
@@ -39,7 +39,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/rte-percent-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else if (getprop("/FMGC/internal/trip-fuel") != 0) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -51,7 +51,7 @@ var initInputB = func(key, i) {
 					setprop("/FMGC/internal/rte-percent", perc);
 					setprop("/FMGC/internal/rte-percent-set", 1);
 					setprop("/FMGC/internal/fuel-calculating", 1);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				}
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7) {
 					setprop("/FMGC/internal/rte-rsv", scratchpad);
@@ -63,7 +63,7 @@ var initInputB = func(key, i) {
 					}
 					setprop("/FMGC/internal/rte-percent-set", 0);
 					setprop("/FMGC/internal/fuel-calculating", 1);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			}
@@ -77,7 +77,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/alt-fuel-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -86,7 +86,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/alt-time", "0000");
 				setprop("/FMGC/internal/alt-fuel-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			}
@@ -101,7 +101,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/final-time-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -109,7 +109,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/final-fuel", tf);
 				setprop("/FMGC/internal/final-fuel-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			}
@@ -120,7 +120,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/final-time", scratchpad);
 				setprop("/FMGC/internal/final-time-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			} 
@@ -131,7 +131,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/min-dest-fob-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -139,7 +139,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/min-dest-fob", tf);
 				setprop("/FMGC/internal/min-dest-fob-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 				if (num(getprop("/FMGC/internal/min-dest-fob")) < num(getprop("/FMGC/internal/final-fuel") + getprop("/FMGC/internal/alt-fuel"))) {
 					genericMessage(i, "CHECK MIN DEST FOB", "wht");
 				}
@@ -177,7 +177,7 @@ var initInputB = func(key, i) {
 					}
 				}
 				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -186,7 +186,7 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and zfwcg >= 1 and zfwcg <= 5 and scratchpad > 0 and scratchpad <= 99.9) {
 					setprop("/FMGC/internal/zfwcg", scratchpad);
 					setprop("/FMGC/internal/zfwcg-set", 1);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -227,7 +227,7 @@ var initInputB = func(key, i) {
 			setprop("/FMGC/internal/block-calculating", 0);
 			setprop("/FMGC/internal/block-confirmed", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			var maxblock = getprop("/options/maxblock");
@@ -241,7 +241,7 @@ var initInputB = func(key, i) {
 					setprop("/FMGC/internal/fuel-calculating", 1);
 					setprop("/FMGC/internal/block-calculating", 0);
 					setprop("/FMGC/internal/block-confirmed", 1);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -267,7 +267,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			if (find("TL", scratchpad) != -1 or find("HD", scratchpad) != -1) {
 				var effwind = substr(scratchpad, 2);
@@ -277,7 +277,7 @@ var initInputB = func(key, i) {
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -289,7 +289,7 @@ var initInputB = func(key, i) {
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -300,7 +300,7 @@ var initInputB = func(key, i) {
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}

@@ -16,12 +16,12 @@ var fplnItem = {
 			} elsif (me.wp.wp_name != "DISCONTINUITY") {
 				var wptName = split("-", me.wp.wp_name);
 				if (wptName[0] == "VECTORS") {
-					return ["MANUAL", nil, me.colour];
+					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
 					if (size(wptName) == 2) {
-						return[wptName[0] ~ wptName[1], nil, me.colour];
+						return[wptName[0] ~ wptName[1], me.getSubText(), me.colour];
 					} else {
-						return [me.wp.wp_name, nil, me.colour];
+						return [me.wp.wp_name, me.getSubText(), me.colour];
 					}
 				}
 			} else {
@@ -31,19 +31,22 @@ var fplnItem = {
 			return ["problem", nil, "ack"];
 		}
 	},
+	getSubText: func() {
+		return nil;
+	},
 	updateCenterText: func() {
 		if (me.wp != nil) { 
 			if (me.wp.wp_name != "DISCONTINUITY") {
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue() - 1 and fmgc.flightPlanController.fromWptTime != nil) {
-					me.assembledStr[0] = fmgc.flightPlanController.fromWptTime ~ " ";
+					me.assembledStr[0] = fmgc.flightPlanController.fromWptTime ~ "   ";
 				} else {
-					me.assembledStr[0] = "---- ";
+					me.assembledStr[0] = "----   ";
 				}
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-					me.assembledStr[1] = "BRG" ~ me.getBrg();
-				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() + 1)) {
-					me.assembledStr[1] = "TRK" ~ me.getTrack();
+					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
+				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() + 1) or me.index == (fmgc.flightPlanController.arrivalIndex[me.plan] + 1)) {
+					me.assembledStr[1] = "TRK" ~ me.getTrack() ~ "   ";
 				} else {
 					me.assembledStr[1] = nil;
 				}
@@ -71,25 +74,32 @@ var fplnItem = {
 		}
 	},
 	getBrg: func() {
-		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - pts.Environment.magVar.getValue();
+		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - magvar();
 		if (me.brg < 0) { me.brg += 360; }
 		if (me.brg > 360) { me.brg -= 360; }
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - pts.Environment.magVar.getValue();
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(wp.lat, wp.lon);
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
 	},
 	getSpd: func() {
-		return "---";
+		if (me.index == 0 and getprop("FMGC/internal/v1-set")) {
+			return sprintf("%3.0f", math.round(getprop("FMGC/internal/v1")));
+		} else {
+			return "---";
+		}
 	},
 	getAlt: func() {
-		if (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
-			return " " ~ fmgc.flightPlanController.fromWptAlt;
+		if (me.index == 0 and left(me.wp.wp_name, 4) == getprop("/FMGC/internal/dep-arpt") and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
+			return sprintf("%6.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT));
+		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
+			return "  " ~ fmgc.flightPlanController.fromWptAlt;
 		} else {
-			return "-----";
+			return "------";
 		}
 	},
 	getDist: func() {
@@ -260,12 +270,15 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	createPlanList: func() {
 		me.planList = [];
 		if (me.temporaryFlagFpln) {
-			for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
-				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "yel"));
-			}
+			colour = "yel";
 		} else {
-			for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
-				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer));
+			colour = "grn";
+		}
+		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and getprop("/FMGC/status/phase") != 6) {
+				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
+			} else {
+				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));
 			}
 		}
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
@@ -280,9 +293,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		if (size(me.outputList) >= 1) {
 			me.L1 = me.outputList[0].updateLeftText();
 			me.C1 = me.outputList[0].updateCenterText();
-			me.C1[1] = "TIME ";
+			me.C1[1] = "TIME   ";
 			me.R1 = me.outputList[0].updateRightText();
-			me.R1[1] = "SPD/ALT   ";
+			me.R1[1] = "SPD/ALT    ";
 		} else {
 			me.L1 = [nil, nil, "ack"];
 			me.C1 = [nil, nil, "ack"];
@@ -327,16 +340,21 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	},
 	destInfo: func() {
 		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil) {
-			me.L6 = [left(me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name, 4), " DEST", "wht"];
+			var destName = split("-", me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name);
+			if (size(destName) == 2) {
+				me.L6 = [destName[0] ~ destName[1], " DEST", "wht"];
+			} else {
+				me.L6 = [destName[0], " DEST", "wht"];
+			}
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
 		}
+		me.C6 = ["----   ", "TIME   ", "wht"];
 		if (fmgc.flightPlanController.arrivalDist != nil) {
-			me.C6 = ["----  " ~ int(fmgc.flightPlanController.arrivalDist), "TIME   DIST", "wht"];
+			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "  --.-", "DIST    EFOB", "wht"];
 		} else {
-			me.C6 = ["----   ----", "TIME   DIST", "wht"];
+			me.R6 = ["----   --.-", "DIST    EFOB", "wht"];
 		}
-		me.R6 = ["--.-", "EFOB", "wht"];
 	},
 	update: func() {
 		#me.basePage();

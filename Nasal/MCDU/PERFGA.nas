@@ -10,7 +10,7 @@ var perfGAInput = func(key, i) {
 			setprop("/FMGC/internal/accel-agl-ft", "1500");
 			setprop("MCDUC/thracc-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 7 and tfs <= 9 and find("/", scratchpad) != -1) {
@@ -21,7 +21,7 @@ var perfGAInput = func(key, i) {
 					setprop("systems/thrust/clbreduc-ft", thracc[0]);
 					setprop("/FMGC/internal/accel-agl-ft", thracc[1]);
 					setprop("MCDUC/thracc-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}
@@ -36,13 +36,13 @@ var perfGAInput = func(key, i) {
 			setprop("/FMGC/internal/eng-out-reduc", "1500");
 			setprop("MCDUC/reducacc-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var tfs = size(scratchpad);
 			if (int(scratchpad) != nil and tfs >= 3 and tfs <= 5) {
 				setprop("/FMGC/internal/eng-out-reduc", scratchpad);
 				setprop("MCDUC/reducacc-set", 1);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			}

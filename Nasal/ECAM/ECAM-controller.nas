@@ -104,7 +104,7 @@ var warning = {
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
-		libraries.SystemDisplay.failCall(me.sdPage);
+		ecam.SystemDisplay.failCall(me.sdPage);
 		me.hasCalled = 1;
 	}
 };
@@ -336,7 +336,7 @@ var ECAM_controller = {
 		}
 		
 		if (statusFlag == 1 and lines[0].getValue() == "") {
-			libraries.SystemDisplay.manCall("sts");
+			ecam.SystemDisplay.manCall("sts");
 			statusFlag = 0;
 		}
 	},

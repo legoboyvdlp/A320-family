@@ -806,17 +806,10 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>atc_stby</object-name>
-		<factor>-35</factor>
-		<offset-deg>70</offset-deg>
-		<center>
-            <x-m>0.01146</x-m>
-			<y-m>0.213663</y-m>
-			<z-m>-0.13086</z-m>
-        </center>
+		<factor>35</factor>
+		<offset-deg>-70</offset-deg>
 		<axis>
-			<x>0</x>
-			<y>0</y>
-			<z>1</z>
+			<object-name>atc_stby.axis</object-name>
 		</axis>
 		<property>controls/atc/mode-knob</property>
 	</animation>
@@ -2030,7 +2023,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("sts");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("sts");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2049,7 +2042,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("apu");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("apu");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2068,7 +2061,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("bleed");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("bleed");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2087,7 +2080,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("press");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("press");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2106,7 +2099,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("elec");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("elec");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2125,7 +2118,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("hyd");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("hyd");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2144,7 +2137,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("fuel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fuel");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2163,7 +2156,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("eng");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("eng");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2182,7 +2175,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("cond");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("cond");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2201,7 +2194,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("door");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("door");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2220,7 +2213,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("wheel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("wheel");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2239,7 +2232,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("fctl");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fctl");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2509,16 +2502,14 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					libraries.ECAMControlPanel.rclBtn();
+					ecam.ECAMControlPanel.rclBtn();
 					ecam.FWC.Btn.recall.setValue(1);
 				</script>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>nasal</command>
-					<script>
-						ecam.FWC.Btn.recall.setValue(0);
-					</script>
+					<script>ecam.FWC.Btn.recall.setValue(0);</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -2540,16 +2531,14 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					libraries.ECAMControlPanel.clrBtn();
+					ecam.ECAMControlPanel.clrBtn();
 					ecam.FWC.Btn.clr.setValue(1);
 				</script>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>nasal</command>
-					<script>
-						ecam.FWC.Btn.clr.setValue(0);
-					</script>
+					<script>ecam.FWC.Btn.clr.setValue(0);</script>
 				</binding>
 			</mod-up>
 		</action>

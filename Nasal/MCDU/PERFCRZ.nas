@@ -9,7 +9,7 @@ var perfCRZInput = func(key, i) {
 			setprop("/FMGC/internal/cost-index", 0);
 			setprop("/FMGC/internal/cost-index-set", 0);
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
@@ -17,7 +17,7 @@ var perfCRZInput = func(key, i) {
 				if (ci != nil and ci >= 0 and ci <= 999) {
 					setprop("/FMGC/internal/cost-index", ci);
 					setprop("/FMGC/internal/cost-index-set", 1);
-					setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);
 				}

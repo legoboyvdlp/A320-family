@@ -4,8 +4,8 @@ Have at least following versions installed:
 * FlightGear 2019.2.0 or newer
 
 ## Install using ZIP Snapshot
-[Download](https://github.com/legoboyvdlp/A320-family/archive/master.zip) the zip file.  
-Use your prefered archive utility to unzip the archive.
+[Download](https://github.com/legoboyvdlp/A320-family/archive/dev.zip) the zip file.  
+Use your preferred archive utility to unzip the archive.
 Move the unpacked directory to your aircraft directory. This can be FGData/Aircraft, or a custom directory you've specified.
 
 Rename the directory to `A320-family`.

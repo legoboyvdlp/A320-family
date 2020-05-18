@@ -8,12 +8,12 @@ var progTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cruise-fl-prog", getprop("/FMGC/internal/cruise-fl"));
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+			mcdu.clearScratchpad(i);
 		} else if (int(scratchpad) != nil) {
 			var crzs = size(scratchpad);
 			if (crzs >= 1 and crzs <= 3 and scratchpad > 0 and scratchpad <= 430 and altSet.getValue() <= scratchpad * 100 and getprop("/FMGC/internal/cruise-lvl-set")) {
 				setprop("/FMGC/internal/cruise-fl-prog", scratchpad);
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "");
+				mcdu.clearScratchpad(i);
 			} else {
 				notAllowed(i);
 			}
