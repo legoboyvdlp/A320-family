@@ -71,7 +71,7 @@ var vertRev = {
 			# When CLB/DES are shown, a small "OR" should be shown between them.
 			# The 'arrows' for CLB/DES should actually be asterisks.
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "amb"], ["ack", "wht", "ack", "ack", "wht", "amb"]];
 			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 		} else {
 			me.title = ["VERT REV", " AT ", me.id];
