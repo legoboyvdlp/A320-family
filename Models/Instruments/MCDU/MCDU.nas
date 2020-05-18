@@ -1577,12 +1577,18 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText("---.-");
 				me["Simple_R2"].hide(); 
 				me["INITB_Block"].show();
-				me["Simple_R3S"].show();
-				me["Simple_R3"].show(); 
-				me["Simple_R3S"].setText("FUEL");
-				me["Simple_R3"].setText("PLANNING ");
-				me["Simple_R3_Arrow"].show();
-				me["Simple_R3_Arrow"].setColor(AMBER);
+				if (zfwSet.getValue() == 1) {
+					me["Simple_R3S"].show();
+					me["Simple_R3"].show(); 
+					me["Simple_R3S"].setText("FUEL");
+					me["Simple_R3"].setText("PLANNING ");
+					me["Simple_R3_Arrow"].show();
+					me["Simple_R3_Arrow"].setColor(AMBER);
+				} else {
+					me["Simple_R3S"].hide();
+					me["Simple_R3"].hide(); 
+					me["Simple_R3_Arrow"].hide();
+				}
 				me["Simple_R4"].setText("---.-/---.-");
 				me["Simple_R6"].setText("---.-/----");
 				
