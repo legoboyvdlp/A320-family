@@ -61,10 +61,11 @@ var vertRev = {
 			me.L3 = [" [    ]", " SPD CSTR", "blu"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
-			me.L6 = [" RETURN", nil, "wht"];
+			me.L6 = [" CLB", nil, "amb"];
 			me.R2 = ["RTA ", nil, "wht"];
 			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
+			me.R6 = ["DES ", nil, "amb"];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 		} else {
