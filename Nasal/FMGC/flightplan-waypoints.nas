@@ -9,6 +9,7 @@ var nilTree = {
 
 var WaypointDatabase = {
 	waypointsVec: [],
+	confirm: 0,
 	# addWP - adds pilot waypoint to waypoints vector
 	# arg: wpObj - passed pilot waypoint object
 	# return: 
@@ -40,6 +41,8 @@ var WaypointDatabase = {
 			append(me.waypointsVec, wpObj);
 			return 2;
 		}
+		
+		me.write();
 	},
 	# delete - empties waypoints vector
 	delete: func() {
@@ -96,9 +99,9 @@ var WaypointDatabase = {
 		}
 		return nil;
 	},
-	# write - write to file, as a delimited string
+	# write - write to file, as a hash structure
 	write: func() {
-		var path = getprop("/sim/fg-home") ~ "/Export/savedWaypoints.xml";
+		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWaypoints.xml";
 		var tree = {
 			waypoints: {
 			
@@ -108,12 +111,47 @@ var WaypointDatabase = {
 		for (var i = 0; i < me.getSize(); i = i + 1) {
 			if (me.waypointsVec[i] != nil) {
 				tree.waypoints["waypoint" ~ i] = me.waypointsVec[i].tree;
-			} else {
-				tree.waypoints["waypoint" ~ i] = nilTree;
 			}
 		}
 		
 		io.writexml(path, props.Node.new(tree)); # write the data
+	},
+	# read - read from a file, extract using props interface
+	read: func() {
+		me.delete();
+		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWaypoints.xml";
+		var data = io.readxml(path).getChild("waypoints");
+		var pilotWP = nil;
+		for (var i = 0; i < 20; i = i + 1) {
+			pilotWP = nil;
+			var childNode = data.getChild("waypoint" ~ i); 
+			if (childNode == nil) { 
+				continue; 
+			}
+			
+			var wpt = createWP({lat: num(childNode.getChild("latitude").getValue()), lon: num(childNode.getChild("longitude").getValue())},childNode.getChild("ident").getValue());
+			
+			if (left(childNode.getChild("ident").getValue(), 3) == "PBD") {
+				pilotWP = pilotWaypoint.newAtPosition(wpt, "PBD", right(childNode.getChild("ident").getValue(), 1));
+			} else {
+				pilotWP = pilotWaypoint.newAtPosition(wpt, "LL", right(childNode.getChild("ident").getValue(), 1));
+			}
+			me.addWPToPos(pilotWP, right(childNode.getChild("ident").getValue(), 1));
+		}
+	},
+	# addWPToPos - helper for reading - inserts at specific index
+	# will create nil for intermediates
+	addWPToPos: func(wpObj, position) {
+		if (me.getSize() >= position) {
+			me.waypointsVec[position - 1] = wpObj;
+		} else {
+			var numToIns = position - me.getSize();
+			while (numToIns >= 1) {
+				append(me.waypointsVec, nil);
+				numToIns -= 1;
+			}
+			me.waypointsVec[position - 1] = wpObj;
+		}
 	},
 };
 
@@ -136,6 +174,23 @@ var pilotWaypoint = {
 		
 		# set ghost to created waypoint
 		pilotWp.wpGhost = createWP(positioned, pilotWp.id);
+		
+		pilotWp.tree = {
+			"latitude": pilotWp.wpGhost.wp_lat,
+			"longitude": pilotWp.wpGhost.wp_lon,
+			"ident": pilotWp.id,
+		};
+		
+		return pilotWp;
+	},
+	newAtPosition: func(positioned, typeStr, position) {
+		var pilotWp = { parents:[pilotWaypoint] };
+		
+		pilotWp.setId(typeStr ~ sprintf("%s", position));
+		pilotWp.index = position - 1;
+		
+		# set ghost to created waypoint
+		pilotWp.wpGhost = positioned;
 		
 		pilotWp.tree = {
 			"latitude": pilotWp.wpGhost.wp_lat,

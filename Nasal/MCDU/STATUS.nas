@@ -6,6 +6,11 @@ var statusInput = func(key, i) {
 	if (key == "L3") {
 		fmgc.switchDatabase();
 	} elsif (key == "R5") {
-		fmgc.WaypointDatabase.delete();
+		if (fmgc.WaypointDatabase.confirm) {
+			fmgc.WaypointDatabase.delete();
+			fmgc.WaypointDatabase.confirm = 0;
+		} else {
+			fmgc.WaypointDatabase.confirm = 1;
+		}
 	}
 }
