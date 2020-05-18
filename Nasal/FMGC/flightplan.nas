@@ -647,6 +647,11 @@ var flightPlanController = {
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
 		me.updatePlans();
+		# push update to fuel
+		if (getprop("/FMGC/internal/block-confirmed")) {
+			setprop("/FMGC/internal/fuel-calculating", 0);
+			setprop("/FMGC/internal/fuel-calculating", 1);
+		}
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
 	

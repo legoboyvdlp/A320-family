@@ -391,6 +391,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		if (index == 6) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+				# push update to fuel
+				if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 0);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				}
 			} else {
 				if (canvas_mcdu.myLatRev[me.computer] != nil) {
 					canvas_mcdu.myLatRev[me.computer].del();
