@@ -65,6 +65,11 @@ var vertRev = {
 			me.R2 = ["RTA ", nil, "wht"];
 			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
 			me.R6 = ["DES ", nil, "amb"];
+			# When the system does vertical planning, L6 should be RETURN and R6 not used if the MCDU knows the waypoint is during climb or descent.
+			# The CLB or DES prompts should only be shown for a vertical revision in the cruise phase.
+			# For now we fake it and allow the user to press either, which both act like RETURN.
+			# When CLB/DES are shown, a small "OR" should be shown between them.
+			# The 'arrows' for CLB/DES should actually be asterisks.
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
