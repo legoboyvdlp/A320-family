@@ -170,7 +170,14 @@ var initInputB = func(key, i) {
 				if (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9) {
 					setprop("/FMGC/internal/zfw", zfwi[1]);
 					setprop("/FMGC/internal/zfw-set", 1);
-					if (getprop("/FMGC/internal/block-confirmed")) {
+					if (!getprop("/FMGC/internal/block-confirmed") and getprop("/FMGC/internal/block-set")) {
+						setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
+						setprop("/FMGC/internal/tow-set", 1);
+						setprop("/FMGC/internal/fuel-request-set", 1);
+						setprop("/FMGC/internal/fuel-calculating", 1);
+						setprop("/FMGC/internal/block-calculating", 0);
+						setprop("/FMGC/internal/block-confirmed", 1);
+					} else if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					} else if (getprop("/FMGC/internal/fuel-request-set")) {
 						setprop("/FMGC/internal/block-calculating", 1);
@@ -237,10 +244,14 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and scratchpad >= 1.0 and scratchpad <= maxblock) {
 					setprop("/FMGC/internal/block", scratchpad);
 					setprop("/FMGC/internal/block-set", 1);
-					setprop("/FMGC/internal/fuel-request-set", 1);
-					setprop("/FMGC/internal/fuel-calculating", 1);
-					setprop("/FMGC/internal/block-calculating", 0);
-					setprop("/FMGC/internal/block-confirmed", 1);
+					if (getprop("/FMGC/internal/zfw-set")) {
+						setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
+						setprop("/FMGC/internal/tow-set", 1);
+						setprop("/FMGC/internal/fuel-request-set", 1);
+						setprop("/FMGC/internal/fuel-calculating", 1);
+						setprop("/FMGC/internal/block-calculating", 0);
+						setprop("/FMGC/internal/block-confirmed", 1);
+					}
 					mcdu.clearScratchpad(i);
 				} else {
 					notAllowed(i);

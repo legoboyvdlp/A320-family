@@ -284,7 +284,7 @@ var canvas_MCDU_base = {
 	"Simple_L5","Simple_L6","Simple_L0S","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S","Simple_L1_Arrow",
 	"Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5",
 	"Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
-	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C5","Simple_C6","Simple_C1S",
+	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C4B","Simple_C5","Simple_C6","Simple_C1S",
 	"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
 	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
 	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
@@ -348,6 +348,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me["Simple_L1_Arrow"].hide();
 				me["Simple_L2_Arrow"].hide();
@@ -693,6 +694,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -757,6 +759,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -820,6 +823,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, 1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -885,6 +889,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, 1, 1, -1, -1);
 				me.showRightArrow(1, 1, 1, 1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -949,6 +954,7 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, -1, -1, -1, 1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, -1, -1, 1, -1);
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
@@ -1019,6 +1025,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, 1, 1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, 0, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1139,6 +1146,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 0, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, 1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1298,6 +1306,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, -1, 1, 1, 1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, 1, 1, -1);
 				
 				me.fontLeft(default, default, 0, 0, 0, default);
@@ -1474,6 +1483,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, 0, 0, 0, 0, default);
@@ -1525,6 +1535,7 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, -1, 1, 1, 1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(-1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
@@ -1538,11 +1549,13 @@ var canvas_MCDU_base = {
 				me.fontSizeLeft(small, small, small, small, small, small);
 				me.fontSizeCenter(small, small, small, small, small, small);
 				me.fontSizeRight(normal, normal, normal, small, small, small);
+				me["Simple_C4B"].setFontSize(small);
 				
 				me.colorLeft("blu", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenter("blu", "wht", "blu", "grn", "blu", "wht");
+				me["Simple_C4B"].setColor(GREEN);
 				me.colorRight("blu", "blu", "amb", "wht", "blu", "wht");
 				me.colorRightS("wht", "wht", "amb", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "amb", "wht", "wht", "wht");
@@ -1574,8 +1587,14 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].setText("---.-");
 				me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
 				me["Simple_L6"].setText("---.-");
-				me["Simple_R2"].hide(); 
-				me["INITB_Block"].show();
+				if (blockSet.getValue() == 1) {
+					me["Simple_R2"].show(); 
+					me["INITB_Block"].hide();
+					me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+				} else {
+					me["Simple_R2"].hide(); 
+					me["INITB_Block"].show();
+				}
 				if (zfwSet.getValue() == 1) {
 					me["Simple_R3S"].show();
 					me["Simple_R3"].show(); 
@@ -1588,6 +1607,7 @@ var canvas_MCDU_base = {
 					me["Simple_R3"].hide(); 
 					me["Simple_R3_Arrow"].hide();
 				}
+				me["Simple_C4B"].hide();
 				me["Simple_R4"].setText("---.-/---.-");
 				me["Simple_R6"].setText("---.-/----");
 				
@@ -1619,6 +1639,7 @@ var canvas_MCDU_base = {
 					me["Simple_R3"].setText("PLANNING ");
 					me["Simple_R3_Arrow"].show();
 					me["Simple_R3_Arrow"].setColor(GREEN);
+					me["Simple_C4B"].hide();
 					me["Simple_R4"].setText("---.-/---.-");
 					me["Simple_R6"].setText("---.-/----");
 				
@@ -1644,7 +1665,13 @@ var canvas_MCDU_base = {
 						me["Simple_R3"].setText("CONFIRM ");
 						me["Simple_R3_Arrow"].show();
 						me["Simple_R3_Arrow"].setColor(AMBER);
-						me["Simple_R4"].setText("---.-/---.-");
+						me["Simple_C4B"].show();
+						if (num(tow.getValue()) >= 100.0) {
+							me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+						} else {
+							me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+						}
+						me["Simple_R4"].setText("---.-");
 						me["Simple_R6"].setText("---.-/----");
 			
 						me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
@@ -1680,7 +1707,13 @@ var canvas_MCDU_base = {
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
-							me["Simple_R4"].setText("---.-/---.-");
+							me["Simple_C4B"].show();
+							if (num(tow.getValue()) >= 100.0) {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+							} else {
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+							}
+							me["Simple_R4"].setText("---.-");
 							me["Simple_R6"].setText("---.-/----");
 				
 							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
@@ -1774,6 +1807,7 @@ var canvas_MCDU_base = {
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
+							me["Simple_C4B"].hide();
 							me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
 							me["Simple_R6"].setText(sprintf("%.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
@@ -1878,6 +1912,7 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].show();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				me.showRight(1, 1, -1, 1, 1, 1);
 				me.showRightS(1, -1, 1, 1, 1, 1);
@@ -2182,6 +2217,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, -1, -1, 1, -1, 1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, symbol, default, default, default);
@@ -2288,6 +2324,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -2461,6 +2498,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, 1, 1, 1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, 1, -1, 1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -2627,6 +2665,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, -1, -1, -1, 1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -2776,6 +2815,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, -1, 1, 1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -2946,6 +2986,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, -1, 1, -1);
 				
 				me.fontLeft(symbol, default, default, default, symbol, default);
@@ -3131,6 +3172,7 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -3212,6 +3254,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3475,6 +3518,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3750,6 +3794,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4070,6 +4115,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4402,6 +4448,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4734,6 +4781,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -5717,6 +5765,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);

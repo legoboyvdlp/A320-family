@@ -1094,10 +1094,6 @@ var timer48gpsAlign3 = maketimer(1, func() {
 
 var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
-		if (!getprop("/FMGC/internal/zfw-set")) {
-			setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round((getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs")) / 1000, 0.1)));
-			setprop("/FMGC/internal/zfw-set", 1);
-		}
 		updateFuel();
 		setprop("/FMGC/internal/block-calculating", 0);
 		setprop("/FMGC/internal/block-fuel-time", -99); 
@@ -1107,10 +1103,6 @@ var timer3blockFuel = maketimer(1, func() {
 
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
-		if (!getprop("/FMGC/internal/zfw-set")) {
-			setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round((getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs")) / 1000, 0.1)));
-			setprop("/FMGC/internal/zfw-set", 1);
-		}
 		updateFuel();
 		setprop("/FMGC/internal/fuel-calculating", 0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
