@@ -148,8 +148,9 @@ var fuelPredInput = func(key, i) {
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 0) {
-				var zfw = getprop("fdm/jsbsim/inertia/weight-lbs") - getprop("consumables/fuel/total-fuel-lbs");
-				setprop("MCDU[" ~ i ~ "]/scratchpad", "/" ~ sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
+				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");
+				setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
+				setprop("/FMGC/internal/zfw-set", 1);
 			} else if (tfs >= 2 and tfs <= 11 and find("/", scratchpad) != -1) {
 				var zfwi = split("/", scratchpad);
 				var zfwcg = num(zfwi[0]);

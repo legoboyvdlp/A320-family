@@ -156,7 +156,20 @@ var initInputB = func(key, i) {
 			var tfs = size(scratchpad);
 			if (tfs == 0) {
 				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "/" ~ sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
+				setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
+				setprop("/FMGC/internal/zfw-set", 1);
+				if (!getprop("/FMGC/internal/block-confirmed") and getprop("/FMGC/internal/block-set")) {
+					setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
+					setprop("/FMGC/internal/tow-set", 1);
+					setprop("/FMGC/internal/fuel-request-set", 1);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+					setprop("/FMGC/internal/block-calculating", 0);
+					setprop("/FMGC/internal/block-confirmed", 1);
+				} else if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				} else if (getprop("/FMGC/internal/fuel-request-set")) {
+					setprop("/FMGC/internal/block-calculating", 1);
+				}
 			} else if (tfs >= 2 and tfs <= 11 and find("/", scratchpad) != -1) {
 				var zfwi = split("/", scratchpad);
 				var zfwcg = num(zfwi[0]);
@@ -239,7 +252,16 @@ var initInputB = func(key, i) {
 			var tfs = size(scratchpad);
 			var maxblock = getprop("/options/maxblock");
 			if (tfs == 0) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
+				setprop("/FMGC/internal/block", sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
+				setprop("/FMGC/internal/block-set", 1);
+				if (getprop("/FMGC/internal/zfw-set")) {
+					setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
+					setprop("/FMGC/internal/tow-set", 1);
+					setprop("/FMGC/internal/fuel-request-set", 1);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+					setprop("/FMGC/internal/block-calculating", 0);
+					setprop("/FMGC/internal/block-confirmed", 1);
+				}
 			} else if (tfs >= 1 and tfs <= 5) {
 				if (num(scratchpad) != nil and scratchpad >= 1.0 and scratchpad <= maxblock) {
 					setprop("/FMGC/internal/block", scratchpad);
