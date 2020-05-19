@@ -17,6 +17,7 @@ var myHold = [nil, nil];
 var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
 var myClosestAirport = [nil, nil];
+var myPilotWP = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
@@ -954,6 +955,250 @@ var canvas_MCDU_base = {
 			me["Simple_R2S"].setText("PILOTS ");
 			me["Simple_R3S"].setText("PILOTS ");
 			me["Simple_R4S"].setText("PILOTS ");
+		} else if (page == "PILOTWP") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].hide();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
+				me["Simple_PageNum"].show();
+				me["Simple_Title"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me["Simple_L0S"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				
+				if (myPilotWP[i] != nil) {
+					me["Simple_PageNum"].setText((myPilotWP[i].scroll + 1) ~ "/" ~ (fmgc.WaypointDatabase.getCount()));
+					
+					me["Simple_Title"].setText(sprintf("%s", myPilotWP[i].title ~ "       "));
+					
+					forindex (var matrixArrow; myPilotWP[i].arrowsMatrix) {
+						if (matrixArrow == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myPilotWP[i].arrowsMatrix[matrixArrow]) {
+							if (myPilotWP[i].arrowsMatrix[matrixArrow][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+							} else {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+							}
+						}
+					}
+					me.colorLeftArrow(myPilotWP[i].arrowsColour[0][0],myPilotWP[i].arrowsColour[0][1],myPilotWP[i].arrowsColour[0][2],myPilotWP[i].arrowsColour[0][3],myPilotWP[i].arrowsColour[0][4],myPilotWP[i].arrowsColour[0][5]);
+					me.colorRightArrow(myPilotWP[i].arrowsColour[1][0],myPilotWP[i].arrowsColour[1][1],myPilotWP[i].arrowsColour[1][2],myPilotWP[i].arrowsColour[1][3],myPilotWP[i].arrowsColour[1][4],myPilotWP[i].arrowsColour[1][5]);
+					
+					
+					forindex (var matrixFont; myPilotWP[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myPilotWP[i].fontMatrix[matrixFont]) {
+							if (myPilotWP[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					if (myPilotWP[i].L1[0] == nil) {
+						me["Simple_L1"].hide();
+						me["Simple_L1S"].hide();
+					} else {
+						me["Simple_L1"].show();
+						me["Simple_L1"].setText(myPilotWP[i].L1[0]);
+						if (myPilotWP[i].L1[1] != nil) {
+							me["Simple_L1S"].show();
+							me["Simple_L1S"].setText(myPilotWP[i].L1[1]);
+						} else {
+							me["Simple_L1S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].L2[0] == nil) {
+						me["Simple_L2"].hide();
+						me["Simple_L2S"].hide();
+					} else {
+						me["Simple_L2"].show();
+						me["Simple_L2"].setText(myPilotWP[i].L2[0]);
+						if (myPilotWP[i].L2[1] != nil) {
+							me["Simple_L2S"].show();
+							me["Simple_L2S"].setText(myPilotWP[i].L2[1]);
+						} else {
+							me["Simple_L2S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].L3[0] == nil) {
+						me["Simple_L3"].hide();
+						me["Simple_L3S"].hide();
+					} else {
+						me["Simple_L3"].show();
+						me["Simple_L3"].setText(myPilotWP[i].L3[0]);
+						if (myPilotWP[i].L3[1] != nil) {
+							me["Simple_L3S"].show();
+							me["Simple_L3S"].setText(myPilotWP[i].L3[1]);
+						} else {
+							me["Simple_L3S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].L4[0] == nil) {
+						me["Simple_L4"].hide();
+						me["Simple_L4S"].hide();
+					} else {
+						me["Simple_L4"].show();
+						me["Simple_L4"].setText(myPilotWP[i].L4[0]);
+						if (myPilotWP[i].L4[1] != nil) {
+							me["Simple_L4S"].show();
+							me["Simple_L4S"].setText(myPilotWP[i].L4[1]);
+						} else {
+							me["Simple_L4S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].L5[0] == nil) {
+						me["Simple_L5"].hide();
+						me["Simple_L5S"].hide();
+					} else {
+						me["Simple_L5"].show();
+						me["Simple_L5"].setText(myPilotWP[i].L5[0]);
+						if (myPilotWP[i].L5[1] != nil) {
+							me["Simple_L5S"].show();
+							me["Simple_L5S"].setText(myPilotWP[i].L5[1]);
+						} else {
+							me["Simple_L5S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].L6[0] == nil) {
+						me["Simple_L6"].hide();
+						me["Simple_L6S"].hide();
+					} else {
+						me["Simple_L6"].show();
+						me["Simple_L6"].setText(myPilotWP[i].L6[0]);
+						if (myPilotWP[i].L6[1] != nil) {
+							me["Simple_L6S"].show();
+							me["Simple_L6S"].setText(myPilotWP[i].L6[1]);
+						} else {
+							me["Simple_L6S"].hide();
+						}
+					}
+					me.colorLeft(myPilotWP[i].L1[2],myPilotWP[i].L2[2],myPilotWP[i].L3[2],myPilotWP[i].L4[2],myPilotWP[i].L5[2],myPilotWP[i].L6[2]);
+					
+					if (myPilotWP[i].R1[0] == nil) {
+						me["Simple_R1"].hide();
+						me["Simple_R1S"].hide();
+					} else {
+						me["Simple_R1"].show();
+						me["Simple_R1"].setText(myPilotWP[i].R1[0]);
+						if (myPilotWP[i].R1[1] != nil) {
+							me["Simple_R1S"].show();
+							me["Simple_R1S"].setText(myPilotWP[i].R1[1]);
+						} else {
+							me["Simple_R1S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].R2[0] == nil) {
+						me["Simple_R2"].hide();
+						me["Simple_R2S"].hide();
+					} else {
+						me["Simple_R2"].show();
+						me["Simple_R2"].setText(myPilotWP[i].R2[0]);
+						if (myPilotWP[i].R2[1] != nil) {
+							me["Simple_R2S"].show();
+							me["Simple_R2S"].setText(myPilotWP[i].R2[1]);
+						} else {
+							me["Simple_R2S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].R3[0] == nil) {
+						me["Simple_R3"].hide();
+						me["Simple_R3S"].hide();
+					} else {
+						me["Simple_R3"].show();
+						me["Simple_R3"].setText(myPilotWP[i].R3[0]);
+						if (myPilotWP[i].R3[1] != nil) {
+							me["Simple_R3S"].show();
+							me["Simple_R3S"].setText(myPilotWP[i].R3[1]);
+						} else {
+							me["Simple_R3S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].R4[0] == nil) {
+						me["Simple_R4"].hide();
+						me["Simple_R4S"].hide();
+					} else {
+						me["Simple_R4"].show();
+						me["Simple_R4"].setText(myPilotWP[i].R4[0]);
+						if (myPilotWP[i].R4[1] != nil) {
+							me["Simple_R4S"].show();
+							me["Simple_R4S"].setText(myPilotWP[i].R4[1]);
+						} else {
+							me["Simple_R4S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].R5[0] == nil) {
+						me["Simple_R5"].hide();
+						me["Simple_R5S"].hide();
+					} else {
+						me["Simple_R5"].show();
+						me["Simple_R5"].setText(myPilotWP[i].R5[0]);
+						if (myPilotWP[i].R5[1] != nil) {
+							me["Simple_R5S"].show();
+							me["Simple_R5S"].setText(myPilotWP[i].R5[1]);
+						} else {
+							me["Simple_R5S"].hide();
+						}
+					}
+					
+					if (myPilotWP[i].R6[0] == nil) {
+						me["Simple_R6"].hide();
+						me["Simple_R6S"].hide();
+					} else {
+						me["Simple_R6"].show();
+						me["Simple_R6"].setText(myPilotWP[i].R6[0]);
+						if (myPilotWP[i].R6[1] != nil) {
+							me["Simple_R6S"].show();
+							me["Simple_R6S"].setText(myPilotWP[i].R6[1]);
+						} else {
+							me["Simple_R6S"].hide();
+						}
+					}
+					me.colorRight(myPilotWP[i].R1[2],myPilotWP[i].R2[2],myPilotWP[i].R3[2],myPilotWP[i].R4[2],myPilotWP[i].R5[2],myPilotWP[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else if (page == "POSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
