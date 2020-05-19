@@ -811,9 +811,11 @@ var canvas_MCDU_base = {
 			if (fmgc.WaypointDatabase.confirm) {
 				me["Simple_R5"].setText("CONFIRM DELETE ALL ");
 				me["Simple_R5"].setColor(getprop("/MCDUC/colors/amb/r"),getprop("/MCDUC/colors/amb/g"),getprop("/MCDUC/colors/amb/b"));
+				me["arrow5R"].setColor(getprop("/MCDUC/colors/amb/r"),getprop("/MCDUC/colors/amb/g"),getprop("/MCDUC/colors/amb/b"));
 			} else {
 				me["Simple_R5"].setText("DELETE ALL ");
 				me["Simple_R5"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
+				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
 			}
 			
 			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {

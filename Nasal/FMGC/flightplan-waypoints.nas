@@ -30,19 +30,21 @@ var WaypointDatabase = {
 		if (wpObj.index >= me.getSize()) {
 			# add to end, since index doesn't exist
 			append(me.waypointsVec, wpObj);
+			me.write();
 			return 2;
 		} elsif (me.waypointsVec[wpObj.index] == nil) {
 			# add at passed index
 			me.waypointsVec[wpObj.index] = wpObj;
+			me.write();
 			return 2;
 		} else {
 			# fall back to end
 			logprint(4, "pilotWaypoint constructor claims index " ~ wpObj.index ~ " is nil, but it isn't!");
 			append(me.waypointsVec, wpObj);
+			me.write();
 			return 2;
 		}
 		
-		me.write();
 	},
 	# delete - empties waypoints vector
 	delete: func() {
@@ -54,6 +56,7 @@ var WaypointDatabase = {
 				}
 			}
 		}
+		me.write();
 	},
 	# deleteAtIndex - delete at specific index. Set to nil, so it still exists in vector
 	deleteAtIndex: func(index) {
@@ -61,6 +64,7 @@ var WaypointDatabase = {
 			return;
 		}
 		me.waypointsVec[index] = nil;
+		me.write();
 	},
 	# getNilIndex - find the first nil
 	# post 2020.1 use dedicated function vecindex()
@@ -118,8 +122,12 @@ var WaypointDatabase = {
 	},
 	# read - read from a file, extract using props interface
 	read: func() {
-		me.delete();
 		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWaypoints.xml";
+		# create file if it doesn't exist
+		if (io.stat(path) == nil) {
+			me.write();
+			return;
+		}
 		var data = io.readxml(path).getChild("waypoints");
 		var pilotWP = nil;
 		for (var i = 0; i < 20; i = i + 1) {
