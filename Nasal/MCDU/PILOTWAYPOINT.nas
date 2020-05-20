@@ -23,7 +23,7 @@ var pilotWaypointPage = {
 	R6: [nil, nil, "ack"],
 	new: func(computer) {
 		var ap = {parents:[pilotWaypointPage]};
-		ap.scroll = 0;
+		ap.scroll = fmgc.WaypointDatabase.getNonNilIndex();
 		ap.computer = computer;
 		ap._setupPageWithData();
 		return ap;
@@ -48,14 +48,24 @@ var pilotWaypointPage = {
 	translateLatitude: func(latitude) {
 		var split = split(".", sprintf("%s", latitude));
 		var degree = split[0];
-		var decimal = sprintf("%0.1f", split[1] * 60);
-		return degree ~ decimal;
+		if (latitude >= 0) {
+			var decimal = sprintf("%04.1f", (latitude - num(degree)) * 60);
+			return sprintf("%02.0f", degree) ~ decimal ~ "N";
+		} else {
+			var decimal = sprintf("%04.1f", (latitude - num(degree)) * 60);
+			return sprintf("%02.0f", degree) ~ decimal ~ "S";
+		}
 	},
 	translateLongitude: func(longitude) {
 		var split = split(".", sprintf("%s", longitude));
 		var degree = split[0];
-		var decimal = sprintf("%0.1f", split[1] * 60);
-		return degree ~ decimal;
+		if (longitude >= 0) {
+			var decimal = sprintf("%04.1f", (longitude - num(degree)) * 60);
+			return sprintf("%03.0f", degree) ~ decimal ~ "E";
+		} else {
+			var decimal = sprintf("%04.1f", (longitude - num(degree)) * 60);
+			return sprintf("%03.0f", degree) ~ decimal ~ "W";
+		}
 	},
 	scrollLeft: func() {
 		me.scroll -= 1;
@@ -82,6 +92,7 @@ var pilotWaypointPage = {
 			me.arrowsColour[1][5] = "blu";
 			fmgc.WaypointDatabase.delete();
 		}
+		me.scroll = fmgc.WaypointDatabase.getNonNilIndex();
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 };

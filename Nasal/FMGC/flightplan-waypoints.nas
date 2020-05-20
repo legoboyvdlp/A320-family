@@ -76,6 +76,16 @@ var WaypointDatabase = {
 		}
 		return -1;
 	},
+	# getNonNilIndex - find the first non-nil
+	# post 2020.1 use dedicated function vecindex()
+	getNonNilIndex: func() {
+		for (var i = 0; i < me.getSize(); i = i + 1) {
+			if (me.waypointsVec[i] != nil) {
+				return i;
+			}
+		}
+		return -1;
+	},
 	# getCount - return size, neglecting "nil"
 	getCount: func() {
 		var count = 0;
