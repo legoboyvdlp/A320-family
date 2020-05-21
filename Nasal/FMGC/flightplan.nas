@@ -56,6 +56,14 @@ var flightPlanController = {
 	_timeTemp: nil,
 	_altTemp: nil,
 	
+	init: func() {
+		me.resetFlightplan(2);
+		me.insertPPOS(2);
+		me.addDiscontinuity(1, 2, 1);
+		me.currentToWptIndex.setValue(0);
+		me.flightPlanChanged(2);
+	},
+	
 	reset: func() {
 		me.temporaryFlag[0] = 0;
 		me.temporaryFlag[1] = 0;
@@ -208,8 +216,11 @@ var flightPlanController = {
 	# Check if a discontinuity already exists either immediately before or at that index
 	# If it does, don't add another one
 	# Optional flag DEBUG_DISCONT to disable discontinuities totally
-	addDiscontinuity: func(index, plan) {
+	addDiscontinuity: func(index, plan, force = 0) {
 		if (DEBUG_DISCONT) { return; }
+		if (force) {
+			me.flightplans[plan].insertWP(createDiscontinuity(), index);
+		}
 		if (index > 0) {
 			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
 				me.flightplans[plan].insertWP(createDiscontinuity(), index);
@@ -229,6 +240,10 @@ var flightPlanController = {
 	
 	insertTP: func(n, index = 1) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), index);
+	},
+	
+	insertPPOS: func(n, index = 0) {
+		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), index);
 	},
 	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
