@@ -201,6 +201,13 @@ var flightPlanController = {
 	
 	# for these two remember to call flightPlanChanged. We are assuming this is called from a function which will all flightPlanChanged itself.
 	
+	# addDiscontinuity - insert discontinuity at passed index
+	# args: index, plan
+	#    index: index to add at
+	#    plan: plan to add to
+	# Check if a discontinuity already exists either immediately before or at that index
+	# If it does, don't add another one
+	# Optional flag DEBUG_DISCONT to disable discontinuities totally
 	addDiscontinuity: func(index, plan) {
 		if (DEBUG_DISCONT) { return; }
 		if (index > 0) {
@@ -232,13 +239,9 @@ var flightPlanController = {
 	#    name: name of waypoint to be created
 	#    typeStr: optional argument to be passed to createWP, must be one of "sid", "star" "approach" "missed" or "pseudo"
 	
-	childWPBearingDistance: func(wpt, bearing, dist, name, typeStr = "") {
+	childWPBearingDistance: func(wpt, bearing, dist) {
 		var coordinates = greatCircleMove(wpt.lat, wpt.lon, num(bearing), num(dist));
-		if (typeStr != "") {
-			return createWP(coordinates, name, typeStr);
-		} else {
-			return createWP(coordinates, name);
-		}
+		return coordinates;
 	},
 	
 	# insertNOSID - create default SID and add to flightplan
@@ -254,7 +257,7 @@ var flightPlanController = {
 			}
 			
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
-			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5, "1500", "sid"), 1);
+			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5), "1500", "sid"), 1);
 		}
 		me.flightPlanChanged(n);
 	},
@@ -274,7 +277,7 @@ var flightPlanController = {
 			if (hdg > 360) {
 				hdg = hdg - 360;
 			}
-			me.flightplans[n].insertWP(me.childWPBearingDistance(wptStore, hdg, 5, "CF", "star"), me.arrivalIndex[n]);
+			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, hdg, 5), "CF", "star"), me.arrivalIndex[n]);
 		}
 		me.flightPlanChanged(n);
 	},
@@ -293,7 +296,10 @@ var flightPlanController = {
 	directTo: func(waypointGhost, plan) {
 		if (me.flightplans[plan].indexOfWP(waypointGhost) == -1) {
 			me.insertTP(plan, 1);
-			me.flightplans[plan].insertWP(createWPFrom(waypointGhost), 2);
+			
+			# use createWP here as createWPFrom doesn't accept waypoints
+			# createWPFrom worked before... but be sure!
+			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.wp_name), 2);
 			me.addDiscontinuity(3, plan);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
@@ -336,6 +342,18 @@ var flightPlanController = {
 		}
 	},
 	
+	# deleteTillIndex - helper that deletes waypoints up to a passed waypoint already in flightplan
+	# uses a while loop to delete a certain number of waypoints between passed index and 
+	# index of waypoint alredy in flightplan
+	deleteTillIndex: func(wpGhost, index, plan) {
+		var numToDel = me.flightplans[plan].indexOfWP(wpGhost) - index;
+		while (numToDel > 0) {
+			me.deleteWP(index, plan, 1);
+			numToDel -= 1;
+		}
+		return 2;
+	},
+	
 	# createDuplicateNames - helper to spawn DUPLICATENAMES page
 	# args: ghostContainer, index, flag, plan
 	#    ghostContainer: vector of fgPositioned ghosts
@@ -364,34 +382,21 @@ var flightPlanController = {
 		}
 		
 		if (size(airport) == 1 or override) {
-			if (!override) {
-				if (me.flightplans[plan].indexOfWP(airport[0]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(airport[0]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(airport[0]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
-				}
+			var indexToInsert = -1;
+			if (override) {
+				indexToInsert = overrideIndex;
 			} else {
-				if (me.flightplans[plan].indexOfWP(airport[overrideIndex]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(airport[overrideIndex]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(airport[overrideIndex]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
-				}
+				indexToInsert = 0;
+			}
+			
+			var indexPresent = me.flightplans[plan].indexOfWP(airport[indexToInsert]);
+			if (me.flightplans[plan].indexOfWP(airport[indexToInsert]) == -1) {
+				me.flightplans[plan].insertWP(createWPFrom(airport[indexToInsert]), index);
+				me.addDiscontinuity(index + 1, plan);
+				me.flightPlanChanged(plan);
+				return 2;
+			} else {
+				return me.deleteTillIndex(airport[indexToInsert], index, plan);
 			}
 		} elsif (size(airport) >= 1) {
 			me.createDuplicateNames(airport, index, 0, plan);
@@ -399,7 +404,7 @@ var flightPlanController = {
 		}
 	},
 	
-	insertFix: func(text, index, plan, override = 0, overrideIndex = -1) { # override - means always choose [0]
+	insertFix: func(text, index, plan, override = 0, overrideIndex = -1) {
 		if (index == 0) {
 			return 1;
 		}
@@ -410,38 +415,74 @@ var flightPlanController = {
 		}
 		
 		if (size(fix) == 1 or override) {
-			if (!override) {
-				if (me.flightplans[plan].indexOfWP(fix[0]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(fix[0]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(fix[0]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
-				}
+			var indexToInsert = -1;
+			if (override) {
+				indexToInsert = overrideIndex;
 			} else {
-				if (me.flightplans[plan].indexOfWP(fix[overrideIndex]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(fix[overrideIndex]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(fix[overrideIndex]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
-				}
+				indexToInsert = 0;
+			}
+			
+			var indexPresent = me.flightplans[plan].indexOfWP(fix[indexToInsert]);
+			if (me.flightplans[plan].indexOfWP(fix[indexToInsert]) == -1) {
+				me.flightplans[plan].insertWP(createWPFrom(fix[indexToInsert]), index);
+				me.addDiscontinuity(index + 1, plan);
+				me.flightPlanChanged(plan);
+				return 2;
+			} else {
+				return me.deleteTillIndex(fix[indexToInsert], index, plan);
 			}
 		} elsif (size(fix) >= 1) {
 			me.createDuplicateNames(fix, index, 0, plan);
 			return 2;
+		}
+	},
+	
+	insertNavaid: func(text, index, plan, override = 0, overrideIndex = -1) {
+		if (index == 0) {
+			return 1;
+		}
+		
+		var navaid = findNavaidsByID(text);
+		if (size(navaid) == 0) {
+			return 0;
+		}
+		
+		if (size(navaid) == 1 or override) {
+			var indexToInsert = -1;
+			if (override) {
+				indexToInsert = overrideIndex;
+			} else {
+				indexToInsert = 0;
+			}
+			
+			var indexPresent = me.flightplans[plan].indexOfWP(navaid[indexToInsert]);
+			if (me.flightplans[plan].indexOfWP(navaid[indexToInsert]) == -1) {
+				me.flightplans[plan].insertWP(createWPFrom(navaid[indexToInsert]), index);
+				me.addDiscontinuity(index + 1, plan);
+				me.flightPlanChanged(plan);
+				return 2;
+			} else {
+				return me.deleteTillIndex(navaid[indexToInsert], index, plan);
+			}
+		} elsif (size(navaid) >= 1) {
+			me.createDuplicateNames(navaid, index, 1, plan);
+			return 2;
+		}
+	},
+	
+	insertDBWP: func(wpGhost, index, plan) {
+		if (index == 0 or wpGhost == nil) {
+			return 1;
+		}
+		
+		if (me.flightplans[plan].indexOfWP(wpGhost) == -1) {
+			# use createWP here as createWPFrom doesn't accept waypoints
+			me.flightplans[plan].insertWP(createWP(wpGhost, wpGhost.wp_name), index);
+			me.addDiscontinuity(index + 1, plan);
+			me.flightPlanChanged(plan);
+			return 2;
+		} else {
+			return me.deleteTillIndex(wpGhost, index, plan);
 		}
 	},
 	
@@ -459,66 +500,16 @@ var flightPlanController = {
 			return 1;
 		}
 		
-		var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ index);
-		if (me.flightplans[plan].indexOfWP(myWpLatLon) == -1) {
-			me.flightplans[plan].insertWP(myWpLatLon, index);
-			me.addDiscontinuity(index + 1, plan);
-			me.flightPlanChanged(plan);
-			return 2;
-		} else {
-			var numToDel = me.flightplans[plan].indexOfWP(myWpLatLon) - index;
-			while (numToDel > 0) {
-				me.deleteWP(index, plan, 1);
-				numToDel -= 1;
-			}
-			return 2;
-		}
-	},
-	
-	insertNavaid: func(text, index, plan, override = 0, overrideIndex = -1) {
-		if (index == 0) {
-			return 1;
+		var waypoint = pilotWaypoint.new({lat: latDecimal, lon: lonDecimal}, "LL");
+		var addDb = WaypointDatabase.addWP(waypoint);
+		if (addDb != 2) {
+			return addDb;
 		}
 		
-		var navaid = findNavaidsByID(text);
-		if (size(navaid) == 0) {
-			return 0;
-		}
-		
-		if (size(navaid) == 1 or override) {
-			if (!override) {
-				if (me.flightplans[plan].indexOfWP(navaid[0]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(navaid[0]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(navaid[0]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
-				}
-			} else {
-				if (me.flightplans[plan].indexOfWP(navaid[overrideIndex]) == -1) {
-					me.flightplans[plan].insertWP(createWPFrom(navaid[overrideIndex]), index);
-					me.addDiscontinuity(index + 1, plan);
-					me.flightPlanChanged(plan);
-					return 2;
-				} else {
-					var numToDel = me.flightplans[plan].indexOfWP(navaid[overrideIndex]) - index;
-					while (numToDel > 0) {
-						me.deleteWP(index, plan, 1);
-						numToDel -= 1;
-					}
-					return 2;
-				}
-			}
-		} elsif (size(navaid) >= 1) {
-			me.createDuplicateNames(navaid, index, 1, plan);
-			return 2;
-		}
+		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
+		me.addDiscontinuity(index + 1, plan);
+		me.flightPlanChanged(plan);
+		return 2;
 	},
 	
 	# getWPforPBD - parse scratchpad text to find waypoint ghost for PBD
@@ -568,7 +559,7 @@ var flightPlanController = {
 			return 1;
 		}
 		
-		if (size(wpGhostContainer) == 0 or override) {
+		if (size(wpGhostContainer) == 1 or override) {
 			if (!override) {
 				wpGhost = wpGhostContainer[0];
 			} else {
@@ -584,8 +575,7 @@ var flightPlanController = {
 		}
 		
 		var localMagvar = magvar(wpGhost.lat, wpGhost.lon);
-		me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan);
-		return 2;
+		return me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan); # magnetic to true? I don't know. But this works!
 	},
 	
 	
@@ -597,12 +587,19 @@ var flightPlanController = {
 	#    plan: plan to insert to
 	
 	insertPlaceBearingDistance: func(wp, bearing, distance, index, plan) {
-		me.flightplans[plan].insertWP(me.childWPBearingDistance(wp, bearing, distance, "PBD" ~ index), index);
+		var waypoint = pilotWaypoint.new(me.childWPBearingDistance(wp, bearing, distance), "PBD");
+		var addDb = WaypointDatabase.addWP(waypoint);
+		if (addDb != 2) {
+			return addDb;
+		}
+		
+		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
 		me.addDiscontinuity(index + 1, plan);
 		me.flightPlanChanged(plan);
+		return 2;
 	},
 	
-	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success, 3 = not allowed due to dir to
+	scratchpad: func(text, index, plan) { # return 0 not in database, 1 not allowed, 2 success, 3 = not allowed due to dir to, 4 = database full
 		if (mcdu.dirToFlag) {
 			return 3;
 		}
@@ -616,6 +613,12 @@ var flightPlanController = {
 			}
 		} else {
 			var thePlan = plan;
+		}
+		
+		# check waypoints database here
+		var wpFromDB = WaypointDatabase.getWP(text);
+		if (wpFromDB != nil) { 
+			return me.insertDBWP(wpFromDB, index, thePlan);
 		}
 		
 		if (size(split("/", text)) == 3) {

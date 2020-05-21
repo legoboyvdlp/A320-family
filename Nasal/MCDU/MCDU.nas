@@ -399,6 +399,7 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].manAirportCall(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			notAllowed(i);
 		}
@@ -473,6 +474,17 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(1);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
+			if (fmgc.WaypointDatabase.getCount() > 0) {
+				if (canvas_mcdu.myPilotWP[i] != nil) {
+					canvas_mcdu.myPilotWP[i].del();
+				}
+				canvas_mcdu.myPilotWP[i] = nil;
+				canvas_mcdu.myPilotWP[i] = pilotWaypointPage.new(i);
+					setprop("/MCDU[" ~ i ~ "]/page", "PILOTWP");
+			} else {
+				notAllowed(i); # todo spawn new waypoints page
+			}
 		} else {
 			notAllowed(i);
 		}
@@ -551,6 +563,8 @@ var rskbutton = func(btn, i) {
 			initInputA("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
+			statusInput("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -619,9 +633,19 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV") {
-			setprop("/MCDU/[" ~ i ~ "]/page", "F-PLNA");
+			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldR6();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PILOTWP") {
+			if (canvas_mcdu.myPilotWP[i] != nil) {
+				if (fmgc.WaypointDatabase.confirm[i]) {
+					fmgc.WaypointDatabase.confirm[i] = 0;
+					canvas_mcdu.myPilotWP[i].deleteCmd();
+				} else {
+					fmgc.WaypointDatabase.confirm[i] = 1;
+					canvas_mcdu.myPilotWP[i].deleteCmd();
+				}
+			}
 		} else {
 			notAllowed(i);
 		}
@@ -650,6 +674,8 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].scrollLeft();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].scrollLeft();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PILOTWP") {
+			canvas_mcdu.myPilotWP[i].scrollLeft();
 		}
 	} else if (btn == "right") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
@@ -672,6 +698,8 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].scrollRight();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].scrollRight();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PILOTWP") {
+			canvas_mcdu.myPilotWP[i].scrollRight();
 		}
 	} else if (btn == "up") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {

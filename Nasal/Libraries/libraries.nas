@@ -227,6 +227,7 @@ var systemsInit = func {
 setlistener("/sim/signals/fdm-initialized", func {
 	systemsInit();
 	fmgc.flightPlanTimer.start();
+	fmgc.WaypointDatabase.read();
 });
 
 var systemsLoop = maketimer(0.1, func {
