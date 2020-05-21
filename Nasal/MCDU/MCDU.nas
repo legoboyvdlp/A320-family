@@ -630,6 +630,7 @@ var rskbutton = func(btn, i) {
 					canvas_mcdu.myPilotWP[i].deleteCmd();
 				} else {
 					fmgc.WaypointDatabase.confirm[i] = 1;
+					canvas_mcdu.myPilotWP[i].deleteCmd();
 				}
 			}
 		} else {

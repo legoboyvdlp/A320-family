@@ -39,10 +39,19 @@ var pilotWaypointPage = {
 		me.L2 = [me.translateLatitude(ghost.lat) ~ "/" ~ me.translateLongitude(ghost.lon), "     LAT/LON", "grn"];
 		
 		me.R5 = ["WAYPOINT ", "NEW ", "wht"];
-		me.R6 = ["DELETE ALL ", nil, "blu"];
+		
 		
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 1]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["ack", "ack", "ack", "ack", "wht", "blu"]];
+		
+		if (fmgc.WaypointDatabase.confirm[me.computer]) {
+			me.R6 = ["CONFIRM DELETE ALL ", nil, "amb"];
+			me.arrowsColour[1][5] = "amb";
+		} else {
+			me.R6 = ["DELETE ALL ", nil, "blu"];
+			me.arrowsColour[1][5] = "blu";
+		}
+		
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	translateLatitude: func(latitude) {
@@ -78,17 +87,11 @@ var pilotWaypointPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	deleteCmd: func() {
-		if (fmgc.WaypointDatabase.confirm[me.computer]) {
-			me.R6 = ["CONFIRM DELETE ALL ", nil, "amb"];
-			me.arrowsColour[1][5] = "amb";
-			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-		} else {
-			me.R6 = ["DELETE ALL ", nil, "blu"];
-			me.arrowsColour[1][5] = "blu";
+		if (!fmgc.WaypointDatabase.confirm[me.computer]) {
 			fmgc.WaypointDatabase.delete(me.computer);
 			me.scroll = fmgc.WaypointDatabase.getNonNilIndex();
-			me._setupPageWithData();
-			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
+		me._setupPageWithData();
+		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 };
