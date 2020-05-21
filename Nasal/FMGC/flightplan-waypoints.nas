@@ -9,7 +9,7 @@ var nilTree = {
 
 var WaypointDatabase = {
 	waypointsVec: [],
-	confirm: 0,
+	confirm: [0, 0],
 	# addWP - adds pilot waypoint to waypoints vector
 	# arg: wpObj - passed pilot waypoint object
 	# return: 
@@ -47,7 +47,8 @@ var WaypointDatabase = {
 		
 	},
 	# delete - empties waypoints vector
-	delete: func() {
+	# callerIdx is the calling mcdu
+	delete: func(callerIdx) {
 		var noDel = 0;
 		for (var i = 0; i < me.getSize(); i = i + 1) {
 			if (me.waypointsVec[i] != nil) {
@@ -57,6 +58,10 @@ var WaypointDatabase = {
 			}
 		}
 		me.write();
+		if (me.getCount() != 0) {
+			setprop("/MCDU[" ~ callerIdx ~ "]/scratchpad-msg", 1);
+			setprop("/MCDU[" ~ callerIdx ~ "]/scratchpad", "PILOT ELEMENT RETAINED");
+		}
 	},
 	# deleteAtIndex - delete at specific index. Set to nil, so it still exists in vector
 	deleteAtIndex: func(index) {
@@ -85,6 +90,47 @@ var WaypointDatabase = {
 			}
 		}
 		return -1;
+	},
+	# getNextFromIndex - find the next non-nil after a passed index
+	getNextFromIndex: func(index) {
+		for (var i = (index + 1); i < me.getSize(); i = i + 1) {
+			if (me.waypointsVec[i] != nil) {
+				return i;
+			}
+		}
+		
+		for (var i = 0; i <= index; i = i + 1) {
+			if (me.waypointsVec[i] != nil) {
+				return i;
+			}
+		}
+		return index;
+	},
+	# getPreviousFromIndex - find the next non-nil before a passed index
+	getPreviousFromIndex: func(index) {
+		for (var i = (index - 1); i >= 0; i = i - 1) {
+			if (me.waypointsVec[i] != nil) {
+				return i;
+			}
+		}
+		
+		for (var i = (me.getSize() - 1); i >= index; i = i - 1) {
+			if (me.waypointsVec[i] != nil) {
+				return i;
+			}
+		}
+		return index;
+	},
+	# getNoOfIndex - return what number passed item is in list, neglecting "nil"
+	getNoOfIndex: func(index) {
+		var count = 0;
+		for (var i = 0; i <= index; i = i + 1) {
+			if (me.waypointsVec[i] == nil) {
+				continue;
+			}
+			count += 1;
+		}
+		return count;
 	},
 	# getCount - return size, neglecting "nil"
 	getCount: func() {
@@ -225,3 +271,15 @@ var pilotWaypoint = {
 		if (me.id != nil) { return id; }
 	},
 };
+
+setlistener("/MCDU[0]/page", func() {
+	if (getprop("/MCDU[0]/page") != "PILOTWP" and getprop("/MCDU[0]/page") != "STATUS") {
+		WaypointDatabase.confirm[0] = 0;
+	}
+}, 0, 0);
+
+setlistener("/MCDU[1]/page", func() {
+	if (getprop("/MCDU[1]/page") != "PILOTWP" and getprop("/MCDU[1]/page") != "STATUS") {
+		WaypointDatabase.confirm[1] = 0;
+	}
+}, 0, 0);

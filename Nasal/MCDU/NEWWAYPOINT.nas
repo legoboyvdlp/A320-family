@@ -1,4 +1,4 @@
-var pilotWaypointPage = {
+var newWaypointPage = {
 	title: nil,
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -22,8 +22,7 @@ var pilotWaypointPage = {
 	R5: [nil, nil, "ack"],
 	R6: [nil, nil, "ack"],
 	new: func(computer) {
-		var ap = {parents:[pilotWaypointPage]};
-		ap.scroll = fmgc.WaypointDatabase.getNonNilIndex();
+		var ap = {parents:[newWaypointPage]};
 		ap.computer = computer;
 		ap._setupPageWithData();
 		return ap;
@@ -66,16 +65,6 @@ var pilotWaypointPage = {
 			var decimal = sprintf("%04.1f", (longitude - num(degree)) * 60);
 			return sprintf("%03.0f", degree) ~ decimal ~ "W";
 		}
-	},
-	scrollLeft: func() {
-		me.scroll = fmgc.WaypointDatabase.getPreviousFromIndex(me.scroll);
-		me._setupPageWithData();
-		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-	},
-	scrollRight: func() {
-		me.scroll = fmgc.WaypointDatabase.getNextFromIndex(me.scroll);
-		me._setupPageWithData();
-		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	deleteCmd: func() {
 		if (fmgc.WaypointDatabase.confirm[me.computer]) {

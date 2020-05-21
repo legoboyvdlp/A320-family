@@ -809,7 +809,7 @@ var canvas_MCDU_base = {
 				me["arrow5R"].hide();
 			}
 			
-			if (fmgc.WaypointDatabase.confirm) {
+			if (fmgc.WaypointDatabase.confirm[i]) {
 				me["Simple_R5"].setText("CONFIRM DELETE ALL ");
 				me["Simple_R5"].setColor(getprop("/MCDUC/colors/amb/r"),getprop("/MCDUC/colors/amb/g"),getprop("/MCDUC/colors/amb/b"));
 				me["arrow5R"].setColor(getprop("/MCDUC/colors/amb/r"),getprop("/MCDUC/colors/amb/g"),getprop("/MCDUC/colors/amb/b"));
@@ -988,7 +988,7 @@ var canvas_MCDU_base = {
 				
 				
 				if (myPilotWP[i] != nil) {
-					me["Simple_PageNum"].setText((myPilotWP[i].scroll + 1) ~ "/" ~ (fmgc.WaypointDatabase.getCount()));
+					me["Simple_PageNum"].setText(fmgc.WaypointDatabase.getNoOfIndex(myPilotWP[i].scroll) ~ "/" ~ (fmgc.WaypointDatabase.getCount()));
 					
 					me["Simple_Title"].setText(sprintf("%s", myPilotWP[i].title ~ "       "));
 					
