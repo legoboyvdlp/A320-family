@@ -50,7 +50,7 @@ var vertRev = {
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R2 = ["RTA ", nil, "wht"];
-			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} if (me.type == 2) { 
@@ -61,12 +61,17 @@ var vertRev = {
 			me.L3 = [" [    ]", " SPD CSTR", "blu"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
-			me.L6 = [" CLB", nil, "wht"];
+			me.L6 = [" CLB", nil, "amb"];
 			me.R2 = ["RTA ", nil, "wht"];
 			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
-			me.R6 = ["DES ", nil, "wht"];
+			me.R6 = ["DES ", nil, "amb"];
+			# When the system does vertical planning, L6 should be RETURN and R6 not used if the MCDU knows the waypoint is during climb or descent.
+			# The CLB or DES prompts should only be shown for a vertical revision in the cruise phase.
+			# For now we fake it and allow the user to press either, which both act like RETURN.
+			# When CLB/DES are shown, a small "OR" should be shown between them.
+			# The 'arrows' for CLB/DES should actually be asterisks.
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "amb"], ["ack", "wht", "ack", "ack", "wht", "amb"]];
 			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 		} else {
 			me.title = ["VERT REV", " AT ", me.id];
@@ -84,8 +89,7 @@ var vertRev = {
 				me.L5 = [" WIND DATA", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R2 = ["RTA ", nil, "wht"];
-				me.R6 = ["DES ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			} elsif (me.type == 1) {
@@ -102,8 +106,7 @@ var vertRev = {
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R2 = ["RTA ", nil, "wht"];
 				me.R3 = ["3000", "G/S INTCP", "grn"];
-				me.R6 = ["DES ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
+				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			}
