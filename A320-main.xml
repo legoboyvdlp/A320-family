@@ -3954,7 +3954,6 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/efis.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -3998,6 +3997,7 @@
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/efis.nas</file>
 		</fcu>
 		<fmgc>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-waypoints.nas</file>

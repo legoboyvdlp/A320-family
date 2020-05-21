@@ -3262,9 +3262,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/CSTR") != 1) {
-					libraries.cpt_efis_btns("cstr");
+					fcu.cpt_efis_btns("cstr");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3304,9 +3304,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/CSTR") != 1) {
-					libraries.fo_efis_btns("cstr");
+					fcu.fo_efis_btns("cstr");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3346,9 +3346,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/wpt") != 1) {
-					libraries.cpt_efis_btns("wpt");
+					fcu.cpt_efis_btns("wpt");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3388,9 +3388,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/wpt") != 1) {
-					libraries.fo_efis_btns("wpt");
+					fcu.fo_efis_btns("wpt");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3430,9 +3430,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/VORD") != 1) {
-					libraries.cpt_efis_btns("vord");
+					fcu.cpt_efis_btns("vord");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3472,9 +3472,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/VORD") != 1) {
-					libraries.fo_efis_btns("vord");
+					fcu.fo_efis_btns("vord");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3514,9 +3514,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/NDB") != 1) {
-					libraries.cpt_efis_btns("ndb");
+					fcu.cpt_efis_btns("ndb");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3556,9 +3556,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/NDB") != 1) {
-					libraries.fo_efis_btns("ndb");
+					fcu.fo_efis_btns("ndb");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3598,9 +3598,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/arpt") != 1) {
-					libraries.cpt_efis_btns("arpt");
+					fcu.cpt_efis_btns("arpt");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3640,9 +3640,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/arpt") != 1) {
-					libraries.fo_efis_btns("arpt");
+					fcu.fo_efis_btns("arpt");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3675,7 +3675,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setCptND(1);</script>
+				<script>fcu.setCptND(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3684,7 +3684,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setCptND(-1);</script>
+				<script>fcu.setCptND(-1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3713,7 +3713,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setFoND(1);</script>
+				<script>fcu.setFoND(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3722,7 +3722,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setFoND(-1);</script>
+				<script>fcu.setFoND(-1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3751,7 +3751,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(0, 1);</script>
+				<script>fcu.setNDRange(0, 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3760,7 +3760,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(0, -1);</script>
+				<script>fcu.setNDRange(0, -1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3790,7 +3790,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(1, 1);</script>
+				<script>fcu.setNDRange(1, 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3799,7 +3799,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(1, -1);</script>
+				<script>fcu.setNDRange(1, -1);</script>
 			</binding>
 		</action>
 	</animation>
