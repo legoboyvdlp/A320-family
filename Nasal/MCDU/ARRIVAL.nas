@@ -80,9 +80,11 @@ var arrivalPage = {
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[me.computer].star;
+				me.selectedTransition = fmgc.flightPlanController.flightplans[me.computer].star_trans;
 				isNoStar[me.computer] = 0;
 			} elsif (fmgc.flightPlanController.flightplans[2].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[2].star;
+				me.selectedTransition = fmgc.flightPlanController.flightplans[2].star_trans;
 				isNoStar[me.computer] = 0;
 			} elsif (isNoStar[me.computer] == 1) {
 				me.selectedSTAR = "NO STAR";

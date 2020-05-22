@@ -508,6 +508,23 @@
 					<legend>AIR</legend>
 					<pref-height>25</pref-height>
 					<pref-width>40</pref-width>
+					<button>
+						<row>0</row>
+						<col>0</col>
+						<legend>AIR</legend>
+						<pref-height>25</pref-height>
+						<pref-width>40</pref-width>
+						<binding>
+							<command>nasal</command>
+							<script>mcdu.pagebutton("airport", 1);</script>
+							<condition>
+								<greater-than-equals>
+									<property>systems/electrical/bus/ac-2</property>
+									<value>110</value>
+								</greater-than-equals>
+							</condition>
+						</binding>
+					</button>
 				</button>
 				
 				<button>

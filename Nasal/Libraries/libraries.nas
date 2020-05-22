@@ -221,8 +221,9 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.eng_init();
 	systems.APUController.init();
-	systems.fire_init();
 	systems.autobrake_init();
+	systems.fire_init();
+	systems.icingInit();
 	fmgc.flightPlanController.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
@@ -230,9 +231,12 @@ var systemsInit = func {
 	mcdu.MCDU_init(0);
 	mcdu.MCDU_init(1);
 	systemsLoop.start();
+<<<<<<< HEAD
 	effects.icingInit();
+=======
+>>>>>>> dev
 	lightsLoop.start();
-	libraries.ECAM.init();
+	ecam.ECAM.init();
 	libraries.variousReset();
 	rmp.init();
 	acp.init();
@@ -240,11 +244,13 @@ var systemsInit = func {
 	atc.init();
 	fcu.FCUController.init();
 	dmc.DMController.init();
+	fmgc.flightPlanController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
 	systemsInit();
 	fmgc.flightPlanTimer.start();
+	fmgc.WaypointDatabase.read();
 });
 
 var systemsLoop = maketimer(0.1, func {
@@ -253,7 +259,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.HYD.loop();
 	systems.FUEL.loop();
 	systems.ADIRS.loop();
-	libraries.ECAM.loop();
+	ecam.ECAM.loop();
 	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();

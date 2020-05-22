@@ -856,6 +856,31 @@
 	
 	<animation>
 		<type>pick</type>
+		<object-name>airport</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("airport", 1);</script>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than>
+							<property>controls/lighting/DU/mcdu2</property>
+							<value>0.01</value>
+						</greater-than>
+					</and>
+				</condition>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
 		<object-name>left</object-name>
 		<action>
 			<button>0</button>

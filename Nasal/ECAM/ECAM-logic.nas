@@ -2033,13 +2033,13 @@ var messages_right_memo = func {
 		land_asap_a.active = 0;
 	}
 	
-	if (libraries.ap_active == 1 and apWarn.getValue() == 1) {
+	if (ecam.ap_active == 1 and apWarn.getValue() == 1) {
 		ap_off.active = 1;
 	} else {
 		ap_off.active = 0;
 	}
 	
-	if (libraries.athr_active == 1 and athrWarn.getValue() == 1) {
+	if (ecam.athr_active == 1 and athrWarn.getValue() == 1) {
 		athr_off.active = 1;
 	} else {
 		athr_off.active = 0;

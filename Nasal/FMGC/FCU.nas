@@ -102,7 +102,7 @@ var FCUController = {
 		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!ap1.getBoolValue()) {
 				ap1Input.setValue(1);
-				libraries.apWarnNode.setValue(0);
+				ecam.apWarnNode.setValue(0);
 			} else {
 				apOff("hard", 1);
 			}
@@ -489,7 +489,7 @@ var updateActiveFMGC = func {
 # Autopilot Disconnection
 var apOff = func(type, side) {
 	if ((ap1Input.getValue() and (side == 1 or side == 0)) or (ap2Input.getValue() and (side == 2 or side == 0))) {
-		libraries.doApWarn(type);
+		ecam.doApWarn(type);
 	}
 	
 	if (side == 0) {
@@ -509,7 +509,7 @@ var athrOff = func(type) {
 			fadec.lockThr();
 		}
 		athrInput.setValue(0);
-		libraries.doAthrWarn(type);
+		ecam.doAthrWarn(type);
 	}
 }
 

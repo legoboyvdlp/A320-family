@@ -4089,12 +4089,10 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/efis.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -4115,14 +4113,28 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
+			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/clock.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
+		<ecam>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
+		</ecam>
+		<effects>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
+		</effects>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
@@ -4131,8 +4143,10 @@
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/efis.nas</file>
 		</fcu>
 		<fmgc>
+			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-waypoints.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
@@ -4147,6 +4161,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
@@ -4169,6 +4184,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
+		<!-- Canvas -->
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>
 		</canvas_pfd>
@@ -4185,12 +4201,7 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
-		<ecam>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
-		</ecam>
+		<!-- Autopush -->
 		<autopush>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>
@@ -4203,6 +4214,7 @@
 		<autopush_route>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush_route.nas</file>
 		</autopush_route>
+		<!-- Panels -->
 		<rmp>
 			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>
 		</rmp>
