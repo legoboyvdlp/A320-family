@@ -152,7 +152,7 @@ var gen1_hz = props.globals.getNode("/systems/electrical/sources/idg-1/output-he
 var gen2_hz = props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz", 1);
 var ext_volts = props.globals.getNode("/systems/electrical/sources/ext/output-volt", 1);
 var ext_hz = props.globals.getNode("/systems/electrical/sources/ext/output-hertz", 1);
-var galleyshed = props.globals.getNode("/systems/electrical/extra/galleyshed", 1);
+var galleyshed = props.globals.getNode("/systems/electrical/some-electric-thingie/galley-shed", 1);
 var switch_galley = props.globals.getNode("/controls/electrical/switches/galley", 1);
 var dcbat = props.globals.getNode("/systems/electrical/bus/dc-bat", 1);
 var ac_ess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
@@ -1671,7 +1671,7 @@ var canvas_lowerECAM_elec = {
 			}
 		}
 
-		if (galleyshed.getValue() == 1 or (switch_galley.getValue() == 0)) {
+		if (galleyshed.getValue()) {
 			me["GalleyShed"].show();
 		} else {
 			me["GalleyShed"].hide();

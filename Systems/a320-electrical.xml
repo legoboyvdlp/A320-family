@@ -989,13 +989,38 @@
 			</test>
 		</switch>
 		
+		<!-- Galleys -->
+		<fcs_function name="/systems/electrical/some-electric-thingie/galley-shed-sum">
+			<function>
+				<sum>
+					<property>/systems/electrical/relay/apu-glc/contact-pos</property>
+					<property>/systems/electrical/relay/ext-epc/contact-pos</property>
+					<property>/systems/electrical/relay/gen-1-glc/contact-pos</property>
+					<property>/systems/electrical/relay/gen-2-glc/contact-pos</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<switch name="/systems/electrical/relay/galley-bus-1-shed-switch/contact-pos">
-			<default value="1"/>
-			<test logic="OR" value="0">
+			<default value="0"/>
+			<test logic="AND" value="1">
 				/controls/electrical/switches/galley eq 1
-				<test logic="AND">
-					/systems/electrical/relay/gen-1-glc/output ne 0
-					/systems/electrical/relay/gen-2-glc/output ne 0
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/wow eq 0
+						/systems/electrical/some-electric-thingie/galley-shed-sum gt 1
+					</test>
+					<test logic="AND">
+						/gear/gear[1]/wow eq 1
+						<test logic="OR">
+							/systems/electrical/relay/apu-glc/output ge 110
+							/systems/electrical/relay/ext-epc/output ge 110
+							<test logic="AND">
+								/systems/electrical/relay/gen-1-glc/output ge 110
+								/systems/electrical/relay/gen-2-glc/output ge 110
+							</test>
+						</test>
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -1008,12 +1033,25 @@
 		</switch>
 		
 		<switch name="/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos">
-			<default value="1"/>
-			<test logic="OR" value="0">
+			<default value="0"/>
+			<test logic="AND" value="1">
 				/controls/electrical/switches/galley eq 1
-				<test logic="AND">
-					/systems/electrical/relay/gen-1-glc/output ne 0
-					/systems/electrical/relay/gen-2-glc/output ne 0
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/wow eq 0
+						/systems/electrical/some-electric-thingie/galley-shed-sum gt 1
+					</test>
+					<test logic="AND">
+						/gear/gear[1]/wow eq 1
+						<test logic="OR">
+							/systems/electrical/relay/apu-glc/output ge 110
+							/systems/electrical/relay/ext-epc/output ge 110
+							<test logic="AND">
+								/systems/electrical/relay/gen-1-glc/output ge 110
+								/systems/electrical/relay/gen-2-glc/output ge 110
+							</test>
+						</test>
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -1022,6 +1060,14 @@
 			<default value="0"/>
 			<test value="/systems/electrical/bus/ac-2">
 				/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/some-electric-thingie/galley-shed">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/relay/galley-bus-1-shed-switch/contact-pos eq 0
+				/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos eq 0
 			</test>
 		</switch>
 		
