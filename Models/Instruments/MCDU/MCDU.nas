@@ -987,8 +987,10 @@ var canvas_MCDU_base = {
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
-				me["Simple_PageNum"].show();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
 				me["Simple_Title"].show();
+				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
@@ -5259,6 +5261,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -5592,6 +5596,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].show();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
