@@ -4115,10 +4115,8 @@
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
-			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/clock.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>

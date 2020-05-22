@@ -223,7 +223,6 @@ var systemsInit = func {
 	systems.APUController.init();
 	systems.autobrake_init();
 	systems.fire_init();
-	systems.icingInit();
 	fmgc.flightPlanController.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
@@ -231,10 +230,7 @@ var systemsInit = func {
 	mcdu.MCDU_init(0);
 	mcdu.MCDU_init(1);
 	systemsLoop.start();
-<<<<<<< HEAD
 	effects.icingInit();
-=======
->>>>>>> dev
 	lightsLoop.start();
 	ecam.ECAM.init();
 	libraries.variousReset();
