@@ -37,7 +37,7 @@ var HYD = {
 		yellow: props.globals.getNode("systems/hydraulic/yellow-psi"),
 	},
 	Ptu: {
-		active: props.globals.getNode("systems/hydraulic/sources/ptu/ptu-active"),
+		active: props.globals.getNode("systems/hydraulic/sources/ptu/ptu-hydraulic-condition"),
 		diff: props.globals.getNode("systems/hydraulic/yellow-psi-diff"),
 	},
 	Qty: {

@@ -523,31 +523,31 @@ var refuelClass = {
 				var actual_fuel = pts.Consumables.Fuel.totalFuelLbs.getValue();
 			}
 			
-			if (me._fuelPreselectAmount >= 10.0) {
+			if (me._fuelPreselectAmount >= 9.95) {
 				me._FQI_pre.setText(sprintf("%2.1f", me._fuelPreselectAmount));
 			} else {
 				me._FQI_pre.setText(sprintf("%2.2f", me._fuelPreselectAmount));
 			}
 			
-			if (me._fuelLeftAmount >= 10.0) {
+			if (me._fuelLeftAmount >= 9.95) {
 				me._FQI_L.setText(sprintf("%2.1f", me._fuelLeftAmount));
 			} else {
 				me._FQI_L.setText(sprintf("%2.2f", me._fuelLeftAmount));
 			}
 			
-			if (me._fuelCenterAmount >= 10.0) {
+			if (me._fuelCenterAmount >= 9.95) {
 				me._FQI_C.setText(sprintf("%2.1f", me._fuelCenterAmount));
 			} else {
 				me._FQI_C.setText(sprintf("%2.2f", me._fuelCenterAmount));
 			}
 			
-			if (me._fuelRightAmount >= 10.0) {
+			if (me._fuelRightAmount >= 9.95) {
 				me._FQI_R.setText(sprintf("%2.1f", me._fuelRightAmount));
 			} else {
 				me._FQI_R.setText(sprintf("%2.2f", me._fuelRightAmount));
 			}
 			
-			if (me._fuelTotalAmount >= 10.0) {
+			if (me._fuelTotalAmount >= 9.95) {
 				me._FQI_actual.setText(sprintf("%2.1f", actual_fuel / 1000));
 			} else {
 				me._FQI_actual.setText(sprintf("%2.2f", actual_fuel / 1000));

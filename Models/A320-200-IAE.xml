@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<name>A320-200</name>
@@ -335,86 +335,97 @@
 		</offsets>
 	</model>
 
-<!-- Tire smoke and spray effects -->
-<model>
-  <path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
-  <name>tyre-smoke-n</name>
-	<offsets>
-		<x-m>7.83</x-m>
-		<y-m>0</y-m>
-		<z-m>-3.9669424</z-m>
-	</offsets>
- </model>
- 
-<model>
-  <path>Aircraft/Generic/Effects/tyre-smoke-port.xml</path>
-  <name>tyre-smoke-p</name>
-	<offsets>
-		<x-m>20.3180764</x-m>
-		<y-m>-3.795</y-m>
-		<z-m>-3.9669424</z-m>
-	</offsets>
-</model>
- 
-<model>
-  <path>Aircraft/Generic/Effects/tyre-smoke-stbd.xml</path>
-  <name>tyre-smoke-s</name>
-	<offsets>
-		<x-m>20.3180764</x-m>
-		<y-m>3.795</y-m>
-		<z-m>-3.9669424</z-m>
-	</offsets>
-</model>
-
-<model>
-  <path>Aircraft/Generic/Effects/rain-nose.xml</path>
-  <name>rain-splash-n</name>
-	<offsets>
-		<x-m>7.83</x-m>
-		<y-m>0</y-m>
-		<z-m>-3.9669424</z-m>
-	</offsets>
-</model>
-
-<model>
-  <path>Aircraft/Generic/Effects/rain-port.xml</path>
-  <name>rain-splash-p</name>
-	<offsets>
-		<x-m>20.3180764</x-m>
-		<y-m>-3.795</y-m>
-		<z-m>-3.9669424</z-m>
-	</offsets>
-</model>
- 
-<model>
-  <path>Aircraft/Generic/Effects/rain-stbd.xml</path>
-  <name>rain-splash-s</name>
-	<offsets>
-		<x-m>20.3180764</x-m>
-		<y-m>3.795</y-m>
-		<z-m>-3.9669424</z-m>
-	</offsets>
-</model>
-
-<model>
-  <path>Aircraft/A320-family/Models/Effects/tire-smoke-left.xml</path>
-  <name>tire-smoke-l</name>
+	<!-- Tire smoke and spray effects -->
+	<model>
+		<path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
+		<name>tyre-smoke-n</name>
+		<offsets>
+			<x-m>7.83</x-m>
+			<y-m>0</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	 </model>
+	 
+	<model>
+		<path>Aircraft/Generic/Effects/tyre-smoke-port.xml</path>
+		<name>tyre-smoke-p</name>
 		<offsets>
 			<x-m>20.3180764</x-m>
 			<y-m>-3.795</y-m>
 			<z-m>-3.9669424</z-m>
 		</offsets>
-</model>
-
-<model>
-  <path>Aircraft/A320-family/Models/Effects/tire-smoke-right.xml</path>
-  <name>tire-smoke-r</name>
+	</model>
+	 
+	<model>
+		<path>Aircraft/Generic/Effects/tyre-smoke-stbd.xml</path>
+		<name>tyre-smoke-s</name>
 		<offsets>
 			<x-m>20.3180764</x-m>
 			<y-m>3.795</y-m>
 			<z-m>-3.9669424</z-m>
 		</offsets>
-</model>
+	</model>
+	
+	<model>
+		<path>Aircraft/Generic/Effects/rain-nose.xml</path>
+		<name>rain-splash-n</name>
+		<offsets>
+			<x-m>7.83</x-m>
+			<y-m>0</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<path>Aircraft/Generic/Effects/rain-port.xml</path>
+		<name>rain-splash-p</name>
+		<offsets>
+			<x-m>20.3180764</x-m>
+			<y-m>-3.795</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+	 
+	<model>
+		<path>Aircraft/Generic/Effects/rain-stbd.xml</path>
+		<name>rain-splash-s</name>
+		<offsets>
+			<x-m>20.3180764</x-m>
+			<y-m>3.795</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/tire-smoke-left.xml</path>
+		<name>tire-smoke-l</name>
+		<offsets>
+			<x-m>20.3180764</x-m>
+			<y-m>-3.795</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/tire-smoke-right.xml</path>
+		<name>tire-smoke-r</name>
+		<offsets>
+			<x-m>20.3180764</x-m>
+			<y-m>3.795</y-m>
+			<z-m>-3.9669424</z-m>
+		</offsets>
+	</model>
+	
+	<!-- wing condensation effect -->
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/wing-condensation-L.xml</path>
+		<name>wing-condensation</name>
+	</model>
+	
+	<model>
+		<path>Aircraft/A320-family/Models/Effects/wing-condensation-R.xml</path>
+		<name>wing-condensation</name>
+	</model>
 
 	<!-- Other non-aircraft models -->
 	<model>
@@ -427,42 +438,46 @@
 		</offsets>
 	</model>
 	
-	<!--Firetruck-->
+	<model>
+		<path>Aircraft/Generic/marker.xml</path>
+	</model>
+	
+	<!-- Firetruck -->
 
-<model>
- <name>Firetruck1</name>
- <path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
- <offsets>
-  <x-m>60.0</x-m>
-  <y-m>10.0</y-m>
-  <z-m>-4.4</z-m>
- </offsets>
-</model>
-
-<model>
- <name>Firetruck2</name>
- <path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
- <offsets>
-  <x-m>80.0</x-m>
-  <y-m>-8.0</y-m>
-  <z-m>-4.4</z-m>
- </offsets>
-</model>
-
-<animation>
-    <type>select</type>
-    <object-name>Firetruck1</object-name>
-    <object-name>Firetruck2</object-name>
-    <condition>
-        <and>
-            <property>sim/animation/fire-services</property>
-            <less-than>
-                <property>velocities/groundspeed-kt</property>
-                <value>40</value>
-            </less-than>
-        </and>
-    </condition>
-</animation>
+	<model>
+		<name>Firetruck1</name>
+		<path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
+		<offsets>
+			<x-m>60.0</x-m>
+			<y-m>10.0</y-m>
+			<z-m>-4.4</z-m>
+		</offsets>
+	</model>
+	
+	<model>
+		<name>Firetruck2</name>
+		<path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
+		<offsets>
+			<x-m>80.0</x-m>
+			<y-m>-8.0</y-m>
+			<z-m>-4.4</z-m>
+		</offsets>
+	</model>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Firetruck1</object-name>
+		<object-name>Firetruck2</object-name>
+		<condition>
+			<and>
+				<property>sim/animation/fire-services</property>
+				<less-than>
+					<property>velocities/groundspeed-kt</property>
+					<value>40</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
 	
 	<!-- LIVERY SELECT -->
 	<!-- Animation -->
@@ -494,7 +509,7 @@
 		</unload>
 	</nasal>
 	
-	<!-- Ground Services -->    
+	<!-- Ground Services -->	
 	<model>
 		<name>ground_services</name>
 		<path>Aircraft/A320-family/Models/A320-groundservices.xml</path>

@@ -8,5 +8,5 @@ var new = func(model) ; # this controller doesn't need an instance
 var LayerController = canvas.SymbolLayer.Controller.registry[name];
 var isActive = func(model) {return 1};#LayerController.a_instance.isActive(model);
 var query_range = func()
-        die(name~".scontroller.query_range /MUST/ be provided by implementation");
+		die(name~".scontroller.query_range /MUST/ be provided by implementation");
 #var model = props.globals.getNode('/position');

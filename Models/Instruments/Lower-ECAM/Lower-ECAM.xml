@@ -1,17 +1,10 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
 	<path>res/Lower-ECAM.ac</path>
-	
-	<animation>
-		<type>scale</type>
-		<x-offset>1.05</x-offset>
-		<y-offset>1.05</y-offset>
-		<z-offset>1.05</z-offset>
-	</animation>
 	
 	<animation>
 		<type>pick</type>
@@ -36,5 +29,10 @@
 			<factor-prop>controls/lighting/DU/du4</factor-prop>
 		</emission>
 	</animation>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/display</inherits-from>
+		<object-name>lecam.screen</object-name>
+	</effect>
 
 </PropertyList>

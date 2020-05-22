@@ -11,6 +11,6 @@ var query_range = func()
 	die(name~".scontroller.query_range /MUST/ be provided by implementation");
 
 var getpos = func(model){
-    [model.lat, model.lon];
+	[model.lat, model.lon];
 }
 

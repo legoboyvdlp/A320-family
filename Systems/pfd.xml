@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -139,6 +139,34 @@
 			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
 		</reference>
 		<output>/instrumentation/pfd/alt-diff</output>
+	</filter>
+	
+	<filter>
+		<name>Ground bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/position/ground-elev-ft</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/ground-diff</output>
+	</filter>
+	
+	<filter>
+		<name>Destination bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/FMGC/internal/ldg-elev</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/landing-diff</output>
 	</filter>
 	
 	<filter>

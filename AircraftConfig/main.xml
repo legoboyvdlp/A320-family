@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -414,6 +414,67 @@
 				<binding>
 					<command>property-toggle</command>
 					<property>/controls/adirs/skip</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Allow APU Oil Consumption</label>
+				<halign>left</halign>
+				<property>/systems/apu/oil/allow-oil-consumption</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/systems/apu/oil/allow-oil-consumption</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>First Officer is the Pilot Flying</label>
+				<halign>left</halign>
+				<property>/options/system/fo-view</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/fo-view</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+
+			<checkbox>
+				<!-- TODO there might be a better way to formulate this. -->
+				<label>Save states between sessions</label>
+				<halign>left</halign>
+				<property>/systems/acconfig/options/save-state</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/save-state</property>
 				</binding>
 				<binding>
 					<command>dialog-apply</command>

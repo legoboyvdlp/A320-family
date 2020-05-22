@@ -22,7 +22,7 @@ var ADIRU = {
 	num: 0,
 	aligned: 0,
 	inAlign: 0,
-	outputOn: 0, # 0 = disc, 1 = normal
+	outputOn: 1, # 0 = disc, 1 = normal
 	mode: 0, # 0 = off, 1 = nav, 2 = att
 	energised: 0, # 0 = off, 1 = on
 	operative: 0, # 0 = off,
@@ -35,6 +35,7 @@ var ADIRU = {
 		var adiru = { parents:[ADIRU] };
 		adiru.num = n;
 		adiru.alignTimer = maketimer(0.1, adiru, me.alignLoop);
+		
 		return adiru;
     },
 	setOperative: func(newOperative) { 
@@ -60,37 +61,36 @@ var ADIRU = {
 	},
 	# BITE
 	selfTest: func() {
-		ADIRSnew._selfTest = 1;
+		ADIRS._selfTest = 1;
 		_selfTestTime = pts.Sim.Time.elapsedSec.getValue();
 		
-		ADIRSnew.Lights.adrOff[me.num].setValue(1);
-		ADIRSnew.Lights.adrFault[me.num].setValue(1);
+		ADIRS.Lights.adrOff[me.num].setValue(1);
+		ADIRS.Lights.adrFault[me.num].setValue(1);
 		settimer(func() {
-			ADIRSnew.Lights.adrOff[me.num].setValue(0);
-			ADIRSnew.Lights.adrFault[me.num].setValue(0);
+			ADIRS.Lights.adrOff[me.num].setValue(0);
+			ADIRS.Lights.adrFault[me.num].setValue(0);
 		}, 0.1);
 		settimer(func() {
-			ADIRSnew.Lights.adrOff[me.num].setValue(1);
-			ADIRSnew.Lights.adrFault[me.num].setValue(1);
-			ADIRSnew.Lights.irFault[me.num].setValue(1);
-			ADIRSnew.Lights.irOff[me.num].setValue(1);
+			ADIRS.Lights.adrOff[me.num].setValue(1);
+			ADIRS.Lights.adrFault[me.num].setValue(1);
+			ADIRS.Lights.irFault[me.num].setValue(1);
+			ADIRS.Lights.irOff[me.num].setValue(1);
 		}, 1.0);
 		settimer(func() {
-			ADIRSnew.Lights.adrOff[me.num].setValue(0);
-			ADIRSnew.Lights.adrFault[me.num].setValue(0);
-			ADIRSnew.Lights.irFault[me.num].setValue(0);
-			ADIRSnew.Lights.irOff[me.num].setValue(0);
+			ADIRS.Lights.adrOff[me.num].setValue(!ADIRS.Switches.adrSw[me.num].getValue());
+			ADIRS.Lights.adrFault[me.num].setValue(0);
+			ADIRS.Lights.irFault[me.num].setValue(0);
+			ADIRS.Lights.irOff[me.num].setValue(0);
 		}, 1.1);
 		
-		ADIRSnew.selfTest();
+		ADIRS.selfTest();
 	},
 	# Alignment
 	align: func(time) {
-		ADIRSnew.Lights.irFault[me.num].setBoolValue(0);
-		if (!ADIRSnew.skip.getValue()) {
+		ADIRS.Lights.irFault[me.num].setBoolValue(0);
+		if (!ADIRS.skip.getValue()) {
 			if (time > 0 and me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + time;
-				print("Alignment Started");
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -99,7 +99,6 @@ var ADIRU = {
 		} else {
 			if (me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + 5;
-				print("Fast Alignment Started");
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -111,14 +110,15 @@ var ADIRU = {
 		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
+		ADIRS.Operating.aligned[me.num].setValue(0);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
 	},
 	stopAlignAligned: func() {
-		print("Aligned");
 		me.inAlign = 0;
 		me.aligned = 1;
+		ADIRS.Operating.aligned[me.num].setValue(1);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
@@ -135,7 +135,6 @@ var ADIRU = {
 			me.update(); # update operative
 			me.align(calcAlignTime(pts.Position.latitude.getValue()));
 		} elsif (me.operative == 0) {
-			print("ADIRU " ~ me.num ~ " off");
 			me.stopAlignNoAlign();
 		} elsif (pts.Sim.Time.elapsedSec.getValue() >= me._alignTime) {
 			me.stopAlignAligned();
@@ -155,26 +154,26 @@ var ADIRU = {
 			if (me._voltageMain) {
 				me._noPowerTime = 0;
 				me.setOperative(1);
-				if (!ADIRSnew._selfTest) {
-					ADIRSnew.Lights.onBat.setBoolValue(0);
+				if (!ADIRS._selfTest) {
+					ADIRS.Lights.onBat.setBoolValue(0);
 				}
 			} elsif (((me._timeVar < me._noPowerTime + 300 and me._voltageLimitedTime) or !me._voltageLimitedTime) and me._voltageBackup) {
 				me.setOperative(1);
-				if (!ADIRSnew._selfTest) {
-					ADIRSnew.Lights.onBat.setBoolValue(1);
+				if (!ADIRS._selfTest) {
+					ADIRS.Lights.onBat.setBoolValue(1);
 				}
 			} else {
 				me._noPowerTime = 0;
 				me.setOperative(0);
-				if (!ADIRSnew._selfTest) {
-					ADIRSnew.Lights.onBat.setBoolValue(0);
+				if (!ADIRS._selfTest) {
+					ADIRS.Lights.onBat.setBoolValue(0);
 				}
 			}
 		} else {
 			me._noPowerTime = 0;
 			me.setOperative(0);
-			if (!ADIRSnew._selfTest) {
-				ADIRSnew.Lights.onBat.setBoolValue(0);
+			if (!ADIRS._selfTest) {
+				ADIRS.Lights.onBat.setBoolValue(0);
 			}
 		}
 	},
@@ -183,49 +182,49 @@ var ADIRU = {
 var ADIRSControlPanel = {
 	adrSw: func(n) { 
 		if (n < 0 or n > _NUMADIRU) { return; }
-		ADIRSnew._adrSwitchState = ADIRSnew.Switches.adrSw[n].getValue();
-		ADIRSnew.Switches.adrSw[n].setValue(!ADIRSnew._adrSwitchState);
-		if (ADIRSnew.ADIRunits[n] != nil) { 
-			ADIRSnew.ADIRunits[n].outputOn = !ADIRSnew._adrSwitchState;
+		ADIRS._adrSwitchState = ADIRS.Switches.adrSw[n].getValue();
+		ADIRS.Switches.adrSw[n].setValue(!ADIRS._adrSwitchState);
+		if (ADIRS.ADIRunits[n] != nil) { 
+			ADIRS.ADIRunits[n].outputOn = !ADIRS._adrSwitchState;
 		}
-		ADIRSnew.Lights.adrOff[n].setValue(ADIRSnew._adrSwitchState);
+		ADIRS.Lights.adrOff[n].setValue(ADIRS._adrSwitchState);
 	},
 	irSw: func(n) { 
 		if (n < 0 or n > _NUMADIRU) { return; }
-		ADIRSnew._irSwitchState = ADIRSnew.Switches.irSw[n].getValue();
-		ADIRSnew.Switches.irSw[n].setValue(!ADIRSnew._irSwitchState);
-		if (ADIRSnew.IRunits[n] != nil) { 
-			ADIRSnew.IRunits[n].outputOn = !ADIRSnew._irSwitchState;
+		ADIRS._irSwitchState = ADIRS.Switches.irSw[n].getValue();
+		ADIRS.Switches.irSw[n].setValue(!ADIRS._irSwitchState);
+		if (ADIRS.IRunits[n] != nil) { 
+			ADIRS.IRunits[n].outputOn = !ADIRS._irSwitchState;
 		}
-		ADIRSnew.Lights.irOff[n].setValue(ADIRSnew._adrSwitchState);
+		ADIRS.Lights.irOff[n].setValue(ADIRS._adrSwitchState);
 	},
 	irModeSw: func(n, mode) {
 		if (n < 0 or n > _NUMADIRU) { return; }
 		if (mode < 0 or mode > 2) { return; }
-		me._irModeSwitchState = ADIRSnew.Switches.irModeSw[n].getValue();
-		if (ADIRSnew.ADIRunits[n] != nil) { 
-			ADIRSnew.ADIRunits[n].mode = mode;
-			ADIRSnew.ADIRunits[n].updateEnergised(mode);
-			ADIRSnew.Switches.irModeSw[n].setValue(mode);
+		me._irModeSwitchState = ADIRS.Switches.irModeSw[n].getValue();
+		if (ADIRS.ADIRunits[n] != nil) { 
+			ADIRS.ADIRunits[n].mode = mode;
+			ADIRS.ADIRunits[n].updateEnergised(mode);
+			ADIRS.Switches.irModeSw[n].setValue(mode);
 			if (mode == 0) {
-				ADIRSnew.Lights.irFault[n].setBoolValue(0);
-				ADIRSnew.ADIRunits[n].stopAlignNoAlign();
-			} elsif (ADIRSnew.ADIRunits[n].aligned == 0) {
-				ADIRSnew.ADIRunits[n].update(); # update early so operative is set properly
-				ADIRSnew.ADIRunits[n].align(calcAlignTime(pts.Position.latitude.getValue())); # when you set NAV, it first acquires GPS position then acquires GPS. You then use IRS INIT > to set PPOS to align if you wish
+				ADIRS.Lights.irFault[n].setBoolValue(0);
+				ADIRS.ADIRunits[n].stopAlignNoAlign();
+			} elsif (ADIRS.ADIRunits[n].aligned == 0) {
+				ADIRS.ADIRunits[n].update(); # update early so operative is set properly
+				ADIRS.ADIRunits[n].align(calcAlignTime(pts.Position.latitude.getValue())); # when you set NAV, it first acquires GPS position then acquires GPS. You then use IRS INIT > to set PPOS to align if you wish
 			}
 		}
 	}
 };
 
-var ADIRSnew = {
+var ADIRS = {
 	# local vars
 	_adrSwitchState: 0,
 	_irSwitchState: 0,
 	_irModeSwitchState: 0,
 	_hasPower: 0,
 	_cacheOperative: [0, 0, 0],
-	_cacheOutputOn: [0, 0, 0],
+	_cacheOutputOn: [1, 1, 1],
 	_flapPos: nil,
 	_slatPos: nil,
 	_selfTest: 0,
@@ -236,23 +235,25 @@ var ADIRSnew = {
 	
 	# Electrical
 	mainSupply: [systems.ELEC.Bus.acEss, systems.ELEC.Bus.ac2, systems.ELEC.Bus.ac1],
-	backupSupply: [[systems.ELEC.Bus.dcHot2, 0], [systems.ELEC.Bus.dcHot2, 1], [systems.ELEC.Bus.dcHot1, 1]],
+	backupSupply: [[systems.ELEC.Source.Bat2.volt, 0], [systems.ELEC.Source.Bat2.volt, 1], [systems.ELEC.Source.Bat1.volt, 1]], 
+	# ADIRS power directly from a separate bus connected to battery (no c.b. unlike main hot bus), as they are so critical
 	
 	# PTS
 	Lights: {
-		adrFault: [props.globals.getNode("controls/navigation/adirscp/lights/adr-1-fault"), props.globals.getNode("controls/navigation/adirscp/lights/adr-2-fault"), props.globals.getNode("controls/navigation/adirscp/lights/adr-3-fault")],
-		adrOff: [props.globals.getNode("controls/navigation/adirscp/lights/adr-1-off"), props.globals.getNode("controls/navigation/adirscp/lights/adr-2-off"), props.globals.getNode("controls/navigation/adirscp/lights/adr-3-off")],
-		irFault: [props.globals.getNode("controls/navigation/adirscp/lights/ir-1-fault"), props.globals.getNode("controls/navigation/adirscp/lights/ir-2-fault"), props.globals.getNode("controls/navigation/adirscp/lights/ir-3-fault")],
-		irOff: [props.globals.getNode("controls/navigation/adirscp/lights/ir-1-off"), props.globals.getNode("controls/navigation/adirscp/lights/ir-2-off"), props.globals.getNode("controls/navigation/adirscp/lights/ir-3-off")],
-		onBat: props.globals.getNode("controls/navigation/adirscp/lights/on-bat"),
+		adrFault: [props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-fault")],
+		adrOff: [props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-off"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-off"), props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-off")],
+		irFault: [props.globals.getNode("/controls/navigation/adirscp/lights/ir-1-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-2-fault"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-3-fault")],
+		irOff: [props.globals.getNode("/controls/navigation/adirscp/lights/ir-1-off"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-2-off"), props.globals.getNode("/controls/navigation/adirscp/lights/ir-3-off")],
+		onBat: props.globals.getNode("/controls/navigation/adirscp/lights/on-bat"),
 	},
 	Switches: {
-		adrSw: [props.globals.getNode("controls/navigation/adirscp/switches/adr-1"), props.globals.getNode("controls/navigation/adirscp/switches/adr-2"), props.globals.getNode("controls/navigation/adirscp/switches/adr-3")],
-		irModeSw: [props.globals.getNode("controls/navigation/adirscp/switches/ir-1-mode"), props.globals.getNode("controls/navigation/adirscp/switches/ir-2-mode"), props.globals.getNode("controls/navigation/adirscp/switches/ir-3-mode")],
-		irSw: [props.globals.getNode("controls/navigation/adirscp/switches/ir-1"), props.globals.getNode("controls/navigation/adirscp/switches/ir-2"), props.globals.getNode("controls/navigation/adirscp/switches/ir-3")],
+		adrSw: [props.globals.getNode("/controls/navigation/adirscp/switches/adr-1"), props.globals.getNode("/controls/navigation/adirscp/switches/adr-2"), props.globals.getNode("/controls/navigation/adirscp/switches/adr-3")],
+		irModeSw: [props.globals.getNode("/controls/navigation/adirscp/switches/ir-1-mode"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-2-mode"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-3-mode")],
+		irSw: [props.globals.getNode("/controls/navigation/adirscp/switches/ir-1"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-2"), props.globals.getNode("/controls/navigation/adirscp/switches/ir-3")],
 	},
 	Operating: {
-		adr: [props.globals.getNode("systems/navigation/adr/operating-1"), props.globals.getNode("systems/navigation/adr/operating-2"), props.globals.getNode("systems/navigation/adr/operating-3")],
+		adr: [props.globals.getNode("/systems/navigation/adr/operating-1"), props.globals.getNode("/systems/navigation/adr/operating-2"), props.globals.getNode("/systems/navigation/adr/operating-3")],
+		aligned: [props.globals.getNode("/systems/navigation/aligned-1"), props.globals.getNode("/systems/navigation/aligned-2"), props.globals.getNode("/systems/navigation/aligned-3")],
 	},
 	
 	# Nodes
@@ -272,21 +273,21 @@ var ADIRSnew = {
 	update_items: [
 		props.UpdateManager.FromPropertyHashList(["/fdm/jsbsim/fcs/flap-pos-deg","/fdm/jsbsim/fcs/slat-pos-deg"], 0.1, func(notification)
 			{
-				me._flapPos = pts.JSBSIM.FCS.flapDeg.getValue();
-				me._slatPos = pts.JSBSIM.FCS.slatDeg.getValue();
+				me._flapPos = pts.Fdm.JSBsim.Fcs.flapDeg.getValue();
+				me._slatPos = pts.Fdm.JSBsim.Fcs.slatDeg.getValue();
 				
 				if (me._flapPos >= 23 and me._slatPos >= 25) {
-					ADIRSnew.overspeedVFE.setValue(181);
+					ADIRS.overspeedVFE.setValue(181);
 				} elsif (me._flapPos >= 18) {
-					ADIRSnew.overspeedVFE.setValue(189);
+					ADIRS.overspeedVFE.setValue(189);
 				} elsif (me._flapPos >= 13 or me._slatPos > 20) {
-					ADIRSnew.overspeedVFE.setValue(204);
+					ADIRS.overspeedVFE.setValue(204);
 				} elsif (me._slatPos <= 20 and me._flapPos > 2) {
-					ADIRSnew.overspeedVFE.setValue(219);
+					ADIRS.overspeedVFE.setValue(219);
 				} elsif (me._slatPos >= 2 and me._slatPos <= 20) {
-					ADIRSnew.overspeedVFE.setValue(234);
+					ADIRS.overspeedVFE.setValue(234);
 				} else {
-					ADIRSnew.overspeedVFE.setValue(1024);
+					ADIRS.overspeedVFE.setValue(1024);
 				}
 			}
 		),
@@ -322,7 +323,7 @@ var ADIRSnew = {
 		}
 	},
 	selfTest: func() {
-		ADIRSnew.Lights.onBat.setBoolValue(1);
+		ADIRS.Lights.onBat.setBoolValue(1);
 		selfTestLoop.start();
 	},
 	
@@ -333,16 +334,16 @@ var calcAlignTime = func(latitude) {
 };
 
 setlistener("/systems/fmgc/cas-compare/cas-reject-all", func() {
-	if (pts.FMGC.CasCompare.rejectAll.getBoolValue()) {
+	if (pts.FMGC.CasCompare.casRejectAll.getBoolValue()) {
 		fcu.athrOff("hard");
 	}
 }, 0, 0);
 
 setlistener("/controls/adirs/skip", func() {
-	if (ADIRSnew.skip.getBoolValue()) {
+	if (ADIRS.skip.getBoolValue()) {
 		for (i = 0; i < 3; i = i + 1) {
-			if (ADIRSnew.ADIRunits[i].inAlign == 1) {
-				ADIRSnew.ADIRunits[i].stopAlignAligned();
+			if (ADIRS.ADIRunits[i].inAlign == 1) {
+				ADIRS.ADIRunits[i].stopAlignAligned();
 			}
 		}
 	}
@@ -350,8 +351,8 @@ setlistener("/controls/adirs/skip", func() {
 
 selfTestLoop = maketimer(0.2, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > _selfTestTime + 5) {
-		ADIRSnew.Lights.onBat.setBoolValue(0);
+		ADIRS.Lights.onBat.setBoolValue(0);
 		selfTestLoop.stop();
-		ADIRSnew._selfTest = 0;
+		ADIRS._selfTest = 0;
 	}
 });

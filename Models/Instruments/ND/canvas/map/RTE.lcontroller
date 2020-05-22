@@ -12,9 +12,9 @@ SymbolLayer.add(name, {
 	type: name, # Symbol type
 	df_controller: __self__, # controller to use by default -- this one
 	df_options: { # default configuration options
-		active_node: "/autopilot/route-manager/active",
-		current_wp_node: "/autopilot/route-manager/current-wp",
-		wp_num: "/autopilot/route-manager/route/num",
+		active_node: "/FMGC/flightplan[2]/active",
+		current_wp_node: "/FMGC/flightplan[2]/current-wp",
+		wp_num: "/FMGC/flightplan[2]/num",
 		display_inactive_rte: 0
 	}
 });
@@ -48,7 +48,7 @@ var last_result = [];
 
 var searchCmd = func {
 	# FIXME: do we return the active route even if it isn't active?
-	printlog(_MP_dbg_lvl, "Running query: ", name);
+	logprint(_MP_dbg_lvl, "Running query: ", name);
 	var plans = [];
 	var driver = me.route_driver;
 	if(!driver.shouldUpdate()) return me.last_result;
@@ -74,12 +74,12 @@ var searchCmd = func {
 				path = [{},{lon:leg.wp_lon, lat:leg.wp_lat}];
 			else
 				path = leg.path();
-			if(i == (fpSize - 1) and !discontinuity){# WORKAROUND FOR FG BUG
-				var ltype = leg.wp_type;
-				var path_l = size(path);
-				if(ltype != 'runway' and path_l >= 2)
-					path = subvec(path, 0, 1) ~ subvec(path, path_l - 1, 1);
-			}
+#			if(i == (fpSize - 1) and !discontinuity){# WORKAROUND FOR FG BUG -- we don't need it anymore (I think)!
+#				var ltype = leg.wp_type;
+#				var path_l = size(path);
+#				if(ltype != 'runway' and path_l >= 2)
+#					path = subvec(path, 0, 1) ~ subvec(path, path_l - 1, 1);
+#			}
 			coords ~= path;
 			discontinuity = driver.hasDiscontinuity(idx, leg);
 		}

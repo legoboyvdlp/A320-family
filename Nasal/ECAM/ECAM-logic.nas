@@ -14,9 +14,9 @@ var fac1Node   = props.globals.getNode("controls/fctl/switches/fac1", 1);
 var state1Node = props.globals.getNode("engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("fdm/jsbsim/position/wow", 1);
-var apu_rpm    = props.globals.getNode("systems/apu/rpm", 1);
+var apu_rpm    = props.globals.getNode("engines/engine[2]/n1", 1);
 var wing_pb    = props.globals.getNode("controls/switches/wing", 1);
-var apumaster  = props.globals.getNode("controls/APU/master", 1);
+var apumaster  = props.globals.getNode("controls/apu/master", 1);
 var apu_bleedSw   = props.globals.getNode("controls/pneumatic/switches/bleedapu", 1);
 var gear       = props.globals.getNode("gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("controls/engines/engine[0]/cutoff-switch", 1);
@@ -25,6 +25,8 @@ var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "B
 var engOpt     = props.globals.getNode("options/eng", 1);
 
 # local variables
+var transmitFlag1 = 0;
+var transmitFlag2 = 0;
 var phaseVar = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
@@ -32,6 +34,10 @@ var gear_agl_cur = nil;
 var numberMinutes = nil;
 var timeNow = nil;
 var timer10secIRS = nil;
+var altAlertInhibit = nil;
+var alt200 = nil;
+var alt750 = nil;
+var bigThree = nil;
 
 var messages_priority_3 = func {
 	phaseVar = phaseNode.getValue();
@@ -66,7 +72,7 @@ var messages_priority_3 = func {
 		
 		if (getprop("systems/navigation/adr/computation/overspeed-vfe")) {
 			overspeedFlap.active = 1;
-			overspeedFlap.msg = "-VFE................" ~ (systems.ADIRSnew.overspeedVFE.getValue() - 4);
+			overspeedFlap.msg = "-VFE................" ~ (systems.ADIRS.overspeedVFE.getValue() - 4);
 		} else {
 			ECAM_controller.warningReset(overspeedFlap);
 			overspeedFlap.msg = "-VFE................XXX";
@@ -80,7 +86,7 @@ var messages_priority_3 = func {
 	}
 	
 	# FCTL FLAPS NOT ZERO
-	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("controls/flight/flap-lever") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
+	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("controls/flight/flaps-input") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
 		flap_not_zero.active = 1;
 	} else {
 		ECAM_controller.warningReset(flap_not_zero);
@@ -420,7 +426,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnevacSw);
 			}
 			
-			if (eng1FireGnevacApu.clearFlag == 0 and getprop("controls/APU/master") and getprop("systems/apu/rpm") > 99) {
+			if (eng1FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("engines/engine[2]/n1") > 99) {
 				eng1FireGnevacApu.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnevacApu);
@@ -603,7 +609,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnevacSw);
 			}
 			
-			if (eng2FireGnevacApu.clearFlag == 0 and getprop("controls/APU/master") and getprop("systems/apu/rpm") > 99) {
+			if (eng2FireGnevacApu.clearFlag == 0 and getprop("controls/apu/master") and getprop("engines/engine[2]/n1") > 99) {
 				eng2FireGnevacApu.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnevacApu);
@@ -656,7 +662,7 @@ var messages_priority_3 = func {
 	
 	# APU Fire
 	if (apuFire.active == 1) {
-		if (apuFirePB.clearFlag == 0 and !getprop("controls/APU/fire-btn")) {
+		if (apuFirePB.clearFlag == 0 and !getprop("controls/apu/fire-btn")) {
 			apuFirePB.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFirePB);
@@ -666,19 +672,19 @@ var messages_priority_3 = func {
 			apuFireAgentTimer.msg = " -AGENT AFT " ~ getprop("systems/fire/apu/agent-timer") ~ " S...DISCH";
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("controls/APU/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") != 0) {
+		if (apuFireAgent.clearFlag == 0 and getprop("controls/apu/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") != 0) {
 			apuFireAgentTimer.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgentTimer);
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("controls/APU/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") == 0) {
+		if (apuFireAgent.clearFlag == 0 and getprop("controls/apu/fire-btn") and !getprop("systems/fire/apu/disch") and getprop("systems/fire/apu/agent-timer") == 0) {
 			apuFireAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgent);
 		}
 		
-		if (apuFireMaster.clearFlag == 0 and getprop("controls/APU/master")) {
+		if (apuFireMaster.clearFlag == 0 and getprop("controls/apu/master")) {
 			apuFireMaster.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireMaster);
@@ -691,7 +697,7 @@ var messages_priority_3 = func {
 	}
 	
 	# CONFIG
-	if ((slats_config.clearFlag == 0) and (getprop("controls/flight/flap-lever") == 0 or getprop("controls/flight/flap-lever")) == 4 and phaseVar >= 3 and phaseVar <= 4) {
+	if ((slats_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input")) == 4 and phaseVar >= 3 and phaseVar <= 4) {
 		slats_config.active = 1;
 		slats_config_1.active = 1;
 	} else {
@@ -699,7 +705,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(slats_config_1);
 	}
 	
-	if ((flaps_config.clearFlag == 0) and (getprop("controls/flight/flap-lever") == 0 or getprop("controls/flight/flap-lever") == 4) and phaseVar >= 3 and phaseVar <= 4) {
+	if ((flaps_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4) and phaseVar >= 3 and phaseVar <= 4) {
 		flaps_config.active = 1;
 		flaps_config_1.active = 1;
 	} else {
@@ -742,6 +748,84 @@ var messages_priority_3 = func {
 		ap_offw.active = 1;
 	} else {
 		ECAM_controller.warningReset(ap_offw);
+	}
+	
+	# C-Chord
+	if ((pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 200) or !pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 200) {
+		alt200 = 1;
+	} else {
+		alt200 = 0;
+	}
+	
+	if ((pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-1-capt")) < 750) or !pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 750) {
+		alt750 = 1;
+	} else {
+		alt750 = 0;
+	}
+	
+	if (FWC.altChg.getValue() or pts.Gear.position[0].getValue() == 1 or (getprop("controls/gear/gear-down") and pts.Fdm.JSBsim.Fcs.slatDeg.getValue() > 4) or fmgc.Output.vert.getValue() == 2) {
+		altAlertInhibit = 1;
+	} else {
+		altAlertInhibit = 0;
+	}
+	
+	if (alt750 and !alt200 and !altAlertInhibit) {
+		FWC.Monostable.altAlert2.setValue(1);
+	} else {
+		FWC.Monostable.altAlert2.setValue(0);
+	}
+	
+	if ((!fcu.ap1.getBoolValue() and !fcu.ap2.getBoolValue()) and FWC.Monostable.altAlert2.getValue()) {
+		FWC.Monostable.altAlert1.setValue(1);
+	} else {
+		FWC.Monostable.altAlert1.setValue(0);
+	}
+	
+	if (alt750 and alt200 and !altAlertInhibit) {
+		setprop("ECAM/flipflop/alt-alert-2-rs-set", 1);
+	} else {
+		setprop("ECAM/flipflop/alt-alert-2-rs-set", 0);
+	}
+	
+	if (getprop("ECAM/flipflop/alt-alert-rs-reset") or (!alt750 and !alt200 and !altAlertInhibit)) {
+		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 1);
+	} else {
+		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 0);
+	}
+	
+	if (alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-2-rs-output")) {
+		setprop("ECAM/flipflop/alt-alert-3-rs-set", 1);
+	} else {
+		setprop("ECAM/flipflop/alt-alert-3-rs-set", 0);
+	}
+	
+	if ((!alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-rs-output")) or (!alt750 and !alt200 and !altAlertInhibit and getprop("ECAM/flipflop/alt-alert-3-rs-output")) or getprop("ECAM/flipflop/alt-alert-3-rs-set")) {
+		bigThree = 1;
+	} else {
+		bigThree = 0;
+	}
+	
+	if (!gnd and (FWC.Monostable.altAlert1Output.getValue() or bigThree)) {
+		if (!getprop("sim/sound/warnings/cchord-inhibit")) {
+			setprop("sim/sound/warnings/cchord", 1);
+		} else {
+			setprop("sim/sound/warnings/cchord", 0);
+		}
+	} else {
+		setprop("sim/sound/warnings/cchord", 0);
+		setprop("sim/sound/warnings/cchord-inhibit", 0);
+	}
+	
+	if (!gnd and getprop("ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
+		setprop("ECAM/alt-alert-steady", 1);
+	} else {
+		setprop("ECAM/alt-alert-steady", 0);
+	}
+	
+	if (!gnd and bigThree) {
+		setprop("ECAM/alt-alert-flash", 1);
+	} else {
+		setprop("ECAM/alt-alert-flash", 0);
 	}
 	
 	if (!systems.cargoTestBtn.getBoolValue()) {
@@ -805,7 +889,7 @@ var messages_priority_3 = func {
 	}
 	
 	# EMER CONFIG
-	if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dualFailNode.getBoolValue() and phaseVar != 4 and phaseVar != 8 and emerconfig.clearFlag == 0) {
+	if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dualFailNode.getBoolValue() and phaseVar != 4 and phaseVar != 8 and emerconfig.clearFlag == 0 and !getprop("systems/acconfig/autoconfig-running")) {
 		emerconfig.active = 1;
 		
 		if (getprop("systems/hydraulic/sources/rat/position") != 0 and emerconfigMinRat.clearFlag == 0) {
@@ -1115,18 +1199,33 @@ var messages_priority_2 = func {
 	}
 	
 	# APU EMER SHUT DOWN
-	if (apuEmerShutdown.clearFlag == 0 and systems.apuEmerShutdown.getBoolValue() and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuEmerShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
 		apuEmerShutdown.isMainMsg = 1;
 	}
 	
-	if (apuEmerShutdownMast.clearFlag == 0 and getprop("controls/APU/master") and apuEmerShutdown.active == 1) {
+	if (apuEmerShutdownMast.clearFlag == 0 and getprop("controls/apu/master") and apuEmerShutdown.active == 1) {
 		apuEmerShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);
 		apuEmerShutdown.isMainMsg = 0;
+	}
+	
+	# APU AUTO SHUT DOWN
+	if (apuAutoShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and !systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+		apuAutoShutdown.active = 1;
+	} elsif (apuAutoShutdown.clearFlag == 1) {
+		ECAM_controller.warningReset(apuAutoShutdown);
+		apuAutoShutdown.isMainMsg = 1;
+	}
+	
+	if (apuAutoShutdownMast.clearFlag == 0 and getprop("controls/apu/master") and apuAutoShutdown.active == 1) {
+		apuAutoShutdownMast.active = 1;
+	} else {
+		ECAM_controller.warningReset(apuAutoShutdownMast);
+		apuAutoShutdown.isMainMsg = 0;
 	}
 	
 	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
@@ -1194,6 +1293,18 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(crgFwdFireDetFault);
 	}
+	
+	if (hf1Emitting.clearFlag == 0 and transmitFlag1) {
+		hf1Emitting.active = 1;
+	} else {
+		ECAM_controller.warningReset(hf1Emitting);
+	}
+	
+	if (hf2Emitting.clearFlag == 0 and transmitFlag2) {
+		hf2Emitting.active = 1;
+	} else {
+		ECAM_controller.warningReset(hf2Emitting);
+	}
 }
 
 var messages_priority_1 = func {
@@ -1213,7 +1324,7 @@ var messages_priority_0 = func {
 
 var messages_config_memo = func {
 	phaseVar = phaseNode.getValue();
-	if (getprop("controls/flight/flap-lever") == 0 or getprop("controls/flight/flap-lever") == 4 or getprop("controls/flight/speedbrake") != 0 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+	if (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4 or getprop("controls/flight/speedbrake") != 0 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("ECAM/to-config-normal", 0);
 	} else {
 		setprop("ECAM/to-config-normal", 1);
@@ -1255,7 +1366,7 @@ var messages_config_memo = func {
 		toMemoLine3.colour = "c";
 	}
 	
-	if (getprop("controls/flight/flap-pos") > 0 and getprop("controls/flight/flap-pos") < 5) {
+	if (getprop("controls/flight/flaps-pos") > 0 and getprop("controls/flight/flaps-pos") < 5) {
 		toMemoLine4.msg = "    FLAPS T.O";
 		toMemoLine4.colour = "g";
 	} else {
@@ -1322,7 +1433,7 @@ var messages_config_memo = func {
 	}
 	
 	if (getprop("it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
-		if (getprop("controls/flight/flap-pos") == 4) {
+		if (getprop("controls/flight/flaps-pos") == 4) {
 			ldgMemoLine4.msg = "    FLAPS CONF 3";
 			ldgMemoLine4.colour = "g";
 		} else {
@@ -1330,7 +1441,7 @@ var messages_config_memo = func {
 			ldgMemoLine4.colour = "c";
 		}
 	} else {
-		if (getprop("controls/flight/flap-pos") == 5) {
+		if (getprop("controls/flight/flaps-pos") == 5) {
 			ldgMemoLine4.msg = "    FLAPS FULL";
 			ldgMemoLine4.colour = "g";
 		} else {
@@ -1385,7 +1496,7 @@ var messages_memo = func {
 		refuelg.active = 0;
 	}
 	
-	if ((phaseVar == 1 or phaseVar == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRSnew.ADIRunits[0].inAlign == 1 or systems.ADIRSnew.ADIRunits[1].inAlign == 1 or systems.ADIRSnew.ADIRunits[2].inAlign == 1)) {
+	if ((phaseVar == 1 or phaseVar == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1)) {
 		irs_in_align.active = 1;
 		if (getprop("ECAM/phases/timer/eng1or2-output")) {
 			irs_in_align.colour = "a";
@@ -1394,7 +1505,7 @@ var messages_memo = func {
 		}
 		
 		timeNow = pts.Sim.Time.elapsedSec.getValue();
-		numberMinutes = math.round(math.max(systems.ADIRSnew.ADIRunits[0]._alignTime - timeNow, systems.ADIRSnew.ADIRunits[1]._alignTime - timeNow, systems.ADIRSnew.ADIRunits[2]._alignTime - timeNow) / 60);
+		numberMinutes = math.round(math.max(systems.ADIRS.ADIRunits[0]._alignTime - timeNow, systems.ADIRS.ADIRunits[1]._alignTime - timeNow, systems.ADIRS.ADIRunits[2]._alignTime - timeNow) / 60);
 		
 		if (numberMinutes >= 7) {
 			irs_in_align.msg = "IRS IN ALIGN > 7 MN";
@@ -1489,13 +1600,13 @@ var messages_right_memo = func {
 		land_asap_a.active = 0;
 	}
 	
-	if (libraries.ap_active == 1 and apWarn.getValue() == 1) {
+	if (ecam.ap_active == 1 and apWarn.getValue() == 1) {
 		ap_off.active = 1;
 	} else {
 		ap_off.active = 0;
 	}
 	
-	if (libraries.athr_active == 1 and athrWarn.getValue() == 1) {
+	if (ecam.athr_active == 1 and athrWarn.getValue() == 1) {
 		athr_off.active = 1;
 	} else {
 		athr_off.active = 0;
@@ -1578,13 +1689,13 @@ var messages_right_memo = func {
 		ignition.active = 0;
 	}
 	
-	if (getprop("controls/pneumatic/switches/bleedapu") == 1 and getprop("systems/apu/rpm") >= 95) {
+	if (getprop("controls/pneumatic/switches/bleedapu") == 1 and getprop("engines/engine[2]/n1") >= 95) {
 		apu_bleed.active = 1;
 	} else {
 		apu_bleed.active = 0;
 	}
 
-	if (apu_bleed.active == 0 and getprop("systems/apu/rpm") >= 95) {
+	if (apu_bleed.active == 0 and getprop("engines/engine[2]/n1") >= 95) {
 		apu_avail.active = 1;
 	} else {
 		apu_avail.active = 0;

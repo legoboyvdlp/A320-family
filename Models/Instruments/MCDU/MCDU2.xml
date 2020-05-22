@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -18,6 +18,24 @@
 			</binding>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>KBMode.Toggle</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/FMGC/keyboard-left</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/FMGC/keyboard-right</property>
+			</binding>
+		</action>
+	</animation>
 
 	<animation>
  		<type>material</type>
@@ -29,6 +47,11 @@
  			<factor-prop>controls/lighting/DU/mcdu2</factor-prop>
  		</emission>
  	</animation>
+
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/display</inherits-from>
+		<object-name>mcdu2.screen</object-name>
+	</effect>
 
 	<animation>
 		<type>pick</type>
@@ -178,6 +201,31 @@
 	
 	<animation>
 		<type>pick</type>
+		<object-name>prog</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("prog", 1);</script>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than>
+							<property>controls/lighting/DU/mcdu2</property>
+							<value>0.01</value>
+						</greater-than>
+					</and>
+				</condition>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
 		<object-name>perf</object-name>
 		<action>
 			<button>0</button>
@@ -235,6 +283,31 @@
 			<binding>
 				<command>nasal</command>
 				<script>mcdu.pagebutton("fuel-pred", 1);</script>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than>
+							<property>controls/lighting/DU/mcdu2</property>
+							<value>0.01</value>
+						</greater-than>
+					</and>
+				</condition>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>dir</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("dirto", 1);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -765,6 +838,31 @@
 			<binding>
 				<command>nasal</command>
 				<script>mcdu.rskbutton_b("6", 1);</script>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than>
+							<property>controls/lighting/DU/mcdu2</property>
+							<value>0.01</value>
+						</greater-than>
+					</and>
+				</condition>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>airport</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("airport", 1);</script>
 				<condition>
 					<and>
 						<greater-than-equals>

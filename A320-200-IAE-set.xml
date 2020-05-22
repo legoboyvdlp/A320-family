@@ -1,15 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList include="A320-main.xml">
 
 	<sim>
-	
-		<sound>
-			<path>Aircraft/A320-family/Sounds/v2500-sound.xml</path>
-		</sound>
-		<checklists include="A32X-Checklists.xml"/>
 		<description>Airbus A320-232 (IAE V2527-A5)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A320-200-IAE</aero>
@@ -27,6 +22,10 @@
 			<cockpit type="int">5</cockpit>
 			<model type="int">4</model>
 		</rating>
+		
+		<sound>
+			<path>Aircraft/A320-family/Sounds/v2500-sound.xml</path>
+		</sound>
 		
 		<previews>
 			<preview>
@@ -163,37 +162,30 @@
 			</config>
 		</view>
 		
-		<systems>
-      <wingflexer include="Systems/wingflexer-params.xml"/>
-      <property-rule n="100">
-        <name>wing flexer property rule</name>
-        <path>Aircraft/Generic/wingflexer.xml</path>
-      </property-rule>
-    </systems>
-		
 		<systems n="0">
-            <autopilot n="0">
-                <path>Aircraft/A320-family/Systems/fadec-iae.xml</path>
-            </autopilot>
+			<autopilot n="0">
+				<path>Aircraft/A320-family/Systems/fadec-iae.xml</path>
+			</autopilot>
 			<autopilot n="10">
 				<path>Aircraft/A320-family/Systems/v2500-sound.xml</path>
 			</autopilot>
 		</systems>
 
 	</sim>
-        
+		
 	<limits>
-		<mass-and-balance> <!--Data source: https://en.wikipedia.org/wiki/Airbus_A320_family#Specifications-->
+		<mass-and-balance> <!--Data source: TCDS WV 017-->
 			<maximum-takeoff-mass-lbs>172000</maximum-takeoff-mass-lbs>
-			<maximum-landing-mass-lbs>146000</maximum-landing-mass-lbs>
-			<maximum-zero-fuel-mass-lbs>138000</maximum-zero-fuel-mass-lbs>
+			<maximum-landing-mass-lbs>145500</maximum-landing-mass-lbs>
+			<maximum-zero-fuel-mass-lbs>137800</maximum-zero-fuel-mass-lbs>
 		</mass-and-balance>
 	</limits>
 	
 	<options n="0">
 		<EIS2 type="bool">0</EIS2>
-		<eng>IAE</eng>
-		<maxblock>52.3</maxblock>
+		<eng type="string">IAE</eng>
+		<maxblock type="double">52.3</maxblock>
+		<maxflap type="int">40</maxflap>
 	</options>
 	
 	<sharklet type="bool">0</sharklet>
@@ -205,7 +197,7 @@
 	
 	<nasal>
 		<specific>
-			<file>Aircraft/A320-family/Nasal/Sim/a320livery-iae.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/a320livery-iae.nas</file>
 		</specific>
 	</nasal>
 

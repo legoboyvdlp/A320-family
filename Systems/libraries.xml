@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -609,27 +609,6 @@
 	</filter>
 	
 	<filter>
-		<name>Icing Severity</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/systems/icing/severity</property>
-					<entry><ind>0</ind><dep>-0.00000166</dep></entry>
-					<entry><ind>1</ind><dep> 0.00000277</dep></entry>
-					<entry><ind>2</ind><dep> 0.00000277</dep></entry>
-					<entry><ind>3</ind><dep> 0.00000554</dep></entry>
-					<entry><ind>4</ind><dep> 0.00001108</dep></entry>
-					<entry><ind>5</ind><dep> 0.00002216</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/systems/icing/factor</output>
-	</filter>
-	
-	<filter>
 		<name>TAS</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -976,20 +955,16 @@
 		<gain>1.0</gain>
 		<enable>
 			<condition>
-				<or>
+				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-bat</property>
+						<property>/systems/electrical/bus/dc-ess</property>
 						<value>25</value>
 					</greater-than-equals>
-					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-1</property>
-						<value>25</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-2</property>
-						<value>25</value>
-					</greater-than-equals>
-				</or>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
+						<value>1</value>
+					</equals> <!-- TODO ATT HDG SWITCH -->
+				</and>
 			</condition>
 		</enable>
 		<input>/orientation/heading-magnetic-deg</input>
@@ -1022,26 +997,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/nav[2]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1052,26 +1021,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
 						<value>-1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[0]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1109,26 +1072,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/nav[3]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1139,26 +1096,20 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
 						<value>-1</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[1]/in-range</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1177,20 +1128,14 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
+						<value>1</value>
+					</equals>
 					<or>
 						<and>
 							<equals>
@@ -1229,20 +1174,14 @@
 		<input>
 			<condition>
 				<and>
-					<or>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>/systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<equals>
+						<property>/systems/navigation/aligned-1</property>
+						<value>1</value>
+					</equals>
 					<or>
 						<and>
 							<equals>
@@ -1273,4 +1212,145 @@
 		<output>/instrumentation/ddrmi/flag-2</output>
 		<filter-time>0.64</filter-time>
 	</filter>
+	
+	<!-- Minimums stuff -->
+	<filter>
+		<name>Minimums Selector</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/baro</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+		</input>
+		<input>/position/gear-agl-ft</input>
+		<output>/instrumentation/pfd/minimums-ref-alt</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Selector</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/radio</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/FMGC/internal/radio</property>
+		</input>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/baro</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<expression> <!-- A bit ehhh, but avoids huge mess in A320-common-sound.xml -->
+				<product>
+					<floor>
+						<sum>
+							<div>
+								<sum> <!-- Calculate offseted radio value -->
+									<difference>
+										<property>/position/gear-agl-ft</property>
+										<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+									</difference>
+									<property>/FMGC/internal/baro</property>
+								</sum>
+								<value>25</value>
+							</div>
+							<value>0.5</value> <!-- Make floor round it -->
+						</sum>
+					</floor>
+					<value>25</value>
+				</product>
+			</expression>
+		</input>
+		<input>99999</input>
+		<output>/instrumentation/pfd/minimums-no-gpws-alt</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Selector</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/radio</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/FMGC/internal/radio</property>
+		</input>
+		<input>
+			<condition>
+				<not-equals>
+					<property>/FMGC/internal/baro</property>
+					<value>99999</value>
+				</not-equals>
+			</condition>
+			<property>/FMGC/internal/baro</property>
+		</input>
+		<input>99999</input>
+		<output>/instrumentation/pfd/minimums</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Minus 50</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input> 
+			<expression>
+				<difference>
+					<property>/instrumentation/pfd/minimums</property>
+					<value>50</value>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/minimums-minus-50</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Plus 50</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<sum>
+					<property>/instrumentation/pfd/minimums</property>
+					<value>50</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/minimums-plus-50</output>
+	</filter>
+	
+	<filter>
+		<name>Minimums Plus 100</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs type="double">0.1</update-interval-secs>
+		<input>
+			<expression>
+				<sum>
+					<property>/instrumentation/pfd/minimums</property>
+					<value>100</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/minimums-plus-100</output>
+	</filter>
+
 </PropertyList>

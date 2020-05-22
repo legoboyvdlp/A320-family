@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<turbine_engine name="APS3200">
+  <milthrust> 2.6 </milthrust>
+  <bypassratio>     0.000 </bypassratio>
+  <tsfc>            0.820 </tsfc>
+  <bleed>           0.96</bleed> <!-- 16 / 400 KW exhaust energy -->
+  
+  <!-- self sustaining speed is 55.0 -->
+  <ignitionn1>     5.0</ignitionn1>
+  <ignitionn2>     26</ignitionn2> <!-- hack to make work -->
+  <n1spinup>       3.0</n1spinup>
+  <n2spinup>       8.666</n2spinup>  <!-- hack to make work -->
+  <n1startrate> 1.8222</n1startrate>
+  <n2startrate> 1.8222</n2startrate>
+  <idlen1>         99.9 </idlen1>
+  <idlen2>         99.9 </idlen2>
+  <n1spindown>     20</n1spindown>
+  <n2spindown>     20</n2spindown>
+  <disable-windmill> 1</disable-windmill>
+  
+  <maxn1>         100.0 </maxn1>
+  <maxn2>         100.0 </maxn2>
+  <augmented>         0 </augmented>
+  <injected>          0 </injected>
+
+  <function name="IdleThrust">
+   <table>
+    <independentVar lookup="row">velocities/mach</independentVar>
+    <independentVar lookup="column">atmosphere/density-altitude</independentVar>
+    <tableData>
+         -10000     0     10000   20000   30000   40000   50000   90000
+     0.0  0.0430  0.0488  0.0528  0.0694  0.0899  0.1183  0.1467  0
+     0.2  0.0500  0.0501  0.0335  0.0544  0.0797  0.1049  0.1342  0
+     0.4  0.0040  0.0047  0.0020  0.0272  0.0595  0.0891  0.1203  0
+     0.6 -0.0804 -0.0804 -0.0560 -0.0237  0.0276  0.0718  0.1073  0
+     0.8 -0.2129 -0.2129 -0.1498 -0.1025  0.0474  0.0868  0.0900  0
+     1.0 -0.2839 -0.2839 -0.1104 -0.0469 -0.0270  0.0552  0.0800  0
+    </tableData>
+   </table>
+  </function>
+
+  <function name="MilThrust">
+   <table>
+    <independentVar lookup="row">velocities/mach</independentVar>
+    <independentVar lookup="column">atmosphere/density-altitude</independentVar>
+    <tableData>
+          -10000       0   10000   20000   30000   40000   50000   60000   90000
+      0.0  1.2600  1.0000  0.7400  0.5340  0.3720  0.2410  0.1490  0.0580  0
+      0.2  1.1692  0.9326  0.6959  0.5052  0.3545  0.2306  0.1428  0.0399  0
+      0.4  1.1465  0.9182  0.6899  0.5044  0.3559  0.2323  0.1446  0.0429  0
+      0.6  1.1755  0.9466  0.7177  0.5295  0.3763  0.2469  0.1533  0.0468  0
+      0.8  1.2503  1.0137  0.7772  0.5784  0.4144  0.2733  0.1690  0.0527  0
+      1.0  1.3585  1.1114  0.8643  0.6460  0.4713  0.3126  0.1935  0.0625  0
+      1.2  1.4713  1.2186  0.9660  0.7371  0.5400  0.3606  0.2229  0.0733  0
+      1.4  1.5769  1.3256  1.0743  0.8359  0.6212  0.4194  0.2602  0.0890  0
+    </tableData>
+   </table>
+  </function>
+
+</turbine_engine>

@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<particlesystem>
+		<!-- <type>trail</type>-->
+		<name>moisture</name>
+		<texture>res/smoke.png</texture>
+		<emissive>false</emissive>
+		<lighting>false</lighting>
+		<offsets>
+			<x-m>0.3</x-m>
+			<y-m>0</y-m>
+			<z-m>-1.3</z-m>
+			<pitch-deg>0</pitch-deg>
+		</offsets>
+		
+		<attach>local</attach>
+		
+		<placer>
+			<type>point</type>
+		</placer>
+		
+		<shooter>
+			<theta-min-deg>0</theta-min-deg>
+			<theta-max-deg>0</theta-max-deg>
+			<phi-min-deg>0</phi-min-deg>
+			<phi-max-deg>0</phi-max-deg>
+			<speed>
+				<value>0</value>
+				<spread>0</spread>
+			</speed>
+			<rotation-speed>
+				<x-min-deg-sec>180</x-min-deg-sec>
+				<y-min-deg-sec>180</y-min-deg-sec>
+				<z-min-deg-sec>180</z-min-deg-sec>
+				<x-max-deg-sec>-180</x-max-deg-sec>
+				<y-max-deg-sec>-180</y-max-deg-sec>
+				<z-max-deg-sec>-180</z-max-deg-sec>
+			</rotation-speed>
+		</shooter>
+		
+		<counter>
+			<particles-per-sec>
+				<value>50</value>
+				<spread>0</spread>
+			</particles-per-sec>
+		</counter>
+		
+		<align>billboard</align>
+		
+		<particle>
+			<start>
+				<color>
+					<red>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</red>
+					<green>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</green>
+					<blue>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</blue>
+					<alpha>
+						<expression>
+							<product>
+								<value>0.002</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</alpha>
+				</color>
+				<size>
+					<value>1.3</value>
+				</size>
+			</start>
+
+			<end>
+				<color>
+					<red>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</red>
+					<green>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</green>
+					<blue>
+						<expression>
+							<product>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</blue>
+					<alpha>
+						<expression>
+							<product>
+								<value>0.0008</value>
+								<property>environment/relative-humidity</property>
+							</product>
+						</expression>
+					</alpha>
+				</color>
+				<size>
+					<value>1.6</value>
+				</size>
+			</end>
+	
+			<life-sec><value>0.0001</value></life-sec>
+			<mass-kg>0.4</mass-kg>
+			<radius-m>0.1</radius-m>
+		</particle>
+		
+		<program>
+			<fluid>air</fluid>
+			<gravity type="bool">false</gravity>
+			<wind type="bool">false</wind>
+		</program>
+		
+	</particlesystem>
+
+</PropertyList>
+

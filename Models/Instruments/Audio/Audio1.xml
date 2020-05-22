@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
 	<path>res/Audio.ac</path>
 
 	<!-- Headset show/hide on Audio Control Panel(click on body) -->
-<animation>
-	<type>pick</type>
-	<object-name>audio_body</object-name>
-	<action>
-		<button>0</button>
-		<binding>
-			<command>property-toggle</command>
-			<property>controls/audio/headset-toggle</property>
-		</binding>
-	</action>
-</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>audio_body</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/audio/headset-toggle</property>
+			</binding>
+		</action>
+	</animation>
 
 	<!-- INT/RAD switch -->
 	<animation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- Custom Instrumentation -->
 
@@ -247,11 +247,11 @@
 	<tcas>
 		<name>tcas</name>
 		<number>0</number>
-		<!--<vertical-range-ft>9900</vertical-range-ft>
+		<vertical-range-ft>9900</vertical-range-ft>
 		<lateral-range-nm>30</lateral-range-nm>
 		<intruder-use-own-alt>1</intruder-use-own-alt>
 		<intruder-inhibit-alt-ft>380</intruder-inhibit-alt-ft>
-		<intruder-minimum-own-alt-ft>1700</intruder-minimum-own-alt-ft> uncomment for 2019.3 -->
+		<intruder-minimum-own-alt-ft>1700</intruder-minimum-own-alt-ft>
 	</tcas>
 	
 	<radar>

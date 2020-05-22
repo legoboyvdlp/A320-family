@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -122,6 +122,14 @@
 			<text>
 				<halign>left</halign>
 				<label>SHIFT + F - Set CL Thrust</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + K - Disable MCDU keyboard input</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + V - Select Pilot Flying view (See Aircraft Configuration dialog)</label>
 			</text>
 			
 		</group>

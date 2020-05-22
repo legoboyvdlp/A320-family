@@ -1,7 +1,7 @@
 # A3XX ECAM
 # Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2019 Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var ap_active = 0;
 var athr_active = 0;
@@ -119,8 +119,8 @@ var ECAM = {
 		clrLight.setValue(0);
 	},
 	loop: func() {
-		stateL = pts.Engines.Engine1.state.getValue();
-		stateR = pts.Engines.Engine2.state.getValue();
+		stateL = pts.Engines.Engine.state[0].getValue();
+		stateR = pts.Engines.Engine.state[1].getValue();
 		wow = pts.Gear.wow[0].getValue();
 		elapsedTime = pts.Sim.Time.elapsedSec.getValue();
 		
@@ -264,8 +264,8 @@ var SystemDisplay = {
 				me.autoCall("door");
 				me.fctl20sec = 9;
 			} elsif (phase == 2) {
-				aileron = pts.JSBSim.FBW.aileron.getValue();
-				elevator = pts.JSBSim.FBW.elevator.getValue();
+				aileron = pts.Fdm.JSBsim.Fbw.aileron.getValue();
+				elevator = pts.Fdm.JSBsim.Fbw.elevator.getValue();
 				
 				if (abs(aileron) >= 0.15 or abs(elevator) >= 0.15 and me.fctl20sec == 9) {
 					me.autoCall("fctl");

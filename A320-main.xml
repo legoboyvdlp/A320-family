@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Matthew Maring (mattmaring) -->
 
-<PropertyList>
+<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
 
-		<author>Joshua Davidson (Octal450), Jonathan Redpath (legoboyvdlp), Thorsten Herrmann (TH-555), Based on IDG-A32X</author>
+		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
+		
+		<checklists include="A32X-Checklists.xml"/>
 		
 		<status>Pre V1.0</status>
 		
@@ -18,6 +21,7 @@
 			<fallback-model-index>212</fallback-model-index>
 
 			<autopush include="AircraftConfig/autopush-config.xml"/>
+			<display-contrast type="double">0.7</display-contrast>
 			<icing>
 				<iceable>
 					<name>Wing</name>
@@ -45,13 +49,14 @@
 					<ice-inches>0.0</ice-inches>
 					<salvage-control>/controls/deice/windowprobeheat</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
-					<!-- not relevant for fdm, ignore output-property -->
+					<output-property>/environment/aircraft-effects/frost-inch</output-property>
 				</iceable>
 				<iceable>
 					<name>Fuselage</name>
 					<ice-inches>0.0</ice-inches>
-					<!-- no salvage control, no deicing of the fuselage -->
+					<!-- salvage control: de-icing truck -->
 					<sensitivity type="double">0.3</sensitivity>
+					<salvage-control>services/deicing_truck/deicing/position-norm</salvage-control>
 					<output-property>/fdm/jsbsim/ice/fuselage</output-property>
 				</iceable>
 				<iceable>
@@ -94,14 +99,6 @@
 			<tag>2-engine</tag>
 		</tags>
 		
-		<flaps>
-			<setting>0.000</setting>
-			<setting>0.290</setting>
-			<setting>0.596</setting>
-			<setting>0.645</setting>
-			<setting>1.000</setting>
-		</flaps>
-
 		<systems n="0">
 			<electrical>
 				<path></path>
@@ -144,6 +141,11 @@
 			<autopilot n="13">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</autopilot>
+			<wingflexer include="Systems/wingflexer-params.xml"/>
+			<property-rule n="100">
+				<name>Generic Wing Flexer</name>
+				<path>Aircraft/Generic/wingflexer.xml</path>
+			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
@@ -156,7 +158,7 @@
 			<no-smoking-sign type="bool">0</no-smoking-sign>
 			<btn1 type="bool">0</btn1>
 			<btn3 type="bool">0</btn3>
-			<gear-vol type="double">0.25</gear-vol>
+			<gear-vol type="double">0.40</gear-vol>
 			<knb1 type="bool">0</knb1>
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
@@ -174,6 +176,10 @@
 		<menubar>
 			<default>
 				<menu n="100">
+					<label>|</label>
+					<enabled type="bool">false</enabled>
+				</menu>
+				<menu n="101">
 					<label>A320-family</label>
 					<item>
 						<label>Aircraft Config</label>
@@ -194,7 +200,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="101">
+				<menu n="102">
 					<label>FMGC</label>
 					<item>
 						<label>FCU Autoflight</label>
@@ -204,14 +210,16 @@
 						</binding>
 					</item>
 					<item>
-						<label>Route Manager</label>
+						<label>Load Flightplan</label>
 						<binding>
-							<command>dialog-show</command>
-							<dialog-name>route-manager</dialog-name>
+							<command>nasal</command>
+							<script>
+							acconfig.loadflightplan_dlg.open();
+							</script>
 						</binding>
 					</item>
 				</menu>
-				<menu n="102">
+				<menu n="103">
 					<label>DU</label>
 					<item>
 						<label>Captain's PFD</label>
@@ -277,7 +285,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="103">
+				<menu n="104">
 					<label>Instruments</label>
 					<item>
 						<label>Left MCDU</label>
@@ -325,7 +333,7 @@
 						</binding>
 					</item>
 				</menu>
-				<menu n="104">
+				<menu n="105">
 					<label>Utilities</label>
 					<item>
 						<label>Select Livery</label>
@@ -456,8 +464,17 @@
 			<tank n="6">
 				<name>Engine 2 Pipes</name>
 			</tank>
+			<tank n="7">
+				<name>APU Pipes</name>
+			</tank>
 		</fuel>
 	</consumables>
+	
+	<environment>
+		<aircraft-effects>
+			<frost-inch type="double">0</frost-inch>
+		</aircraft-effects>
+	</environment>	
 	
 	<fdm>
 		<jsbsim>
@@ -476,43 +493,43 @@
 			<name>Cockpit Crew</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
 			<min-lb type="double">200</min-lb>
-			<max-lb type="double">440</max-lb>
+			<max-lb type="double">776</max-lb>
 		</weight>
 		<weight n="1">
 			<name>Forward Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">4649</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="2">
 			<name>Center Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">13949</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="3">
 			<name>Aft Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">10462</max-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="4">
 			<name>Forward Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">5000</max-lb>
+			<max-lb type="double">7500</max-lb>
 		</weight>
 		<weight n="5">
 			<name>Aft Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">6662</max-lb>
+			<max-lb type="double">10000</max-lb>
 		</weight>
 		<weight n="6">
 			<name>Aft Bulk Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[6]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">3285</max-lb>
+			<max-lb type="double">3300</max-lb>
 		</weight>
 	</payload>
 	
@@ -552,11 +569,6 @@
 			<vmo-mmo type="int">350</vmo-mmo>
 		</speeds>
 	</it-fbw>
-
-	<apu>
-		<rpm type="float">0</rpm>
-		<egt type="float">0</egt>
-	</apu>
 	
 	<FMGC n="0">
 		<active-fmgc-channel type="int">0</active-fmgc-channel>
@@ -573,59 +585,31 @@
 		<footrest-cpt n="1" type="double">0</footrest-cpt>
 		<footrest-fo n="0" type="double">0</footrest-fo>
 		<footrest-fo n="1" type="double">0</footrest-fo>
-		<adirs n="0">
-			<adr n="0">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<adr n="1">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<adr n="2">
-				<fault type="bool">false</fault>
-				<off type="bool">false</off>
-			</adr>
-			<display>
-				<selected type="int">1</selected>
-				<dataknob type="int">5</dataknob>
-				<text type="string"></text>
-			</display>
-			<ir n="0">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<ir n="1">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<ir n="2">
-				<align type="bool">false</align>
-				<knob type="int">0</knob>
-				<fault type="bool">false</fault>
-			</ir>
-			<onbat type="bool">false</onbat>
-			<skip type="bool">0</skip>
-		</adirs>
 		<atc>
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
 		</atc>
-		<APU>
+		<apu>
+			<agent-btn type="bool">0</agent-btn>
 			<fire-btn type="bool">0</fire-btn>
 			<fire-btn-cover type="bool">0</fire-btn-cover>
 			<fire-light type="bool">0</fire-light>
 			<master type="bool">0</master>
 			<start type="bool">0</start>
 			<bleed type="bool">0</bleed>
-		</APU>
+		</apu>
 		<autobrake>
 			<active type="bool">0</active>
 			<brake-left type="double">0</brake-left>
 			<brake-right type="double">0</brake-right>
 		</autobrake>
+		<CVR>
+			<erase type="bool">0</erase>
+			<gndctl type="bool">0</gndctl>
+			<power type="bool">0</power>
+			<test type="bool">0</test>
+			<tone type="bool">0</tone>
+		</CVR>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
@@ -678,6 +662,12 @@
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
+			<engine n="2">
+				<cutoff type="bool">true</cutoff>
+				<starter type="bool">0</starter>
+				<throttle-output type="double">0</throttle-output>
+				<throttle-fdm type="double">0</throttle-fdm>
+			</engine>
 		</engines>
 		<fctl>
 			<lights>
@@ -706,11 +696,10 @@
 		</fire>
 		<flight>
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
-			<aileron-input>0</aileron-input>
-			<elevator-input>0</elevator-input>
-			<flap-pos type="int">0</flap-pos>
-			<speedbrake-arm>0</speedbrake-arm>
-			<slats>0</slats>
+			<aileron-input type="double">0</aileron-input>
+			<elevator-input type="double">0</elevator-input>
+			<speedbrake-arm type="bool">0</speedbrake-arm>
+			<slats type="double">0</slats>
 		</flight>
 		<fuel>
 			<switches>
@@ -793,9 +782,9 @@
 		<navigation>
 			<adirscp>
 				<switches>
-					<adr-1 type="bool">0</adr-1>
-					<adr-2 type="bool">0</adr-2>
-					<adr-3 type="bool">0</adr-3>
+					<adr-1 type="bool">1</adr-1>
+					<adr-2 type="bool">1</adr-2>
+					<adr-3 type="bool">1</adr-3>
 					<ir-1 type="bool">0</ir-1>
 					<ir-2 type="bool">0</ir-2>
 					<ir-3 type="bool">0</ir-3>
@@ -807,9 +796,9 @@
 					<adr-1-fault type="bool">0</adr-1-fault>
 					<adr-2-fault type="bool">0</adr-2-fault>
 					<adr-3-fault type="bool">0</adr-3-fault>
-					<adr-1-off type="bool">1</adr-1-off>
-					<adr-2-off type="bool">1</adr-2-off>
-					<adr-3-off type="bool">1</adr-3-off>
+					<adr-1-off type="bool">0</adr-1-off>
+					<adr-2-off type="bool">0</adr-2-off>
+					<adr-3-off type="bool">0</adr-3-off>
 					<ir-1-fault type="bool">0</ir-1-fault>
 					<ir-2-fault type="bool">0</ir-2-fault>
 					<ir-3-fault type="bool">0</ir-3-fault>
@@ -858,6 +847,13 @@
 			<wing-lights type="bool">0</wing-lights>
 			<landing-lights-l type="float">0.0</landing-lights-l>
 			<landing-lights-r type="float">0.0</landing-lights-r>
+			<LrainRpt type="bool">0</LrainRpt>
+			<RrainRpt type="bool">0</RrainRpt>
+			<emerCallLtO type="bool">0</emerCallLtO>
+			<emerCallLtC type="bool">0</emerCallLtC>
+			<cabinCall type="bool">0</cabinCall>
+			<emerCall type="bool">0</emerCall>
+			<mechCall type="bool">0</mechCall>
 		</switches>
 		<tray n="0">
 			<lefttrayext type="double">0</lefttrayext>
@@ -866,12 +862,6 @@
 	</controls>
 	
 	<engines>
-		<apu>
-			<rpm type="double">0</rpm>
-			<on-fire type="bool">0</on-fire>
-			<running type="bool">0</running>
-			<serviceable type="bool">true</serviceable>
-		</apu>
 		<engine n="0">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
@@ -891,6 +881,13 @@
 			<reverser-pos-norm type="double">0</reverser-pos-norm>
 			<running type="bool">0</running>
 			<state type="int">0</state>
+		</engine>
+		<engine n="2">
+			<egt-actual type="double">0</egt-actual>
+			<n1 type="double">0</n1>
+			<n-actual type="double">0</n-actual>
+			<running type="bool">0</running>
+			<servicable type="bool">1</servicable>
 		</engine>
 	</engines>
 
@@ -938,10 +935,28 @@
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
 		</atc>
-		<apu n="0">
-			<n2 type="double">0</n2>
-			<emer-shutdown type="bool">false</emer-shutdown>
+		<apu>
+			<oil>
+				<level-l type="double">5.4</level-l>
+				<allow-oil-consumption type="bool">1</allow-oil-consumption>
+				<oil-pressure-psi type="double">0</oil-pressure-psi>
+				<oil-temperature-degC type="double">0</oil-temperature-degC>
+			</oil>
+			<bleed-load-kw type="double">252</bleed-load-kw>
+			<electrical-load-kw type="double">132</electrical-load-kw>
+			<available type="bool">0</available>
+			<fault type="bool">0</fault>
+			<dc-bat-three-minutes type="bool">0</dc-bat-three-minutes>
+			<start type="bool">0</start>
 		</apu>
+		<comm>
+			<hf>
+				<reception-1 type="bool">1</reception-1>
+				<reception-2 type="bool">1</reception-2>
+				<tone1000hz-1 type="bool">0</tone1000hz-1>
+				<tone1000hz-2 type="bool">0</tone1000hz-2>
+			</hf>
+		</comm>
 		<electrical n="0">
 			<bus>
 				<dc-1 type="double">0</dc-1>
@@ -958,15 +973,11 @@
 			<sources>
 				<bat-1>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-1>
 				<bat-2>
 					<amps type="double">0</amps>
-					<limiter type="bool">0</limiter>
-					<percent type="double">80</percent>
-					<time type="int">0</time>
+					<percent-calc type="double">80</percent-calc>
 				</bat-2>
 			</sources>
 		</electrical>
@@ -1080,32 +1091,44 @@
 				<right-valve type="bool">0</right-valve>
 				<refuelling type="bool">0</refuelling>
 			</refuel>
+			<valves>
+				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
+			</valves>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 		</fuel>
 		<hydraulic n="0">
+			<sources>
+				<ptu>
+					<green-yellow type="double">0</green-yellow>
+					<yellow-green type="double">0</yellow-green>
+				</ptu>
+			</sources>
 			<blue-psi>0</blue-psi>
 			<green-psi>0</green-psi>
 			<yellow-psi>0</yellow-psi>
 		</hydraulic>
 		
 		<pitot n="1">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</pitot>
 		
 		<pitot n="2">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</pitot>
 		
 		<static n="1">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</static>
 		
 		<static n="2">
-            <serviceable>1</serviceable>
+			<serviceable>1</serviceable>
 		</static>
 		
 		<navigation>
+			<aligned-1 type="bool">0</aligned-1>
+			<aligned-2 type="bool">0</aligned-2>
+			<aligned-3 type="bool">0</aligned-3>
 			<adr>
 				<operating-1 type="bool">0</operating-1>
 				<operating-2 type="bool">0</operating-2>
@@ -1125,6 +1148,15 @@
 	</options>
 	
 	<instrumentation n="0">
+		<altimeter n="0">
+			<inhg type="bool">0</inhg>
+			<indicated-altitude-ft tyep="double">0</indicated-altitude-ft>
+			<indicated-altitude-ft-pfd tyep="double">0</indicated-altitude-ft-pfd>
+			<oldqnh type="double">29.92</oldqnh>
+			<serviceable type="bool">true</serviceable>
+			<std type="bool">0</std>
+		</altimeter>
+		
 		<altimeter n="1">
 			<serviceable type="bool">true</serviceable>
 		</altimeter>
@@ -1328,6 +1360,12 @@
 				<category-13 type="int">7</category-13>
 				<category-14 type="int">0</category-14>
 			</configuration-module>
+			<input-feeders>
+				<discretes>
+					<!-- disable the built-in input feeder -->
+					<landing-flaps type="bool">false</landing-flaps>
+				</discretes>
+			</input-feeders>
 			<inputs>
 				<arinc429>
 					<decision-height-ncd type="bool">0</decision-height-ncd>
@@ -1336,7 +1374,7 @@
 			</inputs>
 			<speaker>
 				<max-dist type="double">2</max-dist>
-				<reference-dist type="double">1</reference-dist>
+				<reference-dist type="double">5</reference-dist>
 				<volume type="double">2</volume>
 			</speaker>
 			<voice>
@@ -1344,12 +1382,17 @@
 			</voice>
 		</mk-viii>
 		
+		<pfd n="0">
+			<hundred-above type="int">99999</hundred-above>
+			<minimums type="int">99999</minimums>
+		</pfd>
+		
 		<radar-altimeter n="0">
 			<antenna>
 				<x-offset-m type="double">-1</x-offset-m>
 				<y-offset-m type="double">0</y-offset-m>
- 				<z-offset-m type="double">2.52</z-offset-m>
- 			</antenna>
+				<z-offset-m type="double">2.52</z-offset-m>
+			</antenna>
 			<az-step-deg type="int">10</az-step-deg>
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
@@ -1362,8 +1405,8 @@
 			<antenna>
 				<x-offset-m type="double">-1</x-offset-m>
 				<y-offset-m type="double">0</y-offset-m>
- 				<z-offset-m type="double">2.52</z-offset-m>
- 			</antenna>
+				<z-offset-m type="double">2.52</z-offset-m>
+			</antenna>
 			<az-step-deg type="int">10</az-step-deg>
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
@@ -1374,11 +1417,6 @@
 	</instrumentation>
 	
 	<modes>
-		<altimeter>
-			<inhg>0</inhg>
-			<std>0</std>
-			<oldqnh>29.92</oldqnh>
-		</altimeter>
 		<cpt-du-xfr>0</cpt-du-xfr>
 		<fo-du-xfr>0</fo-du-xfr>
 		<pfd>
@@ -1430,7 +1468,9 @@
 				<desc>Autothrottle Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>fcu.FCUController.ATDisc();</script>
+					<script>
+						fcu.FCUController.ATDisc();
+					</script>
 				</binding>
 			</key>
 			<key n="6">
@@ -1443,6 +1483,38 @@
 					</script>
 				</binding>
 			</key>
+			<key n="8">
+				<name>Del</name>
+				<desc>CLR</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("CLR", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("CLR", 1);</script>
+				</binding>
+			</key>
+			<key n="11">
+				<name>Disable MCDU keyboard mode</name>
+				<desc>Ctrl+k</desc>
+				<binding>
+					<command>property-assign</command>
+					<property>/FMGC/keyboard-left</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/FMGC/keyboard-right</property>
+					<value>0</value>
+				</binding>
+			</key>
 			<key n="24">
 				<name>Ctrl-x</name>
 				<desc>Reset zoom to default</desc>
@@ -1451,11 +1523,214 @@
 					<script>libraries.fovZoom(0);</script>
 				</binding>
 			</key>
+			<key n="32">
+				<name>SPACE</name>
+				<desc>PTT - Push To Talk (via FGCom)</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("SP", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("SP", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+						space(1, modifiers.getValue());
+						if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+							systems.HFS[0].pttToggle();
+						} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+							systems.HFS[1].pttToggle();
+						}
+					</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>
+							space(0, modifiers.getValue());
+							if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+								systems.HFS[0].pttToggle();
+							} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+								systems.HFS[1].pttToggle();
+							}
+						</script>
+					</binding>
+				</mod-up>
+				<mod-shift>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>space(1, modifiers.getValue())</script>
+					</binding>
+					<mod-up>
+						<binding>
+							<condition>
+								<not><property>/FMGC/keyboard-left</property></not>
+								<not><property>/FMGC/keyboard-right</property></not>
+							</condition>
+							<command>nasal</command>
+							<script>space(0, modifiers.getValue())</script>
+						</binding>
+					</mod-up>
+				</mod-shift>
+			</key>
+			<key n="45">
+				<name>-</name>
+				<desc>Chat Menu</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("PLUSMINUS", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("PLUSMINUS", 1);</script>
+				</binding>
+				<repeatable type="bool">false</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>dialog-show</command>
+					<dialog-name>chat-menu</dialog-name>
+				</binding>
+			</key>
+			<key n="46">
+				<name>.</name>
+				<desc>Right brake</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("DOT", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("DOT", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.applyBrakes(1, 1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.applyBrakes(0, 1)</script>
+					</binding>
+				</mod-up>
+			</key>
+			<key n="47">
+				<name>SLASH</name>
+				<desc>Open property browser</desc>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>gui.property_browser();</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("SLASH", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("SLASH", 1);</script>
+				</binding>
+			</key>
+			<key n="48">
+				<name>0</name>
+				<desc>Move rudder left</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("0", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("0", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-adjust</command>
+					<property>/controls/flight/rudder</property>
+					<step type="double">-0.05</step>
+				</binding>
+			</key>
 			<key n="49">
 				<name>1</name>
 				<desc>Captain View/Elevator Trim Up</desc>
 				<binding>
 					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("1", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("1", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1464,6 +1739,8 @@
 				</binding>
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>property-adjust</command>
@@ -1476,6 +1753,22 @@
 				<desc>First Officer View/Elevator Up</desc>
 				<binding>
 					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("2", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("2", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1484,6 +1777,8 @@
 				</binding>
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1497,6 +1792,22 @@
 				<desc>Overhead View/Throttle Decrease</desc>
 				<binding>
 					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("3", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("3", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1505,6 +1816,8 @@
 				</binding>
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1518,6 +1831,22 @@
 				<desc>Forward Pedestal/Aileron Left</desc>
 				<binding>
 					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("4", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("4", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1526,6 +1855,8 @@
 				</binding>
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1539,6 +1870,22 @@
 				<desc>Aft Pedestal/Center Controls</desc>
 				<binding>
 					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("5", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("5", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1547,6 +1894,8 @@
 				</binding>
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1562,6 +1911,22 @@
 				<desc>FCU Panel/Aileron Right</desc>
 				<binding>
 					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("6", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("6", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1570,6 +1935,8 @@
 				</binding>
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1581,8 +1948,24 @@
 			<key n="55">
 				<name>7</name>
 				<desc>Elevator Trim Down</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("7", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("7", 1);</script>
+				</binding>
 				<!--binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1591,6 +1974,8 @@
 				</binding-->
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>property-adjust</command>
@@ -1601,8 +1986,24 @@
 			<key n="56">
 				<name>8</name>
 				<desc>Elevator Down</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("8", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("8", 1);</script>
+				</binding>
 				<!--binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1611,6 +2012,8 @@
 				</binding-->
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1622,8 +2025,24 @@
 			<key n="57">
 				<name>9</name>
 				<desc>Throttle Increase</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("9", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("9", 1);</script>
+				</binding>
 				<!--binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
 					<command>property-assign</command>
@@ -1632,6 +2051,8 @@
 				</binding-->
 				<binding>
 					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
 					</condition>
 					<command>nasal</command>
@@ -1640,49 +2061,1589 @@
 					</script>
 				</binding>
 			</key>
-			<key n="68">
-				<name>D</name>
-				<desc>Autopilot Disconnect</desc>
+			<key n="63">
 				<binding>
 					<command>nasal</command>
-					<script>fcu.FCUController.APDisc();</script>
+					<script>acconfig.help_dlg.open();</script>
+				</binding>
+			</key>
+			<key n="65"> 
+				<name>SHIFT-a</name>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<or>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+						</or>
+						</and>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>-1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-multiply</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<factor>2.5</factor>
+				</binding>
+				<binding n="3">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</not-equals>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</not-equals>
+						</and>
+					 </condition>
+					<command>nasal</command>
+					<script>controls.speedup(-1);</script>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/slide</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("A", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("A", 1);</script>
+				</binding>
+			</key>
+			<key n="66">
+				<name>SHIFT-b</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("B", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("B", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.applyParkingBrake(1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.applyParkingBrake(0)</script>
+					</binding>
+				</mod-up>
+			</key>
+			<key n="67">
+				<name>SHIFT-c</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("C", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("C", 1);</script>
+				</binding>
+			</key>
+			<key n="68">
+				<name>SHIFT-d</name>
+				<desc>Autopilot Disconnect</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("D", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("D", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+						fcu.FCUController.APDisc();
+					</script>
+				</binding>
+			</key>
+			<key n="69">
+				<name>SHIFT-e</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("E", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("E", 1);</script>
 				</binding>
 			</key>
 			<key n="70">
 				<name>SHIFT-f</name>
 				<desc>CL power</desc>
 				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("F", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("F", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
 					<command>nasal</command>
 					<script>
 					systems.doCLThrust();
 					</script>
 				</binding>
 			</key>
+			<key n="71">
+				<name>SHIFT-g</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("G", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("G", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.gearDown(1)</script>
+				</binding>
+			  	<mod-up>
+			   		<binding>
+			   			<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.gearDown(0)</script>
+			   		</binding>
+			  	</mod-up>
+			</key>
+			<key n="72">
+				<name>SHIFT-h</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("H", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("H", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>aircraft.HUD.cycle_brightness()</script>
+				</binding>
+			</key>
+			<key n="73">
+				<name>SHIFT-i</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("I", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("I", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>aircraft.HUD.cycle_type()</script>
+				</binding>
+			</key>
+			<key n="74">
+				<name>SHIFT-j</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("J", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("J", 1);</script>
+				</binding>
+			</key>
+			<key n="75">
+				<name>SHIFT-k</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("K", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("K", 1);</script>
+				</binding>
+			</key>
+			<key n="76">
+				<name>SHIFT-l</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("L", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("L", 1);</script>
+				</binding>
+			</key>
+			<key n="77">
+				<name>SHIFT-m</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("M", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("M", 1);</script>
+				</binding>
+			</key>
+			<key n="78">
+				<name>SHIFT-n</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("N", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("N", 1);</script>
+				</binding>
+			</key>
+			<key n="79">
+				<name>SHIFT-o</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("O", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("O", 1);</script>
+				</binding>
+			</key>
+			<key n="80">
+				<name>SHIFT-p</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("P", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("P", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-toggle</command>
+					<property>/sim/panel/visibility</property>
+				</binding>
+			</key>
+			<key n="81">
+				<name>SHIFT-q</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Q", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Q", 1);</script>
+				</binding>
+			</key>
+			<key n="82">
+				<name>SHIFT-r</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("R", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("R", 1);</script>
+				</binding>
+			</key>
+			<key n="83">
+				<name>SHIFT-s</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("S", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("S", 1);</script>
+				</binding>
+			</key>
+			<key n="84">
+				<name>SHIFT-t</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("T", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("T", 1);</script>
+				</binding>
+			</key>
+			<key n="85">
+				<name>SHIFT-u</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("U", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("U", 1);</script>
+				</binding>
+			</key>
+			<key n="86">
+				<name>SHIFT-v</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("V", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("V", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>view.stepView(-1)</script>
+				</binding>
+			</key>
+			<key n="87">
+				<name>SHIFT-w</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("W", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("W", 1);</script>
+				</binding>
+			</key>
 			<key n="88">
-				<name>X</name>
+				<name>SHIFT-x</name>
 				<desc>Increase field of view</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("X", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("X", 1);</script>
+				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
 					<command>nasal</command>
 					<script>libraries.fovZoom(1);</script>
 				</binding>
 			</key>
+			<key n="89">
+				<name>SHIFT-y</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Y", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Y", 1);</script>
+				</binding>
+			</key>
+			<key n="90">
+				<name>SHIFT-z</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Z", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Z", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>environment.decreaseVisibility()</script>
+				</binding>
+			</key>
+			<key n="97">
+				<name>a</name>
+				<desc>Slide left</desc>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
+					 </condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>-1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</not-equals>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</not-equals>
+						</and>
+					</condition>
+					<command>nasal</command>
+					<script>controls.speedup(1);</script>
+				</binding>
+				<binding n="3">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+					</condition>
+					 <command>property-adjust</command>
+					<property>/sim/walker/model-heading-deg</property>
+					<min>0</min>
+					<max>360</max>
+					<wrap type="bool">true</wrap>
+					<step type="int">-10</step>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/slide</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("A", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("A", 1);</script>
+				</binding>
+			</key>
+			<key n="98">
+				<name>b</name>
+				<desc>Apply all brakes</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("B", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("B", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.applyBrakes(1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.applyBrakes(0)</script>
+					</binding>
+				</mod-up>
+			</key>
 			<key n="99">
 				<name>c</name>
 				<desc>Reset view to center</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("C", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("C", 1);</script>
+				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
 					<command>nasal</command>
 					<script>libraries.resetView();</script>
+				</binding>
+			</key>
+			<key n="100">
+				<name>d</name>
+				<desc>Slide right</desc>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+					</condition>
+					<command>property-adjust</command>
+					<property>/sim/walker/model-heading-deg</property>
+					<min>0</min>
+					<max>360</max>
+					<wrap type="bool">true</wrap>
+					<step type="int">10</step>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/slide</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("D", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("D", 1);</script>
+				</binding>
+			</key>
+			<key n="101">
+				<name>e</name>
+				<desc>Thrust Levers Idle</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("E", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("E", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+					systems.doIdleThrust();
+					</script>
+				</binding>
+			</key>
+			<key n="102">
+				<name>f</name>
+				<desc>TOGA power</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("F", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("F", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+					systems.doTOGAThrust();
+					</script>
+				</binding>
+			</key>
+			<key n="103">
+				<name>g</name>
+				<desc>Gear Up</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("G", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("G", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.gearDown(-1)</script>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.gearDown(0)</script>
+					</binding>
+				</mod-up>
+			</key>
+			<key n="104">
+				<name>h</name>
+				<desc>HUD Master Switch</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("H", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("H", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>aircraft.HUD.cycle_color()</script>
+				</binding>
+			</key>
+			<key n="105">
+				<name>i</name>
+				<desc>Change view to lights</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("I", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("I", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>libraries.lightsView();</script>
+				</binding>
+			</key>
+			<key n="106">
+				<name>j</name>
+				<desc>Decrease spoilers</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("J", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("J", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.stepSpoilers(-1)</script>
+				</binding>
+			</key>
+			<key n="107">
+				<name>k</name>
+				<desc>Increase spoilers</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("K", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("K", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>controls.stepSpoilers(1)</script>
+				</binding>
+			</key>
+			<key n="108">
+				<name>l</name>
+				<desc>Flashlight</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("L", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("L", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-cycle</command>
+					<property>sim/rendering/als-secondary-lights/use-flashlight</property>
+					<value>0</value>
+					<value>1</value>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-cycle</command>
+					<property>sim/rendering/als-secondary-lights/use-searchlight</property>
+					<value>0</value>
+					<value>1</value>
+				</binding>
+			</key>
+			<key n="109">
+				<name>m</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("M", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("M", 1);</script>
+				</binding>
+			</key>
+			<key n="110">
+				<name>n</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("N", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("N", 1);</script>
+				</binding>
+			</key>
+			<key n="111">
+				<name>o</name>
+				<desc>Change view to overhead</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("O", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("O", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>libraries.overheadView();</script>
+				</binding>
+			</key>
+			<key n="112">
+				<name>p</name>
+				<desc>Toggle the pause state of the sim</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("P", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("P", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>pause</command>
+				</binding>
+			</key>
+			<key n="113">
+				<name>q</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Q", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Q", 1);</script>
+				</binding>
+			</key>
+			<key n="114">
+				<name>r</name>
+				<desc>MCDU</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("R", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("R", 1);</script>
+				</binding>
+			</key>
+			<key n="115">
+				<name>s</name>
+				<desc>Walk backward</desc>
+				<repeatable>false</repeatable>
+				<binding n="0">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<or>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</equals>
+						<equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</equals>
+						</or>
+						</and>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>-1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<condition>
+						<and>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walk View</value>
+						</not-equals>
+						<not-equals>
+							<property>sim/current-view/name</property>
+							<value>Walker Orbit View</value>
+						</not-equals>
+						</and>
+					</condition>
+					<command>nasal</command>
+					<script>controls.startEngine(1)</script>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/forward</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+					<binding n="2">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>nasal</command>
+						<script>controls.startEngine(0)</script>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("S", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("S", 1);</script>
+				</binding>
+			</key>
+			<key n="116">
+				<name>t</name>
+				<desc>Warp time forwards</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("T", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("T", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-adjust</command>
+					<property>/sim/time/warp-delta</property>
+					<step type="int">30</step>
+					<max type="int">720</max>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>show-message</command>
+					<id>warp-feedback</id>
+					<label>Current time: %s</label>
+					<property>/instrumentation/clock/local-short-string</property>
+				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/time/warp-delta</property>
+						<value type="int">0</value>
+					</binding>
+				</mod-up>
+			</key>
+			<key n="117">
+				<name>u</name>
+				<desc>Change view to pedestal</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("U", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("U", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>libraries.pedestalView();</script>
+				</binding>
+			</key>
+			<key n="118">
+				<name>v</name>
+				<desc>Scroll through views</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("V", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("V", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>view.stepView(1)</script>
+				</binding>
+			</key>
+			<key n="119">
+				<name>w</name>
+				<desc>Walk forward</desc>
+				<binding n="0">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>1</value>
+				</binding>
+				<binding n="1">
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/forward</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("W", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("W", 1);</script>
 				</binding>
 			</key>
 			<key n="120">
 				<name>x</name>
 				<desc>Decrease field of view</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("X", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("X", 1);</script>
+				</binding>
 				<repeatable type="bool">true</repeatable>
 				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
 					<command>nasal</command>
 					<script>libraries.fovZoom(-1);</script>
+				</binding>
+			</key>
+			<key n="121">
+				<name>y</name>
+				<desc>Change view to autopilot</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Y", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Y", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>libraries.autopilotView();</script>
+				</binding>
+			</key>
+			<key n="122">
+				<name>z</name>
+				<desc>Increase Visibility</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Z", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.button("Z", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>environment.increaseVisibility()</script>
 				</binding>
 			</key>
 			<key n="127">
@@ -1712,26 +3673,6 @@
 					<command>nasal</command>
 					<script>
 					systems.doRevThrust();
-					</script>
-				</binding>
-			</key>
-			<key n="101">
-				<name>e</name>
-				<desc>Thrust Levers Idle</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-					systems.doIdleThrust();
-					</script>
-				</binding>
-			</key>
-			<key n="102">
-				<name>f</name>
-				<desc>TOGA power</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-					systems.doTOGAThrust();
 					</script>
 				</binding>
 			</key>
@@ -1791,14 +3732,205 @@
 					<value>0</value>
 				</binding>
 			</key>
-			<key n="108">
-				<name>l</name>
-				<desc>Flashlight</desc>
+			<key n="356">
+				<name>Left</name>
+				<desc>Move aileron left (or adjust AP heading.)</desc>
 				<binding>
-					<command>property-cycle</command>
-					<property>sim/rendering/als-secondary-lights/use-flashlight</property>
-					<value>0</value>
-					<value>1</value>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("left", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("left", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.replaySkip(-5);
+						else
+							controls.incAileron(-0.05, -1.0)
+					</script>
+				</binding>
+				<mod-shift>
+					<desc>Look left</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/left-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="357">
+				<name>Up</name>
+				<desc>Elevator down or decrease autopilot altitude</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("up", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("up", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.speedup(1);
+						else
+							controls.incElevator(0.05, -100)
+					</script>
+				</binding>
+				<mod-shift>
+					<desc>Look forward</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/front-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="358">
+				<name>Right</name>
+				<desc>Move aileron right (or adjust AP heading.)</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("right", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("right", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.replaySkip(5);
+						else
+							controls.incAileron(0.05, 1.0)
+					</script>
+					<step type="double">0.05</step>
+				</binding>
+				<mod-shift>
+					<desc>Look right</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/right-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="359">
+				<name>Down</name>
+				<desc>Elevator up or increase autopilot altitude</desc>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-left</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("down", 0);</script>
+				</binding>
+				<binding>
+					<condition>
+						<property>/FMGC/keyboard-right</property>
+					</condition>
+					<command>nasal</command>
+					<script>mcdu.arrowbutton("down", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/freeze/replay-state"))
+							controls.speedup(-1);
+						else
+							controls.incElevator(-0.05, 100)
+					</script>
+				</binding>
+				<mod-shift>
+					<desc>Look backwards</desc>
+					<binding>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<command>property-assign</command>
+						<property>/sim/current-view/goal-heading-offset-deg</property>
+						<property>/sim/view/config/back-direction-deg</property>
+					</binding>
+				</mod-shift>
+			</key>
+			<key n="22">
+				<name>Ctrl-V</name>
+				<desc>Select default view (pilot or copilot)</desc>
+				<binding>
+					<condition>
+						<equals>
+							<property>/options/system/fo-view</property>
+							<value type="double">1</value>
+						</equals>
+					</condition>
+					<command>nasal</command>
+					<script>view.setViewByIndex(100);</script>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>/options/system/fo-view</property>
+							<value type="double">0</value>
+						</equals>
+					</condition>
+					<command>nasal</command>
+					<script>view.setViewByIndex(0);</script>
 				</binding>
 			</key>
 		</keyboard>
@@ -1815,37 +3947,48 @@
 	
 	<nasal>
 		<pts>
-			<file>Aircraft/A320-family/Nasal/Sim/property-tree-setup.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/Sim/zoom-views.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/efis.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
 		<systems>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADIRS.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
+			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
+		<ecam>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
+		</ecam>
+		<effects>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
+		</effects>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
@@ -1854,24 +3997,48 @@
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/efis.nas</file>
 		</fcu>
 		<fmgc>
+			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-waypoints.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/flightplan.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
 		</fmgc>
 		<mcdu>
+			<file>Aircraft/A320-family/Nasal/MCDU/DUPLICATE.nas</file> <!-- dynamic page - init before others as used in various pages -->
+			<file>Aircraft/A320-family/Nasal/MCDU/DIRTO.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> <!-- dynamic page - init before MCDU -->	
+			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> <!-- dynamic page - init before MCDU -->	
+			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/ROUTESELECTION.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITB.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/FUELPRED.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGTO.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGCLB.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGCRZ.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROGDES.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PERFAPPR.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCLB.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCRZ.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFDES.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PERFGA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFTO.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/RADNAV.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
+		<!-- Canvas -->
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>
 		</canvas_pfd>
@@ -1888,15 +4055,7 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
-		<ecam>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
-		</ecam>
-		<icing>
-			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
-		</icing>
+		<!-- Autopush -->
 		<autopush>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>
@@ -1909,6 +4068,7 @@
 		<autopush_route>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush_route.nas</file>
 		</autopush_route>
+		<!-- Panels -->
 		<rmp>
 			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>
 		</rmp>
@@ -1925,6 +4085,13 @@
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
 			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
 		</Dialogs>
+		<save>
+			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
+		</save>
 	</nasal>
+
+	<maintainance>
+		<cockpit-cleaness-factor type="float">1.0</cockpit-cleaness-factor>
+	</maintainance>
 
 </PropertyList>

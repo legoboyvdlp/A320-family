@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -83,89 +83,89 @@
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/ECAM/to-config-set</property>
+			<property>ECAM/to-config-set</property>
 		</S>
 		<R>
-			<property>/ECAM/to-config-reset</property>
+			<property>ECAM/to-config-reset</property>
 		</R>
-		<output>/ECAM/to-config-flipflop</output>
+		<output>ECAM/to-config-flipflop</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/ECAM/to-memo-set</property>
+			<property>ECAM/to-memo-set</property>
 		</S>
 		<R>
-			<property>/ECAM/to-memo-reset</property>
+			<property>ECAM/to-memo-reset</property>
 		</R>
-		<output>/ECAM/to-memo-flipflop</output>
+		<output>ECAM/to-memo-flipflop</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>SR</type>
 		<S>
-			<property>/ECAM/ldg-memo-set</property>
+			<property>ECAM/ldg-memo-set</property>
 		</S>
 		<R>
-			<property>/ECAM/ldg-memo-reset</property>
+			<property>ECAM/ldg-memo-reset</property>
 		</R>
-		<output>/ECAM/ldg-memo-flipflop</output>
+		<output>ECAM/ldg-memo-flipflop</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/ECAM/ldg-memo-2200-set</property>
+			<property>ECAM/ldg-memo-2200-set</property>
 		</S>
 		<R>
-			<property>/ECAM/ldg-memo-2200-reset</property>
+			<property>ECAM/ldg-memo-2200-reset</property>
 		</R>
-		<output>/ECAM/ldg-memo-2200-flipflop</output>
+		<output>ECAM/ldg-memo-2200-flipflop</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>SR</type>
 		<S>
-			<property>/ECAM/phases/flipflop/gear-set</property>
+			<property>ECAM/phases/flipflop/gear-set</property>
 		</S>
 		<R>
-			<property>/ECAM/phases/flipflop/gear-reset</property>
+			<property>ECAM/phases/flipflop/gear-reset</property>
 		</R>
-		<output>/ECAM/phases/flipflop/gear-output</output>
+		<output>ECAM/phases/flipflop/gear-output</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>SR</type>
 		<S>
-			<property>/ECAM/phases/flipflop/phase-2-set</property>
+			<property>ECAM/phases/flipflop/phase-2-set</property>
 		</S>
 		<R>
-			<property>/ECAM/phases/flipflop/phase-2-reset</property>
+			<property>ECAM/phases/flipflop/phase-2-reset</property>
 		</R>
-		<output>/ECAM/phases/flipflop/phase-2-output</output>
+		<output>ECAM/phases/flipflop/phase-2-output</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/ECAM/phases/flipflop/phase-10-set</property>
+			<property>ECAM/phases/flipflop/phase-10-set</property>
 		</S>
 		<R>
-			<property>/ECAM/phases/flipflop/phase-10-reset</property>
+			<property>ECAM/phases/flipflop/phase-10-reset</property>
 		</R>
-		<output>/ECAM/phases/flipflop/phase-10-output</output>
+		<output>ECAM/phases/flipflop/phase-10-output</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/ECAM/flipflop/recall-set</property>
+			<property>ECAM/flipflop/recall-set</property>
 		</S>
 		<R>
-			<property>/ECAM/flipflop/recall-reset</property>
+			<property>ECAM/flipflop/recall-reset</property>
 		</R>
-		<output>/ECAM/flipflop/recall-output</output>
+		<output>ECAM/flipflop/recall-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -175,10 +175,10 @@
 		</time>
 		<S>
 			<not>
-				<property>/ECAM/phases/speed-gt-80</property>
+				<property>ECAM/phases/speed-gt-80</property>
 			</not>
 		</S>
-		<output>/ECAM/phases/monostable-80kt</output>
+		<output>ECAM/phases/monostable-80kt</output>
 	</flipflop>
 	
 	<flipflop>
@@ -187,9 +187,9 @@
 			<value>300.0</value>
 		</time>
 		<S>
-			<property>/ECAM/phases/monostable/phase-1-300</property>
+			<property>ECAM/phases/monostable/phase-1-300</property>
 		</S>
-		<output>/ECAM/phases/monostable/phase-1-output</output>
+		<output>ECAM/phases/monostable/phase-1-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -198,9 +198,9 @@
 			<value>120.0</value>
 		</time>
 		<S>
-			<property>/ECAM/phases/monostable/phase-5</property>
+			<property>ECAM/phases/monostable/phase-5</property>
 		</S>
-		<output>/ECAM/phases/monostable/phase-5-output</output>
+		<output>ECAM/phases/monostable/phase-5-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -209,9 +209,9 @@
 			<value>180.0</value>
 		</time>
 		<S>
-			<property>/ECAM/phases/monostable/phase-7</property>
+			<property>ECAM/phases/monostable/phase-7</property>
 		</S>
-		<output>/ECAM/phases/monostable/phase-7-output</output>
+		<output>ECAM/phases/monostable/phase-7-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -220,12 +220,159 @@
 			<value>5.0</value>
 		</time>
 		<S>
-			<property>/ECAM/buttons/recall-status-normal</property>
+			<property>ECAM/buttons/recall-status-normal</property>
 		</S>
 		<R>
-			<property>/ECAM/buttons/clear-btn</property>
+			<property>ECAM/buttons/clear-btn</property>
 		</R>
-		<output>/ECAM/buttons/recall-status-normal-output</output>
+		<output>ECAM/buttons/recall-status-normal-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>ECAM/altitude-alert-monostable-set</property>
+		</S>
+		<R>
+			<property>ECAM/altitude-alert-monostable-intermediate-output</property>
+		</R>
+		<output>ECAM/altitude-alert-monostable-flipflop-intermediate</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<not><property>ECAM/altitude-alert-monostable-flipflop-intermediate</property></not>
+		</S>
+		<output>ECAM/altitude-alert-monostable-intermediate-output</output>
+	</flipflop>
+	
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<property>ECAM/altitude-alert-monostable-flipflop-intermediate</property>
+					<not><property>ECAM/altitude-alert-monostable-intermediate-output</property></not>
+				</and>
+			</condition>
+			<value>1</value>
+		</input>
+		<output>ECAM/altitude-alert-monostable-output</output>
+	</filter>	
+	
+	<filter>
+		<type>derivative</type>
+		<input>it-autoflight/input/alt</input>
+		<output>it-autoflight/input/alt-is-changing</output>
+		<filter-time>1.0</filter-time>
+	</filter>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>1</value>
+		</time>
+		<S>
+			<property>it-autoflight/input/alt-is-changing</property>
+		</S>
+		<output>ECAM/alt-is-changing</output>
+	</flipflop>
+	
+	<filter>
+		<input>
+			<condition>
+				<equals>
+					<property>gear/gear[0]/position-norm</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not-equals>
+					<property>gear/gear[0]/position-norm</property>
+					<value>1</value>
+				</not-equals>
+			</condition>
+			<value>0</value>
+		</input>
+		<output>ECAM/gear-downlocked-set</output>
+	</filter>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>1</value>
+		</time>
+		<S>
+			<property>ECAM/gear-downlocked-set</property>
+		</S>
+		<output>ECAM/gear-downlocked-output</output>
+	</flipflop>
+	
+	
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<or>
+					<equals><property>ECAM/gear-downlocked-output</property><value>1</value></equals>
+					<equals><property>ECAM/alt-is-changing</property><value>1</value></equals>
+				</or>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<equals><property>ECAM/gear-downlocked-output</property><value>0</value></equals>
+					<equals><property>ECAM/alt-is-changing</property><value>0</value></equals>
+				</and>
+			</condition>
+			<value>0</value>
+		</input>
+		<output>ECAM/flipflop/alt-alert-rs-reset</output>
+	</filter>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>ECAM/flipflop/altitude-alert-rs-set</property>
+		</S>
+		<R>
+			<property>ECAM/flipflop/alt-alert-rs-reset</property>
+		</R>
+		<output>ECAM/flipflop/alt-alert-rs-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>ECAM/flipflop/alt-alert-2-rs-set</property>
+		</S>
+		<R>
+			<property>ECAM/flipflop/alt-alert-2-rs-reset</property>
+		</R>
+		<output>ECAM/flipflop/alt-alert-2-rs-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>ECAM/flipflop/alt-alert-3-rs-set</property>
+		</S>
+		<R>
+			<property>ECAM/flipflop/alt-alert-rs-reset</property>
+		</R>
+		<output>ECAM/flipflop/alt-alert-3-rs-output</output>
 	</flipflop>
 	
 	<!-- falling edge detector - take inverse of following -->
@@ -236,9 +383,9 @@
 			<value>3.0</value>
 		</time>
 		<S>
-			<property>/ECAM/phases/monostable/phase-9</property>
+			<property>ECAM/phases/monostable/phase-9</property>
 		</S>
-		<output>/ECAM/phases/monostable/phase-9-output</output>
+		<output>ECAM/phases/monostable/phase-9-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -248,9 +395,9 @@
 			<value>1.0</value>
 		</time>
 		<S>
-			<property>/ECAM/phases/to-power-set</property>
+			<property>ECAM/phases/to-power-set</property>
 		</S>
-		<output>/ECAM/phases/monostable/to-power-set-output</output>
+		<output>ECAM/phases/monostable/to-power-set-output</output>
 	</flipflop>
 	
 </PropertyList>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSim.xsl"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <fdm_config name="A320-family" version="2.0" release="BETA"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -70,7 +70,33 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			</thruster>
 		</engine>
 		
-		<tank type="FUEL">    <!-- Outer Left Wing Tank -->
+		<engine file="APS3200">
+			<location unit="M">
+				<x> 38.9 </x>
+				<y> 0 </y>
+				<z> 0.95 </z>
+			</location>
+			<orient unit="DEG">
+				<roll> 0.0 </roll>
+				<pitch> 0.0 </pitch>
+				<yaw> 0.0 </yaw>
+			</orient>
+			<feed>7</feed>
+			<thruster file="direct">
+				<location unit="M">
+					<x> 38.9 </x>
+					<y> 0 </y>
+					<z> 0.95 </z>
+				</location>
+				<orient unit="DEG">
+					<roll> 0.0 </roll>
+					<pitch> 0.0 </pitch>
+					<yaw> 0.0 </yaw>
+				</orient>
+			</thruster>
+		</engine>
+		
+		<tank type="FUEL">	  <!-- Outer Left Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>
 				<y> -5.1104 </y>
@@ -83,7 +109,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
-		<tank type="FUEL">    <!-- Inner Left Wing Tank -->
+		<tank type="FUEL">	  <!-- Inner Left Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>
 				<y> -5.1104 </y>
@@ -97,7 +123,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<temperature>50</temperature>
 		</tank>
 		
-		<tank type="FUEL">    <!-- Center Tank -->
+		<tank type="FUEL">	  <!-- Center Tank - wing box may be modified to center fuel tank on the -100 so we have a center tank. Or mostly because its easier... -->
 			<location unit="M">
 				<x> 18.9731 </x>
 				<y> 0 </y>
@@ -110,7 +136,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
-		<tank type="FUEL">    <!-- Inner Right Wing Tank -->
+		<tank type="FUEL">	  <!-- Inner Right Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>
 				<y> 5.1104 </y>
@@ -123,7 +149,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
-		<tank type="FUEL">    <!-- Outer Right Wing Tank -->
+		<tank type="FUEL">	  <!-- Outer Right Wing Tank -->
 			<location unit="M">
 				<x> 18.9231 </x>
 				<y> 5.1104 </y>
@@ -136,7 +162,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<density unit="LBS/GAL">6.71</density>
 			<temperature>50</temperature>
 		</tank>
-		<tank type="FUEL">    <!-- Engine 1 Pipes -->
+		<tank type="FUEL">	  <!-- Engine 1 Pipes -->
 			<location unit="M">
 				<x> 18.8231 </x>
 				<y> 0 </y>
@@ -147,7 +173,18 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
 		</tank>
-		<tank type="FUEL">    <!-- Engine 2 Pipes -->
+		<tank type="FUEL">	  <!-- Engine 2 Pipes -->
+			<location unit="M">
+				<x> 18.8231 </x>
+				<y> 0 </y>
+				<z> 0.19249 </z>
+			</location>
+			<capacity unit="LBS">10</capacity>
+			<contents unit="LBS">0</contents>
+			<priority>1</priority>
+			<density unit="LBS/GAL">6.71</density>
+		</tank>
+		<tank type="FUEL">	  <!-- APU Pipes -->
 			<location unit="M">
 				<x> 18.8231 </x>
 				<y> 0 </y>
@@ -160,7 +197,8 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 		</tank>
 	</propulsion>
 	
-	<system file="glass-effect1"/>
+	<system file="glass-effect"/>
+	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
@@ -170,6 +208,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	<system file="a320-lights"/>
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>
+	<system file="a320-apu"/>
 	<system file="a320-fmgc"/>
 	
 	<flight_control name="none"/>

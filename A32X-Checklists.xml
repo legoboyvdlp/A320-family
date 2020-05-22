@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- Sven Seipp, Oct 2017 -->
 
@@ -12,7 +12,7 @@
 			<value>COMPLETED(BOTH)</value>
 		</item>
 		<item>
-			<name>PINS AND COVERS</name>
+			<name>GEAR PINS AND COVERS</name>
 			<value>REMOVED</value>
 		</item>
 		<item>
@@ -66,7 +66,7 @@
 			</marker>
 		</item>
 		<item>
-			<name>WINDOWS and DOORS</name>      
+			<name>WINDOWS and DOORS</name>		
 			<value>CLOSED(BOTH)</value>
 			<marker>
 				<x-m>4.4658</x-m>
@@ -86,7 +86,7 @@
 			</marker>
 		</item>
 		<item>
-			<name>THR LEVERS</name>
+			<name>THRUST LEVERS</name>
 			<value>IDLE</value>
 			<marker>
 				<x-m>4.7200</x-m>

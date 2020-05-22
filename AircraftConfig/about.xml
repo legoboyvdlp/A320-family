@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -34,30 +34,26 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>A320-family</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>Joshua Davidson (Octal450), Jonanthan Redpath (legoboyvdlp), Thorsten Herrmann (TH-555), Based on IDG-A32X</label>
+			<label>Airbus A320 Family</label>
 		</text>
 		
 		<hrule/>
 		
 		<text>
 			<halign>left</halign>
-			<label>FDM: Joshua Davidson (Octal450)</label>
+			<label>Flight Dyanmics: Josh Davidson (Octal450)</label>
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>Systems: Joshua Davidson (Octal450), Jonanthan Redpath (legoboyvdlp)</label>
+			<label>Systems: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>Cockpit: Thorsten Herrmann (TH-555), Joshua Davidson (Octal450), Jonanthan Redpath (legoboyvdlp)</label>
+			<label>Displays: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>Instruments: Joshua Davidson (Octal450), Jonanthan Redpath (legoboyvdlp)</label>
+			<label>3D/Textures: Thorsten Herrmann (TH-555), Semir Gebran (CaptB)</label>
 		</text>
 	
 	</group>

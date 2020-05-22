@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -11,7 +11,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/systems/apu/rpm</property>
+					<property>/engines/engine[2]/n1</property>
 					<entry><ind>  0</ind><dep>-127</dep></entry>
 					<entry><ind>100</ind><dep>  53</dep></entry>
 					<entry><ind>110</ind><dep>  70</dep></entry>
@@ -28,7 +28,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/systems/apu/egt</property>
+					<property>/systems/apu/egt-degC</property>
 					<entry><ind>  0</ind><dep>-115</dep></entry>
 					<entry><ind> 275</ind><dep>-115</dep></entry>
 					<entry><ind> 300</ind><dep>-108</dep></entry>
@@ -151,7 +151,7 @@
 					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
 					<entry><ind>-30</ind><dep>-1.03</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 17</ind><dep> 0.63</dep></entry>
+					<entry><ind> 15</ind><dep> 0.63</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -168,7 +168,7 @@
 					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
 					<entry><ind>-30</ind><dep>-1.03</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 17</ind><dep> 0.63</dep></entry>
+					<entry><ind> 15</ind><dep> 0.63</dep></entry>
 				</table>
 			</expression>
 		</input>

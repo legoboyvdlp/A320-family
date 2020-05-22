@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -112,7 +112,7 @@
 		<object-name>ACTUTATOR</object-name>
 		<object-name>Main Tires</object-name>
 		<object-name>Compression lower scissor</object-name>
-		<property>gear/gear[2]/compression-ft</property>
+		<property>gear/gear[2]/compression-norm</property>
 		<factor>0.305</factor>
 		<axis>
 			<x1-m>0</x1-m>

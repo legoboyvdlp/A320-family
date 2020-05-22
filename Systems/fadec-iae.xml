@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <!-- A3XX IAE V2500 FADEC -->
 
@@ -51,7 +51,7 @@
 			<condition>
 				<and>
 					<not-equals>
-						<property>/controls/flight/flap-lever</property>
+						<property>/controls/flight/flaps-input</property>
 						<value>0</value>
 					</not-equals>
 					<equals>

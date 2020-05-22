@@ -5,133 +5,149 @@
 	<particlesystem>
 		<name>engine-spray-reverse</name>
 		<texture>res/smoke.png</texture>
-		<emissive type="bool">false</emissive>
-		<lighting type="bool">false</lighting>
-		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
-			<pitch-deg>180</pitch-deg>
-		</offsets>				
+		<emissive>false</emissive>
+		<lighting>false</lighting>
 				
 		<attach>world</attach>
 		
-		<placer>
-			<type>point</type> 
-		</placer>
+			<placer>
+				<type>segments</type>
+				<vertex>
+					<x-m>1</x-m>
+					<y-m>3</y-m>
+					<z-m>-1</z-m>
+				</vertex>
+				<vertex>
+					<x-m>1</x-m>
+					<y-m>-3</y-m>
+					<z-m>-1</z-m>
+				</vertex>
+			</placer>
 		
 		<shooter>
-			<theta-min-deg>-1.5</theta-min-deg>
-			<theta-max-deg>1.5</theta-max-deg>
-			<phi-min-deg>-1.5</phi-min-deg>
-			<phi-max-deg>1.5</phi-max-deg>
-			<speed-mps>
-				<value>0</value>
-				<spread>0</spread>
-			</speed-mps>
-			<rotation-speed>
-				<x-min-deg-sec>0</x-min-deg-sec>
-				<y-min-deg-sec>0</y-min-deg-sec>
-				<z-min-deg-sec>0</z-min-deg-sec>
-				<x-max-deg-sec>0</x-max-deg-sec>
-				<y-max-deg-sec>0</y-max-deg-sec>
-				<z-max-deg-sec>0</z-max-deg-sec>
-			</rotation-speed>
+            <theta-min-deg>0</theta-min-deg>
+            <theta-max-deg>0</theta-max-deg>
+            <phi-min-deg>0</phi-min-deg>
+            <phi-max-deg>0</phi-max-deg>
+            <speed-mps>
+                <value>10</value>
+                <spread>1</spread>
+            </speed-mps>
+            <rotation-speed>
+                <x-max-deg-sec>180</x-max-deg-sec>
+                <x-min-deg-sec>-180</x-min-deg-sec>
+                <y-max-deg-sec>180</y-max-deg-sec>
+                <y-min-deg-sec>-180</y-min-deg-sec>
+                <z-max-deg-sec>180</z-max-deg-sec>
+                <z-min-deg-sec>-180</z-min-deg-sec>
+            </rotation-speed>
 		</shooter>
 		
 		<counter>
 			<particles-per-sec>
-			<value>50</value>
-			<spread>0</spread>
+				<expression>
+					<product>
+						<property>environment/surface/wetness</property>
+						<value>50</value>
+					</product>
+				</expression>
+				<spread>0</spread>
 			</particles-per-sec>
 		</counter>
 		
 		<align>billboard</align>
 		
 		<particle>
-			<start>
+         <start>
 				<color>
 					<red>
 						<expression>
 							<product>
-								<value>0.7</value>
-								<property>rendering/scene/diffuse/red</property>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
 					</red>
 					<green>
 						<expression>
 							<product>
-								<value>0.7</value>
-								<property>rendering/scene/diffuse/red</property>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
 					</green>
 					<blue>
 						<expression>
 							<product>
-								<value>0.7</value>
-								<property>rendering/scene/diffuse/red</property>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
 					</blue>
 					<alpha>
-						<value>0.3</value>
+						<expression>
+							<product>
+								<value>0.2</value>
+								<property>environment/surface/wetness</property>
+							</product>
+						</expression>
 					</alpha>
 				</color>
-				<size>
-					<value>2</value>
-				</size>
-			</start>
-
-			<end>
+             <size>
+                 <value>5</value>
+             </size>
+         </start>
+         <end>
 				<color>
 					<red>
 						<expression>
 							<product>
-								<value>1.0</value>
-								<property>rendering/scene/diffuse/red</property>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
 					</red>
 					<green>
 						<expression>
 							<product>
-								<value>1.0</value>
-								<property>rendering/scene/diffuse/red</property>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
 					</green>
 					<blue>
 						<expression>
 							<product>
-								<value>1.0</value>
-								<property>rendering/scene/diffuse/red</property>
+								<value>0.01</value>
+								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
 					</blue>
 					<alpha>
-						<value>0.00000001</value>
+						<expression>
+							<product>
+								<value>0.1</value>
+								<property>environment/surface/wetness</property>
+							</product>
+						</expression>
 					</alpha>
 				</color>
-				<size>
-					<value>3</value>
-				</size>
-			</end>
-
-			<life-sec>
-				<value>0.4</value>
-			</life-sec>
-
-			<mass-kg>0.5</mass-kg>
-			<radius-m>0.1</radius-m>
+            <size>
+            	<value>10</value>
+            </size>
+         </end>
+         <life-sec>
+             <value>0.5</value>
+         </life-sec>
+         <mass-kg>0.025</mass-kg>
+         <radius-m>0.175</radius-m>
 		</particle>
-
-		<program>
-			<fluid>air</fluid>
-			<gravity type="bool">true</gravity>
-			<wind typ="bool">true</wind>
-		</program>
+				
+      <program>
+	      <fluid>air</fluid>
+	      <gravity>true</gravity>
+	      <wind>true</wind>
+      </program>
 	</particlesystem>
 
 </PropertyList>
