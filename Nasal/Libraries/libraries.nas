@@ -222,6 +222,7 @@ var systemsInit = func {
 	atc.init();
 	fcu.FCUController.init();
 	dmc.DMController.init();
+	fmgc.flightPlanController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {

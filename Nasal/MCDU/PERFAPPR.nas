@@ -82,7 +82,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("/FMGC/internal/vapp-speed-set", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			mcdu.clearScratchpad(i);
-		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 200) {
+		} else if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 			setprop("/FMGC/internal/vapp-speed-set", 1);
 			setprop("/FMGC/internal/computed-speeds/vapp_appr", scratchpad);
 			mcdu.clearScratchpad(i);

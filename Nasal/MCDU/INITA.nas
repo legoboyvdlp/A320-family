@@ -168,7 +168,8 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
-			fmgc.flightPlanController.reset();
+			fmgc.flightPlanController.reset(2);
+			fmgc.flightPlanController.init();
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			mcdu.clearScratchpad(i);
 		#} else if (scratchpad == "") {

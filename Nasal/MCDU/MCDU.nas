@@ -772,42 +772,33 @@ var pagebutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
 			setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
 		} else if (btn == "f-pln" or btn == "airport") {
-			if (fmgc.flightPlanController.active.getBoolValue()) {
-				if (canvas_mcdu.myFpln[i] == nil) {
-					canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
-				}
-				if (btn == "airport") {
-					if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
-						canvas_mcdu.myFpln[i].scroll = 0;
+			if (canvas_mcdu.myFpln[i] == nil) {
+				canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
+			}
+			if (btn == "airport") {
+				if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+					canvas_mcdu.myFpln[i].scroll = 0;
+				} else {
+					if (fmgc.flightPlanController.temporaryFlag[i]) {
+						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[i];
 					} else {
-						if (fmgc.flightPlanController.temporaryFlag[i]) {
-							canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[i];
-						} else {
-							canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[2];
-						}
+						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[2];
 					}
 				}
-				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
-			} else {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "ERROR. INITIALIZE ROUTE"); # Should be ERROR:, but the : character doesn't show in our MCDU font right now...
 			}
+			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+			
 		} else if (btn == "fuel-pred") {
 			setprop("/MCDU[" ~ i ~ "]/page", "FUELPRED");
 		} else if (btn == "dirto") {
-			if (fmgc.flightPlanController.active.getBoolValue()) {
-				if (fmgc.flightPlanController.temporaryFlag[i] and !dirToFlag) {
-					setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad", "INSRT / ERASE TMPY FIRST");
-					return;
-				} elsif (canvas_mcdu.myDirTo[i] == nil) {
-					canvas_mcdu.myDirTo[i] = dirTo.new(i);
-				}
-				setprop("/MCDU[" ~ i ~ "]/page", "DIRTO");
-			} else {
+			if (fmgc.flightPlanController.temporaryFlag[i] and !dirToFlag) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "ERROR. INITIALIZE ROUTE"); # Should be ERROR:, but the : character doesn't show in our MCDU font right now...
+				setprop("/MCDU[" ~ i ~ "]/scratchpad", "INSRT / ERASE TMPY FIRST");
+				return;
+			} elsif (canvas_mcdu.myDirTo[i] == nil) {
+				canvas_mcdu.myDirTo[i] = dirTo.new(i);
 			}
+			setprop("/MCDU[" ~ i ~ "]/page", "DIRTO");
 		}
 	}
 }
