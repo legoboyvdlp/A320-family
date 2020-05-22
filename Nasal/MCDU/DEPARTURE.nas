@@ -77,9 +77,11 @@ var departurePage = {
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[me.computer].sid;
+				me.selectedTransition = fmgc.flightPlanController.flightplans[me.computer].sid_trans;
 				isNoSid[me.computer] = 0;
 			} elsif (fmgc.flightPlanController.flightplans[2].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[2].sid;
+				me.selectedTransition = fmgc.flightPlanController.flightplans[2].sid_trans;
 				isNoSid[me.computer] = 0;
 			} elsif (isNoSid[me.computer] == 1) {
 				me.selectedSID = "NO SID";
@@ -196,7 +198,7 @@ var departurePage = {
 						me.R1 = ["-------", "TRANS ", "wht"];
 					} 
 				} elsif (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
-					me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
+					me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
 				} else {
 					me.R1 = ["-------", "TRANS ", "wht"];
 				}
@@ -558,7 +560,7 @@ var departurePage = {
 			if (!dirToFlag) {
 				me.selectedTransition = me.transitions[index - 2];
 				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].sid = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
+				fmgc.flightPlanController.flightplans[me.computer].sid_trans = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
 				me.updateActiveTransitions();
 				me.updateTransitions();
 				fmgc.flightPlanController.flightPlanChanged(me.computer);
