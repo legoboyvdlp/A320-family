@@ -785,6 +785,8 @@ var pagebutton = func(btn, i) {
 						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[2];
 					}
 				}
+			} else {
+				canvas_mcdu.myFpln[i].scroll = 0;
 			}
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 			
