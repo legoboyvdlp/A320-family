@@ -816,7 +816,7 @@
 				/systems/pneumatics/psi/crossbleed-duct-right ne 0
 				/systems/pneumatics/psi/crossbleed-duct-right-src ne 4
 			</test>
-			<test logic="AND" value="1"> <!-- gnd -->
+			<test logic="AND" value="1"> <!-- gnd has lowest priority, valve forced closed if other source available -->
 				/systems/pneumatics/source/gnd-psi ne 0
 			</test>
 		</switch>
@@ -839,7 +839,7 @@
 				/systems/pneumatics/psi/crossbleed-duct-left ne 0
 				/systems/pneumatics/psi/crossbleed-duct-left-src ne 4
 			</test>
-			<test logic="AND" value="1"> <!-- gnd -->
+			<test logic="AND" value="1"> <!-- gnd has lowest priority, valve forced closed if other source available -->
 				/systems/pneumatics/valves/crossbleed-valve ne 0
 				/systems/pneumatics/source/gnd-psi ne 0
 			</test>
