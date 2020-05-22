@@ -1215,6 +1215,9 @@
 		<switch name="/systems/pneumatics/warnings/bleed1-fault">
 			<default value="0"/>
 			<test logic="AND" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test logic="AND" value="0">
 				/systems/pneumatics/warnings/bleed1-fault eq 1
 				/controls/pneumatics/switches/bleed-1 eq 0
 				/ECAM/warnings/timer/bleed-1-fault-output eq 0
@@ -1233,6 +1236,9 @@
 		
 		<switch name="/systems/pneumatics/warnings/bleed2-fault">
 			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
 			<test logic="AND" value="0">
 				/systems/pneumatics/warnings/bleed2-fault eq 1
 				/controls/pneumatics/switches/bleed-2 eq 0
