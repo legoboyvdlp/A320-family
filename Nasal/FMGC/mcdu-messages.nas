@@ -11,16 +11,20 @@ var TypeIMessage = {
 };
 
 var TypeIIMessage = {
-	new: func(msgText, colour, isInhibit: 0,) {
+	new: func(msgText, colour, isInhibit = 0) {
 		var msg = { parents: [TypeIIMessage] };
 		msg.msgText = msgText;
 		msg.colour = colour;
-		msg.inhibitable: isInhibit;
+		msg.inhibitable = isInhibit;
 		return msg;
 	},
 };
 
 var MessageQueueController = {
+	new: func() {
+		var msgC = { parents: [MessageQueueController] };
+		return msgC;
+	},
 	messages: std.Vector.new(), # show left to right
 	# first in first out
 	addNewMsg: func(msg) {
@@ -41,10 +45,15 @@ var MessageQueueController = {
 };
 
 var scratchpadController = {
-	scratchpad: "",
-	scratchpadSave: "",
-	scratchpadShowTypeIMsg: 0,
-	scratchpadShowTypeIIMsg: 0,
+	new: func() {
+		var sp = { parents: [scratchpadController] };
+		sp.scratchpad = "";
+		sp.scratchpadSave = "";
+		sp.scratchpadColour = "w";
+		scratchpadShowTypeIMsg = 0;
+		scratchpadShowTypeIIMsg = 0;
+		return sp;
+	},
 	
 	addCharToScratchpad: func(character) {
 		if (size(me.scratchpad) >= 22) {
@@ -118,10 +127,10 @@ var MessageController = {
 	]),
 
 	getTypeIMsgByText: func(text) {
-		return me.getMsgByText(text, me.typeIMessages);
+		return me.getMsgByText(text, me.typeIMessages.vector);
 	},
 	getTypeIIMsgByText: func(text) {
-		return me.getMsgByText(text, me.typeIIMessages);
+		return me.getMsgByText(text, me.typeIIMessages.vector);
 	},
 	getMsgByText: func(text, theVector) {
 		foreach (var message; theVector) {
@@ -132,3 +141,5 @@ var MessageController = {
 		return nil;
 	},
 };
+
+var scratchpads = [scratchpadController.new(), scratchpadController.new()];
