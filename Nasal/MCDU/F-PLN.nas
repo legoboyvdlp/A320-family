@@ -188,10 +188,10 @@ var staticText = {
 		return [nil, nil, "ack"];
 	},
 	pushButtonLeft: func() {
-		notAllowed(me.computer);
+		mcdu_message(me.computer, "NOT ALLOWED");
 	},
 	pushButtonRight: func() {
-		notAllowed(me.computer);
+		mcdu_message(me.computer, "NOT ALLOWED");
 	},
 };
 
@@ -406,26 +406,24 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		} else {
 			if (size(me.outputList) >= index) {
-				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
-					var returny = fmgc.flightPlanController.scratchpad(getprop("MCDU[" ~ me.computer ~ "]/scratchpad"), (index - 1 + me.scroll), me.computer);
+				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
 					if (returny == 3) {
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {
-						notInDataBase(me.computer);
+						mcdu_message(me.computer, "NOT IN DATA BASE");
 					} elsif (returny == 1) {
-						notAllowed(me.computer);
+						mcdu_message(me.computer, "NOT ALLOWED");
 					} elsif (returny == 4) {
-						databaseFull(me.computer);
+						mcdu_message(me.computer, "LIST OF 20 IN USE");
 					} else {
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
+						mcdu_scratchpad.scratchpads[me.computer].empty();
 					}
 				} else {
 					me.outputList[index - 1].pushButtonLeft();
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		}
 	},
@@ -440,41 +438,21 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 					setprop("/FMGC/internal/fuel-calculating", 1);
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		} else {
 			if (size(me.outputList) >= index) {
-				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
-					notAllowed(me.computer);
+				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					mcdu_message(me.computer, "NOT ALLOWED");
 				} else {
 					me.outputList[index - 1].pushButtonRight();
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		}
 	},
 };
-
-var notInDataBase = func(i) {
-	if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-		setprop("MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
-	} else {
-		setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
-	}
-	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
-}
-
-var databaseFull = func(i) {
-	if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-		setprop("MCDU[" ~ i ~ "]/last-scratchpad", "LIST OF 20 IN USE");
-	} else {
-		setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
-	}
-	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("MCDU[" ~ i ~ "]/scratchpad", "LIST OF 20 IN USE");
-}
 
 var decimalToShortString = func(dms, type) {
 	var degrees = split(".", sprintf(dms))[0];

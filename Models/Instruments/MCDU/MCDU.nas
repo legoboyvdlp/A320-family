@@ -308,24 +308,6 @@ var canvas_MCDU_base = {
 	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
-		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			color_selected = getprop("/MCDU[" ~ i ~ "]/scratchpad-color");
-			if (color_selected == "grn") {
-				me["Scratchpad"].setColor(GREEN);
-			} else if (color_selected == "blu") {
-				me["Scratchpad"].setColor(BLUE);
-			} else if (color_selected == "amb") {
-				me["Scratchpad"].setColor(AMBER);
-			} else if (color_selected == "yel") {
-				me["Scratchpad"].setColor(YELLOW);
-			} else if (color_selected == "mag") {
-				me["Scratchpad"].setColor(MAGENTA);
-			} else {
-				me["Scratchpad"].setColor(WHITE);
-			}
-		} else {
-			me["Scratchpad"].setColor(WHITE);
-		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -4928,6 +4910,20 @@ var canvas_MCDU_base = {
 	},
 	updateScratchpad: func(i) {
 		me["Scratchpad"].setText(sprintf("%s", mcdu_scratchpad.scratchpads[i].scratchpad));
+		var color_selected = mcdu_scratchpad.scratchpads[i].scratchpadColour;
+		if (color_selected == "grn") {
+			me["Scratchpad"].setColor(GREEN);
+		} else if (color_selected == "blu") {
+			me["Scratchpad"].setColor(BLUE);
+		} else if (color_selected == "amb") {
+			me["Scratchpad"].setColor(AMBER);
+		} else if (color_selected == "yel") {
+			me["Scratchpad"].setColor(YELLOW);
+		} else if (color_selected == "mag") {
+			me["Scratchpad"].setColor(MAGENTA);
+		} else {
+			me["Scratchpad"].setColor(WHITE);
+		}
 	},
 };
 		
@@ -4983,6 +4979,9 @@ setlistener("sim/signals/fdm-initialized", func {
 	MCDU_2 = canvas_MCDU_2.new(group_MCDU2, "Aircraft/A320-family/Models/Instruments/MCDU/res/mcdu.svg");
 	MCDU_1.updateScratchpadCall();
 	MCDU_2.updateScratchpadCall();
+	
+	mcdu.mcdu_message(0, "SELECT DESIRED SYSTEM");
+	mcdu.mcdu_message(1, "SELECT DESIRED SYSTEM");
 	
 	MCDU_update.start();
 });

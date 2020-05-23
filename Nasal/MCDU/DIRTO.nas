@@ -156,7 +156,7 @@ var dirTo = {
 			var lonDecimal = mcdu.stringToDegrees(lon, "lon");
 			
 			if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 			
 			var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ 01);
@@ -229,10 +229,9 @@ var dirTo = {
 			}
 			
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
-		setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-		setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
+		mcdu_scratchpad.scratchpads[me.computer].empty();
 	},
 	leftFieldBtn: func(index) {
 		me.makeTmpy();
@@ -252,22 +251,22 @@ var dirTo = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
-		me.L1 = [" [       ]", " WAYPOINT", "blu"];
-		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 	},
 	fieldR6: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
+			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
-		me.L1 = [" [       ]", " WAYPOINT", "blu"];
-		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
-		setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 	},
 	updateDist: func(dist) {
 		me.R1 = ["----   " ~ sprintf("%.0f", dist) ~ "  ", "UTC   DIST  ", "wht"];

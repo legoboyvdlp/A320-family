@@ -29,7 +29,7 @@ var initInputIRS = func(key, i) {
 				setprop("FMGC/internal/align-ref-long-minutes", getprop("FMGC/internal/align-ref-long-minutes") + 0.1);
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "down") {
 		if (getprop("FMGC/internal/align-ref-lat-edit")) {
@@ -59,14 +59,14 @@ var initInputIRS = func(key, i) {
 				setprop("FMGC/internal/align-ref-long-minutes", getprop("FMGC/internal/align-ref-long-minutes") - 0.1);
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L1") {
 		if (getprop("FMGC/internal/tofrom-set")) {
 			setprop("FMGC/internal/align-ref-lat-edit", 1);
 			setprop("FMGC/internal/align-ref-long-edit", 0);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L6") {
 		setprop("FMGC/internal/align-ref-lat-edit", 0);
@@ -77,7 +77,7 @@ var initInputIRS = func(key, i) {
 			setprop("FMGC/internal/align-ref-lat-edit", 0);
 			setprop("FMGC/internal/align-ref-long-edit", 1);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R6") {
 		setprop("FMGC/internal/align-ref-lat-edit", 0);
@@ -91,27 +91,11 @@ var initInputIRS = func(key, i) {
 				setprop("MCDU[" ~ i ~ "]/page", "INITA");
 			}
 		} else if (getprop("FMGC/internal/tofrom-set") == 0) {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != "SELECT REFERENCE") {
-				if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-					setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
-				} else {
-					setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
-				}
-			}
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT REFERENCE");
+			# setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT REFERENCE");
 		} else if (getprop("systems/navigation/adr/any-adr-on") == 0) {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != "IRS NOT ALIGNED") {
-				if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-					setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
-				} else {
-					setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
-				}
-			}
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-			setprop("MCDU[" ~ i ~ "]/scratchpad", "IRS NOT ALIGNED");
+			# setprop("MCDU[" ~ i ~ "]/scratchpad", "IRS NOT ALIGNED");
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	}
 }

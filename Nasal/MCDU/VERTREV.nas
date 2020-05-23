@@ -118,8 +118,7 @@ var vertRev = {
 			if (!dirToFlag) {
 				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
 			} else {
-			    setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-                setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 			}
 			me._checkTmpy();
 		}

@@ -8,8 +8,7 @@ var perfDESInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cost-index", 0);
 			setprop("/FMGC/internal/cost-index-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
@@ -17,12 +16,12 @@ var perfDESInput = func(key, i) {
 				if (ci != nil and ci >= 0 and ci <= 999) {
 					setprop("/FMGC/internal/cost-index", ci);
 					setprop("/FMGC/internal/cost-index-set", 1);
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "L6") {
@@ -34,7 +33,7 @@ var perfDESInput = func(key, i) {
 					setprop("/FMGC/internal/decel", 1);
 					setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
 				setprop("/FMGC/internal/activate-once", 1);
