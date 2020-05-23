@@ -19,20 +19,24 @@ var initInputA = func(key, i) {
 			#setprop("/FMGC/internal/alt-selected", 1);
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else if (getprop("/FMGC/internal/tofrom-set") == 1) {
-			var tfs = size(scratchpad);
-			if (tfs == 4) {
-				setprop("/FMGC/internal/alt-airport", scratchpad);
-				setprop("/FMGC/internal/alt-set", 1);
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+			if (!fmgc.flightPlanController.temporaryFlag[i]) {
+				var tfs = size(scratchpad);
+				if (tfs == 4) {
+					setprop("/FMGC/internal/alt-airport", scratchpad);
+					setprop("/FMGC/internal/alt-set", 1);
+					if (getprop("/FMGC/internal/block-confirmed")) {
+						setprop("/FMGC/internal/fuel-calculating", 0);
+						setprop("/FMGC/internal/fuel-calculating", 1);
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+					fmgc.updateARPT();
+					#setprop("/FMGC/internal/alt-selected", 1);
+					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
 				}
-				mcdu_scratchpad.scratchpads[i].empty();
-				fmgc.updateARPT();
-				#setprop("/FMGC/internal/alt-selected", 1);
-				#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 			} else {
-				mcdu_message(i, "NOT ALLOWED");
+				mcdu_message(i, "TMPY F-PLN EXISTS");
 			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
@@ -171,45 +175,49 @@ var initInputA = func(key, i) {
 			#setprop("/FMGC/internal/alt-selected", 0);
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else {
-			var tfs = size(scratchpad);
-			if (tfs == 9 and find("/", scratchpad) != -1) {
-				var fromto = split("/", scratchpad);
-				var froms = size(fromto[0]);
-				var tos = size(fromto[1]);
-				if (froms == 4 and tos == 4) {
-					#route
-					setprop("/FMGC/internal/dep-arpt", fromto[0]);
-					setprop("/FMGC/internal/arr-arpt", fromto[1]);
-					setprop("/FMGC/internal/tofrom-set", 1);
-					#scratchpad
-					mcdu_scratchpad.scratchpads[i].empty();
-					fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
-					setprop("/FMGC/internal/alt-selected", 0);
-					#ref lat
-					dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
-					degrees = int(dms);
-					minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-					sign = degrees >= 0 ? "N" : "S";
-					setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
-					setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
-					setprop("/FMGC/internal/align-ref-lat-sign", sign);
-					#ref long
-					dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
-					degrees = int(dms);
-					minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-					sign = degrees >= 0 ? "E" : "W";
-					setprop("/FMGC/internal/align-ref-long-degrees", degrees);
-					setprop("/FMGC/internal/align-ref-long-minutes", minutes);
-					setprop("/FMGC/internal/align-ref-long-sign", sign);
-					#ref edit
-					setprop("/FMGC/internal/align-ref-lat-edit", 0);
-					setprop("/FMGC/internal/align-ref-long-edit", 0);
-					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
+			if (!fmgc.flightPlanController.temporaryFlag[i]) {
+				var tfs = size(scratchpad);
+				if (tfs == 9 and find("/", scratchpad) != -1) {
+					var fromto = split("/", scratchpad);
+					var froms = size(fromto[0]);
+					var tos = size(fromto[1]);
+					if (froms == 4 and tos == 4) {
+						#route
+						setprop("/FMGC/internal/dep-arpt", fromto[0]);
+						setprop("/FMGC/internal/arr-arpt", fromto[1]);
+						setprop("/FMGC/internal/tofrom-set", 1);
+						#scratchpad
+						mcdu_scratchpad.scratchpads[i].empty();
+						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
+						setprop("/FMGC/internal/alt-selected", 0);
+						#ref lat
+						dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+						degrees = int(dms);
+						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+						sign = degrees >= 0 ? "N" : "S";
+						setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
+						setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
+						setprop("/FMGC/internal/align-ref-lat-sign", sign);
+						#ref long
+						dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+						degrees = int(dms);
+						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+						sign = degrees >= 0 ? "E" : "W";
+						setprop("/FMGC/internal/align-ref-long-degrees", degrees);
+						setprop("/FMGC/internal/align-ref-long-minutes", minutes);
+						setprop("/FMGC/internal/align-ref-long-sign", sign);
+						#ref edit
+						setprop("/FMGC/internal/align-ref-lat-edit", 0);
+						setprop("/FMGC/internal/align-ref-long-edit", 0);
+						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				mcdu_message(i, "NOT ALLOWED");
+				mcdu_message(i, "TMPY F-PLN EXISTS");
 			}
 		}
 	} else if (key == "R3") {
