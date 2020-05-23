@@ -148,6 +148,12 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			mcdu_message(i, "NOT ALLOWED");
 		} else {
+			if (!getprop("/FMGC/internal/cost-index-set")) {
+				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index"));
+				setprop("/FMGC/internal/cost-index-set", 1);
+				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index"));
+			}
+			
 			var tfs = size(scratchpad);
 			if (tfs == 0) {
 				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");

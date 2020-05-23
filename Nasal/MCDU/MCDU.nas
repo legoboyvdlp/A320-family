@@ -59,6 +59,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/alt-set", 0);
 	setprop("/FMGC/internal/cost-index", "0");
 	setprop("/FMGC/internal/cost-index-set", 0);
+	setprop("/FMGC/internal/last-cost-index", 0);
 	setprop("/FMGC/internal/cruise-ft", 10000);
 	setprop("/FMGC/internal/cruise-fl", 100);
 	setprop("/FMGC/internal/cruise-lvl-set", 0);
@@ -810,8 +811,9 @@ var button = func(btn, i) {
 	}
 }
 
-var mcdu_message = func(i, string) {
+var mcdu_message = func(i, string, overrideStr = "") {
 	mcdu_scratchpad.scratchpads[i].showTypeI(mcdu_scratchpad.MessageController.getTypeIMsgByText(string));
+	mcdu_scratchpad.scratchpads[i].override(overrideStr);
 }
 
 var screenFlash = func(time, i) {

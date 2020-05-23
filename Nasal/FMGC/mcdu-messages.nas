@@ -109,6 +109,12 @@ var scratchpadController = {
 		me.empty();
 		me.update();
 	},
+	override: func(str) {
+		if (me.scratchpad == "USING COST INDEX N") {
+			me.scratchpad = "USING COST INDEX " ~ str;
+			me.update();
+		}
+	},
 	empty: func() {
 		me.scratchpad = "";
 		me.update();
@@ -136,12 +142,11 @@ var scratchpadController = {
 
 var MessageController = {
 	typeIMessages: std.Vector.new([
-		TypeIMessage.new("AOC DISABLED"),TypeIMessage.new("AWY/WPT MISMATCH"),TypeIMessage.new("DEST/ALTN MISMATCH"),
-		TypeIMessage.new("DIR TO IN PROGRESS"),TypeIMessage.new("ENTRY OUT OF RANGE"),TypeIMessage.new("FORMAT ERROR"),
-		TypeIMessage.new("INSERT/ERASE TMPY FIRST"),TypeIMessage.new("LIST OF 20 IN USE"),TypeIMessage.new("PILOT ELEMENT RETAINED"),
-		TypeIMessage.new("NOT ALLOWED"),TypeIMessage.new("NOT IN DATA BASE"),TypeIMessage.new("ONLY SPD ENTRY ALLOWED"),
-		TypeIMessage.new("REVISION IN PROGRESS"),TypeIMessage.new("TMPY F-PLN EXISTS"),
-		TypeIMessage.new("SELECT DESIRED SYSTEM"),TypeIMessage.new("SELECT HDG/TRK FIRST"),
+		TypeIMessage.new("AOC DISABLED"),TypeIMessage.new("AWY/WPT MISMATCH"),TypeIMessage.new("DIR TO IN PROGRESS"),
+		TypeIMessage.new("ENTRY OUT OF RANGE"),TypeIMessage.new("FORMAT ERROR"),TypeIMessage.new("INSERT/ERASE TMPY FIRST"),
+		TypeIMessage.new("LIST OF 20 IN USE"),TypeIMessage.new("PILOT ELEMENT RETAINED"),TypeIMessage.new("NOT ALLOWED"),
+		TypeIMessage.new("NOT IN DATA BASE"),TypeIMessage.new("ONLY SPD ENTRY ALLOWED"),TypeIMessage.new("REVISION IN PROGRESS"),
+		TypeIMessage.new("TMPY F-PLN EXISTS"),TypeIMessage.new("SELECT DESIRED SYSTEM"),TypeIMessage.new("SELECT HDG/TRK FIRST"),
 		TypeIMessage.new("USING COST INDEX N"),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),
 	]),
 	typeIIMessages: std.Vector.new([
