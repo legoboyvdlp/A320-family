@@ -3,7 +3,7 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var initInputB = func(key, i) {
-	var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1" and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/taxi-fuel", 0.4);

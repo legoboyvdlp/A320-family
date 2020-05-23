@@ -1,7 +1,7 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var progDESInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cruise-fl-prog", getprop("/FMGC/internal/cruise-fl"));

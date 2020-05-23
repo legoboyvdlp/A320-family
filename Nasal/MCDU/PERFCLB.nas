@@ -3,7 +3,7 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var perfCLBInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L2") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cost-index", 0);

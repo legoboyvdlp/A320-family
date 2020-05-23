@@ -91,21 +91,21 @@ var initInputIRS = func(key, i) {
 				setprop("MCDU[" ~ i ~ "]/page", "INITA");
 			}
 		} else if (getprop("FMGC/internal/tofrom-set") == 0) {
-			if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "SELECT REFERENCE") {
+			if (mcdu_scratchpad.scratchpads[i].scratchpad != "SELECT REFERENCE") {
 				if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 					setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
 				} else {
-					setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+					setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 				}
 			}
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 			setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT REFERENCE");
 		} else if (getprop("systems/navigation/adr/any-adr-on") == 0) {
-			if (getprop("MCDU[" ~ i ~ "]/scratchpad") != "IRS NOT ALIGNED") {
+			if (mcdu_scratchpad.scratchpads[i].scratchpad != "IRS NOT ALIGNED") {
 				if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 					setprop("MCDU[" ~ i ~ "]/last-scratchpad", "");
 				} else {
-					setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+					setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 				}
 			}
 			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);

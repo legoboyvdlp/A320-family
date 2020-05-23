@@ -249,7 +249,7 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(1);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
-			canvas_mcdu.myDirTo[i].fieldL1(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			canvas_mcdu.myDirTo[i].fieldL1(mcdu_scratchpad.scratchpads[i].scratchpad);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(1);
 		} else {
@@ -398,7 +398,7 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
-			canvas_mcdu.myClosestAirport[i].manAirportCall(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			canvas_mcdu.myClosestAirport[i].manAirportCall(mcdu_scratchpad.scratchpads[i].scratchpad);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			notAllowed(i);
@@ -619,11 +619,11 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R6",i);
 		} else if ((getprop("/MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
-			if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
+			if (mcdu_scratchpad.scratchpads[i].scratchpad != "AOC DISABLED") {
 				if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 					setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
 				} else {
-					setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+					setprop("/MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 				}
 			}
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
@@ -807,7 +807,7 @@ var pagebutton = func(btn, i) {
 
 var button = func(btn, i) {
 	if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 0 and getprop("/MCDU[" ~ i ~ "]/page") != "MCDU") {
-		var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+		var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 		if (btn == "SLASH") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "/");
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
@@ -815,7 +815,7 @@ var button = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ " ");
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "CLR") {
-			var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (size(scratchpad) == 0) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
@@ -840,7 +840,7 @@ var button = func(btn, i) {
 	} else {
 		if (btn == "CLR") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-			var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (size(scratchpad) == 0) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
@@ -854,11 +854,11 @@ var button = func(btn, i) {
 }
 
 var genericMessage = func(i, text, color) {
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != text) {
+	if (mcdu_scratchpad.scratchpads[i].scratchpad != text) {
 		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
 		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 		}
 	}
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", color);
@@ -868,11 +868,11 @@ var genericMessage = func(i, text, color) {
 
 var notAllowed = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "NOT ALLOWED") {
+	if (mcdu_scratchpad.scratchpads[i].scratchpad != "NOT ALLOWED") {
 		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
 		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 		}
 	}
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
@@ -881,11 +881,11 @@ var notAllowed = func(i) {
 
 var formatError = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "FORMAT ERROR") {
+	if (mcdu_scratchpad.scratchpads[i].scratchpad != "FORMAT ERROR") {
 		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
 		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 		}
 	}
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);

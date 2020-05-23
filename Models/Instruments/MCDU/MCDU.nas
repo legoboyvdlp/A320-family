@@ -217,7 +217,6 @@ var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
-var scratchpad = [fmgc.scratchpads[0].scratchpad, fmgc.scratchpads[1].scratchpad];
 
 # Create Nodes:
 var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
@@ -347,7 +346,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].hide();
 				
-				me["Simple_L0"].hide();
+				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
@@ -4196,8 +4195,6 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 		}
-		
-		me["Scratchpad"].setText(sprintf("%s", scratchpad[i].getValue()));
 	},
 	# ack = ignore, wht = white, grn = green, blu = blue, amb = amber, yel = yellow, mag = magenta
 	colorLeft: func(a, b, c, d, e, f) {
@@ -4929,6 +4926,9 @@ var canvas_MCDU_base = {
 			}
 		}
 	},
+	updateScratchpad: func(i) {
+		me["Scratchpad"].setText(sprintf("%s", mcdu_scratchpad.scratchpads[i].scratchpad));
+	},
 };
 		
 var canvas_MCDU_1 = {
@@ -4941,6 +4941,9 @@ var canvas_MCDU_1 = {
 	update: func() {
 		me.updateCommon(0);
 	},
+	updateScratchpadCall: func() {
+		me.updateScratchpad(0);
+	},
 };
 
 var canvas_MCDU_2 = {
@@ -4952,6 +4955,9 @@ var canvas_MCDU_2 = {
 	},
 	update: func() {
 		me.updateCommon(1);
+	},
+	updateScratchpadCall: func() {
+		me.updateScratchpad(1);
 	},
 };
 
@@ -4975,6 +4981,8 @@ setlistener("sim/signals/fdm-initialized", func {
 
 	MCDU_1 = canvas_MCDU_1.new(group_MCDU1, "Aircraft/A320-family/Models/Instruments/MCDU/res/mcdu.svg");
 	MCDU_2 = canvas_MCDU_2.new(group_MCDU2, "Aircraft/A320-family/Models/Instruments/MCDU/res/mcdu.svg");
+	MCDU_1.updateScratchpadCall();
+	MCDU_2.updateScratchpadCall();
 	
 	MCDU_update.start();
 });

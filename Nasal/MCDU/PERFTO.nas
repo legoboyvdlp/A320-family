@@ -4,7 +4,7 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var perfTOInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (getprop("/FMGC/status/phase") != 1) {
 			if (scratchpad == "CLR") {

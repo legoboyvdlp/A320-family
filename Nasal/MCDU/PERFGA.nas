@@ -3,7 +3,7 @@
 # uses universal values, will implement separately once FPLN is finished
 
 var perfGAInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L5") {
 		if (scratchpad == "CLR") {
 			setprop("systems/thrust/clbreduc-ft", "1500");

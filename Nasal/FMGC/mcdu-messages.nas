@@ -11,7 +11,7 @@ var TypeIMessage = {
 };
 
 var TypeIIMessage = {
-	new: func(msgText, colour, isInhibit = 0) {
+	new: func(msgText, colour = "w", isInhibit = 0) {
 		var msg = { parents: [TypeIIMessage] };
 		msg.msgText = msgText;
 		msg.colour = colour;
@@ -45,17 +45,18 @@ var MessageQueueController = {
 };
 
 var scratchpadController = {
-	new: func() {
+	new: func(mcdu) {
 		var sp = { parents: [scratchpadController] };
 		sp.scratchpad = "";
 		sp.scratchpadSave = "";
 		sp.scratchpadColour = "w";
-		scratchpadShowTypeIMsg = 0;
-		scratchpadShowTypeIIMsg = 0;
+		sp.scratchpadShowTypeIMsg = 0;
+		sp.scratchpadShowTypeIIMsg = 0;
+		sp.mcdu = mcdu;
 		return sp;
 	},
 	
-	addCharToScratchpad: func(character) {
+	addChar: func(character) {
 		if (size(me.scratchpad) >= 22) {
 			return;
 		}
@@ -71,8 +72,9 @@ var scratchpadController = {
 		}
 		
 		me.scratchpad = me.scratchpad ~ character;
+		me.update();
 	},
-	showTypeIMsg: func(msg) {
+	showTypeI: func(msg) {
 		# any shown type ii is hidden
 		if (me.scratchpadShowTypeIIMsg) {
 			me.clearTypeIIMsg();
@@ -82,25 +84,30 @@ var scratchpadController = {
 		# save any data entered
 		me.scratchpadSave = me.scratchpad;
 		me.scratchpad = msg;
+		me.update();
 	},
-	showTypeIIMsg: func(msg) {
+	showTypeII: func(msg) {
 		# only show if scratchpad empty
 		if (me.scratchpad = "") {
 			me.scratchpadShowTypeIIMsg = 1;
 			me.scratchpad = msg;
 		}
+		me.update();
 	},
-	clearTypeIMsg: func() {
+	clearTypeI: func() {
 		me.scratchpad = me.scratchpadSave;
 		me.scratchpadSave = nil;
 		me.scratchpadShowTypeIMsg = 0;
+		me.update();
 	},
-	clearTypeIIMsg: func() {
+	clearTypeII: func() {
 		me.scratchpadShowTypeIIMsg = 0;
 		me.empty();
+		me.update();
 	},
 	empty: func() {
 		me.scratchpad = "";
+		me.update();
 	},
 	clear: func() {
 		if (me.showTypeIMsg) {
@@ -109,6 +116,14 @@ var scratchpadController = {
 			me.scratchpad = left(me.scratchpad, size(me.scratchpad) - 1);
 		} else {
 			me.clearTypeIIMsg();
+		}
+		me.update();
+	},
+	update: func() {	
+		if (me.mcdu == 1) {
+			canvas_mcdu.MCDU_1.updateScratchpadCall();
+		} else {
+			canvas_mcdu.MCDU_2.updateScratchpadCall();
 		}
 	},
 };
@@ -142,4 +157,4 @@ var MessageController = {
 	},
 };
 
-var scratchpads = [scratchpadController.new(), scratchpadController.new()];
+var scratchpads = [scratchpadController.new(1), scratchpadController.new(2)];

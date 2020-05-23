@@ -5,7 +5,7 @@ var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 
 var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 1);
 
 var perfAPPRInput = func(key, i) {
-	var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/dest-qnh", -1);

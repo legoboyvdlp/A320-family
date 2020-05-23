@@ -3,7 +3,7 @@
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
 var radnavInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vor1freq-set", 0);

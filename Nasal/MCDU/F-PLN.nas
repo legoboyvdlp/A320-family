@@ -460,7 +460,7 @@ var notInDataBase = func(i) {
 	if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 		setprop("MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
 	} else {
-		setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+		setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 	}
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
@@ -470,7 +470,7 @@ var databaseFull = func(i) {
 	if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 		setprop("MCDU[" ~ i ~ "]/last-scratchpad", "LIST OF 20 IN USE");
 	} else {
-		setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
+		setprop("MCDU[" ~ i ~ "]/last-scratchpad", mcdu_scratchpad.scratchpads[i].scratchpad);
 	}
 	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 	setprop("MCDU[" ~ i ~ "]/scratchpad", "LIST OF 20 IN USE");

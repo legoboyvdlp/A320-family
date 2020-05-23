@@ -29,7 +29,7 @@ var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 
 var fuelPredInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L3" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/rte-rsv", 0.05 * num(getprop("/FMGC/internal/trip-fuel")));

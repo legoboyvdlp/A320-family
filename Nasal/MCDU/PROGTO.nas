@@ -3,7 +3,7 @@
 var altSet = props.globals.getNode("it-autoflight/input/alt", 1);
 
 var progTOInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cruise-fl-prog", getprop("/FMGC/internal/cruise-fl"));
