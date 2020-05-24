@@ -809,14 +809,14 @@
 						1 -75 -45 -15  -4  0  0   4  15  45  75
 					</tableData>
 					<tableData breakPoint="40.0">
-						  -75 -1  1 75
-						0  -6  0  0  6
-						1  -6  0  0  6
+						  -75  0  75
+						0  -6  0  6
+						1  -6  0  6
 					</tableData>
 					<tableData breakPoint="130.0">
-						  -75 -1  1 75
-						0   0  0  0  0
-						1   0  0  0  0
+						  -75  0  75
+						0   0  0  0
+						1   0  0  0
 					</tableData>
 				</table>
 			</function>
