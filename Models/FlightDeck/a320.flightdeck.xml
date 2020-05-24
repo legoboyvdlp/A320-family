@@ -1080,8 +1080,6 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
-		<object-name>terr_on_nd_label</object-name>
-<!--		<object-name>clock_glare</object-name>-->
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
