@@ -17,6 +17,7 @@ var myHold = [nil, nil];
 var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
 var myClosestAirport = [nil, nil];
+var myPilotWP = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
@@ -130,7 +131,9 @@ var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
 var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
 var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
 var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
+var rte_rsv_set = props.globals.getNode("/FMGC/internal/rte-rsv-set", 1);
 var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
+var rte_percent_set = props.globals.getNode("/FMGC/internal/rte-percent-set", 1);
 var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
 var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
 var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
@@ -139,8 +142,15 @@ var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
 var tow = props.globals.getNode("/FMGC/internal/tow", 1);
 var lw = props.globals.getNode("/FMGC/internal/lw", 1);
 var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
+var trip_wind_value = props.globals.getNode("/FMGC/internal/trip-wind-value", 1);
 var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
+var taxi_fuel_set = props.globals.getNode("/FMGC/internal/taxi-fuel-set", 1);
+var rte_set = props.globals.getNode("/FMGC/internal/rte-set", 1);
+var alt_fuel_set = props.globals.getNode("/FMGC/internal/alt-fuel-set", 1);
+var final_fuel_set = props.globals.getNode("/FMGC/internal/final-fuel-set", 1);
+var final_time_set = props.globals.getNode("/FMGC/internal/final-time-set", 1);
+var min_dest_fob_set = props.globals.getNode("/FMGC/internal/min-dest-fob-set", 1);
 
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
@@ -179,7 +189,6 @@ var flex = props.globals.getNode("/FMGC/internal/flex", 1);
 var flexSet = props.globals.getNode("/FMGC/internal/flex-set", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
-var transAlt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
 
 # CLB PERF
@@ -276,7 +285,7 @@ var canvas_MCDU_base = {
 	"Simple_L5","Simple_L6","Simple_L0S","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S","Simple_L1_Arrow",
 	"Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5",
 	"Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
-	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C4","Simple_C5","Simple_C6","Simple_C1S",
+	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C4B","Simple_C5","Simple_C6","Simple_C1S",
 	"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
 	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
 	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
@@ -339,6 +348,8 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me["Simple_L1_Arrow"].hide();
 				me["Simple_L2_Arrow"].hide();
@@ -683,6 +694,8 @@ var canvas_MCDU_base = {
 				me.showRight(-1, -1, -1, -1, -1, 1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -728,7 +741,18 @@ var canvas_MCDU_base = {
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].hide();
+				me["arrow2L"].hide();
+				me["arrow3L"].hide();
+				me["arrow4L"].hide();
+				me["arrow5L"].hide();
+				me["arrow1R"].hide();
+				me["arrow2R"].hide();
+				me["arrow3R"].hide();
+				me["arrow4R"].hide();
+				me["arrow5R"].show();
+				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
@@ -743,9 +767,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, -1, 1, 1);
 				me.showLeftArrow(-1, -1, 1, -1, -1, -1);
-				me.showRight(-1, 1, -1, -1, -1, 1);
-				me.showRightS(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, 1, -1, 1, 1, 1);
+				me.showRightS(-1, -1, -1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -753,31 +779,68 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, small, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, small, normal, normal);
 				
 				me.colorLeft("grn", "blu", "blu", "wht", "blu", "grn");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "blu", "blu", "wht", "wht", "wht");
-				me.colorRight("wht", "grn", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "grn", "wht", "grn", "blu", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "grn", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				
+				me["Simple_L5"].setText("[   ]");
+				me["Simple_L6"].setText("+4.0/+0.0");
+				me["Simple_L1S"].setText(" ENG");
+				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
+				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
+				me["Simple_L5S"].setText("CHG CODE");
+				me["Simple_L6S"].setText("IDLE/PERF");
+				me["Simple_R6"].setText("STATUS/XLOAD ");
+				me["Simple_R6S"].setText("SOFTWARE ");
+				me["Simple_R4S"].setText("PILOT STORED  ");
+				me["Simple_R4"].setText("00RTES 00RWYS ");
+			
 				pageSwitch[i].setBoolValue(1);
 			}
 			
 			me["Simple_L1"].setText(sprintf("%s", engType.getValue()));
 			me["Simple_L2"].setText(sprintf("%s", " " ~ database1.getValue()));
 			me["Simple_L3"].setText(sprintf("%s", " " ~ database2.getValue()));
-			me["Simple_L5"].setText("[   ]");
-			me["Simple_L6"].setText("+4.0/+0.0");
-			me["Simple_L1S"].setText(" ENG");
-			me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
-			me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
-			me["Simple_L5S"].setText("CHG CODE");
-			me["Simple_L6S"].setText("IDLE/PERF");
 			me["Simple_R2"].setText(sprintf("%s", databaseCode.getValue() ~ " "));
-			me["Simple_R6"].setText("STATUS/XLOAD ");
-			me["Simple_R6S"].setText("SOFTWARE ");
+			
+			if (fmgc.WaypointDatabase.getCount() >= 1) {
+				me["Simple_R4"].show();
+				me["Simple_R5"].show();
+				me["Simple_R4S"].show();
+				me["Simple_R5S"].show();
+				me["arrow5R"].show();
+				me["Simple_R5S"].setText(sprintf("%02.0f", fmgc.WaypointDatabase.getCount()) ~ "WPTS 00NAVS ");
+			} else {
+				me["Simple_R4"].hide();
+				me["Simple_R5"].hide();
+				me["Simple_R4S"].hide();
+				me["Simple_R5S"].hide();
+				me["arrow5R"].hide();
+			}
+			
+			if (fmgc.WaypointDatabase.confirm[i]) {
+				me["Simple_R5"].setText("CONFIRM DELETE ALL ");
+				me["Simple_R5"].setColor(getprop("/MCDUC/colors/amb/r"),getprop("/MCDUC/colors/amb/g"),getprop("/MCDUC/colors/amb/b"));
+				me["arrow5R"].setColor(getprop("/MCDUC/colors/amb/r"),getprop("/MCDUC/colors/amb/g"),getprop("/MCDUC/colors/amb/b"));
+			} else {
+				me["Simple_R5"].setText("DELETE ALL ");
+				me["Simple_R5"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
+				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
+			}
+			
+			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
+				me["Simple_L5"].show();
+				me["Simple_L5S"].show();
+			} else {
+				me["Simple_L5"].hide();
+				me["Simple_L5S"].hide();
+			}
 		} else if (page == "DATA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -808,6 +871,8 @@ var canvas_MCDU_base = {
 				me.showRight(-1, -1, -1, -1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -872,6 +937,8 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, -1, -1);
 				me.showRightS(1, 1, 1, 1, -1, -1);
 				me.showRightArrow(1, 1, 1, 1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -907,6 +974,103 @@ var canvas_MCDU_base = {
 			me["Simple_R2S"].setText("PILOTS ");
 			me["Simple_R3S"].setText("PILOTS ");
 			me["Simple_R4S"].setText("PILOTS ");
+		} else if (page == "PILOTWP") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].hide();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].show();
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				
+				if (myPilotWP[i] != nil) {
+					me["Simple_PageNum"].setText(fmgc.WaypointDatabase.getNoOfIndex(myPilotWP[i].scroll) ~ "/" ~ (fmgc.WaypointDatabase.getCount()));
+					
+					me["Simple_Title"].setText(sprintf("%s", myPilotWP[i].title ~ "       "));
+					
+					forindex (var matrixArrow; myPilotWP[i].arrowsMatrix) {
+						if (matrixArrow == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myPilotWP[i].arrowsMatrix[matrixArrow]) {
+							if (myPilotWP[i].arrowsMatrix[matrixArrow][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+							} else {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+							}
+						}
+					}
+					me.colorLeftArrow(myPilotWP[i].arrowsColour[0][0],myPilotWP[i].arrowsColour[0][1],myPilotWP[i].arrowsColour[0][2],myPilotWP[i].arrowsColour[0][3],myPilotWP[i].arrowsColour[0][4],myPilotWP[i].arrowsColour[0][5]);
+					me.colorRightArrow(myPilotWP[i].arrowsColour[1][0],myPilotWP[i].arrowsColour[1][1],myPilotWP[i].arrowsColour[1][2],myPilotWP[i].arrowsColour[1][3],myPilotWP[i].arrowsColour[1][4],myPilotWP[i].arrowsColour[1][5]);
+					
+					
+					forindex (var matrixFont; myPilotWP[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myPilotWP[i].fontMatrix[matrixFont]) {
+							if (myPilotWP[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					
+					me.dynamicPageFunc(myPilotWP[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myPilotWP[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myPilotWP[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myPilotWP[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myPilotWP[i].L5, "Simple_L5");
+					me.dynamicPageFunc(myPilotWP[i].L6, "Simple_L6");
+					
+					me.colorLeft(myPilotWP[i].L1[2],myPilotWP[i].L2[2],myPilotWP[i].L3[2],myPilotWP[i].L4[2],myPilotWP[i].L5[2],myPilotWP[i].L6[2]);
+					
+					me.dynamicPageFunc(myPilotWP[i].R1, "Simple_R1");
+					me.dynamicPageFunc(myPilotWP[i].R2, "Simple_R2");
+					me.dynamicPageFunc(myPilotWP[i].R3, "Simple_R3");
+					me.dynamicPageFunc(myPilotWP[i].R4, "Simple_R4");
+					me.dynamicPageFunc(myPilotWP[i].R5, "Simple_R5");
+					me.dynamicPageFunc(myPilotWP[i].R6, "Simple_R6");
+					
+					me.colorRight(myPilotWP[i].R1[2],myPilotWP[i].R2[2],myPilotWP[i].R3[2],myPilotWP[i].R4[2],myPilotWP[i].R5[2],myPilotWP[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else if (page == "POSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -935,6 +1099,8 @@ var canvas_MCDU_base = {
 				me.showLeftS(-1, -1, -1, -1, 1, -1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, -1, -1, 1, -1);
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
@@ -1004,6 +1170,8 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, 1, -1);
 				me.showRightS(1, 1, 1, 1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, 0, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1123,6 +1291,8 @@ var canvas_MCDU_base = {
 				me.showRight(0, 0, 1, 1, 1, 1);
 				me.showRightS(1, 0, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, 1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1281,6 +1451,8 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, -1, 1, 1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, 1, 1, -1);
 				
 				me.fontLeft(default, default, 0, 0, 0, default);
@@ -1456,6 +1628,8 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, 0, 0, 0, 0, default);
@@ -1505,7 +1679,9 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
-				me.showCenter(1, -1, -1, -1, -1, -1);
+				me.showCenter(1, -1, 1, 1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(-1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
@@ -1517,12 +1693,15 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(small, small, small, small, small, small);
+				me.fontSizeCenter(small, small, small, small, small, small);
 				me.fontSizeRight(normal, normal, normal, small, small, small);
+				me["Simple_C4B"].setFontSize(small);
 				
 				me.colorLeft("blu", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("blu", "wht", "wht", "grn", "wht", "wht");
+				me.colorCenter("blu", "wht", "blu", "grn", "blu", "wht");
+				me["Simple_C4B"].setColor(GREEN);
 				me.colorRight("blu", "blu", "amb", "wht", "blu", "wht");
 				me.colorRightS("wht", "wht", "amb", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "amb", "wht", "wht", "wht");
@@ -1538,51 +1717,251 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("MIN DEST FOB");
 			me["Simple_R2S"].setText("BLOCK");
-			me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
-			me["Simple_R3S"].setText("FUEL");
-			me["Simple_R3"].setText("PLANNING ");
 			me["Simple_R4S"].setText("TOW/   LW");
 			me["Simple_R5S"].setText("TRIP WIND");
 			me["Simple_R5"].setText(trip_wind.getValue());
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-				setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
-				
-				me["Simple_L2"].setText(sprintf("%4.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
-				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
-				me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
-				me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
-				me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
-				me["Simple_R3S"].hide();
-				me["Simple_R3"].hide(); 
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_C4"].hide();
-				me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
-				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
-				
-				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
-				me["Simple_Title"].setColor(1, 1, 1);
-				
-				me.colorLeft("ack", "grn", "blu", "blu", "blu", "blu");
-				me.colorRight("ack", "ack", "ack", "grn", "ack", "grn");
-			} else {
+			me["Simple_Title"].setColor(1, 1, 1);
+			
+			if (!getprop("/FMGC/internal/fuel-request-set")) {
 				me["Simple_L2"].setText("---.-/----");
-				me["Simple_L3"].setText("---.-/---.-");
+				me["Simple_L3"].setText("---.-");
+				me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
 				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/0030");
+				me["Simple_C4"].hide();
+				me["Simple_L5"].setText("---.-");
+				me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
 				me["Simple_L6"].setText("---.-");
-				me["Simple_R3S"].show();
-				me["Simple_R3"].show(); 
-				me["Simple_R3_Arrow"].show();
+				if (blockSet.getValue() == 1) {
+					me["Simple_R2"].show(); 
+					me["INITB_Block"].hide();
+					me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+				} else {
+					me["Simple_R2"].hide(); 
+					me["INITB_Block"].show();
+				}
+				if (zfwSet.getValue() == 1) {
+					me["Simple_R3S"].show();
+					me["Simple_R3"].show(); 
+					me["Simple_R3S"].setText("FUEL");
+					me["Simple_R3"].setText("PLANNING ");
+					me["Simple_R3_Arrow"].show();
+					me["Simple_R3_Arrow"].setColor(AMBER);
+				} else {
+					me["Simple_R3S"].hide();
+					me["Simple_R3"].hide(); 
+					me["Simple_R3_Arrow"].hide();
+				}
+				me["Simple_C4B"].hide();
 				me["Simple_R4"].setText("---.-/---.-");
 				me["Simple_R6"].setText("---.-/----");
 				
 				me["Simple_Title"].setText("INIT");
 				me["Simple_Title"].setColor(1, 1, 1);
+				
+				me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
+				me["Simple_R3S"].setColor(AMBER);
+			} else {
+			
+				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
+				
+				if (getprop("/FMGC/internal/block-calculating")) {
+					me["Simple_L2"].setText("---.-/----");
+					me["Simple_L3"].setText("---.-");
+					me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					me["Simple_L4"].setText("---.-/----");
+					me["Simple_C4"].hide();
+					me["Simple_L5"].setText("---.-");
+					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+					me["Simple_L6"].setText("---.-");
+					me["Simple_R2"].show();
+					me["Simple_R2"].setText("---.-");
+					me["INITB_Block"].hide();
+					me["Simple_R3S"].show();
+					me["Simple_R3"].show(); 
+					me["Simple_R3S"].setText("FUEL");
+					me["Simple_R3"].setText("PLANNING ");
+					me["Simple_R3_Arrow"].show();
+					me["Simple_R3_Arrow"].setColor(GREEN);
+					me["Simple_C4B"].hide();
+					me["Simple_R4"].setText("---.-/---.-");
+					me["Simple_R6"].setText("---.-/----");
+				
+					me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+					me.colorRight("ack", "wht", "grn", "wht", "ack", "wht");
+					me["Simple_R3S"].setColor(GREEN);
+				} else {
+					if (!getprop("/FMGC/internal/block-confirmed")) {
+						me["Simple_L2"].setText("---.-/----");
+						me["Simple_L3"].setText("---.-");
+						me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+						me["Simple_L4"].setText("---.-/----");
+						me["Simple_C4"].hide();
+						me["Simple_L5"].setText("---.-");
+						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+						me["Simple_L6"].setText("---.-");
+						me["Simple_R2"].show(); 
+						me["INITB_Block"].hide();
+						me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+						me["Simple_R3S"].show();
+						me["Simple_R3"].show(); 
+						me["Simple_R3S"].setText("BLOCK");
+						me["Simple_R3"].setText("CONFIRM ");
+						me["Simple_R3_Arrow"].show();
+						me["Simple_R3_Arrow"].setColor(AMBER);
+						me["Simple_C4B"].show();
+						if (num(tow.getValue()) >= 100.0) {
+							me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+						} else {
+							me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+						}
+						me["Simple_R4"].setText("---.-");
+						me["Simple_R6"].setText("---.-/----");
+			
+						me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+						me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
+						me["Simple_R3S"].setColor(AMBER);
+					} else {
+						if (getprop("/FMGC/internal/fuel-calculating")) {
+							me["Simple_L2"].setText("---.-/----");
+							me["Simple_L3"].setText("---.-");
+							if (rte_rsv_set.getValue() == 1) {
+								me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
+							} else if (rte_percent_set.getValue() == 1) {
+								me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+							} else {
+								me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+							}
+							me["Simple_L4"].setText("---.-/----");
+							me["Simple_C4"].hide();
+							me["Simple_L5"].setText("---.-");
+							if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+								me["Simple_C5"].setText(sprintf("/%s         ", final_time.getValue()));
+							} else if (final_fuel_set.getValue() == 1) {
+								me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+							} else if (final_time_set.getValue() == 1) {
+								me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+							} else {
+								me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+							}
+							me["Simple_L6"].setText("---.-");
+							me["Simple_R2"].show(); 
+							me["INITB_Block"].hide();
+							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							me["Simple_R3S"].hide();
+							me["Simple_R3"].hide(); 
+							me["Simple_R3_Arrow"].hide();
+							me["Simple_C4B"].show();
+							if (num(tow.getValue()) >= 100.0) {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+							} else {
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+							}
+							me["Simple_R4"].setText("---.-");
+							me["Simple_R6"].setText("---.-/----");
+				
+							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
+							me.colorRight("ack", "blu", "ack", "wht", "ack", "wht");
+						} else {
+							me["Simple_L2"].setText(sprintf("%.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
+							me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
+							if (rte_rsv_set.getValue() == 1) {
+								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+								} else if (num(rte_rsv.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+								} else if (num(rte_percent.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+								} else {
+									me["Simple_C3"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+								}
+							} else if (rte_percent_set.getValue() == 1) {
+								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+								} else if (num(rte_rsv.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
+								} else if (num(rte_percent.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+								} else {
+									me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+								}
+							} else {
+								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+								} else if (num(rte_rsv.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+								} else if (num(rte_percent.getValue()) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+								} else {
+									me["Simple_C3"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+								}
+							}
+							if (altSet.getValue() == 1) {
+								me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+								me["Simple_L4"].setColor(BLUE);
+								me["Simple_C4"].show();
+								if (alt_fuel_set.getValue() == 1) {
+									if (num(alt_fuel.getValue()) > 9.9) {
+										me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+									} else {
+										me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+									}
+								} else {
+									if (num(alt_fuel.getValue()) > 9.9) {
+										me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+									} else {
+										me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+									}
+								}
+							} else {
+								me["Simple_L4"].setText("---.-/----");
+								me["Simple_L4"].setColor(WHITE);
+								me["Simple_C4"].hide();
+							}
+							me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
+							if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
+								if (num(final_fuel.getValue()) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+								} else {
+									me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+								}
+							} else if (final_time_set.getValue() == 1) {
+								if (num(final_fuel.getValue()) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s            ", final_time.getValue()));
+								} else {
+									me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+								}
+							} else if (final_fuel_set.getValue() == 1) {
+								if (num(final_fuel.getValue()) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+								} else {
+									me["Simple_C5"].setText(sprintf("/%s                  ", final_time.getValue()));
+								}
+							} else {
+								if (num(final_fuel.getValue()) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s                 ", final_time.getValue()));
+								} else {
+									me["Simple_C5"].setText(sprintf("/%s                   ", final_time.getValue()));
+								}
+							}
+							me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
+							me["Simple_R2"].show(); 
+							me["INITB_Block"].hide();
+							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							me["Simple_R3S"].hide();
+							me["Simple_R3"].hide(); 
+							me["Simple_R3_Arrow"].hide();
+							me["Simple_C4B"].hide();
+							me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
+							me["Simple_R6"].setText(sprintf("%.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+				
+							me.colorLeft("ack", "grn", "blu", "ack", "blu", "blu");
+							me.colorRight("ack", "blu", "ack", "grn", "ack", "grn");
+						}
+					}
+				}
 			}
 			
 			me["Simple_R1S"].setText("ZFWCG/   ZFW");
@@ -1607,12 +1986,47 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].hide(); 
 			}
 			
-			if (blockSet.getValue() == 1) {
-				me["Simple_R2"].show();
-				me["INITB_Block"].hide();			
+			if (taxi_fuel_set.getValue() == 1) {
+				me["Simple_L1"].setFontSize(normal);
 			} else {
-				me["Simple_R2"].hide(); 
-				me["INITB_Block"].show();
+				me["Simple_L1"].setFontSize(small);
+			}
+			
+			if (rte_rsv_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(normal);
+				me["Simple_C3"].setFontSize(small);
+			} else if (rte_percent_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3"].setFontSize(normal);
+			} else {
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3"].setFontSize(small);
+			}
+			
+			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
+			
+			if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+				me["Simple_C5"].setFontSize(normal);
+			} else if (final_fuel_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+				me["Simple_C5"].setFontSize(small);
+			} else if (final_time_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(small);
+				me["Simple_C5"].setFontSize(normal);
+			} else {
+				me["Simple_L5"].setFontSize(small);
+				me["Simple_C5"].setFontSize(small);
+			}
+			
+			if (min_dest_fob_set.getValue() == 1) {
+				me["Simple_L6"].setFontSize(normal);
+			} else {
+				me["Simple_L6"].setFontSize(small);
 			}
 			
 		} else if (page == "FUELPRED") {
@@ -1642,7 +2056,9 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, -1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
-				me.showCenter(1, 1, 1, -1, -1, -1);
+				me.showCenter(1, 1, 1, -1, 1, -1);
+				me["Simple_C3B"].show();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				me.showRight(1, 1, -1, 1, 1, 1);
 				me.showRightS(1, -1, 1, 1, 1, 1);
@@ -1654,12 +2070,15 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
-				me.fontSizeRight(normal, normal, small, small, small, small);
+				me.fontSizeCenter(small, small, small, small, small, small);
+				me.fontSizeRight(normal, normal, normal, small, small, small);
+				me["Simple_C3B"].setFontSize(small);
 				
 				me.colorLeft("grn", "grn", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "blu", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "blu", "grn", "blu", "wht");
+				me["Simple_C3B"].setColor(BLUE);
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRight("grn", "grn", "blu", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -1698,16 +2117,113 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (blockSet.getValue() == 1 and zfwSet.getValue() == 1) {
-				setprop("/FMGC/internal/rte-rsv", num((block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue()) * (rte_percent.getValue() / 100) / (1 + rte_percent.getValue() / 100)));
-				setprop("/FMGC/internal/trip-fuel", num(block.getValue() - taxi_fuel.getValue() - min_dest_fob.getValue() - rte_rsv.getValue()));
-				setprop("/FMGC/internal/tow", num(block.getValue() + zfw.getValue() - taxi_fuel.getValue()));
-				setprop("/FMGC/internal/lw", num(tow.getValue() - trip_fuel.getValue()));
+			if (!getprop("/FMGC/internal/fuel-request-set") or !getprop("/FMGC/internal/block-confirmed") or getprop("/FMGC/internal/fuel-calculating")) {
+				me["Simple_L3"].setText("---.-");
+				if (rte_rsv_set.getValue() == 1) {
+					me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
+				} else if (rte_percent_set.getValue() == 1) {
+					me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+				} else {
+					me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+				}
+				me["Simple_L4"].setText("---.-/----");
+				me["Simple_C4"].hide();
+				me["Simple_L5"].setText("---.-");
+				if (final_fuel_set.getValue() == 1 or final_time_set.getValue() == 1) {
+					me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+				} else {
+					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+				}
+				me["Simple_L6"].setText("---.-");
 				
-				me["Simple_L3"].setText(sprintf("%4.1f/", rte_rsv.getValue()) ~ sprintf("%4.1f", rte_percent.getValue()));
-				me["Simple_L4"].setText(sprintf("%4.1f/" ~ alt_time.getValue(), alt_fuel.getValue()));
-				me["Simple_L5"].setText(sprintf("%4.1f/" ~ final_time.getValue(), final_fuel.getValue()));
-				me["Simple_L6"].setText(sprintf("%2.1f", min_dest_fob.getValue()));
+				me["Simple_R4"].setText("---.-/FF+FQ");
+				me["Simple_R5"].setText("---.-/---.-");
+				me["Simple_R6"].setText("---.-/----");
+	
+				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");
+				me.colorRight("ack", "ack", "ack", "wht", "wht", "wht");
+			} else {
+				me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
+				if (rte_rsv_set.getValue() == 1) {
+					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+					} else if (num(rte_rsv.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					} else if (num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+					} else {
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+					}
+				} else if (rte_percent_set.getValue() == 1) {
+					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+					} else if (num(rte_rsv.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
+					} else if (num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+					} else {
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+					}
+				} else {
+					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+					} else if (num(rte_rsv.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+					} else if (num(rte_percent.getValue()) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+					} else {
+						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+					}
+				}
+				if (altSet.getValue() == 1) {
+					me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+					me["Simple_L4"].setColor(BLUE);
+					me["Simple_C4"].show();
+					if (alt_fuel_set.getValue() == 1) {
+						if (num(alt_fuel.getValue()) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+						} else {
+							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						}
+					} else {
+						if (num(alt_fuel.getValue()) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						} else {
+							me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+						}
+					}
+				} else {
+					me["Simple_L4"].setText("---.-/----");
+					me["Simple_L4"].setColor(WHITE);
+					me["Simple_C4"].hide();
+				}
+				me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
+				if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
+					if (num(final_fuel.getValue()) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+					} else {
+						me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+					}
+				} else if (final_time_set.getValue() == 1) {
+					if (num(final_fuel.getValue()) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s            ", final_time.getValue()));
+					} else {
+						me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+					}
+				} else if (final_fuel_set.getValue() == 1) {
+					if (num(final_fuel.getValue()) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+					} else {
+						me["Simple_C5"].setText(sprintf("/%s                  ", final_time.getValue()));
+					}
+				} else {
+					if (num(final_fuel.getValue()) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s                 ", final_time.getValue()));
+					} else {
+						me["Simple_C5"].setText(sprintf("/%s                   ", final_time.getValue()));
+					}
+				}
+				me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
 				
 				setprop("/FMGC/internal/fob", num(getprop("/consumables/fuel/total-fuel-lbs") / 1000));
 				setprop("/FMGC/internal/fuel-pred-gw", num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000));
@@ -1716,17 +2232,8 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
 				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
 				
-				me.colorLeft("ack", "ack", "blu", "blu", "blu", "blu");
+				me.colorLeft("ack", "ack", "blu", "ack", "blu", "blu");
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
-			} else {
-				me["Simple_L3"].setText("---.-/---.-");
-				me["Simple_L4"].setText("---.-/----");
-				me["Simple_L5"].setText("---.-/0030");
-				me["Simple_L6"].setText("---.-");
-
-				me["Simple_R4"].setText("---.-/FF+FQ");
-				me["Simple_R5"].setText("---.-/---.-");
-				me["Simple_R6"].setText("---.-/----");
 			}
 			
 			me["Simple_R3S"].setText("ZFWCG/ZFW");
@@ -1749,6 +2256,43 @@ var canvas_MCDU_base = {
 				me["FUELPRED_ZFW"].show();
 				me["FUELPRED_ZFW_S"].hide();
 				me["Simple_R3"].hide(); 
+			}
+			
+			if (rte_rsv_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(normal);
+				me["Simple_C3B"].setFontSize(small);
+			} else if (rte_percent_set.getValue() == 1) {
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3B"].setFontSize(normal);
+			} else {
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3B"].setFontSize(small);
+			}
+			
+			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
+			
+			if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+				me["Simple_C5"].setFontSize(normal);
+			} else if (final_fuel_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(normal);
+				me["Simple_C5"].setFontSize(small);
+			} else if (final_time_set.getValue() == 1) {
+				me["Simple_L5"].setFontSize(small);
+				me["Simple_C5"].setFontSize(normal);
+			} else {
+				me["Simple_L5"].setFontSize(small);
+				me["Simple_C5"].setFontSize(small);
+			}
+			
+			if (min_dest_fob_set.getValue() == 1) {
+				me["Simple_L6"].setFontSize(normal);
+			} else {
+				me["Simple_L6"].setFontSize(small);
 			}
 			
 		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
@@ -1818,6 +2362,8 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, -1, -1, 1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, symbol, default, default, default);
@@ -1923,6 +2469,8 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -1949,7 +2497,7 @@ var canvas_MCDU_base = {
 			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
 			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
 			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
 			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
@@ -1967,6 +2515,12 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("FLEX TO TEMP");
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
+			
+			if (fmgc.FMGCInternal.transAltSet) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
 			
 			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
 				me["Simple_L6_Arrow"].show(); 
@@ -2089,6 +2643,8 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, 1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, 1, 1, 1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(-1, -1, 1, -1, 1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -2254,6 +2810,8 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -2402,6 +2960,8 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, 1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, -1, 1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, -1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -2571,6 +3131,8 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, 1, 1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, -1, 1, -1);
 				
 				me.fontLeft(symbol, default, default, default, symbol, default);
@@ -2628,8 +3190,14 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].setText("---g/---");;
 			}
 			
-			me["Simple_L4S"].setText("TRANS ALT");
-			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			me["Simple_L4S"].setText("TRANS FL");
+			me["Simple_L4"].setText("FL" ~ sprintf("%2.0f", (fmgc.FMGCInternal.transAlt / 100)));
+			
+			if (fmgc.FMGCInternal.transAltSet) {
+				me["Simple_L4"].setFontSize(normal);
+			} else {
+				me["Simple_L4"].setFontSize(small);
+			}
 			
 			me["Simple_R1S"].setText("FINAL");
 			if (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
@@ -2749,6 +3317,8 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -2829,6 +3399,8 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3091,6 +3663,8 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3365,6 +3939,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -3684,6 +4260,8 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4015,6 +4593,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4346,6 +4926,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4679,6 +5261,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -5012,6 +5596,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].show();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -5328,6 +5914,8 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].hide();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -6296,8 +6884,23 @@ var canvas_MCDU_base = {
 			me["Simple_C6S"].setFontSize(f); 
 		}
 	},
+	dynamicPageFunc: func (dynamic, string) {
+		if (dynamic[0] == nil) {
+			me[string].hide();
+			me[string ~ "S"].hide();
+		} else {
+			me[string].show();
+			me[string].setText(dynamic[0]);
+			if (dynamic[1] != nil) {
+				me[string ~ "S"].show();
+				me[string ~ "S"].setText(dynamic[1]);
+			} else {
+				me[string ~ "S"].hide();
+			}
+		}
+	},
 };
-
+		
 var canvas_MCDU_1 = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_MCDU_1, canvas_MCDU_base]};

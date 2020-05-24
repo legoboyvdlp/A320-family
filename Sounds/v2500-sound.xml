@@ -8,14 +8,15 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start1.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[0]/state</property>
-					<value>1</value>
-				</equals>
-				<property>/sim/sound/internal-custom</property>
-			</and>
+			<equals>
+				<property>/engines/engine[0]/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>1</factor>
+		</volume>
 		<position>
 			<x>0</x>
 			<y>20</y>
@@ -28,14 +29,15 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start1.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[1]/state</property>
-					<value>1</value>
-				</equals>
-				<property>/sim/sound/internal-custom</property>
-			</and>
+			<equals>
+				<property>/engines/engine[1]/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>1</factor>
+		</volume>
 		<position>
 			<x>0</x>
 			<y>-20</y>
@@ -48,14 +50,15 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start2.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[0]/state</property>
-					<value>2</value>
-				</equals>
-				<property>/sim/sound/internal-custom</property>
-			</and>
+			<equals>
+				<property>/engines/engine[0]/state</property>
+				<value>2</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>1</factor>
+		</volume>
 		<position>
 			<x>0</x>
 			<y>20</y>
@@ -68,14 +71,15 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start2.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[1]/state</property>
-					<value>2</value>
-				</equals>
-				<property>/sim/sound/internal-custom</property>
-			</and>
+			<equals>
+				<property>/engines/engine[1]/state</property>
+				<value>2</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>1</factor>
+		</volume>
 		<position>
 			<x>0</x>
 			<y>-20</y>
@@ -309,21 +313,23 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-starter.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[0]/state</property>
-					<value>1</value>
-				</equals>
-				<not><property>/sim/sound/internal-custom</property></not>
-			</and>
+			<equals>
+				<property>/engines/engine[0]/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>-1</factor>
+			<offset>1</offset>
+		</volume>
 		<orientation>
 			<x>-1</x>
 			<y>0</y>
 			<z>0</z>
 			<inner-angle>225</inner-angle>
 			<outer-angle>135</outer-angle>
-			<outer-gain>0.01</outer-gain>
+			<outer-gain>0.60</outer-gain>
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
@@ -338,21 +344,23 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-starter.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[1]/state</property>
-					<value>1</value>
-				</equals>
-				<not><property>/sim/sound/internal-custom</property></not>
-			</and>
+			<equals>
+				<property>/engines/engine[1]/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>-1</factor>
+			<offset>1</offset>
+		</volume>
 		<orientation>
 			<x>-1</x>
 			<y>0</y>
 			<z>0</z>
 			<inner-angle>225</inner-angle>
 			<outer-angle>135</outer-angle>
-			<outer-gain>0.01</outer-gain>
+			<outer-gain>0.60</outer-gain>
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
@@ -367,14 +375,16 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-startup.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[0]/state</property>
-					<value>2</value>
-				</equals>
-				<not><property>/sim/sound/internal-custom</property></not>
-			</and>
+			<equals>
+				<property>/engines/engine[0]/state</property>
+				<value>2</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>-1</factor>
+			<offset>1</offset>
+		</volume>
 		<orientation>
 			<x>-1</x>
 			<y>0</y>
@@ -396,14 +406,16 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-startup.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[1]/state</property>
-					<value>2</value>
-				</equals>
-				<not><property>/sim/sound/internal-custom</property></not>
-			</and>
+			<equals>
+				<property>/engines/engine[1]/state</property>
+				<value>2</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>-1</factor>
+			<offset>1</offset>
+		</volume>
 		<orientation>
 			<x>-1</x>
 			<y>0</y>
@@ -425,14 +437,16 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-startup-rear.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[0]/state</property>
-					<value>2</value>
-				</equals>
-				<not><property>/sim/sound/internal-custom</property></not>
-			</and>
+			<equals>
+				<property>/engines/engine[0]/state</property>
+				<value>2</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>-1</factor>
+			<offset>1</offset>
+		</volume>
 		<orientation>
 			<x>1</x>
 			<y>0</y>
@@ -454,14 +468,16 @@
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/external/v2500-startup-rear.wav</path>
 		<condition>
-			<and>
-				<equals>
-					<property>/engines/engine[1]/state</property>
-					<value>2</value>
-				</equals>
-				<not><property>/sim/sound/internal-custom</property></not>
-			</and>
+			<equals>
+				<property>/engines/engine[1]/state</property>
+				<value>2</value>
+			</equals>
 		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>-1</factor>
+			<offset>1</offset>
+		</volume>
 		<orientation>
 			<x>1</x>
 			<y>0</y>

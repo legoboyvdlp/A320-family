@@ -6,7 +6,7 @@ var __self__ = caller(0)[0];
 
 canvas.SymbolLayer.Controller.add(name, __self__);
 canvas.SymbolLayer.add(name, {
-	parents: [canvas.MultiSymbolLayer],
+	parents: [MultiSymbolLayer],
 	type: name, # Symbol type
 	df_controller: __self__, # controller to use by default -- this one
 	df_options: { # default configuration options
