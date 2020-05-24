@@ -785,9 +785,9 @@
 					<independentVar lookup="column">hydraulics/tiller/rudder-cmd-input-deg</independentVar>
 					<independentVar lookup="table">/velocities/groundspeed-kt</independentVar>
 					<tableData breakPoint="0.5">
-						 -75 -66 -40 -20 -1  1  20  40  66  75
-						0  0   0   0   0  0  0   0   0   0   0
-						1  0   0   0   0  0  0   0   0   0   0
+						  -75 -66 -40 -20 -1  1  20  40  66  75
+						0   0   0   0   0  0  0   0   0   0   0
+						1   0   0   0   0  0  0   0   0   0   0
 					</tableData>
 					<tableData breakPoint="1.0">
 						  -75 -66 -40 -20 -1  1  20  40  66  75
