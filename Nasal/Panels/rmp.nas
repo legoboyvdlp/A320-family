@@ -31,6 +31,15 @@ var act_vhf1 = props.globals.getNode("instrumentation/comm[0]/frequencies/select
 var act_vhf2 = props.globals.getNode("instrumentation/comm[1]/frequencies/selected-mhz");
 var act_vhf3 = props.globals.getNode("instrumentation/comm[2]/frequencies/selected-mhz");
 
+var act_ls1 = props.globals.getNode("instrumentation/nav[0]/frequencies/selected-mhz");
+var act_vor1 = props.globals.getNode("instrumentation/nav[2]/frequencies/selected-mhz");
+var act_vor2 = props.globals.getNode("instrumentation/nav[3]/frequencies/selected-mhz");
+var act_adf1 = props.globals.getNode("instrumentation/adf[0]/frequencies/selected-khz");
+var act_adf2 = props.globals.getNode("instrumentation/adf[1]/frequencies/selected-khz");
+var act_ls1_crs = props.globals.getNode("instrumentation/nav[0]/radials/selected-deg");
+var act_vor1_crs = props.globals.getNode("instrumentation/nav[2]/radials/selected-deg");
+var act_vor2_crs = props.globals.getNode("instrumentation/nav[3]/radials/selected-deg");
+
 if (rand() > 0.5) {
 	var hf1 = genFourRand();
 	var hf2 = genFiveRand();
@@ -46,6 +55,8 @@ var stby_rmp1_vhf2 = props.globals.initNode("/systems/radio/rmp[0]/vhf2-standby"
 var stby_rmp1_vhf3 = props.globals.initNode("/systems/radio/rmp[0]/vhf3-standby", 123.2, "DOUBLE");
 var stby_rmp1_hf1 = props.globals.initNode("/systems/radio/rmp[0]/hf1-standby", hf1, "DOUBLE");
 var stby_rmp1_hf2 = props.globals.initNode("/systems/radio/rmp[0]/hf2-standby", hf2, "DOUBLE");
+var stby_rmp1_nav = props.globals.initNode("/systems/radio/rmp[0]/nav-standby", 110.5, "DOUBLE");
+var stby_rmp1_adf = props.globals.initNode("/systems/radio/rmp[0]/adf-standby", 313, "DOUBLE");
 
 var act_display_rmp2 = props.globals.initNode("/controls/radio/rmp[1]/active-display", "119.400", "STRING");
 var stby_display_rmp2 = props.globals.initNode("/controls/radio/rmp[1]/standby-display", "122.600", "STRING");
@@ -54,6 +65,8 @@ var stby_rmp2_vhf2 = props.globals.initNode("/systems/radio/rmp[1]/vhf2-standby"
 var stby_rmp2_vhf3 = props.globals.initNode("/systems/radio/rmp[1]/vhf3-standby", 123.2, "DOUBLE");
 var stby_rmp2_hf1 = props.globals.initNode("/systems/radio/rmp[1]/hf1-standby", hf1, "DOUBLE");
 var stby_rmp2_hf2 = props.globals.initNode("/systems/radio/rmp[1]/hf2-standby", hf2, "DOUBLE");
+var stby_rmp2_nav = props.globals.initNode("/systems/radio/rmp[1]/nav-standby", 110.5, "DOUBLE");
+var stby_rmp2_adf = props.globals.initNode("/systems/radio/rmp[1]/adf-standby", 313, "DOUBLE");
 
 var act_display_rmp3 = props.globals.initNode("/controls/radio/rmp[2]/active-display", "data", "STRING");
 var stby_display_rmp3 = props.globals.initNode("/controls/radio/rmp[2]/standby-display", "123.200", "STRING");
@@ -218,7 +231,35 @@ var update_active_vhf = func(vhf) {
 			}
 		}
 	}
-};
+}
+
+var update_nav_displays = func(nav) {
+	var chan1 = chan_rmp1.getValue();
+	var chan2 = chan_rmp2.getValue();
+	
+	if (nav == 1) {
+		if (chan1 == "ls") {
+			act_display_rmp1.setValue(sprintf("%3.3f", act_ls1.getValue()));
+			stby_display_rmp1.setValue("C-" ~ sprintf("%3.0f", act_ls1_crs.getValue()));
+		}
+		if (chan2 == "ls") {
+			act_display_rmp2.setValue(sprintf("%3.3f", act_ls1.getValue()));
+			stby_display_rmp2.setValue("C-" ~ sprintf("%3.0f", act_ls1_crs.getValue()));
+		}
+	} else if (nav == 3 and chan1 == "vor") {
+		act_display_rmp1.setValue(sprintf("%3.3f", act_vor1.getValue()));
+		stby_display_rmp1.setValue("C-" ~ sprintf("%3.0f", act_vor1_crs.getValue()));
+	} else if (nav == 4 and chan2 == "vor") {
+		act_display_rmp2.setValue(sprintf("%3.3f", act_vor2.getValue()));
+		stby_display_rmp2.setValue("C-" ~ sprintf("%3.0f", act_vor2_crs.getValue()));
+	} else if (nav == 5 and chan1 == "adf") {
+		act_display_rmp1.setValue(sprintf("%3.1f", act_adf1.getValue()));
+		stby_display_rmp1.setValue(sprintf("%3.1f", stby_rmp1_adf.getValue()));
+	} else if (nav == 6 and chan2 == "adf") {
+		act_display_rmp2.setValue(sprintf("%3.1f", act_adf2.getValue()));
+		stby_display_rmp2.setValue(sprintf("%3.1f", stby_rmp2_adf.getValue()));
+	}
+}
 
 var update_stby_freq = func(rmp_no, freq) {
 	if (rmp_no == 0) {
@@ -284,6 +325,12 @@ var update_chan_sel = func(rmp_no) {
 	update_active_vhf(3);
 	update_active_vhf(4);
 	update_active_vhf(5);
+	
+	update_nav_displays(1);
+	update_nav_displays(3);
+	update_nav_displays(4);
+	update_nav_displays(5);
+	update_nav_displays(6);
 
 	if (rmp_no == 0) {
 		var chan = chan_rmp1.getValue();
@@ -431,3 +478,36 @@ setlistener("/systems/radio/rmp[1]/sel_chan", func {
 setlistener("/systems/radio/rmp[2]/sel_chan", func {
 	update_chan_sel(2);
 });
+
+setlistener("/instrumentation/nav[0]/frequencies/selected-mhz", func {
+	update_nav_displays(1);
+});
+
+setlistener("/instrumentation/nav[2]/frequencies/selected-mhz", func {
+	update_nav_displays(3);
+});
+
+setlistener("/instrumentation/nav[3]/frequencies/selected-mhz", func {
+	update_nav_displays(4);
+});
+
+setlistener("/instrumentation/adf[0]/frequencies/selected-khz", func {
+	update_nav_displays(5);
+});
+
+setlistener("/instrumentation/adf[1]/frequencies/selected-khz", func {
+	update_nav_displays(6);
+});
+
+setlistener("/instrumentation/nav[0]/radials/selected-deg", func {
+	update_nav_displays(1);
+});
+
+setlistener("/instrumentation/nav[2]/radials/selected-deg", func {
+	update_nav_displays(3);
+});
+
+setlistener("/instrumentation/nav[3]/radials/selected-deg", func {
+	update_nav_displays(4);
+});
+
