@@ -903,7 +903,7 @@
 				/sim/model/autopush/connected eq 1
 				/systems/acconfig/autoconfig-running eq 1
 			</test>
-			<test logic="OR" value="75"> <!-- 12 is way too slow, maybe that was meant for half powered? -->
+			<test logic="OR" value="12">
 				hydraulics/tiller/hyd-pwr eq 1
 			</test>
 		</switch>
