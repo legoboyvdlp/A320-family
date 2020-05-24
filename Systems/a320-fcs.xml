@@ -732,8 +732,21 @@
 			</test>
 		</switch>
 		
-		<lag_filter name="fbw/tiller-handle">
+		<scheduled_gain name="fbw/tiller-handle-scheduled">
 			<input>/controls/gear/steering-switched</input>
+			<table>
+				<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+				<tableData>
+					 0.5  0
+					 1.0  1
+					20.0  1
+					70.0  0
+				</tableData>
+			</table>
+		</scheduled_gain>
+		
+		<lag_filter name="fbw/tiller-handle">
+			<input>fbw/tiller-handle-scheduled</input>
 			<c1>20</c1>
 		</lag_filter>
 		
