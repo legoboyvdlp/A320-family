@@ -787,7 +787,7 @@
 			<gain>75</gain>
 		</pure_gain>
 		
-		<fcs_function name="hydraulics/tiller/rudder-cmd-deg"> <!-- Combines rudder and tiller into just rudder (or aileron) -->
+		<fcs_function name="hydraulics/tiller/rudder-cmd-deg"> <!-- Combines rudder and tiller into just rudder -->
 			<function>
 				<table>
 					<independentVar lookup="row">zero</independentVar> <!-- Take advantage of the table lookup to interpolate -->
