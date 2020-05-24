@@ -736,11 +736,13 @@
 			<input>/controls/gear/steering-switched</input>
 			<table>
 				<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+				<independentVar lookup="column">/systems/acconfig/options/seperate-tiller-axis</independentVar>
 				<tableData>
-					 0.5  0
-					 1.0  1
-					20.0  1
-					70.0  0
+					      0  1
+					 0.5  0  0
+					 1.0  1  1
+					20.0  1  1
+					70.0  0  1
 				</tableData>
 			</table>
 		</scheduled_gain>
@@ -760,24 +762,18 @@
 			<gain>75</gain>
 		</pure_gain>
 		
-		<fcs_function name="hydraulics/tiller/fmgc-cmd-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
-					<tableData>
-						  0.5  0
-						  1.0  6
-						 40.0  6
-						130.0  0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<pure_gain name="hydraulics/tiller/fmgc-cmd-deg">
+		<scheduled_gain name="hydraulics/tiller/fmgc-cmd-deg">
 			<input>fbw/fmgc/yaw-cmd</input>
-			<gain>hydraulics/tiller/fmgc-cmd-gain</gain>
-		</pure_gain>
+			<table>
+				<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+				<tableData>
+					  0.5  0
+					  1.0  6
+					 40.0  6
+					130.0  0
+				</tableData>
+			</table>
+		</scheduled_gain>
 		
 		<switch name="hydraulics/tiller/rudder-cmd-input">
 			<default value="/controls/flight/rudder"/>
