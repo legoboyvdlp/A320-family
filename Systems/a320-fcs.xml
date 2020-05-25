@@ -719,15 +719,157 @@
 	
 	<channel name="Tiller">
 		
-		<switch name="hydraulics/tiller/switch">
+		<switch name="/controls/gear/steering-switched">
 			<default value="/controls/flight/rudder"/>
-			<test logic="AND" value="/controls/flight/aileron">
-				fbw/fmgc/enabled eq 0
+			<test value="0">
+				/gear/gear[0]/wow ne 1
+			</test>
+			<test value="/controls/gear/steering">
+				/systems/acconfig/options/seperate-tiller-axis eq 1
+			</test>
+			<test value="/controls/flight/aileron">
 				/controls/flight/aileron-drives-tiller eq 1
 			</test>
-			<test value="fbw/fmgc/yaw-cmd">
+		</switch>
+		
+		<scheduled_gain name="fbw/tiller-handle-scheduled">
+			<input>/controls/gear/steering-switched</input>
+			<table>
+				<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+				<independentVar lookup="column">/systems/acconfig/options/seperate-tiller-axis</independentVar>
+				<tableData>
+					      0  1
+					 0.5  0  0
+					 1.0  1  1
+					20.0  1  1
+					70.0  0  1
+				</tableData>
+			</table>
+		</scheduled_gain>
+		
+		<lag_filter name="fbw/tiller-handle">
+			<input>fbw/tiller-handle-scheduled</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<pure_gain name="/controls/gear/steering-deg">
+			<input>/controls/gear/steering</input>
+			<gain>75</gain>
+		</pure_gain>
+		
+		<pure_gain name="hydraulics/tiller/autopush-cmd-deg">
+			<input>hydraulics/tiller/autopush-cmd</input>
+			<gain>75</gain>
+		</pure_gain>
+		
+		<scheduled_gain name="hydraulics/tiller/fmgc-cmd-deg">
+			<input>fbw/fmgc/yaw-cmd</input>
+			<table>
+				<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+				<tableData>
+					  0.5  0
+					  1.0  6
+					 40.0  6
+					130.0  0
+				</tableData>
+			</table>
+		</scheduled_gain>
+		
+		<switch name="hydraulics/tiller/rudder-cmd-input">
+			<default value="/controls/flight/rudder"/>
+			<test value="/controls/flight/aileron">
+				/controls/flight/aileron-drives-tiller eq 1
+			</test>
+		</switch>
+		
+		<pure_gain name="hydraulics/tiller/rudder-cmd-input-deg">
+			<input>hydraulics/tiller/rudder-cmd-input</input>
+			<gain>75</gain>
+		</pure_gain>
+		
+		<fcs_function name="hydraulics/tiller/rudder-cmd-deg"> <!-- Combines rudder and tiller into just rudder -->
+			<function>
+				<table>
+					<independentVar lookup="row">zero</independentVar> <!-- Take advantage of the table lookup to interpolate -->
+					<independentVar lookup="column">hydraulics/tiller/rudder-cmd-input-deg</independentVar>
+					<independentVar lookup="table">/velocities/groundspeed-kt</independentVar>
+					<tableData breakPoint="0.5">
+						  -75 -66 -40 -20 -1  1  20  40  66  75
+						0   0   0   0   0  0  0   0   0   0   0
+						1   0   0   0   0  0  0   0   0   0   0
+					</tableData>
+					<tableData breakPoint="1.0">
+						  -75 -66 -40 -20 -1  1  20  40  66  75
+						0 -75 -45 -15  -4  0  0   4  15  45  75
+						1 -75 -45 -15  -4  0  0   4  15  45  75
+					</tableData>
+					<tableData breakPoint="20.0">
+						  -75 -66 -40 -20 -1  1  20  40  66  75
+						0 -75 -45 -15  -4  0  0   4  15  45  75
+						1 -75 -45 -15  -4  0  0   4  15  45  75
+					</tableData>
+					<tableData breakPoint="40.0">
+						  -75  0  75
+						0  -6  0  6
+						1  -6  0  6
+					</tableData>
+					<tableData breakPoint="130.0">
+						  -75  0  75
+						0   0  0  0
+						1   0  0  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/tiller/tiller-cmd-deg">
+			<function>
+				<sum>
+					<table>
+						<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+						<independentVar lookup="column">/controls/gear/steering-deg</independentVar>
+						<tableData>
+							     -75 -66 -40 -20 -1  1  20  40  66  75
+							 0.5   0   0   0   0  0  0   0   0   0   0
+							 1.0 -75 -45 -15  -4  0  0   4  15  45  75
+							20.0 -75 -45 -15  -4  0  0   4  15  45  75
+							70.0   0   0   0   0  0  0   0   0   0   0
+						</tableData>
+					</table>
+					<product>
+						<property>hydraulics/tiller/rudder-cmd-input</property>
+						<table>
+							<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+							<tableData>
+								  0.5  0
+								  1.0  6
+								 40.0  6
+								130.0  0
+							</tableData>
+						</table>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<switch name="hydraulics/tiller/cmd-deg">
+			<default value="hydraulics/tiller/rudder-cmd-deg"/>
+			<test value="0">
+				/gear/gear[0]/wow ne 1
+			</test>
+			<test value="hydraulics/tiller/autopush-cmd-deg">
+				/sim/model/autopush/connected eq 1
+			</test>
+			<test value="hydraulics/tiller/fmgc-cmd-deg">
 				fbw/fmgc/enabled eq 1
 			</test>
+			<test value="hydraulics/tiller/tiller-cmd-deg">
+				/systems/acconfig/options/seperate-tiller-axis eq 1
+			</test>
+			<clipto>
+				<min>-75</min>
+				<max>75</max>
+			</clipto>
 		</switch>
 		
 		<switch name="hydraulics/tiller/elec-pwr">
@@ -755,33 +897,6 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="hydraulics/tiller/function">
-			<function>
-				<ifthen>
-					<eq>
-						<property>/sim/model/autopush/connected</property>
-						<value>1</value>
-					</eq>
-					<product>
-						<property>hydraulics/tiller/autopush-cmd</property>
-						<value>75</value>
-					</product>
-					<table>
-						<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
-						<independentVar lookup="column">hydraulics/tiller/switch</independentVar>
-						<tableData>
-							         -1  0   1
-							  0.500   0  0   0
-							  1.000 -75  0  75
-							 30.000 -47  0  47
-							 30.001  -6  0   6
-							135.000   0  0   0
-						</tableData>
-					</table>
-				</ifthen>
-			</function>
-		</fcs_function>
-		
 		<switch name="fcs/steer-rate">
 			<default value="0"/>
 			<test logic="OR" value="75">
@@ -794,7 +909,7 @@
 		</switch>
 		
 		<actuator name="fcs/steer-deg">
-			<input>hydraulics/tiller/function</input>
+			<input>hydraulics/tiller/cmd-deg</input>
 			<rate_limit>fcs/steer-rate</rate_limit>
 			<output>fcs/steer-pos-deg[0]</output>
 		</actuator>

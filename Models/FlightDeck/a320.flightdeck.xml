@@ -6594,8 +6594,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tiller</object-name>
-		<property>fdm/jsbsim/fbw/rudder-pedal</property>
-		<factor>-70</factor>
+		<property>fdm/jsbsim/fbw/tiller-handle</property>
+		<factor>-75</factor>
 		<axis>
 			<object-name>tiller.axis</object-name>
 		</axis>
@@ -6603,8 +6603,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tillerFo</object-name>
-		<property>fdm/jsbsim/fbw/rudder-pedal</property>
-		<factor>-70</factor>
+		<property>fdm/jsbsim/fbw/tiller-handle</property>
+		<factor>-75</factor>
 		<axis>
 			<object-name>tillerFo.axis</object-name>
 		</axis>
