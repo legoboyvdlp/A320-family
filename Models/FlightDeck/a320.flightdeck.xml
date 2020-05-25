@@ -1073,8 +1073,6 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
-		<object-name>terr_on_nd_label</object-name>
-<!--		<object-name>clock_glare</object-name>-->
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
@@ -6596,8 +6594,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tiller</object-name>
-		<property>fdm/jsbsim/fbw/rudder-pedal</property>
-		<factor>-70</factor>
+		<property>fdm/jsbsim/fbw/tiller-handle</property>
+		<factor>-75</factor>
 		<axis>
 			<object-name>tiller.axis</object-name>
 		</axis>
@@ -6605,8 +6603,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tillerFo</object-name>
-		<property>fdm/jsbsim/fbw/rudder-pedal</property>
-		<factor>-70</factor>
+		<property>fdm/jsbsim/fbw/tiller-handle</property>
+		<factor>-75</factor>
 		<axis>
 			<object-name>tillerFo.axis</object-name>
 		</axis>

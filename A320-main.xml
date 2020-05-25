@@ -485,6 +485,7 @@
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
+			<zero type="int">0</zero>
 		</jsbsim>
 	</fdm>
 	
@@ -929,7 +930,10 @@
 	
 	<systems>
 		<acconfig n="0">
-			<autoconfig-running>0</autoconfig-running>
+			<autoconfig-running type="bool">0</autoconfig-running>
+			<options n="0">
+				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
+			</options>
 		</acconfig>
 		<atc>
 			<transponder-code type="string">2000</transponder-code>
