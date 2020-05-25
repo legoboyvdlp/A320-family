@@ -320,7 +320,6 @@ var flightPlanController = {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
 			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
 			# so four individual deletions. Delete index 1 four times. 
-			# Add one extra for the TP, so while > 2
 			
 			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost);
 			while (timesToDelete > 1) {
@@ -330,9 +329,9 @@ var flightPlanController = {
 			# Add TP afterwards, this is essential
 			me.insertTP(plan, 1);
 		}
-		me.deleteWP(0, plan);
 		var curAircraftPosDirTo = geo.aircraft_position();
-		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(2).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		me.deleteWP(0, plan);
 		me.flightPlanChanged(plan);
 	},
 	
