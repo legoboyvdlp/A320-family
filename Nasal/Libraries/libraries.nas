@@ -212,6 +212,8 @@ var systemsInit = func {
 	fmgc.FMGCinit();
 	mcdu.MCDU_init(0);
 	mcdu.MCDU_init(1);
+	mcdu_scratchpad.mcduMsgtimer1.start();
+	mcdu_scratchpad.mcduMsgtimer2.start();
 	systemsLoop.start();
 	lightsLoop.start();
 	ecam.ECAM.init();

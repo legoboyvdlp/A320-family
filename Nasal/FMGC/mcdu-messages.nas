@@ -2,10 +2,11 @@
 # Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var TypeIMessage = {
-	new: func(msgText) {
+	new: func(msgText, isInhibit = 0) {
 		var msg = { parents: [TypeIMessage] };
 		msg.msgText = msgText;
 		msg.colour = "wht";
+		msg.inhibitable = isInhibit;
 		return msg;
 	},
 };
@@ -21,26 +22,42 @@ var TypeIIMessage = {
 };
 
 var MessageQueueController = {
-	new: func() {
+	new: func(computer) {
 		var msgC = { parents: [MessageQueueController] };
+		msgC.computer = computer;
+		msgC.messages = std.Vector.new(); # show left to right
 		return msgC;
 	},
-	messages: std.Vector.new(), # show left to right
 	# first in first out
 	addNewMsg: func(msg) {
 		if (me.messages.size() < 5) {
 			if (!me.messages.contains(msg)) {
-				me.messages.append(x);
+				me.messages.append(msg);
 			}
 		}
 	},
 	getNextMsg: func() {
 		if (me.messages.size() >= 1) {
-			me.messages.pop(0);
+			return me.messages.vector[0];
+		}
+		return nil;
+	},
+	deleteAtIndex: func(index) {
+		if (num(me.messages.size()) >= (index + 1)) {
+			me.messages.pop(index);
 		}
 	},
 	clearQueue: func() {
 		me.messages.clear();
+	},
+	loop: func() {
+		if (me.getNextMsg() != nil) {
+			if (!scratchpads[me.computer].showTypeIIMsg) {
+				if (scratchpads[me.computer].showTypeII(me.getNextMsg())) {
+					me.deleteAtIndex(me.getNextMsg());
+				}
+			}
+		}
 	},
 };
 
@@ -72,6 +89,7 @@ var scratchpadController = {
 		}
 		
 		me.scratchpad = me.scratchpad ~ character;
+		me.scratchpadColour = "wht";
 		me.update();
 	},
 	showTypeI: func(msg) {
@@ -80,23 +98,28 @@ var scratchpadController = {
 			me.clearTypeII();
 		}
 		
-		me.showTypeIMsg = 1;
-		
-		# save any data entered
-		me.scratchpadSave = me.scratchpad;
-		
+		if (!me.showTypeIMsg) {
+			me.showTypeIMsg = 1;
+			
+			# save any data entered
+			me.scratchpadSave = me.scratchpad;
+		}
+			
 		me.scratchpad = msg.msgText;
 		me.scratchpadColour = msg.colour;
 		me.update();
 	},
 	showTypeII: func(msg) {
 		# only show if scratchpad empty
-		if (me.scratchpad = "") {
+		if (me.scratchpad == "") {
 			me.showTypeIIMsg = 1;
 			me.scratchpad = msg.msgText;
 			me.scratchpadColour = msg.colour;
+			me.update();
+			return 1;
 		}
 		me.update();
+		return 0;
 	},
 	clearTypeI: func() {
 		me.scratchpad = me.scratchpadSave;
@@ -146,11 +169,12 @@ var MessageController = {
 		TypeIMessage.new("ENTRY OUT OF RANGE"),TypeIMessage.new("FORMAT ERROR"),TypeIMessage.new("INSERT/ERASE TMPY FIRST"),
 		TypeIMessage.new("LIST OF 20 IN USE"),TypeIMessage.new("PILOT ELEMENT RETAINED"),TypeIMessage.new("NOT ALLOWED"),
 		TypeIMessage.new("NOT IN DATA BASE"),TypeIMessage.new("ONLY SPD ENTRY ALLOWED"),TypeIMessage.new("REVISION IN PROGRESS"),
-		TypeIMessage.new("TMPY F-PLN EXISTS"),TypeIMessage.new("SELECT DESIRED SYSTEM"),TypeIMessage.new("SELECT HDG/TRK FIRST"),
-		TypeIMessage.new("USING COST INDEX N"),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),
+		TypeIMessage.new("TMPY F-PLN EXISTS", 1),TypeIMessage.new("SELECT DESIRED SYSTEM"),TypeIMessage.new("SELECT HDG/TRK FIRST"),
+		TypeIMessage.new("USING COST INDEX N", 1),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),
 	]),
 	typeIIMessages: std.Vector.new([
-	
+		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),
+		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),
 	]),
 
 	getTypeIMsgByText: func(text) {
@@ -170,3 +194,27 @@ var MessageController = {
 };
 
 var scratchpads = [scratchpadController.new(1), scratchpadController.new(2)];
+var messageQueues = [MessageQueueController.new(0), MessageQueueController.new(1)];
+
+var loop1MsgTimer = func() {
+	if (messageQueues[0].getNextMsg() != nil) {
+		if (!scratchpads[messageQueues[0].computer].showTypeIIMsg) {
+			if (scratchpads[messageQueues[0].computer].showTypeII(messageQueues[0].getNextMsg())) {
+				messageQueues[0].deleteAtIndex(0);
+			}
+		}
+	}
+}
+
+var loop2MsgTimer = func() {
+	if (messageQueues[1].getNextMsg() != nil) {
+		if (!scratchpads[messageQueues[1].computer].showTypeIIMsg) {
+			if (scratchpads[messageQueues[1].computer].showTypeII(messageQueues[1].getNextMsg())) {
+				messageQueues[1].deleteAtIndex(0);
+			}
+		}
+	}
+}
+
+var mcduMsgtimer1 = maketimer(1, loop1MsgTimer);
+var mcduMsgtimer2 = maketimer(1, loop2MsgTimer);
