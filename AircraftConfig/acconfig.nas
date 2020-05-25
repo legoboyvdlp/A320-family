@@ -86,6 +86,7 @@ setprop("/systems/acconfig/options/allow-oil-consumption", 0);
 setprop("/systems/acconfig/options/welcome-skip", 0);
 setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
+setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
 setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/uecam-rate", 1);
