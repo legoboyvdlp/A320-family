@@ -513,6 +513,121 @@
 				<max>29999</max>
 				<wrap>true</wrap>
 			</binding>
+			
+<!-- Temp Comment for working -->		
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">ls</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[0]/frequencies/standby-mhz</property>
+				<step>0.05</step>
+				<min>108.05</min>
+				<max>111.95</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">ls</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[0]/radials/selected-deg</property>
+				<step>1</step>
+				<min>1</min>
+				<max>361</max>
+				<wrap>true</wrap>
+			</binding>
+			
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vor</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[2]/frequencies/standby-mhz</property>
+				<step>0.05</step>
+				<min>107.95</min>
+				<max>117.95</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vor</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[2]/radials/selected-deg</property>
+				<step>1</step>
+				<min>1</min>
+				<max>361</max>
+				<wrap>true</wrap>
+			</binding>
 
 		</action>
 		<action>
@@ -779,9 +894,124 @@
 				<max>29999</max>
 				<wrap>true</wrap>
 			</binding>
-
+			
+<!-- Temp Comment for working -->
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">ls</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[0]/frequencies/standby-mhz</property>
+				<step>-0.05</step>
+				<min>108.05</min>
+				<max>111.95</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">ls</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[0]/radials/selected-deg</property>
+				<step>-1</step>
+				<min>1</min>
+				<max>361</max>
+				<wrap>true</wrap>
+			</binding>
+			
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vor</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[2]/frequencies/standby-mhz</property>
+				<step>-0.05</step>
+				<min>107.95</min>
+				<max>117.95</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/radio/rmp[0]/on</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/sel_chan</property>
+							<value type="string">vor</value>
+						</equals>
+						<equals>
+							<property>systems/radio/rmp[0]/select-crs</property>
+							<value>1</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/nav[2]/radials/selected-deg</property>
+				<step>-1</step>
+				<min>1</min>
+				<max>361</max>
+				<wrap>true</wrap>
+			</binding>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>radio_rot0</object-name>
