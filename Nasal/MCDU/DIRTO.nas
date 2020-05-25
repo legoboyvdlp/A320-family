@@ -236,8 +236,8 @@ var dirTo = {
 	},
 	leftFieldBtn: func(index) {
 		me.makeTmpy();
-		me.L1[0] = me.vector[index + me.scroll - 2].wp_name;
-		fmgc.flightPlanController.directTo(me.vector[index + me.scroll - 2], me.computer);
+		me.L1[0] = me.vector[index - 2].wp_name;
+		fmgc.flightPlanController.directTo(me.vector[index - 2], me.computer);
 		me.arrowsMatrix[0][1] = 0;
 		# FIGURE OUT HOW TO MAKE IT SO IT DOESN'T DELETE THE WAYPOINTS ON DIR TO BUT DOES IN FLIGHTPLAN
 		#for (var i = 2; i != 6; i = i + 1) {
