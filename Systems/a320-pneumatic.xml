@@ -1,6 +1,17 @@
 <!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp) -->
 
 <system name="A320: Pneumatic">
+	<channel name="Startup">
+		
+		<switch name="/systems/startup-power-valves">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/sim/time/elapsed-sec lt 10
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="Valves">
 	
 		<!-- apu -->
@@ -14,7 +25,10 @@
 		
 		<switch name="/systems/pneumatics/valves/apu-bleed-valve-power">
 			<default value="0"/>
-			<test logic="AND" value="5">
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
 				/systems/failures/pneumatics/apu-valve eq 0
 				/systems/electrical/bus/dc-ess-shed ge 25 
 				<!-- confirm, some a320 have it on dc-bat, but this makes sense, since x-bleed is on ess shed too. 
@@ -54,6 +68,9 @@
 		
 		<switch name="/systems/pneumatics/valves/crossbleed-valve-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="AND" value="0.2">
 				/systems/failures/pneumatics/x-bleed-valve eq 0
 				<test logic="OR">
@@ -78,6 +95,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="1"> <!-- pneumatic, so instant nearly -->
 				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
@@ -92,6 +112,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-cmd">
 			<default value="1"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/pneumatics/valves/engine-2-hp-valve eq 1
 			</test>
@@ -99,6 +122,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="1"> <!-- pneumatic, so instant nearly -->
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
@@ -130,6 +156,9 @@
 		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-power">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/failures/pneumatics/hp-1-valve eq 0
 			</test>
@@ -159,6 +188,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/pneumatics/hp-2-valve eq 0
@@ -217,6 +249,7 @@
 				/controls/pneumatics/switches/bleed-1 eq 0
 				/systems/pneumatics/valves/apu-bleed-valve ne 0
 				/systems/pneumatics/valves/starter-valve-1 ne 0
+				/systems/pneumatics/psi/engine-1-upstream-src lt 8
 				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
 			</test>
 			<test logic="AND" value="/systems/pneumatics/valves/engine-1-prv-valve-temp-gain">
@@ -226,9 +259,11 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-power">
 			<default value="0"/>
-			<test logic="AND" value="5.0">
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-ess-shed ge 25
-				/systems/pneumatics/psi/engine-1-upstream-src ge 8
 				/systems/failures/pneumatics/bleed-1-valve eq 0
 			</test>
 		</switch>
@@ -297,6 +332,7 @@
 					/systems/pneumatics/valves/crossbleed-valve ne 0
 				</test>
 				/systems/pneumatics/valves/starter-valve-2 ne 0
+				/systems/pneumatics/psi/engine-2-upstream-src lt 8
 				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
 			</test>
 			<test logic="AND" value="/systems/pneumatics/valves/engine-2-prv-valve-temp-gain">
@@ -306,9 +342,11 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-power">
 			<default value="0"/>
-			<test logic="AND" value="5.0">
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-2 ge 25
-				/systems/pneumatics/psi/engine-2-upstream-src ge 8
 				/systems/failures/pneumatics/bleed-2-valve eq 0
 			</test>
 		</switch>
@@ -421,6 +459,9 @@
 		
 		<switch name="/systems/pneumatics/valves/wing-ice-1-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/failures/icing/wing-left-valve eq 1
 			</test>
@@ -460,6 +501,9 @@
 		
 		<switch name="/systems/pneumatics/valves/wing-ice-2-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/failures/icing/wing-right-valve eq 1
 			</test>
@@ -496,6 +540,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-ice-1-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/failures/icing/engine-left-valve eq 1
 			</test>
@@ -532,6 +579,9 @@
 		
 		<switch name="/systems/pneumatics/valves/engine-ice-2-power">
 			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
 			<test logic="OR" value="0">
 				/systems/failures/icing/engine-right-valve eq 1
 			</test>
@@ -781,150 +831,87 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pneumatics/psi/engine-1-psi"> <!-- measured pressure. Is essentially pressure of the entire left system -->
-			<function>
-				<max>
-					<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
-					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
-				</max>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/systems/pneumatics/psi/engine-2-psi">
-			<function>
-				<max>
-					<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
-					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
-				</max>
-			</function>
-		</fcs_function>
-		
-		<switch name="/systems/pneumatics/psi/crossbleed-duct-left-src">
-			<default value="0"/>
-			<test logic="AND" value="2"> <!-- apu -->
+		<switch name="/systems/pneumatics/psi/engine-left-src">
+			<default value="/systems/pneumatics/psi/engine-left-src"/>
+			<test logic="AND" value="1"> <!-- apu -->
 				/systems/pneumatics/source/apu-psi ne 0
 				/systems/pneumatics/valves/apu-bleed-valve eq 1
 			</test>
-			<test logic="OR" value="3"> <!-- left prv -->
-				<test logic="AND">
+			<test logic="AND" value="2"> <!-- left engine -->
+				<test logic="OR">
+					/systems/pneumatics/psi/engine-1-downstream-opv ge /systems/pneumatics/psi/engine-2-psi
 					/systems/pneumatics/valves/crossbleed-valve eq 0
-					/systems/pneumatics/psi/engine-1-downstream-opv gt 0
 				</test>
+				/systems/pneumatics/valves/engine-1-prv-valve ne 0
+				/systems/pneumatics/valves/engine-1-opv-valve ne 0
 			</test>
-			<test logic="AND" value="4"> <!-- right crossbleed -->
+			<test logic="AND" value="3"> <!-- left engine -->
+				/systems/pneumatics/psi/engine-1-downstream-opv lt /systems/pneumatics/psi/engine-2-psi
 				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/psi/crossbleed-duct-right ne 0
-				/systems/pneumatics/psi/crossbleed-duct-right-src ne 4
+				/systems/pneumatics/psi/engine-right-src ne 3
 			</test>
-			<test logic="AND" value="1"> <!-- gnd has lowest priority, valve forced closed if other source available -->
+			<test logic="AND" value="4"> <!-- gnd has lowest priority, valve forced closed if other source available -->
 				/systems/pneumatics/source/gnd-psi ne 0
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/psi/crossbleed-duct-right-src">
-			<default value="0"/>
-			<test logic="AND" value="2"> <!-- apu -->
-				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/valves/apu-bleed-valve eq 1
+		<switch name="/systems/pneumatics/psi/engine-right-src">
+			<default value="/systems/pneumatics/psi/engine-right-src"/>
+			<test logic="AND" value="1"> <!-- apu -->
 				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve ne 0
+				/systems/pneumatics/valves/crossbleed-valve ne 0
 			</test>
-			<test logic="OR" value="3"> <!-- right prv -->
-				<test logic="AND">
+			<test logic="AND" value="2"> <!-- right engine -->
+				<test logic="OR">
+					/systems/pneumatics/psi/engine-2-downstream-opv ge /systems/pneumatics/psi/engine-1-psi
 					/systems/pneumatics/valves/crossbleed-valve eq 0
-					/systems/pneumatics/psi/engine-2-downstream-opv gt 0
 				</test>
+				/systems/pneumatics/valves/engine-2-prv-valve ne 0
+				/systems/pneumatics/valves/engine-2-opv-valve ne 0
 			</test>
-			<test logic="AND" value="4"> <!-- left crossbleed -->
+			<test logic="AND" value="3"> <!-- left engine -->
+				/systems/pneumatics/psi/engine-2-downstream-opv lt /systems/pneumatics/psi/engine-1-psi
 				/systems/pneumatics/valves/crossbleed-valve ne 0
-				/systems/pneumatics/psi/crossbleed-duct-left ne 0
-				/systems/pneumatics/psi/crossbleed-duct-left-src ne 4
+				/systems/pneumatics/psi/engine-left-src ne 3
 			</test>
-			<test logic="AND" value="1"> <!-- gnd has lowest priority, valve forced closed if other source available -->
-				/systems/pneumatics/valves/crossbleed-valve ne 0
+			<test logic="AND" value="4"> <!-- gnd has lowest priority, valve forced closed if other source available -->
 				/systems/pneumatics/source/gnd-psi ne 0
+				/systems/pneumatics/valves/crossbleed-valve ne 0
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-left">
-			<function>
-				<max>
-					<ifthen>
-						<eq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
-							<value>1</value>
-						</eq>
-						<property>/systems/pneumatics/source/gnd-psi</property>
-						<v>-9999</v> <!-- ignore -->
-					</ifthen>
-					<product>
-						<property>/systems/pneumatics/source/apu-psi</property>
-						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
-					</product>
-					<ifthen>
-						<nq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
-							<value>3</value>
-						</nq>
-						<v>-9999</v> <!-- ignore -->
-						<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
-					</ifthen>
-					<ifthen>
-						<nq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
-							<value>4</value>
-						</nq>
-						<product>
-							<property>/systems/pneumatics/psi/crossbleed-duct-right</property>
-							<property>/systems/pneumatics/valves/crossbleed-valve</property>
-						</product>
-						<v>-9999</v> <!-- ignore -->
-					</ifthen>
-				</max>
-			</function>
-		</fcs_function>
+		<switch name="/systems/pneumatics/psi/engine-1-psi">
+			<default value="0"/>
+			<test value="/systems/pneumatics/source/apu-psi">
+				/systems/pneumatics/psi/engine-left-src eq 1
+			</test>
+			<test value="/systems/pneumatics/psi/engine-1-downstream-opv">
+				/systems/pneumatics/psi/engine-left-src eq 2
+			</test>
+			<test value="/systems/pneumatics/psi/engine-2-psi">
+				/systems/pneumatics/psi/engine-left-src eq 3
+			</test>
+			<test value="/systems/pneumatics/source/gnd-psi">
+				/systems/pneumatics/psi/engine-left-src eq 4
+			</test>
+		</switch>
 		
-		<fcs_function name="/systems/pneumatics/psi/crossbleed-duct-right">
-			<function>
-				<max>
-					<ifthen>
-						<eq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
-							<value>1</value>
-						</eq>
-						<product>
-							<property>/systems/pneumatics/valves/crossbleed-valve</property>
-							<property>/systems/pneumatics/source/gnd-psi</property>
-						</product>
-						<v>-9999</v> <!-- ignore -->
-					</ifthen>
-					<product>
-						<property>/systems/pneumatics/valves/crossbleed-valve</property>
-						<property>/systems/pneumatics/source/apu-psi</property>
-						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
-					</product>
-					<ifthen>
-						<nq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-right-src</property>
-							<value>3</value>
-						</nq>
-						<v>-9999</v> <!-- ignore -->
-						<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
-					</ifthen>
-					<ifthen>
-						<nq>
-							<property>/systems/pneumatics/psi/crossbleed-duct-left-src</property>
-							<value>4</value>
-						</nq>
-						<product>
-							<property>/systems/pneumatics/psi/crossbleed-duct-left</property>
-							<property>/systems/pneumatics/valves/crossbleed-valve</property>
-						</product>
-						<v>-9999</v> <!-- ignore -->
-					</ifthen>
-				</max>
-			</function>
-		</fcs_function>
-		
+		<switch name="/systems/pneumatics/psi/engine-2-psi">
+			<default value="0"/>
+			<test value="/systems/pneumatics/source/apu-psi">
+				/systems/pneumatics/psi/engine-right-src eq 1
+			</test>
+			<test value="/systems/pneumatics/psi/engine-2-downstream-opv">
+				/systems/pneumatics/psi/engine-right-src eq 2
+			</test>
+			<test value="/systems/pneumatics/psi/engine-1-psi">
+				/systems/pneumatics/psi/engine-right-src eq 3
+			</test>
+			<test value="/systems/pneumatics/source/gnd-psi">
+				/systems/pneumatics/psi/engine-right-src eq 4
+			</test>
+		</switch>
 	</channel>
 	
 	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
