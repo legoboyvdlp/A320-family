@@ -60,8 +60,6 @@ var stby_rmp1_vhf2 = props.globals.initNode("/systems/radio/rmp[0]/vhf2-standby"
 var stby_rmp1_vhf3 = props.globals.initNode("/systems/radio/rmp[0]/vhf3-standby", 123.2, "DOUBLE");
 var stby_rmp1_hf1 = props.globals.initNode("/systems/radio/rmp[0]/hf1-standby", hf1, "DOUBLE");
 var stby_rmp1_hf2 = props.globals.initNode("/systems/radio/rmp[0]/hf2-standby", hf2, "DOUBLE");
-# var stby_rmp1_nav = props.globals.initNode("/systems/radio/rmp[0]/nav-standby", 110.5, "DOUBLE");
-# var stby_rmp1_adf = props.globals.initNode("/systems/radio/rmp[0]/adf-standby", 313, "DOUBLE");
 
 var act_display_rmp2 = props.globals.initNode("/controls/radio/rmp[1]/active-display", "119.400", "STRING");
 var stby_display_rmp2 = props.globals.initNode("/controls/radio/rmp[1]/standby-display", "122.600", "STRING");
@@ -70,8 +68,6 @@ var stby_rmp2_vhf2 = props.globals.initNode("/systems/radio/rmp[1]/vhf2-standby"
 var stby_rmp2_vhf3 = props.globals.initNode("/systems/radio/rmp[1]/vhf3-standby", 123.2, "DOUBLE");
 var stby_rmp2_hf1 = props.globals.initNode("/systems/radio/rmp[1]/hf1-standby", hf1, "DOUBLE");
 var stby_rmp2_hf2 = props.globals.initNode("/systems/radio/rmp[1]/hf2-standby", hf2, "DOUBLE");
-# var stby_rmp2_nav = props.globals.initNode("/systems/radio/rmp[1]/nav-standby", 110.5, "DOUBLE");
-# var stby_rmp2_adf = props.globals.initNode("/systems/radio/rmp[1]/adf-standby", 313, "DOUBLE");
 
 var act_display_rmp3 = props.globals.initNode("/controls/radio/rmp[2]/active-display", "data", "STRING");
 var stby_display_rmp3 = props.globals.initNode("/controls/radio/rmp[2]/standby-display", "123.200", "STRING");
@@ -241,48 +237,49 @@ var update_active_vhf = func(vhf) {
 	}
 }
 
-var update_nav_displays = func(nav) {
+
+var update_displays_nav = func(nav) {
 	var chan1 = chan_rmp1.getValue();
 	var chan2 = chan_rmp2.getValue();
 	
 	if (nav == 1) {
 		if (chan1 == "ls") {
-			act_display_rmp1.setValue(sprintf("%3.3f", act_ls1.getValue()));
+			act_display_rmp1.setValue(sprintf("%3.2f", act_ls1.getValue()));
 			if (sel_crs_rmp1.getBoolValue()) {
 				stby_display_rmp1.setValue("C-" ~ sprintf("%3.0f", act_ls1_crs.getValue()));
 			} else {
-				stby_display_rmp1.setValue(sprintf("%3.3f", stby_ls1.getValue()));
+				stby_display_rmp1.setValue(sprintf("%3.2f", stby_ls1.getValue()));
 			}
 		}
 		if (chan2 == "ls") {
-			act_display_rmp2.setValue(sprintf("%3.3f", act_ls1.getValue()));
+			act_display_rmp2.setValue(sprintf("%3.2f", act_ls1.getValue()));
 			if (sel_crs_rmp2.getBoolValue()) {
 				stby_display_rmp2.setValue("C-" ~ sprintf("%3.0f", act_ls1_crs.getValue()));
 			} else {
-				stby_display_rmp2.setValue(sprintf("%3.3f", stby_ls1.getValue()));
+				stby_display_rmp2.setValue(sprintf("%3.2f", stby_ls1.getValue()));
 			}
 		}
 	} else if (nav == 3 and chan1 == "vor") {
-		act_display_rmp1.setValue(sprintf("%3.3f", act_vor1.getValue()));
+		act_display_rmp1.setValue(sprintf("%3.2f", act_vor1.getValue()));
 		if (sel_crs_rmp1.getBoolValue()) {
 			stby_display_rmp1.setValue("C-" ~ sprintf("%3.0f", act_vor1_crs.getValue()));
 		} else {
-			stby_display_rmp1.setValue(sprintf("%3.3f", stby_vor1.getValue()));
+			stby_display_rmp1.setValue(sprintf("%3.2f", stby_vor1.getValue()));
 		}
 
 	} else if (nav == 4 and chan2 == "vor") {
-		act_display_rmp2.setValue(sprintf("%3.3f", act_vor2.getValue()));
+		act_display_rmp2.setValue(sprintf("%3.2f", act_vor2.getValue()));
 		if (sel_crs_rmp2.getBoolValue()) {
 			stby_display_rmp2.setValue("C-" ~ sprintf("%3.0f", act_vor2_crs.getValue()));
 		} else {
-			stby_display_rmp2.setValue(sprintf("%3.3f", stby_vor2.getValue()));
+			stby_display_rmp2.setValue(sprintf("%3.2f", stby_vor2.getValue()));
 		}
 	} else if (nav == 5 and chan1 == "adf") {
-		act_display_rmp1.setValue(sprintf("%3.1f", act_adf1.getValue()));
-		stby_display_rmp1.setValue(sprintf("%3.1f", stby_rmp1_adf.getValue()));
+		act_display_rmp1.setValue(sprintf("%4.0f", act_adf1.getValue()));
+		stby_display_rmp1.setValue(sprintf("%4.0f", stby_adf1.getValue()));
 	} else if (nav == 6 and chan2 == "adf") {
-		act_display_rmp2.setValue(sprintf("%3.1f", act_adf2.getValue()));
-		stby_display_rmp2.setValue(sprintf("%3.1f", stby_rmp2_adf.getValue()));
+		act_display_rmp2.setValue(sprintf("%4.0f", act_adf2.getValue()));
+		stby_display_rmp2.setValue(sprintf("%4.0f", stby_adf2.getValue()));
 	}
 }
 
@@ -351,11 +348,9 @@ var update_chan_sel = func(rmp_no) {
 	update_active_vhf(4);
 	update_active_vhf(5);
 	
-	update_nav_displays(1);
-	update_nav_displays(3);
-	update_nav_displays(4);
-	update_nav_displays(5);
-	update_nav_displays(6);
+	update_displays_nav(1);
+	update_displays_nav(rmp_no + 3);
+	update_displays_nav(rmp_no + 5);
 
 	if (rmp_no == 0) {
 		var chan = chan_rmp1.getValue();
@@ -402,6 +397,7 @@ var update_chan_sel = func(rmp_no) {
 var transfer = func(rmp_no) {
 	rmp_no = rmp_no - 1;
 	var sel_chan = getprop("systems/radio/rmp[" ~ rmp_no ~ "]/sel_chan");
+	var sel_crs = getprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs");
 
 	if (string.match(sel_chan, "vhf[1-3]")) {
 		var mod1 = int(string.replace(sel_chan, "vhf", ""));
@@ -417,6 +413,31 @@ var transfer = func(rmp_no) {
 		var mem = systems.HFS[mod].selectedChannelKhz;
 		systems.HFS[mod].selectChannel(getprop("systems/radio/rmp[" ~ rmp_no ~ "]/hf" ~ mod1 ~ "-standby"));
 		setprop("systems/radio/rmp[" ~ rmp_no ~ "]/hf" ~ mod1 ~ "-standby", mem);
+	} elsif (sel_chan == "adf") {
+		var mem = getprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/selected-khz");
+		setprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/selected-khz", getprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/standby-khz"));
+		setprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/standby-khz", mem);
+		update_displays_nav(rmp_no + 5);
+	} elsif (sel_chan == "vor") {
+		if (sel_crs) {
+			setprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/standby-mhz", getprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/selected-mhz"));
+			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 0);
+			update_displays_nav(rmp_no + 3);
+		} else {
+			setprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/selected-mhz", getprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/standby-mhz"));
+			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 1);
+			update_displays_nav(rmp_no + 3);
+		}
+	} elsif (sel_chan == "ls") {
+		if (sel_crs) {
+			setprop("instrumentation/nav[0]/frequencies/standby-mhz", getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
+			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 0);
+			update_displays_nav(1);
+		} else {
+			setprop("instrumentation/nav[0]/frequencies/selected-mhz", getprop("instrumentation/nav[0]/frequencies/standby-mhz"));
+			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 1);
+			update_displays_nav(1);
+		}
 	}
 }
 
@@ -505,54 +526,54 @@ setlistener("/systems/radio/rmp[2]/sel_chan", func {
 });
 
 setlistener("/instrumentation/nav[0]/frequencies/selected-mhz", func {
-	update_nav_displays(1);
+	update_displays_nav(1);
 });
 
 setlistener("/instrumentation/nav[0]/frequencies/standby-mhz", func {
-	update_nav_displays(1);
+	update_displays_nav(1);
 });
 
 setlistener("/instrumentation/nav[2]/frequencies/selected-mhz", func {
-	update_nav_displays(3);
+	update_displays_nav(3);
 });
 
 setlistener("/instrumentation/nav[2]/frequencies/standby-mhz", func {
-	update_nav_displays(3);
+	update_displays_nav(3);
 });
 
 setlistener("/instrumentation/nav[3]/frequencies/selected-mhz", func {
-	update_nav_displays(4);
+	update_displays_nav(4);
 });
 
 setlistener("/instrumentation/nav[3]/frequencies/standby-mhz", func {
-	update_nav_displays(4);
+	update_displays_nav(4);
 });
 
 setlistener("/instrumentation/adf[0]/frequencies/selected-khz", func {
-	update_nav_displays(5);
+	update_displays_nav(5);
 });
 
 setlistener("/instrumentation/adf[0]/frequencies/standby-khz", func {
-	update_nav_displays(5);
+	update_displays_nav(5);
 });
 
 setlistener("/instrumentation/adf[1]/frequencies/selected-khz", func {
-	update_nav_displays(6);
+	update_displays_nav(6);
 });
 
 setlistener("/instrumentation/adf[1]/frequencies/standby-khz", func {
-	update_nav_displays(6);
+	update_displays_nav(6);
 });
 
 setlistener("/instrumentation/nav[0]/radials/selected-deg", func {
-	update_nav_displays(1);
+	update_displays_nav(1);
 });
 
 setlistener("/instrumentation/nav[2]/radials/selected-deg", func {
-	update_nav_displays(3);
+	update_displays_nav(3);
 });
 
 setlistener("/instrumentation/nav[3]/radials/selected-deg", func {
-	update_nav_displays(4);
+	update_displays_nav(4);
 });
 
