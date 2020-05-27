@@ -2599,7 +2599,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
+			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 1) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_to")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_to")));
 				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_to")));
@@ -3254,7 +3254,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 			
 			me["Simple_L5S"].setText(" VAPP");
-			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
+			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 5) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
 				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
@@ -3366,7 +3366,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
-			if (zfwSet.getValue() == 1 and blockSet.getValue() == 1) {
+			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 6) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
 				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
