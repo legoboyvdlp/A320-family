@@ -1571,6 +1571,44 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(bleedMon2Fault);
 	}
 	
+	# PACK
+	
+	if (pack1Ovht.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Flipflops.pack1Ovht.getValue()) {
+		pack1Ovht.active = 1;
+		
+		if (systems.PNEU.Switch.pack1.getBoolValue()) {
+			pack1OvhtOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack1OvhtOff);
+		}
+		
+		pack1OvhtOut.active = 1;
+		pack1OvhtPack.active = 1;
+	} else {
+		ECAM_controller.warningReset(pack1Ovht);
+		ECAM_controller.warningReset(pack1OvhtOff);
+		ECAM_controller.warningReset(pack1OvhtOut);
+		ECAM_controller.warningReset(pack1OvhtPack);
+	}
+	
+	if (pack2Ovht.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Flipflops.pack2Ovht.getValue()) {
+		pack2Ovht.active = 1;
+		
+		if (systems.PNEU.Switch.pack2.getBoolValue()) {
+			pack2OvhtOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack2OvhtOff);
+		}
+		
+		pack2OvhtOut.active = 1;
+		pack2OvhtPack.active = 1;
+	} else {
+		ECAM_controller.warningReset(pack2Ovht);
+		ECAM_controller.warningReset(pack2OvhtOff);
+		ECAM_controller.warningReset(pack2OvhtOut);
+		ECAM_controller.warningReset(pack2OvhtPack);
+	}
+	
 	# ENG AICE
 	if (eng1IceClosed.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotOpen.getValue() == 1) {
 		eng1IceClosed.active = 1;

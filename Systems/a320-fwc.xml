@@ -828,6 +828,42 @@
 				/systems/pneumatics/psi/engine-2-psi gt 49
 			</test>
 		</switch>
+		
+		<switch name="/ECAM/warnings/logic/phase-10-pulse-input">
+			<default value="0"/>
+			<test value="1">
+				/ECAM/warning-phase eq 10
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-1-ovht-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/logic/phase-10-pulse-input eq 1
+					/ECAM/warnings/logic/phase-10-pulse eq 1
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/logic/pack-1-pulse eq 1
+					/controls/pneumatics/switches/pack-1 eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-ovht-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/logic/phase-10-pulse-input eq 1
+					/ECAM/warnings/logic/phase-10-pulse eq 1
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/logic/pack-2-pulse eq 1
+					/controls/pneumatics/switches/pack-2 eq 1
+				</test>
+			</test>
+		</switch>
+		
 	</channel>
 
 </system>

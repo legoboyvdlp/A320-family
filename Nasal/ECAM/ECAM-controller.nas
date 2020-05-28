@@ -73,6 +73,8 @@ var warningNodes = {
 	Flipflops: {
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
 		bleed2LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output"),
+		pack1Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-1-ovht"),
+		pack2Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-2-ovht"),
 	},
 };
 

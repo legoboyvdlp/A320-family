@@ -331,4 +331,24 @@
 		
 	</channel>
 	
+	<channel name="Warnings">
+	
+		<switch name="/systems/air-conditioning/warnings/pack-1-ovht">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/packs/pack-1-outlet-temp ge 260
+				<!-- not pack 1 + 2 fault -->
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-ovht">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/packs/pack-2-outlet-temp ge 260
+				<!-- not pack 1 + 2 fault -->
+			</test>
+		</switch>
+		
+	</channel>
+	
 </system>

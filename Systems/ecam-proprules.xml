@@ -546,7 +546,6 @@
         <output>/ECAM/warnings/timer/phase-1-pulse</output>
 	</flipflop>
 	
-	
 	<flipflop>
         <type>monostable</type>
         <time>
@@ -556,6 +555,39 @@
 			<not><property>/ECAM/warnings/logic/wai-phase-9-pulse-input</property></not>
         </S>
         <output>/ECAM/warnings/logic/wai-phase-9-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/phase-10-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-10-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/pack-1</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/pack-1-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/pack-2</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/pack-2-pulse</output>
 	</flipflop>
 	
 	<!-- Bleed Low Temp -->
@@ -684,6 +716,28 @@
 			<property>/ECAM/warnings/logic/wing-anti-ice-flipflop-reset</property>
 		</R>
 		<output>/ECAM/warnings/logic/wing-anti-ice-gnd-fault-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/systems/air-conditioning/warnings/pack-1-ovht</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-1-ovht-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-1-ovht</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/systems/air-conditioning/warnings/pack-2-ovht</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-2-ovht-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-2-ovht</output>
 	</flipflop>
 	
 </PropertyList>
