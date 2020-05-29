@@ -275,29 +275,43 @@
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-5">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-input</input>
-            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
-            <rate_limit sense="decr">0.20</rate_limit> <!-- 5 seconds -->
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.20</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-5">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-input</input>
-            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
-            <rate_limit sense="decr">0.20</rate_limit> <!-- 5 seconds -->
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.20</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-2">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-warning-input</input>
-            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
-            <rate_limit sense="decr">0.50</rate_limit> <!-- 2 seconds -->
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.50</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-2">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-warning-input</input>
-            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
-            <rate_limit sense="decr">0.50</rate_limit> <!-- 2 seconds -->
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.50</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-1-off">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-1-off-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-2-off">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-2-off-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 	</channel>
@@ -1117,6 +1131,32 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/timer/pack-2-fault-5 eq 1
 				/ECAM/warnings/logic/pack-1-2-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-1-off-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-1 eq 0
+				/ECAM/warnings/flipflop/pack-1-ovht eq 0
+				/ECAM/warnings/flipflop/pack-1-off eq 0
+				/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output eq 0
+				/ECAM/warnings/logic/bleed-1-avail eq 1
+				/ECAM/warning-phase eq 6
+				<!-- TODO NOT HOT AIR VALVE STUCK OPEN OR OVHT -->
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-off-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-2 eq 0
+				/ECAM/warnings/flipflop/pack-2-ovht eq 0
+				/ECAM/warnings/flipflop/pack-2-off eq 0
+				/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output eq 0
+				/ECAM/warnings/logic/bleed-2-avail eq 1
+				/ECAM/warning-phase eq 6
+				<!-- TODO NOT HOT AIR VALVE STUCK OPEN OR OVHT -->
 			</test>
 		</switch>
 		

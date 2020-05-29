@@ -292,9 +292,9 @@ var warnings				  = std.Vector.new([
 	var eng1BleedNotClsdOff   = warning.new(msg: " -ENG 1 BLEED........OFF",  colour: "c"),
 	var eng2BleedNotClsd      = warning.new(msg: "AIR ENG 2 BLEED NOT CLSD",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var eng2BleedNotClsdOff   = warning.new(msg: " -ENG 2 BLEED........OFF",  colour: "c"),
-	var bleedMonFault         = warning.new(msg: "BLEED MONITORING FAULT",    colour: "a", aural: 0, light: 0),
-	var bleedMon1Fault        = warning.new(msg: "BLEED MONIT SYS 1 FAULT",   colour: "a", aural: 0, light: 0),
-	var bleedMon2Fault        = warning.new(msg: "BLEED MONIT SYS 2 FAULT",   colour: "a", aural: 0, light: 0),
+	var bleedMonFault         = warning.new(msg: "BLEED MONITORING FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var bleedMon1Fault        = warning.new(msg: "BLEED MONIT SYS 1 FAULT",   colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var bleedMon2Fault        = warning.new(msg: "BLEED MONIT SYS 2 FAULT",   colour: "a", aural: 0, light: 0, isMainMsg: 1),
 	
 	# PACK
 	var pack12Fault           = warning.new(msg: "AIR PACK 1+2 FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -320,12 +320,12 @@ var warnings				  = std.Vector.new([
 	var pack1FaultOff         = warning.new(msg: " -PACK 1.............OFF",  colour: "c"),
 	var pack2Fault            = warning.new(msg: "AIR PACK 2 FAULT",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var pack2FaultOff         = warning.new(msg: " -PACK 2.............OFF",  colour: "c"),
-	var pack1Off              = warning.new(msg: "AIR PACK 1 OFF",            colour: "a", aural: 1, light: 1),
-	var pack2Off              = warning.new(msg: "AIR PACK 2 OFF",            colour: "a", aural: 1, light: 1),
-	var pack1RegulFlt         = warning.new(msg: "AIR PACK 1 REGUL FAULT",    colour: "a", aural: 0, light: 0),
-	var pack2RegulFlt         = warning.new(msg: "AIR PACK 2 REGUL FAULT",    colour: "a", aural: 0, light: 0),
-	var aftCrgVentFlt         = warning.new(msg: "AIR AFT CRG VENT FAULT",    colour: "a", aural: 0, light: 0),
-	var fwdCrgVentFlt         = warning.new(msg: "AIR FWD CRG VENT FAULT",    colour: "a", aural: 0, light: 0),
+	var pack1Off              = warning.new(msg: "AIR PACK 1 OFF",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var pack2Off              = warning.new(msg: "AIR PACK 2 OFF",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var pack1RegulFlt         = warning.new(msg: "AIR PACK 1 REGUL FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var pack2RegulFlt         = warning.new(msg: "AIR PACK 2 REGUL FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var aftCrgVentFlt         = warning.new(msg: "AIR AFT CRG VENT FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var fwdCrgVentFlt         = warning.new(msg: "AIR FWD CRG VENT FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
 	
 	# Eng AICE
 	var eng1IceClosed         = warning.new(msg: "ANTI ICE ENG1 VALVE CLSD",  colour: "a", aural: 1, light: 1, isMainMsg: 1),

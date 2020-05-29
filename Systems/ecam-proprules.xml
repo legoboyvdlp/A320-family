@@ -751,4 +751,26 @@
 		<output>/ECAM/warnings/flipflop/pack-2-ovht</output>
 	</flipflop>
 	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/timer/pack-1-fault-5</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-1-ovht-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-1-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/timer/pack-2-fault-5</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-2-ovht-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-2-off</output>
+	</flipflop>
+	
 </PropertyList>

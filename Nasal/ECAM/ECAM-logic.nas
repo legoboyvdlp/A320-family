@@ -1686,7 +1686,7 @@ var messages_priority_2 = func {
 		} else {
 			ECAM_controller.warningReset(pack1FaultOff);
 		}
-	}	else {
+	} else {
 		ECAM_controller.warningReset(pack1Fault);
 		ECAM_controller.warningReset(pack1FaultOff);
 	}
@@ -1699,9 +1699,21 @@ var messages_priority_2 = func {
 		} else {
 			ECAM_controller.warningReset(pack2FaultOff);
 		}
-	}	else {
+	} else {
 		ECAM_controller.warningReset(pack2Fault);
 		ECAM_controller.warningReset(pack2FaultOff);
+	}
+	
+	if (pack1Off.clearFlag == 0 and phaseVar == 6 and warningNodes.Timers.pack1Off.getValue() == 1) {
+		pack1Off.active = 1;
+	} else {
+		ECAM_controller.warningReset(pack1Off);
+	}
+	
+	if (pack2Off.clearFlag == 0 and phaseVar == 6 and warningNodes.Timers.pack2Off.getValue() == 1) {
+		pack2Off.active = 1;
+	} else {
+		ECAM_controller.warningReset(pack2Off);
 	}
 	
 	# ENG AICE

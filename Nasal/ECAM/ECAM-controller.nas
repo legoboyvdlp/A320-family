@@ -74,6 +74,8 @@ var warningNodes = {
 		waiRhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-right"),
 		pack1Fault: props.globals.initNode("/ECAM/warnings/timer/pack-1-fault-2"),
 		pack2Fault: props.globals.initNode("/ECAM/warnings/timer/pack-2-fault-2"),
+		pack1Off: props.globals.initNode("/ECAM/warnings/timer/pack-1-off"),
+		pack2Off: props.globals.initNode("/ECAM/warnings/timer/pack-2-off"),
 	},
 	Flipflops: {
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
