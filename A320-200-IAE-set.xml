@@ -16,35 +16,10 @@
 			</livery>
 		</model>
 		
-		<rating>
-			<FDM type="int">4</FDM>
-			<systems type="int">5</systems>
-			<cockpit type="int">5</cockpit>
-			<model type="int">4</model>
-		</rating>
-		
 		<sound>
 			<path>Aircraft/A320-family/Sounds/v2500-sound.xml</path>
 		</sound>
 		
-		<previews>
-			<preview>
-				<type>exterior</type>
-				<splash type="bool">true</splash>
-				<path>Splash/cockpit.png</path>
-			</preview>
-			<preview>
-				<type>exterior</type>
-				<splash type="bool">true</splash>
-				<path>Splash/wing1.png</path>
-			</preview>
-			<preview>
-				<type>exterior</type>
-				<splash type="bool">true</splash>
-				<path>Splash/wing2.png</path>
-			</preview>
-		</previews>
-
 		<chase-distance-m type="double" archive="y">-80.0</chase-distance-m>
 		<view>
 			<name>Pilot View</name>
