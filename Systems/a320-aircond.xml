@@ -6,6 +6,7 @@
 		<switch name="/systems/air-conditioning/valves/flow-control-valve-1-cmd">
 			<default value="0"/>
 			<test logic="OR" value="0">
+				/systems/air-conditioning/packs/pack-1-outlet-temp ge 260
 				/controls/engines/engine[0]/fire-btn eq 1
 				<test logic="OR">
 					<test logic="AND">
@@ -51,6 +52,7 @@
 		<switch name="/systems/air-conditioning/valves/flow-control-valve-2-cmd">
 			<default value="0"/>
 			<test logic="OR" value="0">
+				/systems/air-conditioning/packs/pack-2-outlet-temp ge 260
 				/controls/engines/engine[1]/fire-btn eq 1
 				<test logic="OR">
 					<test logic="AND">
@@ -337,7 +339,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/air-conditioning/packs/pack-1-outlet-temp ge 260
-				<!-- not pack 1 + 2 fault -->
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
 			</test>
 		</switch>
 		
@@ -345,7 +347,51 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/air-conditioning/packs/pack-2-outlet-temp ge 260
-				<!-- not pack 1 + 2 fault -->
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-1-fault-light">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/pack-1-disagree-input eq 1
+				/systems/air-conditioning/warnings/pack-1-ovht eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-fault-light">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/pack-2-disagree-input eq 1
+				/systems/air-conditioning/warnings/pack-2-ovht eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-1-disagree">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 ne 1
+					/systems/air-conditioning/valves/flow-control-valve-1-cmd eq 1
+				</test>
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 ne 0
+					/systems/air-conditioning/valves/flow-control-valve-1-cmd eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-disagree">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-2 ne 1
+					/systems/air-conditioning/valves/flow-control-valve-2-cmd eq 1
+				</test>
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-2 ne 0
+					/systems/air-conditioning/valves/flow-control-valve-2-cmd eq 0
+				</test>
 			</test>
 		</switch>
 		

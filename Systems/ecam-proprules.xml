@@ -412,6 +412,17 @@
         <output>/ECAM/phases/wing-anti-ice-pulse</output>
     </flipflop>
 	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>180.0</value>
+        </time>
+        <S>
+            <not><property>/ECAM/phases/monostable/phase-6-180</property></not>
+        </S>
+        <output>/ECAM/phases/monostable/phase-6-180-pulse</output>
+    </flipflop>
+	
 	<!-- falling edge detectors -->
 	<flipflop>
 		<type>monostable</type>

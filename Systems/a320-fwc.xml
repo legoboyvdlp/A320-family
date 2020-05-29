@@ -229,6 +229,77 @@
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.025</rate_limit> <!-- 40 seconds -->
 		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/cranking-35-sec">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/cranking-35-sec-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.028571</rate_limit> <!-- 35 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-1-fault-closed">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-1-fault-closed-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-2-fault-closed">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-2-fault-closed-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-1-disagree">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-1-disagree-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-2-disagree">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-2-fault-closed-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/ignition">
+            <description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/ignition</input>
+            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">0.028571</rate_limit> <!-- 35 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-1-fault-5">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-1-fault-input</input>
+            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">0.20</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-2-fault-5">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-2-fault-input</input>
+            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">0.20</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-1-fault-2">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-1-fault-warning-input</input>
+            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">0.50</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/pack-2-fault-2">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/pack-2-fault-warning-input</input>
+            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">0.50</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
 	</channel>
 	
 	<channel name="ECAM">
@@ -861,6 +932,191 @@
 					/ECAM/warnings/logic/pack-2-pulse eq 1
 					/controls/pneumatics/switches/pack-2 eq 1
 				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/cranking-35-sec-input">
+			<default value="0"/>
+			<test value="1">
+				/controls/engines/engine-start-switch eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-1-fault-closed-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/controls/engines/engine-start-switch eq 0
+					/ECAM/warnings/timer/cranking-35-sec eq 1
+				</test>
+				/controls/pneumatics/switches/pack-1 eq 1
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+				/systems/air-conditioning/packs/pack-1-outlet-temp lt 260 <!-- confirm -->
+				/ECAM/warnings/logic/bleed-1-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-fault-closed-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/controls/engines/engine-start-switch eq 0
+					/ECAM/warnings/timer/cranking-35-sec eq 1
+				</test>
+				/controls/pneumatics/switches/pack-2 eq 1
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+				/systems/air-conditioning/packs/pack-2-outlet-temp lt 260 <!-- confirm -->
+				/ECAM/warnings/logic/bleed-2-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-1-disagree-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/warnings/pack-1-disagree eq 1
+				/ECAM/warnings/logic/bleed-1-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-disagree-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/warnings/pack-2-disagree eq 1
+				/ECAM/warnings/logic/bleed-2-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/ignition">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/starter-valve-1 ne 0
+				/systems/pneumatics/valves/starter-valve-2 ne 0
+				/controls/engines/engine-start-switch eq 2
+				/engines/engine[0]/state eq 1
+				/engines/engine[0]/state eq 2
+				/engines/engine[1]/state eq 1
+				/engines/engine[1]/state eq 2
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/inhibit-pack-1-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/ignition eq 1
+				/ECAM/warnings/logic/ignition eq 1
+				<test logic="AND">
+					/controls/pneumatics/switches/pack-1 eq 0
+					/ECAM/warning-phase eq 2
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/inhibit-pack-2-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/ignition eq 1
+				/ECAM/warnings/logic/ignition eq 1
+				<test logic="AND">
+					/controls/pneumatics/switches/pack-2 eq 0
+					/ECAM/warning-phase eq 2
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-1-fault-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/inhibit-pack-1-fault eq 0
+				<test logic="OR">
+					/ECAM/warnings/timer/pack-1-fault-closed eq 1
+					/ECAM/warnings/timer/pack-1-disagree eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-fault-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/inhibit-pack-2-fault eq 0
+				<test logic="OR">
+					/ECAM/warnings/timer/pack-2-fault-closed eq 1
+					/ECAM/warnings/timer/pack-2-disagree eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/phases/monostable/phase-6-180">
+			<default value="0"/>
+			<test value="1">
+				/ECAM/warning-phase eq 6
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-1-2-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/controls/pneumatics/switches/pack-2 eq 0
+					<test logic="OR">
+						/ECAM/warnings/timer/pack-1-fault-5 eq 1
+						/systems/air-conditioning/warnings/pack-1-ovht eq 1
+					</test>
+				</test>
+				<test logic="AND">
+					/controls/pneumatics/switches/pack-1 eq 0
+					<test logic="OR">
+						/ECAM/warnings/timer/pack-2-fault-5 eq 1
+						/systems/air-conditioning/warnings/pack-2-ovht eq 1
+					</test>
+				</test>
+				<test logic="AND">
+					/controls/pneumatics/switches/pack-1 eq 0
+					/controls/pneumatics/switches/pack-2 eq 0
+					<test logic="AND">
+						/ECAM/warning-phase ne 1
+						/ECAM/warning-phase ne 2
+						/ECAM/warning-phase ne 10
+						<test logic="OR">
+							/ECAM/phases/monostable/phase-6-180 eq 0
+							/ECAM/phases/monostable/phase-6-180-pulse eq 0
+						</test>
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/reset-pack-1-switch-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-1 eq 0
+				/ECAM/warnings/timer/pack-1-fault-5 eq 0
+				/ECAM/warnings/flipflop/pack-1-ovht eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/reset-pack-2-switch-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-2 eq 0
+				/ECAM/warnings/timer/pack-2-fault-5 eq 0
+				/ECAM/warnings/flipflop/pack-2-ovht eq 1
+			</test>
+		</switch>
+		
+		
+		<switch name="/ECAM/warnings/logic/pack-1-fault-warning-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/timer/pack-1-fault-5 eq 1
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-fault-warning-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/timer/pack-2-fault-5 eq 1
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
 			</test>
 		</switch>
 		

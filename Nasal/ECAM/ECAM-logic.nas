@@ -1572,6 +1572,75 @@ var messages_priority_2 = func {
 	}
 	
 	# PACK
+	if (pack12Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.pack12Fault.getValue()) { # TODO NOT OUTFLOW OR HOT AIR FAULT
+		pack12Fault.active = 1;
+		
+		if (systems.PNEU.Switch.pack1.getBoolValue()) {
+			pack12FaultPackOff1.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack12FaultPackOff1);
+		}
+		
+		if (systems.PNEU.Switch.pack2.getBoolValue()) {
+			pack12FaultPackOff2.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack12FaultPackOff2);
+		}
+		
+		if (!systems.PNEU.Switch.ramAir.getBoolValue() and !gnd and pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 16000) {
+			pack12FaultDescend.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack12FaultDescend);
+		}
+		
+		if (!systems.PNEU.Switch.ramAir.getBoolValue() and !gnd) {
+			pack12FaultDiffPr.active = 1;
+			pack12FaultDiffPr2.active = 1;
+			pack12FaultRam.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack12FaultDiffPr);
+			ECAM_controller.warningReset(pack12FaultDiffPr2);
+			ECAM_controller.warningReset(pack12FaultRam);
+		}
+		
+		if (!gnd) {
+			pack12FaultMax.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack12FaultMax);
+		}
+		
+		if (warningNodes.Logic.pack1ResetPb.getBoolValue() or warningNodes.Logic.pack2ResetPb.getBoolValue()) {
+			pack12FaultOvht.active = 1;
+			
+			if (warningNodes.Logic.pack1ResetPb.getBoolValue()) {
+				pack12FaultPackOn1.active = 1;
+			} else {
+				ECAM_controller.warningReset(pack12FaultPackOn1);
+			}
+			
+			if (warningNodes.Logic.pack2ResetPb.getBoolValue()) {
+				pack12FaultPackOn2.active = 1;
+			} else {
+				ECAM_controller.warningReset(pack12FaultPackOn2);
+			}
+		} else {
+			ECAM_controller.warningReset(pack12FaultOvht);
+			ECAM_controller.warningReset(pack12FaultPackOn1);
+			ECAM_controller.warningReset(pack12FaultPackOn2);
+		}
+	} else {
+		ECAM_controller.warningReset(pack12Fault);
+		ECAM_controller.warningReset(pack12FaultPackOff1);
+		ECAM_controller.warningReset(pack12FaultPackOff2);
+		ECAM_controller.warningReset(pack12FaultDescend);
+		ECAM_controller.warningReset(pack12FaultDiffPr);
+		ECAM_controller.warningReset(pack12FaultDiffPr2);
+		ECAM_controller.warningReset(pack12FaultRam);
+		ECAM_controller.warningReset(pack12FaultMax);
+		ECAM_controller.warningReset(pack12FaultOvht);
+		ECAM_controller.warningReset(pack12FaultPackOn1);
+		ECAM_controller.warningReset(pack12FaultPackOn2);
+	}
 	
 	if (pack1Ovht.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Flipflops.pack1Ovht.getValue()) {
 		pack1Ovht.active = 1;
@@ -1607,6 +1676,32 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack2OvhtOff);
 		ECAM_controller.warningReset(pack2OvhtOut);
 		ECAM_controller.warningReset(pack2OvhtPack);
+	}
+	
+	if (pack1Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.pack1Fault.getValue() == 1) {
+		pack1Fault.active = 1;
+		
+		if (systems.PNEU.Switch.pack1.getBoolValue()) {
+			pack1FaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack1FaultOff);
+		}
+	}	else {
+		ECAM_controller.warningReset(pack1Fault);
+		ECAM_controller.warningReset(pack1FaultOff);
+	}
+	
+	if (pack2Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.pack2Fault.getValue() == 1) {
+		pack2Fault.active = 1;
+		
+		if (systems.PNEU.Switch.pack2.getBoolValue()) {
+			pack2FaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(pack2FaultOff);
+		}
+	}	else {
+		ECAM_controller.warningReset(pack2Fault);
+		ECAM_controller.warningReset(pack2FaultOff);
 	}
 	
 	# ENG AICE

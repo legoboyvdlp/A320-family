@@ -4136,16 +4136,7 @@
 		<object-name>ACPack1Btn1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/pneumatic/pack1-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatics/switches/pack-1</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>/systems/air-conditioning/warnings/pack-1-fault-light</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4494,16 +4485,7 @@
 		<object-name>ACPack2Btn1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/pneumatic/pack2-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatics/switches/pack-2</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>/systems/air-conditioning/warnings/pack-2-fault-light</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
