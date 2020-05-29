@@ -481,7 +481,9 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("/FMGC/internal/maxspeed", getprop("/it-fbw/speeds/vmo-mmo"));
 	}
 	
+	############################
 	# calculate speeds
+	############################
 	flap = getprop("/controls/flight/flaps-pos");
 	weight_lbs = getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000;
 	tow = getprop("/FMGC/internal/tow");
@@ -489,32 +491,30 @@ var masterFMGC = maketimer(0.2, func {
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	dest_wind = getprop("/FMGC/internal/dest-wind");
 	
-	# current appr speeds
+	# current speeds
 	clean = 2 * weight_lbs * 0.45359237 + 85;
 	if (altitude > 20000) {
 		clean += (altitude - 20000) / 1000;
 	}
-	vs1g_clean = 0.0024 * weight_lbs * weight_lbs + 0.124 * weight_lbs + 88.942;
-	vs1g_conf_1 = -0.0007 * weight_lbs * weight_lbs + 0.6795 * weight_lbs + 44.673;
-	vs1g_conf_1f = -0.0001 * weight_lbs * weight_lbs + 0.5211 * weight_lbs + 49.027;
-	vs1g_conf_2 = -0.0005 * weight_lbs * weight_lbs + 0.5488 * weight_lbs + 44.279;
-	vs1g_conf_3 = -0.0005 * weight_lbs * weight_lbs + 0.5488 * weight_lbs + 43.279;
-	vs1g_conf_full = -0.0007 * weight_lbs * weight_lbs + 0.6002 * weight_lbs + 38.479;
-	
-	slat = vs1g_clean * 1.23;
-	flap2 = vs1g_conf_2 * 1.47;
-	flap3 = vs1g_conf_3 * 1.36;
-	
+	setprop("/FMGC/internal/computed-speeds/clean", clean);
+	setprop("/FMGC/internal/computed-speeds/vs1g_clean", 0.0024 * weight_lbs * weight_lbs + 0.124 * weight_lbs + 88.942);
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_1", -0.0007 * weight_lbs * weight_lbs + 0.6795 * weight_lbs + 44.673);
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_1f", -0.0001 * weight_lbs * weight_lbs + 0.5211 * weight_lbs + 49.027);
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_2", -0.0005 * weight_lbs * weight_lbs + 0.5488 * weight_lbs + 44.279);
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_3", -0.0005 * weight_lbs * weight_lbs + 0.5488 * weight_lbs + 43.279);
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_full", -0.0007 * weight_lbs * weight_lbs + 0.6002 * weight_lbs + 38.479);
+	setprop("/FMGC/internal/computed-speeds/slat", num(getprop("/FMGC/internal/computed-speeds/vs1g_clean")) * 1.23);
+	setprop("/FMGC/internal/computed-speeds/flap2", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_2")) * 1.47);
+	setprop("/FMGC/internal/computed-speeds/flap3", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_3")) * 1.36);
 	if (getprop("/FMGC/internal/ldg-config-3-set")) {
-		vls = vs1g_conf_3 * 1.23;
+		vls = num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_3")) * 1.23;
 	} else {
-		vls = vs1g_conf_full * 1.23
+		vls = num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_full")) * 1.23
 	}
-	
 	if (vls < 113) {
 		vls = 113;
 	}
-	
+	setprop("/FMGC/internal/computed-speeds/vls", vls);
 	if (!getprop("/FMGC/internal/vapp-speed-set")) {
 		if (dest_wind < 5) {
 			vapp = vls + 5;
@@ -526,6 +526,77 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("/FMGC/internal/computed-speeds/vapp", vapp);
 	}
 	
+	# predicted takeoff speeds
+	if (phase == "1") {
+		setprop("/FMGC/internal/computed-speeds/clean_to", getprop("/FMGC/internal/computed-speeds/clean"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_clean_to", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_to", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_to", getprop("/FMGC/internal/computed-speeds/vs1g_conf_3"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_to", getprop("/FMGC/internal/computed-speeds/vs1g_conf_full"));
+		setprop("/FMGC/internal/computed-speeds/slat_to", getprop("/FMGC/internal/computed-speeds/slat"));
+		setprop("/FMGC/internal/computed-speeds/flap2_to", getprop("/FMGC/internal/computed-speeds/flap2"));
+	} else {
+		clean_to = 2 * tow * 0.45359237 + 85;
+		if (altitude > 20000) {
+			clean_to += (altitude - 20000) / 1000;
+		}
+		setprop("/FMGC/internal/computed-speeds/clean_to", clean_to);
+		setprop("/FMGC/internal/computed-speeds/vs1g_clean_to", 0.0024 * tow * tow + 0.124 * tow + 88.942);
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_to", -0.0005 * tow * tow + 0.5488 * tow + 44.279);
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_to", -0.0005 * tow * tow + 0.5488 * tow + 43.279);
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_to", -0.0007 * tow * tow + 0.6002 * tow + 38.479);
+		setprop("/FMGC/internal/computed-speeds/slat_to", num(getprop("/FMGC/internal/computed-speeds/vs1g_clean_to")) * 1.23);
+		setprop("/FMGC/internal/computed-speeds/flap2_to", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_2_to")) * 1.47);
+	}
+	
+	# predicted approach (temp go-around) speeds
+	if (phase == "5" or phase == "6") {
+		setprop("/FMGC/internal/computed-speeds/clean_appr", getprop("/FMGC/internal/computed-speeds/clean"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_clean_appr", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_3"));
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_full"));
+		setprop("/FMGC/internal/computed-speeds/slat_appr", getprop("/FMGC/internal/computed-speeds/slat"));
+		setprop("/FMGC/internal/computed-speeds/flap2_appr", getprop("/FMGC/internal/computed-speeds/flap2"));
+		setprop("/FMGC/internal/computed-speeds/vls_appr", getprop("/FMGC/internal/computed-speeds/vls"));
+		if (!getprop("/FMGC/internal/vapp-speed-set")) {
+			setprop("/FMGC/internal/computed-speeds/vapp_appr", getprop("/FMGC/internal/computed-speeds/vapp"));
+		}
+	} else {
+		clean_appr = 2 * lw * 0.45359237 + 85;
+		if (altitude > 20000) {
+			clean_appr += (altitude - 20000) / 1000;
+		}
+		setprop("/FMGC/internal/computed-speeds/clean_appr", clean_appr);
+		setprop("/FMGC/internal/computed-speeds/vs1g_clean_appr", 0.0024 * lw * lw + 0.124 * lw + 88.942);
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr", -0.0005 * lw * lw + 0.5488 * lw + 44.279);
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_appr", -0.0005 * lw * lw + 0.5488 * lw + 43.279);
+		setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_appr", -0.0007 * lw * lw + 0.6002 * lw + 38.479);
+		setprop("/FMGC/internal/computed-speeds/slat_appr", num(getprop("/FMGC/internal/computed-speeds/vs1g_clean_appr")) * 1.23);
+		setprop("/FMGC/internal/computed-speeds/flap2_appr", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr")) * 1.47);
+		if (getprop("/FMGC/internal/ldg-config-3-set")) {
+			vls_appr = num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_3_appr")) * 1.23;
+		} else {
+			vls_appr = num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_full_appr")) * 1.23
+		}
+		if (vls_appr < 113) {
+			vls_appr = 113;
+		}
+		setprop("/FMGC/internal/computed-speeds/vls_appr", vls_appr);
+		if (!getprop("/FMGC/internal/vapp-speed-set")) {
+			if (dest_wind < 5) {
+				vapp_appr = vls_appr + 5;
+			} else if (dest_wind > 15) {
+				vapp_appr = vls_appr + 15;
+			} else {
+				vapp_appr = vls_appr + dest_wind;
+			}
+			setprop("/FMGC/internal/computed-speeds/vapp_appr", vapp_appr);
+		}
+	}
+	
+	# Need info on these, also correct for height at altitude...
+	# https://www.pprune.org/archive/index.php/t-587639.html
 	aoa_prot = 15;
 	aoa_max = 17.5;
 	aoa_0 = -5;
@@ -538,136 +609,63 @@ var masterFMGC = maketimer(0.2, func {
 		alpha_prot = 0;
 		alpha_max = 0;
 	}
-	
-	# predicted to speeds
-	clean_to = 2 * tow * 0.45359237 + 85;
-	if (altitude > 20000) {
-		clean_to += (altitude - 20000) / 1000;
-	}
-	vs1g_clean_to = 0.0024 * tow * tow + 0.124 * tow + 88.942;
-	vs1g_conf_2_to = -0.0005 * tow * tow + 0.5488 * tow + 44.279;
-	vs1g_conf_3_to = -0.0005 * tow * tow + 0.5488 * tow + 43.279;
-	vs1g_conf_full_to = -0.0007 * tow * tow + 0.6002 * tow + 38.479;
-	slat_to = vs1g_clean_to * 1.23;
-	flap2_to = vs1g_conf_2_to * 1.47;
-	
-	# predicted appr speeds
-	clean_appr = 2 * lw * 0.45359237 + 85;
-	if (altitude > 20000) {
-		clean_appr += (altitude - 20000) / 1000;
-	}
-	vs1g_clean_appr = 0.0024 * lw * lw + 0.124 * lw + 88.942;
-	vs1g_conf_2_appr = -0.0005 * lw * lw + 0.5488 * lw + 44.279;
-	vs1g_conf_3_appr = -0.0005 * lw * lw + 0.5488 * lw + 43.279;
-	vs1g_conf_full_appr = -0.0007 * lw * lw + 0.6002 * lw + 38.479;
-	slat_appr = vs1g_clean_appr * 1.23;
-	flap2_appr = vs1g_conf_2_appr * 1.47;
-	
-	if (getprop("/FMGC/internal/ldg-config-3-set")) {
-		vls_appr = vs1g_conf_3_appr * 1.23;
-	} else {
-		vls_appr = vs1g_conf_full_appr * 1.23
-	}
-	
-	if (vls_appr < 113) {
-		vls_appr = 113;
-	}
-	
-	if (!getprop("/FMGC/internal/vapp-speed-set")) {
-		if (dest_wind < 5) {
-			vapp_appr = vls_appr + 5;
-		} else if (dest_wind > 15) {
-			vapp_appr = vls_appr + 15;
-		} else {
-			vapp_appr = vls_appr + dest_wind;
-		}
-		setprop("/FMGC/internal/computed-speeds/vapp_appr", vapp_appr);
-	}
-	
-	# set the values globally
-	setprop("/FMGC/internal/computed-speeds/clean", clean);
-	setprop("/FMGC/internal/computed-speeds/vs1g_clean", vs1g_clean);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_1", vs1g_conf_1);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_1f", vs1g_conf_1f);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_2", vs1g_conf_2);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_3", vs1g_conf_3);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_full", vs1g_conf_full);
-	setprop("/FMGC/internal/computed-speeds/slat", slat);
-	setprop("/FMGC/internal/computed-speeds/flap2", flap2);
-	setprop("/FMGC/internal/computed-speeds/flap3", flap3);
-	setprop("/FMGC/internal/computed-speeds/vls", vls);
 	setprop("/FMGC/internal/computed-speeds/alpha_prot", alpha_prot);
 	setprop("/FMGC/internal/computed-speeds/alpha_max", alpha_max);
 	
-	setprop("/FMGC/internal/computed-speeds/vs1g_clean_to", vs1g_clean_to);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_to", vs1g_conf_2_to);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_to", vs1g_conf_3_to);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_to", vs1g_conf_full_to);
-	setprop("/FMGC/internal/computed-speeds/slat_to", slat_to);
-	setprop("/FMGC/internal/computed-speeds/flap2_to", flap2_to);
-	setprop("/FMGC/internal/computed-speeds/clean_to", clean_to);
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_3"));
+	setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_full"));
 	
-	setprop("/FMGC/internal/computed-speeds/vs1g_clean_appr", vs1g_clean_appr);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr", vs1g_conf_2_appr);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_3_appr", vs1g_conf_3_appr);
-	setprop("/FMGC/internal/computed-speeds/vs1g_conf_full_appr", vs1g_conf_full_appr);
-	setprop("/FMGC/internal/computed-speeds/slat_appr", slat_appr);
-	setprop("/FMGC/internal/computed-speeds/flap2_appr", flap2_appr);
-	setprop("/FMGC/internal/computed-speeds/clean_appr", clean_appr);
-	setprop("/FMGC/internal/computed-speeds/vls_appr", vls_appr);
-	
-	# Need info on these, also correct for height at altitude...
-	# https://www.pprune.org/archive/index.php/t-587639.html
 	if (getprop("/FMGC/status/to-state") == 1) {
 		if (flap == 0) { # 0
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.28);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_clean")) * 1.28);
 		} else if (flap == 1) { # 1
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_conf_1 * 1.23); 
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_1")) * 1.23); 
 		} else { # 1+F
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.13);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_clean")) * 1.13);
 		}
 	} else {
 		if (flap == 0) { # 0
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_clean * 1.23);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_clean")) * 1.23);
 		} else if (flap == 1) { # 1
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_conf_1 * 1.23); 
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_1")) * 1.23); 
 		} else if (flap == 2) { # 1+F
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_conf_1f * 1.23);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_1f")) * 1.23);
 		} else if (flap == 3) { # 2
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_conf_2 * 1.23);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_2")) * 1.23);
 		} else if (flap == 4) { # 3
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_conf_3 * 1.23);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_3")) * 1.23);
 		} else if (flap == 5) { # FULL
-			setprop("/FMGC/internal/computed-speeds/vls_min", vs1g_conf_full * 1.23);
+			setprop("/FMGC/internal/computed-speeds/vls_min", num(getprop("/FMGC/internal/computed-speeds/vs1g_conf_full")) * 1.23);
 		}
 	}
 	
 	if (flap == 0) { # 0
-		setprop("/FMGC/internal/computed-speeds/vsw", vs1g_clean);
+		setprop("/FMGC/internal/computed-speeds/vsw", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
 	} else if (flap == 1) { # 1
-		setprop("/FMGC/internal/computed-speeds/vsw", vs1g_conf_1); 
+		setprop("/FMGC/internal/computed-speeds/vsw", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2")); 
 	} else if (flap == 2) { # 1+F
-		setprop("/FMGC/internal/computed-speeds/vsw", vs1g_conf_1f);
+		setprop("/FMGC/internal/computed-speeds/vsw", getprop("/FMGC/internal/computed-speeds/vs1g_conf_1f"));
 	} else if (flap == 3) { # 2
-		setprop("/FMGC/internal/computed-speeds/vsw", vs1g_conf_2);
+		setprop("/FMGC/internal/computed-speeds/vsw", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
 	} else if (flap == 4) { # 3
-		setprop("/FMGC/internal/computed-speeds/vsw", vs1g_conf_3);
+		setprop("/FMGC/internal/computed-speeds/vsw", getprop("/FMGC/internal/computed-speeds/vs1g_conf_3"));
 	} else if (flap == 5) { # FULL
-		setprop("/FMGC/internal/computed-speeds/vsw", vs1g_conf_full);
+		setprop("/FMGC/internal/computed-speeds/vsw", getprop("/FMGC/internal/computed-speeds/vs1g_conf_full"));
 	}
 	
 	if (flap == 0) { # 0
-		setprop("/FMGC/internal/minspeed", clean);
+		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/clean"));
 	} else if (flap == 1) { # 1
-		setprop("/FMGC/internal/minspeed", slat);
+		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/slat"));
 	} else if (flap == 2) { # 1+F
-		setprop("/FMGC/internal/minspeed", slat);
+		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/slat"));
 	} else if (flap == 3) { # 2
-		setprop("/FMGC/internal/minspeed", flap2);
+		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/flap2"));
 	} else if (flap == 4) { # 3
-		setprop("/FMGC/internal/minspeed", flap3);
+		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/flap3"));
 	} else if (flap == 5) { # FULL
-		setprop("/FMGC/internal/minspeed", vapp);
+		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/vapp"));
 	}
 	
 	if (gear0 == 1 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA") and flaps < 5) {
@@ -677,7 +675,10 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("/FMGC/status/to-state", 0);
 	}
 	
+	############################
 	#handle radios, runways, v1/vr/v2
+	############################
+	
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
 	if (destination_rwy != nil and phase >= 2) {

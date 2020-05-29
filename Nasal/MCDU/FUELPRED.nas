@@ -151,6 +151,14 @@ var fuelPredInput = func(key, i) {
 				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");
 				setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
 				setprop("/FMGC/internal/zfw-set", 1);
+				if (getprop("/FMGC/internal/block-set") != 1) {
+					setprop("/FMGC/internal/block", num(getprop("consumables/fuel/total-fuel-lbs") / 1000));
+					setprop("/FMGC/internal/block-set", 1);
+					setprop("/FMGC/internal/fuel-request-set", 1);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+					setprop("/FMGC/internal/block-calculating", 0);
+					setprop("/FMGC/internal/block-confirmed", 1);
+				}
 			} else if (tfs >= 2 and tfs <= 11 and find("/", scratchpad) != -1) {
 				var zfwi = split("/", scratchpad);
 				var zfwcg = num(zfwi[0]);
