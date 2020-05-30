@@ -10,6 +10,7 @@ var courseDistanceFrom = nil;
 var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
+var storeCourse = nil;
 
 var DEBUG_DISCONT = 0;
 
@@ -759,8 +760,15 @@ var flightPlanController = {
 					me.distToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[1]);
 					
 					magTrueError = magHDG.getValue() - trueHDG.getValue();
-					me.courseMagToWpt.setValue(me.courseToWpt.getValue() + magTrueError);
 					
+					storeCourse = me.courseToWpt.getValue() + magTrueError;
+					if (storeCourse >= 360) {
+						storeCourse -= 360;
+					} elsif (storeCourse < 0) {
+						storeCourse += 360;
+					}
+					
+					me.courseMagToWpt.setValue(storeCourse);
 				}
 				
 				if (me.num[india].getValue() != me.flightplans[india].getPlanSize()) {
