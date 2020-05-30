@@ -5,21 +5,15 @@
 
 var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
-	scratchpadNode = [props.globals.initNode("/MCDU[0]/scratchpad", "", "STRING"), props.globals.initNode("/MCDU[1]/scratchpad", "", "STRING")];
-	MCDU_reset(i); # Reset MCDU, clears data
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
+	MCDU_reset(i);
 }
 
 var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/active", 0);
 	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
-	setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
 	setprop("/MCDU[" ~ i ~ "]/last-page", "NONE");
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
-	mcdu.clearScratchpad(i);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 	
 	setprop("/FMGC/keyboard-left", 0);
 	setprop("/FMGC/keyboard-right", 0);
@@ -65,6 +59,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/alt-set", 0);
 	setprop("/FMGC/internal/cost-index", "0");
 	setprop("/FMGC/internal/cost-index-set", 0);
+	setprop("/FMGC/internal/last-cost-index", 0);
 	setprop("/FMGC/internal/cruise-ft", 10000);
 	setprop("/FMGC/internal/cruise-fl", 100);
 	setprop("/FMGC/internal/cruise-lvl-set", 0);
@@ -197,19 +192,16 @@ var lskbutton = func(btn, i) {
 	if (btn == "1") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "MCDU") {
 			if (getprop("/MCDU[" ~ i ~ "]/active") != 2) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "WAIT FOR SYSTEM RESPONSE");
+				mcdu_message(i, "WAIT FOR SYSTEM RESPONSE");
 				setprop("/MCDU[" ~ i ~ "]/active", 1);
 				settimer(func(){
 					setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
-					mcdu.clearScratchpad(i);
-					setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+					mcdu_scratchpad.scratchpads[i].empty();
 					setprop("/MCDU[" ~ i ~ "]/active", 2);
 				}, 2);
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
-				mcdu.clearScratchpad(i);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+				mcdu_scratchpad.scratchpads[i].empty();
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("L1",i);
@@ -244,16 +236,16 @@ var lskbutton = func(btn, i) {
 				canvas_mcdu.myDeparture[i] = departurePage.new(canvas_mcdu.myLatRev[i].title[2], i);
 				setprop("/MCDU[" ~ i ~ "]/page", "DEPARTURE");
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(1);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
-			canvas_mcdu.myDirTo[i].fieldL1(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+			canvas_mcdu.myDirTo[i].fieldL1(mcdu_scratchpad.scratchpads[i].scratchpad);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(1);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "2") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
@@ -287,7 +279,7 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(2);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
@@ -325,12 +317,12 @@ var lskbutton = func(btn, i) {
 				canvas_mcdu.myHold[i] = holdPage.new(i, canvas_mcdu.myLatRev[i].wpt);
 				setprop("/MCDU[" ~ i ~ "]/page", "HOLD");
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "4") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
@@ -358,7 +350,7 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(4);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "5") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
@@ -398,10 +390,10 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
-			canvas_mcdu.myClosestAirport[i].manAirportCall(getprop("/MCDU[" ~ i ~ "]/scratchpad"));
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
+			canvas_mcdu.myClosestAirport[i].manAirportCall(mcdu_scratchpad.scratchpads[i].scratchpad);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "6") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
@@ -441,7 +433,7 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].freeze();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	}
 }
@@ -470,7 +462,7 @@ var rskbutton = func(btn, i) {
 				canvas_mcdu.myArrival[i]._setupPageWithData();
 				setprop("/MCDU[" ~ i ~ "]/page", "ARRIVAL");
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(1);
@@ -483,10 +475,10 @@ var rskbutton = func(btn, i) {
 				canvas_mcdu.myPilotWP[i] = pilotWaypointPage.new(i);
 					setprop("/MCDU[" ~ i ~ "]/page", "PILOTWP");
 			} else {
-				notAllowed(i); # todo spawn new waypoints page
+				mcdu_message(i, "NOT ALLOWED"); # todo spawn new waypoints page
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "2") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
@@ -506,7 +498,7 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(2);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
@@ -531,12 +523,12 @@ var rskbutton = func(btn, i) {
 			if (canvas_mcdu.myLatRev[i].type != 2) {
 				canvas_mcdu.myLatRev[i].nextWpt();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(3);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "4") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
@@ -556,7 +548,7 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(4);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "5") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
@@ -590,19 +582,18 @@ var rskbutton = func(btn, i) {
 				canvas_mcdu.myAirways[i] = airwaysPage.new(i, canvas_mcdu.myLatRev[i].wpt);
 				setprop("/MCDU[" ~ i ~ "]/page", "AIRWAYS");	
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "6") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "MCDU") {
 			if (getprop("/MCDU[" ~ i ~ "]/last-page") != "NONE") {
 				setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-page"));
-				mcdu.clearScratchpad(i);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("R6",i);
@@ -619,15 +610,7 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R6",i);
 		} else if ((getprop("/MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
-			if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
-				if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-					setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-				} else {
-					setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
-				}
-			}
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "AOC DISABLED");
+			mcdu_message(i, "AOC DISABLED");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("R6",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
@@ -647,7 +630,7 @@ var rskbutton = func(btn, i) {
 				}
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	}
 }
@@ -769,7 +752,7 @@ var pagebutton = func(btn, i) {
 		} else if (btn == "mcdu") {
 			setprop("/MCDU[" ~ i ~ "]/last-page", getprop("/MCDU[" ~ i ~ "]/page"));
 			setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", getprop("/MCDU[" ~ i ~ "]/page"));
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", "SELECT DESIRED SYSTEM");
+			mcdu_message(i, "SELECT DESIRED SYSTEM");
 			setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
 		} else if (btn == "f-pln" or btn == "airport") {
 			if (canvas_mcdu.myFpln[i] == nil) {
@@ -785,6 +768,8 @@ var pagebutton = func(btn, i) {
 						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[2];
 					}
 				}
+			} else {
+				canvas_mcdu.myFpln[i].scroll = 0;
 			}
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 			
@@ -792,8 +777,7 @@ var pagebutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "FUELPRED");
 		} else if (btn == "dirto") {
 			if (fmgc.flightPlanController.temporaryFlag[i] and !dirToFlag) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "INSRT / ERASE TMPY FIRST");
+				mcdu_message(i, "INSERT/ERASE TMPY FIRST");
 				return;
 			} elsif (canvas_mcdu.myDirTo[i] == nil) {
 				canvas_mcdu.myDirTo[i] = dirTo.new(i);
@@ -804,94 +788,32 @@ var pagebutton = func(btn, i) {
 }
 
 var button = func(btn, i) {
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 0 and getprop("/MCDU[" ~ i ~ "]/page") != "MCDU") {
-		var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+	if (getprop("/MCDU[" ~ i ~ "]/page") != "MCDU") {
+		var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 		if (btn == "SLASH") {
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "/");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			mcdu_scratchpad.scratchpads[i].addChar("/");
 		} else if (btn == "SP") {
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ " ");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			mcdu_scratchpad.scratchpads[i].addChar(" ");
 		} else if (btn == "CLR") {
-			var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (size(scratchpad) == 0) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
-			} else if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-				mcdu.clearScratchpad(i);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			} else if (size(scratchpad) > 0) {
-				setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", left(scratchpad, size(scratchpad) - 1));
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+				mcdu_scratchpad.scratchpads[i].addChar("CLR");
+			} else {
+				mcdu_scratchpad.scratchpads[i].clear();
 			}
 		} else if (btn == "DOT") {
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ ".");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "-");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
+			mcdu_scratchpad.scratchpads[i].addChar("-");
 		} else {
-			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ btn);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-		}
-	} else {
-		if (btn == "CLR") {
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-			var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
-			if (size(scratchpad) == 0) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
-			} else if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad", getprop("/MCDU[" ~ i ~ "]/last-scratchpad"));
-				setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			}
+			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}
 	}
 }
 
-var genericMessage = func(i, text, color) {
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != text) {
-		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
-		}
-	}
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", color);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", text);
-}
-
-var notAllowed = func(i) {
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "NOT ALLOWED") {
-		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
-		}
-	}
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "NOT ALLOWED");
-}
-
-var formatError = func(i) {
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "FORMAT ERROR") {
-		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-		} else {
-			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
-		}
-	}
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("/MCDU[" ~ i ~ "]/scratchpad", "FORMAT ERROR");
-}
-
-var clearScratchpad = func(i) {
-	scratchpadNode[i].setValue("");
+var mcdu_message = func(i, string, overrideStr = "") {
+	mcdu_scratchpad.scratchpads[i].showTypeI(mcdu_scratchpad.MessageController.getTypeIMsgByText(string));
+	mcdu_scratchpad.scratchpads[i].override(overrideStr);
 }
 
 var screenFlash = func(time, i) {

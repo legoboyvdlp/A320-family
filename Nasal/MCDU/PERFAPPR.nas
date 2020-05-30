@@ -5,37 +5,34 @@ var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 
 var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 1);
 
 var perfAPPRInput = func(key, i) {
-	var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/dest-qnh", -1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (num(scratchpad) != nil and (scratchpad >= 28.06 and scratchpad <= 31.01) or (scratchpad >= 745 and scratchpad <= 1050)) {
 			# doesn't support accidental temp input yet
 			setprop("/FMGC/internal/dest-qnh", scratchpad);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L2") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/dest-temp", -999);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (num(scratchpad) != nil and scratchpad >= -99 and scratchpad < 99) {
 			setprop("/FMGC/internal/dest-temp", scratchpad);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L3") {
 		var tfs = size(scratchpad);
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/dest-mag", -1);
 			setprop("/FMGC/internal/dest-wind", -1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (tfs >= 3 and tfs <= 7 and find("/", scratchpad) != -1) {
 			var weather = split("/", scratchpad);
 			var mag = int(weather[0]);
@@ -46,96 +43,92 @@ var perfAPPRInput = func(key, i) {
 				if (mag != nil and wind != nil and mag >= 0 and mag <= 360 and wind >= 0 and wind <= 200) {
 					setprop("/FMGC/internal/dest-mag", weather[0]);
 					setprop("/FMGC/internal/dest-wind", weather[1]);
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L4") {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.transAlt = 18000;
 			fmgc.FMGCInternal.transAltSet = 0;
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
 			if (int(scratchpad) != nil and (tfs == 4 or tfs == 5) and scratchpad >= 1000 and scratchpad <= 39000) {
 				fmgc.FMGCInternal.transAlt = math.round(scratchpad, 500);
 				fmgc.FMGCInternal.transAltSet = 1;
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} elsif (int(scratchpad) != nil and (tfs == 2 or tfs == 3) and scratchpad >= 10 and scratchpad <= 390) {
 				fmgc.FMGCInternal.transAlt = math.round(scratchpad * 100, 5);
 				fmgc.FMGCInternal.transAltSet = 1;
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vapp-speed-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 			setprop("/FMGC/internal/vapp-speed-set", 1);
 			setprop("/FMGC/internal/computed-speeds/vapp_appr", scratchpad);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L6") {
 		setprop("/MCDU[" ~ i ~ "]/page", "PERFDES");
 	} else if (key == "R2") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/baro", 99999);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= getprop("/FMGC/internal/ldg-elev") and scratchpad <= 5000 + getprop("/FMGC/internal/ldg-elev")) {
 			if (getprop("/FMGC/internal/radio-no") == 0) {
 				setprop("/FMGC/internal/radio", 99999);
 			}
 			setprop("/FMGC/internal/baro", scratchpad);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R3") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/radio", 99999);
 			setprop("/FMGC/internal/radio-no", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (scratchpad == "NO") {
 			setprop("/FMGC/internal/radio", 99999);
 			setprop("/FMGC/internal/radio-no", 1);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 700) {
 			setprop("/FMGC/internal/baro", 99999);
 			setprop("/FMGC/internal/radio-no", 0);
 			setprop("/FMGC/internal/radio", scratchpad);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R4") {
 		if (scratchpad == "" and ldg_config_f_set.getValue() == 1 and ldg_config_3_set.getValue() == 0) {
 			setprop("/FMGC/internal/ldg-config-3-set", 1);
 			setprop("/FMGC/internal/ldg-config-f-set", 0);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R5") {
 		if (scratchpad == "" and ldg_config_3_set.getValue() == 1 and ldg_config_f_set.getValue() == 0) {
 			setprop("/FMGC/internal/ldg-config-3-set", 0);
 			setprop("/FMGC/internal/ldg-config-f-set", 1);
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R6") {
 		setprop("/MCDU[" ~ i ~ "]/page", "PERFGA");

@@ -29,14 +29,13 @@ var extra_fuel = props.globals.getNode("FMGC/internal/extra-fuel", 1);
 var extra_time = props.globals.getNode("FMGC/internal/extra-time", 1);
 
 var fuelPredInput = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L3" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/rte-rsv", 0.05 * num(getprop("/FMGC/internal/trip-fuel")));
 			setprop("/FMGC/internal/rte-percent", 5.0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (getprop("/FMGC/internal/trip-fuel") != 0) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -46,7 +45,7 @@ var fuelPredInput = func(key, i) {
 					setprop("/FMGC/internal/rte-rsv", num(perc) / 100 * num(getprop("/FMGC/internal/trip-fuel")));
 					setprop("/FMGC/internal/rte-percent", perc);
 					setprop("/FMGC/internal/fuel-calculating", 1);
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7) {
 					setprop("/FMGC/internal/rte-rsv", scratchpad);
@@ -56,12 +55,12 @@ var fuelPredInput = func(key, i) {
 						setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
 					}
 					setprop("/FMGC/internal/fuel-calculating", 1);
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L4" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating") and getprop("/FMGC/internal/alt-set")) {
 		if (scratchpad == "CLR") {
@@ -69,8 +68,7 @@ var fuelPredInput = func(key, i) {
 			setprop("/FMGC/internal/alt-time", "0000");
 			setprop("/FMGC/internal/alt-fuel-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -79,12 +77,12 @@ var fuelPredInput = func(key, i) {
 				setprop("/FMGC/internal/alt-time", "0000");
 				setprop("/FMGC/internal/alt-fuel-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L5" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
@@ -93,8 +91,7 @@ var fuelPredInput = func(key, i) {
 			setprop("/FMGC/internal/final-fuel-set", 0);
 			setprop("/FMGC/internal/final-time-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -102,9 +99,9 @@ var fuelPredInput = func(key, i) {
 				setprop("/FMGC/internal/final-fuel", tf);
 				setprop("/FMGC/internal/final-fuel-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
 			var tf = num(scratchpad);
@@ -113,9 +110,9 @@ var fuelPredInput = func(key, i) {
 				setprop("/FMGC/internal/final-time", scratchpad);
 				setprop("/FMGC/internal/final-time-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			} 
 		}
 	} else if (key == "L6" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
@@ -123,8 +120,7 @@ var fuelPredInput = func(key, i) {
 			setprop("/FMGC/internal/min-dest-fob", 0);
 			setprop("/FMGC/internal/min-dest-fob-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
 			var tfs = size(scratchpad);
@@ -132,20 +128,26 @@ var fuelPredInput = func(key, i) {
 				setprop("/FMGC/internal/min-dest-fob", tf);
 				setprop("/FMGC/internal/min-dest-fob-set", 1);
 				setprop("/FMGC/internal/fuel-calculating", 1);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 				if (num(getprop("/FMGC/internal/min-dest-fob")) < num(getprop("/FMGC/internal/final-fuel") + getprop("/FMGC/internal/alt-fuel"))) {
 					genericMessage(i, "CHECK MIN DEST FOB", "wht");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R3" and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		} else {
+			if (!getprop("/FMGC/internal/cost-index-set")) {
+				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index"));
+				setprop("/FMGC/internal/cost-index-set", 1);
+				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index"));
+			}
+			
 			var tfs = size(scratchpad);
 			if (tfs == 0) {
 				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");
@@ -193,9 +195,9 @@ var fuelPredInput = func(key, i) {
 					}
 				}
 				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (tfs >= 1 and tfs <= 5) {
 				var zfwcg = size(scratchpad);
@@ -210,31 +212,30 @@ var fuelPredInput = func(key, i) {
 						setprop("/FMGC/internal/block-calculating", 0);
 						setprop("/FMGC/internal/block-confirmed", 1);
 					}
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "R4") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/fffq-sensor", "FF+FQ");
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find("/", scratchpad) == 0) {
 			var sensor = substr(scratchpad, 1);
 			if (sensor == "FF+FQ" or sensor == "FQ+FF" or sensor == "FF" or sensor == "FQ") {
 				setprop("FMGC/internal/fffq-sensor", sensor);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else {
-		notAllowed(i);
+		mcdu_message(i, "NOT ALLOWED");
 	}
 }
