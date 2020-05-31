@@ -1,4 +1,5 @@
 var isNoStar = [0, 0];
+var isNoVia = [0, 0];
 
 var arrivalPage = {
 	title: [nil, nil, nil],
@@ -39,9 +40,10 @@ var arrivalPage = {
 	enableScrollStars: 0,
 	scrollApproach: 0,
 	scrollStars: 0,
-	activePage: 0, # runways, stars, trans
+	activePage: 0, # runways, stars, vias
 	hasPressNoTrans: 0, # temporary
 	_approaches: nil,
+	_vias; nil,
 	_stars: nil,
 	_transitions: nil,
 	new: func(icao, computer) {
@@ -415,6 +417,12 @@ var arrivalPage = {
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
+	updateActiveVIAs: func() {
+	
+	},
+	updateVIAs: func() {
+	#placeholder
+	},
 	clearTransitions: func() {
 		me.R2 = [nil, "TRANS", "wht"];
 		me.R3 = [nil, "TRANS", "wht"];
@@ -519,7 +527,7 @@ var arrivalPage = {
 				}
 				me.updateApproaches();
 			}
-		} else {
+		} elsif (me.activePage == 1) {
 			if (me.enableScrollStars) {
 				me.scrollStars += 1;
 				if (me.scrollStars > size(me.stars) - 4) {
@@ -533,6 +541,14 @@ var arrivalPage = {
 				}
 				me.hasPressNoTrans = 0;
 			}
+		} elsif (me.activePage == 2) {
+			if (me.enableScrollVias) {
+				me.scrollVias += 1;
+				if (me.scrollVias > size(me.vias) - 4) {
+					me.scrollVias = 0;
+				}
+				me.updateVIAs();
+			}
 		}
 	},
 	scrollDn: func() {
@@ -544,7 +560,7 @@ var arrivalPage = {
 				}
 				me.updateApproaches();
 			}
-		} else {
+		} elsif (me.activePage == 1) {
 			if (me.enableScrollStars) {
 				me.scrollStars -= 1;
 				if (me.scrollStars < 0) {
@@ -558,13 +574,23 @@ var arrivalPage = {
 				}
 				me.hasPressNoTrans = 0;
 			}
+		} elsif (me.activePage == 2) {
+			if (me.enableScrollVias) {
+				me.scrollVias -= 1;
+				if (me.scrollVias < 0) {
+					me.scrollVias = size(me.vias) - 4;
+				}
+				me.updateVIAs();
+			}
 		}
 	},
 	scrollLeft: func() {
+		if (me.activePage == 2) { return; }
 		me.activePage = !me.activePage;
 		me.updatePage();
 	},
 	scrollRight: func() {
+		if (me.activePage == 2) { return; }
 		me.activePage = !me.activePage;
 		me.updatePage();
 	},
@@ -597,7 +623,7 @@ var arrivalPage = {
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
-		} else {
+		} elsif (me.activePage == 1) {
 			if (size(me.stars) >= (index - 2)) {
 				if (!dirToFlag) {
 					me.selectedSTAR = me.stars[index - 2 + me.scrollStars];
@@ -621,6 +647,27 @@ var arrivalPage = {
 						me.hasPressNoTrans = 1;
 					}
 					me.updateActiveTransitions();
+					fmgc.flightPlanController.flightPlanChanged(me.computer);
+				} else {
+					mcdu_message(me.computer, "DIR TO IN PROGRESS");
+				}
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
+			}
+		} else {
+			if (size(me.vias) >= (index - 2)) {
+				if (!dirToFlag) {
+					my.selectedVIA = me.vias[index - 2 + me.scrollVias];
+					me.makeTmpy();
+					if (my.selectedVIA != "NO VIA") {
+						isNoVia[me.computer] = 0;
+						fmgc.flightPlanController.flightplans[me.computer].approach_trans = me.selectedVIA;
+					} else {
+						isNoVia[me.computer] = 1;
+						fmgc.flightPlanController.flightplans[me.computer].approach_trans = nil;
+					}
+					me.updateActiveVIAs();
+					me.updateVIAs();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
 					mcdu_message(me.computer, "DIR TO IN PROGRESS");
