@@ -3603,7 +3603,6 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();
 				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].hide();
 				me["Simple_L4_Arrow"].hide();
 				me["Simple_L5_Arrow"].hide();
@@ -3630,6 +3629,12 @@ var canvas_MCDU_base = {
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				if (myArrival[i].arrowsMatrix[0][1]) {
+					me["Simple_L2_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/b"));
+					me["Simple_L2_Arrow"].show();
+				} else {
+					me["Simple_L2_Arrow"].hide();
+				}
 				
 				if (myArrival[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myArrival[i].title[0] ~ myArrival[i].title[1] ~ myArrival[i].title[2]));
@@ -3641,6 +3646,7 @@ var canvas_MCDU_base = {
 							var sign = "R"; 
 						}
 						forindex (var item; myArrival[i].arrowsMatrix[matrixArrow]) {
+							if (item == 1) { continue; }
 							if (item == 5) { 
 								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/b"));
 								continue;
