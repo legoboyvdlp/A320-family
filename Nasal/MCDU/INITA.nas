@@ -4,7 +4,7 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var initInputA = func(key, i) {
-	var scratchpad = getprop("MCDU[" ~ i ~ "]/scratchpad");
+	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L2") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/alt-airport", "");
@@ -13,53 +13,54 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 			fmgc.updateARPT();
 		#} else if (scratchpad == "") {
 			#setprop("/FMGC/internal/alt-selected", 1);
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else if (getprop("/FMGC/internal/tofrom-set") == 1) {
-			var tfs = size(scratchpad);
-			if (tfs == 4) {
-				setprop("/FMGC/internal/alt-airport", scratchpad);
-				setprop("/FMGC/internal/alt-set", 1);
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+			if (!fmgc.flightPlanController.temporaryFlag[i]) {
+				var tfs = size(scratchpad);
+				if (tfs == 4) {
+					setprop("/FMGC/internal/alt-airport", scratchpad);
+					setprop("/FMGC/internal/alt-set", 1);
+					if (getprop("/FMGC/internal/block-confirmed")) {
+						setprop("/FMGC/internal/fuel-calculating", 0);
+						setprop("/FMGC/internal/fuel-calculating", 1);
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+					fmgc.updateARPT();
+					#setprop("/FMGC/internal/alt-selected", 1);
+					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
 				}
-				mcdu.clearScratchpad(i);
-				fmgc.updateARPT();
-				#setprop("/FMGC/internal/alt-selected", 1);
-				#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "TMPY F-PLN EXISTS");
 			}
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L3") {
 		if (scratchpad == "CLR") {
 			setprop("MCDUC/flight-num", "");
 			setprop("MCDUC/flight-num-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var flts = size(scratchpad);
 			if (flts >= 1 and flts <= 8) {
 				setprop("MCDUC/flight-num", scratchpad);
 				setprop("MCDUC/flight-num-set", 1);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cost-index", 0);
 			setprop("/FMGC/internal/cost-index-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
@@ -67,12 +68,12 @@ var initInputA = func(key, i) {
 				if (ci != nil and ci >= 0 and ci <= 999) {
 					setprop("/FMGC/internal/cost-index", ci);
 					setprop("/FMGC/internal/cost-index-set", 1);
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "L6") {
@@ -86,8 +87,7 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);	
+			mcdu_scratchpad.scratchpads[i].empty();	
 		} else if (find("/", scratchpad) != -1) {
 			var crztemp = split("/", scratchpad);
 			if (find("FL", crztemp[0]) != -1) {
@@ -106,9 +106,9 @@ var initInputA = func(key, i) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
 				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
@@ -122,12 +122,12 @@ var initInputA = func(key, i) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else {
 			if (find("FL", scratchpad) != -1) {
@@ -147,12 +147,12 @@ var initInputA = func(key, i) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
-					mcdu.clearScratchpad(i);
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "R1") {
@@ -170,51 +170,54 @@ var initInputA = func(key, i) {
 			}
 			fmgc.flightPlanController.reset(2);
 			fmgc.flightPlanController.init();
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#setprop("/FMGC/internal/alt-selected", 0);
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else {
-			var tfs = size(scratchpad);
-			if (tfs == 9 and find("/", scratchpad) != -1) {
-				var fromto = split("/", scratchpad);
-				var froms = size(fromto[0]);
-				var tos = size(fromto[1]);
-				if (froms == 4 and tos == 4) {
-					#route
-					setprop("/FMGC/internal/dep-arpt", fromto[0]);
-					setprop("/FMGC/internal/arr-arpt", fromto[1]);
-					setprop("/FMGC/internal/tofrom-set", 1);
-					#scratchpad
-					mcdu.clearScratchpad(i);
-					fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
-					setprop("/FMGC/internal/alt-selected", 0);
-					#ref lat
-					dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
-					degrees = int(dms);
-					minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-					sign = degrees >= 0 ? "N" : "S";
-					setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
-					setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
-					setprop("/FMGC/internal/align-ref-lat-sign", sign);
-					#ref long
-					dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
-					degrees = int(dms);
-					minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-					sign = degrees >= 0 ? "E" : "W";
-					setprop("/FMGC/internal/align-ref-long-degrees", degrees);
-					setprop("/FMGC/internal/align-ref-long-minutes", minutes);
-					setprop("/FMGC/internal/align-ref-long-sign", sign);
-					#ref edit
-					setprop("/FMGC/internal/align-ref-lat-edit", 0);
-					setprop("/FMGC/internal/align-ref-long-edit", 0);
-					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
+			if (!fmgc.flightPlanController.temporaryFlag[i]) {
+				var tfs = size(scratchpad);
+				if (tfs == 9 and find("/", scratchpad) != -1) {
+					var fromto = split("/", scratchpad);
+					var froms = size(fromto[0]);
+					var tos = size(fromto[1]);
+					if (froms == 4 and tos == 4) {
+						#route
+						setprop("/FMGC/internal/dep-arpt", fromto[0]);
+						setprop("/FMGC/internal/arr-arpt", fromto[1]);
+						setprop("/FMGC/internal/tofrom-set", 1);
+						#scratchpad
+						mcdu_scratchpad.scratchpads[i].empty();
+						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
+						setprop("/FMGC/internal/alt-selected", 0);
+						#ref lat
+						dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+						degrees = int(dms);
+						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+						sign = degrees >= 0 ? "N" : "S";
+						setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
+						setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
+						setprop("/FMGC/internal/align-ref-lat-sign", sign);
+						#ref long
+						dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+						degrees = int(dms);
+						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+						sign = degrees >= 0 ? "E" : "W";
+						setprop("/FMGC/internal/align-ref-long-degrees", degrees);
+						setprop("/FMGC/internal/align-ref-long-minutes", minutes);
+						setprop("/FMGC/internal/align-ref-long-sign", sign);
+						#ref edit
+						setprop("/FMGC/internal/align-ref-lat-edit", 0);
+						setprop("/FMGC/internal/align-ref-long-edit", 0);
+						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
 				} else {
-					notAllowed(i);
+					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "TMPY F-PLN EXISTS");
 			}
 		}
 	} else if (key == "R3") {
@@ -223,29 +226,27 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/tropo", 36090);
 			setprop("/FMGC/internal/tropo-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tropo = size(scratchpad);
 			if (tropo == 5 and scratchpad <= 99990) {
 				setprop("FMGC/internal/tropo-set", 1);
 				setprop("FMGC/internal/tropo", scratchpad);
-				mcdu.clearScratchpad(i);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				notAllowed(i);
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		}
 	} else if (key == "R6") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/gndtemp-set", 0);
-			setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 0);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and getprop("/FMGC/status/phase") == 0 and size(scratchpad) >= 1 and size(scratchpad) <= 3 and scratchpad >= -99 and scratchpad <= 99) {
 			setprop("/FMGC/internal/gndtemp", scratchpad);
 			setprop("/FMGC/internal/gndtemp-set", 1);
-			mcdu.clearScratchpad(i);
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
-			notAllowed(i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	}
 }

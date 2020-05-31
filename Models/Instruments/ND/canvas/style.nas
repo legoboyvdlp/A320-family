@@ -62,7 +62,7 @@ canvas.NDStyles["Airbus"] = {
 			adf2_frq: "/instrumentation/adf[1]/frequencies/selected-khz",
 			dep_rwy: "/autopilot/route-manager/departure/runway",
 			dest_rwy: "/autopilot/route-manager/destination/runway",
-			wp_count: "autopilot/route-manager/route/num",
+			wp_count: "/FMGC/flightplan[2]/num",
 			level_off_alt: "/autopilot/route-manager/vnav/level-off-alt",
 			athr: "/it-autoflight/output/athr",
 			app_mode: "/instrumentation/nd/app-mode",
@@ -759,13 +759,18 @@ canvas.NDStyles["Airbus"] = {
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
+					var deg = nil;
 					if (nd.get_switch("toggle_true_north")) {
-						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course"));
+						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course")) or 0;
 					} else {
-						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course-mag"));
+						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course-mag")) or 0;
 					}
-					nd.symbols.wpActiveCrs.setText((deg or "")~"°");
-					nd.symbols.wpActiveCrs.show();
+					if (deg != nil) {
+						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f", deg) ~ "°");
+						nd.symbols.wpActiveCrs.show();
+					} else {
+						nd.symbols.wpActiveCrs.hide();
+					}
 				},
 				is_false: func(nd) nd.symbols.wpActiveCrs.hide(),
 			}, # of wpActiveId.impl

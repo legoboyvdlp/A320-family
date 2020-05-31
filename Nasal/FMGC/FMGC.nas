@@ -1078,6 +1078,11 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 var timer30secLanding = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
 		setprop("/FMGC/status/phase", 7);
+		if (getprop("/FMGC/internal/cost-index-set")) {
+			setprop("/FMGC/internal/last-cost-index", getprop("/FMGC/internal/cost-index"));
+		} else {
+			setprop("/FMGC/internal/last-cost-index", 0);
+		}
 		setprop("/FMGC/internal/landing-time", -99);
 		timer30secLanding.stop();
 	}
