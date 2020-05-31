@@ -33,7 +33,7 @@ var windHISTPage = {
 		var whp = {parents:[windHISTPage]};
 		whp.computer = computer;
 		whp._setupPageWithData();
-		#whp.updateTmpy();
+		whp.updateTmpy();
 		return whp;
 	},
 	del: func() {
@@ -71,27 +71,35 @@ var windHISTPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
-		# if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-# 			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
-# 		}
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+		}
 	},
 	updateTmpy: func() {
-		# if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-# 			me.L1[2] = "yel";
-# 			me.L2[2] = "yel";
-# 			me.L6 = [" F-PLN", " TMPY", "yel"];
-# 			me.R6 = ["INSERT* ", " TMPY", "yel"];
-# 			me.arrowsColour[0][5] = "yel";
-# 			me.titleColour = "yel";
-# 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-# 		} else {
-# 			me.L1[2] = "blu";
-# 			me.L2[2] = "blu";
-# 			me.L6 = [" RETURN", nil, "wht"];
-# 			me.R6 = [nil, nil, "ack"];
-# 			me.arrowsColour[0][5] = "wht";
-# 			me.titleColour = "wht";
-# 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-# 		}
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			me.L1[2] = "yel";
+			me.L2[2] = "yel";
+			me.L3[2] = "yel";
+			me.L4[2] = "yel";
+			me.L5[2] = "yel";
+			me.C1[2] = "yel";
+			me.C2[2] = "yel";
+			me.C3[2] = "yel";
+			me.C4[2] = "yel";
+			me.C5[2] = "yel";
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+		} else {
+			me.L1[2] = "blu";
+			me.L2[2] = "blu";
+			me.L3[2] = "blu";
+			me.L4[2] = "blu";
+			me.L5[2] = "blu";
+			me.C1[2] = "blu";
+			me.C2[2] = "blu";
+			me.C3[2] = "blu";
+			me.C4[2] = "blu";
+			me.C5[2] = "blu";
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+		}
 	}
 };
