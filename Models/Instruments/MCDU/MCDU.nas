@@ -3190,8 +3190,8 @@ var canvas_MCDU_base = {
 					me.colorRightS("wht", "amb", "wht", "wht", "wht", "amb");
 				} else if (page == "WINDDES") {
 					myWind = myDESWIND;
-					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-					me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
 				} else if (page == "WINDHIST") {
 					myWind = myHISTWIND;
 					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");

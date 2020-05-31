@@ -556,6 +556,13 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myCLBWIND[i] = nil;
 			canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			if (canvas_mcdu.myCRZWIND[i] != nil) {
+				canvas_mcdu.myCRZWIND[i].del();
+			}
+			canvas_mcdu.myCRZWIND[i] = nil;
+			canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, "");
+			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R4",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -585,6 +592,13 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myCRZWIND[i] = nil;
 			canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, "");
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			if (canvas_mcdu.myDESWIND[i] != nil) {
+				canvas_mcdu.myDESWIND[i].del();
+			}
+			canvas_mcdu.myDESWIND[i] = nil;
+			canvas_mcdu.myDESWIND[i] = windDESPage.new(i, "");
+			setprop("MCDU[" ~ i ~ "]/page", "WINDDES");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
 			statusInput("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {

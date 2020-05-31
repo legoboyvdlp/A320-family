@@ -29,69 +29,91 @@ var windDESPage = {
 	vector: [],
 	index: nil,
 	computer: nil,
-	new: func(computer) {
-		var wdp = {parents:[windDESPage]};
-		wdp.computer = computer;
-		wdp._setupPageWithData();
-		wdp.updateTmpy();
-		return wdp;
+	windList: [],
+	new: func(computer) { #, waypoint
+		var wcp = {parents:[windDESPage]};
+		wcp.computer = computer;
+		wcp.windList = [nil];
+		#wcp.waypoint = waypoint;
+		wcp._setupPageWithData();
+		wcp.updateTmpy();
+		return wcp;
 	},
 	del: func() {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		me.title = "DESCENT WIND";
-		#me.title = "DRAFT DESCENT WIND";
+		me.title = "DES WIND";
+		#me.title = ["DES WIND", " AT ", me.waypoint.wp_name];
 		me.titleColour = "wht";
-		me.L1 = ["[   ]g/[   ]/FL---", "TRU WIND/ALT", "blu"];
-		me.L2 = ["[   ]g/[   ]/FL200", "", "blu"];
-		me.L3 = ["[   ]g/[   ]/FL100", "", "blu"];
-		me.L4 = ["[   ]g/[   ]/FL050", "", "blu"];
-		me.L5 = ["[   ]g/[   ]/GRND", "", "blu"];
-		me.L6 = [" CANCEL", " WIND", "amb"];
-		me.R1 = ["[   ]g/[   ]", "WIND ", "blu"];
-		me.R2 = ["", "FL---", "grn"];
-		me.R3 = [" REQUEST ", "WIND ", "wht"];
+		
+		if (size(me.windList) >= 5) {
+			me.L5 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L5 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 4) {
+			me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L4 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 3) {
+			me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L3 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 2) {
+			me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L2 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 1) {
+			me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+		}
+		
+		me.R1 = ["[  ]/[  ]", "ALTN WIND ", "blu"];
+		me.R3 = [" REQUEST ", "WIND ", "amb"];
 		me.R4 = [" PHASE ", "PREV ", "wht"];
-		me.R6 = ["UPDATE ", "WIND ", "amb"];
-# 		me.L2 = [" R", " TURN", "blu"];
-# 		if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 14000) {
-# 			me.L2 = [" 1.5/----", "TIME/DIST", "blu"];
-# 		} else {
-# 			me.L2 = [" 1.0/----", "TIME/DIST", "blu"];
-# 		}
-# 		me.L6 = [" RETURN", nil, "wht"];
-# 		me.C4 = ["LAST EXIT", nil, "wht"];
-# 		me.C5 = ["----  ---.-", "UTC    FUEL", "wht"];
-# 		me.R1 = ["COMPUTED ", nil, "wht"];
-# 		me.R2 = ["DATABASE ", nil, "wht"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0]];
-		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["ack", "ack", "ack", "wht", "ack", "ack"]];
-		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 0, 0]];
+		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "wht", "ack", "ack"]];
+		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [1, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
-		# if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-# 			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
-# 		}
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
+		}
 	},
 	updateTmpy: func() {
-		# if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-# 			me.L1[2] = "yel";
-# 			me.L2[2] = "yel";
-# 			me.L6 = [" F-PLN", " TMPY", "yel"];
-# 			me.R6 = ["INSERT* ", " TMPY", "yel"];
-# 			me.arrowsColour[0][5] = "yel";
-# 			me.titleColour = "yel";
-# 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-# 		} else {
-# 			me.L1[2] = "blu";
-# 			me.L2[2] = "blu";
-# 			me.L6 = [" RETURN", nil, "wht"];
-# 			me.R6 = [nil, nil, "ack"];
-# 			me.arrowsColour[0][5] = "wht";
-# 			me.titleColour = "wht";
-# 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-# 		}
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			me.L1[2] = "yel";
+			me.L2[2] = "yel";
+			me.L3[2] = "yel";
+			me.L4[2] = "yel";
+			me.L5[2] = "yel";
+			me.R1[2] = "yel";
+			me.L6 = [" CANCEL", " WIND", "amb"];
+			me.R6 = ["UPDATE ", "WIND ", "amb"];
+			me.arrowsMatrix[0][5] = 0;
+			#draft title
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+		} else {
+			me.L1[2] = "blu";
+			me.L2[2] = "blu";
+			me.L3[2] = "blu";
+			me.L4[2] = "blu";
+			me.L5[2] = "blu";
+			me.R1[2] = "blu";
+			me.L6 = [" RETURN", nil, "wht"];
+			me.R6 = [nil, nil, "ack"];
+			me.arrowsMatrix[0][5] = 1;
+			#draft title
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+		}
 	}
 };
