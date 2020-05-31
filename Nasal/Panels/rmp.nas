@@ -237,7 +237,6 @@ var update_active_vhf = func(vhf) {
 	}
 }
 
-
 var update_displays_nav = func(nav) {
 	var chan1 = chan_rmp1.getValue();
 	var chan2 = chan_rmp2.getValue();
@@ -441,6 +440,25 @@ var transfer = func(rmp_no) {
 	}
 }
 
+var change_nav_mode = func(rmp_nr, nav_mode) {
+	if (!nav_mode.getBoolValue()) {
+		if (rmp_nr == 1 and (chan_rmp1.getValue() == "vor" or chan_rmp1.getValue() == "ls" or chan_rmp1.getValue() == "adf")) {
+			chan_rmp1.setValue("vhf1");
+		}
+		if (rmp_nr == 2 and (chan_rmp2.getValue() == "vor" or chan_rmp2.getValue() == "ls" or chan_rmp2.getValue() == "adf")) {
+			chan_rmp2.setValue("vhf2");
+		}
+		setprop("/FMGC/internal/ils1freq-set", 1);
+		setprop("/FMGC/internal/ils1crs-set", 1);
+		setprop("/FMGC/internal/vor1freq-set", 1);
+		setprop("/FMGC/internal/vor1crs-set", 1);
+		setprop("/FMGC/internal/vor2freq-set", 1);
+		setprop("/FMGC/internal/vor2crs-set", 1);
+		setprop("/FMGC/internal/adf1freq-set", 1);
+		setprop("/FMGC/internal/adf2freq-set", 1);	
+	}
+}
+
 setlistener("/systems/radio/rmp[0]/vhf1-standby", func {
 	update_stby_freq(0, 1);
 });
@@ -575,5 +593,13 @@ setlistener("/instrumentation/nav[2]/radials/selected-deg", func {
 
 setlistener("/instrumentation/nav[3]/radials/selected-deg", func {
 	update_displays_nav(4);
+});
+
+setlistener("/systems/radio/rmp[0]/nav", func(nav_mode) {
+	change_nav_mode(1, nav_mode);
+});
+
+setlistener("/systems/radio/rmp[1]/nav", func(nav_mode) {
+	change_nav_mode(2, nav_mode);
 });
 
