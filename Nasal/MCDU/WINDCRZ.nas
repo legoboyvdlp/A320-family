@@ -29,10 +29,12 @@ var windCRZPage = {
 	vector: [],
 	index: nil,
 	computer: nil,
-	new: func(computer, waypoint) {
+	windList: [],
+	new: func(computer) { #, waypoint
 		var wcp = {parents:[windCRZPage]};
 		wcp.computer = computer;
-		wcp.waypoint = waypoint;
+		wcp.windList = [nil];
+		#wcp.waypoint = waypoint;
 		wcp._setupPageWithData();
 		wcp.updateTmpy();
 		return wcp;
@@ -41,23 +43,40 @@ var windCRZPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+		me.title = ["CRZ WIND", " AT ", "TEMP"];
+		#me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
 		me.titleColour = "wht";
-		# me.L1 = [" [   ]", "INB CRS", "blu"];
-# 		me.L2 = [" R", " TURN", "blu"];
-# 		if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 14000) {
-# 			me.L2 = [" 1.5/----", "TIME/DIST", "blu"];
-# 		} else {
-# 			me.L2 = [" 1.0/----", "TIME/DIST", "blu"];
-# 		}
-# 		me.L6 = [" RETURN", nil, "wht"];
-# 		me.C4 = ["LAST EXIT", nil, "wht"];
-# 		me.C5 = ["----  ---.-", "UTC    FUEL", "wht"];
-# 		me.R1 = ["COMPUTED ", nil, "wht"];
-# 		me.R2 = ["DATABASE ", nil, "wht"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 1, 0, 0, 0, 0]];
-		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["wht", "wht", "ack", "ack", "ack", "ack"]];
-		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		
+		if (size(me.windList) >= 4) {
+			me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L4 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 3) {
+			me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L3 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 2) {
+			me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+		} else {
+			me.L2 = [nil, nil, "ack"];
+		}
+		
+		if (size(me.windList) >= 1) {
+			me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+		}
+		
+		me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+		me.R2 = [" REQUEST ", "WIND ", "amb"];
+		me.R4 = [" PHASE ", "PREV ", "wht"];
+		me.R5 = [" PHASE ", "NEXT ", "wht"];
+
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 1, 0]];
+		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "wht", "wht", "ack"]];
+		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
@@ -69,18 +88,22 @@ var windCRZPage = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L1[2] = "yel";
 			me.L2[2] = "yel";
-			me.L6 = [" F-PLN", " TMPY", "yel"];
-			me.R6 = ["INSERT* ", " TMPY", "yel"];
-			me.arrowsColour[0][5] = "yel";
-			me.titleColour = "yel";
+			me.L3[2] = "yel";
+			me.L4[2] = "yel";
+			me.L6 = [" CANCEL", "UPDATE", "amb"];
+			me.R6 = ["INSERT ", "UPDATE ", "amb"];
+			me.arrowsMatrix[0][5] = 0;
+			#draft title
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		} else {
 			me.L1[2] = "blu";
 			me.L2[2] = "blu";
+			me.L3[2] = "blu";
+			me.L4[2] = "blu";
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R6 = [nil, nil, "ack"];
-			me.arrowsColour[0][5] = "wht";
-			me.titleColour = "wht";
+			me.arrowsMatrix[0][5] = 1;
+			#draft title
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	}

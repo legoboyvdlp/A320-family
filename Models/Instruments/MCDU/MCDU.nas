@@ -3154,7 +3154,11 @@ var canvas_MCDU_base = {
 				me["FUELPRED"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
+				# if (page == "WINDCRZ") {
+# 					up/down arrows show
+# 				} else {
+# 					up/down arrows hide
+# 				}
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
@@ -3182,8 +3186,8 @@ var canvas_MCDU_base = {
 					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
 				} else if (page == "WINDCRZ") {
 					myWind = myCRZWIND;
-					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-					me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "amb", "wht", "wht", "wht", "amb");
 				} else if (page == "WINDDES") {
 					myWind = myDESWIND;
 					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3195,7 +3199,11 @@ var canvas_MCDU_base = {
 				}
 				
 				if (myWind[i] != nil) {
-					me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
+					if (page == "WINDCRZ") {
+						me["Simple_Title"].setText(sprintf("%s", myWind[i].title[0] ~ myWind[i].title[1] ~ myWind[i].title[2]));
+					} else {
+						me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
+					}
 					
 					forindex (var matrixArrow; myWind[i].arrowsMatrix) {
 						if (matrixArrow == 0) { 
