@@ -404,6 +404,13 @@ var lskbutton = func(btn, i) {
 			fuelPredInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("L6",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
+			if (canvas_mcdu.myCLBWIND[i] != nil) {
+				canvas_mcdu.myCLBWIND[i].del();
+			}
+			canvas_mcdu.myCLBWIND[i] = nil;
+			canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
+			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
@@ -446,6 +453,13 @@ var rskbutton = func(btn, i) {
 			initInputIRS("R1",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R1",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+			if (canvas_mcdu.myHISTWIND[i] != nil) {
+				canvas_mcdu.myHISTWIND[i].del();
+			}
+			canvas_mcdu.myHISTWIND[i] = nil;
+			canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
+			setprop("MCDU[" ~ i ~ "]/page", "WINDHIST");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R1",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {

@@ -2,7 +2,7 @@
 
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
-var windHistPage = {
+var windHISTPage = {
 	title: nil,
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -30,7 +30,7 @@ var windHistPage = {
 	index: nil,
 	computer: nil,
 	new: func(computer) {
-		var whp = {parents:[windHistPage]};
+		var whp = {parents:[windHISTPage]};
 		whp.computer = computer;
 		whp._setupPageWithData();
 		#whp.updateTmpy();
@@ -42,11 +42,11 @@ var windHistPage = {
 	_setupPageWithData: func() {
 		me.title = "HISTROY WIND";
 		me.titleColour = "wht";
-		me.L1 = ["----g/---", "", "blu"];
-		me.L2 = ["----g/---", "", "blu"];
-		me.L3 = ["----g/---", "", "blu"];
-		me.L4 = ["----g/---", "", "blu"];
-		me.L5 = ["----g/---", "", "blu"];
+		me.L1 = ["[  ]/[  ]", "", "blu"];
+		me.L2 = ["[  ]/[  ]", "", "blu"];
+		me.L3 = ["[  ]/[  ]", "", "blu"];
+		me.L4 = ["[  ]/[  ]", "", "blu"];
+		me.L5 = ["[  ]/[  ]", "", "blu"];
 		me.L6 = [" CLIMB WIND", "", "wht"];
 		me.C1 = ["FL050", "", "blu"];
 		me.C2 = ["FL150", "", "blu"];
@@ -67,7 +67,7 @@ var windHistPage = {
 # 		me.R2 = ["DATABASE ", nil, "wht"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
-		me.fontMatrix = [[1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 1]];
+		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
