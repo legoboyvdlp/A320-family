@@ -52,6 +52,11 @@ var closestAirportPage = {
 	},
 	freeze: func() {
 		me.frozen = !me.frozen;
+		if (me.frozen) {
+			me.L6 = [" UNFREEZE", nil, "blu"];
+		} else {
+			me.L6 = [" FREEZE", nil, "blu"];
+		}
 	},
 	update: func() {
 		if (me.frozen) { return; }
@@ -106,7 +111,7 @@ var closestAirportPage = {
 			return;
 		}
 		if (size(id) > 4) {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
 		if (airportinfo(id) == nil) {
 			notInDataBase(me.computer);

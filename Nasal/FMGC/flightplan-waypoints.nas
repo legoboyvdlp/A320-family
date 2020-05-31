@@ -59,8 +59,7 @@ var WaypointDatabase = {
 		}
 		me.write();
 		if (me.getCount() != 0) {
-			setprop("/MCDU[" ~ callerIdx ~ "]/scratchpad-msg", 1);
-			setprop("/MCDU[" ~ callerIdx ~ "]/scratchpad", "PILOT ELEMENT RETAINED");
+			mcdu.mcdu_message(callerIdx, "PILOT ELEMENT RETAINED");
 		}
 	},
 	# deleteAtIndex - delete at specific index. Set to nil, so it still exists in vector

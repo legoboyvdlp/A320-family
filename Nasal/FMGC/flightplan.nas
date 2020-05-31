@@ -10,6 +10,7 @@ var courseDistanceFrom = nil;
 var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
+var storeCourse = nil;
 
 var DEBUG_DISCONT = 0;
 
@@ -320,7 +321,6 @@ var flightPlanController = {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
 			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
 			# so four individual deletions. Delete index 1 four times. 
-			# Add one extra for the TP, so while > 2
 			
 			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost);
 			while (timesToDelete > 1) {
@@ -330,9 +330,9 @@ var flightPlanController = {
 			# Add TP afterwards, this is essential
 			me.insertTP(plan, 1);
 		}
-		me.deleteWP(0, plan);
 		var curAircraftPosDirTo = geo.aircraft_position();
-		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(2).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
+		me.deleteWP(0, plan);
 		me.flightPlanChanged(plan);
 	},
 	
@@ -760,8 +760,15 @@ var flightPlanController = {
 					me.distToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[1]);
 					
 					magTrueError = magHDG.getValue() - trueHDG.getValue();
-					me.courseMagToWpt.setValue(me.courseToWpt.getValue() + magTrueError);
 					
+					storeCourse = me.courseToWpt.getValue() + magTrueError;
+					if (storeCourse >= 360) {
+						storeCourse -= 360;
+					} elsif (storeCourse < 0) {
+						storeCourse += 360;
+					}
+					
+					me.courseMagToWpt.setValue(storeCourse);
 				}
 				
 				if (me.num[india].getValue() != me.flightplans[india].getPlanSize()) {

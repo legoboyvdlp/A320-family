@@ -411,7 +411,7 @@
 			</expression> 
 		</input>
 		<input>0</input>
-		<output>/sim/sound/cockpit/buzz-1-v</output>
+		<output>/sim/sound/cockpit/buzz-1-p</output>
 	</filter>
 	
 	<filter>

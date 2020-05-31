@@ -120,8 +120,7 @@ var latRev = {
 			if (!dirToFlag) {
 				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
 			} else {
-				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-                setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 			}
 			me._checkTmpy();
 		}
@@ -129,14 +128,13 @@ var latRev = {
 	nextWpt: func() {
 		me.makeTmpy();
 		
-		var returny = fmgc.flightPlanController.scratchpad(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad"), me.index + 1, me.computer);
+		var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.index + 1, me.computer);
 		if (returny == 0) {
 			notInDataBase(me.computer);
 		} elsif (returny == 1) {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		} else {
-			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
+			mcdu_scratchpad.scratchpads[me.computer].empty();
 			fmgc.flightPlanController.flightPlanChanged(me.computer);
 			if (getprop("/MCDU[" ~ me.computer ~ "]/page") != "DUPLICATENAMES") {
 				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");

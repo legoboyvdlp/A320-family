@@ -80,9 +80,40 @@
 			</flame>
 		</model>
 		
-		<startup>
-			<splash-texture>Aircraft/A320-family/Splash/SplashOld.png</splash-texture>
-		</startup>
+		<previews>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/cockpit.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/cockpit2.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/wing1.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/wing2.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/wing3.png</path>
+			</preview>
+		</previews>
+	
+		<rating>
+			<FDM type="int">4</FDM>
+			<systems type="int">5</systems>
+			<cockpit type="int">5</cockpit>
+			<model type="int">4</model>
+		</rating>
 		
 		<tags>
 			<tag>transport</tag>
@@ -485,6 +516,7 @@
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
+			<zero type="int">0</zero>
 		</jsbsim>
 	</fdm>
 	
@@ -929,7 +961,10 @@
 	
 	<systems>
 		<acconfig n="0">
-			<autoconfig-running>0</autoconfig-running>
+			<autoconfig-running type="bool">0</autoconfig-running>
+			<options n="0">
+				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
+			</options>
 		</acconfig>
 		<atc>
 			<transponder-code type="string">2000</transponder-code>
@@ -4055,6 +4090,9 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
+		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
+			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
+		</mcdu_scratchpad>
 		<!-- Autopush -->
 		<autopush>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
