@@ -18,6 +18,7 @@ var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
 var myClosestAirport = [nil, nil];
 var myPilotWP = [nil, nil];
+var myCLBWIND = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
@@ -3137,6 +3138,107 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
+		} else if (page == "WINDCLB") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].hide();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+				#me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+				#me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				if (myCLBWIND[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myCLBWIND[i].title));
+					
+					forindex (var matrixArrow; myCLBWIND[i].arrowsMatrix) {
+						if (matrixArrow == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myCLBWIND[i].arrowsMatrix[matrixArrow]) {
+							if (myCLBWIND[i].arrowsMatrix[matrixArrow][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+							} else {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+							}
+						}
+					}
+					me.colorLeftArrow(myCLBWIND[i].arrowsColour[0][0],myCLBWIND[i].arrowsColour[0][1],myCLBWIND[i].arrowsColour[0][2],myCLBWIND[i].arrowsColour[0][3],myCLBWIND[i].arrowsColour[0][4],myCLBWIND[i].arrowsColour[0][5]);
+					
+					forindex (var matrixFont; myCLBWIND[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myCLBWIND[i].fontMatrix[matrixFont]) {
+							if (myCLBWIND[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					me.dynamicPageFunc(myCLBWIND[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myCLBWIND[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myCLBWIND[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myCLBWIND[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myCLBWIND[i].L5, "Simple_L5");
+					me.dynamicPageFunc(myCLBWIND[i].L6, "Simple_L6");
+					
+					me.colorLeft(myCLBWIND[i].L1[2],myCLBWIND[i].L2[2],myCLBWIND[i].L3[2],myCLBWIND[i].L4[2],myCLBWIND[i].L5[2],myCLBWIND[i].L6[2]);
+					
+					# me.dynamicPageFunc(myCLBWIND[i].C1, "Simple_C1");
+# 					me.dynamicPageFunc(myCLBWIND[i].C2, "Simple_C2");
+# 					me.dynamicPageFunc(myCLBWIND[i].C3, "Simple_C3");
+# 					me.dynamicPageFunc(myCLBWIND[i].C4, "Simple_C4");
+# 					me.dynamicPageFunc(myCLBWIND[i].C5, "Simple_C5");
+# 					me.dynamicPageFunc(myCLBWIND[i].C6, "Simple_C6");
+# 					
+# 					me.colorCenter(myCLBWIND[i].C1[2],myCLBWIND[i].C2[2],myCLBWIND[i].C3[2],myCLBWIND[i].C4[2],myCLBWIND[i].C5[2],myCLBWIND[i].C6[2]);
+					
+					me.dynamicPageFunc(myCLBWIND[i].R1, "Simple_R1");
+					me.dynamicPageFunc(myCLBWIND[i].R2, "Simple_R2");
+					me.dynamicPageFunc(myCLBWIND[i].R3, "Simple_R3");
+					me.dynamicPageFunc(myCLBWIND[i].R4, "Simple_R4");
+					me.dynamicPageFunc(myCLBWIND[i].R5, "Simple_R5");
+					me.dynamicPageFunc(myCLBWIND[i].R6, "Simple_R6");
+					
+					me.colorRight(myCLBWIND[i].R1[2],myCLBWIND[i].R2[2],myCLBWIND[i].R3[2],myCLBWIND[i].R4[2],myCLBWIND[i].R5[2],myCLBWIND[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else if (page == "LATREV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();

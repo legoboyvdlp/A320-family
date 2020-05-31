@@ -473,7 +473,7 @@ var rskbutton = func(btn, i) {
 				}
 				canvas_mcdu.myPilotWP[i] = nil;
 				canvas_mcdu.myPilotWP[i] = pilotWaypointPage.new(i);
-					setprop("/MCDU[" ~ i ~ "]/page", "PILOTWP");
+				setprop("/MCDU[" ~ i ~ "]/page", "PILOTWP");
 			} else {
 				mcdu_message(i, "NOT ALLOWED"); # todo spawn new waypoints page
 			}
@@ -531,7 +531,9 @@ var rskbutton = func(btn, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "4") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+			initInputA("R4",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
 			fuelPredInput("R4",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R4",i);
