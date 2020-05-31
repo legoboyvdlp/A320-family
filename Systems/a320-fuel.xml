@@ -7,7 +7,7 @@
 	<channel name="Fuel Pumps and Valves">
 		<!-- Pumps -->
 		
-		<switch name="/systems/fuel/pumps/apu-operate">
+		<switch name="/systems/fuel/pumps/apu-operate"> <!-- DC HOT 1 ? -->
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fuel/pumps/all-eng-pump-off eq 1

@@ -69,7 +69,6 @@ var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 
 var target_altitude = props.globals.getNode("/autopilot/settings/target-altitude-ft", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 var altitude_pfd = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
-var trans_alt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
 var alt_diff = props.globals.getNode("/instrumentation/pfd/alt-diff", 1);
 var ground_diff = props.globals.getNode("/instrumentation/pfd/ground-diff", 1);
 var landing_diff = props.globals.getNode("/instrumentation/pfd/landing-diff", 1);
@@ -645,7 +644,7 @@ var canvas_PFD_base = {
 			me["QNH"].hide();
 			me["QNH_setting"].hide();
 			
-			if (altitude.getValue() < trans_alt.getValue() and FMGCphase.getValue() == '4') {
+			if (altitude.getValue() < fmgc.FMGCInternal.transAlt and FMGCphase.getValue() == '4') {
 				if (qnh_going == 0) {
 					qnh_going = 1;
 				}
@@ -670,7 +669,7 @@ var canvas_PFD_base = {
 			me["QNH_std"].hide();
 			me["QNH_box"].hide();
 		
-			if (altitude.getValue() >= trans_alt.getValue() and FMGCphase.getValue() == '2') {
+			if (altitude.getValue() >= fmgc.FMGCInternal.transAlt and FMGCphase.getValue() == '2') {
 				if (qnh_going == 0) {
 					qnh_going = 1;
 				}
@@ -695,7 +694,7 @@ var canvas_PFD_base = {
 
 		} else if (alt_inhg_mode.getValue() == 1) {
 		
-			if (altitude.getValue() >= trans_alt.getValue() and FMGCphase.getValue() == '2') {
+			if (altitude.getValue() >= fmgc.FMGCInternal.transAlt and FMGCphase.getValue() == '2') {
 				if (qnh_going == 0) {
 					qnh_going = 1;
 				}
@@ -1261,7 +1260,11 @@ var canvas_PFD_1 = {
 			
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
-					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					if (getprop("/FMGC/internal/vapp-speed-set")) {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+					} else {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {
@@ -1995,7 +1998,11 @@ var canvas_PFD_2 = {
 				
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
-					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					if (getprop("/FMGC/internal/vapp-speed-set")) {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+					} else {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {

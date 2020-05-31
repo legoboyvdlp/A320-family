@@ -6,8 +6,8 @@ var distance = 0;
 var min_dist = 0;
 var max_dist = 0;
 var canChangeZOffset = 0;
-var decStep = -0.5;
-var incStep = 0.5;
+var decStep = -1;
+var incStep = 1;
 var viewName = "XX";
 
 var fovZoom = func(d) {

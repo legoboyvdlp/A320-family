@@ -33,12 +33,12 @@
      units="px"
      inkscape:snap-global="false"
      showguides="false"
-     inkscape:current-layer="IRSINIT"
+     inkscape:current-layer="Simple_Center"
      inkscape:window-maximized="0"
      inkscape:window-y="23"
      inkscape:window-x="0"
-     inkscape:cy="938.61658"
-     inkscape:cx="1070.6893"
+     inkscape:cy="626.44135"
+     inkscape:cx="714.79832"
      inkscape:zoom="1.7842543"
      showgrid="true"
      id="namedview371"
@@ -278,6 +278,32 @@
            y="717.159"
            x="520.20905"
            id="tspan4286"
+           sodipodi:role="line">TEXT</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="521.16608"
+         y="421.81097"
+         id="Simple_C3B"
+         transform="scale(0.991516,1.0085566)"
+         inkscape:label="#text4244"><tspan
+           sodipodi:role="line"
+           id="tspan4248-3"
+           x="521.16608"
+           y="421.81097"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1px">TEXT</tspan></text>
+      <text
+         inkscape:label="#text4244"
+         transform="scale(0.991516,1.0085566)"
+         id="Simple_C4B"
+         y="539.16522"
+         x="521.16608"
+         style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1px"
+           y="539.16522"
+           x="521.16608"
+           id="tspan4252-9"
            sodipodi:role="line">TEXT</tspan></text>
     </g>
     <text

@@ -16,12 +16,12 @@ var fplnItem = {
 			} elsif (me.wp.wp_name != "DISCONTINUITY") {
 				var wptName = split("-", me.wp.wp_name);
 				if (wptName[0] == "VECTORS") {
-					return ["MANUAL", nil, me.colour];
+					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
 					if (size(wptName) == 2) {
-						return[wptName[0] ~ wptName[1], nil, me.colour];
+						return[wptName[0] ~ wptName[1], me.getSubText(), me.colour];
 					} else {
-						return [me.wp.wp_name, nil, me.colour];
+						return [me.wp.wp_name, me.getSubText(), me.colour];
 					}
 				}
 			} else {
@@ -30,6 +30,9 @@ var fplnItem = {
 		} else {
 			return ["problem", nil, "ack"];
 		}
+	},
+	getSubText: func() {
+		return nil;
 	},
 	updateCenterText: func() {
 		if (me.wp != nil) { 
@@ -185,10 +188,10 @@ var staticText = {
 		return [nil, nil, "ack"];
 	},
 	pushButtonLeft: func() {
-		notAllowed(me.computer);
+		mcdu_message(me.computer, "NOT ALLOWED");
 	},
 	pushButtonRight: func() {
-		notAllowed(me.computer);
+		mcdu_message(me.computer, "NOT ALLOWED");
 	},
 };
 
@@ -388,6 +391,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		if (index == 6) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+				# push update to fuel
+				if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 0);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				}
 			} else {
 				if (canvas_mcdu.myLatRev[me.computer] != nil) {
 					canvas_mcdu.myLatRev[me.computer].del();
@@ -398,24 +406,24 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		} else {
 			if (size(me.outputList) >= index) {
-				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
-					var returny = fmgc.flightPlanController.scratchpad(getprop("MCDU[" ~ me.computer ~ "]/scratchpad"), (index - 1 + me.scroll), me.computer);
+				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
 					if (returny == 3) {
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {
-						notInDataBase(me.computer);
+						mcdu_message(me.computer, "NOT IN DATA BASE");
 					} elsif (returny == 1) {
-						notAllowed(me.computer);
+						mcdu_message(me.computer, "NOT ALLOWED");
+					} elsif (returny == 4) {
+						mcdu_message(me.computer, "LIST OF 20 IN USE");
 					} else {
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-						setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
+						mcdu_scratchpad.scratchpads[me.computer].empty();
 					}
 				} else {
 					me.outputList[index - 1].pushButtonLeft();
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		}
 	},
@@ -424,32 +432,27 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (dirToFlag) { dirToFlag = 0; }
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+				# push update to fuel
+				if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 0);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		} else {
 			if (size(me.outputList) >= index) {
-				if (size(getprop("MCDU[" ~ me.computer ~ "]/scratchpad")) > 0) {
-					notAllowed(me.computer);
+				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					mcdu_message(me.computer, "NOT ALLOWED");
 				} else {
 					me.outputList[index - 1].pushButtonRight();
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		}
 	},
 };
-
-var notInDataBase = func(i) {
-		if (getprop("MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
-			setprop("MCDU[" ~ i ~ "]/last-scratchpad", "NOT IN DATABASE");
-		} else {
-			setprop("MCDU[" ~ i ~ "]/last-scratchpad", getprop("MCDU[" ~ i ~ "]/scratchpad"));
-		}
-	setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-	setprop("MCDU[" ~ i ~ "]/scratchpad", "NOT IN DATABASE");
-}
 
 var decimalToShortString = func(dms, type) {
 	var degrees = split(".", sprintf(dms))[0];

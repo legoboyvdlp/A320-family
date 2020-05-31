@@ -77,9 +77,11 @@ var departurePage = {
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[me.computer].sid;
+				me.selectedTransition = fmgc.flightPlanController.flightplans[me.computer].sid_trans;
 				isNoSid[me.computer] = 0;
 			} elsif (fmgc.flightPlanController.flightplans[2].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[2].sid;
+				me.selectedTransition = fmgc.flightPlanController.flightplans[2].sid_trans;
 				isNoSid[me.computer] = 0;
 			} elsif (isNoSid[me.computer] == 1) {
 				me.selectedSID = "NO SID";
@@ -196,7 +198,7 @@ var departurePage = {
 						me.R1 = ["-------", "TRANS ", "wht"];
 					} 
 				} elsif (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
-					me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
+					me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
 				} else {
 					me.R1 = ["-------", "TRANS ", "wht"];
 				}
@@ -428,8 +430,7 @@ var departurePage = {
 				me.arrowsColour[0][5] = "yel";
 				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 			} else {
-                setprop("MCDU[" ~ i ~ "]/scratchpad-msg", 1);
-                setprop("MCDU[" ~ i ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
             }
 		}
 	},
@@ -506,11 +507,10 @@ var departurePage = {
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 					me.scrollRight();
 				} else {
-					setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-					setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+					mcdu_message(me.computer, "DIR TO IN PROGRESS");
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		} else {
 			if (size(me.sids) >= (index - 1)) {
@@ -536,11 +536,10 @@ var departurePage = {
 					me.updateActiveTransitions();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
-					setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-					setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 				}
 			} else {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		}
 	},
@@ -551,23 +550,21 @@ var departurePage = {
 				me.updateActiveTransitions();
 				me.updateTransitions();
 			} else {
-				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-				setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 			}
 		} elsif (size(me.transitions) >= (index -  1)) {
 			if (!dirToFlag) {
 				me.selectedTransition = me.transitions[index - 2];
 				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].sid = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
+				fmgc.flightPlanController.flightplans[me.computer].sid_trans = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
 				me.updateActiveTransitions();
 				me.updateTransitions();
 				fmgc.flightPlanController.flightPlanChanged(me.computer);
 			} else {
-				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-				setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 			}
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
 	},
 };

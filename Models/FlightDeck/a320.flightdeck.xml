@@ -806,17 +806,10 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>atc_stby</object-name>
-		<factor>-35</factor>
-		<offset-deg>70</offset-deg>
-		<center>
-            <x-m>0.01146</x-m>
-			<y-m>0.213663</y-m>
-			<z-m>-0.13086</z-m>
-        </center>
+		<factor>35</factor>
+		<offset-deg>-70</offset-deg>
 		<axis>
-			<x>0</x>
-			<y>0</y>
-			<z>1</z>
+			<object-name>atc_stby.axis</object-name>
 		</axis>
 		<property>controls/atc/mode-knob</property>
 	</animation>
@@ -1080,8 +1073,6 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
-		<object-name>terr_on_nd_label</object-name>
-<!--		<object-name>clock_glare</object-name>-->
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
@@ -2030,7 +2021,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("sts");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("sts");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2049,7 +2040,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("apu");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("apu");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2068,7 +2059,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("bleed");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("bleed");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2087,7 +2078,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("press");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("press");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2106,7 +2097,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("elec");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("elec");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2125,7 +2116,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("hyd");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("hyd");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2144,7 +2135,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("fuel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fuel");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2163,7 +2154,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("eng");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("eng");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2182,7 +2173,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("cond");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("cond");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2201,7 +2192,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("door");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("door");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2220,7 +2211,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("wheel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("wheel");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2239,7 +2230,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.ECAMControlPanel.sysPageBtn("fctl");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fctl");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2509,16 +2500,14 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					libraries.ECAMControlPanel.rclBtn();
+					ecam.ECAMControlPanel.rclBtn();
 					ecam.FWC.Btn.recall.setValue(1);
 				</script>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>nasal</command>
-					<script>
-						ecam.FWC.Btn.recall.setValue(0);
-					</script>
+					<script>ecam.FWC.Btn.recall.setValue(0);</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -2540,16 +2529,14 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-					libraries.ECAMControlPanel.clrBtn();
+					ecam.ECAMControlPanel.clrBtn();
 					ecam.FWC.Btn.clr.setValue(1);
 				</script>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>nasal</command>
-					<script>
-						ecam.FWC.Btn.clr.setValue(0);
-					</script>
+					<script>ecam.FWC.Btn.clr.setValue(0);</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -3273,9 +3260,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/CSTR") != 1) {
-					libraries.cpt_efis_btns("cstr");
+					fcu.cpt_efis_btns("cstr");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3315,9 +3302,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/CSTR") != 1) {
-					libraries.fo_efis_btns("cstr");
+					fcu.fo_efis_btns("cstr");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3357,9 +3344,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/wpt") != 1) {
-					libraries.cpt_efis_btns("wpt");
+					fcu.cpt_efis_btns("wpt");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3399,9 +3386,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/wpt") != 1) {
-					libraries.fo_efis_btns("wpt");
+					fcu.fo_efis_btns("wpt");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3441,9 +3428,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/VORD") != 1) {
-					libraries.cpt_efis_btns("vord");
+					fcu.cpt_efis_btns("vord");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3483,9 +3470,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/VORD") != 1) {
-					libraries.fo_efis_btns("vord");
+					fcu.fo_efis_btns("vord");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3525,9 +3512,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/NDB") != 1) {
-					libraries.cpt_efis_btns("ndb");
+					fcu.cpt_efis_btns("ndb");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3567,9 +3554,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/NDB") != 1) {
-					libraries.fo_efis_btns("ndb");
+					fcu.fo_efis_btns("ndb");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3609,9 +3596,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis/inputs/arpt") != 1) {
-					libraries.cpt_efis_btns("arpt");
+					fcu.cpt_efis_btns("arpt");
 				} else {
-					libraries.cpt_efis_btns("off");
+					fcu.cpt_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3651,9 +3638,9 @@
 				<command>nasal</command>
 				<script>
 				if (getprop("instrumentation/efis[1]/inputs/arpt") != 1) {
-					libraries.fo_efis_btns("arpt");
+					fcu.fo_efis_btns("arpt");
 				} else {
-					libraries.fo_efis_btns("off");
+					fcu.fo_efis_btns("off");
 				}
 				setprop("sim/sounde/btn1", 1);
 				</script>
@@ -3686,7 +3673,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setCptND(1);</script>
+				<script>fcu.setCptND(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3695,7 +3682,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setCptND(-1);</script>
+				<script>fcu.setCptND(-1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3724,7 +3711,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setFoND(1);</script>
+				<script>fcu.setFoND(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3733,7 +3720,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setFoND(-1);</script>
+				<script>fcu.setFoND(-1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3762,7 +3749,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(0, 1);</script>
+				<script>fcu.setNDRange(0, 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3771,7 +3758,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(0, -1);</script>
+				<script>fcu.setNDRange(0, -1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3801,7 +3788,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(1, 1);</script>
+				<script>fcu.setNDRange(1, 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3810,7 +3797,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.setNDRange(1, -1);</script>
+				<script>fcu.setNDRange(1, -1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6607,8 +6594,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tiller</object-name>
-		<property>fdm/jsbsim/fbw/rudder-pedal</property>
-		<factor>-70</factor>
+		<property>fdm/jsbsim/fbw/tiller-handle</property>
+		<factor>-75</factor>
 		<axis>
 			<object-name>tiller.axis</object-name>
 		</axis>
@@ -6616,8 +6603,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tillerFo</object-name>
-		<property>fdm/jsbsim/fbw/rudder-pedal</property>
-		<factor>-70</factor>
+		<property>fdm/jsbsim/fbw/tiller-handle</property>
+		<factor>-75</factor>
 		<axis>
 			<object-name>tillerFo.axis</object-name>
 		</axis>

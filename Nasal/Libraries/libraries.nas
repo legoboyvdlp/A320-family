@@ -195,7 +195,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 
 var systemsInit = func {
 	fbw.FBW.init();
-	light_manager.init();
+	effects.light_manager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.HYD.init();
@@ -203,18 +203,20 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.eng_init();
 	systems.APUController.init();
-	systems.fire_init();
 	systems.autobrake_init();
+	systems.fire_init();
+	systems.icingInit();
 	fmgc.flightPlanController.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
 	mcdu.MCDU_init(0);
 	mcdu.MCDU_init(1);
+	mcdu_scratchpad.mcduMsgtimer1.start();
+	mcdu_scratchpad.mcduMsgtimer2.start();
 	systemsLoop.start();
-	icing.icingInit();
 	lightsLoop.start();
-	libraries.ECAM.init();
+	ecam.ECAM.init();
 	libraries.variousReset();
 	rmp.init();
 	acp.init();
@@ -222,11 +224,13 @@ var systemsInit = func {
 	atc.init();
 	fcu.FCUController.init();
 	dmc.DMController.init();
+	fmgc.flightPlanController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
 	systemsInit();
 	fmgc.flightPlanTimer.start();
+	fmgc.WaypointDatabase.read();
 });
 
 var systemsLoop = maketimer(0.1, func {
@@ -235,7 +239,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.HYD.loop();
 	systems.FUEL.loop();
 	systems.ADIRS.loop();
-	libraries.ECAM.loop();
+	ecam.ECAM.loop();
 	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();

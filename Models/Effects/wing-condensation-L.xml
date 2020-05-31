@@ -11,61 +11,35 @@
 
 		<condition>
 			<and>
-				<or>
-				   <greater-than-equals>
-						<expression>
-							<sum>
-								<product>
-				         		<property>environment/relative-humidity</property>					         	
-					         	<value>0.1</value>
-								</product>
-								<property>systems/navigation/adr/output/aoa-1</property>						         	
-				         </sum>
-				      </expression>		      
-				      <value>13.5</value>
-				   </greater-than-equals>
-				   <greater-than-equals>
-						<expression>
-							<sum>
-								<product>
-				         		<property>environment/relative-humidity</property>
-					         	<value>0.1</value>
-								</product>						         	
-					         <property>systems/navigation/adr/output/aoa-2</property>
-				         </sum>
-				      </expression>		      
-				      <value>13.5</value>     
-				   </greater-than-equals>
-				   <greater-than-equals>
-						<expression>
-							<sum>
-								<product>
-				         		<property>environment/relative-humidity</property>					         	
-					         	<value>0.1</value>
-								</product>						         	
-				         	<property>systems/navigation/adr/output/aoa-3</property>
-				         </sum>
-				      </expression>		      
-				      <value>13.5</value>
-			   	</greater-than-equals>
-	         </or>
+			   <greater-than-equals>
+					<expression>
+						<sum>
+							<product>
+								<property>environment/relative-humidity</property>								
+								<value>0.075</value>
+							</product>
+							<property>fdm/jsbsim/aero/alpha-deg</property>									
+						 </sum>
+					</expression>			  
+					<value>13.5</value>
+			   </greater-than-equals>
 			   <greater-than>
 					<property>velocities/groundspeed-kt</property>
 					<value>100</value>
-	         </greater-than>
-	         <less-than>
+				</greater-than>
+				<less-than>
 					<property>velocities/groundspeed-kt</property>
 					<value>210</value>
-	         </less-than>
-	         <greater-than>
+				</less-than>
+				<greater-than>
 					<property>environment/relative-humidity</property>
 					<value>50</value>
-	         </greater-than>
-	         <less-than-equals>
+				</greater-than>
+				<less-than-equals>
 					<property>environment/temperature-degc</property>
 					<value>28</value>
-	         </less-than-equals>
-      		<greater-than>
+				</less-than-equals>
+				<greater-than>
 					<property>position/altitude-agl-ft</property>
 					<value>0</value>
 				</greater-than>
@@ -73,20 +47,10 @@
 					<property>position/altitude-agl-ft</property>
 					<value>8000</value>
 				</less-than>
-	         <or>
-		         <greater-than>
-		         	<property>systems/navigation/adr/output/aoa-1</property>
-		         	<value>0</value>
-		         </greater-than>
-		         <greater-than>
-		         	<property>systems/navigation/adr/output/aoa-2</property>
-		         	<value>0</value>
-		         </greater-than>
-		         <greater-than>
-		         	<property>systems/navigation/adr/output/aoa-3</property>
-		         	<value>0</value>
-		         </greater-than>
-	         </or>
+				<greater-than>
+					<property>fdm/jsbsim/aero/alpha-deg</property>	
+					<value>0</value>
+				</greater-than>
 			</and>
 		</condition>
 
@@ -109,49 +73,49 @@
 			</vertex>
 		</placer>
 
-     <shooter>
-         <theta-min-deg>
-   			<!-- <expression>
+	 <shooter>
+		 <theta-min-deg>
+			<!-- <expression>
 					<sum>
-		         	<value>70</value>
-		         	<property>systems/navigation/adr/output/aoa-1</property>
-		         </sum>
-		      </expression> -->
-		      <value>90</value>
-         </theta-min-deg>
-         <theta-max-deg>
-   			<!-- <expression>
+					<value>70</value>
+					<property>systems/navigation/adr/output/aoa-1</property>
+				 </sum>
+			  </expression> -->
+			  <value>90</value>
+		 </theta-min-deg>
+		 <theta-max-deg>
+			<!-- <expression>
 					<sum>
-		         	<value>110</value>
-		         	<property>systems/navigation/adr/output/aoa-1</property>
-		         </sum>
-		      </expression> -->
-		      <value>90</value>        
-         </theta-max-deg>
-         <phi-min-deg>90</phi-min-deg>
-         <phi-max-deg>90</phi-max-deg>
-         <speed-mps>
-            <!-- <expression>
-            	<product>
-            		<property>velocities/groundspeed-kt</property>
-             		<value>-1</value>
-             	</product>
-				</expression> -->             
-            <value>0</value>
-            <spread>0</spread>
-         </speed-mps>
-         <rotation-speed>
-             <x-max-deg-sec>180</x-max-deg-sec>
-             <x-min-deg-sec>180</x-min-deg-sec>
-             <y-max-deg-sec>180</y-max-deg-sec>
-             <y-min-deg-sec>-180</y-min-deg-sec>
-             <z-max-deg-sec>-180</z-max-deg-sec>
-             <z-min-deg-sec>-180</z-min-deg-sec>
-         </rotation-speed>
-     </shooter>
+					<value>110</value>
+					<property>systems/navigation/adr/output/aoa-1</property>
+				 </sum>
+			  </expression> -->
+			  <value>90</value>		   
+		 </theta-max-deg>
+		 <phi-min-deg>90</phi-min-deg>
+		 <phi-max-deg>90</phi-max-deg>
+		 <speed-mps>
+			<!-- <expression>
+				<product>
+					<property>velocities/groundspeed-kt</property>
+					<value>-1</value>
+				</product>
+				</expression> -->			  
+			<value>0</value>
+			<spread>0</spread>
+		 </speed-mps>
+		 <rotation-speed>
+			 <x-max-deg-sec>180</x-max-deg-sec>
+			 <x-min-deg-sec>180</x-min-deg-sec>
+			 <y-max-deg-sec>180</y-max-deg-sec>
+			 <y-min-deg-sec>-180</y-min-deg-sec>
+			 <z-max-deg-sec>-180</z-max-deg-sec>
+			 <z-min-deg-sec>-180</z-min-deg-sec>
+		 </rotation-speed>
+	 </shooter>
 
-     <counter>
-         <particles-per-sec>
+	 <counter>
+		 <particles-per-sec>
 			<expression>
 				<product>
 					<value>4</value>
@@ -159,13 +123,13 @@
 				</product>
 			</expression>
 			<spread>10</spread>
-         </particles-per-sec>
-     </counter>
+		 </particles-per-sec>
+	 </counter>
 
-     <align>billboard</align>
+	 <align>billboard</align>
 
-     <particle>
-         <start>
+	 <particle>
+		 <start>
 				<color>
 					<red>
 						<expression>
@@ -203,8 +167,8 @@
 				<size>
 					<value>1.5</value>
 				</size>
-         </start>
-         <end>
+		 </start>
+		 <end>
 				<color>
 					<red>
 						<expression>
@@ -239,22 +203,22 @@
 						</expression>
 					</alpha>
 				</color>
-            <size>
-            	<value>2</value>
-            </size>
-         </end>
-         <life-sec>
-             <value>0.00001</value>
-         </life-sec>
-         <mass-kg>0.025</mass-kg>
-         <radius-m>0.175</radius-m>
-     </particle>
+			<size>
+				<value>2</value>
+			</size>
+		 </end>
+		 <life-sec>
+			 <value>0.00001</value>
+		 </life-sec>
+		 <mass-kg>0.025</mass-kg>
+		 <radius-m>0.175</radius-m>
+	 </particle>
 
-     <program>
-         <fluid>air</fluid>
-         <gravity>true</gravity>
-         <wind>true</wind>
-     </program>
+	 <program>
+		 <fluid>air</fluid>
+		 <gravity>true</gravity>
+		 <wind>true</wind>
+	 </program>
 
 	</particlesystem>
 

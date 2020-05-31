@@ -80,9 +80,45 @@
 			</flame>
 		</model>
 		
-		<startup>
-			<splash-texture>Aircraft/A320-family/Splash/SplashOld.png</splash-texture>
-		</startup>
+		<previews>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/cockpit.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/cockpit2.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/cockpit3.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/wing1.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/wing2.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Splash/wing3.png</path>
+			</preview>
+		</previews>
+	
+		<rating>
+			<FDM type="int">4</FDM>
+			<systems type="int">5</systems>
+			<cockpit type="int">5</cockpit>
+			<model type="int">4</model>
+		</rating>
 		
 		<tags>
 			<tag>transport</tag>
@@ -492,6 +528,7 @@
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
+			<zero type="int">0</zero>
 		</jsbsim>
 	</fdm>
 	
@@ -936,7 +973,10 @@
 	
 	<systems>
 		<acconfig n="0">
-			<autoconfig-running>0</autoconfig-running>
+			<autoconfig-running type="bool">0</autoconfig-running>
+			<options n="0">
+				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
+			</options>
 		</acconfig>
 		<atc>
 			<transponder-code type="string">2000</transponder-code>
@@ -3957,21 +3997,16 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/efis.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
 		<systems>
 			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
@@ -3980,14 +4015,27 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
+		<ecam>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
+		</ecam>
+		<effects>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
+		</effects>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
@@ -3996,8 +4044,10 @@
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/efis.nas</file>
 		</fcu>
 		<fmgc>
+			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-waypoints.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
@@ -4012,6 +4062,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
@@ -4034,6 +4085,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
+		<!-- Canvas -->
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>
 		</canvas_pfd>
@@ -4050,15 +4102,10 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
-		<ecam>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
-			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
-		</ecam>
-		<icing>
-			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
-		</icing>
+		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
+			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
+		</mcdu_scratchpad>
+		<!-- Autopush -->
 		<autopush>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>
@@ -4071,6 +4118,7 @@
 		<autopush_route>
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush_route.nas</file>
 		</autopush_route>
+		<!-- Panels -->
 		<rmp>
 			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>
 		</rmp>
