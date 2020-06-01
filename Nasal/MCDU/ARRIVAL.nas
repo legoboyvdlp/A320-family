@@ -40,6 +40,7 @@ var arrivalPage = {
 	enableScrollVias: 0,
 	scrollApproach: 0,
 	scrollStars: 0,
+	scrollVias: 0,
 	activePage: 0, # runways, stars, vias
 	oldPage: 0,
 	hasPressNoTrans: 0, # temporary
@@ -112,8 +113,8 @@ var arrivalPage = {
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 		
-		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			me.L6 = [" RETURN END", nil, "wht"];
+		if (!fmgc.flightPlanController.temporaryFlag[me.computer] or me.activePage == 2) {
+			me.L6 = [" RETURN", nil, "wht"];
 		} else {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
 			me.arrowsColour[0][5] = "yel";
@@ -450,59 +451,75 @@ var arrivalPage = {
 	},
 	updateVIAs: func() {
 		if (me.selectedApproach == nil) {
-			me.L3 = [" NO VIA ", " APP VIAS", "blu"];
+			me.L2 = [" NO VIA ", " APP VIAS", "blu"];
 			if (!me.hasPressNoVia) {
-				me.arrowsMatrix[1][2] = 1;
-				me.arrowsColour[1][2] = "blu";
+				me.arrowsMatrix[0][2] = 1;
+				me.arrowsColour[0][2] = "blu";
 			} else {
-				me.arrowsMatrix[1][2] = 0;
-				me.arrowsColour[1][2] = "ack";
+				me.arrowsMatrix[0][2] = 0;
+				me.arrowsColour[0][2] = "ack";
 			}
 			return;
 		}
 		me._vias = me.selectedApproach.transitions;
 		me.vias = sort(me._vias, func(a,b) cmp(a,b));
-		debug.dump(me.vias);
-		debug.dump(me._vias);
+		
 		if (size(me.vias) == 0) {
-			me.L3 = [" NO VIA", " APP VIAS", "blu"];
+			me.L2 = [" NO VIA", " APP VIAS", "blu"];
 			if (!me.hasPressNoVia) {
-				me.arrowsMatrix[1][2] = 1;
-				me.arrowsColour[1][2] = "blu";
+				me.arrowsMatrix[0][1] = 1;
+				me.arrowsColour[0][1] = "blu";
 			} else {
-				me.arrowsMatrix[1][2] = 0;
-				me.arrowsColour[1][2] = "ack";
+				me.arrowsMatrix[0][1] = 0;
+				me.arrowsColour[0][1] = "ack";
 			}
-		} elsif (size(me.vias) >= 1) {
-			me.L3 = [" " ~ me.vias[0], " APP VIAS", "blu"];
+		} else {
+			append(me.vias, "NO VIA");
+		}
+		if (size(me.vias) >= 1) {
+			me.L2 = [" " ~ me.vias[0 + me.scrollVias], " APP VIAS", "blu"];
 			if (me.vias[0] != me.selectedVIA) {
-				me.arrowsMatrix[1][2] = 1;
-				me.arrowsColour[1][2] = "blu";
+				me.arrowsMatrix[0][1] = 1;
+				me.arrowsColour[0][1] = "blu";
 			} else {
-				me.arrowsMatrix[1][2] = 0;
-				me.arrowsColour[1][2] = "ack";
+				me.arrowsMatrix[0][1] = 0;
+				me.arrowsColour[0][1] = "ack";
 			}
-		} elsif (size(me.vias) >= 2) {
-			me.L4 = [" " ~ me.vias[1], nil, "blu"];
+		} 
+		if (size(me.vias) >= 2) {
+			me.L3 = [" " ~ me.vias[1 + me.scrollVias], nil, "blu"];
 			if (me.vias[1] != me.selectedVIA) {
-				me.arrowsMatrix[1][3] = 1;
-				me.arrowsColour[1][3] = "blu";
+				me.arrowsMatrix[0][2] = 1;
+				me.arrowsColour[0][2] = "blu";
 			} else {
-				me.arrowsMatrix[1][3] = 0;
-				me.arrowsColour[1][3] = "ack";
+				me.arrowsMatrix[0][2] = 0;
+				me.arrowsColour[0][2] = "ack";
 			}
-		} elsif (size(me.vias) >= 3) {
-			me.L5 = [me.vias[2] ~ " ", nil, "blu"];
+		}
+		if (size(me.vias) >= 3) {
+			me.L4 = [" " ~ me.vias[2 + me.scrollVias], nil, "blu"];
 			if (me.vias[2] != me.selectedVIA) {
-				me.arrowsMatrix[1][4] = 1;
-				me.arrowsColour[1][4] = "blu";
+				me.arrowsMatrix[0][3] = 1;
+				me.arrowsColour[0][3] = "blu";
 			} else {
-				me.arrowsMatrix[1][4] = 0;
-				me.arrowsColour[1][4] = "ack";
+				me.arrowsMatrix[0][3] = 0;
+				me.arrowsColour[0][3] = "ack";
+			}
+		}
+		if (size(me.vias) >= 4) {
+			me.L5 = [" " ~ me.vias[3 + me.scrollVias], nil, "blu"];
+			if (me.vias[2] != me.selectedVIA) {
+				me.arrowsMatrix[0][4] = 1;
+				me.arrowsColour[0][4] = "blu";
+			} else {
+				me.arrowsMatrix[0][4] = 0;
+				me.arrowsColour[0][4] = "ack";
 			}
 		}
 		
-		# no indication it is scrollable...
+		if (size(me.vias) > 3) {
+			me.enableScrollVias = 1;
+		}
 	},
 	clearTransitions: func() {
 		me.R3 = [nil, nil, "wht"];
@@ -545,7 +562,8 @@ var arrivalPage = {
 				me.arrowsMatrix[1][2] = 0;
 				me.arrowsColour[1][2] = "ack";
 			}
-		} elsif (size(me.transitions) >= 1) {
+		}
+		if (size(me.transitions) >= 1) {
 			me.R3 = [me.transitions[0] ~ " ", "TRANS", "blu"];
 			if (me.transitions[0] != me.selectedTransition) {
 				me.arrowsMatrix[1][2] = 1;
@@ -554,7 +572,8 @@ var arrivalPage = {
 				me.arrowsMatrix[1][2] = 0;
 				me.arrowsColour[1][2] = "ack";
 			}
-		} elsif (size(me.transitions) >= 2) {
+		}
+		if (size(me.transitions) >= 2) {
 			me.R4 = [me.transitions[1] ~ " ", nil, "blu"];
 			if (me.transitions[1] != me.selectedTransition) {
 				me.arrowsMatrix[1][3] = 1;
@@ -563,7 +582,8 @@ var arrivalPage = {
 				me.arrowsMatrix[1][3] = 0;
 				me.arrowsColour[1][3] = "ack";
 			}
-		} elsif (size(me.transitions) >= 3) {
+		} 
+		if (size(me.transitions) >= 3) {
 			me.R5 = [me.transitions[2] ~ " ", nil, "blu"];
 			if (me.transitions[2] != me.selectedTransition) {
 				me.arrowsMatrix[1][4] = 1;
@@ -628,6 +648,7 @@ var arrivalPage = {
 				if (me.scrollVias > size(me.vias) - 4) {
 					me.scrollVias = 0;
 				}
+				me.updateActiveVIAs();
 				me.updateVIAs();
 			}
 		}
@@ -661,6 +682,7 @@ var arrivalPage = {
 				if (me.scrollVias < 0) {
 					me.scrollVias = size(me.vias) - 4;
 				}
+				me.updateActiveVIAs();
 				me.updateVIAs();
 			}
 		}
@@ -682,11 +704,18 @@ var arrivalPage = {
 			me.oldPage = me.activePage;
 			me.activePage = 2;
 			me.updatePage();
+			me.updateVIAs();
 		} elsif (index == 6 and me.activePage == 2) {
 			me.activePage = me.oldPage;
 			me.oldPage = 0;
 			me.updatePage();
-		} elsif (me.activePage == 0) {
+		} elsif (index == 6 and me.activePage != 2) {
+			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+			} else {
+				setprop("/MCDU[" ~ i ~ "]/page", "LATREV");
+			}
+		} elsif (me.activePage == 0 and index != 6) {
 			if (size(me.approaches) >= (index - 2) and index != 2) { # index = 3, size = 1
 				if (!dirToFlag) {
 					me.selectedSTAR = nil;
@@ -715,7 +744,7 @@ var arrivalPage = {
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
-		} elsif (me.activePage == 1) {
+		} elsif (me.activePage == 1 and index != 6) {
 			if (size(me.stars) >= (index - 2) and index != 2) {
 				if (!dirToFlag) {
 					me.selectedSTAR = me.stars[index - 3 + me.scrollStars];
@@ -746,12 +775,12 @@ var arrivalPage = {
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
-		} else {
+		} elsif (me.activePage == 2 and index != 6) {
 			if (size(me.vias) >= (index - 1)) { # different!!
 				if (!dirToFlag) {
-					my.selectedVIA = me.vias[index - 2 + me.scrollVias];
+					me.selectedVIA = me.vias[index - 2 + me.scrollVias];
 					me.makeTmpy();
-					if (my.selectedVIA != "NO VIA") {
+					if (me.selectedVIA != "NO VIA") {
 						me.hasPressNoVia = 0;
 						fmgc.flightPlanController.flightplans[me.computer].approach_trans = me.selectedVIA;
 					} else {
@@ -767,6 +796,8 @@ var arrivalPage = {
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
 	},
 	arrPushbuttonRight: func(index) {
