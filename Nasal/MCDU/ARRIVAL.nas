@@ -1,5 +1,4 @@
 var isNoStar = [0, 0];
-var isNoVia = [0, 0];
 
 var arrivalPage = {
 	title: [nil, nil, nil],
@@ -42,7 +41,9 @@ var arrivalPage = {
 	scrollApproach: 0,
 	scrollStars: 0,
 	activePage: 0, # runways, stars, vias
+	oldPage: 0,
 	hasPressNoTrans: 0, # temporary
+	hasPressNoVia: 0, # temporary
 	_approaches: nil,
 	_vias: nil,
 	_stars: nil,
@@ -120,8 +121,10 @@ var arrivalPage = {
 		
 		if (me.activePage == 0) {
 			me.updateApproaches();
-		} else {
+		} elsif (me.activePage == 1) {
 			me.updateSTARs();
+		} else {
+			me.updateVIAs();
 		}
 		me.checkPageType();
 		
@@ -446,7 +449,60 @@ var arrivalPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateVIAs: func() {
-	#placeholder
+		if (me.selectedApproach == nil) {
+			me.L3 = [" NO VIA ", " APP VIAS", "blu"];
+			if (!me.hasPressNoVia) {
+				me.arrowsMatrix[1][2] = 1;
+				me.arrowsColour[1][2] = "blu";
+			} else {
+				me.arrowsMatrix[1][2] = 0;
+				me.arrowsColour[1][2] = "ack";
+			}
+			return;
+		}
+		me._vias = me.selectedApproach.transitions;
+		me.vias = sort(me._vias, func(a,b) cmp(a,b));
+		debug.dump(me.vias);
+		debug.dump(me._vias);
+		if (size(me.vias) == 0) {
+			me.L3 = [" NO VIA", " APP VIAS", "blu"];
+			if (!me.hasPressNoVia) {
+				me.arrowsMatrix[1][2] = 1;
+				me.arrowsColour[1][2] = "blu";
+			} else {
+				me.arrowsMatrix[1][2] = 0;
+				me.arrowsColour[1][2] = "ack";
+			}
+		} elsif (size(me.vias) >= 1) {
+			me.L3 = [" " ~ me.vias[0], " APP VIAS", "blu"];
+			if (me.vias[0] != me.selectedVIA) {
+				me.arrowsMatrix[1][2] = 1;
+				me.arrowsColour[1][2] = "blu";
+			} else {
+				me.arrowsMatrix[1][2] = 0;
+				me.arrowsColour[1][2] = "ack";
+			}
+		} elsif (size(me.vias) >= 2) {
+			me.L4 = [" " ~ me.vias[1], nil, "blu"];
+			if (me.vias[1] != me.selectedVIA) {
+				me.arrowsMatrix[1][3] = 1;
+				me.arrowsColour[1][3] = "blu";
+			} else {
+				me.arrowsMatrix[1][3] = 0;
+				me.arrowsColour[1][3] = "ack";
+			}
+		} elsif (size(me.vias) >= 3) {
+			me.L5 = [me.vias[2] ~ " ", nil, "blu"];
+			if (me.vias[2] != me.selectedVIA) {
+				me.arrowsMatrix[1][4] = 1;
+				me.arrowsColour[1][4] = "blu";
+			} else {
+				me.arrowsMatrix[1][4] = 0;
+				me.arrowsColour[1][4] = "ack";
+			}
+		}
+		
+		# no indication it is scrollable...
 	},
 	clearTransitions: func() {
 		me.R3 = [nil, nil, "wht"];
@@ -622,7 +678,15 @@ var arrivalPage = {
 		me.updatePage();
 	},
 	arrPushbuttonLeft: func(index) {
-		if (me.activePage == 0) {
+		if (index == 2 and me.activePage != 2) {
+			me.oldPage = me.activePage;
+			me.activePage = 2;
+			me.updatePage();
+		} elsif (index == 6 and me.activePage == 2) {
+			me.activePage = me.oldPage;
+			me.oldPage = 0;
+			me.updatePage();
+		} elsif (me.activePage == 0) {
 			if (size(me.approaches) >= (index - 2) and index != 2) { # index = 3, size = 1
 				if (!dirToFlag) {
 					me.selectedSTAR = nil;
@@ -688,10 +752,10 @@ var arrivalPage = {
 					my.selectedVIA = me.vias[index - 2 + me.scrollVias];
 					me.makeTmpy();
 					if (my.selectedVIA != "NO VIA") {
-						isNoVia[me.computer] = 0;
+						me.hasPressNoVia = 0;
 						fmgc.flightPlanController.flightplans[me.computer].approach_trans = me.selectedVIA;
 					} else {
-						isNoVia[me.computer] = 1;
+						me.hasPressNoVia = 1;
 						fmgc.flightPlanController.flightplans[me.computer].approach_trans = nil;
 					}
 					me.updateActiveVIAs();
