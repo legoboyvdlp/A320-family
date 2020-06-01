@@ -11,13 +11,4 @@
 			<z-m>1.7005004</z-m>
 		</offsets>
 	</model>
-	
-	<model>
-		<name>Interior</name>
-		<path>Aircraft/A320-family/Models/Interior/a320.interior.xml</path>
-		<offsets>
-			<x-m>-18.8499</x-m>
-			<z-m>1.7005004</z-m>
-		</offsets>
-	</model>
 </PropertyList>
