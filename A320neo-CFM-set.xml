@@ -163,8 +163,6 @@
 		<maxflap type="int">35</maxflap>
 	</options>
 	
-	<sharklet type="bool">1</sharklet>
-	
 	<MCDUC n="0">
 		<type>A320-251N</type>
 		<eng>LEAP-1A26</eng>

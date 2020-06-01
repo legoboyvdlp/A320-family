@@ -163,8 +163,6 @@
 		<maxflap type="int">35</maxflap>
 	</options>
 	
-	<sharklet type="bool">0</sharklet>
-	
 	<MCDUC n="0">
 		<type>A320-214</type>
 		<eng>CFM56-5B4</eng>

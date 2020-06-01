@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+
+<PropertyList>
+	<name>A320-200</name>
+	<path>empty.ac</path> <!-- Livery system on MP multimodel -->
+
+	<model>
+		<name>Fuselage</name>
+		<path>Aircraft/A320-family/Models/Fuselages/A320/fuselage.xml</path>
+	</model>
+	
+	<model>
+		<name>Interior</name>
+		<path>Aircraft/A320-family/Models/A320-interior.xml</path>
+		<!-- On multiplayer models, the interior is loaded separately and global
+			 offsets are not applied. This cancels the global offsets, so that
+			 the interior is loaded at (0,0,0) anyway. -->
+		<offsets>
+			<x-m>18.8499</x-m>
+			<z-m>-1.7005004</z-m>
+		</offsets>
+		<usage>interior</usage>
+	</model>
+	
+	<!-- Animations -->
+	<animation>
+		<type>select</type>
+		<object-name>Sharklet</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>WingtipFence</object-name>
+		<condition>
+			<not><property>sim/multiplay/generic/int[12]</property></not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Antenna1</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[14]</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Antenna2</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[13]</property>
+		</condition>
+	</animation>
+</PropertyList>

@@ -460,10 +460,12 @@
 				<int n="9" alias="/sim/model/lights/beacon/state"/>
 				<int n="10" alias="/engines/engine[0]/contrail"/>
 				<int n="11" alias="/engines/engine[1]/contrail"/>
-				<int n="12" alias="/sharklet"/>
+				<int n="12" alias="/options/model-options/sharklet"/>
+				<int n="13" alias="/options/model-options/wifi-aft"/>
+				<int n="14" alias="/options/model-options/wifi-fwd"/>
 			</generic>
 		</multiplay>
-		
+			
 		<flight-recorder include="Systems/flight-recorder.xml"/>
 		
 		<gui n="0" include="gui/it-gui.xml"/>
@@ -3976,14 +3978,13 @@
 		</keyboard>
 	</input>
 	
-	<aircraft>
-		<door n="0">
-			<x-m>16.582</x-m>
-			<y-m>9.702</y-m>
-			<z-m>3.642</z-m>
-		</door>
-		<jetway-hood-deg type="double">3</jetway-hood-deg>
-	</aircraft>
+	<options n="0">
+		<model-options>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft>
+			<wifi-fwd type="bool">0</wifi-fwd>
+		</model-options>
+	</options>
 	
 	<nasal>
 		<pts>

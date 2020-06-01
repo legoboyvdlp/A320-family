@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	<name>A320-200</name>
+	<name>A320-200-CFM</name>
 	<path>empty.ac</path> <!-- Livery system on MP multimodel -->
 
 	<offsets>
@@ -12,20 +12,12 @@
 	</offsets>
 
 	<model>
-		<name>Fuselage</name>
-		<path>Aircraft/A320-family/Models/Fuselages/A320/fuselage.xml</path>
+		<name>A320</name>
+		<path>Aircraft/A320-family/Models/A320-common.xml</path>
 	</model>
 	
 	<model>
-		<name>Interior</name>
-		<path>Aircraft/A320-family/Models/A320-interior.xml</path>
-		<!-- On multiplayer models, the interior is loaded separately and global
-			 offsets are not applied. This cancels the global offsets, so that
-			 the interior is loaded at (0,0,0) anyway. -->
-		<offsets>
-			<x-m>18.8499</x-m>
-			<z-m>-1.7005004</z-m>
-		</offsets>
-		<usage>interior</usage>
+		<name>EnginesCFM</name>
+		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.cfm.xml</path>
 	</model>
 </PropertyList>
