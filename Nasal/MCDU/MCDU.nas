@@ -209,6 +209,10 @@ var lskbutton = func(btn, i) {
 			initInputB("L1",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(1);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonLeft(1);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonLeft(1);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PROGTO") {
 			progTOInput("L1",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PROGCLB") {
@@ -254,6 +258,10 @@ var lskbutton = func(btn, i) {
 			initInputA("L2",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(2);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonLeft(2);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonLeft(2);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L2",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -294,6 +302,10 @@ var lskbutton = func(btn, i) {
 			fuelPredInput("L3",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(3);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonLeft(3);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonLeft(3);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L3",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -339,6 +351,10 @@ var lskbutton = func(btn, i) {
 			fuelPredInput("L4",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(4);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonLeft(4);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonLeft(4);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L4",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -369,6 +385,10 @@ var lskbutton = func(btn, i) {
 			fuelPredInput("L5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(5);
+		# } else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+# 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(5);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("L5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
