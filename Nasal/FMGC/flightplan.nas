@@ -29,6 +29,21 @@ var wpCourse = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course", 0, "
 var wpDistance = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance", 0, "DOUBLE")]];
 var wpCoursePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/course-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/course-from-prev", 0, "DOUBLE")]];
 var wpDistancePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance-from-prev", 0, "DOUBLE")]];
+var wpWindDirection0 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[0]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[0]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[0]/direction", 0, "DOUBLE")]];
+var wpWindMagnitude0 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[0]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[0]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[0]/magnitude", 0, "DOUBLE")]];
+var wpWindAltitude0 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[0]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[0]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[0]/altitude", "", "STRING")]];
+
+var wpWindDirection1 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[1]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[1]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[1]/direction", 0, "DOUBLE")]];
+var wpWindMagnitude1 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[1]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[1]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[1]/magnitude", 0, "DOUBLE")]];
+var wpWindAltitude1 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[1]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[1]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[1]/altitude", "", "STRING")]];
+
+var wpWindDirection2 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[2]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[2]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[2]/direction", 0, "DOUBLE")]];
+var wpWindMagnitude2 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[2]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[2]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[2]/magnitude", 0, "DOUBLE")]];
+var wpWindAltitude2 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[2]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[2]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[2]/altitude", "", "STRING")]];
+
+var wpWindDirection3 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[3]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[3]/direction", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[3]/direction", 0, "DOUBLE")]];
+var wpWindMagnitude3 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[3]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[3]/magnitude", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[3]/magnitude", 0, "DOUBLE")]];
+var wpWindAltitude3 = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/wind[3]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/wind[3]/altitude", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/wind[3]/altitude", "", "STRING")]];
 
 var flightPlanController = {
 	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
@@ -113,6 +128,25 @@ var flightPlanController = {
 			me.flightplans[2] = me.flightplans[n].clone();
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
+			
+			# copy winds since they are not part of the waypoint object
+			for (var counter = 0; counter < me.flightplans[n].getPlanSize(); counter += 1) {
+				wpWindDirection0[2][counter].setValue(wpWindDirection0[n][counter].getValue());
+				wpWindMagnitude0[2][counter].setValue(wpWindMagnitude0[n][counter].getValue());
+				wpWindAltitude0[2][counter].setValue(wpWindAltitude0[n][counter].getValue());
+				
+				wpWindDirection1[2][counter].setValue(wpWindDirection1[n][counter].getValue());
+				wpWindMagnitude1[2][counter].setValue(wpWindMagnitude1[n][counter].getValue());
+				wpWindAltitude1[2][counter].setValue(wpWindAltitude1[n][counter].getValue());
+				
+				wpWindDirection2[2][counter].setValue(wpWindDirection2[n][counter].getValue());
+				wpWindMagnitude2[2][counter].setValue(wpWindMagnitude2[n][counter].getValue());
+				wpWindAltitude2[2][counter].setValue(wpWindAltitude2[n][counter].getValue());
+				
+				wpWindDirection3[2][counter].setValue(wpWindDirection3[n][counter].getValue());
+				wpWindMagnitude3[2][counter].setValue(wpWindMagnitude3[n][counter].getValue());
+				wpWindAltitude3[2][counter].setValue(wpWindAltitude3[n][counter].getValue());
+			}
 		}
 		if (n == 3) { return; }
 		me.resetFlightplan(n);
@@ -530,12 +564,21 @@ var flightPlanController = {
 	getWaypointList: func(plan) {
 		var waypointsList = [];
 		for (var index = 1; index < me.arrivalIndex[plan]; index += 1) {
-			#print(me.flightplans[plan].getWP(index).wp_name);
-			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index).wp_type != "vectors" and me.flightplans[plan].getWP(index).wp_type != "hdgToAlt") {
+			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index).wp_type != "vectors" and me.flightplans[plan].getWP(index).wp_type != "hdgToAlt" and me.flightplans[plan].getWP(index).wp_type != "sid" and me.flightplans[plan].getWP(index).wp_type != "star" and me.flightplans[plan].getWP(index).wp_type != "approach") {
 				append(waypointsList, me.flightplans[plan].getWP(index));
 			}
 		}
 		return waypointsList;
+	},
+	
+	getWaypointMapping: func(plan) {
+		var waypointsMapping = [];
+		for (var index = 1; index < me.arrivalIndex[plan]; index += 1) {
+			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index).wp_type != "vectors" and me.flightplans[plan].getWP(index).wp_type != "hdgToAlt" and me.flightplans[plan].getWP(index).wp_type != "sid" and me.flightplans[plan].getWP(index).wp_type != "star" and me.flightplans[plan].getWP(index).wp_type != "approach") {
+				append(waypointsMapping, index);
+			}
+		}
+		return waypointsMapping;
 	},
 	
 	# getWPforPBD - parse scratchpad text to find waypoint ghost for PBD
@@ -674,7 +717,24 @@ var flightPlanController = {
 			append(wpDistance[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance", 0, "DOUBLE"));
 			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
+			
+			append(wpWindDirection0[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[0]/direction", 0, "DOUBLE"));
+			append(wpWindMagnitude0[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[0]/magnitude", 0, "DOUBLE"));
+			append(wpWindAltitude0[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[0]/altitude", "", "STRING"));
+			
+			append(wpWindDirection1[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[1]/direction", 0, "DOUBLE"));
+			append(wpWindMagnitude1[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[1]/magnitude", 0, "DOUBLE"));
+			append(wpWindAltitude1[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[1]/altitude", "", "STRING"));
+			
+			append(wpWindDirection2[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[2]/direction", 0, "DOUBLE"));
+			append(wpWindMagnitude2[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[2]/magnitude", 0, "DOUBLE"));
+			append(wpWindAltitude2[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[2]/altitude", "", "STRING"));
+			
+			append(wpWindDirection3[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[3]/direction", 0, "DOUBLE"));
+			append(wpWindMagnitude3[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[3]/magnitude", 0, "DOUBLE"));
+			append(wpWindAltitude3[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/wind[3]/altitude", "", "STRING"));
 		}
+		
 		me.updatePlans();
 		# push update to fuel
 		if (getprop("/FMGC/internal/block-confirmed")) {

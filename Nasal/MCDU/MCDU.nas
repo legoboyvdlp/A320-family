@@ -587,21 +587,36 @@ var rskbutton = func(btn, i) {
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
-			if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
-				if (canvas_mcdu.myCRZWIND[i] != nil) {
-					canvas_mcdu.myCRZWIND[i].del();
+			if (fmgc.flightPlanController.temporaryFlag[i]) {
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(i)) > 0) {
+					if (canvas_mcdu.myCRZWIND[i] != nil) {
+						canvas_mcdu.myCRZWIND[i].del();
+					}
+					canvas_mcdu.myCRZWIND[i] = nil;
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(i)[0], 0);
+				} else {
+					if (canvas_mcdu.myCRZWIND[i] == nil) {
+						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
+					} else {
+						canvas_mcdu.myCRZWIND[i].reload();
+					}
 				}
-				canvas_mcdu.myCRZWIND[i] = nil;
-				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
-				setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 			} else {
-				if (canvas_mcdu.myCRZWIND[i] != nil) {
-					canvas_mcdu.myCRZWIND[i].del();
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
+					if (canvas_mcdu.myCRZWIND[i] != nil) {
+						canvas_mcdu.myCRZWIND[i].del();
+					}
+					canvas_mcdu.myCRZWIND[i] = nil;
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
+				} else {
+					if (canvas_mcdu.myCRZWIND[i] == nil) {
+						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
+					} else {
+						canvas_mcdu.myCRZWIND[i].reload();
+					}
 				}
-				canvas_mcdu.myCRZWIND[i] = nil;
-				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
-				setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 			}
+			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R4",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -625,19 +640,34 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
-			if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
-				if (canvas_mcdu.myCRZWIND[i] != nil) {
-					canvas_mcdu.myCRZWIND[i].del();
+			if (fmgc.flightPlanController.temporaryFlag[i]) {
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(i)) > 0) {
+					if (canvas_mcdu.myCRZWIND[i] != nil) {
+						canvas_mcdu.myCRZWIND[i].del();
+					}
+					canvas_mcdu.myCRZWIND[i] = nil;
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(i)[0], 0);
+				} else {
+					if (canvas_mcdu.myCRZWIND[i] == nil) {
+						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
+					} else {
+						canvas_mcdu.myCRZWIND[i].reload();
+					}
 				}
-				canvas_mcdu.myCRZWIND[i] = nil;
-				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
 			} else {
-				if (canvas_mcdu.myCRZWIND[i] != nil) {
-					canvas_mcdu.myCRZWIND[i].del();
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
+					if (canvas_mcdu.myCRZWIND[i] != nil) {
+						canvas_mcdu.myCRZWIND[i].del();
+					}
+					canvas_mcdu.myCRZWIND[i] = nil;
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
+				} else {
+					if (canvas_mcdu.myCRZWIND[i] == nil) {
+						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
+					} else {
+						canvas_mcdu.myCRZWIND[i].reload();
+					}
 				}
-				canvas_mcdu.myCRZWIND[i] = nil;
-				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
-				setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
