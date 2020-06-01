@@ -115,5 +115,9 @@ var windDESPage = {
 			#draft title
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
+	},
+	reload: func() {
+		me._setupPageWithData();
+		me.updateTmpy();
 	}
 };

@@ -143,6 +143,10 @@ var windCLBPage = {
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	},
+	reload: func() {
+		me._setupPageWithData();
+		me.updateTmpy();
+	},
 	pushButtonLeft: func(index) {
 		if (size(me.windList) >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {

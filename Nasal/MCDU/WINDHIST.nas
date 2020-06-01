@@ -101,5 +101,9 @@ var windHISTPage = {
 			me.C5[2] = "blu";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
+	},
+	reload: func() {
+		me._setupPageWithData();
+		me.updateTmpy();
 	}
 };

@@ -527,6 +527,17 @@ var flightPlanController = {
 		return 2;
 	},
 	
+	getWaypointList: func(plan) {
+		var waypointsList = [];
+		for (var index = 1; index < me.arrivalIndex[plan]; index += 1) {
+			#print(me.flightplans[plan].getWP(index).wp_name);
+			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index).wp_type != "vectors" and me.flightplans[plan].getWP(index).wp_type != "hdgToAlt") {
+				append(waypointsList, me.flightplans[plan].getWP(index));
+			}
+		}
+		return waypointsList;
+	},
+	
 	# getWPforPBD - parse scratchpad text to find waypoint ghost for PBD
 	# args: text, index, plan
 	#    text: scratchpad text

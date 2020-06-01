@@ -225,6 +225,8 @@ var initInputA = func(key, i) {
 	} else if (key == "R4") {
 		if (canvas_mcdu.myCLBWIND[i] == nil) {
 			canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
+		} else {
+			canvas_mcdu.myCLBWIND[i].reload();
 		}
 		setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 	} else if (key == "R5") {

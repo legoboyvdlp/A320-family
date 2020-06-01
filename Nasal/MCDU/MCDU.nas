@@ -417,6 +417,8 @@ var lskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
 			if (canvas_mcdu.myCLBWIND[i] == nil) {
 				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
+			} else {
+				canvas_mcdu.myCLBWIND[i].reload();
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ROUTESELECTION") {
@@ -464,6 +466,8 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			if (canvas_mcdu.myHISTWIND[i] == nil) {
 				canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
+			} else {
+				canvas_mcdu.myHISTWIND[i].reload();
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDHIST");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
@@ -558,13 +562,26 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
 			if (canvas_mcdu.myCLBWIND[i] == nil) {
 				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
+			} else {
+				canvas_mcdu.myCLBWIND[i].reload();
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
-			if (canvas_mcdu.myCRZWIND[i] == nil) {
-				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, "");
+			if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
+				if (canvas_mcdu.myCRZWIND[i] != nil) {
+					canvas_mcdu.myCRZWIND[i].del();
+				}
+				canvas_mcdu.myCRZWIND[i] = nil;
+				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
+				setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
+			} else {
+				if (canvas_mcdu.myCRZWIND[i] != nil) {
+					canvas_mcdu.myCRZWIND[i].del();
+				}
+				canvas_mcdu.myCRZWIND[i] = nil;
+				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
+				setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R4",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
@@ -588,13 +605,26 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
-			if (canvas_mcdu.myCRZWIND[i] == nil) {
-				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, "");
+			if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
+				if (canvas_mcdu.myCRZWIND[i] != nil) {
+					canvas_mcdu.myCRZWIND[i].del();
+				}
+				canvas_mcdu.myCRZWIND[i] = nil;
+				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
+			} else {
+				if (canvas_mcdu.myCRZWIND[i] != nil) {
+					canvas_mcdu.myCRZWIND[i].del();
+				}
+				canvas_mcdu.myCRZWIND[i] = nil;
+				canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
+				setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
 			if (canvas_mcdu.myDESWIND[i] == nil) {
 				canvas_mcdu.myDESWIND[i] = windDESPage.new(i, "");
+			} else {
+				canvas_mcdu.myDESWIND[i].reload();
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDDES");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
@@ -737,6 +767,8 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myDirTo[i].scrollUp();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("up",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonUp();
 		}
 	} else if (btn == "down") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
@@ -749,7 +781,9 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myDirTo[i].scrollDn();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("down",i);
-		} 
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonDown();
+		}
 	}
 }
 

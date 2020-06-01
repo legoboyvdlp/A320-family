@@ -27,14 +27,20 @@ var windCRZPage = {
 	R6: [nil, nil, "ack"],
 	scroll: 0,
 	vector: [],
-	index: nil,
+	#index: nil,
 	computer: nil,
+	cur_location: 0,
 	windList: [],
-	new: func(computer) { #, waypoint
+	singleCRZ: 0,
+	new: func(computer, waypoint, cur_location) {
 		var wcp = {parents:[windCRZPage]};
 		wcp.computer = computer;
 		wcp.windList = [nil];
-		#wcp.waypoint = waypoint;
+		wcp.waypoint = waypoint;
+		wcp.cur_location = cur_location;
+		if (waypoint == nil) {
+			wcp.singleCRZ = 1;
+		}
 		wcp._setupPageWithData();
 		wcp.updateTmpy();
 		return wcp;
@@ -43,8 +49,11 @@ var windCRZPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		me.title = ["CRZ WIND", " AT ", "TEMP"];
-		#me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+		if (me.singleCRZ == 1) {
+			me.title = ["","CRZ WIND",""];
+		} else {
+			me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+		}
 		me.titleColour = "wht";
 		
 		if (size(me.windList) >= 4) {
@@ -108,5 +117,31 @@ var windCRZPage = {
 			#draft title
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
+	},
+	reload: func() {
+		me._setupPageWithData();
+		me.updateTmpy();
+	},
+	pushButtonUp: func() {
+		if (me.cur_location < size(fmgc.flightPlanController.getWaypointList(2)) - 1) {
+			me.cur_location = me.cur_location + 1;
+		} else {
+			me.cur_location = 0;
+		}
+		me.waypoint = fmgc.flightPlanController.getWaypointList(2)[me.cur_location];
+		me.windList = [];
+		#load stored data here
+		me.reload();
+	},
+	pushButtonDown: func() {
+		if (me.cur_location > 0) {
+			me.cur_location = me.cur_location - 1;
+		} else {
+			me.cur_location = size(fmgc.flightPlanController.getWaypointList(2)) - 1;
+		}
+		me.waypoint = fmgc.flightPlanController.getWaypointList(2)[me.cur_location];
+		me.windList = [];
+		#load stored data here
+		me.reload();
 	}
 };
