@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<name>reflection</name>
+	<inherits-from>Effects/model-combined-deferred</inherits-from>
+	<parameters>
+		<reflection-enabled type="int">1</reflection-enabled>
+		<reflection-dynamic type="int">1</reflection-dynamic>
+		<reflect_map-enabled type="int">1</reflect_map-enabled>
+		<reflection-correction type="float">-0.05</reflection-correction>
+		<reflection-type type="int">2</reflection-type>
+		<ambient-correction type="float">0.1</ambient-correction>
+		<lightmap-enabled type="int">0</lightmap-enabled>
+		<lightmap-multi type="int">0</lightmap-multi>
+		<texture n="5">
+			<type>cubemap</type>
+			<images>
+				<positive-x>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/1.png</positive-x>
+				<negative-x>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/4.png</negative-x>
+				<positive-y>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/2.png</positive-y>
+				<negative-y>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/3.png</negative-y>
+				<positive-z>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/6.png</positive-z>
+				<negative-z>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/5.png</negative-z>
+			</images>
+		</texture>
+		<reflection-rainbow type="float">0.0</reflection-rainbow>
+		<reflection-fresnel type="float">0.0</reflection-fresnel>
+		<reflection-fresnel-factor type="float">0.5</reflection-fresnel-factor>
+		<ambient_correction>0.5</ambient_correction>
+	</parameters>
+</PropertyList>

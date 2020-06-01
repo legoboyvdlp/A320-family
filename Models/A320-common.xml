@@ -56,4 +56,10 @@
 			<property>sim/multiplay/generic/int[13]</property>
 		</condition>
 	</animation>
+	
+	<!-- Effects -->
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
+		<object-name>Fuselage</object-name>
+	</effect>
 </PropertyList>
