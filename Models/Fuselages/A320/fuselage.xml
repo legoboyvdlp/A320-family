@@ -21,6 +21,21 @@
 		<object-name>Antenna2</object-name>
 		<object-name>WingtipFence</object-name>
 		<object-name>Sharklet</object-name>
+		<object-name>GearLDoor</object-name>
+		<object-name>GearLWingDoor1</object-name>
+		<object-name>GearLWingDoor2</object-name>
+		<object-name>GearRDoor</object-name>
+		<object-name>GearRDoor.002</object-name>
+		<object-name>GearNAtDoorL</object-name>
+		<object-name>GearNAtDoorR</object-name>
+		<object-name>GearNFwdDoorL</object-name>
+		<object-name>GearNFwdDoorR</object-name>
+		<object-name>FlapL1</object-name>
+		<object-name>FlapL2</object-name>
+		<object-name>SLatL1</object-name>
+		<object-name>SlatL2</object-name>
+		<object-name>SlatL2.006</object-name>
+		<object-name>AileronL</object-name>
 	</effect>
 
 </PropertyList>
