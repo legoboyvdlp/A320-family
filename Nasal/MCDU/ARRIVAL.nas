@@ -451,7 +451,7 @@ var arrivalPage = {
 	},
 	updateVIAs: func() {
 		if (me.selectedApproach == nil) {
-			me.L2 = [" NO VIA ", " APP VIAS", "blu"];
+			me.L2 = [" NO VIA", " APP VIAS", "blu"];
 			if (!me.hasPressNoVia) {
 				me.arrowsMatrix[0][2] = 1;
 				me.arrowsColour[0][2] = "blu";
@@ -463,22 +463,11 @@ var arrivalPage = {
 		}
 		me._vias = me.selectedApproach.transitions;
 		me.vias = sort(me._vias, func(a,b) cmp(a,b));
+		append(me.vias, "NO VIA");
 		
-		if (size(me.vias) == 0) {
-			me.L2 = [" NO VIA", " APP VIAS", "blu"];
-			if (!me.hasPressNoVia) {
-				me.arrowsMatrix[0][1] = 1;
-				me.arrowsColour[0][1] = "blu";
-			} else {
-				me.arrowsMatrix[0][1] = 0;
-				me.arrowsColour[0][1] = "ack";
-			}
-		} else {
-			append(me.vias, "NO VIA");
-		}
 		if (size(me.vias) >= 1) {
 			me.L2 = [" " ~ me.vias[0 + me.scrollVias], " APP VIAS", "blu"];
-			if (me.vias[0] != me.selectedVIA) {
+			if (me.vias[0 + me.scrollVias] != me.selectedVIA) {
 				me.arrowsMatrix[0][1] = 1;
 				me.arrowsColour[0][1] = "blu";
 			} else {
@@ -488,7 +477,7 @@ var arrivalPage = {
 		} 
 		if (size(me.vias) >= 2) {
 			me.L3 = [" " ~ me.vias[1 + me.scrollVias], nil, "blu"];
-			if (me.vias[1] != me.selectedVIA) {
+			if (me.vias[1 + me.scrollVias] != me.selectedVIA) {
 				me.arrowsMatrix[0][2] = 1;
 				me.arrowsColour[0][2] = "blu";
 			} else {
@@ -498,7 +487,7 @@ var arrivalPage = {
 		}
 		if (size(me.vias) >= 3) {
 			me.L4 = [" " ~ me.vias[2 + me.scrollVias], nil, "blu"];
-			if (me.vias[2] != me.selectedVIA) {
+			if (me.vias[2 + me.scrollVias] != me.selectedVIA) {
 				me.arrowsMatrix[0][3] = 1;
 				me.arrowsColour[0][3] = "blu";
 			} else {
@@ -508,7 +497,7 @@ var arrivalPage = {
 		}
 		if (size(me.vias) >= 4) {
 			me.L5 = [" " ~ me.vias[3 + me.scrollVias], nil, "blu"];
-			if (me.vias[2] != me.selectedVIA) {
+			if (me.vias[3 + me.scrollVias] != me.selectedVIA) {
 				me.arrowsMatrix[0][4] = 1;
 				me.arrowsColour[0][4] = "blu";
 			} else {
@@ -709,6 +698,9 @@ var arrivalPage = {
 			me.activePage = me.oldPage;
 			me.oldPage = 0;
 			me.updatePage();
+			if (me.selectedSTAR != nil) {
+				me.updateTransitions();
+			}
 		} elsif (index == 6 and me.activePage != 2) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
