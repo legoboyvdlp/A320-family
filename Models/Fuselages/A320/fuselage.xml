@@ -5,5 +5,22 @@
 <PropertyList>
 	<name>Fuselage</name>
 	<path>res/A320-216.ac</path>
+	
+	<!-- Effects -->
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
+		<object-name>Fuselage</object-name>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR4</object-name>
+		<object-name>Cargo1</object-name>
+		<object-name>Cargo2</object-name>
+		<object-name>Cargo3</object-name>
+		<object-name>Antenna1</object-name>
+		<object-name>Antenna2</object-name>
+		<object-name>WingtipFence</object-name>
+		<object-name>Sharklet</object-name>
+	</effect>
 
 </PropertyList>

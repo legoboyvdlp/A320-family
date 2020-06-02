@@ -57,19 +57,6 @@
 		</condition>
 	</animation>
 	
-	<!-- Effects -->
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
-		<object-name>Fuselage</object-name>
-		<object-name>DoorL1</object-name>
-		<object-name>DoorL4</object-name>
-		<object-name>DoorR1</object-name>
-		<object-name>DoorR4</object-name>
-		<object-name>Cargo1</object-name>
-		<object-name>Cargo2</object-name>
-		<object-name>Cargo3</object-name>
-	</effect>
-	
 	<!-- Ancilliary Objects -->
 	
 	<!-- APU fire -->
