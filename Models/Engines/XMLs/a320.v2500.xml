@@ -291,7 +291,7 @@
 	<!--<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLIAE</object-name>
+		<object-name>FanLIAEL</object-name>
 		<factor>-67</factor>
 		<property>engines/engine[3]/n1</property>
 		<axis>
@@ -299,12 +299,17 @@
 			<y>0</y>
 			<z>0</z>
 		</axis>
+		<center>
+			<x-m>-5.78383</x-m>
+			<y-m>-5.63237</y-m>
+			<z-m>-2.20633</z-m>
+		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLIAE</object-name>
+		<object-name>FanLIAER</object-name>
 		<factor>-67</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
@@ -312,11 +317,16 @@
 			<y>0</y>
 			<z>0</z>
 		</axis>
+		<center>
+			<x-m>-5.78383</x-m>
+			<y-m> 5.62732</y-m>
+			<z-m>-2.2079</z-m>
+		</center>
 	</animation>-->
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningIAE</object-name>
+		<object-name>FanSpinningIAEL</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[3]/n1</property>
@@ -327,10 +337,32 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLIAE</object-name>
+		<object-name>FanSpinningIAER</object-name>
+		<condition>
+			<greater-than>
+				<property>engines/engine[4]/n1</property>
+				<value>40.0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FanLIAEL</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[3]/n1</property>
+				<value>40.0</value>
+			</less-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FanLIAER</object-name>
+		<condition>
+			<less-than-equals>
+				<property>engines/engine[4]/n1</property>
 				<value>40.0</value>
 			</less-than-equals>
 		</condition>

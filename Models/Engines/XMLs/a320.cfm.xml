@@ -45,7 +45,7 @@
 			<y-m>0</y-m>
 			<z-m>0</z-m>
 		</offsets>
-	</model>
+	</model>-->
 
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
@@ -75,9 +75,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0.3</z-m>
+			<x-m>-6.49508</x-m>
+			<y-m>-5.63082</y-m>
+			<z-m>-2.22766</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -110,14 +110,14 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0.3</z-m>
+			<x-m>-6.49508</x-m>
+			<y-m>5.63082</y-m>
+			<z-m>-2.22766</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
 	
-	<model>
+	<!--<model>
 		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
 		<name>engine-spray-left</name>
 		<condition>
@@ -288,35 +288,81 @@
 	</model>-->
 	
 	<!-- Animations -->
-	<!--<animation>
+	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLCFM56</object-name>
-		<factor>-67</factor>
+		<object-name>FanLCFM56L</object-name>
+		<factor>50</factor> <!-- TCDS sourced - don't tune! -->
 		<property>engines/engine[3]/n1</property>
 		<axis>
 			<x>-1</x>
 			<y>0</y>
 			<z>0</z>
 		</axis>
+		<center>
+			<x-m>-5.78383</x-m>
+			<y-m>-5.63237</y-m>
+			<z-m>-2.20633</z-m>
+		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLCFM56</object-name>
-		<factor>-67</factor>
+		<object-name>FanLCFM56R</object-name>
+		<factor>50</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
 			<y>0</y>
 			<z>0</z>
 		</axis>
-	</animation>-->
+		<center>
+			<x-m>-5.78383</x-m>
+			<y-m> 5.62732</y-m>
+			<z-m>-2.2079</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Fan spinning animation (slow)</name>
+		<type>spin</type>
+		<object-name>FanSpinningCFM56L</object-name>
+		<factor>5</factor>
+		<property>engines/engine[3]/n1</property>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-5.78383</x-m>
+			<y-m>-5.63237</y-m>
+			<z-m>-2.20633</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Fan spinning animation (slow)</name>
+		<type>spin</type>
+		<object-name>FanSpinningCFM56R</object-name>
+		<factor>5</factor>
+		<property>engines/engine[4]/n1</property>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-5.78383</x-m>
+			<y-m> 5.62732</y-m>
+			<z-m>-2.2079</z-m>
+		</center>
+	</animation>
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningCFM56</object-name>
+		<object-name>FanSpinningCFM56L</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[3]/n1</property>
@@ -327,10 +373,32 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLCFM56</object-name>
+		<object-name>FanSpinningCFM56R</object-name>
+		<condition>
+			<greater-than>
+				<property>engines/engine[4]/n1</property>
+				<value>40.0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FanLCFM56L</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[3]/n1</property>
+				<value>40.0</value>
+			</less-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FanLCFM56R</object-name>
+		<condition>
+			<less-than-equals>
+				<property>engines/engine[4]/n1</property>
 				<value>40.0</value>
 			</less-than-equals>
 		</condition>
@@ -348,7 +416,7 @@
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
-		<object-name>ExxhaustCFM56</object-name>
+		<object-name>ExhaustCFM56</object-name>
 		<object-name>IntakeCFM56</object-name>
 	</effect>
 </PropertyList>
