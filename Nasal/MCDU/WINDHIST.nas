@@ -105,5 +105,12 @@ var windHISTPage = {
 	reload: func() {
 		me._setupPageWithData();
 		me.updateTmpy();
+		if (me.computer == 0) {
+			#canvas_mcdu.myHISTWIND[1].windList = me.windList;
+			canvas_mcdu.myHISTWIND[1]._setupPageWithData();
+		} else {
+			#canvas_mcdu.myHISTWIND[0].windList = me.windList;
+			canvas_mcdu.myHISTWIND[0]._setupPageWithData();
+		}
 	}
 };

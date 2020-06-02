@@ -33,7 +33,13 @@ var windCLBPage = {
 	new: func(computer) {
 		var wcp = {parents:[windCLBPage]};
 		wcp.computer = computer;
-		wcp.windList = [nil];
+		if (computer == 0 and canvas_mcdu.myCLBWIND[1] != nil) {
+			wcp.windList = canvas_mcdu.myCLBWIND[1].windList;
+		} else if (computer == 1 and canvas_mcdu.myCLBWIND[0] != nil) {
+			wcp.windList = canvas_mcdu.myCLBWIND[0].windList;
+		} else {
+			wcp.windList = [nil];
+		}
 		wcp._setupPageWithData();
 		wcp.updateTmpy();
 		return wcp;

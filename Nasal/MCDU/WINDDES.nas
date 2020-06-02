@@ -33,7 +33,13 @@ var windDESPage = {
 	new: func(computer) { #, waypoint
 		var wcp = {parents:[windDESPage]};
 		wcp.computer = computer;
-		wcp.windList = [nil];
+		if (computer == 0 and canvas_mcdu.myDESWIND[1] != nil) {
+			wcp.windList = canvas_mcdu.myDESWIND[1].windList;
+		} else if (computer == 1 and canvas_mcdu.myDESWIND[0] != nil) {
+			wcp.windList = canvas_mcdu.myDESWIND[0].windList;
+		} else {
+			wcp.windList = [nil];
+		}
 		#wcp.waypoint = waypoint;
 		wcp._setupPageWithData();
 		wcp.updateTmpy();

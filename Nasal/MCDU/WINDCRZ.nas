@@ -36,13 +36,20 @@ var windCRZPage = {
 	new: func(computer, waypoint, cur_location) {
 		var wcp = {parents:[windCRZPage]};
 		wcp.computer = computer;
-		wcp.windList = [nil];
+		if (computer == 0 and canvas_mcdu.myCRZWIND[1] != nil) {
+			wcp.windList = canvas_mcdu.myCRZWIND[1].windList;
+		} else if (computer == 1 and canvas_mcdu.myCRZWIND[0] != nil) {
+			wcp.windList = canvas_mcdu.myCRZWIND[0].windList;
+		} else {
+			wcp.windList = [nil];
+		}
 		wcp.waypoint = waypoint;
 		wcp.cur_location = cur_location;
 		if (waypoint == nil) {
 			wcp.singleCRZ = 1;
+		} else {
+			wcp.match_location = fmgc.flightPlanController.getWaypointMapping(2)[wcp.cur_location];
 		}
-		wcp.match_location = fmgc.flightPlanController.getWaypointMapping(2)[wcp.cur_location];
 		wcp._setupPageWithData();
 		wcp.updateTmpy();
 		return wcp;
@@ -117,7 +124,7 @@ var windCRZPage = {
 		
 		if (size(me.windList) >= 3) {
 			if (me.windList[2] != nil) {
-				me.L3 = ["%03d", me.windList[2][0]) ~ "/" ~ sprintf("%03d", me.windList[2][1]) ~ "/" ~ me.windList[2][2], nil, "blu"];
+				me.L3 = [sprintf("%03d", me.windList[2][0]) ~ "/" ~ sprintf("%03d", me.windList[2][1]) ~ "/" ~ me.windList[2][2], nil, "blu"];
 				me.fontMatrix[0][2] = 0;
 			} else {
 				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -129,7 +136,7 @@ var windCRZPage = {
 		
 		if (size(me.windList) >= 2) {
 			if (me.windList[1] != nil) {
-				me.L2 = ["%03d", me.windList[1][0]) ~ "/" ~ sprintf("%03d", me.windList[1][1]) ~ "/" ~ me.windList[1][2], nil, "blu"];
+				me.L2 = [sprintf("%03d", me.windList[1][0]) ~ "/" ~ sprintf("%03d", me.windList[1][1]) ~ "/" ~ me.windList[1][2], nil, "blu"];
 				me.fontMatrix[0][1] = 0;
 			} else {
 				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -141,7 +148,7 @@ var windCRZPage = {
 		
 		if (size(me.windList) >= 1) {
 			if (me.windList[0] != nil) {
-				me.L1 = ["%03d", me.windList[0][0]) ~ "/" ~ sprintf("%03d", me.windList[0][1]) ~ "/" ~ me.windList[0][2], "TRU WIND/ALT", "blu"];
+				me.L1 = [sprintf("%03d", me.windList[0][0]) ~ "/" ~ sprintf("%03d", me.windList[0][1]) ~ "/" ~ me.windList[0][2], "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 0;
 			} else {
 				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
