@@ -222,14 +222,24 @@ var flightPlanController = {
 		if (force) {
 			me.flightplans[plan].insertWP(createDiscontinuity(), index);
 		}
-		if (index > 0) {
-			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
+		
+		if (me.flightplans[plan].getWP(index) != nil) { # index is not nil
+			if (me.flightplans[plan].getWP(index - 1) != nil) { # index -1 is also not nil
+				if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
+					me.flightplans[plan].insertWP(createDiscontinuity(), index);
+				}
+			} else { # -1 is nil
+				if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY") {
+					me.flightplans[plan].insertWP(createDiscontinuity(), index);
+				}
+			}
+		} elsif (me.flightplans[plan].getWP(index - 1) != nil) { # index is nil, -1 is not
+			if (me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
 				me.flightplans[plan].insertWP(createDiscontinuity(), index);
 			}
-		} else {
-			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY") {
-				me.flightplans[plan].insertWP(createDiscontinuity(), index);
-			}
+		} else { # both are nil??
+			print("Possible error in discontinuities!");
+			me.flightplans[plan].insertWP(createDiscontinuity(), index);
 		}
 	},
 	
