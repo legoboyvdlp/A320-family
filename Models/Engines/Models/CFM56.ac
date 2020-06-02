@@ -1,6 +1,6 @@
 AC3Db
 MATERIAL "DefaultWhite" rgb 1.000 1.000 1.000  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
-MATERIAL "engine-CFM56" rgb 0.800 0.800 0.800  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.515  shi 12 trans 0.000
+MATERIAL "engine-CFM56" rgb 0.800 0.800 0.800  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.970 0.970 1.000  shi 20 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.26__CFM56.ac"
 kids 8
