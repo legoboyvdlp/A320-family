@@ -332,4 +332,18 @@
 		<object-name>ReverserRDoor1</object-name>
 		<object-name>ReverserRDoor2</object-name>
 	</effect>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
+		<object-name>ExxhaustCFM56</object-name>
+		<object-name>IntakeCFM56</object-name>
+	</effect>
+	
+	<!--<animation>
+        <type>shader</type>
+        <shader>chrome</shader>
+        <texture>Aircraft/A320-family/Models/Engines/Models/chrome.png</texture>
+		<object-name>ExxhaustCFM56</object-name>
+		<object-name>IntakeCFM56</object-name>
+	</animation>-->
 </PropertyList>

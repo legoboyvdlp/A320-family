@@ -68,11 +68,10 @@
 				</iceable>
 			</icing>
 			<reflection>
-				<ambient-correction type="double">0.5</ambient-correction>
-				<reflection-correction type="double">0.333</reflection-correction>
-				<reflection-fresnel type="double">0.0</reflection-fresnel>
-				<reflection-fresnel-factor type="double">0.5</reflection-fresnel-factor>
-				<reflection-rainbow type="double">0.0</reflection-rainbow>
+				<ambient-correction type="double">0.10</ambient-correction>
+				<reflection-correction type="double">0.10</reflection-correction>
+				<ambient-correction-chrome type="double">0.05</ambient-correction-chrome>
+				<reflection-correction-chrome type="double">0.20</reflection-correction-chrome>
 			</reflection>
 		</model>
 		
