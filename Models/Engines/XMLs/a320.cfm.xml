@@ -69,7 +69,7 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[0]/n1</property>
+					<property>engines/engine[3]/n1</property>
 					<value>65</value>
 				</greater-than>
 			</and>
@@ -104,7 +104,7 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[1]/n1</property>
+					<property>engines/engine[4]/n1</property>
 					<value>65</value>
 				</greater-than>
 			</and>
@@ -139,7 +139,7 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[0]/n1-actual</property>
+					<property>engines/engine[3]/n1</property>
 					<value>65</value>
 				</greater-than>
 				<equals>
@@ -177,7 +177,7 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[1]/n1-actual</property>
+					<property>engines/engine[4]/n1</property>
 					<value>65</value>
 				</greater-than>
 				<equals>
@@ -211,7 +211,7 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[0]/n1-actual</property>
+					<property>engines/engine[3]/n1</property>
 					<value>65</value>
 				</greater-than>
 				<greater-than>
@@ -245,7 +245,7 @@
 					<value>1.63</value>
 				</less-than-equals>
 				<greater-than>
-					<property>engines/engine[1]/n1-actual</property>
+					<property>engines/engine[4]/n1</property>
 					<value>65</value>
 				</greater-than>
 				<greater-than>
@@ -293,7 +293,20 @@
 		<type>spin</type>
 		<object-name>FanLCFM56</object-name>
 		<factor>-67</factor>
-		<property>engines/engine[0]/n1</property>
+		<property>engines/engine[3]/n1</property>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Fan spinning animation (slow)</name>
+		<type>spin</type>
+		<object-name>FanLCFM56</object-name>
+		<factor>-67</factor>
+		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
 			<y>0</y>
@@ -306,7 +319,7 @@
 		<object-name>FanSpinningCFM56</object-name>
 		<condition>
 			<greater-than>
-				<property>engines/engine[0]/n1</property>
+				<property>engines/engine[3]/n1</property>
 				<value>40.0</value>
 			</greater-than>
 		</condition>
@@ -317,7 +330,7 @@
 		<object-name>FanLCFM56</object-name>
 		<condition>
 			<less-than-equals>
-				<property>engines/engine[0]/n1</property>
+				<property>engines/engine[3]/n1</property>
 				<value>40.0</value>
 			</less-than-equals>
 		</condition>
@@ -338,12 +351,4 @@
 		<object-name>ExxhaustCFM56</object-name>
 		<object-name>IntakeCFM56</object-name>
 	</effect>
-	
-	<!--<animation>
-        <type>shader</type>
-        <shader>chrome</shader>
-        <texture>Aircraft/A320-family/Models/Engines/Models/chrome.png</texture>
-		<object-name>ExxhaustCFM56</object-name>
-		<object-name>IntakeCFM56</object-name>
-	</animation>-->
 </PropertyList>
