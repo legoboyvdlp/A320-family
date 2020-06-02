@@ -21,21 +21,31 @@
 		<object-name>Antenna2</object-name>
 		<object-name>WingtipFence</object-name>
 		<object-name>Sharklet</object-name>
-		<object-name>GearLDoor</object-name>
-		<object-name>GearLWingDoor1</object-name>
-		<object-name>GearLWingDoor2</object-name>
-		<object-name>GearRDoor</object-name>
-		<object-name>GearRDoor.002</object-name>
-		<object-name>GearNAtDoorL</object-name>
-		<object-name>GearNAtDoorR</object-name>
-		<object-name>GearNFwdDoorL</object-name>
-		<object-name>GearNFwdDoorR</object-name>
+		<object-name>MLGGearDoorL</object-name>
+		<object-name>MLGGearDoorR</object-name>
+		<object-name>NLGAftDoorL</object-name>
+		<object-name>NLGAftDoorR</object-name>
+		<object-name>NLGForewardDoorL</object-name>
+		<object-name>NLGForewardDoorR</object-name>
 		<object-name>FlapL1</object-name>
 		<object-name>FlapL2</object-name>
+		<object-name>FlapR1</object-name>
+		<object-name>FlapR2</object-name>
 		<object-name>SLatL1</object-name>
 		<object-name>SlatL2</object-name>
-		<object-name>SlatL2.006</object-name>
+		<object-name>LightWingL</object-name>
 		<object-name>AileronL</object-name>
+		<object-name>AileronR</object-name>
+		<object-name>ElevatorL</object-name>
+		<object-name>ElevatorR</object-name>
+		<object-name>Hstabs</object-name>
+		<object-name>Hstabs.001</object-name>
+		<object-name>Rudder</object-name>
+		<object-name>SpoilerL1</object-name>
+		<object-name>SpoilerL2</object-name>
+		<object-name>SpoilerL3</object-name>
+		<object-name>SpoilerL4</object-name>
+		<object-name>SpoilerL5</object-name>
 	</effect>
 
 </PropertyList>
