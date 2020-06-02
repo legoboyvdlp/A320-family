@@ -718,12 +718,12 @@ var flightPlanController = {
 					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
 					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
 					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
-					if (wpt > 1) {
-						if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-							# print("Adding " ~ courseDistanceFromPrev[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
-							me._arrivalDist += courseDistanceFromPrev[1]; 
-						}
-					}
+					#if (wpt > 1) {
+					#	if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
+					#		# print("Adding " ~ courseDistanceFromPrev[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
+					#		me._arrivalDist += courseDistanceFromPrev[1]; 
+					#	}
+					#}
 				} else {
 					# use PPOS for the first waypoint
 					wpCoursePrev[n][wpt].setValue(courseDistanceFrom[0]);
@@ -742,8 +742,7 @@ var flightPlanController = {
 				}
 			}
 		}
-		# print("Total: " ~ me._arrivalDist);
-		me.arrivalDist = me._arrivalDist;
+		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},
 	
