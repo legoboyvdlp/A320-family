@@ -7,7 +7,6 @@ var pos = nil;
 var geoPosPrev = geo.Coord.new();
 var currentLegCourseDist = nil;
 var courseDistanceFrom = nil;
-var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
 var storeCourse = nil;
@@ -713,14 +712,10 @@ var flightPlanController = {
 				}
 				
 				if (wpt > 0) {
-					geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
-					
-					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
-					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
-					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
+					wpCoursePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_bearing);
+					wpDistancePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_distance);
 					#if (wpt > 1) {
 					#	if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-					#		# print("Adding " ~ courseDistanceFromPrev[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
 					#		me._arrivalDist += courseDistanceFromPrev[1]; 
 					#	}
 					#}
