@@ -301,8 +301,8 @@
 		</axis>
 		<center>
 			<x-m>-5.78383</x-m>
-			<y-m>-5.63237</y-m>
-			<z-m>-2.20633</z-m>
+			<y-m>-5.63082</y-m>
+			<z-m>-2.20697</z-m>
 		</center>
 	</animation>
 	
@@ -319,13 +319,13 @@
 		</axis>
 		<center>
 			<x-m>-5.78383</x-m>
-			<y-m> 5.62732</y-m>
-			<z-m>-2.2079</z-m>
+			<y-m> 5.62871</y-m>
+			<z-m>-2.20697</z-m>
 		</center>
 	</animation>
 	
 	<animation>
-		<name>Fan spinning animation (slow)</name>
+		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
 		<object-name>FanSpinningCFM56L</object-name>
 		<factor>5</factor>
@@ -337,13 +337,13 @@
 		</axis>
 		<center>
 			<x-m>-5.78383</x-m>
-			<y-m>-5.63237</y-m>
-			<z-m>-2.20633</z-m>
+			<y-m>-5.63082</y-m>
+			<z-m>-2.20697</z-m>
 		</center>
 	</animation>
 	
 	<animation>
-		<name>Fan spinning animation (slow)</name>
+		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
 		<object-name>FanSpinningCFM56R</object-name>
 		<factor>5</factor>
@@ -355,8 +355,8 @@
 		</axis>
 		<center>
 			<x-m>-5.78383</x-m>
-			<y-m> 5.62732</y-m>
-			<z-m>-2.2079</z-m>
+			<y-m> 5.62871</y-m>
+			<z-m>-2.20697</z-m>
 		</center>
 	</animation>
 	

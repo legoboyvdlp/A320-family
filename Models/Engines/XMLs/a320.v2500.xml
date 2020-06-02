@@ -288,11 +288,11 @@
 	</model>-->
 	
 	<!-- Animations -->
-	<!--<animation>
+	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
 		<object-name>FanLIAEL</object-name>
-		<factor>-67</factor>
+		<factor>56.5</factor>
 		<property>engines/engine[3]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -300,9 +300,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-5.78383</x-m>
-			<y-m>-5.63237</y-m>
-			<z-m>-2.20633</z-m>
+			<x-m>-6.15203</x-m>
+			<y-m>-5.62875</y-m>
+			<z-m>-2.22299</z-m>
 		</center>
 	</animation>
 	
@@ -310,7 +310,7 @@
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
 		<object-name>FanLIAER</object-name>
-		<factor>-67</factor>
+		<factor>56.5</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -318,11 +318,47 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-5.78383</x-m>
-			<y-m> 5.62732</y-m>
-			<z-m>-2.2079</z-m>
+			<x-m>-6.15203</x-m>
+			<y-m> 5.62664</y-m>
+			<z-m>-2.22299</z-m>
 		</center>
-	</animation>-->
+	</animation>
+	
+	<animation>
+		<name>Fan spinning animation (fast)</name>
+		<type>spin</type>
+		<object-name>FanSpinningIAEL</object-name>
+		<factor>5.65</factor>
+		<property>engines/engine[3]/n1</property>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-6.15203</x-m>
+			<y-m>-5.62875</y-m>
+			<z-m>-2.22299</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Fan spinning animation (fast)</name>
+		<type>spin</type>
+		<object-name>FanSpinningIAER</object-name>
+		<factor>5.65</factor>
+		<property>engines/engine[4]/n1</property>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-6.15203</x-m>
+			<y-m> 5.62664</y-m>
+			<z-m>-2.22299</z-m>
+		</center>
+	</animation>
 	
 	<animation>
 		<type>select</type>
