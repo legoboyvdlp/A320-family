@@ -61,5 +61,28 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
 		<object-name>Fuselage</object-name>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR4</object-name>
+		<object-name>Cargo1</object-name>
+		<object-name>Cargo2</object-name>
+		<object-name>Cargo3</object-name>
 	</effect>
+	
+	<!-- Ancilliary Objects -->
+	
+	<!-- APU fire -->
+	<model>
+		<name>APU fire</name>
+		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<offsets>
+			<x-m>38.9</x-m>
+			<y-m>0</y-m>
+			<z-m>0.95</z-m>
+		</offsets>
+		<condition>
+			<property>systems/failures/apu-fire</property>
+		</condition>
+	</model>
 </PropertyList>

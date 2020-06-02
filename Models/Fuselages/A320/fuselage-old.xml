@@ -6,36 +6,6 @@
 	<name>Fuselage</name>
 	<path>res/fuselage.ac</path>
 
-	<!-- Reflection Shader -->
-	<!--effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/NEOreflect</inherits-from>
-		<object-name>Fuselage</object-name>
-	</effect-->
-    
-	<effect>
-		<inherits-from>Effects/glass</inherits-from>
-		<object-name>Windsheild</object-name>
-		<object-name>Windows</object-name>
-		<object-name>glass</object-name>
-		<object-name>glass1</object-name>
-		<object-name>glass2</object-name>
-		<object-name>glass3</object-name>
-    </effect>
-
-	<!-- APU fire -->
-	<model>
-		<name>APU fire</name>
-		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
-		<offsets>
-			<x-m>38.9</x-m>
-			<y-m>0</y-m>
-			<z-m>0.95</z-m>
-		</offsets>
-		<condition>
-			<property>systems/failures/apu-fire</property>
-		</condition>
-	</model>
-
 	<!-- ANIMATIONS -->
 	<!-- PAX doors -->
 	<animation>
