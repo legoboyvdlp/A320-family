@@ -174,8 +174,11 @@ var MessageController = {
 	]),
 	typeIIMessages: std.Vector.new([
 		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),
-		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),
+		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),TypeIIMessage.new("V1/VR/V2 DISAGREE", "amb", 0),
+		TypeIIMessage.new("TO SPEED TOO LOW", "amb", 0),
 	]),
+	
+	# to speed to low - new on a320, margin against vmcg / vs1g
 
 	getTypeIMsgByText: func(text) {
 		return me.getMsgByText(text, me.typeIMessages.vector);

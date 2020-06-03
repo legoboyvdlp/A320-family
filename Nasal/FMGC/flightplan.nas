@@ -110,6 +110,19 @@ var flightPlanController = {
 			flightPlanTimer.stop();
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
+			
+			if (mcdu.isNoStar[n] == 1) {
+				mcdu.isNoStar[2] = 1;
+			} else {
+				mcdu.isNoStar[2] = 0;
+			}
+			
+			if (mcdu.isNoVia[n] == 1) {
+				mcdu.isNoVia[2] = 1;
+			} else {
+				mcdu.isNoVia[2] = 0;
+			}
+			
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
