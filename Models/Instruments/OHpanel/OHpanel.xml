@@ -3899,7 +3899,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/cockpit-temp</property>
+				<property>controls/pneumatics/switches/temp-cockpit</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3911,7 +3911,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/cockpit-temp</property>
+				<property>controls/pneumatics/switches/temp-cockpit</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3922,7 +3922,7 @@
 		<name>Cockpit Temp rotate</name>
 		<type>rotate</type>
 		<object-name>CockpitACKnb</object-name>
-		<property>controls/pneumatic/switches/cockpit-temp</property>
+		<property>controls/pneumatics/switches/temp-cockpit</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -3949,7 +3949,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/fwd-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3961,7 +3961,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/fwd-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3972,7 +3972,7 @@
 		<name>FWD Temp rotate</name>
 		<type>rotate</type>
 		<object-name>FwdCabinACKnb</object-name>
-		<property>controls/pneumatic/switches/fwd-temp</property>
+		<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -3999,7 +3999,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/aft-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-aft</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -4011,7 +4011,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/aft-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-aft</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -4022,7 +4022,7 @@
 		<name>AFT Temp rotate</name>
 		<type>rotate</type>
 		<object-name>AftCabinACKnb</object-name>
-		<property>controls/pneumatic/switches/aft-temp</property>
+		<property>controls/pneumatics/switches/temp-cabin-aft</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -4398,7 +4398,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/hot-air</property>
+				<property>controls/pneumatics/switches/hot-air</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4418,7 +4418,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/hot-air</property>
+						<property>controls/pneumatics/switches/hot-air</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4436,7 +4436,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/hot-air</property>
+					<property>controls/pneumatics/switches/hot-air</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4539,7 +4539,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/ram-air</property>
+				<property>controls/pneumatics/switches/ram-air</property>
 			</binding>
 			<binding>
 				<condition>
@@ -4601,7 +4601,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/ram-air</property>
+					<property>controls/pneumatics/switches/ram-air</property>
 					<value>1</value>
 				</equals>
 				<equals>

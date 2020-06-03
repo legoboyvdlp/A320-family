@@ -112,7 +112,7 @@ var start_one_check = func {
 }
 
 var start_one_check_b = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine1.getValue() and !getprop("/controls/engines/engine[0]/cutoff-switch")) { {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine1.getValue() and !getprop("/controls/engines/engine[0]/cutoff-switch")) {
 		auto_start_one();
 	}
 }
@@ -195,7 +195,7 @@ var start_two_check = func {
 }
 
 var start_two_check_b = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine2.getValue() >= 25 and !getprop("/controls/engines/engine[1]/cutoff-switch")) { {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine2.getValue() >= 25 and !getprop("/controls/engines/engine[1]/cutoff-switch")) {
 		auto_start_two();
 	}
 }

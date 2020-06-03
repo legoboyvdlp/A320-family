@@ -89,11 +89,12 @@ var PNEU = {
 		prv2: props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve"),
 		pack1: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-1"),
 		pack2: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-2"),
+		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 	},
 	init: func() {
 		me.resetFail();
 		
-		# Legacy shit
+		# Legacy pressurization system
 		setprop("/systems/pressurization/mode", "GN");
 		setprop("/systems/pressurization/vs", "0");
 		setprop("/systems/pressurization/targetvs", "0");

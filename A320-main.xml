@@ -1010,6 +1010,7 @@
 			<valves>
 				<flow-control-valve-1 type="double">0</flow-control-valve-1>
 				<flow-control-valve-2 type="double">0</flow-control-valve-2>
+				<ram-air type="double">0</ram-air>
 			</valves>
 			<warnings>
 				<pack-1-disagree type="bool">0</pack-1-disagree>

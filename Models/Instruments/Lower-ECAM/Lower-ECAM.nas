@@ -734,7 +734,8 @@ var canvas_lowerECAM_bleed = {
 		"BLEED-Pack-1-Comp-Out-Temp", "BLEED-Pack-1-Packflow-needle", "BLEED-Pack-1-Bypass-needle", "BLEED-Pack-2-Out-Temp",
 		"BLEED-Pack-2-Bypass-needle", "BLEED-Pack-2-Comp-Out-Temp", "BLEED-Pack-2-Packflow-needle", "BLEED-Anti-Ice-Left",
 		"BLEED-Anti-Ice-Right", "BLEED-HP-2-connection", "BLEED-HP-1-connection", "BLEED-ANTI-ICE-ARROW-LEFT", "BLEED-ANTI-ICE-ARROW-RIGHT",
-		"BLEED-xbleedLeft","BLEED-xbleedCenter","BLEED-xbleedRight"];
+		"BLEED-xbleedLeft","BLEED-xbleedCenter","BLEED-xbleedRight","BLEED-cond-1","BLEED-cond-2","BLEED-cond-3","BLEED-Ram-Air-connection",
+		"BLEED-Ram-Air"];
 	},
 	update: func() {
 		# X BLEED
@@ -1030,6 +1031,45 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-2-Flow-Valve"].setColor(0.7333,0.3803,0);
 		}
 
+		# Ram Air
+		if (systems.PNEU.Valves.ramAir.getValue() == 0) {
+			me["BLEED-Ram-Air"].setRotation(90 * D2R);
+			me["BLEED-Ram-Air"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-Ram-Air"].setColorFill(0.0509,0.7529,0.2941);
+			me["BLEED-Ram-Air-connection"].hide();
+		} elsif (systems.PNEU.Valves.ramAir.getValue() == 1) {
+			me["BLEED-Ram-Air"].setRotation(0);
+			if (pts.Gear.wow[1].getValue()) {
+				me["BLEED-Ram-Air"].setColor(0.7333,0.3803,0);
+				me["BLEED-Ram-Air"].setColorFill(0.7333,0.3803,0);
+			} else {
+				me["BLEED-Ram-Air"].setColor(0.0509,0.7529,0.2941);
+				me["BLEED-Ram-Air"].setColorFill(0.0509,0.7529,0.2941);
+			}
+			me["BLEED-Ram-Air-connection"].show();
+		} else {
+			me["BLEED-Ram-Air"].setRotation(45 * D2R);
+			me["BLEED-Ram-Air"].setColor(0.7333,0.3803,0);
+			me["BLEED-Ram-Air"].setColorFill(0.7333,0.3803,0);
+			me["BLEED-Ram-Air-connection"].show();
+		}
+		
+		# Triangles
+		if (systems.PNEU.Valves.pack1.getValue() == 0 and systems.PNEU.Valves.pack2.getValue() == 0) {
+			if (pts.Gear.wow[1].getValue() or systems.PNEU.Valves.ramAir.getValue() != 1) {
+				me["BLEED-cond-1"].setColor(0.7333,0.3803,0);
+				me["BLEED-cond-2"].setColor(0.7333,0.3803,0);
+				me["BLEED-cond-3"].setColor(0.7333,0.3803,0);
+			} else {
+				me["BLEED-cond-1"].setColor(0.0509,0.7529,0.2941);
+				me["BLEED-cond-2"].setColor(0.0509,0.7529,0.2941);
+				me["BLEED-cond-3"].setColor(0.0509,0.7529,0.2941);
+			}
+		} else {
+			me["BLEED-cond-1"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-cond-2"].setColor(0.0509,0.7529,0.2941);
+			me["BLEED-cond-3"].setColor(0.0509,0.7529,0.2941);
+		}
 		me.updateBottomStatus();
 	},
 };
