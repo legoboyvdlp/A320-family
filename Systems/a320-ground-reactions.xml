@@ -8,7 +8,7 @@
 		<location unit="M">
 			<x>-12.768</x>
 			<y>0</y>
-			<z>-4.07014</z>
+			<z>-4.15014</z>
 		</location>
 		<static_friction>1.4</static_friction> <!-- Arbitrarily high to help nose wheel steering - no effect on braking -->
 		<dynamic_friction>0.6</dynamic_friction>

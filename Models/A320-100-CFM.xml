@@ -6,11 +6,6 @@
 	<name>A320-100-CFM</name>
 	<path>empty.ac</path> <!-- Livery system on MP multimodel -->
 
-	<offsets>
-		<x-m>-18.8499</x-m>
-		<z-m>1.7005004</z-m>
-	</offsets>
-
 	<model>
 		<name>A320</name>
 		<path>Aircraft/A320-family/Models/A320-common.xml</path>

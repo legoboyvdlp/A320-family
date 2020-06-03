@@ -14,13 +14,6 @@
 	<model>
 		<name>Interior</name>
 		<path>Aircraft/A320-family/Models/A320-interior.xml</path>
-		<!-- On multiplayer models, the interior is loaded separately and global
-			 offsets are not applied. This cancels the global offsets, so that
-			 the interior is loaded at (0,0,0) anyway. -->
-		<offsets>
-			<x-m>18.8499</x-m>
-			<z-m>-1.7005004</z-m>
-		</offsets>
 		<usage>interior</usage>
 	</model>
 	
