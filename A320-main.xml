@@ -94,6 +94,11 @@
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
+				<path>Splash/cockpit3.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
 				<path>Splash/wing1.png</path>
 			</preview>
 			<preview>
