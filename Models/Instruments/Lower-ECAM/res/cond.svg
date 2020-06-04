@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="false"
-     inkscape:zoom="0.5"
-     inkscape:cx="285.0004"
-     inkscape:cy="859.89724"
+     inkscape:zoom="163.84"
+     inkscape:cx="931.44175"
+     inkscape:cy="894.81836"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -362,7 +362,9 @@
   <g
      id="CONDTrimValveCKPT"
      inkscape:label="#g4870"
-     transform="matrix(1.0008336,0,0,1.0076569,-0.20693166,-2.7123511)">
+     transform="matrix(1.0008336,0,0,1.0076569,-0.20693166,-2.7123511)"
+     inkscape:transform-center-x="0.34849792"
+     inkscape:transform-center-y="-35.397308">
     <path
        inkscape:connector-curvature="0"
        id="path4844"
@@ -425,7 +427,9 @@
   <g
      transform="translate(224.8544,-0.57971191)"
      id="CONDTrimValveFWD"
-     inkscape:label="#g4870">
+     inkscape:label="#g4870"
+     inkscape:transform-center-x="0.27914252"
+     inkscape:transform-center-y="-35.133687">
     <path
        inkscape:connector-curvature="0"
        id="path4844-7"
@@ -488,7 +492,9 @@
   <g
      transform="translate(449.85443,-0.57974243)"
      id="CONDTrimValveAFT"
-     inkscape:label="#g4870">
+     inkscape:label="#g4870"
+     inkscape:transform-center-x="0.17680135"
+     inkscape:transform-center-y="-35.128738">
     <path
        inkscape:connector-curvature="0"
        id="path4844-7-1"

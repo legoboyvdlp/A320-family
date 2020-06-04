@@ -225,9 +225,9 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/valves/trim-cockpit</property>
-					<entry><ind>0.0</ind><dep>-80</dep></entry>
+					<entry><ind>0.0</ind><dep>-50</dep></entry>
 					<entry><ind>0.5</ind><dep>  0</dep></entry>
-					<entry><ind>1.0</ind><dep> 80</dep></entry>
+					<entry><ind>1.0</ind><dep> 50</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -242,9 +242,9 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/valves/trim-aft</property>
-					<entry><ind>0.0</ind><dep>-80</dep></entry>
+					<entry><ind>0.0</ind><dep>-50</dep></entry>
 					<entry><ind>0.5</ind><dep>  0</dep></entry>
-					<entry><ind>1.0</ind><dep> 80</dep></entry>
+					<entry><ind>1.0</ind><dep> 50</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -259,9 +259,9 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/valves/trim-fwd</property>
-					<entry><ind>0.0</ind><dep>-80</dep></entry>
+					<entry><ind>0.0</ind><dep>-50</dep></entry>
 					<entry><ind>0.5</ind><dep>  0</dep></entry>
-					<entry><ind>1.0</ind><dep> 80</dep></entry>
+					<entry><ind>1.0</ind><dep> 50</dep></entry>
 				</table>
 			</expression>
 		</input>
