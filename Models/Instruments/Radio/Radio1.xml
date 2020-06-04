@@ -1467,23 +1467,15 @@
 		<type>pick</type>
 		<object-name>radio_nav_lit</object-name>
 		<action>
-			<button>1</button>
+			<button>0</button>
 			<binding>
-				<command>property-assign</command>
+				<command>property-toggle</command>
 				<property>controls/radio/rmp[0]/nav-protect</property>
-				<value>1</value>
 			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/radio/rmp[0]/nav-protect</property>
-					<value>0</value>
-				</binding>
-				<binding>
-					<command>nasal</command>
-					<script>setprop("sim/sounde/oh-cover", 1);</script>
-				</binding>
-			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	<animation>
@@ -1502,7 +1494,7 @@
 		<object-name>radio_nav</object-name>
 		<action>
 			<button>0</button>
-			<repeatable>true</repeatable>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
 				<property>systems/radio/rmp[0]/nav</property>
@@ -1522,6 +1514,15 @@
 						</equals>
 					</and>
 				</condition>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/radio/rmp[0]/nav-protect</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
 			</binding>
 		</action>
 	</animation>
