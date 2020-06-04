@@ -11,7 +11,7 @@
 	</params>
 
 	<!-- Particle Effects -->
-	<!--<model>
+	<model>
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
 		<name>contrailLeft</name>
 		<condition>
@@ -23,9 +23,9 @@
 			</params>
 		</overlay>
 		<offsets>
-			<x-m>4.875</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m> 4.64247</x-m>
+			<y-m>-5.63029</y-m>
+			<z-m>-2.22295</z-m>
 		</offsets>
 	</model>
 	
@@ -41,9 +41,9 @@
 			</params>
 		</overlay>
 		<offsets>
-			<x-m>4.875</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m> 4.64247</x-m>
+			<y-m> 5.63029</y-m>
+			<z-m>-2.22295</z-m>
 		</offsets>
 	</model>
 
@@ -52,10 +52,6 @@
 		<name>moistureLeft</name>
 		<condition>
 			<and>
-				<greater-than>
-					<property>position/altitude-agl-ft</property>
-					<value>1</value>
-				</greater-than>
 				<greater-than>
 					<property>environment/relative-humidity</property>
 					<value>45</value>
@@ -75,9 +71,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0.3</z-m>
+			<x-m>-7.30742</x-m>
+			<y-m>-5.63029</y-m>
+			<z-m>-2.16465</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -88,10 +84,6 @@
 		<condition>
 			<and>
 				<greater-than>
-					<property>position/altitude-agl-ft</property>
-					<value>1</value>
-				</greater-than>
-				<greater-than>
 					<property>environment/relative-humidity</property>
 					<value>45</value>
 				</greater-than>
@@ -110,9 +102,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0.3</z-m>
+			<x-m>-7.30742</x-m>
+			<y-m> 5.63029</y-m>
+			<z-m>-2.16465</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -123,10 +115,6 @@
 		<condition>
 			<and>
 				<greater-than>
-					<property>position/altitude-agl-ft</property>
-					<value>1</value>
-				</greater-than>
-				<greater-than>
 					<property>environment/surface/wetness</property>
 					<value>0.3</value>
 				</greater-than>
@@ -149,8 +137,8 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>4.875</x-m>
-			<y-m>0</y-m>
+			<x-m>-0.5</x-m>
+			<y-m>-5.63029</y-m>
 			<z-m>-5</z-m>
 		</offsets>
 	</model>
@@ -161,10 +149,6 @@
 		<condition>
 			<and>
 				<greater-than>
-					<property>position/altitude-agl-ft</property>
-					<value>1</value>
-				</greater-than>
-				<greater-than>
 					<property>environment/surface/wetness</property>
 					<value>0.3</value>
 				</greater-than>
@@ -187,8 +171,8 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>4.875</x-m>
-			<y-m>0</y-m>
+			<x-m>-0.5</x-m>
+			<y-m>5.63029</y-m>
 			<z-m>-5</z-m>
 		</offsets>
 	</model>
@@ -198,10 +182,6 @@
 		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
-				<greater-than>
-					<property>position/altitude-agl-ft</property>
-					<value>1</value>
-				</greater-than>
 				<greater-than>
 					<property>environment/surface/wetness</property>
 					<value>0.3</value>
@@ -221,9 +201,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m>-6.5</x-m>
+			<y-m>-5.63029</y-m>
+			<z-m>-5</z-m>
 		</offsets>
 	</model>
 	
@@ -232,10 +212,6 @@
 		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
-				<greater-than>
-					<property>position/altitude-agl-ft</property>
-					<value>1</value>
-				</greater-than>
 				<greater-than>
 					<property>environment/surface/wetness</property>
 					<value>0.3</value>
@@ -255,9 +231,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>0</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m>-6.5</x-m>
+			<y-m>5.63029</y-m>
+			<z-m>-5</z-m>
 		</offsets>
 	</model>
 
@@ -265,9 +241,9 @@
 		<name>Engine fire left</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>2.774</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m>-2.64247</x-m>
+			<y-m>-5.63029</y-m>
+			<z-m>-2.22295</z-m>
 		</offsets>
 		<condition>
 			<property>systems/failures/engine-left-fire</property>
@@ -278,14 +254,14 @@
 		<name>Engine fire right</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>2.774</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m>-2.64247</x-m>
+			<y-m> 5.63029</y-m>
+			<z-m>-2.22295</z-m>
 		</offsets>
 		<condition>
 			<property>systems/failures/engine-right-fire</property>
 		</condition>
-	</model>-->
+	</model>
 	
 	<!-- Animations -->
 	<animation>
@@ -425,7 +401,6 @@
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
-		<!--<object-name>ExhaustIAEV2500</object-name>-->
 		<object-name>IntakeIAEV2500</object-name>
 	</effect>
 </PropertyList>
