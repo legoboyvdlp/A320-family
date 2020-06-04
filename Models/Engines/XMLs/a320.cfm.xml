@@ -300,9 +300,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-5.78383</x-m>
+			<x-m>-6.54315</x-m>
 			<y-m>-5.63082</y-m>
-			<z-m>-2.20697</z-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
@@ -318,9 +318,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-5.78383</x-m>
+			<x-m>-6.54315</x-m>
 			<y-m> 5.62871</y-m>
-			<z-m>-2.20697</z-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
@@ -336,9 +336,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-5.78383</x-m>
+			<x-m>-6.54315</x-m>
 			<y-m>-5.63082</y-m>
-			<z-m>-2.20697</z-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
@@ -354,9 +354,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-5.78383</x-m>
+			<x-m>-6.54315</x-m>
 			<y-m> 5.62871</y-m>
-			<z-m>-2.20697</z-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
@@ -404,6 +404,64 @@
 		</condition>
 	</animation>
 	
+	<animation>
+		<name>Reverser Door 1</name>
+		<type>rotate</type>
+		<object-name>ReverserLDoor1</object-name>
+		<factor>-65</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.35053</x1-m>
+			<y1-m>-6.30728</y1-m>
+			<z1-m>-1.58439</z1-m>
+			<x2-m>-4.40053</x2-m>
+			<y2-m>-6.52487</y2-m>
+			<z2-m>-2.01931</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door 1</name>
+		<type>translate</type>
+		<object-name>ReverserLDoor1</object-name>
+		<factor>0.125</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x>1</x>
+			<y>1</y>
+			<z>-1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door 2</name>
+		<type>rotate</type>
+		<object-name>ReverserLDoor2</object-name>
+		<factor>-65</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.40053</x1-m>
+			<y1-m>-6.53645</y1-m>
+			<z1-m>-2.59226</z1-m>
+			<x2-m>-4.35053</x2-m>
+			<y2-m>-6.27728</y2-m>
+			<z2-m>-2.97285</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door 2</name>
+		<type>translate</type>
+		<object-name>ReverserLDoor2</object-name>
+		<factor>0.125</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x>1</x>
+			<y>1</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
 	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
@@ -416,7 +474,7 @@
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
-		<object-name>ExhaustCFM56</object-name>
+		<!--<object-name>ExhaustCFM56</object-name>-->
 		<object-name>IntakeCFM56</object-name>
 	</effect>
 </PropertyList>
