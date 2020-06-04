@@ -52,6 +52,9 @@ var PNEU = {
 		pack2OutTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-2-output-temp"),
 		pack1OutletTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-1-outlet-temp"),
 		pack2OutletTemp: props.globals.getNode("/systems/air-conditioning/packs/pack-2-outlet-temp"),
+		trimCockpit: props.globals.getNode("/ECAM/Lower/trim-cockpit-output"),
+		trimAft: props.globals.getNode("/ECAM/Lower/trim-aft-output"),
+		trimFwd: props.globals.getNode("/ECAM/Lower/trim-fwd-output"),
 	},
 	Psi: {
 		engine1: props.globals.getNode("/systems/pneumatics/psi/engine-1-psi"),
@@ -90,6 +93,7 @@ var PNEU = {
 		pack1: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-1"),
 		pack2: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-2"),
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
+		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
 	},
 	init: func() {
 		me.resetFail();

@@ -5552,7 +5552,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/cabinfan</property>
+				<property>controls/switches/pneumatics/cabin-fans</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5567,7 +5567,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/cabinfan</property>
+					<property>controls/switches/pneumatics/cabin-fans</property>
 					<value>0</value>
 				</equals>
 				<equals>

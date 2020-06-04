@@ -882,7 +882,7 @@
 				<cabin-fans type="bool">0</cabin-fans>
 				<extract type="bool">0</extract>
 				<groundair type="bool">0</groundair>
-				<hot-air type="bool">0</hot-air>
+				<hot-air type="bool">1</hot-air>
 				<pack-1 type="bool">0</pack-1>
 				<pack-2 type="bool">0</pack-2>
 				<pack-flow type="double">1.0</pack-flow>
@@ -1004,9 +1004,6 @@
 			<temperatures>
 				<cabin-overall-temp-kelvin type="double">297</cabin-overall-temp-kelvin>
 			</temperatures>
-			<recirc>
-				<recirc-fans type="bool">0</recirc-fans>
-			</recirc>
 			<valves>
 				<flow-control-valve-1 type="double">0</flow-control-valve-1>
 				<flow-control-valve-2 type="double">0</flow-control-valve-2>

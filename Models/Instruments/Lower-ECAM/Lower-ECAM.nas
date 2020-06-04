@@ -734,8 +734,7 @@ var canvas_lowerECAM_bleed = {
 		"BLEED-Pack-1-Comp-Out-Temp", "BLEED-Pack-1-Packflow-needle", "BLEED-Pack-1-Bypass-needle", "BLEED-Pack-2-Out-Temp",
 		"BLEED-Pack-2-Bypass-needle", "BLEED-Pack-2-Comp-Out-Temp", "BLEED-Pack-2-Packflow-needle", "BLEED-Anti-Ice-Left",
 		"BLEED-Anti-Ice-Right", "BLEED-HP-2-connection", "BLEED-HP-1-connection", "BLEED-ANTI-ICE-ARROW-LEFT", "BLEED-ANTI-ICE-ARROW-RIGHT",
-		"BLEED-xbleedLeft","BLEED-xbleedCenter","BLEED-xbleedRight","BLEED-cond-1","BLEED-cond-2","BLEED-cond-3","BLEED-Ram-Air-connection",
-		"BLEED-Ram-Air"];
+		"BLEED-xbleedLeft","BLEED-xbleedCenter","BLEED-xbleedRight","BLEED-cond-1","BLEED-cond-2","BLEED-cond-3","BLEED-Ram-Air-connection"];
 	},
 	update: func() {
 		# X BLEED
@@ -1082,10 +1081,36 @@ var canvas_lowerECAM_cond = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","CargoCond","CONDHotAirValve","CONDFanFwdFault","CONDFanAftFault",
+		"CONDTrimValveCKPT","CONDTrimValveAFT","CONDTrimValveFWD"];
 	},
 	update: func() {
-
+		if (systems.PNEU.Valves.hotAir.getValue() == 0) {
+			me["CONDHotAirValve"].setRotation(90 * D2R);
+			if (systems.PNEU.Switch.hotAir.getBoolValue()) {
+				me["CONDHotAirValve"].setColor(0.7333,0.3803,0);
+			} else {
+				me["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
+			}
+		} else {
+			me["CONDHotAirValve"].setRotation(0); # doesn't show rotation in transit
+			if (systems.PNEU.Switch.hotAir.getBoolValue()) {
+				me["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["CONDHotAirValve"].setColor(0.7333,0.3803,0);
+			}
+		}
+		
+		me["CONDTrimValveCKPT"].setRotation(systems.PNEU.Packs.trimCockpit.getValue() * D2R);
+		me["CONDTrimValveAFT"].setRotation(systems.PNEU.Packs.trimAft.getValue() * D2R);
+		me["CONDTrimValveFWD"].setRotation(systems.PNEU.Packs.trimFwd.getValue() * D2R);
+		
+		# fans faults not implemented
+		me["CONDFanFwdFault"].hide();
+		me["CONDFanAftFault"].hide();
+		
+		# aft cargo ventilation disabled
+		me["CargoCond"].hide();
 		me.updateBottomStatus();
 	},
 };

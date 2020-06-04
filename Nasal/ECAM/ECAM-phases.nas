@@ -136,14 +136,14 @@ var phaseLoop = func() {
 	
 	if (eng == "IAE") {
 		eprlim = getprop("controls/engines/epr-limit");
-		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.78 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.78) and fadec.Output.limFlex.getBoolValue()) or (pts.Controls.Engines.Engine.throttle[0].getValue() == 1.0 or pts.Controls.Engines.Engine.throttle[1].getValue() == 1.0))) {
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.78 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.779) and fadec.Output.limFlex.getBoolValue()) or (pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.99 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.99))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
 		}
 	} else {
 		n1lim = getprop("controls/engines/n1-limit");
-		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.78 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.78) and fadec.Output.limFlex.getBoolValue()) or (pts.Controls.Engines.Engine.throttle[0].getValue() == 1.0 or pts.Controls.Engines.Engine.throttle[1].getValue() == 1.0))) {
+		if ((!getprop("controls/engines/engine[0]/reverser") and !getprop("controls/engines/engine[1]/reverser")) and (((pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.78 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.779) and fadec.Output.limFlex.getBoolValue()) or (pts.Controls.Engines.Engine.throttle[0].getValue() >= 0.99 or pts.Controls.Engines.Engine.throttle[1].getValue() >= 0.99))) {
 			FWC.toPower.setBoolValue(1);
 		} else {
 			FWC.toPower.setBoolValue(0);
