@@ -385,7 +385,7 @@
 		<type>rotate</type>
 		<object-name>ReverserLDoor1</object-name>
 		<object-name>ReverserLDoor1.Inner</object-name>
-		<factor>-75</factor>
+		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.64922</x1-m>
@@ -402,7 +402,7 @@
 		<type>rotate</type>
 		<object-name>ReverserLDoor2</object-name>
 		<object-name>ReverserLDoor2.Inner</object-name>
-		<factor>-75</factor>
+		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.65327</x1-m>
@@ -419,7 +419,7 @@
 		<type>rotate</type>
 		<object-name>ReverserRDoor1</object-name>
 		<object-name>ReverserRDoor1.Inner</object-name>
-		<factor>75</factor>
+		<factor>70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.64922</x1-m>
@@ -436,7 +436,7 @@
 		<type>rotate</type>
 		<object-name>ReverserRDoor2</object-name>
 		<object-name>ReverserRDoor2.Inner</object-name>
-		<factor>75</factor>
+		<factor>70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.65342</x1-m>
