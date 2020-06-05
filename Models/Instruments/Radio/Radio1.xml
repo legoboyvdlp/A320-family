@@ -240,7 +240,6 @@
 	</animation>
 
 	<!-- Knob -->
-	<!-- TODO add bindings for VOR, LS and ADF -->
 	<!-- We use a little hack to get 8.33MHz spacing working:
 		First we assign our current STBY freq we want to adjust to the default instrument.
 		Then we change the channel there.
