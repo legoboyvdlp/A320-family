@@ -50,13 +50,19 @@
 		<object-name>RatDoorR</object-name>
 	</effect>
 	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
+		<object-name>Rat</object-name>
+		<object-name>RatSpinner</object-name>
+	</effect>
+	
 	<!-- Animations -->
 	
 	<!-- Belly -->
 	
 	<!-- Ram Air Turbine -->
 	<animation>
-		<name>Rudder Animation</name>
+		<name>RAT Door left</name>
 		<type>rotate</type>
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorL.Inner</object-name>
@@ -73,7 +79,7 @@
 	</animation>
 	
 	<animation>
-		<name>Rudder Animation</name>
+		<name>RAT Door right</name>
 		<type>rotate</type>
 		<object-name>RatDoorR</object-name>
 		<object-name>RatDoorR.Inner</object-name>
@@ -90,7 +96,7 @@
 	</animation>
 	
 	<animation>
-		<name>Rudder Animation</name>
+		<name>RAT Deploy</name>
 		<type>rotate</type>
 		<object-name>RatSpinner</object-name>
 		<object-name>Rat</object-name>
@@ -105,6 +111,29 @@
 		<axis>
 			<x>0</x>
 			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>RAT Spin</name>
+		<type>spin</type>
+		<object-name>RatSpinner</object-name>
+		<property>systems/hydraulic/sources/rat/rat-speed-rpm</property>
+		<condition>
+			<greater-than>
+				<property>systems/hydraulic/sources/rat/arm-position</property>
+				<value>0.8</value>
+			</greater-than>
+		</condition>
+		<center>
+			<x-m>-2.66533</x-m>
+			<y-m>-1.64941</y-m>
+			<z-m>-2.79509</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
 			<z>0</z>
 		</axis>
 	</animation>

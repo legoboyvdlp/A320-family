@@ -126,6 +126,21 @@
 			</clipto>
 		</fcs_function>
 		
+		<fcs_function name="/systems/hydraulic/sources/rat/rat-speed-rpm">	
+			<function>
+				<table>
+					<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar> <!-- use this meantime so it can stall. But ADR failures will break RAT which is bad... -->
+					<tableData>
+					    50   0
+						85   150
+						90   2500
+						100  4800
+						350  6540
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/systems/hydraulic/sources/rat/source-psi">
 			<function>
 				<ifthen>
