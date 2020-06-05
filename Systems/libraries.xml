@@ -23,36 +23,6 @@
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
 
-	<filter>
-		<name>Gear AGL Altitude FT</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<dif>
-					<property>/position/altitude-agl-ft</property>
-					<value>14.201</value>
-				</dif>
-			</expression>
-		</input>
-		<output>/position/gear-agl-ft</output>
-	</filter>
-	
-	<filter>
-		<name>Gear AGL Altitude M</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<product>
-					<property>/position/gear-agl-ft</property>
-					<value>0.3048</value>
-				</product>
-			</expression>
-		</input>
-		<output>/position/gear-agl-m</output>
-	</filter>
-
 	<predict-simple>
 		<name>Gear AGL Altitude</name>
 		<debug>false</debug>
