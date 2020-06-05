@@ -126,16 +126,33 @@
 			</clipto>
 		</fcs_function>
 		
+		<scheduled_gain name="/systems/hydraulic/sources/rat/rat-airspeed-cmd">
+			<input>velocities/vc-kts</input>
+			<table>
+				<independentVar lookup="row">aero/alpha-deg-norm</independentVar>
+				<tableData>
+					-60	 0
+					  0	 1
+					 60	 0
+				</tableData>
+			</table>
+		</scheduled_gain>
+		
+		<lag_filter name="/systems/hydraulic/sources/rat/rat-airspeed">
+			<input>/systems/hydraulic/sources/rat/rat-airspeed-cmd</input>
+			<c1>10</c1>
+		</lag_filter>
+		
 		<fcs_function name="/systems/hydraulic/sources/rat/rat-speed-rpm">	
 			<function>
 				<table>
-					<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar> <!-- use this meantime so it can stall. But ADR failures will break RAT which is bad... -->
+					<independentVar lookup="row">/systems/hydraulic/sources/rat/rat-airspeed</independentVar> <!-- use this meantime so it can stall. But ADR failures will break RAT which is bad... -->
 					<tableData>
-						50   0
-						85   150
-						90   2500
-						100  4800
-						350  6540
+						50	 0
+						85	 150
+						90	 2500
+						100	 4800
+						350	 6540
 					</tableData>
 				</table>
 			</function>
@@ -149,10 +166,10 @@
 						<value>1</value>
 					</eq>
 					<table>
-						<independentVar lookup="row">/instrumentation/airspeed-indicator/indicated-speed-kt</independentVar>
+						<independentVar lookup="row">/systems/hydraulic/sources/rat/rat-airspeed</independentVar>
 						<tableData>
-							90   0
-							100  2500
+							90	 0
+							100	 2500
 						</tableData>
 					</table>
 					<value>0</value>
@@ -204,11 +221,11 @@
 		</switch>
 		
 		<actuator name="/systems/hydraulic/sources/blue-elec/pump-operate-apu-timer">
-            <description>Timer for the ECAM system</description>
-            <input>/systems/hydraulic/sources/blue-elec/pump-operate-apu</input>
-            <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
-            <rate_limit sense="decr">0.0083333</rate_limit> <!-- 120 seconds -->
-        </actuator>
+			<description>Timer for the ECAM system</description>
+			<input>/systems/hydraulic/sources/blue-elec/pump-operate-apu</input>
+			<rate_limit sense="incr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">0.0083333</rate_limit> <!-- 120 seconds -->
+		</actuator>
 		
 		<fcs_function name="/systems/hydraulic/sources/blue-elec/source-psi">
 			<function>
@@ -220,8 +237,8 @@
 					<table>
 						<independentVar lookup="row">/systems/hydraulic/sources/blue-elec/pump-operate</independentVar>
 						<tableData>
-							 0    0
-							 1  3000
+							 0	  0
+							 1	3000
 						</tableData>
 					</table>
 					<value>0</value>
@@ -247,8 +264,8 @@
 					<table>
 						<independentVar lookup="row">/engines/engine[0]/n2-actual</independentVar>
 						<tableData>
-							40    0
-							45  3000
+							40	  0
+							45	3000
 						</tableData>
 					</table>
 					<value>0</value>
@@ -291,8 +308,8 @@
 					<table>
 						<independentVar lookup="row">/systems/hydraulic/sources/yellow-elec/pump-operate</independentVar>
 						<tableData>
-							 0    0
-							 1  3000
+							 0	  0
+							 1	3000
 						</tableData>
 					</table>
 					<value>0</value>
@@ -318,7 +335,7 @@
 					<table>
 						<independentVar lookup="row">/engines/engine[1]/n2-actual</independentVar>
 						<tableData>
-							40    0
+							40	  0
 							45 3000
 						</tableData>
 					</table>

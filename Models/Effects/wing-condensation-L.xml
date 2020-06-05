@@ -18,7 +18,7 @@
 								<property>environment/relative-humidity</property>								
 								<value>0.075</value>
 							</product>
-							<property>fdm/jsbsim/aero/alpha-deg</property>									
+							<property>fdm/jsbsim/aero/alpha-deg-norm</property>									
 						 </sum>
 					</expression>			  
 					<value>13.5</value>

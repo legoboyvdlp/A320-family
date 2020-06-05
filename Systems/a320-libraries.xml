@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320 Libraries -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+
+<system name="A320: Libraries">
+	
+	<channel name="Libraries">
+	
+		<switch name="aero/alpha-deg-norm">
+            <default value="0"/>
+            <test value="aero/alpha-deg">
+                gear/unit[0]/WOW eq 0
+            </test>
+        </switch>
+		
+		<switch name="position/wow">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				gear/unit[0]/WOW eq 1
+				gear/unit[1]/WOW eq 1
+				gear/unit[2]/WOW eq 1
+			</test>
+		</switch>
+	
+	</channel>
+
+</system>

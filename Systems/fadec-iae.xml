@@ -192,23 +192,6 @@
 	</filter>
 	
 	<filter>
-		<name>Alpha Normalizer</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/gear/gear[0]/wow</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/fdm/jsbsim/aero/alpha-deg</property>
-		</input>
-		<input>0</input>
-		<output>/fdm/jsbsim/aero/alpha-deg-fixed</output>
-	</filter>
-	
-	<filter>
 		<name>EPR Scale 2 Sum/Difference</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -229,7 +212,7 @@
 						<entry><ind>1.00</ind><dep>0.010</dep></entry>
 					</table>
 					<table>
-						<property>/fdm/jsbsim/aero/alpha-deg-fixed</property>
+						<property>/fdm/jsbsim/aero/alpha-deg-norm</property>
 						<entry><ind> 0.0</ind><dep>0.00</dep></entry>
 						<entry><ind> 7.5</ind><dep>0.01</dep></entry>
 						<entry><ind>17.0</ind><dep>0.03</dep></entry>

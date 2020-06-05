@@ -30,15 +30,6 @@
 	
 	<channel name="Libraries">
 		
-		<switch name="position/wow">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				gear/unit[0]/WOW eq 1
-				gear/unit[1]/WOW eq 1
-				gear/unit[2]/WOW eq 1
-			</test>
-		</switch>
-		
 		<switch name="fbw/roll/gain-switch">
 			<default value="0"/>
 			<test logic="OR" value="1">

@@ -511,6 +511,9 @@
 	
 	<fdm>
 		<jsbsim>
+			<aero>
+				<alpha-deg-norm type="double">0</alpha-deg-norm>
+			</aero>
 			<external_reactions>
 				<tractor>
 					<magnitude alias="/sim/model/autopush/force-lbf"/>

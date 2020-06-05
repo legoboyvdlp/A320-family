@@ -270,7 +270,7 @@ var thrust_loop = maketimer(0.04, func {
 		setprop("controls/engines/n1-limit", n1toga);
 	}
 	
-	alpha = getprop("fdm/jsbsim/aero/alpha-deg");
+	alpha = getprop("fdm/jsbsim/aero/alpha-deg-norm");
 	flaps = getprop("controls/flight/flaps-pos");
 	if (flaps == 0) {
 		alphaProt = 9.5;

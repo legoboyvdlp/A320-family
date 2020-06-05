@@ -272,6 +272,7 @@
 		</tank>
 	</propulsion>
 	
+	<system file="a320-libraries"/>
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
