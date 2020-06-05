@@ -384,28 +384,16 @@
 		<name>Reverser Door 1</name>
 		<type>rotate</type>
 		<object-name>ReverserLDoor1</object-name>
-		<factor>-65</factor>
+		<object-name>ReverserLDoor1.Inner</object-name>
+		<factor>-75</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x1-m>-4.35053</x1-m>
-			<y1-m>-6.30728</y1-m>
-			<z1-m>-1.58439</z1-m>
-			<x2-m>-4.40053</x2-m>
-			<y2-m>-6.52487</y2-m>
-			<z2-m>-2.01931</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door 1</name>
-		<type>translate</type>
-		<object-name>ReverserLDoor1</object-name>
-		<factor>0.125</factor>
-		<property>engines/engine[0]/reverser-pos-norm</property>
-		<axis>
-			<x>1</x>
-			<y>1</y>
-			<z>-1</z>
+			<x1-m>-4.64922</x1-m>
+			<y1-m>-6.25156</y1-m>
+			<z1-m>-1.65547</z1-m>
+			<x2-m>-4.65017</x2-m>
+			<y2-m>-6.29771</y2-m>
+			<z2-m>-1.71849</z2-m>
 		</axis>
 	</animation>
 	
@@ -413,28 +401,50 @@
 		<name>Reverser Door 2</name>
 		<type>rotate</type>
 		<object-name>ReverserLDoor2</object-name>
-		<factor>-65</factor>
+		<object-name>ReverserLDoor2.Inner</object-name>
+		<factor>-75</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x1-m>-4.40053</x1-m>
-			<y1-m>-6.53645</y1-m>
-			<z1-m>-2.59226</z1-m>
-			<x2-m>-4.35053</x2-m>
-			<y2-m>-6.27728</y2-m>
-			<z2-m>-2.97285</z2-m>
+			<x1-m>-4.65327</x1-m>
+			<y1-m>-6.29253</y1-m>
+			<z1-m>-2.82287</z1-m>
+			<x2-m>-4.65265</x2-m>
+			<y2-m>-6.24312</y2-m>
+			<z2-m>-2.89296</z2-m>
 		</axis>
 	</animation>
 	
 	<animation>
-		<name>Reverser Door 2</name>
-		<type>translate</type>
-		<object-name>ReverserLDoor2</object-name>
-		<factor>0.125</factor>
+		<name>Reverser Door 3</name>
+		<type>rotate</type>
+		<object-name>ReverserRDoor1</object-name>
+		<object-name>ReverserRDoor1.Inner</object-name>
+		<factor>75</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x>1</x>
-			<y>1</y>
-			<z>1</z>
+			<x1-m>-4.64922</x1-m>
+			<y1-m>-5.01022</y1-m>
+			<z1-m>-1.6555</z1-m>
+			<x2-m>-4.65017</x2-m>
+			<y2-m>-4.96408</y2-m>
+			<z2-m>-1.71852</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door 3</name>
+		<type>rotate</type>
+		<object-name>ReverserRDoor2</object-name>
+		<object-name>ReverserRDoor2.Inner</object-name>
+		<factor>75</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.65342</x1-m>
+			<y1-m>-4.96919</y1-m>
+			<z1-m>-2.82264</z1-m>
+			<x2-m>-4.65288</x2-m>
+			<y2-m>-5.01209</y2-m>
+			<z2-m>-2.8834</z2-m>
 		</axis>
 	</animation>
 	
