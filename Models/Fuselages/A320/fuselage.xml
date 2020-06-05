@@ -47,5 +47,59 @@
 		<object-name>SpoilerL4</object-name>
 		<object-name>SpoilerL5</object-name>
 	</effect>
+	
+	<!-- Animations -->
+	
+	<!-- Flight Control Surfaces -->
+	
+	<!-- Rudder -->
+	<animation>
+		<name>Rudder Animation</name>
+		<type>rotate</type>
+		<object-name>Rudder</object-name>
+		<property>sim/multiplay/generic/float[8]</property>
+		<factor>1</factor>
+		<axis>
+			<x1-m>14.9152</x1-m>
+			<y1-m>0.00216</y1-m>
+			<z1-m>1.96737</z1-m>
+			<x2-m>17.4201</x2-m>
+			<y2-m>0.000904</y2-m>
+			<z2-m>7.71235</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Elevators -->
+	<animation>
+		<name>Left elevator</name>
+		<type>rotate</type>
+		<object-name>ElevatorL</object-name>
+		<property>sim/multiplay/generic/float[4]</property>
+		<factor>-1</factor>
+		<axis>
+			<x1-m>15.6955</x1-m>
+			<y1-m>-0.92572</y1-m>
+			<z1-m>0.649405</z1-m>
+			<x2-m>17.553</x2-m>
+			<y2-m>-6.08356</y2-m>
+			<z2-m>1.45399</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Right elevator</name>
+		<type>rotate</type>
+		<object-name>ElevatorR</object-name>
+		<property>sim/multiplay/generic/float[5]</property>
+		<factor>-1</factor>
+		<axis>
+			<x1-m>17.553</x1-m>
+			<y1-m>6.0879</y1-m>
+			<z1-m>1.454</z1-m>
+			<x2-m>15.6955</x2-m>
+			<y2-m>0.93006</y2-m>
+			<z2-m>0.649405</z2-m>
+		</axis>
+	</animation>
 
 </PropertyList>
