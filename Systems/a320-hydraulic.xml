@@ -97,6 +97,35 @@
 			</traverse>
 		</kinematic>
 		
+		<fcs_function name="/systems/hydraulic/sources/rat/door-position">
+			<function>
+				<product>
+					<value>5</value>
+					<property>/systems/hydraulic/sources/rat/position</property>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="/systems/hydraulic/sources/rat/arm-position">
+			<function>
+				<sum>
+					<value>-0.2</value>
+					<product>
+						<property>/systems/hydraulic/sources/rat/position</property>
+						<value>1.25</value>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+		</fcs_function>
+		
 		<fcs_function name="/systems/hydraulic/sources/rat/source-psi">
 			<function>
 				<ifthen>

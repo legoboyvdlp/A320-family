@@ -46,9 +46,68 @@
 		<object-name>SpoilerL3</object-name>
 		<object-name>SpoilerL4</object-name>
 		<object-name>SpoilerL5</object-name>
+		<object-name>RatDoorL</object-name>
+		<object-name>RatDoorR</object-name>
 	</effect>
 	
 	<!-- Animations -->
+	
+	<!-- Belly -->
+	
+	<!-- Ram Air Turbine -->
+	<animation>
+		<name>Rudder Animation</name>
+		<type>rotate</type>
+		<object-name>RatDoorL</object-name>
+		<object-name>RatDoorL.Inner</object-name>
+		<property>systems/hydraulic/sources/rat/door-position</property>
+		<factor>-105</factor>
+		<axis>
+			<x1-m>-3.4349</x1-m>
+			<y1-m>-1.75372</y1-m>
+			<z1-m>-2.21517</z1-m>
+			<x2-m>-2.43981</x2-m>
+			<y2-m>-1.75542</y2-m>
+			<z2-m>-2.20495</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Rudder Animation</name>
+		<type>rotate</type>
+		<object-name>RatDoorR</object-name>
+		<object-name>RatDoorR.Inner</object-name>
+		<property>systems/hydraulic/sources/rat/door-position</property>
+		<factor>135</factor>
+		<axis>
+			<x1-m>-3.4348</x1-m>
+			<y1-m>-1.53239</y1-m>
+			<z1-m>-2.3598</z1-m>
+			<x2-m>-2.43977</x2-m>
+			<y2-m>-1.53327</y2-m>
+			<z2-m>-2.35378</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Rudder Animation</name>
+		<type>rotate</type>
+		<object-name>RatSpinner</object-name>
+		<object-name>Rat</object-name>
+		<property>systems/hydraulic/sources/rat/arm-position</property>
+		<factor>-90</factor>
+		<offset-deg>90</offset-deg>
+		<center>
+			<x-m>-2.46547</x-m>
+			<y-m>-1.64941</y-m>
+			<z-m>-2.20802</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
 	
 	<!-- Flight Control Surfaces -->
 	
