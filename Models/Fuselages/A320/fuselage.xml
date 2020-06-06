@@ -19,20 +19,27 @@
 		<object-name>Cargo3</object-name>
 		<object-name>Antenna1</object-name>
 		<object-name>Antenna2</object-name>
-		<object-name>WingtipFence</object-name>
-		<object-name>Sharklet</object-name>
 		<object-name>MLGGearDoorL</object-name>
 		<object-name>MLGGearDoorR</object-name>
 		<object-name>NLGAftDoorL</object-name>
 		<object-name>NLGAftDoorR</object-name>
 		<object-name>NLGForewardDoorL</object-name>
 		<object-name>NLGForewardDoorR</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
+		<object-name>Wings</object-name>
+		<object-name>RatDoorL</object-name>
+		<object-name>RatDoorR</object-name>
 		<object-name>FlapL1</object-name>
 		<object-name>FlapL2</object-name>
 		<object-name>FlapR1</object-name>
 		<object-name>FlapR2</object-name>
 		<object-name>SLatL1</object-name>
 		<object-name>SlatL2</object-name>
+		<object-name>WingtipFence</object-name>
+		<object-name>Sharklet</object-name>
 		<object-name>LightWingL</object-name>
 		<object-name>AileronL</object-name>
 		<object-name>AileronR</object-name>
@@ -46,8 +53,6 @@
 		<object-name>SpoilerL3</object-name>
 		<object-name>SpoilerL4</object-name>
 		<object-name>SpoilerL5</object-name>
-		<object-name>RatDoorL</object-name>
-		<object-name>RatDoorR</object-name>
 	</effect>
 	
 	<effect>
@@ -69,10 +74,10 @@
 		<property>systems/hydraulic/sources/rat/door-position</property>
 		<factor>-105</factor>
 		<axis>
-			<x1-m>-3.4349</x1-m>
+			<x1-m>-3.55938</x1-m>
 			<y1-m>-1.75372</y1-m>
 			<z1-m>-2.21517</z1-m>
-			<x2-m>-2.43981</x2-m>
+			<x2-m>-2.56435</x2-m>
 			<y2-m>-1.75542</y2-m>
 			<z2-m>-2.20495</z2-m>
 		</axis>
@@ -86,10 +91,10 @@
 		<property>systems/hydraulic/sources/rat/door-position</property>
 		<factor>135</factor>
 		<axis>
-			<x1-m>-3.4348</x1-m>
+			<x1-m>-3.55938</x1-m>
 			<y1-m>-1.53239</y1-m>
 			<z1-m>-2.3598</z1-m>
-			<x2-m>-2.43977</x2-m>
+			<x2-m>-2.56435</x2-m>
 			<y2-m>-1.53327</y2-m>
 			<z2-m>-2.35378</z2-m>
 		</axis>
@@ -103,15 +108,13 @@
 		<property>systems/hydraulic/sources/rat/arm-position</property>
 		<factor>-90</factor>
 		<offset-deg>90</offset-deg>
-		<center>
-			<x-m>-2.46547</x-m>
-			<y-m>-1.64941</y-m>
-			<z-m>-2.20802</z-m>
-		</center>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<x1-m>-2.58751</x1-m>
+			<y1-m>-1.68915</y1-m>
+			<z1-m>-2.20464</z1-m>
+			<x2-m>-2.58751</x2-m>
+			<y2-m>-1.59255</y2-m>
+			<z2-m>-2.23052</z2-m>
 		</axis>
 	</animation>
 	
@@ -127,9 +130,9 @@
 			</greater-than>
 		</condition>
 		<center>
-			<x-m>-2.66533</x-m>
-			<y-m>-1.64941</y-m>
-			<z-m>-2.79509</z-m>
+			<x-m>-2.78737</x-m>
+			<y-m>-1.7928</y-m>
+			<z-m>-2.78465</z-m>
 		</center>
 		<axis>
 			<x>1</x>
@@ -148,10 +151,10 @@
 		<property>sim/multiplay/generic/float[8]</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>14.9152</x1-m>
+			<x1-m>14.7906</x1-m>
 			<y1-m>0.00216</y1-m>
 			<z1-m>1.96737</z1-m>
-			<x2-m>17.4201</x2-m>
+			<x2-m>17.29552</x2-m>
 			<y2-m>0.000904</y2-m>
 			<z2-m>7.71235</z2-m>
 		</axis>
@@ -165,12 +168,12 @@
 		<property>sim/multiplay/generic/float[4]</property>
 		<factor>-1</factor>
 		<axis>
-			<x1-m>15.6955</x1-m>
+			<x1-m>15.586</x1-m>
 			<y1-m>-0.92572</y1-m>
-			<z1-m>0.649405</z1-m>
-			<x2-m>17.553</x2-m>
-			<y2-m>-6.08356</y2-m>
-			<z2-m>1.45399</z2-m>
+			<z1-m>0.659407</z1-m>
+			<x2-m>17.4453</x2-m>
+			<y2-m>-6.12819</y2-m>
+			<z2-m>1.4795</z2-m>
 		</axis>
 	</animation>
 	
@@ -181,12 +184,12 @@
 		<property>sim/multiplay/generic/float[5]</property>
 		<factor>-1</factor>
 		<axis>
-			<x1-m>17.553</x1-m>
-			<y1-m>6.0879</y1-m>
-			<z1-m>1.454</z1-m>
-			<x2-m>15.6955</x2-m>
+			<x1-m>17.4453</x1-m>
+			<y1-m>6.13253</y1-m>
+			<z1-m>1.4795</z1-m>
+			<x2-m>15.586</x2-m>
 			<y2-m>0.93006</y2-m>
-			<z2-m>0.649405</z2-m>
+			<z2-m>0.659407</z2-m>
 		</axis>
 	</animation>
 

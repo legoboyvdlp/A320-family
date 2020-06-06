@@ -68,10 +68,12 @@
 				</iceable>
 			</icing>
 			<reflection>
-				<ambient-correction type="double">0.10</ambient-correction>
-				<reflection-correction type="double">0.10</reflection-correction>
+				<ambient-correction type="double">0.05</ambient-correction>
+				<reflection-correction type="double">0.05</reflection-correction>
 				<ambient-correction-chrome type="double">0.05</ambient-correction-chrome>
 				<reflection-correction-chrome type="double">0.20</reflection-correction-chrome>
+				<ambient-correction-wing type="double">0.05</ambient-correction-wing>
+				<reflection-correction-wing type="double">-0.25</reflection-correction-wing>
 			</reflection>
 		</model>
 		

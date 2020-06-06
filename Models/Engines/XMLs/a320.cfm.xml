@@ -23,7 +23,7 @@
 			</params>
 		</overlay>
 		<offsets>
-			<x-m> 4.64247</x-m>
+			<x-m> 4.51789</x-m>
 			<y-m>-5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -41,7 +41,7 @@
 			</params>
 		</overlay>
 		<offsets>
-			<x-m> 4.64247</x-m>
+			<x-m> 4.51789</x-m>
 			<y-m> 5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -71,9 +71,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-7.30742</x-m>
+			<x-m>-7.432</x-m>
 			<y-m>-5.63029</y-m>
-			<z-m>-1.75465</z-m>
+			<z-m>-2.16465</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -102,9 +102,9 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-7.30742</x-m>
+			<x-m>-7.432</x-m>
 			<y-m> 5.63029</y-m>
-			<z-m>-1.75465</z-m>
+			<z-m>-2.16465</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -137,7 +137,7 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-0.5</x-m>
+			<x-m>-0.62458</x-m>
 			<y-m>-5.63029</y-m>
 			<z-m>-5</z-m>
 		</offsets>
@@ -171,7 +171,7 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-0.5</x-m>
+			<x-m>-0.62458</x-m>
 			<y-m>5.63029</y-m>
 			<z-m>-5</z-m>
 		</offsets>
@@ -201,7 +201,7 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-6.5</x-m>
+			<x-m>-6.62458</x-m>
 			<y-m>-5.63029</y-m>
 			<z-m>-5</z-m>
 		</offsets>
@@ -231,7 +231,7 @@
 			</and>
 		</condition>
 		<offsets>
-			<x-m>-6.5</x-m>
+			<x-m>-6.62458</x-m>
 			<y-m>5.63029</y-m>
 			<z-m>-5</z-m>
 		</offsets>
@@ -241,7 +241,7 @@
 		<name>Engine fire left</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>-3.84247</x-m>
+			<x-m>-3.96705</x-m>
 			<y-m>-5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -254,7 +254,7 @@
 		<name>Engine fire right</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>-3.84247</x-m>
+			<x-m>-3.96705</x-m>
 			<y-m> 5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -276,7 +276,7 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.54315</x-m>
+			<x-m>-6.66773</x-m>
 			<y-m>-5.63082</y-m>
 			<z-m>-2.26943</z-m>
 		</center>
@@ -294,7 +294,7 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.54315</x-m>
+			<x-m>-6.66773</x-m>
 			<y-m> 5.62871</y-m>
 			<z-m>-2.26943</z-m>
 		</center>
@@ -312,7 +312,7 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.54315</x-m>
+			<x-m>-6.66773</x-m>
 			<y-m>-5.63082</y-m>
 			<z-m>-2.26943</z-m>
 		</center>
@@ -330,7 +330,7 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.54315</x-m>
+			<x-m>-6.66773</x-m>
 			<y-m> 5.62871</y-m>
 			<z-m>-2.26943</z-m>
 		</center>
@@ -388,10 +388,10 @@
 		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x1-m>-4.64922</x1-m>
+			<x1-m>-4.7738</x1-m>
 			<y1-m>-6.25156</y1-m>
 			<z1-m>-1.65547</z1-m>
-			<x2-m>-4.65017</x2-m>
+			<x2-m>-4.77475</x2-m>
 			<y2-m>-6.29771</y2-m>
 			<z2-m>-1.71849</z2-m>
 		</axis>
@@ -405,12 +405,12 @@
 		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x1-m>-4.65327</x1-m>
+			<x1-m>-4.77785</x1-m>
 			<y1-m>-6.29253</y1-m>
 			<z1-m>-2.82287</z1-m>
-			<x2-m>-4.65265</x2-m>
-			<y2-m>-6.24312</y2-m>
-			<z2-m>-2.89296</z2-m>
+			<x2-m>-4.77731</x2-m>
+			<y2-m>-6.2496</y2-m>
+			<z2-m>-2.88363</z2-m>
 		</axis>
 	</animation>
 	
@@ -422,10 +422,10 @@
 		<factor>70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x1-m>-4.64922</x1-m>
+			<x1-m>-4.7738</x1-m>
 			<y1-m>-5.01022</y1-m>
 			<z1-m>-1.6555</z1-m>
-			<x2-m>-4.65017</x2-m>
+			<x2-m>-4.77475</x2-m>
 			<y2-m>-4.96408</y2-m>
 			<z2-m>-1.71852</z2-m>
 		</axis>
@@ -439,10 +439,10 @@
 		<factor>70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
-			<x1-m>-4.65342</x1-m>
+			<x1-m>-4.778</x1-m>
 			<y1-m>-4.96919</y1-m>
 			<z1-m>-2.82264</z1-m>
-			<x2-m>-4.65288</x2-m>
+			<x2-m>-4.77746</x2-m>
 			<y2-m>-5.01209</y2-m>
 			<z2-m>-2.8834</z2-m>
 		</axis>
