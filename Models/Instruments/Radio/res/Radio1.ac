@@ -3,7 +3,7 @@ MATERIAL "radio" rgb 0.800 0.800 0.800  amb 1.000 1.000 1.000  emis 0.100 0.100 
 MATERIAL "radio_emit" rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.850 0.850 0.850  spec 0.400 0.400 0.400  shi 12 trans 0.000
 MATERIAL "DefaultWhite" rgb 1.000 1.000 1.000  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
 OBJECT world
-name "Blender_exporter_v2.26__Radio1.ac"
+name "Blender_exporter_v3.3__Radio1.ac"
 kids 37
 OBJECT poly
 name "radio_active.screen"
@@ -14746,9 +14746,9 @@ SURF 0X0
 mat 0
 refs 4
 5 0.993212 0.944859
-4 0.931324 0.944859
-10 0.931324 0.943492
 11 0.993212 0.943492
+10 0.931324 0.943492
+4 0.931324 0.944859
 SURF 0X0
 mat 0
 refs 4
@@ -14760,9 +14760,9 @@ SURF 0X0
 mat 0
 refs 4
 1 0.965523 0.925681
-0 0.997855 0.925681
-4 0.997855 0.935702
 5 0.965523 0.935702
+4 0.997855 0.935702
+0 0.997855 0.925681
 SURF 0X0
 mat 0
 refs 4
@@ -14792,9 +14792,9 @@ SURF 0X0
 mat 0
 refs 4
 0 0.931324 0.94175
-1 0.993212 0.94175
-3 0.993212 0.942381
 2 0.931324 0.942381
+3 0.993212 0.942381
+1 0.993212 0.94175
 kids 0
 OBJECT poly
 name "radio_nav_lit.axis"

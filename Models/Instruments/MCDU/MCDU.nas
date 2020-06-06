@@ -1019,6 +1019,30 @@ var canvas_MCDU_base = {
 			me["Simple_R3S"].setText("CHAN/ MLS");
 			me["Simple_R4S"].setText("SLOPE   CRS");
 			me["Simple_R5S"].setText("FREQ/ADF2");
+			
+			if (getprop("systems/radio/rmp[0]/nav") or getprop("systems/radio/rmp[1]/nav")) {
+				me["Simple_L1"].hide();
+				me["Simple_L2"].hide();
+				me["Simple_L3"].hide();
+				me["Simple_L4"].hide();
+				me["Simple_L5"].hide();
+				me["Simple_R1"].hide();
+				me["Simple_R2"].hide();
+				me["Simple_R3"].hide();
+				me["Simple_R4"].hide();
+				me["Simple_R5"].hide();
+			} else {
+				me["Simple_L1"].show();
+				me["Simple_L2"].show();
+				me["Simple_L3"].show();
+				me["Simple_L4"].show();
+				me["Simple_L5"].show();
+				me["Simple_R1"].show();
+				me["Simple_R2"].show();
+				me["Simple_R3"].show();
+				me["Simple_R4"].show();
+				me["Simple_R5"].show();
+			}
 		} else if (page == "INITA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
