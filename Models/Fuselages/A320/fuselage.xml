@@ -53,6 +53,10 @@
 		<object-name>SpoilerL3</object-name>
 		<object-name>SpoilerL4</object-name>
 		<object-name>SpoilerL5</object-name>
+		<object-name>FairingL1</object-name>
+		<object-name>FairingL2</object-name>
+		<object-name>FairingR1</object-name>
+		<object-name>FairingR2</object-name>
 	</effect>
 	
 	<effect>
@@ -190,6 +194,39 @@
 			<x2-m>15.586</x2-m>
 			<y2-m>0.93006</y2-m>
 			<z2-m>0.659407</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Ailerons -->
+	<animation>
+		<name>Left aileron</name>
+		<type>rotate</type>
+		<object-name>AileronL</object-name>
+		<property>sim/multiplay/generic/float[6]</property>
+		<factor>-1</factor>
+		<axis>
+			<x1-m>1.43752</x1-m>
+			<y1-m>-13.2839</y1-m>
+			<z1-m>-0.005796</z1-m>
+			<x2-m>2.5211</x2-m>
+			<y2-m>-16.2917</y2-m>
+			<z2-m>0.291967</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Right aileron</name>
+		<type>rotate</type>
+		<object-name>AileronR</object-name>
+		<property>sim/multiplay/generic/float[7]</property>
+		<factor>1</factor>
+		<axis>
+			<x1-m>1.43752</x1-m>
+			<y1-m>13.2815</y1-m>
+			<z1-m>-0.005792</z1-m>
+			<x2-m>2.5211</x2-m>
+			<y2-m>16.2893</y2-m>
+			<z2-m>0.291973</z2-m>
 		</axis>
 	</animation>
 
