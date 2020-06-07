@@ -10,6 +10,7 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
 		<object-name>Fuselage</object-name>
+		<object-name>Rudder</object-name>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorR1</object-name>
@@ -21,17 +22,19 @@
 		<object-name>Antenna2</object-name>
 		<object-name>MLGGearDoorL</object-name>
 		<object-name>MLGGearDoorR</object-name>
+		<object-name>MLGWingDoorL1</object-name>
+		<object-name>MLGWingDoorL2</object-name>
 		<object-name>NLGAftDoorL</object-name>
 		<object-name>NLGAftDoorR</object-name>
 		<object-name>NLGForewardDoorL</object-name>
 		<object-name>NLGForewardDoorR</object-name>
+		<object-name>RatDoorL</object-name>
+		<object-name>RatDoorR</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
 		<object-name>Wings</object-name>
-		<object-name>RatDoorL</object-name>
-		<object-name>RatDoorR</object-name>
 		<object-name>FlapL1</object-name>
 		<object-name>FlapL2</object-name>
 		<object-name>FlapR1</object-name>
@@ -47,7 +50,6 @@
 		<object-name>ElevatorR</object-name>
 		<object-name>Hstabs</object-name>
 		<object-name>Hstabs.001</object-name>
-		<object-name>Rudder</object-name>
 		<object-name>SpoilerL1</object-name>
 		<object-name>SpoilerL2</object-name>
 		<object-name>SpoilerL3</object-name>
@@ -55,8 +57,10 @@
 		<object-name>SpoilerL5</object-name>
 		<object-name>FairingL1</object-name>
 		<object-name>FairingL2</object-name>
+		<object-name>FairingL3</object-name>
 		<object-name>FairingR1</object-name>
 		<object-name>FairingR2</object-name>
+		<object-name>FairingR3</object-name>
 	</effect>
 	
 	<effect>

@@ -459,6 +459,11 @@
 	</effect>
 	
 	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
+		<object-name>PylonCFM56</object-name>
+	</effect>
+	
+	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
 		<object-name>IntakeCFM56</object-name>
 	</effect>

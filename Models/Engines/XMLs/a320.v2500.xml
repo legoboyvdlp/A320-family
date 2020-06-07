@@ -400,6 +400,11 @@
 	</effect>
 	
 	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
+		<object-name>PylonIAEV2500</object-name>
+	</effect>
+	
+	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
 		<object-name>IntakeIAEV2500</object-name>
 	</effect>
