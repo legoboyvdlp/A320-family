@@ -72,10 +72,13 @@ var arrivalPage = {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
-				if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
-					me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
-				} elsif (isNoVia[2] == 1) {
-					me.selectedVIA = "NO VIA";
+				
+				if (getprop("/sim/version/flightgear") == "2020.2.0") {
+					if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
+						me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
+					} elsif (isNoVia[2] == 1) {
+						me.selectedVIA = "NO VIA";
+					}
 				}
 			}
 			
@@ -94,15 +97,19 @@ var arrivalPage = {
 		} else {
 			if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[me.computer].approach;
-				if (fmgc.flightPlanController.flightplans[me.computer].approach_trans != nil) {
-					me.selectedVIA = fmgc.flightPlanController.flightplans[me.computer].approach_trans;
-				} elsif (isNoVia[me.computer] == 1) {
-					me.selectedVIA = "NO VIA";
+				if (getprop("/sim/version/flightgear") == "2020.2.0") {
+					if (fmgc.flightPlanController.flightplans[me.computer].approach_trans != nil) {
+						me.selectedVIA = fmgc.flightPlanController.flightplans[me.computer].approach_trans;
+					} elsif (isNoVia[me.computer] == 1) {
+						me.selectedVIA = "NO VIA";
+					}
 				}
 			} elsif (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
-				if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
-					me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
+				if (getprop("/sim/version/flightgear") == "2020.2.0") {
+					if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
+						me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
+					}
 				}
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
@@ -188,7 +195,7 @@ var arrivalPage = {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].destination_runway.id, " APPR", "yel"];
-				} elsif (fmgc.flightPlanController.flightplans[2].destination_runway != nil) {
+				} elsif (fmgc.flightPlanController.flightplans[2].destination_runway != nil and fmgc.flightPlanController.flightplans[2].destination_runway.id == me.selectedApproach.id) {
 					me.L1 = [fmgc.flightPlanController.flightplans[2].destination_runway.id, " APPR", "yel"];
 				} else {
 					me.L1 = ["-----", " APPR", "wht"];
@@ -204,13 +211,13 @@ var arrivalPage = {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].approach.id, " APPR", "yel"];
-				} elsif (fmgc.flightPlanController.flightplans[2].approach != nil and fmgc.flightPlanController.flightplans[2].approach == me.selectedApproach) {
+				} elsif (fmgc.flightPlanController.flightplans[2].approach != nil and fmgc.flightPlanController.flightplans[2].approach.id == me.selectedApproach.id) {
 					me.L1 = [fmgc.flightPlanController.flightplans[2].approach.id, " APPR", "yel"];
 				} else {
 					me.L1 = ["-----", " APPR", "wht"];
 				} 
 			} else {
-				if (fmgc.flightPlanController.flightplans[2].approach != nil and fmgc.flightPlanController.flightplans[2].approach == me.selectedApproach) {
+				if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[2].approach.id, " APPR", "grn"];
 				} else {
 					me.L1 = ["-----", " APPR", "wht"];
@@ -223,6 +230,8 @@ var arrivalPage = {
 	},
 	
 	updateActiveVIAs: func() {
+		if (getprop("/sim/version/flightgear") != "2020.2.0") { return; }
+				
 		if (me.selectedVIA == "NO VIA") {
 			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				me.C1 = ["NONE", "VIA", "grn"];
@@ -233,13 +242,13 @@ var arrivalPage = {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].approach_trans != nil) {
 					me.C1 = [fmgc.flightPlanController.flightplans[me.computer].approach_trans.id, "VIA", "yel"];
-				} elsif (fmgc.flightPlanController.flightplans[2].approach_trans != nil and fmgc.flightPlanController.flightplans[2].approach_trans == me.selectedVIA) {
+				} elsif (fmgc.flightPlanController.flightplans[2].approach_trans != nil and fmgc.flightPlanController.flightplans[2].approach_trans.id == me.selectedVIA.id) {
 					me.C1 = [fmgc.flightPlanController.flightplans[2].approach_trans.id, "VIA", "yel"];
 				} else {
 					me.C1 = ["-------", "VIA", "wht"];
 				} 
 			} else {
-				if (fmgc.flightPlanController.flightplans[2].approach_trans != nil and fmgc.flightPlanController.flightplans[2].approach_trans == me.selectedVIA) {
+				if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
 					me.C1 = [fmgc.flightPlanController.flightplans[2].approach_trans.id, "VIA", "grn"];
 				} else {
 					me.C1 = ["-------", "VIA", "wht"];
@@ -262,13 +271,13 @@ var arrivalPage = {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
 					me.R1 = [fmgc.flightPlanController.flightplans[me.computer].star.id, "STAR  ", "yel"];
-				} elsif (fmgc.flightPlanController.flightplans[2].star != nil and fmgc.flightPlanController.flightplans[2].star == me.selectedSTAR) {
+				} elsif (fmgc.flightPlanController.flightplans[2].star != nil and fmgc.flightPlanController.flightplans[2].star.id == me.selectedSTAR.id) {
 					me.R1 = [fmgc.flightPlanController.flightplans[2].star.id, "STAR  ", "yel"];
 				} else {
 					me.R1 = ["-------", "STAR  ", "wht"];
 				} 
 			} else {
-				if (fmgc.flightPlanController.flightplans[2].star != nil and fmgc.flightPlanController.flightplans[2].star == me.selectedSTAR) {
+				if (fmgc.flightPlanController.flightplans[2].star != nil) {
 					me.R1 = [fmgc.flightPlanController.flightplans[2].star.id, "STAR  ", "grn"];
 				} else {
 					me.R1 = ["-------", "STAR  ", "wht"];
@@ -292,7 +301,7 @@ var arrivalPage = {
 				if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 					if (fmgc.flightPlanController.flightplans[me.computer].star_trans != nil) {
 						me.R2 = [fmgc.flightPlanController.flightplans[me.computer].star_trans.id, "TRANS  ", "yel"];
-					} elsif (fmgc.flightPlanController.flightplans[2].star_trans != nil and fmgc.flightPlanController.flightplans[2].star_trans == me.selectedTransition) {
+					} elsif (fmgc.flightPlanController.flightplans[2].star_trans != nil and fmgc.flightPlanController.flightplans[2].star_trans.id == me.selectedTransition.id) {
 						me.R2 = [fmgc.flightPlanController.flightplans[2].star_trans.id, "TRANS  ", "yel"];
 					} else {
 						me.R2 = ["-------", "TRANS  ", "wht"];
@@ -484,6 +493,7 @@ var arrivalPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateVIAs: func() {
+		if (getprop("/sim/version/flightgear") != "2020.2.0") { return; }
 		if (me.selectedApproach == nil or me.activePage != 2) {
 			return;
 		}
@@ -712,6 +722,7 @@ var arrivalPage = {
 	},
 	arrPushbuttonLeft: func(index) {
 		if (index == 2 and me.activePage == 1 and me.selectedApproach != nil) {
+			if (getprop("/sim/version/flightgear") != "2020.2.0") { return; }
 			me.oldPage = me.activePage;
 			me.activePage = 2;
 			me.updatePage();

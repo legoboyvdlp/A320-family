@@ -123,6 +123,12 @@ var flightPlanController = {
 				mcdu.isNoVia[2] = 0;
 			}
 			
+			if (mcdu.isNoTrans[n] == 1) {
+				mcdu.isNoTrans[2] = 1;
+			} else {
+				mcdu.isNoTrans[2] = 0;
+			}
+			
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}

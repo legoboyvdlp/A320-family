@@ -216,17 +216,6 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	R5: [nil, nil, "ack"],
 	R6: [nil, nil, "ack"],
 	
-	# init conditions
-	# line 1 = FROM
-	# line 2 = TO
-	# line 6 = DEST
-	# neither pseudo nor markers may be FROM waypoint
-	# bearing between FROM and TO waypoints
-	# track between line 2 and line 3 waypoints
-	# name of LEG above TO waypoint - is airway identifier, or waypoint name
-	
-	# DEST in LINE 6 time prediction, distance along flightplan, and EFOB
-	# dashes if no predictions
 	planList: [],
 	outputList: [],
 	scroll: 0,
