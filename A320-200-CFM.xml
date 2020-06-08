@@ -22,9 +22,9 @@
 		<emptywt unit="LBS">95721.5</emptywt>
 		
 		<location name="CG" unit="M">
-			<x>-1.5496</x> <!-- 28.5% MAC -->
+			<x>-2.4335</x> <!-- 28.5% MAC -->
 			<y>0</y>
-			<z>-0.66395</z>
+			<z>-0.75</z>
 		</location>
 		
 		<pointmass name="Crew">
@@ -96,7 +96,7 @@
 	<propulsion>
 		<engine file="cfm56_5b4_1">
 			<location unit="M">
-				<x>14.3962788</x>
+				<x>-5.34904</x>
 				<y>-5.755</y>
 				<z>-1.04768</z>
 			</location>
@@ -108,7 +108,7 @@
 			<feed>5</feed>
 			<thruster file="direct">
 				<location unit="M">
-					<x>14.3962788</x>
+					<x>-5.34904</x>
 					<y>-5.755</y>
 					<z>-1.04768</z>
 				</location>
@@ -122,7 +122,7 @@
 		
 		<engine file="cfm56_5b4_2">
 			<location unit="M">
-				<x>14.3962788</x>
+				<x>-5.34904</x>
 				<y>5.755</y>
 				<z>-1.04768</z>
 			</location>
@@ -134,7 +134,7 @@
 			<feed>6</feed>
 			<thruster file="direct">
 				<location unit="M">
-					<x>14.3962788</x>
+					<x>-5.34904</x>
 					<y>5.755</y>
 					<z>-1.04768</z>
 				</location>
@@ -174,9 +174,9 @@
 		
 		<tank type="FUEL">	 <!-- Outer Left Wing Tank -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>-7.0291</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">1523</capacity>
 			<contents unit="LBS">1523</contents>
@@ -187,9 +187,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- Inner Left Wing Tank -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>-4.1029</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12591.95</capacity>
 			<contents unit="LBS">6000</contents>
@@ -200,9 +200,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- Center Tank -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>0</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">14623</capacity>
 			<contents unit="LBS">42</contents>
@@ -213,9 +213,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- Inner Right Wing Tank -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>4.1029</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12591.95</capacity>
 			<contents unit="LBS">6000</contents>
@@ -226,9 +226,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- Outer Right Wing Tank -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>7.0291</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">1523</capacity>
 			<contents unit="LBS">1523</contents>
@@ -239,9 +239,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- Engine 1 Pipes -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>0</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>
@@ -250,9 +250,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- Engine 2 Pipes -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>0</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>
@@ -261,9 +261,9 @@
 		</tank>
 		<tank type="FUEL">	 <!-- APU Pipes -->
 			<location unit="M">
-				<x>-1.5496</x>
+				<x>-2.4335</x>
 				<y>0</y>
-				<z>-0.66395</z>
+				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">10</capacity>
 			<contents unit="LBS">0</contents>

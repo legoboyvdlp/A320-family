@@ -6,15 +6,15 @@
 <metrics>
 	
 	<wingarea unit="FT2">1319.79</wingarea>
-	<wingspan unit="FT" >117.26</wingspan>
-	<chord unit="FT" >20.76</chord>
+	<wingspan unit="FT">117.26</wingspan>
+	<chord unit="FT">20.76</chord>
 	<htailarea unit="FT2">334.24</htailarea>
 	<vtailarea unit="FT2">248.79</vtailarea>
 	
 	<location name="AERORP" unit="M">
-		<x>-1.8496</x>
+		<x>-2.6496</x>
 		<y>0</y>
-		<z>-0.66395</z>
+		<z>-0.75</z>
 	</location>
 	
 	<location name="EYEPOINT" unit="M">
