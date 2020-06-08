@@ -62,6 +62,8 @@
 		<object-name>FairingR1</object-name>
 		<object-name>FairingR2</object-name>
 		<object-name>FairingR3</object-name>
+		<object-name>EngineFairingL</object-name>
+		<object-name>EngineFairingR</object-name>
 	</effect>
 	
 	<effect>
@@ -175,22 +177,20 @@
 			<entry><ind>0.8</ind><dep> 0.0</dep></entry>
 		</interpolation>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<x1-m>-13.3241</x1-m>
+			<y1-m>-0.47053</y1-m>
+			<z1-m>-2.01238</z1-m>
+			<x2-m>-13.3241</x2-m>
+			<y2-m>0.4696</y2-m>
+			<z2-m>-2.01238</z2-m>
 		</axis>
-		<center>
-			<x-m>-13.3241</x-m>
-			<y-m>-0.00204</y-m>
-			<z-m>-2.01238</z-m>
-		</center>
 	</animation>
 	
 	<animation>
 		<type>rotate</type>
 		<object-name>MLGFittingL</object-name>
 		<object-name>MLGWheelsL</object-name>
-		<object-name>MLGCablesL1.001</object-name>
+		<object-name>MLGCablesL1</object-name>
 		<object-name>MLGCablesL2</object-name>
 		<object-name>MLGSlidingTubeAxleL</object-name>
 		<object-name>SideStayL2</object-name>
@@ -200,45 +200,25 @@
 		<object-name>MLGLockstayActuatorL1</object-name>
 		<object-name>MLGLockstayActuatorL2</object-name>
 		<object-name>MLGTorgueLinkL1</object-name>
-		<object-name>MLGTorqueLink2</object-name>
-		<object-name>MLGLSlaveLink1</object-name>
+		<object-name>MLGTorqueLinkL2</object-name>
+		<object-name>MLGLSlaveLinkL1</object-name>
 		<object-name>MLGSlaveLinkL2</object-name>
-		<property>gear/gear[1]/position-norm</property>
-		<interpolation>
-			<entry><ind>0.2</ind><dep>84.89</dep></entry>
-			<entry><ind>0.8</ind><dep> 0.0</dep></entry>
-		</interpolation>
-		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
-		</axis>
-		<center>
-			<x-m>-1.76315</x-m>
-			<y-m>-3.86306</y-m>
-			<z-m>-1.00680</z-m>
-		</center>
-	</animation>
-	
-	<animation>
-		<type>rotate</type>
 		<object-name>MLGWingDoorL1</object-name>
 		<object-name>MLGWingDoorL1.Inner</object-name>
 		<property>gear/gear[1]/position-norm</property>
 		<interpolation>
-			<entry><ind>0.2</ind><dep>0.0</dep></entry>
-			<entry><ind>0.8</ind><dep>-84.89</dep></entry>
+			<entry><ind>0.2</ind><dep>-80.00</dep></entry>
+			<entry><ind>0.8</ind><dep> 0.0</dep></entry>
 		</interpolation>
 		<axis>
-			<x1-m>-1.928</x1-m>
-			<y1-m>-3.97346</y1-m>
-			<z1-m>-1.32254</z1-m>
-			<x2-m>-1.17301</x2-m>
-			<y2-m>-3.94211</y2-m>
-			<z2-m>-1.23757</z2-m>
+			<x1-m>-1.35004</x1-m>
+			<y1-m>-3.84617</y1-m>
+			<z1-m>-1.05491</z1-m>
+			<x2-m>-2.02267</x2-m>
+			<y2-m>-3.85672</y2-m>
+			<z2-m>-1.17403</z2-m>
 		</axis>
 	</animation>
-	
 	
 	<animation>
 		<type>rotate</type>
@@ -259,6 +239,59 @@
 		</axis>
 	</animation>
 	
+	<animation>
+		<type>rotate</type>
+		<object-name>MLGFittingR</object-name>
+		<object-name>MLGWheelsR</object-name>
+		<object-name>MLGCablesR1</object-name>
+		<object-name>MLGCablesR2</object-name>
+		<object-name>MLGSlidingTubeAxleR</object-name>
+		<object-name>SideStayR2</object-name>
+		<object-name>SideStayR1</object-name>
+		<object-name>MLGLockStayR1</object-name>
+		<object-name>MLGLockStayR2</object-name>
+		<object-name>MLGLockstayActuatorR1</object-name>
+		<object-name>MLGLockstayActuatorR2</object-name>
+		<object-name>MLGTorgueLinkR1</object-name>
+		<object-name>MLGTorqueLinkR2</object-name>
+		<object-name>MLGLSlaveLinkR1</object-name>
+		<object-name>MLGSlaveLinkR2</object-name>
+		<object-name>MLGWingDoorR1</object-name>
+		<object-name>MLGWingDoorR1.Inner</object-name>
+		<property>gear/gear[2]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>80.00</dep></entry>
+			<entry><ind>0.8</ind><dep> 0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.35004</x1-m>
+			<y1-m> 3.84613</y1-m>
+			<z1-m>-1.05492</z1-m>
+			<x2-m>-2.02267</x2-m>
+			<y2-m> 3.85668</y2-m>
+			<z2-m>-1.17404</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>MLGWingDoorR2</object-name>
+		<object-name>MLGWingDoorR2.Inner</object-name>
+		<property>gear/gear[2]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>90.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.928</x1-m>
+			<y1-m> 3.97108</y1-m>
+			<z1-m>-1.32254</z1-m>
+			<x2-m>-1.17301</x2-m>
+			<y2-m> 3.93972</y2-m>
+			<z2-m>-1.23757</z2-m>
+		</axis>
+	</animation>
+	
 	<!-- Compression -->
 	<animation>
 		<name>Compression (Nose)</name>
@@ -274,6 +307,40 @@
 			<x2-m>-13.667</x2-m>
 			<y2-m>-0.001254</y2-m>
 			<z2-m>-4.03746</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Compression (Left)</name>
+		<type>translate</type>
+		<object-name>MLGSlidingTubeAxleL</object-name>
+		<object-name>MLGWheelsL</object-name>
+		<property>gear/gear[1]/compression-norm</property>
+		<factor>-0.3048</factor>
+		<axis>
+			<x1-m>-1.23216</x1-m>
+			<y1-m>-3.8317</y1-m>
+			<z1-m>-3.11445</z1-m>
+			<x2-m>-1.11809</x2-m>
+			<y2-m>-3.81576</y2-m>
+			<z2-m>-3.94002</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Compression (Right)</name>
+		<type>translate</type>
+		<object-name>MLGSlidingTubeAxleR</object-name>
+		<object-name>MLGWheelsR</object-name>
+		<property>gear/gear[2]/compression-norm</property>
+		<factor>-0.3048</factor>
+		<axis>
+			<x1-m>-1.23217</x1-m>
+			<y1-m> 3.82954</y1-m>
+			<z1-m>-3.11442</z1-m>
+			<x2-m>-1.1181</x2-m>
+			<y2-m> 3.8136</y2-m>
+			<z2-m>-3.93998</z2-m>
 		</axis>
 	</animation>
 	
@@ -308,9 +375,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-1.1393</x-m>
-			<y-m>-3.86304</y-m>
-			<z-m>-3.79006</z-m>
+			<x-m>-1.13079</x-m>
+			<y-m>-3.81752</y-m>
+			<z-m>-3.8452</z-m>
 		</center>
 	</animation>
 	
@@ -326,9 +393,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-1.1393</x-m>
-			<y-m>3.86093</y-m>
-			<z-m>-3.79005</z-m>
+			<x-m>-1.1308</x-m>
+			<y-m>3.81537</y-m>
+			<z-m>-3.84517</z-m>
 		</center>
 	</animation>
 	
