@@ -6,9 +6,9 @@
 		<name>Flightdeck</name>
 		<path>Aircraft/A320-family/Models/FlightDeck/a320.flightdeck.xml</path>
 		<offsets>
-			<x-m>-14.0320</x-m>
-			<y-m>0.0</y-m>
-			<z-m>0.0</z-m>
+			<x-m>-16.47411</x-m>
+			<y-m>-0.00015</y-m>
+			<z-m>-0.09483</z-m>
 		</offsets>
 	</model>
 </PropertyList>

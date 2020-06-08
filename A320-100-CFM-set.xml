@@ -26,8 +26,8 @@
 			<internal archive="y">true</internal>
 			<config>
 				<x-offset-m archive="y">-0.45</x-offset-m>
-				<y-offset-m archive="y">0.64</y-offset-m>
-				<z-offset-m archive="y">-13.75</z-offset-m>
+				<y-offset-m archive="y">0.545</y-offset-m>
+				<z-offset-m archive="y">-16.193</z-offset-m>
 				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 			</config>
@@ -39,8 +39,8 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.45</x-offset-m>
-				<y-offset-m archive="y">0.64</y-offset-m>
-				<z-offset-m archive="y">-13.75</z-offset-m>
+				<y-offset-m archive="y">0.545</y-offset-m>
+				<z-offset-m archive="y">-16.193</z-offset-m>
 				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 			</config>
@@ -52,8 +52,8 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0</x-offset-m>
-				<y-offset-m archive="y">0.64</y-offset-m>
-				<z-offset-m archive="y">-13.72</z-offset-m>
+				<y-offset-m archive="y">0.545</y-offset-m>
+				<z-offset-m archive="y">-16.163</z-offset-m>
 				<pitch-offset-deg archive="y">65.5</pitch-offset-deg>
 				<default-field-of-view-deg type="double">115</default-field-of-view-deg>
 			</config>
@@ -65,8 +65,8 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.64</y-offset-m>
-				<z-offset-m archive="y">-14.15</z-offset-m>
+				<y-offset-m archive="y">0.545</y-offset-m>
+				<z-offset-m archive="y">-16.593</z-offset-m>
 				<pitch-offset-deg archive="y">-76</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 			</config>
@@ -78,8 +78,8 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.64</y-offset-m>
-				<z-offset-m archive="y">-13.8</z-offset-m>
+				<y-offset-m archive="y">0.545</y-offset-m>
+				<z-offset-m archive="y">-16.243</z-offset-m>
 				<pitch-offset-deg archive="y">-82</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 			</config>
@@ -91,8 +91,8 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.64</y-offset-m>
-				<z-offset-m archive="y">-13.75</z-offset-m>
+				<y-offset-m archive="y">0.545</y-offset-m>
+				<z-offset-m archive="y">-16.193</z-offset-m>
 				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">52</default-field-of-view-deg>
 			</config>
@@ -105,7 +105,7 @@
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.81</x-offset-m>
 				<y-offset-m archive="y">0.5</y-offset-m>
-				<z-offset-m archive="y">-6.49</z-offset-m>
+				<z-offset-m archive="y">-7.99</z-offset-m>
 				<heading-offset-deg>129</heading-offset-deg>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 			</config>
@@ -118,7 +118,7 @@
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.81</x-offset-m>
 				<y-offset-m archive="y">0.5</y-offset-m>
-				<z-offset-m archive="y">0</z-offset-m>
+				<z-offset-m archive="y">-2.5</z-offset-m>
 				<heading-offset-deg>257</heading-offset-deg>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 			</config>
@@ -131,7 +131,7 @@
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.81</x-offset-m>
 				<y-offset-m archive="y">0.5</y-offset-m>
-				<z-offset-m archive="y">6.8</z-offset-m>
+				<z-offset-m archive="y">4.3</z-offset-m>
 				<heading-offset-deg>63</heading-offset-deg>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 			</config>
