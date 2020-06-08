@@ -30,6 +30,7 @@
 		<object-name>NLGForewardDoorR</object-name>
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorR</object-name>
+		<object-name>NLGFitting</object-name>
 	</effect>
 	
 	<effect>
@@ -67,6 +68,7 @@
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
 		<object-name>Rat</object-name>
 		<object-name>RatSpinner</object-name>
+		<object-name>NLGSlidingTubeAxle</object-name>
 	</effect>
 	
 	<!-- Animations -->
@@ -148,6 +150,345 @@
 			<z>0</z>
 		</axis>
 	</animation>
+	
+	<!-- Gear -->
+	
+	<!-- Retraction -->
+	<animation>
+		<type>rotate</type>
+		<object-name>NLGFitting</object-name>
+		<object-name>NLGDragStrutAssembly1</object-name>
+		<object-name>NLGDragStrutAssembly2</object-name>
+		<object-name>NLGSlidingTubeAxle</object-name>
+		<object-name>NLGWheels</object-name>
+		<object-name>NLGTorqueLink1</object-name>
+		<object-name>NLGTorqueLink2</object-name>
+		<object-name>NLGLockStay1</object-name>
+		<object-name>NLGLockStay2</object-name>
+		<object-name>NurbsPath.002</object-name>
+		<object-name>NurbsPath.003</object-name>
+		<object-name>NurbsPath.004</object-name>
+		<object-name>NurbsPath.005</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>90.0</dep></entry>
+			<entry><ind>0.8</ind><dep> 0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-13.3241</x-m>
+			<y-m>-0.00204</y-m>
+			<z-m>-2.01238</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>MLGFittingL</object-name>
+		<object-name>MLGWheelsL</object-name>
+		<object-name>MLGCablesL1.001</object-name>
+		<object-name>MLGCablesL2</object-name>
+		<object-name>MLGSlidingTubeAxleL</object-name>
+		<object-name>SideStayL2</object-name>
+		<object-name>SideStayL1</object-name>
+		<object-name>MLGLockStayL1</object-name>
+		<object-name>MLGLockStayL2</object-name>
+		<object-name>MLGLockstayActuatorL1</object-name>
+		<object-name>MLGLockstayActuatorL2</object-name>
+		<object-name>MLGTorgueLinkL1</object-name>
+		<object-name>MLGTorqueLink2</object-name>
+		<object-name>MLGLSlaveLink1</object-name>
+		<object-name>MLGSlaveLinkL2</object-name>
+		<property>gear/gear[1]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>84.89</dep></entry>
+			<entry><ind>0.8</ind><dep> 0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-1.76315</x-m>
+			<y-m>-3.86306</y-m>
+			<z-m>-1.00680</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>MLGWingDoorL1</object-name>
+		<object-name>MLGWingDoorL1.Inner</object-name>
+		<property>gear/gear[1]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>-84.89</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.928</x1-m>
+			<y1-m>-3.97346</y1-m>
+			<z1-m>-1.32254</z1-m>
+			<x2-m>-1.17301</x2-m>
+			<y2-m>-3.94211</y2-m>
+			<z2-m>-1.23757</z2-m>
+		</axis>
+	</animation>
+	
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>MLGWingDoorL2</object-name>
+		<object-name>MLGWingDoorL2.Inner</object-name>
+		<property>gear/gear[1]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.2</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>-90.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.928</x1-m>
+			<y1-m>-3.97346</y1-m>
+			<z1-m>-1.32254</z1-m>
+			<x2-m>-1.17301</x2-m>
+			<y2-m>-3.94211</y2-m>
+			<z2-m>-1.23757</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Compression -->
+	<animation>
+		<name>Compression (Nose)</name>
+		<type>translate</type>
+		<object-name>NLGSlidingTubeAxle</object-name>
+		<object-name>NLGWheels</object-name>
+		<property>gear/gear[0]/compression-norm</property>
+		<factor>-0.3048</factor>
+		<axis>
+			<x1-m>-13.524</x1-m>
+			<y1-m>-0.001189</y1-m>
+			<z1-m>-3.10083</z1-m>
+			<x2-m>-13.667</x2-m>
+			<y2-m>-0.001254</y2-m>
+			<z2-m>-4.03746</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Tyre Spin -->
+	<animation>
+		<name>Tire rotation (nose)</name>
+		<type>spin</type>
+		<object-name>NLGWheels</object-name>
+		<property>gear/gear[0]/rollspeed-ms</property>
+		<factor>10</factor>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-13.6545</x-m>
+			<y-m>0.0</y-m>
+			<z-m>-3.96094</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Tire rotation (Left)</name>
+		<type>spin</type>
+		<object-name>MLGWheelsL</object-name>
+		<property>gear/gear[1]/rollspeed-ms</property>
+		<factor>10</factor>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-1.1393</x-m>
+			<y-m>-3.86304</y-m>
+			<z-m>-3.79006</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Tire rotation (Right)</name>
+		<type>spin</type>
+		<object-name>MLGWheelsR</object-name>
+		<property>gear/gear[2]/rollspeed-ms</property>
+		<factor>10</factor>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-1.1393</x-m>
+			<y-m>3.86093</y-m>
+			<z-m>-3.79005</z-m>
+		</center>
+	</animation>
+	
+	<!-- Doors -->
+	<animation>
+		<type>rotate</type>
+		<object-name>NLGAftDoorL</object-name>
+		<object-name>NLGAftDoorL.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>55.0</dep></entry>
+			<entry><ind>0.8</ind><dep>55.0</dep></entry>
+			<entry><ind>1.0</ind><dep>55.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-13.4018</x-m>
+			<y-m>-0.51956</y-m>
+			<z-m>-2.17508</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>NLGAftDoorL</object-name>
+		<object-name>NLGAftDoorL.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>0.04</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>NLGForewardDoorL</object-name>
+		<object-name>NLGForewardDoorL.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>-55.0</dep></entry>
+			<entry><ind>0.8</ind><dep>-55.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+            <x1-m>-15.6204</x1-m>
+            <y1-m>-0.52032</y1-m>
+            <z1-m>-2.00992</z1-m>
+            <x2-m>-13.8945</x2-m>
+            <y2-m>-0.51988</y2-m>
+            <z2-m>-2.15419</z2-m>
+        </axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>NLGForewardDoorL</object-name>
+		<object-name>NLGForewardDoorL.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>0.04</dep></entry>
+			<entry><ind>0.8</ind><dep>0.04</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>NLGAftDoorR</object-name>
+		<object-name>NLGAftDoorR.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>55.0</dep></entry>
+			<entry><ind>0.8</ind><dep>55.0</dep></entry>
+			<entry><ind>1.0</ind><dep>55.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-13.4018</x-m>
+			<y-m>0.51686</y-m>
+			<z-m>-2.17508</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>NLGAftDoorR</object-name>
+		<object-name>NLGAftDoorR.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.8</ind><dep>0.04</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>NLGForewardDoorR</object-name>
+		<object-name>NLGForewardDoorR.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>55.0</dep></entry>
+			<entry><ind>0.8</ind><dep>55.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+            <x1-m>-15.6204</x1-m>
+            <y1-m> 0.51763</y1-m>
+            <z1-m>-2.00992</z1-m>
+            <x2-m>-13.8945</x2-m>
+            <y2-m> 0.51719</y2-m>
+            <z2-m>-2.15419</z2-m>
+        </axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>NLGForewardDoorR</object-name>
+		<object-name>NLGForewardDoorR.Inner</object-name>
+		<property>gear/gear[0]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>0.04</dep></entry>
+			<entry><ind>0.8</ind><dep>0.04</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
 	
 	<!-- Flight Control Surfaces -->
 	
@@ -233,5 +574,4 @@
 			<z2-m>0.291973</z2-m>
 		</axis>
 	</animation>
-
 </PropertyList>
