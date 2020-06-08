@@ -325,6 +325,10 @@ var arrivalPage = {
 		if (me.arrAirport == nil) {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
+		
+		me.approaches = [];
+		me._approaches = nil;
+		
 		me._approaches = me.arrAirport[0].getApproachList();
 		me.approaches = sort(me._approaches,func(a,b) cmp(a,b));
 		if (me.approaches == nil or size(me.approaches) == 0) {
@@ -440,6 +444,10 @@ var arrivalPage = {
 		if (me.arrAirport == nil) {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
+		
+		me.stars = [];
+		me._stars = nil;
+		
 		if (me.selectedApproach != nil) {
 			me._stars = me.arrAirport[0].stars(me.selectedApproach.runways[0]);
 		} else {
@@ -497,6 +505,8 @@ var arrivalPage = {
 		if (me.selectedApproach == nil or me.activePage != 2) {
 			return;
 		}
+		me.vias = [];
+		me._vias = nil;
 		me._vias = me.selectedApproach.transitions;
 		me.vias = sort(me._vias, func(a,b) cmp(a,b));
 		append(me.vias, "NO VIA");
@@ -578,10 +588,15 @@ var arrivalPage = {
 		if (me.arrAirport == nil) {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
+
+		me.clearTransitions();
 		if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
-			me.clearTransitions();
+			append(me.transitions, "NO TRANS");
 			return;
 		}
+		
+		me.transitions = [];
+		me._transitions = nil;
 		me._transitions = me.arrAirport[0].getStar(me.selectedSTAR).transitions;
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
 		append(me.transitions, "NO TRANS");
@@ -828,21 +843,18 @@ var arrivalPage = {
 	arrPushbuttonRight: func(index) {
 		if (size(me.transitions) >= (index - 2)) {
 			if (!dirToFlag) {
-				if (me.transitions[index - 3] == "NO TRANS") {
-					me.makeTmpy();
-					fmgc.flightPlanController.flightplans[me.computer].star_trans = nil;
-					isNoTrans[me.computer] = 1;
-					me.updateActiveTransitions();
-					me.updateTransitions();
-					fmgc.flightPlanController.flightPlanChanged(me.computer);
-				} else {
-					me.selectedTransition = me.transitions[index - 3];
-					me.makeTmpy();
+				me.selectedTransition = me.transitions[index - 3];
+				me.makeTmpy();
+				if (me.selectedTransition != "NO TRANS") {
+					isNoTrans[me.computer] = 0;
 					fmgc.flightPlanController.flightplans[me.computer].star_trans = me.selectedTransition;
-					me.updateActiveTransitions();
-					me.updateTransitions();
-					fmgc.flightPlanController.flightPlanChanged(me.computer);
+				} else {
+					isNoTrans[me.computer] = 1;
+					fmgc.flightPlanController.flightplans[me.computer].star_trans = nil;
 				}
+				me.updateActiveTransitions();
+				me.updateTransitions();
+				fmgc.flightPlanController.flightPlanChanged(me.computer);
 			} else {
 				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 			}
