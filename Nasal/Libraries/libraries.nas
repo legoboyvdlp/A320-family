@@ -38,32 +38,28 @@ setprop("/engines/engine[1]/oil-qt-actual", qty2);
 # Lights #
 ##########
 
-var beacon_switch = props.globals.getNode("controls/switches/beacon", 1);
-var beacon_ctl = props.globals.getNode("controls/lighting/beacon", 1);
+var beacon_switch = props.globals.getNode("/controls/switches/beacon", 1);
+var beacon_ctl = props.globals.getNode("/controls/lighting/beacon", 1);
 var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.1, 1], "/controls/lighting/beacon");
-var strobe_switch = props.globals.getNode("controls/switches/strobe", 1);
-var strobe_light = props.globals.getNode("controls/lighting/strobe", 1);
+var strobe_switch = props.globals.getNode("/controls/switches/strobe", 1);
+var strobe_light = props.globals.getNode("/controls/lighting/strobe", 1);
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
 var logo_lights = getprop("/sim/model/lights/logo-lights");
-var nav_lights = props.globals.getNode("sim/model/lights/nav-lights");
-var wing_switch = props.globals.getNode("controls/switches/wing-lights", 1);
-var wing_ctl = props.globals.getNode("controls/lighting/wing-lights", 1);
+var nav_lights = props.globals.getNode("/sim/model/lights/nav-lights");
+var wing_switch = props.globals.getNode("/controls/switches/wing-lights", 1);
+var wing_ctl = props.globals.getNode("/controls/lighting/wing-lights", 1);
 var dome_light = props.globals.initNode("/sim/model/lights/dome-light", 0.0, "DOUBLE");
 var wow = getprop("/gear/gear[2]/wow");
 var slats = getprop("/controls/flight/slats");
 var gear = getprop("/gear/gear[0]/position-norm");
 var nose_lights = getprop("/sim/model/lights/nose-lights");
-var left_turnoff_light = props.globals.getNode("controls/lighting/leftturnoff");
-var right_turnoff_light = props.globals.getNode("controls/lighting/rightturnoff");
+var left_turnoff_light = props.globals.getNode("/controls/lighting/leftturnoff");
+var right_turnoff_light = props.globals.getNode("/controls/lighting/rightturnoff");
 var settingT = getprop("/controls/lighting/taxi-light-switch");
 var settingTurnoff = getprop("/controls/lighting/turnoff-light-switch");
 var setting = getprop("/controls/lighting/nav-lights-switch");
 var domeSetting = getprop("/controls/lighting/dome-norm");
-var landL = props.globals.getNode("controls/lighting/landing-lights[1]", 1);
-var landR = props.globals.getNode("controls/lighting/landing-lights[2]", 1);
-var landlSw = props.globals.getNode("controls/switches/landing-lights-l", 1);
-var landrSw = props.globals.getNode("controls/switches/landing-lights-r", 1);
 
 ###################
 # Tire Smoke/Rain #
@@ -81,7 +77,7 @@ setlistener("/sim/sounde/btn1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -90,7 +86,7 @@ setlistener("/sim/sounde/oh-btn", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/oh-btn").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/oh-btn").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -99,7 +95,7 @@ setlistener("/sim/sounde/btn3", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn3").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn3").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -108,7 +104,7 @@ setlistener("/sim/sounde/knb1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/knb1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/knb1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -117,26 +113,26 @@ setlistener("/sim/sounde/switch1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/switch1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/switch1").setBoolValue(0);
 	}, 0.05);
 });
 
 setlistener("/controls/lighting/seatbelt-sign", func {
-	props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(0);
 	}, 2);
 }, 0, 0);
 
 setlistener("/controls/lighting/no-smoking-sign", func {
-	props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(0);
 	}, 1);
 }, 0, 0);
 
 setlistener("/controls/flight/flaps-input", func {
-	props.globals.getNode("sim/sounde/flaps-click").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/flaps-click").setBoolValue(1);
 }, 0, 0);
 
 setlistener("/sim/sounde/flaps-click", func {
@@ -144,7 +140,7 @@ setlistener("/sim/sounde/flaps-click", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/flaps-click").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/flaps-click").setBoolValue(0);
 	}, 0.4);
 });
 #########
@@ -424,8 +420,8 @@ var lightsLoop = maketimer(0.2, func {
 	
 	# turnoff lights
 	settingTurnoff = getprop("/controls/lighting/turnoff-light-switch");
-	left_turnoff_light = props.globals.getNode("controls/lighting/leftturnoff");
-	right_turnoff_light = props.globals.getNode("controls/lighting/rightturnoff");
+	left_turnoff_light = props.globals.getNode("/controls/lighting/leftturnoff");
+	right_turnoff_light = props.globals.getNode("/controls/lighting/rightturnoff");
 	
 	if (settingTurnoff == 1 and gear > 0.9 and getprop("/systems/electrical/bus/ac-1") > 0) {
 		left_turnoff_light.setBoolValue(1);
@@ -441,8 +437,8 @@ var lightsLoop = maketimer(0.2, func {
 	
 	# logo and navigation lights
 	setting = getprop("/controls/lighting/nav-lights-switch");
-	nav_lights = props.globals.getNode("sim/model/lights/nav-lights");
-	logo_lights = props.globals.getNode("sim/model/lights/logo-lights");
+	nav_lights = props.globals.getNode("/sim/model/lights/nav-lights");
+	logo_lights = props.globals.getNode("/sim/model/lights/logo-lights");
 	wow = getprop("/gear/gear[2]/wow");
 	slats = getprop("/controls/flight/slats");
 	
@@ -506,20 +502,6 @@ var lightsLoop = maketimer(0.2, func {
 		wing_ctl.setValue(0);
 	}
 	
-	# landL
-	
-	if (landlSw.getValue() == 1 and getprop("/systems/electrical/bus/ac-1") > 0) {
-		landL.setValue(1);
-	} else {
-		landL.setValue(0);
-	}
-	
-	if (landrSw.getValue() == 1 and getprop("/systems/electrical/bus/ac-2") > 0) {
-		landR.setValue(1);
-	} else {
-		landR.setValue(0);
-	}
-	
 	# signs
 	
 	if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
@@ -547,18 +529,6 @@ var lightsLoop = maketimer(0.2, func {
 		} else {
 			setprop("/controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
 		}
-	}
-	
-	if (getprop("/controls/lighting/landing-lights[1]") >= 0.5) {
-		setprop("/fdm/jsbsim/rubbish/landL", 1);
-	} else {
-		setprop("/fdm/jsbsim/rubbish/landL", 0);
-	}
-	
-	if (getprop("/controls/lighting/landing-lights[2]") >= 0.5) {
-		setprop("/fdm/jsbsim/rubbish/landR", 1);
-	} else {
-		setprop("/fdm/jsbsim/rubbish/landR", 0);
 	}
 });
 

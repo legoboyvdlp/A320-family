@@ -77,6 +77,43 @@
 	
 	<!-- Belly -->
 	
+	<!-- Landing Lights -->
+	<animation>
+		<name>Landing Light left</name>
+		<type>rotate</type>
+		<object-name>LightWingL</object-name>
+		<property>/controls/lighting/landing-light-pos-l</property>
+		<factor>90</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.11117</x-m>
+			<y-m>-2.27417</y-m>
+			<z-m>-1.57529</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Landing Light right</name>
+		<type>rotate</type>
+		<object-name>LightWingR</object-name>
+		<property>/controls/lighting/landing-light-pos-r</property>
+		<factor>90</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.11117</x-m>
+			<y-m> 2.27179</y-m>
+			<z-m>-1.57529</z-m>
+		</center>
+	</animation>
+	
 	<!-- Ram Air Turbine -->
 	<animation>
 		<name>RAT Door left</name>
@@ -639,6 +676,141 @@
 			<x2-m>2.5211</x2-m>
 			<y2-m>16.2893</y2-m>
 			<z2-m>0.291973</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Doors -->
+	
+	<!-- Cargo -->
+	
+	<!-- Fwd -->
+	<animation>
+		<name>Cargo Fwd door pick</name>
+		<type>pick</type>
+		<object-name>Cargo1</object-name>
+		<object-name>Cargo1.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.cargofwd, "cargofwd", "forward cargo");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Cargo Fwd door rotate</name>
+		<type>rotate</type>
+		<object-name>Cargo1</object-name>
+		<object-name>Cargo1.Inner</object-name>
+		<property>sim/model/door-positions/cargofwd/position-norm</property>
+		<factor>125</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-10.8477</x-m>
+			<y-m>1.87925</y-m>
+			<z-m>-0.70975</z-m>
+		</center>
+	</animation>
+	
+	<!-- Aft -->
+	<animation>
+		<name>Cargo Aft door pick</name>
+		<type>pick</type>
+		<object-name>Cargo2</object-name>
+		<object-name>Cargo2.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.cargoaft, "cargoaft", "aft cargo");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Cargo Aft door rotate</name>
+		<type>rotate</type>
+		<object-name>Cargo2</object-name>
+		<object-name>Cargo2.Inner</object-name>
+		<property>sim/model/door-positions/cargoaft/position-norm</property>
+		<factor>125</factor>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>3.64802</x-m>
+			<y-m>1.86904</y-m>
+			<z-m>-0.723425</z-m>
+		</center>
+	</animation>
+	
+	<!-- Bulk -->
+	<animation>
+		<name>Cargo bulk door pick</name>
+		<type>pick</type>
+		<object-name>Cargo3</object-name>
+		<object-name>Cargo3.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.cargobulk, "cargobulk", "bulk cargo");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Cargo bulk door rotate</name>
+		<type>rotate</type>
+		<object-name>Cargo3</object-name>
+		<object-name>Cargo3.Inner</object-name>
+		<property>sim/model/door-positions/cargobulk/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.1</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>55</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>7.8423</x1-m>
+			<y1-m>1.53011</y1-m>
+			<z1-m>-1.21223</z1-m>
+			<x2-m>7.11226</x2-m>
+			<y2-m>1.57592</y2-m>
+			<z2-m>-1.21271</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Cargo bulk door translate</name>
+		<type>translate</type>
+		<object-name>Cargo3</object-name>
+		<object-name>Cargo3.Inner</object-name>
+		<property>sim/model/door-positions/cargobulk/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.1</ind><dep>0.025</dep></entry>
+			<entry><ind>1</ind><dep>0.05</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
 		</axis>
 	</animation>
 </PropertyList>

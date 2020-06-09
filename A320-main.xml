@@ -803,6 +803,8 @@
 			<landing-lights n="0" type="double">0</landing-lights>
 			<landing-lights n="1" type="double">0</landing-lights>
 			<landing-lights n="2" type="double">0</landing-lights>
+			<landing-light-pos-l type="double">0</landing-light-pos-l>
+			<landing-light-pos-r type="double">0</landing-light-pos-r>
 			<ped-flood-knb type="double">0</ped-flood-knb>
 			<ped-flood-norm type="double">0</ped-flood-norm>
 			<main-flood-knb type="double">0</main-flood-knb>

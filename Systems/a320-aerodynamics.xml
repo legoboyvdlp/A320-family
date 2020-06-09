@@ -6,8 +6,6 @@
 <aerodynamics>
 	
 	<property value="0.0">ice/wing</property>
-	<property value="0">rubbish/landL</property>
-	<property value="0">rubbish/landR</property>
 	
 	<axis name="LIFT">
 		
@@ -360,7 +358,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<property>rubbish/landL</property>
+				<property>/controls/lighting/landing-light-pos-l</property>
 				<value>0.0016</value>
 			</product>
 		</function>
@@ -370,7 +368,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<property>rubbish/landR</property>
+				<property>/controls/lighting/landing-light-pos-r</property>
 				<value>0.0016</value>
 			</product>
 		</function>

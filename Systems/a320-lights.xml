@@ -4,7 +4,7 @@
 
 <system name="A320: Lights">
 
-	<channel name="Lights">
+	<channel name="Interior Lights">
 		<switch name="/controls/lighting/reading-light-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-flood-knb">
@@ -56,6 +56,67 @@
 				/systems/electrical/bus/dc-2 gt 25
 			</test>
 		</switch>
+	</channel>
+	
+	<channel name="External lights">
+		
+		<switch name="/controls/lighting/landing-lights[1]">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/landing-lights-l eq 1
+				/systems/electrical/bus/ac-1 ge 110
+				/controls/lighting/landing-light-pos-l eq 1
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/landing-lights[2]">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/landing-lights-r ne 0
+				/systems/electrical/bus/ac-2 ge 110
+				/controls/lighting/landing-light-pos-r eq 1
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/landing-light-pos-l-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/landing-lights-l ne 0
+			</test>
+		</switch>
+		
+		
+		<switch name="/controls/lighting/landing-light-pos-r-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/landing-lights-r ne 0
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/landing-light-pos-l-power">
+			<default value="0"/>
+			<test logic="AND" value="0.2">
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/landing-light-pos-r-power">
+			<default value="0"/>
+			<test logic="AND" value="0.2">
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/controls/lighting/landing-light-pos-l">
+			<input>/controls/lighting/landing-light-pos-l-cmd</input>
+			<rate_limit>/controls/lighting/landing-light-pos-l-power</rate_limit>
+		</actuator>
+		
+		<actuator name="/controls/lighting/landing-light-pos-r">
+			<input>/controls/lighting/landing-light-pos-r-cmd</input>
+			<rate_limit>/controls/lighting/landing-light-pos-r-power</rate_limit>
+		</actuator>
+		
 	</channel>
 
 </system>
