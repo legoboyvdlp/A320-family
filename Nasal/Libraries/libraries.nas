@@ -24,7 +24,6 @@ setprop("/controls/lighting/upper-norm", 1);
 
 # Lights
 setprop("/sim/model/lights/nose-lights", 0);
-setprop("/sim/model/lights/turnoffsw", 0);
 setprop("/controls/lighting/turnoff-light-switch", 0);
 setprop("/controls/lighting/leftturnoff", 0);
 setprop("/controls/lighting/rightturnoff", 0);
