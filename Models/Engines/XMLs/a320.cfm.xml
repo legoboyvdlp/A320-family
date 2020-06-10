@@ -73,7 +73,7 @@
 		<offsets>
 			<x-m>-7.432</x-m>
 			<y-m>-5.63029</y-m>
-			<z-m>-2.16465</z-m>
+			<z-m>-2.46943</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -104,7 +104,7 @@
 		<offsets>
 			<x-m>-7.432</x-m>
 			<y-m> 5.63029</y-m>
-			<z-m>-2.16465</z-m>
+			<z-m>-2.46943</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>

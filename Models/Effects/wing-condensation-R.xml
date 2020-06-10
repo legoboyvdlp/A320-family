@@ -57,19 +57,19 @@
 		<placer>
 			<type>segments</type>
 			<vertex>
-				<x-m>15</x-m>
+				<x-m>-2.8</x-m>
 				<y-m>2.3</y-m>
-				<z-m>0</z-m>
+				<z-m>-0.8</z-m>
 			</vertex>
 			<vertex>
-				<x-m>22</x-m>
+				<x-m>2.0</x-m>
 				<y-m>16</y-m>
-				<z-m>0.7</z-m>
+				<z-m>0.3</z-m>
 			</vertex>
 			<vertex>
-				<x-m>19</x-m>
-				<y-m>2.3</y-m>
-				<z-m>-1</z-m>
+				<x-m>-1.2</x-m>
+				<y-m>8.7</y-m>
+				<z-m>-0.3</z-m>
 			</vertex>
 		</placer>
 

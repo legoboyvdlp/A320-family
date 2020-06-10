@@ -22,8 +22,6 @@
 		<object-name>Antenna2</object-name>
 		<object-name>MLGGearDoorL</object-name>
 		<object-name>MLGGearDoorR</object-name>
-		<object-name>MLGWingDoorL1</object-name>
-		<object-name>MLGWingDoorL2</object-name>
 		<object-name>NLGAftDoorL</object-name>
 		<object-name>NLGAftDoorR</object-name>
 		<object-name>NLGForewardDoorL</object-name>
@@ -31,6 +29,22 @@
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorR</object-name>
 		<object-name>NLGFitting</object-name>
+		<object-name>NLGDragStrutAssembly1</object-name>
+		<object-name>NLGDragStrutAssembly2</object-name>
+		<object-name>MLGFittingL</object-name>
+		<object-name>MLGFittingR</object-name>
+		<object-name>SideStayL1</object-name>
+		<object-name>SideStayL2</object-name>
+		<object-name>SideStayR1</object-name>
+		<object-name>SideStayR2</object-name>
+		<object-name>LockStayL1</object-name>
+		<object-name>LockStayL2</object-name>
+		<object-name>LockStayR1</object-name>
+		<object-name>LockStayR2</object-name>
+		<object-name>MLGLockstayActuatorL1</object-name>
+		<object-name>MLGLockstayActuatorL2</object-name>
+		<object-name>MLGLockstayActuatorR1</object-name>
+		<object-name>MLGLockstayActuatorR2</object-name>
 	</effect>
 	
 	<effect>
@@ -64,6 +78,10 @@
 		<object-name>FairingR3</object-name>
 		<object-name>EngineFairingL</object-name>
 		<object-name>EngineFairingR</object-name>
+		<object-name>MLGWingDoorL1</object-name>
+		<object-name>MLGWingDoorL2</object-name>
+		<object-name>MLGWingDoorR1</object-name>
+		<object-name>MLGWingDoorR2</object-name>
 	</effect>
 	
 	<effect>
@@ -71,6 +89,18 @@
 		<object-name>Rat</object-name>
 		<object-name>RatSpinner</object-name>
 		<object-name>NLGSlidingTubeAxle</object-name>
+		<object-name>MLGSlidingTubeAxleL</object-name>
+		<object-name>MLGSlidingTubeAxleR</object-name>
+		<object-name>NLGTorqueLink1</object-name>
+		<object-name>NLGTorqueLink2</object-name>
+		<object-name>MLGTorgueLinkL1</object-name>
+		<object-name>MLGTorqueLinkL2</object-name>
+		<object-name>MLGSlaveLinkL1</object-name>
+		<object-name>MLGSlaveLinkL2</object-name>
+		<object-name>MLGTorgueRinkR1</object-name>
+		<object-name>MLGTorqueRinkR2</object-name>
+		<object-name>MLGSRaveRinkR1</object-name>
+		<object-name>MLGSRaveRinkR2</object-name>
 	</effect>
 	
 	<!-- Animations -->
@@ -278,6 +308,27 @@
 	
 	<animation>
 		<type>rotate</type>
+		<object-name>MLGGearDoorL</object-name>
+		<object-name>MLGGearDoorL.Inner</object-name>
+		<property>gear/gear[1]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>-90.0</dep></entry>
+			<entry><ind>0.8</ind><dep>-90.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.59792</x1-m>
+			<y1-m>-0.21093</y1-m>
+			<z1-m>-2.44185</z1-m>
+			<x2-m>-2.47222</x2-m>
+			<y2-m>-0.21093</y2-m>
+			<z2-m>-2.45447</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
 		<object-name>MLGFittingR</object-name>
 		<object-name>MLGWheelsR</object-name>
 		<object-name>MLGCablesR1</object-name>
@@ -329,12 +380,34 @@
 		</axis>
 	</animation>
 	
+	<animation>
+		<type>rotate</type>
+		<object-name>MLGGearDoorR</object-name>
+		<object-name>MLGGearDoorR.Inner</object-name>
+		<property>gear/gear[2]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.2</ind><dep>90.0</dep></entry>
+			<entry><ind>0.8</ind><dep>90.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.59792</x1-m>
+			<y1-m>0.20882</y1-m>
+			<z1-m>-2.44185</z1-m>
+			<x2-m>-2.47222</x2-m>
+			<y2-m>0.20882</y2-m>
+			<z2-m>-2.45447</z2-m>
+		</axis>
+	</animation>
+	
 	<!-- Compression -->
 	<animation>
 		<name>Compression (Nose)</name>
 		<type>translate</type>
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
+		<object-name>NLGTorqueLink2</object-name>
 		<property>gear/gear[0]/compression-norm</property>
 		<factor>-0.3048</factor>
 		<axis>
@@ -345,6 +418,40 @@
 			<y2-m>-0.001254</y2-m>
 			<z2-m>-4.03746</z2-m>
 		</axis>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>NLGTorqueLink2</object-name>
+		<center>
+		  <x-m>-13.569</x-m>
+		  <y-m>-0.004744</y-m>
+		  <z-m>-3.91356</z-m>
+		</center>
+		<lock-axis>
+		  <x>0</x>
+		  <y>1</y>
+		  <z>0</z>
+		</lock-axis>
+		<track-axis>
+		  <x>0.100955</x>
+		  <y>0.569668</y>
+		  <z>0.001675</z>
+		</track-axis>
+		
+		<target-name>NLGFitting</target-name>
+		<target-center>
+		  <x-m>-13.468</x-m>
+		  <y-m>-0.006419</y-m>
+		  <z-m>-3.34389</z-m>
+		</target-center>
+	
+		<slave-name>NLGTorqueLink1</slave-name>
+		<slave-center>
+		  <x-m>-13.2685</x-m>
+		  <y-m>-0.005584</y-m>
+		  <z-m>-3.67419</z-m>
+		</slave-center>
 	</animation>
 	
 	<animation>
@@ -412,9 +519,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-1.13004</x-m>
-			<y-m>-4.50876</y-m>
-			<z-m>-3.84553</z-m>
+			<x-m>-1.12983</x-m>
+			<y-m>-3.87098</y-m>
+			<z-m>-3.84487</z-m>
 		</center>
 	</animation>
 	
@@ -430,9 +537,9 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-1.12994</x-m>
-			<y-m>3.86933</y-m>
-			<z-m>-3.84517</z-m>
+			<x-m>-1.12983</x-m>
+			<y-m> 3.85001</y-m>
+			<z-m>-3.84487</z-m>
 		</center>
 	</animation>
 	
