@@ -70,10 +70,10 @@ var windCRZPage = {
 		
 		# load wind list
 		if (me.singleCRZ == 0) {
-			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			if (fmgc.windController.temporaryFlag[me.computer]) {
 				#get from 0
 				me.windList = [nil];
-				if (fmgc.wpWindAltitude0[me.computer][me.match_location].getValue() != "") {
+				if (fmgc.windController.winds[me.computer][me.match_location].getValue() != nil) {
 					me.windList[0] = [fmgc.wpWindDirection0[me.computer][me.match_location].getValue(), fmgc.wpWindMagnitude0[me.computer][me.match_location].getValue(), fmgc.wpWindAltitude0[me.computer][me.match_location].getValue()];
 					append(me.windList, nil);
 				}

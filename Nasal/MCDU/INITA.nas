@@ -169,7 +169,9 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
 			fmgc.flightPlanController.reset(2);
+			fmgc.windController.reset(2);
 			fmgc.flightPlanController.init();
+			fmgc.windController.init();
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#setprop("/FMGC/internal/alt-selected", 0);
