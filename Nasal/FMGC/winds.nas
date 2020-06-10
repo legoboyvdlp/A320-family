@@ -159,7 +159,7 @@ var windController = {
 	},
 	
 	destroyTemporaryWinds: func(n, a) { # a = 1 activate, a = 0 erase
-		print("destroying temporary ", n);
+		#print("destroying temporary ", n);
 		if (a == 1) {
 			me.resetWind(2);
 			me.clb_winds[2] = me.copyClbWind(n);
@@ -203,14 +203,14 @@ var windController = {
 				me.winds[plan][index] = waypoint_winds.new(id, "waypoint", 0);
 			}
 		} else {
-			print("insert invalid id: ", id, ", plan: ", plan, ", index: ", index, ", size: ", me.windSizes[plan]);
-			debug.dump(me.winds);
-			debug.dump(me.windSizes);
+			#print("insert invalid id: ", id, ", plan: ", plan, ", index: ", index, ", size: ", me.windSizes[plan]);
+			#debug.dump(me.winds);
+			#debug.dump(me.windSizes);
 			return;
 		}
-		print("insert plan: ", plan, ", index: ", index);
-		debug.dump(me.winds);
-		debug.dump(me.windSizes);
+		#print("insert plan: ", plan, ", index: ", index);
+		#debug.dump(me.winds);
+		#debug.dump(me.windSizes);
 	},
 	
 	deleteWind: func(plan, index) {
@@ -224,14 +224,14 @@ var windController = {
 			pop(me.winds[plan]);
 			me.windSizes[plan] -= 1;
 		} else {
-			print("delete invalid plan: ", plan, ", index: ", index, ", size: ", me.windSizes[plan]);
-			debug.dump(me.winds);
-			debug.dump(me.windSizes);
+			#print("delete invalid plan: ", plan, ", index: ", index, ", size: ", me.windSizes[plan]);
+			#debug.dump(me.winds);
+			#debug.dump(me.windSizes);
 			return;
 		}
-		print("delete plan: ", plan, ", index: ", index);
-		debug.dump(me.winds);
-		debug.dump(me.windSizes);
+		#print("delete plan: ", plan, ", index: ", index);
+		#debug.dump(me.winds);
+		#debug.dump(me.windSizes);
 	},
 	
 	updatePlans: func() {
@@ -245,7 +245,7 @@ var windController = {
 		for (plan = 0; plan <= 2; plan += 1) {
 			for (i = 0; i < fmgc.flightPlanController.flightplans[plan].getPlanSize(); i += 1) {
 				var waypoint = fmgc.flightPlanController.flightplans[plan].getWP(i);
-				print(waypoint.wp_role, "| : |", waypoint.wp_type);
+				#print(waypoint.wp_role, "| : |", waypoint.wp_type);
 				if (waypoint.wp_role == "sid") {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
 					me.windSizes[plan] += 1;
@@ -255,7 +255,7 @@ var windController = {
 				} else if (waypoint.wp_role == nil and waypoint.wp_type == "navaid") {
 					var found = 0;
 					for (index = 0; index < windSizes_copy[plan]; index += 1) {
-						print(waypoint.id, " : ", winds_copy[plan][index].id);
+						#print(waypoint.id, " : ", winds_copy[plan][index].id);
 						if (waypoint.id == winds_copy[plan][index].id) {
 							append(me.winds[plan], winds_copy[plan][index]);
 							append(me.nav_indicies[plan], i);
@@ -271,12 +271,14 @@ var windController = {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "waypoint", 0));
 					me.windSizes[plan] += 1;
 				}
-				print("insert plan: ", plan, ", index: ", i);
-				debug.dump(me.winds);
-				debug.dump(me.nav_indicies);
-				debug.dump(me.windSizes);
+				#print("insert plan: ", plan, ", index: ", i);
+				#debug.dump(me.winds);
+				#debug.dump(me.nav_indicies);
+				#debug.dump(me.windSizes);
 			}
 		}
+		
+		debug.dump(me.nav_indicies);
 		
 		if (canvas_mcdu.myCLBWIND[1] != nil) {
 			canvas_mcdu.myCLBWIND[1]._setupPageWithData();

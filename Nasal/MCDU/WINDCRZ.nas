@@ -30,6 +30,7 @@ var windCRZPage = {
 	index: nil,
 	computer: nil,
 	cur_location: 0,
+	match_location: 0,
 	items: 0,
 	singleCRZ: 0,
 	new: func(computer, waypoint, cur_location) {
@@ -39,8 +40,6 @@ var windCRZPage = {
 		wcp.cur_location = cur_location;
 		if (waypoint == nil) {
 			wcp.singleCRZ = 1;
-		} else {
-			#wcp.match_location = first item in match list;
 		}
 		wcp._setupPageWithData();
 		return wcp;
@@ -64,9 +63,9 @@ var windCRZPage = {
 			computer_temp = me.computer;
 		}
 		
-		debug.dump(fmgc.windController.crz_winds[0]);
-		debug.dump(fmgc.windController.crz_winds[1]);
-		debug.dump(fmgc.windController.crz_winds[2]);
+		#debug.dump(fmgc.windController.crz_winds[0]);
+		#debug.dump(fmgc.windController.crz_winds[1]);
+		#debug.dump(fmgc.windController.crz_winds[2]);
 		
 		if (me.singleCRZ == 1) {
 			if (fmgc.windController.crz_winds[computer_temp] == 0 or fmgc.windController.crz_winds[computer_temp].wind1.altitude == "") {
@@ -79,7 +78,16 @@ var windCRZPage = {
 				me.items = 4;
 			}
 		} else {
-			
+			me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+			if (size(fmgc.windController.winds[computer_temp]) == 0 or fmgc.windController.winds[computer_temp][me.match_location].wind1.altitude == "") {
+				me.items = 1;
+			} else if (fmgc.windController.winds[computer_temp][me.match_location].wind2.altitude == "") {
+				me.items = 2;
+			} else if (fmgc.windController.crz_winds[computer_temp][me.match_location].wind3.altitude == "") {
+				me.items = 3;
+			} else {
+				me.items = 4;
+			}
 		}
 		
 		# load data
@@ -134,7 +142,55 @@ var windCRZPage = {
 				}
 			}
 		} else {
-			
+			if (me.items >= 4) {
+				wind = fmgc.windController.winds[computer_temp][me.match_location].wind4;
+				if (wind.altitude != "") {
+					me.L4 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][3] = 0;
+				} else {
+					me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.fontMatrix[0][3] = 1;
+				}
+			} else {
+				me.L4 = [nil, nil, "ack"];
+			}
+		
+			if (me.items >= 3) {
+				wind = fmgc.windController.winds[computer_temp][me.match_location].wind3;
+				if (wind.altitude != "") {
+					me.L3 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][2] = 0;
+				} else {
+					me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.fontMatrix[0][2] = 1;
+				}
+			} else {
+				me.L3 = [nil, nil, "ack"];
+			}
+		
+			if (me.items >= 2) {
+				wind = fmgc.windController.winds[computer_temp][me.match_location].wind2;
+				if (wind.altitude != "") {
+					me.L2 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][1] = 0;
+				} else {
+					me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.fontMatrix[0][1] = 1;
+				}
+			} else {
+				me.L2 = [nil, nil, "ack"];
+			}
+		
+			if (me.items >= 1) {
+				wind = fmgc.windController.winds[computer_temp][me.match_location].wind1;
+				if (wind.altitude != "") {
+					me.L1 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+					me.fontMatrix[0][0] = 0;
+				} else {
+					me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+					me.fontMatrix[0][0] = 1;
+				}
+			}
 		}
 		
 		me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
@@ -216,7 +272,27 @@ var windCRZPage = {
 							fmgc.windController.crz_winds[computer_temp].wind1.altitude = winds[2];
 						}
 					} else {
-						
+						if (index == 5) {
+							fmgc.windController.winds[computer_temp][me.match_location].wind5.heading = winds[0];
+							fmgc.windController.winds[computer_temp][me.match_location].wind5.magnitude = winds[1];
+							fmgc.windController.winds[computer_temp][me.match_location].wind5.altitude = winds[2];
+						} else if (index == 4) {
+							fmgc.windController.winds[computer_temp][me.match_location].wind4.heading = winds[0];
+							fmgc.windController.winds[computer_temp][me.match_location].wind4.magnitude = winds[1];
+							fmgc.windController.winds[computer_temp][me.match_location].wind4.altitude = winds[2];
+						} else if (index == 3) {
+							fmgc.windController.winds[computer_temp][me.match_location].wind3.heading = winds[0];
+							fmgc.windController.winds[computer_temp][me.match_location].wind3.magnitude = winds[1];
+							fmgc.windController.winds[computer_temp][me.match_location].wind3.altitude = winds[2];
+						} else if (index == 2) {
+							fmgc.windController.winds[computer_temp][me.match_location].wind2.heading = winds[0];
+							fmgc.windController.winds[computer_temp][me.match_location].wind2.magnitude = winds[1];
+							fmgc.windController.winds[computer_temp][me.match_location].wind2.altitude = winds[2];
+						} else if (index == 1) {
+							fmgc.windController.winds[computer_temp][me.match_location].wind1.heading = winds[0];
+							fmgc.windController.winds[computer_temp][me.match_location].wind1.magnitude = winds[1];
+							fmgc.windController.winds[computer_temp][me.match_location].wind1.altitude = winds[2];
+						}
 					}
 					mcdu_scratchpad.scratchpads[me.computer].empty();
 					if (me.items == index and index != 5) {
@@ -235,25 +311,31 @@ var windCRZPage = {
 		}
 	},
 	pushButtonUp: func() {
-		if (me.cur_location < size(fmgc.flightPlanController.getWaypointList(2)) - 1) {
+		var computer_temp = 2;
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			computer_temp = me.computer;
+		}
+		if (me.cur_location < size(fmgc.windController.nav_indicies[computer_temp]) - 1) {
 			me.cur_location = me.cur_location + 1;
 		} else {
 			me.cur_location = 0;
 		}
-		me.waypoint = fmgc.flightPlanController.getWaypointList(2)[me.cur_location];
-		me.match_location = fmgc.flightPlanController.getWaypointMapping(2)[me.cur_location];
-		#load stored data here
+		me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+		me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
 		me.reload();
 	},
 	pushButtonDown: func() {
+		var computer_temp = 2;
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			computer_temp = me.computer;
+		}
 		if (me.cur_location > 0) {
 			me.cur_location = me.cur_location - 1;
 		} else {
-			me.cur_location = size(fmgc.flightPlanController.getWaypointList(2)) - 1;
+			me.cur_location = size(fmgc.windController.nav_indicies[computer_temp]) - 1;
 		}
-		me.waypoint = fmgc.flightPlanController.getWaypointList(2)[me.cur_location];
-		me.match_location = fmgc.flightPlanController.getWaypointMapping(2)[me.cur_location];
-		#load stored data here
+		me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+		me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
 		me.reload();
 	}
 };

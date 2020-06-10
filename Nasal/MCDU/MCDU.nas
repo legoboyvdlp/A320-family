@@ -588,12 +588,12 @@ var rskbutton = func(btn, i) {
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(i)) > 0) {
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
 					canvas_mcdu.myCRZWIND[i] = nil;
-					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(i)[0], 0);
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.flightplans[i].getWP(fmgc.windController.nav_indicies[i][0]), 0);
 				} else {
 					if (canvas_mcdu.myCRZWIND[i] == nil) {
 						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
@@ -602,12 +602,12 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			} else {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
 					canvas_mcdu.myCRZWIND[i] = nil;
-					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.flightplans[2].getWP(fmgc.windController.nav_indicies[2][0]), 0);
 				} else {
 					if (canvas_mcdu.myCRZWIND[i] == nil) {
 						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
@@ -641,12 +641,12 @@ var rskbutton = func(btn, i) {
 			initInputB("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(i)) > 0) {
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
 					canvas_mcdu.myCRZWIND[i] = nil;
-					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(i)[0], 0);
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.flightplans[i].getWP(fmgc.windController.nav_indicies[i][0]), 0);
 				} else {
 					if (canvas_mcdu.myCRZWIND[i] == nil) {
 						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
@@ -655,12 +655,12 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			} else {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.flightPlanController.getWaypointList(2)) > 0) {
+				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
 					canvas_mcdu.myCRZWIND[i] = nil;
-					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.getWaypointList(2)[0], 0);
+					canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, fmgc.flightPlanController.flightplans[2].getWP(fmgc.windController.nav_indicies[2][0]), 0);
 				} else {
 					if (canvas_mcdu.myCRZWIND[i] == nil) {
 						canvas_mcdu.myCRZWIND[i] = windCRZPage.new(i, nil, nil);
