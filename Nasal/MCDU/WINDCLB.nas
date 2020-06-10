@@ -43,7 +43,7 @@ var windCLBPage = {
 		me.title = "CLIMB WIND";
 		#me.title = "DRAFT CLIMB WIND";
 		me.titleColour = "wht";
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 1, 0]];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 1, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
 		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];
 		
@@ -132,6 +132,7 @@ var windCLBPage = {
 			}
 		}
 		
+		me.L6 = [" RETURN", nil, "wht"];
 		me.R1 = [" HISTORY ", "WIND ", "wht"];
 		me.R3 = [" REQUEST ", "WIND ", "amb"];
 		me.R5 = [" PHASE ", "NEXT ", "wht"];

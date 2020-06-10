@@ -27,31 +27,22 @@ var windCRZPage = {
 	R6: [nil, nil, "ack"],
 	scroll: 0,
 	vector: [],
-	#index: nil,
+	index: nil,
 	computer: nil,
 	cur_location: 0,
-	match_location: 0,
-	windList: [nil],
+	items: 0,
 	singleCRZ: 0,
 	new: func(computer, waypoint, cur_location) {
 		var wcp = {parents:[windCRZPage]};
 		wcp.computer = computer;
-		if (computer == 0 and canvas_mcdu.myCRZWIND[1] != nil) {
-			wcp.windList = canvas_mcdu.myCRZWIND[1].windList;
-		} else if (computer == 1 and canvas_mcdu.myCRZWIND[0] != nil) {
-			wcp.windList = canvas_mcdu.myCRZWIND[0].windList;
-		} else {
-			wcp.windList = [nil];
-		}
 		wcp.waypoint = waypoint;
 		wcp.cur_location = cur_location;
 		if (waypoint == nil) {
 			wcp.singleCRZ = 1;
 		} else {
-			wcp.match_location = fmgc.flightPlanController.getWaypointMapping(2)[wcp.cur_location];
+			#wcp.match_location = first item in match list;
 		}
 		wcp._setupPageWithData();
-		wcp.updateTmpy();
 		return wcp;
 	},
 	del: func() {
@@ -68,95 +59,86 @@ var windCRZPage = {
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "wht", "wht", "ack"]];
 		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];
 		
-		# load wind list
-		if (me.singleCRZ == 0) {
-			if (fmgc.windController.temporaryFlag[me.computer]) {
-				#get from 0
-				me.windList = [nil];
-				if (fmgc.windController.winds[me.computer][me.match_location].getValue() != nil) {
-					me.windList[0] = [fmgc.wpWindDirection0[me.computer][me.match_location].getValue(), fmgc.wpWindMagnitude0[me.computer][me.match_location].getValue(), fmgc.wpWindAltitude0[me.computer][me.match_location].getValue()];
-					append(me.windList, nil);
-				}
-				if (fmgc.wpWindAltitude1[me.computer][me.match_location].getValue() != "") {
-					me.windList[1] = [fmgc.wpWindDirection1[me.computer][me.match_location].getValue(), fmgc.wpWindMagnitude1[me.computer][me.match_location].getValue(), fmgc.wpWindAltitude1[me.computer][me.match_location].getValue()];
-					append(me.windList, nil);
-				}
-				if (fmgc.wpWindAltitude2[me.computer][me.match_location].getValue() != "") {
-					me.windList[2] = [fmgc.wpWindDirection2[me.computer][me.match_location].getValue(), fmgc.wpWindMagnitude2[me.computer][me.match_location].getValue(), fmgc.wpWindAltitude2[me.computer][me.match_location].getValue()];
-					append(me.windList, nil);
-				}
-				if (fmgc.wpWindAltitude3[me.computer][me.match_location].getValue() != "") {
-					me.windList[3] = [fmgc.wpWindDirection3[me.computer][me.match_location].getValue(), fmgc.wpWindMagnitude3[me.computer][me.match_location].getValue(), fmgc.wpWindAltitude3[me.computer][me.match_location].getValue()];
-				}
+		var computer_temp = 2;
+		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			computer_temp = me.computer;
+		}
+		
+		debug.dump(fmgc.windController.crz_winds[0]);
+		debug.dump(fmgc.windController.crz_winds[1]);
+		debug.dump(fmgc.windController.crz_winds[2]);
+		
+		if (me.singleCRZ == 1) {
+			if (fmgc.windController.crz_winds[computer_temp] == 0 or fmgc.windController.crz_winds[computer_temp].wind1.altitude == "") {
+				me.items = 1;
+			} else if (fmgc.windController.crz_winds[computer_temp].wind2.altitude == "") {
+				me.items = 2;
+			} else if (fmgc.windController.crz_winds[computer_temp].wind3.altitude == "") {
+				me.items = 3;
 			} else {
-				#get from 2
-				me.windList = [nil];
-				if (fmgc.wpWindAltitude0[2][me.match_location].getValue() != "") {
-					me.windList[0] = [fmgc.wpWindDirection0[2][me.match_location].getValue(), fmgc.wpWindMagnitude0[2][me.match_location].getValue(), fmgc.wpWindAltitude0[2][me.match_location].getValue()];
-					append(me.windList, nil);
-				}
-				if (fmgc.wpWindAltitude1[2][me.match_location].getValue() != "") {
-					me.windList[1] = [fmgc.wpWindDirection1[2][me.match_location].getValue(), fmgc.wpWindMagnitude1[2][me.match_location].getValue(), fmgc.wpWindAltitude1[2][me.match_location].getValue()];
-					append(me.windList, nil);
-				}
-				if (fmgc.wpWindAltitude2[2][me.match_location].getValue() != "") {
-					me.windList[2] = [fmgc.wpWindDirection2[2][me.match_location].getValue(), fmgc.wpWindMagnitude2[2][me.match_location].getValue(), fmgc.wpWindAltitude2[2][me.match_location].getValue()];
-					append(me.windList, nil);
-				}
-				if (fmgc.wpWindAltitude3[2][me.match_location].getValue() != "") {
-					me.windList[3] = [fmgc.wpWindDirection3[2][me.match_location].getValue(), fmgc.wpWindMagnitude3[2][me.match_location].getValue(), fmgc.wpWindAltitude3[2][me.match_location].getValue()];
-				}
+				me.items = 4;
 			}
+		} else {
+			
 		}
 		
 		# load data
-		if (size(me.windList) >= 4) {
-			if (me.windList[3] != nil) {
-				me.L4 = [sprintf("%03d", me.windList[3][0]) ~ "/" ~ sprintf("%03d", me.windList[3][1]) ~ "/" ~ me.windList[3][2], nil, "blu"];
-				me.fontMatrix[0][3] = 0;
+		if (me.singleCRZ == 1) {
+			if (me.items >= 4) {
+				wind = fmgc.windController.crz_winds[computer_temp].wind4;
+				if (wind.altitude != "") {
+					me.L4 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][3] = 0;
+				} else {
+					me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.fontMatrix[0][3] = 1;
+				}
 			} else {
-				me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][3] = 1;
+				me.L4 = [nil, nil, "ack"];
+			}
+		
+			if (me.items >= 3) {
+				wind = fmgc.windController.crz_winds[computer_temp].wind3;
+				if (wind.altitude != "") {
+					me.L3 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][2] = 0;
+				} else {
+					me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.fontMatrix[0][2] = 1;
+				}
+			} else {
+				me.L3 = [nil, nil, "ack"];
+			}
+		
+			if (me.items >= 2) {
+				wind = fmgc.windController.crz_winds[computer_temp].wind2;
+				if (wind.altitude != "") {
+					me.L2 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][1] = 0;
+				} else {
+					me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.fontMatrix[0][1] = 1;
+				}
+			} else {
+				me.L2 = [nil, nil, "ack"];
+			}
+		
+			if (me.items >= 1) {
+				wind = fmgc.windController.crz_winds[computer_temp].wind1;
+				if (wind.altitude != "") {
+					me.L1 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+					me.fontMatrix[0][0] = 0;
+				} else {
+					me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+					me.fontMatrix[0][0] = 1;
+				}
 			}
 		} else {
-			me.L4 = [nil, nil, "ack"];
-		}
-		
-		if (size(me.windList) >= 3) {
-			if (me.windList[2] != nil) {
-				me.L3 = [sprintf("%03d", me.windList[2][0]) ~ "/" ~ sprintf("%03d", me.windList[2][1]) ~ "/" ~ me.windList[2][2], nil, "blu"];
-				me.fontMatrix[0][2] = 0;
-			} else {
-				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][2] = 1;
-			}
-		} else {
-			me.L3 = [nil, nil, "ack"];
-		}
-		
-		if (size(me.windList) >= 2) {
-			if (me.windList[1] != nil) {
-				me.L2 = [sprintf("%03d", me.windList[1][0]) ~ "/" ~ sprintf("%03d", me.windList[1][1]) ~ "/" ~ me.windList[1][2], nil, "blu"];
-				me.fontMatrix[0][1] = 0;
-			} else {
-				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][1] = 1;
-			}
-		} else {
-			me.L2 = [nil, nil, "ack"];
-		}
-		
-		if (size(me.windList) >= 1) {
-			if (me.windList[0] != nil) {
-				me.L1 = [sprintf("%03d", me.windList[0][0]) ~ "/" ~ sprintf("%03d", me.windList[0][1]) ~ "/" ~ me.windList[0][2], "TRU WIND/ALT", "blu"];
-				me.fontMatrix[0][0] = 0;
-			} else {
-				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
-				me.fontMatrix[0][0] = 1;
-			}
+			
 		}
 		
 		me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+		me.L6 = [" RETURN", nil, "wht"];
 		me.R2 = [" REQUEST ", "WIND ", "amb"];
 		me.R4 = [" PHASE ", "PREV ", "wht"];
 		me.R5 = [" PHASE ", "NEXT ", "wht"];
@@ -198,7 +180,7 @@ var windCRZPage = {
 		me.updateTmpy();
 	},
 	pushButtonLeft: func(index) {
-		if (size(me.windList) >= index) {
+		if (me.items >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
 				if (size(winds[0]) == 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
@@ -206,31 +188,40 @@ var windCRZPage = {
 				size(winds[2]) == 5 and ((num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
 				(num(split("FL", winds[2])[1]) != nil and split("FL", winds[2])[1] >= 10 and split("FL", winds[2])[1] <= 390))) {
 					me.makeTmpy();
+					var computer_temp = 2;
+					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+						computer_temp = me.computer;
+					}
+					#print(computer_temp);
 					if (me.singleCRZ == 1) {
-						me.windList[index - 1] = [winds[0], winds[1], winds[2]];
-						if (index != 4) {
-							append(me.windList, nil);
+						if (index == 5) {
+							fmgc.windController.crz_winds[computer_temp].wind5.heading = winds[0];
+							fmgc.windController.crz_winds[computer_temp].wind5.magnitude = winds[1];
+							fmgc.windController.crz_winds[computer_temp].wind5.altitude = winds[2];
+						} else if (index == 4) {
+							fmgc.windController.crz_winds[computer_temp].wind4.heading = winds[0];
+							fmgc.windController.crz_winds[computer_temp].wind4.magnitude = winds[1];
+							fmgc.windController.crz_winds[computer_temp].wind4.altitude = winds[2];
+						} else if (index == 3) {
+							fmgc.windController.crz_winds[computer_temp].wind3.heading = winds[0];
+							fmgc.windController.crz_winds[computer_temp].wind3.magnitude = winds[1];
+							fmgc.windController.crz_winds[computer_temp].wind3.altitude = winds[2];
+						} else if (index == 2) {
+							fmgc.windController.crz_winds[computer_temp].wind2.heading = winds[0];
+							fmgc.windController.crz_winds[computer_temp].wind2.magnitude = winds[1];
+							fmgc.windController.crz_winds[computer_temp].wind2.altitude = winds[2];
+						} else if (index == 1) {
+							fmgc.windController.crz_winds[computer_temp].wind1.heading = winds[0];
+							fmgc.windController.crz_winds[computer_temp].wind1.magnitude = winds[1];
+							fmgc.windController.crz_winds[computer_temp].wind1.altitude = winds[2];
 						}
 					} else {
-						if (index == 1) {
-							fmgc.wpWindDirection0[me.computer][me.match_location].setValue(num(winds[0]));
-							fmgc.wpWindMagnitude0[me.computer][me.match_location].setValue(num(winds[1]));
-							fmgc.wpWindAltitude0[me.computer][me.match_location].setValue(winds[2]);
-						} else if (index == 2) {
-							fmgc.wpWindDirection1[me.computer][me.match_location].setValue(num(winds[0]));
-							fmgc.wpWindMagnitude1[me.computer][me.match_location].setValue(num(winds[1]));
-							fmgc.wpWindAltitude1[me.computer][me.match_location].setValue(winds[2]);
-						} else if (index == 3) {
-							fmgc.wpWindDirection2[me.computer][me.match_location].setValue(num(winds[0]));
-							fmgc.wpWindMagnitude2[me.computer][me.match_location].setValue(num(winds[1]));
-							fmgc.wpWindAltitude2[me.computer][me.match_location].setValue(winds[2]);
-						} else if (index == 4) {
-							fmgc.wpWindDirection3[me.computer][me.match_location].setValue(num(winds[0]));
-							fmgc.wpWindMagnitude3[me.computer][me.match_location].setValue(num(winds[1]));
-							fmgc.wpWindAltitude3[me.computer][me.match_location].setValue(winds[2]);
-						}
+						
 					}
 					mcdu_scratchpad.scratchpads[me.computer].empty();
+					if (me.items == index and index != 5) {
+						me.items += 1;
+					}
 					me._setupPageWithData();
 					me.updateTmpy();
 				} else {

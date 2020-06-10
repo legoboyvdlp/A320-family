@@ -123,11 +123,35 @@ var windController = {
 		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
 	},
 	
+	copyCrzWind: func(n) {
+		var id = me.crz_winds[n].id;
+		var type = me.crz_winds[n].type;
+		var includeWind = me.crz_winds[n].includeWind;
+		var wind1 = wind.newcopy(me.crz_winds[n].wind1.heading, me.crz_winds[n].wind1.magnitude, me.crz_winds[n].wind1.altitude);
+		var wind2 = wind.newcopy(me.crz_winds[n].wind2.heading, me.crz_winds[n].wind2.magnitude, me.crz_winds[n].wind2.altitude);
+		var wind3 = wind.newcopy(me.crz_winds[n].wind3.heading, me.crz_winds[n].wind3.magnitude, me.crz_winds[n].wind3.altitude);
+		var wind4 = wind.newcopy(me.crz_winds[n].wind4.heading, me.crz_winds[n].wind4.magnitude, me.crz_winds[n].wind4.altitude);
+		var wind5 = wind.newcopy(me.crz_winds[n].wind5.heading, me.crz_winds[n].wind5.magnitude, me.crz_winds[n].wind5.altitude);
+		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
+	},
+	
+	copyDesWind: func(n) {
+		var id = me.des_winds[n].id;
+		var type = me.des_winds[n].type;
+		var includeWind = me.des_winds[n].includeWind;
+		var wind1 = wind.newcopy(me.des_winds[n].wind1.heading, me.des_winds[n].wind1.magnitude, me.des_winds[n].wind1.altitude);
+		var wind2 = wind.newcopy(me.des_winds[n].wind2.heading, me.des_winds[n].wind2.magnitude, me.des_winds[n].wind2.altitude);
+		var wind3 = wind.newcopy(me.des_winds[n].wind3.heading, me.des_winds[n].wind3.magnitude, me.des_winds[n].wind3.altitude);
+		var wind4 = wind.newcopy(me.des_winds[n].wind4.heading, me.des_winds[n].wind4.magnitude, me.des_winds[n].wind4.altitude);
+		var wind5 = wind.newcopy(me.des_winds[n].wind5.heading, me.des_winds[n].wind5.magnitude, me.des_winds[n].wind5.altitude);
+		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
+	},
+	
 	createTemporaryWinds: func(n) {
 		me.resetWind(n);
 		me.clb_winds[n] = me.copyClbWind(2);
-		me.crz_winds[n] = me.crz_winds[2];
-		me.des_winds[n] = me.des_winds[2];
+		me.crz_winds[n] = me.copyCrzWind(2);
+		me.des_winds[n] = me.copyDesWind(2);
 		me.winds[n] = me.winds[2];
 		me.nav_indicies[n] = me.nav_indicies[2];
 		me.windSizes[n] = me.windSizes[2];
@@ -139,8 +163,8 @@ var windController = {
 		if (a == 1) {
 			me.resetWind(2);
 			me.clb_winds[2] = me.copyClbWind(n);
-			me.crz_winds[2] = me.crz_winds[n];
-			me.des_winds[2] = me.des_winds[n];
+			me.crz_winds[2] = me.copyCrzWind(n);
+			me.des_winds[2] = me.copyDesWind(n);
 			me.winds[2] = me.winds[n];
 			me.nav_indicies[2] = me.nav_indicies[n];
 			me.windSizes[2] = me.windSizes[n];
@@ -260,6 +284,18 @@ var windController = {
 		if (canvas_mcdu.myCLBWIND[0] != nil) {
 			canvas_mcdu.myCLBWIND[0]._setupPageWithData();
 		}
+		if (canvas_mcdu.myCRZWIND[1] != nil) {
+			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
+		}
+		if (canvas_mcdu.myCRZWIND[0] != nil) {
+			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
+		}
+		if (canvas_mcdu.myDESWIND[1] != nil) {
+			canvas_mcdu.myDESWIND[1]._setupPageWithData();
+		}
+		if (canvas_mcdu.myDESWIND[0] != nil) {
+			canvas_mcdu.myDESWIND[0]._setupPageWithData();
+		}
 	},
 
 	updateWind: func(n) {
@@ -268,59 +304,59 @@ var windController = {
 				canvas_mcdu.myCLBWIND[1]._setupPageWithData();
 			}
  			
-# 			if (canvas_mcdu.myCRZWIND[0] != nil and canvas_mcdu.myCRZWIND[1] != nil) {
-# 				if (!getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(0)) == 0) {
-# 					canvas_mcdu.myCRZWIND[1].windList = canvas_mcdu.myCRZWIND[0].windList;
-# 				} else {
-# 					canvas_mcdu.myCRZWIND[1].del();
-# 					canvas_mcdu.myCRZWIND[1] = nil;
-# 					canvas_mcdu.myCRZWIND[1] = mcdu.windCRZPage.new(1, me.getWaypointList(2)[0], 0);
-# 				}
-# 				canvas_mcdu.myCRZWIND[1]._setupPageWithData();
-# 			} else if (canvas_mcdu.myCRZWIND[1] != nil and getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(0)) > 0) {
-# 				canvas_mcdu.myCRZWIND[1].del();
-# 				canvas_mcdu.myCRZWIND[1] = nil;
-# 				canvas_mcdu.myCRZWIND[1] = mcdu.windCRZPage.new(1, me.getWaypointList(2)[0], 0);
-# 				canvas_mcdu.myCRZWIND[1]._setupPageWithData();
-# 			}
-# 			
-# 			if (canvas_mcdu.myDESWIND[0] != nil and canvas_mcdu.myDESWIND[1] != nil) {
-# 				canvas_mcdu.myDESWIND[1].windList = canvas_mcdu.myDESWIND[0].windList;
-# 				canvas_mcdu.myDESWIND[1]._setupPageWithData();
-# 			}
-# 			
-# 			if (canvas_mcdu.myHISTWIND[1] != nil) {
-# 				canvas_mcdu.myHISTWIND[1]._setupPageWithData();
-# 			}
+		if (canvas_mcdu.myCRZWIND[0] != nil and canvas_mcdu.myCRZWIND[1] != nil) {
+			if (!getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(0)) == 0) {
+				canvas_mcdu.myCRZWIND[1].windList = canvas_mcdu.myCRZWIND[0].windList;
+			} else {
+				canvas_mcdu.myCRZWIND[1].del();
+				canvas_mcdu.myCRZWIND[1] = nil;
+				canvas_mcdu.myCRZWIND[1] = mcdu.windCRZPage.new(1, me.getWaypointList(2)[0], 0);
+			}
+			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
+		} else if (canvas_mcdu.myCRZWIND[1] != nil and getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(0)) > 0) {
+			canvas_mcdu.myCRZWIND[1].del();
+			canvas_mcdu.myCRZWIND[1] = nil;
+			canvas_mcdu.myCRZWIND[1] = mcdu.windCRZPage.new(1, me.getWaypointList(2)[0], 0);
+			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
+		}
+		
+		if (canvas_mcdu.myDESWIND[0] != nil and canvas_mcdu.myDESWIND[1] != nil) {
+			canvas_mcdu.myDESWIND[1].windList = canvas_mcdu.myDESWIND[0].windList;
+			canvas_mcdu.myDESWIND[1]._setupPageWithData();
+		}
+		
+		if (canvas_mcdu.myHISTWIND[1] != nil) {
+			canvas_mcdu.myHISTWIND[1]._setupPageWithData();
+		}
 		} else {
 			if (canvas_mcdu.myCLBWIND[0] != nil and canvas_mcdu.myCLBWIND[1] != nil) {
 				canvas_mcdu.myCLBWIND[0]._setupPageWithData();
 			}
 		
-# 			if (canvas_mcdu.myCRZWIND[0] != nil and canvas_mcdu.myCRZWIND[1] != nil) {
-# 				if (!getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(1)) == 0) {
-# 					canvas_mcdu.myCRZWIND[0].windList = canvas_mcdu.myCRZWIND[1].windList;
-# 				} else {
-# 					canvas_mcdu.myCRZWIND[0].del();
-# 					canvas_mcdu.myCRZWIND[0] = nil;
-# 					canvas_mcdu.myCRZWIND[0] = mcdu.windCRZPage.new(0, me.getWaypointList(2)[0], 0);
-# 				}
-# 				canvas_mcdu.myCRZWIND[0]._setupPageWithData();
-# 			} else if (canvas_mcdu.myCRZWIND[0] != nil and getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(1)) > 0) {
-# 				canvas_mcdu.myCRZWIND[0].del();
-# 				canvas_mcdu.myCRZWIND[0] = nil;
-# 				canvas_mcdu.myCRZWIND[0] = mcdu.windCRZPage.new(0, me.getWaypointList(2)[0], 0);
-# 				canvas_mcdu.myCRZWIND[0]._setupPageWithData();
-# 			}
-# 			
-# 			if (canvas_mcdu.myDESWIND[0] != nil and canvas_mcdu.myDESWIND[1] != nil) {
-# 				canvas_mcdu.myDESWIND[0].windList = canvas_mcdu.myDESWIND[1].windList;
-# 				canvas_mcdu.myDESWIND[0]._setupPageWithData();
-# 			}
-# 			
-# 			if (canvas_mcdu.myHISTWIND[0] != nil) {
-# 				canvas_mcdu.myHISTWIND[0]._setupPageWithData();
-# 			}
+		if (canvas_mcdu.myCRZWIND[0] != nil and canvas_mcdu.myCRZWIND[1] != nil) {
+			if (!getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(1)) == 0) {
+				canvas_mcdu.myCRZWIND[0].windList = canvas_mcdu.myCRZWIND[1].windList;
+			} else {
+				canvas_mcdu.myCRZWIND[0].del();
+				canvas_mcdu.myCRZWIND[0] = nil;
+				canvas_mcdu.myCRZWIND[0] = mcdu.windCRZPage.new(0, me.getWaypointList(2)[0], 0);
+			}
+			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
+		} else if (canvas_mcdu.myCRZWIND[0] != nil and getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(1)) > 0) {
+			canvas_mcdu.myCRZWIND[0].del();
+			canvas_mcdu.myCRZWIND[0] = nil;
+			canvas_mcdu.myCRZWIND[0] = mcdu.windCRZPage.new(0, me.getWaypointList(2)[0], 0);
+			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
+		}
+		
+		if (canvas_mcdu.myDESWIND[0] != nil and canvas_mcdu.myDESWIND[1] != nil) {
+			canvas_mcdu.myDESWIND[0].windList = canvas_mcdu.myDESWIND[1].windList;
+			canvas_mcdu.myDESWIND[0]._setupPageWithData();
+		}
+		
+		if (canvas_mcdu.myHISTWIND[0] != nil) {
+			canvas_mcdu.myHISTWIND[0]._setupPageWithData();
+		}
 		}
 	}
 };
