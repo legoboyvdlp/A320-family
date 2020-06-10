@@ -75,6 +75,12 @@
 				<ambient-correction-wing type="double">0.10</ambient-correction-wing>
 				<reflection-correction-wing type="double">-0.25</reflection-correction-wing>
 			</reflection>
+			<door>
+				<position-x-m type="float">-13.8008</position-x-m>
+				<position-y-m type="float">-1.91254</position-y-m>
+				<position-z-m type="float">-0.57991</position-z-m>
+				<jetway-hood-deg type="float">5</jetway-hood-deg>
+			</door>
 		</model>
 		
 		<previews>
