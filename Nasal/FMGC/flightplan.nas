@@ -92,8 +92,8 @@ var flightPlanController = {
 		if (canvas_mcdu.myAirways[n] != nil) {
 			canvas_mcdu.myAirways[n].updateTmpy();
 		}
-		me.flightPlanChanged(n);
 		fmgc.windController.createTemporaryWinds(n);
+		me.flightPlanChanged(n);
 	},
 	
 	loadFlightPlan: func(path) {
@@ -122,6 +122,7 @@ var flightPlanController = {
 			canvas_mcdu.myDirTo[n].updateTmpy();
 		}
 		fmgc.windController.destroyTemporaryWinds(n, a);
+		me.flightPlanChanged(n);
 	},
 	
 	updateAirports: func(dep, arr, plan) {

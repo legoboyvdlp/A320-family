@@ -198,7 +198,6 @@ var windCRZPage = {
 		me.updateTmpy();
 	},
 	pushButtonLeft: func(index) {
-		#destroyTemporaryFlightPlan
 		if (size(me.windList) >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
