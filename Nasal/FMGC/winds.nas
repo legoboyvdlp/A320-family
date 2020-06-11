@@ -287,9 +287,19 @@ var windController = {
 			canvas_mcdu.myCLBWIND[0]._setupPageWithData();
 		}
 		if (canvas_mcdu.myCRZWIND[1] != nil) {
+			# if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[1]) > 0) {
+# 				canvas_mcdu.myCRZWIND[1].del();
+# 				canvas_mcdu.myCRZWIND[1] = nil;
+# 				canvas_mcdu.myCRZWIND[1] = windCRZPage.new(1, fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]), 0);
+# 			}
 			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
 		}
 		if (canvas_mcdu.myCRZWIND[0] != nil) {
+			# if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[0]) > 0) {
+# 				canvas_mcdu.myCRZWIND[0].del();
+# 				canvas_mcdu.myCRZWIND[0] = nil;
+# 				canvas_mcdu.myCRZWIND[0] = windCRZPage.new(0, fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]), 0);
+# 			}
 			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
 		}
 		if (canvas_mcdu.myDESWIND[1] != nil) {
@@ -297,68 +307,6 @@ var windController = {
 		}
 		if (canvas_mcdu.myDESWIND[0] != nil) {
 			canvas_mcdu.myDESWIND[0]._setupPageWithData();
-		}
-	},
-
-	updateWind: func(n) {
-		if (n == 0) {
-			if (canvas_mcdu.myCLBWIND[0] != nil and canvas_mcdu.myCLBWIND[1] != nil) {
-				canvas_mcdu.myCLBWIND[1]._setupPageWithData();
-			}
- 			
-		if (canvas_mcdu.myCRZWIND[0] != nil and canvas_mcdu.myCRZWIND[1] != nil) {
-			if (!getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(0)) == 0) {
-				canvas_mcdu.myCRZWIND[1].windList = canvas_mcdu.myCRZWIND[0].windList;
-			} else {
-				canvas_mcdu.myCRZWIND[1].del();
-				canvas_mcdu.myCRZWIND[1] = nil;
-				canvas_mcdu.myCRZWIND[1] = mcdu.windCRZPage.new(1, me.getWaypointList(2)[0], 0);
-			}
-			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
-		} else if (canvas_mcdu.myCRZWIND[1] != nil and getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(0)) > 0) {
-			canvas_mcdu.myCRZWIND[1].del();
-			canvas_mcdu.myCRZWIND[1] = nil;
-			canvas_mcdu.myCRZWIND[1] = mcdu.windCRZPage.new(1, me.getWaypointList(2)[0], 0);
-			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
-		}
-		
-		if (canvas_mcdu.myDESWIND[0] != nil and canvas_mcdu.myDESWIND[1] != nil) {
-			canvas_mcdu.myDESWIND[1].windList = canvas_mcdu.myDESWIND[0].windList;
-			canvas_mcdu.myDESWIND[1]._setupPageWithData();
-		}
-		
-		if (canvas_mcdu.myHISTWIND[1] != nil) {
-			canvas_mcdu.myHISTWIND[1]._setupPageWithData();
-		}
-		} else {
-			if (canvas_mcdu.myCLBWIND[0] != nil and canvas_mcdu.myCLBWIND[1] != nil) {
-				canvas_mcdu.myCLBWIND[0]._setupPageWithData();
-			}
-		
-		if (canvas_mcdu.myCRZWIND[0] != nil and canvas_mcdu.myCRZWIND[1] != nil) {
-			if (!getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(1)) == 0) {
-				canvas_mcdu.myCRZWIND[0].windList = canvas_mcdu.myCRZWIND[1].windList;
-			} else {
-				canvas_mcdu.myCRZWIND[0].del();
-				canvas_mcdu.myCRZWIND[0] = nil;
-				canvas_mcdu.myCRZWIND[0] = mcdu.windCRZPage.new(0, me.getWaypointList(2)[0], 0);
-			}
-			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
-		} else if (canvas_mcdu.myCRZWIND[0] != nil and getprop("/FMGC/internal/tofrom-set") and size(me.getWaypointList(1)) > 0) {
-			canvas_mcdu.myCRZWIND[0].del();
-			canvas_mcdu.myCRZWIND[0] = nil;
-			canvas_mcdu.myCRZWIND[0] = mcdu.windCRZPage.new(0, me.getWaypointList(2)[0], 0);
-			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
-		}
-		
-		if (canvas_mcdu.myDESWIND[0] != nil and canvas_mcdu.myDESWIND[1] != nil) {
-			canvas_mcdu.myDESWIND[0].windList = canvas_mcdu.myDESWIND[1].windList;
-			canvas_mcdu.myDESWIND[0]._setupPageWithData();
-		}
-		
-		if (canvas_mcdu.myHISTWIND[0] != nil) {
-			canvas_mcdu.myHISTWIND[0]._setupPageWithData();
-		}
 		}
 	}
 };

@@ -83,7 +83,7 @@ var windCRZPage = {
 				me.items = 1;
 			} else if (fmgc.windController.winds[computer_temp][me.match_location].wind2.altitude == "") {
 				me.items = 2;
-			} else if (fmgc.windController.crz_winds[computer_temp][me.match_location].wind3.altitude == "") {
+			} else if (fmgc.windController.winds[computer_temp][me.match_location].wind3.altitude == "") {
 				me.items = 3;
 			} else {
 				me.items = 4;
@@ -236,7 +236,19 @@ var windCRZPage = {
 		me.updateTmpy();
 	},
 	pushButtonLeft: func(index) {
-		if (me.items >= index) {
+		if (index == 6 and fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			if (canvas_mcdu.myFpln[me.computer] != nil) {
+				canvas_mcdu.myFpln[me.computer].pushButtonLeft(index);
+			} else {
+				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+				# push update to fuel
+				if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 0);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				}
+			}
+			me.reload();
+		} else if (me.items >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
 				if (size(winds[0]) == 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
@@ -306,6 +318,23 @@ var windCRZPage = {
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
+		}
+	},
+	pushButtonRight: func(index) {
+		if (index == 6 and fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			if (canvas_mcdu.myFpln[me.computer] != nil) {
+				canvas_mcdu.myFpln[me.computer].pushButtonRight(index);
+			} else {
+				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+				# push update to fuel
+				if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 0);
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				}
+			}
+			me.reload();
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		}

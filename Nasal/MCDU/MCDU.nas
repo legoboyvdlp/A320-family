@@ -434,6 +434,14 @@ var lskbutton = func(btn, i) {
 			fuelPredInput("L6",i);
 		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("L6",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+			canvas_mcdu.myCLBWIND[i].pushButtonLeft(6);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonLeft(6);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonLeft(6);
+		#} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
+		#	canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
 			if (canvas_mcdu.myCLBWIND[i] == nil) {
 				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
@@ -721,6 +729,14 @@ var rskbutton = func(btn, i) {
 			initInputA("R6",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
 			initInputIRS("R6",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+			canvas_mcdu.myCLBWIND[i].pushButtonRight(6);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonRight(6);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonRight(6);
+		#} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
+		#	canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R6",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
