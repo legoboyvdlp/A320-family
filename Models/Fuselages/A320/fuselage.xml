@@ -45,6 +45,7 @@
 		<object-name>MLGLockstayActuatorL2</object-name>
 		<object-name>MLGLockstayActuatorR1</object-name>
 		<object-name>MLGLockstayActuatorR2</object-name>
+		<object-name>ApuFlap</object-name>
 	</effect>
 	
 	<effect>
@@ -400,6 +401,8 @@
 			<z2-m>-2.45447</z2-m>
 		</axis>
 	</animation>
+	
+	<!-- Gear -->
 	
 	<!-- Compression -->
 	<animation>
@@ -937,6 +940,28 @@
 			<z2-m>0.949</z2-m>
 		</axis>
 	</animation>
+	
+	<!-- Tail -->
+	
+	<animation>
+		<name>APU Flap</name>
+		<type>rotate</type>
+		<object-name>ApuFlap</object-name>
+		<property>/controls/apu/inlet-flap/position-norm</property>
+		<factor>-10</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>15.4039</x-m>
+			<y-m>0.000173</y-m>
+			<z-m>-0.508579</z-m>
+		</center>
+	</animation>
+	
+	<!-- APU Flap -->
 	
 	<!-- Doors -->
 	
