@@ -30,18 +30,18 @@ var departurePage = {
 	selectedRunway: nil,
 	selectedSID: nil,
 	selectedTransition: nil,
-	sids: nil,
-	transitions: nil,
 	computer: nil,
 	enableScrollRwy: 0,
 	enableScrollSids: 0,
 	scrollRwy: 0,
 	scrollSids: 0,
 	activePage: 0, # runways, sids, trans
-	hasPressNoTrans: 0, # temporary
 	_runways: nil,
 	_sids: nil,
 	_transitions: nil,
+	runways: [],
+	sids: [],
+	transitions: [],
 	new: func(icao, computer) {
 		var page = {parents:[departurePage]};
 		page.id = icao;
@@ -55,8 +55,9 @@ var departurePage = {
 	},
 	reset: func() {
 		isNoSid[me.computer] = 0;
+		isNoTransDep[me.computer] = 0;
 		me.selectedSID = nil;
-		me.hasPressNoTrans = 0;
+		me.selectedTransition = nil;
 	},
 	_setupFirstTime: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {

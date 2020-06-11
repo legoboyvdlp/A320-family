@@ -61,8 +61,9 @@ var arrivalPage = {
 		return nil;
 	},
 	reset: func() {
-		me.selectedSTAR = nil;
 		me.selectedApproach = nil;
+		me.selectedSTAR = nil;
+		me.selectedTransition = nil;
 		me.selectedVIA = nil;
 		isNoStar[me.computer] = 0;
 		isNoTransArr[me.computer] = 0;
