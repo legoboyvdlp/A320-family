@@ -151,9 +151,11 @@ var arrivalPage = {
 			me.updateApproaches();
 		} elsif (me.activePage == 1) {
 			me.updateSTARs();
+			me.updateTransitions();
 		} else {
 			me.updateVIAs();
 		}
+		
 		me.checkPageType();
 		
 		me.updateActiveApproach();
@@ -597,7 +599,11 @@ var arrivalPage = {
 		
 		me.transitions = [];
 		me._transitions = nil;
-		me._transitions = me.arrAirport[0].getStar(me.selectedSTAR).transitions;
+		if (isghost(me.selectedSTAR)) {
+			me._transitions = me.arrAirport[0].getStar(me.selectedSTAR.id).transitions;
+		} else {
+			me._transitions = me.arrAirport[0].getStar(me.selectedSTAR).transitions;
+		}
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
 		append(me.transitions, "NO TRANS");
 		
@@ -633,6 +639,7 @@ var arrivalPage = {
 		}
 		
 		# no indication it is scrollable...
+		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
@@ -746,9 +753,6 @@ var arrivalPage = {
 			me.activePage = me.oldPage;
 			me.oldPage = 0;
 			me.updatePage();
-			if (me.selectedSTAR != nil) {
-				me.updateTransitions();
-			}
 		} elsif (index == 6 and me.activePage != 2) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
@@ -758,7 +762,7 @@ var arrivalPage = {
 		} elsif (me.activePage == 0 and index != 6) {
 			if (size(me.approaches) >= (index - 2) and index != 2) { # index = 3, size = 1
 				if (!dirToFlag) {
-					me.selectedSTAR = nil;
+					me.selectedVIA = nil;
 					isNoTrans[me.computer] = 0;
 					isNoStar[me.computer] = 0;
 					me.makeTmpy();
@@ -773,8 +777,8 @@ var arrivalPage = {
 					setprop("FMGC/internal/baro", 99999);
 					setprop("FMGC/internal/radio", 99999);
 					setprop("FMGC/internal/radio-no", 0);
-					me.updateActiveApproach();
 					me.updateApproaches();
+					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 					me.scrollRight();
 					me.checkPageType();
@@ -787,6 +791,7 @@ var arrivalPage = {
 		} elsif (me.activePage == 1 and index != 6) {
 			if (size(me.stars) >= (index - 2) and index != 2) {
 				if (!dirToFlag) {
+					me.selectedTransition = nil;
 					me.selectedSTAR = me.stars[index - 3 + me.scrollStars];
 					me.makeTmpy();
 					if (me.selectedSTAR != "NO STAR") {
@@ -799,15 +804,13 @@ var arrivalPage = {
 							fmgc.flightPlanController.insertNOSTAR(me.computer);
 						}
 					}
-					me.updateActiveSTARs();
 					me.updateSTARs();
 					if (me.selectedSTAR != "NO STAR") {
 						isNoTrans[me.computer] = 0;
-						me.updateTransitions();
 					} else {
 						isNoTrans[me.computer] = 1;
 					}
-					me.updateActiveTransitions();
+					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
 					mcdu_message(me.computer, "DIR TO IN PROGRESS");
@@ -827,8 +830,8 @@ var arrivalPage = {
 						isNoVia[me.computer] = 1;
 						fmgc.flightPlanController.flightplans[me.computer].approach_trans = nil;
 					}
-					me.updateActiveVIAs();
 					me.updateVIAs();
+					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
 					mcdu_message(me.computer, "DIR TO IN PROGRESS");
@@ -852,8 +855,7 @@ var arrivalPage = {
 					isNoTrans[me.computer] = 1;
 					fmgc.flightPlanController.flightplans[me.computer].star_trans = nil;
 				}
-				me.updateActiveTransitions();
-				me.updateTransitions();
+				me.updatePage();
 				fmgc.flightPlanController.flightPlanChanged(me.computer);
 			} else {
 				mcdu_message(me.computer, "DIR TO IN PROGRESS");
