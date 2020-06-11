@@ -31,10 +31,11 @@ var windDESPage = {
 	computer: nil,
 	items: 0,
 	new: func(computer) {
-		var wcp = {parents:[windDESPage]};
-		wcp.computer = computer;
-		wcp._setupPageWithData();
-		return wcp;
+		var wdp = {parents:[windDESPage]};
+		wdp.computer = computer;
+		wdp._setupPageWithData();
+		wdp.updateTmpy();
+		return wdp;
 	},
 	del: func() {
 		return nil;

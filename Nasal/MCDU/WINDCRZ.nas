@@ -42,6 +42,7 @@ var windCRZPage = {
 			wcp.singleCRZ = 1;
 		}
 		wcp._setupPageWithData();
+		wcp.updateTmpy();
 		return wcp;
 	},
 	del: func() {

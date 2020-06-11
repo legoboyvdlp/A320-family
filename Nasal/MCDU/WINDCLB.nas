@@ -34,6 +34,7 @@ var windCLBPage = {
 		var wcp = {parents:[windCLBPage]};
 		wcp.computer = computer;
 		wcp._setupPageWithData();
+		wcp.updateTmpy();
 		return wcp;
 	},
 	del: func() {
