@@ -53,9 +53,9 @@ var windDESPage = {
 			computer_temp = me.computer;
 		}
 		
-		debug.dump(fmgc.windController.des_winds[0]);
-		debug.dump(fmgc.windController.des_winds[1]);
-		debug.dump(fmgc.windController.des_winds[2]);
+		# debug.dump(fmgc.windController.des_winds[0]);
+# 		debug.dump(fmgc.windController.des_winds[1]);
+# 		debug.dump(fmgc.windController.des_winds[2]);
 		
 		if (fmgc.windController.des_winds[computer_temp] == 0 or fmgc.windController.des_winds[computer_temp].wind1.altitude == "") {
 			me.items = 1;

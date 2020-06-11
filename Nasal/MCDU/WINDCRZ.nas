@@ -49,6 +49,8 @@ var windCRZPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
+		print("setup called");
+		
 		if (me.singleCRZ == 1) {
 			me.title = ["","CRZ WIND",""];
 		} else {
