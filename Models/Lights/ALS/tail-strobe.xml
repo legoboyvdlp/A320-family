@@ -4,46 +4,43 @@
 
 <PropertyList>
 
- <path>tail-strobe.ac</path>
- <nopreview/>
+	<path>tail-strobe.ac</path>
+	<nopreview/>
 
+	<animation>
+		<type>noshadow</type>
+		<object-name>tailstrobeals</object-name>
+	</animation>
 
- 
-<effect>
-   <inherits-from>Aircraft/A320-family/Models/lights/ALS/tail-strobe</inherits-from>
-   <object-name>tailstrobeals</object-name>
- </effect>
- 
+	<effect>
+			<inherits-from>Aircraft/A320-family/Models/lights/ALS/tail-strobe</inherits-from>
+			<object-name>tailstrobeals</object-name>
+	</effect>
 
- 
- <animation>
-  <type>scale</type>
-  <x-offset>0.75</x-offset>
-  <y-offset>0.75</y-offset>
-  <z-offset>0.75</z-offset>
- </animation>
- 
+	<animation>
+		<type>scale</type>
+		<x-offset>0.75</x-offset>
+		<y-offset>0.75</y-offset>
+		<z-offset>0.75</z-offset>
+	</animation>
 
- 
-<animation>
-  <type>dist-scale</type>
-  <object-name>tailstrobeals</object-name>
-  <interpolation>
-   <entry>
-    <ind>0</ind>
-    <dep>1</dep>
-   </entry>
-   <entry>
-    <ind>300</ind>
-    <dep>4</dep>
-   </entry>
-   <entry>
-    <ind>1500</ind>
-    <dep>8</dep>
-   </entry>
-  </interpolation>
- </animation>
- 
-
+	<animation>
+		<type>dist-scale</type>
+		<object-name>tailstrobeals</object-name>
+		<interpolation>
+			<entry>
+				<ind>0</ind>
+				<dep>1</dep>
+			</entry>
+			<entry>
+				<ind>300</ind>
+				<dep>4</dep>
+			</entry>
+			<entry>
+				<ind>1500</ind>
+				<dep>8</dep>
+			</entry>
+		</interpolation>
+	</animation>
 
 </PropertyList>

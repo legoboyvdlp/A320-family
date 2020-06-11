@@ -20,6 +20,11 @@
 		</condition>
 	</animation>
 
+	<animation>
+		<type>noshadow</type>
+		<object-name>Light</object-name>
+	</animation>
+
 	<!-- Billboard animation -->
 	<animation>
 		<name>Billboard</name>

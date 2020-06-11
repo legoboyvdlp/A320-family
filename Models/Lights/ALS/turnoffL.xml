@@ -4,66 +4,64 @@
 
 <PropertyList>
 
- <path>landinglight.ac</path>
- <nopreview/>
+	<path>landinglight.ac</path>
+	<nopreview/>
 
+	<animation>
+		<type>noshadow</type>
+		<object-name>landinglightals</object-name>
+	</animation>
 
- 
-<effect>
-   <inherits-from>Aircraft/A320-family/Models/lights/ALS/turnoffL</inherits-from>
-   <object-name>landinglightals</object-name>
- </effect>
- 
+	<effect>
+			<inherits-from>Aircraft/A320-family/Models/lights/ALS/turnoffL</inherits-from>
+			<object-name>landinglightals</object-name>
+	</effect>
 
- 
- <animation>
-  <type>scale</type>
-  <x-offset>0.75</x-offset>
-  <y-offset>0.75</y-offset>
-  <z-offset>0.75</z-offset>
- </animation>
- 
+	<animation>
+		<type>scale</type>
+		<x-offset>0.75</x-offset>
+		<y-offset>0.75</y-offset>
+		<z-offset>0.75</z-offset>
+	</animation>
 
- 
-<animation>
-  <type>dist-scale</type>
-  <object-name>landinglightals</object-name>
-  <interpolation>
-   <entry>
-    <ind>0</ind>
-    <dep>1</dep>
-   </entry>
-   <entry>
-    <ind>300</ind>
-    <dep>4</dep>
-   </entry>
-   <entry>
-    <ind>1500</ind>
-    <dep>8</dep>
-   </entry>
-  </interpolation>
- </animation>
- 
-    <animation>
-        <type>flash</type>
-        <object-name>landinglightals</object-name>
-        <center>
-            <x-m>0.0</x-m>
-            <y-m>0.0</y-m>
-            <z-m>0.0</z-m>
-        </center>
-        <axis>
-            <x>-1</x>
-            <y>-0.75</y>
-            <z>0</z>
-        </axis>
-        <power>8</power>
-        <factor>6</factor>
-        <offset>0</offset>
-        <two-sides type="bool">false</two-sides>
-        <min>0.15</min>
-        <max>0.5</max>
-    </animation>
+	<animation>
+		<type>dist-scale</type>
+		<object-name>landinglightals</object-name>
+		<interpolation>
+			<entry>
+				<ind>0</ind>
+				<dep>1</dep>
+			</entry>
+			<entry>
+				<ind>300</ind>
+				<dep>4</dep>
+			</entry>
+			<entry>
+				<ind>1500</ind>
+				<dep>8</dep>
+			</entry>
+		</interpolation>
+	</animation>
 
+	<animation>
+		<type>flash</type>
+		<object-name>landinglightals</object-name>
+		<center>
+			<x-m>0.0</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>-1</x>
+			<y>-0.75</y>
+			<z>0</z>
+		</axis>
+		<power>8</power>
+		<factor>6</factor>
+		<offset>0</offset>
+		<two-sides	type="bool">false</two-sides>
+		<min>0.15</min>
+		<max>0.5</max>
+	</animation>
 
 </PropertyList>
