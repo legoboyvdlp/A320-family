@@ -53,7 +53,7 @@
 				spoilers/main-gear-and eq 1
 				/velocities/groundspeed-kt ge 72
 			</test>
-			<test logic="AND" value="0.25"> <!-- PLD Set -->
+			<test logic="AND" value="0.20"> <!-- PLD Set 10 degrees -->
 				spoilers/throttle[0] lt 0.01
 				spoilers/throttle[1] lt 0.01
 				/controls/flight/speedbrake-arm eq 1
@@ -64,7 +64,11 @@
 		
 		<switch name="spoilers/max-spoiler">
 			<default value="1.0"/>
-			<test logic="AND" value="0.5">
+			<test logic="AND" value="0.4">
+				spoilers/main-gear-or eq 0
+				fbw/fmgc/enabled eq 1
+			</test>
+			<test logic="AND" value="0.8">
 				spoilers/main-gear-or eq 0
 				fbw/fmgc/enabled eq 1
 			</test>
@@ -76,8 +80,8 @@
 					<independentVar lookup="row">/controls/flight/speedbrake</independentVar>
 					<tableData>
 						0.10  0.0
-						0.45  0.5
-						0.55  0.5
+						0.45  0.625
+						0.55  0.625
 						0.95  1.0
 					</tableData>
 				</table>
@@ -123,7 +127,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l1/cmd-deg">
 			<input>hydraulics/spoiler-l1/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-l1/final-actuator">
@@ -144,8 +148,17 @@
 			</test>
 		</switch>
 		
+		<fcs_function name="hydraulics/spoiler-l2/main-cmd-calc">
+			<function>
+				<product>
+					<property>spoilers/main-cmd</property>
+					<value>0.8</value>
+				</product>
+			</function>
+		</fcs_function>
+		
 		<actuator name="hydraulics/spoiler-l2/main-cmd">
-			<input>spoilers/main-cmd</input>
+			<input>hydraulics/spoiler-l2/main-cmd-calc</input>
 			<rate_limit>hydraulics/spoiler-l2/main-cmd-rate</rate_limit>
 			<output>hydraulics/spoiler-l2/main-cmd-feedback</output>
 		</actuator>
@@ -161,7 +174,7 @@
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
 							0.0  0.0
-							1.0 -0.4
+							1.0 -0.55
 						</tableData>
 					</table>
 				</sum>
@@ -176,7 +189,7 @@
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
 							0.0  0.0
-							1.0 -0.5
+							1.0 -0.7
 						</tableData>
 					</table>
 				</sum>
@@ -188,7 +201,7 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						-1.0  0.5
+						-1.0  0.7
 						 0.0  0.0
 					</tableData>
 				</table>
@@ -222,7 +235,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l2/cmd-deg">
 			<input>hydraulics/spoiler-l2/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-l2/final-actuator">
@@ -236,7 +249,7 @@
 	
 	<channel name="Spoiler L3">
 		
-		<fcs_function name="hydraulics/spoiler-l3/extended">
+		<fcs_function name="hydraulics/spoiler-l3/ground-extended">
 			<function>
 				<sum>
 					<property>spoilers/main-cmd</property>
@@ -244,7 +257,25 @@
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
 							0.0  0.0
-							1.0 -0.5
+							1.0 -0.7
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/spoiler-l3/air-extended">
+			<function>
+				<sum>
+					<product>
+						<property>spoilers/main-cmd</property>
+						<value>0.8</value>
+					</product>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0 -0.7
 						</tableData>
 					</table>
 				</sum>
@@ -256,7 +287,7 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						-1.0  0.5
+						-1.0  0.7
 						 0.0  0.0
 					</tableData>
 				</table>
@@ -265,11 +296,18 @@
 		
 		<switch name="hydraulics/spoiler-l3/switch">
 			<default value="0"/>
-			<test logic="AND" value="hydraulics/spoiler-l3/extended">
-				/systems/hydraulic/blue-psi ge 1500
+			<test logic="AND" value="hydraulics/spoiler-l3/air-extended">
+				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 0
 				/systems/failures/spoiler-l3 eq 0
 				spoilers/main-cmd gt 0
 			</test>
+			<test logic="AND" value="hydraulics/spoiler-l3/ground-extended">
+				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 1
+				/systems/failures/spoiler-l3 eq 0
+				spoilers/main-cmd gt 0
+			</test>			
 			<test logic="AND" value="hydraulics/spoiler-l3/retracted">
 				/systems/hydraulic/blue-psi ge 1500
 				/systems/failures/spoiler-l3 eq 0
@@ -283,7 +321,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l3/cmd-deg">
 			<input>hydraulics/spoiler-l3/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-l3/final-actuator">
@@ -297,7 +335,7 @@
 	
 	<channel name="Spoiler L4">
 		
-		<fcs_function name="hydraulics/spoiler-l4/extended">
+		<fcs_function name="hydraulics/spoiler-l4/ground-extended">
 			<function>
 				<sum>
 					<property>spoilers/main-cmd</property>
@@ -305,7 +343,25 @@
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
 							0.0  0.0
-							1.0 -0.5
+							1.0 -0.7
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/spoiler-l4/air-extended">
+			<function>
+				<sum>
+					<product>
+						<property>spoilers/main-cmd</property>
+						<value>0.8</value>
+					</product>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0 -0.7
 						</tableData>
 					</table>
 				</sum>
@@ -317,7 +373,7 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						-1.0  0.5
+						-1.0  0.7
 						 0.0  0.0
 					</tableData>
 				</table>
@@ -326,13 +382,20 @@
 		
 		<switch name="hydraulics/spoiler-l4/switch">
 			<default value="0"/>
-			<test logic="AND" value="hydraulics/spoiler-l4/extended">
+			<test logic="AND" value="hydraulics/spoiler-l4/air-extended">
 				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 0
 				/systems/failures/spoiler-l4 eq 0
 				spoilers/main-cmd gt 0
 			</test>
-			<test logic="AND" value="hydraulics/spoiler-l4/retracted">
+			<test logic="AND" value="hydraulics/spoiler-l4/ground-extended">
 				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 1
+				/systems/failures/spoiler-l4 eq 0
+				spoilers/main-cmd gt 0
+			</test>			
+			<test logic="AND" value="hydraulics/spoiler-l4/retracted">
+				/systems/hydraulic/blue-psi ge 1500
 				/systems/failures/spoiler-l4 eq 0
 				spoilers/main-cmd eq 0
 			</test>
@@ -344,7 +407,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l4/cmd-deg">
 			<input>hydraulics/spoiler-l4/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-l4/final-actuator">
@@ -366,7 +429,7 @@
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
 							0.0  0.0
-							1.0 -0.5
+							1.0 -0.7
 						</tableData>
 					</table>
 				</sum>
@@ -378,7 +441,7 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						-1.0  0.5
+						-1.0  0.7
 						 0.0  0.0
 					</tableData>
 				</table>
@@ -406,7 +469,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l5/cmd-deg">
 			<input>hydraulics/spoiler-l5/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-l5/final-actuator">
@@ -435,7 +498,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r1/cmd-deg">
 			<input>hydraulics/spoiler-r1/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-r1/final-actuator">
@@ -456,8 +519,17 @@
 			</test>
 		</switch>
 		
+		<fcs_function name="hydraulics/spoiler-r2/main-cmd-calc">
+			<function>
+				<product>
+					<property>spoilers/main-cmd</property>
+					<value>0.8</value>
+				</product>
+			</function>
+		</fcs_function>
+		
 		<actuator name="hydraulics/spoiler-r2/main-cmd">
-			<input>spoilers/main-cmd</input>
+			<input>hydraulics/spoiler-r2/main-cmd-calc</input>
 			<rate_limit>hydraulics/spoiler-r2/main-cmd-rate</rate_limit>
 			<output>hydraulics/spoiler-r2/main-cmd-feedback</output>
 		</actuator>
@@ -472,7 +544,7 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
-							-1.0 -0.4
+							-1.0 -0.55
 							 0.0  0.0
 						</tableData>
 					</table>
@@ -487,7 +559,7 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
-							-1.0 -0.5
+							-1.0 -0.7
 							 0.0  0.0
 						</tableData>
 					</table>
@@ -501,7 +573,7 @@
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
 						0.0  0.0
-						1.0  0.5
+						1.0  0.7
 					</tableData>
 				</table>
 			</function>
@@ -534,7 +606,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r2/cmd-deg">
 			<input>hydraulics/spoiler-r2/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-r2/final-actuator">
@@ -548,15 +620,33 @@
 	
 	<channel name="Spoiler R3">
 		
-		<fcs_function name="hydraulics/spoiler-r3/extended">
+		<fcs_function name="hydraulics/spoiler-r3/ground-extended">
 			<function>
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
-							-1.0 -0.5
-							 0.0  0.0
+							0.0  0.0
+							1.0 -0.7
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/spoiler-r3/air-extended">
+			<function>
+				<sum>
+					<product>
+						<property>spoilers/main-cmd</property>
+						<value>0.8</value>
+					</product>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0 -0.7
 						</tableData>
 					</table>
 				</sum>
@@ -568,8 +658,8 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						0.0  0.0
-						1.0  0.5
+						-1.0  0.7
+						 0.0  0.0
 					</tableData>
 				</table>
 			</function>
@@ -577,8 +667,15 @@
 		
 		<switch name="hydraulics/spoiler-r3/switch">
 			<default value="0"/>
-			<test logic="AND" value="hydraulics/spoiler-r3/extended">
-				/systems/hydraulic/blue-psi ge 1500
+			<test logic="AND" value="hydraulics/spoiler-r3/air-extended">
+				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 0
+				/systems/failures/spoiler-r3 eq 0
+				spoilers/main-cmd gt 0
+			</test>
+			<test logic="AND" value="hydraulics/spoiler-r3/ground-extended">
+				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 1
 				/systems/failures/spoiler-r3 eq 0
 				spoilers/main-cmd gt 0
 			</test>
@@ -595,7 +692,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r3/cmd-deg">
 			<input>hydraulics/spoiler-r3/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-r3/final-actuator">
@@ -609,15 +706,33 @@
 	
 	<channel name="Spoiler R4">
 		
-		<fcs_function name="hydraulics/spoiler-r4/extended">
+		<fcs_function name="hydraulics/spoiler-r4/ground-extended">
 			<function>
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
-							-1.0 -0.5
-							 0.0  0.0
+							0.0  0.0
+							1.0 -0.7
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/spoiler-r4/air-extended">
+			<function>
+				<sum>
+					<product>
+						<property>spoilers/main-cmd</property>
+						<value>0.8</value>
+					</product>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0 -0.7
 						</tableData>
 					</table>
 				</sum>
@@ -629,8 +744,8 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						0.0  0.0
-						1.0  0.5
+						-1.0  0.7
+						 0.0  0.0
 					</tableData>
 				</table>
 			</function>
@@ -638,13 +753,20 @@
 		
 		<switch name="hydraulics/spoiler-r4/switch">
 			<default value="0"/>
-			<test logic="AND" value="hydraulics/spoiler-r4/extended">
+			<test logic="AND" value="hydraulics/spoiler-r4/air-extended">
 				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 0
+				/systems/failures/spoiler-r4 eq 0
+				spoilers/main-cmd gt 0
+			</test>
+			<test logic="AND" value="hydraulics/spoiler-r4/ground-extended">
+				/systems/hydraulic/yellow-psi ge 1500
+				spoilers/main-gear-and eq 1
 				/systems/failures/spoiler-r4 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r4/retracted">
-				/systems/hydraulic/yellow-psi ge 1500
+				/systems/hydraulic/blue-psi ge 1500
 				/systems/failures/spoiler-r4 eq 0
 				spoilers/main-cmd eq 0
 			</test>
@@ -656,7 +778,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r4/cmd-deg">
 			<input>hydraulics/spoiler-r4/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-r4/final-actuator">
@@ -677,7 +799,7 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-l</independentVar>
 						<tableData>
-							-1.0 -0.5
+							-1.0 -0.7
 							 0.0  0.0
 						</tableData>
 					</table>
@@ -691,7 +813,7 @@
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
 						0.0  0.0
-						1.0  0.5
+						1.0  0.7
 					</tableData>
 				</table>
 			</function>
@@ -718,7 +840,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r5/cmd-deg">
 			<input>hydraulics/spoiler-r5/switch</input>
-			<gain>40.0</gain>
+			<gain>50.0</gain>
 		</pure_gain>
 		
 		<actuator name="hydraulics/spoiler-r5/final-actuator">
