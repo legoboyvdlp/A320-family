@@ -10,9 +10,9 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.05</blue>
-				<green>0.05</green>
-				<red>0.05</red>
+				<blue>0.213</blue>
+				<green>0.199</green>
+				<red>0.191</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -22,15 +22,15 @@
 			</button>
 			<checkbox-foreground n="0">
 				<alpha>0.95</alpha>
-				<blue>0.05</blue>
-				<green>0.05</green>
-				<red>0.05</red>
+				<blue>0.173</blue>
+				<green>0.169</green>
+				<red>0.161</red>
 			</checkbox-foreground>
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
-				<blue>0.9</blue>
-				<green>0.9</green>
-				<red>0.9</red>
+				<blue>0.8</blue>
+				<green>0.58</green>
+				<red>0.44</red>
 			</checkbox-highlight>
 			<checkbox-misc n="0">
 				<alpha>0.95</alpha>
@@ -52,9 +52,9 @@
 			</dial-misc>
 			<hrule n="0">
 				<alpha>0.95</alpha>
-				<blue>1.0</blue>
-				<green>0.0</green>
-				<red>1.0</red>
+				<blue>0.8</blue>
+				<green>0.58</green>
+				<red>0.44</red>
 			</hrule>
 			<input n="0">
 				<alpha>0.95</alpha>
@@ -100,9 +100,9 @@
 			</textbox-editable>
 			<vrule n="0">
 				<alpha>0.95</alpha>
-				<blue>1.0</blue>
-				<green>0.0</green>
-				<red>1.0</red>
+				<blue>0.8</blue>
+				<green>0.58</green>
+				<red>0.44</red>
 			</vrule>
 		</colors>
 	</style>
@@ -111,9 +111,9 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.05</blue>
-				<green>0.05</green>
-				<red>0.05</red>
+				<blue>0.213</blue>
+				<green>0.199</green>
+				<red>0.191</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -123,15 +123,15 @@
 			</button>
 			<checkbox-foreground n="0">
 				<alpha>0.95</alpha>
-				<blue>0.05</blue>
-				<green>0.05</green>
-				<red>0.05</red>
+				<blue>0.173</blue>
+				<green>0.169</green>
+				<red>0.161</red>
 			</checkbox-foreground>
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
-				<blue>0.9</blue>
-				<green>0.9</green>
-				<red>0.9</red>
+				<blue>0.8</blue>
+				<green>0.58</green>
+				<red>0.44</red>
 			</checkbox-highlight>
 			<checkbox-misc n="0">
 				<alpha>0.95</alpha>
@@ -153,9 +153,9 @@
 			</dial-misc>
 			<hrule n="0">
 				<alpha>0.95</alpha>
-				<blue>1.0</blue>
-				<green>0.0</green>
-				<red>1.0</red>
+				<blue>0.8</blue>
+				<green>0.58</green>
+				<red>0.44</red>
 			</hrule>
 			<input n="0">
 				<alpha>0.95</alpha>
@@ -201,9 +201,9 @@
 			</textbox-editable>
 			<vrule n="0">
 				<alpha>0.95</alpha>
-				<blue>1.0</blue>
-				<green>0.0</green>
-				<red>1.0</red>
+				<blue>0.8</blue>
+				<green>0.58</green>
+				<red>0.44</red>
 			</vrule>
 		</colors>
 	</style>
