@@ -123,10 +123,16 @@ var flightPlanController = {
 				mcdu.isNoVia[2] = 0;
 			}
 			
-			if (mcdu.isNoTrans[n] == 1) {
-				mcdu.isNoTrans[2] = 1;
+			if (mcdu.isNoTransDep[n] == 1) {
+				mcdu.isNoTransDep[2] = 1;
 			} else {
-				mcdu.isNoTrans[2] = 0;
+				mcdu.isNoTransDep[2] = 0;
+			}
+			
+			if (mcdu.isNoTransArr[n] == 1) {
+				mcdu.isNoTransArr[2] = 1;
+			} else {
+				mcdu.isNoTransArr[2] = 0;
 			}
 			
 			me.flightPlanChanged(2);

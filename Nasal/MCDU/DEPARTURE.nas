@@ -1,4 +1,5 @@
 var isNoSid = [0, 0];
+var isNoTransDep = [0, 0, 0];
 
 var departurePage = {
 	title: [nil, nil, nil],

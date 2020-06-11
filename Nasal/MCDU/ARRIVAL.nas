@@ -1,5 +1,5 @@
 var isNoStar = [0, 0, 0];
-var isNoTrans = [0, 0, 0];
+var isNoTransArr = [0, 0, 0];
 var isNoVia = [0, 0, 0];
 
 var arrivalPage = {
@@ -65,7 +65,7 @@ var arrivalPage = {
 		me.selectedApproach = nil;
 		me.selectedVIA = nil;
 		isNoStar[me.computer] = 0;
-		isNoTrans[me.computer] = 0;
+		isNoTransArr[me.computer] = 0;
 		isNoVia[me.computer] = 0;
 	},
 	_setupFirstTime: func() {
@@ -89,7 +89,7 @@ var arrivalPage = {
 				me.selectedSTAR = "NO STAR";
 			}
 			
-			if (isNoTrans[2]) {
+			if (isNoTransArr[2]) {
 				me.selectedTransition = "NO TRANS";
 			} elsif (fmgc.flightPlanController.flightplans[2].star != nil) {
 				me.selectedTransition = fmgc.flightPlanController.flightplans[2].star_trans;
@@ -124,7 +124,7 @@ var arrivalPage = {
 				me.selectedSTAR = "NO STAR";
 			}
 			
-			if (isNoTrans[me.computer] or isNoTrans[2]) {
+			if (isNoTransArr[me.computer] or isNoTransArr[2]) {
 				me.selectedTransition = "NO TRANS";
 			} elsif (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
 				me.selectedTransition = fmgc.flightPlanController.flightplans[me.computer].star_trans;
@@ -763,7 +763,7 @@ var arrivalPage = {
 			if (size(me.approaches) >= (index - 2) and index != 2) { # index = 3, size = 1
 				if (!dirToFlag) {
 					me.selectedVIA = nil;
-					isNoTrans[me.computer] = 0;
+					isNoTransArr[me.computer] = 0;
 					isNoStar[me.computer] = 0;
 					me.makeTmpy();
 					if (!me.apprIsRwyFlag) {
@@ -806,9 +806,9 @@ var arrivalPage = {
 					}
 					me.updateSTARs();
 					if (me.selectedSTAR != "NO STAR") {
-						isNoTrans[me.computer] = 0;
+						isNoTransArr[me.computer] = 0;
 					} else {
-						isNoTrans[me.computer] = 1;
+						isNoTransArr[me.computer] = 1;
 					}
 					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
@@ -849,10 +849,10 @@ var arrivalPage = {
 				me.selectedTransition = me.transitions[index - 3];
 				me.makeTmpy();
 				if (me.selectedTransition != "NO TRANS") {
-					isNoTrans[me.computer] = 0;
+					isNoTransArr[me.computer] = 0;
 					fmgc.flightPlanController.flightplans[me.computer].star_trans = me.selectedTransition;
 				} else {
-					isNoTrans[me.computer] = 1;
+					isNoTransArr[me.computer] = 1;
 					fmgc.flightPlanController.flightplans[me.computer].star_trans = nil;
 				}
 				me.updatePage();
