@@ -142,6 +142,15 @@ var windCRZPage = {
 					me.fontMatrix[0][0] = 1;
 				}
 			}
+			
+			wind = fmgc.windController.crz_winds[computer_temp].sat1;
+			if (wind.altitude != "") {
+				me.L5 = [wind.temp ~ "/" ~ wind.altitude, "SAT / ALT", "blu"];
+				me.fontMatrix[0][4] = 0;
+			} else {
+				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+				me.fontMatrix[0][4] = 1;
+			}
 		} else {
 			if (me.items >= 4) {
 				wind = fmgc.windController.winds[computer_temp][me.match_location].wind4;
@@ -192,9 +201,17 @@ var windCRZPage = {
 					me.fontMatrix[0][0] = 1;
 				}
 			}
+			
+			wind = fmgc.windController.winds[computer_temp][me.match_location].sat1;
+			if (wind.altitude != "") {
+				me.L5 = [wind.temp ~ "/" ~ wind.altitude, "SAT / ALT", "blu"];
+				me.fontMatrix[0][4] = 0;
+			} else {
+				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+				me.fontMatrix[0][4] = 1;
+			}
 		}
 		
-		me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
 		me.L6 = [" RETURN", nil, "wht"];
 		me.R2 = [" REQUEST ", "WIND ", "amb"];
 		me.R4 = [" PHASE ", "PREV ", "wht"];
@@ -252,7 +269,34 @@ var windCRZPage = {
 		} else if (index == 6) {
 			setprop("/MCDU[" ~ me.computer ~ "]/page", "INITA");
 		} else if (index == 5) {
-			#set sat temp here
+			var sts = size(mcdu_scratchpad.scratchpads[me.computer].scratchpad);
+			if (sts >= 7 and sts <= 9) {
+				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
+				if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= -99 and winds[0] <= -99 and
+				size(winds[1]) == 5 and ((num(winds[1]) != nil and winds[1] >= 1000 and winds[1] <= 39000) or
+				(num(split("FL", winds[1])[1]) != nil and split("FL", winds[1])[1] >= 10 and split("FL", winds[1])[1] <= 390))) {
+					me.makeTmpy();
+					var computer_temp = 2;
+					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+						computer_temp = me.computer;
+					}
+					#print(computer_temp);
+					if (me.singleCRZ == 1) {
+						fmgc.windController.crz_winds[computer_temp].sat1.temp = winds[0];
+						fmgc.windController.crz_winds[computer_temp].sat1.altitude = winds[1];
+					} else {
+						fmgc.windController.winds[computer_temp][me.match_location].sat1.temp = winds[0];
+						fmgc.windController.winds[computer_temp][me.match_location].sat1.altitude = winds[1];
+					}
+					mcdu_scratchpad.scratchpads[me.computer].empty();
+					me._setupPageWithData();
+					me.updateTmpy();
+				} else {
+					mcdu_message(me.computer, "NOT ALLOWED");
+				}
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
+			}
 		} else if (me.items >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
@@ -267,11 +311,7 @@ var windCRZPage = {
 					}
 					#print(computer_temp);
 					if (me.singleCRZ == 1) {
-						if (index == 5) {
-							fmgc.windController.crz_winds[computer_temp].wind5.heading = winds[0];
-							fmgc.windController.crz_winds[computer_temp].wind5.magnitude = winds[1];
-							fmgc.windController.crz_winds[computer_temp].wind5.altitude = winds[2];
-						} else if (index == 4) {
+						if (index == 4) {
 							fmgc.windController.crz_winds[computer_temp].wind4.heading = winds[0];
 							fmgc.windController.crz_winds[computer_temp].wind4.magnitude = winds[1];
 							fmgc.windController.crz_winds[computer_temp].wind4.altitude = winds[2];
@@ -289,11 +329,7 @@ var windCRZPage = {
 							fmgc.windController.crz_winds[computer_temp].wind1.altitude = winds[2];
 						}
 					} else {
-						if (index == 5) {
-							fmgc.windController.winds[computer_temp][me.match_location].wind5.heading = winds[0];
-							fmgc.windController.winds[computer_temp][me.match_location].wind5.magnitude = winds[1];
-							fmgc.windController.winds[computer_temp][me.match_location].wind5.altitude = winds[2];
-						} else if (index == 4) {
+						if (index == 4) {
 							fmgc.windController.winds[computer_temp][me.match_location].wind4.heading = winds[0];
 							fmgc.windController.winds[computer_temp][me.match_location].wind4.magnitude = winds[1];
 							fmgc.windController.winds[computer_temp][me.match_location].wind4.altitude = winds[2];
@@ -312,7 +348,7 @@ var windCRZPage = {
 						}
 					}
 					mcdu_scratchpad.scratchpads[me.computer].empty();
-					if (me.items == index and index != 5) {
+					if (me.items == index and index != 4) {
 						me.items += 1;
 					}
 					me._setupPageWithData();
