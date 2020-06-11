@@ -658,8 +658,8 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						-1.0  0.7
 						 0.0  0.0
+						 1.0  0.7
 					</tableData>
 				</table>
 			</function>
@@ -744,8 +744,8 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-l</independentVar>
 					<tableData>
-						-1.0  0.7
 						 0.0  0.0
+						 1.0  0.7
 					</tableData>
 				</table>
 			</function>
