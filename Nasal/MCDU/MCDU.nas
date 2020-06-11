@@ -385,8 +385,8 @@ var lskbutton = func(btn, i) {
 			fuelPredInput("L5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(5);
-		# } else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
-# 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(5);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
@@ -498,6 +498,8 @@ var rskbutton = func(btn, i) {
 				canvas_mcdu.myHISTWIND[i].reload();
 			}
 			setprop("MCDU[" ~ i ~ "]/page", "WINDHIST");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonRight(1);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
 			radnavInput("R1",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {

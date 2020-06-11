@@ -250,6 +250,8 @@ var windCRZPage = {
 			me.reload();
 		} else if (index == 6) {
 			setprop("/MCDU[" ~ me.computer ~ "]/page", "INITA");
+		} else if (index == 5) {
+			#set sat temp here
 		} else if (me.items >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);

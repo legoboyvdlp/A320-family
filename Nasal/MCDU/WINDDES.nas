@@ -133,7 +133,13 @@ var windDESPage = {
 		}
 		
 		me.L6 = [" RETURN", nil, "wht"];
-		me.R1 = ["[  ]/[  ]", "ALTN WIND ", "blu"];
+		
+		if (getprop("/FMGC/internal/alt-set")) {
+			me.R1 = ["[  ]/[  ]", "ALTN WIND ", "blu"];
+		} else {
+			me.R1 = ["", "", "blu"];
+		}
+		
 		me.R3 = [" REQUEST ", "WIND ", "amb"];
 		me.R4 = [" PHASE ", "PREV ", "wht"];
 		
@@ -241,7 +247,9 @@ var windDESPage = {
 		}
 	},
 	pushButtonRight: func(index) {
-		if (index == 6 and fmgc.flightPlanController.temporaryFlag[me.computer]) {
+		if (index == 1 and getprop("/FMGC/internal/alt-set")) {
+			# set alt wind here
+		} if (index == 6 and fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (canvas_mcdu.myFpln[me.computer] != nil) {
 				canvas_mcdu.myFpln[me.computer].pushButtonRight(index);
 			} else {
