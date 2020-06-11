@@ -147,12 +147,28 @@ var windController = {
 		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
 	},
 	
+	copyWinds: func(n) {
+		var tempWind = [];
+		for (i = 0; i < size(me.winds[n]); i += 1) {
+			var id = me.winds[n][i].id;
+			var type = me.winds[n][i].type;
+			var includeWind = me.winds[n][i].includeWind;
+			var wind1 = wind.newcopy(me.winds[n][i].wind1.heading, me.winds[n][i].wind1.magnitude, me.winds[n][i].wind1.altitude);
+			var wind2 = wind.newcopy(me.winds[n][i].wind2.heading, me.winds[n][i].wind2.magnitude, me.winds[n][i].wind2.altitude);
+			var wind3 = wind.newcopy(me.winds[n][i].wind3.heading, me.winds[n][i].wind3.magnitude, me.winds[n][i].wind3.altitude);
+			var wind4 = wind.newcopy(me.winds[n][i].wind4.heading, me.winds[n][i].wind4.magnitude, me.winds[n][i].wind4.altitude);
+			var wind5 = wind.newcopy(me.winds[n][i].wind5.heading, me.winds[n][i].wind5.magnitude, me.winds[n][i].wind5.altitude);
+			append(tempWind, waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5));
+		}
+		return tempWind;
+	},
+	
 	createTemporaryWinds: func(n) {
 		me.resetWind(n);
 		me.clb_winds[n] = me.copyClbWind(2);
 		me.crz_winds[n] = me.copyCrzWind(2);
 		me.des_winds[n] = me.copyDesWind(2);
-		me.winds[n] = me.winds[2];
+		me.winds[n] = me.copyWinds(2);
 		me.nav_indicies[n] = me.nav_indicies[2];
 		me.windSizes[n] = me.windSizes[2];
 		#me.temporaryFlag[n] = 1;
@@ -165,7 +181,7 @@ var windController = {
 			me.clb_winds[2] = me.copyClbWind(n);
 			me.crz_winds[2] = me.copyCrzWind(n);
 			me.des_winds[2] = me.copyDesWind(n);
-			me.winds[2] = me.winds[n];
+			me.winds[2] = me.copyWinds(n);
 			me.nav_indicies[2] = me.nav_indicies[n];
 			me.windSizes[2] = me.windSizes[n];
 		}
@@ -281,32 +297,30 @@ var windController = {
 		debug.dump(me.nav_indicies);
 		
 		if (canvas_mcdu.myCLBWIND[1] != nil) {
-			canvas_mcdu.myCLBWIND[1]._setupPageWithData();
+			canvas_mcdu.myCLBWIND[1].reload();
 		}
 		if (canvas_mcdu.myCLBWIND[0] != nil) {
-			canvas_mcdu.myCLBWIND[0]._setupPageWithData();
+			canvas_mcdu.myCLBWIND[0].reload();
 		}
 		if (canvas_mcdu.myCRZWIND[1] != nil) {
-			# if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[1]) > 0) {
-# 				canvas_mcdu.myCRZWIND[1].del();
-# 				canvas_mcdu.myCRZWIND[1] = nil;
-# 				canvas_mcdu.myCRZWIND[1] = windCRZPage.new(1, fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]), 0);
-# 			}
-			canvas_mcdu.myCRZWIND[1]._setupPageWithData();
+			if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[1]) > 0) {
+				canvas_mcdu.myCRZWIND[1].waypoint = fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]);
+				canvas_mcdu.myCRZWIND[1].cur_location = 0;
+			}
+			canvas_mcdu.myCRZWIND[1].reload();
 		}
 		if (canvas_mcdu.myCRZWIND[0] != nil) {
-			# if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[0]) > 0) {
-# 				canvas_mcdu.myCRZWIND[0].del();
-# 				canvas_mcdu.myCRZWIND[0] = nil;
-# 				canvas_mcdu.myCRZWIND[0] = windCRZPage.new(0, fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]), 0);
-# 			}
-			canvas_mcdu.myCRZWIND[0]._setupPageWithData();
+			if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[0]) > 0) {
+				canvas_mcdu.myCRZWIND[0].waypoint = fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]);
+				canvas_mcdu.myCRZWIND[0].cur_location = 0;
+			}
+			canvas_mcdu.myCRZWIND[0].reload();
 		}
 		if (canvas_mcdu.myDESWIND[1] != nil) {
-			canvas_mcdu.myDESWIND[1]._setupPageWithData();
+			canvas_mcdu.myDESWIND[1].reload();
 		}
 		if (canvas_mcdu.myDESWIND[0] != nil) {
-			canvas_mcdu.myDESWIND[0]._setupPageWithData();
+			canvas_mcdu.myDESWIND[0].reload();
 		}
 	}
 };
