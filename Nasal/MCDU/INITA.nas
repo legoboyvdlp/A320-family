@@ -9,6 +9,7 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/alt-airport", "");
 			setprop("/FMGC/internal/alt-set", 0);
+			fmgc.windController.updatePlans();
 			if (getprop("/FMGC/internal/block-confirmed")) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
 				setprop("/FMGC/internal/fuel-calculating", 1);
@@ -24,6 +25,7 @@ var initInputA = func(key, i) {
 				if (tfs == 4) {
 					setprop("/FMGC/internal/alt-airport", scratchpad);
 					setprop("/FMGC/internal/alt-set", 1);
+					fmgc.windController.updatePlans();
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
