@@ -42,29 +42,19 @@ var windHISTPage = {
 	_setupPageWithData: func() {
 		me.title = "HISTROY WIND";
 		me.titleColour = "wht";
-		me.L1 = ["[  ]/[  ]", "", "blu"];
-		me.L2 = ["[  ]/[  ]", "", "blu"];
-		me.L3 = ["[  ]/[  ]", "", "blu"];
-		me.L4 = ["[  ]/[  ]", "", "blu"];
-		me.L5 = ["[  ]/[  ]", "", "blu"];
+		me.L1 = ["----/---", "", "blu"];
+		me.L2 = ["----/---", "", "blu"];
+		me.L3 = ["----/---", "", "blu"];
+		me.L4 = ["----/---", "", "blu"];
+		me.L5 = ["----/---", "", "blu"];
 		me.L6 = [" CLIMB WIND", "", "wht"];
 		me.C1 = ["FL050", "", "blu"];
 		me.C2 = ["FL150", "", "blu"];
 		me.C3 = ["FL250", "", "blu"];
-		me.C4 = ["FL---", "", "blu"];
+		me.C4 = ["       FL--- CRZ FL", "", "blu"];
 		me.C5 = ["FL370", "", "blu"];
 		me.R6 = ["SELECT ", "", "amb"];
-# 		me.L2 = [" R", " TURN", "blu"];
-# 		if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 14000) {
-# 			me.L2 = [" 1.5/----", "TIME/DIST", "blu"];
-# 		} else {
-# 			me.L2 = [" 1.0/----", "TIME/DIST", "blu"];
-# 		}
-# 		me.L6 = [" RETURN", nil, "wht"];
-# 		me.C4 = ["LAST EXIT", nil, "wht"];
-# 		me.C5 = ["----  ---.-", "UTC    FUEL", "wht"];
-# 		me.R1 = ["COMPUTED ", nil, "wht"];
-# 		me.R2 = ["DATABASE ", nil, "wht"];
+
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];

@@ -29,6 +29,54 @@ var wind = {
 	}
 };
 
+var alt_wind = {
+	heading: 0,
+	magnitude: 0,
+	
+	new: func() {
+		return {
+			parents: [wind],
+			heading: 0,
+			magnitude: 0
+		};
+	},
+	
+	newcopy: func(heading, magnitude) {
+		me.heading = heading;
+		me.magnitude = magnitude;
+		
+		return {
+			parents: [wind],
+			heading: me.heading,
+			magnitude: me.magnitude
+		}
+	}
+};
+
+var sat_temp = {
+	temp: 0,
+	altitude: "",
+	
+	new: func() {
+		return {
+			parents: [wind],
+			temp: 0,
+			altitude: ""
+		};
+	},
+	
+	newcopy: func(temp, altitude) {
+		me.temp = temp;
+		me.altitude = altitude;
+		
+		return {
+			parents: [wind],
+			temp: me.temp,
+			altitude: me.altitude
+		}
+	}
+};
+
 var waypoint_winds = {
 	type: "", #departure, waypoint, arrival
 	includeWind: 1,
@@ -37,6 +85,8 @@ var waypoint_winds = {
 	wind3: 0,
 	wind4: 0,
 	wind5: 0,
+	sat1: 0,
+	alt1: 0,
 	
 	new: func(id, type, includeWind) {
 		me.id = id;
@@ -51,11 +101,13 @@ var waypoint_winds = {
 			wind2: wind.new(),
 			wind3: wind.new(),
 			wind4: wind.new(),
-			wind5: wind.new()
+			wind5: wind.new(),
+			sat1: sat_temp.new(),
+			alt1: alt_wind.new()
 		};
 	},
 	
-	newcopy: func(id, type, includeWind, wind1, wind2, wind3, wind4, wind5) {
+	newcopy: func(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1) {
 		me.id = id;
 		me.type = type;
 		me.includeWind = includeWind;
@@ -64,6 +116,8 @@ var waypoint_winds = {
 		me.wind3 = wind3;
 		me.wind4 = wind4;
 		me.wind5 = wind5;
+		me.sat1 = sat1;
+		me.alt1 = alt1;
 		
 		return {
 			id: me.id,
@@ -73,7 +127,9 @@ var waypoint_winds = {
 			wind2: me.wind2,
 			wind3: me.wind3,
 			wind4: me.wind4,
-			wind5: me.wind5
+			wind5: me.wind5,
+			sat1: me.sat1,
+			alt1: me.alt1
 		};
 	}
 };
@@ -120,7 +176,9 @@ var windController = {
 		var wind3 = wind.newcopy(me.clb_winds[n].wind3.heading, me.clb_winds[n].wind3.magnitude, me.clb_winds[n].wind3.altitude);
 		var wind4 = wind.newcopy(me.clb_winds[n].wind4.heading, me.clb_winds[n].wind4.magnitude, me.clb_winds[n].wind4.altitude);
 		var wind5 = wind.newcopy(me.clb_winds[n].wind5.heading, me.clb_winds[n].wind5.magnitude, me.clb_winds[n].wind5.altitude);
-		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
+		var sat1 = alt_wind.newcopy(me.clb_winds[n].sat1.temperature, me.clb_winds[n].sat1.altitude);
+		var alt1 = sat_temp.newcopy(me.clb_winds[n].alt1.heading, me.clb_winds[n].alt1.magnitude);
+		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1);
 	},
 	
 	copyCrzWind: func(n) {
@@ -132,7 +190,9 @@ var windController = {
 		var wind3 = wind.newcopy(me.crz_winds[n].wind3.heading, me.crz_winds[n].wind3.magnitude, me.crz_winds[n].wind3.altitude);
 		var wind4 = wind.newcopy(me.crz_winds[n].wind4.heading, me.crz_winds[n].wind4.magnitude, me.crz_winds[n].wind4.altitude);
 		var wind5 = wind.newcopy(me.crz_winds[n].wind5.heading, me.crz_winds[n].wind5.magnitude, me.crz_winds[n].wind5.altitude);
-		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
+		var sat1 = alt_wind.newcopy(me.crz_winds[n].sat1.temperature, me.crz_winds[n].sat1.altitude);
+		var alt1 = sat_temp.newcopy(me.crz_winds[n].alt1.heading, me.crz_winds[n].alt1.magnitude);
+		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1);
 	},
 	
 	copyDesWind: func(n) {
@@ -144,7 +204,9 @@ var windController = {
 		var wind3 = wind.newcopy(me.des_winds[n].wind3.heading, me.des_winds[n].wind3.magnitude, me.des_winds[n].wind3.altitude);
 		var wind4 = wind.newcopy(me.des_winds[n].wind4.heading, me.des_winds[n].wind4.magnitude, me.des_winds[n].wind4.altitude);
 		var wind5 = wind.newcopy(me.des_winds[n].wind5.heading, me.des_winds[n].wind5.magnitude, me.des_winds[n].wind5.altitude);
-		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5);
+		var sat1 = alt_wind.newcopy(me.des_winds[n].sat1.temp, me.des_winds[n].sat1.altitude);
+		var alt1 = sat_temp.newcopy(me.des_winds[n].alt1.heading, me.des_winds[n].alt1.magnitude);
+		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1);
 	},
 	
 	copyWinds: func(n) {
@@ -158,7 +220,9 @@ var windController = {
 			var wind3 = wind.newcopy(me.winds[n][i].wind3.heading, me.winds[n][i].wind3.magnitude, me.winds[n][i].wind3.altitude);
 			var wind4 = wind.newcopy(me.winds[n][i].wind4.heading, me.winds[n][i].wind4.magnitude, me.winds[n][i].wind4.altitude);
 			var wind5 = wind.newcopy(me.winds[n][i].wind5.heading, me.winds[n][i].wind5.magnitude, me.winds[n][i].wind5.altitude);
-			append(tempWind, waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5));
+			var sat1 = alt_wind.newcopy(me.winds[n][i].sat1.temperature, me.winds[n][i].sat1.altitude);
+			var alt1 = sat_temp.newcopy(me.winds[n][i].alt1.heading, me.winds[n][i].alt1.magnitude);
+			append(tempWind, waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1));
 		}
 		return tempWind;
 	},

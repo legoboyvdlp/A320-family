@@ -3175,7 +3175,6 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3184,18 +3183,22 @@ var canvas_MCDU_base = {
 					myWind = myCLBWIND;
 					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
 					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
 				} else if (page == "WINDCRZ") {
 					myWind = myCRZWIND;
 					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
 					me.colorRightS("wht", "amb", "wht", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
 				} else if (page == "WINDDES") {
 					myWind = myDESWIND;
 					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
 					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
 				} else if (page == "WINDHIST") {
 					myWind = myHISTWIND;
 					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 					me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.fontSizeCenter(small, small, small, small, small, normal);
 				}
 				
 				if (myWind[i] != nil) {
