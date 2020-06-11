@@ -872,12 +872,12 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>4.879</x1-m>
-			<y1-m>6.201</y1-m>
-			<z1-m>0.507</z1-m>
-			<x2-m>4.879</x2-m>
-			<y2-m>4.455</y2-m>
-			<z2-m>0.241</z2-m>
+			<x1-m>-1.23423</x1-m>
+			<y1-m>6.10191</y1-m>
+			<z1-m>-0.618062</z1-m>
+			<x2-m>-1.2302</x2-m>
+			<y2-m>4.55902</y2-m>
+			<z2-m>-0.854871</z2-m>
 		</axis>
 	</animation>
 	<animation>
@@ -887,12 +887,12 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>5.678</x1-m>
-			<y1-m>8.563</y1-m>
-			<z1-m>0.706</z1-m>
-			<x2-m>5.084</x2-m>
-			<y2-m>6.905</y2-m>
-			<z2-m>0.574</z2-m>
+			<x1-m>-0.460798</x1-m>
+			<y1-m>8.51333</y1-m>
+			<z1-m>-0.411579</z1-m>
+			<x2-m>-1.01298</x2-m>
+			<y2-m>6.9642</y2-m>
+			<z2-m>-0.557443</z2-m>
 		</axis>
 	</animation>
 	<animation>
@@ -902,12 +902,12 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>6.246</x1-m>
-			<y1-m>10.145</y1-m>
-			<z1-m>0.832</z1-m>
-			<x2-m>5.685</x2-m>
-			<y2-m>8.581</y2-m>
-			<z2-m>0.707</z2-m>
+			<x1-m>0.101834</x1-m>
+			<y1-m>10.0794</y1-m>
+			<z1-m>-0.263732</z1-m>
+			<x2-m>-0.414163</x2-m>
+			<y2-m>8.64314</y2-m>
+			<z2-m>-0.399324</z2-m>
 		</axis>
 	</animation>
 	<animation>
@@ -917,12 +917,12 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>6.769</x1-m>
-			<y1-m>11.603</y1-m>
-			<z1-m>0.947</z1-m>
-			<x2-m>6.253</x2-m>
-			<y2-m>10.164</y2-m>
-			<z2-m>0.833</z2-m>
+			<x1-m>0.640994</x1-m>
+			<y1-m>11.5802</y1-m>
+			<z1-m>-0.122053</z1-m>
+			<x2-m>0.146844</x2-m>
+			<y2-m>10.2047</y2-m>
+			<z2-m>-0.251904</z2-m>
 		</axis>
 	</animation>
 	<animation>
@@ -932,12 +932,12 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>7.292</x1-m>
-			<y1-m>13.06</y1-m>
-			<z1-m>1.063</z1-m>
-			<x2-m>6.776</x2-m>
-			<y2-m>11.622</y2-m>
-			<z2-m>0.949</z2-m>
+			<x1-m>1.15724</x1-m>
+			<y1-m>13.0171</y1-m>
+			<z1-m>0.013605</z1-m>
+			<x2-m>0.683598</x2-m>
+			<y2-m>11.6987</y2-m>
+			<z2-m>-0.110857</z2-m>
 		</axis>
 	</animation>
 	
