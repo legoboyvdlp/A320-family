@@ -76,6 +76,11 @@ var flightPlanController = {
 		me.flightplans[n].cleanPlan();
 		me.flightplans[n].departure = nil;
 		me.flightplans[n].destination = nil;
+		mcdu.isNoTransArr[n] = 0;
+		mcdu.isNoTransDep[n] = 0;
+		mcdu.isNoSid[n] = 0;
+		mcdu.isNoStar[n] = 0;
+		mcdu.isNoVia[n] = 0;
 	},
 	
 	createTemporaryFlightPlan: func(n) {
@@ -110,6 +115,12 @@ var flightPlanController = {
 			flightPlanTimer.stop();
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
+			
+			if (mcdu.isNoSid[n] == 1) {
+				mcdu.isNoSid[2] = 1;
+			} else {
+				mcdu.isNoSid[2] = 0;
+			}
 			
 			if (mcdu.isNoStar[n] == 1) {
 				mcdu.isNoStar[2] = 1;

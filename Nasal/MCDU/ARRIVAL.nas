@@ -118,7 +118,6 @@ var arrivalPage = {
 				isNoStar[me.computer] = 0;
 			} elsif (fmgc.flightPlanController.flightplans[2].star != nil) {
 				me.selectedSTAR = fmgc.flightPlanController.flightplans[2].star;
-				me.selectedTransition = fmgc.flightPlanController.flightplans[2].star_trans;
 				isNoStar[me.computer] = 0;
 				isNoStar[2] = 0;
 			} elsif (isNoStar[me.computer] == 1) {
@@ -506,6 +505,7 @@ var arrivalPage = {
 	updateVIAs: func() {
 		if (getprop("/sim/version/flightgear") != "2020.2.0") { return; }
 		if (me.selectedApproach == nil or me.activePage != 2) {
+			me.clearVias();
 			return;
 		}
 		me.vias = [];
@@ -592,14 +592,15 @@ var arrivalPage = {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
 
+		me.transitions = [];
+		me._transitions = nil;
+		
 		me.clearTransitions();
 		if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
 			append(me.transitions, "NO TRANS");
 			return;
 		}
 		
-		me.transitions = [];
-		me._transitions = nil;
 		if (isghost(me.selectedSTAR)) {
 			me._transitions = me.arrAirport[0].getStar(me.selectedSTAR.id).transitions;
 		} else {
@@ -677,7 +678,7 @@ var arrivalPage = {
 		} elsif (me.activePage == 1) {
 			if (me.enableScrollStars) {
 				me.scrollStars += 1;
-				if (me.scrollStars > size(me.stars) - 4) {
+				if (me.scrollStars > size(me.stars) - 3) {
 					me.scrollStars = 0;
 				}
 				me.updateSTARs();
@@ -711,7 +712,7 @@ var arrivalPage = {
 			if (me.enableScrollStars) {
 				me.scrollStars -= 1;
 				if (me.scrollStars < 0) {
-					me.scrollStars = size(me.stars) - 4;
+					me.scrollStars = size(me.stars) - 3;
 				}
 				me.updateSTARs();
 				if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
@@ -810,6 +811,7 @@ var arrivalPage = {
 						isNoTransArr[me.computer] = 0;
 					} else {
 						isNoTransArr[me.computer] = 1;
+						me.selectedTransition = "NO TRANS";
 					}
 					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);

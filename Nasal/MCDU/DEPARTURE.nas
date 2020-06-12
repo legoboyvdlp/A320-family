@@ -1,4 +1,4 @@
-var isNoSid = [0, 0];
+var isNoSid = [0, 0, 0];
 var isNoTransDep = [0, 0, 0];
 
 var departurePage = {
@@ -67,9 +67,14 @@ var departurePage = {
 			if (fmgc.flightPlanController.flightplans[2].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[2].sid;
 				isNoSid[me.computer] = 0;
-			} elsif (isNoSid[me.computer] == 1) {
+			} elsif (isNoSid[2] == 1) {
 				me.selectedSID = "NO SID";
-				me.hasPressNoTrans = 1;
+			}
+			
+			if (isNoTransDep[2]) {
+				me.selectedTransition = "NO TRANS";
+			} elsif (fmgc.flightPlanController.flightplans[2].sid != nil) {
+				me.selectedTransition = fmgc.flightPlanController.flightplans[2].sid_trans;
 			}
 		} else {
 			if (fmgc.flightPlanController.flightplans[me.computer].departure_runway != nil) {
@@ -79,15 +84,20 @@ var departurePage = {
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[me.computer].sid;
-				me.selectedTransition = fmgc.flightPlanController.flightplans[me.computer].sid_trans;
 				isNoSid[me.computer] = 0;
 			} elsif (fmgc.flightPlanController.flightplans[2].sid != nil) {
 				me.selectedSID = fmgc.flightPlanController.flightplans[2].sid;
-				me.selectedTransition = fmgc.flightPlanController.flightplans[2].sid_trans;
 				isNoSid[me.computer] = 0;
 			} elsif (isNoSid[me.computer] == 1) {
 				me.selectedSID = "NO SID";
-				me.hasPressNoTrans = 1;
+			}
+			
+			if (isNoTransDep[me.computer] or isNoTransDep[2]) {
+				me.selectedTransition = "NO TRANS";
+			} elsif (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
+				me.selectedTransition = fmgc.flightPlanController.flightplans[me.computer].sid_trans;
+			} elsif (fmgc.flightPlanController.flightplans[2].sid != nil) {
+				me.selectedTransition = fmgc.flightPlanController.flightplans[2].sid_trans;
 			}
 		}
 	},
@@ -109,6 +119,7 @@ var departurePage = {
 			me.updateRunways();
 		} else {
 			me.updateSIDs();
+			me.updateTransitions();
 		}
 		
 		me.updateActiveRunway();
@@ -144,18 +155,20 @@ var departurePage = {
 	},
 	updateActiveRunway: func() {
 		if (me.selectedRunway != nil) {
-			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
+			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].departure_runway != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].departure_runway.id, " RWY", "yel"];
-				} elsif (fmgc.flightPlanController.flightplans[2].departure_runway.id == me.selectedRunway.id) {
-					me.L1 = [fmgc.flightPlanController.flightplans[2].departure_runway.id, " RWY", "grn"];
+				} elsif (fmgc.flightPlanController.flightplans[2].departure_runway != nil and fmgc.flightPlanController.flightplans[2].departure_runway.id == me.selectedRunway.id) {
+					me.L1 = [fmgc.flightPlanController.flightplans[2].departure_runway.id, " RWY", "yel"];
 				} else {
 					me.L1 = ["---", " RWY", "wht"];
 				} 
-			} elsif (fmgc.flightPlanController.flightplans[me.computer].departure_runway != nil) {
-				me.L1 = [fmgc.flightPlanController.flightplans[me.computer].departure_runway.id, " RWY", "yel"];
 			} else {
-				me.L1 = ["---", " RWY", "wht"];
+				if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
+					me.L1 = [fmgc.flightPlanController.flightplans[2].departure_runway.id, " RWY", "grn"];
+				} else {
+					me.L1 = ["---", " RWY", "wht"];
+				}
 			}
 		} else {
 			me.L1 = ["---", " RWY", "wht"];
@@ -170,18 +183,20 @@ var departurePage = {
 				me.C1 = ["NONE", "SID", "yel"];
 			}
 		} elsif (me.selectedSID != nil) {
-			if (fmgc.flightPlanController.flightplans[2].sid != nil) {
+			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
 					me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid.id, "SID", "yel"];
-				} elsif (fmgc.flightPlanController.flightplans[2].sid.id == me.selectedSID.id) {
-					me.C1 = [fmgc.flightPlanController.flightplans[2].sid.id, "SID", "grn"];
+				} elsif (fmgc.flightPlanController.flightplans[2].sid != nil and fmgc.flightPlanController.flightplans[2].sid.id == me.selectedSID.id) {
+					me.C1 = [fmgc.flightPlanController.flightplans[2].sid.id, "SID", "yel"];
 				} else {
 					me.C1 = ["------- ", "SID", "wht"];
 				} 
-			} elsif (fmgc.flightPlanController.flightplans[me.computer].sid != nil) {
-				me.C1 = [fmgc.flightPlanController.flightplans[me.computer].sid.id, "SID", "yel"];
 			} else {
-				me.C1 = ["------- ", "SID", "wht"];
+				if (fmgc.flightPlanController.flightplans[2].sid != nil) {
+				me.C1 = [fmgc.flightPlanController.flightplans[2].sid.id, "SID", "grn"];
+				} else {
+					me.C1 = ["------- ", "SID", "wht"];
+				}
 			}
 		} else {
 			me.C1 = ["------- ", "SID", "wht"];
@@ -189,29 +204,31 @@ var departurePage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateActiveTransitions: func() {
-		if (!me.hasPressNoTrans) {
-			if (me.selectedTransition != nil) {
-				if (fmgc.flightPlanController.flightplans[2].sid_trans != nil) {
-					if (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
-						me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "TRANS", "yel"];
-					} elsif (fmgc.flightPlanController.flightplans[2].sid_trans.id == me.selectedTransition.id) {
-						me.R1 = [fmgc.flightPlanController.flightplans[2].sid_trans.id, "TRANS", "grn"];
-					} else {
-						me.R1 = ["-------", "TRANS ", "wht"];
-					} 
-				} elsif (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
-					me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "SID", "yel"];
-				} else {
-					me.R1 = ["-------", "TRANS ", "wht"];
-				}
-			} else {
-				me.R1 = ["-------", "TRANS ", "wht"];
-			}
-		} else {
+		if (me.selectedTransition == "NO TRANS") {
 			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				me.R1 = ["NONE", "TRANS ", "grn"];
 			} else {
 				me.R1 = ["NONE", "TRANS ", "yel"];
+			}
+		} else {
+			if (me.selectedTransition != nil) {
+				if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+					if (fmgc.flightPlanController.flightplans[me.computer].sid_trans != nil) {
+						me.R1 = [fmgc.flightPlanController.flightplans[me.computer].sid_trans.id, "TRANS", "yel"];
+					} elsif (fmgc.flightPlanController.flightplans[2].sid_trans != nil and fmgc.flightPlanController.flightplans[2].sid_trans.id == me.selectedTransition.id) {
+						me.R1 = [fmgc.flightPlanController.flightplans[2].sid_trans.id, "TRANS", "yel"];
+					} else {
+						me.R1 = ["-------", "TRANS ", "wht"];
+					} 
+				} else { 
+					if (fmgc.flightPlanController.flightplans[2].sid_trans != nil) {
+						me.R1 = [fmgc.flightPlanController.flightplans[2].sid_trans.id, "SID", "grn"];
+					} else {
+						me.R1 = ["-------", "TRANS ", "wht"];
+					}
+				}
+			} else {
+				me.R1 = ["-------", "TRANS ", "wht"];
 			}
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
@@ -220,6 +237,10 @@ var departurePage = {
 		if (me.depAirport == nil) {
 			me.depAirport = findAirportsByICAO(left(me.id, 4));
 		}
+		
+		me.runways = [];
+		me._runways = nil; 
+		
 		me._runways = keys(me.depAirport[0].runways);
 		me.runways = sort(me._runways,func(a,b) cmp(a,b));
 		
@@ -281,6 +302,10 @@ var departurePage = {
 		if (me.depAirport == nil) {
 			me.depAirport = findAirportsByICAO(left(me.id, 4));
 		}
+		
+		me.sids = [];
+		me._sids = nil;
+		
 		if (me.selectedRunway != nil) {
 			me._sids = me.depAirport[0].sids(me.selectedRunway.id);
 		} else {
@@ -336,8 +361,8 @@ var departurePage = {
 			}
 		}
 		
-		me.C2 = [nil, "AVAILABLE", "wht"];
-		me.R2 = [nil, "TRANS ", "wht"];
+		me.C2[1] = "AVAILABLE";
+		me.R2[1] = "TRANS ";
 		
 		if (size(me.sids) > 4) {
 			me.enableScrollSids = 1;
@@ -363,30 +388,22 @@ var departurePage = {
 			me.depAirport = findAirportsByICAO(left(me.id, 4));
 		}
 		
-		if (me.selectedSID == nil) {
-			me.R2 = ["NO TRANS ", "TRANS", "blu"];
-			if (!me.hasPressNoTrans) {
-				me.arrowsMatrix[1][1] = 1;
-				me.arrowsColour[1][1] = "blu";
-			} else {
-				me.arrowsMatrix[1][1] = 0;
-				me.arrowsColour[1][1] = "ack";
-			}
+		me.clearTransitions();
+		if (me.selectedSID == nil or me.selectedSID == "NO SID") {
+			append(me.transitions, "NO TRANS");
 			return;
+		}
+		
+		if (isghost(me.selectedSID)) {
+			me._transitions = me.depAirport[0].getSid(me.selectedSID.id).transitions;
+		} else {
+			me._transitions = me.depAirport[0].getSid(me.selectedSID).transitions;
 		}
 		me._transitions = me.depAirport[0].getSid(me.selectedSID).transitions;
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
+		append(me.transitions, "NO TRANS");
 		
-		if (size(me.transitions) == 0) {
-			me.R2 = ["NO TRANS ", "TRANS", "blu"];
-			if (!me.hasPressNoTrans) {
-				me.arrowsMatrix[1][1] = 1;
-				me.arrowsColour[1][1] = "blu";
-			} else {
-				me.arrowsMatrix[1][1] = 0;
-				me.arrowsColour[1][1] = "ack";
-			}
-		} elsif (size(me.transitions) >= 1) {
+		if (size(me.transitions) >= 1) {
 			me.R2 = [me.transitions[0] ~ " ", "TRANS", "blu"];
 			if (me.transitions[0] != me.selectedTransition) {
 				me.arrowsMatrix[1][1] = 1;
@@ -423,6 +440,7 @@ var departurePage = {
 				me.arrowsColour[1][4] = "ack";
 			}
 		}
+		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
 		if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
@@ -457,7 +475,6 @@ var departurePage = {
 				} else {
 					me.updateTransitions();
 				}
-				me.hasPressNoTrans = 0;
 			}
 		}
 	},
@@ -482,7 +499,6 @@ var departurePage = {
 				} else {
 					me.updateTransitions();
 				}
-				me.hasPressNoTrans = 0;
 			}
 		}
 	},
@@ -500,12 +516,12 @@ var departurePage = {
 				if (!dirToFlag) {
 					me.selectedSID = nil;
 					isNoSid[me.computer] = 0;
-					me.hasPressNoTrans = 0;
+					isNoTransDep[me.computer] = 0;
 					me.selectedRunway = me.depAirport[0].runway(me.runways[index - 2 + me.scrollRwy]);
 					me.makeTmpy();
 					fmgc.flightPlanController.flightplans[me.computer].departure_runway = me.selectedRunway;
-					me.updateActiveRunway();
 					me.updateRunways();
+					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 					me.scrollRight();
 				} else {
@@ -521,21 +537,20 @@ var departurePage = {
 					me.makeTmpy();
 					if (me.selectedSID != "NO SID") {
 						isNoSid[me.computer] = 0;
-						fmgc.flightPlanController.flightplans[me.computer].sid = me.selectedSID;
+						fmgc.flightPlanController.flightplans[me.computer].sid = me.depAirport[0].getSid(me.selectedSID);
 					} else {
 						isNoSid[me.computer] = 1;
 						fmgc.flightPlanController.flightplans[me.computer].sid = nil;
 						fmgc.flightPlanController.insertNOSID(me.computer);
 					}
-					me.updateActiveSIDs();
 					me.updateSIDs();
 					if (me.selectedSID != "NO SID") {
-						me.hasPressNoTrans = 0;
-						me.updateTransitions();
+						isNoTransDep[me.computer] = 0;
 					} else {
-						me.hasPressNoTrans = 1;
+						isNoTransDep[me.computer] = 1;
+						me.selectedTransition = "NO TRANS";
 					}
-					me.updateActiveTransitions();
+					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);
 				} else {
 				mcdu_message(me.computer, "DIR TO IN PROGRESS");
@@ -546,21 +561,18 @@ var departurePage = {
 		}
 	},
 	depPushbuttonRight: func(index) {
-		if (index == 2 and size(me.transitions) == 0) {
-			if (!dirToFlag) {
-				me.hasPressNoTrans = 1;
-				me.updateActiveTransitions();
-				me.updateTransitions();
-			} else {
-				mcdu_message(me.computer, "DIR TO IN PROGRESS");
-			}
-		} elsif (size(me.transitions) >= (index -  1)) {
+		if (size(me.transitions) >= (index -  1)) {
 			if (!dirToFlag) {
 				me.selectedTransition = me.transitions[index - 2];
 				me.makeTmpy();
-				fmgc.flightPlanController.flightplans[me.computer].sid_trans = me.depAirport[0].getSid(me.selectedSID).transition(me.selectedTransition);
-				me.updateActiveTransitions();
-				me.updateTransitions();
+				if (me.selectedTransition != "NO TRANS") {
+					isNoTransDep[me.computer] = 0;
+					fmgc.flightPlanController.flightplans[me.computer].sid_trans = me.selectedTransition;
+				} else {
+					isNoTransDep[me.computer] = 1;
+					fmgc.flightPlanController.flightplans[me.computer].sid_trans = nil;
+				}
+				me.updatePage();
 				fmgc.flightPlanController.flightPlanChanged(me.computer);
 			} else {
 				mcdu_message(me.computer, "DIR TO IN PROGRESS");
