@@ -274,7 +274,7 @@ var windCRZPage = {
 			var sts = size(mcdu_scratchpad.scratchpads[me.computer].scratchpad);
 			if (sts >= 7 and sts <= 9) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
-				if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= -99 and winds[0] <= -99 and
+				if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= -99 and winds[0] <= 99 and
 				size(winds[1]) == 5 and ((num(winds[1]) != nil and winds[1] >= 1000 and winds[1] <= 39000) or
 				(num(split("FL", winds[1])[1]) != nil and split("FL", winds[1])[1] >= 10 and split("FL", winds[1])[1] <= 390))) {
 					me.makeTmpy();

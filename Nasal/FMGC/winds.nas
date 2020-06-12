@@ -365,28 +365,48 @@ var windController = {
 			canvas_mcdu.myCLBWIND[0].reload();
 		}
 		if (canvas_mcdu.myCRZWIND[1] != nil) {
-			if (fmgc.flightPlanController.temporaryFlag[1]) {
+			if (!fmgc.flightPlanController.temporaryFlag[1]) {
 				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
 					canvas_mcdu.myCRZWIND[1].waypoint = fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]);
+					canvas_mcdu.myCRZWIND[1].singleCRZ = 0;
+					canvas_mcdu.myCRZWIND[1].cur_location = 0;
+				} else {
+					canvas_mcdu.myCRZWIND[1].waypoint = nil;
+					canvas_mcdu.myCRZWIND[1].singleCRZ = 1;
 					canvas_mcdu.myCRZWIND[1].cur_location = 0;
 				}
 			} else {
 				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[1]) > 0) {
 					canvas_mcdu.myCRZWIND[1].waypoint = fmgc.flightPlanController.flightplans[1].getWP(me.nav_indicies[1][0]);
+					canvas_mcdu.myCRZWIND[1].singleCRZ = 0;
+					canvas_mcdu.myCRZWIND[1].cur_location = 0;
+				} else {
+					canvas_mcdu.myCRZWIND[1].waypoint = nil;
+					canvas_mcdu.myCRZWIND[1].singleCRZ = 1;
 					canvas_mcdu.myCRZWIND[1].cur_location = 0;
 				}
 			}
 			canvas_mcdu.myCRZWIND[1].reload();
 		}
 		if (canvas_mcdu.myCRZWIND[0] != nil) {
-			if (fmgc.flightPlanController.temporaryFlag[1]) {
+			if (!fmgc.flightPlanController.temporaryFlag[0]) {
 				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
 					canvas_mcdu.myCRZWIND[0].waypoint = fmgc.flightPlanController.flightplans[2].getWP(me.nav_indicies[2][0]);
+					canvas_mcdu.myCRZWIND[0].singleCRZ = 0;
+					canvas_mcdu.myCRZWIND[0].cur_location = 0;
+				} else {
+					canvas_mcdu.myCRZWIND[0].waypoint = nil;
+					canvas_mcdu.myCRZWIND[0].singleCRZ = 1;
 					canvas_mcdu.myCRZWIND[0].cur_location = 0;
 				}
 			} else {
 				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[0]) > 0) {
 					canvas_mcdu.myCRZWIND[0].waypoint = fmgc.flightPlanController.flightplans[0].getWP(me.nav_indicies[0][0]);
+					canvas_mcdu.myCRZWIND[0].singleCRZ = 0;
+					canvas_mcdu.myCRZWIND[0].cur_location = 0;
+				} else {
+					canvas_mcdu.myCRZWIND[0].waypoint = nil;
+					canvas_mcdu.myCRZWIND[0].singleCRZ = 1;
 					canvas_mcdu.myCRZWIND[0].cur_location = 0;
 				}
 			}
