@@ -282,7 +282,7 @@ var windCLBPage = {
 					}	
 				}
 				mcdu_scratchpad.scratchpads[me.computer].empty();
-				me.items -= 0;
+				me.items -= 1;
 				me._setupPageWithData();
 				me.updateTmpy();
 			} else {

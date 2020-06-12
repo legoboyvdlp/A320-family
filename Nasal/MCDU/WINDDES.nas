@@ -247,6 +247,59 @@ var windDESPage = {
 				} else {
 					mcdu_message(me.computer, "NOT ALLOWED");
 				}
+			} else if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+				var computer_temp = 2;
+				if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+					computer_temp = me.computer;
+				}
+				if (me.items == index) {
+					if (index == 5) {
+						fmgc.windController.des_winds[computer_temp].wind5.heading = 0;
+						fmgc.windController.des_winds[computer_temp].wind5.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind5.altitude = "";
+					} else if (index == 4) {
+						fmgc.windController.des_winds[computer_temp].wind4.heading = 0;
+						fmgc.windController.des_winds[computer_temp].wind4.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind4.altitude = "";
+					} else if (index == 3) {
+						fmgc.windController.des_winds[computer_temp].wind3.heading = 0;
+						fmgc.windController.des_winds[computer_temp].wind3.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind3.altitude = "";
+					} else if (index == 2) {
+						fmgc.windController.des_winds[computer_temp].wind2.heading = 0;
+						fmgc.windController.des_winds[computer_temp].wind2.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind2.altitude = "";
+					} else if (index == 1) {
+						fmgc.windController.des_winds[computer_temp].wind1.heading = 0;
+						fmgc.windController.des_winds[computer_temp].wind1.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind1.altitude = "";
+					}
+				} else {
+					if (index <= 1) {
+						fmgc.windController.des_winds[computer_temp].wind1.heading = fmgc.windController.des_winds[computer_temp].wind2.heading;
+						fmgc.windController.des_winds[computer_temp].wind1.magnitude = fmgc.windController.des_winds[computer_temp].wind2.magnitude;
+						fmgc.windController.des_winds[computer_temp].wind1.altitude = fmgc.windController.des_winds[computer_temp].wind2.altitude;
+					}
+					if (index <= 2) {
+						fmgc.windController.des_winds[computer_temp].wind2.heading = fmgc.windController.des_winds[computer_temp].wind3.heading;
+						fmgc.windController.des_winds[computer_temp].wind2.magnitude = fmgc.windController.des_winds[computer_temp].wind3.magnitude;
+						fmgc.windController.des_winds[computer_temp].wind2.altitude = fmgc.windController.des_winds[computer_temp].wind3.altitude;
+					}
+					if (index <= 3) {
+						fmgc.windController.des_winds[computer_temp].wind3.heading = fmgc.windController.des_winds[computer_temp].wind4.heading;
+						fmgc.windController.des_winds[computer_temp].wind3.magnitude = fmgc.windController.des_winds[computer_temp].wind4.magnitude;
+						fmgc.windController.des_winds[computer_temp].wind3.altitude = fmgc.windController.des_winds[computer_temp].wind4.altitude;
+					}
+					if (index <= 4) {
+						fmgc.windController.des_winds[computer_temp].wind4.heading = fmgc.windController.des_winds[computer_temp].wind5.heading;
+						fmgc.windController.des_winds[computer_temp].wind4.magnitude = fmgc.windController.des_winds[computer_temp].wind5.magnitude;
+						fmgc.windController.des_winds[computer_temp].wind4.altitude = fmgc.windController.des_winds[computer_temp].wind5.altitude;
+					}	
+				}
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me.items -= 1;
+				me._setupPageWithData();
+				me.updateTmpy();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
