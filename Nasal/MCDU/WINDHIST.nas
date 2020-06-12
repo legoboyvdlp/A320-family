@@ -40,7 +40,7 @@ var windHISTPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		me.title = "HISTROY WIND";
+		me.title = "HISTORY WIND";
 		me.titleColour = "wht";
 		me.L1 = ["----/---", "", "blu"];
 		me.L2 = ["----/---", "", "blu"];
@@ -95,12 +95,5 @@ var windHISTPage = {
 	reload: func() {
 		me._setupPageWithData();
 		me.updateTmpy();
-		if (me.computer == 0) {
-			#canvas_mcdu.myHISTWIND[1].windList = me.windList;
-			canvas_mcdu.myHISTWIND[1]._setupPageWithData();
-		} else {
-			#canvas_mcdu.myHISTWIND[0].windList = me.windList;
-			canvas_mcdu.myHISTWIND[0]._setupPageWithData();
-		}
 	}
 };

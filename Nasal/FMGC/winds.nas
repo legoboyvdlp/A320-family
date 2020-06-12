@@ -418,5 +418,11 @@ var windController = {
 		if (canvas_mcdu.myDESWIND[0] != nil) {
 			canvas_mcdu.myDESWIND[0].reload();
 		}
+		if (canvas_mcdu.myHISTWIND[1] != nil) {
+			canvas_mcdu.myHISTWIND[1].reload();
+		}
+		if (canvas_mcdu.myHISTWIND[0] != nil) {
+			canvas_mcdu.myHISTWIND[0].reload();
+		}
 	}
 };
