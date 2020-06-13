@@ -269,7 +269,7 @@ var windCRZPage = {
 			}
 			me.reload();
 		} else if (index == 6) {
-			setprop("/MCDU[" ~ me.computer ~ "]/page", "INITA");
+			setprop("/MCDU[" ~ me.computer ~ "]/page", fmgc.windController.accessPage[me.computer]);
 		} else if (index == 5) {
 			var sts = size(mcdu_scratchpad.scratchpads[me.computer].scratchpad);
 			if (sts >= 7 and sts <= 9) {

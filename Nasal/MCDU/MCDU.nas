@@ -409,6 +409,8 @@ var lskbutton = func(btn, i) {
 			printInput2("L5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
 			dataInput("L5",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
+			data2Input("L5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {

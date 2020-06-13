@@ -141,6 +141,7 @@ var windController = {
 	winds: [[], [], []], #waypoint winds used if route includes navaids
 	nav_indicies: [[], [], []],
 	windSizes: [0, 0, 0],
+	accessPage: ["", ""],
 	#temporaryFlag: [0, 0],
 	
 	init: func() {

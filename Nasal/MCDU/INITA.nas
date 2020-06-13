@@ -232,6 +232,7 @@ var initInputA = func(key, i) {
 		} else {
 			canvas_mcdu.myCLBWIND[i].reload();
 		}
+		fmgc.windController.accessPage[i] = "INITA";
 		setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
