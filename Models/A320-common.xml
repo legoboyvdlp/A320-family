@@ -377,7 +377,182 @@
 			<z-m>-2.50394</z-m>
 		</offsets>
 	</model>
-
+	
+	<light>
+	  <name>Top Beacon Compositor</name>
+	  <type>point</type>
+	  <position>
+		<x-m>-3.97011</x-m>
+		<y-m>-0.001032</y-m>
+		<z-m>-2.50394</z-m>
+	  </position>
+	  <ambient>
+		<r>1.0</r>
+		<g>0.0</g>
+		<b>0.0</b>
+		<a>1</a>
+	  </ambient>
+	  <diffuse>
+		<r>1.0</r>
+		<g>0.0</g>
+		<b>0.0</b>
+		<a>1</a>
+	  </diffuse>
+	  <specular>
+		<r>0.95</r>
+		<g>0.0</g>
+		<b>0.0</b>
+		<a>1</a>
+	  </specular>
+	  <attenuation>
+		<c>1.0</c>
+		<l>0.7</l>
+		<q>1.8</q>
+	  </attenuation>
+	  <range-m>7</range-m>
+	</light>
+	
+	<light>
+	  <name>Top Beacon Compositor</name>
+	  <type>point</type>
+	  <position>
+		<x-m>-3.58595</x-m>
+		<y-m>-0.001033</y-m>
+		<z-m>1.94988</z-m>
+	  </position>
+	  <ambient>
+		<r>1.0</r>
+		<g>0.0</g>
+		<b>0.0</b>
+		<a>1</a>
+	  </ambient>
+	  <diffuse>
+		<r>1.0</r>
+		<g>0.0</g>
+		<b>0.0</b>
+		<a>1</a>
+	  </diffuse>
+	  <specular>
+		<r>0.95</r>
+		<g>0.0</g>
+		<b>0.0</b>
+		<a>1</a>
+	  </specular>
+	  <attenuation>
+		<c>1.0</c>
+		<l>0.7</l>
+		<q>1.8</q>
+	  </attenuation>
+	  <range-m>7</range-m>
+	</light>
+	
+	<light>
+	  <name>Landing Light Left Compositor</name>
+	  <type>spot</type>
+	  <position>
+		<x-m>-2.09668</x-m>
+		<y-m>-2.23631</y-m>
+		<z-m>-1.72072</z-m>
+	  </position>
+	  <direction>
+		<x>-1.0</x>
+		<y>0</y>
+		<z>-0.013</z>
+	  </direction>
+	  <ambient>
+		<r>1.0</r>
+		<g>1.0</g>
+		<b>1.0</b>
+		<a>1</a>
+	  </ambient>
+	  <diffuse>
+		<r>1.0</r>
+		<g>1.0</g>
+		<b>1.0</b>
+		<a>1</a>
+	  </diffuse>
+	  <specular>
+		<r>1.0</r>
+		<g>1.0</g>
+		<b>1.0</b>
+		<a>1</a>
+	  </specular>
+	  <attenuation>
+		<c>1.0</c>
+		<l>0.7</l>
+		<q>1.8</q>
+	  </attenuation>
+	  <spot-exponent>5</spot-exponent>
+	  <spot-cutoff>40</spot-cutoff>
+	  <range-m>7</range-m>
+	</light>
+	
+	<light>
+	  <name>Landing Light Right Compositor</name>
+	  <type>spot</type>
+	  <center>
+		<x-m>-2.11117</x-m>
+		<y-m> 2.2341</y-m>
+		<z-m>-1.57985</z-m>
+	  </center>
+	  <direction>
+		<x>-1.0</x>
+		<y>0</y>
+		<z>-0.013</z>
+	  </direction>
+	  <ambient>
+		<r>1.0</r>
+		<g>1.0</g>
+		<b>1.0</b>
+		<a>1</a>
+	  </ambient>
+	  <diffuse>
+		<r>1.0</r>
+		<g>1.0</g>
+		<b>1.0</b>
+		<a>1</a>
+	  </diffuse>
+	  <specular>
+		<r>1.0</r>
+		<g>1.0</g>
+		<b>1.0</b>
+		<a>1</a>
+	  </specular>
+	  <attenuation>
+		<c>1.0</c>
+		<l>0.7</l>
+		<q>1.8</q>
+	  </attenuation>
+	  <spot-exponent>5</spot-exponent>
+	  <spot-cutoff>40</spot-cutoff>
+	  <range-m>7</range-m>
+	</light>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Top Beacon Compositor</object-name>
+		<object-name>Bottom Beacon Compositor</object-name>
+		<condition>
+			<property>sim/model/lights/beacon/state</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Landing Light Left Compositor</object-name>
+		<condition>
+			<property>controls/lighting/landing-lights[1]</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Landing Light Right Compositor</object-name>
+		<condition>
+			<property>controls/lighting/landing-lights[2]</property>
+		</condition>
+	</animation>
+	
 	<model>
 		<name>Port landing light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightL.xml</path>
