@@ -296,6 +296,22 @@ var windCRZPage = {
 				} else {
 					mcdu_message(me.computer, "NOT ALLOWED");
 				}
+			} else if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+				var computer_temp = 2;
+				if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+					computer_temp = me.computer;
+				}
+				#print(computer_temp);
+				if (me.singleCRZ == 1) {
+					fmgc.windController.crz_winds[computer_temp].sat1.temp = 0;
+					fmgc.windController.crz_winds[computer_temp].sat1.altitude = "";
+				} else {
+					fmgc.windController.winds[computer_temp][me.match_location].sat1.temp = 0;
+					fmgc.windController.winds[computer_temp][me.match_location].sat1.altitude = "";
+				}
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
+				me.updateTmpy();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
