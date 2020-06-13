@@ -422,7 +422,9 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV" or getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV" or getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE" or getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL" or getprop("/MCDU[" ~ i ~ "]/page") == "HOLD") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+			canvas_mcdu.myArrival[i].arrPushbuttonLeft(6);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE" or getprop("/MCDU[" ~ i ~ "]/page") == "HOLD") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
 				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
 			} else {

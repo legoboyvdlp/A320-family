@@ -7,7 +7,6 @@ var pos = nil;
 var geoPosPrev = geo.Coord.new();
 var currentLegCourseDist = nil;
 var courseDistanceFrom = nil;
-var courseDistanceFromPrev = nil;
 var sizeWP = nil;
 var magTrueError = 0;
 var storeCourse = nil;
@@ -77,6 +76,11 @@ var flightPlanController = {
 		me.flightplans[n].cleanPlan();
 		me.flightplans[n].departure = nil;
 		me.flightplans[n].destination = nil;
+		mcdu.isNoTransArr[n] = 0;
+		mcdu.isNoTransDep[n] = 0;
+		mcdu.isNoSid[n] = 0;
+		mcdu.isNoStar[n] = 0;
+		mcdu.isNoVia[n] = 0;
 	},
 	
 	createTemporaryFlightPlan: func(n) {
@@ -111,6 +115,37 @@ var flightPlanController = {
 			flightPlanTimer.stop();
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
+			
+			if (mcdu.isNoSid[n] == 1) {
+				mcdu.isNoSid[2] = 1;
+			} else {
+				mcdu.isNoSid[2] = 0;
+			}
+			
+			if (mcdu.isNoStar[n] == 1) {
+				mcdu.isNoStar[2] = 1;
+			} else {
+				mcdu.isNoStar[2] = 0;
+			}
+			
+			if (mcdu.isNoVia[n] == 1) {
+				mcdu.isNoVia[2] = 1;
+			} else {
+				mcdu.isNoVia[2] = 0;
+			}
+			
+			if (mcdu.isNoTransDep[n] == 1) {
+				mcdu.isNoTransDep[2] = 1;
+			} else {
+				mcdu.isNoTransDep[2] = 0;
+			}
+			
+			if (mcdu.isNoTransArr[n] == 1) {
+				mcdu.isNoTransArr[2] = 1;
+			} else {
+				mcdu.isNoTransArr[2] = 0;
+			}
+			
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
@@ -222,14 +257,24 @@ var flightPlanController = {
 		if (force) {
 			me.flightplans[plan].insertWP(createDiscontinuity(), index);
 		}
-		if (index > 0) {
-			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
+		
+		if (me.flightplans[plan].getWP(index) != nil) { # index is not nil
+			if (me.flightplans[plan].getWP(index - 1) != nil) { # index -1 is also not nil
+				if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY" and me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
+					me.flightplans[plan].insertWP(createDiscontinuity(), index);
+				}
+			} else { # -1 is nil
+				if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY") {
+					me.flightplans[plan].insertWP(createDiscontinuity(), index);
+				}
+			}
+		} elsif (me.flightplans[plan].getWP(index - 1) != nil) { # index is nil, -1 is not
+			if (me.flightplans[plan].getWP(index - 1).wp_name != "DISCONTINUITY") {
 				me.flightplans[plan].insertWP(createDiscontinuity(), index);
 			}
-		} else {
-			if (me.flightplans[plan].getWP(index).wp_name != "DISCONTINUITY") {
-				me.flightplans[plan].insertWP(createDiscontinuity(), index);
-			}
+		} else { # both are nil??
+			print("Possible error in discontinuities!");
+			me.flightplans[plan].insertWP(createDiscontinuity(), index);
 		}
 	},
 	
@@ -703,17 +748,13 @@ var flightPlanController = {
 				}
 				
 				if (wpt > 0) {
-					geoPosPrev.set_latlon(me.flightplans[n].getWP(wpt - 1).lat, me.flightplans[n].getWP(wpt - 1).lon);
-					
-					courseDistanceFromPrev = waypointHashStore.courseAndDistanceFrom(geoPosPrev);
-					wpCoursePrev[n][wpt].setValue(courseDistanceFromPrev[0]);
-					wpDistancePrev[n][wpt].setValue(courseDistanceFromPrev[1]);
-					if (wpt > 1) {
-						if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-							# print("Adding " ~ courseDistanceFromPrev[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
-							me._arrivalDist += courseDistanceFromPrev[1]; 
-						}
-					}
+					wpCoursePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_bearing);
+					wpDistancePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_distance);
+					#if (wpt > 1) {
+					#	if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
+					#		me._arrivalDist += courseDistanceFromPrev[1]; 
+					#	}
+					#}
 				} else {
 					# use PPOS for the first waypoint
 					wpCoursePrev[n][wpt].setValue(courseDistanceFrom[0]);
@@ -732,8 +773,7 @@ var flightPlanController = {
 				}
 			}
 		}
-		# print("Total: " ~ me._arrivalDist);
-		me.arrivalDist = me._arrivalDist;
+		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},
 	
