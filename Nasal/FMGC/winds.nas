@@ -7,12 +7,11 @@ var wind = {
 	altitude: "",
 	
 	new: func() {
-		return {
-			parents: [wind],
-			heading: 0,
-			magnitude: 0,
-			altitude: ""
-		};
+		var w = {parents: [wind]};
+		w.heading = 0;
+		w.magnitude = 0;
+		w.altitude = "";
+		return w;
 	},
 	
 	newcopy: func(heading, magnitude, altitude) {
@@ -20,12 +19,11 @@ var wind = {
 		me.magnitude = magnitude;
 		me.altitude = altitude;
 		
-		return {
-			parents: [wind],
-			heading: me.heading,
-			magnitude: me.magnitude,
-			altitude: me.altitude
-		}
+		var w = {parents: [wind]};
+		w.heading = me.heading;
+		w.magnitude = me.magnitude;
+		w.altitude = me.altitude;
+		return w;
 	}
 };
 
@@ -34,22 +32,20 @@ var alt_wind = {
 	magnitude: 0,
 	
 	new: func() {
-		return {
-			parents: [wind],
-			heading: 0,
-			magnitude: 0
-		};
+		var aw = {parents: [alt_wind]};
+		aw.heading = 0;
+		aw.magnitude = 0;
+		return aw;
 	},
 	
 	newcopy: func(heading, magnitude) {
 		me.heading = heading;
 		me.magnitude = magnitude;
 		
-		return {
-			parents: [wind],
-			heading: me.heading,
-			magnitude: me.magnitude
-		}
+		var aw = {parents: [alt_wind]};
+		aw.heading = me.heading ;
+		aw.magnitude = me.magnitude;
+		return aw;
 	}
 };
 
@@ -58,22 +54,20 @@ var sat_temp = {
 	altitude: "",
 	
 	new: func() {
-		return {
-			parents: [wind],
-			temp: 0,
-			altitude: ""
-		};
+		var st = {parents: [sat_temp]};
+		st.temp = 0;
+		st.altitude = "";
+		return st;
 	},
 	
 	newcopy: func(temp, altitude) {
 		me.temp = temp;
 		me.altitude = altitude;
 		
-		return {
-			parents: [wind],
-			temp: me.temp,
-			altitude: me.altitude
-		}
+		var st = {parents: [sat_temp]};
+		st.temp = me.temp;
+		st.altitude = me.altitude;
+		return st;
 	}
 };
 
@@ -93,18 +87,18 @@ var waypoint_winds = {
 		me.type = type;
 		me.includeWind = includeWind;
 		
-		return {
-			id: me.id,
-			type: me.type, #departure, waypoint, arrival
-			includeWind: me.includeWind,
-			wind1: wind.new(),
-			wind2: wind.new(),
-			wind3: wind.new(),
-			wind4: wind.new(),
-			wind5: wind.new(),
-			sat1: sat_temp.new(),
-			alt1: alt_wind.new()
-		};
+		var ww = {parents: [waypoint_winds]};
+		ww.id = me.id;
+		ww.type = me.type; #departure, waypoint, arrival
+		ww.includeWind = me.includeWind;
+		ww.wind1 = wind.new();
+		ww.wind2 = wind.new();
+		ww.wind3 = wind.new();
+		ww.wind4 = wind.new();
+		ww.wind5 = wind.new();
+		ww.sat1 = sat_temp.new();
+		ww.alt1 = alt_wind.new();
+		return ww;
 	},
 	
 	newcopy: func(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1) {
@@ -119,18 +113,18 @@ var waypoint_winds = {
 		me.sat1 = sat1;
 		me.alt1 = alt1;
 		
-		return {
-			id: me.id,
-			type: me.type, #departure, waypoint, arrival
-			includeWind: me.includeWind,
-			wind1: me.wind1,
-			wind2: me.wind2,
-			wind3: me.wind3,
-			wind4: me.wind4,
-			wind5: me.wind5,
-			sat1: me.sat1,
-			alt1: me.alt1
-		};
+		var ww = {parents: [waypoint_winds]};
+		ww.id = me.id;
+		ww.type = me.type; #departure, waypoint, arrival
+		ww.includeWind = me.includeWind;
+		ww.wind1 = me.wind1;
+		ww.wind2 = me.wind2;
+		ww.wind3 = me.wind3;
+		ww.wind4 = me.wind4;
+		ww.wind5 = me.wind5;
+		ww.sat1 = me.sat1;
+		ww.alt1 = me.alt1;
+		return ww;
 	}
 };
 
