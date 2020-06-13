@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- IT-GUI -->
+<!-- IT-GUI (Airbus) -->
 
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
@@ -10,21 +10,21 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.213</blue>
-				<green>0.199</green>
-				<red>0.191</red>
+				<blue>0.17</blue>
+				<green>0.17</green>
+				<red>0.17</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
-				<blue>0.2</blue>
-				<green>0.2</green>
-				<red>0.2</red>
+				<blue>0.13</blue>
+				<green>0.13</green>
+				<red>0.13</red>
 			</button>
 			<checkbox-foreground n="0">
 				<alpha>0.95</alpha>
-				<blue>0.173</blue>
-				<green>0.169</green>
-				<red>0.161</red>
+				<blue>0.19</blue>
+				<green>0.19</green>
+				<red>0.19</red>
 			</checkbox-foreground>
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
@@ -40,9 +40,9 @@
 			</checkbox-misc>
 			<combo-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</combo-editfield>
 			<dial-misc n="0">
 				<alpha>0.95</alpha>
@@ -58,9 +58,9 @@
 			</hrule>
 			<input n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</input>
 			<input-legend n="0">
 				<alpha>0.95</alpha>
@@ -82,21 +82,21 @@
 			</radio-foreground>
 			<select-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</select-editfield>
 			<slider n="0">
 				<alpha>1.0</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</slider>
 			<textbox-editable n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</textbox-editable>
 			<vrule n="0">
 				<alpha>0.95</alpha>
@@ -111,21 +111,21 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.213</blue>
-				<green>0.199</green>
-				<red>0.191</red>
+				<blue>0.17</blue>
+				<green>0.17</green>
+				<red>0.17</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
-				<blue>0.2</blue>
-				<green>0.2</green>
-				<red>0.2</red>
+				<blue>0.13</blue>
+				<green>0.13</green>
+				<red>0.13</red>
 			</button>
 			<checkbox-foreground n="0">
 				<alpha>0.95</alpha>
-				<blue>0.173</blue>
-				<green>0.169</green>
-				<red>0.161</red>
+				<blue>0.19</blue>
+				<green>0.19</green>
+				<red>0.19</red>
 			</checkbox-foreground>
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
@@ -141,9 +141,9 @@
 			</checkbox-misc>
 			<combo-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</combo-editfield>
 			<dial-misc n="0">
 				<alpha>0.95</alpha>
@@ -159,9 +159,9 @@
 			</hrule>
 			<input n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</input>
 			<input-legend n="0">
 				<alpha>0.95</alpha>
@@ -183,21 +183,21 @@
 			</radio-foreground>
 			<select-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</select-editfield>
 			<slider n="0">
 				<alpha>1.0</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</slider>
 			<textbox-editable n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.33</blue>
+				<green>0.33</green>
+				<red>0.33</red>
 			</textbox-editable>
 			<vrule n="0">
 				<alpha>0.95</alpha>
