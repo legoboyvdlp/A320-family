@@ -417,6 +417,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(5);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonLeft(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(5);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {

@@ -148,23 +148,23 @@ var fplnItem = {
 		
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			} else {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			}
 		} else {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			} else {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			}
 		}
 		setprop("MCDU[" ~ me.computer ~ "]/page", "VERTREV");

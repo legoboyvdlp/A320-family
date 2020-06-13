@@ -330,7 +330,7 @@ var windController = {
 				if (waypoint.wp_role == "sid") {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
 					me.windSizes[plan] += 1;
-				} else if (waypoint.wp_role == "star" or waypoint.wp_role == "arrival" or waypoint.wp_role == "missed") {
+				} else if (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed") {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "arrival", 0));
 					me.windSizes[plan] += 1;
 				} else if (waypoint.wp_role == nil and waypoint.wp_type == "navaid") {
