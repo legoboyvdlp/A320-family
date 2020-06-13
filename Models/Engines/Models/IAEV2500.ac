@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "engine-IAEV-2500" rgb 0.800 0.800 0.800  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 1.000 1.000 1.000  shi 20 trans 0.000
+MATERIAL "engine-IAEV-2500" rgb 0.720 0.720 0.720  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.900 0.900 0.900  shi 25 trans 0.000
 MATERIAL "engine-IAE-V2500-Inner" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 5 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.26__IAEV2500.ac"
