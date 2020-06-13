@@ -33,7 +33,9 @@ var fuelPredInput = func(key, i) {
 	if (key == "L3" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/rte-rsv", 0.05 * num(getprop("/FMGC/internal/trip-fuel")));
+			setprop("/FMGC/internal/rte-rsv-set", 0);
 			setprop("/FMGC/internal/rte-percent", 5.0);
+			setprop("/FMGC/internal/rte-percent-set", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (getprop("/FMGC/internal/trip-fuel") != 0) {
@@ -43,17 +45,21 @@ var fuelPredInput = func(key, i) {
 				var perc = num(split("/", scratchpad)[1]);
 				if (perc != nil and perc >= 0.0 and perc <= 15.0) {
 					setprop("/FMGC/internal/rte-rsv", num(perc) / 100 * num(getprop("/FMGC/internal/trip-fuel")));
+					setprop("/FMGC/internal/rte-rsv-set", 0);
 					setprop("/FMGC/internal/rte-percent", perc);
+					setprop("/FMGC/internal/rte-percent-set", 1);
 					setprop("/FMGC/internal/fuel-calculating", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7) {
 					setprop("/FMGC/internal/rte-rsv", scratchpad);
+					setprop("/FMGC/internal/rte-rsv-set", 1);
 					if (scratchpad / num(getprop("/FMGC/internal/trip-fuel")) * 100 <= 15.0) {
 						setprop("/FMGC/internal/rte-percent", scratchpad / num(getprop("/FMGC/internal/trip-fuel")) * 100);
 					} else {
 						setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
 					}
+					setprop("/FMGC/internal/rte-percent-set", 0);
 					setprop("/FMGC/internal/fuel-calculating", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 			} else {
