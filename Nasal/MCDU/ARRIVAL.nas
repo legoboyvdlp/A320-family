@@ -660,7 +660,7 @@ var arrivalPage = {
 			me.L2 = [nil, nil, "wht"];
 			me.arrowsMatrix[0][1] = 0;
 			me.arrowsColour[0][1] = "wht";
-		} else {
+		} elsif (me.activePage == 1) {
 			me.L2 = [" VIAS", " APPR", "wht"];
 			me.arrowsMatrix[0][1] = 1;
 			me.arrowsColour[0][1] = "wht";
