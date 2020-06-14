@@ -986,7 +986,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
-				me["Simple_L5"].setText("[    ]/[     . ]");
+				me["Simple_L5"].setText("[   ]/[     ]");
 			}
 			
 			if (vor2FreqSet.getValue() == 1) {
@@ -1006,7 +1006,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 
-				me["Simple_R5"].setText("[     . ]/[    ]");
+				me["Simple_R5"].setText("[     ]/[   ]");
 			}
 			
 			me["Simple_L1"].setText(" " ~ vor1.getValue());
@@ -1020,7 +1020,7 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("ADF1/FREQ");
 			me["Simple_R1"].setText(" " ~ vor2.getValue());
 			me["Simple_R2"].setText(sprintf("%3.0f", vor2CRS.getValue()));
-			me["Simple_R3"].setText("[   ]/[    ]");
+			me["Simple_R3"].setText("[  ]/[   ]");
 			me["Simple_R4"].setText("-.-   [   ]");
 			me["Simple_R1S"].setText("FREQ/VOR2");
 			me["Simple_R2S"].setText("CRS");
