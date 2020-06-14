@@ -2296,7 +2296,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R2"].setText("[    ]  ");
+			me["Simple_R2"].setText("[   ]  ");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
 			me["Simple_R1S"].setText("RWY ");
@@ -2372,7 +2372,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R3"].setFont(symbol); 
 				me["Simple_R3"].setFontSize(small); 
-				me["Simple_R3"].setText("[  ]/[      ]");
+				me["Simple_R3"].setText("[  ]/[    ]");
 			}
 			if (flexSet.getValue() == 1) {
 				me["Simple_R4"].setFont(default); 

@@ -70,10 +70,10 @@ var windCLBPage = {
 		}
 		
 		if (me.items >= 5) {
-			var wind = 0;
-			wind = fmgc.windController.clb_winds[computer_temp].wind5;
-			if (wind.altitude != "") {
-				me.L5 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
+			var windStore = 0;
+			windStore = fmgc.windController.clb_winds[computer_temp].wind5;
+			if (windStore.altitude != "") {
+				me.L5 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			} else {
 				me.L5 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -84,9 +84,9 @@ var windCLBPage = {
 		}
 		
 		if (me.items >= 4) {
-			wind = fmgc.windController.clb_winds[computer_temp].wind4;
-			if (wind.altitude != "") {
-				me.L4 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
+			windStore = fmgc.windController.clb_winds[computer_temp].wind4;
+			if (windStore.altitude != "") {
+				me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			} else {
 				me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -97,9 +97,9 @@ var windCLBPage = {
 		}
 		
 		if (me.items >= 3) {
-			wind = fmgc.windController.clb_winds[computer_temp].wind3;
-			if (wind.altitude != "") {
-				me.L3 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
+			windStore = fmgc.windController.clb_winds[computer_temp].wind3;
+			if (windStore.altitude != "") {
+				me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			} else {
 				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -110,9 +110,9 @@ var windCLBPage = {
 		}
 		
 		if (me.items >= 2) {
-			wind = fmgc.windController.clb_winds[computer_temp].wind2;
-			if (wind.altitude != "") {
-				me.L2 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
+			windStore = fmgc.windController.clb_winds[computer_temp].wind2;
+			if (windStore.altitude != "") {
+				me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			} else {
 				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -123,9 +123,9 @@ var windCLBPage = {
 		}
 		
 		if (me.items >= 1) {
-			wind = fmgc.windController.clb_winds[computer_temp].wind1;
-			if (wind.altitude != "") {
-				me.L1 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+			windStore = fmgc.windController.clb_winds[computer_temp].wind1;
+			if (windStore.altitude != "") {
+				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			} else {
 				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
