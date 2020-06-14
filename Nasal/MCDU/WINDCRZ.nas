@@ -96,8 +96,7 @@ var windCRZPage = {
 		# load data
 		if (me.singleCRZ == 1) {
 			if (me.items >= 4) {
-				var windStore = 0;
-				windStore = fmgc.windController.crz_winds[computer_temp].wind4;
+				var windStore = fmgc.windController.crz_winds[computer_temp].wind4;
 				if (windStore.altitude != "") {
 					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][3] = 1;
@@ -110,7 +109,7 @@ var windCRZPage = {
 			}
 		
 			if (me.items >= 3) {
-				windStore = fmgc.windController.crz_winds[computer_temp].wind3;
+				var windStore = fmgc.windController.crz_winds[computer_temp].wind3;
 				if (windStore.altitude != "") {
 					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][2] = 1;
@@ -123,7 +122,7 @@ var windCRZPage = {
 			}
 		
 			if (me.items >= 2) {
-				windStore = fmgc.windController.crz_winds[computer_temp].wind2;
+				var windStore = fmgc.windController.crz_winds[computer_temp].wind2;
 				if (windStore.altitude != "") {
 					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][1] = 1;
@@ -136,7 +135,7 @@ var windCRZPage = {
 			}
 		
 			if (me.items >= 1) {
-				windStore = fmgc.windController.crz_winds[computer_temp].wind1;
+				var windStore = fmgc.windController.crz_winds[computer_temp].wind1;
 				if (windStore.altitude != "") {
 					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
@@ -146,7 +145,7 @@ var windCRZPage = {
 				}
 			}
 			
-			windStore = fmgc.windController.crz_winds[computer_temp].sat1;
+			var windStore = fmgc.windController.crz_winds[computer_temp].sat1;
 			if (windStore.altitude != "") {
 				me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
 				me.fontMatrix[0][4] = 1;
@@ -156,7 +155,7 @@ var windCRZPage = {
 			}
 		} else {
 			if (me.items >= 4) {
-				windStore = fmgc.windController.winds[computer_temp][me.match_location].wind4;
+				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind4;
 				if (windStore.altitude != "") {
 					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][3] = 1;
@@ -169,7 +168,7 @@ var windCRZPage = {
 			}
 		
 			if (me.items >= 3) {
-				windStore = fmgc.windController.winds[computer_temp][me.match_location].wind3;
+				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind3;
 				if (windStore.altitude != "") {
 					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][2] = 1;
@@ -182,7 +181,7 @@ var windCRZPage = {
 			}
 		
 			if (me.items >= 2) {
-				windStore = fmgc.windController.winds[computer_temp][me.match_location].wind2;
+				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind2;
 				if (windStore.altitude != "") {
 					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][1] = 1;
@@ -195,7 +194,7 @@ var windCRZPage = {
 			}
 		
 			if (me.items >= 1) {
-				windStore = fmgc.windController.winds[computer_temp][me.match_location].wind1;
+				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind1;
 				if (windStore.altitude != "") {
 					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
@@ -205,7 +204,7 @@ var windCRZPage = {
 				}
 			}
 			
-			windStore = fmgc.windController.winds[computer_temp][me.match_location].sat1;
+			var windStore = fmgc.windController.winds[computer_temp][me.match_location].sat1;
 			if (windStore.altitude != "") {
 				me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
 				me.fontMatrix[0][4] = 1;
