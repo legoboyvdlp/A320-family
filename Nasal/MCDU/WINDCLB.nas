@@ -4,6 +4,7 @@
 
 var windCLBPage = {
 	title: nil,
+	titleColour: "wht",
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
@@ -42,7 +43,6 @@ var windCLBPage = {
 	},
 	_setupPageWithData: func() {
 		me.title = "CLIMB WIND";
-		#me.title = "DRAFT CLIMB WIND";
 		me.titleColour = "wht";
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 1, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
@@ -73,8 +73,8 @@ var windCLBPage = {
 			var wind = 0;
 			wind = fmgc.windController.clb_winds[computer_temp].wind5;
 			if (wind.altitude != "") {
-				me.L5 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-				me.fontMatrix[0][4] = 0;
+				me.L5 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.fontMatrix[0][4] = 1;
 			} else {
 				me.L5 = ["[  ]/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][4] = 1;
@@ -86,8 +86,8 @@ var windCLBPage = {
 		if (me.items >= 4) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind4;
 			if (wind.altitude != "") {
-				me.L4 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-				me.fontMatrix[0][3] = 0;
+				me.L4 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.fontMatrix[0][3] = 1;
 			} else {
 				me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][3] = 1;
@@ -99,8 +99,8 @@ var windCLBPage = {
 		if (me.items >= 3) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind3;
 			if (wind.altitude != "") {
-				me.L3 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-				me.fontMatrix[0][2] = 0;
+				me.L3 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.fontMatrix[0][2] = 1;
 			} else {
 				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][2] = 1;
@@ -112,8 +112,8 @@ var windCLBPage = {
 		if (me.items >= 2) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind2;
 			if (wind.altitude != "") {
-				me.L2 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-				me.fontMatrix[0][1] = 0;
+				me.L2 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.fontMatrix[0][1] = 1;
 			} else {
 				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][1] = 1;
@@ -125,8 +125,8 @@ var windCLBPage = {
 		if (me.items >= 1) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind1;
 			if (wind.altitude != "") {
-				me.L1 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
-				me.fontMatrix[0][0] = 0;
+				me.L1 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+				me.fontMatrix[0][0] = 1;
 			} else {
 				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
@@ -155,7 +155,8 @@ var windCLBPage = {
 			me.L6 = [" CANCEL", " WIND", "amb"];
 			me.R6 = ["UPDATE ", "WIND ", "amb"];
 			me.arrowsMatrix[0][5] = 0;
-			#draft title
+			me.title = "DRAFT CLIMB WIND";
+			me.titleColour = "yel";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		} else {
 			me.L1[2] = "blu";
@@ -166,7 +167,8 @@ var windCLBPage = {
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R6 = [nil, nil, "ack"];
 			me.arrowsMatrix[0][5] = 1;
-			#draft title
+			me.title = "CLIMB WIND";
+			me.titleColour = "wht";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	},

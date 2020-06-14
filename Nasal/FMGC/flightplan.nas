@@ -171,7 +171,7 @@ var flightPlanController = {
 		}
 		
 		me.addDiscontinuity(1, plan);
-		debug.dump(me.flightplans[2]);
+		#debug.dump(me.flightplans[2]);
 		# reset mcdu if it exists
 		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }
 		if (canvas_mcdu.myFpln[1] != nil) { canvas_mcdu.myFpln[1].scroll = 0; }
@@ -657,7 +657,7 @@ var flightPlanController = {
 	getNavCount: func(plan) {
 		var count = 0;
 		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			print(me.flightplans[plan].getWP(wpt).wp_type);
+			#print(me.flightplans[plan].getWP(wpt).wp_type);
 			if (me.flightplans[plan].getWP(wpt).wp_type == "navaid") {
 				count += 1;
 			}
@@ -668,7 +668,7 @@ var flightPlanController = {
 	getDepartureCount: func(plan) {
 		var count = 0;
 		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			print(me.flightplans[plan].getWP(wpt).wp_role);
+			#print(me.flightplans[plan].getWP(wpt).wp_role);
 			if (me.flightplans[plan].getWP(wpt).wp_role == "sid") {
 				count += 1;
 			}

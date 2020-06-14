@@ -136,7 +136,7 @@ var vertRev = {
 	},
 	pushButtonLeft: func(index) {
 		if (index == 5) {
-			print("role: ", me.wp.wp_role, ", type: ", me.wp.wp_type);
+			#print("role: ", me.wp.wp_role, ", type: ", me.wp.wp_type);
 			if (me.wp.wp_role == "sid") {
 				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
 					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);

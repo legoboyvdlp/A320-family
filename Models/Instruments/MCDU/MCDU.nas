@@ -24,7 +24,8 @@ var myCRZWIND = [nil, nil];
 var myDESWIND = [nil, nil];
 var myHISTWIND = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
-var symbol = "helvetica_medium.txf";
+#var symbol = "helvetica_medium.txf";
+var symbol = "LiberationMonoCustom.ttf";
 var normal = 70;
 var small = 56;
 var page = "";
@@ -3179,10 +3180,10 @@ var canvas_MCDU_base = {
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				# if (page == "WINDCRZ") {
-# 					up/down arrows show
-# 				} else {
-# 					up/down arrows hide
-# 				}
+ 				#	up/down arrows show
+ 				# } else {
+ 				#	up/down arrows hide
+ 				# }
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
@@ -3231,6 +3232,7 @@ var canvas_MCDU_base = {
 					} else {
 						me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
 					}
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/b"));
 					
 					forindex (var matrixArrow; myWind[i].arrowsMatrix) {
 						if (matrixArrow == 0) { 

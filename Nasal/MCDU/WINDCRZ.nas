@@ -4,6 +4,7 @@
 
 var windCRZPage = {
 	title: [nil, nil, nil],
+	titleColour: "wht",
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
@@ -49,7 +50,6 @@ var windCRZPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		print("setup called");
 		
 		if (me.singleCRZ == 1) {
 			me.title = ["","CRZ WIND",""];
@@ -98,8 +98,8 @@ var windCRZPage = {
 			if (me.items >= 4) {
 				wind = fmgc.windController.crz_winds[computer_temp].wind4;
 				if (wind.altitude != "") {
-					me.L4 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-					me.fontMatrix[0][3] = 0;
+					me.L4 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][3] = 1;
 				} else {
 					me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][3] = 1;
@@ -111,8 +111,8 @@ var windCRZPage = {
 			if (me.items >= 3) {
 				wind = fmgc.windController.crz_winds[computer_temp].wind3;
 				if (wind.altitude != "") {
-					me.L3 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-					me.fontMatrix[0][2] = 0;
+					me.L3 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][2] = 1;
 				} else {
 					me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][2] = 1;
@@ -124,8 +124,8 @@ var windCRZPage = {
 			if (me.items >= 2) {
 				wind = fmgc.windController.crz_winds[computer_temp].wind2;
 				if (wind.altitude != "") {
-					me.L2 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-					me.fontMatrix[0][1] = 0;
+					me.L2 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][1] = 1;
 				} else {
 					me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][1] = 1;
@@ -137,8 +137,8 @@ var windCRZPage = {
 			if (me.items >= 1) {
 				wind = fmgc.windController.crz_winds[computer_temp].wind1;
 				if (wind.altitude != "") {
-					me.L1 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
-					me.fontMatrix[0][0] = 0;
+					me.L1 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+					me.fontMatrix[0][0] = 1;
 				} else {
 					me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
@@ -148,7 +148,7 @@ var windCRZPage = {
 			wind = fmgc.windController.crz_winds[computer_temp].sat1;
 			if (wind.altitude != "") {
 				me.L5 = [wind.temp ~ "/" ~ wind.altitude, "SAT / ALT", "blu"];
-				me.fontMatrix[0][4] = 0;
+				me.fontMatrix[0][4] = 1;
 			} else {
 				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
 				me.fontMatrix[0][4] = 1;
@@ -157,8 +157,8 @@ var windCRZPage = {
 			if (me.items >= 4) {
 				wind = fmgc.windController.winds[computer_temp][me.match_location].wind4;
 				if (wind.altitude != "") {
-					me.L4 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-					me.fontMatrix[0][3] = 0;
+					me.L4 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][3] = 1;
 				} else {
 					me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][3] = 1;
@@ -170,8 +170,8 @@ var windCRZPage = {
 			if (me.items >= 3) {
 				wind = fmgc.windController.winds[computer_temp][me.match_location].wind3;
 				if (wind.altitude != "") {
-					me.L3 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-					me.fontMatrix[0][2] = 0;
+					me.L3 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][2] = 1;
 				} else {
 					me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][2] = 1;
@@ -183,8 +183,8 @@ var windCRZPage = {
 			if (me.items >= 2) {
 				wind = fmgc.windController.winds[computer_temp][me.match_location].wind2;
 				if (wind.altitude != "") {
-					me.L2 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
-					me.fontMatrix[0][1] = 0;
+					me.L2 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+					me.fontMatrix[0][1] = 1;
 				} else {
 					me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][1] = 1;
@@ -196,8 +196,8 @@ var windCRZPage = {
 			if (me.items >= 1) {
 				wind = fmgc.windController.winds[computer_temp][me.match_location].wind1;
 				if (wind.altitude != "") {
-					me.L1 = [wind.heading ~ "/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
-					me.fontMatrix[0][0] = 0;
+					me.L1 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+					me.fontMatrix[0][0] = 1;
 				} else {
 					me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
@@ -207,7 +207,7 @@ var windCRZPage = {
 			wind = fmgc.windController.winds[computer_temp][me.match_location].sat1;
 			if (wind.altitude != "") {
 				me.L5 = [wind.temp ~ "/" ~ wind.altitude, "SAT / ALT", "blu"];
-				me.fontMatrix[0][4] = 0;
+				me.fontMatrix[0][4] = 1;
 			} else {
 				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
 				me.fontMatrix[0][4] = 1;
@@ -236,7 +236,12 @@ var windCRZPage = {
 			me.L6 = [" CANCEL", "UPDATE", "amb"];
 			me.R6 = ["INSERT ", "UPDATE ", "amb"];
 			me.arrowsMatrix[0][5] = 0;
-			#draft title
+			if (me.singleCRZ == 1) {
+				me.title = ["","DRAFT CRZ WIND",""];
+			} else {
+				me.title = ["DRAFT CRZ WIND", " AT ", me.waypoint.wp_name];
+			}
+			me.titleColour = "yel";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		} else {
 			me.L1[2] = "blu";
@@ -247,7 +252,12 @@ var windCRZPage = {
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R6 = [nil, nil, "ack"];
 			me.arrowsMatrix[0][5] = 1;
-			#draft title
+			if (me.singleCRZ == 1) {
+				me.title = ["","CRZ WIND",""];
+			} else {
+				me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+			}
+			me.titleColour = "wht";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	},
