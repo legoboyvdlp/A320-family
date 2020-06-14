@@ -212,13 +212,17 @@ var windDESPage = {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
 				if (size(winds[0]) >= 0 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
 				size(winds[1]) >= 0 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200 and
-				size(winds[2]) >= 4 and size(winds[2]) <= 5 and ((num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
+				size(winds[2]) >= 4 and size(winds[2]) <= 5 and (winds[2] == "GRND" or (num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
 				(num(split("FL", winds[2])[1]) != nil and split("FL", winds[2])[1] >= 10 and split("FL", winds[2])[1] <= 390))) {
 					me.makeTmpy();
 					var computer_temp = 2;
 					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 						computer_temp = me.computer;
 					}
+					# if (winds[2] == "GRND") {
+# 						setprop("/FMGC/internal/dest-mag-grnd", winds[0]);
+# 						setprop("/FMGC/internal/dest-wind-grnd", winds[1]);
+# 					}
 					#print(computer_temp);
 					if (index == 5) {
 						fmgc.windController.des_winds[computer_temp].wind5.heading = winds[0];

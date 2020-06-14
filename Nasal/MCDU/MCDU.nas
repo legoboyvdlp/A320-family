@@ -167,6 +167,8 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/dest-temp", -999);
 	setprop("/FMGC/internal/dest-mag", -1);
 	setprop("/FMGC/internal/dest-wind", -1);
+	# setprop("/FMGC/internal/dest-mag-grnd", -1);
+# 	setprop("/FMGC/internal/dest-wind-grnd", -1);
 	setprop("/FMGC/internal/vapp-speed-set", 0);
 	setprop("/FMGC/internal/final", "");
 	setprop("/FMGC/internal/baro", 99999);
