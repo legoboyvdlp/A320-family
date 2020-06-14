@@ -73,7 +73,7 @@ var windCLBPage = {
 			var wind = 0;
 			wind = fmgc.windController.clb_winds[computer_temp].wind5;
 			if (wind.altitude != "") {
-				me.L5 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.L5 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			} else {
 				me.L5 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -86,7 +86,7 @@ var windCLBPage = {
 		if (me.items >= 4) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind4;
 			if (wind.altitude != "") {
-				me.L4 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.L4 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			} else {
 				me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -99,7 +99,7 @@ var windCLBPage = {
 		if (me.items >= 3) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind3;
 			if (wind.altitude != "") {
-				me.L3 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.L3 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			} else {
 				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -112,7 +112,7 @@ var windCLBPage = {
 		if (me.items >= 2) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind2;
 			if (wind.altitude != "") {
-				me.L2 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, nil, "blu"];
+				me.L2 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			} else {
 				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
@@ -125,7 +125,7 @@ var windCLBPage = {
 		if (me.items >= 1) {
 			wind = fmgc.windController.clb_winds[computer_temp].wind1;
 			if (wind.altitude != "") {
-				me.L1 = [wind.heading ~ "°/" ~ wind.magnitude ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
+				me.L1 = [sprintf("%03.0f", wind.heading) ~ "°/" ~ sprintf("%03.0f", wind.magnitude) ~ "/" ~ wind.altitude, "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			} else {
 				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
@@ -192,11 +192,11 @@ var windCLBPage = {
 		} else if (index == 6) {
 			setprop("/MCDU[" ~ me.computer ~ "]/page", fmgc.windController.accessPage[me.computer]);
 		} else if (me.items >= index) {
-			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 13) {
+			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) >= 5 and size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) <= 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
-				if (size(winds[0]) == 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
-				size(winds[1]) == 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200 and
-				size(winds[2]) == 5 and ((num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
+				if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
+				size(winds[1]) >= 1 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200 and
+				size(winds[2]) >= 4 and size(winds[2]) <= 5 and ((num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
 				(num(split("FL", winds[2])[1]) != nil and split("FL", winds[2])[1] >= 10 and split("FL", winds[2])[1] <= 390))) {
 					me.makeTmpy();
 					var computer_temp = 2;
