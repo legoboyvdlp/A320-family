@@ -3335,6 +3335,8 @@ var canvas_MCDU_base = {
 				
 				if (myLatRev[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myLatRev[i].title[0] ~ myLatRev[i].title[1] ~ myLatRev[i].title[2]));
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/b"));
+					
 					
 					if (myLatRev[i].subtitle[0] != nil) {
 						me["Simple_Center"].show();

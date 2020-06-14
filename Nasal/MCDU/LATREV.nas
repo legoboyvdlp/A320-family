@@ -1,5 +1,6 @@
 var latRev = {
 	title: [nil, nil, nil],
+	titleColour: "wht",
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -36,6 +37,7 @@ var latRev = {
 	_checkTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
+			me.titleColour = "yel";
 			me.arrowsColour[0][5] = "yel";
 			me.R2[2] = "yel";
 			me.R3[2] = "yel";
