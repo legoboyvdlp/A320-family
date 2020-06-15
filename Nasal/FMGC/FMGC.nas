@@ -269,9 +269,9 @@ var updateFuel = func {
 		temp = getprop("/FMGC/internal/cruise-temp");
 		dist = flightPlanController.arrivalDist;
 		
-		wind = getprop("/FMGC/internal/trip-wind");
+		trpWind = getprop("/FMGC/internal/trip-wind");
 		wind_value = getprop("/FMGC/internal/trip-wind-value");
-		if (find("HD", wind) != -1 or find("-", wind) != -1 or find("H", wind) != -1) {
+		if (find("HD", trpWind) != -1 or find("-", trpWind) != -1 or find("H", trpWind) != -1) {
 			wind_value = wind_value * -1;
 		}
 		dist = dist - (dist * wind_value * 0.002);
@@ -722,6 +722,8 @@ var reset_FMGC = func {
 	ITAF.init();
 	FMGCinit();
 	flightPlanController.reset();
+	windController.reset();
+	
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	setprop("it-autoflight/input/fd1", fd1);

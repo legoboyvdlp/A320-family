@@ -20,12 +20,14 @@ var vertRev = {
 	arrAirport: nil,
 	index: nil,
 	computer: nil,
-	new: func(type, id, index, computer) {
+	new: func(type, id, index, computer, wp, plan) {
 		var vr = {parents:[vertRev]};
 		vr.type = type; # 0 = origin 1 = destination 2 = wpt not ppos 3 = ppos 4 = cruise wpt 5 = climb wpt (3 + 4 not needed yet)
 		vr.id = id;
 		vr.index = index;
 		vr.computer = computer;
+		vr.wp = wp;
+		vr.plan = plan;
 		vr._setupPageWithData();
 		vr._checkTmpy();
 		return vr;
@@ -130,6 +132,52 @@ var vertRev = {
 		} else {
 			me.R5 = [nil, nil, "ack"];
 			me.arrowsMatrix[1][4] = 0;
+		}
+	},
+	pushButtonLeft: func(index) {
+		if (index == 5) {
+			#print("role: ", me.wp.wp_role, ", type: ", me.wp.wp_type);
+			if (me.wp.wp_role == "sid") {
+				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
+					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
+				} else {
+					canvas_mcdu.myCLBWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCLB");
+			} else if (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed") {
+				if (canvas_mcdu.myDESWIND[me.computer] == nil) {
+					canvas_mcdu.myDESWIND[me.computer] = windDESPage.new(me.computer);
+				} else {
+					canvas_mcdu.myDESWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDDES");
+			} else if (me.wp.wp_role == nil and me.wp.wp_type == "navaid") {
+				if (canvas_mcdu.myCRZWIND[me.computer] == nil) {
+					cur_location = 0;
+					for (i = 0; i < size(fmgc.windController.nav_indicies[me.plan]); i += 1) {
+						if (fmgc.windController.nav_indicies[me.plan][i] == me.index) {
+							cur_location = i;
+						}
+					}
+					canvas_mcdu.myCRZWIND[me.computer] = windCRZPage.new(me.computer, me.wp, cur_location);
+				} else {
+					canvas_mcdu.myCRZWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCRZ");
+			} else {
+				if (canvas_mcdu.myCRZWIND[me.computer] == nil) {
+					canvas_mcdu.myCRZWIND[me.computer] = windCRZPage.new(me.computer, nil, 0);
+				} else {
+					canvas_mcdu.myCRZWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCRZ");
+			}
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
 	},
 };

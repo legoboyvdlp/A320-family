@@ -207,6 +207,7 @@ var systemsInit = func {
 	systems.fire_init();
 	systems.icingInit();
 	fmgc.flightPlanController.reset();
+	fmgc.windController.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
@@ -225,6 +226,7 @@ var systemsInit = func {
 	fcu.FCUController.init();
 	dmc.DMController.init();
 	fmgc.flightPlanController.init();
+	fmgc.windController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
