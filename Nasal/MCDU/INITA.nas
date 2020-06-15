@@ -9,6 +9,7 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/alt-airport", "");
 			setprop("/FMGC/internal/alt-set", 0);
+			fmgc.windController.updatePlans();
 			if (getprop("/FMGC/internal/block-confirmed")) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
 				setprop("/FMGC/internal/fuel-calculating", 1);
@@ -24,6 +25,7 @@ var initInputA = func(key, i) {
 				if (tfs == 4) {
 					setprop("/FMGC/internal/alt-airport", scratchpad);
 					setprop("/FMGC/internal/alt-set", 1);
+					fmgc.windController.updatePlans();
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
@@ -169,7 +171,9 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
 			fmgc.flightPlanController.reset(2);
+			fmgc.windController.reset(2);
 			fmgc.flightPlanController.init();
+			fmgc.windController.init();
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#setprop("/FMGC/internal/alt-selected", 0);
@@ -222,6 +226,14 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R3") {
 		setprop("MCDU[" ~ i ~ "]/page", "IRSINIT");
+	} else if (key == "R4") {
+		if (canvas_mcdu.myCLBWIND[i] == nil) {
+			canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
+		} else {
+			canvas_mcdu.myCLBWIND[i].reload();
+		}
+		fmgc.windController.accessPage[i] = "INITA";
+		setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/tropo", 36090);
