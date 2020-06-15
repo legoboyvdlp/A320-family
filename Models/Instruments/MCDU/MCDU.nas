@@ -18,8 +18,14 @@ var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
 var myClosestAirport = [nil, nil];
 var myPilotWP = [nil, nil];
+var myWind = [nil, nil];
+var myCLBWIND = [nil, nil];
+var myCRZWIND = [nil, nil];
+var myDESWIND = [nil, nil];
+var myHISTWIND = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
-var symbol = "helvetica_medium.txf";
+#var symbol = "helvetica_medium.txf";
+var symbol = "LiberationMonoCustom.ttf";
 var normal = 70;
 var small = 56;
 var page = "";
@@ -204,6 +210,8 @@ var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
 var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
 var dest_mag = props.globals.getNode("/FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("/FMGC/internal/dest-wind", 1);
+# var grnd_mag = props.globals.getNode("/FMGC/internal/dest-mag-grnd", 1);
+# var grnd_wind = props.globals.getNode("/FMGC/internal/dest-wind-grnd", 1);
 var vapp_speed_set = props.globals.getNode("/FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
@@ -978,7 +986,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
-				me["Simple_L5"].setText("[    ]/[     . ]");
+				me["Simple_L5"].setText("[   ]/[     ]");
 			}
 			
 			if (vor2FreqSet.getValue() == 1) {
@@ -998,7 +1006,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 
-				me["Simple_R5"].setText("[     . ]/[    ]");
+				me["Simple_R5"].setText("[     ]/[   ]");
 			}
 			
 			me["Simple_L1"].setText(" " ~ vor1.getValue());
@@ -1012,13 +1020,37 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("ADF1/FREQ");
 			me["Simple_R1"].setText(" " ~ vor2.getValue());
 			me["Simple_R2"].setText(sprintf("%3.0f", vor2CRS.getValue()));
-			me["Simple_R3"].setText("[   ]/[    ]");
+			me["Simple_R3"].setText("[  ]/[   ]");
 			me["Simple_R4"].setText("-.-   [   ]");
 			me["Simple_R1S"].setText("FREQ/VOR2");
 			me["Simple_R2S"].setText("CRS");
 			me["Simple_R3S"].setText("CHAN/ MLS");
 			me["Simple_R4S"].setText("SLOPE   CRS");
 			me["Simple_R5S"].setText("FREQ/ADF2");
+			
+			if (getprop("systems/radio/rmp[0]/nav") or getprop("systems/radio/rmp[1]/nav")) {
+				me["Simple_L1"].hide();
+				me["Simple_L2"].hide();
+				me["Simple_L3"].hide();
+				me["Simple_L4"].hide();
+				me["Simple_L5"].hide();
+				me["Simple_R1"].hide();
+				me["Simple_R2"].hide();
+				me["Simple_R3"].hide();
+				me["Simple_R4"].hide();
+				me["Simple_R5"].hide();
+			} else {
+				me["Simple_L1"].show();
+				me["Simple_L2"].show();
+				me["Simple_L3"].show();
+				me["Simple_L4"].show();
+				me["Simple_L5"].show();
+				me["Simple_R1"].show();
+				me["Simple_R2"].show();
+				me["Simple_R3"].show();
+				me["Simple_R4"].show();
+				me["Simple_R5"].show();
+			}
 		} else if (page == "INITA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -2264,7 +2296,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R2"].setText("[    ]  ");
+			me["Simple_R2"].setText("[   ]  ");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
 			me["Simple_R1S"].setText("RWY ");
@@ -2340,7 +2372,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R3"].setFont(symbol); 
 				me["Simple_R3"].setFontSize(small); 
-				me["Simple_R3"].setText("[  ]/[      ]");
+				me["Simple_R3"].setText("[  ]/[    ]");
 			}
 			if (flexSet.getValue() == 1) {
 				me["Simple_R4"].setFont(default); 
@@ -2944,6 +2976,8 @@ var canvas_MCDU_base = {
 			me["Simple_L3S"].setText("MAG WIND");
 			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
 				me["Simple_L3"].setText(sprintf("%03.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
+			# } else if (grnd_mag.getValue() != -1 and grnd_wind.getValue() != -1) {
+# 				me["Simple_L3"].setText(sprintf("%03.0fg", grnd_mag.getValue()) ~ sprintf("/%.0f", grnd_wind.getValue()));
 			} else {
 				me["Simple_L3"].setText("---g/---");;
 			}
@@ -3137,6 +3171,135 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
+		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				# if (page == "WINDCRZ") {
+ 				#	up/down arrows show
+ 				# } else {
+ 				#	up/down arrows hide
+ 				# }
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				if (page == "WINDCLB") {
+					myWind = myCLBWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				} else if (page == "WINDCRZ") {
+					myWind = myCRZWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "amb", "wht", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				} else if (page == "WINDDES") {
+					myWind = myDESWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				} else if (page == "WINDHIST") {
+					myWind = myHISTWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.fontSizeCenter(small, small, small, small, small, normal);
+				}
+				
+				if (myWind[i] != nil) {
+					if (page == "WINDCRZ") {
+						me["Simple_Title"].setText(sprintf("%s", myWind[i].title[0] ~ myWind[i].title[1] ~ myWind[i].title[2]));
+					} else {
+						me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
+					}
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/b"));
+					
+					forindex (var matrixArrow; myWind[i].arrowsMatrix) {
+						if (matrixArrow == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myWind[i].arrowsMatrix[matrixArrow]) {
+							if (myWind[i].arrowsMatrix[matrixArrow][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+							} else {
+								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+							}
+						}
+					}
+					me.colorLeftArrow(myWind[i].arrowsColour[0][0],myWind[i].arrowsColour[0][1],myWind[i].arrowsColour[0][2],myWind[i].arrowsColour[0][3],myWind[i].arrowsColour[0][4],myWind[i].arrowsColour[0][5]);
+					
+					forindex (var matrixFont; myWind[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myWind[i].fontMatrix[matrixFont]) {
+							if (myWind[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+							}
+						}
+					}
+					
+					me.dynamicPageFunc(myWind[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myWind[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myWind[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myWind[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myWind[i].L5, "Simple_L5");
+					me.dynamicPageFunc(myWind[i].L6, "Simple_L6");
+					
+					me.colorLeft(myWind[i].L1[2],myWind[i].L2[2],myWind[i].L3[2],myWind[i].L4[2],myWind[i].L5[2],myWind[i].L6[2]);
+					
+					me.dynamicPageFunc(myWind[i].C1, "Simple_C1");
+					me.dynamicPageFunc(myWind[i].C2, "Simple_C2");
+					me.dynamicPageFunc(myWind[i].C3, "Simple_C3");
+					me.dynamicPageFunc(myWind[i].C4, "Simple_C4");
+					me.dynamicPageFunc(myWind[i].C5, "Simple_C5");
+					me.dynamicPageFunc(myWind[i].C6, "Simple_C6");
+					
+					me.colorCenter(myWind[i].C1[2],myWind[i].C2[2],myWind[i].C3[2],myWind[i].C4[2],myWind[i].C5[2],myWind[i].C6[2]);
+					
+					me.dynamicPageFunc(myWind[i].R1, "Simple_R1");
+					me.dynamicPageFunc(myWind[i].R2, "Simple_R2");
+					me.dynamicPageFunc(myWind[i].R3, "Simple_R3");
+					me.dynamicPageFunc(myWind[i].R4, "Simple_R4");
+					me.dynamicPageFunc(myWind[i].R5, "Simple_R5");
+					me.dynamicPageFunc(myWind[i].R6, "Simple_R6");
+					
+					me.colorRight(myWind[i].R1[2],myWind[i].R2[2],myWind[i].R3[2],myWind[i].R4[2],myWind[i].R5[2],myWind[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else if (page == "LATREV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -3176,6 +3339,8 @@ var canvas_MCDU_base = {
 				
 				if (myLatRev[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myLatRev[i].title[0] ~ myLatRev[i].title[1] ~ myLatRev[i].title[2]));
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/b"));
+					
 					
 					if (myLatRev[i].subtitle[0] != nil) {
 						me["Simple_Center"].show();
@@ -3603,7 +3768,6 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();
 				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].hide();
 				me["Simple_L4_Arrow"].hide();
 				me["Simple_L5_Arrow"].hide();
@@ -3630,6 +3794,12 @@ var canvas_MCDU_base = {
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				if (myArrival[i].arrowsMatrix[0][1]) {
+					me["Simple_L2_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/b"));
+					me["Simple_L2_Arrow"].show();
+				} else {
+					me["Simple_L2_Arrow"].hide();
+				}
 				
 				if (myArrival[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myArrival[i].title[0] ~ myArrival[i].title[1] ~ myArrival[i].title[2]));
@@ -3641,6 +3811,7 @@ var canvas_MCDU_base = {
 							var sign = "R"; 
 						}
 						forindex (var item; myArrival[i].arrowsMatrix[matrixArrow]) {
+							if (item == 1) { continue; }
 							if (item == 5) { 
 								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/b"));
 								continue;

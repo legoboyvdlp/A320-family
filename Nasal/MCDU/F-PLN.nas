@@ -7,6 +7,7 @@ var fplnItem = {
 		fI.computer = computer;
 		fI.colour = colour;
 		fI.assembledStr = [nil, nil, colour];
+		fI._colour = "wht";
 		return fI;
 	},
 	updateLeftText: func() {
@@ -39,8 +40,10 @@ var fplnItem = {
 			if (me.wp.wp_name != "DISCONTINUITY") {
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue() - 1 and fmgc.flightPlanController.fromWptTime != nil) {
 					me.assembledStr[0] = fmgc.flightPlanController.fromWptTime ~ "   ";
+					me.assembledStr[2] = "grn";
 				} else {
 					me.assembledStr[0] = "----   ";
+					me.assembledStr[2] = "wht";
 				}
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
@@ -65,7 +68,11 @@ var fplnItem = {
 				me.spd = me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				return [me.spd ~ "/" ~ me.alt, " " ~ me.dist ~ "NM    ", me.colour];
+				me._colour = "wht";
+				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
+					me._colour = "mag";
+				}
+				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
 				return [nil, nil, "ack"];
 			}
@@ -88,18 +95,26 @@ var fplnItem = {
 	},
 	getSpd: func() {
 		if (me.index == 0 and getprop("FMGC/internal/v1-set")) {
-			return sprintf("%3.0f", math.round(getprop("FMGC/internal/v1")));
+			return [sprintf("%3.0f", math.round(getprop("FMGC/internal/v1"))), "mag"];
+		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr != 0) {
+			return [sprintf("%3.0f", me.wp.speed_cstr), "mag"];
 		} else {
-			return "---";
+			return ["---", "wht"];
 		}
 	},
 	getAlt: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == getprop("/FMGC/internal/dep-arpt") and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
-			return sprintf("%6.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT));
+			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "mag"];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
-			return "  " ~ fmgc.flightPlanController.fromWptAlt;
+			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
+		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr != 0) {
+			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
+				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), "mag"];
+			} else {
+				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), "mag"];
+			}
 		} else {
-			return "------";
+			return ["------", "wht"];
 		}
 	},
 	getDist: func() {
@@ -148,23 +163,23 @@ var fplnItem = {
 		
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
-			} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
+			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			} else {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			}
 		} else {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			} else {
-				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer);
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 			}
 		}
 		setprop("MCDU[" ~ me.computer ~ "]/page", "VERTREV");
@@ -216,17 +231,6 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	R5: [nil, nil, "ack"],
 	R6: [nil, nil, "ack"],
 	
-	# init conditions
-	# line 1 = FROM
-	# line 2 = TO
-	# line 6 = DEST
-	# neither pseudo nor markers may be FROM waypoint
-	# bearing between FROM and TO waypoints
-	# track between line 2 and line 3 waypoints
-	# name of LEG above TO waypoint - is airway identifier, or waypoint name
-	
-	# DEST in LINE 6 time prediction, distance along flightplan, and EFOB
-	# dashes if no predictions
 	planList: [],
 	outputList: [],
 	scroll: 0,

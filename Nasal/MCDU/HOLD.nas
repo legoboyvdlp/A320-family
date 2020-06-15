@@ -40,21 +40,42 @@ var holdPage = {
 	_setupPageWithData: func() {
 		me.title = ["HOLD", " AT ", me.waypoint.wp_name];
 		me.titleColour = "wht";
-		me.L1 = [" [   ]", "INB CRS", "blu"];
-		me.L2 = [" R", " TURN", "blu"];
-		if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 14000) {
-			me.L2 = [" 1.5/----", "TIME/DIST", "blu"];
+		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 1, 0, 0, 0, 0]];
+		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["wht", "wht", "ack", "ack", "ack", "ack"]];
+		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		if (me.waypoint.fly_type == "Hold") {
+			me.makeTmpy();
+			me.L1 = [" " ~ sprintf("%03.0f", me.waypoint.hold_inbound_radial), "INB CRS", "blu"];
+			me.fontMatrix[0][0] = 0;
+			
+			if (me.waypoint.hold_is_left_handed) {
+				me.L2 = [" L", " TURN", "blu"];
+			} else {
+				me.L2 = [" R", " TURN", "blu"];
+			}
+			
+			if (me.waypoint.hold_is_distance) {
+				me.L2 = [" -.-/" ~ me.waypoint.hold_time_or_distance, "TIME/DIST", "blu"];
+			} else {
+				me.L2 = [" " ~ sprintf("%3.1f", (me.waypoint.hold_time_or_distance / 60)) ~ "/----", "TIME/DIST", "blu"];
+			}
+			me.R1 = ["COMPUTED ", nil, "wht"];
+			me.R2 = ["DATABASE ", nil, "yel"];
+			me.arrowsMatrix[1][1] = 0;
 		} else {
-			me.L2 = [" 1.0/----", "TIME/DIST", "blu"];
+			me.L1 = [" 100", "INB CRS", "blu"];
+			me.L2 = [" R", " TURN", "blu"];
+			if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 14000) {
+				me.L2 = [" 1.5/----", "TIME/DIST", "blu"];
+			} else {
+				me.L2 = [" 1.0/----", "TIME/DIST", "blu"];
+			}
+			me.R1 = ["COMPUTED ", nil, "wht"];
+			me.R2 = ["DATABASE ", nil, "wht"];
 		}
 		me.L6 = [" RETURN", nil, "wht"];
 		me.C4 = ["LAST EXIT", nil, "wht"];
 		me.C5 = ["----  ---.-", "UTC    FUEL", "wht"];
-		me.R1 = ["COMPUTED ", nil, "wht"];
-		me.R2 = ["DATABASE ", nil, "wht"];
-		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 1, 0, 0, 0, 0]];
-		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["wht", "wht", "ack", "ack", "ack", "ack"]];
-		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
@@ -67,7 +88,7 @@ var holdPage = {
 			me.L1[2] = "yel";
 			me.L2[2] = "yel";
 			me.L6 = [" F-PLN", " TMPY", "yel"];
-			me.R6 = ["INSERT* ", " TMPY", "yel"];
+			me.R6 = ["INSERT ", " TMPY", "yel"];
 			me.arrowsColour[0][5] = "yel";
 			me.titleColour = "yel";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
