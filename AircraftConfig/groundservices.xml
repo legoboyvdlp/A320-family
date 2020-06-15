@@ -30,131 +30,71 @@
     <hrule/>
 
     <group>
-        <layout>hbox</layout>
+        <layout>vbox</layout>
 
         <group>
-            <layout>vbox</layout>
-            <group>
-                <layout>hbox</layout>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-                <text>
-                    <label>Landing Gear</label>
-                </text>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-            </group>
+            <layout>hbox</layout>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+            <text>
+                <label>Landing Gear</label>
+            </text>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
         </group>
 
-        <group>
-            <layout>vbox</layout>
-            <group>
-                <layout>hbox</layout>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-                <text>
-                    <label>Stairways</label>
-                </text>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-            </group>
-        </group>
-    </group>
+        <checkbox>
+            <label>Nose Gear Chock</label>
+            <halign>left</halign>
+            <enable>
+                <and>
+                    <property>/gear/gear[0]/wow</property>
+                    <property>/gear/gear[1]/wow</property>
+                    <property>/gear/gear[2]/wow</property>
+                </and>
+            </enable>
+            <property>/services/chocks/nose</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
 
-    <group>
-        <layout>hbox</layout>
+        <checkbox>
+            <label>Main Left Gear Chock</label>
+            <halign>left</halign>
+            <enable>
+                <and>
+                    <property>/gear/gear[0]/wow</property>
+                    <property>/gear/gear[1]/wow</property>
+                    <property>/gear/gear[2]/wow</property>
+                </and>
+            </enable>
+            <property>/services/chocks/left</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
 
-        <group>
-            <layout>vbox</layout>
-            <checkbox>
-                <label>Nose Gear Chock</label>
-                <halign>left</halign>
-                <enable>
-                    <and>
-                        <property>/gear/gear[0]/wow</property>
-                        <property>/gear/gear[1]/wow</property>
-                        <property>/gear/gear[2]/wow</property>
-                    </and>
-                </enable>
-                <property>/services/chocks/nose</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-
-            <checkbox>
-                <label>Main Left Gear Chock</label>
-                <halign>left</halign>
-                <enable>
-                    <and>
-                        <property>/gear/gear[0]/wow</property>
-                        <property>/gear/gear[1]/wow</property>
-                        <property>/gear/gear[2]/wow</property>
-                    </and>
-                </enable>
-                <property>/services/chocks/left</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-
-            <checkbox>
-                <label>Main Right Gear Chock</label>
-                <halign>left</halign>
-                <enable>
-                    <and>
-                        <property>/gear/gear[0]/wow</property>
-                        <property>/gear/gear[1]/wow</property>
-                        <property>/gear/gear[2]/wow</property>
-                    </and>
-                </enable>
-                <property>/services/chocks/right</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-        </group>
-
-        <group>
-            <layout>vbox</layout>
-
-            <checkbox>
-                <label>Front Left</label>
-                <halign>left</halign>
-                <property>/services/stairs/l1</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-
-            <checkbox>
-                <label>Rear Left</label>
-                <halign>left</halign>
-                <property>/services/stairs/l4</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-
-            <checkbox>
-                <label>Stairway Cover</label>
-                <halign>left</halign>
-                <property>/services/stairs/cover</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-        </group>
+        <checkbox>
+            <label>Main Right Gear Chock</label>
+            <halign>left</halign>
+            <enable>
+                <and>
+                    <property>/gear/gear[0]/wow</property>
+                    <property>/gear/gear[1]/wow</property>
+                    <property>/gear/gear[2]/wow</property>
+                </and>
+            </enable>
+            <property>/services/chocks/right</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
     </group>
 
     <group>
@@ -308,6 +248,49 @@
                 <stretch type="bool">true</stretch>
             </hrule>
             <text>
+                <label>Stairways</label>
+            </text>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+        </group>
+
+        <checkbox>
+            <label>Front Left</label>
+            <halign>left</halign>
+            <property>/services/stairs/l1</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+
+        <checkbox>
+            <label>Rear Left</label>
+            <halign>left</halign>
+            <property>/services/stairs/l4</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+
+        <checkbox>
+            <label>Stairway Cover</label>
+            <halign>left</halign>
+            <property>/services/stairs/cover</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+
+        <group>
+            <layout>hbox</layout>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+            <text>
                 <label>Baggage</label>
             </text>
             <hrule>
@@ -325,127 +308,124 @@
             <live>true</live>
         </checkbox>
 
+
         <group>
-            <layout>vbox</layout>
-
-            <group>
-                <layout>hbox</layout>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-                <text>
-                    <label>Catering</label>
-                </text>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-            </group>
-
-            <checkbox>
-                <label>Enable Catering Truck</label>
-                <halign>left</halign>
-                <property>/services/catering/enable</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-
-            <button>
-                <legend>Toggle Catering</legend>
-                <halign>center</halign>
-                <padding>5</padding>
-                <enable>
-                    <property>/services/catering/enable</property>
-                </enable>
-                <binding>
-                    <condition>
-                        <less-than>
-                            <property>/services/catering/position-norm</property>
-                            <value>0.1</value>
-                        </less-than>
-                    </condition>
-                    <command>property-interpolate</command>
-                    <property>/services/catering/position-norm</property>
-                    <value>0.68</value>
-                    <time>5</time>
-                </binding>
-                <binding>
-                    <condition>
-                        <greater-than-equals>
-                            <property>/services/catering/position-norm</property>
-                            <value>0.1</value>
-                        </greater-than-equals>
-                    </condition>
-                    <command>property-interpolate</command>
-                    <property>/services/catering/position-norm</property>
-                    <value>0.0</value>
-                    <time>5</time>
-                </binding>
-            </button>
-
-            <group>
-                <layout>hbox</layout>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-                <text>
-                    <label>Fuel</label>
-                </text>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-            </group>
-
-            <button>
-                <legend>Fuel Truck</legend>
-                <halign>center</halign>
-                <padding>5</padding>
-                <binding>
-                    <command>nasal</command>
-                    <script>
-                    acconfig.fuel_dlg.open();
-                    </script>
-                </binding>
-            </button>
-
-            <group>
-                <layout>hbox</layout>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-                <text>
-                    <label>De-icing</label>
-                </text>
-                <hrule>
-                    <stretch type="bool">true</stretch>
-                </hrule>
-            </group>
-            
-            <checkbox>
-                <label>Enable De-icing Truck</label>
-                <halign>left</halign>
-                <property>/services/deicing_truck/enable</property>
-                <binding>
-                    <command>dialog-apply</command>
-                </binding>
-                <live>true</live>
-            </checkbox>
-
-            <button>
-                <legend>De-ice Aircraft</legend>
-                <halign>center</halign>
-                <padding>5</padding>
-                <enable>
-                    <property>/services/deicing_truck/enable</property>
-                </enable>
-                <binding>
-                    <command>property-assign</command>
-                    <property>/services/deicing_truck/de-ice</property>
-                    <value>1</value>
-                </binding>
-            </button>
+            <layout>hbox</layout>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+            <text>
+                <label>Catering</label>
+            </text>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
         </group>
+
+        <checkbox>
+            <label>Enable Catering Truck</label>
+            <halign>left</halign>
+            <property>/services/catering/enable</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+
+        <button>
+            <legend>Toggle Catering</legend>
+            <halign>center</halign>
+            <padding>5</padding>
+            <enable>
+                <property>/services/catering/enable</property>
+            </enable>
+            <binding>
+                <condition>
+                    <less-than>
+                        <property>/services/catering/position-norm</property>
+                        <value>0.1</value>
+                    </less-than>
+                </condition>
+                <command>property-interpolate</command>
+                <property>/services/catering/position-norm</property>
+                <value>0.68</value>
+                <time>5</time>
+            </binding>
+            <binding>
+                <condition>
+                    <greater-than-equals>
+                        <property>/services/catering/position-norm</property>
+                        <value>0.1</value>
+                    </greater-than-equals>
+                </condition>
+                <command>property-interpolate</command>
+                <property>/services/catering/position-norm</property>
+                <value>0.0</value>
+                <time>5</time>
+            </binding>
+        </button>
+
+        <group>
+            <layout>hbox</layout>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+            <text>
+                <label>Fuel</label>
+            </text>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+        </group>
+
+        <button>
+            <legend>Fuel Truck</legend>
+            <halign>center</halign>
+            <padding>5</padding>
+            <binding>
+                <command>nasal</command>
+                <script>
+                    acconfig.fuel_dlg.open();
+                </script>
+            </binding>
+        </button>
+
+        <group>
+            <layout>hbox</layout>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+            <text>
+                <label>De-icing</label>
+            </text>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+        </group>
+
+        <checkbox>
+            <label>Enable De-icing Truck</label>
+            <halign>left</halign>
+            <property>/services/deicing_truck/enable</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+
+        <button>
+            <legend>De-ice Aircraft</legend>
+            <halign>center</halign>
+            <padding>5</padding>
+            <enable>
+                <property>/services/deicing_truck/enable</property>
+            </enable>
+            <binding>
+                <command>property-assign</command>
+                <property>/services/deicing_truck/de-ice</property>
+                <value>1</value>
+            </binding>
+        </button>
     </group>
 
 </PropertyList>
