@@ -853,6 +853,10 @@
 			<test logic="AND" value="4"> <!-- gnd has lowest priority, valve forced closed if other source available -->
 				/systems/pneumatics/source/gnd-psi ne 0
 			</test>
+			<test logic="AND" value="0"> <!-- manually cancel -->
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve eq 0
+			</test>
 		</switch>
 		
 		<switch name="/systems/pneumatics/psi/engine-right-src">
@@ -878,6 +882,10 @@
 			<test logic="AND" value="4"> <!-- gnd has lowest priority, valve forced closed if other source available -->
 				/systems/pneumatics/source/gnd-psi ne 0
 				/systems/pneumatics/valves/crossbleed-valve ne 0
+			</test>
+			<test logic="AND" value="0"> <!-- manually cancel -->
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/crossbleed-valve eq 0
 			</test>
 		</switch>
 		
