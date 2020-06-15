@@ -78,7 +78,6 @@ var srsSPD = 0;
 var maxspeed = 0;
 var minspeed = 0;
 var mach_switchover = 0;
-var decel = 0;
 var mng_alt_spd_cmd = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach_cmd = 0;
@@ -126,7 +125,6 @@ var FMGCinit = func {
 	setprop("/FMGC/internal/mng-kts-mach", 0);
 	setprop("/FMGC/internal/mach-switchover", 0);
 	setprop("it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
-	setprop("/FMGC/internal/decel", 0);
 	setprop("/FMGC/internal/loc-source", "NAV0");
 	setprop("/FMGC/internal/optalt", 0);
 	setprop("/FMGC/internal/landing-time", -99);
@@ -143,6 +141,7 @@ var FMGCinit = func {
 var FMGCInternal = {
 	transAlt: 18000,
 	transAltSet: 0,
+	decel: 0,
 };
 
 ############
@@ -453,14 +452,14 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	if (phase == 4 and getprop("/FMGC/internal/decel")) {
+	if (phase == 4 and FMGCInternal.decel) {
 		setprop("/FMGC/status/phase", 5);
 	}
 	
-	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and aglalt < 9500) { #todo decel pseudo waypoint
-		setprop("/FMGC/internal/decel", 1);
-	} else if (getprop("/FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
-		setprop("/FMGC/internal/decel", 0);
+	if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon)[1] < 0.1) and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and aglalt < 9500) {
+		FMGCInternal.decel = 1;
+	} elsif (FMGCInternal.decel and (phase == 0 or phase == 6)) {
+		FMGCInternal.decel = 0;
 	}
 	
 	if ((phase == "5") and state1 == "TOGA" and state2 == "TOGA") {
@@ -878,7 +877,6 @@ var ManagedSPD = maketimer(0.25, func {
 			maxspeed = getprop("/FMGC/internal/maxspeed");
 			minspeed = getprop("/FMGC/internal/minspeed");
 			mach_switchover = getprop("/FMGC/internal/mach-switchover");
-			decel = getprop("/FMGC/internal/decel");
 			
 			mng_alt_spd_cmd = getprop("/FMGC/internal/mng-alt-spd");
 			mng_alt_spd = math.round(mng_alt_spd_cmd, 1);
@@ -905,9 +903,9 @@ var ManagedSPD = maketimer(0.25, func {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
-				if (mng_spd_cmd != 250 and !decel) {
+				if (mng_spd_cmd != 250 and !FMGCInternal.decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", 250);
-				} else if (mng_spd_cmd != minspeed and decel) {
+				} else if (mng_spd_cmd != minspeed and FMGCInternal.decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
 			} else if ((phase == 2 or phase == 3) and altitude > 10070 and !mach_switchover) {
@@ -942,18 +940,18 @@ var ManagedSPD = maketimer(0.25, func {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
-				if (mng_spd_cmd != mng_alt_spd and !decel) {
+				if (mng_spd_cmd != mng_alt_spd and !FMGCInternal.decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_spd);
-				} else if (mng_spd_cmd != minspeed and decel) {
+				} else if (mng_spd_cmd != minspeed and FMGCInternal.decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
 			} else if ((phase == 4 or phase == 5 or phase == 6) and altitude <= 10980) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
-				if (mng_spd_cmd != 250 and !decel) {
+				if (mng_spd_cmd != 250 and !FMGCInternal.decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", 250);
-				} else if (mng_spd_cmd != minspeed and decel) {
+				} else if (mng_spd_cmd != minspeed and FMGCInternal.decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
 			}

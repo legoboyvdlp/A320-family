@@ -50,7 +50,7 @@ canvas.NDStyles["Airbus"] = {
 			lat_ctrl: "/it-autoflight/output/lat",
 			managed_val: 1,
 			ver_ctrl: "/it-autoflight/output/vert",
-			spd_ctrl: "/flight-management/control/spd-ctrl",
+			spd_ctrl: "it-autoflight/input/spd-managed",
 			current_wp: "/FMGC/flightplan[2]/current-wp",
 			ap1: "/it-autoflight/output/ap1",
 			ap2: "/it-autoflight/output/ap2",
@@ -563,7 +563,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range"],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and getprop("/instrumentation/nd/symbols/decel/show");
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -573,11 +573,12 @@ canvas.NDStyles["Airbus"] = {
 				# Overridable options:
 				# decel_node: node containing latitude-deg and longitude-deg used to mark the deceleration point
 				# managed_speed_node: boolean property indicating that the aircraft is flying in managed speed mode
+				decel_node: "/instrumentation/nd/symbols/decel",
 				listen: [
 					"fplan_active",
+					"current_wp",
+					"wp_count",
 					"spd_ctrl",
-					"ver_ctrl",
-					"athr"
 				]
 			},
 			style: {
