@@ -55,7 +55,7 @@ var vertRev = {
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
-		} if (me.type == 2) { 
+		} elsif (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
