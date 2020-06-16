@@ -79,6 +79,12 @@ var init = func {
 }
 
 var draw = func{
+	if (me.model.wp.hidden == 1) {
+		me.wp_sym.hide();
+		me.text_wps.hide();
+		return;
+	}
+	
 	var wp_group = me.element;
 	var alt = me.model.alt;
 	var i = me.model.idx;

@@ -299,6 +299,12 @@ var flightPlanController = {
         fmgc.windController.insertWind(n, index, 0, "PPOS");
     },
 	
+	insertDecel: func(n, pos, index) {
+        me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
+		me.flightplans[n].getWP(index).hidden = 1;
+        fmgc.windController.insertWind(n, index, 0, "(DECEL)");
+    },
+	
     # childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
     # args: wpt, bearing, dist, name, typeStr
     #    wpt: waypoint ghost
@@ -697,30 +703,62 @@ var flightPlanController = {
 		return count;
 	},
 	
+	getIndexOfFirstDecel: func(plan) {
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			if (me.flightplans[plan].getWP(wpt).wp_name == "(DECEL)") {
+				return wpt;
+			}
+		}
+		return -99;
+	},
+	
     calculateDecelPoint: func() {
 		if (me.getPlanSizeNoDiscont(2) <= 1 or fmgc.FMGCInternal.decel) { 
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
 			return;			
 		}
-        var index = 0;
+		
+		me.indexDecel = me.getIndexOfFirstDecel(2);
+		if (me.indexDecel != -99) {
+			me.flightplans[2].deleteWP(me.indexDecel);
+			fmgc.windController.deleteWind(2, me.indexDecel);
+		}
+		
+        me.indexDecel = 0;
+		
         for (var wpt = 0; wpt < me.flightplans[2].getPlanSize(); wpt += 1) {
 			if (me.flightplans[2].getWP(wpt).wp_role == "approach") {
-				index = wpt;
+				me.indexDecel = wpt;
+				print("Using " ~ me.flightplans[2].getWP(wpt).wp_name ~ " index " ~ me.indexDecel);
 				break;
 			}
 			if (wpt == me.flightplans[2].getPlanSize()) {
-				index = me.arrivalIndex - 2;
+				me.indexDecel = me.arrivalIndex - 2;
+				print("Falling back to two waypoints before runway for DECEL calculations.");
 				break;
 			}
 		}
         
-        var dist = (me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route- me.flightplans[2].getWP(index).distance_along_route) + 7;
-        me.decelPoint = me.flightplans[2].pathGeod(me.arrivalIndex[2], -dist);
+        me.dist = (me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(me.indexDecel).distance_along_route) + 7;
+		
+		me.decelPoint = me.flightplans[2].pathGeod(me.arrivalIndex[2], -me.dist);
         setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
         setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);
 		setprop("/instrumentation/nd/symbols/decel/show", 1); 
+		
+		me.indexTemp = me.indexDecel;
+		me.distTemp = 7;
+		
+		if (me.flightplans[2].getWP(me.indexTemp).leg_distance < 7) {
+			while (me.distTemp > 0 and me.indexTemp > 0) {
+				me.distTemp -= me.flightplans[2].getWP(me.indexTemp).leg_distance;
+				me.indexTemp -= 1;
+			}
+		}
 
 		# todo create waypoint, insert to flightplan, as non-sequence one (gets skipped in sequencing code
+		me.insertDecel(2,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp + 1);
+		me.flightPlanChanged(2,0);
     },
     
     # insertPlaceBearingDistance - insert PBD waypoint at specified index,
@@ -783,7 +821,7 @@ var flightPlanController = {
         }
     },
     
-    flightPlanChanged: func(n) {
+    flightPlanChanged: func(n, callDecel = 1) {
         sizeWP = size(wpID[n]);
         for (var counter = sizeWP; counter < me.flightplans[n].getPlanSize(); counter += 1) { # create new properties if they are required
             append(wpID[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/text", "", "STRING"));
@@ -798,6 +836,10 @@ var flightPlanController = {
         me.updatePlans();
         fmgc.windController.updatePlans();
             
+		if (callDecel) {
+			me.calculateDecelPoint();
+		}
+		
         # push update to fuel
         if (getprop("/FMGC/internal/block-confirmed")) {
             setprop("/FMGC/internal/fuel-calculating", 0);
@@ -864,7 +906,6 @@ var flightPlanController = {
         }
 		
 		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
-		me.calculateDecelPoint();
     },
     
     updateCurrentWaypoint: func() {

@@ -687,9 +687,9 @@ canvas.NDStyles["Airbus"] = {
 			id: "tas",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/velocities/TAS") >= 60,
+				predicate: func(nd) getprop("/instrumentation/airspeed-indicator/true-speed-kt") >= 60,
 				is_true: func(nd) {
-					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/velocities/TAS")));
+					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/instrumentation/airspeed-indicator/true-speed-kt")));
 					nd.symbols.tas.show();
 				},
 				is_false: func(nd){

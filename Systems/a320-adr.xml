@@ -562,7 +562,7 @@
 					<property>/systems/navigation/probes/tat-1/tat</property>
 					<quotient>
 						<pow>
-							<property>/velocities/TAS</property>
+							<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
 							<value>2</value>
 						</pow>
 						<value>7569</value>
