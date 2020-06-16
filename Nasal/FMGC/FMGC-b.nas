@@ -358,9 +358,9 @@ var ITAF = {
 		# Preselect Heading
 		if (Output.latTemp != 0 and Output.latTemp != 9) { # Modes that always show HDG
 			if (Custom.hdgTime.getValue() + 45 >= Misc.elapsedSec.getValue()) {
-				setprop("it-autoflight/custom/show-hdg", 1);
+				setprop("/it-autoflight/custom/show-hdg", 1);
 			} else {
-				setprop("it-autoflight/custom/show-hdg", 0);
+				setprop("/it-autoflight/custom/show-hdg", 0);
 			}
 		}
 		
@@ -427,9 +427,6 @@ var ITAF = {
 				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
 				# Advance logic done by flightplan controller
-				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue()) {
-				#	flightPlanController.autoSequencing();
-				#}
 				
 				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 					flightPlanController.autoSequencing();
@@ -1024,11 +1021,11 @@ setlistener("/sim/signals/fdm-initialized", func {
 
 # For Canvas Nav Display.
 setlistener("/it-autoflight/input/hdg", func {
-	setprop("autopilot/settings/heading-bug-deg", getprop("it-autoflight/input/hdg"));
+	setprop("autopilot/settings/heading-bug-deg", getprop("/it-autoflight/input/hdg"));
 });
 
 setlistener("/it-autoflight/internal/alt", func {
-	setprop("autopilot/settings/target-altitude-ft", getprop("it-autoflight/internal/alt"));
+	setprop("autopilot/settings/target-altitude-ft", getprop("/it-autoflight/internal/alt"));
 });
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);

@@ -298,7 +298,7 @@ var flightPlanController = {
         me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), index);
         fmgc.windController.insertWind(n, index, 0, "PPOS");
     },
-    
+	
     # childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
     # args: wpt, bearing, dist, name, typeStr
     #    wpt: waypoint ghost
@@ -698,7 +698,7 @@ var flightPlanController = {
 	},
 	
     calculateDecelPoint: func() {
-		if (me.getPlanSizeNoDiscont(2) <= 1) { 
+		if (me.getPlanSizeNoDiscont(2) <= 1 or fmgc.FMGCInternal.decel) { 
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
 			return;			
 		}
@@ -714,7 +714,7 @@ var flightPlanController = {
 			}
 		}
         
-        var dist = (me.arrivalDist - me.flightplans[2].getWP(index).distance_along_route) + 7;
+        var dist = (me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route- me.flightplans[2].getWP(index).distance_along_route) + 7;
         me.decelPoint = me.flightplans[2].pathGeod(me.arrivalIndex[2], -dist);
         setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
         setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);

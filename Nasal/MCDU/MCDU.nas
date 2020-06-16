@@ -10,7 +10,7 @@ var MCDU_init = func(i) {
 
 var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/active", 0);
-	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
+	setprop("/it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-page", "NONE");
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
@@ -137,12 +137,12 @@ var MCDU_reset = func(i) {
 	# PERF
 	
 	#PERF TO
-	setprop("/FMGC/internal/v1", 0);
-	setprop("/FMGC/internal/v1-set", 0);
-	setprop("/FMGC/internal/vr", 0);
-	setprop("/FMGC/internal/vr-set", 0);
-	setprop("/FMGC/internal/v2", 0);
-	setprop("/FMGC/internal/v2-set", 0);
+	fmgc.FMGCInternal.v1 = 0;
+	fmgc.FMGCInternal.v1set = 0;
+	fmgc.FMGCInternal.vr = 0;
+	fmgc.FMGCInternal.vrset = 0;
+	fmgc.FMGCInternal.v2 = 0;
+	fmgc.FMGCInternal.v2set = 0;
 	setprop("FMGC/internal/accel-agl-ft", "1500"); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
 	setprop("FMGC/internal/to-flap", 0);
@@ -153,6 +153,7 @@ var MCDU_reset = func(i) {
 	setprop("FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
 	fmgc.FMGCInternal.transAlt = 18000;
+	fmgc.FMGCInternal.transAltSet = 0;
 	
 	# CLB PERF
 	setprop("/FMGC/internal/activate-once", 0);
