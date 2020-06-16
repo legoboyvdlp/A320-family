@@ -10,6 +10,8 @@ var perfTOInput = func(key, i) {
 			if (scratchpad == "CLR") {
 				fmgc.FMGCInternal.v1 = 0;
 				fmgc.FMGCInternal.v1set = 0;
+				fmgc.FMGCNodes.v1.setValue(0);
+				fmgc.FMGCNodes.v1set.setValue(0);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				var tfs = size(scratchpad);
@@ -17,6 +19,10 @@ var perfTOInput = func(key, i) {
 					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 						fmgc.FMGCInternal.v1 = scratchpad;
 						fmgc.FMGCInternal.v1set = 1;
+						
+						# for sounds:
+						fmgc.FMGCNodes.v1.setValue(scratchpad);
+						fmgc.FMGCNodes.v1set.setValue(1);
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
 						mcdu_message(i, "NOT ALLOWED");

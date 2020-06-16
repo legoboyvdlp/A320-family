@@ -150,6 +150,11 @@ var FMGCInternal = {
 	decel: 0,
 };
 
+var FMGCNodes = {
+	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
+	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
+};
+
 ############
 # FBW Trim #
 ############
