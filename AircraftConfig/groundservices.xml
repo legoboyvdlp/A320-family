@@ -57,6 +57,7 @@
                         <property>/gear/gear[2]/wow</property>
                     </and>
                 </enable>
+                <property>/services/chocks/nose</property>
                 <binding>
                     <command>property-toggle</command>
                     <property>/services/chocks/left</property>
