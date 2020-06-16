@@ -250,6 +250,31 @@ var staticText = {
 	},
 };
 
+var pseudoItem = {
+	new: func(computer, text) {
+		var pI = {parents:[pseudoItem]};
+		pI.computer = computer;
+		pI.text = text;
+		pI.colour = colour;
+		return pI;
+	},
+	updateLeftText: func() {
+		return [me.text, nil, me.colour];
+	},
+	updateCenterText: func() {
+		return ["----", nil, "wht"];
+	},
+	updateRightText: func() {
+		return ["---/------", " --NM    ", "wht"];
+	},
+	pushButtonLeft: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+	pushButtonRight: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+};
+
 var fplnPage = { # this one is only created once, and then updated - remember this
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -307,6 +332,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			return "----END OF ALTN F-PLN---";
 		} else if (type == "noAltnFpln") {
 			return "------NO ALTN F-PLN-----";
+		} else if (type == "decel") { 
+			return "(DECEL)";
 		} else if (type == "empty") {
 			return "";
 		}
@@ -318,6 +345,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			colour = "grn";
 		}
+		
 		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
 			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and getprop("/FMGC/status/phase") != 6) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
@@ -325,6 +353,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));
 			}
 		}
+		
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
 		append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
 		me.basePage();

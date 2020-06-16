@@ -497,7 +497,7 @@ canvas.NDStyles["Airbus"] = {
 					var lat_ctrl = getprop(me.options.lat_ctrl);
 					var is_managed = (lat_ctrl == me.options.managed_val);
 					var is_active = getprop(me.options.fplan_active);
-					(is_managed and is_active ? [] : [32, 16]);
+					(is_managed and is_active ? [] : [12, 12]);
 				},
 				line_dash_alternate_active: [32,16],
 				line_dash_temporary: [32,16],
@@ -529,6 +529,7 @@ canvas.NDStyles["Airbus"] = {
 					"fplan_active",
 					"lat_ctrl",
 					"ver_ctrl",
+					"spd_ctrl",
 					"current_wp",
 					"wp_count",
 					"dep_rwy",
@@ -1140,14 +1141,9 @@ canvas.NDStyles["Airbus"] = {
 			id:"trkline",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd){ 
-					nd.get_switch("toggle_display_mode") == "MAP" and 
-					!nd.get_switch("toggle_centered") and 
-					(
-						getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val or 
-						nd.get_switch("toggle_trk_line")
-					)
-				},
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
+							 !nd.get_switch("toggle_centered") and 
+							 getprop(nd.options.defaults.lat_ctrl) == 0),
 				is_true: func(nd) {
 					nd.symbols.trkline.show();
 				},
@@ -1173,7 +1169,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
 							 nd.get_switch("toggle_centered") and 
-							 getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val),
+							 getprop(nd.options.defaults.lat_ctrl) == 0),
 				is_true: func(nd) {
 					nd.symbols.trkline2.show();
 				},
