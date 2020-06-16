@@ -46,52 +46,31 @@
         </group>
 
         <group>
-            <layout>hbox</layout>
-
-            <group>
-                <layout>vbox</layout>
-                <checkbox>
-                    <label>Nose Gear Chock</label>
-                    <halign>left</halign>
-                    <enable>
-                        <and>
-                            <property>/gear/gear[0]/wow</property>
-                            <property>/gear/gear[1]/wow</property>
-                            <property>/gear/gear[2]/wow</property>
-                        </and>
-                    </enable>
+            <layout>vbox</layout>
+            <checkbox>
+                <label>Enable Gear Chocks</label>
+                <halign>left</halign>
+                <enable>
+                    <and>
+                        <property>/gear/gear[0]/wow</property>
+                        <property>/gear/gear[1]/wow</property>
+                        <property>/gear/gear[2]/wow</property>
+                    </and>
+                </enable>
+                <binding>
+                    <command>property-toggle</command>
+                    <property>/services/chocks/left</property>
+                </binding>
+                <binding>
+                    <command>property-toggle</command>
+                    <property>/services/chocks/right</property>
+                </binding>
+                <binding>
+                    <command>property-toggle</command>
                     <property>/services/chocks/nose</property>
-                    <binding>
-                        <command>dialog-apply</command>
-                    </binding>
-                    <live>true</live>
-                </checkbox>
-            </group>
-
-            <group>
-                <layout>vbox</layout>
-                <checkbox>
-                    <label>Main Gear Chock</label>
-                    <halign>left</halign>
-                    <enable>
-                        <and>
-                            <property>/gear/gear[0]/wow</property>
-                            <property>/gear/gear[1]/wow</property>
-                            <property>/gear/gear[2]/wow</property>
-                        </and>
-                    </enable>
-                    <binding>
-                        <command>property-toggle</command>
-                        <property>/services/chocks/left</property>
-                    </binding>
-                    <binding>
-                        <command>property-toggle</command>
-                        <property>/services/chocks/right</property>
-                    </binding>
-                    <live>true</live>
-                </checkbox>
-            </group>
-
+                </binding>
+                <live>true</live>
+            </checkbox>
         </group>
     </group>
 
@@ -305,7 +284,6 @@
             </binding>
             <live>true</live>
         </checkbox>
-
 
         <group>
             <layout>hbox</layout>
