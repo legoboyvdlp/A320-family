@@ -247,7 +247,7 @@
 			<test logic="OR" value="0">
 				/controls/engines/engine[0]/fire-btn eq 1
 				/controls/pneumatics/switches/bleed-1 eq 0
-				/systems/pneumatics/valves/apu-bleed-valve ne 0
+				/systems/pneumatics/valves/apu-bleed-valve eq 1
 				/systems/pneumatics/valves/starter-valve-1 ne 0
 				/systems/pneumatics/psi/engine-1-upstream-src lt 8
 				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
@@ -328,7 +328,7 @@
 				/controls/engines/engine[1]/fire-btn eq 1
 				/controls/pneumatics/switches/bleed-2 eq 0
 				<test logic="AND">
-					/systems/pneumatics/valves/apu-bleed-valve ne 0
+					/systems/pneumatics/valves/apu-bleed-valve eq 1
 					/systems/pneumatics/valves/crossbleed-valve ne 0
 				</test>
 				/systems/pneumatics/valves/starter-valve-2 ne 0
@@ -835,7 +835,7 @@
 			<default value="/systems/pneumatics/psi/engine-left-src"/>
 			<test logic="AND" value="1"> <!-- apu -->
 				/systems/pneumatics/source/apu-psi ne 0
-				/systems/pneumatics/valves/apu-bleed-valve eq 1
+				/systems/pneumatics/valves/apu-bleed-valve ge 0.5
 			</test>
 			<test logic="AND" value="2"> <!-- left engine -->
 				<test logic="OR">
@@ -863,7 +863,7 @@
 			<default value="/systems/pneumatics/psi/engine-right-src"/>
 			<test logic="AND" value="1"> <!-- apu -->
 				/systems/pneumatics/source/apu-psi ne 0
-				/systems/pneumatics/valves/apu-bleed-valve ne 0
+				/systems/pneumatics/valves/apu-bleed-valve ge 0.5
 				/systems/pneumatics/valves/crossbleed-valve ne 0
 			</test>
 			<test logic="AND" value="2"> <!-- right engine -->
@@ -889,37 +889,39 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pneumatics/psi/engine-1-psi">
-			<default value="0"/>
-			<test value="/systems/pneumatics/source/apu-psi">
-				/systems/pneumatics/psi/engine-left-src eq 1
-			</test>
-			<test value="/systems/pneumatics/psi/engine-1-downstream-opv">
-				/systems/pneumatics/psi/engine-left-src eq 2
-			</test>
-			<test value="/systems/pneumatics/psi/engine-2-psi">
-				/systems/pneumatics/psi/engine-left-src eq 3
-			</test>
-			<test value="/systems/pneumatics/source/gnd-psi">
-				/systems/pneumatics/psi/engine-left-src eq 4
-			</test>
-		</switch>
+		<fcs_function name="/systems/pneumatics/psi/engine-1-psi">
+			<function>
+				<switch>
+					<p>/systems/pneumatics/psi/engine-left-src</p>
+					<v>0</v>
+					<product>
+						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+						<property>/systems/pneumatics/source/apu-psi</property>
+					</product>
+					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
+					<property>/systems/pneumatics/psi/engine-2-psi</property>
+					<property>/systems/pneumatics/source/gnd-psi</property>
+				</switch>
+			</function>
+		</fcs_function>
 		
-		<switch name="/systems/pneumatics/psi/engine-2-psi">
-			<default value="0"/>
-			<test value="/systems/pneumatics/source/apu-psi">
-				/systems/pneumatics/psi/engine-right-src eq 1
-			</test>
-			<test value="/systems/pneumatics/psi/engine-2-downstream-opv">
-				/systems/pneumatics/psi/engine-right-src eq 2
-			</test>
-			<test value="/systems/pneumatics/psi/engine-1-psi">
-				/systems/pneumatics/psi/engine-right-src eq 3
-			</test>
-			<test value="/systems/pneumatics/source/gnd-psi">
-				/systems/pneumatics/psi/engine-right-src eq 4
-			</test>
-		</switch>
+		<fcs_function name="/systems/pneumatics/psi/engine-2-psi">
+			<function>
+				<switch>
+					<p>/systems/pneumatics/psi/engine-right-src</p>
+					<v>0</v>
+					<product>
+						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+						<property>/systems/pneumatics/valves/crossbleed-valve</property>
+						<property>/systems/pneumatics/source/apu-psi</property>
+					</product>
+					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
+					<property>/systems/pneumatics/psi/engine-1-psi</property>
+					<property>/systems/pneumatics/source/gnd-psi</property>
+				</switch>
+			</function>
+		</fcs_function>
+		
 	</channel>
 	
 	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
@@ -1169,7 +1171,7 @@
 		<switch name="/systems/pneumatics/warnings/apu-bleed-not-on-cmd">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/pneumatics/valves/apu-bleed-valve eq 0
+				/systems/pneumatics/valves/apu-bleed-valve ne 1
 				/controls/apu/master eq 1
 				/controls/pneumatics/switches/apu eq 1
 			</test>

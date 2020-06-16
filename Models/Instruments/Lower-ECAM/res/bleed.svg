@@ -42,7 +42,7 @@
      id="namedview371"
      showgrid="true"
      inkscape:zoom="0.73868665"
-     inkscape:cx="492.21406"
+     inkscape:cx="272.22904"
      inkscape:cy="280.96379"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -299,21 +299,25 @@
   <g
      id="BLEED-APU-LINES"
      inkscape:label="#g1035">
-    <path
-       style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
-       id="path5107-1-44-0"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="zzzzz"
-       transform="rotate(-90,880.67777,539.21767)" />
-    <rect
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect5105-2-5-3-6"
-       width="53.195583"
-       height="5.1203089"
-       x="817.61298"
-       y="169.28328"
-       transform="rotate(-90,880.67777,539.21767)" />
+    <g
+       id="BLEED-APU-CIRCLE"
+       inkscape:label="#g1015">
+      <path
+         transform="rotate(-90,880.67777,539.21767)"
+         sodipodi:nodetypes="zzzzz"
+         inkscape:connector-curvature="0"
+         id="path5107-1-44-0"
+         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="rotate(-90,880.67777,539.21767)"
+         y="169.28328"
+         x="817.61298"
+         height="5.1203089"
+         width="53.195583"
+         id="rect5105-2-5-3-6"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
     <rect
        y="602.28253"
        x="510.74338"

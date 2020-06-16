@@ -727,7 +727,7 @@ var canvas_lowerECAM_bleed = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU", "BLEED-HP-Valve-1",
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "BLEED-XFEED", "BLEED-Ram-Air", "BLEED-APU-CIRCLE", "BLEED-HP-Valve-1",
 		"BLEED-APU-LINES","BLEED-ENG-1", "BLEED-HP-Valve-2", "BLEED-ENG-2", "BLEED-Precooler-1-Inlet-Press", "BLEED-Precooler-1-Outlet-Temp",
 		"BLEED-Precooler-2-Inlet-Press", "BLEED-Precooler-2-Outlet-Temp", "BLEED-ENG-1-label", "BLEED-ENG-2-label",
 		"BLEED-GND", "BLEED-Pack-1-Flow-Valve", "BLEED-Pack-2-Flow-Valve", "BLEED-Pack-1-Out-Temp","BLEED-APU-connectionTop",
@@ -818,11 +818,11 @@ var canvas_lowerECAM_bleed = {
 		if (apu_master.getValue()) {
 			me["BLEED-APU-LINES"].show();
 			if (apu_valve_state2 == 1) {
-				me["BLEED-APU"].setRotation(0);
+				me["BLEED-APU-CIRCLE"].setRotation(0);
 				me["BLEED-APU-connectionTop"].show();
 				me["BLEED-xbleedLeft"].show();
 			} else {
-				me["BLEED-APU"].setRotation(90 * D2R);
+				me["BLEED-APU-CIRCLE"].setRotation(90 * D2R);
 				me["BLEED-APU-connectionTop"].hide();
 				if (xbleed.getValue() != 1) {
 					me["BLEED-xbleedLeft"].hide();
@@ -831,9 +831,9 @@ var canvas_lowerECAM_bleed = {
 				}
 			}
 			if (apuBleedNotOn.getValue() != 1) {
-				me["BLEED-APU"].setColor(0.0509,0.7529,0.2941);
+				me["BLEED-APU-CIRCLE"].setColor(0.0509,0.7529,0.2941);
 			} else {
-				me["BLEED-APU"].setColor(0.7333,0.3803,0);
+				me["BLEED-APU-CIRCLE"].setColor(0.7333,0.3803,0);
 			}
 		} else {
 			if (xbleed.getValue() != 1) {
