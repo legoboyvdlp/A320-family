@@ -675,33 +675,27 @@ canvas.NDStyles["Airbus"] = {
 		},
 		{
 			# TODO: taOnly doesn"t need to use getprop polling in update(), use a listener instead!
-			id: "taOnly", # the SVG ID
-			impl: { # implementation hash
-				init: func(nd, symbol), # for updateCenter stuff, called during initialization in the ctor
-				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2, # the condition
-				is_true:   func(nd) nd.symbols.taOnly.show(),			# if true, run this
-				is_false:  func(nd) nd.symbols.taOnly.hide(),			# if false, run this
-			}, # end of taOnly	behavior/callbacks
-		}, # end of taOnly
+			id: "taOnly",
+			impl: {
+				init: func(nd, symbol),
+				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2, 
+				is_true:   func(nd) nd.symbols.taOnly.show(),
+				is_false:  func(nd) nd.symbols.taOnly.hide(),
+			},
+		},
 		{
 			id: "tas",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) nd.aircraft_source.get_spd() > 100,
+				predicate: func(nd) getprop("/velocities/TAS") >= 60,
 				is_true: func(nd) {
-					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/velocities/TAS") ));
+					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/velocities/TAS")));
 					nd.symbols.tas.show();
 				},
-				is_false: func(nd) nd.symbols.tas.hide(),
-			},
-		},
-		{
-			id: "tasLbl",
-			impl: {
-				init: func(nd,symbol),
-				predicate: func(nd) nd.aircraft_source.get_spd() > 100,
-				is_true: func(nd) nd.symbols.tasLbl.show(),
-				is_false: func(nd) nd.symbols.tasLbl.hide(),
+				is_false: func(nd){
+					nd.symbols.tas.setText("---");
+					nd.symbols.tas.show();
+				},
 			},
 		},
 		{
@@ -894,12 +888,6 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				common: func(nd) nd.symbols.gs.setText(sprintf("%3.0f",nd.aircraft_source.get_gnd_spd() )),
-				predicate: func(nd) nd.aircraft_source.get_gnd_spd() >= 30,
-				is_true: func(nd) {
-					#nd.symbols.gs.show();
-					nd.symbols.gs.setFontSize(36);
-				},
-				is_false: func(nd) {},#nd.symbols.gs.hide(),
 			},
 		},
 		{
@@ -1341,7 +1329,7 @@ canvas.NDStyles["Airbus"] = {
 			id:"windArrow",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (!(nd.in_mode("toggle_display_mode", ["PLAN"]) and (nd.get_switch("toggle_display_type") == "LCD"))),
+				predicate: func(nd) (!(nd.in_mode("toggle_display_mode", ["PLAN"]) and (nd.get_switch("toggle_display_type") == "LCD")) and getprop("environment/wind-speed-kt") >= 2),
 				is_true: func(nd) {
 					nd.symbols.windArrow.show();
 					var windArrowRot = getprop("environment/wind-from-heading-deg");
