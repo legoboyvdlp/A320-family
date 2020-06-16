@@ -469,85 +469,94 @@
 		
 		<fcs_function name="/systems/air-conditioning/valves/trim-cockpit-gain">
 			<function>
+				<quotient>
 				<product>
-					<quotient>
-						<sum>
-							<difference>
-								<value>1</value>
-								<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
-							</difference>
-							<difference>
-								<value>1</value>
-								<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
-							</difference>
-						</sum>
-						<value>2</value>
-					</quotient>
-					<difference>
-						<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
-						<min>
+						<quotient>
+							<sum>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
+								</difference>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
+								</difference>
+							</sum>
+							<value>2</value>
+						</quotient>
+						<difference>
 							<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
-							<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
-							<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
-						</min>
-					</difference>
-				</product>
+							<min>
+								<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							</min>
+						</difference>
+					</product>
+					<value>2</value>
+				</quotient>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="/systems/air-conditioning/valves/trim-aft-gain">
 			<function>
-				<product>
-					<quotient>
-						<sum>
-							<difference>
-								<value>1</value>
-								<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
-							</difference>
-							<difference>
-								<value>1</value>
-								<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
-							</difference>
-						</sum>
-						<value>2</value>
-					</quotient>
-					<difference>
-						<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
-						<min>
-							<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+				<quotient>
+					<product>
+						<quotient>
+							<sum>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
+								</difference>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
+								</difference>
+							</sum>
+							<value>2</value>
+						</quotient>
+						<difference>
 							<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
-							<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
-						</min>
-					</difference>
-				</product>
+							<min>
+								<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							</min>
+						</difference>
+					</product>
+					<value>2</value>
+				</quotient>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="/systems/air-conditioning/valves/trim-fwd-gain">
 			<function>
-				<product>
-					<quotient>
-						<sum>
-							<difference>
-								<value>1</value>
-								<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
-							</difference>
-							<difference>
-								<value>1</value>
-								<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
-							</difference>
-						</sum>
-						<value>2</value>
-					</quotient>
-					<difference>
-						<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
-						<min>
-							<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
-							<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+				<quotient>
+					<product>
+						<quotient>
+							<sum>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
+								</difference>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
+								</difference>
+							</sum>
+							<value>2</value>
+						</quotient>
+						<difference>
 							<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
-						</min>
-					</difference>
-				</product>
+							<min>
+								<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							</min>
+						</difference>
+					</product>
+					<value>2</value>
+				</quotient>
 			</function>
 		</fcs_function>
 		
