@@ -110,7 +110,7 @@ var flightPlanController = {
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
-	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase
+	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase, s = 0 don't call flightplan changed
 		if (a == 1) {
 			flightPlanTimer.stop();
 			me.resetFlightplan(2);
@@ -147,11 +147,13 @@ var flightPlanController = {
 					mcdu.isNoTransArr[2] = 0;
 				}
 			}
-			
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
-		if (n == 3) { return; }
+		if (n == 3) {  
+			me.flightPlanChanged(n);
+			return; 
+		}
 		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
 		if (canvas_mcdu.myDirTo[n] != nil) {
@@ -722,6 +724,7 @@ var flightPlanController = {
 		if (me.indexDecel != -99) {
 			me.flightplans[2].deleteWP(me.indexDecel);
 			fmgc.windController.deleteWind(2, me.indexDecel);
+			me.flightPlanChanged(2,0);
 		}
 		
 		me.indexDecel = 0;
@@ -834,12 +837,8 @@ var flightPlanController = {
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
 		
-		me.updatePlans();
+		me.updatePlans(1, callDecel);
 		fmgc.windController.updatePlans();
-			
-		if (callDecel) {
-			me.calculateDecelPoint();
-		}
 		
 		# push update to fuel
 		if (getprop("/FMGC/internal/block-confirmed")) {
@@ -849,7 +848,7 @@ var flightPlanController = {
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
 	
-	updatePlans: func() {
+	updatePlans: func(runDecel = 0, callDecel = 1) {
 		me.updateCurrentWaypoint();
 		me._arrivalDist = 0;
 		for (var n = 0; n <= 2; n += 1) {
@@ -904,6 +903,10 @@ var flightPlanController = {
 				}
 			}
 			me.updateMCDUDriver(n);
+		}
+		
+		if (runDecel and callDecel) {
+			me.calculateDecelPoint();
 		}
 		
 		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
