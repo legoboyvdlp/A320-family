@@ -106,8 +106,6 @@ var flightPlanController = {
 			print(err[0]);
 			print("Load failed.");
 		}
-		# try to fix fgfp
-		me.flightplans[3].destination = airportinfo(getprop("/FMGC/internal/arr-arpt"));
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
@@ -117,34 +115,36 @@ var flightPlanController = {
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			
-			if (mcdu.isNoSid[n] == 1) {
-				mcdu.isNoSid[2] = 1;
-			} else {
-				mcdu.isNoSid[2] = 0;
-			}
-			
-			if (mcdu.isNoStar[n] == 1) {
-				mcdu.isNoStar[2] = 1;
-			} else {
-				mcdu.isNoStar[2] = 0;
-			}
-			
-			if (mcdu.isNoVia[n] == 1) {
-				mcdu.isNoVia[2] = 1;
-			} else {
-				mcdu.isNoVia[2] = 0;
-			}
-			
-			if (mcdu.isNoTransDep[n] == 1) {
-				mcdu.isNoTransDep[2] = 1;
-			} else {
-				mcdu.isNoTransDep[2] = 0;
-			}
-			
-			if (mcdu.isNoTransArr[n] == 1) {
-				mcdu.isNoTransArr[2] = 1;
-			} else {
-				mcdu.isNoTransArr[2] = 0;
+			if (n != 3) {
+				if (mcdu.isNoSid[n] == 1) {
+					mcdu.isNoSid[2] = 1;
+				} else {
+					mcdu.isNoSid[2] = 0;
+				}
+				
+				if (mcdu.isNoStar[n] == 1) {
+					mcdu.isNoStar[2] = 1;
+				} else {
+					mcdu.isNoStar[2] = 0;
+				}
+				
+				if (mcdu.isNoVia[n] == 1) {
+					mcdu.isNoVia[2] = 1;
+				} else {
+					mcdu.isNoVia[2] = 0;
+				}
+				
+				if (mcdu.isNoTransDep[n] == 1) {
+					mcdu.isNoTransDep[2] = 1;
+				} else {
+					mcdu.isNoTransDep[2] = 0;
+				}
+				
+				if (mcdu.isNoTransArr[n] == 1) {
+					mcdu.isNoTransArr[2] = 1;
+				} else {
+					mcdu.isNoTransArr[2] = 0;
+				}
 			}
 			
 			me.flightPlanChanged(2);
@@ -171,7 +171,6 @@ var flightPlanController = {
 		}
 		
 		me.addDiscontinuity(1, plan);
-		#debug.dump(me.flightplans[2]);
 		# reset mcdu if it exists
 		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }
 		if (canvas_mcdu.myFpln[1] != nil) { canvas_mcdu.myFpln[1].scroll = 0; }
