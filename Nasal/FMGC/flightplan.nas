@@ -714,55 +714,55 @@ var flightPlanController = {
 		return -99;
 	},
 	
-	calculateDecelPoint: func() {
-		if (me.getPlanSizeNoDiscont(2) <= 1 or fmgc.FMGCInternal.decel) { 
+	calculateDecelPoint: func(n) {
+		if (me.getPlanSizeNoDiscont(n) <= 1 or fmgc.FMGCInternal.decel) { 
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
 			return;			
 		}
 		
-		me.indexDecel = me.getIndexOfFirstDecel(2);
+		me.indexDecel = me.getIndexOfFirstDecel(n);
 		if (me.indexDecel != -99) {
-			me.flightplans[2].deleteWP(me.indexDecel);
-			fmgc.windController.deleteWind(2, me.indexDecel);
-			me.flightPlanChanged(2,0);
+			me.flightplans[n].deleteWP(me.indexDecel);
+			fmgc.windController.deleteWind(n, me.indexDecel);
+			me.flightPlanChanged(n,0);
 		}
 		
 		me.indexDecel = 0;
 		
-		for (var wpt = 0; wpt < me.flightplans[2].getPlanSize(); wpt += 1) {
-			if (me.flightplans[2].getWP(wpt).wp_role == "approach") {
+		for (var wpt = 0; wpt < me.flightplans[n].getPlanSize(); wpt += 1) {
+			if (me.flightplans[n].getWP(wpt).wp_role == "approach") {
 				me.indexDecel = wpt;
-				print("Using " ~ me.flightplans[2].getWP(wpt).wp_name ~ " index " ~ me.indexDecel);
 				break;
 			}
-			if (wpt == me.flightplans[2].getPlanSize()) {
+			if (wpt == me.flightplans[n].getPlanSize()) {
 				me.indexDecel = me.arrivalIndex - 2;
-				print("Falling back to two waypoints before runway for DECEL calculations.");
 				break;
 			}
 		}
 		
-		me.dist = (me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(me.indexDecel).distance_along_route) + 7;
+		me.dist = (me.flightplans[n].getWP(me.arrivalIndex[n]).distance_along_route - me.flightplans[n].getWP(me.indexDecel).distance_along_route) + 7;
 		
-		me.decelPoint = me.flightplans[2].pathGeod(me.arrivalIndex[2], -me.dist);
-		setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
-		setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);
-		setprop("/instrumentation/nd/symbols/decel/show", 1); 
+		me.decelPoint = me.flightplans[n].pathGeod(me.arrivalIndex[n], -me.dist);
+		if (n == 2) {
+			setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
+			setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);
+			setprop("/instrumentation/nd/symbols/decel/show", 1);
+		}
 		
 		me.indexTemp = me.indexDecel;
 		me.distTemp = 7;
 		
-		if (me.flightplans[2].getWP(me.indexTemp).leg_distance < 7) {
+		if (me.flightplans[n].getWP(me.indexTemp).leg_distance < 7) {
 			while (me.distTemp > 0 and me.indexTemp > 0) {
-				me.distTemp -= me.flightplans[2].getWP(me.indexTemp).leg_distance;
+				me.distTemp -= me.flightplans[n].getWP(me.indexTemp).leg_distance;
 				me.indexTemp -= 1;
 			}
 			me.indexTemp += 1; 
 		}
 
 		# todo create waypoint, insert to flightplan, as non-sequence one (gets skipped in sequencing code
-		me.insertDecel(2,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
-		me.flightPlanChanged(2,0);
+		me.insertDecel(n,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
+		me.flightPlanChanged(n,0);
 	},
 	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
@@ -903,10 +903,10 @@ var flightPlanController = {
 				}
 			}
 			me.updateMCDUDriver(n);
-		}
 		
-		if (runDecel and callDecel) {
-			me.calculateDecelPoint();
+			if (runDecel and callDecel) {
+				me.calculateDecelPoint(n);
+			}
 		}
 		
 		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
