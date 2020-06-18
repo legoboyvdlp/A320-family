@@ -391,21 +391,39 @@
 			<z>0</z>
 		</axis>
 	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>ReverserRDoor</object-name>
+		<property>engines/engine[1]/reverser-pos-norm</property>
+		<factor>0.50</factor> <!-- According to photo reference -->
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+
 	
 	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
-		<object-name>EngineIAEV2500</object-name>
+		<object-name>EngineIAEV2500L</object-name>
+		<object-name>EngineIAEV2500R</object-name>
 		<object-name>ReverserLDoor</object-name>
+		<object-name>ReverserRDoor</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
-		<object-name>PylonIAEV2500</object-name>
+		<object-name>PylonIAEV2500L</object-name>
+		<object-name>PylonIAEV2500R</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
-		<object-name>IntakeIAEV2500</object-name>
+		<object-name>IntakeIAEV2500L</object-name>
+		<object-name>IntakeIAEV2500R</object-name>
 	</effect>
 </PropertyList>
