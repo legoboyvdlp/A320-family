@@ -448,7 +448,6 @@
 		</axis>
 	</animation>
 
-
 	<animation>
 		<name>Reverser Door RH 1</name>
 		<type>rotate</type>
@@ -458,10 +457,10 @@
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.7738</x1-m>
-			<y1-m>-6.25156</y1-m>
+			<y1-m> 5.01008</y1-m>
 			<z1-m>-1.65547</z1-m>
 			<x2-m>-4.77475</x2-m>
-			<y2-m>-6.29771</y2-m>
+			<y2-m> 4.96393</y2-m>
 			<z2-m>-1.71849</z2-m>
 		</axis>
 	</animation>
@@ -475,10 +474,10 @@
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.77785</x1-m>
-			<y1-m>6.29253</y1-m>
+			<y1-m> 4.96912</y1-m>
 			<z1-m>-2.82287</z1-m>
 			<x2-m>-4.77731</x2-m>
-			<y2-m>6.2496</y2-m>
+			<y2-m> 5.01204</y2-m>
 			<z2-m>-2.88363</z2-m>
 		</axis>
 	</animation>
@@ -492,10 +491,10 @@
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.7738</x1-m>
-			<y1-m>5.01022</y1-m>
+			<y1-m> 6.25142</y1-m>
 			<z1-m>-1.6555</z1-m>
 			<x2-m>-4.77475</x2-m>
-			<y2-m>4.96408</y2-m>
+			<y2-m> 6.29756</y2-m>
 			<z2-m>-1.71852</z2-m>
 		</axis>
 	</animation>
@@ -509,10 +508,10 @@
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
 			<x1-m>-4.778</x1-m>
-			<y1-m>4.96919</y1-m>
+			<y1-m> 6.29245</y1-m>
 			<z1-m>-2.82264</z1-m>
 			<x2-m>-4.77746</x2-m>
-			<y2-m>5.01209</y2-m>
+			<y2-m> 6.24955</y2-m>
 			<z2-m>-2.8834</z2-m>
 		</axis>
 	</animation>
