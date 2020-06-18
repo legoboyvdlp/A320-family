@@ -214,39 +214,14 @@ var flightPlanController = {
 		if (me.currentToWptIndexTemp < 1) {
 			me.currentToWptIndex.setValue(1);
 		} else if (me.num[2].getValue() > 2) {
-			if (me.currentToWptIndexTemp == 2) { # Clean up after a no-sequence waypoint
-				me.currentToWptIndex.setValue(1); # MUST be set first
-				# TODO: Add support for deleting multiple waypoints at once, this will do for now
-				if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
-					me.deleteWP(0, 0);
-				}
-				if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
-					me.deleteWP(0, 1);
-				}
-				me.deleteWP(0, 2, 0, 1);
-				if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
-					me.deleteWP(0, 0);
-				}
-				if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
-					me.deleteWP(0, 1);
-				}
-				me.deleteWP(0, 2, 0, 1);
-			} else {
-				me.wptHidden = me.flightplans[2].getWP(me.currentToWptIndexTemp).hidden;
-				me.wptType = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type;
-				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "dmeIntercept" or me.wptType == "hdgToAlt";
-				if (me.wptTypeNoAdvanceDelete or me.wptHidden) {
-					me.currentToWptIndex.setValue(2);
-				} else {
-					if (me.temporaryFlag[0] == 1 and wpID[0][0] == wpID[2][0]) {
-						me.deleteWP(0, 0);
-					}
-					if (me.temporaryFlag[1] == 1 and wpID[1][0] == wpID[2][0]) {
-						me.deleteWP(0, 1);
-					}
-					me.deleteWP(0, 2, 0, 1);
+			for (var i = 0; i <= 2; i += 1) {
+				if (i == 2) {
+					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
+				} elsif (me.temporaryFlag[i]) {
+					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
 				}
 			}
+			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 		}
 	},
 	
@@ -791,7 +766,7 @@ var flightPlanController = {
 			return 3;
 		}
 		
-		if (!fmgc.flightPlanController.temporaryFlag[plan]) {
+		if (!me.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
 				var thePlan = 2;
 			} else {
