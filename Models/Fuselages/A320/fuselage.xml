@@ -411,7 +411,7 @@
 		<type>translate</type>
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
-		<object-name>NLGTorqueLink2</object-name>
+		<!--<object-name>NLGTorqueLink2</object-name>-->
 		<property>gear/gear[0]/compression-norm</property>
 		<factor>-0.3048</factor>
 		<axis>
@@ -422,39 +422,6 @@
 			<y2-m>-0.001254</y2-m>
 			<z2-m>-4.03746</z2-m>
 		</axis>
-	</animation>
-	
-	<animation>
-		<type>locked-track</type>
-		<object-name>NLGTorqueLink2</object-name> <!-- lower -->
-		<center>
-		  <x-m>-13.569</x-m>
-		  <y-m>-0.004744</y-m>
-		  <z-m>-3.91356</z-m>
-		</center>
-		<lock-axis>
-		  <x>0</x>
-		  <y>1</y>
-		  <z>0</z>
-		</lock-axis>
-		<track-axis>
-		  <x>0.100955</x>
-		  <y>0.569668</y>
-		  <z>0.001675</z>
-		</track-axis>
-		
-		<target-name>NLGTorqueLink1</target-name>
-		<target-center>
-		  <x-m>-13.2685</x-m>
-		  <y-m>-0.005584</y-m>
-		  <z-m>-3.67419</z-m>
-		</target-center>
-		
-		<slave-center> <!-- rotation axis of upper -->
-		  <x-m>-13.468</x-m>
-		  <y-m>-0.006419</y-m>
-		  <z-m>-3.34389</z-m>
-		</slave-center>
 	</animation>
 	
 	<animation>
@@ -471,22 +438,23 @@
 		  <z>0</z>
 		</lock-axis>
 		<track-axis>
-		  <x>-0.100955</x>
-		  <y>-0.569668</y>
+		  <x>-0.100957</x>
+		  <y>-0.569667</y>
 		  <z>-0.001675</z>
 		</track-axis>
 		
-		<target-name>NLGTorqueLink2</target-name>
+		<target-name>NLGSlidingTubeAxle</target-name>
 		<target-center>
-		  <x-m>-13.2685</x-m>
-		  <y-m>-0.005584</y-m>
-		  <z-m>-3.67419</z-m>
-		</target-center>
-		
-		<slave-center> <!-- rotation axis of lower -->
 		  <x-m>-13.569</x-m>
 		  <y-m>-0.004744</y-m>
 		  <z-m>-3.91356</z-m>
+		</target-center>
+		
+		<slave-name>NLGTorqueLink2</slave-name>
+		<slave-center> <!-- rotation axis of lower -->
+		  <x-m>-13.2685</x-m>
+		  <y-m>-0.005584</y-m>
+		  <z-m>-3.67419</z-m>
 		</slave-center>
 	</animation>
 	
@@ -957,6 +925,24 @@
 			<x2-m>2.5211</x2-m>
 			<y2-m>16.2893</y2-m>
 			<z2-m>0.291973</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Slats -->
+	<animation>
+		<name>Left slats</name>
+		<type>rotate</type>
+		<object-name>SLatL1</object-name>
+		<object-name>SlatL2</object-name>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>-27</factor>
+		<axis>
+			<x1-m>1.65134</x1-m>
+			<y1-m>-16.1742</y1-m>
+			<z1-m>-0.036693</z1-m>
+			<x2-m>-5.49045</x2-m>
+			<y2-m>-2.20908</y2-m>
+			<z2-m>-1.32506</z2-m>
 		</axis>
 	</animation>
 	
