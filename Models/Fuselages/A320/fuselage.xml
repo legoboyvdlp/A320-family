@@ -636,7 +636,7 @@
 		<type>spin</type>
 		<object-name>NLGWheels</object-name>
 		<property>gear/gear[0]/rollspeed-ms</property>
-		<factor>10</factor>
+		<factor>25.3633375446</factor>
 		<axis>
 			<x>0</x>
 			<y>-1</y>
@@ -654,7 +654,7 @@
 		<type>spin</type>
 		<object-name>MLGWheelsL</object-name>
 		<property>gear/gear[1]/rollspeed-ms</property>
-		<factor>10</factor>
+		<factor>17.2338866369</factor>
 		<axis>
 			<x>0</x>
 			<y>-1</y>
@@ -672,7 +672,7 @@
 		<type>spin</type>
 		<object-name>MLGWheelsR</object-name>
 		<property>gear/gear[2]/rollspeed-ms</property>
-		<factor>10</factor>
+		<factor>17.2338866369</factor>
 		<axis>
 			<x>0</x>
 			<y>-1</y>
