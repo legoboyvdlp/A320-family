@@ -406,12 +406,12 @@
 	<!-- Gear -->
 	
 	<!-- Compression -->
+	
 	<animation>
 		<name>Compression (Nose)</name>
 		<type>translate</type>
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
-		<!--<object-name>NLGTorqueLink2</object-name>-->
 		<property>gear/gear[0]/compression-norm</property>
 		<factor>-0.3048</factor>
 		<axis>
@@ -434,13 +434,13 @@
 		</center>
 		<lock-axis>
 		  <x>0</x>
-		  <y>1</y>
+		  <y>-1</y>
 		  <z>0</z>
 		</lock-axis>
 		<track-axis>
-		  <x>-0.100957</x>
-		  <y>-0.569667</y>
-		  <z>-0.001675</z>
+		  <x>0.100957</x>
+		  <y>0.569667</y>
+		  <z>0.001675</z>
 		</track-axis>
 		
 		<target-name>NLGSlidingTubeAxle</target-name>
