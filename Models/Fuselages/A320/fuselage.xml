@@ -434,24 +434,24 @@
 		</center>
 		<lock-axis>
 		  <x>0</x>
-		  <y>-1</y>
+		  <y>-1</y> <!-- inverting this gives strange results! -->
 		  <z>0</z>
 		</lock-axis>
-		<track-axis>
+		<track-axis> <!-- +- ve doesn't matter -->
 		  <x>0.100957</x>
 		  <y>0.569667</y>
 		  <z>0.001675</z>
 		</track-axis>
 		
-		<target-name>NLGSlidingTubeAxle</target-name>
-		<target-center>
+		<target-name>NLGSlidingTubeAxle</target-name> <!-- oleo strut -->
+		<target-center>  <!-- rotation axis of lower -->
 		  <x-m>-13.569</x-m>
 		  <y-m>-0.004744</y-m>
 		  <z-m>-3.91356</z-m>
 		</target-center>
 		
 		<slave-name>NLGTorqueLink2</slave-name>
-		<slave-center> <!-- rotation axis of lower -->
+		<slave-center>  <!-- middle hinge -->
 		  <x-m>-13.2685</x-m>
 		  <y-m>-0.005584</y-m>
 		  <z-m>-3.67419</z-m>
@@ -463,8 +463,6 @@
 		<type>translate</type>
 		<object-name>MLGSlidingTubeAxleL</object-name>
 		<object-name>MLGWheelsL</object-name>
-		<object-name>MLGTorqueLinkL2</object-name>
-		<object-name>MLGSlaveLinkL2</object-name>
 		<object-name>MLGCablesL2</object-name>
 		<property>gear/gear[1]/compression-norm</property>
 		<factor>-0.3048</factor>
@@ -480,39 +478,6 @@
 	
 	<animation>
 		<type>locked-track</type>
-		<object-name>MLGTorqueLinkL2</object-name> <!-- lower -->
-		<center>
-		  <x-m>-1.28275</x-m>
-		  <y-m>-3.87113</y-m>
-		  <z-m>-3.81849</z-m>
-		</center>
-		<lock-axis>
-		  <x>0</x>
-		  <y>1</y>
-		  <z>0</z>
-		</lock-axis>
-		<track-axis>
-		  <x>0.125464</x>
-		  <y>-0.632771</y>
-		  <z>-0.000499</z>
-		</track-axis>
-		
-		<target-name>MLGTorqueLinkL1</target-name>
-		<target-center>
-		  <x-m>-1.58278</x-m>
-		  <y-m>-3.85151</y-m>
-		  <z-m>-3.55522</z-m>
-		</target-center>
-		
-		<slave-center> <!-- rotation axis of upper -->
-		  <x-m>-1.40821</x-m>
-		  <y-m>-3.87163</y-m>
-		  <z-m>-3.18572</z-m>
-		</slave-center>
-	</animation>
-	
-	<animation>
-		<type>locked-track</type>
 		<object-name>MLGTorqueLinkL1</object-name> <!-- upper -->
 		<center>
 		  <x-m>-1.40821</x-m>
@@ -521,59 +486,27 @@
 		</center>
 		<lock-axis>
 		  <x>0</x>
-		  <y>1</y>
+		  <y>1</y> <!-- inverting this gives strange results! -->
 		  <z>0</z>
 		</lock-axis>
-		<track-axis>
+		<track-axis> <!-- +- ve doesn't matter -->
 		  <x>0.125464</x>
 		  <y>-0.632771</y>
 		  <z>-0.000499</z>
 		</track-axis>
 		
-		<target-name>MLGTorqueLinkL2</target-name>
-		<target-center>
-		  <x-m>-1.58278</x-m>
-		  <y-m>-3.85151</y-m>
-		  <z-m>-3.55522</z-m>
-		</target-center>
-		
-		<slave-center> <!-- rotation axis of lower -->
+		<target-name>MLGSlidingTubeAxleL</target-name> <!-- oleo strut -->
+		<target-center>  <!-- rotation axis of lower -->
 		  <x-m>-1.28275</x-m>
 		  <y-m>-3.87113</y-m>
 		  <z-m>-3.81849</z-m>
-		</slave-center>
-	</animation>
-	
-	<animation>
-		<type>locked-track</type>
-		<object-name>MLGSlaveLinkL2</object-name> <!-- lower -->
-		<center>
-		  <x-m>-1.02521</x-m>
-		  <y-m>-3.87137</y-m>
-		  <z-m>-3.76295</z-m>
-		</center>
-		<lock-axis>
-		  <x>0</x>
-		  <y>1</y>
-		  <z>0</z>
-		</lock-axis>
-		<track-axis>
-		  <x>0.125464</x>
-		  <y>-0.632771</y>
-		  <z>-0.000499</z>
-		</track-axis>
-		
-		<target-name>MLGSlaveLinkL1</target-name>
-		<target-center>
-		  <x-m>-0.886121</x-m>
-		  <y-m>-3.87234</y-m>
-		  <z-m>-3.43612</z-m>
 		</target-center>
 		
-		<slave-center> <!-- rotation axis of upper -->
-		  <x-m>-1.09482</x-m>
-		  <y-m>-3.87165</y-m>
-		  <z-m>-3.15584</z-m>
+		<object-name>MLGTorqueLinkL2</object-name>
+		<slave-center>  <!-- middle hinge -->
+		  <x-m>-1.58278</x-m>
+		  <y-m>-3.85151</y-m>
+		  <z-m>-3.55522</z-m>
 		</slave-center>
 	</animation>
 	
@@ -587,26 +520,27 @@
 		</center>
 		<lock-axis>
 		  <x>0</x>
-		  <y>1</y>
+		  <y>-1</y> <!-- inverting this gives strange results! -->
 		  <z>0</z>
 		</lock-axis>
-		<track-axis>
+		<track-axis> <!-- +- ve doesn't matter -->
 		  <x>0.125464</x>
 		  <y>-0.632771</y>
 		  <z>-0.000499</z>
 		</track-axis>
 		
-		<target-name>MLGSlaveLinkL2</target-name>
-		<target-center>
-		  <x-m>-0.886121</x-m>
-		  <y-m>-3.87234</y-m>
-		  <z-m>-3.43612</z-m>
-		</target-center>
-		
-		<slave-center> <!-- rotation axis of lower -->
+		<target-name>MLGSlidingTubeAxleL</target-name> <!-- oleo strut -->
+		<target-center>  <!-- rotation axis of lower -->
 		  <x-m>-1.02521</x-m>
 		  <y-m>-3.87137</y-m>
 		  <z-m>-3.76295</z-m>
+		</target-center>
+		
+		<object-name>MLGSlaveLinkL2</object-name>
+		<slave-center>  <!-- middle hinge -->
+		  <x-m>-0.886121</x-m>
+		  <y-m>-3.87234</y-m>
+		  <z-m>-3.43612</z-m>
 		</slave-center>
 	</animation>
 	
@@ -615,8 +549,6 @@
 		<type>translate</type>
 		<object-name>MLGSlidingTubeAxleR</object-name>
 		<object-name>MLGWheelsR</object-name>
-		<object-name>MLGTorqueLinkR2</object-name>
-		<object-name>MLGSlaveLinkR2</object-name>
 		<object-name>MLGCablesR2</object-name>
 		<property>gear/gear[2]/compression-norm</property>
 		<factor>-0.3048</factor>
@@ -629,6 +561,75 @@
 			<z2-m>-3.93998</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>MLGTorqueLinkR1</object-name> <!-- upper -->
+		<center>
+		  <x-m>-1.40821</x-m>
+		  <y-m> 3.87163</y-m>
+		  <z-m>-3.18572</z-m>
+		</center>
+		<lock-axis>
+		  <x>0</x>
+		  <y>1</y> <!-- inverting this gives strange results! -->
+		  <z>0</z>
+		</lock-axis>
+		<track-axis> <!-- +- ve doesn't matter -->
+		  <x>0.125464</x>
+		  <y>-0.632771</y>
+		  <z>-0.000499</z>
+		</track-axis>
+		
+		<target-name>MLGSlidingTubeAxleR</target-name> <!-- oleo strut -->
+		<target-center>  <!-- rotation axis of lower -->
+		  <x-m>-1.28275</x-m>
+		  <y-m> 3.87113</y-m>
+		  <z-m>-3.81849</z-m>
+		</target-center>
+		
+		<object-name>MLGTorqueLinkL2</object-name>
+		<slave-center>  <!-- middle hinge -->
+		  <x-m>-1.58278</x-m>
+		  <y-m> 3.85151</y-m>
+		  <z-m>-3.55522</z-m>
+		</slave-center>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>MLGSlaveLinkR1</object-name> <!-- upper -->
+		<center>
+		  <x-m>-1.09482</x-m>
+		  <y-m> 3.87165</y-m>
+		  <z-m>-3.15584</z-m>
+		</center>
+		<lock-axis>
+		  <x>0</x>
+		  <y>-1</y> <!-- inverting this gives strange results! -->
+		  <z>0</z>
+		</lock-axis>
+		<track-axis> <!-- +- ve doesn't matter -->
+		  <x>0.125464</x>
+		  <y>-0.632771</y>
+		  <z>-0.000499</z>
+		</track-axis>
+		
+		<target-name>MLGSlidingTubeAxleR</target-name> <!-- oleo strut -->
+		<target-center>  <!-- rotation axis of lower -->
+		  <x-m>-1.02521</x-m>
+		  <y-m> 3.87137</y-m>
+		  <z-m>-3.76295</z-m>
+		</target-center>
+		
+		<object-name>MLGSlaveLinkR2</object-name>
+		<slave-center>  <!-- middle hinge -->
+		  <x-m>-0.886121</x-m>
+		  <y-m> 3.87234</y-m>
+		  <z-m>-3.43612</z-m>
+		</slave-center>
+	</animation>
+	
 	
 	<!-- Tyre Spin -->
 	<animation>
