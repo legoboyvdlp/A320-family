@@ -55,8 +55,10 @@
 		<object-name>FlapL2</object-name>
 		<object-name>FlapR1</object-name>
 		<object-name>FlapR2</object-name>
-		<object-name>SLatL1</object-name>
+		<object-name>SlatL1</object-name>
 		<object-name>SlatL2</object-name>
+		<object-name>SlatR1</object-name>
+		<object-name>SlatR2</object-name>
 		<object-name>WingtipFence</object-name>
 		<object-name>Sharklet</object-name>
 		<object-name>LightWingL</object-name>
@@ -931,21 +933,68 @@
 	
 	<!-- Slats -->
 	<animation>
-		<name>Left slats</name>
+		<name>Left inbd slats</name>
 		<type>rotate</type>
-		<object-name>SLatL1</object-name>
+		<object-name>SlatL1</object-name>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>-27</factor>
+		<axis>
+			<x1-m>-3.77871</x1-m>
+			<y1-m>-5.18072</y1-m>
+			<z1-m>-1.27424</z1-m>
+			<x2-m>-5.30738</x2-m>
+			<y2-m>-2.12168</y2-m>
+			<z2-m>-1.49252</z2-m>
+		</axis>
+	</animation>	
+	<animation>
+		<name>Left otbd slats</name>
+		<type>rotate</type>
 		<object-name>SlatL2</object-name>
 		<property>sim/multiplay/generic/float[11]</property>
 		<factor>-27</factor>
 		<axis>
-			<x1-m>1.65134</x1-m>
-			<y1-m>-16.1742</y1-m>
-			<z1-m>-0.036693</z1-m>
-			<x2-m>-5.49045</x2-m>
-			<y2-m>-2.20908</y2-m>
-			<z2-m>-1.32506</z2-m>
+			<x1-m>1.76797</x1-m>
+			<y1-m>-16.34869</y1-m>
+			<z1-m>-0.00822</z1-m>
+			<x2-m>-3.54786</x2-m>
+			<y2-m>-5.99527</y2-m>
+			<z2-m>-1.06999</z2-m>
 		</axis>
 	</animation>
+
+	<animation>
+		<name>Right inbd slats</name>
+		<type>rotate</type>
+		<object-name>SlatR1</object-name>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>27</factor>
+		<axis>
+			<x1-m>-3.77871</x1-m>
+			<y1-m>5.17861</y1-m>
+			<z1-m>-1.27424</z1-m>
+			<x2-m>-5.30738</x2-m>
+			<y2-m>2.11957</y2-m>
+			<z2-m>-1.49252</z2-m>
+		</axis>
+	</animation>	
+	<animation>
+		<name>Right otbd slats</name>
+		<type>rotate</type>
+		<object-name>SlatR2</object-name>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>27</factor>
+		<axis>
+			<x1-m>1.76797</x1-m>
+			<y1-m>16.34658</y1-m>
+			<z1-m>-0.00822</z1-m>
+			<x2-m>-3.54786</x2-m>
+			<y2-m>5.99316</y2-m>
+			<z2-m>-1.06999</z2-m>
+		</axis>
+	</animation>
+
+
 	
 	<!-- Spoilers -->
 	<animation>
