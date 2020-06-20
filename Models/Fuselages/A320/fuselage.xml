@@ -266,15 +266,15 @@
 		<object-name>MLGCablesL1</object-name>
 		<object-name>MLGCablesL2</object-name>
 		<object-name>MLGSlidingTubeAxleL</object-name>
-		<object-name>SideStayL2</object-name>
+		<!--<object-name>SideStayL2</object-name>
 		<object-name>SideStayL1</object-name>
 		<object-name>MLGLockStayL1</object-name>
 		<object-name>MLGLockStayL2</object-name>
 		<object-name>MLGLockstayActuatorL1</object-name>
-		<object-name>MLGLockstayActuatorL2</object-name>
+		<object-name>MLGLockstayActuatorL2</object-name>-->
 		<object-name>MLGTorqueLinkL1</object-name>
 		<object-name>MLGTorqueLinkL2</object-name>
-		<object-name>MLGLSlaveLinkL1</object-name>
+		<object-name>MLGSlaveLinkL1</object-name>
 		<object-name>MLGSlaveLinkL2</object-name>
 		<object-name>MLGWingDoorL1</object-name>
 		<object-name>MLGWingDoorL1.Inner</object-name>
@@ -292,6 +292,140 @@
 			<z2-m>-1.17403</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SideStayL1</object-name>
+		<object-name>SideStayL2</object-name>
+		<condition>
+			<greater-than>
+				<property>gear/gear[1]/position-norm</property>
+				<value>0.27</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>SideStayL2</object-name>
+		<center>
+		  <x-m>-1.33702</x-m>
+		  <y-m>-3.7148</y-m>
+		  <z-m>-2.60177</z-m>
+		</center>
+		<lock-axis>
+		  <x>0.123337</x>
+		  <y>0.071652</y>
+		  <z>-0.019742</z>
+		</lock-axis>
+		<track-axis>
+		  <x>-0.840759</x>
+		  <y>0.388363</y>
+		  <z>1.57522</z>
+		</track-axis>
+		
+		<target-name>Static-Elements</target-name>
+		<target-center>
+		  <x-m>-2.18098</x-m>
+		  <y-m>-2.45903</y-m>
+		  <z-m>-1.44973</z-m>
+		</target-center>
+		
+		<slave-name>SideStayL1</slave-name>
+		<slave-center>
+		  <x-m>-1.79538</x-m>
+		  <y-m>-3.22299</y-m>
+		  <z-m>-1.94457</z-m>
+		</slave-center>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>MLGLockStayL1</object-name>
+		<center>
+		  <x-m>-1.97681</x-m>
+		  <y-m>-3.87645</y-m>
+		  <z-m>-1.45257</z-m>
+		</center>
+		<lock-axis>
+		  <x>0.02488</x>
+		  <y>0.0183955</y>
+		  <z>-0.004424</z>
+		</lock-axis>
+		<track-axis>
+		  <x>0.130818</x>
+		  <y>-0.401675</y>
+		  <z>-0.640478</z>
+		</track-axis>
+		
+		<target-name>SideStayL1</target-name>
+		<target-center>
+		  <x-m>-1.84615</x-m>
+		  <y-m>-3.24043</y-m>
+		  <z-m>-1.85274</z-m>
+		</target-center>
+		
+		<slave-name>MLGLockStayL2</slave-name>
+		<slave-center>
+		  <x-m>-1.88007</x-m>
+		  <y-m>-3.47957</y-m>
+		  <z-m>-1.72857</z-m>
+		</slave-center>
+	</animation>
+	
+    <!--<animation>
+		<type>locked-track</type>
+		<object-name>MLGLockstayActuatorL1</object-name>
+		<center>
+		  <x-m>-2.03965</x-m>
+		  <y-m>-3.00317</y-m>
+		  <z-m>-1.55554</z-m>
+		</center>
+		<lock-axis>
+		  <x>-0.031283</x>
+		  <y>-0.018093</y>
+		  <z>0.004954</z>
+		</lock-axis>
+		<track-axis>
+		  <x>0.176109</x>
+		  <y>-0.208942</y>
+		  <z>0.349027</z>
+		</track-axis>
+		
+		<target-name>MLGLockStayL2</target-name>
+		<target-center>
+		  <x-m>-1.87714</x-m>
+		  <y-m>-3.35268</y-m>
+		  <z-m>-1.76802</z-m>
+		</target-center>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>MLGLockstayActuatorL2</object-name>
+		<center>
+		  <x-m>-1.87714</x-m>
+		  <y-m>-3.35268</y-m>
+		  <z-m>-1.76802</z-m>
+		</center>
+		<lock-axis>
+		  <x>-0.031283</x>
+		  <y>-0.018093</y>
+		  <z>0.004954</z>
+		</lock-axis>
+		<track-axis>
+		  <x>0.176109</x>
+		  <y>-0.208942</y>
+		  <z>0.349027</z>
+		</track-axis>
+		
+		<target-name>Static-Elements</target-name>
+		<target-center>
+		  <x-m>-2.03965</x-m>
+		  <y-m>-3.00317</y-m>
+		  <z-m>-1.55554</z-m>
+		</target-center>
+	</animation>-->
 	
 	<animation>
 		<type>rotate</type>
@@ -504,7 +638,7 @@
 		  <z-m>-3.81849</z-m>
 		</target-center>
 		
-		<object-name>MLGTorqueLinkL2</object-name>
+		<slave-name>MLGTorqueLinkL2</slave-name>
 		<slave-center>  <!-- middle hinge -->
 		  <x-m>-1.58278</x-m>
 		  <y-m>-3.85151</y-m>
@@ -538,7 +672,7 @@
 		  <z-m>-3.76295</z-m>
 		</target-center>
 		
-		<object-name>MLGSlaveLinkL2</object-name>
+		<slave-name>MLGSlaveLinkL2</slave-name>
 		<slave-center>  <!-- middle hinge -->
 		  <x-m>-0.886121</x-m>
 		  <y-m>-3.87234</y-m>
@@ -590,7 +724,7 @@
 		  <z-m>-3.81849</z-m>
 		</target-center>
 		
-		<object-name>MLGTorqueLinkL2</object-name>
+		<slave-name>MLGTorqueLinkL2</slave-name>
 		<slave-center>  <!-- middle hinge -->
 		  <x-m>-1.58278</x-m>
 		  <y-m> 3.85151</y-m>
@@ -624,14 +758,13 @@
 		  <z-m>-3.76295</z-m>
 		</target-center>
 		
-		<object-name>MLGSlaveLinkR2</object-name>
+		<slave-name>MLGSlaveLinkR2</slave-name>
 		<slave-center>  <!-- middle hinge -->
 		  <x-m>-0.886121</x-m>
 		  <y-m> 3.87234</y-m>
 		  <z-m>-3.43612</z-m>
 		</slave-center>
 	</animation>
-	
 	
 	<!-- Tyre Spin -->
 	<animation>
