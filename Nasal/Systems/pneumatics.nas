@@ -55,6 +55,9 @@ var PNEU = {
 		trimCockpit: props.globals.getNode("/ECAM/Lower/trim-cockpit-output"),
 		trimAft: props.globals.getNode("/ECAM/Lower/trim-aft-output"),
 		trimFwd: props.globals.getNode("/ECAM/Lower/trim-fwd-output"),
+		cockpitDuctTemp: props.globals.getNode("/systems/air-conditioning/temperatures/cockpit-duct"),
+		cabinAftDuctTemp: props.globals.getNode("/systems/air-conditioning/temperatures/cabin-aft-duct"),
+		cabinFwdDuctTemp: props.globals.getNode("/systems/air-conditioning/temperatures/cabin-fwd-duct"),
 	},
 	Psi: {
 		engine1: props.globals.getNode("/systems/pneumatics/psi/engine-1-psi"),

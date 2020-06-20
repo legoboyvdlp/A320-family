@@ -1003,6 +1003,9 @@
 			</packs>
 			<temperatures>
 				<cabin-overall-temp-kelvin type="double">297</cabin-overall-temp-kelvin>
+				<cockpit-duct type="double">0</cockpit-duct>
+				<cabin-aft-duct type="double">0</cabin-aft-duct>
+				<cabin-fwd-duct type="double">0</cabin-fwd-duct>
 			</temperatures>
 			<valves>
 				<flow-control-valve-1 type="double">0</flow-control-valve-1>

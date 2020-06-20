@@ -1082,7 +1082,7 @@ var canvas_lowerECAM_cond = {
 	},
 	getKeys: func() {
 		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","CargoCond","CONDHotAirValve","CONDFanFwdFault","CONDFanAftFault",
-		"CONDTrimValveCKPT","CONDTrimValveAFT","CONDTrimValveFWD"];
+		"CONDTrimValveCKPT","CONDTrimValveAFT","CONDTrimValveFWD","CONDDuctTempCKPT","CONDDuctTempAFT","CONDDuctTempFWD","CONDTempCKPT","CONDTempAFT","CONDTempFWD"];
 	},
 	update: func() {
 		if (systems.PNEU.Valves.hotAir.getValue() == 0) {
@@ -1104,6 +1104,10 @@ var canvas_lowerECAM_cond = {
 		me["CONDTrimValveCKPT"].setRotation(systems.PNEU.Packs.trimCockpit.getValue() * D2R);
 		me["CONDTrimValveAFT"].setRotation(systems.PNEU.Packs.trimAft.getValue() * D2R);
 		me["CONDTrimValveFWD"].setRotation(systems.PNEU.Packs.trimFwd.getValue() * D2R);
+		
+		me["CONDDuctTempCKPT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cockpitDuctTemp.getValue())));
+		me["CONDDuctTempAFT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinAftDuctTemp.getValue())));
+		me["CONDDuctTempFWD"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinFwdDuctTemp.getValue())));
 		
 		# fans faults not implemented
 		me["CONDFanFwdFault"].hide();
