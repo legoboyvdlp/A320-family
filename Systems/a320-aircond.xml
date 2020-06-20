@@ -331,10 +331,17 @@
 			<rate_limit>/systems/air-conditioning/valves/trim-power-cockpit</rate_limit>
 		</actuator>
 		
-		<lag_filter name="/systems/air-conditioning/temperatures/cockpit-temp">
-			<input>/systems/air-conditioning/packs/demand-temp/cockpit</input>
-			<c1>0.01</c1>
-		</lag_filter>
+		<switch name="/systems/air-conditioning/temperatures/rate">
+			<default value="0.03333333333"/>
+			<test value="100">
+				/sim/time/elapsed-sec lt 20
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cockpit-temp">
+			<input>/systems/air-conditioning/packs/demand-temp/cockpit-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/temperatures/rate</rate_limit>
+		</actuator>
 		
 		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-aft">
 			<function>
@@ -384,10 +391,10 @@
 			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-aft</rate_limit>
 		</actuator>
 		
-		<lag_filter name="/systems/air-conditioning/temperatures/cabin-aft-temp">
-			<input>/systems/air-conditioning/packs/demand-temp/cabin-aft</input>
-			<c1>0.01</c1>
-		</lag_filter>
+		<actuator name="/systems/air-conditioning/temperatures/cabin-aft-temp">
+			<input>/systems/air-conditioning/packs/demand-temp/cabin-aft-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/temperatures/rate</rate_limit>
+		</actuator>
 		
 		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-fwd">
 			<function>
@@ -424,10 +431,10 @@
 			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-fwd</rate_limit>
 		</actuator>
 		
-		<lag_filter name="/systems/air-conditioning/temperatures/cabin-fwd-temp">
-			<input>/systems/air-conditioning/packs/demand-temp/cabin-fwd</input>
-			<c1>0.01</c1>
-		</lag_filter>
+		<actuator name="/systems/air-conditioning/temperatures/cabin-fwd-temp">
+			<input>/systems/air-conditioning/packs/demand-temp/cabin-fwd-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/temperatures/rate</rate_limit>
+		</actuator>
 		
 		<switch name="/systems/air-conditioning/valves/ram-air-cmd">
 			<default value="0"/>

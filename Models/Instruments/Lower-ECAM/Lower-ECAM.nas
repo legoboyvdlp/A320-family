@@ -1109,6 +1109,10 @@ var canvas_lowerECAM_cond = {
 		me["CONDDuctTempAFT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinAftDuctTemp.getValue())));
 		me["CONDDuctTempFWD"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinFwdDuctTemp.getValue())));
 		
+		me["CONDTempCKPT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cockpitTemp.getValue())));
+		me["CONDTempAFT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinAftTemp.getValue())));
+		me["CONDTempFWD"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinFwdTemp.getValue())));
+		
 		# fans faults not implemented
 		me["CONDFanFwdFault"].hide();
 		me["CONDFanAftFault"].hide();

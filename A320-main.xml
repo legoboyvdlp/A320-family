@@ -1006,6 +1006,9 @@
 				<cockpit-duct type="double">0</cockpit-duct>
 				<cabin-aft-duct type="double">0</cabin-aft-duct>
 				<cabin-fwd-duct type="double">0</cabin-fwd-duct>
+				<cockpit-temp type="double">0</cockpit-temp>
+				<cabin-aft-temp type="double">0</cabin-aft-temp>
+				<cabin-fwd-temp type="double">0</cabin-fwd-temp>
 			</temperatures>
 			<valves>
 				<flow-control-valve-1 type="double">0</flow-control-valve-1>
