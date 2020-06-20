@@ -1716,8 +1716,44 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack2Off);
 	}
 	
+	# COND
+	if (cabFanFault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.cabinFans.getBoolValue()) {
+		cabFanFault.active = 1;
+		cabFanFaultFlow.active = 1;
+	} else {
+		ECAM_controller.warningReset(cabFanFault);
+		ECAM_controller.warningReset(cabFanFaultFlow);
+	}
+	
+	if (trimAirFault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.trimAirFault.getValue() == 1) {
+		trimAirFault.active = 1;
+		
+		if (systems.PNEU.Fail.trimValveAft.getBoolValue()) {
+			trimAirFaultAft.active = 1; 
+		} else {
+			ECAM_controller.warningReset(trimAirFaultAft);
+		}
+		
+		if (systems.PNEU.Fail.trimValveFwd.getBoolValue()) {
+			trimAirFaultFwd.active = 1; 
+		} else {
+			ECAM_controller.warningReset(trimAirFaultFwd);
+		}
+		
+		if (systems.PNEU.Fail.trimValveCockpit.getBoolValue()) {
+			trimAirFaultCkpt.active = 1; 
+		} else {
+			ECAM_controller.warningReset(trimAirFaultCkpt);
+		}
+	} else {
+		ECAM_controller.warningReset(trimAirFault);
+		ECAM_controller.warningReset(trimAirFaultAft);
+		ECAM_controller.warningReset(trimAirFaultFwd);
+		ECAM_controller.warningReset(trimAirFaultCkpt);
+	}
+	
 	# ENG AICE
-	if (eng1IceClosed.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotOpen.getValue() == 1) {
+	if (eng1IceClosed.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotOpen.getValue() == 1) {
 		eng1IceClosed.active = 1;
 		eng1IceClosedIcing.active = 1;
 	} else {
@@ -1725,7 +1761,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1IceClosedIcing);
 	}
 	
-	if (eng2IceClosed.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotOpen.getValue() == 1) {
+	if (eng2IceClosed.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotOpen.getValue() == 1) {
 		eng2IceClosed.active = 1;
 		eng2IceClosedIcing.active = 1;
 	} else {
@@ -1733,7 +1769,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2IceClosedIcing);
 	}
 	
-	if (eng1IceOpen.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotClsd.getValue() == 1) {
+	if (eng1IceOpen.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotClsd.getValue() == 1) {
 		eng1IceOpen.active = 1;
 		eng1IceOpenThrust.active = 1;
 	} else {
@@ -1741,7 +1777,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1IceOpenThrust);
 	}
 	
-	if (eng2IceOpen.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotClsd.getValue() == 1) {
+	if (eng2IceOpen.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotClsd.getValue() == 1) {
 		eng2IceOpen.active = 1;
 		eng2IceOpenThrust.active = 1;
 	} else {

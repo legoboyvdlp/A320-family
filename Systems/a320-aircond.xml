@@ -313,7 +313,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/pneumatics/switches/hot-air</property>
+						<property>/systems/air-conditioning/valves/hot-air</property>
 						<value>0</value>
 					</eq>
 					<min>
@@ -373,7 +373,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/pneumatics/switches/hot-air</property>
+						<property>/systems/air-conditioning/valves/hot-air</property>
 						<value>0</value>
 					</eq>
 					<min>
@@ -413,7 +413,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/pneumatics/switches/hot-air</property>
+						<property>/systems/air-conditioning/valves/hot-air</property>
 						<value>0</value>
 					</eq>
 					<min>
@@ -766,12 +766,20 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/air-conditioning/recirc/cabin-fans">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/pneumatics/cabin-fans eq 1
+				/systems/failures/pneumatics/cabin-fans eq 0
+			</test>
+		</switch>
+		
 		<fcs_function name="/systems/air-conditioning/mass-flow-total-kg_s">
 			<function>
 				<sum>
 					<product>
 						<property>/systems/air-conditioning/recirc/recirc-factor</property>
-						<property>/controls/switches/pneumatics/cabin-fans</property>
+						<property>/systems/air-conditioning/recirc/cabin-fans</property>
 						<property>/systems/air-conditioning/mass-flow-fresh-kg_s</property>
 					</product>
 					<property>/systems/air-conditioning/mass-flow-fresh-kg_s</property>

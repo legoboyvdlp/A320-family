@@ -314,6 +314,13 @@
             <rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
+		<actuator name="/ECAM/warnings/timer/trim-air-fault">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/trim-air-fault-input</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
 	</channel>
 	
 	<channel name="ECAM">
@@ -1160,6 +1167,42 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/trim-air-fault-inhibit">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/ac-ess lt 110
+				<test logic="AND">
+					<test logic="OR">
+						/ECAM/warning-phase eq 1
+						/ECAM/warning-phase eq 10
+					</test>
+					/systems/air-conditioning/valves/hot-air eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/trim-air-fault-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/failures/pneumatics/trim-valve-cabin-aft eq 1
+					/systems/failures/pneumatics/trim-valve-cabin-fwd eq 1
+					/systems/failures/pneumatics/trim-valve-cockpit eq 1
+				</test>
+				/ECAM/warnings/logic/trim-air-fault-inhibit eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/cabin-fans-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/failures/pneumatics/cabin-fans eq 1
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
 	</channel>
 
 </system>

@@ -250,8 +250,8 @@ var warnings				  = std.Vector.new([
 	var bleed2FaultPack       = warning.new(msg: " -PACK 2.............OFF",  colour: "c"),
 	var bleed2FaultXBleed     = warning.new(msg: " -X BLEED...........OPEN",  colour: "c"),
 	var apuBleedFault         = warning.new(msg: "AIR APU BLEED FAULT",       colour: "a", aural: 1, light: 1),
-	var hpValve1Fault         = warning.new(msg: "AIR ENG 1 HP VALVE FAULT",  colour: "a", aural: 0, light: 0),
-	var hpValve2Fault         = warning.new(msg: "AIR ENG 2 HP VALVE FAULT",  colour: "a", aural: 0, light: 0),
+	var hpValve1Fault         = warning.new(msg: "AIR ENG 1 HP VALVE FAULT",  colour: "a"),
+	var hpValve2Fault         = warning.new(msg: "AIR ENG 2 HP VALVE FAULT",  colour: "a"),
 	var xBleedFault           = warning.new(msg: "AIR X BLEED FAULT",         colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var xBleedFaultMan        = warning.new(msg: " -X BLEED........MAN CTL",  colour: "c"),
 	var xBleedOff             = warning.new(msg: " -WING ANTI ICE......OFF",  colour: "c"),
@@ -292,9 +292,9 @@ var warnings				  = std.Vector.new([
 	var eng1BleedNotClsdOff   = warning.new(msg: " -ENG 1 BLEED........OFF",  colour: "c"),
 	var eng2BleedNotClsd      = warning.new(msg: "AIR ENG 2 BLEED NOT CLSD",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var eng2BleedNotClsdOff   = warning.new(msg: " -ENG 2 BLEED........OFF",  colour: "c"),
-	var bleedMonFault         = warning.new(msg: "BLEED MONITORING FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
-	var bleedMon1Fault        = warning.new(msg: "BLEED MONIT SYS 1 FAULT",   colour: "a", aural: 0, light: 0, isMainMsg: 1),
-	var bleedMon2Fault        = warning.new(msg: "BLEED MONIT SYS 2 FAULT",   colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var bleedMonFault         = warning.new(msg: "BLEED MONITORING FAULT",    colour: "a", isMainMsg: 1),
+	var bleedMon1Fault        = warning.new(msg: "BLEED MONIT SYS 1 FAULT",   colour: "a", isMainMsg: 1),
+	var bleedMon2Fault        = warning.new(msg: "BLEED MONIT SYS 2 FAULT",   colour: "a", isMainMsg: 1),
 	
 	# PACK
 	var pack12Fault           = warning.new(msg: "AIR PACK 1+2 FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -322,10 +322,12 @@ var warnings				  = std.Vector.new([
 	var pack2FaultOff         = warning.new(msg: " -PACK 2.............OFF",  colour: "c"),
 	var pack1Off              = warning.new(msg: "AIR PACK 1 OFF",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var pack2Off              = warning.new(msg: "AIR PACK 2 OFF",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var pack1RegulFlt         = warning.new(msg: "AIR PACK 1 REGUL FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
-	var pack2RegulFlt         = warning.new(msg: "AIR PACK 2 REGUL FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
-	var aftCrgVentFlt         = warning.new(msg: "AIR AFT CRG VENT FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
-	var fwdCrgVentFlt         = warning.new(msg: "AIR FWD CRG VENT FAULT",    colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var cabFanFault           = warning.new(msg: "COND L+R CAB FAN FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var cabFanFaultFlow       = warning.new(msg: " -PACK FLOW...........HI",  colour: "c"),
+	var trimAirFault          = warning.new(msg: "COND TRIM AIR SYS FAULT",   colour: "a", isMainMsg: 1),
+	var trimAirFaultAft       = warning.new(msg: " -AFT CAB TRIM VALVE",      colour: "c"),
+	var trimAirFaultFwd       = warning.new(msg: " -FWD CAB TRIM VALVE",      colour: "c"),
+	var trimAirFaultCkpt      = warning.new(msg: " -CKPT TRIM VALVE",         colour: "c"),
 	
 	# Eng AICE
 	var eng1IceClosed         = warning.new(msg: "ANTI ICE ENG1 VALVE CLSD",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -364,9 +366,9 @@ var warnings				  = std.Vector.new([
 	var wingIceROpenThrust    = warning.new(msg: " THRUST LIM PENALTY",       colour: "c"),
 	var wingIceOpenGnd        = warning.new(msg: "WING A.ICE OPEN ON GND",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var wingIceOpenGndShut    = warning.new(msg: " -WING ANTI ICE......OFF",  colour: "c"),
-	var wingIceLHiPr          = warning.new(msg: "WING A.ICE L HI PR",        colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var wingIceLHiPr          = warning.new(msg: "WING A.ICE L HI PR",        colour: "a", isMainMsg: 1),
 	var wingIceLHiPrThrust    = warning.new(msg: " THRUST LIM PENTALTY",      colour: "c"),
-	var wingIceRHiPr          = warning.new(msg: "WING A.ICE R HI PR",        colour: "a", aural: 0, light: 0, isMainMsg: 1),
+	var wingIceRHiPr          = warning.new(msg: "WING A.ICE R HI PR",        colour: "a", isMainMsg: 1),
 	var wingIceRHiPrThrust    = warning.new(msg: " THRUST LIM PENTALTY",      colour: "c"),
 	
 	# FIRE det fault

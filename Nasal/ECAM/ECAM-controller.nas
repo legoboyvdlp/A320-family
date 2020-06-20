@@ -51,6 +51,7 @@ var warningNodes = {
 		pack12Fault: props.globals.initNode("/ECAM/warnings/logic/pack-1-2-fault"),
 		pack1ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-1-switch-cmd"),
 		pack2ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-2-switch-cmd"),
+		cabinFans: props.globals.initNode("/ECAM/warnings/logic/cabin-fans-fault"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -76,6 +77,7 @@ var warningNodes = {
 		pack2Fault: props.globals.initNode("/ECAM/warnings/timer/pack-2-fault-2"),
 		pack1Off: props.globals.initNode("/ECAM/warnings/timer/pack-1-off"),
 		pack2Off: props.globals.initNode("/ECAM/warnings/timer/pack-2-off"),
+		trimAirFault: props.globals.initNode("/ECAM/warnings/timer/trim-air-fault"),
 	},
 	Flipflops: {
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
