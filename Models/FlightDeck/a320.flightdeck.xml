@@ -8448,5 +8448,135 @@
 			</binding>
 		</action>
 	</animation>
+	
+	<!-- Windows -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>WindowOpenerCpt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.windowLeft, "windowLeft", "left window");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>WindowOpenerFo</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.windowRight, "windowRight", "right window");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>WindowCpt</object-name>
+		<property>/sim/model/door-positions/windowLeft/position-norm</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.0</dep></entry>
+			<entry><ind>1.00</ind><dep>-0.6</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>0.95663</x1-m>
+			<y1-m>-1.52289</y1-m>
+			<z1-m>0.20648</z1-m>
+			<x2-m>-0.32899</x2-m>
+			<y2-m>-0.99848</y2-m>
+			<z2-m>0.20648</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>WindowCpt</object-name>
+		<property>/sim/model/door-positions/windowLeft/position-norm</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.08</dep></entry>
+			<entry><ind>1.00</ind><dep>0.08</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>WindowOpenerCpt</object-name>
+		<property>/sim/model/door-positions/windowLeft/position-norm</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>-10.0</dep></entry>
+			<entry><ind>0.25</ind><dep>90.0</dep></entry>
+			<entry><ind>1.00</ind><dep>90.0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>WindowOpenerCpt.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>WindowFo</object-name>
+		<property>/sim/model/door-positions/windowRight/position-norm</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.0</dep></entry>
+			<entry><ind>1.00</ind><dep>-0.6</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>0.95663</x1-m>
+			<y1-m>1.52289</y1-m>
+			<z1-m>0.20648</z1-m>
+			<x2-m>-0.32899</x2-m>
+			<y2-m>0.99848</y2-m>
+			<z2-m>0.20648</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>WindowFo</object-name>
+		<property>/sim/model/door-positions/windowRight/position-norm</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.08</dep></entry>
+			<entry><ind>1.00</ind><dep>0.08</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>WindowOpenerFo</object-name>
+		<property>/sim/model/door-positions/windowRight/position-norm</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>-90.0</dep></entry>
+			<entry><ind>1.00</ind><dep>-90.0</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>WindowOpenerFo.axis</object-name>
+		</axis>
+	</animation>
 
 </PropertyList>
