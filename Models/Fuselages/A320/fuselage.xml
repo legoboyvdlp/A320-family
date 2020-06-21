@@ -237,7 +237,6 @@
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
 		<object-name>NLGTorqueLink1</object-name>
-		<object-name>NLGTorqueLink2</object-name>
 		<object-name>NLGLockStay1</object-name>
 		<object-name>NLGLockStay2</object-name>
 		<object-name>NurbsPath.002</object-name>
@@ -273,9 +272,7 @@
 		<object-name>MLGLockstayActuatorL1</object-name>
 		<object-name>MLGLockstayActuatorL2</object-name>-->
 		<object-name>MLGTorqueLinkL1</object-name>
-		<object-name>MLGTorqueLinkL2</object-name>
 		<object-name>MLGSlaveLinkL1</object-name>
-		<object-name>MLGSlaveLinkL2</object-name>
 		<object-name>MLGWingDoorL1</object-name>
 		<object-name>MLGWingDoorL1.Inner</object-name>
 		<property>gear/gear[1]/position-norm</property>
@@ -479,9 +476,7 @@
 		<object-name>MLGLockstayActuatorR1</object-name>
 		<object-name>MLGLockstayActuatorR2</object-name>-->
 		<object-name>MLGTorqueLinkR1</object-name>
-		<object-name>MLGTorqueLinkR2</object-name>
-		<object-name>MLGLSlaveLinkR1</object-name>
-		<object-name>MLGSlaveLinkR2</object-name>
+		<object-name>MLGSlaveLinkR1</object-name>
 		<object-name>MLGWingDoorR1</object-name>
 		<object-name>MLGWingDoorR1.Inner</object-name>
 		<property>gear/gear[2]/position-norm</property>
