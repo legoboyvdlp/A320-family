@@ -5,29 +5,34 @@
 # props.nas:
 
 var dualFailNode = props.globals.initNode("/ECAM/dual-failure-enabled", 0, "BOOL");
-var phaseNode    = props.globals.getNode("ECAM/warning-phase", 1);
-var apWarn       = props.globals.getNode("it-autoflight/output/ap-warning", 1);
-var athrWarn     = props.globals.getNode("it-autoflight/output/athr-warning", 1);
-var emerGen      = props.globals.getNode("controls/electrical/switches/emer-gen", 1);
+var phaseNode    = props.globals.getNode("/ECAM/warning-phase", 1);
+var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
+var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
+var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
 
-var fac1Node   = props.globals.getNode("controls/fctl/switches/fac1", 1);
-var state1Node = props.globals.getNode("engines/engine[0]/state", 1);
-var state2Node = props.globals.getNode("engines/engine[1]/state", 1);
-var wowNode    = props.globals.getNode("fdm/jsbsim/position/wow", 1);
-var apu_rpm    = props.globals.getNode("engines/engine[2]/n1", 1);
-var wing_pb    = props.globals.getNode("controls/ice-protection/wing", 1);
-var apumaster  = props.globals.getNode("controls/apu/master", 1);
-var apu_bleedSw   = props.globals.getNode("controls/pneumatics/switches/apu", 1);
-var gear       = props.globals.getNode("gear/gear-pos-norm", 1);
-var cutoff1    = props.globals.getNode("controls/engines/engine[0]/cutoff-switch", 1);
-var cutoff2    = props.globals.getNode("controls/engines/engine[1]/cutoff-switch", 1);
+var fac1Node   = props.globals.getNode("/controls/fctl/switches/fac1", 1);
+var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
+var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
+var wowNode    = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
+var apu_rpm    = props.globals.getNode("/engines/engine[2]/n1", 1);
+var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
+var apumaster  = props.globals.getNode("/controls/apu/master", 1);
+var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
+var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
+var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
+var cutoff2    = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
 var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
-var engOpt     = props.globals.getNode("options/eng", 1);
+var engOpt     = props.globals.getNode("/options/eng", 1);
 
 # local variables
 var transmitFlag1 = 0;
 var transmitFlag2 = 0;
-var phaseVar = nil;
+var phaseVar3 = nil;
+var phaseVar2 = nil;
+var phaseVar1 = nil;
+var phaseVarMemo = nil;
+var phaseVarMemo2 = nil;
+var phaseVarMemo3 = nil;
 var dualFailFACActive = 1;
 var emerConfigFACActive = 1;
 var gear_agl_cur = nil;
@@ -40,11 +45,11 @@ var alt750 = nil;
 var bigThree = nil;
 
 var messages_priority_3 = func {
-	phaseVar = phaseNode.getValue();
+	phaseVar3 = phaseNode.getValue();
 	
 	# Stall
 	# todo - altn law and emer cancel flipflops page 2440
-	if (phaseVar >= 5 and phaseVar <= 7 and (getprop("fdm/jsbsim/fcs/slat-pos-deg") <= 15 and (getprop("systems/navigation/adr/output/aoa-1") > 15 or getprop("systems/navigation/adr/output/aoa-2") > 15 or getprop("systems/navigation/adr/output/aoa-3") > 15)) or (getprop("fdm/jsbsim/fcs/slat-pos-deg") > 15 and (getprop("systems/navigation/adr/output/aoa-1") > 23 or getprop("systems/navigation/adr/output/aoa-2") > 23 or getprop("systems/navigation/adr/output/aoa-3") > 23))) {
+	if (phaseVar3 >= 5 and phaseVar3 <= 7 and (getprop("fdm/jsbsim/fcs/slat-pos-deg") <= 15 and (getprop("systems/navigation/adr/output/aoa-1") > 15 or getprop("systems/navigation/adr/output/aoa-2") > 15 or getprop("systems/navigation/adr/output/aoa-3") > 15)) or (getprop("fdm/jsbsim/fcs/slat-pos-deg") > 15 and (getprop("systems/navigation/adr/output/aoa-1") > 23 or getprop("systems/navigation/adr/output/aoa-2") > 23 or getprop("systems/navigation/adr/output/aoa-3") > 23))) {
 		stall.active = 1;
 	} else {
 		ECAM_controller.warningReset(stall);
@@ -56,7 +61,7 @@ var messages_priority_3 = func {
 		stallVoice.setValue(0);
 	}
 	
-	if ((phaseVar == 1 or (phaseVar >= 5 and phaseVar <= 7)) and getprop("systems/navigation/adr/output/overspeed")) {
+	if ((phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("systems/navigation/adr/output/overspeed")) {
 		overspeed.active = 1;
 		if (getprop("systems/navigation/adr/computation/overspeed-vmo") or getprop("systems/navigation/adr/computation/overspeed-mmo")) {
 			overspeedVMO.active = 1;
@@ -86,7 +91,7 @@ var messages_priority_3 = func {
 	}
 	
 	# FCTL FLAPS NOT ZERO
-	if ((flap_not_zero.clearFlag == 0) and phaseVar == 6 and getprop("controls/flight/flaps-input") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
+	if ((flap_not_zero.clearFlag == 0) and phaseVar3 == 6 and getprop("controls/flight/flaps-input") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
 		flap_not_zero.active = 1;
 	} else {
 		ECAM_controller.warningReset(flap_not_zero);
@@ -94,7 +99,7 @@ var messages_priority_3 = func {
 	
 	# ENG DUAL FAIL
 	
-	if (phaseVar >= 5 and phaseVar <= 7 and dualFailNode.getBoolValue() and dualFail.clearFlag == 0) {
+	if (phaseVar3 >= 5 and phaseVar3 <= 7 and dualFailNode.getBoolValue() and dualFail.clearFlag == 0) {
 		dualFail.active = 1;
 	} else {
 		ECAM_controller.warningReset(dualFail);
@@ -276,13 +281,13 @@ var messages_priority_3 = func {
 	}
 	
 	# ENG FIRE
-	if ((eng1FireFlAgent2.clearFlag == 0 and getprop("systems/fire/engine1/warning-active") == 1 and phaseVar >= 5 and phaseVar <= 7) or (eng1FireGnevacBat.clearFlag == 0 and getprop("systems/fire/engine1/warning-active") == 1 and (phaseVar < 5 or phaseVar > 7))) {
+	if ((eng1FireFlAgent2.clearFlag == 0 and getprop("systems/fire/engine1/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnevacBat.clearFlag == 0 and getprop("systems/fire/engine1/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng1Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1Fire);
 	}
 	
-	if ((eng2FireFlAgent2.clearFlag == 0 and getprop("systems/fire/engine2/warning-active") == 1 and phaseVar >= 5 and phaseVar <= 7) or (eng2FireGnevacBat.clearFlag == 0 and getprop("systems/fire/engine2/warning-active") == 1 and (phaseVar < 5 or phaseVar > 7))) {
+	if ((eng2FireFlAgent2.clearFlag == 0 and getprop("systems/fire/engine2/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnevacBat.clearFlag == 0 and getprop("systems/fire/engine2/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng2Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2Fire);
@@ -295,7 +300,7 @@ var messages_priority_3 = func {
 	}
 	
 	if (eng1Fire.active == 1) {
-		if (phaseVar >= 5 and phaseVar <= 7) {
+		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
 			if (eng1FireFllever.clearFlag == 0 and getprop("fdm/jsbsim/fcs/throttle-lever[0]") > 0.01) {
 				eng1FireFllever.active = 1;
 			} else {
@@ -361,7 +366,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(eng1FireFlAgent2);
 		}
 		
-		if (phaseVar < 5 or phaseVar > 7) {
+		if (phaseVar3 < 5 or phaseVar3 > 7) {
 			if (eng1FireGnlever.clearFlag == 0 and getprop("fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
 				eng1FireGnlever.active = 1;
 			} else {
@@ -478,7 +483,7 @@ var messages_priority_3 = func {
 	}
 	
 	if (eng2Fire.active == 1) {
-		if (phaseVar >= 5 and phaseVar <= 7) {
+		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
 			if (eng2FireFllever.clearFlag == 0 and getprop("fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
 				eng2FireFllever.active = 1;
 			} else {
@@ -544,7 +549,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(eng2FireFlAgent2);
 		}
 		
-		if (phaseVar < 5 or phaseVar > 7) {
+		if (phaseVar3 < 5 or phaseVar3 > 7) {
 			if (eng2FireGnlever.clearFlag == 0 and getprop("fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
 				eng2FireGnlever.active = 1;
 			} else {
@@ -697,7 +702,7 @@ var messages_priority_3 = func {
 	}
 	
 	# CONFIG
-	if ((slats_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input")) == 4 and phaseVar >= 3 and phaseVar <= 4) {
+	if ((slats_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input")) == 4 and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		slats_config.active = 1;
 		slats_config_1.active = 1;
 	} else {
@@ -705,7 +710,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(slats_config_1);
 	}
 	
-	if ((flaps_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4) and phaseVar >= 3 and phaseVar <= 4) {
+	if ((flaps_config.clearFlag == 0) and (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4) and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		flaps_config.active = 1;
 		flaps_config_1.active = 1;
 	} else {
@@ -713,7 +718,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(flaps_config_1);
 	}
 	
-	if ((spd_brk_config.clearFlag == 0) and getprop("controls/flight/speedbrake") != 0 and phaseVar >= 3 and phaseVar <= 4) {
+	if ((spd_brk_config.clearFlag == 0) and getprop("controls/flight/speedbrake") != 0 and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		spd_brk_config.active = 1;
 		spd_brk_config_1.active = 1;
 	} else {
@@ -721,7 +726,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(spd_brk_config_1);
 	}
 	
-	if ((pitch_trim_config.clearFlag == 0) and (getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65) and phaseVar >= 3 and phaseVar <= 4) {
+	if ((pitch_trim_config.clearFlag == 0) and (getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65) and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		pitch_trim_config.active = 1;
 		pitch_trim_config_1.active = 1;
 	} else {
@@ -729,7 +734,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(pitch_trim_config_1);
 	}
 	
-	if ((rud_trim_config.clearFlag == 0) and (getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) and phaseVar >= 3 and phaseVar <= 4) {
+	if ((rud_trim_config.clearFlag == 0) and (getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		rud_trim_config.active = 1;
 		rud_trim_config_1.active = 1;
 	} else {
@@ -737,7 +742,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(rud_trim_config_1);
 	}
 	
-	if ((park_brk_config.clearFlag == 0) and getprop("controls/gear/brake-parking") == 1 and phaseVar >= 3 and phaseVar <= 4) {
+	if ((park_brk_config.clearFlag == 0) and getprop("controls/gear/brake-parking") == 1 and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		park_brk_config.active = 1;
 	} else {
 		ECAM_controller.warningReset(park_brk_config);
@@ -829,7 +834,7 @@ var messages_priority_3 = func {
 	}
 	
 	if (!systems.cargoTestBtn.getBoolValue()) {
-		if (cargoSmokeFwd.clearFlag == 0 and systems.fwdCargoFireWarn.getBoolValue() and (phaseVar <= 3 or phaseVar >= 9 or phaseVar == 6)) {
+		if (cargoSmokeFwd.clearFlag == 0 and systems.fwdCargoFireWarn.getBoolValue() and (phaseVar3 <= 3 or phaseVar3 >= 9 or phaseVar3 == 6)) {
 			cargoSmokeFwd.active = 1;
 		} elsif (cargoSmokeFwd.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeFwd);
@@ -843,7 +848,7 @@ var messages_priority_3 = func {
 			cargoSmokeFwd.isMainMsg = 0;
 		}
 
-		if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar <= 3 or phaseVar >= 9 or phaseVar == 6)) {
+		if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar3 <= 3 or phaseVar3 >= 9 or phaseVar3 == 6)) {
 			cargoSmokeAft.active = 1;
 		} elsif (cargoSmokeAft.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
 			ECAM_controller.warningReset(cargoSmokeAft);
@@ -872,7 +877,7 @@ var messages_priority_3 = func {
 	}
 	
 	# ESS on BAT
-	if ((!gear.getValue() or !getprop("controls/gear/gear-down")) and getprop("systems/electrical/some-electric-thingie/static-inverter-timer") == 1 and phaseVar >= 5 and phaseVar <= 7) {
+	if ((!gear.getValue() or !getprop("controls/gear/gear-down")) and getprop("systems/electrical/some-electric-thingie/static-inverter-timer") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) {
 		essBusOnBat.active = 1;
 		essBusOnBatLGUplock.active = 1;
 		essBusOnBatManOn.active = 1;
@@ -889,7 +894,7 @@ var messages_priority_3 = func {
 	}
 	
 	# EMER CONFIG
-	if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dualFailNode.getBoolValue() and phaseVar != 4 and phaseVar != 8 and emerconfig.clearFlag == 0 and !getprop("systems/acconfig/autoconfig-running")) {
+	if (getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dualFailNode.getBoolValue() and phaseVar3 != 4 and phaseVar3 != 8 and emerconfig.clearFlag == 0 and !getprop("systems/acconfig/autoconfig-running")) {
 		emerconfig.active = 1;
 		
 		if (getprop("systems/hydraulic/sources/rat/position") != 0 and emerconfigMinRat.clearFlag == 0) {
@@ -1019,9 +1024,9 @@ var messages_priority_3 = func {
 }
 
 var messages_priority_2 = func {
-	phaseVar = phaseNode.getValue();
+	phaseVar2 = phaseNode.getValue();
 	# DC EMER CONFIG
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar != 4 and phaseVar != 8 and dcEmerconfig.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcEmerconfig.clearFlag == 0) {
 		dcEmerconfig.active = 1;
 		dcEmerconfigManOn.active = 1;
 	} else {
@@ -1029,7 +1034,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcEmerconfigManOn);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar != 4 and phaseVar != 8 and dcBus12Fault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus12Fault.clearFlag == 0) {
 		dcBus12Fault.active = 1;
 		dcBus12FaultBlower.active = 1;
 		dcBus12FaultExtract.active = 1;
@@ -1045,7 +1050,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBus12FaultBrking);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.acEss.getValue() < 110 and phaseVar != 4 and phaseVar != 8 and AcBusEssFault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.acEss.getValue() < 110 and phaseVar2 != 4 and phaseVar2 != 8 and AcBusEssFault.clearFlag == 0) {
 		AcBusEssFault.active = 1;
 		if (!systems.ELEC.Switch.acEssFeed.getBoolValue()) {
 			AcBusEssFaultFeed.active = 1;
@@ -1059,7 +1064,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(AcBusEssFaultAtc);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac1.getValue() < 110 and phaseVar != 4 and phaseVar != 8 and AcBus1Fault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac1.getValue() < 110 and phaseVar2 != 4 and phaseVar2 != 8 and AcBus1Fault.clearFlag == 0) {
 		AcBus1Fault.active = 1;
 		AcBus1FaultBlower.active = 1;
 	} else {
@@ -1067,7 +1072,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(AcBus1FaultBlower);
 	}
 	
-	if (!dcEmerconfig.active and systems.ELEC.Bus.dcEss.getValue() < 25 and phaseVar != 4 and phaseVar != 8 and DcEssBusFault.clearFlag == 0) {
+	if (!dcEmerconfig.active and systems.ELEC.Bus.dcEss.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and DcEssBusFault.clearFlag == 0) {
 		DcEssBusFault.active = 1;
 		DcEssBusFaultRadio.active = 1;
 		DcEssBusFaultRadio2.active = 1;
@@ -1081,7 +1086,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(DcEssBusFaultGPWS);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac2.getValue() < 110 and phaseVar != 4 and phaseVar != 8 and AcBus2Fault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.ac2.getValue() < 110 and phaseVar2 != 4 and phaseVar2 != 8 and AcBus2Fault.clearFlag == 0) {
 		AcBus2Fault.active = 1;
 		AcBus2FaultExtract.active = 1;
 	} else {
@@ -1089,7 +1094,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(AcBus2FaultExtract);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() >= 25 and phaseVar != 4 and phaseVar != 8 and dcBus1Fault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() >= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus1Fault.clearFlag == 0) {
 		dcBus1Fault.active = 1;
 		dcBus1FaultBlower.active = 1;
 		dcBus1FaultExtract.active = 1;
@@ -1099,7 +1104,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBus1FaultExtract);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() >= 25 and systems.ELEC.Bus.dc2.getValue() <= 25 and phaseVar != 4 and phaseVar != 8 and dcBus2Fault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and systems.ELEC.Bus.dc1.getValue() >= 25 and systems.ELEC.Bus.dc2.getValue() <= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus2Fault.clearFlag == 0) {
 		dcBus2Fault.active = 1;
 		dcBus2FaultAirData.active = 1;
 		dcBus2FaultBaro.active = 1;
@@ -1109,13 +1114,13 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBus2FaultBaro);
 	}
 	
-	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dcBat.getValue() < 25 and phaseVar != 4 and phaseVar != 5 and phaseVar != 7 and phaseVar != 8 and dcBusBatFault.clearFlag == 0) {
+	if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !dcEmerconfig.active and systems.ELEC.Bus.dcBat.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and dcBusBatFault.clearFlag == 0) {
 		dcBusBatFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(dcBusBatFault);
 	}
 	
-	if (!(getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar != 4 and phaseVar != 8 and dcBusEssShed.clearFlag == 0) {
+	if (!(getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBusEssShed.clearFlag == 0) {
 		dcBusEssShed.active = 1;
 		dcBusEssShedExtract.active = 1;
 		dcBusEssShedIcing.active = 1;
@@ -1125,7 +1130,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBusEssShedIcing);
 	}
 	
-	if (!(getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar != 4 and phaseVar != 8 and acBusEssShed.clearFlag == 0) {
+	if (!(getprop("systems/electrical/some-electric-thingie/emer-elec-config") and !getprop("systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar2 != 4 and phaseVar2 != 8 and acBusEssShed.clearFlag == 0) {
 		acBusEssShed.active = 1;
 		if (!getprop("systems/electrical/some-electric-thingie/emer-elec-config")) {
 			acBusEssShedAtc.active = 1;
@@ -1137,7 +1142,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
 	
-	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar != 4 and phaseVar != 8 and phaseVar != 10) {
+	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar2 != 4 and phaseVar2 != 8 and phaseVar2 != 10) {
 		athr_offw.active = 1;
 		athr_offw_1.active = 1;
 	} else {
@@ -1145,7 +1150,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_offw_1);
 	}
 	
-	if ((athr_lock.clearFlag == 0) and phaseVar >= 5 and phaseVar <= 7 and getprop("systems/thrust/thr-locked-alert") == 1) {
+	if ((athr_lock.clearFlag == 0) and phaseVar2 >= 5 and phaseVar2 <= 7 and getprop("systems/thrust/thr-locked-alert") == 1) {
 		if (getprop("systems/thrust/thr-locked-flash") == 0) {
 			athr_lock.msg = " ";
 		} else {
@@ -1159,7 +1164,7 @@ var messages_priority_2 = func {
 	}
 	
 	
-	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("systems/thrust/eng-out") != 1 and (getprop("systems/thrust/state1") == "MAN" or getprop("systems/thrust/state2") == "MAN")) or (getprop("systems/thrust/eng-out") == 1 and (getprop("systems/thrust/state1") == "MAN" or getprop("systems/thrust/state2") == "MAN" or (getprop("systems/thrust/state1") == "MAN THR" and getprop("controls/engines/engine[0]/throttle-pos") <= 0.83) or (getprop("systems/thrust/state2") == "MAN THR" and getprop("controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar >= 5 and phaseVar <= 7)) {
+	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("systems/thrust/eng-out") != 1 and (getprop("systems/thrust/state1") == "MAN" or getprop("systems/thrust/state2") == "MAN")) or (getprop("systems/thrust/eng-out") == 1 and (getprop("systems/thrust/state1") == "MAN" or getprop("systems/thrust/state2") == "MAN" or (getprop("systems/thrust/state1") == "MAN THR" and getprop("controls/engines/engine[0]/throttle-pos") <= 0.83) or (getprop("systems/thrust/state2") == "MAN THR" and getprop("controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar2 >= 5 and phaseVar2 <= 7)) {
 		athr_lim.active = 1;
 		athr_lim_1.active = 1;
 	} else {
@@ -1168,7 +1173,7 @@ var messages_priority_2 = func {
 	}
 	
 	
-	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar != 3 and phaseVar != 4 and phaseVar != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
+	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(tcasFault);
@@ -1199,7 +1204,7 @@ var messages_priority_2 = func {
 	}
 	
 	# APU EMER SHUT DOWN
-	if (apuEmerShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuEmerShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
@@ -1214,7 +1219,7 @@ var messages_priority_2 = func {
 	}
 	
 	# APU AUTO SHUT DOWN
-	if (apuAutoShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and !systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuAutoShutdown.clearFlag == 0 and systems.APUController.APU.signals.autoshutdown and !systems.APUController.APU.signals.emer and !getprop("systems/fire/apu/warning-active") and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		apuAutoShutdown.active = 1;
 	} elsif (apuAutoShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuAutoShutdown);
@@ -1236,7 +1241,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed1Fault.setValue(0);
 	}
 	
-	if (bleed1Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
+	if (bleed1Fault.clearFlag == 0 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
 		bleed1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed1Fault);
@@ -1273,7 +1278,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed2Fault.setValue(0);
 	}
 	
-	if (bleed2Fault.clearFlag == 0 and (phaseVar == 2 or phaseVar == 6 or phaseVar == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
+	if (bleed2Fault.clearFlag == 0 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
 		bleed2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed2Fault);
@@ -1303,27 +1308,27 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(bleed2FaultXBleed);
 	}
 	
-	if (apuBleedFault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.apuFaultOutput.getValue() == 1) {
+	if (apuBleedFault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.apuFaultOutput.getValue() == 1) {
 		apuBleedFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuBleedFault);
 	}
 	
 	# HP Valves
-	if (hpValve1Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and systems.PNEU.Fail.hp1Valve.getValue() and systems.ELEC.Bus.dcEssShed.getValue() >= 25) {
+	if (hpValve1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and systems.PNEU.Fail.hp1Valve.getValue() and systems.ELEC.Bus.dcEssShed.getValue() >= 25) {
 		hpValve1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(hpValve1Fault);
 	}
 	
-	if (hpValve2Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and systems.PNEU.Fail.hp2Valve.getValue() and systems.ELEC.Bus.dc2.getValue() >= 25) {
+	if (hpValve2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and systems.PNEU.Fail.hp2Valve.getValue() and systems.ELEC.Bus.dc2.getValue() >= 25) {
 		hpValve2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(hpValve2Fault);
 	}
 	
 	# Crossbleed
-	if (xBleedFault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.crossbleedFault.getValue()) {
+	if (xBleedFault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.crossbleedFault.getValue()) {
 		xBleedFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(xBleedFault);
@@ -1353,13 +1358,13 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(xBleedIcing);
 	}
 	
-	if (bleed1Off.clearFlag == 0 and (warningNodes.Timers.bleed1Off60Output.getValue() == 1 or warningNodes.Timers.bleed1Off5Output.getValue() == 1) and FWC.Timer.eng1idleOutput.getBoolValue() and (phaseVar == 2 or phaseVar == 6)) {
+	if (bleed1Off.clearFlag == 0 and (warningNodes.Timers.bleed1Off60Output.getValue() == 1 or warningNodes.Timers.bleed1Off5Output.getValue() == 1) and FWC.Timer.eng1idleOutput.getBoolValue() and (phaseVar2 == 2 or phaseVar2 == 6)) {
 		bleed1Off.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed1Off);
 	}
 	
-	if (bleed2Off.clearFlag == 0 and (warningNodes.Timers.bleed2Off60Output.getValue() == 1 or warningNodes.Timers.bleed2Off5Output.getValue() == 1) and FWC.Timer.eng2idleOutput.getBoolValue() and (phaseVar == 2 or phaseVar == 6)) {
+	if (bleed2Off.clearFlag == 0 and (warningNodes.Timers.bleed2Off60Output.getValue() == 1 or warningNodes.Timers.bleed2Off5Output.getValue() == 1) and FWC.Timer.eng2idleOutput.getBoolValue() and (phaseVar2 == 2 or phaseVar2 == 6)) {
 		bleed2Off.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed2Off);
@@ -1371,7 +1376,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed1And2LoTemp.setValue(0);
 	}	
 	
-	if (engBleedLowTemp.clearFlag == 0 and warningNodes.Timers.bleed1And2LoTempOutput.getValue() == 1 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6 or phaseVar == 7)) {
+	if (engBleedLowTemp.clearFlag == 0 and warningNodes.Timers.bleed1And2LoTempOutput.getValue() == 1 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6 or phaseVar2 == 7)) {
 		engBleedLowTemp.active = 1;
 		
 		if (engBleedLowTempAthr.clearFlag == 0 and fmgc.Output.athr.getValue()) {
@@ -1412,7 +1417,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(engBleedLowTempIcing);
 	}
 	
-	if (eng1BleedLowTemp.clearFlag == 0 and warningNodes.Flipflops.bleed1LowTemp.getValue() == 1 and warningNodes.Flipflops.bleed2LowTemp.getValue() == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6 or phaseVar == 7)) {
+	if (eng1BleedLowTemp.clearFlag == 0 and warningNodes.Flipflops.bleed1LowTemp.getValue() == 1 and warningNodes.Flipflops.bleed2LowTemp.getValue() == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6 or phaseVar2 == 7)) {
 		eng1BleedLowTemp.active = 1;
 		
 		if (eng1BleedLowTempAthr.clearFlag == 0 and fmgc.Output.athr.getValue()) {
@@ -1470,7 +1475,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1BleedLowTempIcing);
 	}
 	
-	if (eng2BleedLowTemp.clearFlag == 0 and warningNodes.Flipflops.bleed1LowTemp.getValue() == 0 and warningNodes.Flipflops.bleed2LowTemp.getValue() == 1 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6 or phaseVar == 7)) {
+	if (eng2BleedLowTemp.clearFlag == 0 and warningNodes.Flipflops.bleed1LowTemp.getValue() == 0 and warningNodes.Flipflops.bleed2LowTemp.getValue() == 1 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6 or phaseVar2 == 7)) {
 		eng2BleedLowTemp.active = 1;
 		
 		if (eng2BleedLowTempAthr.clearFlag == 0 and fmgc.Output.athr.getValue()) {
@@ -1528,7 +1533,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2BleedLowTempIcing);
 	}
 	
-	if (eng1BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed1NotShutOutput.getValue() == 1) {
+	if (eng1BleedNotClsd.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.bleed1NotShutOutput.getValue() == 1) {
 		eng1BleedNotClsd.active = 1;
 		if (systems.PNEU.Switch.bleed1.getBoolValue()) {
 			eng1BleedNotClsdOff.active = 1;
@@ -1540,7 +1545,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1BleedNotClsdOff);
 	}
 	
-	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.bleed2NotShutOutput.getValue() == 1) {
+	if (eng2BleedNotClsd.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.bleed2NotShutOutput.getValue() == 1) {
 		eng2BleedNotClsd.active = 1;
 		if (systems.PNEU.Switch.bleed2.getBoolValue()) {
 			eng2BleedNotClsdOff.active = 1;
@@ -1553,26 +1558,26 @@ var messages_priority_2 = func {
 	}
 	
 	# BMC
-	if (bleedMonFault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue() and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6)) {
+	if (bleedMonFault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue() and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6)) {
 		bleedMonFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleedMonFault);
 	}
 	
-	if (bleedMon1Fault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and !systems.PNEU.Fail.bmc2.getValue() and (phaseVar <= 2 or phaseVar >= 9)) {
+	if (bleedMon1Fault.clearFlag == 0 and systems.PNEU.Fail.bmc1.getValue() and !systems.PNEU.Fail.bmc2.getValue() and (phaseVar2 <= 2 or phaseVar2 >= 9)) {
 		bleedMon1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleedMon1Fault);
 	}
 	
-	if (bleedMon2Fault.clearFlag == 0 and !systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue() and (phaseVar <= 2 or phaseVar >= 9)) {
+	if (bleedMon2Fault.clearFlag == 0 and !systems.PNEU.Fail.bmc1.getValue() and systems.PNEU.Fail.bmc2.getValue() and (phaseVar2 <= 2 or phaseVar2 >= 9)) {
 		bleedMon2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleedMon2Fault);
 	}
 	
 	# PACK
-	if (pack12Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.pack12Fault.getValue()) { # TODO NOT OUTFLOW OR HOT AIR FAULT
+	if (pack12Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.pack12Fault.getValue()) { # TODO NOT OUTFLOW OR HOT AIR FAULT
 		pack12Fault.active = 1;
 		
 		if (systems.PNEU.Switch.pack1.getBoolValue()) {
@@ -1642,7 +1647,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack12FaultPackOn2);
 	}
 	
-	if (pack1Ovht.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Flipflops.pack1Ovht.getValue()) {
+	if (pack1Ovht.clearFlag == 0 and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Flipflops.pack1Ovht.getValue()) {
 		pack1Ovht.active = 1;
 		
 		if (systems.PNEU.Switch.pack1.getBoolValue()) {
@@ -1660,7 +1665,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack1OvhtPack);
 	}
 	
-	if (pack2Ovht.clearFlag == 0 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6) and warningNodes.Flipflops.pack2Ovht.getValue()) {
+	if (pack2Ovht.clearFlag == 0 and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Flipflops.pack2Ovht.getValue()) {
 		pack2Ovht.active = 1;
 		
 		if (systems.PNEU.Switch.pack2.getBoolValue()) {
@@ -1678,7 +1683,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack2OvhtPack);
 	}
 	
-	if (pack1Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.pack1Fault.getValue() == 1) {
+	if (pack1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.pack1Fault.getValue() == 1) {
 		pack1Fault.active = 1;
 		
 		if (systems.PNEU.Switch.pack1.getBoolValue()) {
@@ -1691,7 +1696,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack1FaultOff);
 	}
 	
-	if (pack2Fault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.pack2Fault.getValue() == 1) {
+	if (pack2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.pack2Fault.getValue() == 1) {
 		pack2Fault.active = 1;
 		
 		if (systems.PNEU.Switch.pack2.getBoolValue()) {
@@ -1704,20 +1709,20 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(pack2FaultOff);
 	}
 	
-	if (pack1Off.clearFlag == 0 and phaseVar == 6 and warningNodes.Timers.pack1Off.getValue() == 1) {
+	if (pack1Off.clearFlag == 0 and phaseVar2 == 6 and warningNodes.Timers.pack1Off.getValue() == 1) {
 		pack1Off.active = 1;
 	} else {
 		ECAM_controller.warningReset(pack1Off);
 	}
 	
-	if (pack2Off.clearFlag == 0 and phaseVar == 6 and warningNodes.Timers.pack2Off.getValue() == 1) {
+	if (pack2Off.clearFlag == 0 and phaseVar2 == 6 and warningNodes.Timers.pack2Off.getValue() == 1) {
 		pack2Off.active = 1;
 	} else {
 		ECAM_controller.warningReset(pack2Off);
 	}
 	
 	# COND
-	if (cabFanFault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.cabinFans.getBoolValue()) {
+	if (cabFanFault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.cabinFans.getBoolValue()) {
 		cabFanFault.active = 1;
 		cabFanFaultFlow.active = 1;
 	} else {
@@ -1725,7 +1730,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(cabFanFaultFlow);
 	}
 	
-	if (trimAirFault.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.trimAirFault.getValue() == 1) {
+	if (trimAirFault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.trimAirFault.getValue() == 1) {
 		trimAirFault.active = 1;
 		
 		if (systems.PNEU.Fail.trimValveAft.getBoolValue()) {
@@ -1753,7 +1758,7 @@ var messages_priority_2 = func {
 	}
 	
 	# ENG AICE
-	if (eng1IceClosed.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotOpen.getValue() == 1) {
+	if (eng1IceClosed.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.eng1AiceNotOpen.getValue() == 1) {
 		eng1IceClosed.active = 1;
 		eng1IceClosedIcing.active = 1;
 	} else {
@@ -1761,7 +1766,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1IceClosedIcing);
 	}
 	
-	if (eng2IceClosed.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotOpen.getValue() == 1) {
+	if (eng2IceClosed.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.eng2AiceNotOpen.getValue() == 1) {
 		eng2IceClosed.active = 1;
 		eng2IceClosedIcing.active = 1;
 	} else {
@@ -1769,7 +1774,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2IceClosedIcing);
 	}
 	
-	if (eng1IceOpen.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng1AiceNotClsd.getValue() == 1) {
+	if (eng1IceOpen.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.eng1AiceNotClsd.getValue() == 1) {
 		eng1IceOpen.active = 1;
 		eng1IceOpenThrust.active = 1;
 	} else {
@@ -1777,7 +1782,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1IceOpenThrust);
 	}
 	
-	if (eng2IceOpen.clearFlag == 0 and (phaseVar <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Timers.eng2AiceNotClsd.getValue() == 1) {
+	if (eng2IceOpen.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Timers.eng2AiceNotClsd.getValue() == 1) {
 		eng2IceOpen.active = 1;
 		eng2IceOpenThrust.active = 1;
 	} else {
@@ -1786,7 +1791,7 @@ var messages_priority_2 = func {
 	}
 	
 	# Wing anti ice
-	if (wingIceSysFault.clearFlag == 0 and warningNodes.Logic.waiSysfault.getBoolValue() and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6)) {
+	if (wingIceSysFault.clearFlag == 0 and warningNodes.Logic.waiSysfault.getBoolValue() and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6)) {
 		wingIceSysFault.active = 1;
 		
 		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and warningNodes.Logic.procWaiShutdown.getValue() == 1) {
@@ -1812,7 +1817,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(wingIceSysFaultIcing);
 	}
 	
-	if (wingIceOpenGnd.clearFlag == 0 and warningNodes.Logic.waiGndFlight.getValue() and (phaseVar <= 2  or phaseVar >= 9)) {
+	if (wingIceOpenGnd.clearFlag == 0 and warningNodes.Logic.waiGndFlight.getValue() and (phaseVar2 <= 2  or phaseVar2 >= 9)) {
 		wingIceOpenGnd.active = 1;
 		
 		if (pts.Gear.wow[1].getValue() and getprop("/controls/ice-protection/wing")) {
@@ -1825,7 +1830,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(wingIceOpenGndShut);
 	}
 	
-	if (wingIceLHiPr.clearFlag == 0 and warningNodes.Timers.waiLhiPr.getValue() == 1 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6)) {
+	if (wingIceLHiPr.clearFlag == 0 and warningNodes.Timers.waiLhiPr.getValue() == 1 and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6)) {
 		wingIceLHiPr.active = 1;
 		wingIceLHiPrThrust.active = 1;
 	} else {
@@ -1833,7 +1838,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(wingIceLHiPrThrust);
 	}
 	
-	if (wingIceRHiPr.clearFlag == 0 and warningNodes.Timers.waiRhiPr.getValue() == 1 and (phaseVar <= 2  or phaseVar >= 9 or phaseVar == 6)) {
+	if (wingIceRHiPr.clearFlag == 0 and warningNodes.Timers.waiRhiPr.getValue() == 1 and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6)) {
 		wingIceRHiPr.active = 1;
 		wingIceRHiPrThrust.active = 1;
 	} else {
@@ -1842,67 +1847,67 @@ var messages_priority_2 = func {
 	}
 	
 	# Eng fire
-	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (eng1FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[0].condition == 0 or (systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and systems.eng1Inop.getBoolValue())) and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		eng1FireDetFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1FireDetFault);
 	}
 	
-	if (eng1LoopAFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo != 9 and !systems.eng1Inop.getBoolValue() and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (eng1LoopAFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[0].loopOne == 9 and systems.engFireDetectorUnits.vector[0].loopTwo != 9 and !systems.eng1Inop.getBoolValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		eng1LoopAFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1LoopAFault);
 	}
 	
-	if (eng1LoopBFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[0].loopOne != 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and !systems.eng1Inop.getBoolValue() and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (eng1LoopBFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[0].loopOne != 9 and systems.engFireDetectorUnits.vector[0].loopTwo == 9 and !systems.eng1Inop.getBoolValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		eng1LoopBFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1LoopBFault);
 	}
 	
-	if (eng2FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[1].condition == 0 or (systems.engFireDetectorUnits.vector[1].loopOne == 9 and systems.engFireDetectorUnits.vector[1].loopTwo == 9 and systems.eng2Inop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (eng2FireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[1].condition == 0 or (systems.engFireDetectorUnits.vector[1].loopOne == 9 and systems.engFireDetectorUnits.vector[1].loopTwo == 9 and systems.eng2Inop.getBoolValue())) and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		eng2FireDetFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2FireDetFault);
 	}
 	
-	if (eng2LoopAFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[1].loopOne == 9 and systems.engFireDetectorUnits.vector[1].loopTwo != 9 and !systems.eng2Inop.getBoolValue() and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (eng2LoopAFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[1].loopOne == 9 and systems.engFireDetectorUnits.vector[1].loopTwo != 9 and !systems.eng2Inop.getBoolValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		eng2LoopAFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2LoopAFault);
 	}
 	
-	if (eng2LoopBFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[1].loopOne != 9 and systems.engFireDetectorUnits.vector[1].loopTwo == 9 and !systems.eng2Inop.getBoolValue() and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (eng2LoopBFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[1].loopOne != 9 and systems.engFireDetectorUnits.vector[1].loopTwo == 9 and !systems.eng2Inop.getBoolValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		eng2LoopBFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2LoopBFault);
 	}
 	
-	if (apuFireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[2].condition == 0 or (systems.engFireDetectorUnits.vector[2].loopOne == 9 and systems.engFireDetectorUnits.vector[2].loopTwo == 9 and systems.apuInop.getBoolValue())) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuFireDetFault.clearFlag == 0 and (systems.engFireDetectorUnits.vector[2].condition == 0 or (systems.engFireDetectorUnits.vector[2].loopOne == 9 and systems.engFireDetectorUnits.vector[2].loopTwo == 9 and systems.apuInop.getBoolValue())) and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		apuFireDetFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuFireDetFault);
 	}
 	
-	if (apuLoopAFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[2].loopOne == 9 and systems.engFireDetectorUnits.vector[2].loopTwo != 9 and !systems.apuInop.getBoolValue() and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuLoopAFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[2].loopOne == 9 and systems.engFireDetectorUnits.vector[2].loopTwo != 9 and !systems.apuInop.getBoolValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		apuLoopAFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuLoopAFault);
 	}
 	
-	if (apuLoopBFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[2].loopOne != 9 and systems.engFireDetectorUnits.vector[2].loopTwo == 9 and !systems.apuInop.getBoolValue() and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (apuLoopBFault.clearFlag == 0 and systems.engFireDetectorUnits.vector[2].loopOne != 9 and systems.engFireDetectorUnits.vector[2].loopTwo == 9 and !systems.apuInop.getBoolValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		apuLoopBFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuLoopBFault);
 	}
 	
-	if (crgAftFireDetFault.clearFlag == 0 and (systems.cargoSmokeDetectorUnits.vector[0].condition == 0 or systems.cargoSmokeDetectorUnits.vector[1].condition == 0) and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (crgAftFireDetFault.clearFlag == 0 and (systems.cargoSmokeDetectorUnits.vector[0].condition == 0 or systems.cargoSmokeDetectorUnits.vector[1].condition == 0) and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		crgAftFireDetFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(crgAftFireDetFault);
 	}
 	
-	if (crgFwdFireDetFault.clearFlag == 0 and systems.cargoSmokeDetectorUnits.vector[2].condition == 0 and (phaseVar == 6 or phaseVar >= 9 or phaseVar <= 2)) {
+	if (crgFwdFireDetFault.clearFlag == 0 and systems.cargoSmokeDetectorUnits.vector[2].condition == 0 and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
 		crgFwdFireDetFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(crgFwdFireDetFault);
@@ -1937,20 +1942,20 @@ var messages_priority_0 = func {
 }
 
 var messages_config_memo = func {
-	phaseVar = phaseNode.getValue();
+	phaseVarMemo = phaseNode.getValue();
 	if (getprop("controls/flight/flaps-input") == 0 or getprop("controls/flight/flaps-input") == 4 or getprop("controls/flight/speedbrake") != 0 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("ECAM/to-config-normal", 0);
 	} else {
 		setprop("ECAM/to-config-normal", 1);
 	}
 	
-	if (getprop("ECAM/to-config-test") and (phaseVar == 2 or phaseVar == 9)) {
+	if (getprop("ECAM/to-config-test") and (phaseVarMemo == 2 or phaseVarMemo == 9)) {
 		setprop("ECAM/to-config-set", 1);
 	} else {
 		setprop("ECAM/to-config-set", 0);
 	}
 	
-	if (!getprop("ECAM/to-config-normal") or phaseVar == 6) {
+	if (!getprop("ECAM/to-config-normal") or phaseVarMemo == 6) {
 		setprop("ECAM/to-config-reset", 1);
 	} else {
 		setprop("ECAM/to-config-reset", 0);
@@ -1996,19 +2001,19 @@ var messages_config_memo = func {
 		toMemoLine5.colour = "c";
 	}
 	
-	if (getprop("ECAM/to-config-test") and (phaseVar == 2 or phaseVar == 9)) {
+	if (getprop("ECAM/to-config-test") and (phaseVarMemo == 2 or phaseVarMemo == 9)) {
 		setprop("ECAM/to-memo-set", 1);
 	} else {
 		setprop("ECAM/to-memo-set", 0);
 	}
 	
-	if (phaseVar == 1 or phaseVar == 3 or phaseVar == 6 or phaseVar == 10) {
+	if (phaseVarMemo == 1 or phaseVarMemo == 3 or phaseVarMemo == 6 or phaseVarMemo == 10) {
 		setprop("ECAM/to-memo-reset", 1);
 	} else {
 		setprop("ECAM/to-memo-reset", 0);
 	}
 	
-	if ((phaseVar == 2 and getprop("ECAM/engine-start-time") != 0 and getprop("ECAM/engine-start-time") + 120 < getprop("sim/time/elapsed-sec")) or getprop("ECAM/to-memo-flipflop")) {
+	if ((phaseVarMemo == 2 and getprop("ECAM/engine-start-time") != 0 and getprop("ECAM/engine-start-time") + 120 < getprop("sim/time/elapsed-sec")) or getprop("ECAM/to-memo-flipflop")) {
 		toMemoLine1.active = 1;
 		toMemoLine2.active = 1;
 		toMemoLine3.active = 1;
@@ -2083,13 +2088,13 @@ var messages_config_memo = func {
 		setprop("ECAM/ldg-memo-2200-set", 0);
 	}
 	
-	if (phaseVar != 6 and phaseVar != 7 and phaseVar != 8) {
+	if (phaseVarMemo != 6 and phaseVarMemo != 7 and phaseVarMemo != 8) {
 		setprop("ECAM/ldg-memo-2200-reset", 1);
 	} else {
 		setprop("ECAM/ldg-memo-2200-reset", 0);
 	}
 	
-	if ((phaseVar == 6 and getprop("ECAM/ldg-memo-flipflop") and getprop("ECAM/ldg-memo-2200-flipflop")) or phaseVar == 7 or phaseVar == 8) {
+	if ((phaseVarMemo == 6 and getprop("ECAM/ldg-memo-flipflop") and getprop("ECAM/ldg-memo-2200-flipflop")) or phaseVarMemo == 7 or phaseVarMemo == 8) {
 		ldgMemoLine1.active = 1;
 		ldgMemoLine2.active = 1;
 		ldgMemoLine3.active = 1;
@@ -2103,14 +2108,14 @@ var messages_config_memo = func {
 }
 
 var messages_memo = func {
-	phaseVar = phaseNode.getValue();
+	phaseVarMemo2 = phaseNode.getValue();
 	if (getprop("services/fuel-truck/enable") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		refuelg.active = 1;
 	} else {
 		refuelg.active = 0;
 	}
 	
-	if ((phaseVar == 1 or phaseVar == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1)) {
+	if ((phaseVarMemo2 == 1 or phaseVarMemo2 == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1)) {
 		irs_in_align.active = 1;
 		if (getprop("ECAM/phases/timer/eng1or2-output")) {
 			irs_in_align.colour = "a";
@@ -2188,7 +2193,7 @@ var messages_memo = func {
 }
 
 var messages_right_memo = func {
-	phaseVar = phaseNode.getValue();
+	phaseVarMemo3 = phaseNode.getValue();
 	if (FWC.Timer.toInhibitOutput.getValue() == 1) {
 		to_inhibit.active = 1;
 	} else {
@@ -2201,14 +2206,14 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if ((getprop("gear/gear[1]/wow") == 0) and (getprop("systems/electrical/some-electric-thingie/emer-elec-config") or getprop("systems/fire/engine1/warning-active") == 1 or getprop("systems/fire/engine2/warning-active") == 1 or getprop("systems/fire/apu/warning-active") == 1 or getprop("systems/failures/cargo-aft-fire") == 1 or getprop("systems/failures/cargo-fwd-fire") == 1) or (((getprop("systems/hydraulic/green-psi") < 1500 and getprop("engines/engine[0]/state") == 3) and (getprop("systems/hydraulic/yellow-psi") < 1500 and getprop("engines/engine[1]/state") == 3)) or ((getprop("systems/hydraulic/green-psi") < 1500 or getprop("systems/hydraulic/yellow-psi") < 1500) and getprop("engines/engine[0]/state") == 3 and getprop("engines/engine[1]/state") == 3) and phaseVar >= 3 and phaseVar <= 8)) {
+	if ((getprop("gear/gear[1]/wow") == 0) and (getprop("systems/electrical/some-electric-thingie/emer-elec-config") or getprop("systems/fire/engine1/warning-active") == 1 or getprop("systems/fire/engine2/warning-active") == 1 or getprop("systems/fire/apu/warning-active") == 1 or getprop("systems/failures/cargo-aft-fire") == 1 or getprop("systems/failures/cargo-fwd-fire") == 1) or (((getprop("systems/hydraulic/green-psi") < 1500 and getprop("engines/engine[0]/state") == 3) and (getprop("systems/hydraulic/yellow-psi") < 1500 and getprop("engines/engine[1]/state") == 3)) or ((getprop("systems/hydraulic/green-psi") < 1500 or getprop("systems/hydraulic/yellow-psi") < 1500) and getprop("engines/engine[0]/state") == 3 and getprop("engines/engine[1]/state") == 3) and phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8)) {
 		# todo: emer elec
 		land_asap_r.active = 1;
 	} else {
 		land_asap_r.active = 0;
 	}
 	
-	if (land_asap_r.active == 0 and getprop("gear/gear[1]/wow") == 0 and ((getprop("fdm/jsbsim/propulsion/tank[0]/contents-lbs") < 1650 and getprop("fdm/jsbsim/propulsion/tank[1]/contents-lbs") < 1650) or ((getprop("systems/electrical/bus/dc-2") < 25 and (getprop("systems/failures/elac1") == 1 or getprop("systems/failures/sec1") == 1)) or (getprop("systems/hydraulic/green-psi") < 1500 and (getprop("systems/failures/elac1") == 1 and getprop("systems/failures/sec1") == 1)) or (getprop("systems/hydraulic/yellow-psi") < 1500 and (getprop("systems/failures/elac1") == 1 and getprop("systems/failures/sec1") == 1)) or (getprop("systems/hydraulic/blue-psi") < 1500 and (getprop("systems/failures/elac2") == 1 and getprop("systems/failures/sec2") == 1))) or (phaseVar >= 3 and phaseVar <= 8 and (getprop("engines/engine[0]/state") != 3 or getprop("engines/engine[1]/state") != 3)))) {
+	if (land_asap_r.active == 0 and getprop("gear/gear[1]/wow") == 0 and ((getprop("fdm/jsbsim/propulsion/tank[0]/contents-lbs") < 1650 and getprop("fdm/jsbsim/propulsion/tank[1]/contents-lbs") < 1650) or ((getprop("systems/electrical/bus/dc-2") < 25 and (getprop("systems/failures/elac1") == 1 or getprop("systems/failures/sec1") == 1)) or (getprop("systems/hydraulic/green-psi") < 1500 and (getprop("systems/failures/elac1") == 1 and getprop("systems/failures/sec1") == 1)) or (getprop("systems/hydraulic/yellow-psi") < 1500 and (getprop("systems/failures/elac1") == 1 and getprop("systems/failures/sec1") == 1)) or (getprop("systems/hydraulic/blue-psi") < 1500 and (getprop("systems/failures/elac2") == 1 and getprop("systems/failures/sec2") == 1))) or (phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8 and (getprop("engines/engine[0]/state") != 3 or getprop("engines/engine[1]/state") != 3)))) {
 		land_asap_a.active = 1;
 	} else {
 		land_asap_a.active = 0;
@@ -2226,24 +2231,24 @@ var messages_right_memo = func {
 		athr_off.active = 0;
 	}
 	
-	if ((phaseVar >= 2 and phaseVar <= 7) and getprop("controls/flight/speedbrake") != 0) {
+	if ((phaseVarMemo3 >= 2 and phaseVarMemo3 <= 7) and getprop("controls/flight/speedbrake") != 0) {
 		spd_brk.active = 1;
 	} else {
 		spd_brk.active = 0;
 	}
 	
-	if (getprop("systems/thrust/state1") == "IDLE" and getprop("systems/thrust/state2") == "IDLE" and phaseVar >= 6 and phaseVar <= 7) {
+	if (getprop("systems/thrust/state1") == "IDLE" and getprop("systems/thrust/state2") == "IDLE" and phaseVarMemo3 >= 6 and phaseVarMemo3 <= 7) {
 		spd_brk.colour = "g";
-	} else if ((phaseVar >= 2 and phaseVar <= 5) or ((getprop("systems/thrust/state1") != "IDLE" or getprop("systems/thrust/state2") != "IDLE") and (phaseVar >= 6 and phaseVar <= 7))) {
+	} else if ((phaseVarMemo3 >= 2 and phaseVarMemo3 <= 5) or ((getprop("systems/thrust/state1") != "IDLE" or getprop("systems/thrust/state2") != "IDLE") and (phaseVarMemo3 >= 6 and phaseVarMemo3 <= 7))) {
 		spd_brk.colour = "a";
 	}
 	
-	if (getprop("controls/gear/brake-parking") == 1 and phaseVar != 3) {
+	if (getprop("controls/gear/brake-parking") == 1 and phaseVarMemo3 != 3) {
 		park_brk.active = 1;
 	} else {
 		park_brk.active = 0;
 	}
-	if (phaseVar >= 4 and phaseVar <= 8) {
+	if (phaseVarMemo3 >= 4 and phaseVarMemo3 <= 8) {
 		park_brk.colour = "a";
 	} else {
 		park_brk.colour = "g";
@@ -2267,7 +2272,7 @@ var messages_right_memo = func {
 		rat.active = 0;
 	}
 	
-	if (phaseVar >= 1 and phaseVar <= 2) {
+	if (phaseVarMemo3 >= 1 and phaseVarMemo3 <= 2) {
 		rat.colour = "a";
 	} else {
 		rat.colour = "g";
@@ -2333,24 +2338,24 @@ var messages_right_memo = func {
 		wing_aice.active = 0;
 	}
 	
-	if (getprop("instrumentation/comm[2]/frequencies/selected-mhz") != 0 and (phaseVar == 1 or phaseVar == 2 or phaseVar == 6 or phaseVar == 9 or phaseVar == 10)) {
+	if (getprop("instrumentation/comm[2]/frequencies/selected-mhz") != 0 and (phaseVarMemo3 == 1 or phaseVarMemo3 == 2 or phaseVarMemo3 == 6 or phaseVarMemo3 == 9 or phaseVarMemo3 == 10)) {
 		vhf3_voice.active = 1;
 	} else {
 		vhf3_voice.active = 0;
 	}
-	if (getprop("controls/autobrake/mode") == 1 and (phaseVar == 7 or phaseVar == 8)) {
+	if (getprop("controls/autobrake/mode") == 1 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_lo.active = 1;
 	} else {
 		auto_brk_lo.active = 0;
 	}
 
-	if (getprop("controls/autobrake/mode") == 2 and (phaseVar == 7 or phaseVar == 8)) {
+	if (getprop("controls/autobrake/mode") == 2 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_med.active = 1;
 	} else {
 		auto_brk_med.active = 0;
 	}
 
-	if (getprop("controls/autobrake/mode") == 3 and (phaseVar == 7 or phaseVar == 8)) {
+	if (getprop("controls/autobrake/mode") == 3 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_max.active = 1;
 	} else {
 		auto_brk_max.active = 0;
@@ -2362,7 +2367,7 @@ var messages_right_memo = func {
 		fuelx.active = 0;
 	}
 	
-	if (phaseVar >= 3 and phaseVar <= 5) {
+	if (phaseVarMemo3 >= 3 and phaseVarMemo3 <= 5) {
 		fuelx.colour = "a";
 	} else {
 		fuelx.colour = "g";
@@ -2374,7 +2379,7 @@ var messages_right_memo = func {
 		gpws_flap3.active = 0;
 	}
 	
-	if (phaseVar >= 2 and phaseVar <= 9 and systems.ELEC.Bus.ac1.getValue() >= 110 and systems.ELEC.Bus.ac2.getValue() >= 110 and (getprop("systems/fuel/feed-center-1") or getprop("systems/fuel/feed-center-2"))) {
+	if (phaseVarMemo3 >= 2 and phaseVarMemo3 <= 9 and systems.ELEC.Bus.ac1.getValue() >= 110 and systems.ELEC.Bus.ac2.getValue() >= 110 and (getprop("systems/fuel/feed-center-1") or getprop("systems/fuel/feed-center-2"))) {
 		ctr_tk_feedg.active = 1;
 	} else {
 		ctr_tk_feedg.active = 0;
