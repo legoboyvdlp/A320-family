@@ -134,6 +134,37 @@
 		</axis>
 	</animation>
 	
+	<animation>
+		<name>Landing Light right</name>
+		<type>rotate</type>
+		<object-name>LightWingR</object-name>
+		<property>/controls/lighting/landing-light-pos-r</property>
+		<factor>90</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.11118</x-m>
+			<y-m>-2.23648</y-m>
+			<z-m>-1.57986</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>Landing Light right</name>
+		<type>translate</type>
+		<object-name>LightWingR</object-name>
+		<property>/controls/lighting/landing-light-pos-r</property>
+		<factor>0.025</factor>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>-1</z>
+		</axis>
+	</animation>
+	
 	<!-- Ram Air Turbine -->
 	<animation>
 		<name>RAT Door left</name>
