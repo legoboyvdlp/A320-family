@@ -29,22 +29,14 @@
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorR</object-name>
 		<object-name>NLGFitting</object-name>
-		<object-name>NLGDragStrutAssembly1</object-name>
-		<object-name>NLGDragStrutAssembly2</object-name>
 		<object-name>MLGFittingL</object-name>
 		<object-name>MLGFittingR</object-name>
 		<object-name>SideStayL1</object-name>
-		<object-name>SideStayL2</object-name>
 		<object-name>SideStayR1</object-name>
-		<object-name>SideStayR2</object-name>
 		<object-name>LockStayL1</object-name>
-		<object-name>LockStayL2</object-name>
 		<object-name>LockStayR1</object-name>
-		<object-name>LockStayR2</object-name>
 		<object-name>MLGLockstayActuatorL1</object-name>
-		<object-name>MLGLockstayActuatorL2</object-name>
 		<object-name>MLGLockstayActuatorR1</object-name>
-		<object-name>MLGLockstayActuatorR2</object-name>
 		<object-name>ApuFlap</object-name>
 	</effect>
 	
@@ -100,15 +92,10 @@
 		<object-name>MLGSlidingTubeAxleL</object-name>
 		<object-name>MLGSlidingTubeAxleR</object-name>
 		<object-name>NLGTorqueLink1</object-name>
-		<object-name>NLGTorqueLink2</object-name>
 		<object-name>MLGTorqueLinkL1</object-name>
-		<object-name>MLGTorqueLinkL2</object-name>
-		<object-name>MLGLSlaveLinkL1</object-name>
-		<object-name>MLGSlaveLinkL2</object-name>
+		<object-name>MLGSlaveLinkL1</object-name>
 		<object-name>MLGTorqueRinkR1</object-name>
-		<object-name>MLGTorqueRinkR2</object-name>
-		<object-name>MLGSRaveRinkR1</object-name>
-		<object-name>MLGSRaveRinkR2</object-name>
+		<object-name>MLGSlaveRinkR1</object-name>
 	</effect>
 	
 	<!-- Animations -->
@@ -128,28 +115,23 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-2.11117</x-m>
+			<x-m>-2.11118</x-m>
 			<y-m>-2.23648</y-m>
 			<z-m>-1.57986</z-m>
 		</center>
 	</animation>
 	
 	<animation>
-		<name>Landing Light right</name>
-		<type>rotate</type>
-		<object-name>LightWingR</object-name>
-		<property>/controls/lighting/landing-light-pos-r</property>
-		<factor>90</factor>
+		<name>Landing Light left</name>
+		<type>translate</type>
+		<object-name>LightWingL</object-name>
+		<property>/controls/lighting/landing-light-pos-l</property>
+		<factor>0.025</factor>
 		<axis>
 			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<y>-1</y>
+			<z>-1</z>
 		</axis>
-		<center>
-			<x-m>-2.11117</x-m>
-			<y-m> 2.2341</y-m>
-			<z-m>-1.57985</z-m>
-		</center>
 	</animation>
 	
 	<!-- Ram Air Turbine -->
