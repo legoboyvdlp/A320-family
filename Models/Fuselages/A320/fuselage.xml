@@ -474,10 +474,10 @@
 		<object-name>MLGCablesR1</object-name>
 		<object-name>MLGCablesR2</object-name>
 		<object-name>MLGSlidingTubeAxleR</object-name>
-		<object-name>MLGLockStayR1</object-name>
+		<!--<object-name>MLGLockStayR1</object-name>
 		<object-name>MLGLockStayR2</object-name>
 		<object-name>MLGLockstayActuatorR1</object-name>
-		<object-name>MLGLockstayActuatorR2</object-name>
+		<object-name>MLGLockstayActuatorR2</object-name>-->
 		<object-name>MLGTorqueLinkR1</object-name>
 		<object-name>MLGTorqueLinkR2</object-name>
 		<object-name>MLGLSlaveLinkR1</object-name>
@@ -724,7 +724,7 @@
 		  <z-m>-3.81849</z-m>
 		</target-center>
 		
-		<slave-name>MLGTorqueLinkL2</slave-name>
+		<slave-name>MLGTorqueLinkR2</slave-name>
 		<slave-center>  <!-- middle hinge -->
 		  <x-m>-1.58278</x-m>
 		  <y-m> 3.85151</y-m>
