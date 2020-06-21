@@ -821,6 +821,7 @@ var flightPlanController = {
 			setprop("/FMGC/internal/fuel-calculating", 1);
 		}
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
+		if (n == 2) { me.flightplans[2].activate(); }
 	},
 	
 	updatePlans: func(runDecel = 0, callDecel = 1) {
