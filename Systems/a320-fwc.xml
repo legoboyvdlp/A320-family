@@ -260,7 +260,7 @@
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-disagree">
             <description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/pack-2-fault-closed-input</input>
+			<input>/ECAM/warnings/logic/pack-2-disagree-input</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
@@ -956,6 +956,28 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/pack-1-off-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 10
+				<test logic="AND">
+					/ECAM/warnings/logic/pack-1-pulse eq 1
+					/controls/pneumatics/switches/pack-1 eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/pack-2-off-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 10
+				<test logic="AND">
+					/ECAM/warnings/logic/pack-2-pulse eq 1
+					/controls/pneumatics/switches/pack-2 eq 1
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/cranking-35-sec-input">
 			<default value="0"/>
 			<test value="1">
@@ -1128,7 +1150,7 @@
 		<switch name="/ECAM/warnings/logic/pack-1-fault-warning-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/warnings/timer/pack-1-fault-5 eq 1
+				/ECAM/warnings/logic/pack-1-fault-input eq 1
 				/ECAM/warnings/logic/pack-1-2-fault eq 0
 			</test>
 		</switch>
@@ -1136,7 +1158,7 @@
 		<switch name="/ECAM/warnings/logic/pack-2-fault-warning-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/warnings/timer/pack-2-fault-5 eq 1
+				/ECAM/warnings/logic/pack-2-fault-input eq 1
 				/ECAM/warnings/logic/pack-1-2-fault eq 0
 			</test>
 		</switch>
@@ -1144,12 +1166,12 @@
 		<switch name="/ECAM/warnings/logic/pack-1-off-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-1-avail eq 1
+				/ECAM/warning-phase eq 6
 				/controls/pneumatics/switches/pack-1 eq 0
 				/ECAM/warnings/flipflop/pack-1-ovht eq 0
 				/ECAM/warnings/flipflop/pack-1-off eq 0
 				/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output eq 0
-				/ECAM/warnings/logic/bleed-1-avail eq 1
-				/ECAM/warning-phase eq 6
 				<!-- TODO NOT HOT AIR VALVE STUCK OPEN OR OVHT -->
 			</test>
 		</switch>
@@ -1157,12 +1179,12 @@
 		<switch name="/ECAM/warnings/logic/pack-2-off-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/warnings/logic/bleed-2-avail eq 1
+				/ECAM/warning-phase eq 6
 				/controls/pneumatics/switches/pack-2 eq 0
 				/ECAM/warnings/flipflop/pack-2-ovht eq 0
 				/ECAM/warnings/flipflop/pack-2-off eq 0
 				/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output eq 0
-				/ECAM/warnings/logic/bleed-2-avail eq 1
-				/ECAM/warning-phase eq 6
 				<!-- TODO NOT HOT AIR VALVE STUCK OPEN OR OVHT -->
 			</test>
 		</switch>

@@ -732,7 +732,7 @@
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/systems/air-conditioning/warnings/pack-1-ovht</property>
+			<property>/systems/air-conditioning/warnings/pack-1-ovht-fault</property>
 		</S>
 		<R>
 			<property>/ECAM/warnings/logic/pack-1-ovht-reset</property>
@@ -743,7 +743,7 @@
 	<flipflop>
 		<type>RS</type>
 		<S>
-			<property>/systems/air-conditioning/warnings/pack-2-ovht</property>
+			<property>/systems/air-conditioning/warnings/pack-2-ovht-fault</property>
 		</S>
 		<R>
 			<property>/ECAM/warnings/logic/pack-2-ovht-reset</property>
@@ -757,7 +757,7 @@
 			<property>/ECAM/warnings/timer/pack-1-fault-5</property>
 		</S>
 		<R>
-			<property>/ECAM/warnings/logic/pack-1-ovht-reset</property>
+			<property>/ECAM/warnings/logic/pack-1-off-reset</property>
 		</R>
 		<output>/ECAM/warnings/flipflop/pack-1-off</output>
 	</flipflop>
@@ -768,7 +768,7 @@
 			<property>/ECAM/warnings/timer/pack-2-fault-5</property>
 		</S>
 		<R>
-			<property>/ECAM/warnings/logic/pack-2-ovht-reset</property>
+			<property>/ECAM/warnings/logic/pack-2-off-reset</property>
 		</R>
 		<output>/ECAM/warnings/flipflop/pack-2-off</output>
 	</flipflop>

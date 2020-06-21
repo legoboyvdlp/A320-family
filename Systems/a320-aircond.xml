@@ -804,7 +804,6 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/air-conditioning/packs/pack-1-outlet-temp ge 260
-				/ECAM/warnings/logic/pack-1-2-fault eq 0
 			</test>
 		</switch>
 		
@@ -812,6 +811,21 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/air-conditioning/packs/pack-2-outlet-temp ge 260
+			</test>
+		</switch>
+		
+			<switch name="/systems/air-conditioning/warnings/pack-1-ovht-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/warnings/pack-1-ovht eq 1
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-ovht-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/warnings/pack-2-ovht eq 1
 				/ECAM/warnings/logic/pack-1-2-fault eq 0
 			</test>
 		</switch>
