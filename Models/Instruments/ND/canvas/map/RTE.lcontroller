@@ -14,7 +14,7 @@ SymbolLayer.add(name, {
 	df_options: { # default configuration options
 		active_node: "/autopilot/route-manager/active",
 		current_wp_node: "/autopilot/route-manager/current-wp",
-		wp_num: "/FMGC/flightplan[2]/num",
+		wp_num: "/autopilot/route-manager/route/num",
 		display_inactive_rte: 0
 	}
 });

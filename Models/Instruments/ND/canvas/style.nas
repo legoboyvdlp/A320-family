@@ -62,7 +62,7 @@ canvas.NDStyles["Airbus"] = {
 			adf2_frq: "/instrumentation/adf[1]/frequencies/selected-khz",
 			dep_rwy: "/autopilot/route-manager/departure/runway",
 			dest_rwy: "/autopilot/route-manager/destination/runway",
-			wp_count: "/FMGC/flightplan[2]/num",
+			wp_count: "/autopilot/route-manager/route/num",
 			level_off_alt: "/autopilot/route-manager/vnav/level-off-alt",
 			athr: "/it-autoflight/output/athr",
 			app_mode: "/instrumentation/nd/app-mode",
@@ -736,11 +736,11 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveId",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/id") != nil and 
 						getprop("/autopilot/route-manager/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
 				is_true: func(nd) {
-					nd.symbols.wpActiveId.setText(getprop("/FMGC/flightplan[2]/current-leg"));
+					nd.symbols.wpActiveId.setText(getprop("/autopilot/route-manager/wp[0]/id"));
 					nd.symbols.wpActiveId.show();
 				},
 				is_false: func(nd) nd.symbols.wpActiveId.hide(),
@@ -750,16 +750,16 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveCrs",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/id") != nil and 
 						getprop("/autopilot/route-manager/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
 					var deg = nil;
 					if (nd.get_switch("toggle_true_north")) {
-						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course")) or 0;
+						var deg = math.round(getprop("/autopilot/route-manager/wp[0]/true-bearing-deg")) or 0;
 					} else {
-						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course-mag")) or 0;
+						var deg = math.round(getprop("/autopilot/route-manager/wp[0]/bearing-deg")) or 0;
 					}
 					if (deg != nil) {
 						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f", deg) ~ "°");
@@ -775,11 +775,11 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDist",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/dist") != nil and 
 						getprop("/autopilot/route-manager/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
 				is_true: func(nd) {
-					var dst = getprop("/FMGC/flightplan[2]/current-leg-dist");
+					var dst = getprop("/autopilot/route-manager/wp[0]/dist");
 					nd.symbols.wpActiveDist.setText(sprintf("%3.01f",dst));
 					nd.symbols.wpActiveDist.show();
 				},
@@ -790,10 +790,10 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDistLbl",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/autopilot/route-manager/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/dist") != nil and getprop("/autopilot/route-manager/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
 				is_true: func(nd) {
 					nd.symbols.wpActiveDistLbl.show();
-					if(getprop("/FMGC/flightplan[2]/current-leg-dist") > 1000)
+					if(getprop("/autopilot/route-manager/wp[0]/dist") > 1000)
 						nd.symbols.wpActiveDistLbl.setText("   NM");
 				},
 				is_false: func(nd) nd.symbols.wpActiveDistLbl.hide(),

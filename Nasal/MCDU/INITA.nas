@@ -195,7 +195,7 @@ var initInputA = func(key, i) {
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						setprop("/FMGC/internal/alt-selected", 0);
 						#ref lat
-						dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+						dms = getprop("/autopilot/route-manager/route/wp[0]/lat");
 						degrees = int(dms);
 						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 						sign = degrees >= 0 ? "N" : "S";
@@ -203,7 +203,7 @@ var initInputA = func(key, i) {
 						setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
 						setprop("/FMGC/internal/align-ref-lat-sign", sign);
 						#ref long
-						dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+						dms = getprop("/autopilot/route-manager/route/wp[0]/lon");
 						degrees = int(dms);
 						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 						sign = degrees >= 0 ? "E" : "W";

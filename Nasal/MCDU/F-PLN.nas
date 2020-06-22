@@ -81,14 +81,16 @@ var fplnItem = {
 		}
 	},
 	getBrg: func() {
-		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - magvar();
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		var courseDistanceFrom = courseAndDistance(wp);
+		me.brg = courseDistanceFrom[0] - magvar();
 		if (me.brg < 0) { me.brg += 360; }
 		if (me.brg > 360) { me.brg -= 360; }
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
 		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
-		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(wp.lat, wp.lon);
+		me.trk = me.wp.leg_bearing - magvar(wp.lat, wp.lon);
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
@@ -118,10 +120,12 @@ var fplnItem = {
 		}
 	},
 	getDist: func() {
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
 		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-			return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
+			var courseDistanceFrom = courseAndDistance(wp);
+			return math.round(courseDistanceFrom[1]);
 		} else {
-			return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+			return math.round(wp.leg_distance);
 		}
 	},
 	pushButtonLeft: func() {

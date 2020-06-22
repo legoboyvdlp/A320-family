@@ -20,15 +20,6 @@ var FMGCdep = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
 var FMGCarr = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
 var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
 
-# Props.initNode
-var wpID = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/id", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/id", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/id", "", "STRING")]];
-var wpLat = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/lat", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/lat", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/lat", 0, "DOUBLE")]];
-var wpLon = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/lon", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/lon", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/lon", 0, "DOUBLE")]];
-var wpCourse = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/course", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/course", 0, "DOUBLE")]];
-var wpDistance = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance", 0, "DOUBLE")]];
-var wpCoursePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/course-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/course-from-prev", 0, "DOUBLE")]];
-var wpDistancePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance-from-prev", 0, "DOUBLE")]];
-
 var flightPlanController = {
 	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
 	temporaryFlag: [0, 0],
@@ -39,15 +30,14 @@ var flightPlanController = {
 	currentToWpt: nil, # container for the current TO waypoint ghost
 	currentToWptIndex: props.globals.initNode("/autopilot/route-manager/current-wp", 1, "INT"),
 	currentToWptIndexTemp: 0,
-	currentToWptID: props.globals.initNode("/FMGC/flightplan[2]/current-leg", "", "STRING"),
-	courseToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course", 0, "DOUBLE"),
-	courseMagToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course-mag", 0, "DOUBLE"),
-	distToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-dist", 0, "DOUBLE"),
+	currentToWptID: props.globals.initNode("/autopilot/route-manager/wp[0]/id", "", "STRING"),
+	courseToWpt: props.globals.initNode("/autopilot/route-manager/wp[0]/true-bearing-deg", 0, "DOUBLE"),
+	courseMagToWpt: props.globals.initNode("/autopilot/route-manager/wp[0]/bearing-deg", 0, "DOUBLE"),
+	distToWpt: props.globals.initNode("/autopilot/route-manager/wp[0]/dist", 0, "DOUBLE"),
 	wptType: nil,
 	wptTypeNoAdvanceDelete: 0,
 	
-	distanceToDest: [0, 0, 0],
-	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[2]/num", 0, "INT")],
+	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/autopilot/route-manager/route/num", 0, "INT")],
 	arrivalIndex: [0, 0, 0],
 	arrivalDist: 0,
 	_arrivalDist: 0,
@@ -62,6 +52,7 @@ var flightPlanController = {
 		me.insertPPOS(2);
 		me.addDiscontinuity(1, 2, 1);
 		me.flightPlanChanged(2);
+		me.flightplans[2].activate();
 	},
 	
 	reset: func() {
@@ -70,6 +61,7 @@ var flightPlanController = {
 		me.resetFlightplan(0);
 		me.resetFlightplan(1);
 		me.resetFlightplan(2);
+		me.flightplans[2].activate();
 	},
 	
 	resetFlightplan: func(n) {
@@ -373,8 +365,8 @@ var flightPlanController = {
 	},
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
-		var wp = wpID[n][index].getValue();
-		if (((s == 0 and left(wp, 4) != FMGCdep.getValue() and left(wp, 4) != FMGCarr.getValue()) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
+		var wp = me.flightplans[n].getWP(index);
+		if (((s == 0 and left(wp.wp_name, 4) != FMGCdep.getValue() and left(wp.wp_name, 4) != FMGCarr.getValue()) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
@@ -799,17 +791,6 @@ var flightPlanController = {
 	},
 	
 	flightPlanChanged: func(n, callDecel = 1) {
-		sizeWP = size(wpID[n]);
-		for (var counter = sizeWP; counter < me.flightplans[n].getPlanSize(); counter += 1) { # create new properties if they are required
-			append(wpID[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/text", "", "STRING"));
-			append(wpLat[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/lat", 0, "DOUBLE"));
-			append(wpLon[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/lon", 0, "DOUBLE"));
-			append(wpCourse[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course", 0, "DOUBLE"));
-			append(wpDistance[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance", 0, "DOUBLE"));
-			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
-			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
-		}
-		
 		me.updatePlans(1, callDecel);
 		fmgc.windController.updatePlans();
 		
@@ -829,43 +810,18 @@ var flightPlanController = {
 				var curAircraftPos = geo.aircraft_position(); # don't want to get this corrupted so make sure it is a local variable
 				var waypointHashStore = me.flightplans[n].getWP(wpt);
 				
-				courseDistanceFrom = waypointHashStore.courseAndDistanceFrom(curAircraftPos);
-				wpID[n][wpt].setValue(waypointHashStore.wp_name);
-				wpLat[n][wpt].setValue(waypointHashStore.wp_lat);
-				wpLon[n][wpt].setValue(waypointHashStore.wp_lon);
-				
-				wpCourse[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[0]);
-				wpDistance[n][wpt].setValue(waypointHashStore.courseAndDistanceFrom(curAircraftPos)[1]);
 				
 				if (wpt == 1) {
+					var courseDistanceFrom = waypointHashStore.courseAndDistanceFrom(curAircraftPos);
 					if (me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
 						# print("Adding " ~ courseDistanceFrom[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
 						me._arrivalDist += courseDistanceFrom[1]; # distance to next waypoint, therafter to end of flightplan
 					}
 				}
 				
-				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
+				if (left(waypointHashStore.wp_name, 4) == FMGCarr.getValue() and wpt != 0) {
 					if (me.arrivalIndex[n] != wpt) {
 						me.arrivalIndex[n] = wpt;
-					}
-				}
-				
-				if (wpt > 0) {
-					wpCoursePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_bearing);
-					wpDistancePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_distance);
-					#if (wpt > 1) {
-					#	if (me.flightplans[n].getWP(wpt - 1).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt - 1).wp_type != "vectors" and me.flightplans[n].getWP(wpt - 1).wp_type != "hdgToAlt" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-					#		me._arrivalDist += courseDistanceFromPrev[1]; 
-					#	}
-					#}
-				} else {
-					# use PPOS for the first waypoint
-					wpCoursePrev[n][wpt].setValue(courseDistanceFrom[0]);
-					wpDistancePrev[n][wpt].setValue(courseDistanceFrom[1]);
-				}
-				
-				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
-					if (me.arrivalIndex[n] != wpt) { # don't merge line 397 and 398 if statements
 						if (canvas_mcdu.myFpln[0] != nil) {
 							canvas_mcdu.myFpln[0].destInfo();
 						}
@@ -886,58 +842,20 @@ var flightPlanController = {
 	},
 	
 	updateCurrentWaypoint: func() {
-		for (var india = 0; india <= 2; india += 1) {
-			if (toFromSet.getBoolValue() and me.flightplans[india].departure != nil and me.flightplans[india].destination != nil) { # check if flightplan exists
-				var curAircraftPos = geo.aircraft_position(); # don't want to get this corrupted so make sure it is a local variable
-	
-				if (india == 2) { # main plan
-					if (!me.active.getBoolValue()) {
-						me.active.setValue(1);
-					}
-					
-					if (me.currentToWptIndex.getValue() == -1) { return; }
-					if (me.currentToWptIndex.getValue() < 1) { 
-						me.currentToWptIndex.setValue(1); 
-					} elsif (me.currentToWptIndex.getValue() > me.flightplans[india].getPlanSize()) {
-						me.currentToWptIndex.setValue(me.flightplans[india].getPlanSize());
-					}
-					
-					me.currentToWpt = me.flightplans[india].getWP(me.currentToWptIndex.getValue());
-					
-					if (me.currentToWptID.getValue() != me.currentToWpt.wp_name) {
-						me.currentToWptID.setValue(me.currentToWpt.wp_name);
-					}
-					me.courseToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[0]);
-					me.distToWpt.setValue(me.currentToWpt.courseAndDistanceFrom(curAircraftPos)[1]);
-					
-					magTrueError = magHDG.getValue() - trueHDG.getValue();
-					
-					storeCourse = me.courseToWpt.getValue() + magTrueError;
-					if (storeCourse >= 360) {
-						storeCourse -= 360;
-					} elsif (storeCourse < 0) {
-						storeCourse += 360;
-					}
-					
-					me.courseMagToWpt.setValue(storeCourse);
-				}
-				
-				if (me.num[india].getValue() != me.flightplans[india].getPlanSize()) {
-					me.num[india].setValue(me.flightplans[india].getPlanSize());
-				}
-			} else {
-				if (india == 2) {
-					if (me.active.getBoolValue()) {
-						me.active.setValue(0);
-					}
-					if (me.currentToWptID.getValue() != "") {
-						me.currentToWptID.setValue("");
-					}
-				}
-				
-				if (me.num[india].getValue() != 0) {
-					me.num[india].setValue(0);
-				}
+		if (toFromSet.getBoolValue() and me.flightplans[2].departure != nil and me.flightplans[2].destination != nil) { # check if flightplan exists
+			if (!me.active.getBoolValue()) {
+				me.active.setValue(1);
+			}
+			
+			if (me.currentToWptIndex.getValue() == -1) { return; }
+			if (me.currentToWptIndex.getValue() < 1) { 
+				me.currentToWptIndex.setValue(1); 
+			} elsif (me.currentToWptIndex.getValue() > me.flightplans[2].getPlanSize()) {
+				me.currentToWptIndex.setValue(me.flightplans[2].getPlanSize());
+			}
+		} else {
+			if (me.active.getBoolValue()) {
+				me.active.setValue(0);
 			}
 		}
 	},
