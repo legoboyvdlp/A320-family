@@ -168,6 +168,7 @@ var flightPlanController = {
 			me.destroyTemporaryFlightPlan(0, 0);
 			me.destroyTemporaryFlightPlan(1, 0);
 			me.currentToWptIndex.setValue(0);
+			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
 		
 		me.addDiscontinuity(1, plan);
@@ -823,6 +824,12 @@ var flightPlanController = {
 				}
 			}
 		}
+		
+		if (me.flightplans[2].getWP(me.arrivalIndex[2]) == nil or me.flightplans[2].getWP(1) == nil) {
+			me.arrivalDist = 9999;
+			print(me.arrivalIndex[2]);
+		}
+		
 		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},
