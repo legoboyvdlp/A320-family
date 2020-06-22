@@ -48,10 +48,10 @@ var Radio = {
 };
 
 var FPLN = {
-	active: props.globals.getNode("/FMGC/flightplan[2]/active", 1),
+	active: props.globals.getNode("/autopilot/route-manager/active", 1),
 	activeTemp: 0,
 	currentCourse: 0,
-	currentWP: props.globals.getNode("/FMGC/flightplan[2]/current-wp", 1),
+	currentWP: props.globals.getNode("/autopilot/route-manager/current-wp", 1),
 	currentWPTemp: 0,
 	deltaAngle: 0,
 	deltaAngleRad: 0,
@@ -428,9 +428,7 @@ var ITAF = {
 				
 				# Advance logic done by flightplan controller
 				
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
-					flightPlanController.autoSequencing();
-				} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
+				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue()) {
 					flightPlanController.autoSequencing();
 				}
 			}

@@ -1305,6 +1305,12 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
+		<gps>
+			<config>
+				<enable-fly-by type="bool">true</enable-fly-by>
+			</config>
+		</gps>
+		
 		<marker-beacon n="0">
 			<serviceable type="bool">true</serviceable>
 		</marker-beacon>

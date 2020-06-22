@@ -34,10 +34,10 @@ var flightPlanController = {
 	temporaryFlag: [0, 0],
 	
 	# These flags are only for the main flgiht-plan
-	active: props.globals.initNode("/FMGC/flightplan[2]/active", 0, "BOOL"),
+	active: props.globals.initNode("/autopilot/route-manager/active", 0, "BOOL"),
 	
 	currentToWpt: nil, # container for the current TO waypoint ghost
-	currentToWptIndex: props.globals.initNode("/FMGC/flightplan[2]/current-wp", 0, "INT"),
+	currentToWptIndex: props.globals.initNode("/autopilot/route-manager/current-wp", 1, "INT"),
 	currentToWptIndexTemp: 0,
 	currentToWptID: props.globals.initNode("/FMGC/flightplan[2]/current-leg", "", "STRING"),
 	courseToWpt: props.globals.initNode("/FMGC/flightplan[2]/current-leg-course", 0, "DOUBLE"),
@@ -61,7 +61,6 @@ var flightPlanController = {
 		me.resetFlightplan(2);
 		me.insertPPOS(2);
 		me.addDiscontinuity(1, 2, 1);
-		me.currentToWptIndex.setValue(0);
 		me.flightPlanChanged(2);
 	},
 	
@@ -115,6 +114,7 @@ var flightPlanController = {
 			flightPlanTimer.stop();
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
+			me.flightplans[2].activate();
 			
 			if (n != 3) {
 				if (mcdu.isNoSid[n] == 1) {
@@ -170,7 +170,6 @@ var flightPlanController = {
 		if (plan == 2) {
 			me.destroyTemporaryFlightPlan(0, 0);
 			me.destroyTemporaryFlightPlan(1, 0);
-			me.currentToWptIndex.setValue(0);
 		}
 		
 		me.addDiscontinuity(1, plan);
@@ -221,7 +220,6 @@ var flightPlanController = {
 					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
 				}
 			}
-			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 		}
 	},
 	
@@ -736,8 +734,8 @@ var flightPlanController = {
 		}
 
 		# todo create waypoint, insert to flightplan, as non-sequence one (gets skipped in sequencing code
-		me.insertDecel(n,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
-		me.flightPlanChanged(n,0);
+		#me.insertDecel(n,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
+		#me.flightPlanChanged(n,0);
 	},
 	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
@@ -821,7 +819,6 @@ var flightPlanController = {
 			setprop("/FMGC/internal/fuel-calculating", 1);
 		}
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
-		if (n == 2) { me.flightplans[2].activate(); }
 	},
 	
 	updatePlans: func(runDecel = 0, callDecel = 1) {
@@ -898,7 +895,10 @@ var flightPlanController = {
 						me.active.setValue(1);
 					}
 					
-					if (me.currentToWptIndex.getValue() > me.flightplans[india].getPlanSize()) {
+					if (me.currentToWptIndex.getValue() == -1) { return; }
+					if (me.currentToWptIndex.getValue() < 1) { 
+						me.currentToWptIndex.setValue(1); 
+					} elsif (me.currentToWptIndex.getValue() > me.flightplans[india].getPlanSize()) {
 						me.currentToWptIndex.setValue(me.flightplans[india].getPlanSize());
 					}
 					
