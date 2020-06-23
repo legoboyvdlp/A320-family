@@ -23,9 +23,9 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-** System (please complete the following information):**
- - OS:
- - FlightGear version:
+**System (please complete the following information):**
+ - OS: 
+ - FlightGear version: 
 
 
 **Additional context**
