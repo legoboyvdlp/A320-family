@@ -250,6 +250,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>NLGFitting</object-name>
+		<object-name>NLGFittingPanel</object-name>
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
 		<object-name>NLGTorqueLink1</object-name>
