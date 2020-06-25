@@ -29,6 +29,7 @@
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorR</object-name>
 		<object-name>NLGFitting</object-name>
+		<object-name>NLGDragStrutAssembly1</object-name>
 		<object-name>MLGFittingL</object-name>
 		<object-name>MLGFittingR</object-name>
 		<object-name>SideStayL1</object-name>
@@ -251,12 +252,11 @@
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
 		<object-name>NLGTorqueLink1</object-name>
-		<object-name>NLGLockStay1</object-name>
-		<object-name>NLGLockStay2</object-name>
 		<object-name>NurbsPath.002</object-name>
 		<object-name>NurbsPath.003</object-name>
 		<object-name>NurbsPath.004</object-name>
 		<object-name>NurbsPath.005</object-name>
+		<!--<object-name>NLGDragStrutAssembly2</object-name>-->
 		<property>gear/gear[0]/position-norm</property>
 		<interpolation>
 			<entry><ind>0.2</ind><dep>90.0</dep></entry>
@@ -270,6 +270,74 @@
 			<y2-m>0.4696</y2-m>
 			<z2-m>-2.01238</z2-m>
 		</axis>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>NLGDragStrutAssembly1</object-name>
+		<center>
+			<x-m>-14.6646</x-m>
+			<y-m>-0.000081</y-m>
+			<z-m>-1.17297</z-m>
+		</center>
+		<lock-axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</lock-axis>
+		<track-axis>
+			<x>0.690062</x>
+			<y>-1.0652</y>
+			<z>-0.000001</z>
+		</track-axis>
+		
+		<target-name>NLGFitting</target-name>
+		<target-center>
+			<x-m>-13.6434</x-m>
+			<y-m>-0.00059</y-m>
+			<z-m>-2.7498</z-m>
+		</target-center>
+		
+		<slave-name>NLGDragStrutAssembly2</slave-name>
+		<slave-center>
+			<x-m>-13.9746</x-m>
+			<y-m>-0.00008</y-m>
+			<z-m>-2.23817</z-m>
+		</slave-center>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>NLGLockStay2</object-name>
+		<center>
+			<x-m>-13.9064</x-m>
+			<y-m>0.000205</y-m>
+			<z-m>-2.24031</z-m>
+		</center>
+		<lock-axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</lock-axis>
+		<track-axis>
+			<x>0.38765</x>
+			<y>0.147679</y>
+			<z>0.000275</z>
+		</track-axis>
+		
+		<target-name>NLGFitting</target-name>
+		<target-center>
+			<x-m>-13.5173</x-m>
+			<y-m>-0.00007</y-m>
+			<z-m>-2.09164</z-m>
+		</target-center>
+		
+		<slave-name>NLGLockStay1</slave-name>
+		<slave-center>
+			<x-m>-13.701</x-m>
+			<y-m>-0.00007</y-m>
+			<z-m>-2.16679</z-m>
+		</slave-center>
 	</animation>
 	
 	<animation>
