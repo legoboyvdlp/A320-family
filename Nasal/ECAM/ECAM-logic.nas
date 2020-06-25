@@ -810,7 +810,7 @@ var messages_priority_3 = func {
 		bigThree = 0;
 	}
 	
-	if (!gnd and (FWC.Monostable.altAlert1Output.getValue() or bigThree)) {
+	if (FWC.Timer.gnd.getValue() != 1 and (FWC.Monostable.altAlert1Output.getValue() or bigThree)) {
 		if (!getprop("sim/sound/warnings/cchord-inhibit")) {
 			setprop("sim/sound/warnings/cchord", 1);
 		} else {
@@ -821,13 +821,13 @@ var messages_priority_3 = func {
 		setprop("sim/sound/warnings/cchord-inhibit", 0);
 	}
 	
-	if (!gnd and getprop("ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
+	if (FWC.Timer.gnd.getValue() != 1 and getprop("ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
 		setprop("ECAM/alt-alert-steady", 1);
 	} else {
 		setprop("ECAM/alt-alert-steady", 0);
 	}
 	
-	if (!gnd and bigThree) {
+	if (FWC.Timer.gnd.getValue() != 1 and bigThree) {
 		setprop("ECAM/alt-alert-flash", 1);
 	} else {
 		setprop("ECAM/alt-alert-flash", 0);
@@ -1592,13 +1592,13 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(pack12FaultPackOff2);
 		}
 		
-		if (!systems.PNEU.Switch.ramAir.getBoolValue() and !gnd and pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 16000) {
+		if (!systems.PNEU.Switch.ramAir.getBoolValue() and !FWC.Timer.gnd.getValue() != 1 and pts.Instrumentation.Altimeter.indicatedFt.getValue() >= 16000) {
 			pack12FaultDescend.active = 1;
 		} else {
 			ECAM_controller.warningReset(pack12FaultDescend);
 		}
 		
-		if (!systems.PNEU.Switch.ramAir.getBoolValue() and !gnd) {
+		if (!systems.PNEU.Switch.ramAir.getBoolValue() and FWC.Timer.gnd.getValue() != 1) {
 			pack12FaultDiffPr.active = 1;
 			pack12FaultDiffPr2.active = 1;
 			pack12FaultRam.active = 1;
@@ -1608,7 +1608,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(pack12FaultRam);
 		}
 		
-		if (!gnd) {
+		if (FWC.Timer.gnd.getValue() != 1) {
 			pack12FaultMax.active = 1;
 		} else {
 			ECAM_controller.warningReset(pack12FaultMax);

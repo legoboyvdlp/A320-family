@@ -127,12 +127,12 @@
 	<flipflop>
 		<type>SR</type>
 		<S>
-			<property>ECAM/phases/flipflop/gear-set</property>
+			<property>ECAM/flipflop/radar-altimeter-5-set</property>
 		</S>
 		<R>
-			<property>ECAM/phases/flipflop/gear-reset</property>
+			<property>ECAM/flipflop/radar-altimeter-5-reset</property>
 		</R>
-		<output>ECAM/phases/flipflop/gear-output</output>
+		<output>ECAM/flipflop/radar-altimeter-5-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -169,6 +169,17 @@
 	</flipflop>
 	
 	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>ECAM/flipflop/speed-gt-80-set</property>
+		</S>
+		<R>
+			<property>ECAM/flipflop/speed-gt-80-reset</property>
+		</R>
+		<output>ECAM/phases/speed-gt-80</output>
+	</flipflop>
+	
+	<flipflop>
 		<type>monostable</type>
 		<time>
 			<value>2.0</value>
@@ -180,6 +191,18 @@
 		</S>
 		<output>ECAM/phases/monostable-80kt</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>2.0</value>
+		</time>
+		<S>
+			<property>/ECAM/ground-calc-immediate</property>
+		</S>
+		<output>ECAM/phases/monostable/gnd-output</output>
+	</flipflop>
+	
 	
 	<flipflop>
 		<type>monostable</type>
