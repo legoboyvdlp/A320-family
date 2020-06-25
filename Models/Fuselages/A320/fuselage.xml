@@ -10,6 +10,7 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
 		<object-name>Fuselage</object-name>
+		<object-name>NLGFittingPanel</object-name>
 		<object-name>Rudder</object-name>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL4</object-name>
@@ -28,16 +29,6 @@
 		<object-name>NLGForewardDoorR</object-name>
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorR</object-name>
-		<object-name>NLGFitting</object-name>
-		<object-name>NLGDragStrutAssembly1</object-name>
-		<object-name>MLGFittingL</object-name>
-		<object-name>MLGFittingR</object-name>
-		<object-name>SideStayL1</object-name>
-		<object-name>SideStayR1</object-name>
-		<object-name>LockStayL1</object-name>
-		<object-name>LockStayR1</object-name>
-		<object-name>MLGLockstayActuatorL1</object-name>
-		<object-name>MLGLockstayActuatorR1</object-name>
 		<object-name>ApuFlap</object-name>
 	</effect>
 	
@@ -98,6 +89,16 @@
 		<object-name>MLGSlaveLinkL1</object-name>
 		<object-name>MLGTorqueRinkR1</object-name>
 		<object-name>MLGSlaveRinkR1</object-name>
+		<object-name>NLGFitting</object-name>
+		<object-name>NLGDragStrutAssembly1</object-name>
+		<object-name>MLGFittingL</object-name>
+		<object-name>MLGFittingR</object-name>
+		<object-name>SideStayL1</object-name>
+		<object-name>SideStayR1</object-name>
+		<object-name>LockStayL1</object-name>
+		<object-name>LockStayR1</object-name>
+		<object-name>MLGLockstayActuatorL1</object-name>
+		<object-name>MLGLockstayActuatorR1</object-name>
 	</effect>
 	
 	<!-- Animations -->
