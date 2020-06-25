@@ -1077,6 +1077,26 @@
 	
 	<!-- Elevators -->
 	<animation>
+		<name>Hstab</name>
+		<type>rotate</type>
+		<object-name>Hstabs</object-name>
+		<object-name>ElevatorL</object-name>
+		<object-name>ElevatorR</object-name>
+		<property>sim/multiplay/generic/float[9]</property>
+		<factor>1</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>15.1266</x-m>
+			<y-m>0</y-m>
+			<z-m>0.669353</z-m>
+		</center>
+	</animation>
+	
+	<animation>
 		<name>Left elevator</name>
 		<type>rotate</type>
 		<object-name>ElevatorL</object-name>
