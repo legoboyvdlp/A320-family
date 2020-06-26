@@ -35,12 +35,10 @@ var perfAPPRInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (tfs >= 3 and tfs <= 7 and find("/", scratchpad) != -1) {
 			var weather = split("/", scratchpad);
-			var mag = int(weather[0]);
 			var mags = size(weather[0]);
-			var wind = int(weather[1]);
 			var winds = size(weather[1]);
 			if (mags >= 1 and mags <= 3 and winds >= 1 and winds <= 3) {
-				if (mag != nil and wind != nil and mag >= 0 and mag <= 360 and wind >= 0 and wind <= 200) {
+				if (num(weather[0]) != nil and num(weather[1]) != nil and int(weather[0]) >= 0 and int(weather[0]) <= 360 and int(weather[1]) >= 0 and int(weather[1]) <= 200) {
 					setprop("/FMGC/internal/dest-mag", weather[0]);
 					setprop("/FMGC/internal/dest-wind", weather[1]);
 					mcdu_scratchpad.scratchpads[i].empty();

@@ -204,6 +204,7 @@ var systemsInit = func {
 	systems.fire_init();
 	systems.icingInit();
 	fmgc.flightPlanController.reset();
+	fmgc.windController.reset();
 	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
@@ -222,6 +223,7 @@ var systemsInit = func {
 	fcu.FCUController.init();
 	dmc.DMController.init();
 	fmgc.flightPlanController.init();
+	fmgc.windController.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
@@ -245,7 +247,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.APUController.loop();
 	systems.HFLoop();
 	
-	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/nose") == 0 and getprop("/services/chocks/left") == 0 and getprop("/services/chocks/right") == 0))) {
+	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/enable") == 0))) {
 		setprop("/controls/electrical/ground-cart", 0);
 		setprop("/controls/pneumatic/switches/groundair", 0);
 	}

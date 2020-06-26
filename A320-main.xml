@@ -961,9 +961,7 @@
 	
 	<services n="0">
 		<chocks n="0">
-			<nose type="bool">0</nose>
-			<left type="bool">0</left>
-			<right type="bool">0</right>
+			<enable type="bool">0</enable>
 		</chocks>
 		<fuel-truck>
 			<connect type="bool">0</connect>
@@ -4054,6 +4052,7 @@
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/winds.nas</file>
 		</fmgc>
 		<mcdu>
 			<file>Aircraft/A320-family/Nasal/MCDU/DUPLICATE.nas</file> <!-- dynamic page - init before others as used in various pages -->
@@ -4067,6 +4066,10 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDCLB.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
@@ -4085,6 +4088,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFTO.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/RADNAV.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/DATA2.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
 		<!-- Canvas -->

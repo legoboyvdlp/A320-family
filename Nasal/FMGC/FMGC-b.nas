@@ -430,6 +430,12 @@ var ITAF = {
 				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue()) {
 					flightPlanController.autoSequencing();
 				}
+				
+				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
+				#	flightPlanController.autoSequencing();
+				#} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
+				#	flightPlanController.autoSequencing();
+				#}
 			}
 		}
 	},

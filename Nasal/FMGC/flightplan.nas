@@ -96,6 +96,7 @@ var flightPlanController = {
 		if (canvas_mcdu.myAirways[n] != nil) {
 			canvas_mcdu.myAirways[n].updateTmpy();
 		}
+		fmgc.windController.createTemporaryWinds(n);
 		me.flightPlanChanged(n);
 	},
 	
@@ -105,8 +106,6 @@ var flightPlanController = {
 			print(err[0]);
 			print("Load failed.");
 		}
-		# try to fix fgfp
-		me.flightplans[3].destination = airportinfo(getprop("/FMGC/internal/arr-arpt"));
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
@@ -116,34 +115,36 @@ var flightPlanController = {
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			
-			if (mcdu.isNoSid[n] == 1) {
-				mcdu.isNoSid[2] = 1;
-			} else {
-				mcdu.isNoSid[2] = 0;
-			}
-			
-			if (mcdu.isNoStar[n] == 1) {
-				mcdu.isNoStar[2] = 1;
-			} else {
-				mcdu.isNoStar[2] = 0;
-			}
-			
-			if (mcdu.isNoVia[n] == 1) {
-				mcdu.isNoVia[2] = 1;
-			} else {
-				mcdu.isNoVia[2] = 0;
-			}
-			
-			if (mcdu.isNoTransDep[n] == 1) {
-				mcdu.isNoTransDep[2] = 1;
-			} else {
-				mcdu.isNoTransDep[2] = 0;
-			}
-			
-			if (mcdu.isNoTransArr[n] == 1) {
-				mcdu.isNoTransArr[2] = 1;
-			} else {
-				mcdu.isNoTransArr[2] = 0;
+			if (n != 3) {
+				if (mcdu.isNoSid[n] == 1) {
+					mcdu.isNoSid[2] = 1;
+				} else {
+					mcdu.isNoSid[2] = 0;
+				}
+				
+				if (mcdu.isNoStar[n] == 1) {
+					mcdu.isNoStar[2] = 1;
+				} else {
+					mcdu.isNoStar[2] = 0;
+				}
+				
+				if (mcdu.isNoVia[n] == 1) {
+					mcdu.isNoVia[2] = 1;
+				} else {
+					mcdu.isNoVia[2] = 0;
+				}
+				
+				if (mcdu.isNoTransDep[n] == 1) {
+					mcdu.isNoTransDep[2] = 1;
+				} else {
+					mcdu.isNoTransDep[2] = 0;
+				}
+				
+				if (mcdu.isNoTransArr[n] == 1) {
+					mcdu.isNoTransArr[2] = 1;
+				} else {
+					mcdu.isNoTransArr[2] = 0;
+				}
 			}
 			
 			me.flightPlanChanged(2);
@@ -155,6 +156,8 @@ var flightPlanController = {
 		if (canvas_mcdu.myDirTo[n] != nil) {
 			canvas_mcdu.myDirTo[n].updateTmpy();
 		}
+		fmgc.windController.destroyTemporaryWinds(n, a);
+		me.flightPlanChanged(n);
 	},
 	
 	updateAirports: func(dep, arr, plan) {
@@ -165,6 +168,7 @@ var flightPlanController = {
 			me.destroyTemporaryFlightPlan(0, 0);
 			me.destroyTemporaryFlightPlan(1, 0);
 			me.currentToWptIndex.setValue(0);
+			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
 		
 		me.addDiscontinuity(1, plan);
@@ -286,10 +290,12 @@ var flightPlanController = {
 	
 	insertTP: func(n, index = 1) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), index);
+		fmgc.windController.insertWind(n, index, 0, "T-P");
 	},
 	
 	insertPPOS: func(n, index = 0) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), index);
+		fmgc.windController.insertWind(n, index, 0, "PPOS");
 	},
 	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
@@ -319,6 +325,7 @@ var flightPlanController = {
 			
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
 			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5), "1500", "sid"), 1);
+			fmgc.windController.insertWind(n, 1, 0, "1500");
 		}
 		me.flightPlanChanged(n);
 	},
@@ -339,6 +346,7 @@ var flightPlanController = {
 				hdg = hdg - 360;
 			}
 			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, hdg, 5), "CF", "star"), me.arrivalIndex[n]);
+			fmgc.windController.insertWind(n, me.arrivalIndex[n], 0, "CF");
 		}
 		me.flightPlanChanged(n);
 	},
@@ -361,6 +369,7 @@ var flightPlanController = {
 			# use createWP here as createWPFrom doesn't accept waypoints
 			# createWPFrom worked before... but be sure!
 			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.wp_name), 2);
+			fmgc.windController.insertWind(plan, 2, 0, waypointGhost.wp_name);
 			me.addDiscontinuity(3, plan);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
@@ -386,6 +395,7 @@ var flightPlanController = {
 		if (((s == 0 and left(wp, 4) != FMGCdep.getValue() and left(wp, 4) != FMGCarr.getValue()) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
+				fmgc.windController.deleteWind(n, index);
 				if (me.flightplans[n].getWP(index) != nil and s == 0) {
 					if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 						me.addDiscontinuity(index, n);
@@ -393,6 +403,7 @@ var flightPlanController = {
 				}
 			} else {
 				me.flightplans[n].deleteWP(index);
+				fmgc.windController.deleteWind(n, index);
 			}
 			me.flightPlanChanged(n);
 			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
@@ -452,6 +463,7 @@ var flightPlanController = {
 			var indexPresent = me.flightplans[plan].indexOfWP(airport[indexToInsert]);
 			if (me.flightplans[plan].indexOfWP(airport[indexToInsert]) == -1) {
 				me.flightplans[plan].insertWP(createWPFrom(airport[indexToInsert]), index);
+				fmgc.windController.insertWind(plan, index, 0, text);
 				me.addDiscontinuity(index + 1, plan);
 				me.flightPlanChanged(plan);
 				return 2;
@@ -485,6 +497,7 @@ var flightPlanController = {
 			var indexPresent = me.flightplans[plan].indexOfWP(fix[indexToInsert]);
 			if (me.flightplans[plan].indexOfWP(fix[indexToInsert]) == -1) {
 				me.flightplans[plan].insertWP(createWPFrom(fix[indexToInsert]), index);
+				fmgc.windController.insertWind(plan, index, 1, text);
 				me.addDiscontinuity(index + 1, plan);
 				me.flightPlanChanged(plan);
 				return 2;
@@ -518,6 +531,7 @@ var flightPlanController = {
 			var indexPresent = me.flightplans[plan].indexOfWP(navaid[indexToInsert]);
 			if (me.flightplans[plan].indexOfWP(navaid[indexToInsert]) == -1) {
 				me.flightplans[plan].insertWP(createWPFrom(navaid[indexToInsert]), index);
+				fmgc.windController.insertWind(plan, index, 1, text);
 				me.addDiscontinuity(index + 1, plan);
 				me.flightPlanChanged(plan);
 				return 2;
@@ -538,6 +552,7 @@ var flightPlanController = {
 		if (me.flightplans[plan].indexOfWP(wpGhost) == -1) {
 			# use createWP here as createWPFrom doesn't accept waypoints
 			me.flightplans[plan].insertWP(createWP(wpGhost, wpGhost.wp_name), index);
+			fmgc.windController.insertWind(plan, index, 1, wpGhost.wp_name);
 			me.addDiscontinuity(index + 1, plan);
 			me.flightPlanChanged(plan);
 			return 2;
@@ -567,6 +582,7 @@ var flightPlanController = {
 		}
 		
 		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
+		fmgc.windController.insertWind(plan, index, 1, "LL");
 		me.addDiscontinuity(index + 1, plan);
 		me.flightPlanChanged(plan);
 		return 2;
@@ -638,6 +654,37 @@ var flightPlanController = {
 		return me.insertPlaceBearingDistance(wpGhost, textSplit[1] + localMagvar, textSplit[2], index, plan); # magnetic to true? I don't know. But this works!
 	},
 	
+	getNavCount: func(plan) {
+		var count = 0;
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			#print(me.flightplans[plan].getWP(wpt).wp_type);
+			if (me.flightplans[plan].getWP(wpt).wp_type == "navaid") {
+				count += 1;
+			}
+		}
+		return count;
+	},
+	
+	getDepartureCount: func(plan) {
+		var count = 0;
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			#print(me.flightplans[plan].getWP(wpt).wp_role);
+			if (me.flightplans[plan].getWP(wpt).wp_role == "sid") {
+				count += 1;
+			}
+		}
+		return count;
+	},
+	
+	getArrivalCount: func(plan) {
+		var count = 0;
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			if (me.flightplans[plan].getWP(wpt).wp_role == "star" or me.flightplans[plan].getWP(wpt).wp_role == "approach" or me.flightplans[plan].getWP(wpt).wp_role == "missed") {
+				count += 1;
+			}
+		}
+		return count;
+	},
 	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
 	# at some specified bearing, distance from a specified location
@@ -654,6 +701,7 @@ var flightPlanController = {
 		}
 		
 		me.flightplans[plan].insertWP(waypoint.wpGhost, index);
+		fmgc.windController.insertWind(plan, index, 0, "PBD");
 		me.addDiscontinuity(index + 1, plan);
 		me.flightPlanChanged(plan);
 		return 2;
@@ -709,7 +757,10 @@ var flightPlanController = {
 			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
+		
 		me.updatePlans();
+		fmgc.windController.updatePlans();
+			
 		# push update to fuel
 		if (getprop("/FMGC/internal/block-confirmed")) {
 			setprop("/FMGC/internal/fuel-calculating", 0);
@@ -773,6 +824,12 @@ var flightPlanController = {
 				}
 			}
 		}
+		
+		if (me.flightplans[2].getWP(me.arrivalIndex[2]) == nil or me.flightplans[2].getWP(1) == nil) {
+			me.arrivalDist = 9999;
+			print(me.arrivalIndex[2]);
+		}
+		
 		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},
