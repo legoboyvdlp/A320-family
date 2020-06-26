@@ -139,29 +139,9 @@
 			</group>
 			
 			<checkbox>
-				<label>Bleed APU</label>
-				<halign>left</halign>
-				<property>/systems/failures/bleed-apu</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
-			
-			<checkbox>
-				<label>Bleed EXT</label>
-				<halign>left</halign>
-				<property>/systems/failures/bleed-ext</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
-			
-			<checkbox>
 				<label>Bleed ENG 1</label>
 				<halign>left</halign>
-				<property>/systems/failures/bleed-eng1</property>
+				<property>/systems/failures/pneumatics/bleed-1-valve</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -171,7 +151,47 @@
 			<checkbox>
 				<label>Bleed ENG 2</label>
 				<halign>left</halign>
-				<property>/systems/failures/bleed-eng2</property>
+				<property>/systems/failures/pneumatics/bleed-2-valve</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>HP Valve ENG 1</label>
+				<halign>left</halign>
+				<property>/systems/failures/pneumatics/hp-1-valve</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>HP Valve ENG 2</label>
+				<halign>left</halign>
+				<property>/systems/failures/pneumatics/hp-2-valve</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Hot Air Valve</label>
+				<halign>left</halign>
+				<property>/systems/failures/pneumatics/hot-air-valve</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Ram Air Valve</label>
+				<halign>left</halign>
+				<property>/systems/failures/pneumatics/ram-air-valve</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -181,7 +201,7 @@
 			<checkbox>
 				<label>Pack 1</label>
 				<halign>left</halign>
-				<property>/systems/failures/pack1</property>
+				<property>/systems/failures/pneumatics/pack-1-valve</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -191,13 +211,22 @@
 			<checkbox>
 				<label>Pack 2</label>
 				<halign>left</halign>
-				<property>/systems/failures/pack2</property>
+				<property>/systems/failures/pneumatics/pack-2-valve</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
 				<live>true</live>
 			</checkbox>
 			
+			<checkbox>
+				<label>X Bleed</label>
+				<halign>left</halign>
+				<property>/systems/failures/pneumatics/x-bleed-valve</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
 		</group>
 		
 		<vrule/>
@@ -222,7 +251,7 @@
 			<checkbox>
 				<label>Blue HYD Leak</label>
 				<halign>left</halign>
-				<property>/systems/failures/hyd-blue</property>
+				<property>/systems/failures/hydraulic/blue-leak</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -232,7 +261,7 @@
 			<checkbox>
 				<label>Blue ELEC Pump</label>
 				<halign>left</halign>
-				<property>/systems/failures/pump-blue</property>
+				<property>/systems/failures/hydraulic/blue-elec</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -242,7 +271,7 @@
 			<checkbox>
 				<label>Green HYD Leak</label>
 				<halign>left</halign>
-				<property>/systems/failures/hyd-green</property>
+				<property>/systems/failures/hydraulic/green-leak</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -252,7 +281,7 @@
 			<checkbox>
 				<label>Green ENG 1 Pump</label>
 				<halign>left</halign>
-				<property>/systems/failures/pump-green</property>
+				<property>/systems/failures/hydraulic/green-edp</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -262,7 +291,7 @@
 			<checkbox>
 				<label>Yellow HYD Leak</label>
 				<halign>left</halign>
-				<property>/systems/failures/hyd-yellow</property>
+				<property>/systems/failures/hydraulic/yellow-leak</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -272,7 +301,7 @@
 			<checkbox>
 				<label>Yellow ENG 2 Pump</label>
 				<halign>left</halign>
-				<property>/systems/failures/pump-yellow-eng</property>
+				<property>/systems/failures/hydraulic/yellow-edp</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -282,7 +311,17 @@
 			<checkbox>
 				<label>Yellow ELEC Pump</label>
 				<halign>left</halign>
-				<property>/systems/failures/pump-yellow-elec</property>
+				<property>/systems/failures/hydraulic/yellow-elec</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>PTU</label>
+				<halign>left</halign>
+				<property>/systems/failures/hydraulic/ptu</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -407,7 +446,7 @@
 			<checkbox>
 				<label>Tank L Pump 1</label>
 				<halign>left</halign>
-				<property>/systems/failures/tank0pump1</property>
+				<property>/systems/failures/fuel/left-tank-pump-1</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -417,7 +456,7 @@
 			<checkbox>
 				<label>Tank L Pump 2</label>
 				<halign>left</halign>
-				<property>/systems/failures/tank0pump2</property>
+				<property>/systems/failures/fuel/left-tank-pump-2</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -427,7 +466,7 @@
 			<checkbox>
 				<label>Tank C Pump 1</label>
 				<halign>left</halign>
-				<property>/systems/failures/tank1pump1</property>
+				<property>/systems/failures/fuel/center-tank-pump-1</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -437,7 +476,7 @@
 			<checkbox>
 				<label>Tank C Pump 2</label>
 				<halign>left</halign>
-				<property>/systems/failures/tank1pump2</property>
+				<property>/systems/failures/fuel/center-tank-pump-2</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -447,7 +486,7 @@
 			<checkbox>
 				<label>Tank R Pump 1</label>
 				<halign>left</halign>
-				<property>/systems/failures/tank2pump1</property>
+				<property>/systems/failures/fuel/right-tank-pump-1</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -457,7 +496,7 @@
 			<checkbox>
 				<label>Tank R Pump 2</label>
 				<halign>left</halign>
-				<property>/systems/failures/tank2pump2</property>
+				<property>/systems/failures/fuel/right-tank-pump-2</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>

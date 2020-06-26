@@ -2296,7 +2296,7 @@ var messages_right_memo = func {
 		nw_strg_disc.colour = "g";
 	}
 	
-	if (getprop("controls/pneumatic/switches/ram-air") == 1) {
+	if (getprop("controls/pneumatics/switches/ram-air") == 1) {
 		ram_air.active = 1;
 	} else {
 		ram_air.active = 0;

@@ -4275,7 +4275,7 @@
 			<or>
 				<!--<and>
 					<equals>
-						<property>systems/pneumatic/bleedapu-fault</property>
+						<property>systems/pneumatics/bleedapu-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -4414,7 +4414,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/hotair-fault</property>
+						<property>systems/pneumatics/hotair-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
