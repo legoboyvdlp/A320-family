@@ -154,7 +154,7 @@ var initInputB = func(key, i) {
 				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index"));
 			}
 			var zfw_min = 80.6; #make based on performance
-			var zfw_max = 137.8; #make based on performance
+			var zfw_max = 134.5; #61,000 kg, make based on performance
 			if (size(scratchpad) == 0) {
 				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");
 				setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
