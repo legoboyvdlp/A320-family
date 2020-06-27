@@ -148,7 +148,7 @@
 		<name>Pushback</name>
 		<path>Aircraft/A320-family/Models/Services/Pushback/Douglas.xml</path>
 		<offsets>
-			<x-m>6.0</x-m>
+			<x-m>-13.80</x-m>
 			<y-m>0</y-m>
 			<z-m>-4.24</z-m>
 		</offsets>
