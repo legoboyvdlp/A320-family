@@ -254,6 +254,7 @@ var dirTo = {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
@@ -264,6 +265,7 @@ var dirTo = {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 		} else {

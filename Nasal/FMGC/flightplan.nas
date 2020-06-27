@@ -368,8 +368,8 @@ var flightPlanController = {
 			
 			# use createWP here as createWPFrom doesn't accept waypoints
 			# createWPFrom worked before... but be sure!
-			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.wp_name), 2);
-			fmgc.windController.insertWind(plan, 2, 0, waypointGhost.wp_name);
+			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.id), 2);
+			fmgc.windController.insertWind(plan, 2, 0, waypointGhost.id);
 			me.addDiscontinuity(3, plan);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
