@@ -72,7 +72,7 @@
 		<switch name="/controls/lighting/landing-lights[2]">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/switches/landing-lights-r ne 0
+				/controls/switches/landing-lights-r eq 1
 				/systems/electrical/bus/ac-2 ge 110
 				/controls/lighting/landing-light-pos-r eq 1
 			</test>
