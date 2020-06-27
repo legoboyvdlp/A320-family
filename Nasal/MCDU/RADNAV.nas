@@ -68,7 +68,7 @@ var radnavInput = func(key, i) {
 							setprop("/FMGC/internal/ils1freq-set", 1);
 							mcdu_scratchpad.scratchpads[i].empty();
 							if (num(getprop("/FMGC/internal/ils1freq-calculated")) != 0 and num(getprop("/FMGC/internal/ils1freq-calculated")) != num(getprop("instrumentation/nav[0]/frequencies/selected-mhz"))) {
-								genericMessage(i, "RWY/LS MISMATCH", "amb");
+								mcdu_message(i, "RWY/LS MISMATCH");
 							}
 						} else {
 							mcdu_message(i, "NOT ALLOWED");
