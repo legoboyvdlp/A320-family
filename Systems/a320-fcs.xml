@@ -930,16 +930,10 @@
 			<c1>20</c1>
 		</lag_filter>
 		
-		<pure_gain name="/services/chocks/nose-half">
-			<input>/services/chocks/nose</input>
-			<gain>0.5</gain>
-		</pure_gain>
-		
 		<summer name="fcs/left-brake-summer">
 			<input>/controls/gear/brake-left</input>
 			<input>/controls/gear/brake-parking</input>
-			<input>/services/chocks/nose-half</input>
-			<input>/services/chocks/left</input>
+			<input>/services/chocks/enable</input>
 			<clipto>
 				<min>0</min>
 				<max>1</max>
@@ -957,8 +951,7 @@
 		<summer name="fcs/right-brake-summer">
 			<input>/controls/gear/brake-right</input>
 			<input>/controls/gear/brake-parking</input>
-			<input>/services/chocks/nose-half</input>
-			<input>/services/chocks/right</input>
+			<input>/services/chocks/enable</input>
 			<clipto>
 				<min>0</min>
 				<max>1</max>

@@ -951,9 +951,7 @@
 	
 	<services n="0">
 		<chocks n="0">
-			<nose type="bool">0</nose>
-			<left type="bool">0</left>
-			<right type="bool">0</right>
+			<enable type="bool">0</enable>
 		</chocks>
 		<fuel-truck>
 			<connect type="bool">0</connect>

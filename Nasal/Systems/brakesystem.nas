@@ -169,7 +169,7 @@ var BrakeSystem =
 				var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
 
 				LThermalEnergy += (Mass * getprop("gear/gear[1]/compression-norm") * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
-				if (getprop("services/chocks/left")) {
+				if (getprop("services/chocks/enable")) {
 					if (!getprop("controls/gear/brake-parking")) {
 						# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
 						LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);					
@@ -202,7 +202,7 @@ var BrakeSystem =
 				};
 
 				RThermalEnergy += (Mass * getprop("gear/gear[2]/compression-norm") * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
-				if (getprop("services/chocks/right")) {
+				if (getprop("services/chocks/enable")) {
 					if (!getprop("controls/gear/brake-parking")) {
 						# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
 						RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);

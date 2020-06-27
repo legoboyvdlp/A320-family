@@ -20,9 +20,12 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 9.9) {
 					setprop("/FMGC/internal/taxi-fuel", scratchpad);
 					setprop("/FMGC/internal/taxi-fuel-set", 1);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+					if (getprop("/FMGC/internal/block-confirmed")) {
+						setprop("/FMGC/internal/fuel-calculating", 1);
+					} else if (getprop("/FMGC/internal/fuel-request-set")) {
+						setprop("/FMGC/internal/block-calculating", 1);
+					}
 					mcdu_scratchpad.scratchpads[i].empty();
-					fmgc.updateFuel();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
@@ -148,14 +151,14 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			mcdu_message(i, "NOT ALLOWED");
 		} else {
-			if (!getprop("/FMGC/internal/cost-index-set")) {
+			if (!getprop("/FMGC/internal/cost-index-set") and getprop("/FMGC/internal/tofrom-set")) {
 				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index"));
 				setprop("/FMGC/internal/cost-index-set", 1);
 				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index"));
 			}
-			
-			var tfs = size(scratchpad);
-			if (tfs == 0) {
+			var zfw_min = 80.6; #make based on performance
+			var zfw_max = 134.5; #61,000 kg, make based on performance
+			if (size(scratchpad) == 0) {
 				var zfw = getprop("/fdm/jsbsim/inertia/weight-lbs") - getprop("/consumables/fuel/total-fuel-lbs");
 				setprop("/FMGC/internal/zfw", sprintf("%3.1f", math.round(zfw / 1000, 0.1)));
 				setprop("/FMGC/internal/zfw-set", 1);
@@ -171,18 +174,49 @@ var initInputB = func(key, i) {
 				} else if (getprop("/FMGC/internal/fuel-request-set")) {
 					setprop("/FMGC/internal/block-calculating", 1);
 				}
-			} else if (tfs >= 2 and tfs <= 11 and find("/", scratchpad) != -1) {
+				mcdu_scratchpad.scratchpads[i].empty();
+			} else if (find("/", scratchpad) != -1) {
 				var zfwi = split("/", scratchpad);
-				var zfwcg = num(zfwi[0]);
-				var zfw = num(zfwi[1]);
-				var zfwcgs = size(zfwi[0]);
-				var zfws = size(zfwi[1]);
-				if (zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) {
-					setprop("/FMGC/internal/zfwcg", zfwi[0]);
-					setprop("/FMGC/internal/zfwcg-set", 1);
+				var zfw = num(zfwi[0]);
+				var zfwcg = num(zfwi[1]);
+				var zfws = size(zfwi[0]);
+				var zfwcgs = size(zfwi[1]);
+				if (zfw != nil and zfws > 0 and zfws <= 5 and size(split(".", zfwi[0])[1]) <= 1 and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and size(split(".", zfwi[1])[1]) <= 1) {
+					if (zfw >= zfw_min and zfw <= zfw_max and zfwcg >= 8.0 and zfwcg <= 45.0) {
+						setprop("/FMGC/internal/zfw", zfw);
+						setprop("/FMGC/internal/zfw-set", 1);
+						setprop("/FMGC/internal/zfwcg", zfwcg);
+						setprop("/FMGC/internal/zfwcg-set", 1);
+						if (!getprop("/FMGC/internal/block-confirmed") and getprop("/FMGC/internal/block-set")) {
+							setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
+							setprop("/FMGC/internal/tow-set", 1);
+							setprop("/FMGC/internal/fuel-request-set", 1);
+							setprop("/FMGC/internal/fuel-calculating", 1);
+							setprop("/FMGC/internal/block-calculating", 0);
+							setprop("/FMGC/internal/block-confirmed", 1);
+						} else if (getprop("/FMGC/internal/block-confirmed")) {
+							setprop("/FMGC/internal/fuel-calculating", 1);
+						} else if (getprop("/FMGC/internal/fuel-request-set")) {
+							setprop("/FMGC/internal/block-calculating", 1);
+						}
+						mcdu_scratchpad.scratchpads[i].empty();
+					} else {
+						mcdu_message(i, "ENTRY OUT OF RANGE");
+					}
+				} else if (zfws == 0 and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and size(split(".", zfwi[1])[1]) <= 1) {
+					if (zfwcg >= 8.0 and zfwcg <= 45.0) {
+						setprop("/FMGC/internal/zfwcg", zfwcg);
+						setprop("/FMGC/internal/zfwcg-set", 1);
+						mcdu_scratchpad.scratchpads[i].empty();
+					} else {
+						mcdu_message(i, "ENTRY OUT OF RANGE");
+					}
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
 				}
-				if (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9) {
-					setprop("/FMGC/internal/zfw", zfwi[1]);
+			} else if (num(scratchpad) != nil and size(scratchpad) > 0 and size(scratchpad) <= 5 and size(split(".", scratchpad)[1]) <= 1) {
+				if (scratchpad >= zfw_min and scratchpad <= zfw_max) {
+					setprop("/FMGC/internal/zfw", scratchpad);
 					setprop("/FMGC/internal/zfw-set", 1);
 					if (!getprop("/FMGC/internal/block-confirmed") and getprop("/FMGC/internal/block-set")) {
 						setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
@@ -196,20 +230,9 @@ var initInputB = func(key, i) {
 					} else if (getprop("/FMGC/internal/fuel-request-set")) {
 						setprop("/FMGC/internal/block-calculating", 1);
 					}
-				}
-				if ((zfwcg != nil and zfwcgs >= 1 and zfwcgs <= 5 and zfwcg > 0 and zfwcg <= 99.9) or (zfw != nil and zfws >= 1 and zfws <= 5 and zfw > 0 and zfw <= 999.9)) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					mcdu_message(i, "NOT ALLOWED");
-				}
-			} else if (tfs >= 1 and tfs <= 5) {
-				var zfwcg = size(scratchpad);
-				if (num(scratchpad) != nil and zfwcg >= 1 and zfwcg <= 5 and scratchpad > 0 and scratchpad <= 99.9) {
-					setprop("/FMGC/internal/zfwcg", scratchpad);
-					setprop("/FMGC/internal/zfwcg-set", 1);
-					mcdu_scratchpad.scratchpads[i].empty();
-				} else {
-					mcdu_message(i, "NOT ALLOWED");
+					mcdu_message(i, "ENTRY OUT OF RANGE");
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
