@@ -619,6 +619,26 @@
 	
 	<!-- Gear -->
 	
+	<!-- Nose Gear Steering -->
+	<animation>
+		<name>Steering (Nose)</name>
+		<type>rotate</type>
+		<object-name>NLGSlidingTubeAxle</object-name>
+		<object-name>NLGWheels</object-name>
+		<object-name>NLGFittingLower</object-name>
+		<object-name>NLGTorqueLink1</object-name>
+		<property>sim/multiplay/generic/float[1]</property>
+		<factor>75</factor>
+		<axis>
+			<x1-m>-13.5256</x1-m>
+			<y1-m>-0.027617</y1-m>
+			<z1-m>-3.11144</z1-m>
+			<x2-m>-13.5725</x2-m>
+			<y2-m>-0.000079</y2-m>
+			<z2-m>-3.42216</z2-m>
+		</axis>
+	</animation>
+	
 	<!-- Compression -->
 	
 	<animation>
