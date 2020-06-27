@@ -258,7 +258,6 @@
 		<object-name>NurbsPath.003</object-name>
 		<object-name>NurbsPath.004</object-name>
 		<object-name>NurbsPath.005</object-name>
-		<!--<object-name>NLGDragStrutAssembly2</object-name>-->
 		<property>gear/gear[0]/position-norm</property>
 		<interpolation>
 			<entry><ind>0.2</ind><dep>90.0</dep></entry>
@@ -1216,7 +1215,6 @@
 		<object-name>SlatR2</object-name>
 		<property>sim/multiplay/generic/float[11]</property>
 		<factor>27</factor>
-		>
 		<axis>
 			<x1-m>1.76797</x1-m>
 			<y1-m>16.34650</y1-m>
@@ -1237,10 +1235,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-l1/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>-1.2297</x1-m>
+			<x1-m>-1.2047</x1-m>
 			<y1-m>-4.56129</y1-m>
 			<z1-m>-0.854146</z1-m>
-			<x2-m>-1.23339</x2-m>
+			<x2-m>-1.20839</x2-m>
 			<y2-m>-6.1044</y2-m>
 			<z2-m>-0.618676</z2-m>
 		</axis>
@@ -1252,10 +1250,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-l2/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>-1.01386</x1-m>
+			<x1-m>-0.98886</x1-m>
 			<y1-m>-6.96568</y1-m>
 			<z1-m>-0.556706</z1-m>
-			<x2-m>-0.457835</x2-m>
+			<x2-m>-0.432835</x2-m>
 			<y2-m>-8.51412</y2-m>
 			<z2-m>-0.410596</z2-m>
 		</axis>
@@ -1267,10 +1265,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-l3/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>-0.4112</x1-m>
+			<x1-m>-0.3862</x1-m>
 			<y1-m>-8.64393</y1-m>
 			<z1-m>-0.398151</z1-m>
-			<x2-m>0.104795</x2-m>
+			<x2-m>0.129795</x2-m>
 			<y2-m>-10.0795</y2-m>
 			<z2-m>-0.262752</z2-m>
 		</axis>
@@ -1282,14 +1280,15 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-l4/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>0.150515</x1-m>
+			<x1-m>0.175515</x1-m>
 			<y1-m>-10.2055</y1-m>
 			<z1-m>-0.250732</z1-m>
-			<x2-m>0.643955</x2-m>
+			<x2-m>0.668955</x2-m>
 			<y2-m>-11.5802</y2-m>
 			<z2-m>-0.121072</z2-m>
 		</axis>
 	</animation>
+	
 	<animation>
 		<name>Left spoiler 5</name>
 		<type>rotate</type>
@@ -1297,14 +1296,53 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>0.68727</x1-m>
+			<x1-m>0.71227</x1-m>
 			<y1-m>-11.6975</y1-m>
 			<z1-m>-0.109877</z1-m>
-			<x2-m>1.16091</x2-m>
+			<x2-m>1.18591</x2-m>
 			<y2-m>-13.0159</y2-m>
 			<z2-m>0.014588</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>SpoilerActuatorL5</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+		<factor>-0.85</factor>
+		<axis>
+			<x1-m>0.96858</x1-m>
+			<y1-m>-12.4253</y1-m>
+			<z1-m>-0.096347</z1-m>
+			<x2-m>0.91571</x2-m>
+			<y2-m>-12.2774</y2-m>
+			<z2-m>-0.111877</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SpoilerActuatorRodL5</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
+			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
+			<entry><ind>20.0</ind><dep> 0.004</dep></entry>
+			<entry><ind>30.0</ind><dep> 0.016</dep></entry>
+			<entry><ind>40.0</ind><dep> 0.024</dep></entry>
+			<entry><ind>50.0</ind><dep> 0.033</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>1.01962</x1-m>
+			<y1-m>-12.3207</y1-m>
+			<z1-m>-0.075614</z1-m>
+			<x2-m>1.12682</x2-m>
+			<y2-m>-12.2782</y2-m>
+			<z2-m>-0.036176</z2-m>
+		</axis>
+	</animation>
+	
+	
 	<animation>
 		<name>Right spoiler 1</name>
 		<type>rotate</type>
@@ -1312,10 +1350,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>-1.23423</x1-m>
+			<x1-m>-1.20923</x1-m>
 			<y1-m>6.10191</y1-m>
 			<z1-m>-0.618062</z1-m>
-			<x2-m>-1.2302</x2-m>
+			<x2-m>-1.2052</x2-m>
 			<y2-m>4.55902</y2-m>
 			<z2-m>-0.854871</z2-m>
 		</axis>
@@ -1327,10 +1365,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>-0.460798</x1-m>
+			<x1-m>-0.435798</x1-m>
 			<y1-m>8.51333</y1-m>
 			<z1-m>-0.411579</z1-m>
-			<x2-m>-1.01298</x2-m>
+			<x2-m>-0.98798</x2-m>
 			<y2-m>6.9642</y2-m>
 			<z2-m>-0.557443</z2-m>
 		</axis>
@@ -1342,10 +1380,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>0.101834</x1-m>
+			<x1-m>0.126834</x1-m>
 			<y1-m>10.0794</y1-m>
 			<z1-m>-0.263732</z1-m>
-			<x2-m>-0.414163</x2-m>
+			<x2-m>-0.389163</x2-m>
 			<y2-m>8.64314</y2-m>
 			<z2-m>-0.399324</z2-m>
 		</axis>
@@ -1357,10 +1395,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>0.640994</x1-m>
+			<x1-m>0.665994</x1-m>
 			<y1-m>11.5802</y1-m>
 			<z1-m>-0.122053</z1-m>
-			<x2-m>0.146844</x2-m>
+			<x2-m>0.171844</x2-m>
 			<y2-m>10.2047</y2-m>
 			<z2-m>-0.251904</z2-m>
 		</axis>
@@ -1372,10 +1410,10 @@
 		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>1.15724</x1-m>
+			<x1-m>1.18224</x1-m>
 			<y1-m>13.0171</y1-m>
 			<z1-m>0.013605</z1-m>
-			<x2-m>0.683598</x2-m>
+			<x2-m>0.708598</x2-m>
 			<y2-m>11.6987</y2-m>
 			<z2-m>-0.110857</z2-m>
 		</axis>
