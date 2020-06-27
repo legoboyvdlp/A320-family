@@ -1095,6 +1095,14 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/phases/monostable/phase-6-180-inhibit">
+			<default value="0"/>
+			<test value="1">
+				/ECAM/phases/monostable/phase-6-180 eq 1
+				/ECAM/phases/monostable/phase-6-180-pulse eq 1
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/pack-1-2-fault">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -1119,10 +1127,7 @@
 						/ECAM/warning-phase ne 1
 						/ECAM/warning-phase ne 2
 						/ECAM/warning-phase ne 10
-						<test logic="OR">
-							/ECAM/phases/monostable/phase-6-180 eq 0
-							/ECAM/phases/monostable/phase-6-180-pulse eq 0
-						</test>
+						/ECAM/phases/monostable/phase-6-180-inhibit ne 1
 					</test>
 				</test>
 			</test>

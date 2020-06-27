@@ -40,9 +40,6 @@ var FWC = {
 		altAlert2: props.globals.initNode("/ECAM/flipflop/altitude-alert-rs-set", 0, "BOOL"),
 	},
 	Flipflop: {
-		gearSet: props.globals.initNode("/ECAM/phases/flipflop/gear-set", 0, "BOOL"),
-		gearReset: props.globals.initNode("/ECAM/phases/flipflop/gear-reset", 0, "BOOL"),
-		gearOutput: props.globals.initNode("/ECAM/phases/flipflop/gear-output", 0, "BOOL"),
 		phase2Set: props.globals.initNode("/ECAM/phases/flipflop/phase-2-set", 0, "BOOL"),
 		phase2Reset: props.globals.initNode("/ECAM/phases/flipflop/phase-2-reset", 0, "BOOL"),
 		phase2Output: props.globals.initNode("/ECAM/phases/flipflop/phase-2-output", 0, "BOOL"),
