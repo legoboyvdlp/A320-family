@@ -20,9 +20,12 @@ var initInputB = func(key, i) {
 				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 9.9) {
 					setprop("/FMGC/internal/taxi-fuel", scratchpad);
 					setprop("/FMGC/internal/taxi-fuel-set", 1);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+					if (getprop("/FMGC/internal/block-confirmed")) {
+						setprop("/FMGC/internal/fuel-calculating", 1);
+					} else if (getprop("/FMGC/internal/fuel-request-set")) {
+						setprop("/FMGC/internal/block-calculating", 1);
+					}
 					mcdu_scratchpad.scratchpads[i].empty();
-					fmgc.updateFuel();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
