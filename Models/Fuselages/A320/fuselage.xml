@@ -1245,8 +1245,6 @@
 		</axis>
 	</animation>
 
-
-	
 	<!-- Spoilers -->
 	<animation>
 		<name>Left spoiler 1</name>
@@ -1742,6 +1740,382 @@
 		<axis>
 			<x>0</x>
 			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- Door L1 -->
+	<animation>
+		<name>Door L1 pick</name>
+		<type>pick</type>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL1.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.doorl1, "doorl1", "L1");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Door L1 hinge</name>
+		<type>rotate</type>
+		<object-name>DoorHingeL1</object-name>
+		<center>
+			<x-m>-14.2723</x-m>
+			<y-m>-1.5992</y-m>
+			<z-m>0.22131</z-m>
+		</center>
+		<property>sim/model/door-positions/doorl1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-10</dep></entry>
+			<entry><ind>0.8</ind><dep>-45</dep></entry>
+			<entry><ind>1</ind><dep>-70</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door L1 hinge</name>
+		<type>translate</type>
+		<object-name>DoorHingeL1</object-name>
+		<property>sim/model/door-positions/doorl1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-0.15</dep></entry>
+			<entry><ind>1</ind><dep>-0.15</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door L1 translate</name>
+		<type>translate</type>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL1.Inner</object-name>
+		<property>sim/model/door-positions/doorl1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door L1 translate</name>
+		<type>translate</type>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL1.Inner</object-name>
+		<property>sim/model/door-positions/doorl1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-0.1</dep></entry>
+			<entry><ind>1</ind><dep>-0.1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- Door L2 -->
+	<animation>
+		<name>Door L2 pick</name>
+		<type>pick</type>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorL4.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.doorl4, "doorl4", "L2");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Door L2 hinge</name>
+		<type>rotate</type>
+		<object-name>DoorHingeL4</object-name>
+		<center>
+			<x-m>10.3658</x-m>
+			<y-m>-1.55292</y-m>
+			<z-m>0.221315</z-m>
+		</center>
+		<property>sim/model/door-positions/doorl4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-10</dep></entry>
+			<entry><ind>0.8</ind><dep>-45</dep></entry>
+			<entry><ind>1</ind><dep>-70</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door L2 hinge</name>
+		<type>translate</type>
+		<object-name>DoorHingeL4</object-name>
+		<property>sim/model/door-positions/doorl4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-0.15</dep></entry>
+			<entry><ind>1</ind><dep>-0.15</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door L2 translate</name>
+		<type>translate</type>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorL4.Inner</object-name>
+		<property>sim/model/door-positions/doorl4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door L2 translate</name>
+		<type>translate</type>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorL4.Inner</object-name>
+		<property>sim/model/door-positions/doorl4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>-0.2</dep></entry>
+			<entry><ind>1</ind><dep>-0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- Door R1 -->
+	<animation>
+		<name>Door R1 pick</name>
+		<type>pick</type>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR1.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.doorr1, "doorr1", "R1");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Door R1 hinge</name>
+		<type>rotate</type>
+		<object-name>DoorHingeR1</object-name>
+		<center>
+			<x-m>-14.2723</x-m>
+			<y-m>1.5992</y-m>
+			<z-m>0.22131</z-m>
+		</center>
+		<property>sim/model/door-positions/doorr1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>10</dep></entry>
+			<entry><ind>0.8</ind><dep>45</dep></entry>
+			<entry><ind>1</ind><dep>70</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door R1 hinge</name>
+		<type>translate</type>
+		<object-name>DoorHingeR1</object-name>
+		<property>sim/model/door-positions/doorr1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.15</dep></entry>
+			<entry><ind>1</ind><dep>0.15</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door R1 translate</name>
+		<type>translate</type>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR1.Inner</object-name>
+		<property>sim/model/door-positions/doorr1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door R1 translate</name>
+		<type>translate</type>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR1.Inner</object-name>
+		<property>sim/model/door-positions/doorr1/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.2</dep></entry>
+			<entry><ind>1</ind><dep>0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- Door R2 -->
+	<animation>
+		<name>Door R2 pick</name>
+		<type>pick</type>
+		<object-name>DoorR4</object-name>
+		<object-name>DoorR4.Inner</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				 libraries.triggerDoor(libraries.doorr4, "doorr4", "R2");
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<name>Door R2 hinge</name>
+		<type>rotate</type>
+		<object-name>DoorHingeR4</object-name>
+		<center>
+			<x-m>10.3658</x-m>
+			<y-m>1.55292</y-m>
+			<z-m>0.221315</z-m>
+		</center>
+		<property>sim/model/door-positions/doorr4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>10</dep></entry>
+			<entry><ind>0.8</ind><dep>45</dep></entry>
+			<entry><ind>1</ind><dep>70</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door R2 hinge</name>
+		<type>translate</type>
+		<object-name>DoorHingeL4</object-name>
+		<property>sim/model/door-positions/doorr4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.15</dep></entry>
+			<entry><ind>1</ind><dep>0.15</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door R2 translate</name>
+		<type>translate</type>
+		<object-name>DoorR4</object-name>
+		<object-name>DoorR4.Inner</object-name>
+		<property>sim/model/door-positions/doorr4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>1</ind><dep>-1</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Door R2 translate</name>
+		<type>translate</type>
+		<object-name>DoorR4</object-name>
+		<object-name>DoorR4.Inner</object-name>
+		<property>sim/model/door-positions/doorr4/position-norm</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.25</ind><dep>0.2</dep></entry>
+			<entry><ind>1</ind><dep>0.2</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
 			<z>0</z>
 		</axis>
 	</animation>
