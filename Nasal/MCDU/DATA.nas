@@ -87,4 +87,3 @@ var data2Input = func(key, i) {
 		setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 	}
 }
-

@@ -633,7 +633,6 @@ var flightPlanController = {
 	getNavCount: func(plan) {
 		var count = 0;
 		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			#print(me.flightplans[plan].getWP(wpt).wp_type);
 			if (me.flightplans[plan].getWP(wpt).wp_type == "navaid") {
 				count += 1;
 			}
@@ -644,7 +643,6 @@ var flightPlanController = {
 	getDepartureCount: func(plan) {
 		var count = 0;
 		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			#print(me.flightplans[plan].getWP(wpt).wp_role);
 			if (me.flightplans[plan].getWP(wpt).wp_role == "sid") {
 				count += 1;
 			}
