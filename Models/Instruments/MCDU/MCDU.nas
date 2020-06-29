@@ -1276,7 +1276,7 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
-				dms_lat = getprop("/autopilot/route-manager/route/wp[0]/lat");
+				dms_lat = getprop("/autopilot/route-manager/route/wp[0]/latitude-deg");
 				degrees_lat = int(dms_lat);
 				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
@@ -1286,7 +1286,7 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-long-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-long-minutes");
 				sign = getprop("/FMGC/internal/align-ref-long-sign");
-				dms_long = getprop("/autopilot/route-manager/route/wp[0]/lon");
+				dms_long = getprop("/autopilot/route-manager/route/wp[0]/longitude-deg");
 				degrees_long = int(dms_long);
 				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
 				sign_long = degrees_long >= 0 ? "E" : "W";

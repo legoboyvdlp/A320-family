@@ -39,8 +39,7 @@ var flightPlanController = {
 	
 	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/autopilot/route-manager/route/num", 0, "INT")],
 	arrivalIndex: [0, 0, 0],
-	arrivalDist: 0,
-	_arrivalDist: 0,
+	arrivalDist: props.globals.getNode("/autopilot/route-manager/distance-remaining-nm"),
 	fromWptTime: nil,
 	fromWptAlt: nil,
 	_timeTemp: nil,
@@ -73,6 +72,7 @@ var flightPlanController = {
 		mcdu.isNoSid[n] = 0;
 		mcdu.isNoStar[n] = 0;
 		mcdu.isNoVia[n] = 0;
+		me.arrivalIndex[n] = 0; # reset arrival index calculations
 	},
 	
 	createTemporaryFlightPlan: func(n) {
@@ -804,20 +804,10 @@ var flightPlanController = {
 	
 	updatePlans: func(runDecel = 0, callDecel = 1) {
 		me.updateCurrentWaypoint();
-		me._arrivalDist = 0;
 		for (var n = 0; n <= 2; n += 1) {
 			for (var wpt = 0; wpt < me.flightplans[n].getPlanSize(); wpt += 1) { # Iterate through the waypoints and update their data
 				var curAircraftPos = geo.aircraft_position(); # don't want to get this corrupted so make sure it is a local variable
 				var waypointHashStore = me.flightplans[n].getWP(wpt);
-				
-				
-				if (wpt == 1) {
-					var courseDistanceFrom = waypointHashStore.courseAndDistanceFrom(curAircraftPos);
-					if (me.flightplans[n].getWP(wpt).wp_name != "DISCONTINUITY" and me.flightplans[n].getWP(wpt).wp_type != "vectors" and me.flightplans[n].getWP(wpt).wp_type != "hdgToAlt" and wpt <= me.arrivalIndex[n]) {
-						# print("Adding " ~ courseDistanceFrom[1] ~ " miles for waypoint " ~ me.flightplans[n].getWP(wpt).wp_name);
-						me._arrivalDist += courseDistanceFrom[1]; # distance to next waypoint, therafter to end of flightplan
-					}
-				}
 				
 				if (left(waypointHashStore.wp_name, 4) == FMGCarr.getValue() and wpt != 0) {
 					if (me.arrivalIndex[n] != wpt) {
@@ -837,13 +827,6 @@ var flightPlanController = {
 				me.calculateDecelPoint(n);
 			}
 		}
-		
-		if (me.flightplans[2].getWP(me.arrivalIndex[2]) == nil or me.flightplans[2].getWP(1) == nil) {
-			me.arrivalDist = 9999;
-			print(me.arrivalIndex[2]);
-		}
-		
-		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 	},
 	
 	updateCurrentWaypoint: func() {
