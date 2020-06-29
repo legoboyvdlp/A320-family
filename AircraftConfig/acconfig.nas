@@ -497,7 +497,7 @@ var taxi_b = func {
 	if (pts.Instrumentation.Altimeter.std.getBoolValue()) {
 		libraries.toggleSTD();
 	}
-	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/pressure-sea-level-inhg"));
+	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {

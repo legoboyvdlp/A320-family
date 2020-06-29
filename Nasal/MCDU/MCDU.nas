@@ -59,7 +59,6 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/alt-set", 0);
 	setprop("/FMGC/internal/cost-index", "0");
 	setprop("/FMGC/internal/cost-index-set", 0);
-	setprop("/FMGC/internal/last-cost-index", 0);
 	setprop("/FMGC/internal/cruise-ft", 10000);
 	setprop("/FMGC/internal/cruise-fl", 100);
 	setprop("/FMGC/internal/cruise-lvl-set", 0);
