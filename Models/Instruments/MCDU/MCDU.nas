@@ -3768,6 +3768,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();
 				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].hide();
 				me["Simple_L4_Arrow"].hide();
 				me["Simple_L5_Arrow"].hide();
@@ -3778,7 +3779,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
-				
+				me["arrow2L"].hide();
+				me["arrow2R"].hide();
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
