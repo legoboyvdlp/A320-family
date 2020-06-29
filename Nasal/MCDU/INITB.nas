@@ -151,11 +151,6 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			mcdu_message(i, "NOT ALLOWED");
 		} else {
-			if (!getprop("/FMGC/internal/cost-index-set") and getprop("/FMGC/internal/tofrom-set")) {
-				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index"));
-				setprop("/FMGC/internal/cost-index-set", 1);
-				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index"));
-			}
 			var zfw_min = 80.6; #make based on performance
 			var zfw_max = 134.5; #61,000 kg, make based on performance
 			if (size(scratchpad) == 0) {
@@ -236,6 +231,12 @@ var initInputB = func(key, i) {
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
+			}
+			
+			if (!getprop("/FMGC/internal/cost-index-set") and getprop("/FMGC/internal/tofrom-set")) {
+				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index") or 0);
+				setprop("/FMGC/internal/cost-index-set", 1);
+				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index") or 0);
 			}
 		}
 	} else if (key == "R2" and !getprop("/FMGC/internal/fuel-calculating")) {

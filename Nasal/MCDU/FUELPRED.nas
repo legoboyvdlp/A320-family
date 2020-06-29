@@ -219,9 +219,9 @@ var fuelPredInput = func(key, i) {
 			}
 			
 			if (!getprop("/FMGC/internal/cost-index-set") and getprop("/FMGC/internal/tofrom-set")) {
-				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index"));
+				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index") or 0);
 				setprop("/FMGC/internal/cost-index-set", 1);
-				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index"));
+				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index") or 0);
 			}
 		}
 	} else if (key == "R4") {
