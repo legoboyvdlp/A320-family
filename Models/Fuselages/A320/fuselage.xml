@@ -373,53 +373,7 @@
 		</axis>
 	</animation>
 	
-	<animation>
-		<type>select</type>
-		<object-name>SideStayL1</object-name>
-		<object-name>SideStayL2</object-name>
-		<condition>
-			<greater-than>
-				<property>gear/gear[1]/position-norm</property>
-				<value>0.27</value>
-			</greater-than>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>locked-track</type>
-		<object-name>SideStayL2</object-name>
-		<center>
-		  <x-m>-1.33702</x-m>
-		  <y-m>-3.7148</y-m>
-		  <z-m>-2.60177</z-m>
-		</center>
-		<lock-axis>
-		  <x>0.123337</x>
-		  <y>0.071652</y>
-		  <z>-0.019742</z>
-		</lock-axis>
-		<track-axis>
-		  <x>-0.840759</x>
-		  <y>0.388363</y>
-		  <z>1.57522</z>
-		</track-axis>
-		
-		<target-name>Static-Elements</target-name>
-		<target-center>
-		  <x-m>-2.18098</x-m>
-		  <y-m>-2.45903</y-m>
-		  <z-m>-1.44973</z-m>
-		</target-center>
-		
-		<slave-name>SideStayL1</slave-name>
-		<slave-center>
-		  <x-m>-1.79538</x-m>
-		  <y-m>-3.22299</y-m>
-		  <z-m>-1.94457</z-m>
-		</slave-center>
-	</animation>
-	
-	<animation>
+	<!--<animation>
 		<type>locked-track</type>
 		<object-name>MLGLockStayL1</object-name>
 		<center>
@@ -451,7 +405,7 @@
 		  <y-m>-3.47957</y-m>
 		  <z-m>-1.72857</z-m>
 		</slave-center>
-	</animation>
+	</animation>-->
 	
     <!--<animation>
 		<type>locked-track</type>
@@ -575,6 +529,57 @@
 			<y2-m> 3.85668</y2-m>
 			<z2-m>-1.17404</z2-m>
 		</axis>
+	</animation>
+	
+	<!--<animation>
+		<type>select</type>
+		<object-name>MLGLockStayR1</object-name>
+		<object-name>MLGLockStayR2</object-name>
+		<object-name>MLGLockstayActuatorR1</object-name>
+		<object-name>MLGLockstayActuatorR2</object-name>
+		<object-name>MLGWheelsR</object-name>
+		<object-name>MLGCablesR1</object-name>
+		<object-name>MLGCablesR2</object-name>
+		<condition>
+			<equals>
+				<property>/fdm/jsbsim/zero</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>-->
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>SideStayR1</object-name>
+		<center>
+		  <x-m>-2.16918</x-m>
+		  <y-m>2.81909</y-m>
+		  <z-m>-1.40903</z-m>
+		</center>
+		<lock-axis>
+		  <x>-0.070073</x>
+		  <y>-0.040522</y>
+		  <z>-0.011105</z>
+		</lock-axis>
+		<track-axis>
+		  <x>-0.832154</x>
+		  <y>1.19276</y>
+		  <z>0.893679</z>
+		</track-axis>
+		
+		<target-name>MLGFittingR</target-name>
+		<target-center>
+		  <x-m>-1.33702</x-m>
+		  <y-m>3.71277</y-m>
+		  <z-m>-2.60178</z-m>
+		</target-center>
+		
+		<slave-name>SideStayR2</slave-name>
+		<slave-center>
+		  <x-m>-1.79537</x-m>
+		  <y-m>3.2209</y-m>
+		  <z-m>-1.94463</z-m>
+		</slave-center>
 	</animation>
 	
 	<animation>
@@ -1774,8 +1779,8 @@
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>-10</dep></entry>
-			<entry><ind>0.8</ind><dep>-45</dep></entry>
+			<entry><ind>0.5</ind><dep>-10</dep></entry>
+			<entry><ind>0.85</ind><dep>-45</dep></entry>
 			<entry><ind>1</ind><dep>-70</dep></entry>
 		</interpolation>
 		<axis>
@@ -1792,7 +1797,7 @@
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>-0.15</dep></entry>
+			<entry><ind>0.5</ind><dep>-0.15</dep></entry>
 			<entry><ind>1</ind><dep>-0.15</dep></entry>
 		</interpolation>
 		<axis>
@@ -1810,7 +1815,7 @@
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>0</dep></entry>
 			<entry><ind>1</ind><dep>-1</dep></entry>
 		</interpolation>
 		<axis>
@@ -1828,8 +1833,8 @@
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>-0.1</dep></entry>
-			<entry><ind>1</ind><dep>-0.1</dep></entry>
+			<entry><ind>0.5</ind><dep>-0.225</dep></entry>
+			<entry><ind>1</ind><dep>-0.20</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
@@ -1859,7 +1864,7 @@
 	<animation>
 		<name>Door L2 hinge</name>
 		<type>rotate</type>
-		<object-name>DoorHingeL4</object-name>
+		<object-name>DoorHingeL2</object-name>
 		<center>
 			<x-m>10.3658</x-m>
 			<y-m>-1.55292</y-m>
@@ -1868,8 +1873,8 @@
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>-10</dep></entry>
-			<entry><ind>0.8</ind><dep>-45</dep></entry>
+			<entry><ind>0.5</ind><dep>-10</dep></entry>
+			<entry><ind>0.85</ind><dep>-45</dep></entry>
 			<entry><ind>1</ind><dep>-70</dep></entry>
 		</interpolation>
 		<axis>
@@ -1882,11 +1887,11 @@
 	<animation>
 		<name>Door L2 hinge</name>
 		<type>translate</type>
-		<object-name>DoorHingeL4</object-name>
+		<object-name>DoorHingeL2</object-name>
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>-0.15</dep></entry>
+			<entry><ind>0.5</ind><dep>-0.15</dep></entry>
 			<entry><ind>1</ind><dep>-0.15</dep></entry>
 		</interpolation>
 		<axis>
@@ -1904,7 +1909,7 @@
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>0</dep></entry>
 			<entry><ind>1</ind><dep>-1</dep></entry>
 		</interpolation>
 		<axis>
@@ -1922,8 +1927,8 @@
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>-0.2</dep></entry>
-			<entry><ind>1</ind><dep>-0.2</dep></entry>
+			<entry><ind>0.5</ind><dep>-0.25</dep></entry>
+			<entry><ind>1</ind><dep>-0.40</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
@@ -1962,8 +1967,8 @@
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>10</dep></entry>
-			<entry><ind>0.8</ind><dep>45</dep></entry>
+			<entry><ind>0.5</ind><dep>10</dep></entry>
+			<entry><ind>0.85</ind><dep>45</dep></entry>
 			<entry><ind>1</ind><dep>70</dep></entry>
 		</interpolation>
 		<axis>
@@ -1980,8 +1985,8 @@
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0.15</dep></entry>
-			<entry><ind>1</ind><dep>0.15</dep></entry>
+			<entry><ind>0.5</ind><dep>-0.15</dep></entry>
+			<entry><ind>1</ind><dep>-0.15</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>
@@ -1998,7 +2003,7 @@
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>0</dep></entry>
 			<entry><ind>1</ind><dep>-1</dep></entry>
 		</interpolation>
 		<axis>
@@ -2016,8 +2021,8 @@
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0.2</dep></entry>
-			<entry><ind>1</ind><dep>0.2</dep></entry>
+			<entry><ind>0.5</ind><dep>0.225</dep></entry>
+			<entry><ind>1</ind><dep>0.20</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
@@ -2047,7 +2052,7 @@
 	<animation>
 		<name>Door R2 hinge</name>
 		<type>rotate</type>
-		<object-name>DoorHingeR4</object-name>
+		<object-name>DoorHingeR2</object-name>
 		<center>
 			<x-m>10.3658</x-m>
 			<y-m>1.55292</y-m>
@@ -2056,8 +2061,8 @@
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>10</dep></entry>
-			<entry><ind>0.8</ind><dep>45</dep></entry>
+			<entry><ind>0.5</ind><dep>10</dep></entry>
+			<entry><ind>0.85</ind><dep>45</dep></entry>
 			<entry><ind>1</ind><dep>70</dep></entry>
 		</interpolation>
 		<axis>
@@ -2070,12 +2075,12 @@
 	<animation>
 		<name>Door R2 hinge</name>
 		<type>translate</type>
-		<object-name>DoorHingeL4</object-name>
+		<object-name>DoorHingeR2</object-name>
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0.15</dep></entry>
-			<entry><ind>1</ind><dep>0.15</dep></entry>
+			<entry><ind>0.5</ind><dep>-0.15</dep></entry>
+			<entry><ind>1</ind><dep>-0.15</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>
@@ -2092,7 +2097,7 @@
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>0</dep></entry>
 			<entry><ind>1</ind><dep>-1</dep></entry>
 		</interpolation>
 		<axis>
@@ -2110,8 +2115,8 @@
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.25</ind><dep>0.2</dep></entry>
-			<entry><ind>1</ind><dep>0.2</dep></entry>
+			<entry><ind>0.5</ind><dep>0.25</dep></entry>
+			<entry><ind>1</ind><dep>0.40</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>

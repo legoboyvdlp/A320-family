@@ -148,18 +148,12 @@ setlistener("/sim/sounde/flaps-click", func {
 #########
 
 # Front doors
-var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 4);
-var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 4);
-
-# Middle doors (A321 only)
-var doorl2 = aircraft.door.new("/sim/model/door-positions/doorl2", 4);
-var doorr2 = aircraft.door.new("/sim/model/door-positions/doorr2", 4);
-var doorl3 = aircraft.door.new("/sim/model/door-positions/doorl3", 4);
-var doorr3 = aircraft.door.new("/sim/model/door-positions/doorr3", 4);
+var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 3);
+var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 3);
 
 # Rear doors
-var doorl4 = aircraft.door.new("/sim/model/door-positions/doorl4", 4);
-var doorr4 = aircraft.door.new("/sim/model/door-positions/doorr4", 4);
+var doorl4 = aircraft.door.new("/sim/model/door-positions/doorl4", 3);
+var doorr4 = aircraft.door.new("/sim/model/door-positions/doorr4", 3);
 
 # Cargo holds
 var cargobulk = aircraft.door.new("/sim/model/door-positions/cargobulk", 3);
