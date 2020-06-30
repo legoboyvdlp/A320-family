@@ -428,7 +428,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.L6 = ["----", " DEST", "wht"];
 		}
 		me.C6 = ["----   ", "TIME   ", "wht"];
-		if (fmgc.flightPlanController.arrivalDist != nil) {
+		if (fmgc.flightPlanController.arrivalDist.getValue() != nil) {
 			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist.getValue())) ~ "  --.-", "DIST    EFOB", "wht"];
 		} else {
 			me.R6 = ["----   --.-", "DIST    EFOB", "wht"];

@@ -256,9 +256,9 @@ var flightPlanController = {
 	# args: n, index
 	#	 n: flightplan to which the PPOS waypoint will be inserted
 	#	 index: optional argument, defaults to 1, index which the waypoint will be at. 
-	# Default to one, as direct to will insert TP, then create leg to DIRTO waypoint, then delete waypoint[0]
+	# Default to currentWPIndex + 1, as direct to will insert TP, then create leg to DIRTO waypoint, then delete current FROM waypoint
 	
-	insertTP: func(n, index = 1) {
+	insertTP: func(n, index) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), index);
 		fmgc.windController.insertWind(n, index, 0, "T-P");
 	},
@@ -300,7 +300,7 @@ var flightPlanController = {
 			}
 			
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
-			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5), "1500", "sid"), 1);
+			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5 + (me.flightplans[n].departure_runway.length * M2NM)), "1500", "sid"), 1);
 			fmgc.windController.insertWind(n, 1, 0, "1500");
 		}
 		me.flightPlanChanged(n);
@@ -340,29 +340,30 @@ var flightPlanController = {
 	
 	directTo: func(waypointGhost, plan) {
 		if (me.flightplans[plan].indexOfWP(waypointGhost) == -1) {
-			me.insertTP(plan, 1);
+			me.insertTP(plan, me.currentToWptIndex.getValue());
 			
 			# use createWP here as createWPFrom doesn't accept waypoints
 			# createWPFrom worked before... but be sure!
-			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.id), 2);
-			fmgc.windController.insertWind(plan, 2, 0, waypointGhost.id);
-			me.addDiscontinuity(3, plan);
+			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.id), me.currentToWptIndex.getValue() + 1);
+			fmgc.windController.insertWind(plan, me.currentToWptIndex.getValue() + 1, 0, waypointGhost.id);
+			me.addDiscontinuity(me.currentToWptIndex.getValue() + 2, plan);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
 			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
 			# so four individual deletions. Delete index 1 four times. 
 			
-			var timesToDelete = me.flightplans[plan].indexOfWP(waypointGhost);
-			while (timesToDelete > 1) {
-				me.deleteWP(1, plan, 1);
-				timesToDelete -= 1; 
+			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
+			print(indexWP);
+			
+			for (var i = 0; i < indexWP; i = i + 1) {
+				me.flightplans[plan].getWP(i).hidden = 1;
 			}
-			# Add TP afterwards, this is essential
-			me.insertTP(plan, 1);
+			
+			me.insertTP(plan, me.currentToWptIndex.getValue());
+			me.currentToWptIndex.setValue(indexWP + 1);
 		}
 		var curAircraftPosDirTo = geo.aircraft_position();
-		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(2).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
-		me.deleteWP(0, plan);
+		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(me.currentToWptIndex.getValue() + 1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
 		me.flightPlanChanged(plan);
 	},
 	

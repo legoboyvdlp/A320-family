@@ -277,7 +277,7 @@ var updateFuel = func {
 	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set") and getprop("/FMGC/internal/zfw-set")) {
 		crz = getprop("/FMGC/internal/cruise-fl");
 		temp = getprop("/FMGC/internal/cruise-temp");
-		dist = flightPlanController.arrivalDist;
+		dist = flightPlanController.arrivalDist.getValue();
 		
 		trpWind = getprop("/FMGC/internal/trip-wind");
 		wind_value = getprop("/FMGC/internal/trip-wind-value");
@@ -295,7 +295,7 @@ var updateFuel = func {
 		}
 		
 		# cruize temp correction
-		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
+		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist.getValue());
 		
 		trip_time = 9.095e-02 + (dist*-3.968e-02) + (dist*dist*4.302e-04) + (dist*dist*dist*2.005e-07) + (dist*dist*dist*dist*-6.876e-11) + (dist*dist*dist*dist*dist*1.432e-14) + (dist*dist*dist*dist*dist*dist*-1.177e-18) + (crz*7.348e-01) + (dist*crz*3.310e-03) + (dist*dist*crz*-8.700e-06) + (dist*dist*dist*crz*-4.214e-10) + (dist*dist*dist*dist*crz*5.652e-14) + (dist*dist*dist*dist*dist*crz*-6.379e-18) + (crz*crz*-1.449e-02) + (dist*crz*crz*-7.508e-06) + (dist*dist*crz*crz*4.529e-08) + (dist*dist*dist*crz*crz*3.699e-13) + (dist*dist*dist*dist*crz*crz*8.466e-18) + (crz*crz*crz*1.108e-04) + (dist*crz*crz*crz*-4.126e-08) + (dist*dist*crz*crz*crz*-9.645e-11) + (dist*dist*dist*crz*crz*crz*-1.544e-16) + (crz*crz*crz*crz*-4.123e-07) + (dist*crz*crz*crz*crz*1.831e-10) + (dist*dist*crz*crz*crz*crz*7.438e-14) + (crz*crz*crz*crz*crz*7.546e-10) + (dist*crz*crz*crz*crz*crz*-1.921e-13) + (crz*crz*crz*crz*crz*crz*-5.453e-13);
 		if (trip_time < 10) {
@@ -452,12 +452,12 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if (crzFl >= 200) {
-		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+		if (phase == 3 and (flightPlanController.arrivalDist.getValue() <= 200 or altSel < 20000)) {
 			setprop("/FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
-		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+		if (phase == 3 and (flightPlanController.arrivalDist.getValue() <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			setprop("/FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
