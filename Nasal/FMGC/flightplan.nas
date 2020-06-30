@@ -806,7 +806,6 @@ var flightPlanController = {
 		me.updateCurrentWaypoint();
 		for (var n = 0; n <= 2; n += 1) {
 			for (var wpt = 0; wpt < me.flightplans[n].getPlanSize(); wpt += 1) { # Iterate through the waypoints and update their data
-				var curAircraftPos = geo.aircraft_position(); # don't want to get this corrupted so make sure it is a local variable
 				var waypointHashStore = me.flightplans[n].getWP(wpt);
 				
 				if (left(waypointHashStore.wp_name, 4) == FMGCarr.getValue() and wpt != 0) {
