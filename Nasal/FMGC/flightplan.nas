@@ -347,19 +347,19 @@ var flightPlanController = {
 			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.id), me.currentToWptIndex.getValue() + 1);
 			fmgc.windController.insertWind(plan, me.currentToWptIndex.getValue() + 1, 0, waypointGhost.id);
 			me.addDiscontinuity(me.currentToWptIndex.getValue() + 2, plan);
+			me.currentToWptIndex.setValue(me.currentToWptIndex.getValue() + 1);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
 			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
 			# so four individual deletions. Delete index 1 four times. 
 			
 			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
-			print(indexWP);
 			
 			for (var i = 0; i < indexWP; i = i + 1) {
 				me.flightplans[plan].getWP(i).hidden = 1;
 			}
 			
-			me.insertTP(plan, me.currentToWptIndex.getValue());
+			me.insertTP(plan, indexWP);
 			me.currentToWptIndex.setValue(indexWP + 1);
 		}
 		var curAircraftPosDirTo = geo.aircraft_position();
