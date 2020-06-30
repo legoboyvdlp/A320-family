@@ -148,12 +148,12 @@ setlistener("/sim/sounde/flaps-click", func {
 #########
 
 # Front doors
-var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 3);
-var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 3);
+var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 5);
+var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 5);
 
 # Rear doors
-var doorl4 = aircraft.door.new("/sim/model/door-positions/doorl4", 3);
-var doorr4 = aircraft.door.new("/sim/model/door-positions/doorr4", 3);
+var doorl4 = aircraft.door.new("/sim/model/door-positions/doorl4", 5);
+var doorr4 = aircraft.door.new("/sim/model/door-positions/doorr4", 5);
 
 # Cargo holds
 var cargobulk = aircraft.door.new("/sim/model/door-positions/cargobulk", 3);
