@@ -30,6 +30,7 @@ var flightPlanController = {
 	currentToWpt: nil, # container for the current TO waypoint ghost
 	currentToWptIndex: props.globals.initNode("/autopilot/route-manager/current-wp", 1, "INT"),
 	currentToWptIndexTemp: 0,
+	currentToWptIndexTemp2: 0,
 	currentToWptID: props.globals.initNode("/autopilot/route-manager/wp[0]/id", "", "STRING"),
 	courseToWpt: props.globals.initNode("/autopilot/route-manager/wp[0]/true-bearing-deg", 0, "DOUBLE"),
 	courseMagToWpt: props.globals.initNode("/autopilot/route-manager/wp[0]/bearing-deg", 0, "DOUBLE"),
@@ -104,10 +105,11 @@ var flightPlanController = {
 	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase, s = 0 don't call flightplan changed
 		if (a == 1) {
 			flightPlanTimer.stop();
+			me.currentToWptIndexTemp2 = me.currentToWptIndex.getValue();
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			me.flightplans[2].activate();
-			
+			me.currentToWptIndex.setValue(me.currentToWptIndexTemp2);
 			if (n != 3) {
 				if (mcdu.isNoSid[n] == 1) {
 					mcdu.isNoSid[2] = 1;

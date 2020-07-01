@@ -20,13 +20,9 @@
 # You can disable the default GPS behaviour *without* touching this delegate : they are
 # kept seperate since this first one is less likely to need changes
 
-var RouteManagerDelegate = {
+var A320RouteManagerDelegate = {
     new: func(fp) {
-    # if this property is set, don't build a delegate at all
-    if (getprop('/autopilot/route-manager/disable-route-manager'))
-        return nil;
-
-        var m = { parents: [RouteManagerDelegate] };
+        var m = { parents: [A320RouteManagerDelegate] };
         m.flightplan = fp;
         return m;
     },
@@ -148,19 +144,18 @@ var GPSPath = "/instrumentation/gps";
 # route sequencing and activation
 #
 
-var DefaultGPSDeleagte = {
+var A320GPSDeleagte = {
     new: func(fp) {
-        # if this property is set, don't build a delegate at all
-        if (getprop('/autopilot/route-manager/disable-fms'))
-            return nil;
+        var m = { parents: [A320GPSDeleagte], flightplan:fp, landingCheck:nil };
 
-        var m = { parents: [DefaultGPSDeleagte], flightplan:fp, landingCheck:nil };
-
-        logprint(LOG_INFO, 'creating default GPS FPDelegate');
+        logprint(LOG_INFO, 'creating A320 GPS FPDelegate');
 
         # tell the GPS C++ code we will do sequencing ourselves, so it can disable
         # its legacy logic for this
         setprop(GPSPath ~ '/config/delegate-sequencing', 1);
+		
+        # enable 2020.2 C++ turn anticipation
+        setprop(GPSPath ~ '/config/enable-fly-by', 1);
 
         # make FlightPlan behaviour match GPS config state
         fp.followLegTrackToFix = getprop(GPSPath ~ '/config/follow-leg-track-to-fix') or 0;
@@ -295,15 +290,9 @@ var DefaultGPSDeleagte = {
             me.landingCheck.stop();
             me.landingCheck = nil; # delete timer
         }
-
-        #logprint(LOG_INFO, 'saw current WP changed, now ' ~ me.flightplan.current);
+		
         var active = me.flightplan.currentWP();
         if (active == nil) return;
-
-        if (active.alt_cstr_type == "at") {
-            logprint(LOG_INFO, 'Default GPS: new WP has valid altitude restriction, setting on AP');
-            setprop('/autopilot/settings/target-altitude-ft', active.alt_cstr);
-        }
 
         var activeRunway = active.runway();
         # this check is needed to avoid problems with circular routes; when
@@ -321,6 +310,6 @@ var DefaultGPSDeleagte = {
     }
 };
 
-registerFlightPlanDelegate(DefaultGPSDeleagte.new);
-registerFlightPlanDelegate(RouteManagerDelegate.new);
+registerFlightPlanDelegate(A320GPSDeleagte.new);
+registerFlightPlanDelegate(A320RouteManagerDelegate.new);
 

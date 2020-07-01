@@ -1303,12 +1303,6 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
-		<gps>
-			<config>
-				<enable-fly-by type="bool">true</enable-fly-by>
-			</config>
-		</gps>
-		
 		<marker-beacon n="0">
 			<serviceable type="bool">true</serviceable>
 		</marker-beacon>
@@ -4044,6 +4038,7 @@
 			<file>Aircraft/A320-family/Nasal/Panels/efis.nas</file>
 		</fcu>
 		<fmgc>
+			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-delegates.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-waypoints.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
