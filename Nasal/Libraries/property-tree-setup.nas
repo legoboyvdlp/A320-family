@@ -127,6 +127,7 @@ var Orientation = {
 	pitch: props.globals.getNode("/orientation/pitch-deg"),
 	roll: props.globals.getNode("/orientation/roll-deg"),
 	yaw: props.globals.getNode("/orientation/yaw-deg"),
+	heading: props.globals.getNode("/orientation/heading-deg"),
 };
 
 var Position = {

@@ -156,6 +156,9 @@ var A320GPSDeleagte = {
 		
         # enable 2020.2 C++ turn anticipation
         setprop(GPSPath ~ '/config/enable-fly-by', 1);
+		
+		# Set maximum lateral deviation for sequencing to 5 miles
+		setprop(GPSPath ~ '/config/overflight-arm-distance', 5);
 
         # make FlightPlan behaviour match GPS config state
         fp.followLegTrackToFix = getprop(GPSPath ~ '/config/follow-leg-track-to-fix') or 0;
@@ -264,7 +267,12 @@ var A320GPSDeleagte = {
         } else if (mode == 'leg') {
             # standard leq sequencing
             var nextIndex = me.flightplan.current + 1;
-            if (nextIndex >= me.flightplan.numWaypoints()) {
+			if (nextIndex < me.flightplan.numWaypoints() and me.flightplan.nextWP().id == '(DECEL)') {
+				nextIndex += 1;
+                logprint(LOG_INFO, "default GPS reached DECEL, going to next waypoint");
+			} 
+			
+			if (nextIndex >= me.flightplan.numWaypoints()) {
                 logprint(LOG_INFO, "default GPS sequencing, finishing flightplan");
                 me.flightplan.finish();
             } elsif (me.flightplan.nextWP().wp_type == 'discontinuity') {
@@ -279,6 +287,7 @@ var A320GPSDeleagte = {
         } else {
             # OBS, do nothing
         }
+		
     },
 
     currentWaypointChanged: func

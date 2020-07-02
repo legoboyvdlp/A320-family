@@ -9,7 +9,7 @@ var progCLBInput = func(key, i) {
 				setprop("/FMGC/status/phase", 3);
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
-				setprop("/FMGC/internal/decel", 0);
+				fmgc.FMGCInternal.decel = 0;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
@@ -21,7 +21,7 @@ var progCLBInput = func(key, i) {
 					setprop("/FMGC/status/phase", 3);
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
-					setprop("/FMGC/internal/decel", 0);
+					fmgc.FMGCInternal.decel = 0;
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");

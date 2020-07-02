@@ -164,7 +164,6 @@ var flightPlanController = {
 		if (plan == 2) {
 			me.destroyTemporaryFlightPlan(0, 0);
 			me.destroyTemporaryFlightPlan(1, 0);
-			me.currentToWptIndex.setValue(0);
 			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
 		
@@ -206,9 +205,7 @@ var flightPlanController = {
 		
 		# Advancing logic
 		me.currentToWptIndexTemp = me.currentToWptIndex.getValue();
-		if (me.currentToWptIndexTemp < 1) {
-			me.currentToWptIndex.setValue(1);
-		} else if (me.num[2].getValue() > 2) {
+		if (me.num[2].getValue() > 2) {
 			for (var i = 0; i <= 2; i += 1) {
 				if (i == 2) {
 					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
@@ -257,8 +254,7 @@ var flightPlanController = {
 	# insertTP - insert PPOS waypoint denoted "T-P" at specified index
 	# args: n, index
 	#	 n: flightplan to which the PPOS waypoint will be inserted
-	#	 index: optional argument, defaults to 1, index which the waypoint will be at. 
-	# Default to currentWPIndex + 1, as direct to will insert TP, then create leg to DIRTO waypoint, then delete current FROM waypoint
+	#	 index: index which the waypoint will be at. 
 	
 	insertTP: func(n, index) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), index);
@@ -729,8 +725,8 @@ var flightPlanController = {
 		}
 
 		# todo create waypoint, insert to flightplan, as non-sequence one (gets skipped in sequencing code
-		#me.insertDecel(n,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
-		#me.flightPlanChanged(n,0);
+		me.insertDecel(n,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
+		me.flightPlanChanged(n,0);
 	},
 	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
@@ -836,17 +832,8 @@ var flightPlanController = {
 			if (!me.active.getBoolValue()) {
 				me.active.setValue(1);
 			}
-			
-			if (me.currentToWptIndex.getValue() == -1) { return; }
-			if (me.currentToWptIndex.getValue() < 1) { 
-				me.currentToWptIndex.setValue(1); 
-			} elsif (me.currentToWptIndex.getValue() > me.flightplans[2].getPlanSize()) {
-				me.currentToWptIndex.setValue(me.flightplans[2].getPlanSize());
-			}
-		} else {
-			if (me.active.getBoolValue()) {
-				me.active.setValue(0);
-			}
+		} elsif (me.active.getBoolValue()) {
+			me.active.setValue(0);
 		}
 	},
 	

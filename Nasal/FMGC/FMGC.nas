@@ -96,6 +96,8 @@ var thr1 = 0;
 var thr2 = 0;
 var altsel = 0;
 var crzFl = 0;
+var xtrkError = 0;
+var courseDistanceDecel = 0;
 setprop("/FMGC/internal/maxspeed", 0);
 setprop("/FMGC/internal/minspeed", 0);
 setprop("position/gear-agl-ft", 0);
@@ -426,6 +428,7 @@ var masterFMGC = maketimer(0.2, func {
 	thr2 = getprop("/controls/engines/engine[1]/throttle-pos");
 	altSel = getprop("/it-autoflight/input/alt");
 	crzFl = getprop("/FMGC/internal/cruise-fl");
+	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
 	
 	if (getprop("/gear/gear[0]/wow") != getprop("/gear/gear[0]/wow-fmgc")) {
 		setprop("gear/gear[0]/wow-fmgc", getprop("/gear/gear[0]/wow"));
@@ -463,14 +466,20 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
+	if (flightPlanController.decelPoint != nil) {
+		courseDistanceDecel = courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon);
+		if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseDistanceDecel[1] <= 5 and (math.abs(courseDistanceDecel[0] - pts.Orientation.heading.getValue()) >= 90 and xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and aglalt < 9500) {
+			FMGCInternal.decel = 1;
+		} elsif (FMGCInternal.decel and (phase == 0 or phase == 6)) {
+			FMGCInternal.decel = 0;
+		}
+	} else {
+		FMGCInternal.decel = 0;
+	}	
+	
+	
 	if (phase == 4 and FMGCInternal.decel) {
 		setprop("/FMGC/status/phase", 5);
-	}
-	
-	if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon)[1] < 0.1) and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and aglalt < 9500) {
-		FMGCInternal.decel = 1;
-	} elsif (FMGCInternal.decel and (phase == 0 or phase == 6)) {
-		FMGCInternal.decel = 0;
 	}
 	
 	if ((phase == "5") and state1 == "TOGA" and state2 == "TOGA") {

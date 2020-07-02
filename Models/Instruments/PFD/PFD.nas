@@ -1253,7 +1253,7 @@ var canvas_PFD_1 = {
 			tgt_kts = at_input_spd_kts.getValue();
 			
 			if (managed_spd.getValue() == 1) {
-				if (getprop("/FMGC/internal/decel") == 1) {
+				if (fmgc.FMGCInternal.decel) {
 					if (getprop("/FMGC/internal/vapp-speed-set")) {
 						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
 					} else {
@@ -1991,7 +1991,7 @@ var canvas_PFD_2 = {
 			tgt_kts = at_input_spd_kts.getValue();
 				
 			if (managed_spd.getValue() == 1) {
-				if (getprop("/FMGC/internal/decel") == 1) {
+				if (fmgc.FMGCInternal.decel) {
 					if (getprop("/FMGC/internal/vapp-speed-set")) {
 						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
 					} else {

@@ -36,7 +36,7 @@ var perfCLBInput = func(key, i) {
 				if (getprop("/FMGC/internal/activate-twice") == 0) {
 					setprop("/FMGC/internal/activate-twice", 1);
 					setprop("/FMGC/status/phase", 5);
-					setprop("/FMGC/internal/decel", 1);
+					fmgc.FMGCInternal.decel = 1;
 					setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
