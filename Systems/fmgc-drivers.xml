@@ -411,6 +411,26 @@
 		</period>
 	</filter>
 	
+	<!--<filter>
+		<name>Crosstrack</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/instrumentation/gps/wp/wp[1]/course-error-nm</input>
+		<output>/it-autoflight/internal/crosstrack-error</output>
+		<min>-2</min>
+		<max>2</max>
+	</filter>
+	
+	<filter>
+		<name>Crosstrack Error</name>
+		<type>gain</type>
+		<gain>64</gain>
+		<input>/it-autoflight/internal/crosstrack-error</input>
+		<output>/it-autoflight/internal/crosstrack-error-correction</output>
+		<min>-45</min>
+		<max>45</max>
+	</filter>-->
+	
 	<filter>
 		<name>HEADING ERROR DEG</name>
 		<debug>false</debug>
@@ -463,7 +483,8 @@
 			</condition>
 			<expression>
 				<sum>
-					<property>/autopilot/route-manager/wp[0]/true-bearing-deg</property>
+					<property>/instrumentation/gps/wp/wp[1]/course-deviation-deg</property>
+					<property>/instrumentation/gps/wp/leg-true-course-deg</property>
 					<product>
 						<property>/it-autoflight/internal/drift-angle-deg</property>
 						<value>-1.0</value>

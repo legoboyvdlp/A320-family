@@ -105,11 +105,9 @@ var flightPlanController = {
 	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase, s = 0 don't call flightplan changed
 		if (a == 1) {
 			flightPlanTimer.stop();
-			me.currentToWptIndexTemp2 = me.currentToWptIndex.getValue();
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			me.flightplans[2].activate();
-			me.currentToWptIndex.setValue(me.currentToWptIndexTemp2);
 			if (n != 3) {
 				if (mcdu.isNoSid[n] == 1) {
 					mcdu.isNoSid[2] = 1;
@@ -141,6 +139,9 @@ var flightPlanController = {
 					mcdu.isNoTransArr[2] = 0;
 				}
 			}
+			if (me.currentToWptIndex.getValue() == 0) {
+				me.currentToWptIndex.setValue(1);
+			}
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
@@ -162,8 +163,8 @@ var flightPlanController = {
 		me.flightplans[plan].departure = airportinfo(dep);
 		me.flightplans[plan].destination = airportinfo(arr);
 		if (plan == 2) {
-			me.destroyTemporaryFlightPlan(0, 0);
-			me.destroyTemporaryFlightPlan(1, 0);
+			if (me.temporaryFlag[0]) {	 me.destroyTemporaryFlightPlan(0, 0); }
+			if (me.temporaryFlag[1]) {	 me.destroyTemporaryFlightPlan(1, 0); }
 			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
 		
@@ -268,7 +269,7 @@ var flightPlanController = {
 	
 	insertDecel: func(n, pos, index) {
 		me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
-		me.flightplans[n].getWP(index).hidden = 1;
+		#me.flightplans[n].getWP(index).hidden = 1;
 		fmgc.windController.insertWind(n, index, 0, "(DECEL)");
 	},
 	
@@ -802,7 +803,15 @@ var flightPlanController = {
 	},
 	
 	updatePlans: func(runDecel = 0, callDecel = 1) {
-		me.updateCurrentWaypoint();
+		if (toFromSet.getBoolValue() and me.flightplans[2].departure != nil and me.flightplans[2].destination != nil) { # check if flightplan exists
+			if (!me.active.getBoolValue()) {
+				me.currentToWptIndex.setValue(0);
+				me.active.setValue(1);
+			}
+		} elsif (me.active.getBoolValue()) {
+			me.active.setValue(0);
+		}
+		
 		for (var n = 0; n <= 2; n += 1) {
 			for (var wpt = 0; wpt < me.flightplans[n].getPlanSize(); wpt += 1) { # Iterate through the waypoints and update their data
 				var waypointHashStore = me.flightplans[n].getWP(wpt);
@@ -818,32 +827,19 @@ var flightPlanController = {
 						}
 					}
 				}
+			}	
+			
+			for (var i = 0; i <= 1; i += 1) {
+				if (canvas_mcdu.myFpln[i] != nil) {
+					canvas_mcdu.myFpln[i].updatePlan();
+				}
+				if (canvas_mcdu.myDirTo[i] != nil) {
+					canvas_mcdu.myDirTo[i].updateFromFpln();
+				}
 			}
-			me.updateMCDUDriver(n);
 		
 			if (runDecel and callDecel) {
 				me.calculateDecelPoint(n);
-			}
-		}
-	},
-	
-	updateCurrentWaypoint: func() {
-		if (toFromSet.getBoolValue() and me.flightplans[2].departure != nil and me.flightplans[2].destination != nil) { # check if flightplan exists
-			if (!me.active.getBoolValue()) {
-				me.active.setValue(1);
-			}
-		} elsif (me.active.getBoolValue()) {
-			me.active.setValue(0);
-		}
-	},
-	
-	updateMCDUDriver: func() {
-		for (var i = 0; i <= 1; i += 1) {
-			if (canvas_mcdu.myFpln[i] != nil) {
-				canvas_mcdu.myFpln[i].updatePlan();
-			}
-			if (canvas_mcdu.myDirTo[i] != nil) {
-				canvas_mcdu.myDirTo[i].updateFromFpln();
 			}
 		}
 	},

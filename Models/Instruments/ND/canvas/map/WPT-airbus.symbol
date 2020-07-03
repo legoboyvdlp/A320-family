@@ -82,6 +82,9 @@ var draw = func{
 	if (me.model.wp.hidden == 1) {
 		me.wp_sym.hide();
 		me.text_wps.hide();
+		if (me.text_alt != nil) {
+			me.text_alt.hide();
+		}
 		return;
 	}
 	

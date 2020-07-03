@@ -7,7 +7,7 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
-setprop("/autopilot/route-manager/disable-route-manager", 1);
+#setprop("/autopilot/route-manager/disable-route-manager", 1);
 setprop("/autopilot/route-manager/disable-fms", 1);
 
 setprop("/sim/replay/was-active", 0);
