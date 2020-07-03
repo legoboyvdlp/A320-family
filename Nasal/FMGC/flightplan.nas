@@ -106,8 +106,6 @@ var flightPlanController = {
 			print(err[0]);
 			print("Load failed.");
 		}
-		# try to fix fgfp
-		me.flightplans[3].destination = airportinfo(getprop("/FMGC/internal/arr-arpt"));
 		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
@@ -117,34 +115,36 @@ var flightPlanController = {
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			
-			if (mcdu.isNoSid[n] == 1) {
-				mcdu.isNoSid[2] = 1;
-			} else {
-				mcdu.isNoSid[2] = 0;
-			}
-			
-			if (mcdu.isNoStar[n] == 1) {
-				mcdu.isNoStar[2] = 1;
-			} else {
-				mcdu.isNoStar[2] = 0;
-			}
-			
-			if (mcdu.isNoVia[n] == 1) {
-				mcdu.isNoVia[2] = 1;
-			} else {
-				mcdu.isNoVia[2] = 0;
-			}
-			
-			if (mcdu.isNoTransDep[n] == 1) {
-				mcdu.isNoTransDep[2] = 1;
-			} else {
-				mcdu.isNoTransDep[2] = 0;
-			}
-			
-			if (mcdu.isNoTransArr[n] == 1) {
-				mcdu.isNoTransArr[2] = 1;
-			} else {
-				mcdu.isNoTransArr[2] = 0;
+			if (n != 3) {
+				if (mcdu.isNoSid[n] == 1) {
+					mcdu.isNoSid[2] = 1;
+				} else {
+					mcdu.isNoSid[2] = 0;
+				}
+				
+				if (mcdu.isNoStar[n] == 1) {
+					mcdu.isNoStar[2] = 1;
+				} else {
+					mcdu.isNoStar[2] = 0;
+				}
+				
+				if (mcdu.isNoVia[n] == 1) {
+					mcdu.isNoVia[2] = 1;
+				} else {
+					mcdu.isNoVia[2] = 0;
+				}
+				
+				if (mcdu.isNoTransDep[n] == 1) {
+					mcdu.isNoTransDep[2] = 1;
+				} else {
+					mcdu.isNoTransDep[2] = 0;
+				}
+				
+				if (mcdu.isNoTransArr[n] == 1) {
+					mcdu.isNoTransArr[2] = 1;
+				} else {
+					mcdu.isNoTransArr[2] = 0;
+				}
 			}
 			
 			me.flightPlanChanged(2);
@@ -168,10 +168,10 @@ var flightPlanController = {
 			me.destroyTemporaryFlightPlan(0, 0);
 			me.destroyTemporaryFlightPlan(1, 0);
 			me.currentToWptIndex.setValue(0);
+			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
 		
 		me.addDiscontinuity(1, plan);
-		#debug.dump(me.flightplans[2]);
 		# reset mcdu if it exists
 		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }
 		if (canvas_mcdu.myFpln[1] != nil) { canvas_mcdu.myFpln[1].scroll = 0; }
@@ -368,8 +368,8 @@ var flightPlanController = {
 			
 			# use createWP here as createWPFrom doesn't accept waypoints
 			# createWPFrom worked before... but be sure!
-			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.wp_name), 2);
-			fmgc.windController.insertWind(plan, 2, 0, waypointGhost.wp_name);
+			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.id), 2);
+			fmgc.windController.insertWind(plan, 2, 0, waypointGhost.id);
 			me.addDiscontinuity(3, plan);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
@@ -824,6 +824,12 @@ var flightPlanController = {
 				}
 			}
 		}
+		
+		if (me.flightplans[2].getWP(me.arrivalIndex[2]) == nil or me.flightplans[2].getWP(1) == nil) {
+			me.arrivalDist = 9999;
+			print(me.arrivalIndex[2]);
+		}
+		
 		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},

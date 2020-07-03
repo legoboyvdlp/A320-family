@@ -294,8 +294,8 @@ var canvas_MCDU_base = {
 	"Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
 	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C4B","Simple_C5","Simple_C6","Simple_C1S",
 	"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
-	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
-	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
+	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFWCG_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
+	"FUELPRED_ZFWCG","FUELPRED_ZFWCG_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
 	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star"];
@@ -1483,7 +1483,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(small, small, small, small, small, small);
-				me.fontSizeCenter(small, small, small, small, small, small);
+				me.fontSizeCenter(normal, small, small, small, small, small);
 				me.fontSizeRight(normal, normal, normal, small, small, small);
 				me["Simple_C4B"].setFontSize(small);
 				
@@ -1754,28 +1754,30 @@ var canvas_MCDU_base = {
 				}
 			}
 			
-			me["Simple_R1S"].setText("ZFWCG/   ZFW");
-			me["Simple_R1"].setText(sprintf("%3.1f", zfw.getValue()));
+			me["Simple_R1S"].setText("ZFW/ZFWCG");
+			me["Simple_R1"].setText(sprintf("%3.1f", zfwcg.getValue()));
+			me["INITB_ZFWCG"].hide();
+			me["INITB_ZFWCG_S"].show();
+			me["Simple_R1"].show();
 			if (zfwcgSet.getValue() == 1) {
-				me["Simple_C1"].setFontSize(normal); 
-				me["Simple_C1"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["INITB_ZFWCG"].hide();
+				me["Simple_R1"].setFontSize(normal);
 			} else {
-				me["Simple_C1"].setFontSize(small);
-				me["Simple_C1"].setText("           " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["INITB_ZFWCG"].hide();
+				me["Simple_R1"].setFontSize(small);
 			}
 			
 			if (zfwSet.getValue() == 1) {
+				if (zfw.getValue() < 100) {
+					me["Simple_C1"].setText("          " ~ sprintf("%3.1f", zfw.getValue()));
+				} else {
+					me["Simple_C1"].setText("         " ~ sprintf("%3.1f", zfw.getValue()));
+				}
+				me["Simple_C1"].show();
 				me["INITB_ZFW"].hide();
-				me["INITB_ZFW_S"].show();
-				me["Simple_R1"].show(); 
 			} else {
+				me["Simple_C1"].hide();
 				me["INITB_ZFW"].show();
-				me["INITB_ZFW_S"].hide();
-				me["Simple_R1"].hide(); 
 			}
-			
+
 			if (taxi_fuel_set.getValue() == 1) {
 				me["Simple_L1"].setFontSize(normal);
 			} else {
@@ -1860,7 +1862,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
-				me.fontSizeCenter(small, small, small, small, small, small);
+				me.fontSizeCenter(small, small, normal, small, small, small);
 				me.fontSizeRight(normal, normal, normal, small, small, small);
 				me["Simple_C3B"].setFontSize(small);
 				
@@ -2026,26 +2028,28 @@ var canvas_MCDU_base = {
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
 			}
 			
-			me["Simple_R3S"].setText("ZFWCG/ZFW");
-			me["Simple_R3"].setText(sprintf("%3.1f", zfw.getValue()));
+			me["Simple_R3S"].setText("ZFW/ZFWCG");
+			me["Simple_R3"].setText(sprintf("%3.1f", zfwcg.getValue()));
+			me["Simple_R3"].show();
+			me["FUELPRED_ZFWCG"].hide();
+			me["FUELPRED_ZFWCG_S"].show();
 			if (zfwcgSet.getValue() == 1) {
-				me["Simple_C3"].setFontSize(normal); 
-				me["Simple_C3"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["FUELPRED_ZFWCG"].hide();
+				me["Simple_R3"].setFontSize(normal);
 			} else {
-				me["Simple_C3"].setFontSize(small);
-				me["Simple_C3"].setText("           " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["FUELPRED_ZFWCG"].hide();
+				me["Simple_R3"].setFontSize(small);
 			}
 			
 			if (zfwSet.getValue() == 1) {
+				if (zfw.getValue() < 100) {
+					me["Simple_C3"].setText("          " ~ sprintf("%3.1f", zfw.getValue()));
+				} else {
+					me["Simple_C3"].setText("         " ~ sprintf("%3.1f", zfw.getValue()));
+				}
+				me["Simple_C3"].show();
 				me["FUELPRED_ZFW"].hide();
-				me["FUELPRED_ZFW_S"].show();
-				me["Simple_R3"].show(); 
 			} else {
+				me["Simple_C3"].hide();
 				me["FUELPRED_ZFW"].show();
-				me["FUELPRED_ZFW_S"].hide();
-				me["Simple_R3"].hide(); 
 			}
 			
 			if (rte_rsv_set.getValue() == 1) {
@@ -3768,6 +3772,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();
 				me["Simple_L1_Arrow"].hide();
+				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].hide();
 				me["Simple_L4_Arrow"].hide();
 				me["Simple_L5_Arrow"].hide();
@@ -3778,7 +3783,8 @@ var canvas_MCDU_base = {
 				me["Simple_R4_Arrow"].hide();
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].hide();
-				
+				me["arrow2L"].hide();
+				me["arrow2R"].hide();
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();

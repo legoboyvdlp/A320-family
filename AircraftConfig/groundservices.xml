@@ -57,18 +57,9 @@
                         <property>/gear/gear[2]/wow</property>
                     </and>
                 </enable>
-                <property>/services/chocks/nose</property>
+                <property>/services/chocks/enable</property>
                 <binding>
-                    <command>property-toggle</command>
-                    <property>/services/chocks/left</property>
-                </binding>
-                <binding>
-                    <command>property-toggle</command>
-                    <property>/services/chocks/right</property>
-                </binding>
-                <binding>
-                    <command>property-toggle</command>
-                    <property>/services/chocks/nose</property>
+                    <command>dialog-apply</command>
                 </binding>
                 <live>true</live>
             </checkbox>
@@ -136,9 +127,7 @@
                 <and>
                     <or>
                         <property>/controls/gear/brake-parking</property>
-                        <property>/services/chocks/nose</property>
-                        <property>/services/chocks/left</property>
-                        <property>/services/chocks/right</property>
+                        <property>/services/chocks/enable</property>
                     </or>
                     <less-than>
                         <property>/velocities/groundspeed-kt</property>
@@ -164,9 +153,7 @@
                 <and>
                     <or>
                         <property>/controls/gear/brake-parking</property>
-                        <property>/services/chocks/nose</property>
-                        <property>/services/chocks/left</property>
-                        <property>/services/chocks/right</property>
+                        <property>/services/chocks/enable</property>
                     </or>
                     <less-than>
                         <property>/velocities/groundspeed-kt</property>
@@ -192,9 +179,7 @@
                 <and>
                     <or>
                         <property>/controls/gear/brake-parking</property>
-                        <property>/services/chocks/nose</property>
-                        <property>/services/chocks/left</property>
-                        <property>/services/chocks/right</property>
+                        <property>/services/chocks/enable</property>
                     </or>
                     <less-than>
                         <property>/velocities/groundspeed-kt</property>
