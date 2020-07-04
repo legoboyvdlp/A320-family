@@ -148,6 +148,7 @@ var dirTo = {
 	fieldL1: func(text, override = 0, overrideIndex = -1) {
 		me.makeTmpy();
 		me.L1[0] = text;
+		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		if (size(text) == 16) {
 			# lat lon
 			var lat = split("/", text)[0];
@@ -156,7 +157,7 @@ var dirTo = {
 			var lonDecimal = mcdu.stringToDegrees(lon, "lon");
 			
 			if (latDecimal > 90 or latDecimal < -90 or lonDecimal > 180 or lonDecimal < -180) {
-				notAllowed(me.computer);
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 			
 			var myWpLatLon = createWP(latDecimal, lonDecimal, "LL" ~ 01);
@@ -166,7 +167,7 @@ var dirTo = {
 			# fix
 			var fix = findFixesByID(text);
 			if (size(fix) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(fix) == 1 or override) {
@@ -188,7 +189,7 @@ var dirTo = {
 			# airport
 			var airport =  findAirportsByICAO(text);
 			if (size(airport) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(airport) == 1 or override) {
@@ -210,7 +211,7 @@ var dirTo = {
 			# navaid
 			var navaid =  findNavaidsByID(text);
 			if (size(navaid) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(navaid) == 1 or override) {
@@ -229,15 +230,15 @@ var dirTo = {
 			}
 			
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
-		setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-		setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "");
+		mcdu_scratchpad.scratchpads[me.computer].empty();
 	},
 	leftFieldBtn: func(index) {
 		me.makeTmpy();
-		me.L1[0] = me.vector[index + me.scroll - 2].wp_name;
-		fmgc.flightPlanController.directTo(me.vector[index + me.scroll - 2], me.computer);
+		me.L1[0] = me.vector[index - 2].wp_name;
+		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
+		fmgc.flightPlanController.directTo(me.vector[index - 2], me.computer);
 		me.arrowsMatrix[0][1] = 0;
 		# FIGURE OUT HOW TO MAKE IT SO IT DOESN'T DELETE THE WAYPOINTS ON DIR TO BUT DOES IN FLIGHTPLAN
 		#for (var i = 2; i != 6; i = i + 1) {
@@ -252,22 +253,24 @@ var dirTo = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
+			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
+			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
-		me.L1 = [" [       ]", " WAYPOINT", "blu"];
-		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 	},
 	fieldR6: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
+			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
+			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 		} else {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
-		me.L1 = [" [       ]", " WAYPOINT", "blu"];
-		me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
-		setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 	},
 	updateDist: func(dist) {
 		me.R1 = ["----   " ~ sprintf("%.0f", dist) ~ "  ", "UTC   DIST  ", "wht"];

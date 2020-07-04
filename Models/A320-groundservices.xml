@@ -132,7 +132,7 @@
 		<path>Aircraft/A320-family/Models/Services/Chocks/chock_nose.ac</path>
 		<condition>
 			<equals>
-				<property>services/chocks/nose</property>
+				<property>services/chocks/enable</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -147,7 +147,7 @@
 		<path>Aircraft/A320-family/Models/Services/Chocks/chock_left.ac</path>
 		<condition>
 			<equals>
-				<property>services/chocks/left</property>
+				<property>services/chocks/enable</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -163,7 +163,7 @@
 		<path>Aircraft/A320-family/Models/Services/Chocks/chock_right.ac</path>
 		<condition>
 			<equals>
-				<property>services/chocks/right</property>
+				<property>services/chocks/enable</property>
 				<value>1</value>
 			</equals>
 		</condition>

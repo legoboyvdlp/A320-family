@@ -5,7 +5,7 @@
 	<pitch-deg type="float">0.0</pitch-deg>
 	<min-turn-radius-m type="float">15</min-turn-radius-m>
 	<stopping-distance-m type="float">5.0</stopping-distance-m>
-	<chocks	alias="/services/chocks/nose"/>
+	<chocks	alias="/services/chocks/enable"/>
 	<available type="int">1</available>
 	<enabled type="int"/>
 	<connected type="bool">false</connected>

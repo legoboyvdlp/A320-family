@@ -1260,7 +1260,11 @@ var canvas_PFD_1 = {
 			
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
-					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					if (getprop("/FMGC/internal/vapp-speed-set")) {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+					} else {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {
@@ -1994,7 +1998,11 @@ var canvas_PFD_2 = {
 				
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
-					vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					if (getprop("/FMGC/internal/vapp-speed-set")) {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+					} else {
+						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (FMGCphase.getValue() == 6) {

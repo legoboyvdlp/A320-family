@@ -1,5 +1,6 @@
 var latRev = {
 	title: [nil, nil, nil],
+	titleColour: "wht",
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -36,6 +37,7 @@ var latRev = {
 	_checkTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
+			me.titleColour = "yel";
 			me.arrowsColour[0][5] = "yel";
 			me.R2[2] = "yel";
 			me.R3[2] = "yel";
@@ -50,7 +52,7 @@ var latRev = {
 			me.L3 = [" HOLD", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R1 = ["FIX INFO ", nil, "wht"];
-			me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
+			me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
 			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
@@ -75,7 +77,7 @@ var latRev = {
 				me.L2 = [" OFFSET", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
+				me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
 				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
@@ -120,8 +122,7 @@ var latRev = {
 			if (!dirToFlag) {
 				fmgc.flightPlanController.createTemporaryFlightPlan(me.computer);
 			} else {
-				setprop("MCDU[" ~ me.computer ~ "]/scratchpad-msg", 1);
-                setprop("MCDU[" ~ me.computer ~ "]/scratchpad", "DIR TO IN PROGRESS");
+				mcdu_message(me.computer, "DIR TO IN PROGRESS");
 			}
 			me._checkTmpy();
 		}
@@ -129,14 +130,13 @@ var latRev = {
 	nextWpt: func() {
 		me.makeTmpy();
 		
-		var returny = fmgc.flightPlanController.scratchpad(getprop("/MCDU[" ~ me.computer ~ "]/scratchpad"), me.index + 1, me.computer);
+		var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.index + 1, me.computer);
 		if (returny == 0) {
 			notInDataBase(me.computer);
 		} elsif (returny == 1) {
-			notAllowed(me.computer);
+			mcdu_message(me.computer, "NOT ALLOWED");
 		} else {
-			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad-msg", "");
-			setprop("/MCDU[" ~ me.computer ~ "]/scratchpad", "");
+			mcdu_scratchpad.scratchpads[me.computer].empty();
 			fmgc.flightPlanController.flightPlanChanged(me.computer);
 			if (getprop("/MCDU[" ~ me.computer ~ "]/page") != "DUPLICATENAMES") {
 				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");

@@ -11,6 +11,12 @@ var FUEL = {
 	refuelling: props.globals.getNode("systems/fuel/refuel/refuelling"),
 	
 	Fail: {
+		pumpLeft1: props.globals.getNode("/systems/failures/fuel/left-tank-pump-1"),
+		pumpLeft2: props.globals.getNode("/systems/failures/fuel/left-tank-pump-2"),
+		pumpCenter1: props.globals.getNode("/systems/failures/fuel/center-tank-pump-1"),
+		pumpCenter2: props.globals.getNode("/systems/failures/fuel/center-tank-pump-2"),
+		pumpRight1: props.globals.getNode("/systems/failures/fuel/right-tank-pump-1"),
+		pumpRight2: props.globals.getNode("/systems/failures/fuel/right-tank-pump-2"),
 	},
 	Switches: {
 		centerTkMode: props.globals.getNode("controls/fuel/switches/center-mode"),
@@ -52,10 +58,15 @@ var FUEL = {
 		usedRight: props.globals.getNode("systems/fuel/fuel-used-2"),
 	},
 	resetFail: func() {
-	
+		me.Fail.pumpLeft1.setValue(0);
+		me.Fail.pumpLeft2.setValue(0);
+		me.Fail.pumpCenter1.setValue(0);
+		me.Fail.pumpCenter1.setValue(0);
+		me.Fail.pumpRight1.setValue(0);
+		me.Fail.pumpRight2.setValue(0);
 	},
 	init: func() {
-	
+		me.resetFail();
 	},
 	loop: func() {
 		systems.FUEL.Quantity.usedLeft.setValue(pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue() + me.offset1);
