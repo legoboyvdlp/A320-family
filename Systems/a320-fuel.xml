@@ -787,7 +787,7 @@
 		<summer name="/systems/fuel/internal/apu-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-apu</input>
 			<input>/systems/fuel/internal/center-tank-apu</input>
-			<input>//systems/fuel/internal/right-wing-tank-apu</input>
+			<input>/systems/fuel/internal/right-wing-tank-apu</input>
 			<output>propulsion/tank[7]/external-flow-rate-pps</output>
 		</summer>
 	</channel>
