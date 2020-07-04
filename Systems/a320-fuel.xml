@@ -23,6 +23,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fuel/switches/pump-left-1 eq 1
+				/systems/failures/fuel/left-tank-pump-1 ne 1
 				<test logic="OR">
 					<test logic="AND">
 						/systems/electrical/sources/idg-1/pmg-volt ge 110
@@ -36,6 +37,7 @@
 		<switch name="/systems/fuel/pumps/wing-pump-left-2-operate">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/failures/fuel/left-tank-pump-2 ne 1
 				/controls/fuel/switches/pump-left-2 eq 1
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
@@ -45,6 +47,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fuel/switches/pump-right-1 eq 1
+				/systems/failures/fuel/right-tank-pump-1 ne 1
 				<test logic="OR">
 					<test logic="AND">
 						/systems/electrical/sources/idg-1/pmg-volt ge 110
@@ -58,6 +61,7 @@
 		<switch name="/systems/fuel/pumps/wing-pump-right-2-operate">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/failures/fuel/right-tank-pump-2 ne 1
 				/controls/fuel/switches/pump-right-2 eq 1
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
@@ -108,6 +112,7 @@
 		<switch name="/systems/fuel/pumps/center-pump-1-operate">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/failures/fuel/center-tank-pump-1 ne 1
 				/controls/fuel/switches/pump-center-1 eq 1
 				<test logic="OR">
 					/controls/fuel/switches/center-mode eq 0
@@ -130,6 +135,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fuel/switches/pump-center-2 eq 1
+				/systems/failures/fuel/center-tank-pump-2 ne 1
 				<test logic="OR">
 					/controls/fuel/switches/center-mode eq 0
 					<test logic="AND">

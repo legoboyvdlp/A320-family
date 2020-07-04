@@ -1064,6 +1064,7 @@
 			</condition>
 			<volume>
 				<property>/sim/sound/other/air-con</property>
+				<factor>6</factor>
 			</volume>
 		</ac>
 		
@@ -1538,6 +1539,21 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
+				<factor>0.75</factor>
+			</volume>
+		</switch>
+
+		<switch>
+			<name>Speedbrake Lever</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/SASA/A320_flaplever.wav</path>
+			<condition>
+				<and>
+					<property>/sim/sounde/spdbrk-click</property>
+					<property>/sim/current-view/internal</property>
+				</and>
+			</condition>
+			<volume>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -2019,5 +2035,65 @@
 			</condition>
 			<volume>0.05</volume>
 		</pushback>
+
+        <gear-screech>
+            <name>gear-screech</name>
+            <mode>once</mode>
+            <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
+            <condition>
+				<and>
+					<or>
+						<greater-than>
+							<property>/fdm/jsbsim/fcs/left-brake-cmd-norm</property>
+							<value>0.95</value>
+						</greater-than>
+						<greater-than>
+							<property>/fdm/jsbsim/fcs/right-brake-cmd-norm</property>
+							<value>0.95</value>
+						</greater-than>
+					</or>
+					<greater-than>
+						<property>/velocities/groundspeed-kt</property>
+						<value>5</value>
+					</greater-than>
+				</and>
+            </condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2</factor>
+			</volume>
+            <reference-dist>10</reference-dist>
+            <max-dist>200.0</max-dist>
+        </gear-screech>
+
+        <gear-screech-looped>
+            <name>gear-screech looped</name>
+            <mode>looped</mode>
+            <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
+            <condition>
+				<and>
+					<or>
+						<greater-than>
+							<property>/fdm/jsbsim/gear/unit[0]/slip-angle-deg</property>
+							<value>35</value>
+						</greater-than>
+						<greater-than>
+							<property>/fdm/jsbsim/gear/unit[0]/side_friction_coeff</property>
+							<value>0.95</value>
+						</greater-than>
+					</or>
+					<greater-than>
+						<property>/velocities/groundspeed-kt</property>
+						<value>5</value>
+					</greater-than>
+				</and>
+            </condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2</factor>
+			</volume>
+            <reference-dist>10</reference-dist>
+            <max-dist>200.0</max-dist>
+        </gear-screech-looped>
 	  </fx>
 </PropertyList>

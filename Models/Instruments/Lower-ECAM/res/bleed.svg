@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="bleed.svg">
   <metadata
      id="metadata375">
@@ -40,10 +40,10 @@
      inkscape:window-width="1366"
      inkscape:window-height="705"
      id="namedview371"
-     showgrid="false"
-     inkscape:zoom="1.4773733"
-     inkscape:cx="843.6625"
-     inkscape:cy="621.84897"
+     showgrid="true"
+     inkscape:zoom="0.73868665"
+     inkscape:cx="272.22904"
+     inkscape:cy="280.96379"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -70,14 +70,6 @@
        id="rect5105-2"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:4.09363317;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-5"
-     width="5.3955846"
-     height="367.33694"
-     x="463.6044"
-     y="-581.08691"
-     transform="rotate(90)" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.18700027px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:2.68228626px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
@@ -301,25 +293,30 @@
      transform="rotate(90)"
      inkscape:label="#rect5105-6-4-5-0" />
   <g
+     id="BLEED-APU"
+     inkscape:label="#g3445"
+     transform="rotate(-90,880.67779,539.2177)" />
+  <g
      id="BLEED-APU-LINES"
-     inkscape:label="#g4686">
+     inkscape:label="#g1035">
     <g
-       transform="rotate(-90,880.67779,539.2177)"
-       inkscape:label="#g3445"
-       id="BLEED-APU">
+       id="BLEED-APU-CIRCLE"
+       inkscape:label="#g1015">
       <path
-         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
-         id="path5107-1-44-0"
+         transform="rotate(-90,880.67777,539.21767)"
+         sodipodi:nodetypes="zzzzz"
          inkscape:connector-curvature="0"
-         sodipodi:nodetypes="zzzzz" />
+         id="path5107-1-44-0"
+         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <rect
-         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect5105-2-5-3-6"
-         width="53.195583"
-         height="5.1203089"
+         transform="rotate(-90,880.67777,539.21767)"
+         y="169.28328"
          x="817.61298"
-         y="169.28328" />
+         height="5.1203089"
+         width="53.195583"
+         id="rect5105-2-5-3-6"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <rect
        y="602.28253"
@@ -328,14 +325,6 @@
        width="5.3955846"
        id="rect5105-6-4-5-1"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.27201295;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       inkscape:label="#rect5105-6-4-5-3"
-       y="465.25"
-       x="510.46811"
-       height="83.83696"
-       width="5.3955846"
-       id="BLEED-APU-connection"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.95566499;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
      id="BLEED-GND"
@@ -360,13 +349,31 @@
        style="fill:none;stroke:#cecdce;stroke-width:2.87359571;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.66503072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-5-7"
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.91679168;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="BLEED-APU-connectionTop"
+     width="5.3955846"
+     height="80.537186"
+     x="510.46811"
+     y="465.25"
+     inkscape:label="#rect5105-6-4-5-3" />
+  <rect
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:3.71239424;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="BLEED-xbleedLeft"
+     width="5.3955846"
+     height="302.10294"
+     x="463.6044"
+     y="-515.85291"
+     transform="rotate(90)"
+     inkscape:label="#rect5105-5" />
+  <rect
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.64573288;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="BLEED-xbleedRight"
      width="4.7754087"
-     height="175.90536"
+     height="173.36708"
      x="464.18976"
      y="-813.75"
-     transform="rotate(90)" />
+     transform="rotate(90)"
+     inkscape:label="#rect5105-5-7" />
   <g
      id="BLEED-Pack-1-Flow-Valve"
      inkscape:label="#g3445"
@@ -599,7 +606,7 @@
        x="212.20123"
        height="28.975597"
        width="4.1129341"
-       id="BLEED-Pack-1-Packflow-needel"
+       id="BLEED-Pack-1-Packflow-needle"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.00380528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:transform-center-x="-0.06117064"
        inkscape:transform-center-y="-30.783886" />
@@ -610,7 +617,7 @@
        x="-218.12874"
        height="32.696423"
        width="4.1145287"
-       id="BLEED-Pack-1-Bypass-needel"
+       id="BLEED-Pack-1-Bypass-needle"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.0665164;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:transform-center-x="-0.13399155"
        inkscape:transform-center-y="-28.056774" />
@@ -802,7 +809,7 @@
        x="209.9595"
        height="31.200571"
        width="4.1151652"
-       id="BLEED-Pack-2-Packflow-needel"
+       id="BLEED-Pack-2-Packflow-needle"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.04191506;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:transform-center-x="1.3492459"
        inkscape:transform-center-y="-34.314208" />
@@ -813,7 +820,7 @@
        x="-213.51646"
        height="32.714966"
        width="4.1114964"
-       id="BLEED-Pack-2-Bypass-needel"
+       id="BLEED-Pack-2-Bypass-needle"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.06642556;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:transform-center-x="0.24542415"
        inkscape:transform-center-y="-28.143827" />
@@ -1063,7 +1070,7 @@
        y="537.82135">PSI</tspan></text>
   <rect
      style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.35079527;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="BLEED-HP-1-connection-0"
+     id="BLEED-HP-2-connection"
      width="5.3955846"
      height="39.996841"
      x="797.35443"
@@ -1138,12 +1145,12 @@
        transform="scale(0.94655352,1.0564643)"
        inkscape:label="#text3720"
        id="APUGentext-7-2-1-3-6-1"
-       y="426.34195"
-       x="148.62262"
+       y="417.6925"
+       x="130.38766"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.18700027px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         y="426.34195"
-         x="148.62262"
+         y="417.6925"
+         x="130.38766"
          id="tspan5816-7"
          sodipodi:role="line">ANTI</tspan></text>
     <path
@@ -1156,12 +1163,12 @@
        transform="scale(0.94655352,1.0564643)"
        inkscape:label="#text3720"
        id="APUGentext-7-2-1-3-6-7-5"
-       y="457.41693"
-       x="171.19373"
+       y="448.76749"
+       x="152.95877"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.18700027px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         y="457.41693"
-         x="171.19373"
+         y="448.76749"
+         x="152.95877"
          id="tspan5836-7"
          sodipodi:role="line">ICE</tspan></text>
   </g>
@@ -1346,4 +1353,13 @@
        x="560.88452"
        y="976.25214"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#0dc04b">00</tspan></text>
+  <rect
+     transform="rotate(90)"
+     y="-580.51971"
+     x="463.6044"
+     height="64.666832"
+     width="5.3955846"
+     id="BLEED-xbleedCenter"
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.71758175;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:label="#rect1024" />
 </svg>

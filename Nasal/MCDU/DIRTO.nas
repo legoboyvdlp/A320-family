@@ -167,7 +167,7 @@ var dirTo = {
 			# fix
 			var fix = findFixesByID(text);
 			if (size(fix) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(fix) == 1 or override) {
@@ -189,7 +189,7 @@ var dirTo = {
 			# airport
 			var airport =  findAirportsByICAO(text);
 			if (size(airport) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(airport) == 1 or override) {
@@ -211,7 +211,7 @@ var dirTo = {
 			# navaid
 			var navaid =  findNavaidsByID(text);
 			if (size(navaid) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(navaid) == 1 or override) {

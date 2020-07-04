@@ -30,6 +30,10 @@
 		<object-name>ELAC1Btn1F</object-name>
 		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerExtLtBtn2O</object-name>
+		<object-name>Eng1AntiIceBtn1F</object-name>
+		<object-name>Eng1AntiIceBtn2O</object-name>
+		<object-name>Eng2AntiIceBtn1F</object-name>
+		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
@@ -42,6 +46,8 @@
 		<object-name>RamAirBtn2O</object-name>
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
+		<object-name>WingAntiIceBtn1F</object-name>
+		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
 		<condition>
 			<greater-than-equals>
@@ -53,8 +59,6 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>APUBleedBtn1F</object-name>
-		<object-name>APUBleedBtn2O</object-name>
 		<object-name>APUGenBtn1F</object-name>
 		<object-name>APUGenBtn2O</object-name>
 		<object-name>APUMasterBtn1F</object-name>
@@ -112,15 +116,7 @@
 		<object-name>EmerCallBtn1C</object-name>
 		<object-name>EmerCallBtn2O</object-name>
 		<object-name>EmerGenInd1F</object-name>
-		<object-name>Eng1AntiIceBtn1F</object-name>
-		<object-name>Eng1AntiIceBtn2O</object-name>
-		<object-name>Eng2AntiIceBtn1F</object-name>
-		<object-name>Eng2AntiIceBtn2O</object-name>
-		<object-name>Eng1BleedBtn1F</object-name>
-		<object-name>Eng1BleedBtn2O</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
-		<object-name>Eng2BleedBtn1F</object-name>
-		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<object-name>EvacCommandBtn1E</object-name>
 		<object-name>EvacCommandBtn2O</object-name>
@@ -170,8 +166,6 @@
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
-		<object-name>WingAntiIceBtn1F</object-name>
-		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>YellowElecPump1F</object-name>
 		<object-name>YellowElecPump2O</object-name>
 		<object-name>YellowEngPump1F</object-name>
@@ -181,6 +175,28 @@
 				<property>systems/electrical/bus/dc-ess</property>
 				<value>25</value>
 			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng1BleedBtn1F</object-name>
+		<object-name>Eng1BleedBtn2O</object-name>
+		<object-name>Eng2BleedBtn1F</object-name>
+		<object-name>Eng2BleedBtn2O</object-name>
+		<object-name>APUBleedBtn1F</object-name>
+		<object-name>APUBleedBtn2O</object-name>
+		<condition>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-2</property>
+					<value>25</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess-shed</property>
+					<value>25</value>
+				</greater-than-equals>
+			</or>
 		</condition>
 	</animation>
 	
@@ -3824,10 +3840,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/pack-flo</property>
-				<value>7</value>
-				<value>9</value>
-				<value>11</value>
+				<property>controls/pneumatics/switches/pack-flow</property>
+				<value>0.8</value>
+				<value>1.0</value>
+				<value>1.2</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3840,10 +3856,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/pack-flo</property>
-				<value>11</value>
-				<value>9</value>
-				<value>7</value>
+				<property>controls/pneumatics/switches/pack-flow</property>
+				<value>1.2</value>
+				<value>1.0</value>
+				<value>0.8</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3855,11 +3871,11 @@
 		<name>AC pack flow rotate</name>
 		<type>rotate</type>
 		<object-name>ACFlowKnb</object-name>
-		<property>controls/pneumatic/switches/pack-flo</property>
+		<property>controls/pneumatics/switches/pack-flow</property>
 		<interpolation>
-			<entry><ind> 7</ind><dep> 55</dep></entry>
-			<entry><ind> 9</ind><dep>  0</dep></entry>
-			<entry><ind>11</ind><dep>-55</dep></entry>
+			<entry><ind>0.8</ind><dep> 55</dep></entry>
+			<entry><ind>1.0</ind><dep>  0</dep></entry>
+			<entry><ind>1.2</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>
@@ -3883,7 +3899,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/cockpit-temp</property>
+				<property>controls/pneumatics/switches/temp-cockpit</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3895,7 +3911,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/cockpit-temp</property>
+				<property>controls/pneumatics/switches/temp-cockpit</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3906,7 +3922,7 @@
 		<name>Cockpit Temp rotate</name>
 		<type>rotate</type>
 		<object-name>CockpitACKnb</object-name>
-		<property>controls/pneumatic/switches/cockpit-temp</property>
+		<property>controls/pneumatics/switches/temp-cockpit</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -3933,7 +3949,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/fwd-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3945,7 +3961,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/fwd-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3956,7 +3972,7 @@
 		<name>FWD Temp rotate</name>
 		<type>rotate</type>
 		<object-name>FwdCabinACKnb</object-name>
-		<property>controls/pneumatic/switches/fwd-temp</property>
+		<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -3983,7 +3999,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/aft-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-aft</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3995,7 +4011,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/aft-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-aft</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -4006,7 +4022,7 @@
 		<name>AFT Temp rotate</name>
 		<type>rotate</type>
 		<object-name>AftCabinACKnb</object-name>
-		<property>controls/pneumatic/switches/aft-temp</property>
+		<property>controls/pneumatics/switches/temp-cabin-aft</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -4033,7 +4049,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/xbleed</property>
+				<property>/controls/pneumatics/switches/x-bleed</property>
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
@@ -4049,7 +4065,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/xbleed</property>
+				<property>/controls/pneumatics/switches/x-bleed</property>
 				<value>2</value>
 				<value>1</value>
 				<value>0</value>
@@ -4064,7 +4080,7 @@
 		<name>X-Bleed rotate</name>
 		<type>rotate</type>
 		<object-name>XbleedKnb</object-name>
-		<property>controls/pneumatic/switches/xbleed</property>
+		<property>/controls/pneumatics/switches/x-bleed</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 55</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
@@ -4106,7 +4122,7 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/pack1</property>
+				<property>controls/pneumatics/switches/pack-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4120,16 +4136,7 @@
 		<object-name>ACPack1Btn1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/pneumatic/pack1-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatic/switches/pack1</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>/systems/air-conditioning/warnings/pack-1-fault-light</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4144,7 +4151,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/pack1</property>
+					<property>controls/pneumatics/switches/pack-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4167,13 +4174,19 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess-shed</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleed1</property>
+				<property>controls/pneumatics/switches/bleed-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4189,11 +4202,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/bleed1-fault</property>
+						<property>systems/pneumatics/warnings/bleed1-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleed1</property>
+						<property>controls/pneumatics/switches/bleed-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4211,7 +4224,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleed1</property>
+					<property>controls/pneumatics/switches/bleed-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4236,17 +4249,17 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
+							<property>systems/electrical/bus/dc-2</property>
 							<value>25</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>systems/electrical/bus/dc-ess-shed</property>
 							<value>25</value>
 						</greater-than-equals>
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleedapu</property>
+				<property>controls/pneumatics/switches/apu</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4260,16 +4273,16 @@
 		<object-name>APUBleedBtn1F</object-name>
 		<condition>
 			<or>
-				<and>
+				<!--<and>
 					<equals>
-						<property>systems/pneumatic/bleedapu-fault</property>
+						<property>systems/pneumatics/bleedapu-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleedapu</property>
+						<property>controls/pneumatics/switches/apu</property>
 						<value>1</value>
 					</equals>
-				</and>
+				</and> leak not simulated yet -->
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4284,7 +4297,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleedapu</property>
+					<property>controls/pneumatics/switches/apu</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -4307,13 +4320,19 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess-shed</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleed2</property>
+				<property>controls/pneumatics/switches/bleed-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4329,11 +4348,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/bleed2-fault</property>
+						<property>systems/pneumatics/warnings/bleed2-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleed2</property>
+						<property>controls/pneumatics/switches/bleed-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4351,7 +4370,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleed2</property>
+					<property>controls/pneumatics/switches/bleed-2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4379,7 +4398,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/hot-air</property>
+				<property>controls/pneumatics/switches/hot-air</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4395,11 +4414,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/hotair-fault</property>
+						<property>systems/pneumatics/hotair-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/hot-air</property>
+						<property>controls/pneumatics/switches/hot-air</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4417,7 +4436,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/hot-air</property>
+					<property>controls/pneumatics/switches/hot-air</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4452,7 +4471,7 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/pack2</property>
+				<property>controls/pneumatics/switches/pack-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4466,16 +4485,7 @@
 		<object-name>ACPack2Btn1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/pneumatic/pack2-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatic/switches/pack2</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>/systems/air-conditioning/warnings/pack-2-fault-light</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4490,7 +4500,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/pack2</property>
+					<property>controls/pneumatics/switches/pack-2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4529,7 +4539,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/ram-air</property>
+				<property>controls/pneumatics/switches/ram-air</property>
 			</binding>
 			<binding>
 				<condition>
@@ -4591,7 +4601,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/ram-air</property>
+					<property>controls/pneumatics/switches/ram-air</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5307,12 +5317,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-ess-shed</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/wing</property>
+				<property>controls/ice-protection/wing</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5327,7 +5337,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/wingfault</property>
+					<property>controls/ice-protection/wingfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5344,7 +5354,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/wing</property>
+					<property>controls/ice-protection/wing</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5368,12 +5378,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-1</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/leng</property>
+				<property>controls/ice-protection/leng</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5388,7 +5398,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/lengfault</property>
+					<property>controls/ice-protection/lengfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5405,7 +5415,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/leng</property>
+					<property>controls/ice-protection/leng</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5429,12 +5439,12 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/reng</property>
+				<property>controls/ice-protection/reng</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5449,7 +5459,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/rengfault</property>
+					<property>controls/ice-protection/rengfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5466,7 +5476,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/reng</property>
+					<property>controls/ice-protection/reng</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5497,7 +5507,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-cycle</command>
-				<property>controls/switches/windowprobeheat</property>
+				<property>controls/ice-protection/windowprobeheat</property>
 				<value>0.5</value>
 				<value>1</value>
 			</binding>
@@ -5514,7 +5524,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/windowprobeheat</property>
+					<property>controls/ice-protection/windowprobeheat</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5542,7 +5552,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/cabinfan</property>
+				<property>controls/switches/pneumatics/cabin-fans</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5557,7 +5567,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/cabinfan</property>
+					<property>controls/switches/pneumatics/cabin-fans</property>
 					<value>0</value>
 				</equals>
 				<equals>
