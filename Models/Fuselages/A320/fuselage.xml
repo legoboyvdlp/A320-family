@@ -508,7 +508,7 @@
 			<z-m>-2.60187</z-m>
 		</target-center>
 	</animation>
-	
+	<!--
 	<animation>
 		<type>locked-track</type>
 		<object-name>MLGLockstayActuatorL2</object-name>
@@ -533,6 +533,17 @@
 			<y-m>-3.00527</y-m>
 			<z-m>-1.56352</z-m>
 		</target-center>
+	</animation>
+	-->
+	<animation>
+		<type>select</type>
+		<object-name>MLGLockstayActuatorL1</object-name>
+		<object-name>MLGLockstayActuatorR1</object-name>
+		<object-name>MLGLockstayActuatorL2</object-name>
+		<object-name>MLGLockstayActuatorR2</object-name>
+		<condition>
+			<property>/fdm/jsbsim/zero</property>
+		</condition>
 	</animation>
 	
 	<animation>
