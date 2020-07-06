@@ -398,8 +398,8 @@
 		<object-name>SideStayL2</object-name>
 		<center>
 			<x-m>-1.33776</x-m>
-			<y-m>-3.71472</y-m>
-			<z-m>-2.60187</z-m>
+			<y-m>-3.71481</y-m>
+			<z-m>-2.60177</z-m>
 		</center>
 		<lock-axis>
 			<x> 0.039747</x>
@@ -413,9 +413,9 @@
 		</track-axis>
 		<target-name>SideStayL1</target-name>
 		<target-center>
-			<x-m>-2.17513</x-m>
-			<y-m>-2.82315</y-m>
-			<z-m>-1.39814</z-m>
+			<x-m>-2.19175</x-m>
+			<y-m>-2.77511</y-m>
+			<z-m>-1.36926</z-m>
 		</target-center>
    </animation>
 
@@ -423,9 +423,9 @@
 		<type>locked-track</type>
 		<object-name>SideStayL1</object-name>
 		<center>
-			<x-m>-2.17513</x-m>
-			<y-m>-2.82315</y-m>
-			<z-m>-1.39814</z-m>
+			<x-m>-2.19175</x-m>
+			<y-m>-2.77511</y-m>
+			<z-m>-1.36926</z-m>
 		</center>
 		<lock-axis>
 			<x>-0.039747</x>
@@ -440,11 +440,11 @@
 		<target-name>SideStayL2</target-name>
 		<target-center>
 			<x-m>-1.33776</x-m>
-			<y-m>-3.71472</y-m>
-			<z-m>-2.60187</z-m>
+			<y-m>-3.71481</y-m>
+			<z-m>-2.60177</z-m>
 		</target-center>
 	</animation>
-
+	
 	<!-- folding -->
 
 	<animation>
@@ -452,8 +452,8 @@
 		<object-name>SideStayL2</object-name>
 		<center>
 			<x-m>-1.33776</x-m>
-			<y-m>-3.71472</y-m>
-			<z-m>-2.60187</z-m>
+			<y-m>-3.71481</y-m>
+			<z-m>-2.60177</z-m>
 		</center>
 		<lock-axis>
 			<x> 0.856519</x>
@@ -466,15 +466,15 @@
 			<z>-1.203730</z>
 		</track-axis>
 		<slave-center>
-			<x-m>-1.79677</x-m>
-			<y-m>-3.22355</y-m>
-			<z-m>-1.94509</z-m>
+			<x-m>-1.79538</x-m>
+			<y-m>-3.22299</y-m>
+			<z-m>-1.94457</z-m>
 		</slave-center>
 		<target-name>Static-Elements</target-name>
 		<target-center>
-			<x-m>-2.17513</x-m>
-			<y-m>-2.82315</y-m>
-			<z-m>-1.39814</z-m>
+			<x-m>-2.19175</x-m>
+			<y-m>-2.77511</y-m>
+			<z-m>-1.36926</z-m>
 		</target-center>
 	</animation>
 
@@ -482,9 +482,9 @@
 		<type>locked-track</type>
 		<object-name>SideStayL1</object-name>
 		<center>
-			<x-m>-2.17513</x-m>
-			<y-m>-2.82315</y-m>
-			<z-m>-1.39814</z-m>
+			<x-m>-2.19175</x-m>
+			<y-m>-2.77511</y-m>
+			<z-m>-1.36926</z-m>
 		</center>
 		<lock-axis>
 			<x>-0.856519</x>
@@ -497,44 +497,18 @@
 			<z> 1.203730</z>
 		</track-axis>
 		<slave-center>
-			<x-m>-1.79677</x-m>
-			<y-m>-3.22355</y-m>
-			<z-m>-1.94509</z-m>
+			<x-m>-1.79538</x-m>
+			<y-m>-3.22299</y-m>
+			<z-m>-1.94457</z-m>
 		</slave-center>
 		<target-name>MLGFittingL</target-name>
 		<target-center>
 			<x-m>-1.33776</x-m>
-			<y-m>-3.71472</y-m>
-			<z-m>-2.60187</z-m>
+			<y-m>-3.71481</y-m>
+			<z-m>-2.60177</z-m>
 		</target-center>
 	</animation>
-	<!--
-	<animation>
-		<type>locked-track</type>
-		<object-name>MLGLockstayActuatorL2</object-name>
-		<center>
-			<x-m>-1.87491</x-m>
-			<y-m>-3.3555</y-m>
-			<z-m>-1.77288</z-m>
-		</center>
-		<lock-axis>
-			<x>-0.026181</x>
-			<y>-0.011481</y>
-			<z>0.000347</z>
-		</lock-axis>
-		<track-axis>
-			<x>-0.790508</x>
-			<y>0.109596</y>
-			<z>0.177768</z>
-		</track-axis>
-		<target-name>SideStayL1</target-name>
-		<target-center>
-			<x-m>-2.05065</x-m>
-			<y-m>-3.00527</y-m>
-			<z-m>-1.56352</z-m>
-		</target-center>
-	</animation>
-	-->
+	
 	<animation>
 		<type>select</type>
 		<object-name>MLGLockstayActuatorL1</object-name>
@@ -550,9 +524,9 @@
 		<type>locked-track</type>
 		<object-name>MLGLockStayL2</object-name>
 		<center>
-			<x-m>-1.84641</x-m>
-			<y-m>-3.24264</y-m>
-			<z-m>-1.85195</z-m>
+			<x-m>-1.84599</x-m>
+			<y-m>-3.23597</y-m>
+			<z-m>-1.85424</z-m>
 		</center>
 		<lock-axis>
 			<x>-0.856519</x>
@@ -560,21 +534,51 @@
 			<z>-0.497581</z>
 		</lock-axis>
 		<track-axis>
-			<x>-0.130398</x>
-			<y> 0.399385</y>
-			<z> 0.633813</z>
+			<x>-1.97681</x>
+			<y>-1.45257</y>
+			<z> 3.87645</z>
 		</track-axis>
-		<slave-name>MLGLockStayL1</slave-name>
 		<slave-center>
-			<x-m>-1.88057</x-m>
-			<y-m>-3.48285</y-m>
-			<z-m>-1.72685</z-m>
+			<x-m>-1.88007</x-m>
+			<y-m>-3.47957</y-m>
+			<z-m>-1.72857</z-m>
 		</slave-center>
-		<target-name>MLGFittingL</target-name>
+		<target-name>MLGLockStayL1</target-name>
 		<target-center>
-			<x-m>-1.97644</x-m>
-			<y-m>-3.87496</y-m>
-			<z-m>-1.45361</z-m>
+			<x-m>-1.97681</x-m>
+			<y-m>-3.87645</y-m>
+			<z-m>-1.45257</z-m>
+		</target-center>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>MLGLockStayL1</object-name>
+		<center>
+			<x-m>-1.97681</x-m>
+			<y-m>-3.87645</y-m>
+			<z-m>-1.45257</z-m>
+		</center>
+		<lock-axis>
+			<x>0.856519</x>
+			<y>0.137070</y>
+			<z>0.497581</z>
+		</lock-axis>
+		<track-axis>
+			<x>1.97681</x>
+			<y>1.45257</y>
+			<z>-3.87645</z>
+		</track-axis>
+		<slave-center>
+			<x-m>-1.88007</x-m>
+			<y-m>-3.47957</y-m>
+			<z-m>-1.72857</z-m>
+		</slave-center>
+		<target-name>SideStayL1</target-name>
+		<target-center>
+			<x-m>-1.84599</x-m>
+			<y-m>-3.23597</y-m>
+			<z-m>-1.85424</z-m>
 		</target-center>
 	</animation>
 	
