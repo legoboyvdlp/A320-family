@@ -122,12 +122,6 @@
 				<value>120</value>
 			</u_min>
 			<u_min>
-				<condition>
-					<equals>
-						<property>/it-autoflight/output/thr-mode</property>
-						<value>1</value>
-					</equals>
-				</condition>
 				<expression>
 					<difference>
 						<property>/it-autoflight/internal/vert-speed-fpm</property>
@@ -135,32 +129,6 @@
 					</difference>
 				</expression>
 			</u_min>
-			<u_max>
-				<condition>
-					<and>
-						<equals>
-							<property>/it-autoflight/output/thr-mode</property>
-							<value>2</value>
-						</equals>
-						<and>
-							<equals>
-								<property>/gear/gear[1]/wow</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/gear/gear[2]/wow</property>
-								<value>0</value>
-							</equals>
-						</and>
-					</and>
-				</condition>
-				<expression>
-					<sum>
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
-						<value>2500</value>
-					</sum>
-				</expression>
-			</u_max>
 			<u_max>
 				<condition>
 					<and>
@@ -191,27 +159,7 @@
 				</condition>
 				<value>-120</value>
 			</u_max>
-			<u_min>
-				<condition>
-					<equals>
-						<property>/it-autoflight/output/thr-mode</property>
-						<value>0</value>
-					</equals>
-				</condition>
-				<expression>
-					<difference>
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
-						<value>2500</value>
-					</difference>
-				</expression>
-			</u_min>
 			<u_max>
-				<condition>
-					<equals>
-						<property>/it-autoflight/output/thr-mode</property>
-						<value>0</value>
-					</equals>
-				</condition>
 				<expression>
 					<sum>
 						<property>/it-autoflight/internal/vert-speed-fpm</property>
@@ -560,11 +508,14 @@
 			<Td>0.0001</Td>
 			<u_min>
 				<condition>
-					<not-equals>
+					<equals>
 						<property>/it-autoflight/output/vert</property>
 						<value>6</value>
-					</not-equals>
+					</equals>
 				</condition>
+				<value>0</value>
+			</u_min>
+			<u_min>
 				<expression>
 					<max>
 						<dif>
@@ -575,38 +526,6 @@
 					</max>
 				</expression>
 			</u_min>
-			<u_min>
-				<condition>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>6</value>
-					</equals>
-				</condition>
-				<value>0</value>
-			</u_min>
-			<u_max>
-				<condition>
-					<and>
-						<equals>
-							<property>/gear/gear[1]/wow</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>/gear/gear[2]/wow</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</condition>
-				<expression>
-					<min>
-						<sum>
-							<property>/orientation/pitch-deg</property>
-							<value>5</value>
-						</sum>
-						<value>30</value>
-					</min>
-				</expression>
-			</u_max>
 			<u_max>
 				<condition>
 					<or>
@@ -621,6 +540,34 @@
 					</or>
 				</condition>
 				<value>10</value>
+			</u_max>
+			<u_max>
+				<condition>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>7</value>
+					</equals>
+				</condition>
+				<expression>
+					<min>
+						<sum>
+							<property>/orientation/pitch-deg</property>
+							<value>5</value>
+						</sum>
+						<value>18</value>
+					</min>
+				</expression>
+			</u_max>
+			<u_max>
+				<expression>
+					<min>
+						<sum>
+							<property>/orientation/pitch-deg</property>
+							<value>5</value>
+						</sum>
+						<value>30</value>
+					</min>
+				</expression>
 			</u_max>
 		</config>
 	</pid-controller>

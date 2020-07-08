@@ -43,23 +43,6 @@
 	</predict-simple>
 	
 	<!-- Autopilot Helpers/Calculators -->
-	<filter> <!-- Replace -->
-		<name>AUTOLAND FD FPM</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input> 
-			<expression>
-				<table>
-					<property>/position/gear-agl-ft</property> 
-					<entry><ind>100</ind><dep>-650</dep></entry>
-					<entry><ind> 50</ind><dep>-500</dep></entry>
-					<entry><ind> 45</ind><dep> -70</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/it-autoflight/internal/target-fpm-c2</output>
-	</filter>
-	
 	<filter>
 		<name>FMGC Managed Knots</name>
 		<type>gain</type>
@@ -152,7 +135,12 @@
 					<value>T/O CLB</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/settings/togaspd</property>
+			<expression>
+				<sum>
+					<property>/it-autoflight/settings/togaspd</property>
+					<value>10</value>
+				</sum>
+			</expression>
 		</input>
 		<input>/it-autoflight/input/spd-kts</input>
 		<output>/it-autoflight/internal/flch-kts</output>
