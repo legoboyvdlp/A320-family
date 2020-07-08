@@ -4,47 +4,10 @@
 
 # Initialize all used variables and property nodes
 # Sim
-var Velocities = {
-	airspeedKt: props.globals.getNode("velocities/airspeed-kt", 1), # Only used for gain scheduling
-	groundspeedKt: props.globals.getNode("velocities/groundspeed-kt", 1),
-	groundspeedMps: 0,
-	indicatedAirspeedKt: props.globals.getNode("instrumentation/airspeed-indicator/indicated-speed-kt", 1),
-	indicatedMach: props.globals.getNode("instrumentation/airspeed-indicator/indicated-mach", 1),
-	trueAirspeedKt: props.globals.getNode("instrumentation/airspeed-indicator/true-speed-kt", 1),
-	trueAirspeedKtTemp: 0,
-};
-
-var Position = {
-	gearAglFtTemp: 0,
-	gearAglFt: props.globals.getNode("position/gear-agl-ft", 1),
-	indicatedAltitudeFt: props.globals.getNode("instrumentation/altimeter/indicated-altitude-ft", 1),
-	indicatedAltitudeFtTemp: 0,
-};
-
-var Gear = {
-	wow0: props.globals.getNode("gear/gear[0]/wow", 1),
-	wow1: props.globals.getNode("gear/gear[1]/wow", 1),
-	wow1Temp: 1,
-	wow2: props.globals.getNode("gear/gear[2]/wow", 1),
-	wow2Temp: 1,
-};
-
-var Control = {
-	aileron: props.globals.getNode("controls/flight/aileron", 1),
-	elevator: props.globals.getNode("controls/flight/elevator", 1),
-	rudder: props.globals.getNode("controls/flight/rudder", 1),
-};
-
-var Radio = {
-	gsDefl: [props.globals.getNode("instrumentation/nav[0]/gs-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/gs-needle-deflection-norm", 1)],
-	gsDeflTemp: 0,
-	inRange: [props.globals.getNode("instrumentation/nav[0]/in-range", 1), props.globals.getNode("instrumentation/nav[1]/in-range", 1)],
-	inRangeTemp: 0,
-	locDefl: [props.globals.getNode("instrumentation/nav[0]/heading-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/heading-needle-deflection-norm", 1)],
-	locDeflTemp: 0,
-	radioSel: 0,
-	signalQuality: [props.globals.getNode("instrumentation/nav[0]/signal-quality-norm", 1), props.globals.getNode("instrumentation/nav[1]/signal-quality-norm", 1)],
-	signalQualityTemp: 0,
+var Controls = {
+	aileron: props.globals.getNode("/controls/flight/aileron", 1),
+	elevator: props.globals.getNode("/controls/flight/elevator", 1),
+	rudder: props.globals.getNode("/controls/flight/rudder", 1),
 };
 
 var FPLN = {
@@ -67,12 +30,49 @@ var FPLN = {
 	wpFlyTo: 0,
 };
 
+var Gear = {
+	wow0: props.globals.getNode("/gear/gear[0]/wow", 1),
+	wow1: props.globals.getNode("/gear/gear[1]/wow", 1),
+	wow1Temp: 1,
+	wow2: props.globals.getNode("/gear/gear[2]/wow", 1),
+	wow2Temp: 1,
+};
+
 var Misc = {
-	acEss: props.globals.getNode("systems/electrical/bus/ac-ess", 1),
-	elapsedSec: props.globals.getNode("sim/time/elapsed-sec", 1),
-	fbwLaw: props.globals.getNode("it-fbw/law", 1),
-	flapNorm: props.globals.getNode("surface-positions/flap-pos-norm", 1),
-	pfdHeadingScale: props.globals.getNode("instrumentation/pfd/heading-scale", 1),
+	acEss: props.globals.getNode("/systems/electrical/bus/ac-ess", 1),
+	elapsedSec: props.globals.getNode("/sim/time/elapsed-sec", 1),
+	fbwLaw: props.globals.getNode("/it-fbw/law", 1),
+	flapNorm: props.globals.getNode("/surface-positions/flap-pos-norm", 1),
+	pfdHeadingScale: props.globals.getNode("/instrumentation/pfd/heading-scale", 1),
+};
+
+var Position = {
+	gearAglFtTemp: 0,
+	gearAglFt: props.globals.getNode("/position/gear-agl-ft", 1),
+	indicatedAltitudeFt: props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1),
+	indicatedAltitudeFtTemp: 0,
+};
+
+var Radio = {
+	gsDefl: [props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/gs-needle-deflection-norm", 1)],
+	gsDeflTemp: 0,
+	inRange: [props.globals.getNode("/instrumentation/nav[0]/in-range", 1), props.globals.getNode("instrumentation/nav[1]/in-range", 1)],
+	inRangeTemp: 0,
+	locDefl: [props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/heading-needle-deflection-norm", 1)],
+	locDeflTemp: 0,
+	radioSel: 0,
+	signalQuality: [props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1), props.globals.getNode("instrumentation/nav[1]/signal-quality-norm", 1)],
+	signalQualityTemp: 0,
+};
+
+var Velocities = {
+	airspeedKt: props.globals.getNode("/velocities/airspeed-kt", 1), # Only used for gain scheduling
+	groundspeedKt: props.globals.getNode("/velocities/groundspeed-kt", 1),
+	groundspeedMps: 0,
+	indicatedAirspeedKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1),
+	indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1),
+	trueAirspeedKt: props.globals.getNode("/instrumentation/airspeed-indicator/true-speed-kt", 1),
+	trueAirspeedKtTemp: 0,
 };
 
 # IT-AUTOFLIGHT
@@ -87,6 +87,7 @@ var Input = {
 	fd1: props.globals.initNode("/it-autoflight/input/fd1", 1, "BOOL"),
 	fd2: props.globals.initNode("/it-autoflight/input/fd2", 1, "BOOL"),
 	fpa: props.globals.initNode("/it-autoflight/input/fpa", 0, "DOUBLE"),
+	fpaAbs: props.globals.initNode("/it-autoflight/input/fpa-abs", 0, "DOUBLE"), # Set by property rule
 	hdg: props.globals.initNode("/it-autoflight/input/hdg", 0, "INT"),
 	hdgCalc: 0,
 	ias: props.globals.initNode("/it-autoflight/input/spd-kts", 250, "INT"),
@@ -98,6 +99,7 @@ var Input = {
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
 	trueCourse: props.globals.initNode("/it-autoflight/input/true-course", 0, "BOOL"),
 	vs: props.globals.initNode("/it-autoflight/input/vs", 0, "INT"),
+	vsAbs: props.globals.initNode("/it-autoflight/input/vs-abs", 0, "INT"), # Set by property rule
 	vert: props.globals.initNode("/it-autoflight/input/vert", 7, "INT"),
 	vertTemp: 7,
 };
@@ -155,7 +157,7 @@ var Text = {
 };
 
 var Setting = {
-	reducAglFt: props.globals.initNode("/it-autoflight/settings/accel-agl-ft", 1500, "INT"), # Changable from MCDU #eventually set to 1500 above runway
+	reducAglFt: props.globals.initNode("/it-autoflight/settings/accel-agl-ft", 1500, "INT"), # Changable from MCDU, eventually set to 1500 above runway
 };
 
 var Sound = {
@@ -166,12 +168,15 @@ var Sound = {
 # A3XX Custom
 var Custom = {
 	apFdOn: 0,
-	hdgTime: props.globals.getNode("modes/fcu/hdg-time", 1),
-	ndTrkSel: [props.globals.getNode("instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("instrumentation/efis[1]/trk-selected", 1)],
+	hdgTime: props.globals.getNode("/modes/fcu/hdg-time", 1),
+	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
+	FMGC: {
+		v2Speed: props.globals.getNode("/FMGC/internal/v2", 1),
+	},
 	Input: {
-		spdManaged: props.globals.getNode("it-autoflight/input/spd-managed", 1),
+		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
 	},
 	Output: {
 		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
@@ -180,7 +185,7 @@ var Custom = {
 		athrOff: props.globals.initNode("/it-autoflight/sound/athrsound", 0, "BOOL"),
 		enableAthrOff: 0,
 	},
-	ThrLock: props.globals.getNode("systems/thrust/thr-locked", 1)
+	ThrLock: props.globals.getNode("/systems/thrust/thr-locked", 1)
 };
 
 var ITAF = {
@@ -366,7 +371,7 @@ var ITAF = {
 		
 		# Misc
 		if (Output.ap1Temp == 1 or Output.ap2Temp == 1) { # Trip AP off
-			if (abs(Control.aileron.getValue()) >= 0.2 or abs(Control.elevator.getValue()) >= 0.2 or abs(Control.rudder.getValue()) >= 0.2) {
+			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2) {
 				fcu.apOff("hard", 0);
 			}
 		}
@@ -816,15 +821,15 @@ var ITAF = {
 	takeoffGoAround: func() {
 		Output.vertTemp = Output.vert.getValue();
 		if ((Output.vertTemp == 2 or Output.vertTemp == 6) and Velocities.indicatedAirspeedKt.getValue() >= 80) {
+			me.setLatMode(3);
+			me.setVertMode(7); # Must be before kicking AP off
+			Text.vert.setValue("G/A CLB");
+			Input.ktsMach.setBoolValue(0);
+			me.syncIASGA();
 			if (Gear.wow1.getBoolValue() or Gear.wow2.getBoolValue()) {
 				me.ap1Master(0);
 				me.ap2Master(0);
 			}
-			me.setLatMode(3);
-			me.setVertMode(7);
-			Text.vert.setValue("G/A CLB");
-			Input.ktsMach.setBoolValue(0);
-			me.syncIAS();
 		} else if (Gear.wow1Temp or Gear.wow2Temp) {
 			me.athrMaster(1);
 			if (Output.lat.getValue() != 5) { # Don't accidently disarm LNAV
@@ -847,6 +852,9 @@ var ITAF = {
 	},
 	syncIAS: func() {
 		Input.ias.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
+	},
+	syncIASGA: func() { # Same as syncIAS, except doesn't go below V2
+		Input.ias.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), Custom.FMGC.v2Speed.getValue(), 350));
 	},
 	syncMach: func() {
 		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));
