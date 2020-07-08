@@ -613,12 +613,66 @@
 			<entry><ind>1.0</ind><dep>0.0</dep></entry>
 		</interpolation>
 		<axis>
-			<x1-m>-0.59792</x1-m>
-			<y1-m>-0.21093</y1-m>
-			<z1-m>-2.44185</z1-m>
-			<x2-m>-2.47222</x2-m>
-			<y2-m>-0.21093</y2-m>
-			<z2-m>-2.45447</z2-m>
+			<x1-m>-0.959303</x1-m>
+			<y1-m>-0.254655</y1-m>
+			<z1-m>-2.39315</z1-m>
+			<x2-m>-2.40568</x2-m>
+			<y2-m>-0.254654</y2-m>
+			<z2-m>-2.39429</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>GearLeftDoorActuator</name>
+		<object-name>GearLDoorActuatorL</object-name>
+		<object-name>GearLDoorActuatorRodL</object-name>
+	</animation>
+	
+	<animation>
+		<type>locked-track</type>
+		<object-name>GearLeftDoorActuator</object-name>
+		<center>
+			<x-m>-2.40532</x-m>
+			<y-m>-0.321412</y-m>
+			<z-m>-2.08067</z-m>
+		</center>
+		<lock-axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</lock-axis>
+		<track-axis>
+			<x>0</x>
+			<y>-0.517846</y>
+			<z>-0.317551</z>
+		</track-axis>
+		
+		<target-name>MLGGearDoorL</target-name>
+		<target-center>
+			<x-m>-2.40532</x-m>
+			<y-m>-0.838963</y-m>
+			<z-m>-2.39852</z-m>
+		</target-center>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>GearLDoorActuatorRodL</object-name>
+		<property>gear/gear[1]/position-norm</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.10</ind><dep>0.30</dep></entry>
+			<entry><ind>0.20</ind><dep>0.40</dep></entry>
+			<entry><ind>0.8</ind><dep>0.40</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-2.40532</x1-m>
+			<y1-m>-0.345406</y1-m>
+			<z1-m>-2.0954</z1-m>
+			<x2-m>-2.40532</x2-m>
+			<y2-m>-0.838963</y2-m>
+			<z2-m>-2.39852</z2-m>
 		</axis>
 	</animation>
 	
@@ -881,12 +935,12 @@
 			<entry><ind>1.0</ind><dep>0.0</dep></entry>
 		</interpolation>
 		<axis>
-			<x1-m>-0.59792</x1-m>
-			<y1-m>0.20882</y1-m>
-			<z1-m>-2.44185</z1-m>
-			<x2-m>-2.47222</x2-m>
-			<y2-m>0.20882</y2-m>
-			<z2-m>-2.45447</z2-m>
+			<x1-m>-0.959303</x1-m>
+			<y1-m> 0.254655</y1-m>
+			<z1-m>-2.39315</z1-m>
+			<x2-m>-2.40568</x2-m>
+			<y2-m> 0.254654</y2-m>
+			<z2-m>-2.39429</z2-m>
 		</axis>
 	</animation>
 	
