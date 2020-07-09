@@ -403,7 +403,7 @@
 				<row>0</row>
 				<col>3</col>
 				<pref-width>50</pref-width>
-				<property>/it-autoflight/input/spd-kts</property>
+				<property>/it-autoflight/input/kts</property>
 				<live type="bool">true</live>
 				<enable>
 					<and>
@@ -529,7 +529,7 @@
 				<row>0</row>
 				<col>3</col>
 				<pref-width>50</pref-width>
-				<property>/it-autoflight/input/spd-mach</property>
+				<property>/it-autoflight/input/mach</property>
 				<live type="bool">true</live>
 				<enable>
 					<and>

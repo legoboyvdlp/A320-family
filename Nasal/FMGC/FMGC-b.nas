@@ -14,8 +14,8 @@ var FPLN = {
 	active: props.globals.getNode("/FMGC/flightplan[2]/active", 1),
 	activeTemp: 0,
 	currentCourse: 0,
-	currentWP: props.globals.getNode("/FMGC/flightplan[2]/current-wp", 1),
-	currentWPTemp: 0,
+	currentWp: props.globals.getNode("/FMGC/flightplan[2]/current-wp", 1),
+	currentWpTemp: 0,
 	deltaAngle: 0,
 	deltaAngleRad: 0,
 	distCoeff: 0,
@@ -90,11 +90,11 @@ var Input = {
 	fpaAbs: props.globals.initNode("/it-autoflight/input/fpa-abs", 0, "DOUBLE"), # Set by property rule
 	hdg: props.globals.initNode("/it-autoflight/input/hdg", 0, "INT"),
 	hdgCalc: 0,
-	ias: props.globals.initNode("/it-autoflight/input/spd-kts", 250, "INT"),
+	kts: props.globals.initNode("/it-autoflight/input/kts", 100, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
 	latTemp: 5,
-	mach: props.globals.initNode("/it-autoflight/input/spd-mach", 0.5, "DOUBLE"),
+	mach: props.globals.initNode("/it-autoflight/input/mach", 0.5, "DOUBLE"),
 	toga: props.globals.initNode("/it-autoflight/input/toga", 0, "BOOL"),
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
 	trueCourse: props.globals.initNode("/it-autoflight/input/true-course", 0, "BOOL"),
@@ -112,7 +112,7 @@ var Internal = {
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),
 	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 30, "INT"),
 	bankLimitAuto: 30,
-	captVS: 0,
+	captVs: 0,
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
@@ -120,8 +120,8 @@ var Internal = {
 	hdgErrorDeg: props.globals.initNode("/it-autoflight/internal/heading-error-deg", 0, "DOUBLE"),
 	hdgPredicted: props.globals.initNode("/it-autoflight/internal/heading-predicted", 0, "DOUBLE"),
 	lnavAdvanceNm: props.globals.initNode("/it-autoflight/internal/lnav-advance-nm", 0, "DOUBLE"),
-	minVS: props.globals.initNode("/it-autoflight/internal/min-vs", -500, "INT"),
-	maxVS: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
+	minVs: props.globals.initNode("/it-autoflight/internal/min-vs", -500, "INT"),
+	maxVs: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
 	trk: props.globals.initNode("/it-autoflight/internal/track-deg", 0, "DOUBLE"),
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
@@ -220,13 +220,13 @@ var ITAF = {
 		Output.thrMode.setValue(0);
 		Output.lat.setValue(9);
 		Output.vert.setValue(9);
-		Internal.minVS.setValue(-500);
-		Internal.maxVS.setValue(500);
+		Internal.minVs.setValue(-500);
+		Internal.maxVs.setValue(500);
 		Internal.bankLimit.setValue(30);
 		Internal.bankLimitAuto = 30;
 		Internal.alt.setValue(10000);
 		Internal.altCaptureActive = 0;
-		Input.ias.setValue(100);
+		Input.kts.setValue(100);
 		Input.mach.setValue(0.5);
 		Text.thr.setValue("THRUST");
 		Text.arm.setValue(" ");
@@ -309,9 +309,9 @@ var ITAF = {
 		Internal.altDiff = Internal.altTemp - Position.indicatedAltitudeFtTemp;
 		
 		if (Output.vertTemp != 0 and Output.vertTemp != 2 and Output.vertTemp != 6 and Output.vertTemp != 9) {
-			Internal.captVS = math.clamp(math.round(abs(Internal.vs.getValue()) / 5, 100), 50, 2500); # Capture limits
+			Internal.captVs = math.clamp(math.round(abs(Internal.vs.getValue()) / 5, 100), 50, 2500); # Capture limits
 			Custom.apFdOn = Output.ap1Temp or Output.ap2Temp or Output.fd1.getBoolValue() or Output.fd2.getBoolValue();
-			if (abs(Internal.altDiff) <= Internal.captVS and !Gear.wow1Temp and !Gear.wow2Temp and Custom.apFdOn) {
+			if (abs(Internal.altDiff) <= Internal.captVs and !Gear.wow1Temp and !Gear.wow2Temp and Custom.apFdOn) {
 				if (Internal.altTemp >= Position.indicatedAltitudeFtTemp and Internal.vsTemp >= -25) { # Don't capture if we are going the wrong way
 					me.setVertMode(3);
 				} else if (Internal.altTemp < Position.indicatedAltitudeFtTemp and Internal.vsTemp <= 25) { # Don't capture if we are going the wrong way
@@ -380,7 +380,7 @@ var ITAF = {
 		Input.bankLimitSWTemp = Input.bankLimitSW.getValue();
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
-		FPLN.currentWPTemp = FPLN.currentWP.getValue();
+		FPLN.currentWpTemp = FPLN.currentWp.getValue();
 		
 		# Bank Limit
 		if (Velocities.trueAirspeedKtTemp >= 420) {
@@ -402,14 +402,14 @@ var ITAF = {
 		
 		# Waypoint Advance Logic
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
-			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
+			if ((FPLN.currentWpTemp + 1) < flightPlanController.num[2].getValue()) {
 				Velocities.groundspeedMps = Velocities.groundspeedKt.getValue() * 0.5144444444444;
-				FPLN.wpFlyFrom = FPLN.currentWPTemp;
+				FPLN.wpFlyFrom = FPLN.currentWpTemp;
 				if (FPLN.wpFlyFrom < 0) {
 					FPLN.wpFlyFrom = 0;
 				}
 				FPLN.currentCourse = fmgc.wpCourse[2][FPLN.wpFlyFrom].getValue();
-				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
+				FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
 				FPLN.nextCourse = fmgc.wpCourse[2][FPLN.wpFlyTo].getValue();
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
@@ -436,7 +436,7 @@ var ITAF = {
 					flightPlanController.autoSequencing();
 				}
 				
-				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
+				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
 				#	flightPlanController.autoSequencing();
 				#} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
 				#	flightPlanController.autoSequencing();
@@ -569,7 +569,7 @@ var ITAF = {
 			Output.lnavArm.setBoolValue(0);
 			Output.locArm.setBoolValue(0);
 			Output.apprArm.setBoolValue(0);
-			me.syncHDG();
+			me.syncHdg();
 			Output.lat.setValue(0);
 			Custom.showHdg.setBoolValue(1);
 			Text.lat.setValue("HDG");
@@ -614,7 +614,7 @@ var ITAF = {
 				me.armTextCheck();
 			}
 		} else if (n == 3) {
-			me.syncHDG();
+			me.syncHdg();
 			Output.lnavArm.setBoolValue(0);
 			Custom.showHdg.setBoolValue(1);
 			me.armTextCheck();
@@ -629,7 +629,7 @@ var ITAF = {
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
 			Text.vert.setValue("ALT HLD");
-			me.syncALT();
+			me.syncAlt();
 			me.armTextCheck();
 		} else if (n == 1) { # V/S
 			if (abs(Input.altDiff) >= 25) {
@@ -638,7 +638,7 @@ var ITAF = {
 				Output.apprArm.setBoolValue(0);
 				Output.vert.setValue(1);
 				Text.vert.setValue("V/S");
-				me.syncVS();
+				me.syncVs();
 				me.armTextCheck();
 			} else {
 				Output.apprArm.setBoolValue(0);
@@ -682,7 +682,7 @@ var ITAF = {
 				Output.apprArm.setBoolValue(0);
 				Output.vert.setValue(5);
 				Text.vert.setValue("FPA");
-				me.syncFPA();
+				me.syncFpa();
 				me.armTextCheck();
 			} else {
 				Output.apprArm.setBoolValue(0);
@@ -807,16 +807,16 @@ var ITAF = {
 	setClimbRateLim: func() {
 		Internal.vsTemp = Internal.vs.getValue();
 		if (Internal.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) {
-			Internal.maxVS.setValue(math.round(Internal.vsTemp));
-			Internal.minVS.setValue(-500);
+			Internal.maxVs.setValue(math.round(Internal.vsTemp));
+			Internal.minVs.setValue(-500);
 		} else {
-			Internal.maxVS.setValue(500);
-			Internal.minVS.setValue(math.round(Internal.vsTemp));
+			Internal.maxVs.setValue(500);
+			Internal.minVs.setValue(math.round(Internal.vsTemp));
 		}
 	},
 	resetClimbRateLim: func() {
-		Internal.minVS.setValue(-500);
-		Internal.maxVS.setValue(500);
+		Internal.minVs.setValue(-500);
+		Internal.maxVs.setValue(500);
 	},
 	takeoffGoAround: func() {
 		Output.vertTemp = Output.vert.getValue();
@@ -825,7 +825,7 @@ var ITAF = {
 			me.setVertMode(7); # Must be before kicking AP off
 			Text.vert.setValue("G/A CLB");
 			Input.ktsMach.setBoolValue(0);
-			me.syncIASGA();
+			me.syncKtsGa();
 			if (Gear.wow1.getBoolValue() or Gear.wow2.getBoolValue()) {
 				me.ap1Master(0);
 				me.ap2Master(0);
@@ -850,26 +850,26 @@ var ITAF = {
 			Text.arm.setValue(" ");
 		}
 	},
-	syncIAS: func() {
-		Input.ias.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
+	syncKts: func() {
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
 	},
-	syncIASGA: func() { # Same as syncIAS, except doesn't go below V2
-		Input.ias.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), Custom.FMGC.v2Speed.getValue(), 350));
+	syncKtsGa: func() { # Same as syncKts, except doesn't go below V2
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), Custom.FMGC.v2Speed.getValue(), 350));
 	},
 	syncMach: func() {
 		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));
 	},
-	syncHDG: func() {
+	syncHdg: func() {
 		Input.hdg.setValue(math.round(Internal.hdgPredicted.getValue())); # Switches to track automatically
 	},
-	syncALT: func() {
+	syncAlt: func() {
 		Input.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 		Internal.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 	},
-	syncVS: func() {
+	syncVs: func() {
 		Input.vs.setValue(math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000));
 	},
-	syncFPA: func() {
+	syncFpa: func() {
 		Input.fpa.setValue(math.clamp(math.round(Internal.fpa.getValue(), 0.1), -9.9, 9.9));
 	},
 	# Custom Stuff Below
@@ -986,7 +986,7 @@ setlistener("/it-autoflight/input/kts-mach", func {
 	if (Input.ktsMach.getBoolValue()) {
 		ITAF.syncMach();
 	} else {
-		ITAF.syncIAS();
+		ITAF.syncKts();
 	}
 }, 0, 0);
 

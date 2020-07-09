@@ -100,7 +100,7 @@
 					<value>0</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/input/spd-kts</property>
+			<property>/it-autoflight/input/kts</property>
 		</input>
 		<input>
 			<condition>
@@ -115,7 +115,7 @@
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
 					</div>
-					<property>/it-autoflight/input/spd-mach</property>
+					<property>/it-autoflight/input/mach</property>
 				</product>
 			</expression>
 		</input>
@@ -142,7 +142,7 @@
 				</sum>
 			</expression>
 		</input>
-		<input>/it-autoflight/input/spd-kts</input>
+		<input>/it-autoflight/input/kts</input>
 		<output>/it-autoflight/internal/flch-kts</output>
 		<min>
 			<expression>
@@ -198,7 +198,7 @@
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/input/spd-mach</input>
+		<input>/it-autoflight/input/mach</input>
 		<output>/it-autoflight/internal/flch-mach</output>
 		<min>
 			<expression>
@@ -270,7 +270,7 @@
 				</floor>
 			</expression>
 		</input>
-		<output>/it-autoflight/input/spd-kts</output>
+		<output>/it-autoflight/input/kts</output>
 	</filter>
 	
 	<filter>
@@ -301,7 +301,7 @@
 				</div>
 			</expression>
 		</input>
-		<output>/it-autoflight/input/spd-mach</output>
+		<output>/it-autoflight/input/mach</output>
 	</filter>
 	
 	<filter>

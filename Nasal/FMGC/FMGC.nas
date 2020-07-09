@@ -714,7 +714,7 @@ var reset_FMGC = func {
 	setprop("/FMGC/status/phase", 0);
 	fd1 = getprop("/it-autoflight/input/fd1");
 	fd2 = getprop("/it-autoflight/input/fd2");
-	spd = getprop("/it-autoflight/input/spd-kts");
+	spd = getprop("/it-autoflight/input/kts");
 	hdg = getprop("/it-autoflight/input/hdg");
 	alt = getprop("/it-autoflight/input/alt");
 	ITAF.init();
@@ -726,7 +726,7 @@ var reset_FMGC = func {
 	mcdu.MCDU_reset(1);
 	setprop("it-autoflight/input/fd1", fd1);
 	setprop("it-autoflight/input/fd2", fd2);
-	setprop("it-autoflight/input/spd-kts", spd);
+	setprop("it-autoflight/input/kts", spd);
 	setprop("it-autoflight/input/hdg", hdg);
 	setprop("it-autoflight/input/alt", alt);
 	setprop("systems/pressurization/mode", "GN");
@@ -868,8 +868,8 @@ var ManagedSPD = maketimer(0.25, func {
 			mngktsmach = getprop("/FMGC/internal/mng-kts-mach");
 			mng_spd = getprop("/FMGC/internal/mng-spd");
 			mng_spd_cmd = getprop("/FMGC/internal/mng-spd-cmd");
-			kts_sel = getprop("/it-autoflight/input/spd-kts");
-			mach_sel = getprop("/it-autoflight/input/spd-mach");
+			kts_sel = getprop("/it-autoflight/input/kts");
+			mach_sel = getprop("/it-autoflight/input/mach");
 			srsSPD = getprop("/it-autoflight/settings/togaspd");
 			phase = getprop("/FMGC/status/phase"); # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 			flap = getprop("/controls/flight/flaps-pos");
@@ -973,9 +973,9 @@ var ManagedSPD = maketimer(0.25, func {
 			mng_spd = getprop("/FMGC/internal/mng-spd");
 			
 			if (kts_sel != mng_spd and !ktsmach) {
-				setprop("it-autoflight/input/spd-kts", mng_spd);
+				setprop("it-autoflight/input/kts", mng_spd);
 			} else if (mach_sel != mng_spd and ktsmach) {
-				setprop("it-autoflight/input/spd-mach", mng_spd);
+				setprop("it-autoflight/input/mach", mng_spd);
 			}
 		} else {
 			ManagedSPD.stop();

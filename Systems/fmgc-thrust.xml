@@ -11,7 +11,7 @@
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/input/spd-kts</input>
+		<input>/it-autoflight/input/kts</input>
 		<output>/it-autoflight/internal/athr-kts</output>
 		<min>
 			<expression>
@@ -69,7 +69,7 @@
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/input/spd-mach</input>
+		<input>/it-autoflight/input/mach</input>
 		<output>/it-autoflight/internal/athr-mach</output>
 		<min>
 			<expression>
