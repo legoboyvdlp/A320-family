@@ -633,8 +633,8 @@
 		<object-name>GearLeftDoorActuator</object-name>
 		<center>
 			<x-m>-2.40532</x-m>
-			<y-m>-0.321412</y-m>
-			<z-m>-2.08067</z-m>
+			<y-m>-0.294007</y-m>
+			<z-m>-2.06384</z-m>
 		</center>
 		<lock-axis>
 			<x>1</x>
@@ -643,8 +643,8 @@
 		</lock-axis>
 		<track-axis>
 			<x>0</x>
-			<y>-0.517846</y>
-			<z>-0.317551</z>
+			<y>-0.5343</y>
+			<z>-0.328136</z>
 		</track-axis>
 		
 		<target-name>MLGGearDoorL</target-name>
@@ -661,9 +661,10 @@
 		<property>gear/gear[1]/position-norm</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.10</ind><dep>0.30</dep></entry>
-			<entry><ind>0.20</ind><dep>0.40</dep></entry>
-			<entry><ind>0.8</ind><dep>0.40</dep></entry>
+			<entry><ind>0.10</ind><dep>0.25</dep></entry>
+			<entry><ind>0.20</ind><dep>0.30</dep></entry>
+			<entry><ind>0.8</ind><dep>0.30</dep></entry>
+			<entry><ind>0.9</ind><dep>0.25</dep></entry>
 			<entry><ind>1.0</ind><dep>0.0</dep></entry>
 		</interpolation>
 		<axis>
