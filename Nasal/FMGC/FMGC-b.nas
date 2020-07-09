@@ -171,9 +171,6 @@ var Custom = {
 	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
-	FMGC: {
-		v2Speed: props.globals.getNode("/FMGC/internal/v2", 1),
-	},
 	Input: {
 		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
 	},
@@ -856,7 +853,7 @@ var ITAF = {
 		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
 	},
 	syncKtsGa: func() { # Same as syncKts, except doesn't go below V2
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), Custom.FMGC.v2Speed.getValue(), 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 350));
 	},
 	syncMach: func() {
 		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));

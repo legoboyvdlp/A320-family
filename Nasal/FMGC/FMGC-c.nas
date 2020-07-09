@@ -125,7 +125,7 @@ var loopFMA = maketimer(0.05, func {
 	var engstate2 = getprop("engines/engine[1]/state");
 	if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)))) and (engstate1 == 3 or engstate2 == 3)) {
 		# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
-		if (wow and fmgc.FMGCInternal.v2set and getprop("it-autoflight/output/vert") != 7) {
+		if (wow and FMGCInternal.v2set and getprop("it-autoflight/output/vert") != 7) {
 			ITAF.setVertMode(7);
 			setprop("it-autoflight/mode/vert", "T/O CLB");
 		}
@@ -345,9 +345,9 @@ setlistener("/it-autoflight/mode/vert", func {
 
 var updatePitchArm2 = func {
 	var newvertarm = getprop("modes/pfd/fma/pitch-mode2-armed");
-	if (newvertarm != "CLB" and fmgc.FMGCInternal.v2set) {
+	if (newvertarm != "CLB" and FMGCInternal.v2set) {
 		setprop("modes/pfd/fma/pitch-mode2-armed", "CLB");
-	} else if (newvertarm != " " and !fmgc.FMGCInternal.v2set) {
+	} else if (newvertarm != " " and FMGCInternal.v2set != 1) {
 		setprop("modes/pfd/fma/pitch-mode2-armed", " ");
 	}
 }
