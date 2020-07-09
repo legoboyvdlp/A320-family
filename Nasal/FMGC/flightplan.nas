@@ -200,6 +200,7 @@ var flightPlanController = {
 	},
 	
 	autoSequencing: func() {
+		if (!me.active.getBoolValue()) { return; }
 		me.calculateTimeAltitudeOnSequence();
 		
 		# todo setlistener on sim/time/warp to recompute predictions

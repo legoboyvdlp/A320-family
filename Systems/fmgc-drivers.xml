@@ -371,26 +371,6 @@
 		</period>
 	</filter>
 	
-	<!--<filter>
-		<name>Crosstrack</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>/instrumentation/gps/wp/wp[1]/course-error-nm</input>
-		<output>/it-autoflight/internal/crosstrack-error</output>
-		<min>-2</min>
-		<max>2</max>
-	</filter>
-	
-	<filter>
-		<name>Crosstrack Error</name>
-		<type>gain</type>
-		<gain>64</gain>
-		<input>/it-autoflight/internal/crosstrack-error</input>
-		<output>/it-autoflight/internal/crosstrack-error-correction</output>
-		<min>-45</min>
-		<max>45</max>
-	</filter>-->
-	
 	<filter>
 		<name>Heading Error Deg</name>
 		<debug>false</debug>

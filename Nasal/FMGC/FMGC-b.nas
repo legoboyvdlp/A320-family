@@ -379,7 +379,7 @@ var ITAF = {
 		Input.bankLimitSWTemp = Input.bankLimitSW.getValue();
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
-		FPLN.currentWpTemp = FPLN.currentWp.getValue();
+		FPLN.currentWPTemp = FPLN.currentWP.getValue();
 		
 		# Bank Limit
 		if (Velocities.trueAirspeedKtTemp >= 420) {
@@ -401,20 +401,17 @@ var ITAF = {
 		
 		# Waypoint Advance Logic
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
-<<<<<<< HEAD
-			return;
 			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
-=======
-			if ((FPLN.currentWpTemp + 1) < flightPlanController.num[2].getValue()) {
->>>>>>> dev
 				Velocities.groundspeedMps = Velocities.groundspeedKt.getValue() * 0.5144444444444;
-				FPLN.wpFlyFrom = FPLN.currentWpTemp;
+				FPLN.wpFlyFrom = FPLN.currentWPTemp;
 				if (FPLN.wpFlyFrom < 0) {
 					FPLN.wpFlyFrom = 0;
 				}
-				FPLN.currentCourse = fmgc.wpCourse[2][FPLN.wpFlyFrom].getValue();
-				FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
-				FPLN.nextCourse = fmgc.wpCourse[2][FPLN.wpFlyTo].getValue();
+				FPLN.currentCourse = flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).leg_bearing;
+				print(FPLN.currentCourse);
+				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
+				FPLN.nextCourse = flightPlanController.flightplans[2].getWP(FPLN.wpFlyTo).leg_bearing;
+				print(FPLN.nextCourse);
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
 				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
@@ -437,11 +434,11 @@ var ITAF = {
 				
 				# Advance logic done by flightplan controller
 				
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
+				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 					flightPlanController.autoSequencing();
 				}
 				
-				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
+				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 				#	flightPlanController.autoSequencing();
 				#} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
 				#	flightPlanController.autoSequencing();

@@ -743,19 +743,11 @@ var reset_FMGC = func {
 	
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
-<<<<<<< HEAD
-	setprop("/it-autoflight/input/fd1", fd1);
-	setprop("/it-autoflight/input/fd2", fd2);
-	setprop("/it-autoflight/input/spd-kts", spd);
-	setprop("/it-autoflight/input/hdg", hdg);
-	setprop("/it-autoflight/input/alt", alt);
-=======
 	setprop("it-autoflight/input/fd1", fd1);
 	setprop("it-autoflight/input/fd2", fd2);
 	setprop("it-autoflight/input/kts", spd);
 	setprop("it-autoflight/input/hdg", hdg);
 	setprop("it-autoflight/input/alt", alt);
->>>>>>> dev
 	setprop("systems/pressurization/mode", "GN");
 	setprop("systems/pressurization/vs", "0");
 	setprop("systems/pressurization/targetvs", "0");
@@ -999,15 +991,9 @@ var ManagedSPD = maketimer(0.25, func {
 			mng_spd = getprop("/FMGC/internal/mng-spd");
 			
 			if (kts_sel != mng_spd and !ktsmach) {
-<<<<<<< HEAD
-				setprop("/it-autoflight/input/spd-kts", mng_spd);
+				setprop("/it-autoflight/input/kts", mng_spd);
 			} else if (mach_sel != mng_spd and ktsmach) {
-				setprop("/it-autoflight/input/spd-mach", mng_spd);
-=======
-				setprop("it-autoflight/input/kts", mng_spd);
-			} else if (mach_sel != mng_spd and ktsmach) {
-				setprop("it-autoflight/input/mach", mng_spd);
->>>>>>> dev
+				setprop("/it-autoflight/input/mach", mng_spd);
 			}
 		} else {
 			ManagedSPD.stop();
