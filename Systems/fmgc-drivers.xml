@@ -135,7 +135,12 @@
 					<value>T/O CLB</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/settings/togaspd</property>
+			<expression>
+				<sum>
+					<property>/it-autoflight/settings/togaspd</property>
+					<value>10</value>
+				</sum>
+			</expression>
 		</input>
 		<input>/it-autoflight/input/kts</input>
 		<output>/it-autoflight/internal/flch-kts</output>
