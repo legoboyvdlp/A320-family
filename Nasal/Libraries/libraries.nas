@@ -139,18 +139,36 @@ setlistener("/controls/lighting/no-smoking-sign", func {
 	}, 1);
 }, 0, 0);
 
+var flaps_click = props.globals.getNode("/sim/sounde/flaps-click");
+
 setlistener("/controls/flight/flaps-input", func {
-	props.globals.getNode("sim/sounde/flaps-click").setBoolValue(1);
+	flaps_click.setBoolValue(1);
 }, 0, 0);
 
 setlistener("/sim/sounde/flaps-click", func {
-	if (!getprop("/sim/sounde/flaps-click")) {
+	if (!flaps_click.getValue()) {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/flaps-click").setBoolValue(0);
+		flaps_click.setBoolValue(0);
 	}, 0.4);
 });
+
+var spdbrk_click = props.globals.getNode("/sim/sounde/spdbrk-click");
+
+setlistener("/controls/flight/speedbrake", func {
+	spdbrk_click.setBoolValue(1);
+}, 0, 0);
+
+setlistener("/sim/sounde/spdbrk-click", func {
+	if (!spdbrk_click.getValue()) {
+		return;
+	}
+	settimer(func {
+		spdbrk_click.setBoolValue(0);
+	}, 0.4);
+});
+
 #########
 # Doors #
 #########
@@ -208,7 +226,6 @@ var systemsInit = func {
 	systems.APUController.init();
 	systems.autobrake_init();
 	systems.fire_init();
-	systems.icingInit();
 	fmgc.flightPlanController.reset();
 	fmgc.windController.reset();
 	fadec.FADEC.init();
@@ -219,6 +236,7 @@ var systemsInit = func {
 	mcdu_scratchpad.mcduMsgtimer1.start();
 	mcdu_scratchpad.mcduMsgtimer2.start();
 	systemsLoop.start();
+	effects.icingInit();
 	lightsLoop.start();
 	ecam.ECAM.init();
 	libraries.variousReset();
@@ -253,9 +271,9 @@ var systemsLoop = maketimer(0.1, func {
 	systems.APUController.loop();
 	systems.HFLoop();
 	
-	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/enable") == 0))) {
+	if ((getprop("/controls/pneumatics/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/enable") == 0))) {
 		setprop("/controls/electrical/ground-cart", 0);
-		setprop("/controls/pneumatic/switches/groundair", 0);
+		setprop("/controls/pneumatics/switches/groundair", 0);
 	}
 	
 	if (getprop("/velocities/groundspeed-kt") > 15) {

@@ -206,6 +206,7 @@ var flightPlanController = {
 		
 		# Advancing logic
 		me.currentToWptIndexTemp = me.currentToWptIndex.getValue();
+		me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 		if (me.num[2].getValue() > 2) {
 			for (var i = 0; i <= 2; i += 1) {
 				if (i == 2) {

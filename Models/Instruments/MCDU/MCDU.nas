@@ -2527,9 +2527,9 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}		
@@ -2681,9 +2681,9 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
@@ -2842,9 +2842,9 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/spd-kts")));
+					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/kts")));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}

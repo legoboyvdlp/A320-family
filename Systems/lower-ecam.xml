@@ -182,5 +182,90 @@
 		<input>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</input>
 		<output>/ECAM/Lower/elevator-trim-deg</output>
 	</filter>
+	
+	<filter>
+		<name>Pack 1 Flow Output</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/packs/pack-flow-1</property>
+					<entry><ind>0.8</ind><dep>-80</dep></entry>
+					<entry><ind>1.0</ind><dep>  0</dep></entry>
+					<entry><ind>1.2</ind><dep> 80</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/pack-1-flow-output</output>
+	</filter>
+	
+	<filter>
+		<name>Pack 2 Flow Output</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/packs/pack-flow-2</property>
+					<entry><ind>0.8</ind><dep>-80</dep></entry>
+					<entry><ind>1.0</ind><dep>  0</dep></entry>
+					<entry><ind>1.2</ind><dep> 80</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/pack-2-flow-output</output>
+	</filter>
+	
+	<filter>
+		<name>Trim Valve Cockpit</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/valves/trim-cockpit</property>
+					<entry><ind>0.0</ind><dep>-50</dep></entry>
+					<entry><ind>0.5</ind><dep>  0</dep></entry>
+					<entry><ind>1.0</ind><dep> 50</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/trim-cockpit-output</output>
+	</filter>
+	
+	<filter>
+		<name>Trim Valve Aft</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/valves/trim-aft</property>
+					<entry><ind>0.0</ind><dep>-50</dep></entry>
+					<entry><ind>0.5</ind><dep>  0</dep></entry>
+					<entry><ind>1.0</ind><dep> 50</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/trim-aft-output</output>
+	</filter>
+	
+	<filter>
+		<name>Trim Valve Fwd</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/systems/air-conditioning/valves/trim-fwd</property>
+					<entry><ind>0.0</ind><dep>-50</dep></entry>
+					<entry><ind>0.5</ind><dep>  0</dep></entry>
+					<entry><ind>1.0</ind><dep> 50</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/ECAM/Lower/trim-fwd-output</output>
+	</filter>
 
 </PropertyList>

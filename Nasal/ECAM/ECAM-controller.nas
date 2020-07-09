@@ -29,6 +29,64 @@ var counter = 0;
 var noMainMsg = 0;
 var storeFirstWarning = nil;
 
+var warningNodes = {
+	Logic: {
+		crossbleedFault: props.globals.initNode("/ECAM/warnings/logic/crossbleed-fault"),
+		crossbleedWai: props.globals.initNode("/ECAM/warnings/logic/crossbleed-wai"),
+		bleed1LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-unsucc"),
+		bleed1LoTempXbleed: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-xbleed"),
+		bleed1LoTempBleed: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-bleed"),
+		bleed1LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-pack"),
+		bleed1WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-1-wai-avail"),
+		bleed2LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-unsucc"),
+		bleed2LoTempXbleed: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-xbleed"),
+		bleed2LoTempBleed: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-bleed"),
+		bleed2LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-pack"),
+		bleed2WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-2-wai-avail"),
+		waiSysfault: props.globals.initNode("/ECAM/warnings/logic/wing-anti-ice-sys-fault"),
+		waiLclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-left-closed"),
+		waiRclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-right-closed"),
+		procWaiShutdown: props.globals.initNode("/ECAM/warnings/logic/proc-wai-shutdown-output"),
+		waiGndFlight: props.globals.initNode("/ECAM/warnings/logic/wing-anti-ice-gnd-fault"),
+		pack12Fault: props.globals.initNode("/ECAM/warnings/logic/pack-1-2-fault"),
+		pack1ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-1-switch-cmd"),
+		pack2ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-2-switch-cmd"),
+		cabinFans: props.globals.initNode("/ECAM/warnings/logic/cabin-fans-fault"),
+	},
+	Timers: {
+		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
+		bleed1Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault"),
+		bleed1FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault-output"),
+		bleed2Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault"),
+		bleed2FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault-output"),
+		bleed1NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-1-not-shut-output"),
+		bleed2NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-2-not-shut-output"),
+		bleed1And2LoTemp: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp"),
+		bleed1And2LoTempOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp-output"),
+		bleed1Off60Output: props.globals.initNode("/ECAM/warnings/logic/bleed-1-off-60-output"),
+		bleed1Off5Output: props.globals.initNode("/ECAM/warnings/logic/bleed-1-off-5-output"),
+		bleed2Off60Output: props.globals.initNode("/ECAM/warnings/logic/bleed-2-off-60-output"),
+		bleed2Off5Output: props.globals.initNode("/ECAM/warnings/logic/bleed-2-off-5-output"),
+		eng1AiceNotClsd: props.globals.initNode("/ECAM/warnings/timer/eng-aice-1-open-output"),
+		eng2AiceNotClsd: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-open-output"),
+		eng1AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-1-closed-output"),
+		eng2AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-closed-output"),
+		waiLhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-left"),
+		waiRhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-right"),
+		pack1Fault: props.globals.initNode("/ECAM/warnings/timer/pack-1-fault-2"),
+		pack2Fault: props.globals.initNode("/ECAM/warnings/timer/pack-2-fault-2"),
+		pack1Off: props.globals.initNode("/ECAM/warnings/timer/pack-1-off"),
+		pack2Off: props.globals.initNode("/ECAM/warnings/timer/pack-2-off"),
+		trimAirFault: props.globals.initNode("/ECAM/warnings/timer/trim-air-fault"),
+	},
+	Flipflops: {
+		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
+		bleed2LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output"),
+		pack1Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-1-ovht"),
+		pack2Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-2-ovht"),
+	},
+};
+
 var warning = {
 	new: func(msg,colour = "g",aural = 9,light = 9,isMainMsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
 		var t = {parents:[warning]};

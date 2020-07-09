@@ -24,23 +24,30 @@
 			<display-contrast type="double">0.7</display-contrast>
 			<icing>
 				<iceable>
-					<name>Wing</name>
+					<name>WingLeft</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/wing</salvage-control>
+					<salvage-control>/systems/pneumatics/valves/wing-ice-1</salvage-control>
 					<sensitivity type="double">0.8</sensitivity>
-					<output-property>/fdm/jsbsim/ice/wing</output-property>
+					<output-property>/fdm/jsbsim/ice/wingL</output-property>
+				</iceable>
+				<iceable>
+					<name>WingRight</name>
+					<ice-inches>0.0</ice-inches>
+					<salvage-control>/systems/pneumatics/valves/wing-ice-2</salvage-control>
+					<sensitivity type="double">0.8</sensitivity>
+					<output-property>/fdm/jsbsim/ice/wingR</output-property>
 				</iceable>
 				<iceable>
 					<name>LeftEngine</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/lengine</salvage-control>
+					<salvage-control>/systems/pneumatics/valves/engine-ice-1</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
 					<output-property>/fdm/jsbsim/ice/lengine</output-property>
 				</iceable>
 				<iceable>
 					<name>RightEngine</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/rengine</salvage-control>
+					<salvage-control>/systems/pneumatics/valves/engine-ice-2</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
 					<output-property>/fdm/jsbsim/ice/rengine</output-property>
 				</iceable>
@@ -199,6 +206,7 @@
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
+			<spdbrk-click type="bool">0</spdbrk-click>
 		</sounde>
 
 		<instrumentation>
@@ -865,13 +873,26 @@
 				<ratman type="bool">0</ratman>
 			</protectors>
 		</OH>
-		<pneumatic n="0">
+		<pneumatics n="0">
 			<switches n="0">
-				<aft-temp type="double">0.5</aft-temp>
-				<cockpit-temp type="double">0.5</cockpit-temp>
-				<fwd-temp type="double">0.5</fwd-temp>
+				<apu type="bool">0</apu>
+				<bleed-1 type="bool">1</bleed-1>
+				<bleed-2 type="bool">1</bleed-2>
+				<blower type="bool">0</blower>
+				<cabin-fans type="bool">0</cabin-fans>
+				<extract type="bool">0</extract>
+				<groundair type="bool">0</groundair>
+				<hot-air type="bool">1</hot-air>
+				<pack-1 type="bool">0</pack-1>
+				<pack-2 type="bool">0</pack-2>
+				<pack-flow type="double">1.0</pack-flow>
+				<ram-air type="bool">0</ram-air>
+				<temp-cabin-aft type="double">0.5</temp-cabin-aft>
+				<temp-cabin-fwd type="double">0.5</temp-cabin-fwd>
+				<temp-cockpit type="double">0.5</temp-cockpit>
+				<x-bleed type="int">1</x-bleed> <!-- auto -->
 			</switches>
-		</pneumatic>
+		</pneumatics>
 		<switches>
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
@@ -969,6 +990,38 @@
 				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
 			</options>
 		</acconfig>
+		<air-conditioning>
+			<packs>
+				<pack-1-output-temp type="double">0</pack-1-output-temp>
+				<pack-2-output-temp type="double">0</pack-2-output-temp>
+				<pack-1-outlet-temp type="double">0</pack-1-outlet-temp>
+				<pack-2-outlet-temp type="double">0</pack-2-outlet-temp>
+				<pack-flow-1 type="double">0</pack-flow-1>
+				<pack-flow-2 type="double">0</pack-flow-2>
+			</packs>
+			<temperatures>
+				<cabin-overall-temp-kelvin type="double">297</cabin-overall-temp-kelvin>
+				<cockpit-duct type="double">0</cockpit-duct>
+				<cabin-aft-duct type="double">0</cabin-aft-duct>
+				<cabin-fwd-duct type="double">0</cabin-fwd-duct>
+				<cockpit-temp type="double">0</cockpit-temp>
+				<cabin-aft-temp type="double">0</cabin-aft-temp>
+				<cabin-fwd-temp type="double">0</cabin-fwd-temp>
+			</temperatures>
+			<valves>
+				<flow-control-valve-1 type="double">0</flow-control-valve-1>
+				<flow-control-valve-2 type="double">0</flow-control-valve-2>
+				<ram-air type="double">0</ram-air>
+			</valves>
+			<warnings>
+				<pack-1-disagree type="bool">0</pack-1-disagree>
+				<pack-2-disagree type="bool">0</pack-2-disagree>
+				<pack-1-fault-light type="bool">0</pack-1-fault-light>
+				<pack-2-fault-light type="bool">0</pack-2-fault-light>
+				<pack-1-ovht type="bool">0</pack-1-ovht>
+				<pack-2-ovht type="bool">0</pack-2-ovht>
+			</warnings>
+		</air-conditioning>
 		<atc>
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
@@ -1054,6 +1107,14 @@
 				<fac1 type="bool">0</fac1>
 				<fac2 type="bool">0</fac2>
 			</fctl>
+			<fuel>
+				<left-tank-pump-1 type="bool">0</left-tank-pump-1>
+				<left-tank-pump-2 type="bool">0</left-tank-pump-2>
+				<center-tank-pump-1 type="bool">0</center-tank-pump-1>
+				<center-tank-pump-2 type="bool">0</center-tank-pump-2>
+				<right-tank-pump-1 type="bool">0</right-tank-pump-1>
+				<right-tank-pump-2 type="bool">0</right-tank-pump-2>
+			</fuel>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>
@@ -1065,6 +1126,30 @@
 				<yellow-elec type="bool">0</yellow-elec>
 				<yellow-leak type="bool">0</yellow-leak>
 			</hydraulic>
+			<icing>
+				<wing-left-valve type="bool">0</wing-left-valve>
+				<wing-right-valve type="bool">0</wing-right-valve>
+				<engine-left-valve type="bool">0</engine-left-valve>
+				<engine-right-valve type="bool">0</engine-right-valve>
+			</icing>
+			<pneumatics>
+				<apu-valve type="bool">0</apu-valve>
+				<bleed-1-valve type="bool">0</bleed-1-valve>
+				<bleed-2-valve type="bool">0</bleed-2-valve>
+				<bmc-1 type="bool">0</bmc-1>
+				<bmc-2 type="bool">0</bmc-2>
+				<cabin-fans type="bool">0</cabin-fans>
+				<hot-air-valve type="bool">0</hot-air-valve>
+				<hp-1-valve type="bool">0</hp-1-valve>
+				<hp-2-valve type="bool">0</hp-2-valve>
+				<pack-1-valve type="bool">0</pack-1-valve>
+				<pack-2-valve type="bool">0</pack-2-valve>
+				<ram-air-valve type="bool">0</ram-air-valve>
+				<trim-valve-cockpit type="bool">0</trim-valve-cockpit>
+				<trim-valve-cabin-aft type="bool">0</trim-valve-cabin-aft>
+				<trim-valve-cabin-fwd type="bool">0</trim-valve-cabin-fwd>
+				<x-bleed-valve type="bool">0</x-bleed-valve>
+			</pneumatics>
 			<rudder type="bool">0</rudder>
 			<spoiler-l1 type="bool">0</spoiler-l1>
 			<spoiler-l2 type="bool">0</spoiler-l2>
@@ -1146,6 +1231,80 @@
 			<green-psi>0</green-psi>
 			<yellow-psi>0</yellow-psi>
 		</hydraulic>
+		
+		<pneumatics>
+			<egt-1-factor type="double">0.36</egt-1-factor>
+			<egt-2-factor type="double">0.36</egt-2-factor>
+			<indicating>
+				<bmc1-working type="bool">0</bmc1-working>
+				<bmc2-working type="bool">0</bmc2-working>
+			</indicating>
+			<pack-1-bypass type="bool">0</pack-1-bypass>
+			<pack-2-bypass type="bool">0</pack-2-bypass>
+			<pack-1-flow type="double">0</pack-1-flow>
+			<pack-2-flow type="double">0</pack-2-flow>
+			<precooler>
+				<temp-1 type="double">0</temp-1>
+				<temp-2 type="double">0</temp-2>
+				<ovht-1 type="double">0</ovht-1>
+				<ovht-2 type="double">0</ovht-2>
+			</precooler>
+			<psi>
+				<crossbleed-duct-left type="double">0</crossbleed-duct-left>
+				<crossbleed-duct-right type="double">0</crossbleed-duct-right>
+				<crossbleed-duct-left-src type="int">0</crossbleed-duct-left-src>
+				<crossbleed-duct-right-src type="int">0</crossbleed-duct-right-src>
+				<engine-1-psi type="double">0</engine-1-psi>
+				<engine-2-psi type="double">0</engine-2-psi>
+				<engine-1-downstream-prv type="double">0</engine-1-downstream-prv>
+				<engine-2-downstream-prv type="double">0</engine-2-downstream-prv>
+				<engine-1-downstream-opv type="double">0</engine-1-downstream-opv>
+				<engine-2-downstream-opv type="double">0</engine-2-downstream-opv>
+				<engine-1-upstream-src type="double">0</engine-1-upstream-src>
+				<engine-2-upstream-src type="double">0</engine-2-upstream-src>
+			</psi>
+			<source>
+				<apu-psi type="double">0</apu-psi>
+				<gnd-psi type="double">0</gnd-psi>
+				<engine-1-lp-psi type="double">0</engine-1-lp-psi>
+				<engine-2-lp-psi type="double">0</engine-2-lp-psi>
+				<engine-1-hp-psi type="double">0</engine-1-hp-psi>
+				<engine-2-hp-psi type="double">0</engine-2-hp-psi>
+			</source>
+			<valves>
+				<apu-bleed-valve type="double">0</apu-bleed-valve>
+				<crossbleed-valve type="double">0</crossbleed-valve>
+				<engine-1-lp-valve type="double">0</engine-1-lp-valve>
+				<engine-2-lp-valve type="double">0</engine-2-lp-valve>
+				<engine-1-hp-valve type="double">0</engine-1-hp-valve>
+				<engine-2-hp-valve type="double">0</engine-2-hp-valve>
+				<engine-1-opv-valve type="double">0</engine-1-opv-valve>
+				<engine-2-opv-valve type="double">0</engine-2-opv-valve>
+				<engine-1-prv-valve type="double">0</engine-1-prv-valve>
+				<engine-2-prv-valve type="double">0</engine-2-prv-valve>
+				<engine-1-prv-valve-disag type="bool">0</engine-1-prv-valve-disag>
+				<engine-2-prv-valve-disag type="bool">0</engine-2-prv-valve-disag>
+				<wing-ice-1 type="double">0</wing-ice-1>
+				<wing-ice-2 type="double">0</wing-ice-2>
+				<pack-1 type="double">0</pack-1>
+				<pack-2 type="double">0</pack-2>
+				<starter-valve-1 type="bool">0</starter-valve-1>
+				<starter-valve-2 type="bool">0</starter-valve-2>
+			</valves>
+			<warnings>
+				<apu-bleed-not-on-cmd type="bool">0</apu-bleed-not-on-cmd>
+				<apu-bleed-not-on type="double">0</apu-bleed-not-on>
+				<bleed1-fault type="bool">0</bleed1-fault>
+				<bleed2-fault type="bool">0</bleed2-fault>
+				<crossbleed-disag type="bool">0</crossbleed-disag>
+				<crossbleed-disag-open type="bool">0</crossbleed-disag-open>
+			</warnings>
+		</pneumatics>
+		
+		<pressurization>
+			<cabinpsi type="double">14.7</cabinpsi>
+			<ditchingpb type="double">14.7</ditchingpb>
+		</pressurization>
 		
 		<pitot n="1">
 			<serviceable>1</serviceable>
@@ -3996,6 +4155,12 @@
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
+		<effects>
+			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/icing.nas</file>
+		</effects>
 		<systems>
 			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
@@ -4004,15 +4169,14 @@
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/SwitchingPanel.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
-			<file>Aircraft/A320-family/Nasal/Instruments/clock.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/icing.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/clock.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
 		<ecam>

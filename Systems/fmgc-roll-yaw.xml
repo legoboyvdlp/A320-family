@@ -1,15 +1,13 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
-
 <!-- IT-AUTOFLIGHT -->
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
 	<!-- Roll Axis -->
-	
 	<filter>
-		<name>IT-CONTROLLER: HDG/LNAV ROLL</name>
+		<name>IT-CONTROLLER: Heading/LNAV</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>
@@ -66,7 +64,7 @@
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: VORLOC ROLL</name>
+		<name>IT-CONTROLLER: VOR/LOC</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>
@@ -117,7 +115,29 @@
 	</filter>
 	
 	<filter>
-		<name>ROLL DEG SYNC</name>
+		<name>IT-CONTROLLER: Align/Rollout/Takeoff</name>
+		<debug>false</debug>
+		<type>noise-spike</type>
+		<enable>
+			<condition>
+				<or>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>4</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>5</value>
+					</equals>
+				</or>
+			</condition>
+		</enable>
+		<input>0</input>
+		<output>/it-autoflight/internal/target-roll-deg</output>
+	</filter>
+	
+	<filter>
+		<name>System Command: Roll Target Inactive Sync</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -153,24 +173,9 @@
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: TARGET ROLL CMD</name>
+		<name>System Command: Target Roll Filter</name>
 		<debug>false</debug>
 		<type>noise-spike</type>
-		<input>
-			<condition>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/lat</property>
-						<value>4</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/lat</property>
-						<value>5</value>
-					</equals>
-				</or>
-			</condition>
-			<value>0</value>
-		</input>
 		<input>/it-autoflight/internal/target-roll-deg</input>
 		<output>/it-autoflight/internal/target-roll</output>
 		<max-rate-of-change>
@@ -215,7 +220,7 @@
 	</filter>
 	
 	<filter>
-		<name>System Command: Roll Rate</name>
+		<name>System Command: Roll Rate Target</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>-0.1</gain>
@@ -227,9 +232,8 @@
 	</filter>
 	
 	<!-- Yaw Axis -->
-	
 	<pi-simple-controller>
-		<name>RUDDER VORLOC TRK</name>
+		<name>IT-CONTROLLER: Yaw VOR/LOC</name>
 		<debug>false</debug>
 		<enable>
 			<condition>
@@ -266,7 +270,7 @@
 	</pi-simple-controller>
 	
 	<filter>
-		<name>IT-CONTROLLER: RUDDER CMD</name>
+		<name>System Command: Rudder</name>
 		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>

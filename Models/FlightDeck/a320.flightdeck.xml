@@ -4323,7 +4323,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.0f</format>
-		<property>it-autoflight/input/spd-kts</property>
+		<property>it-autoflight/input/kts</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -4349,7 +4349,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%0.3f</format>
-		<property>it-autoflight/input/spd-mach</property>
+		<property>it-autoflight/input/mach</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>

@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="cond.svg">
   <metadata
      id="metadata375">
@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="false"
-     inkscape:zoom="0.5"
-     inkscape:cx="935.0004"
-     inkscape:cy="859.89724"
+     inkscape:zoom="163.84"
+     inkscape:cx="931.44175"
+     inkscape:cy="894.81836"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -119,19 +119,6 @@
        id="rect5105-2"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.64407849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="418.23062"
-     y="52.832542"
-     id="CONDZoneFault"
-     inkscape:label="#text5149"
-     transform="scale(0.92294741,1.0834854)"><tspan
-       sodipodi:role="line"
-       id="tspan95"
-       x="418.23062"
-       y="52.832542"
-       style="font-size:31.72893906px;line-height:0;fill:#0dc04b;fill-opacity:1;stroke-width:2.64407849px">ALTN MODE</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -224,7 +211,7 @@
        id="tspan4642"
        x="856.18103"
        y="37.231632"
-       style="font-size:30.27799988px;line-height:0">TEMP  :</tspan></text>
+       style="font-size:30.27799988px;line-height:0">    TEMP   :</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:2.52312994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -375,7 +362,9 @@
   <g
      id="CONDTrimValveCKPT"
      inkscape:label="#g4870"
-     transform="matrix(1.0008336,0,0,1.0076569,-0.20693166,-2.7123511)">
+     transform="matrix(1.0008336,0,0,1.0076569,-0.20693166,-2.7123511)"
+     inkscape:transform-center-x="0.34849792"
+     inkscape:transform-center-y="-35.397308">
     <path
        inkscape:connector-curvature="0"
        id="path4844"
@@ -438,7 +427,9 @@
   <g
      transform="translate(224.8544,-0.57971191)"
      id="CONDTrimValveFWD"
-     inkscape:label="#g4870">
+     inkscape:label="#g4870"
+     inkscape:transform-center-x="0.27914252"
+     inkscape:transform-center-y="-35.133687">
     <path
        inkscape:connector-curvature="0"
        id="path4844-7"
@@ -501,7 +492,9 @@
   <g
      transform="translate(449.85443,-0.57974243)"
      id="CONDTrimValveAFT"
-     inkscape:label="#g4870">
+     inkscape:label="#g4870"
+     inkscape:transform-center-x="0.17680135"
+     inkscape:transform-center-y="-35.128738">
     <path
        inkscape:connector-curvature="0"
        id="path4844-7-1"
@@ -572,263 +565,267 @@
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccc" />
   <g
-     transform="translate(453.74998,318.74089)"
-     id="CONDHeat-scale-3-3-7"
-     inkscape:label="#g4925">
-    <path
-       inkscape:label="#APUN-scale"
-       sodipodi:nodetypes="cc"
-       inkscape:connector-curvature="0"
-       id="1234-9-9-8"
-       d="m 192.74999,303.24999 c 27.03805,-27.40296 77.25,-33 110.25,0"
-       style="fill:none;fill-opacity:1;stroke:#cecdce;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="scale(-1)"
-       y="-282.70255"
-       x="-251.25"
-       height="12.452538"
-       width="5.3955846"
-       id="rect5105-1-7-2-4-0-4"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75371224;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.62508571"
-       x="221.56564"
-       y="279.96747"
-       id="text4971-8-8-5"
-       transform="scale(0.83344761,1.1998355)"><tspan
-         sodipodi:role="line"
-         x="221.56564"
+     id="CargoCond"
+     inkscape:label="#g1002">
+    <g
+       inkscape:label="#g4925"
+       id="CONDHeat-scale-3-3-7"
+       transform="translate(453.74998,318.74089)">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#cecdce;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 192.74999,303.24999 c 27.03805,-27.40296 77.25,-33 110.25,0"
+         id="1234-9-9-8"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc"
+         inkscape:label="#APUN-scale" />
+      <rect
+         style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75371224;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-1-7-2-4-0-4"
+         width="5.3955846"
+         height="12.452538"
+         x="-251.25"
+         y="-282.70255"
+         transform="scale(-1)" />
+      <text
+         transform="scale(0.83344761,1.1998355)"
+         id="text4971-8-8-5"
          y="279.96747"
-         style="font-size:25.00342751px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.62508571"
-         id="tspan4973-1-8-0">C</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.6385085"
-       x="343.26071"
-       y="285.13028"
-       id="text4979-2-5-3"
-       transform="scale(0.8513447,1.1746123)"><tspan
-         sodipodi:role="line"
-         id="tspan4977-9-0-6"
-         x="343.26071"
+         x="221.56564"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.62508571"
+         xml:space="preserve"><tspan
+           id="tspan4973-1-8-0"
+           style="font-size:25.00342751px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.62508571"
+           y="279.96747"
+           x="221.56564"
+           sodipodi:role="line">C</tspan></text>
+      <text
+         transform="scale(0.8513447,1.1746123)"
+         id="text4979-2-5-3"
          y="285.13028"
-         style="font-size:25.54034042px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.6385085">H</tspan></text>
-  </g>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="734.49084"
-     y="474.75494"
-     id="CONDTempCargoAFT"
-     inkscape:label="#text5149"><tspan
-       sodipodi:role="line"
-       id="tspan5151-3-3"
-       x="734.49084"
+         x="343.26071"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.6385085"
+         xml:space="preserve"><tspan
+           style="font-size:25.54034042px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.6385085"
+           y="285.13028"
+           x="343.26071"
+           id="tspan4977-9-0-6"
+           sodipodi:role="line">H</tspan></text>
+    </g>
+    <text
+       inkscape:label="#text5149"
+       id="CONDTempCargoAFT"
        y="474.75494"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="721.77655"
-     y="514.75751"
-     id="CONDDuctTempCargoAFT"
-     inkscape:label="#text5149"><tspan
-       sodipodi:role="line"
-       id="tspan5151-3-9-0"
-       x="721.77655"
+       x="734.49084"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px"
+         y="474.75494"
+         x="734.49084"
+         id="tspan5151-3-3"
+         sodipodi:role="line">34</tspan></text>
+    <text
+       inkscape:label="#text5149"
+       id="CONDDuctTempCargoAFT"
        y="514.75751"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
-  <g
-     id="CONDOutletValve"
-     inkscape:label="#g3445"
-     transform="translate(-71.362998,288.46671)">
-    <path
-       sodipodi:nodetypes="zzzzz"
-       inkscape:connector-curvature="0"
-       id="path5107-1"
-       d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
-       style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="169.28328"
-       x="817.61298"
-       height="5.1203089"
-       width="53.195583"
-       id="rect5105-2-5"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <g
-     id="CONDHotAirCargoValve"
-     inkscape:label="#g3445"
-     transform="translate(-9.6455357,523.96681)">
-    <path
-       sodipodi:nodetypes="zzzzz"
-       inkscape:connector-curvature="0"
-       id="path5107-1-4"
-       d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
-       style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="169.28328"
-       x="817.61298"
-       height="5.1203089"
-       width="53.195583"
-       id="rect5105-2-5-7"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6"
-     width="5.3955846"
-     height="21.920309"
-     x="693.10443"
-     y="-885.17029"
-     transform="rotate(90)" />
-  <g
-     transform="translate(-8.4626824,314.74572)"
-     id="CONDHotAir-text-5"
-     inkscape:label="#g5063">
-    <text
-       transform="scale(0.89370291,1.1189401)"
-       id="text5049-6"
-       y="332.37225"
-       x="1004.2363"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73987794"
+       x="721.77655"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         y="332.37225"
-         x="1004.2363"
-         id="tspan5053-9"
-         sodipodi:role="line"
-         style="font-size:29.59499741px;line-height:1.25">HOT</tspan></text>
-    <text
-       transform="scale(0.99117946,1.008899)"
-       id="text5057-3"
-       y="408.18839"
-       x="907.98334"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.83926964"
-       xml:space="preserve"><tspan
-         style="font-size:33.57078552px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.83926964"
-         y="408.18839"
-         x="907.98334"
-         id="tspan5055-7"
-         sodipodi:role="line">AIR</tspan></text>
-  </g>
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.18858266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-4"
-     width="5.3955846"
-     height="104.99595"
-     x="693.25"
-     y="-804"
-     transform="rotate(90)" />
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.11282313;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-4-5"
-     width="5.3955846"
-     height="27.145565"
-     x="699.00403"
-     y="671.5" />
-  <g
-     transform="matrix(1,0,0,0.97190814,453.00403,328.09597)"
-     id="CONDTrimValveCargoAFT"
-     inkscape:label="#g4870">
-    <path
-       inkscape:connector-curvature="0"
-       id="path4844-7-1-5"
-       d="m 248.50536,283.25445 7.99463,31.99554 h -16.5 z"
-       style="fill:#0dc04b;fill-opacity:1;stroke:#0dc04b;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       sodipodi:nodetypes="cccc" />
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px"
+         y="514.75751"
+         x="721.77655"
+         id="tspan5151-3-9-0"
+         sodipodi:role="line">34</tspan></text>
+    <g
+       transform="translate(-71.362998,288.46671)"
+       inkscape:label="#g3445"
+       id="CONDOutletValve">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
+         id="path5107-1"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="zzzzz" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-2-5"
+         width="53.195583"
+         height="5.1203089"
+         x="817.61298"
+         y="169.28328" />
+    </g>
+    <g
+       transform="translate(-9.6455357,523.96681)"
+       inkscape:label="#g3445"
+       id="CONDHotAirCargoValve">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
+         id="path5107-1-4"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="zzzzz" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-2-5-7"
+         width="53.195583"
+         height="5.1203089"
+         x="817.61298"
+         y="169.28328" />
+    </g>
     <rect
-       transform="scale(-1)"
-       y="-353.32971"
-       x="-251.39558"
-       height="38.079739"
+       transform="rotate(90)"
+       y="-885.17029"
+       x="693.10443"
+       height="21.920309"
        width="5.3955846"
-       id="rect5105-1-7-2-9-7-5-4"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.31802487;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <g
-     id="CONDInletValve"
-     inkscape:label="#g3445"
-     transform="rotate(-90,966.83923,436.0927)">
-    <path
-       sodipodi:nodetypes="zzzzz"
-       inkscape:connector-curvature="0"
-       id="path5107-1-44"
-       d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
-       style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="169.28328"
-       x="817.61298"
-       height="5.1203089"
-       width="53.195583"
-       id="rect5105-2-5-3"
+       id="rect5105-6"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <rect
-     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.77140373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0"
-     width="5.3955846"
-     height="13.04398"
-     x="699.60443"
-     y="519.70599" />
-  <rect
-     style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.77140373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0-7"
-     width="5.3955846"
-     height="13.04398"
-     x="768.60443"
-     y="493.45602" />
-  <rect
-     style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.47977984;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0-7-8"
-     width="5.3955846"
-     height="47.999954"
-     x="501.1044"
-     y="-774"
-     transform="rotate(90)" />
-  <rect
-     style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.31769943;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0-7-8-6"
-     width="5.3955846"
-     height="117.74998"
-     x="501.10443"
-     y="-675"
-     transform="rotate(90)" />
-  <rect
-     style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.99221587;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0-7-8-6-8"
-     width="5.3955846"
-     height="87.000038"
-     x="557.25"
-     y="419.5" />
-  <rect
-     style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.13363338;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0-7-8-6-8-8"
-     width="5.3955846"
-     height="215.24992"
-     x="-421.1456"
-     y="557.25"
-     transform="rotate(-90)" />
-  <rect
-     style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73988998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5105-6-0-7-4"
-     width="5.3955846"
-     height="11.99999"
-     x="768.75"
-     y="415.75" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="597.97925"
-     y="448.3699"
-     id="APUGentext-7-2-1-3"
-     inkscape:label="#text3720"
-     transform="scale(0.94655352,1.0564643)"><tspan
-       style="font-size:32.18700027px;line-height:0;stroke-width:2.68228602px"
+    <g
+       inkscape:label="#g5063"
+       id="CONDHotAir-text-5"
+       transform="translate(-8.4626824,314.74572)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73987794"
+         x="1004.2363"
+         y="332.37225"
+         id="text5049-6"
+         transform="scale(0.89370291,1.1189401)"><tspan
+           style="font-size:29.59499741px;line-height:1.25"
+           sodipodi:role="line"
+           id="tspan5053-9"
+           x="1004.2363"
+           y="332.37225">HOT</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.83926964"
+         x="907.98334"
+         y="408.18839"
+         id="text5057-3"
+         transform="scale(0.99117946,1.008899)"><tspan
+           sodipodi:role="line"
+           id="tspan5055-7"
+           x="907.98334"
+           y="408.18839"
+           style="font-size:33.57078552px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.83926964">AIR</tspan></text>
+    </g>
+    <rect
+       transform="rotate(90)"
+       y="-804"
+       x="693.25"
+       height="104.99595"
+       width="5.3955846"
+       id="rect5105-6-4"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.18858266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="671.5"
+       x="699.00403"
+       height="27.145565"
+       width="5.3955846"
+       id="rect5105-6-4-5"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.11282313;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       inkscape:label="#g4870"
+       id="CONDTrimValveCargoAFT"
+       transform="matrix(1,0,0,0.97190814,453.00403,328.09597)">
+      <path
+         sodipodi:nodetypes="cccc"
+         style="fill:#0dc04b;fill-opacity:1;stroke:#0dc04b;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 248.50536,283.25445 7.99463,31.99554 h -16.5 z"
+         id="path4844-7-1-5"
+         inkscape:connector-curvature="0" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.31802487;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-1-7-2-9-7-5-4"
+         width="5.3955846"
+         height="38.079739"
+         x="-251.39558"
+         y="-353.32971"
+         transform="scale(-1)" />
+    </g>
+    <g
+       transform="rotate(-90,966.83923,436.0927)"
+       inkscape:label="#g3445"
+       id="CONDInletValve">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
+         id="path5107-1-44"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="zzzzz" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-2-5-3"
+         width="53.195583"
+         height="5.1203089"
+         x="817.61298"
+         y="169.28328" />
+    </g>
+    <rect
+       y="519.70599"
+       x="699.60443"
+       height="13.04398"
+       width="5.3955846"
+       id="rect5105-6-0"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.77140373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="493.45602"
+       x="768.60443"
+       height="13.04398"
+       width="5.3955846"
+       id="rect5105-6-0-7"
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.77140373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       transform="rotate(90)"
+       y="-774"
+       x="501.1044"
+       height="47.999954"
+       width="5.3955846"
+       id="rect5105-6-0-7-8"
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.47977984;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       transform="rotate(90)"
+       y="-675"
+       x="501.10443"
+       height="117.74998"
+       width="5.3955846"
+       id="rect5105-6-0-7-8-6"
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.31769943;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="419.5"
+       x="557.25"
+       height="87.000038"
+       width="5.3955846"
+       id="rect5105-6-0-7-8-6-8"
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.99221587;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       transform="rotate(-90)"
+       y="557.25"
+       x="-421.1456"
+       height="215.24992"
+       width="5.3955846"
+       id="rect5105-6-0-7-8-6-8-8"
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.13363338;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="415.75"
+       x="768.75"
+       height="11.99999"
+       width="5.3955846"
+       id="rect5105-6-0-7-4"
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73988998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       transform="scale(0.94655352,1.0564643)"
+       inkscape:label="#text3720"
+       id="APUGentext-7-2-1-3"
        y="448.3699"
        x="597.97925"
-       sodipodi:role="line"
-       id="tspan4769-1">AFT</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan4769-1"
+         sodipodi:role="line"
+         x="597.97925"
+         y="448.3699"
+         style="font-size:32.18700027px;line-height:0;stroke-width:2.68228602px">AFT</tspan></text>
+  </g>
   <g
      id="g913">
     <rect

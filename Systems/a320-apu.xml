@@ -13,7 +13,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/pneumatic/switches/bleedapu</property>
+						<property>/controls/pneumatics/switches/apu</property>
 						<value>1</value>
 					</eq>
 					<value>252</value>
