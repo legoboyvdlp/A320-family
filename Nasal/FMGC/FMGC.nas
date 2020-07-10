@@ -138,6 +138,7 @@ var FMGCinit = func {
 }
 
 var FMGCInternal = {
+	# PERF
 	v1: 0,
 	v1set: 0,
 	vr: 0,
@@ -146,7 +147,26 @@ var FMGCInternal = {
 	v2set: 0,
 	transAlt: 18000,
 	transAltSet: 0,
+	
+	# INIT A
+	crzFt: 10000,
+	crzFl: 0,
+	crzSet: 0,
+	crzTemp: 15,
+	crzTempSet: 0,
+	tropo: 36090,
+	tropoSet: 0,
+	flightNum: "",
+	flightNumSet: 0,
+	
 };
+
+var postInit = func() {
+	# Some properties had setlistener -- so to make sure all is o.k., we call function immediately like so:
+	altvert();
+	updateRouteManagerAlt();
+	mcdu.updateCrzLvlCallback();
+}
 
 var FMGCNodes = {
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
@@ -185,9 +205,9 @@ var updateARPT = func {
 	}
 }
 
-setlistener("/FMGC/internal/cruise-ft", func {
-	setprop("autopilot/route-manager/cruise/altitude-ft", getprop("/FMGC/internal/cruise-ft"));
-});
+updateRouteManagerAlt = func() {
+	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+};
 
 ########
 # FUEL #
@@ -272,9 +292,9 @@ var updateFuel = func {
 	}
 	
 	# Calculate trip fuel
-	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set") and getprop("/FMGC/internal/zfw-set")) {
-		crz = getprop("/FMGC/internal/cruise-fl");
-		temp = getprop("/FMGC/internal/cruise-temp");
+	if (getprop("/FMGC/internal/tofrom-set") and FMGCInternal.crzSet and FMGCInternal.crzTempSet and getprop("/FMGC/internal/zfw-set")) {
+		crz = FMGCInternal.crzFl;
+		temp = FMGCInternal.crzTemp;
 		dist = flightPlanController.arrivalDist;
 		
 		trpWind = getprop("/FMGC/internal/trip-wind");
@@ -396,8 +416,8 @@ var masterFMGC = maketimer(0.2, func {
 	gs = getprop("/velocities/groundspeed-kt");
 	alt = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	aglalt = pts.Position.gearAglFt.getValue();
-	cruiseft = getprop("/FMGC/internal/cruise-ft");
-	cruiseft_b = getprop("/FMGC/internal/cruise-ft") - 200;
+	# cruiseft = FMGCInternal.crzFt;
+	# cruiseft_b = FMGCInternal.crzFt - 200;
 	newcruise = getprop("/it-autoflight/internal/alt");
 	phase = getprop("/FMGC/status/phase");
 	state1 = getprop("/systems/thrust/state1");
@@ -423,7 +443,6 @@ var masterFMGC = maketimer(0.2, func {
 	thr1 = getprop("/controls/engines/engine[0]/throttle-pos");
 	thr2 = getprop("/controls/engines/engine[1]/throttle-pos");
 	altSel = getprop("/it-autoflight/input/alt");
-	crzFl = getprop("/FMGC/internal/cruise-fl");
 	
 	if (getprop("/gear/gear[0]/wow") != getprop("/gear/gear[0]/wow-fmgc")) {
 		setprop("gear/gear[0]/wow-fmgc", getprop("/gear/gear[0]/wow"));
@@ -449,13 +468,13 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("systems/pressurization/mode", "CR");
 	}
 	
-	if (crzFl >= 200) {
+	if (FMGCInternal.crzFl >= 200) {
 		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
 			setprop("/FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
-		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			setprop("/FMGC/status/phase", 4);
 			setprop("systems/pressurization/mode", "DE");
 		}
@@ -868,7 +887,7 @@ var adf1 = func {
 #################
 
 var ManagedSPD = maketimer(0.25, func {
-	if (getprop("/FMGC/internal/cruise-lvl-set") == 1 and getprop("/FMGC/internal/cost-index-set") == 1) {
+	if (FMGCInternal.crzSet and getprop("/FMGC/internal/cost-index-set") == 1) {
 		if (getprop("/it-autoflight/input/spd-managed") == 1) {
 			altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 			mode = getprop("/modes/pfd/fma/pitch-mode");
