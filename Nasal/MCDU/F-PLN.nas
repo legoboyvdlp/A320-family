@@ -103,7 +103,7 @@ var fplnItem = {
 		}
 	},
 	getAlt: func() {
-		if (me.index == 0 and left(me.wp.wp_name, 4) == getprop("/FMGC/internal/dep-arpt") and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
+		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
 			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "mag"];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];

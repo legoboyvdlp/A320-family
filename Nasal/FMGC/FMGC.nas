@@ -716,7 +716,7 @@ var masterFMGC = maketimer(0.2, func {
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
 	if (destination_rwy != nil and phase >= 2) {
-		var airport = airportinfo(getprop("/FMGC/internal/arr-arpt"));
+		var airport = airportinfo(fmgc.FMGCInternal.arrApt);
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
 		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = destination_rwy.ils_frequency_mhz;
