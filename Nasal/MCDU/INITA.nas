@@ -45,14 +45,14 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "L3") {
 		if (scratchpad == "CLR") {
-			setprop("MCDUC/flight-num", "");
-			setprop("MCDUC/flight-num-set", 0);
+			fmgc.FMGCInternal.flightNum = "";
+			fmgc.FMGCInternal.flightNumSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var flts = size(scratchpad);
 			if (flts >= 1 and flts <= 8) {
-				setprop("MCDUC/flight-num", scratchpad);
-				setprop("MCDUC/flight-num-set", 1);
+				fmgc.FMGCInternal.flightNum = scratchpad;
+				fmgc.FMGCInternal.flightNumSet = 1;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -80,11 +80,14 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "L6") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/cruise-ft", 10000);
-			setprop("/FMGC/internal/cruise-fl", 100);
-			setprop("/FMGC/internal/cruise-lvl-set", 0);
-			setprop("/FMGC/internal/cruise-temp", 15);
-			setprop("/FMGC/internal/cruise-temp-set", 0);
+			fmgc.FMGCInternal.crzFt = 10000;
+			fmgc.FMGCInternal.crzFl = 100;
+			fmgc.altvert();
+			fmgc.updateRouteManagerAlt();
+			fmgc.FMGCInternal.crzSet = 0;
+			updateCrzLvlCallback();
+			fmgc.FMGCInternal.crzTemp = 15;
+			fmgc.FMGCInternal.crzTempSet = 0;
 			if (getprop("/FMGC/internal/block-confirmed")) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
 				setprop("/FMGC/internal/fuel-calculating", 1);
@@ -101,9 +104,10 @@ var initInputA = func(key, i) {
 			}
 			var temp = int(crztemp[1]);
 			var temps = size(crztemp[1]);
-			if (crzs == 0 and temps >= 1 and temps <= 3 and temp != nil and getprop("/FMGC/internal/cruise-lvl-set")) {
+			if (crzs == 0 and temps >= 1 and temps <= 3 and temp != nil and fmgc.FMGCInternal.crzSet) {
 				if (temp >= -99 and temp <= 99) {
-					setprop("/FMGC/internal/cruise-temp", temp);
+					fmgc.FMGCInternal.crzTemp = temp;
+					fmgc.FMGCInternal.crzTempSet = 1;
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
@@ -114,12 +118,15 @@ var initInputA = func(key, i) {
 				}
 			} else if (crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
 				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
-					setprop("/FMGC/internal/cruise-ft", crz * 100);
-					setprop("/FMGC/internal/cruise-fl", crz);
-					setprop("/FMGC/internal/cruise-fl-prog", crz);
-					setprop("/FMGC/internal/cruise-lvl-set", 1);
-					setprop("/FMGC/internal/cruise-temp", temp);
-					setprop("/FMGC/internal/cruise-temp-set", 1);
+					fmgc.FMGCInternal.crzFt = crz * 100;
+					fmgc.FMGCInternal.crzFl = crz;
+					fmgc.altvert();
+					fmgc.updateRouteManagerAlt();
+					fmgc.FMGCInternal.crzSet = 1;
+					updateCrzLvlCallback();
+					fmgc.FMGCInternal.crzTemp = temp;
+					fmgc.FMGCInternal.crzTempSet = 1;
+					fmgc.FMGCInternal.crzProg = crz;
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
@@ -141,10 +148,13 @@ var initInputA = func(key, i) {
 			}
 			if (crzs >= 1 and crzs <= 3 and crz != nil) {
 				if (crz > 0 and crz <= 390) {
-					setprop("/FMGC/internal/cruise-ft", crz * 100);
-					setprop("/FMGC/internal/cruise-fl", crz);
-					setprop("/FMGC/internal/cruise-fl-prog", crz);
-					setprop("/FMGC/internal/cruise-lvl-set", 1);
+					fmgc.FMGCInternal.crzFt = crz * 100;
+					fmgc.FMGCInternal.crzFl = crz;
+					fmgc.altvert();
+					fmgc.updateRouteManagerAlt();
+					fmgc.FMGCInternal.crzSet = 1;
+					updateCrzLvlCallback();
+					fmgc.FMGCInternal.crzProg = crz;
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
 						setprop("/FMGC/internal/fuel-calculating", 1);
@@ -236,14 +246,14 @@ var initInputA = func(key, i) {
 		setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/tropo", 36090);
-			setprop("/FMGC/internal/tropo-set", 0);
+			fmgc.FMGCInternal.tropo = 36090;
+			fmgc.FMGCInternal.tropoSet = 1;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tropo = size(scratchpad);
 			if (tropo == 5 and scratchpad <= 99990) {
-				setprop("FMGC/internal/tropo-set", 1);
-				setprop("FMGC/internal/tropo", scratchpad);
+				fmgc.FMGCInternal.tropo = scratchpad;
+				fmgc.FMGCInternal.tropoSet = 1;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");

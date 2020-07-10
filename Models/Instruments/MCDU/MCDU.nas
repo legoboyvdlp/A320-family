@@ -101,8 +101,6 @@ var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-de
 var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
 
 # INT-A
-var flightNum = props.globals.getNode("/MCDUC/flight-num", 1);
-var flightNumSet = props.globals.getNode("/MCDUC/flight-num-set", 1);
 var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
 var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
@@ -110,12 +108,6 @@ var alt_airport = props.globals.getNode("/FMGC/internal/alt-airport", 1);
 var altSet = props.globals.getNode("/FMGC/internal/alt-set", 1);
 var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
 var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
-var cruiseFL = props.globals.getNode("/FMGC/internal/cruise-fl", 1);
-var cruiseSet = props.globals.getNode("/FMGC/internal/cruise-lvl-set", 1);
-var cruiseTemp = props.globals.getNode("/FMGC/internal/cruise-temp", 1);
-var cruiseTempSet = props.globals.getNode("/FMGC/internal/cruise-temp-set", 1);
-var tropo = props.globals.getNode("/FMGC/internal/tropo", 1);
-var tropoSet = props.globals.getNode("/FMGC/internal/tropo-set", 1);
 var gndtemp = props.globals.getNode("/FMGC/internal/gndtemp", 1);
 var gndtempSet = props.globals.getNode("/FMGC/internal/gndtemp-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
@@ -170,9 +162,6 @@ var fob = props.globals.getNode("/FMGC/internal/fob", 1);
 var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
 var gw = props.globals.getNode("/FMGC/internal/fuel-pred-gw", 1);
 var cg = props.globals.getNode("/FMGC/internal/cg", 1);
-
-# PROG
-var cruiseFL_prog = props.globals.getNode("/FMGC/internal/cruise-fl-prog", 1);
 
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
@@ -359,8 +348,8 @@ var canvas_MCDU_base = {
 			
 			if (myFpln[i] != nil) {
 				
-				if (flightNumSet.getValue()) {
-					me["FPLN_Callsign"].setText(flightNum.getValue());
+				if (fmgc.FMGCInternal.flightNumSet) {
+					me["FPLN_Callsign"].setText(fmgc.FMGCInternal.flightNum);
 					me["FPLN_Callsign"].show();
 				} else {
 					me["FPLN_Callsign"].hide();
@@ -1095,13 +1084,14 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (flightNumSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.flightNumSet) {
 				me["INITA_FltNbr"].hide();
 				me["Simple_L3"].show();
 			} else {
 				me["INITA_FltNbr"].show();
 				me["Simple_L3"].hide();
 			}
+			
 			if (toFromSet.getValue() != 1 and costIndexSet.getValue() != 1) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(1,1,1);
@@ -1116,20 +1106,20 @@ var canvas_MCDU_base = {
 				me["INITA_CostIndex"].show();
 				me["Simple_L5"].hide();
 			}
-			if (toFromSet.getValue() != 1 and cruiseSet.getValue() != 1) {
+			if (toFromSet.getValue() != 1 and !fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} else if (cruiseSet.getValue() == 1 and cruiseTempSet.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
-			} else if (cruiseSet.getValue() == 1) {
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
+			} else if (fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				setprop("/FMGC/internal/cruise-temp", 15 - (2 * cruiseFL.getValue() / 10));
-				setprop("/FMGC/internal/cruise-temp-set", 1);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
+				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
+				fmgc.FMGCInternal.crzTempSet = 1;
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(0.7333,0.3803,0);
@@ -1167,7 +1157,7 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setColor(WHITE);
 				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			}
-			if (tropoSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.tropoSet) {
 				me["Simple_R5"].setFontSize(normal); 
 			} else {
 				me["Simple_R5"].setFontSize(small); 
@@ -1193,7 +1183,7 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("COST INDEX");
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			me["Simple_L1"].setText("NONE");
-			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
+			me["Simple_L3"].setText(sprintf("%s", fmgc.FMGCInternal.flightNum));
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
 			me["Simple_R5S"].setText("TROPO");
@@ -1202,7 +1192,7 @@ var canvas_MCDU_base = {
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("IRS INIT ");
 			me["Simple_R4"].setText("WIND ");
-			me["Simple_R5"].setText(sprintf("%5.0f", tropo.getValue()));
+			me["Simple_R5"].setText(sprintf("%5.0f", fmgc.FMGCInternal.tropo));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -2112,15 +2102,15 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				
-				if (flightNumSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.flightNumSet) {
 					if (page == "PROGTO") {
-						me["Simple_Title"].setText(sprintf("TAKE OFF %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("TAKE OFF %s", fmgc.FMGCInternal.flightNum));
 					} else if (page == "PROGCLB") {
-						me["Simple_Title"].setText(sprintf("CLIMB %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("CLIMB %s", fmgc.FMGCInternal.flightNum));
 					} else if (page == "PROGCRZ") {
-						me["Simple_Title"].setText(sprintf("CRUISE %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("CRUISE %s", fmgc.FMGCInternal.flightNum));
 					} else if (page == "PROGDES") {
-						me["Simple_Title"].setText(sprintf("DESCENT %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("DESCENT %s", fmgc.FMGCInternal.flightNum));
 					}
 				} else {
 					if (page == "PROGTO") {
@@ -2186,11 +2176,11 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (cruiseSet.getValue() == 1 and page != "PROGDES") {
-				if (getprop("/it-autoflight/input/alt") > cruiseFL_prog.getValue() * 100) {
+			if (fmgc.FMGCInternal.crzSet and page != "PROGDES") {
+				if (getprop("/it-autoflight/input/alt") > fmgc.FMGCInternal.crzProg * 100) {
 					me["Simple_L1"].setText(sprintf("%s", "FL" ~ getprop("/it-autoflight/input/alt") / 100));
 				} else {
-					me["Simple_L1"].setText(sprintf("%s", "FL" ~ cruiseFL_prog.getValue()));
+					me["Simple_L1"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzProg));
 				}
 			} else {
 				me["Simple_L1"].setText("----");

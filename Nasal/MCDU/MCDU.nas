@@ -50,8 +50,8 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/adf2freq-set", 0);
 	
 	# INT-A
-	setprop("MCDUC/flight-num", "");
-	setprop("MCDUC/flight-num-set", 0);
+	fmgc.FMGCInternal.flightNum = "";
+	fmgc.FMGCInternal.flightNumSet = 0;
 	setprop("/FMGC/internal/dep-arpt", "");
 	setprop("/FMGC/internal/arr-arpt", "");
 	setprop("/FMGC/internal/tofrom-set", 0);
@@ -59,13 +59,16 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/alt-set", 0);
 	setprop("/FMGC/internal/cost-index", "0");
 	setprop("/FMGC/internal/cost-index-set", 0);
-	setprop("/FMGC/internal/cruise-ft", 10000);
-	setprop("/FMGC/internal/cruise-fl", 100);
-	setprop("/FMGC/internal/cruise-lvl-set", 0);
-	setprop("/FMGC/internal/tropo", 36090);
-	setprop("/FMGC/internal/tropo-set", 0);
-	setprop("/FMGC/internal/cruise-temp", 15);
-	setprop("/FMGC/internal/cruise-temp-set", 0);
+	fmgc.FMGCInternal.crzFt = 10000;
+	fmgc.altvert();
+	fmgc.updateRouteManagerAlt();
+	fmgc.FMGCInternal.crzFl = 100;
+	fmgc.FMGCInternal.crzSet = 0;
+	updateCrzLvlCallback();
+	fmgc.FMGCInternal.tropo = 36090;
+	fmgc.FMGCInternal.tropoSet = 0;
+	fmgc.FMGCInternal.crzTemp = 15;
+	fmgc.FMGCInternal.crzTempSet = 0;
 	
 	# IRSINIT
 	setprop("/FMGC/internal/align-set", 0);
@@ -131,7 +134,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/cg", 0);
 	
 	# PROG
-	setprop("/FMGC/internal/cruise-fl-prog", 100);
+	fmgc.FMGCInternal.crzProg = 100;
 	
 	# PERF
 	
