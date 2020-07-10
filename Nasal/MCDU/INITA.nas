@@ -71,6 +71,7 @@ var initInputA = func(key, i) {
 				if (ci != nil and ci >= 0 and ci <= 999) {
 					fmgc.FMGCInternal.costIndex = ci;
 					fmgc.FMGCInternal.costIndexSet = 1;
+					fmgc.FMGCNodes.costIndex.setValue(fmgc.FMGCInternal.costIndex);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");

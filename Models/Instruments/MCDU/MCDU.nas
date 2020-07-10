@@ -101,8 +101,6 @@ var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-de
 var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
 
 # INT-A
-var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
-var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
@@ -2282,7 +2280,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
 			
-			if (fmgc.FMGCInternal.transcrzSet) {
+			if (fmgc.FMGCInternal.transAltSet) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
@@ -2967,7 +2965,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS FL");
 			me["Simple_L4"].setText("FL" ~ sprintf("%2.0f", (fmgc.FMGCInternal.transAlt / 100)));
 			
-			if (fmgc.FMGCInternal.transcrzSet) {
+			if (fmgc.FMGCInternal.transAltSet) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
