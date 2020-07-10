@@ -267,7 +267,7 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.gndTempSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
-		} else if (int(scratchpad) != nil and getprop("/FMGC/status/phase") == 0 and size(scratchpad) >= 1 and size(scratchpad) <= 3 and scratchpad >= -99 and scratchpad <= 99) {
+		} else if (int(scratchpad) != nil and fmgc.FMGCInternal.phase == 0 and size(scratchpad) >= 1 and size(scratchpad) <= 3 and scratchpad >= -99 and scratchpad <= 99) {
 			fmgc.FMGCInternal.gndTemp = scratchpad;
 			fmgc.FMGCInternal.gndTempSet = 1;
 			mcdu_scratchpad.scratchpads[i].empty();

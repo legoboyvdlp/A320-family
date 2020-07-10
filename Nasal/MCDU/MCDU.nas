@@ -875,33 +875,33 @@ var pagebutton = func(btn, i) {
 		if (btn == "radnav") {
 			setprop("/MCDU[" ~ i ~ "]/page", "RADNAV");
 		} else if (btn == "prog") {
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
-			} else if (getprop("/FMGC/status/phase") == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
-			} else if (getprop("/FMGC/status/phase") == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
-			} else if (getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5 or getprop("/FMGC/status/phase") == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
 			}
 		} else if (btn == "perf") {
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFTO");
-			} else if (getprop("/FMGC/status/phase") == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
-			} else if (getprop("/FMGC/status/phase") == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
-			} else if (getprop("/FMGC/status/phase") == 4) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
-			} else if (getprop("/FMGC/status/phase") == 5) {
+			} else if (fmgc.FMGCInternal.phase == 5) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
-			} else if (getprop("/FMGC/status/phase") == 6) {
+			} else if (fmgc.FMGCInternal.phase == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
-			} else if (getprop("/FMGC/status/phase") == 7) {
+			} else if (fmgc.FMGCInternal.phase == 7) {
 				fmgc.reset_FMGC();
 			}
 		} else if (btn == "init") {
-			if (getprop("/FMGC/status/phase") == 7) {
+			if (fmgc.FMGCInternal.phase == 7) {
 				fmgc.reset_FMGC();
 			}
 			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
@@ -917,7 +917,7 @@ var pagebutton = func(btn, i) {
 				canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
 			}
 			if (btn == "airport") {
-				if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+				if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 					canvas_mcdu.myFpln[i].scroll = 0;
 				} else {
 					if (fmgc.flightPlanController.temporaryFlag[i]) {
