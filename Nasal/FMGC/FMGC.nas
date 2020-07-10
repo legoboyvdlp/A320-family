@@ -148,20 +148,24 @@ var FMGCInternal = {
 	transAltSet: 0,
 	
 	# INIT A
+	altAirport: "",
+	altAirportSet: 0,
+	altSelected: 0,
+	arrApt: "",
+	costIndex: 0,
+	costIndexSet: 0,
 	crzFt: 10000,
 	crzFl: 0,
 	crzSet: 0,
 	crzTemp: 15,
 	crzTempSet: 0,
-	tropo: 36090,
-	tropoSet: 0,
 	flightNum: "",
 	flightNumSet: 0,
-	altAirport: "",
-	altAirportSet: 0,
-	altSelected: 0,
-	arrApt: "",
+	gndTemp: 15,
+	gndTempSet: 0,
 	depApt: "",
+	tropo: 36090,
+	tropoSet: 0,
 	toFromSet: 0,
 };
 
@@ -173,9 +177,10 @@ var postInit = func() {
 }
 
 var FMGCNodes = {
+	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
+	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
-	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 };
 
 ############
@@ -889,7 +894,7 @@ var adf1 = func {
 #################
 
 var ManagedSPD = maketimer(0.25, func {
-	if (FMGCInternal.crzSet and getprop("/FMGC/internal/cost-index-set") == 1) {
+	if (FMGCInternal.crzSet and FMGCInternal.costIndex) {
 		if (getprop("/it-autoflight/input/spd-managed") == 1) {
 			altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 			mode = getprop("/modes/pfd/fma/pitch-mode");
@@ -1109,8 +1114,8 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 var timer30secLanding = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
 		setprop("/FMGC/status/phase", 7);
-		if (getprop("/FMGC/internal/cost-index-set")) {
-			setprop("/FMGC/internal/last-cost-index", getprop("/FMGC/internal/cost-index"));
+		if (FMGCInternal.costIndexSet) {
+			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
 		} else {
 			setprop("/FMGC/internal/last-cost-index", 0);
 		}
