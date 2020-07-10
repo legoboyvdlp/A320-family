@@ -104,19 +104,14 @@ var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-de
 var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
 var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
-var alt_airport = props.globals.getNode("/FMGC/internal/alt-airport", 1);
-var altSet = props.globals.getNode("/FMGC/internal/alt-set", 1);
 var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
 var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
-var gndtemp = props.globals.getNode("/FMGC/internal/gndtemp", 1);
-var gndtempSet = props.globals.getNode("/FMGC/internal/gndtemp-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
 var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 
 # ROUTE SELECTION
-var alt_selected = props.globals.getNode("/FMGC/internal/alt-selected", 1);
 
 # INT-B
 var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
@@ -1131,7 +1126,7 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
 				if (altSet.getValue() == 1) {
-					me["Simple_L2"].setText(alt_airport.getValue());
+					me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 				} else {
 					me["Simple_L2"].setText("NONE");
 				}
@@ -1164,17 +1159,17 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R6S"].setText("GND TEMP");
-			if (getprop("/FMGC/status/phase") == 0 and !getprop("/FMGC/internal/gndtemp-set")) {
-				setprop("/FMGC/internal/gndtemp", 15 - (2 * getprop("/position/gear-agl-ft") / 1000));
-				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
+			if (getprop("/FMGC/status/phase") == 0 and !fmgc.FMGCInternal.gndTempSet) {
+				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
+				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
 				me["Simple_R6"].setFontSize(small); 
 			} else {
-				if (getprop("/FMGC/internal/gndtemp-set")) {
+				if (fmgc.FMGCInternal.gndTempSet) {
 					me["Simple_R6"].setFontSize(normal); 
 				} else {
 					me["Simple_R6"].setFontSize(small); 
 				}
-				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
+				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
 			}
 			
 			me["Simple_L1S"].setText(" CO RTE");
@@ -1417,12 +1412,12 @@ var canvas_MCDU_base = {
 			me["Simple_L1"].setText("NONE");
 			me["Simple_L6"].setText(" RETURN");
 
-			if (toFromSet.getValue() == 1 and alt_selected.getValue() == 0) {
+			if (toFromSet.getValue() and !fmgc.FMGCInternal.altSelected) {
 				me["Simple_Title"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
-			} else if (toFromSet.getValue() == 0 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
-				me["Simple_Title"].setText(sprintf("%s", alt_airport.getValue()));
-			} else if (toFromSet.getValue() == 1 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
-				me["Simple_Title"].setText(sprintf("%s", arrArpt.getValue() ~ "/" ~ alt_airport.getValue()));
+			} else if (!toFromSet.getValue() and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.altAirport));
+			} else if (toFromSet.getValue() and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", arrArpt.getValue() ~ "/" ~ fmgc.FMGCInternal.altAirport));
 			} else {
 				me["Simple_Title"].setText("ROUTE SELECTION");
 			}
@@ -1867,10 +1862,10 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText(arrArpt.getValue());
 			}
-			if (!engrdy.getBoolValue() or alt_airport.getValue() == "") {
+			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
 				me["Simple_L2"].setText("----");
 			} else {
-				me["Simple_L2"].setText(alt_airport.getValue());
+				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
 			
 			me["Simple_L1S"].setText("AT");

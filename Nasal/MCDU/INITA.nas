@@ -7,8 +7,8 @@ var initInputA = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L2") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/alt-airport", "");
-			setprop("/FMGC/internal/alt-set", 0);
+			fmgc.FMGCInternal.altAirport = "";
+			fmgc.FMGCInternal.altAirportSet = 0;
 			fmgc.windController.updatePlans();
 			if (getprop("/FMGC/internal/block-confirmed")) {
 				setprop("/FMGC/internal/fuel-calculating", 0);
@@ -17,14 +17,14 @@ var initInputA = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 			fmgc.updateARPT();
 		#} else if (scratchpad == "") {
-			#setprop("/FMGC/internal/alt-selected", 1);
+			#fmgc.FMGCInternal.altSelected = 1;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else if (getprop("/FMGC/internal/tofrom-set") == 1) {
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
 				var tfs = size(scratchpad);
 				if (tfs == 4) {
-					setprop("/FMGC/internal/alt-airport", scratchpad);
-					setprop("/FMGC/internal/alt-set", 1);
+					fmgc.FMGCInternal.altAirport = scratchpad;
+					fmgc.FMGCInternal.altAirportSet = 0;
 					fmgc.windController.updatePlans();
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
@@ -32,7 +32,7 @@ var initInputA = func(key, i) {
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
-					#setprop("/FMGC/internal/alt-selected", 1);
+					#fmgc.FMGCInternal.altSelected = 1;
 					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
@@ -186,7 +186,7 @@ var initInputA = func(key, i) {
 			fmgc.windController.init();
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
-			#setprop("/FMGC/internal/alt-selected", 0);
+			#fmgc.FMGCInternal.altSelected = 0;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else {
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
@@ -203,7 +203,7 @@ var initInputA = func(key, i) {
 						#scratchpad
 						mcdu_scratchpad.scratchpads[i].empty();
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
-						setprop("/FMGC/internal/alt-selected", 0);
+						fmgc.FMGCInternal.altSelected = 0;
 						#ref lat
 						dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
 						degrees = int(dms);
@@ -261,11 +261,11 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R6") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/gndtemp-set", 0);
+			fmgc.FMGCInternal.gndTempSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and getprop("/FMGC/status/phase") == 0 and size(scratchpad) >= 1 and size(scratchpad) <= 3 and scratchpad >= -99 and scratchpad <= 99) {
-			setprop("/FMGC/internal/gndtemp", scratchpad);
-			setprop("/FMGC/internal/gndtemp-set", 1);
+			fmgc.FMGCInternal.gndTemp = scratchpad;
+			fmgc.FMGCInternal.gndTempSet = 1;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
