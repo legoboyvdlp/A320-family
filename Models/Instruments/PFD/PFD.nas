@@ -82,8 +82,8 @@ var FMGC_max_spd = props.globals.getNode("/FMGC/internal/maxspeed", 1);
 var ind_spd_kt = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
 var ind_spd_mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
 var at_mach_mode = props.globals.getNode("/it-autoflight/input/kts-mach", 1);
-var at_input_spd_mach = props.globals.getNode("/it-autoflight/input/spd-mach", 1);
-var at_input_spd_kts = props.globals.getNode("/it-autoflight/input/spd-kts", 1);
+var at_input_spd_mach = props.globals.getNode("/it-autoflight/input/mach", 1);
+var at_input_spd_kts = props.globals.getNode("/it-autoflight/input/kts", 1);
 var fd_roll = props.globals.getNode("/it-autoflight/fd/roll-bar", 1);
 var fd_pitch = props.globals.getNode("/it-autoflight/fd/pitch-bar", 1);
 var decision = props.globals.getNode("/instrumentation/mk-viii/inputs/arinc429/decision-height", 1);
@@ -128,12 +128,6 @@ var ils1_crs_set = props.globals.getNode("/FMGC/internal/ils1crs-set/", 1);
 var outer_marker = props.globals.getNode("/instrumentation/marker-beacon/outer", 1);
 var middle_marker = props.globals.getNode("/instrumentation/marker-beacon/middle", 1);
 var inner_marker = props.globals.getNode("/instrumentation/marker-beacon/inner", 1);
-var v1 = props.globals.getNode("/FMGC/internal/v1", 1);
-var v1_set = props.globals.getNode("/FMGC/internal/v1-set", 1);
-var vr = props.globals.getNode("/FMGC/internal/vr", 1);
-var vr_set = props.globals.getNode("/FMGC/internal/vr-set", 1);
-var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
-var v2_set = props.globals.getNode("/FMGC/internal/v2-set", 1);
 var flap_config = props.globals.getNode("/controls/flight/flaps-input", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
@@ -1331,8 +1325,8 @@ var canvas_PFD_1 = {
 				me["ASI_target"].hide();
 			}
 			
-			if (v1_set.getValue() == '1') {
-				tgt_v1 = v1.getValue();
+			if (fmgc.FMGCInternal.v1set) {
+				tgt_v1 = fmgc.FMGCInternal.v1;
 				if (tgt_v1 <= 30) {
 					me.V1trgt = 0 - me.ASI;
 				} else if (tgt_v1 >= 420) {
@@ -1350,7 +1344,7 @@ var canvas_PFD_1 = {
 				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["v1_group"].hide();
 					me["v1_text"].show();
-					me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
+					me["v1_text"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
 				} else {
 					me["v1_group"].hide();
 					me["v1_text"].hide();
@@ -1360,8 +1354,8 @@ var canvas_PFD_1 = {
 				me["v1_text"].hide();
 			}
 			
-			if (vr_set.getValue() == '1') {
-				tgt_vr = vr.getValue();
+			if (fmgc.FMGCInternal.vrset) {
+				tgt_vr = fmgc.FMGCInternal.vr;
 				if (tgt_vr <= 30) {
 					me.VRtrgt = 0 - me.ASI;
 				} else if (tgt_vr >= 420) {
@@ -1382,8 +1376,8 @@ var canvas_PFD_1 = {
 				me["vr_speed"].hide();
 			}
 			
-			if (v2_set.getValue() == '1') {
-				tgt_v2 = v2.getValue();
+			if (fmgc.FMGCInternal.v2set) {
+				tgt_v2 = fmgc.FMGCInternal.v2;
 				if (tgt_v2 <= 30) {
 					me.V2trgt = 0 - me.ASI;
 				} else if (tgt_v2 >= 420) {
@@ -1397,10 +1391,10 @@ var canvas_PFD_1 = {
 				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
 					me["ASI_target"].show();
 					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["ASI_target"].hide();
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 				}
 			}
 			
@@ -2070,8 +2064,8 @@ var canvas_PFD_2 = {
 				me["ASI_target"].hide();
 			}
 			
-			if (v1_set.getValue() == '1') {
-				tgt_v1 = v1.getValue();
+			if (fmgc.FMGCInternal.v1set) {
+				tgt_v1 = fmgc.FMGCInternal.v1;
 				if (tgt_v1 <= 30) {
 					me.V1trgt = 0 - me.ASI;
 				} else if (tgt_v1 >= 420) {
@@ -2089,7 +2083,7 @@ var canvas_PFD_2 = {
 				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["v1_group"].hide();
 					me["v1_text"].show();
-					me["v1_text"].setText(sprintf("%3.0f", v1.getValue()));
+					me["v1_text"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
 				} else {
 					me["v1_group"].hide();
 					me["v1_text"].hide();
@@ -2099,8 +2093,8 @@ var canvas_PFD_2 = {
 				me["v1_text"].hide();
 			}
 			
-			if (vr_set.getValue() == '1') {
-				tgt_vr = vr.getValue();
+			if (fmgc.FMGCInternal.vrset) {
+				tgt_vr = fmgc.FMGCInternal.vr;
 				if (tgt_vr <= 30) {
 					me.VRtrgt = 0 - me.ASI;
 				} else if (tgt_vr >= 420) {
@@ -2121,8 +2115,8 @@ var canvas_PFD_2 = {
 				me["vr_speed"].hide();
 			}
 			
-			if (v2_set.getValue() == '1') {
-				tgt_v2 = v2.getValue();
+			if (fmgc.FMGCInternal.v2set) {
+				tgt_v2 = fmgc.FMGCInternal.v2;
 				if (tgt_v2 <= 30) {
 					me.V2trgt = 0 - me.ASI;
 				} else if (tgt_v2 >= 420) {
@@ -2136,10 +2130,10 @@ var canvas_PFD_2 = {
 				if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2 and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
 					me["ASI_target"].show();
 					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 				} else if (pts.Position.gearAglFt.getValue() < 55 and FMGCphase.getValue() <= 2) {
 					me["ASI_target"].hide();
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", v2.getValue()));
+					me["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 				}
 			}
 			

@@ -178,13 +178,6 @@ var cruiseFL_prog = props.globals.getNode("/FMGC/internal/cruise-fl-prog", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 
 # TO PERF
-var v1 = props.globals.getNode("/FMGC/internal/v1", 1);
-var v1Set = props.globals.getNode("/FMGC/internal/v1-set", 1);
-var vr = props.globals.getNode("/FMGC/internal/vr", 1);
-var vrSet = props.globals.getNode("/FMGC/internal/vr-set", 1);
-var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
-var v2Set = props.globals.getNode("/FMGC/internal/v2-set", 1);
-
 var clbReducFt = props.globals.getNode("/systems/thrust/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
@@ -2288,9 +2281,6 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
-			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
-			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
 			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
 			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
@@ -2338,27 +2328,33 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("TAKE OFF");
 			}
 			
-			if (v1Set.getValue() == 1) {
+			if (fmgc.FMGCInternal.v1set) {
 				me["PERFTO_V1"].hide();
+				me["Simple_L1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
 				me["Simple_L1"].show();
 			} else {
 				me["PERFTO_V1"].show();
 				me["Simple_L1"].hide();
 			}
-			if (vrSet.getValue() == 1) {
+			
+			if (fmgc.FMGCInternal.vrset) {
 				me["PERFTO_VR"].hide();
+				me["Simple_L2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vr));
 				me["Simple_L2"].show();
 			} else {
 				me["PERFTO_VR"].show();
 				me["Simple_L2"].hide();
 			}
-			if (v2Set.getValue() == 1) {
+			
+			if (fmgc.FMGCInternal.v2set) {
 				me["PERFTO_V2"].hide();
+				me["Simple_L3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 				me["Simple_L3"].show();
 			} else {
 				me["PERFTO_V2"].show();
 				me["Simple_L3"].hide();
 			}
+			
 			if (thrAccSet.getValue() == 1) {
 				me["Simple_L5"].setFontSize(normal);
 			} else {
@@ -2531,9 +2527,9 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}		
@@ -2685,9 +2681,9 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
@@ -2846,9 +2842,9 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/spd-kts")));
+					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/kts")));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
