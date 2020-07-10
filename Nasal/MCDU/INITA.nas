@@ -19,12 +19,12 @@ var initInputA = func(key, i) {
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 1;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
-		} else if (getprop("/FMGC/internal/tofrom-set") == 1) {
+		} else if (fmgc.FMGCInternal.toFromSet) {
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
 				var tfs = size(scratchpad);
 				if (tfs == 4) {
 					fmgc.FMGCInternal.altAirport = scratchpad;
-					fmgc.FMGCInternal.altAirportSet = 0;
+					fmgc.FMGCInternal.altAirportSet = 1;
 					fmgc.windController.updatePlans();
 					if (getprop("/FMGC/internal/block-confirmed")) {
 						setprop("/FMGC/internal/fuel-calculating", 0);
@@ -169,9 +169,10 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/dep-arpt", "");
-			setprop("/FMGC/internal/arr-arpt", "");
-			setprop("/FMGC/internal/tofrom-set", 0);
+			fmgc.FMGCInternal.depApt = "";
+			fmgc.FMGCInternal.arrApt = "";
+			fmgc.FMGCInternal.toFromSet = 0;
+			fmgc.FMGCNodes.toFromSet.setValue(0);
 			setprop("/FMGC/internal/align-ref-lat", 0);
 			setprop("/FMGC/internal/align-ref-long", 0);
 			setprop("/FMGC/internal/align-ref-lat-edit", 0);
@@ -197,9 +198,10 @@ var initInputA = func(key, i) {
 					var tos = size(fromto[1]);
 					if (froms == 4 and tos == 4) {
 						#route
-						setprop("/FMGC/internal/dep-arpt", fromto[0]);
-						setprop("/FMGC/internal/arr-arpt", fromto[1]);
-						setprop("/FMGC/internal/tofrom-set", 1);
+						fmgc.FMGCInternal.depApt = fromto[0];
+						fmgc.FMGCInternal.arrApt = fromto[1];
+						fmgc.FMGCInternal.toFromSet = 1;
+						fmgc.FMGCNodes.toFromSet.setValue(1);
 						#scratchpad
 						mcdu_scratchpad.scratchpads[i].empty();
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
@@ -247,7 +249,7 @@ var initInputA = func(key, i) {
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.tropo = 36090;
-			fmgc.FMGCInternal.tropoSet = 1;
+			fmgc.FMGCInternal.tropoSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tropo = size(scratchpad);

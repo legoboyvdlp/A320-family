@@ -103,7 +103,6 @@ var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-de
 # INT-A
 var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
-var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
 var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
 var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
@@ -1087,7 +1086,7 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].hide();
 			}
 			
-			if (toFromSet.getValue() != 1 and costIndexSet.getValue() != 1) {
+			if (!fmgc.FMGCInternal.toFromSet and costIndexSet.getValue() != 1) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(1,1,1);
 				me["Simple_L5"].show();
@@ -1101,7 +1100,7 @@ var canvas_MCDU_base = {
 				me["INITA_CostIndex"].show();
 				me["Simple_L5"].hide();
 			}
-			if (toFromSet.getValue() != 1 and !fmgc.FMGCInternal.crzSet) {
+			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
@@ -1120,12 +1119,12 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setColor(0.7333,0.3803,0);
 				me["Simple_L6"].setText("         g");
 			}
-			if (toFromSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.toFromSet) {
 				me["INITA_CoRoute"].hide();
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				if (altSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.altAirportSet) {
 					me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 				} else {
 					me["Simple_L2"].setText("NONE");
@@ -1183,7 +1182,7 @@ var canvas_MCDU_base = {
 			me["Simple_R2S"].setText("INIT ");
 			me["Simple_R5S"].setText("TROPO");
 			
-			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
+			me["Simple_R1"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("IRS INIT ");
 			me["Simple_R4"].setText("WIND ");
@@ -1257,7 +1256,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT_2"].hide();
 			}
 			
-			if (toFromSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.toFromSet) {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
@@ -1412,12 +1411,12 @@ var canvas_MCDU_base = {
 			me["Simple_L1"].setText("NONE");
 			me["Simple_L6"].setText(" RETURN");
 
-			if (toFromSet.getValue() and !fmgc.FMGCInternal.altSelected) {
-				me["Simple_Title"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
-			} else if (!toFromSet.getValue() and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+			if (fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
+			} else if (!fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
 				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.altAirport));
-			} else if (toFromSet.getValue() and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
-				me["Simple_Title"].setText(sprintf("%s", arrArpt.getValue() ~ "/" ~ fmgc.FMGCInternal.altAirport));
+			} else if (fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.arrApt ~ "/" ~ fmgc.FMGCInternal.altAirport));
 			} else {
 				me["Simple_Title"].setText("ROUTE SELECTION");
 			}
@@ -1666,7 +1665,7 @@ var canvas_MCDU_base = {
 									me["Simple_C3"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
 								}
 							}
-							if (altSet.getValue() == 1) {
+							if (fmgc.FMGCInternal.crzSet == 1) {
 								me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
 								me["Simple_L4"].setColor(BLUE);
 								me["Simple_C4"].show();
@@ -1773,7 +1772,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
+			if (alt_fuel_set.getValue() == 1 and fmgc.FMGCInternal.crzSet == 1) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
@@ -1857,10 +1856,10 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (!engrdy.getBoolValue() or toFromSet.getValue() != 1) {
+			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
 				me["Simple_L1"].setText("----");
 			} else {
-				me["Simple_L1"].setText(arrArpt.getValue());
+				me["Simple_L1"].setText(fmgc.FMGCInternal.arrApt);
 			}
 			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
 				me["Simple_L2"].setText("----");
@@ -1945,7 +1944,7 @@ var canvas_MCDU_base = {
 						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
 					}
 				}
-				if (altSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.crzSet == 1) {
 					me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
 					me["Simple_L4"].setColor(BLUE);
 					me["Simple_C4"].show();
@@ -2041,7 +2040,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
+			if (alt_fuel_set.getValue() == 1 and fmgc.FMGCInternal.crzSet == 1) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
@@ -2285,7 +2284,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			me["Simple_R6S"].setText("NEXT ");
 			
-			if (fmgc.FMGCInternal.transAltSet) {
+			if (fmgc.FMGCInternal.transcrzSet) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
@@ -2970,7 +2969,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS FL");
 			me["Simple_L4"].setText("FL" ~ sprintf("%2.0f", (fmgc.FMGCInternal.transAlt / 100)));
 			
-			if (fmgc.FMGCInternal.transAltSet) {
+			if (fmgc.FMGCInternal.transcrzSet) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);

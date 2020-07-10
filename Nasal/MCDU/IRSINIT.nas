@@ -62,7 +62,7 @@ var initInputIRS = func(key, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L1") {
-		if (getprop("FMGC/internal/tofrom-set")) {
+		if (fmgc.FMGCInternal.toFromSet) {
 			setprop("FMGC/internal/align-ref-lat-edit", 1);
 			setprop("FMGC/internal/align-ref-long-edit", 0);
 		} else {
@@ -73,7 +73,7 @@ var initInputIRS = func(key, i) {
 		setprop("FMGC/internal/align-ref-long-edit", 0);
 		setprop("MCDU[" ~ i ~ "]/page", "INITA");
 	} else if (key == "R1") {
-		if (getprop("FMGC/internal/tofrom-set")) {
+		if (fmgc.FMGCInternal.toFromSet) {
 			setprop("FMGC/internal/align-ref-lat-edit", 0);
 			setprop("FMGC/internal/align-ref-long-edit", 1);
 		} else {
@@ -82,7 +82,7 @@ var initInputIRS = func(key, i) {
 	} else if (key == "R6") {
 		setprop("FMGC/internal/align-ref-lat-edit", 0);
 		setprop("FMGC/internal/align-ref-long-edit", 0);
-		if (getprop("FMGC/internal/tofrom-set") == 1 and getprop("systems/navigation/adr/any-adr-on") == 1) {
+		if (fmgc.FMGCInternal.toFromSet and getprop("systems/navigation/adr/any-adr-on") == 1) {
 			if (getprop("FMGC/internal/align-set") == 0) {
 				setprop("FMGC/internal/align-set", 1);
 			} else {
@@ -90,7 +90,7 @@ var initInputIRS = func(key, i) {
 				setprop("FMGC/internal/align-set", 0);
 				setprop("MCDU[" ~ i ~ "]/page", "INITA");
 			}
-		} else if (getprop("FMGC/internal/tofrom-set") == 0) {
+		} else if (!fmgc.FMGCInternal.toFromSet) {
 			# setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT REFERENCE");
 		} else if (getprop("systems/navigation/adr/any-adr-on") == 0) {
 			# setprop("MCDU[" ~ i ~ "]/scratchpad", "IRS NOT ALIGNED");

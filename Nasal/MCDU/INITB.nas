@@ -233,7 +233,7 @@ var initInputB = func(key, i) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
 			
-			if (!getprop("/FMGC/internal/cost-index-set") and getprop("/FMGC/internal/tofrom-set")) {
+			if (!getprop("/FMGC/internal/cost-index-set") and fmgc.FMGCInternal.toFromSet) {
 				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index") or 0);
 				setprop("/FMGC/internal/cost-index-set", 1);
 				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index") or 0);
