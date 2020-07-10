@@ -22,7 +22,6 @@ var modelat = 0;
 var mode = 0;
 var modeI = 0;
 var gs = 0;
-var alt = 0;
 var aglalt = 0;
 var cruiseft = 0;
 var cruiseft_b = 0;
@@ -158,6 +157,9 @@ var FMGCInternal = {
 	tropoSet: 0,
 	flightNum: "",
 	flightNumSet: 0,
+	altAirport: "",
+	altAirportSet: 0,
+	altSelected: 0,
 	
 };
 
@@ -196,10 +198,9 @@ var trimReset = func {
 var updateARPT = func {
 	dep = getprop("/FMGC/internal/dep-arpt");
 	arr = getprop("/FMGC/internal/arr-arpt");
-	alt = getprop("/FMGC/internal/alt-airport");
 	setprop("autopilot/route-manager/departure/airport", dep);
 	setprop("autopilot/route-manager/destination/airport", arr);
-	setprop("autopilot/route-manager/alternate/airport", alt);
+	setprop("autopilot/route-manager/alternate/airport", fmgc.FMGCInternal.altAirport);
 	if (getprop("/autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
 	}
@@ -258,9 +259,9 @@ var updateFuel = func {
 	}
 	
 	# Calculate alternate fuel
-	if (!getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
+	if (!getprop("/FMGC/internal/alt-fuel-set") and fmgc.FMGCInternal.altAirportSet) {
 		#calc
-	} else if (getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
+	} else if (getprop("/FMGC/internal/alt-fuel-set") and fmgc.FMGCInternal.altAirportSet) {
 		#dummy calc for now
 		alt_fuel = 1000 * num(getprop("/FMGC/internal/alt-fuel"));
 		zfw = 1000 * getprop("/FMGC/internal/zfw");

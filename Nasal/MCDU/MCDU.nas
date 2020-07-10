@@ -55,8 +55,8 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/dep-arpt", "");
 	setprop("/FMGC/internal/arr-arpt", "");
 	setprop("/FMGC/internal/tofrom-set", 0);
-	setprop("/FMGC/internal/alt-airport", "");
-	setprop("/FMGC/internal/alt-set", 0);
+	fmgc.FMGCInternal.altAirport = "";
+	fmgc.FMGCInternal.altAirportSet = 0;
 	setprop("/FMGC/internal/cost-index", "0");
 	setprop("/FMGC/internal/cost-index-set", 0);
 	fmgc.FMGCInternal.crzFt = 10000;
@@ -69,6 +69,8 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.tropoSet = 0;
 	fmgc.FMGCInternal.crzTemp = 15;
 	fmgc.FMGCInternal.crzTempSet = 0;
+	fmgc.FMGCInternal.gndTemp = -99;
+	fmgc.FMGCInternal.gndTempSet = 0;
 	
 	# IRSINIT
 	setprop("/FMGC/internal/align-set", 0);
@@ -85,7 +87,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/align3-done", 0);
 
 	# ROUTE SELECTION
-	setprop("/FMGC/internal/alt-selected", 0);
+	fmgc.FMGCInternal.altSelected = 0;
 
 	# INT-B
 	setprop("/FMGC/internal/zfw", 0);
