@@ -572,7 +572,7 @@ var canvas_MCDU_base = {
 				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
 			}
 			
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {
 				me["Simple_L5"].show();
 				me["Simple_L5S"].show();
 			} else {
@@ -1154,7 +1154,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R6S"].setText("GND TEMP");
-			if (getprop("/FMGC/status/phase") == 0 and !fmgc.FMGCInternal.gndTempSet) {
+			if (fmgc.FMGCInternal.phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
 				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
 				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
 				me["Simple_R6"].setFontSize(small); 
@@ -2063,16 +2063,16 @@ var canvas_MCDU_base = {
 			}
 			
 		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGTO");
 				page = "PROGTO";
-			} else if (getprop("/FMGC/status/phase") == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGCLB");
 				page = "PROGCLB";
-			} else if (getprop("/FMGC/status/phase") == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGCRZ");
 				page = "PROGCRZ";
-			} else if (getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5 or getprop("/FMGC/status/phase") == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGDES");
 				page = "PROGDES";
 			}
@@ -2286,7 +2286,7 @@ var canvas_MCDU_base = {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {
 				me["Simple_L6_Arrow"].show(); 
 				me["Simple_L6"].show();
 				me["Simple_L6S"].show();
@@ -2296,7 +2296,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 			}
 			
-			if (getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 1) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2369,7 +2369,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 1) {
+			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 1) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_to")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_to")));
 				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_to")));
@@ -2440,7 +2440,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 2) {
+			if (fmgc.FMGCInternal.phase == 2) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showLeftS(0, 0, 0, 0, 1, 0);
@@ -2470,7 +2470,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("/FMGC/status/phase") == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2606,7 +2606,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 3) {
+			if (fmgc.FMGCInternal.phase == 3) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 
 				if (managedSpeed.getValue() == 1) {
@@ -2630,7 +2630,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("/FMGC/status/phase") == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2757,7 +2757,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 4) {
+			if (fmgc.FMGCInternal.phase == 4) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showRight(0, 1, 0, 1, 0, 0);
@@ -2786,7 +2786,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("/FMGC/status/phase") == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2926,7 +2926,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 5) {
+			if (fmgc.FMGCInternal.phase == 5) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -3026,7 +3026,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 			
 			me["Simple_L5S"].setText(" VAPP");
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 5) {
+			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 5) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
 				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
@@ -3114,7 +3114,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 6) {
+			if (fmgc.FMGCInternal.phase == 6) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -3138,7 +3138,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 6) {
+			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 6) {
 				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
 				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
 				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));

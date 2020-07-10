@@ -6,7 +6,7 @@
 var perfTOInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
-		if (getprop("/FMGC/status/phase") != 1) {
+		if (fmgc.FMGCInternal.phase != 1) {
 			if (scratchpad == "CLR") {
 				fmgc.FMGCInternal.v1 = 0;
 				fmgc.FMGCInternal.v1set = 0;
@@ -35,7 +35,7 @@ var perfTOInput = func(key, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L2") {
-		if (getprop("/FMGC/status/phase") != 1) {
+		if (fmgc.FMGCInternal.phase != 1) {
 			if (scratchpad == "CLR") {
 				fmgc.FMGCInternal.vr = 0;
 				fmgc.FMGCInternal.vrset = 0;
@@ -58,7 +58,7 @@ var perfTOInput = func(key, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L3") {
-		if (getprop("/FMGC/status/phase") != 1) {
+		if (fmgc.FMGCInternal.phase != 1) {
 			if (scratchpad == "CLR") {
 				fmgc.FMGCInternal.v2 = 0;
 				fmgc.FMGCInternal.v2set = 0;

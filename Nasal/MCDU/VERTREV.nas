@@ -126,7 +126,7 @@ var vertRev = {
 		}
 	},
 	updateR5: func() {
-		if (fmgc.FMGCInternal.crzSet and (getprop("FMGC/status/phase") < 4 or getprop("FMGC/status/phase") == 7)) {
+		if (fmgc.FMGCInternal.crzSet and (fmgc.FMGCInternal.phase < 4 or fmgc.FMGCInternal.phase == 7)) {
 			me.R5 = ["STEP ALTS ", nil, "wht"];
 			me.arrowsMatrix[1][4] = 1;
 		} else {
@@ -192,7 +192,7 @@ var updateCrzLvlCallback = func () {
 	}
 };
 
-setlistener("FMGC/status/phase", func() {
+var updatePhaseCallback = func() {
 	if (canvas_mcdu.myVertRev[0] != nil) { 
 		canvas_mcdu.myVertRev[0].updateR5();
 	}
@@ -200,4 +200,4 @@ setlistener("FMGC/status/phase", func() {
 	if (canvas_mcdu.myVertRev[1] != nil) { 
 		canvas_mcdu.myVertRev[1].updateR5();
 	}
-}, 0, 0);
+};
