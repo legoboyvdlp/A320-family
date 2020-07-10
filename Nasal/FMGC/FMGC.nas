@@ -160,7 +160,9 @@ var FMGCInternal = {
 	altAirport: "",
 	altAirportSet: 0,
 	altSelected: 0,
-	
+	arrApt: "",
+	depApt: "",
+	toFromSet: 0,
 };
 
 var postInit = func() {
@@ -173,6 +175,7 @@ var postInit = func() {
 var FMGCNodes = {
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
+	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 };
 
 ############
@@ -196,10 +199,8 @@ var trimReset = func {
 ###############
 
 var updateARPT = func {
-	dep = getprop("/FMGC/internal/dep-arpt");
-	arr = getprop("/FMGC/internal/arr-arpt");
-	setprop("autopilot/route-manager/departure/airport", dep);
-	setprop("autopilot/route-manager/destination/airport", arr);
+	setprop("autopilot/route-manager/departure/airport", fmgc.FMGCInternal.depApt);
+	setprop("autopilot/route-manager/destination/airport", fmgc.FMGCInternal.arrApt);
 	setprop("autopilot/route-manager/alternate/airport", fmgc.FMGCInternal.altAirport);
 	if (getprop("/autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
@@ -293,7 +294,7 @@ var updateFuel = func {
 	}
 	
 	# Calculate trip fuel
-	if (getprop("/FMGC/internal/tofrom-set") and FMGCInternal.crzSet and FMGCInternal.crzTempSet and getprop("/FMGC/internal/zfw-set")) {
+	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and getprop("/FMGC/internal/zfw-set")) {
 		crz = FMGCInternal.crzFl;
 		temp = FMGCInternal.crzTemp;
 		dist = flightPlanController.arrivalDist;

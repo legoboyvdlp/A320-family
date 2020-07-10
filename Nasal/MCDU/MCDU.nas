@@ -52,9 +52,10 @@ var MCDU_reset = func(i) {
 	# INT-A
 	fmgc.FMGCInternal.flightNum = "";
 	fmgc.FMGCInternal.flightNumSet = 0;
-	setprop("/FMGC/internal/dep-arpt", "");
-	setprop("/FMGC/internal/arr-arpt", "");
-	setprop("/FMGC/internal/tofrom-set", 0);
+	fmgc.FMGCInternal.arrApt = "";
+	fmgc.FMGCInternal.depApt = "";
+	fmgc.FMGCInternal.toFromSet = 0;
+	fmgc.FMGCNodes.toFromSet.setValue(0);
 	fmgc.FMGCInternal.altAirport = "";
 	fmgc.FMGCInternal.altAirportSet = 0;
 	setprop("/FMGC/internal/cost-index", "0");
@@ -611,7 +612,7 @@ var rskbutton = func(btn, i) {
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[i]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -625,7 +626,7 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			} else {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[2]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -664,7 +665,7 @@ var rskbutton = func(btn, i) {
 			initInputB("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[i]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -678,7 +679,7 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			} else {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[2]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}

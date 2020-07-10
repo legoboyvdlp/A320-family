@@ -10,7 +10,7 @@ var progTOInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
 			var crzs = size(scratchpad);
-			if (crzs >= 1 and crzs <= 3 and scratchpad > 0 and scratchpad <= 430 and altSet.getValue() <= scratchpad * 100 and fmgc.FMGCInternal.crzSet) {
+			if (crzs >= 1 and crzs <= 3 and scratchpad > 0 and scratchpad <= 430 and fmgc.FMGCInternal.crzSet <= scratchpad * 100 and fmgc.FMGCInternal.crzSet) {
 				fmgc.FMGCInternal.crzProg = scratchpad;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
