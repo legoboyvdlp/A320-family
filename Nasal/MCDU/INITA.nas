@@ -60,16 +60,17 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/cost-index", 0);
-			setprop("/FMGC/internal/cost-index-set", 0);
+			fmgc.FMGCInternal.costIndex = 0;
+			fmgc.FMGCInternal.costIndexSet = 0;
+			fmgc.FMGCNodes.costIndex.setValue(0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
 			if (cis >= 1 and cis <= 3) {
 				if (ci != nil and ci >= 0 and ci <= 999) {
-					setprop("/FMGC/internal/cost-index", ci);
-					setprop("/FMGC/internal/cost-index-set", 1);
+					fmgc.FMGCInternal.costIndex = ci;
+					fmgc.FMGCInternal.costIndexSet = 1;
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");

@@ -50,28 +50,28 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/adf2freq-set", 0);
 	
 	# INT-A
-	fmgc.FMGCInternal.flightNum = "";
-	fmgc.FMGCInternal.flightNumSet = 0;
-	fmgc.FMGCInternal.arrApt = "";
-	fmgc.FMGCInternal.depApt = "";
-	fmgc.FMGCInternal.toFromSet = 0;
-	fmgc.FMGCNodes.toFromSet.setValue(0);
 	fmgc.FMGCInternal.altAirport = "";
 	fmgc.FMGCInternal.altAirportSet = 0;
-	setprop("/FMGC/internal/cost-index", "0");
-	setprop("/FMGC/internal/cost-index-set", 0);
+	fmgc.FMGCInternal.arrApt = "";
+	fmgc.FMGCInternal.costIndex = 0;
+	fmgc.FMGCInternal.costIndexSet = 0;
 	fmgc.FMGCInternal.crzFt = 10000;
 	fmgc.altvert();
 	fmgc.updateRouteManagerAlt();
 	fmgc.FMGCInternal.crzFl = 100;
 	fmgc.FMGCInternal.crzSet = 0;
 	updateCrzLvlCallback();
-	fmgc.FMGCInternal.tropo = 36090;
-	fmgc.FMGCInternal.tropoSet = 0;
 	fmgc.FMGCInternal.crzTemp = 15;
 	fmgc.FMGCInternal.crzTempSet = 0;
+	fmgc.FMGCInternal.depApt = "";
+	fmgc.FMGCInternal.flightNum = "";
+	fmgc.FMGCInternal.flightNumSet = 0;
 	fmgc.FMGCInternal.gndTemp = -99;
 	fmgc.FMGCInternal.gndTempSet = 0;
+	fmgc.FMGCInternal.toFromSet = 0;
+	fmgc.FMGCNodes.toFromSet.setValue(0);
+	fmgc.FMGCInternal.tropo = 36090;
+	fmgc.FMGCInternal.tropoSet = 0;
 	
 	# IRSINIT
 	setprop("/FMGC/internal/align-set", 0);

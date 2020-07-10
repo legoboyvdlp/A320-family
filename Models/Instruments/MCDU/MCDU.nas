@@ -103,8 +103,6 @@ var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-de
 # INT-A
 var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
 var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
-var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
-var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
@@ -1086,16 +1084,16 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].hide();
 			}
 			
-			if (!fmgc.FMGCInternal.toFromSet and costIndexSet.getValue() != 1) {
+			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.costIndexSet) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(1,1,1);
 				me["Simple_L5"].show();
 				me["Simple_L5"].setText("---");
-			} else if (costIndexSet.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.costIndexSet) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(0.0901,0.6039,0.7176);
 				me["Simple_L5"].show();
-				me["Simple_L5"].setText(sprintf("%s", costIndex.getValue()));
+				me["Simple_L5"].setText(sprintf("%s", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["INITA_CostIndex"].show();
 				me["Simple_L5"].hide();
@@ -2519,9 +2517,9 @@ var canvas_MCDU_base = {
 			}		
 			
 			me["Simple_L2S"].setText(" CI");
-			if (costIndexSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.costIndexSet) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %s", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
@@ -2672,9 +2670,9 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
 			
-			if (costIndexSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.costIndexSet) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %s", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
@@ -2833,9 +2831,9 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
 			
-			if (costIndexSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.costIndexSet) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %2.0f", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %2.0f", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
