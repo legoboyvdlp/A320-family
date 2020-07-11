@@ -405,10 +405,8 @@ var ITAF = {
 					FPLN.wpFlyFrom = 0;
 				}
 				FPLN.currentCourse = flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).leg_bearing;
-				print(FPLN.currentCourse);
 				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
 				FPLN.nextCourse = flightPlanController.flightplans[2].getWP(FPLN.wpFlyTo).leg_bearing;
-				print(FPLN.nextCourse);
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
 				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));

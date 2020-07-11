@@ -805,7 +805,7 @@ var flightPlanController = {
 	updatePlans: func(runDecel = 0, callDecel = 1) {
 		if (fmgc.FMGCInternal.toFromSet and me.flightplans[2].departure != nil and me.flightplans[2].destination != nil) { # check if flightplan exists
 			if (!me.active.getBoolValue()) {
-				me.currentToWptIndex.setValue(0);
+				me.currentToWptIndex.setValue(1);
 				me.active.setValue(1);
 			}
 		} elsif (me.active.getBoolValue()) {
