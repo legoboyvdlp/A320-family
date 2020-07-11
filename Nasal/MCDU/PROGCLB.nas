@@ -6,7 +6,7 @@ var progCLBInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFl;
 			if (fmgc.FMGCInternal.phase == 5) {
-				setprop("/FMGC/status/phase", 3);
+				fmgc.FMGCInternal.phase = 3;
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
 				setprop("/FMGC/internal/decel", 0);
@@ -18,7 +18,7 @@ var progCLBInput = func(key, i) {
 				fmgc.FMGCInternal.crzProg = scratchpad;
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.phase == 5) {
-					setprop("/FMGC/status/phase", 3);
+					fmgc.FMGCInternal.phase = 3;
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
 					setprop("/FMGC/internal/decel", 0);
