@@ -207,10 +207,17 @@ var triggerDoor = func(door, doorName, doorDesc) {
 	}
 };
 
+
+#######################
+# Effects             #
+#######################
+aircraft.tyresmoke_system.new(0, 1, 2);
+
+aircraft.rain.init();
+
 #######################
 # Various Other Stuff #
 #######################
-
 var systemsInit = func {
 	fbw.FBW.init();
 	effects.light_manager.init();
