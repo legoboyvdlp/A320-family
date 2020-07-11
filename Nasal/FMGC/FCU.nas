@@ -196,7 +196,7 @@ var FCUController = {
 	},
 	SPDPush: func() {
 		if (me.FCUworking) {
-			if (getprop("FMGC/internal/cruise-lvl-set") == 1 and getprop("FMGC/internal/cost-index-set") == 1) {
+			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
 				spdManaged.setBoolValue(1);
 				fmgc.ManagedSPD.start();
 			}

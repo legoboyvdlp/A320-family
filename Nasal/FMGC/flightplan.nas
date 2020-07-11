@@ -16,9 +16,6 @@ var DEBUG_DISCONT = 0;
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
 var trueHDG = props.globals.getNode("/orientation/heading-deg", 1);
-var FMGCdep = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
-var FMGCarr = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
-var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
 
 # Props.initNode
 var wpID = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/id", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/id", "", "STRING")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/id", "", "STRING")]];
@@ -392,7 +389,7 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		if (((s == 0 and left(wp, 4) != FMGCdep.getValue() and left(wp, 4) != FMGCarr.getValue()) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
+		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
@@ -792,12 +789,6 @@ var flightPlanController = {
 					}
 				}
 				
-				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
-					if (me.arrivalIndex[n] != wpt) {
-						me.arrivalIndex[n] = wpt;
-					}
-				}
-				
 				if (wpt > 0) {
 					wpCoursePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_bearing);
 					wpDistancePrev[n][wpt].setValue(me.flightplans[n].getWP(wpt).leg_distance);
@@ -812,8 +803,10 @@ var flightPlanController = {
 					wpDistancePrev[n][wpt].setValue(courseDistanceFrom[1]);
 				}
 				
-				if (left(wpID[n][wpt].getValue(), 4) == FMGCarr.getValue() and wpt != 0) {
-					if (me.arrivalIndex[n] != wpt) { # don't merge line 397 and 398 if statements
+				if (left(wpID[n][wpt].getValue(), 4) == fmgc.FMGCInternal.arrApt and wpt != 0) {
+					if (me.arrivalIndex[n] != wpt) {
+						me.arrivalIndex[n] = wpt;
+						
 						if (canvas_mcdu.myFpln[0] != nil) {
 							canvas_mcdu.myFpln[0].destInfo();
 						}
@@ -828,15 +821,16 @@ var flightPlanController = {
 		if (me.flightplans[2].getWP(me.arrivalIndex[2]) == nil or me.flightplans[2].getWP(1) == nil) {
 			me.arrivalDist = 9999;
 			print(me.arrivalIndex[2]);
+		} else {
+			me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		}
 		
-		me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		me.updateMCDUDriver(n);
 	},
 	
 	updateCurrentWaypoint: func() {
 		for (var india = 0; india <= 2; india += 1) {
-			if (toFromSet.getBoolValue() and me.flightplans[india].departure != nil and me.flightplans[india].destination != nil) { # check if flightplan exists
+			if (FMGCInternal.toFromSet and me.flightplans[india].departure != nil and me.flightplans[india].destination != nil) { # check if flightplan exists
 				var curAircraftPos = geo.aircraft_position(); # don't want to get this corrupted so make sure it is a local variable
 	
 				if (india == 2) { # main plan

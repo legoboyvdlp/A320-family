@@ -22,7 +22,6 @@ var modelat = 0;
 var mode = 0;
 var modeI = 0;
 var gs = 0;
-var alt = 0;
 var aglalt = 0;
 var cruiseft = 0;
 var cruiseft_b = 0;
@@ -38,7 +37,6 @@ var targetfpa = 0;
 var accel_agl_ft = 0;
 var locarm = 0;
 var apprarm = 0;
-var gear0 = 0;
 var fd1 = 0;
 var fd2 = 0;
 var spd = 0;
@@ -113,11 +111,10 @@ setprop("/FMGC/internal/vor1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
 setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
-setprop("gear/gear[0]/wow-fmgc", 1);
 
 var FMGCinit = func {
 	setprop("/FMGC/status/to-state", 0);
-	setprop("/FMGC/status/phase", 0); # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
+	fmgc.FMGCInternal.phase = 0; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 	setprop("/FMGC/internal/maxspeed", 338);
 	setprop("/FMGC/internal/mng-spd", 157);
 	setprop("/FMGC/internal/mng-spd-cmd", 157);
@@ -138,6 +135,10 @@ var FMGCinit = func {
 }
 
 var FMGCInternal = {
+	# phase logic
+	phase: 0,
+	
+	# PERF
 	v1: 0,
 	v1set: 0,
 	vr: 0,
@@ -146,9 +147,39 @@ var FMGCInternal = {
 	v2set: 0,
 	transAlt: 18000,
 	transAltSet: 0,
+	
+	# INIT A
+	altAirport: "",
+	altAirportSet: 0,
+	altSelected: 0,
+	arrApt: "",
+	costIndex: 0,
+	costIndexSet: 0,
+	crzFt: 10000,
+	crzFl: 0,
+	crzSet: 0,
+	crzTemp: 15,
+	crzTempSet: 0,
+	flightNum: "",
+	flightNumSet: 0,
+	gndTemp: 15,
+	gndTempSet: 0,
+	depApt: "",
+	tropo: 36090,
+	tropoSet: 0,
+	toFromSet: 0,
 };
 
+var postInit = func() {
+	# Some properties had setlistener -- so to make sure all is o.k., we call function immediately like so:
+	altvert();
+	updateRouteManagerAlt();
+	mcdu.updateCrzLvlCallback();
+}
+
 var FMGCNodes = {
+	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
+	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
 };
@@ -157,14 +188,13 @@ var FMGCNodes = {
 # FBW Trim #
 ############
 
-setlistener("/gear/gear[0]/wow-fmgc", func {
+setlistener("/gear/gear[0]/wow", func {
 	trimReset();
-});
+}, 0, 0);
 
 var trimReset = func {
-	gear0 = getprop("/gear/gear[0]/wow");
 	flaps = getprop("/controls/flight/flaps-pos");
-	if (gear0 == 1 and getprop("/FMGC/status/to-state") == 0 and (flaps >= 5 or (flaps >= 4 and getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override") == 1))) {
+	if (pts.Gear.wow[0].getBoolValue() and getprop("/FMGC/status/to-state") == 0 and (flaps >= 5 or (flaps >= 4 and getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override") == 1))) {
 		interpolate("/controls/flight/elevator-trim", 0.0, 1.5);
 	}
 }
@@ -174,20 +204,17 @@ var trimReset = func {
 ###############
 
 var updateARPT = func {
-	dep = getprop("/FMGC/internal/dep-arpt");
-	arr = getprop("/FMGC/internal/arr-arpt");
-	alt = getprop("/FMGC/internal/alt-airport");
-	setprop("autopilot/route-manager/departure/airport", dep);
-	setprop("autopilot/route-manager/destination/airport", arr);
-	setprop("autopilot/route-manager/alternate/airport", alt);
+	setprop("autopilot/route-manager/departure/airport", fmgc.FMGCInternal.depApt);
+	setprop("autopilot/route-manager/destination/airport", fmgc.FMGCInternal.arrApt);
+	setprop("autopilot/route-manager/alternate/airport", fmgc.FMGCInternal.altAirport);
 	if (getprop("/autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
 	}
 }
 
-setlistener("/FMGC/internal/cruise-ft", func {
-	setprop("autopilot/route-manager/cruise/altitude-ft", getprop("/FMGC/internal/cruise-ft"));
-});
+updateRouteManagerAlt = func() {
+	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+};
 
 ########
 # FUEL #
@@ -238,9 +265,9 @@ var updateFuel = func {
 	}
 	
 	# Calculate alternate fuel
-	if (!getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
+	if (!getprop("/FMGC/internal/alt-fuel-set") and fmgc.FMGCInternal.altAirportSet) {
 		#calc
-	} else if (getprop("/FMGC/internal/alt-fuel-set") and getprop("/FMGC/internal/alt-set")) {
+	} else if (getprop("/FMGC/internal/alt-fuel-set") and fmgc.FMGCInternal.altAirportSet) {
 		#dummy calc for now
 		alt_fuel = 1000 * num(getprop("/FMGC/internal/alt-fuel"));
 		zfw = 1000 * getprop("/FMGC/internal/zfw");
@@ -272,9 +299,9 @@ var updateFuel = func {
 	}
 	
 	# Calculate trip fuel
-	if (getprop("/FMGC/internal/tofrom-set") and getprop("/FMGC/internal/cruise-lvl-set") and getprop("/FMGC/internal/cruise-temp-set") and getprop("/FMGC/internal/zfw-set")) {
-		crz = getprop("/FMGC/internal/cruise-fl");
-		temp = getprop("/FMGC/internal/cruise-temp");
+	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and getprop("/FMGC/internal/zfw-set")) {
+		crz = FMGCInternal.crzFl;
+		temp = FMGCInternal.crzTemp;
 		dist = flightPlanController.arrivalDist;
 		
 		trpWind = getprop("/FMGC/internal/trip-wind");
@@ -396,13 +423,12 @@ var masterFMGC = maketimer(0.2, func {
 	gs = getprop("/velocities/groundspeed-kt");
 	alt = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	aglalt = pts.Position.gearAglFt.getValue();
-	cruiseft = getprop("/FMGC/internal/cruise-ft");
-	cruiseft_b = getprop("/FMGC/internal/cruise-ft") - 200;
+	# cruiseft = FMGCInternal.crzFt;
+	# cruiseft_b = FMGCInternal.crzFt - 200;
 	newcruise = getprop("/it-autoflight/internal/alt");
-	phase = getprop("/FMGC/status/phase");
+	phase = fmgc.FMGCInternal.phase;
 	state1 = getprop("/systems/thrust/state1");
 	state2 = getprop("/systems/thrust/state2");
-	gear0 = getprop("/gear/gear[0]/wow");
 	wowl = getprop("/gear/gear[1]/wow");
 	wowr = getprop("/gear/gear[2]/wow");
 	targetalt = getprop("/it-autoflight/internal/alt");
@@ -411,7 +437,7 @@ var masterFMGC = maketimer(0.2, func {
 	accel_agl_ft = getprop("/it-autoflight/settings/accel-agl-ft");
 	locarm = getprop("/it-autopilot/output/loc-armed");
 	apprarm = getprop("/it-autopilot/output/appr-armed");
-	gear0 = getprop("/gear/gear[0]/wow");
+	gear0 = pts.Gear.wow[0].getBoolValue();
 	ap1 = getprop("/it-autoflight/output/ap1");
 	ap2 = getprop("/it-autoflight/output/ap2");
 	flx = getprop("/systems/thrust/lim-flex");
@@ -423,62 +449,57 @@ var masterFMGC = maketimer(0.2, func {
 	thr1 = getprop("/controls/engines/engine[0]/throttle-pos");
 	thr2 = getprop("/controls/engines/engine[1]/throttle-pos");
 	altSel = getprop("/it-autoflight/input/alt");
-	crzFl = getprop("/FMGC/internal/cruise-fl");
 	
-	if (getprop("/gear/gear[0]/wow") != getprop("/gear/gear[0]/wow-fmgc")) {
-		setprop("gear/gear[0]/wow-fmgc", getprop("/gear/gear[0]/wow"));
-	}
-	
-	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 == 1 and phase == 1) { # rejected takeoff
-		setprop("/FMGC/status/phase", 0);
+	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
+		FMGCInternal.phase = 0;
 		setprop("systems/pressurization/mode", "GN");
 	}
 	
-	if (gear0 == 1 and phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
-		setprop("/FMGC/status/phase", 1);
+	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
+		FMGCInternal.phase = 1;
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if (phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
-		setprop("/FMGC/status/phase", 2);
+	if (FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
+		FMGCInternal.phase = 2;
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if (phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
-		setprop("/FMGC/status/phase", 3);
+	if (FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
+		FMGCInternal.phase = 3;
 		setprop("systems/pressurization/mode", "CR");
 	}
 	
-	if (crzFl >= 200) {
-		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
-			setprop("/FMGC/status/phase", 4);
+	if (FMGCInternal.crzFl >= 200) {
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+			FMGCInternal.phase = 4;
 			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
-		if (phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
-			setprop("/FMGC/status/phase", 4);
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+			FMGCInternal.phase = 4;
 			setprop("systems/pressurization/mode", "DE");
 		}
 	}
 	
-	if (phase == 4 and getprop("/FMGC/internal/decel")) {
-		setprop("/FMGC/status/phase", 5);
+	if (FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
+		FMGCInternal.phase = 5;
 	}
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and aglalt < 9500) { #todo decel pseudo waypoint
 		setprop("/FMGC/internal/decel", 1);
-	} else if (getprop("/FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
+	} else if (getprop("/FMGC/internal/decel") == 1 and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
 		setprop("/FMGC/internal/decel", 0);
 	}
 	
-	if ((phase == "5") and state1 == "TOGA" and state2 == "TOGA") {
-		setprop("/FMGC/status/phase", 6);
+	if ((FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
+		FMGCInternal.phase = 6;
 		setprop("systems/pressurization/mode", "TO");
 		setprop("/it-autoflight/input/toga", 1);
 	}
 	
-	if (phase == "6" and alt >= accel_agl_ft) { # todo when insert altn or new dest
-		setprop("/FMGC/status/phase", 2);
+	if (FMGCInternal.phase == 6 and alt >= accel_agl_ft) { # todo when insert altn or new dest
+		FMGCInternal.phase = 2;
 	}
 	
 	if (getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") != 1024) {
@@ -535,7 +556,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# predicted takeoff speeds
-	if (phase == "1") {
+	if (FMGCInternal.phase == 1) {
 		setprop("/FMGC/internal/computed-speeds/clean_to", getprop("/FMGC/internal/computed-speeds/clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_clean_to", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_to", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
@@ -558,7 +579,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# predicted approach (temp go-around) speeds
-	if (phase == "5" or phase == "6") {
+	if (FMGCInternal.phase == 5 or FMGCInternal.phase == 6) {
 		setprop("/FMGC/internal/computed-speeds/clean_appr", getprop("/FMGC/internal/computed-speeds/clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_clean_appr", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
@@ -676,7 +697,7 @@ var masterFMGC = maketimer(0.2, func {
 		setprop("/FMGC/internal/minspeed", getprop("/FMGC/internal/computed-speeds/vapp"));
 	}
 	
-	if (gear0 == 1 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA") and flaps < 5) {
+	if (gear0 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA") and flaps < 5) {
 		setprop("/FMGC/status/to-state", 1);
 	}
 	if (pts.Position.gearAglFt.getValue() >= 55) {
@@ -690,7 +711,7 @@ var masterFMGC = maketimer(0.2, func {
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
 	if (destination_rwy != nil and phase >= 2) {
-		var airport = airportinfo(getprop("/FMGC/internal/arr-arpt"));
+		var airport = airportinfo(fmgc.FMGCInternal.arrApt);
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
 		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = destination_rwy.ils_frequency_mhz;
@@ -721,7 +742,7 @@ var masterFMGC = maketimer(0.2, func {
 });
 
 var reset_FMGC = func {
-	setprop("/FMGC/status/phase", 0);
+	fmgc.FMGCInternal.phase = 0;
 	fd1 = getprop("/it-autoflight/input/fd1");
 	fd2 = getprop("/it-autoflight/input/fd2");
 	spd = getprop("/it-autoflight/input/kts");
@@ -868,7 +889,7 @@ var adf1 = func {
 #################
 
 var ManagedSPD = maketimer(0.25, func {
-	if (getprop("/FMGC/internal/cruise-lvl-set") == 1 and getprop("/FMGC/internal/cost-index-set") == 1) {
+	if (FMGCInternal.crzSet and FMGCInternal.costIndex) {
 		if (getprop("/it-autoflight/input/spd-managed") == 1) {
 			altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 			mode = getprop("/modes/pfd/fma/pitch-mode");
@@ -881,7 +902,7 @@ var ManagedSPD = maketimer(0.25, func {
 			kts_sel = getprop("/it-autoflight/input/kts");
 			mach_sel = getprop("/it-autoflight/input/mach");
 			srsSPD = getprop("/it-autoflight/settings/togaspd");
-			phase = getprop("/FMGC/status/phase"); # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
+			phase = fmgc.FMGCInternal.phase; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 			flap = getprop("/controls/flight/flaps-pos");
 			maxspeed = getprop("/FMGC/internal/maxspeed");
 			minspeed = getprop("/FMGC/internal/minspeed");
@@ -894,22 +915,22 @@ var ManagedSPD = maketimer(0.25, func {
 			mng_alt_mach_cmd = getprop("/FMGC/internal/mng-alt-mach");
 			mng_alt_mach = math.round(mng_alt_mach_cmd, 0.001);
 			
-			if (mach > mng_alt_mach and (phase == 2 or phase == 3)) {
+			if (mach > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
 				setprop("/FMGC/internal/mach-switchover", 1);
 			}
 			
-			if (ias > mng_alt_spd and (phase == 4 or phase == 5)) {
+			if (ias > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
 				setprop("/FMGC/internal/mach-switchover", 0);
 			}
 			
-			if ((mode == " " or mode == "SRS") and (phase == 0 or phase == 1)) {
+			if ((mode == " " or mode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
 				if (mng_spd_cmd != srsSPD) {
 					setprop("/FMGC/internal/mng-spd-cmd", srsSPD);
 				}
-			} else if ((phase == 2 or phase == 3) and altitude <= 10050) {
+			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= 10050) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
@@ -918,35 +939,35 @@ var ManagedSPD = maketimer(0.25, func {
 				} else if (mng_spd_cmd != minspeed and decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
-			} else if ((phase == 2 or phase == 3) and altitude > 10070 and !mach_switchover) {
+			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > 10070 and !mach_switchover) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
 				if (mng_spd_cmd != mng_alt_spd) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_spd);
 				}
-			} else if ((phase == 2 or phase == 3) and altitude > 10070 and mach_switchover) {
+			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > 10070 and mach_switchover) {
 				if (!mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 1);
 				}
 				if (mng_spd_cmd != mng_alt_mach) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_mach);
 				}
-			} else if (phase == 4 and altitude > 11000 and !mach_switchover) {
+			} else if (FMGCInternal.phase == 4 and altitude > 11000 and !mach_switchover) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
 				if (mng_spd_cmd != mng_alt_spd) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_spd);
 				}
-			} else if (phase == 4 and altitude > 11000 and mach_switchover) {
+			} else if (FMGCInternal.phase == 4 and altitude > 11000 and mach_switchover) {
 				if (!mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 1);
 				}
 				if (mng_spd_cmd != mng_alt_mach) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_mach);
 				}
-			} else if ((phase == 4 or phase == 5 or phase == 6) and altitude > 11000 and !mach_switchover) {
+			} else if ((FMGCInternal.phase == 4 or FMGCInternal.phase == 5 or FMGCInternal.phase == 6) and altitude > 11000 and !mach_switchover) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
@@ -955,7 +976,7 @@ var ManagedSPD = maketimer(0.25, func {
 				} else if (mng_spd_cmd != minspeed and decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
-			} else if ((phase == 4 or phase == 5 or phase == 6) and altitude <= 10980) {
+			} else if ((FMGCInternal.phase == 4 or FMGCInternal.phase == 5 or FMGCInternal.phase == 6) and altitude <= 10980) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
@@ -1087,9 +1108,9 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 # Maketimers
 var timer30secLanding = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
-		setprop("/FMGC/status/phase", 7);
-		if (getprop("/FMGC/internal/cost-index-set")) {
-			setprop("/FMGC/internal/last-cost-index", getprop("/FMGC/internal/cost-index"));
+		fmgc.FMGCInternal.phase = 7;
+		if (FMGCInternal.costIndexSet) {
+			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
 		} else {
 			setprop("/FMGC/internal/last-cost-index", 0);
 		}
