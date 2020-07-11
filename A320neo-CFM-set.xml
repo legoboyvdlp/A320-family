@@ -14,6 +14,7 @@
 			<livery>
 				<file>Airbus</file>
 			</livery>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/CFM-NEO</livery-dir>
 		</model>
 		
 		<sound>
@@ -169,11 +170,5 @@
 		<type>A320-251N</type>
 		<eng>LEAP-1A26</eng>
 	</MCDUC>
-	
-	<nasal>
-		<specific>
-			<file>Aircraft/A320-family/Nasal/Libraries/a320livery-neocfm.nas</file>
-		</specific>
-	</nasal>
 
 </PropertyList>

@@ -14,6 +14,7 @@
 			<livery>
 				<file>Airbus</file>
 			</livery>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/CFM</livery-dir>
 		</model>
 		
 		<sound>
@@ -169,11 +170,5 @@
 		<type>A320-214</type>
 		<eng>CFM56-5B4</eng>
 	</MCDUC>
-	
-	<nasal>
-		<specific>
-			<file>Aircraft/A320-family/Nasal/Libraries/a320livery-cfm.nas</file>
-		</specific>
-	</nasal>
 
 </PropertyList>

@@ -215,6 +215,8 @@ aircraft.tyresmoke_system.new(0, 1, 2);
 
 aircraft.rain.init();
 
+aircraft.livery.init(getprop("/sim/model/livery-dir"));
+
 #######################
 # Various Other Stuff #
 #######################
