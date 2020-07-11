@@ -37,20 +37,19 @@ var Iceable = {
 ### Icing parameters computation.
 # Environmental parameters of the icing model.
 var environment = {
-	dewpoint: props.globals.getNode("environment/dewpoint-degc"),
-	temperature: props.globals.getNode("environment/temperature-degc"),
-	visibility: props.globals.getNode("environment/effective-visibility-m"),
-	visibLclWx: props.globals.getNode("environment/visibility-m"),
+	dewpoint: props.globals.getNode("/environment/dewpoint-degc"),
+	temperature: props.globals.getNode("/environment/temperature-degc"),
+	visibility: props.globals.getNode("/environment/effective-visibility-m"),
+	visibLclWx: props.globals.getNode("/environment/visibility-m"),
 };
 
 var effects = {
-	frost_inch: props.globals.getNode("environment/aircraft-effects/frost-inch", 1),
-	frost_norm: props.globals.getNode("environment/aircraft-effects/frost-level"),
+	frost_inch: props.globals.getNode("/environment/aircraft-effects/frost-inch", 1),
+	frost_norm: props.globals.getNode("/environment/aircraft-effects/frost-level"),
 };
 
 
 # Icing factor computation.
-var maxSpread = 0;
 
 var severity_factor_table = [
 	-0.00000166,
@@ -63,20 +62,21 @@ var severity_factor_table = [
 
 var melt_factor = -0.00005;
 
+var temperature = 0;
+var spread = 0;
+var icingCond = 0;
+var severity = 0;
+
 var icing_factor = func() {
-	var temperature = environment.temperature.getValue();
-	var dewpoint = environment.dewpoint.getValue();
-	var visibility = environment.visibility.getValue();
-	var visibLclWx = environment.visibLclWx.getValue();
+	temperature = environment.temperature.getValue();
 
 	# Do we create ice?
-	var spread = temperature - dewpoint;
+	spread = temperature - environment.dewpoint.getValue();
 	# freezing fog or low temp and below dp or in advanced wx cloud
-	var icingCond = ((spread < maxSpread or visibility < 1000 or visibLclWx < 5000)
+	icingCond = ((spread < 0.1 or environment.visibility.getValue() < 1000 or environment.visibLclWx.getValue() < 5000)
 					 and temperature < 0);
 
-	# todo: turn this into a table or something
-	var severity = 0;
+	severity = 0;
 	if (icingCond) {
 		if (temperature >= -2) {
 			severity = 1;
@@ -96,7 +96,6 @@ var icing_factor = func() {
 
 
 var speed = 0;
-var pause = 0;
 var windowprobe = 0;
 var wingBtn = 0;
 var wingFault = 0;
@@ -117,18 +116,10 @@ var stateR = 0;
 
 var iceables = [];
 
-var icingInit = func {
-	setprop("/controls/ice-protection/windowprobeheat", 0);
-	setprop("/controls/ice-protection/wingfault", 0);
-	setprop("/controls/ice-protection/wing", 0);
-	setprop("/controls/ice-protection/leng", 0);
-	setprop("/controls/ice-protection/lengfault", 0);
-	setprop("/controls/ice-protection/reng", 0);
-	setprop("/controls/ice-protection/rengfault", 0);
-	setprop("/controls/deice/windowprobeheat", 0);
-	setprop("/systems/pitot/icing", 0.0);
-	setprop("/systems/pitot/failed", 1);
+var PitotIcing = [props.globals.getNode("/systems/pitot[0]/icing"),props.globals.getNode("/systems/pitot[1]/icing"),props.globals.getNode("/systems/pitot[2]/icing")];
+var PitotServicable = [props.globals.getNode("/systems/pitot[0]/serviceable", 1),props.globals.getNode("/systems/pitot[1]/serviceable", 1),props.globals.getNode("/systems/pitot[2]/serviceable"), 1];
 
+var icingInit = func {
 	iceables = props.globals.getNode("sim/model/icing", 1).getChildren("iceable");
 	forindex(var i; iceables) {
 		iceables[i] = Iceable.new(iceables[i]);
@@ -138,20 +129,6 @@ var icingInit = func {
 }
 
 var icingModel = func {
-	speed = getprop("velocities/airspeed-kt");
-	pause = getprop("/sim/freeze/master");
-	windowprobe = getprop("/controls/deice/windowprobeheat");
-	wingBtn = getprop("/controls/ice-protection/wing");
-	wingFault = getprop("/controls/ice-protection/wingfault");
-	wowl = getprop("gear/gear[1]/wow");
-	wowr = getprop("gear/gear[2]/wow");
-	PitotIcing = getprop("/systems/pitot/icing");
-	PitotFailed = getprop("/systems/pitot/failed");
-	lengBtn = getprop("/controls/ice-protection/leng");
-	lengFault = getprop("/controls/ice-protection/lengfault");
-	rengBtn = getprop("/controls/ice-protection/reng");
-	rengFault = getprop("/controls/ice-protection/rengfault");
-
 	var factor = icing_factor();
 	foreach(iceable; iceables) {
 		iceable.update(factor, melt_factor);
@@ -159,48 +136,18 @@ var icingModel = func {
 
 	effects.frost_norm.setDoubleValue(effects.frost_inch.getValue() * 50);
 	
-	if (PitotIcing > 0.03) {
-		if (!PitotFailed) {
-			setprop("/systems/pitot/failed", 1);
-		}
-	} else if (PitotIcing < 0.03) {
-		if (PitotFailed) {
-			setprop("/systems/pitot/failed", 0);
+	for (var i = 0; i <= 2; i = i + 1) {
+		if (PitotIcing[i].getValue() > 0.03) {
+			if (PitotServicable[i].getBoolValue()) {
+				PitotServicable[i].setBoolValue(0);
+			}
+		} else {
+			if (!PitotServicable[i].getBoolValue()) {
+				PitotServicable[i].setBoolValue(1);
+			}
 		}
 	}
-
-	# if ((getprop("/systems/electrical/bus/dc-1") == 0 or getprop("/systems/electrical/bus/dc-2") == 0) and getprop("fdm/jsbsim/position/wow") == 0) {
-	#	setprop("/controls/ice-protection/leng", 1);
-	#	setprop("/controls/ice-protection/reng", 1);
-	# }
-	
-	#if (getprop("/systems/electrical/bus/dc-ess-shed") == 0) {
-	#	setprop("/controls/ice-protection/wing", 0);
-	#}
 }
-
-##################
-# Probe Anti-Ice #
-##################
-
-setlistener("/controls/ice-protection/windowprobeheat", func {
-	windowprb = getprop("/controls/ice-protection/windowprobeheat");
-	if (windowprb == 0.5) { # if in auto 
-		wowl = getprop("gear/gear[1]/wow");
-		wowr = getprop("gear/gear[2]/wow");
-		stateL = getprop("engines/engine[0]/state");
-		stateR = getprop("engines/engine[1]/state");
-		if (!wowl or !wowr) {
-			setprop("/controls/deice/windowprobeheat", 1);
-		} else if (stateL == 3 or stateR == 3) {
-			setprop("/controls/deice/windowprobeheat", 1);
-		}
-	} else if (windowprb == 1) { # if in ON
-		setprop("/controls/deice/windowprobeheat", 1);
-	} else {
-		setprop("/controls/deice/windowprobeheat", 0);
-	}
-});	
 
 ###################
 # Update Function #

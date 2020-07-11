@@ -5512,7 +5512,7 @@
 				</condition>
 				<command>property-cycle</command>
 				<property>controls/ice-protection/windowprobeheat</property>
-				<value>0.5</value>
+				<value>0</value>
 				<value>1</value>
 			</binding>
 			<binding>

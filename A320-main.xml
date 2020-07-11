@@ -54,37 +54,40 @@
 				<iceable>
 					<name>Windshield</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/windowprobeheat</salvage-control>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
 					<output-property>/environment/aircraft-effects/frost-inch</output-property>
 				</iceable>
 				<iceable>
 					<name>Fuselage</name>
 					<ice-inches>0.0</ice-inches>
-					<!-- salvage control: de-icing truck -->
 					<sensitivity type="double">0.3</sensitivity>
+					<!-- salvage control: de-icing truck -->
 					<salvage-control>services/deicing_truck/deicing/position-norm</salvage-control>
 					<output-property>/fdm/jsbsim/ice/fuselage</output-property>
 				</iceable>
 				<iceable>
 					<name>Pitot tube</name>
 					<ice-inches>0.0</ice-inches>
-					<sensitivity type="double">1</sensitivity>
-					<salvage-control>/controls/deice/windowprobeheat</salvage-control>
-					<output-property>/systems/pitot/icing</output-property>
+					<sensitivity type="double">0.99</sensitivity>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
+					<output-property>/systems/pitot[0]/icing</output-property>
+				</iceable>
+				<iceable>
+					<name>Pitot tube</name>
+					<ice-inches>0.0</ice-inches>
+					<sensitivity type="double">0.99</sensitivity>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
+					<output-property>/systems/pitot[1]/icing</output-property>
+				</iceable>
+				<iceable>
+					<name>Pitot tube</name>
+					<ice-inches>0.0</ice-inches>
+					<sensitivity type="double">0.98</sensitivity>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
+					<output-property>/systems/pitot[2]/icing</output-property>
 				</iceable>
 			</icing>
-			<flame>
-				<red-high type="double">1.0</red-high>
-				<red-low type="double">0.95</red-low>
-				<red-base type="double">1.0</red-base>
-				<green-high type="double">0.741</green-high>
-				<green-low type="double">0.32</green-low>
-				<green-base type="double">0.741</green-base>
-				<blue-high type="double">0.10</blue-high>
-				<blue-low type="double">0.02</blue-low>
-				<blue-base type="double">0.09</blue-base>
-			</flame>
 		</model>
 		
 		<previews>
@@ -776,6 +779,16 @@
 				<yellow-elec type="bool">0</yellow-elec>
 			</switches>
 		</hydraulic>
+		<ice-protection>
+			<leng type="bool">0</leng>
+			<reng type="bool">0</reng>
+			<wing type="bool">0</wing>
+			<lengfault type="bool">0</lengfault>
+			<rengfault type="bool">0</rengfault>
+			<wingfault type="bool">0</wingfault>
+			<windowprobeheat type="bool">0</windowprobeheat>
+			<windowprobeheat-output type="bool">0</windowprobeheat-output>
+		</ice-protection>
 		<lighting>
 			<DU>
 				<du1 type="double">1</du1>
@@ -886,7 +899,6 @@
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
 			<seatbelt-sign type="double">0.0</seatbelt-sign>
 			<annun-test>0</annun-test>
-			<windowprobeheat type="double">0.5</windowprobeheat>
 			<qnh-knb>100000</qnh-knb>
 			<strobe type="double">0.0</strobe>
 			<beacon type="bool">0</beacon>
@@ -933,7 +945,7 @@
 			<n1 type="double">0</n1>
 			<n-actual type="double">0</n-actual>
 			<running type="bool">0</running>
-			<servicable type="bool">1</servicable>
+			<serviceable type="bool">1</serviceable>
 		</engine>
 	</engines>
 
@@ -1298,20 +1310,27 @@
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
 		
+		<pitot n="0">
+			<icing type="double">0</icing>
+			<serviceable type="bool">1</serviceable>
+		</pitot>
+		
 		<pitot n="1">
-			<serviceable>1</serviceable>
+			<icing type="double">0</icing>
+			<serviceable type="bool">1</serviceable>
 		</pitot>
 		
 		<pitot n="2">
-			<serviceable>1</serviceable>
+			<icing type="double">0</icing>
+			<serviceable type="bool">1</serviceable>
 		</pitot>
 		
 		<static n="1">
-			<serviceable>1</serviceable>
+			<serviceable type="bool">1</serviceable>
 		</static>
 		
 		<static n="2">
-			<serviceable>1</serviceable>
+			<serviceable type="bool">1</serviceable>
 		</static>
 		
 		<navigation>

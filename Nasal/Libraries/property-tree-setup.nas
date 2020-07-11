@@ -138,6 +138,7 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	pause: props.globals.getNode("/sim/freeze/master"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
 	},
