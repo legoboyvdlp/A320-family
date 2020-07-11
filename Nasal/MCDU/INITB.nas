@@ -237,7 +237,7 @@ var initInputB = func(key, i) {
 				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index") or 0);
 				fmgc.FMGCInternal.costIndexSet = 1;
 				fmgc.FMGCInternal.costIndex = getprop("/FMGC/internal/last-cost-index") or 0;
-				fmgc.FMGCNodes.setValue(fmgc.FMGCInternal.costIndex);
+				fmgc.FMGCNodes.costIndex.setValue(fmgc.FMGCInternal.costIndex);
 			}
 		}
 	} else if (key == "R2" and !getprop("/FMGC/internal/fuel-calculating")) {
