@@ -558,8 +558,8 @@
 		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightL.xml</path>
 		<offsets>
 			<x-m>-2.080</x-m>
-			<y-m>-2.20316</y-m>
-			<z-m>-1.66834</z-m>
+			<y-m>-2.22016</y-m>
+			<z-m>-1.69034</z-m>
 		</offsets>
 	</model>
 
@@ -567,9 +567,9 @@
 		<name>Starboard landing light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightR.xml</path>
 		<offsets>
-			<x-m>-2.08567</x-m>
-			<y-m> 2.2238</y-m>
-			<z-m>-1.66834</z-m>
+			<x-m>-2.080</x-m>
+			<y-m> 2.22016</y-m>
+			<z-m>-1.69034</z-m>
 		</offsets>
 	</model>
 
