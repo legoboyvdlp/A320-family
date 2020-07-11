@@ -134,8 +134,6 @@ var A320GPSDeleagte = {
     {
         if (!me.flightplan.active)
             return;
-			
-		flightPlanController.autoSequencing();
 		
         var mode = me._modeProp.getValue();
         if (mode == 'dto') {
