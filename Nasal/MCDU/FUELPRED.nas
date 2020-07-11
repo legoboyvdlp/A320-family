@@ -218,10 +218,11 @@ var fuelPredInput = func(key, i) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
 			
-			if (!getprop("/FMGC/internal/cost-index-set") and getprop("/FMGC/internal/tofrom-set")) {
+			if (!fmgc.FMGCInternal.costIndexSet and fmgc.FMGCInternal.toFromSet) {
 				mcdu_message(i, "USING COST INDEX N", getprop("/FMGC/internal/last-cost-index") or 0);
-				setprop("/FMGC/internal/cost-index-set", 1);
-				setprop("/FMGC/internal/cost-index", getprop("/FMGC/internal/last-cost-index") or 0);
+				fmgc.FMGCInternal.costIndexSet = 1;
+				fmgc.FMGCInternal.costIndex = getprop("/FMGC/internal/last-cost-index") or 0;
+				fmgc.FMGCNodes.setValue(fmgc.FMGCInternal.costIndex);
 			}
 		}
 	} else if (key == "R4") {

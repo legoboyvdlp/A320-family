@@ -50,22 +50,28 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/adf2freq-set", 0);
 	
 	# INT-A
-	setprop("MCDUC/flight-num", "");
-	setprop("MCDUC/flight-num-set", 0);
-	setprop("/FMGC/internal/dep-arpt", "");
-	setprop("/FMGC/internal/arr-arpt", "");
-	setprop("/FMGC/internal/tofrom-set", 0);
-	setprop("/FMGC/internal/alt-airport", "");
-	setprop("/FMGC/internal/alt-set", 0);
-	setprop("/FMGC/internal/cost-index", "0");
-	setprop("/FMGC/internal/cost-index-set", 0);
-	setprop("/FMGC/internal/cruise-ft", 10000);
-	setprop("/FMGC/internal/cruise-fl", 100);
-	setprop("/FMGC/internal/cruise-lvl-set", 0);
-	setprop("/FMGC/internal/tropo", 36090);
-	setprop("/FMGC/internal/tropo-set", 0);
-	setprop("/FMGC/internal/cruise-temp", 15);
-	setprop("/FMGC/internal/cruise-temp-set", 0);
+	fmgc.FMGCInternal.altAirport = "";
+	fmgc.FMGCInternal.altAirportSet = 0;
+	fmgc.FMGCInternal.arrApt = "";
+	fmgc.FMGCInternal.costIndex = 0;
+	fmgc.FMGCInternal.costIndexSet = 0;
+	fmgc.FMGCInternal.crzFt = 10000;
+	fmgc.altvert();
+	fmgc.updateRouteManagerAlt();
+	fmgc.FMGCInternal.crzFl = 100;
+	fmgc.FMGCInternal.crzSet = 0;
+	updateCrzLvlCallback();
+	fmgc.FMGCInternal.crzTemp = 15;
+	fmgc.FMGCInternal.crzTempSet = 0;
+	fmgc.FMGCInternal.depApt = "";
+	fmgc.FMGCInternal.flightNum = "";
+	fmgc.FMGCInternal.flightNumSet = 0;
+	fmgc.FMGCInternal.gndTemp = -99;
+	fmgc.FMGCInternal.gndTempSet = 0;
+	fmgc.FMGCInternal.toFromSet = 0;
+	fmgc.FMGCNodes.toFromSet.setValue(0);
+	fmgc.FMGCInternal.tropo = 36090;
+	fmgc.FMGCInternal.tropoSet = 0;
 	
 	# IRSINIT
 	setprop("/FMGC/internal/align-set", 0);
@@ -82,7 +88,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/align3-done", 0);
 
 	# ROUTE SELECTION
-	setprop("/FMGC/internal/alt-selected", 0);
+	fmgc.FMGCInternal.altSelected = 0;
 
 	# INT-B
 	setprop("/FMGC/internal/zfw", 0);
@@ -131,7 +137,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/cg", 0);
 	
 	# PROG
-	setprop("/FMGC/internal/cruise-fl-prog", 100);
+	fmgc.FMGCInternal.crzProg = 100;
 	
 	# PERF
 	
@@ -606,7 +612,7 @@ var rskbutton = func(btn, i) {
 			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[i]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -620,7 +626,7 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			} else {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[2]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -659,7 +665,7 @@ var rskbutton = func(btn, i) {
 			initInputB("R5",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[i]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -673,7 +679,7 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			} else {
-				if (getprop("/FMGC/internal/tofrom-set") and size(fmgc.windController.nav_indicies[2]) > 0) {
+				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[2]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
 						canvas_mcdu.myCRZWIND[i].del();
 					}
@@ -869,33 +875,33 @@ var pagebutton = func(btn, i) {
 		if (btn == "radnav") {
 			setprop("/MCDU[" ~ i ~ "]/page", "RADNAV");
 		} else if (btn == "prog") {
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
-			} else if (getprop("/FMGC/status/phase") == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
-			} else if (getprop("/FMGC/status/phase") == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
-			} else if (getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5 or getprop("/FMGC/status/phase") == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
 			}
 		} else if (btn == "perf") {
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFTO");
-			} else if (getprop("/FMGC/status/phase") == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
-			} else if (getprop("/FMGC/status/phase") == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
-			} else if (getprop("/FMGC/status/phase") == 4) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
-			} else if (getprop("/FMGC/status/phase") == 5) {
+			} else if (fmgc.FMGCInternal.phase == 5) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
-			} else if (getprop("/FMGC/status/phase") == 6) {
+			} else if (fmgc.FMGCInternal.phase == 6) {
 				setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
-			} else if (getprop("/FMGC/status/phase") == 7) {
+			} else if (fmgc.FMGCInternal.phase == 7) {
 				fmgc.reset_FMGC();
 			}
 		} else if (btn == "init") {
-			if (getprop("/FMGC/status/phase") == 7) {
+			if (fmgc.FMGCInternal.phase == 7) {
 				fmgc.reset_FMGC();
 			}
 			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
@@ -911,7 +917,7 @@ var pagebutton = func(btn, i) {
 				canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
 			}
 			if (btn == "airport") {
-				if (getprop("FMGC/status/phase") == 0 or getprop("FMGC/status/phase") == 1) {
+				if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 					canvas_mcdu.myFpln[i].scroll = 0;
 				} else {
 					if (fmgc.flightPlanController.temporaryFlag[i]) {

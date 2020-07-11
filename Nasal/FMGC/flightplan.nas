@@ -16,9 +16,6 @@ var DEBUG_DISCONT = 0;
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
 var trueHDG = props.globals.getNode("/orientation/heading-deg", 1);
-var FMGCdep = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
-var FMGCarr = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
-var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
 
 var flightPlanController = {
 	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
@@ -370,7 +367,8 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = me.flightplans[n].getWP(index);
-		if (((s == 0 and left(wp.wp_name, 4) != FMGCdep.getValue() and left(wp.wp_name, 4) != FMGCarr.getValue()) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
+		if (((s == 0 and left(wp.wp_name, 4) != FMGCInternal.depApt and left(wp.wp_name, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
+
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
@@ -818,7 +816,7 @@ var flightPlanController = {
 			for (var wpt = 0; wpt < me.flightplans[n].getPlanSize(); wpt += 1) { # Iterate through the waypoints and update their data
 				var waypointHashStore = me.flightplans[n].getWP(wpt);
 				
-				if (left(waypointHashStore.wp_name, 4) == FMGCarr.getValue() and wpt != 0) {
+				if (left(waypointHashStore.wp_name, 4) == fmgc.FMGCInternal.arrApt and wpt != 0) {
 					if (me.arrivalIndex[n] != wpt) {
 						me.arrivalIndex[n] = wpt;
 						if (canvas_mcdu.myFpln[0] != nil) {
@@ -831,17 +829,17 @@ var flightPlanController = {
 				}
 			}	
 			
-			for (var i = 0; i <= 1; i += 1) {
-				if (canvas_mcdu.myFpln[i] != nil) {
-					canvas_mcdu.myFpln[i].updatePlan();
-				}
-				if (canvas_mcdu.myDirTo[i] != nil) {
-					canvas_mcdu.myDirTo[i].updateFromFpln();
-				}
-			}
-		
 			if (runDecel and callDecel) {
 				me.calculateDecelPoint(n);
+			}
+		}
+		
+		for (var i = 0; i <= 1; i += 1) {
+			if (canvas_mcdu.myFpln[i] != nil) {
+				canvas_mcdu.myFpln[i].updatePlan();
+			}
+			if (canvas_mcdu.myDirTo[i] != nil) {
+				canvas_mcdu.myDirTo[i].updateFromFpln();
 			}
 		}
 	},
