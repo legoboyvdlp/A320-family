@@ -4150,7 +4150,6 @@
 		<effects>
 			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/icing.nas</file>
 		</effects>
 		<systems>
@@ -4178,11 +4177,6 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
-		<effects>
-			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
-		</effects>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
