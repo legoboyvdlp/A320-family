@@ -620,9 +620,6 @@
 		<internal>
 			<cost-index type="int">0</cost-index>
 		</internal>
-		<status>
-			<to-state type="bool">1</to-state>
-		</status>
 	</FMGC>
 	
 	<controls>
@@ -715,15 +712,6 @@
 			</engine>
 		</engines>
 		<fctl>
-			<lights>
-				<elac1-fault type="bool">0</elac1-fault>
-				<elac2-fault type="bool">0</elac2-fault>
-				<sec1-fault type="bool">0</sec1-fault>
-				<sec2-fault type="bool">0</sec2-fault>
-				<sec3-fault type="bool">0</sec3-fault>
-				<fac1-fault type="bool">0</fac1-fault>
-				<fac2-fault type="bool">0</fac2-fault>
-			</lights>
 			<switches>
 				<elac1 type="bool">0</elac1>
 				<elac2 type="bool">0</elac2>
@@ -1059,6 +1047,7 @@
 				</ess-tr-contactor>
 			</relay>
 			<some-electric-thingie>
+				<emer-elec-config type="bool">0</emer-elec-config>
 				<emer-gen-operate type="bool">0</emer-gen-operate>
 			</some-electric-thingie>
 			<sources>
@@ -1151,16 +1140,18 @@
 				<x-bleed-valve type="bool">0</x-bleed-valve>
 			</pneumatics>
 			<rudder type="bool">0</rudder>
-			<spoiler-l1 type="bool">0</spoiler-l1>
-			<spoiler-l2 type="bool">0</spoiler-l2>
-			<spoiler-l3 type="bool">0</spoiler-l3>
-			<spoiler-l4 type="bool">0</spoiler-l4>
-			<spoiler-l5 type="bool">0</spoiler-l5>
-			<spoiler-r1 type="bool">0</spoiler-r1>
-			<spoiler-r2 type="bool">0</spoiler-r2>
-			<spoiler-r3 type="bool">0</spoiler-r3>
-			<spoiler-r4 type="bool">0</spoiler-r4>
-			<spoiler-r5 type="bool">0</spoiler-r5>
+			<spoilers>
+				<spoiler-l1 type="bool">0</spoiler-l1>
+				<spoiler-l2 type="bool">0</spoiler-l2>
+				<spoiler-l3 type="bool">0</spoiler-l3>
+				<spoiler-l4 type="bool">0</spoiler-l4>
+				<spoiler-l5 type="bool">0</spoiler-l5>
+				<spoiler-r1 type="bool">0</spoiler-r1>
+				<spoiler-r2 type="bool">0</spoiler-r2>
+				<spoiler-r3 type="bool">0</spoiler-r3>
+				<spoiler-r4 type="bool">0</spoiler-r4>
+				<spoiler-r5 type="bool">0</spoiler-r5>
+			</spoilers>
 			<engine-left-fire type="bool">0</engine-left-fire>
 			<engine-right-fire type="bool">0</engine-right-fire>
 			<apu-fire type="bool">0</apu-fire>
@@ -1219,6 +1210,7 @@
 			</valves>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
+			<mode-fault type="bool">0</mode-fault>
 		</fuel>
 		<hydraulic n="0">
 			<sources>

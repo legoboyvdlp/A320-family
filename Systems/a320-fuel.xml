@@ -791,5 +791,30 @@
 			<output>propulsion/tank[7]/external-flow-rate-pps</output>
 		</summer>
 	</channel>
+	
+	<channel name="Warnings">
+		
+		<summer name="/systems/fuel/quantity/left-wing-kg">
+			<input>/consumables/fuel/tank[0]/level-kg</input>
+			<input>/consumables/fuel/tank[1]/level-kg</input>
+		</summer>
+		
+		<summer name="/systems/fuel/quantity/right-wing-kg">
+			<input>/consumables/fuel/tank[3]/level-kg</input>
+			<input>/consumables/fuel/tank[4]/level-kg</input>
+		</summer>
+		
+		<switch name="/systems/fuel/mode-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/fuel/quantity/left-wing-kg lt 5000
+					/systems/fuel/quantity/right-wing-kg lt 5000
+				</test>
+				/consumables/fuel/tank[2]/level-kg ge 250
+			</test>
+		</switch>
+		
+	</channel>
 
 </system>

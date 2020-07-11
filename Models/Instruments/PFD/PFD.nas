@@ -78,7 +78,6 @@ var vs_needle = props.globals.getNode("/instrumentation/pfd/vs-needle", 1);
 var vs_digit = props.globals.getNode("/instrumentation/pfd/vs-digit-trans", 1);
 var ap_vs_pfd = props.globals.getNode("/it-autoflight/internal/vert-speed-fpm-pfd", 1);
 var athr_arm = props.globals.getNode("/modes/pfd/fma/athr-armed", 1);
-var FMGC_max_spd = props.globals.getNode("/FMGC/internal/maxspeed", 1);
 var ind_spd_kt = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
 var ind_spd_mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
 var at_mach_mode = props.globals.getNode("/it-autoflight/input/kts-mach", 1);
@@ -1025,7 +1024,6 @@ var canvas_PFD_1 = {
 	SPDftrgtdiff: 0,
 	SPDflaptrgtdiff: 0,
 	SPDcleantrgtdiff: 0,
-	FMGC_max: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_PFD_1, canvas_PFD_base]};
 		m.init(canvas_group, file);
@@ -1186,7 +1184,7 @@ var canvas_PFD_1 = {
 				me.ASI = ind_spd - 30;
 			}
 			
-			me.FMGC_max = FMGC_max_spd.getValue();
+			me.FMGC_max = fmgc.FMGCInternal.maxspeed;
 			if (me.FMGC_max <= 30) {
 				me.ASImax = 0 - me.ASI;
 			} else if (me.FMGC_max >= 420) {
@@ -1198,7 +1196,7 @@ var canvas_PFD_1 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("/FMGC/status/to-state") and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
+			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -1207,7 +1205,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
 				}
-				me.FMGC_prot = getprop("/FMGC/internal/computed-speeds/alpha_prot");
+				me.FMGC_prot = fmgc.FMGCInternal.alpha_prot;
 				if (me.FMGC_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
 				} else if (me.FMGC_prot >= 420) {
@@ -1215,7 +1213,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
 				}
-				me.FMGC_max = getprop("/FMGC/internal/computed-speeds/alpha_max");
+				me.FMGC_max = fmgc.FMGCInternal.alpha_max;
 				if (me.FMGC_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
 				} else if (me.FMGC_max >= 420) {
@@ -1924,7 +1922,7 @@ var canvas_PFD_2 = {
 				me.ASI = ind_spd - 30;
 			}
 			
-			me.FMGC_max = FMGC_max_spd.getValue();
+			me.FMGC_max = fmgc.FMGCInternal.maxspeed;
 			if (me.FMGC_max <= 30) {
 				me.ASImax = 0 - me.ASI;
 			} else if (me.FMGC_max >= 420) {
@@ -1936,7 +1934,7 @@ var canvas_PFD_2 = {
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
-			if (!getprop("/FMGC/status/to-state") and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
+			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
@@ -1945,7 +1943,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
 				}
-				me.FMGC_prot = getprop("/FMGC/internal/computed-speeds/alpha_prot");
+				me.FMGC_prot = fmgc.FMGCInternal.alpha_prot;
 				if (me.FMGC_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
 				} else if (me.FMGC_prot >= 420) {
@@ -1953,7 +1951,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
 				}
-				me.FMGC_max = getprop("/FMGC/internal/computed-speeds/alpha_max");
+				me.FMGC_max = fmgc.FMGCInternal.alpha_max;
 				if (me.FMGC_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
 				} else if (me.FMGC_max >= 420) {

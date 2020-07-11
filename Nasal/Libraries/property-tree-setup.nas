@@ -87,6 +87,7 @@ var Gear = {
 var Instrumentation = {
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
+		indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach"),
 	},
 	Altimeter: {
 		indicatedFt: props.globals.getNode("/instrumentation/altimeter[0]/indicated-altitude-ft"),

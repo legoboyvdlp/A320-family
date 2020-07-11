@@ -198,26 +198,26 @@ var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r2/final-
 var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r3/final-deg", 1);
 var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
 var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
-var spoiler_L1_fail = props.globals.getNode("/systems/failures/spoiler-l1", 1);
-var spoiler_L2_fail = props.globals.getNode("/systems/failures/spoiler-l2", 1);
-var spoiler_L3_fail = props.globals.getNode("/systems/failures/spoiler-l3", 1);
-var spoiler_L4_fail = props.globals.getNode("/systems/failures/spoiler-l4", 1);
-var spoiler_L5_fail = props.globals.getNode("/systems/failures/spoiler-l5", 1);
-var spoiler_R1_fail = props.globals.getNode("/systems/failures/spoiler-r1", 1);
-var spoiler_R2_fail = props.globals.getNode("/systems/failures/spoiler-r2", 1);
-var spoiler_R3_fail = props.globals.getNode("/systems/failures/spoiler-r3", 1);
-var spoiler_R4_fail = props.globals.getNode("/systems/failures/spoiler-r4", 1);
-var spoiler_R5_fail = props.globals.getNode("/systems/failures/spoiler-r5", 1);
+var spoiler_L1_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l1", 1);
+var spoiler_L2_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l2", 1);
+var spoiler_L3_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l3", 1);
+var spoiler_L4_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l4", 1);
+var spoiler_L5_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l5", 1);
+var spoiler_R1_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r1", 1);
+var spoiler_R2_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r2", 1);
+var spoiler_R3_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r3", 1);
+var spoiler_R4_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r4", 1);
+var spoiler_R5_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r5", 1);
 var elac1 = props.globals.getNode("/systems/fctl/elac1", 1);
 var elac2 = props.globals.getNode("/systems/fctl/elac2", 1);
 var sec1 = props.globals.getNode("/systems/fctl/sec1", 1);
 var sec2 = props.globals.getNode("/systems/fctl/sec2", 1);
 var sec3 = props.globals.getNode("/systems/fctl/sec3", 1);
-var elac1_fail = props.globals.getNode("/systems/failures/elac1", 1);
-var elac2_fail = props.globals.getNode("/systems/failures/elac2", 1);
-var sec1_fail = props.globals.getNode("/systems/failures/sec1", 1);
-var sec2_fail = props.globals.getNode("/systems/failures/sec2", 1);
-var sec3_fail = props.globals.getNode("/systems/failures/sec3", 1);
+var elac1_fail = props.globals.getNode("/systems/failures/fctl/elac1", 1);
+var elac2_fail = props.globals.getNode("/systems/failures/fctl/elac2", 1);
+var sec1_fail = props.globals.getNode("/systems/failures/fctl/sec1", 1);
+var sec2_fail = props.globals.getNode("/systems/failures/fctl/sec2", 1);
+var sec3_fail = props.globals.getNode("/systems/failures/fctl/sec3", 1);
 var eng1_n1 = props.globals.getNode("/engines/engine[0]/n1-actual", 1);
 var eng2_n1 = props.globals.getNode("/engines/engine[1]/n1-actual", 1);
 var total_fuel_lbs = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
@@ -231,13 +231,6 @@ var fuel_right_outer_temp = props.globals.getNode("/consumables/fuel/tank[4]/tem
 var fuel_right_inner_temp = props.globals.getNode("/consumables/fuel/tank[3]/temperature_degC", 1);
 var cutoff_switch1 = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
 var cutoff_switch2 = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
-var fuel_xfeed = props.globals.getNode("/controls/fuel/x-feed", 1);
-var tank0pump1 = props.globals.getNode("/controls/fuel/tank0pump1", 1);
-var tank0pump2 = props.globals.getNode("/controls/fuel/tank0pump2", 1);
-var tank1pump1 = props.globals.getNode("/controls/fuel/tank1pump1", 1);
-var tank1pump2 = props.globals.getNode("/controls/fuel/tank1pump2", 1);
-var tank2pump1 = props.globals.getNode("/controls/fuel/tank2pump1", 1);
-var tank2pump2 = props.globals.getNode("/controls/fuel/tank2pump2", 1);
 var autobreak_mode = props.globals.getNode("/controls/autobrake/mode", 1);
 var gear1_pos = props.globals.getNode("/gear/gear[0]/position-norm", 1);
 var gear2_pos = props.globals.getNode("/gear/gear[1]/position-norm", 1);
@@ -2505,7 +2498,7 @@ var canvas_lowerECAM_fuel = {
 		# TODO use the valve prop
 		# TODO add amber when disagree between switch and btn
 		# TODO add transition state
-		if (systems.FUEL.Valves.crossfeed.getValue() == 1) {
+		if (systems.FUEL.Valves.crossfeed.getBoolValue()) {
 			me["FUEL-XFEED"].setRotation(0);
 			me["FUEL-XFEED-pipes"].show();
 		} else {
@@ -2514,7 +2507,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add LO indication
-		if (systems.FUEL.Switches.pumpLeft1.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpLeft1.getBoolValue()) {
 			me["FUEL-Pump-Left-1-Open"].show();
 			me["FUEL-Pump-Left-1-Closed"].hide();
 			me["FUEL-Pump-Left-1"].setColor(0.0509,0.7529,0.2941);
@@ -2527,7 +2520,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add LO indication
-		if (systems.FUEL.Switches.pumpLeft2.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpLeft2.getBoolValue()) {
 			me["FUEL-Pump-Left-2-Open"].show();
 			me["FUEL-Pump-Left-2-Closed"].hide();
 			me["FUEL-Pump-Left-2"].setColor(0.0509,0.7529,0.2941);
@@ -2540,7 +2533,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add functionality to match FCOM 1.28.20 "Amber: Transfer valve is open, whereas commanded closed in automatic or manual mode" 
-		if (systems.FUEL.Switches.pumpCenter1.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpCenter1.getBoolValue()) {
 			me["FUEL-Pump-Center-1-Open"].show();
 			me["FUEL-Pump-Center-1-Closed"].hide();
 			me["FUEL-Pump-Center-1"].setColor(0.0509,0.7529,0.2941);
@@ -2553,7 +2546,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add LO indication
-		if (systems.FUEL.Switches.pumpCenter2.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpCenter2.getBoolValue()) {
 			me["FUEL-Pump-Center-2-Open"].show();
 			me["FUEL-Pump-Center-2-Closed"].hide();
 			me["FUEL-Pump-Center-2"].setColor(0.0509,0.7529,0.2941);
@@ -2566,7 +2559,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add LO indication
-		if (systems.FUEL.Switches.pumpRight1.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpRight1.getBoolValue()) {
 			me["FUEL-Pump-Right-1-Open"].show();
 			me["FUEL-Pump-Right-1-Closed"].hide();
 			me["FUEL-Pump-Right-1"].setColor(0.0509,0.7529,0.2941);
@@ -2579,7 +2572,7 @@ var canvas_lowerECAM_fuel = {
 		}
 
 		# TODO add LO indication
-		if (systems.FUEL.Switches.pumpRight2.getValue() == 1) {
+		if (systems.FUEL.Switches.pumpRight2.getBoolValue()) {
 			me["FUEL-Pump-Right-2-Open"].show();
 			me["FUEL-Pump-Right-2-Closed"].hide();
 			me["FUEL-Pump-Right-2"].setColor(0.0509,0.7529,0.2941);

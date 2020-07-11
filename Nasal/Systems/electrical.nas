@@ -15,6 +15,7 @@ var dc2 = 0;
 var ELEC = {
 	_timer1On: 0,
 	_timer2On: 0,
+	EmerElec: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config"),
 	Bus: {
 		acEss: props.globals.getNode("systems/electrical/bus/ac-ess"),
 		acEssShed: props.globals.getNode("systems/electrical/bus/ac-ess-shed"),

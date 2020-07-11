@@ -165,7 +165,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/FMGC/status/to-state</property>
+						<property>/FMGC/internal/to-state</property>
 						<value>1</value>
 					</equals>
 				</and>
