@@ -125,7 +125,6 @@ var FBW = {
 };
 
 var update_loop = func {
-	
 	elac1 = FBW.Computers.elac1.getBoolValue();
 	elac2 = FBW.Computers.elac2.getBoolValue();
 	sec1 = FBW.Computers.sec1.getBoolValue();
@@ -178,7 +177,7 @@ var update_loop = func {
 	law = FBW.activeLaw.getValue();
 	
 	# Mech Backup can always return to direct, if it can.
-	if (law == 3 and ac_ess >= 110 and (green >= 1500 or blue >= 1500 or yellow >= 1500)) {
+	if (law == 3 and systems.ELEC.Bus.acEss.getValue() >= 110 and (green >= 1500 or blue >= 1500 or yellow >= 1500)) {
 		FBW.degradeLaw.setValue(2);
 	}
 	

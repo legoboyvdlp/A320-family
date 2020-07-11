@@ -88,6 +88,9 @@
 					<output-property>/systems/pitot[2]/icing</output-property>
 				</iceable>
 			</icing>
+			<lights>
+				<nose-lights type="double">0</nose-lights>
+			</lights>
 		</model>
 		
 		<previews>
@@ -824,6 +827,9 @@
 			<no-smoking-sign type="bool">1</no-smoking-sign>
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<taxi-light-switch type="float">0</taxi-light-switch>
+			<turnoff-light-switch type="bool">0</turnoff-light-switch>
+			<leftturnoff type="bool">0</leftturnoff>
+			<rightturnoff type="bool">0</rightturnoff>
 		</lighting>
 		<navigation>
 			<adirscp>
@@ -920,6 +926,7 @@
 	</controls>
 	
 	<engines>
+		<ready type="bool">0</ready>
 		<engine n="0">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
@@ -4162,6 +4169,7 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
