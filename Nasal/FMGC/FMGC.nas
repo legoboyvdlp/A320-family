@@ -114,7 +114,7 @@ setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 
 var FMGCinit = func {
 	setprop("/FMGC/status/to-state", 0);
-	setprop("/FMGC/status/phase", 0); # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
+	fmgc.FMGCInternal.phase = 0; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 	setprop("/FMGC/internal/maxspeed", 338);
 	setprop("/FMGC/internal/mng-spd", 157);
 	setprop("/FMGC/internal/mng-spd-cmd", 157);
@@ -450,55 +450,55 @@ var masterFMGC = maketimer(0.2, func {
 	thr2 = getprop("/controls/engines/engine[1]/throttle-pos");
 	altSel = getprop("/it-autoflight/input/alt");
 	
-	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.FMGCInternal.phase == 1) { # rejected takeoff
+	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
 		FMGCInternal.phase = 0;
 		setprop("systems/pressurization/mode", "GN");
 	}
 	
-	if (gear0 and FMGCInternal.FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
+	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
 		FMGCInternal.phase = 1;
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if (FMGCInternal.FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
+	if (FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
 		FMGCInternal.phase = 2;
 		setprop("systems/pressurization/mode", "TO");
 	}
 	
-	if (FMGCInternal.FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
+	if (FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
 		FMGCInternal.phase = 3;
 		setprop("systems/pressurization/mode", "CR");
 	}
 	
 	if (FMGCInternal.crzFl >= 200) {
-		if (FMGCInternal.FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
 			FMGCInternal.phase = 4;
 			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
-		if (FMGCInternal.FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			FMGCInternal.phase = 4;
 			setprop("systems/pressurization/mode", "DE");
 		}
 	}
 	
-	if (FMGCInternal.FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
+	if (FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
 		FMGCInternal.phase = 5;
 	}
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and aglalt < 9500) { #todo decel pseudo waypoint
 		setprop("/FMGC/internal/decel", 1);
-	} else if (getprop("/FMGC/internal/decel") == 1 and (FMGCInternal.FMGCInternal.phase == 0 or FMGCInternal.FMGCInternal.phase == 6)) {
+	} else if (getprop("/FMGC/internal/decel") == 1 and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
 		setprop("/FMGC/internal/decel", 0);
 	}
 	
-	if ((FMGCInternal.FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
+	if ((FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
 		FMGCInternal.phase = 6;
 		setprop("systems/pressurization/mode", "TO");
 		setprop("/it-autoflight/input/toga", 1);
 	}
 	
-	if (FMGCInternal.FMGCInternal.phase == 6 and alt >= accel_agl_ft) { # todo when insert altn or new dest
+	if (FMGCInternal.phase == 6 and alt >= accel_agl_ft) { # todo when insert altn or new dest
 		FMGCInternal.phase = 2;
 	}
 	
@@ -556,7 +556,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# predicted takeoff speeds
-	if (FMGCInternal.FMGCInternal.phase == 1) {
+	if (FMGCInternal.phase == 1) {
 		setprop("/FMGC/internal/computed-speeds/clean_to", getprop("/FMGC/internal/computed-speeds/clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_clean_to", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_to", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
@@ -579,7 +579,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# predicted approach (temp go-around) speeds
-	if (FMGCInternal.FMGCInternal.phase == 5 or FMGCInternal.FMGCInternal.phase == 6) {
+	if (FMGCInternal.phase == 5 or FMGCInternal.phase == 6) {
 		setprop("/FMGC/internal/computed-speeds/clean_appr", getprop("/FMGC/internal/computed-speeds/clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_clean_appr", getprop("/FMGC/internal/computed-speeds/vs1g_clean"));
 		setprop("/FMGC/internal/computed-speeds/vs1g_conf_2_appr", getprop("/FMGC/internal/computed-speeds/vs1g_conf_2"));
@@ -742,7 +742,7 @@ var masterFMGC = maketimer(0.2, func {
 });
 
 var reset_FMGC = func {
-	setprop("/FMGC/status/phase", 0);
+	fmgc.FMGCInternal.phase = 0;
 	fd1 = getprop("/it-autoflight/input/fd1");
 	fd2 = getprop("/it-autoflight/input/fd2");
 	spd = getprop("/it-autoflight/input/kts");
@@ -915,22 +915,22 @@ var ManagedSPD = maketimer(0.25, func {
 			mng_alt_mach_cmd = getprop("/FMGC/internal/mng-alt-mach");
 			mng_alt_mach = math.round(mng_alt_mach_cmd, 0.001);
 			
-			if (mach > mng_alt_mach and (FMGCInternal.FMGCInternal.phase == 2 or FMGCInternal.FMGCInternal.phase == 3)) {
+			if (mach > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
 				setprop("/FMGC/internal/mach-switchover", 1);
 			}
 			
-			if (ias > mng_alt_spd and (FMGCInternal.FMGCInternal.phase == 4 or FMGCInternal.FMGCInternal.phase == 5)) {
+			if (ias > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
 				setprop("/FMGC/internal/mach-switchover", 0);
 			}
 			
-			if ((mode == " " or mode == "SRS") and (FMGCInternal.FMGCInternal.phase == 0 or FMGCInternal.FMGCInternal.phase == 1)) {
+			if ((mode == " " or mode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
 				if (mng_spd_cmd != srsSPD) {
 					setprop("/FMGC/internal/mng-spd-cmd", srsSPD);
 				}
-			} else if ((FMGCInternal.FMGCInternal.phase == 2 or FMGCInternal.FMGCInternal.phase == 3) and altitude <= 10050) {
+			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= 10050) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
@@ -939,35 +939,35 @@ var ManagedSPD = maketimer(0.25, func {
 				} else if (mng_spd_cmd != minspeed and decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
-			} else if ((FMGCInternal.FMGCInternal.phase == 2 or FMGCInternal.FMGCInternal.phase == 3) and altitude > 10070 and !mach_switchover) {
+			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > 10070 and !mach_switchover) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
 				if (mng_spd_cmd != mng_alt_spd) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_spd);
 				}
-			} else if ((FMGCInternal.FMGCInternal.phase == 2 or FMGCInternal.FMGCInternal.phase == 3) and altitude > 10070 and mach_switchover) {
+			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > 10070 and mach_switchover) {
 				if (!mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 1);
 				}
 				if (mng_spd_cmd != mng_alt_mach) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_mach);
 				}
-			} else if (FMGCInternal.FMGCInternal.phase == 4 and altitude > 11000 and !mach_switchover) {
+			} else if (FMGCInternal.phase == 4 and altitude > 11000 and !mach_switchover) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
 				if (mng_spd_cmd != mng_alt_spd) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_spd);
 				}
-			} else if (FMGCInternal.FMGCInternal.phase == 4 and altitude > 11000 and mach_switchover) {
+			} else if (FMGCInternal.phase == 4 and altitude > 11000 and mach_switchover) {
 				if (!mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 1);
 				}
 				if (mng_spd_cmd != mng_alt_mach) {
 					setprop("/FMGC/internal/mng-spd-cmd", mng_alt_mach);
 				}
-			} else if ((FMGCInternal.FMGCInternal.phase == 4 or FMGCInternal.FMGCInternal.phase == 5 or FMGCInternal.FMGCInternal.phase == 6) and altitude > 11000 and !mach_switchover) {
+			} else if ((FMGCInternal.phase == 4 or FMGCInternal.phase == 5 or FMGCInternal.phase == 6) and altitude > 11000 and !mach_switchover) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
@@ -976,7 +976,7 @@ var ManagedSPD = maketimer(0.25, func {
 				} else if (mng_spd_cmd != minspeed and decel) {
 					setprop("/FMGC/internal/mng-spd-cmd", minspeed);
 				}
-			} else if ((FMGCInternal.FMGCInternal.phase == 4 or FMGCInternal.FMGCInternal.phase == 5 or FMGCInternal.FMGCInternal.phase == 6) and altitude <= 10980) {
+			} else if ((FMGCInternal.phase == 4 or FMGCInternal.phase == 5 or FMGCInternal.phase == 6) and altitude <= 10980) {
 				if (mngktsmach) {
 					setprop("/FMGC/internal/mng-kts-mach", 0);
 				}
@@ -1108,7 +1108,7 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 # Maketimers
 var timer30secLanding = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
-		setprop("/FMGC/status/phase", 7);
+		fmgc.FMGCInternal.phase = 7;
 		if (FMGCInternal.costIndexSet) {
 			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
 		} else {
