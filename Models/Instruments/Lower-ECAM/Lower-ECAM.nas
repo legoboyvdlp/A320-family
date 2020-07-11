@@ -18,7 +18,6 @@ var lowerECAM_wheel = nil;
 var lowerECAM_test = nil;
 var lowerECAM_display = nil;
 var page = "fctl";
-var oat = getprop("/environment/temperature-degc");
 var blue_psi = 0;
 var green_psi = 0;
 var yellow_psi = 0;
@@ -589,8 +588,6 @@ var canvas_lowerECAM_apu = {
 		"text3724","text3728","text3732"];
 	},
 	update: func() {
-		oat = temperature_degc.getValue();
-
 		# Avail and Flap Open
 		if (apu_flap.getValue() == 1) {
 			me["APUFlapOpen"].show();
