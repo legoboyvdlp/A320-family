@@ -96,10 +96,6 @@
 		<object-name>MLGFittingR</object-name>
 		<object-name>SideStayL1</object-name>
 		<object-name>SideStayR1</object-name>
-		<object-name>LockStayL1</object-name>
-		<object-name>LockStayR1</object-name>
-		<object-name>MLGLockstayActuatorL1</object-name>
-		<object-name>MLGLockstayActuatorR1</object-name>
 	</effect>
 	
 	<!-- Animations -->
