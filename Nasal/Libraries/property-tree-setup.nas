@@ -32,6 +32,7 @@ var Controls = {
 		flaps: props.globals.getNode("/controls/flight/flaps"),
 		flapsTemp: 0,
 		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
+		speedbrake: props.globals.getNode("/controls/flight/speedbrake"),
 		speedbrakeArm: props.globals.getNode("/controls/flight/speedbrake-arm"),
 	},
 	Gear: {
