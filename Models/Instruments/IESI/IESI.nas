@@ -18,9 +18,6 @@ var iesi_rate = props.globals.getNode("/systems/acconfig/options/iesi-rate", 1);
 var et = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var aconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 
-var dcess = 0;
-var dchot1 = 0;
-
 var airspeed = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
 var mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
 var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
@@ -29,7 +26,7 @@ var skid = props.globals.getNode("/instrumentation/slip-skid-ball/indicated-slip
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 var altitude_ind = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
 
-var altimeter_mode = props.globals.getNode("/modes/altimeter/std", 1);
+var altimeter_mode = props.globals.getNode("/instrumentation/altimeter[0]/std", 1);
 var qnh_hpa = props.globals.getNode("/instrumentation/altimeter/setting-hpa", 1);
 var qnh_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 1);
 
@@ -77,11 +74,8 @@ var canvas_IESI_base = {
 		return [];
 	},
 	update: func() {
-		dcess = systems.ELEC.Bus.dcEss.getValue();
-		dchot1 = systems.ELEC.Bus.dcHot1.getValue();
-		
 		cur_time = et.getValue();
-		if (dcess >= 25 or (dchot1 >= 25 and airspeed.getValue() >= 50 and cur_time >= 5)) {
+		if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1.getValue() >= 25 and airspeed.getValue() >= 50 and cur_time >= 5)) {
 			IESI.page.show();
 			IESI.update();
 			
@@ -103,7 +97,8 @@ var canvas_IESI = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_IESI, canvas_IESI_base]};
 		m.init(canvas_group, file);
-
+		m._cachedInhg = -99;
+		
 		return m;
 	},
 	getKeys: func() {
@@ -113,6 +108,7 @@ var canvas_IESI = {
 		if (iesi_time.getValue() + 90 >= et.getValue()) {
 			me["IESI"].hide(); 
 			me["IESI_Init"].show();
+			return;
 		} else {
 			me["IESI_Init"].hide();
 			me["IESI"].show();
@@ -175,8 +171,13 @@ var canvas_IESI = {
 		altTens = num(right(sprintf("%02d", altitude.getValue()), 2));
 		me["ALT_tens"].setTranslation(0, altTens * 3.16);
 		
-		# QNH
-		if (altimeter_mode.getValue() == 1) {
+		if (qnh_inhg.getValue() != me._cachedInhg) {
+			me._cachedInhg = qnh_inhg.getValue();
+			me.updateQNH();
+		}
+	},
+	updateQNH: func() {
+		if (altimeter_mode.getBoolValue()) {
 			me["QNH_setting"].hide();
 			me["QNH_std"].show();
 		} else {
@@ -184,7 +185,7 @@ var canvas_IESI = {
 			me["QNH_setting"].show();
 			me["QNH_std"].hide();
 		}
-	},
+	}
 };
 
 setlistener("sim/signals/fdm-initialized", func {
@@ -199,11 +200,15 @@ setlistener("sim/signals/fdm-initialized", func {
 	
 	IESI = canvas_IESI.new(group_IESI, "Aircraft/A320-family/Models/Instruments/IESI/res/iesi.svg");
 	
+	IESI.updateQNH();
+	
 	IESI_update.start();
 	if (iesi_rate.getValue() > 1) {
 		rateApply();
 	}
 });
+
+setlistener("/instrumentation/altimeter[0]/std", func() { if (IESI != nil) { IESI.updateQNH(); } }, 0, 0);
 
 var rateApply = func {
 	IESI_update.restart(0.05 * iesi_rate.getValue());
