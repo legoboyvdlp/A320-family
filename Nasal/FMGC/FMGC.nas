@@ -117,7 +117,6 @@ var FMGCinit = func {
 	setprop("/FMGC/internal/mng-spd-cmd", 157);
 	setprop("/FMGC/internal/mng-kts-mach", 0);
 	setprop("/FMGC/internal/mach-switchover", 0);
-	setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/FMGC/internal/loc-source", "NAV0");
 	setprop("/FMGC/internal/optalt", 0);
 	setprop("/FMGC/internal/landing-time", -99);
@@ -127,8 +126,7 @@ var FMGCinit = func {
 	setprop("/FMGC/internal/block-fuel-time", -99);
 	setprop("/FMGC/internal/fuel-pred-time", -99); 
 	masterFMGC.start();
-	various.start();
-	various2.start();
+	radios.start();
 }
 
 var FMGCInternal = {
@@ -419,6 +417,93 @@ var updateFuel = func {
 # Flight Phase and Various #
 ############################
 
+var nav0 = func {
+	var freqnav0uf = getprop("/instrumentation/nav[0]/frequencies/selected-mhz");
+	var freqnav0 = sprintf("%.2f", freqnav0uf);
+	var namenav0 = getprop("/instrumentation/nav[0]/nav-id") or "";
+	if (freqnav0 >= 108.10 and freqnav0 <= 111.95) {
+		if (namenav0 != "") {
+			setprop("/FMGC/internal/ils1-mcdu", namenav0 ~ "/" ~ freqnav0);
+		} else {
+			setprop("/FMGC/internal/ils1-mcdu", freqnav0);
+		}
+	}
+}
+
+var nav1 = func {
+	var freqnav1uf = getprop("/instrumentation/nav[1]/frequencies/selected-mhz");
+	var freqnav1 = sprintf("%.2f", freqnav1uf);
+	var namenav1 = getprop("/instrumentation/nav[1]/nav-id") or "";
+	if (freqnav1 >= 108.10 and freqnav1 <= 111.95) {
+		if (namenav1 != "") {
+			setprop("/FMGC/internal/ils2-mcdu", freqnav1 ~ "/" ~ namenav1);
+		} else {
+			setprop("/FMGC/internal/ils2-mcdu", freqnav1);
+		}
+	}
+}
+
+var nav2 = func {
+	var freqnav2uf = getprop("/instrumentation/nav[2]/frequencies/selected-mhz");
+	var freqnav2 = sprintf("%.2f", freqnav2uf);
+	var namenav2 = getprop("/instrumentation/nav[2]/nav-id") or "";
+	if (freqnav2 >= 108.00 and freqnav2 <= 117.95) {
+		if (namenav2 != "") {
+			setprop("/FMGC/internal/vor1-mcdu", namenav2 ~ "/" ~ freqnav2);
+		} else {
+			setprop("/FMGC/internal/vor1-mcdu", freqnav2);
+		}
+	}
+}
+
+var nav3 = func {
+	var freqnav3uf = getprop("/instrumentation/nav[3]/frequencies/selected-mhz");
+	var freqnav3 = sprintf("%.2f", freqnav3uf);
+	var namenav3 = getprop("/instrumentation/nav[3]/nav-id") or "";
+	if (freqnav3 >= 108.00 and freqnav3 <= 117.95) {
+		if (namenav3 != "") {
+			setprop("/FMGC/internal/vor2-mcdu", freqnav3 ~ "/" ~ namenav3);
+		} else {
+			setprop("/FMGC/internal/vor2-mcdu", freqnav3);
+		}
+	}
+}
+
+var adf0 = func {
+	var freqadf0uf = getprop("/instrumentation/adf[0]/frequencies/selected-khz");
+	var freqadf0 = sprintf("%.2f", freqadf0uf);
+	var nameadf0 = getprop("/instrumentation/adf[0]/ident") or "";
+	if (freqadf0 >= 190 and freqadf0 <= 1750) {
+		if (nameadf0 != "") {
+			setprop("/FMGC/internal/adf1-mcdu", nameadf0 ~ "/" ~ freqadf0);
+		} else {
+			setprop("/FMGC/internal/adf1-mcdu", freqadf0);
+		}
+	}
+}
+
+var adf1 = func {
+	var freqadf1uf = getprop("/instrumentation/adf[1]/frequencies/selected-khz");
+	var freqadf1 = sprintf("%.2f", freqadf1uf);
+	var nameadf1 = getprop("/instrumentation/adf[1]/ident") or "";
+	if (freqadf1 >= 190 and freqadf1 <= 1750) {
+		if (nameadf1 != "") {
+			setprop("/FMGC/internal/adf2-mcdu", freqadf1 ~ "/" ~ nameadf1);
+		} else {
+			setprop("/FMGC/internal/adf2-mcdu", freqadf1);
+		}
+	}
+}
+
+var radios = maketimer(1, func() {
+	nav0();
+	nav1();
+	nav2();
+	nav3();
+	adf0();
+	adf1();
+});
+
 var masterFMGC = maketimer(0.2, func {
 	n1_left = getprop("/engines/engine[0]/n1-actual");
 	n1_right = getprop("/engines/engine[1]/n1-actual");
@@ -521,10 +606,10 @@ var masterFMGC = maketimer(0.2, func {
 	############################
 	flap = getprop("/controls/flight/flaps-pos");
 	weight_lbs = getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000;
-	tow = getprop("/FMGC/internal/tow");
-	lw = getprop("/FMGC/internal/lw");
+	tow = getprop("/FMGC/internal/tow") or 0;
+	lw = getprop("/FMGC/internal/lw") or 0;
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
-	dest_wind = getprop("/FMGC/internal/dest-wind");
+	dest_wind = getprop("/FMGC/internal/dest-wind") or 0;
 	
 	# current speeds
 	clean = 2 * weight_lbs * 0.45359237 + 85;
@@ -796,105 +881,6 @@ var reset_FMGC = func {
 	setprop("systems/ventilation/lavatory/extractvalve", "0");
 	setprop("systems/pressurization/ambientpsi", "0");
 	setprop("systems/pressurization/cabinpsi", "0");
-}
-
-var various = maketimer(1, func {
-	if (getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") != 3) {
-		setprop("/it-autoflight/settings/accel-agl-ft", getprop("/FMGC/internal/eng-out-reduc"));
-	} else if (getprop("/engines/engine[0]/state") != 3 and getprop("/engines/engine[1]/state") == 3) {
-		setprop("/it-autoflight/settings/accel-agl-ft", getprop("/FMGC/internal/eng-out-reduc"));
-	} else {
-		setprop("/it-autoflight/settings/accel-agl-ft", getprop("/FMGC/internal/accel-agl-ft"));
-	}
-	
-	setprop("/FMGC/internal/gw", math.round(getprop("/fdm/jsbsim/inertia/weight-lbs"), 100));
-});
-
-var various2 = maketimer(0.5, func {
-	nav0();
-	nav1();
-	nav2();
-	nav3();
-	adf0();
-	adf1();
-});
-
-var nav0 = func {
-	var freqnav0uf = getprop("/instrumentation/nav[0]/frequencies/selected-mhz");
-	var freqnav0 = sprintf("%.2f", freqnav0uf);
-	var namenav0 = getprop("/instrumentation/nav[0]/nav-id");
-	if (freqnav0 >= 108.10 and freqnav0 <= 111.95) {
-		if (namenav0 != "") {
-			setprop("/FMGC/internal/ils1-mcdu", namenav0 ~ "/" ~ freqnav0);
-		} else {
-			setprop("/FMGC/internal/ils1-mcdu", freqnav0);
-		}
-	}
-}
-
-var nav1 = func {
-	var freqnav1uf = getprop("/instrumentation/nav[1]/frequencies/selected-mhz");
-	var freqnav1 = sprintf("%.2f", freqnav1uf);
-	var namenav1 = getprop("/instrumentation/nav[1]/nav-id");
-	if (freqnav1 >= 108.10 and freqnav1 <= 111.95) {
-		if (namenav1 != "") {
-			setprop("/FMGC/internal/ils2-mcdu", freqnav1 ~ "/" ~ namenav1);
-		} else {
-			setprop("/FMGC/internal/ils2-mcdu", freqnav1);
-		}
-	}
-}
-
-var nav2 = func {
-	var freqnav2uf = getprop("/instrumentation/nav[2]/frequencies/selected-mhz");
-	var freqnav2 = sprintf("%.2f", freqnav2uf);
-	var namenav2 = getprop("/instrumentation/nav[2]/nav-id");
-	if (freqnav2 >= 108.00 and freqnav2 <= 117.95) {
-		if (namenav2 != "") {
-			setprop("/FMGC/internal/vor1-mcdu", namenav2 ~ "/" ~ freqnav2);
-		} else {
-			setprop("/FMGC/internal/vor1-mcdu", freqnav2);
-		}
-	}
-}
-
-var nav3 = func {
-	var freqnav3uf = getprop("/instrumentation/nav[3]/frequencies/selected-mhz");
-	var freqnav3 = sprintf("%.2f", freqnav3uf);
-	var namenav3 = getprop("/instrumentation/nav[3]/nav-id");
-	if (freqnav3 >= 108.00 and freqnav3 <= 117.95) {
-		if (namenav3 != "") {
-			setprop("/FMGC/internal/vor2-mcdu", freqnav3 ~ "/" ~ namenav3);
-		} else {
-			setprop("/FMGC/internal/vor2-mcdu", freqnav3);
-		}
-	}
-}
-
-var adf0 = func {
-	var freqadf0uf = getprop("/instrumentation/adf[0]/frequencies/selected-khz");
-	var freqadf0 = sprintf("%.2f", freqadf0uf);
-	var nameadf0 = getprop("/instrumentation/adf[0]/ident");
-	if (freqadf0 >= 190 and freqadf0 <= 1750) {
-		if (nameadf0 != "") {
-			setprop("/FMGC/internal/adf1-mcdu", nameadf0 ~ "/" ~ freqadf0);
-		} else {
-			setprop("/FMGC/internal/adf1-mcdu", freqadf0);
-		}
-	}
-}
-
-var adf1 = func {
-	var freqadf1uf = getprop("/instrumentation/adf[1]/frequencies/selected-khz");
-	var freqadf1 = sprintf("%.2f", freqadf1uf);
-	var nameadf1 = getprop("/instrumentation/adf[1]/ident");
-	if (freqadf1 >= 190 and freqadf1 <= 1750) {
-		if (nameadf1 != "") {
-			setprop("/FMGC/internal/adf2-mcdu", freqadf1 ~ "/" ~ nameadf1);
-		} else {
-			setprop("/FMGC/internal/adf2-mcdu", freqadf1);
-		}
-	}
 }
 
 #################

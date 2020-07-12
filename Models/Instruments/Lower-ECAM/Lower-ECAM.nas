@@ -74,7 +74,7 @@ var elevator_ind_right = props.globals.getNode("/ECAM/Lower/elevator-ind-right",
 var elevator_trim_deg = props.globals.getNode("/ECAM/Lower/elevator-trim-deg", 1);
 var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/final-deg", 1);
 var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1);
-var gw = props.globals.getNode("/FMGC/internal/gw", 1);
+var gw = props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
 var apu_master = props.globals.getNode("/controls/apu/master", 1);
 var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
@@ -567,10 +567,10 @@ var canvas_lowerECAM_base = {
 		me["UTCh"].setText(sprintf("%02d", hour.getValue()));
 		me["UTCm"].setText(sprintf("%02d", minute.getValue()));
 		if (acconfig_weight_kgs.getValue() == 1) {
-			me["GW"].setText(sprintf("%s", math.round(gw.getValue() * LBS2KGS)));
+			me["GW"].setText(sprintf("%s", math.round(math.round(gw.getValue() * LBS2KGS, 100))));
 			me["GW-weight-unit"].setText("KG");
 		} else {
-			me["GW"].setText(sprintf("%s", math.round(gw.getValue())));
+			me["GW"].setText(sprintf("%s", math.round(gw.getValue(), 100)));
 			me["GW-weight-unit"].setText("LBS");
 		}
 	},
