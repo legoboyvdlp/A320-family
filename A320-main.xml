@@ -89,6 +89,7 @@
 				</iceable>
 			</icing>
 			<lights>
+				<dome-light type="double">0</dome-light>
 				<nose-lights type="double">0</nose-lights>
 			</lights>
 		</model>
