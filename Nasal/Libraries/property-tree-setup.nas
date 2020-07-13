@@ -26,9 +26,14 @@ var Controls = {
 	},
 	Flight: {
 		aileron: props.globals.getNode("/controls/flight/aileron"),
+		aileronDrivesTiller: props.globals.getNode("/controls/flight/aileron-drives-tiller"),
+		autoCoordination: props.globals.getNode("/controls/flight/auto-coordination"),
+		elevatorTrim: props.globals.getNode("/controls/flight/elevator-trim"),
 		flaps: props.globals.getNode("/controls/flight/flaps"),
 		flapsTemp: 0,
 		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
+		speedbrake: props.globals.getNode("/controls/flight/speedbrake"),
+		speedbrakeArm: props.globals.getNode("/controls/flight/speedbrake-arm"),
 	},
 	Gear: {
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
@@ -87,6 +92,7 @@ var Gear = {
 var Instrumentation = {
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
+		indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach"),
 	},
 	Altimeter: {
 		indicatedFt: props.globals.getNode("/instrumentation/altimeter[0]/indicated-altitude-ft"),
@@ -137,10 +143,12 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	pause: props.globals.getNode("/sim/freeze/master"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
 	},
 	Time: {
+		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
 	},
 };

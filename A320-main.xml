@@ -22,6 +22,12 @@
 
 			<autopush include="AircraftConfig/autopush-config.xml"/>
 			<display-contrast type="double">0.7</display-contrast>
+			<door>
+				<position-x-m type="float">-13.8008</position-x-m>
+				<position-y-m type="float">-1.91254</position-y-m>
+				<position-z-m type="float">-0.57991</position-z-m>
+				<jetway-hood-deg type="float">5</jetway-hood-deg>
+			</door>
 			<icing>
 				<iceable>
 					<name>WingLeft</name>
@@ -54,26 +60,44 @@
 				<iceable>
 					<name>Windshield</name>
 					<ice-inches>0.0</ice-inches>
-					<salvage-control>/controls/deice/windowprobeheat</salvage-control>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
 					<output-property>/environment/aircraft-effects/frost-inch</output-property>
 				</iceable>
 				<iceable>
 					<name>Fuselage</name>
 					<ice-inches>0.0</ice-inches>
-					<!-- salvage control: de-icing truck -->
 					<sensitivity type="double">0.3</sensitivity>
+					<!-- salvage control: de-icing truck -->
 					<salvage-control>services/deicing_truck/deicing/position-norm</salvage-control>
 					<output-property>/fdm/jsbsim/ice/fuselage</output-property>
 				</iceable>
 				<iceable>
 					<name>Pitot tube</name>
 					<ice-inches>0.0</ice-inches>
-					<sensitivity type="double">1</sensitivity>
-					<salvage-control>/controls/deice/windowprobeheat</salvage-control>
-					<output-property>/systems/pitot/icing</output-property>
+					<sensitivity type="double">0.99</sensitivity>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
+					<output-property>/systems/pitot[0]/icing</output-property>
+				</iceable>
+				<iceable>
+					<name>Pitot tube</name>
+					<ice-inches>0.0</ice-inches>
+					<sensitivity type="double">0.99</sensitivity>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
+					<output-property>/systems/pitot[1]/icing</output-property>
+				</iceable>
+				<iceable>
+					<name>Pitot tube</name>
+					<ice-inches>0.0</ice-inches>
+					<sensitivity type="double">0.98</sensitivity>
+					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
+					<output-property>/systems/pitot[2]/icing</output-property>
 				</iceable>
 			</icing>
+			<lights>
+				<dome-light type="double">0</dome-light>
+				<nose-lights type="double">0</nose-lights>
+			</lights>
 			<reflection>
 				<ambient-correction type="double">0.40</ambient-correction>
 				<reflection-correction type="double">-0.05</reflection-correction>
@@ -82,12 +106,6 @@
 				<ambient-correction-wing type="double">0.20</ambient-correction-wing>
 				<reflection-correction-wing type="double">-0.25</reflection-correction-wing>
 			</reflection>
-			<door>
-				<position-x-m type="float">-13.8008</position-x-m>
-				<position-y-m type="float">-1.91254</position-y-m>
-				<position-z-m type="float">-0.57991</position-z-m>
-				<jetway-hood-deg type="float">5</jetway-hood-deg>
-			</door>
 		</model>
 		
 		<previews>
@@ -628,9 +646,6 @@
 		<internal>
 			<cost-index type="int">0</cost-index>
 		</internal>
-		<status>
-			<to-state type="bool">1</to-state>
-		</status>
 	</FMGC>
 	
 	<controls>
@@ -723,15 +738,6 @@
 			</engine>
 		</engines>
 		<fctl>
-			<lights>
-				<elac1-fault type="bool">0</elac1-fault>
-				<elac2-fault type="bool">0</elac2-fault>
-				<sec1-fault type="bool">0</sec1-fault>
-				<sec2-fault type="bool">0</sec2-fault>
-				<sec3-fault type="bool">0</sec3-fault>
-				<fac1-fault type="bool">0</fac1-fault>
-				<fac2-fault type="bool">0</fac2-fault>
-			</lights>
 			<switches>
 				<elac1 type="bool">0</elac1>
 				<elac2 type="bool">0</elac2>
@@ -796,6 +802,16 @@
 				<yellow-elec type="bool">0</yellow-elec>
 			</switches>
 		</hydraulic>
+		<ice-protection>
+			<leng type="bool">0</leng>
+			<reng type="bool">0</reng>
+			<wing type="bool">0</wing>
+			<lengfault type="bool">0</lengfault>
+			<rengfault type="bool">0</rengfault>
+			<wingfault type="bool">0</wingfault>
+			<windowprobeheat type="bool">0</windowprobeheat>
+			<windowprobeheat-output type="bool">0</windowprobeheat-output>
+		</ice-protection>
 		<lighting>
 			<DU>
 				<du1 type="double">1</du1>
@@ -833,6 +849,9 @@
 			<no-smoking-sign type="bool">1</no-smoking-sign>
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<taxi-light-switch type="float">0</taxi-light-switch>
+			<turnoff-light-switch type="bool">0</turnoff-light-switch>
+			<leftturnoff type="bool">0</leftturnoff>
+			<rightturnoff type="bool">0</rightturnoff>
 		</lighting>
 		<navigation>
 			<adirscp>
@@ -908,7 +927,6 @@
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
 			<seatbelt-sign type="double">0.0</seatbelt-sign>
 			<annun-test>0</annun-test>
-			<windowprobeheat type="double">0.5</windowprobeheat>
 			<qnh-knb>100000</qnh-knb>
 			<strobe type="double">0.0</strobe>
 			<beacon type="bool">0</beacon>
@@ -930,6 +948,7 @@
 	</controls>
 	
 	<engines>
+		<ready type="bool">0</ready>
 		<engine n="0">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
@@ -955,7 +974,7 @@
 			<n1 type="double">0</n1>
 			<n-actual type="double">0</n-actual>
 			<running type="bool">0</running>
-			<servicable type="bool">1</servicable>
+			<serviceable type="bool">1</serviceable>
 		</engine>
 	</engines>
 
@@ -1069,6 +1088,7 @@
 				</ess-tr-contactor>
 			</relay>
 			<some-electric-thingie>
+				<emer-elec-config type="bool">0</emer-elec-config>
 				<emer-gen-operate type="bool">0</emer-gen-operate>
 			</some-electric-thingie>
 			<sources>
@@ -1161,16 +1181,18 @@
 				<x-bleed-valve type="bool">0</x-bleed-valve>
 			</pneumatics>
 			<rudder type="bool">0</rudder>
-			<spoiler-l1 type="bool">0</spoiler-l1>
-			<spoiler-l2 type="bool">0</spoiler-l2>
-			<spoiler-l3 type="bool">0</spoiler-l3>
-			<spoiler-l4 type="bool">0</spoiler-l4>
-			<spoiler-l5 type="bool">0</spoiler-l5>
-			<spoiler-r1 type="bool">0</spoiler-r1>
-			<spoiler-r2 type="bool">0</spoiler-r2>
-			<spoiler-r3 type="bool">0</spoiler-r3>
-			<spoiler-r4 type="bool">0</spoiler-r4>
-			<spoiler-r5 type="bool">0</spoiler-r5>
+			<spoilers>
+				<spoiler-l1 type="bool">0</spoiler-l1>
+				<spoiler-l2 type="bool">0</spoiler-l2>
+				<spoiler-l3 type="bool">0</spoiler-l3>
+				<spoiler-l4 type="bool">0</spoiler-l4>
+				<spoiler-l5 type="bool">0</spoiler-l5>
+				<spoiler-r1 type="bool">0</spoiler-r1>
+				<spoiler-r2 type="bool">0</spoiler-r2>
+				<spoiler-r3 type="bool">0</spoiler-r3>
+				<spoiler-r4 type="bool">0</spoiler-r4>
+				<spoiler-r5 type="bool">0</spoiler-r5>
+			</spoilers>
 			<engine-left-fire type="bool">0</engine-left-fire>
 			<engine-right-fire type="bool">0</engine-right-fire>
 			<apu-fire type="bool">0</apu-fire>
@@ -1229,6 +1251,7 @@
 			</valves>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
+			<mode-fault type="bool">0</mode-fault>
 		</fuel>
 		<hydraulic n="0">
 			<sources>
@@ -1316,20 +1339,27 @@
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
 		
+		<pitot n="0">
+			<icing type="double">0</icing>
+			<serviceable type="bool">1</serviceable>
+		</pitot>
+		
 		<pitot n="1">
-			<serviceable>1</serviceable>
+			<icing type="double">0</icing>
+			<serviceable type="bool">1</serviceable>
 		</pitot>
 		
 		<pitot n="2">
-			<serviceable>1</serviceable>
+			<icing type="double">0</icing>
+			<serviceable type="bool">1</serviceable>
 		</pitot>
 		
 		<static n="1">
-			<serviceable>1</serviceable>
+			<serviceable type="bool">1</serviceable>
 		</static>
 		
 		<static n="2">
-			<serviceable>1</serviceable>
+			<serviceable type="bool">1</serviceable>
 		</static>
 		
 		<navigation>
@@ -4160,6 +4190,7 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -4167,7 +4198,6 @@
 		<effects>
 			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/icing.nas</file>
 		</effects>
 		<systems>
@@ -4195,11 +4225,6 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
-		<effects>
-			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
-		</effects>
 		<fadec>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
 		</fadec>
