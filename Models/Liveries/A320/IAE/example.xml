@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>ICAO Airline Name (Extra Info)</name>
+				<texture>Liveries/A320/CFM/texture.png</texture>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<EIS2 type="bool">0</EIS2>
+		<model-options>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft>
+			<wifi-fwd type="bool">0</wifi-fwd>
+		</model-options>
+	</options>
+</PropertyList>
