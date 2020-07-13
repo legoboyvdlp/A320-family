@@ -34,6 +34,7 @@ var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL")
 var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
+var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
 
 # Fetch nodes:
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
@@ -97,6 +98,7 @@ var ECAM_line7c = props.globals.getNode("/ECAM/msg/linec7", 1);
 var ECAM_line8c = props.globals.getNode("/ECAM/msg/linec8", 1);
 var ECAMleft = props.globals.getNode("/ECAM/left-msg", 1);
 var ECAMright = props.globals.getNode("/ECAM/right-msg", 1);
+var slatsLocked = props.globals.getNode("/fdm/jsbsim/fcs/slat-locked", 1);
 var rate = props.globals.getNode("/systems/acconfig/options/uecam-rate", 1);
 
 var canvas_upperECAM_base = {
@@ -251,6 +253,24 @@ var canvas_upperECAM_base = {
 			me["FlapDots"].show();
 		} else {
 			me["FlapDots"].hide();
+		}
+		
+		if (slatsLocked.getValue() == 1) {
+			if (slatLockGoing == 0) {
+				slatLockGoing = 1;
+			}
+			if (slatLockGoing == 1) {
+				slatLockTimer.start();
+				if (slatLockFlash.getValue() == 1) {
+					me["SlatAlphaLock"].show();	
+				} else {
+					me["SlatAlphaLock"].hide();	
+				}
+			}
+		} else {
+			slatLockTimer.stop();
+			slatLockGoing = 0;
+			me["SlatAlphaLock"].hide();	
 		}
 		
 		# FOB
@@ -626,7 +646,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B",
 		"TO_Config_B","LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3",
-		"FOB-weight-unit","FFlow-weight-unit"];
+		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock"];
 	},
 	update: func() {
 		# N1
@@ -879,7 +899,7 @@ var canvas_upperECAM_iae_eis2 = {
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
 		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B","TO_Config_B",
-		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3", "FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit"];
+		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3", "FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock"];
 	},
 	update: func() {
 		N1_1_cur = N1_1.getValue();
@@ -1264,3 +1284,13 @@ var showUpperECAM = func {
 setlistener("/systems/electrical/bus/ac-ess", func() {
 	canvas_upperECAM_base.updateDu3();
 }, 0, 0);
+
+
+var slatLockGoing = 0;
+var slatLockTimer = maketimer(0.50, func {
+	if (!slatLockFlash.getBoolValue()) {
+		slatLockFlash.setBoolValue(1);
+	} else {
+		slatLockFlash.setBoolValue(0);
+	}
+});
