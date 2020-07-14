@@ -2498,4 +2498,78 @@
 			<z>0</z>
 		</axis>
 	</animation>
+	
+	<!-- AOA Vanes -->
+	<animation>
+		<name>AOA Vane L1</name>
+		<type>rotate</type>
+		<object-name>AOASensorL1</object-name>
+		<property>fdm/jsbsim/aero/alpha-deg-norm</property>
+		<interpolation>
+			<entry><ind>-60</ind><dep>85</dep></entry>
+			<entry><ind>-35</ind><dep>60</dep></entry>
+			<entry><ind>0  </ind><dep>25</dep></entry>
+			<entry><ind>25 </ind><dep>0</dep></entry>
+			<entry><ind>60 </ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-11.0935</x-m>
+			<y-m>-1.97097</y-m>
+			<z-m>-0.27039</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>AOA Vane R</name>
+		<type>rotate</type>
+		<object-name>AOASensorR</object-name>
+		<property>fdm/jsbsim/aero/alpha-deg-norm</property>
+		<interpolation>
+			<entry><ind>-60</ind><dep>-85</dep></entry>
+			<entry><ind>-35</ind><dep>-60</dep></entry>
+			<entry><ind>0  </ind><dep>-25</dep></entry>
+			<entry><ind>25 </ind><dep>0</dep></entry>
+			<entry><ind>60 </ind><dep>35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-11.0935</x-m>
+			<y-m> 1.96202</y-m>
+			<z-m>-0.27039</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<name>AOA Vane L2</name>
+		<type>rotate</type>
+		<object-name>AOASensorL2</object-name>
+		<property>fdm/jsbsim/aero/alpha-deg-norm</property>
+		<interpolation>
+			<entry><ind>-60</ind><dep>85</dep></entry>
+			<entry><ind>-35</ind><dep>60</dep></entry>
+			<entry><ind>0  </ind><dep>25</dep></entry>
+			<entry><ind>25 </ind><dep>0</dep></entry>
+			<entry><ind>60 </ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-12.0842</x-m>
+			<y-m>-1.81232</y-m>
+			<z-m>-0.98641</z-m>
+		</center>
+	</animation>
+	
 </PropertyList>
