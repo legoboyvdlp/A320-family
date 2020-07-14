@@ -109,18 +109,15 @@ var PNEU = {
 		setprop("/systems/pressurization/vs", "0");
 		setprop("/systems/pressurization/targetvs", "0");
 		setprop("/systems/pressurization/vs-norm", "0");
-		setprop("/systems/pressurization/auto", 1);
 		setprop("/systems/pressurization/deltap", "0");
 		setprop("/systems/pressurization/outflowpos", "0");
 		setprop("/systems/pressurization/deltap-norm", "0");
 		setprop("/systems/pressurization/outflowpos-norm", "0");
 		setprop("/systems/pressurization/outflowpos-man", "0.5");
-		setprop("/systems/pressurization/outflowpos-man-sw", "0");
 		setprop("/systems/pressurization/outflowpos-norm-cmd", "0");
 		setprop("/systems/pressurization/cabinalt", getprop("instrumentation/altimeter/indicated-altitude-ft"));
 		setprop("/systems/pressurization/targetalt", getprop("instrumentation/altimeter/indicated-altitude-ft")); 
 		setprop("/systems/pressurization/diff-to-target", "0");
-		setprop("/systems/pressurization/ditchingpb", 0);
 		setprop("/systems/pressurization/targetvs", "0");
 		setprop("/systems/pressurization/ambientpsi", "0");
 		setprop("/systems/pressurization/cabinpsi", "0");
@@ -195,9 +192,9 @@ var PNEU = {
 		vs = getprop("/systems/pressurization/vs-norm");
 		manvs = getprop("/systems/pressurization/manvs-cmd");
 		pause = getprop("/sim/freeze/master");
-		auto = getprop("/systems/pressurization/auto");
+		auto = getprop("/controls/pressurization/mode-sel");
 		speed = getprop("velocities/groundspeed-kt");
-		ditch = getprop("/systems/pressurization/ditchingpb");
+		ditch = getprop("/controls/pressurization/ditching");
 		outflowpos = getprop("/systems/pressurization/outflowpos");
 		targetvs = getprop("/systems/pressurization/targetvs");
 		

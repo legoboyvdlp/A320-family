@@ -862,7 +862,6 @@ var reset_FMGC = func {
 	setprop("systems/pressurization/vs", "0");
 	setprop("systems/pressurization/targetvs", "0");
 	setprop("systems/pressurization/vs-norm", "0");
-	setprop("systems/pressurization/auto", 1);
 	setprop("systems/pressurization/deltap", "0");
 	setprop("systems/pressurization/outflowpos", "0");
 	setprop("systems/pressurization/deltap-norm", "0");
@@ -871,7 +870,6 @@ var reset_FMGC = func {
 	setprop("systems/pressurization/cabinalt", altitude);
 	setprop("systems/pressurization/targetalt", altitude); 
 	setprop("systems/pressurization/diff-to-target", "0");
-	setprop("systems/pressurization/ditchingpb", 0);
 	setprop("systems/pressurization/targetvs", "0");
 	setprop("systems/ventilation/cabin/fans", 0); # aircon fans
 	setprop("systems/ventilation/avionics/fan", 0);

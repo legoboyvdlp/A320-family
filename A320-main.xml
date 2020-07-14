@@ -901,6 +901,12 @@
 				<x-bleed type="int">1</x-bleed> <!-- auto -->
 			</switches>
 		</pneumatics>
+		<pressurization>
+			<man-vs-ctl type="int">0</man-vs-ctl>
+			<mode-sel type="bool">1</mode-sel>
+			<ldg-elev type="double">0</ldg-elev>
+			<ditching type="bool">0</ditching>
+		</pressurization>
 		<switches>
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
@@ -4184,6 +4190,7 @@
 			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/electrical.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/pressurization.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>

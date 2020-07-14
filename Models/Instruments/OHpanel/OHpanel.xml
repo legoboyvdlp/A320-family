@@ -4624,18 +4624,14 @@
 			<button>0</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>libraries.increaseManVS();</script>
-			</binding>
-			<binding>
 				<command>property-assign</command>
-				<property>systems/pressurization/outflowpos-man-sw</property>
+				<property>controls/pressurization/man-vs-ctl</property>
 				<value>1</value>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
-					<property>systems/pressurization/outflowpos-man-sw</property>
+					<property>controls/pressurization/man-vs-ctl</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -4644,18 +4640,14 @@
 			<button>1</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>libraries.decreaseManVS();</script>
-			</binding>
-			<binding>
 				<command>property-assign</command>
-				<property>systems/pressurization/outflowpos-man-sw</property>
+				<property>controls/pressurization/man-vs-ctl</property>
 				<value>-1</value>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
-					<property>systems/pressurization/outflowpos-man-sw</property>
+					<property>controls/pressurization/man-vs-ctl</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -4664,18 +4656,14 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>libraries.increaseManVS();</script>
-			</binding>
-			<binding>
 				<command>property-assign</command>
-				<property>systems/pressurization/outflowpos-man-sw</property>
+				<property>controls/pressurization/man-vs-ctl</property>
 				<value>1</value>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
-					<property>systems/pressurization/outflowpos-man-sw</property>
+					<property>controls/pressurization/man-vs-ctl</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -4684,18 +4672,14 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>libraries.decreaseManVS();</script>
-			</binding>
-			<binding>
 				<command>property-assign</command>
-				<property>systems/pressurization/outflowpos-man-sw</property>
+				<property>controls/pressurization/man-vs-ctl</property>
 				<value>-1</value>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
-					<property>systems/pressurization/outflowpos-man-sw</property>
+					<property>controls/pressurization/man-vs-ctl</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -4706,7 +4690,7 @@
 		<name>Man VS rotate</name>
 		<type>rotate</type>
 		<object-name>ManVSCTLSwitch</object-name>
-		<property>systems/pressurization/outflowpos-man-sw</property>
+		<property>controls/pressurization/man-vs-ctl</property>
 		<interpolation>
 			<entry><ind>-1</ind><dep>-35</dep></entry>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -4725,6 +4709,33 @@
 	</animation>
 
 	<animation>
+		<type>knob</type>
+		<object-name>LdgElevKnb</object-name>
+		<property>/controls/pressurization/ldg-elev</property>
+		<factor>16.8750000026</factor>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.00913</x-m>
+			<y-m>0.111549</y-m>
+			<z-m>-0.218076</z-m>
+		</center>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>/controls/pressurization/ldg-elev</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>16</max> 
+				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
 		<type>pick</type>
 		<object-name>CabinPressModeBtn</object-name>
 		<object-name>CabinPressModeBtn1F</object-name>
@@ -4740,7 +4751,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>systems/pressurization/auto</property>
+				<property>controls/pressurization/mode-sel</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4772,7 +4783,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>systems/pressurization/auto</property>
+					<property>controls/pressurization/mode-sel</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4811,7 +4822,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>systems/pressurization/ditchingpb</property>
+				<property>controls/pressurization/ditching</property>
 			</binding>
 			<binding>
 				<condition>
@@ -4874,7 +4885,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>systems/pressurization/ditchingpb</property>
+					<property>controls/pressurization/ditching</property>
 					<value>1</value>
 				</equals>
 				<equals>

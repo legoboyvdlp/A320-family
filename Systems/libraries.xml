@@ -490,7 +490,7 @@
 		<input>
 			<condition>
 				<equals>
-					<property>/systems/pressurization/auto</property>
+					<property>/controls/pressurization/mode-sel</property>
 					<value>0</value>
 				</equals>
 			</condition>
@@ -499,7 +499,7 @@
 		<input>
 			<condition>
 				<equals>
-					<property>/systems/pressurization/auto</property>
+					<property>/controls/pressurization/mode-sel</property>
 					<value>1</value>
 				</equals>
 			</condition>

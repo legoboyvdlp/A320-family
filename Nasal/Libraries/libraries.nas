@@ -183,6 +183,7 @@ var systemsInit = func {
 	effects.light_manager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
+	systems.PRESS.init();
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
@@ -232,6 +233,7 @@ var groundspeed = 0;
 var systemsLoop = maketimer(0.1, func {
 	systems.ELEC.loop();
 	systems.PNEU.loop();
+	systems.PRESS.loop();
 	systems.HYD.loop();
 	systems.FUEL.loop();
 	systems.ADIRS.loop();
