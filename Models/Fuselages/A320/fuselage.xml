@@ -2572,4 +2572,37 @@
 		</center>
 	</animation>
 	
+	<!-- Outflow valve -->
+	<animation>
+		<name>Outflow Valve Aft Flap</name>
+		<type>rotate</type>
+		<object-name>OutflowValveDoor2</object-name>
+		<property>/systems/pressurization/outflowpos-norm</property>
+		<factor>75</factor>
+		<axis>
+			<x1-m>10.197</x1-m>
+			<y1-m>1.27348</y1-m>
+			<z1-m>-1.19836</z1-m>
+			<x2-m>10.1971</x2-m>
+			<y2-m>1.49002</y2-m>
+			<z2-m>-0.931125</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Outflow Valve Aft Flap</name>
+		<type>rotate</type>
+		<object-name>OutflowValveDoor1</object-name>
+		<property>/systems/pressurization/outflowpos-norm</property>
+		<factor>-75</factor>
+		<axis>
+			<x1-m>9.86024</x1-m>
+			<y1-m>1.53631</y1-m>
+			<z1-m>-0.93133</z1-m>
+			<x2-m>9.86015</x2-m>
+			<y2-m>1.34027</y2-m>
+			<z2-m>-1.19836</z2-m>
+		</axis>
+	</animation>
+	
 </PropertyList>
