@@ -1,0 +1,198 @@
+<!-- Copyright (c) 2020 Jonathan Redpath (legoboyvdlp) -->
+
+<system name="A320: Pressurization">
+
+	<channel name="Pressurization Logic Controller">
+		
+		<summer name="/systems/pressurization/logic/alt-change-takeoff">
+			<input>-/systems/pressurization/logic/takeoff-altitude-ft</input>
+			<input>/systems/navigation/adr/computation/baro-alt-corrected-1-capt</input>
+		</summer>
+		
+		<switch name="/systems/pressurization/logic/alt-change-5075">
+			<default value="/systems/pressurization/logic/alt-change-5075"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/logic/alt-change-5075 eq 0
+				/systems/pressurization/logic/takeoff-altitude-ft ne -9999
+				/systems/pressurization/logic/alt-change-takeoff ge 5075
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/gnd-to-takeoff">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/throttle ge 0.78
+				/controls/engines/engine[1]/throttle ge 0.78
+				<test logic="OR">
+					/gear/gear[1]/wow eq 1
+					/gear/gear[2]/wow eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/takeoff-to-climb">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/navigation/adr/output/tas-1 gt 100
+					/systems/navigation/adr/output/tas-2 gt 100
+					/systems/navigation/adr/output/tas-3 gt 100
+				</test>
+				<test logic="OR">
+					/gear/gear[1]/wow ne 1
+					/gear/gear[2]/wow ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/climb-lt-200-30-cmd">
+			<default value="0"/>
+			<test value="1">
+				/instrumentation/gps/indicated-vertical-speed lt 200
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pressurization/logic/climb-lt-200-30">
+			<input>/systems/pressurization/logic/climb-lt-200-30-cmd</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.03333333333</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pressurization/logic/climb-to-abort">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/logic/climb-lt-200-30 eq 1
+				<test logic="OR">
+					/systems/navigation/adr/computation/baro-alt-corrected-1-capt lt 8000
+					/systems/pressurization/logic/alt-change-5075 eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/abort-to-gnd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/gear/gear[1]/wow eq 1
+					/gear/gear[2]/wow eq 1
+				</test>
+				<test logic="OR">
+					/systems/navigation/adr/output/tas-1 le 100
+					/systems/navigation/adr/output/tas-2 le 100
+					/systems/navigation/adr/output/tas-3 le 100
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/takeoff-to-gnd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/throttle lt 0.78
+				/controls/engines/engine[1]/throttle lt 0.78
+				<test logic="OR">
+					/gear/gear[1]/wow eq 1
+					/gear/gear[2]/wow eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/climb-ge-30-60-cmd">
+			<default value="0"/>
+			<test value="1">
+				/instrumentation/gps/indicated-vertical-speed ge 30
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pressurization/logic/climb-ge-30-60">
+			<input>/systems/pressurization/logic/climb-ge-30-60-cmd</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.01666666666</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pressurization/logic/abort-to-climb">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/logic/climb-ge-30-60 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/climb-lt-100-30-cmd">
+			<default value="0"/>
+			<test value="1">
+				/instrumentation/gps/indicated-vertical-speed lt 100
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pressurization/logic/climb-lt-100-30">
+			<input>/systems/pressurization/logic/climb-lt-100-30-cmd</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.03333333333</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pressurization/logic/climb-to-cruise">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 8000
+				/systems/pressurization/logic/alt-change-5075 eq 1
+				/systems/pressurization/logic/climb-lt-100-30 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/climb-ge-250-60-cmd">
+			<default value="0"/>
+			<test value="1">
+				/instrumentation/gps/indicated-vertical-speed ge 250
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pressurization/logic/climb-ge-250-60">
+			<input>/systems/pressurization/logic/climb-ge-250-60-cmd</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.01666666666</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pressurization/logic/cruise-to-climb">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/logic/climb-ge-250-60 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/descent-to-climb">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/logic/climb-ge-250-60 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/descent-ge-250-30-cmd">
+			<default value="0"/>
+			<test value="1">
+				/instrumentation/gps/indicated-vertical-speed le -250
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pressurization/logic/descent-ge-250-30">
+			<input>/systems/pressurization/logic/descent-ge-250-30-cmd</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.03333333333</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pressurization/logic/cruise-to-descent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/logic/descent-ge-250-30 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/descent-to-gnd">
+			<default value="/systems/pressurization/logic/abort-to-gnd"/>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/climb-to-descent"> <!-- TODO must consider FMGC end of cruise flag. This avoids problem with changing cruise altitude -->
+			<default value="/systems/pressurization/logic/cruise-to-descent"/>
+		</switch>
+		
+	</channel>
+	
+</system>

@@ -4755,6 +4755,16 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
+				<script>
+					if (systems.CPCController.mode == 0) {
+						systems.CPCController.setMode(2);
+					} else {
+						systems.CPCController.setMode(0);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
 				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>

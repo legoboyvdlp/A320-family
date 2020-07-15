@@ -10,7 +10,6 @@ var state1 = nil;
 var state2 = nil;
 var stateL = nil;
 var stateR = nil;
-var pressmode = nil;
 var wowc = nil;
 var wowl = nil;
 var wowr = nil;
@@ -105,7 +104,6 @@ var PNEU = {
 		me.resetFail();
 		
 		# Legacy pressurization system
-		setprop("/systems/pressurization/mode", "GN");
 		setprop("/systems/pressurization/vs", "0");
 		setprop("/systems/pressurization/targetvs", "0");
 		setprop("/systems/pressurization/vs-norm", "0");
@@ -188,7 +186,6 @@ var PNEU = {
 		cabinpsi = getprop("/systems/pressurization/cabinpsi");
 		state1 = getprop("/systems/thrust/state1");
 		state2 = getprop("/systems/thrust/state2");
-		pressmode = getprop("/systems/pressurization/mode");
 		vs = getprop("/systems/pressurization/vs-norm");
 		manvs = getprop("/systems/pressurization/manvs-cmd");
 		pause = getprop("/sim/freeze/master");
@@ -200,12 +197,6 @@ var PNEU = {
 		
 		setprop("/systems/pressurization/diff-to-target", targetalt - cabinalt); 
 		setprop("/systems/pressurization/deltap", cabinpsi - ambient); 
-
-		if ((pressmode == "GN") and (pressmode != "CL") and (wowl and wowr) and ((state1 == "MCT") or (state1 == "TOGA")) and ((state2 == "MCT") or (state2 == "TOGA"))) {
-			setprop("/systems/pressurization/mode", "TO");
-		} else if (((!wowl) or (!wowr)) and (speed > 100) and (pressmode == "TO")) {
-			setprop("/systems/pressurization/mode", "CL");	
-		}
 		
 		if (vs != targetvs and !wowl and !wowr) {
 			setprop("/systems/pressurization/vs", targetvs);

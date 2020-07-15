@@ -1320,6 +1320,9 @@
 		</pneumatics>
 		
 		<pressurization>
+			<logic>
+				<takeoff-altitude-ft type="double">-9999</takeoff-altitude-ft>
+			</logic>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
