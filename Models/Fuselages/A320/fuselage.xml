@@ -1503,12 +1503,12 @@
 		<property>sim/multiplay/generic/float[4]</property>
 		<factor>-1</factor>
 		<axis>
-			<x1-m>15.586</x1-m>
-			<y1-m>-0.92572</y1-m>
-			<z1-m>0.659407</z1-m>
-			<x2-m>17.4453</x2-m>
-			<y2-m>-6.12819</y2-m>
-			<z2-m>1.4795</z2-m>
+			<x1-m>15.5724</x1-m>
+			<y1-m>-0.909268</y1-m>
+			<z1-m>0.658597</z1-m>
+			<x2-m>17.3985</x2-m>
+			<y2-m>-6.1085</y2-m>
+			<z2-m>1.48068</z2-m>
 		</axis>
 	</animation>
 	
@@ -1519,12 +1519,12 @@
 		<property>sim/multiplay/generic/float[5]</property>
 		<factor>-1</factor>
 		<axis>
-			<x1-m>17.4453</x1-m>
-			<y1-m>6.13253</y1-m>
-			<z1-m>1.4795</z1-m>
-			<x2-m>15.586</x2-m>
-			<y2-m>0.93006</y2-m>
-			<z2-m>0.659407</z2-m>
+			<x1-m>17.3985</x1-m>
+			<y1-m>6.1085</y1-m>
+			<z1-m>1.48068</z1-m>
+			<x2-m>15.5724</x2-m>
+			<y2-m>0.909268</y2-m>
+			<z2-m>0.658597</z2-m>
 		</axis>
 	</animation>
 	
