@@ -329,11 +329,13 @@ var FCUController = {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				latModeInput.setValue(2);
-				if (vertTemp == 2 or vertTemp == 6) {
-					me.VSPull();
-				} else {
-					fmgc.ITAF.disarmGS();
+				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
+					latModeInput.setValue(2);
+					if (vertTemp == 2 or vertTemp == 6) {
+						me.VSPull();
+					} else {
+						fmgc.ITAF.disarmGS();
+					}
 				}
 			}
 		}
