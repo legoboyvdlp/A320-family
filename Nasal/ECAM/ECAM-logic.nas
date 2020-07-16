@@ -1189,13 +1189,13 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(rudTravLimSysFaultFac);
 	}
 	
-	if (rudTravLimSys1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.rtlu1Fault.getBoolValue()) {
+	if (rudTravLimSys1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu1Fault.getBoolValue()) {
 		rudTravLimSys1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(rudTravLimSys1Fault);
 	}
 	
-	if (rudTravLimSys2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.rtlu2Fault.getBoolValue()) {
+	if (rudTravLimSys2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu2Fault.getBoolValue()) {
 		rudTravLimSys2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(rudTravLimSys2Fault);
