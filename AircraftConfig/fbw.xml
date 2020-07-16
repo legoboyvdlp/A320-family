@@ -53,6 +53,8 @@
 				<script>
 				setprop("it-fbw/degrade-law", 0);
 				setprop("it-fbw/law", 0);
+				setprop("it-fbw/degrade-yaw-law", 0);
+				setprop("it-fbw/yaw-law", 0);
 				gui.popupTip("Fly By Wire switched to NORMAL law!");
 				</script>
 			</binding>
@@ -69,6 +71,8 @@
 				<script>
 				setprop("it-fbw/degrade-law", 1);
 				setprop("it-fbw/law", 1);
+				setprop("it-fbw/degrade-yaw-law", 1);
+				setprop("it-fbw/yaw-law", 1);
 				gui.popupTip("Fly By Wire switched to ALTERNATE law!");
 				</script>
 			</binding>
@@ -85,6 +89,8 @@
 				<script>
 				setprop("it-fbw/degrade-law", 2);
 				setprop("it-fbw/law", 2);
+				setprop("it-fbw/degrade-yaw-law", 2);
+				setprop("it-fbw/yaw-law", 2);
 				gui.popupTip("Fly By Wire switched to DIRECT law!");
 				</script>
 			</binding>
@@ -101,6 +107,8 @@
 				<script>
 				setprop("it-fbw/degrade-law", 3);
 				setprop("it-fbw/law", 3);
+				setprop("it-fbw/degrade-yaw-law", 2);
+				setprop("it-fbw/yaw-law", 2);
 				gui.popupTip("Fly By Wire switched to MECHANICAL BACKUP law!");
 				</script>
 			</binding>

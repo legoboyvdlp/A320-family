@@ -21,10 +21,14 @@ var ail = 0;
 var roll = 0;
 var rollback = 0;
 var law = 0;
+var lawyaw = 0;
 
 var FBW = {
+	apOff: 0,
 	degradeLaw: props.globals.getNode("/it-fbw/degrade-law"),
+	degradeYawLaw: props.globals.getNode("/it-fbw/degrade-yaw-law"),
 	activeLaw: props.globals.getNode("/it-fbw/law"),
+	activeYawLaw: props.globals.getNode("/it-fbw/yaw-law"),
 	override: props.globals.getNode("/it-fbw/override"),
 	rollBack: props.globals.getNode("/it-fbw/roll-back"),
 	rollLim: props.globals.getNode("/it-fbw/roll-lim"),
@@ -105,6 +109,7 @@ var FBW = {
 		me.degradeLaw.setValue(0);
 		me.activeLaw.setValue(0);
 		me.override.setValue(0);
+		me.apOff = 0;
 		
 		if (!updatet.isRunning) {
 			updatet.start();
@@ -133,6 +138,7 @@ var update_loop = func {
 	fac1 = FBW.Computers.fac1.getBoolValue();
 	fac2 = FBW.Computers.fac2.getBoolValue();
 	law = FBW.activeLaw.getValue();
+	lawyaw = FBW.activeYawLaw.getValue();
 	
 	# Degrade logic, all failures which degrade FBW need to go here. -JD
 	blue = systems.HYD.Psi.blue.getValue();
@@ -140,30 +146,70 @@ var update_loop = func {
 	yellow = systems.HYD.Psi.yellow.getValue();
 	if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
 		if (!elac1 and !elac2) {
+			if (lawyaw == 0) {
+				FBW.degradeYawLaw.setValue(1);
+			}
 			if (law == 0) {
 				FBW.degradeLaw.setValue(1);
-				fcu.apOff("hard", 0);
-				fcu.athrOff("hard");
+				FBW.apOff = 1;
+			}
+		}
+		if ((!elac1 and elac2 and ((green < 1500 and yellow >= 1500) or (green >= 1500 and yellow < 1500))) or (!elac2 and elac1 and blue < 1500)) {
+			if (lawyaw == 0) {
+				FBW.degradeYawLaw.setValue(1);
+			}
+			if (law == 0) {
+				FBW.degradeLaw.setValue(1);
+				FBW.apOff = 1;
+			}
+		}
+		if (!sec1 and !sec2 and !sec3) {
+			if (lawyaw == 0) {
+				FBW.degradeYawLaw.setValue(1);
+			}
+			if (law == 0) {
+				FBW.degradeLaw.setValue(1);
 			}
 		}
 		if (systems.ELEC.EmerElec.getBoolValue()) {
+			if (lawyaw == 0 or lawyaw == 1) {
+				FBW.degradeYawLaw.setValue(2);
+			}
 			if (law == 0) {
 				FBW.degradeLaw.setValue(1);
-				fcu.apOff("hard", 0);
-				fcu.athrOff("hard");
+				FBW.apOff = 1;
 			}
 		}
-		if ((blue >= 1500 and green < 1500 and yellow < 1500) or (blue < 1500 and green < 1500 and yellow >= 1500)) {
-			if (law == 0 or law == 1) {
-				FBW.degradeLaw.setValue(2);
-				fcu.apOff("hard", 0);
-				fcu.athrOff("hard");
+		if (blue >= 1500 and green < 1500 and yellow < 1500) {
+			if (lawyaw == 0 or lawyaw == 1) {
+				FBW.degradeYawLaw.setValue(2);
+			}
+			if (law == 0) {
+				FBW.degradeLaw.setValue(1);
+				FBW.apOff = 1;
 			}
 		} 
-		if (systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25) {
+		if (blue < 1500 and green < 1500 and yellow >= 1500) {
+			if (lawyaw == 0) {
+				FBW.degradeYawLaw.setValue(1);
+			}
+			if (law == 0) {
+				FBW.degradeLaw.setValue(1);
+				FBW.apOff = 1;
+			}
+		}
+		if (!fac1 and !fac2 ) {
+			if (lawyaw == 0 or lawyaw == 1) {
+				FBW.degradeYawLaw.setValue(2);
+			}
+			if (law == 0) {
+				FBW.degradeLaw.setValue(1);
+				FBW.apOff = 1;
+			}
+		}
+		if (!elac1 and !elac2 and !sec1 and !sec2 and !sec3 and !fac1 and !fac2) {
 			FBW.degradeLaw.setValue(3);
-			fcu.apOff("hard", 0);
-			fcu.athrOff("hard");
+			FBW.apOff = 1;
 		}
 	}
 	
@@ -255,9 +301,25 @@ var fbw_loop = func {
 				FBW.activeLaw.setValue(3);
 			}
 		}
+		
+		active = FBW.activeYawLaw.getValue();
+		degrade = FBW.degradeYawLaw.getValue();
+		if (degrade == 0) {
+			if (active != 0) {
+				FBW.activeYawLaw.setValue(0);
+			}
+		} else if (degrade == 1) {
+			if (active != 1) {
+				FBW.activeYawLaw.setValue(1);
+			}
+		} else if (degrade == 2) {
+			if (active != 2) {
+				FBW.activeYawLaw.setValue(2);
+			}
+		}
 	}
 	
-	if (FBW.activeLaw.getValue() != 0) {
+	if (FBW.apOff) {
 		if (fmgc.Input.ap1.getBoolValue() or fmgc.Input.ap2.getBoolValue()) {
 			fcu.apOff("hard", 0);
 			fcu.athrOff("hard");

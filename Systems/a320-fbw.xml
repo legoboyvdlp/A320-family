@@ -60,8 +60,7 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				position/wow eq 1
-				/it-fbw/law eq 2
-				/it-fbw/law eq 3
+				/it-fbw/yaw-law eq 2
 			</test>
 		</switch>
 		
@@ -1542,8 +1541,8 @@
 		<switch name="fbw/yaw/law-switch">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/it-fbw/law eq 0
-				/it-fbw/law eq 1
+				/it-fbw/yaw-law eq 0
+				/it-fbw/yaw-law eq 1
 			</test>
 		</switch>
 		

@@ -103,6 +103,7 @@ var FCUController = {
 			if (!ap1.getBoolValue()) {
 				ap1Input.setValue(1);
 				ecam.apWarnNode.setValue(0);
+				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 1);
 			}
@@ -112,6 +113,7 @@ var FCUController = {
 		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!ap2.getBoolValue()) {
 				ap2Input.setValue(1);
+				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 2);
 			}

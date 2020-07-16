@@ -614,6 +614,8 @@
 		<alpha-hld type="bool">0</alpha-hld>
 		<degrade-law type="int">0</degrade-law>
 		<law type="int">0</law>
+		<degrade-yaw-law type="int">0</degrade-yaw-law>
+		<yaw-law type="int">0</yaw-law>
 		<roll-lim type="string">33</roll-lim>
 		<roll-back type="bool">0</roll-back>
 		<override type="bool">0</override>
@@ -910,7 +912,7 @@
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
 			<seatbelt-sign type="double">0.0</seatbelt-sign>
-			<annun-test>0</annun-test>
+			<annun-test type="int">0</annun-test>
 			<qnh-knb>100000</qnh-knb>
 			<strobe type="double">0.0</strobe>
 			<beacon type="bool">0</beacon>

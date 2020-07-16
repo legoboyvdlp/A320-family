@@ -333,13 +333,44 @@
 			</test>
 		</switch>
 		
+		<switch name="hydraulics/rudder/trim-autopilot">
+			<default value="0"/>
+			<test logic="AND" value="/controls/flight/rudder-trim">
+				/it-autoflight/output/ap1 eq 0
+				/it-autoflight/output/ap2 eq 0
+			</test>
+		</switch>
+		
 		<pure_gain name="hydraulics/rudder/trim-cmd-deg">
-			<input>/controls/flight/rudder-trim</input>
+			<input>hydraulics/rudder/trim-autopilot</input>
 			<gain>20</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/rudder/trim-rate">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/fctl/fac1 eq 1
+				</test>
+				<test logic="AND">
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/fctl/fac2 eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="hydraulics/rudder/trim-deg">
+			<input>hydraulics/rudder/trim-cmd-deg</input>
+			<rate_limit>hydraulics/rudder/trim-rate</rate_limit>
+		</actuator>
+		
 		<aerosurface_scale name="hydraulics/rudder/trim-norm">
-			<input>/controls/flight/rudder-trim</input>
+			<input>hydraulics/rudder/trim-deg</input>
+			<domain>
+				<min>-20</min>
+				<max> 20</max>
+			</domain>
 			<range>
 				<min>-0.8</min>
 				<max>0.8</max>
