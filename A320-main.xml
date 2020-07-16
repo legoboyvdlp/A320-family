@@ -536,6 +536,11 @@
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
+			<fbw>
+				<yaw>
+					<max-deg-switch type="double">25</max-deg-switch>
+				</yaw>
+			</fbw>
 			<zero type="int">0</zero>
 		</jsbsim>
 	</fdm>
@@ -1115,6 +1120,8 @@
 				<sec3 type="bool">0</sec3>
 				<fac1 type="bool">0</fac1>
 				<fac2 type="bool">0</fac2>
+				<rtlu-1 type="bool">0</rtlu-1>
+				<rtlu-2 type="bool">0</rtlu-2>
 			</fctl>
 			<fuel>
 				<left-tank-pump-1 type="bool">0</left-tank-pump-1>
@@ -1159,7 +1166,6 @@
 				<trim-valve-cabin-fwd type="bool">0</trim-valve-cabin-fwd>
 				<x-bleed-valve type="bool">0</x-bleed-valve>
 			</pneumatics>
-			<rudder type="bool">0</rudder>
 			<spoilers>
 				<spoiler-l1 type="bool">0</spoiler-l1>
 				<spoiler-l2 type="bool">0</spoiler-l2>

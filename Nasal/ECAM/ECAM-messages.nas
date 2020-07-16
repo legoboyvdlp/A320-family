@@ -226,6 +226,13 @@ var warnings				  = std.Vector.new([
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
+	# Rudder Travel Limiter
+	var rudTravLimSysFault    = warning.new(msg: "AUTO FLT RUD TRV LIM SYS",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var rudTravLimSysFaultRud = warning.new(msg: "RUD WITH CARE ABV 160 KT",  colour: "c", aural: 1, light: 1),
+	var rudTravLimSysFaultFac = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c", aural: 1, light: 1),
+	var rudTravLimSys1Fault    = warning.new(msg: "AUTO FLT RUD TRV LIM 1",  colour: "a", isMainMsg: 1),
+	var rudTravLimSys2Fault    = warning.new(msg: "AUTO FLT RUD TRV LIM 2",  colour: "a", isMainMsg: 1),
+	
 	# FCU fault
 	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var fcuFaultBaro          = warning.new(msg: " -PFD BARO REF: STD ONLY",  colour: "c"),

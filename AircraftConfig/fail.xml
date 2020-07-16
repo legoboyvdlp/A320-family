@@ -124,6 +124,26 @@
 				<live>true</live>
 			</checkbox>
 			
+			<checkbox>
+				<label>RTLU1</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/rtlu-1</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>RTLU2</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/rtlu-2</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
 			<group>
 				<layout>hbox</layout>
 

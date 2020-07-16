@@ -1173,10 +1173,32 @@ var messages_priority_2 = func {
 	}
 	
 	
-	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 7 and systems.ELEC.Bus.ac1.getValue() and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
+	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 7 and systems.ELEC.Bus.ac1.getValue() >= 110 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(tcasFault);
+	}
+	
+	if (rudTravLimSysFault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and warningNodes.Logic.rtlu12Fault.getBoolValue()) {
+		rudTravLimSysFault.active = 1;
+		rudTravLimSysFaultRud.active = 1;
+		rudTravLimSysFaultFac.active = 1;
+	} else {
+		ECAM_controller.warningReset(rudTravLimSysFault);
+		ECAM_controller.warningReset(rudTravLimSysFaultRud);
+		ECAM_controller.warningReset(rudTravLimSysFaultFac);
+	}
+	
+	if (rudTravLimSys1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.rtlu1Fault.getBoolValue()) {
+		rudTravLimSys1Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(rudTravLimSys1Fault);
+	}
+	
+	if (rudTravLimSys2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar >= 9 or phaseVar == 6) and warningNodes.Logic.rtlu2Fault.getBoolValue()) {
+		rudTravLimSys2Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(rudTravLimSys2Fault);
 	}
 	
 	if (fcu.FCUController.FCU1.failed and fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and fcuFault.clearFlag == 0) {

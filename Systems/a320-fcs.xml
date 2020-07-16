@@ -356,11 +356,7 @@
 		</summer>
 		
 		<switch name="hydraulics/rudder/switch">
-			<default value="0"/>
-			<test logic="AND" value="hydraulics/rudder/summer">
-				hydraulics/rudder/pressure-switch-or eq 1
-				/systems/failures/rudder eq 0
-			</test>
+			<default value="hydraulics/rudder/summer"/>
 			<clipto>
 				<min>fbw/yaw/max-deg-scale-neg</min>
 				<max>fbw/yaw/max-deg-scale</max>
@@ -372,9 +368,16 @@
 			<gain>25</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/rudder/rate">
+			<default value="80"/>
+			<test logic="OR" value="0">
+				hydraulics/rudder/pressure-switch-or eq 0
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/rudder/final-actuator">
 			<input>hydraulics/rudder/cmd-deg</input>
-			<rate_limit>80</rate_limit>
+			<rate_limit>hydraulics/rudder/rate</rate_limit>
 			<lag>25.5</lag>
 			<output>hydraulics/rudder/final-deg</output>
 		</actuator>

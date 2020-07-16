@@ -380,14 +380,6 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/failures/rudder">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/fctl/fac1 eq 0
-				/systems/fctl/fac2 eq 0
-			</test>
-		</switch>
-		
 	</channel>
 	
 	<channel name="FBW: Roll">
@@ -1315,10 +1307,10 @@
 	
 	<channel name="FBW: Yaw">
 		
-		<fcs_function name="fbw/yaw/max-deg-fac">
+		<fcs_function name="fbw/yaw/max-deg-fac-1">
 			<function>
 				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="row">/systems/fmgc/active-airspeed-1</independentVar>
 					<tableData>
 						160  25.0
 						410   3.5
@@ -1327,20 +1319,106 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fbw/yaw/max-deg-switch">
-			<default value="25"/>
-			<test logic="AND" value="fbw/yaw/max-deg-fac">
+		<fcs_function name="fbw/yaw/max-deg-fac-2">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/fmgc/active-airspeed-2</independentVar>
+					<tableData>
+						160  25.0
+						410   3.5
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/fctl/fac1-rtlu-avail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/failures/fctl/rtlu-1 eq 0
+				/systems/electrical/bus/dc-ess ge 25
 				/systems/fctl/fac1 eq 1
-				/systems/fctl/fac2 eq 1
-				/gear/gear[1]/wow eq 0
-				/gear/gear[2]/wow eq 0
-			</test>
-			<test logic="AND" value="fbw/yaw/max-deg-fac">
-				/controls/flight/flaps eq 0
-				/gear/gear[1]/wow eq 0
-				/gear/gear[2]/wow eq 0
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-1 eq 0
+						/systems/navigation/adr/operating-1 eq 1
+					</test>
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-3 eq 0
+						/systems/navigation/adr/operating-3 eq 1
+					</test>
+				</test>
 			</test>
 		</switch>
+		
+		<switch name="/systems/fctl/fac2-rtlu-avail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/failures/fctl/rtlu-2 eq 0
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/fctl/fac2 eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-2 eq 0
+						/systems/navigation/adr/operating-2 eq 1
+					</test>
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-3 eq 0
+						/systems/navigation/adr/operating-3 eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="fbw/yaw/rtlu-emergency">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac1-rtlu-avail eq 0
+				/systems/fctl/fac2-rtlu-avail eq 0
+				fcs/slat-pos-deg ne 0
+			</test>
+		</switch>
+		
+		<switch name="fbw/yaw/max-deg-switch-cmd">
+			<default value="25"/>
+			<test logic="AND" value="fbw/yaw/max-deg-switch"> <!-- RTLU frozen with FAC 1 / 2 failure -->
+				/systems/fctl/fac1-rtlu-avail eq 0
+				/systems/fctl/fac2-rtlu-avail eq 0
+				fcs/slat-pos-deg eq 0
+			</test>
+			<test logic="AND" value="25"> <!-- Return to low speed control with slats extended -->
+				fbw/yaw/rtlu-emergency eq 1
+			</test>
+			<test logic="AND" value="fbw/yaw/max-deg-fac-1"> <!-- Side 1 has priority -->
+				/systems/fctl/fac1-rtlu-avail eq 1
+			</test>
+			<test logic="AND" value="fbw/yaw/max-deg-fac-2">
+				/systems/fctl/fac2-rtlu-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/yaw/rtlu-power">
+			<default value="0"/>
+			<test logic="AND" value="25"> <!-- Main motor control -->
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed ge 25
+					/systems/electrical/bus/dc-2 ge 25
+				</test>
+				fbw/yaw/rtlu-emergency ne 1
+			</test>
+			<test logic="AND" value="3"> <!-- Emergency motor is slower -->
+				/systems/electrical/bus/ac-ess-26v ge 24.8
+				/systems/fctl/fac1-rtlu-avail eq 0
+				/systems/fctl/fac2-rtlu-avail eq 0
+				fcs/slat-pos-deg ne 0
+				fbw/yaw/max-deg-switch ne fbw/yaw/max-deg-switch-cmd
+			</test>
+		</switch>
+		
+		<actuator name="rubbish/rudder-travel-limiter">
+			<input>fbw/yaw/max-deg-switch-cmd</input>
+			<rate_limit>fbw/yaw/rtlu-power</rate_limit>
+			<output>fbw/yaw/max-deg-switch</output>
+		</actuator>
 		
 		<aerosurface_scale name="fbw/yaw/max-deg-scale">
 			<input>fbw/yaw/max-deg-switch</input>

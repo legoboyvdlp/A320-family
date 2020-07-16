@@ -33,11 +33,12 @@ var failResetOld = func {
 	setprop("/systems/failures/fctl/sec3", 0);
 	setprop("/systems/failures/fctl/fac1", 0);
 	setprop("/systems/failures/fctl/fac2", 0);
+	setprop("/systems/failures/fctl/rtlu-1", 0);
+	setprop("/systems/failures/fctl/rtlu-2", 0);
 	setprop("/systems/failures/aileron-left", 0);
 	setprop("/systems/failures/aileron-right", 0);
 	setprop("/systems/failures/elevator-left", 0);
 	setprop("/systems/failures/elevator-right", 0);
-	setprop("/systems/failures/rudder", 0);
 	setprop("/systems/failures/spoilers/spoiler-l1", 0);
 	setprop("/systems/failures/spoilers/spoiler-l2", 0);
 	setprop("/systems/failures/spoilers/spoiler-l3", 0);
@@ -51,7 +52,6 @@ var failResetOld = func {
 	setprop("/systems/failures/hyd-blue", 0);
 	setprop("/systems/failures/hyd-green", 0);
 	setprop("/systems/failures/hyd-yellow", 0);
-	setprop("/systems/failures/ptu", 0);
 	setprop("/systems/failures/pump-blue", 0);
 	setprop("/systems/failures/pump-green", 0);
 	setprop("/systems/failures/pump-yellow-eng", 0);

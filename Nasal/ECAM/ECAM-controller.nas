@@ -52,6 +52,9 @@ var warningNodes = {
 		pack1ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-1-switch-cmd"),
 		pack2ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-2-switch-cmd"),
 		cabinFans: props.globals.initNode("/ECAM/warnings/logic/cabin-fans-fault"),
+		rtlu1Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-1-fault"),
+		rtlu2Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-2-fault"),
+		rtlu12Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-fault"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
