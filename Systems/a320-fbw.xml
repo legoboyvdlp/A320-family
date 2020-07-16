@@ -56,11 +56,14 @@
 			</test>
 		</switch>
 		
-		<switch name="fbw/yaw/gain-switch">
+		<switch name="fbw/yaw/gain-switch"> <!-- disable auto-trim -->
 			<default value="0"/>
 			<test logic="OR" value="1">
 				position/wow eq 1
-				/it-fbw/yaw-law eq 2
+				<test logic="AND">
+					/it-fbw/yaw-law eq 2
+					/it-fbw/law ne 0
+				</test>
 			</test>
 		</switch>
 		
@@ -1538,11 +1541,14 @@
 			<input>fbw/yaw/fmgc-cmd</input>
 		</summer>
 		
-		<switch name="fbw/yaw/law-switch">
+		<switch name="fbw/yaw/law-switch"> <!-- Is the yaw damper active or not? -->
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/it-fbw/yaw-law eq 0
-				/it-fbw/yaw-law eq 1
+			<test logic="AND" value="1">
+				/it-fbw/law ne 3
+				<test logic="OR">
+					/it-fbw/yaw-law eq 0
+					/it-fbw/yaw-law eq 1
+				</test>
 			</test>
 		</switch>
 		
