@@ -467,7 +467,9 @@ var FCUController = {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				vertModeInput.setValue(2);
+				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
+					vertModeInput.setValue(2);
+				}
 			}
 		}
 	},
