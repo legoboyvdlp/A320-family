@@ -1124,6 +1124,8 @@
 				<fac2 type="bool">0</fac2>
 				<rtlu-1 type="bool">0</rtlu-1>
 				<rtlu-2 type="bool">0</rtlu-2>
+				<yaw-damper-1 type="bool">0</yaw-damper-1>
+				<yaw-damper-2 type="bool">0</yaw-damper-2>
 			</fctl>
 			<fuel>
 				<left-tank-pump-1 type="bool">0</left-tank-pump-1>
@@ -1194,6 +1196,7 @@
 			<sec3 type="bool">0</sec3>
 			<fac1 type="bool">0</fac1>
 			<fac2 type="bool">0</fac2>
+			<yawdamper-active type="bool">0</yawdamper-active>
 		</fctl>
 		<fire n="0">
 			<apu>

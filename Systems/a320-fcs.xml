@@ -296,7 +296,8 @@
 		
 		<switch name="hydraulics/elevator-trim/rate">
 			<default value="0.125"/>
-			<test value="0.25">
+			<test logic="OR" value="0.25">
+				/systems/hydraulic/yellow-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 		</switch>
@@ -333,6 +334,40 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/fctl/yawdamper-1-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac1-healthy-signal eq 1
+				/systems/hydraulic/green-psi ge 1500
+				<test logic="OR">
+					/systems/navigation/adr/operating-1 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				/systems/failures/fctl/yaw-damper-1 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/yawdamper-2-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac2-healthy-signal eq 1
+				/systems/hydraulic/yellow-psi ge 1500
+				<test logic="OR">
+					/systems/navigation/adr/operating-2 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				/systems/failures/fctl/yaw-damper-2 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/yawdamper-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fctl/yawdamper-1-active eq 1
+				/systems/fctl/yawdamper-2-active eq 1
+			</test>
+		</switch>
+		
 		<switch name="hydraulics/rudder/trim-autopilot">
 			<default value="0"/>
 			<test logic="AND" value="/controls/flight/rudder-trim">
@@ -351,11 +386,11 @@
 			<test logic="OR" value="1">
 				<test logic="AND">
 					/systems/electrical/bus/dc-ess ge 25
-					/systems/fctl/fac1 eq 1
+					/systems/fctl/fac1-healthy-signal eq 1
 				</test>
 				<test logic="AND">
 					/systems/electrical/bus/dc-2 ge 25
-					/systems/fctl/fac2 eq 1
+					/systems/fctl/fac2-healthy-signal eq 1
 				</test>
 			</test>
 		</switch>

@@ -321,6 +321,19 @@
             <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
+		<actuator name="/ECAM/warnings/timer/yaw-damper-1-fault">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/yaw-damper-1-fault</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/yaw-damper-2-fault">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/yaw-damper-2-fault</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
 	</channel>
 	
 	<channel name="ECAM">
@@ -1239,7 +1252,7 @@
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/ac-1 ge 110
 				/systems/fctl/fac1-rtlu-avail eq 0
-				/systems/fctl/fac1 eq 1
+				/systems/fctl/fac1-healthy-signal eq 1
 			</test>
 		</switch>
 		
@@ -1251,7 +1264,7 @@
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/electrical/bus/ac-2 ge 110
 				/systems/fctl/fac2-rtlu-avail eq 0
-				/systems/fctl/fac2 eq 1
+				/systems/fctl/fac2-healthy-signal eq 1
 			</test>
 		</switch>
 		
@@ -1276,6 +1289,152 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/rud-trav-lim-sys-2-fault-cmd eq 1
 				/ECAM/warnings/logic/rud-trav-lim-sys-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/fac-12-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/fctl/fac1-healthy-signal eq 0
+				/systems/fctl/fac2-healthy-signal eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/fac-1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/operating-1 eq 1
+				/systems/navigation/adr/operating-3 eq 1
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/fctl/fac1-healthy-signal eq 0
+				/systems/fctl/fac2-healthy-signal eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/fac-2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/operating-2 eq 1
+				/systems/navigation/adr/operating-3 eq 1
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/fctl/fac1-healthy-signal eq 1
+				/systems/fctl/fac2-healthy-signal eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-1-fault-eng-start">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[1]/cutoff-switch eq 0 <!-- opposite side -->
+				/systems/hydraulic/green-psi lt 1500
+				/ECAM/timer/ground-calc eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-1-fault-green">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulic/green-psi lt 1500
+				/ECAM/warning-phase eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-1-fault-adr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/operating-1 eq 0
+				/systems/navigation/adr/operating-3 eq 0
+				<test logic="OR">
+					/ECAM/warning-phase eq 1
+					/ECAM/warning-phase eq 10
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/operating-1 eq 1
+				/systems/navigation/adr/operating-3 eq 1
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/electrical/bus/ac-1 ge 110
+				/ECAM/warnings/logic/yaw-damper-1-fault-eng-start eq 0
+				/ECAM/warnings/logic/yaw-damper-1-fault-green eq 0
+				/ECAM/warnings/logic/yaw-damper-1-fault-adr eq 0
+				/ECAM/irs-in-align eq 0
+				/systems/fctl/yawdamper-1-active eq 0
+				/systems/fctl/fac1-healthy-signal eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-2-fault-eng-start">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/cutoff-switch eq 0 <!-- opposite side -->
+				/systems/hydraulic/yellow-psi lt 1500
+				/ECAM/timer/ground-calc eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-2-fault-yellow">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulic/yellow-psi lt 1500
+				/ECAM/warning-phase eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-2-fault-adr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/operating-2 eq 0
+				/systems/navigation/adr/operating-3 eq 0
+				<test logic="OR">
+					/ECAM/warning-phase eq 1
+					/ECAM/warning-phase eq 10
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/operating-2 eq 1
+				/systems/navigation/adr/operating-3 eq 1
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/electrical/bus/ac-2 ge 110
+				/ECAM/warnings/logic/yaw-damper-2-fault-eng-start eq 0
+				/ECAM/warnings/logic/yaw-damper-2-fault-yellow eq 0
+				/ECAM/warnings/logic/yaw-damper-2-fault-adr eq 0
+				/ECAM/irs-in-align eq 0
+				/systems/fctl/yawdamper-2-active eq 0
+				/systems/fctl/fac2-healthy-signal eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/yaw-damper-12-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/irs-in-align eq 0
+				<test logic="OR">
+					/systems/navigation/adr/operating-1 eq 1
+					/systems/navigation/adr/operating-2 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed ge 25
+					/systems/electrical/bus/ac-1 ge 110
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/electrical/bus/ac-2 ge 110
+				</test>
+				/ECAM/warnings/logic/yaw-damper-1-fault-green eq 0
+				/ECAM/warnings/logic/yaw-damper-2-fault-yellow eq 0
+				/ECAM/warnings/logic/yaw-damper-1-fault eq 1
+				/ECAM/warnings/logic/yaw-damper-2-fault eq 1
 			</test>
 		</switch>
 	</channel>

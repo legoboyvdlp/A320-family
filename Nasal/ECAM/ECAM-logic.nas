@@ -10,7 +10,6 @@ var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
 
-var fac1Node   = props.globals.getNode("/controls/fctl/switches/fac1", 1);
 var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wowNode    = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
@@ -33,8 +32,6 @@ var phaseVar1 = nil;
 var phaseVarMemo = nil;
 var phaseVarMemo2 = nil;
 var phaseVarMemo3 = nil;
-var dualFailFACActive = 1;
-var emerConfigFACActive = 1;
 var gear_agl_cur = nil;
 var numberMinutes = nil;
 var timeNow = nil;
@@ -103,8 +100,6 @@ var messages_priority_3 = func {
 		dualFail.active = 1;
 	} else {
 		ECAM_controller.warningReset(dualFail);
-		
-		dualFailFACActive = 1; # reset FAC local variable
 	}
 	
 	if (dualFail.active == 1) {
@@ -144,7 +139,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(dualFailRadio);
 		}
 		
-		if (dualFailFACActive == 1 and dualFailFAC.clearFlag == 0) {
+		if (getprop("/systems/fctl/fac1-healthy-signal") == 0 and dualFailFAC.clearFlag == 0) {
 			dualFailFAC.active = 1;
 		} else {
 			ECAM_controller.warningReset(dualFailFAC);
@@ -959,7 +954,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigFuelG2);
 		}
 		
-		if (emerConfigFACActive == 1 and emerconfigFAC.clearFlag == 0) {
+		if (getprop("/systems/fctl/fac1-healthy-signal") == 0 and emerconfigFAC.clearFlag == 0) {
 			emerconfigFAC.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigFAC);
@@ -1179,6 +1174,28 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(tcasFault);
 	}
 	
+	if (fac12Fault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and warningNodes.Logic.fac12Fault.getBoolValue()) {
+		fac12Fault.active = 1;
+		fac12FaultRud.active = 1;
+		fac12FaultFac.active = 1;
+		fac12FaultSuccess.active = 1;
+		fac12FaultFacOff.active = 1;
+	} else {
+		ECAM_controller.warningReset(fac12Fault);
+		ECAM_controller.warningReset(fac12FaultRud);
+		ECAM_controller.warningReset(fac12FaultFac);
+		ECAM_controller.warningReset(fac12FaultSuccess);
+		ECAM_controller.warningReset(fac12FaultFacOff);
+	}
+	
+	if (yawDamperSysFault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and phaseVar2 != 10 and warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
+		yawDamperSysFault.active = 1;
+		yawDamperSysFaultFac.active = 1;
+	} else {
+		ECAM_controller.warningReset(yawDamperSysFault);
+		ECAM_controller.warningReset(yawDamperSysFaultFac);
+	}
+	
 	if (rudTravLimSysFault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and warningNodes.Logic.rtlu12Fault.getBoolValue()) {
 		rudTravLimSysFault.active = 1;
 		rudTravLimSysFaultRud.active = 1;
@@ -1187,6 +1204,42 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(rudTravLimSysFault);
 		ECAM_controller.warningReset(rudTravLimSysFaultRud);
 		ECAM_controller.warningReset(rudTravLimSysFaultFac);
+	}
+	
+	if (fac1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.fac1Fault.getBoolValue()) {
+		fac1Fault.active = 1;
+		fac1FaultFac.active = 1;
+		fac1FaultSuccess.active = 1;
+		fac1FaultFacOff.active = 1;
+	} else {
+		ECAM_controller.warningReset(fac1Fault);
+		ECAM_controller.warningReset(fac1FaultFac);
+		ECAM_controller.warningReset(fac1FaultSuccess);
+		ECAM_controller.warningReset(fac1FaultFacOff);
+	}
+	
+	if (fac2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.fac2Fault.getBoolValue()) {
+		fac2Fault.active = 1;
+		fac2FaultFac.active = 1;
+		fac2FaultSuccess.active = 1;
+		fac2FaultFacOff.active = 1;
+	} else {
+		ECAM_controller.warningReset(fac2Fault);
+		ECAM_controller.warningReset(fac2FaultFac);
+		ECAM_controller.warningReset(fac2FaultSuccess);
+		ECAM_controller.warningReset(fac2FaultFacOff);
+	}
+	
+	if (yawDamper1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 == 9 or phaseVar2 == 6) and warningNodes.Timers.yawDamper1Fault.getValue() == 1 and !warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
+		yawDamper1Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(yawDamper1Fault);
+	}
+	
+	if (yawDamper2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 == 9 or phaseVar2 == 6) and warningNodes.Timers.yawDamper2Fault.getValue() == 1 and !warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
+		yawDamper2Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(yawDamper2Fault);
 	}
 	
 	if (rudTravLimSys1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu1Fault.getBoolValue()) {
@@ -1230,14 +1283,12 @@ var messages_priority_2 = func {
 		apuEmerShutdown.active = 1;
 	} elsif (apuEmerShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuEmerShutdown);
-		apuEmerShutdown.isMainMsg = 1;
 	}
 	
 	if (apuEmerShutdownMast.clearFlag == 0 and getprop("controls/apu/master") and apuEmerShutdown.active == 1) {
 		apuEmerShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuEmerShutdownMast);
-		apuEmerShutdown.isMainMsg = 0;
 	}
 	
 	# APU AUTO SHUT DOWN
@@ -1245,14 +1296,12 @@ var messages_priority_2 = func {
 		apuAutoShutdown.active = 1;
 	} elsif (apuAutoShutdown.clearFlag == 1) {
 		ECAM_controller.warningReset(apuAutoShutdown);
-		apuAutoShutdown.isMainMsg = 1;
 	}
 	
 	if (apuAutoShutdownMast.clearFlag == 0 and pts.APU.masterSw.getValue() and apuAutoShutdown.active == 1) {
 		apuAutoShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuAutoShutdownMast);
-		apuAutoShutdown.isMainMsg = 0;
 	}
 	
 	# Bleed
@@ -2137,6 +2186,12 @@ var messages_memo = func {
 		refuelg.active = 0;
 	}
 	
+	if (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1) {
+		FWC.Logic.IRSinAlign.setValue(1);
+	} else {
+		FWC.Logic.IRSinAlign.setValue(0);
+	}
+	
 	if ((phaseVarMemo2 == 1 or phaseVarMemo2 == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1)) {
 		irs_in_align.active = 1;
 		if (getprop("ECAM/phases/timer/eng1or2-output")) {
@@ -2407,23 +2462,6 @@ var messages_right_memo = func {
 		ctr_tk_feedg.active = 0;
 	}
 }
-
-# Listeners
-setlistener("/controls/fctl/switches/fac1", func() {
-	if (dualFail.active == 0 and emerconfig.active == 0) { return; }
-	
-	if (fac1Node.getBoolValue() and dualFail.active == 1) {
-		dualFailFACActive = 0;
-	} else {
-		dualFailFACActive = 1;
-	}
-	
-	if (fac1Node.getBoolValue() and emerconfig.active == 1) {
-		emerConfigFACActive = 0;
-	} else {
-		emerConfigFACActive = 1;
-	}
-}, 0, 0);
 
 setlistener("/engines/engine[0]/state", func() {
 	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and wowNode.getValue() == 0) {

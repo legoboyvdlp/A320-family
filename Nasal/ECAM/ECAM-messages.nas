@@ -226,12 +226,34 @@ var warnings				  = std.Vector.new([
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
-	# Rudder Travel Limiter
+	# FAC and Rudder System
+	var fac12Fault            = warning.new(msg: "AUTO FLT FAC 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fac12FaultRud         = warning.new(msg: "RUD WITH CARE ABV 160 KT",  colour: "c"),
+	var fac12FaultFac         = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	var fac12FaultSuccess     = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var fac12FaultFacOff      = warning.new(msg: " -FAC 1+2............OFF",  colour: "c"),
+	var yawDamperSysFault     = warning.new(msg: "AUTO FLT YAW DAMPER SYS",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var yawDamperSysFaultFac  = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	# var rudderTrimSysFault    = warning.new(msg: "AUTO FLT RUD TRIM SYS",     colour: "a", aural: 1, light: 1, isMainMsg: 1), not implemented
+	# var rudderTrimSysFaultFac = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
 	var rudTravLimSysFault    = warning.new(msg: "AUTO FLT RUD TRV LIM SYS",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var rudTravLimSysFaultRud = warning.new(msg: "RUD WITH CARE ABV 160 KT",  colour: "c", aural: 1, light: 1),
-	var rudTravLimSysFaultFac = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c", aural: 1, light: 1),
-	var rudTravLimSys1Fault    = warning.new(msg: "AUTO FLT RUD TRV LIM 1",  colour: "a", isMainMsg: 1),
-	var rudTravLimSys2Fault    = warning.new(msg: "AUTO FLT RUD TRV LIM 2",  colour: "a", isMainMsg: 1),
+	var rudTravLimSysFaultRud = warning.new(msg: "RUD WITH CARE ABV 160 KT",  colour: "c"),
+	var rudTravLimSysFaultFac = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	var fac1Fault             = warning.new(msg: "AUTO FLT FAC 1 FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fac1FaultFac          = warning.new(msg: " -FAC 1......OFF THEN ON",  colour: "c"),
+	var fac1FaultSuccess      = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var fac1FaultFacOff       = warning.new(msg: " -FAC 1..............OFF",  colour: "c"),
+	var fac2Fault             = warning.new(msg: "AUTO FLT FAC 2 FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fac2FaultFac          = warning.new(msg: " -FAC 2......OFF THEN ON",  colour: "c"),
+	var fac2FaultSuccess      = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var fac2FaultFacOff       = warning.new(msg: " -FAC 2..............OFF",  colour: "c"),
+	
+	var yawDamper1Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 1",     colour: "a", isMainMsg: 1),
+	var yawDamper2Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 2",     colour: "a", isMainMsg: 1),
+	# var rudTrim1Fault         = warning.new(msg: "AUTO FLT RUD TRIM1 FAULT",  colour: "a", isMainMsg: 1), not implemented
+	# var rudTrim2Fault         = warning.new(msg: "AUTO FLT RUD TRIM2 FAULT",  colour: "a", isMainMsg: 1), not implemented
+	var rudTravLimSys1Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 1",    colour: "a", isMainMsg: 1),
+	var rudTravLimSys2Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 2",    colour: "a", isMainMsg: 1),
 	
 	# FCU fault
 	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),

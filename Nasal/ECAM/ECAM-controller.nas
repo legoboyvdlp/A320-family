@@ -55,6 +55,10 @@ var warningNodes = {
 		rtlu1Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-1-fault"),
 		rtlu2Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-2-fault"),
 		rtlu12Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-fault"),
+		fac12Fault: props.globals.initNode("/ECAM/warnings/logic/fac-12-fault"),
+		fac1Fault: props.globals.initNode("/ECAM/warnings/logic/fac-1-fault"),
+		fac2Fault: props.globals.initNode("/ECAM/warnings/logic/fac-2-fault"),
+		yawDamper12Fault: props.globals.initNode("/ECAM/warnings/logic/yaw-damper-12-fault"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -81,6 +85,8 @@ var warningNodes = {
 		pack1Off: props.globals.initNode("/ECAM/warnings/timer/pack-1-off"),
 		pack2Off: props.globals.initNode("/ECAM/warnings/timer/pack-2-off"),
 		trimAirFault: props.globals.initNode("/ECAM/warnings/timer/trim-air-fault"),
+		yawDamper1Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-1-fault"),
+		yawDamper2Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-2-fault"),
 	},
 	Flipflops: {
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),

@@ -32,14 +32,15 @@ var FBW = {
 	override: props.globals.getNode("/it-fbw/override"),
 	rollBack: props.globals.getNode("/it-fbw/roll-back"),
 	rollLim: props.globals.getNode("/it-fbw/roll-lim"),
+	yawdamper: props.globals.getNode("/systems/fctl/yawdamper-active"),
 	Computers: {
 		elac1: props.globals.getNode("/systems/fctl/elac1"),
 		elac2: props.globals.getNode("/systems/fctl/elac2"),
 		sec1: props.globals.getNode("/systems/fctl/sec1"),
 		sec2: props.globals.getNode("/systems/fctl/sec2"),
 		sec3: props.globals.getNode("/systems/fctl/sec3"),
-		fac1: props.globals.getNode("/systems/fctl/fac1"),
-		fac2: props.globals.getNode("/systems/fctl/fac2"),
+		fac1: props.globals.getNode("/systems/fctl/fac1-healthy-signal"),
+		fac2: props.globals.getNode("/systems/fctl/fac2-healthy-signal"),
 	},
 	Failures: {
 		elac1: props.globals.getNode("/systems/failures/fctl/elac1"),
@@ -59,6 +60,8 @@ var FBW = {
 		spoilerr3: props.globals.getNode("/systems/failures/spoilers/spoiler-r3"),
 		spoilerr4: props.globals.getNode("/systems/failures/spoilers/spoiler-r4"),
 		spoilerr5: props.globals.getNode("/systems/failures/spoilers/spoiler-r5"),
+		yawDamper1: props.globals.getNode("/systems/failures/fctl/yaw-damper-1"),
+		yawDamper2: props.globals.getNode("/systems/failures/fctl/yaw-damper-2"),
 	},
 	Lights: {
 		elac1: props.globals.getNode("/systems/fctl/lights/elac1-fault"),
@@ -126,6 +129,18 @@ var FBW = {
 		me.Failures.sec3.setBoolValue(0);
 		me.Failures.fac1.setBoolValue(0);
 		me.Failures.fac2.setBoolValue(0);
+		me.Failures.spoilerl1.setBoolValue(0);
+		me.Failures.spoilerl2.setBoolValue(0);
+		me.Failures.spoilerl3.setBoolValue(0);
+		me.Failures.spoilerl4.setBoolValue(0);
+		me.Failures.spoilerl5.setBoolValue(0);
+		me.Failures.spoilerr1.setBoolValue(0);
+		me.Failures.spoilerr2.setBoolValue(0);
+		me.Failures.spoilerr3.setBoolValue(0);
+		me.Failures.spoilerr4.setBoolValue(0);
+		me.Failures.spoilerr5.setBoolValue(0);
+		me.Failures.yawDamper1.setBoolValue(0);
+		me.Failures.yawDamper2.setBoolValue(0);
 	},
 };
 
@@ -173,22 +188,14 @@ var update_loop = func {
 		}
 		if (systems.ELEC.EmerElec.getBoolValue()) {
 			if (lawyaw == 0 or lawyaw == 1) {
-				FBW.degradeYawLaw.setValue(2);
+			} elsif (fac1 and lawyaw == 2) {
+				FBW.degradeYawLaw.setValue(1);
 			}
 			if (law == 0) {
 				FBW.degradeLaw.setValue(1);
 				FBW.apOff = 1;
 			}
 		}
-		if (blue >= 1500 and green < 1500 and yellow < 1500) {
-			if (lawyaw == 0 or lawyaw == 1) {
-				FBW.degradeYawLaw.setValue(2);
-			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
-				FBW.apOff = 1;
-			}
-		} 
 		if (blue < 1500 and green < 1500 and yellow >= 1500) {
 			if (lawyaw == 0) {
 				FBW.degradeYawLaw.setValue(1);
@@ -198,7 +205,7 @@ var update_loop = func {
 				FBW.apOff = 1;
 			}
 		}
-		if (!fac1 and !fac2 ) {
+		if ((!fac1 and !fac2) or !FBW.yawdamper.getValue() or (blue >= 1500 and green < 1500 and yellow < 1500)) {
 			if (lawyaw == 0 or lawyaw == 1) {
 				FBW.degradeYawLaw.setValue(2);
 			}
