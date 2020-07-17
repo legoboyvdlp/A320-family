@@ -296,7 +296,8 @@
 		
 		<switch name="hydraulics/elevator-trim/rate">
 			<default value="0.125"/>
-			<test value="0.25">
+			<test logic="OR" value="0.25">
+				/systems/hydraulic/yellow-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 		</switch>
@@ -333,13 +334,78 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/fctl/yawdamper-1-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac1-healthy-signal eq 1
+				/systems/hydraulic/green-psi ge 1500
+				<test logic="OR">
+					/systems/navigation/adr/operating-1 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				/systems/failures/fctl/yaw-damper-1 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/yawdamper-2-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac2-healthy-signal eq 1
+				/systems/hydraulic/yellow-psi ge 1500
+				<test logic="OR">
+					/systems/navigation/adr/operating-2 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				/systems/failures/fctl/yaw-damper-2 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/yawdamper-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fctl/yawdamper-1-active eq 1
+				/systems/fctl/yawdamper-2-active eq 1
+			</test>
+		</switch>
+		
+		<switch name="hydraulics/rudder/trim-autopilot">
+			<default value="0"/>
+			<test logic="AND" value="/controls/flight/rudder-trim">
+				/it-autoflight/output/ap1 eq 0
+				/it-autoflight/output/ap2 eq 0
+			</test>
+		</switch>
+		
 		<pure_gain name="hydraulics/rudder/trim-cmd-deg">
-			<input>/controls/flight/rudder-trim</input>
+			<input>hydraulics/rudder/trim-autopilot</input>
 			<gain>20</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/rudder/trim-rate">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/fctl/fac1-healthy-signal eq 1
+				</test>
+				<test logic="AND">
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/fctl/fac2-healthy-signal eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="hydraulics/rudder/trim-deg">
+			<input>hydraulics/rudder/trim-cmd-deg</input>
+			<rate_limit>hydraulics/rudder/trim-rate</rate_limit>
+		</actuator>
+		
 		<aerosurface_scale name="hydraulics/rudder/trim-norm">
-			<input>/controls/flight/rudder-trim</input>
+			<input>hydraulics/rudder/trim-deg</input>
+			<domain>
+				<min>-20</min>
+				<max> 20</max>
+			</domain>
 			<range>
 				<min>-0.8</min>
 				<max>0.8</max>
@@ -356,11 +422,7 @@
 		</summer>
 		
 		<switch name="hydraulics/rudder/switch">
-			<default value="0"/>
-			<test logic="AND" value="hydraulics/rudder/summer">
-				hydraulics/rudder/pressure-switch-or eq 1
-				/systems/failures/rudder eq 0
-			</test>
+			<default value="hydraulics/rudder/summer"/>
 			<clipto>
 				<min>fbw/yaw/max-deg-scale-neg</min>
 				<max>fbw/yaw/max-deg-scale</max>
@@ -372,9 +434,16 @@
 			<gain>25</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/rudder/rate">
+			<default value="80"/>
+			<test logic="OR" value="0">
+				hydraulics/rudder/pressure-switch-or eq 0
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/rudder/final-actuator">
 			<input>hydraulics/rudder/cmd-deg</input>
-			<rate_limit>80</rate_limit>
+			<rate_limit>hydraulics/rudder/rate</rate_limit>
 			<lag>25.5</lag>
 			<output>hydraulics/rudder/final-deg</output>
 		</actuator>

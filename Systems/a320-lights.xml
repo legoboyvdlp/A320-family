@@ -141,7 +141,7 @@
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
 				<test logic="OR">
-					/controls/flight/slats ge 0
+					/controls/flight/slats-cmd ge 0
 					/gear/gear[2]/wow eq 1
 				</test>
 			</test>
