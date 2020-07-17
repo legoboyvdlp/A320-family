@@ -180,30 +180,35 @@ var start_loop = maketimer(0.1, func {
 	};
 });
 
-
-var update_items = [
-	props.UpdateManager.FromPropertyHashList(["/fdm/jsbsim/hydraulics/rudder/trim-deg", "/controls/switches/annun-test"], 0.05, func(notification)
-		{
-			var rudder_val = getprop("fdm/jsbsim/hydraulics/rudder/trim-deg");
-			if (getprop("/controls/switches/annun-test") == 1) {
-				setprop("/controls/flight/rudder-trim-display", sprintf("%3.1f", "88.8"));
-				setprop("/controls/flight/rudder-trim-letter-display", sprintf("%1.0f", "8"));
+var updateRudderTrim = func() {
+	var rudder_val = getprop("fdm/jsbsim/hydraulics/rudder/trim-deg");
+	if (getprop("/controls/switches/annun-test") == 1) {
+		setprop("/controls/flight/rudder-trim-display", sprintf("%3.1f", "88.8"));
+		setprop("/controls/flight/rudder-trim-letter-display", sprintf("%1.0f", "8"));
+	} else {
+		if (rudder_val > -0.05 and rudder_val < 0.05) {
+			setprop("/controls/flight/rudder-trim-display", sprintf("%2.1f", abs(rudder_val)));
+			setprop("/controls/flight/rudder-trim-letter-display", "");
+		} else {
+			if (rudder_val >= 0.05) {
+				setprop("/controls/flight/rudder-trim-display", sprintf("%2.1f", abs(rudder_val)));
+				setprop("/controls/flight/rudder-trim-letter-display", "R");
 			} else {
-				if (rudder_val > -0.05 and rudder_val < 0.05) {
+				if (rudder_val <= -0.05) {
 					setprop("/controls/flight/rudder-trim-display", sprintf("%2.1f", abs(rudder_val)));
-					setprop("/controls/flight/rudder-trim-letter-display", "");
-				} else {
-					if (rudder_val >= 0.05) {
-						setprop("/controls/flight/rudder-trim-display", sprintf("%2.1f", abs(rudder_val)));
-						setprop("/controls/flight/rudder-trim-letter-display", "R");
-					} else {
-						if (rudder_val <= -0.05) {
-							setprop("/controls/flight/rudder-trim-display", sprintf("%2.1f", abs(rudder_val)));
-							setprop("/controls/flight/rudder-trim-letter-display", "L");
-						}
-					}
+					setprop("/controls/flight/rudder-trim-letter-display", "L");
 				}
 			}
 		}
+	}
+}
+
+var update_items = [
+	props.UpdateManager.FromProperty("/fdm/jsbsim/hydraulics/rudder/trim-deg", 0.05, func(notification)
+		{
+			updateRudderTrim();
+		}
 	),
 ];
+
+setlistener("/controls/switches/annun-test", updateRudderTrim, 0, 0);
