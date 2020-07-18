@@ -11,6 +11,11 @@
 		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction</use></ambient-correction>
 		<lightmap-enabled type="int">0</lightmap-enabled>
 		<lightmap-multi type="int">0</lightmap-multi>
+		<texture n="2">
+			<image>Aircraft/A320-family/Models/Effects/res/Fuse-Main-Normal.png</image>
+				<wrap-s>clamp</wrap-s>
+				<wrap-t>clamp</wrap-t>
+		</texture>
 		<texture n="5">
 			<type>cubemap</type>
 			<images>
