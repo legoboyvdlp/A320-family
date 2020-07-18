@@ -1538,12 +1538,12 @@
 		<property>sim/multiplay/generic/float[6]</property>
 		<factor>-1</factor>
 		<axis>
-			<x1-m>1.43752</x1-m>
-			<y1-m>-13.2839</y1-m>
-			<z1-m>-0.005796</z1-m>
-			<x2-m>2.5211</x2-m>
+			<x1-m>1.44774</x1-m>
+			<y1-m>-13.2833</y1-m>
+			<z1-m>-0.005817</z1-m>
+			<x2-m>2.53379</x2-m>
 			<y2-m>-16.2917</y2-m>
-			<z2-m>0.291967</z2-m>
+			<z2-m>0.293572</z2-m>
 		</axis>
 	</animation>
 	
@@ -1554,12 +1554,12 @@
 		<property>sim/multiplay/generic/float[7]</property>
 		<factor>1</factor>
 		<axis>
-			<x1-m>1.43752</x1-m>
-			<y1-m>13.2815</y1-m>
-			<z1-m>-0.005792</z1-m>
-			<x2-m>2.5211</x2-m>
-			<y2-m>16.2893</y2-m>
-			<z2-m>0.291973</z2-m>
+			<x1-m>1.44774</x1-m>
+			<y1-m>13.2833</y1-m>
+			<z1-m>-0.005817</z1-m>
+			<x2-m>2.53379</x2-m>
+			<y2-m>16.2917</y2-m>
+			<z2-m>0.293572</z2-m>
 		</axis>
 	</animation>
 	
@@ -1620,12 +1620,12 @@
 		<property>sim/multiplay/generic/float[12]</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.5</ind><dep>0.17</dep></entry>
-			<entry><ind>1.0</ind><dep>0.28</dep></entry>
+			<entry><ind>0.5</ind><dep>0.16</dep></entry>
+			<entry><ind>1.0</ind><dep>0.27</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>
-			<y>0.0</y>
+			<y>0.2</y>
 			<z>-0.5</z>
 		</axis>
 	</animation>
@@ -1693,6 +1693,28 @@
 			<x2-m>0.60609</x2-m>
 			<y2-m>-11.7946</y2-m>
 			<z2-m>-0.374512</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>EngineLFairing</name>
+		<type>rotate</type>
+		<object-name>EngineFairingL</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>7.0</dep></entry>
+			<entry><ind>0.375</ind><dep>9.5</dep></entry>
+			<entry><ind>0.50</ind><dep>13.5</dep></entry>
+			<entry><ind>1.0</ind><dep>22.5</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.05276</x1-m>
+			<y1-m>-5.72562</y1-m>
+			<z1-m>-1.06509</z1-m>
+			<x2-m>-1.05297</x2-m>
+			<y2-m>-5.53733</y2-m>
+			<z2-m>-1.07666</z2-m>
 		</axis>
 	</animation>
 	
