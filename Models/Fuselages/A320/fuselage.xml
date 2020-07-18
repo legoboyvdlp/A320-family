@@ -511,6 +511,8 @@
 		<object-name>MLGLockstayActuatorR1</object-name>
 		<object-name>MLGLockstayActuatorL2</object-name>
 		<object-name>MLGLockstayActuatorR2</object-name>
+		<object-name>FlapMechanismL</object-name>
+		<object-name>FlapMechanismR</object-name>
 		<condition>
 			<property>/fdm/jsbsim/zero</property>
 		</condition>
@@ -1579,19 +1581,118 @@
 	</animation>
 	
 	<animation>
+		<name>FlapL2</name>
+		<type>rotate</type>
+		<object-name>FlapL2</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<factor>-40</factor>
+		<axis>
+			<x1-m>-0.40519</x1-m>
+			<y1-m>-6.44122</y1-m>
+			<z1-m>-0.788081</z1-m>
+			<x2-m>1.92808</x2-m>
+			<y2-m>-13.1844</y2-m>
+			<z2-m>-0.065162</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
 		<name>FlapL1</name>
 		<type>translate</type>
 		<object-name>FlapL1</object-name>
 		<property>sim/multiplay/generic/float[12]</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.5</ind><dep>0.25</dep></entry>
+			<entry><ind>0.5</ind><dep>0.20</dep></entry>
 			<entry><ind>1.0</ind><dep>0.30</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>
 			<y>0</y>
 			<z>-0.5</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>FlapL2</name>
+		<type>translate</type>
+		<object-name>FlapL2</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.5</ind><dep>0.17</dep></entry>
+			<entry><ind>1.0</ind><dep>0.28</dep></entry>
+		</interpolation>
+		<axis>
+			<x>1</x>
+			<y>0.0</y>
+			<z>-0.5</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>FlapL1Fairing</name>
+		<type>rotate</type>
+		<object-name>FairingL1</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>7.0</dep></entry>
+			<entry><ind>0.375</ind><dep>9.5</dep></entry>
+			<entry><ind>0.50</ind><dep>13.5</dep></entry>
+			<entry><ind>1.0</ind><dep>22.5</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.35375</x1-m>
+			<y1-m>-5.04032</y1-m>
+			<z1-m>-1.19595</z1-m>
+			<x2-m>-1.35375</x2-m>
+			<y2-m>-4.6714</y2-m>
+			<z2-m>-1.24688</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>FlapL2FairingInner</name>
+		<type>rotate</type>
+		<object-name>FairingL2</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.20</ind><dep>5.75</dep></entry>
+			<entry><ind>0.50</ind><dep>11.75</dep></entry>
+			<entry><ind>0.75</ind><dep>15.25</dep></entry>
+			<entry><ind>1.0</ind><dep>19.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.75735</x1-m>
+			<y1-m>-8.46311</y1-m>
+			<z1-m>-0.789946</z1-m>
+			<x2-m>-0.75735</x2-m>
+			<y2-m>-8.09297</y2-m>
+			<z2-m>-0.831006</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>FlapL2FairingOuter</name>
+		<type>rotate</type>
+		<object-name>FairingL3</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.20</ind><dep>5.75</dep></entry>
+			<entry><ind>0.50</ind><dep>11.75</dep></entry>
+			<entry><ind>0.75</ind><dep>15.25</dep></entry>
+			<entry><ind>1.0</ind><dep>19.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>0.60609</x1-m>
+			<y1-m>-12.0651</y1-m>
+			<z1-m>-0.344492</z1-m>
+			<x2-m>0.60609</x2-m>
+			<y2-m>-11.7946</y2-m>
+			<z2-m>-0.374512</z2-m>
 		</axis>
 	</animation>
 	
