@@ -337,7 +337,7 @@
 		</actuator>
 	</channel>
 	
-	<channel name="ECAM">
+	<channel name="ECAM" execrate="8">
 		
 		<switch name="/ECAM/warnings/logic/apu-bleed-fault">
 			<default value="0"/>
