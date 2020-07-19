@@ -52,6 +52,7 @@ var FWC = {
 	},
 	Logic: {
 		gnd: props.globals.getNode("/ECAM/ground-calc-immediate"),
+		IRSinAlign: props.globals.initNode("/ECAM/irs-in-align", 0, "BOOL"),
 	},
 	Timer: {
 		eng1idle: props.globals.initNode("/ECAM/phases/timer/eng1idle", 0, "INT"),

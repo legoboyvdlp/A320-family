@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp) -->
 
 <system name="A320: Pneumatic">
-	<channel name="Startup">
+	<channel name="Startup" execrate="8">
 		
 		<switch name="/systems/startup-power-valves">
 			<default value="0"/>
@@ -12,7 +12,7 @@
 		
 	</channel>
 	
-	<channel name="Valves">
+	<channel name="Valves" execrate="8"> 
 	
 		<!-- apu -->
 		<switch name="/systems/pneumatics/valves/apu-bleed-valve-cmd">
@@ -604,7 +604,7 @@
 		</actuator>
 	</channel>
 	
-	<channel name="Source PSI">
+	<channel name="Source PSI" execrate="8">
 	
         <fcs_function name="/systems/pneumatics/source/apu-psi">
             <function>
@@ -749,7 +749,7 @@
 		
 	</channel>
 	
-	<channel name="System PSI">
+	<channel name="System PSI" execrate="8">
 	
 		<fcs_function name="/systems/pneumatics/psi/engine-1-upstream-src">
 			<function>
@@ -924,7 +924,7 @@
 		
 	</channel>
 	
-	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
+	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"  execrate="8"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
 	
 		<fcs_function name="/systems/pneumatics/precooler/calc/temp-1">
 			<function>
@@ -1037,7 +1037,7 @@
 		</switch>
 	</channel>
 	 
-	<channel name="Precooler Right" execute="/systems/pneumatics/indicating/bmc2-working">  <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
+	<channel name="Precooler Right" execute="/systems/pneumatics/indicating/bmc2-working" execrate="8">  <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
 		
 		<fcs_function name="/systems/pneumatics/precooler/calc/temp-2">
 			<function>
@@ -1150,7 +1150,7 @@
 		</switch>
 	</channel>
 	
-	<channel name="ECAM">
+	<channel name="ECAM" execrate="8">
 		
 		<switch name="/systems/pneumatics/indicating/bmc1-working">
 			<default value="0"/>
@@ -1295,6 +1295,31 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/pneumatics/valves/engine-ice-2 ne /controls/ice-protection/reng
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/windowprobeheat-output">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/ice-protection/windowprobeheat eq 1
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/bus/ac-1 ge 110
+					/systems/electrical/bus/ac-2 ge 110
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/windowprobeheat eq 0
+				/gear/gear[1]/wow eq 1
+				<test logic="OR">
+					/engines/engine[0]/state eq 3
+					/engines/engine[1]/state eq 3
+				</test>
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/bus/ac-1 ge 110
+					/systems/electrical/bus/ac-2 ge 110
+				</test>
 			</test>
 		</switch>
 	</channel>

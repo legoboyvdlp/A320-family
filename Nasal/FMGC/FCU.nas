@@ -103,6 +103,7 @@ var FCUController = {
 			if (!ap1.getBoolValue()) {
 				ap1Input.setValue(1);
 				ecam.apWarnNode.setValue(0);
+				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 1);
 			}
@@ -112,6 +113,7 @@ var FCUController = {
 		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!ap2.getBoolValue()) {
 				ap2Input.setValue(1);
+				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 2);
 			}
@@ -329,11 +331,13 @@ var FCUController = {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				latModeInput.setValue(2);
-				if (vertTemp == 2 or vertTemp == 6) {
-					me.VSPull();
-				} else {
-					fmgc.ITAF.disarmGS();
+				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
+					latModeInput.setValue(2);
+					if (vertTemp == 2 or vertTemp == 6) {
+						me.VSPull();
+					} else {
+						fmgc.ITAF.disarmGS();
+					}
 				}
 			}
 		}
@@ -465,7 +469,9 @@ var FCUController = {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				vertModeInput.setValue(2);
+				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
+					vertModeInput.setValue(2);
+				}
 			}
 		}
 	},

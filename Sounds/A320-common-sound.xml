@@ -165,7 +165,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/FMGC/status/to-state</property>
+						<property>/FMGC/internal/to-state</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1071,7 +1071,7 @@
 		<wow>
 			<mode>once</mode>
 			<name>wow0</name>
-			<path>Aircraft/A320-family/Sounds/SASA/Touch-Main.wav</path> <!-- Nose seemed to harsh -->
+			<path>Aircraft/A320-family/Sounds/SASA/Touch-Main.wav</path>
 			<condition>
 				<property>gear/gear[0]/wow</property>
 			</condition>

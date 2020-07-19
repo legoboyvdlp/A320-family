@@ -33,6 +33,18 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="hydraulics/rudder-swing">
+			<function>
+				<table>
+					<independentVar lookup="row">/velocities/airspeed-kt</independentVar> <!-- rudder is rather large at 7m2... so it doesn't take much speed to stop it -->
+					<tableData>
+						 12  1.0
+						 35  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<actuator name="spoilers/anti-droop-cmd">
 			<input>fbw/spoiler-output</input>
 			<rate_limit sense="incr">0.9</rate_limit>
@@ -296,7 +308,8 @@
 		
 		<switch name="hydraulics/elevator-trim/rate">
 			<default value="0.125"/>
-			<test value="0.25">
+			<test logic="OR" value="0.25">
+				/systems/hydraulic/yellow-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 		</switch>
@@ -333,13 +346,78 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/fctl/yawdamper-1-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac1-healthy-signal eq 1
+				/systems/hydraulic/green-psi ge 1500
+				<test logic="OR">
+					/systems/navigation/adr/operating-1 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				/systems/failures/fctl/yaw-damper-1 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/yawdamper-2-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac2-healthy-signal eq 1
+				/systems/hydraulic/yellow-psi ge 1500
+				<test logic="OR">
+					/systems/navigation/adr/operating-2 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+				/systems/failures/fctl/yaw-damper-2 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/yawdamper-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fctl/yawdamper-1-active eq 1
+				/systems/fctl/yawdamper-2-active eq 1
+			</test>
+		</switch>
+		
+		<switch name="hydraulics/rudder/trim-autopilot">
+			<default value="0"/>
+			<test logic="AND" value="/controls/flight/rudder-trim">
+				/it-autoflight/output/ap1 eq 0
+				/it-autoflight/output/ap2 eq 0
+			</test>
+		</switch>
+		
 		<pure_gain name="hydraulics/rudder/trim-cmd-deg">
-			<input>/controls/flight/rudder-trim</input>
+			<input>hydraulics/rudder/trim-autopilot</input>
 			<gain>20</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/rudder/trim-rate">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/fctl/fac1-healthy-signal eq 1
+				</test>
+				<test logic="AND">
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/fctl/fac2-healthy-signal eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="hydraulics/rudder/trim-deg">
+			<input>hydraulics/rudder/trim-cmd-deg</input>
+			<rate_limit>hydraulics/rudder/trim-rate</rate_limit>
+		</actuator>
+		
 		<aerosurface_scale name="hydraulics/rudder/trim-norm">
-			<input>/controls/flight/rudder-trim</input>
+			<input>hydraulics/rudder/trim-deg</input>
+			<domain>
+				<min>-20</min>
+				<max> 20</max>
+			</domain>
 			<range>
 				<min>-0.8</min>
 				<max>0.8</max>
@@ -355,11 +433,42 @@
 			</clipto>
 		</summer>
 		
+		<fcs_function name="hydraulics/rudder/swing-deg">
+			<function>
+				<product>
+					<property>hydraulics/rudder-swing</property>
+					<sin>
+						<toradians><difference>
+							<property>/orientation/heading-deg</property>
+							<property>/environment/wind-from-heading-deg</property>
+						</difference></toradians>
+					</sin>
+					<property>/environment/wind-speed-kt</property>
+					<value>1.6666</value>
+				</product>
+			</function>
+			<clipto>
+				<min>-25.0</min>
+				<max>25.0</max>
+			</clipto>
+		</fcs_function>
+		
+		<aerosurface_scale name="hydraulics/rudder/swing-norm">
+			<input>hydraulics/rudder/swing-deg</input>
+			<domain>
+				<min>-25</min>
+				<max> 25</max>
+			</domain>
+			<range>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</range>
+		</aerosurface_scale>
+		
 		<switch name="hydraulics/rudder/switch">
-			<default value="0"/>
+			<default value="hydraulics/rudder/swing-norm"/>
 			<test logic="AND" value="hydraulics/rudder/summer">
-				hydraulics/rudder/pressure-switch-or eq 1
-				/systems/failures/rudder eq 0
+				hydraulics/rudder/pressure-switch-or ne 0
 			</test>
 			<clipto>
 				<min>fbw/yaw/max-deg-scale-neg</min>
@@ -372,9 +481,16 @@
 			<gain>25</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/rudder/rate">
+			<default value="80"/>
+			<test logic="OR" value="25"> <!-- returns to center from centering spring / damping / aero -->
+				hydraulics/rudder/pressure-switch-or eq 0
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/rudder/final-actuator">
 			<input>hydraulics/rudder/cmd-deg</input>
-			<rate_limit>80</rate_limit>
+			<rate_limit>hydraulics/rudder/rate</rate_limit>
 			<lag>25.5</lag>
 			<output>hydraulics/rudder/final-deg</output>
 		</actuator>
@@ -646,8 +762,49 @@
 	
 	<channel name="Slats">
 		
+		<switch name="fcs/slat-locked-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				fcs/slat-locked-cmd eq 1
+				<test logic="OR">
+					/gear/gear[1]/wow ne 1
+					/velocities/airspeed-kt ge 60
+				</test>
+				<test logic="OR">
+					aero/alpha-deg gt 7.6
+					/systems/navigation/adr/output/cas-1 lt 154
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				fcs/slat-locked-cmd eq 0
+				/controls/flight/flaps-input ne 0
+				<test logic="OR">
+					/gear/gear[1]/wow ne 1
+					/velocities/airspeed-kt ge 60
+				</test>
+				<test logic="OR">
+					aero/alpha-deg gt 8.5
+					/systems/navigation/adr/output/cas-1 lt 148
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="fcs/slat-locked">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/flight/flaps-input eq 0
+				fcs/slat-pos-deg le 18.01
+				fcs/slat-locked-cmd eq 1
+			</test>
+		</switch>
+		
 		<switch name="fcs/slat-pos-rate">
 			<default value="0.0"/>
+			<test logic="AND" value="0.0">
+				/controls/flight/flaps-input eq 0
+				fcs/slat-pos-deg le 18.01
+				fcs/slat-locked eq 1
+			</test>
 			<test value="100">
 				/systems/acconfig/autoconfig-running eq 1
 			</test>

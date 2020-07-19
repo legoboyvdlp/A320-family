@@ -56,12 +56,14 @@
 			</test>
 		</switch>
 		
-		<switch name="fbw/yaw/gain-switch">
+		<switch name="fbw/yaw/gain-switch"> <!-- disable auto-trim -->
 			<default value="0"/>
 			<test logic="OR" value="1">
 				position/wow eq 1
-				/it-fbw/law eq 2
-				/it-fbw/law eq 3
+				<test logic="AND">
+					/it-fbw/yaw-law eq 2
+					/it-fbw/law ne 0
+				</test>
 			</test>
 		</switch>
 		
@@ -246,6 +248,234 @@
 			</function>
 		</fcs_function>
 	
+	</channel>
+	
+	<channel name="Computers">
+		
+		<switch name="/systems/fctl/lights/elac1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/elac1 eq 1
+				/systems/fctl/elac1 eq 0
+			</test>
+		</switch>
+	
+		<switch name="/systems/fctl/elac1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/elac1 eq 1
+				/systems/failures/fctl/elac1 eq 0
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-hot-1 ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/lights/elac2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/elac2 eq 1
+				/systems/fctl/elac2 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/elac2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/elac2 eq 1
+				/systems/failures/fctl/elac2 eq 0
+				<test logic="OR">
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/electrical/bus/dc-hot-2 ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/lights/sec1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/sec1 eq 1
+				/systems/fctl/sec1 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/sec1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/sec1 eq 1
+				/systems/failures/fctl/sec1 eq 0
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-hot-1 ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/lights/sec2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/sec2 eq 1
+				/systems/fctl/sec2 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/sec2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/sec2 eq 1
+				/systems/failures/fctl/sec2 eq 0
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/lights/sec3-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/sec3 eq 1
+				/systems/fctl/sec3 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/sec3">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/sec3 eq 1
+				/systems/failures/fctl/sec3 eq 0
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac1-healthy">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac1 eq 1
+				/systems/failures/fctl/fac1 eq 0
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/bus/dc-ess-shed ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac1-healthy-latch-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[0]/wow eq 0
+				/controls/fctl/switches/fac1 eq 1
+				/systems/fctl/fac1-healthy eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac1-healthy-latch-reset">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac1 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac1-healthy-latch">
+			<default value="/systems/fctl/fac1-healthy-latch"/>
+			<test value="1">
+				/systems/fctl/fac1-healthy-latch-set eq 1
+			</test>
+			<test value="0">
+				/systems/fctl/fac1-healthy-latch-reset eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac1-healthy-signal">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac1-healthy eq 1
+				<test logic="OR">
+					/systems/fctl/fac1-healthy-latch eq 0
+					/gear/gear[0]/wow eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/lights/fac1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac1 eq 1
+				/systems/fctl/fac1-healthy-signal eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac1 eq 1
+				/systems/fctl/fac1-healthy eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac2-healthy">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac2 eq 1
+				/systems/failures/fctl/fac2 eq 0
+				<test logic="OR">
+					/systems/electrical/bus/ac-2 ge 110
+					/systems/electrical/bus/dc-2 ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac2-healthy-latch-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac2 eq 1
+				/systems/fctl/fac2-healthy eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac2-healthy-latch-reset">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac2 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac2-healthy-latch">
+			<default value="/systems/fctl/fac2-healthy-latch"/>
+			<test value="1">
+				/gear/gear[0]/wow eq 0
+				/systems/fctl/fac2-healthy-latch-set eq 1
+			</test>
+			<test value="0">
+				/systems/fctl/fac2-healthy-latch-reset eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac2-healthy-signal">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac2-healthy eq 1
+				<test logic="OR">
+					/systems/fctl/fac2-healthy-latch eq 0
+					/gear/gear[0]/wow eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/lights/fac2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac2 eq 1
+				/systems/fctl/fac2-healthy-signal eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/fctl/fac2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fctl/switches/fac2 eq 1
+				/systems/fctl/fac2-healthy eq 1
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="FBW: Roll">
@@ -737,7 +967,7 @@
 				/controls/flight/flaps-pos ge 4
 				/controls/engines/engine[0]/throttle lt 0.65
 				/controls/engines/engine[1]/throttle lt 0.65
-				/FMGC/status/to-state eq 0
+				/FMGC/internal/to-state eq 0
 				/it-fbw/law eq 0
 				position/wow eq 0
 			</test>
@@ -747,7 +977,7 @@
 				/controls/flight/flaps-pos ge 4
 				/controls/engines/engine[0]/throttle lt 0.65
 				/controls/engines/engine[1]/throttle lt 0.65
-				/FMGC/status/to-state eq 0
+				/FMGC/internal/to-state eq 0
 				/it-fbw/law eq 0
 				gear/unit[0]/WOW eq 0
 				fbw/pitch/flare-gear-switch eq 1
@@ -1173,10 +1403,10 @@
 	
 	<channel name="FBW: Yaw">
 		
-		<fcs_function name="fbw/yaw/max-deg-fac">
+		<fcs_function name="fbw/yaw/max-deg-fac-1">
 			<function>
 				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="row">/systems/fmgc/active-airspeed-1</independentVar>
 					<tableData>
 						160  25.0
 						410   3.5
@@ -1185,20 +1415,106 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fbw/yaw/max-deg-switch">
-			<default value="25"/>
-			<test logic="AND" value="fbw/yaw/max-deg-fac">
-				/systems/fctl/fac1 eq 1
-				/systems/fctl/fac2 eq 1
-				/gear/gear[1]/wow eq 0
-				/gear/gear[2]/wow eq 0
-			</test>
-			<test logic="AND" value="fbw/yaw/max-deg-fac">
-				/controls/flight/flaps eq 0
-				/gear/gear[1]/wow eq 0
-				/gear/gear[2]/wow eq 0
+		<fcs_function name="fbw/yaw/max-deg-fac-2">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/fmgc/active-airspeed-2</independentVar>
+					<tableData>
+						160  25.0
+						410   3.5
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/fctl/fac1-rtlu-avail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/failures/fctl/rtlu-1 eq 0
+				/systems/electrical/bus/dc-ess ge 25
+				/systems/fctl/fac1-healthy-signal eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-1 eq 0
+						/systems/navigation/adr/operating-1 eq 1
+					</test>
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-3 eq 0
+						/systems/navigation/adr/operating-3 eq 1
+					</test>
+				</test>
 			</test>
 		</switch>
+		
+		<switch name="/systems/fctl/fac2-rtlu-avail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/failures/fctl/rtlu-2 eq 0
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/fctl/fac2-healthy-signal eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-2 eq 0
+						/systems/navigation/adr/operating-2 eq 1
+					</test>
+					<test logic="AND">
+						/systems/fmgc/cas-compare/cas-reject-3 eq 0
+						/systems/navigation/adr/operating-3 eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="fbw/yaw/rtlu-emergency">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fctl/fac1-rtlu-avail eq 0
+				/systems/fctl/fac2-rtlu-avail eq 0
+				fcs/slat-pos-deg ne 0
+			</test>
+		</switch>
+		
+		<switch name="fbw/yaw/max-deg-switch-cmd">
+			<default value="25"/>
+			<test logic="AND" value="fbw/yaw/max-deg-switch"> <!-- RTLU frozen with FAC 1 / 2 failure -->
+				/systems/fctl/fac1-rtlu-avail eq 0
+				/systems/fctl/fac2-rtlu-avail eq 0
+				fcs/slat-pos-deg eq 0
+			</test>
+			<test logic="AND" value="25"> <!-- Return to low speed control with slats extended -->
+				fbw/yaw/rtlu-emergency eq 1
+			</test>
+			<test logic="AND" value="fbw/yaw/max-deg-fac-1"> <!-- Side 1 has priority -->
+				/systems/fctl/fac1-rtlu-avail eq 1
+			</test>
+			<test logic="AND" value="fbw/yaw/max-deg-fac-2">
+				/systems/fctl/fac2-rtlu-avail eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/yaw/rtlu-power">
+			<default value="0"/>
+			<test logic="AND" value="25"> <!-- Main motor control -->
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed ge 25
+					/systems/electrical/bus/dc-2 ge 25
+				</test>
+				fbw/yaw/rtlu-emergency ne 1
+			</test>
+			<test logic="AND" value="3"> <!-- Emergency motor is slower -->
+				/systems/electrical/bus/ac-ess-26v ge 24.8
+				/systems/fctl/fac1-rtlu-avail eq 0
+				/systems/fctl/fac2-rtlu-avail eq 0
+				fcs/slat-pos-deg ne 0
+				fbw/yaw/max-deg-switch ne fbw/yaw/max-deg-switch-cmd
+			</test>
+		</switch>
+		
+		<actuator name="rubbish/rudder-travel-limiter">
+			<input>fbw/yaw/max-deg-switch-cmd</input>
+			<rate_limit>fbw/yaw/rtlu-power</rate_limit>
+			<output>fbw/yaw/max-deg-switch</output>
+		</actuator>
 		
 		<aerosurface_scale name="fbw/yaw/max-deg-scale">
 			<input>fbw/yaw/max-deg-switch</input>
@@ -1319,11 +1635,14 @@
 			<input>fbw/yaw/fmgc-cmd</input>
 		</summer>
 		
-		<switch name="fbw/yaw/law-switch">
+		<switch name="fbw/yaw/law-switch"> <!-- Is the yaw damper active or not? -->
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/it-fbw/law eq 0
-				/it-fbw/law eq 1
+			<test logic="AND" value="1">
+				/it-fbw/law ne 3
+				<test logic="OR">
+					/it-fbw/yaw-law eq 0
+					/it-fbw/yaw-law eq 1
+				</test>
 			</test>
 		</switch>
 		

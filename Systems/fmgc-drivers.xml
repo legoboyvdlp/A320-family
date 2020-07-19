@@ -789,5 +789,50 @@
 		<max>15</max>
 		<max-rate-of-change>10</max-rate-of-change>
 	</filter>
+	
+	<filter>
+		<name>Accel Altitude</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<or>
+					<and>
+						<equals>
+							<property>/engines/engine[0]/state</property>
+							<value>3</value>
+						</equals>
+						<not>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</not>
+					</and>
+					<and>
+						<not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+						</not>
+						<equals>
+							<property>/engines/engine[1]/state</property>
+							<value>3</value>
+						</equals>
+					</and>
+				</or>
+			</condition>
+			<expression>
+				<property>/FMGC/internal/eng-out-reduc</property>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<property>/FMGC/internal/accel-agl-ft</property>
+			</expression>
+		</input>
+		<output>/it-autoflight/settings/accel-agl-ft</output>
+	</filter>
  
 </PropertyList>

@@ -20,18 +20,6 @@ setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);
 
-# Dimmers
-setprop("/controls/lighting/ndl-norm", 1);
-setprop("/controls/lighting/ndr-norm", 1);
-setprop("/controls/lighting/upper-norm", 1);
-
-# Lights
-setprop("/sim/model/lights/nose-lights", 0);
-setprop("/sim/model/lights/turnoffsw", 0);
-setprop("/controls/lighting/turnoff-light-switch", 0);
-setprop("/controls/lighting/leftturnoff", 0);
-setprop("/controls/lighting/rightturnoff", 0);
-
 # Oil Qty
 var qty1 = math.round((rand() * 5 ) + 20, 0.1);
 var qty2 = math.round((rand() * 5 ) + 20, 0.1);
@@ -41,40 +29,21 @@ setprop("/engines/engine[1]/oil-qt-actual", qty2);
 ##########
 # Lights #
 ##########
-
-var beacon_switch = props.globals.getNode("controls/switches/beacon", 1);
-var beacon_ctl = props.globals.getNode("controls/lighting/beacon", 1);
 var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.1, 1], "/controls/lighting/beacon");
-var strobe_switch = props.globals.getNode("controls/switches/strobe", 1);
-var strobe_light = props.globals.getNode("controls/lighting/strobe", 1);
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
-var logo_lights = getprop("/sim/model/lights/logo-lights");
-var nav_lights = props.globals.getNode("sim/model/lights/nav-lights");
-var wing_switch = props.globals.getNode("controls/switches/wing-lights", 1);
-var wing_ctl = props.globals.getNode("controls/lighting/wing-lights", 1);
-var dome_light = props.globals.initNode("/sim/model/lights/dome-light", 0.0, "DOUBLE");
-var wow = getprop("/gear/gear[2]/wow");
-var slats = getprop("/controls/flight/slats");
-var gear = getprop("/gear/gear[0]/position-norm");
-var nose_lights = getprop("/sim/model/lights/nose-lights");
-var left_turnoff_light = props.globals.getNode("controls/lighting/leftturnoff");
-var right_turnoff_light = props.globals.getNode("controls/lighting/rightturnoff");
-var settingT = getprop("/controls/lighting/taxi-light-switch");
-var settingTurnoff = getprop("/controls/lighting/turnoff-light-switch");
-var setting = getprop("/controls/lighting/nav-lights-switch");
-var domeSetting = getprop("/controls/lighting/dome-norm");
-var landL = props.globals.getNode("controls/lighting/landing-lights[1]", 1);
-var landR = props.globals.getNode("controls/lighting/landing-lights[2]", 1);
-var landlSw = props.globals.getNode("controls/switches/landing-lights-l", 1);
-var landrSw = props.globals.getNode("controls/switches/landing-lights-r", 1);
 
-###################
-# Tire Smoke/Rain #
-###################
+var stateL = 0;
+var stateR = 0;
+
+###########
+# Effects #
+###########
 
 var tiresmoke_system = aircraft.tyresmoke_system.new(0, 1, 2);
 aircraft.rain.init();
+
+aircraft.livery.init(getprop("/sim/model/livery-dir"));
 
 ##########
 # Sounds #
@@ -210,10 +179,9 @@ var triggerDoor = func(door, doorName, doorDesc) {
 	}
 };
 
-#######################
-# Various Other Stuff #
-#######################
-
+###########
+# Systems #
+###########
 var systemsInit = func {
 	fbw.FBW.init();
 	effects.light_manager.init();
@@ -257,6 +225,14 @@ setlistener("/sim/signals/fdm-initialized", func {
 	fmgc.WaypointDatabase.read();
 });
 
+var collectorTankL = props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs");
+var collectorTankR = props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs");
+var groundAir = props.globals.getNode("/controls/pneumatics/switches/groundair");
+var groundCart = props.globals.getNode("/controls/electrical/ground-cart");
+var chocks = props.globals.getNode("/services/chocks/enable");
+var engRdy = props.globals.getNode("/engines/ready");
+var groundspeed = 0;
+
 var systemsLoop = maketimer(0.1, func {
 	systems.ELEC.loop();
 	systems.PNEU.loop();
@@ -272,59 +248,88 @@ var systemsLoop = maketimer(0.1, func {
 	systems.APUController.loop();
 	systems.HFLoop();
 	
-	if ((getprop("/controls/pneumatics/switches/groundair") or getprop("/controls/electrical/ground-cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or (getprop("/controls/gear/brake-parking") == 0 and getprop("/services/chocks/enable") == 0))) {
-		setprop("/controls/electrical/ground-cart", 0);
-		setprop("/controls/pneumatics/switches/groundair", 0);
+	groundspeed = pts.Velocities.groundspeed.getValue();
+	if ((groundAir.getBoolValue() or groundCart.getBoolValue()) and ((groundspeed > 2) or (!pts.Controls.Gear.parkingBrake.getBoolValue() and !chocks.getBoolValue()))) {
+		groundAir.setBoolValue(0);
+		groundCart.setBoolValue(0);
 	}
 	
-	if (getprop("/velocities/groundspeed-kt") > 15) {
-		setprop("/systems/shake/effect", 1);
+	if (groundspeed > 15) {
+		shakeEffectA3XX.setBoolValue(1);
 	} else {
-		setprop("/systems/shake/effect", 0);
+		shakeEffectA3XX.setBoolValue(0);
 	}
 	
-	if (getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1 or (getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override") == 1 and getprop("/controls/flight/flaps-pos") >= 4)) {
-		setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override", 1);
+	stateL = pts.Engines.Engine.state[0].getValue();
+	stateR = pts.Engines.Engine.state[1].getValue();
+	
+	if (stateL == 3 and stateR == 3) {
+		engRdy.setBoolValue(1);
 	} else {
-		setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override", 0);
+		engRdy.setBoolValue(0);
 	}
 	
-	if (getprop("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit") == 1) {
-		setprop("/instrumentation/mk-viii/speaker/volume", 0);
-	} else {
-		setprop("/instrumentation/mk-viii/speaker/volume", 2);
-	}
-	
-	if (getprop("/engines/engine[0]/state") == 3 and getprop("/engines/engine[1]/state") == 3) {
-		setprop("/engines/ready", 1);
-	} else {
-		setprop("/engines/ready", 0);
-	}
-	
-	if ((getprop("/engines/engine[0]/state") == 2 or getprop("/engines/engine[0]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[5]/contents-lbs") < 1) {
+	if ((stateL == 2 or stateL == 3) and collectorTankL.getValue() < 1) {
 		systems.cutoff_one();
 	}
-	if ((getprop("/engines/engine[1]/state") == 2 or getprop("/engines/engine[1]/state") == 3) and getprop("/fdm/jsbsim/propulsion/tank[6]/contents-lbs") < 1) {
+	if ((stateR == 2 or stateR == 3) and collectorTankR.getValue() < 1) {
 		systems.cutoff_two();
-	}
-	
-	if (getprop("/sim/replay/replay-state") == 1) {
-		setprop("/sim/replay/was-active", 1);
-	} else if (getprop("/sim/replay/replay-state") == 0 and getprop("/sim/replay/was-active") == 1) {
-		setprop("/sim/replay/was-active", 0);
-		acconfig.colddark();
-		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
 	}
 });
 
+# GPWS
+var GPWS = {
+	inhibitNode: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit"),
+	volume: props.globals.getNode("/instrumentation/mk-viii/speaker/volume"),
+	flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
+	flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
+	flapOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override"),
+};
+
+setlistener("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", func() {
+	if (GPWS.inhibitNode.getBoolValue()) {
+		GPWS.volume.setValue(2);
+	} else {
+		GPWS.volume.setValue(0);
+	}
+}, 0, 0);
+
+var updateGPWSFlap = func() {
+	if (GPWS.flapAllOverride.getBoolValue() or (GPWS.flap3Override.getBoolValue() and pts.Controls.Flight.flapsPos.getValue() >= 4)) {
+		GPWS.flapOverride.setBoolValue(1);
+	} else {
+		GPWS.flapOverride.setBoolValue(0);
+	}
+}
+
+setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override", func() {
+	updateGPWSFlap();
+}, 0, 0);
+
+setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", func() {
+	updateGPWSFlap();
+}, 0, 0);
+
+# Replay
+var replayState = props.globals.getNode("/sim/replay/replay-state");
+setlistener("/sim/replay/replay-state", func() {
+	if (replayState.getBoolValue()) {
+	} else {
+		acconfig.colddark();
+		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
+	}
+}, 0, 0);
+
+# Steep ILS
 setlistener("/options/steep-ils", func {
 	if (getprop("/options/steep-ils") == 1) {
 		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 1);
 	} else {
 		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 0);
 	}
-});
+}, 0, 0);
 
+# hackCanvas
 canvas.Text._lastText = canvas.Text["_lastText"];
 canvas.Text.setText = func(text) {
 	if (text == me._lastText and text != nil and size(text) == size(me._lastText)) {return me;}
@@ -348,8 +353,12 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
+############
+# Controls #
+############
+
 controls.stepSpoilers = func(step) {
-	setprop("/controls/flight/speedbrake-arm", 0);
+	pts.Controls.Flight.speedbrakeArm.setValue(0);
 	if (step == 1) {
 		deploySpeedbrake();
 	} else if (step == -1) {
@@ -358,37 +367,40 @@ controls.stepSpoilers = func(step) {
 }
 
 var deploySpeedbrake = func {
-	if (getprop("/gear/gear[1]/wow") == 1 or getprop("/gear/gear[2]/wow") == 1) {
-		if (getprop("/controls/flight/speedbrake") < 1.0) {
-			setprop("/controls/flight/speedbrake", 1.0);
+	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+		if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
+			pts.Controls.Flight.speedbrake.setValue(1.0);
 		}
 	} else {
-		if (getprop("/controls/flight/speedbrake") < 0.5) {
-			setprop("/controls/flight/speedbrake", 0.5);
-		} else if (getprop("/controls/flight/speedbrake") < 1.0) {
-			setprop("/controls/flight/speedbrake", 1.0);
+		if (pts.Controls.Flight.speedbrake.getValue() < 0.5) {
+			pts.Controls.Flight.speedbrake.setValue(0.5);
+		} else if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
+			pts.Controls.Flight.speedbrake.setValue(1.0);
 		}
 	}
 }
 
 var retractSpeedbrake = func {
-	if (getprop("/gear/gear[1]/wow") == 1 or getprop("/gear/gear[2]/wow") == 1) {
-		if (getprop("/controls/flight/speedbrake") > 0.0) {
-			setprop("/controls/flight/speedbrake", 0.0);
+	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+		if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
+			pts.Controls.Flight.speedbrake.setValue(0.0);
 		}
 	} else {
-		if (getprop("/controls/flight/speedbrake") > 0.5) {
-			setprop("/controls/flight/speedbrake", 0.5);
-		} else if (getprop("/controls/flight/speedbrake") > 0.0) {
-			setprop("/controls/flight/speedbrake", 0.0);
+		if (pts.Controls.Flight.speedbrake.getValue() > 0.5) {
+			pts.Controls.Flight.speedbrake.setValue(0.5);
+		} else if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
+			pts.Controls.Flight.speedbrake.setValue(0.0);
 		}
 	}
 }
 
+var delta = 0;
+var output = 0;
 var slewProp = func(prop, delta) {
-	delta *= getprop("/sim/time/delta-realtime-sec");
-	setprop(prop, getprop(prop) + delta);
-	return getprop(prop);
+    delta *= pts.Sim.Time.deltaRealtimeSec.getValue();
+    output = props.globals.getNode(prop).getValue() + delta;
+    props.globals.getNode(prop).setValue(output);
+    return output;
 }
 
 controls.flapsDown = func(step) {
@@ -416,135 +428,25 @@ controls.flapsDown = func(step) {
 	}
 }
 
-
-controls.elevatorTrim = func(speed) {
-	if (getprop("/systems/hydraulic/green-psi") >= 1500) {
-		slewprop("/controls/flight/elevator-trim", speed * 0.0185);  # Rate in JSB normalized (0.25 / 13.5)
-	} else {
-		slewprop("/controls/flight/elevator-trim", speed * 0.0092);  # Rate in JSB normalized (0.125 / 13.5)
+controls.elevatorTrim = func(d) {
+    if (systems.HYD.Psi.green.getValue() >= 1500) {
+        slewProp("/controls/flight/elevator-trim", d * 0.0185); # Rate in JSB normalized (0.125 / 13.5)
+    } else {
+		 slewProp("/controls/flight/elevator-trim", d * 0.0092) # Rate in JSB normalized (0.125 / 13.5)
 	}
 }
 
 setlistener("/controls/flight/elevator-trim", func {
-	if (getprop("/controls/flight/elevator-trim") > 0.296296) {
-		setprop("/controls/flight/elevator-trim", 0.296296);
-	}
-});
+    if (pts.Controls.Flight.elevatorTrim.getValue() > 0.296296) {
+        pts.Controls.Flight.elevatorTrim.setValue(0.296296);
+    }
+}, 0, 0);
+
+##########
+# Lights #
+##########
 
 var lightsLoop = maketimer(0.2, func {
-	gear = getprop("/gear/gear[0]/position-norm");
-	nose_lights = getprop("/sim/model/lights/nose-lights");
-	settingT = getprop("/controls/lighting/taxi-light-switch");
-	domeSetting = getprop("/controls/lighting/dome-norm");
-	
-	# nose lights
-	
-	if (settingT == 0.5 and gear > 0.9 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
-		setprop("/sim/model/lights/nose-lights", 0.85);
-	} else if (settingT == 1 and gear > 0.9 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
-		setprop("/sim/model/lights/nose-lights", 1);
-	} else {
-		setprop("/sim/model/lights/nose-lights", 0);
-	}
-	
-	# turnoff lights
-	settingTurnoff = getprop("/controls/lighting/turnoff-light-switch");
-	left_turnoff_light = props.globals.getNode("controls/lighting/leftturnoff");
-	right_turnoff_light = props.globals.getNode("controls/lighting/rightturnoff");
-	
-	if (settingTurnoff == 1 and gear > 0.9 and getprop("/systems/electrical/bus/ac-1") > 0) {
-		left_turnoff_light.setBoolValue(1);
-	} else {
-		left_turnoff_light.setBoolValue(0);
-	}
-	
-	if (settingTurnoff == 1 and gear > 0.9 and getprop("/systems/electrical/bus/ac-2") > 0) {
-		right_turnoff_light.setBoolValue(1);
-	} else {
-		right_turnoff_light.setBoolValue(0);
-	}
-	
-	# logo and navigation lights
-	setting = getprop("/controls/lighting/nav-lights-switch");
-	nav_lights = props.globals.getNode("sim/model/lights/nav-lights");
-	logo_lights = props.globals.getNode("sim/model/lights/logo-lights");
-	wow = getprop("/gear/gear[2]/wow");
-	slats = getprop("/controls/flight/slats");
-	
-	if (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0  or getprop("/systems/electrical/bus/dc-1") > 0 or getprop("/systems/electrical/bus/dc-2") > 0) {
-		setprop("/systems/electrical/nav-lights-power", 1);
-	} else { 
-		setprop("/systems/electrical/nav-lights-power", 0);
-	}
-	
-	if (setting == 0 and logo_lights == 1) {
-		 logo_lights.setBoolValue(0);
-	} else if (setting == 1 or setting == 2 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
-		if ((wow) or (!wow and slats > 0)) {
-			logo_lights.setBoolValue(1);
-		} else {
-			logo_lights.setBoolValue(0);
-		}
-	} else {
-		logo_lights.setBoolValue(0);
-	}
-
-	if (setting == 1 or setting == 2 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0 or getprop("/systems/electrical/bus/dc-1") > 0 or getprop("/systems/electrical/bus/dc-2") > 0)) {
-		nav_lights.setBoolValue(1);
-	} else {
-		nav_lights.setBoolValue(0);
-	}
-	
-	if (domeSetting == 0.5 and getprop("/systems/electrical/bus/dc-ess") > 0) {
-		dome_light.setValue(0.5);
-	} elsif (domeSetting == 1 and getprop("/systems/electrical/bus/dc-ess") > 0) {
-		dome_light.setValue(1);
-	} else {
-		dome_light.setValue(0);
-	}
-	
-	# strobe
-	strobe_sw = strobe_switch.getValue();
-	
-	if (strobe_sw == 1 and getprop("/systems/electrical/bus/ac-2") > 0) {
-		strobe_light.setValue(1);
-	} elsif (strobe_sw == 0.5 and getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0 and getprop("/systems/electrical/bus/ac-2") > 0) {
-		# todo: use lgciu output 5
-		strobe_light.setValue(1);
-	} else {
-		strobe_light.setValue(0);
-	}
-	
-	# beacon
-	
-	if (beacon_switch.getValue() == 1 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
-		beacon_ctl.setValue(1);
-	} else {
-		beacon_ctl.setValue(0);
-	}
-	
-	# wing
-	
-	if (wing_switch.getValue() == 1 and (getprop("/systems/electrical/bus/ac-1") > 0 or getprop("/systems/electrical/bus/ac-2") > 0)) {
-		wing_ctl.setValue(1);
-	} else {
-		wing_ctl.setValue(0);
-	}
-	
-	# landL
-	
-	if (landlSw.getValue() == 1 and getprop("/systems/electrical/bus/ac-1") > 0) {
-		landL.setValue(1);
-	} else {
-		landL.setValue(0);
-	}
-	
-	if (landrSw.getValue() == 1 and getprop("/systems/electrical/bus/ac-2") > 0) {
-		landR.setValue(1);
-	} else {
-		landR.setValue(0);
-	}
-	
 	# signs
 	
 	if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
@@ -573,86 +475,70 @@ var lightsLoop = maketimer(0.2, func {
 			setprop("/controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
 		}
 	}
-	
-	if (getprop("/controls/lighting/landing-lights[1]") >= 0.5) {
-		setprop("/fdm/jsbsim/rubbish/landL", 1);
-	} else {
-		setprop("/fdm/jsbsim/rubbish/landL", 0);
-	}
-	
-	if (getprop("/controls/lighting/landing-lights[2]") >= 0.5) {
-		setprop("/fdm/jsbsim/rubbish/landR", 1);
-	} else {
-		setprop("/fdm/jsbsim/rubbish/landR", 0);
-	}
 });
 
-var lTray = func {
-	var lTrayCMD = getprop("/controls/tray/lefttrayext");
-	if (lTrayCMD < 0.5) {
-		interpolate("/controls/tray/lefttrayext", 0.5, 0.5);
-	} else if (lTrayCMD == 0.5) {
-		interpolate("/controls/tray/lefttrayext", 1.0, 0.5);
+var pilotComfortTwoPos = func(prop) {
+	var item = getprop(prop);
+	if (item < 0.5) {
+		interpolate(prop, 0.5, 0.5);
+	} elsif (item == 0.5) {
+		interpolate(prop, 1.0, 0.5);
 	} else {
-		interpolate("/controls/tray/lefttrayext", 0.0, 1.0);
+		interpolate(prop, 0.0, 1.0);
 	}
 }
 
-var rTray = func {
-	var rTrayCMD = getprop("/controls/tray/righttrayext");
-	if (rTrayCMD < 0.5) {
-		interpolate("/controls/tray/righttrayext", 0.5, 0.5);
-	} else if (rTrayCMD == 0.5) {
-		interpolate("/controls/tray/righttrayext", 1.0, 0.5);
+var pilotComfortOnePos = func(prop) {
+	var item = getprop(prop);
+	if (item < 1.0) {
+		interpolate(prop, 1.0, 1.0);
 	} else {
-		interpolate("/controls/tray/righttrayext", 0.0, 1.0);
+		interpolate(prop, 0.0, 1.0);
 	}
+}
+
+var lTray = func {
+	pilotComfortTwoPos("/controls/tray/lefttrayext");
+}
+var rTray = func {
+	pilotComfortTwoPos("/controls/tray/righttrayext");
 }
 
 var l1Pedal = func {
-	var lPedalCMD = getprop("/controls/footrest-cpt[0]");
-	if (lPedalCMD < 1.0) {
-		interpolate("/controls/footrest-cpt[0]", 1.0, 0.5);
-	} else {
-		interpolate("/controls/footrest-cpt[0]", 0.0, 0.5);
-	}
+	pilotComfortOnePos("/controls/footrest-cpt[0]");
 }
-
 var l2Pedal = func {
-	var l2PedalCMD = getprop("/controls/footrest-cpt[1]");
-	if (l2PedalCMD < 1.0) {
-		interpolate("/controls/footrest-cpt[1]", 1.0, 0.5);
-	} else {
-		interpolate("/controls/footrest-cpt[1]", 0.0, 0.5);
-	}
+	pilotComfortOnePos("/controls/footrest-cpt[1]");
 }
 
 var r1Pedal = func {
-	var rPedalCMD = getprop("/controls/footrest-fo[0]");
-	if (rPedalCMD < 1.0) {
-		interpolate("/controls/footrest-fo[0]", 1.0, 0.5);
-	} else {
-		interpolate("/controls/footrest-fo[0]", 0.0, 0.5);
-	}
+	pilotComfortOnePos("/controls/footrest-fo[0]");
 }
-
 var r2Pedal = func {
 	var r2PedalCMD = getprop("/controls/footrest-fo[1]");
-	if (r2PedalCMD < 1.0) {
-		interpolate("/controls/footrest-fo[1]", 1.0, 0.5);
-	} else {
-		interpolate("/controls/footrest-fo[1]", 0.0, 0.5);
-	}
+	pilotComfortOnePos("/controls/footrest-fo[1]");
 }
 
-if (getprop("/controls/flight/auto-coordination") == 1) {
-	setprop("/controls/flight/auto-coordination", 0);
+#####################
+# Auto-coordination #
+#####################
+
+if (pts.Controls.Flight.autoCoordination.getBoolValue()) {
+    pts.Controls.Flight.autoCoordination.setBoolValue(0);
+    pts.Controls.Flight.aileronDrivesTiller.setBoolValue(1);
+} else {
+    pts.Controls.Flight.aileronDrivesTiller.setBoolValue(0);
+}
+
+setlistener("/controls/flight/auto-coordination", func {
+    pts.Controls.Flight.autoCoordination.setBoolValue(0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
-} 
+});
 
-setprop("/controls/flight/aileron-drives-tiller", 0);
-
+##############
+# Legacy FCU #
+##############
 var APPanel = {
 	APDisc: func() {
 		fcu.FCUController.APDisc();
@@ -661,150 +547,5 @@ var APPanel = {
 		fcu.FCUController.ATDisc();
 	},
 };
-
-var resetView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
-		} else {
-			var _shakeFlag = 0;
-		}
-		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 360;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
-		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", -14.6, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
-		}
-	} 
-}
-
-var autopilotView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
-		} else {
-			var _shakeFlag = 0;
-		}
-		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 341.7;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
-		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", -16.4, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
-		}
-	} 
-}
-
-var overheadView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
-		} else {
-			var _shakeFlag = 0;
-		}
-		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 348;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
-		
-		interpolate("sim/current-view/field-of-view", 105.8, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", 65.25, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0,0.66);
-		interpolate("sim/current-view/x-offset-m", -0.12, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
-		}
-	} 
-}
-
-var pedestalView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
-		} else {
-			var _shakeFlag = 0;
-		}
-		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 315;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
-		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", -46.3, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
-		}
-	} 
-}
-
-var lightsView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
-		} else {
-			var _shakeFlag = 0;
-		}
-		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 329;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
-		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", 17.533, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
-		}
-	} 
-}
 
 setprop("/systems/acconfig/libraries-loaded", 1);
