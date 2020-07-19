@@ -5,7 +5,7 @@
 
 <system name="A320: APU">
 
-    <channel name="APU">
+    <channel name="APU" execrate="8">
         <!-- bleed 1.8 kg / sec @ 42 psig -->
         <!-- fuel 148 kg/hr -->
 		<!-- generator 24034 rpm, 10129 rpm fuel ctl, 32045 rpm starter, 51965 rpm cooling, 4137rpm oil pump -->

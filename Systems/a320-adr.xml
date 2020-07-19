@@ -5,7 +5,7 @@
 
 <system name="A320: ADR">
 
-    <channel name="ADR Inputs">
+    <channel name="ADR Inputs" execrate="2">
 		
 		<sensor name="/systems/navigation/probes/aoa-1">
 			<input>aero/alpha-deg-norm</input>
@@ -128,7 +128,7 @@
 		
     </channel>
 	
-	<channel name="ADR Computation">
+	<channel name="ADR Computation" execrate="2">
 	
 		<sensor name="/systems/navigation/adr/computation/baro-alt-1-capt">
 			<input>/instrumentation/altimeter[0]/pressure-alt-ft</input>
@@ -755,7 +755,7 @@
 		
 	</channel>
 	
-	<channel name="ADR Output"> <!-- todo - need lowpass? -->
+	<channel name="ADR Output" execrate="2"> <!-- todo - need lowpass? -->
 	
 		<pure_gain name="/systems/navigation/adr/output/aoa-1">
 			<input>/systems/navigation/probes/aoa-1</input>

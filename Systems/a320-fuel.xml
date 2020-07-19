@@ -5,7 +5,7 @@
 
 <system name="A320: Fuel:">
 	
-	<channel name="Fuel Pumps and Valves">
+	<channel name="Fuel Pumps and Valves" execrate="8">
 		<!-- Pumps -->
 		
 		<switch name="/systems/fuel/pumps/apu-operate"> <!-- DC HOT 1 ? -->
@@ -409,7 +409,7 @@
 		</actuator>
 	</channel>
 	
-	<channel name="Flow Rates">
+	<channel name="Flow Rates" execrate="2">
 	
 		<switch name="/systems/fuel/feed-left-inner">
 			<default value="0"/>
@@ -793,7 +793,7 @@
 		</summer>
 	</channel>
 	
-	<channel name="Warnings">
+	<channel name="Warnings" execrate="8">
 		
 		<summer name="/systems/fuel/quantity/left-wing-kg">
 			<input>/consumables/fuel/tank[0]/level-kg</input>
