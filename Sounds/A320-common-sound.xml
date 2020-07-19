@@ -1071,7 +1071,7 @@
 		<wow>
 			<mode>once</mode>
 			<name>wow0</name>
-			<path>Aircraft/A320-family/Sounds/SASA/Touch-Main.wav</path> <!-- Nose seemed to harsh -->
+			<path>Aircraft/A320-family/Sounds/SASA/Touch-Nose.wav</path>
 			<condition>
 				<property>gear/gear[0]/wow</property>
 			</condition>
