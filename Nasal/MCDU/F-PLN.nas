@@ -94,8 +94,8 @@ var fplnItem = {
 		return sprintf("%03.0f", math.round(me.trk));
 	},
 	getSpd: func() {
-		if (me.index == 0 and getprop("FMGC/internal/v1-set")) {
-			return [sprintf("%3.0f", math.round(getprop("FMGC/internal/v1"))), "mag"];
+		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
+			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "mag"];
 		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr != 0) {
 			return [sprintf("%3.0f", me.wp.speed_cstr), "mag"];
 		} else {
@@ -103,7 +103,7 @@ var fplnItem = {
 		}
 	},
 	getAlt: func() {
-		if (me.index == 0 and left(me.wp.wp_name, 4) == getprop("/FMGC/internal/dep-arpt") and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
+		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
 			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "mag"];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
@@ -319,7 +319,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			colour = "grn";
 		}
 		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
-			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and getprop("/FMGC/status/phase") != 6) {
+			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and fmgc.FMGCInternal.phase != 6) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
 			} else {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));

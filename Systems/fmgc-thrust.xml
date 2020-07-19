@@ -5,15 +5,30 @@
 <PropertyList>
 	
 	<!-- Thrust Axis -->
-	
 	<filter>
-		<name>KTS INPUT FILTER</name>
+		<name>A/THR Knots Input Filter</name>
 		<debug>false</debug>
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/input/spd-kts</input>
-		<output>/it-autoflight/internal/kts</output>
+		<input>/it-autoflight/input/kts</input>
+		<output>/it-autoflight/internal/athr-kts</output>
+		<min>
+			<expression>
+				<difference>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<value>25</value>
+				</difference>
+			</expression>
+		</min>
+		<max>
+			<expression>
+				<sum>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<value>25</value>
+				</sum>
+			</expression>
+		</max>
 		<max-rate-of-change>
 			<condition>
 				<and>
@@ -49,13 +64,29 @@
 	</filter>
 	
 	<filter>
-		<name>MACH INPUT FILTER</name>
+		<name>A/THR Mach Input Filter</name>
 		<debug>false</debug>
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/input/spd-mach</input>
-		<output>/it-autoflight/internal/mach</output>
+		<input>/it-autoflight/input/mach</input>
+		<output>/it-autoflight/internal/athr-mach</output>
+		<min>
+			<expression>
+				<difference>
+					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<value>0.045</value>
+				</difference>
+			</expression>
+		</min>
+		<max>
+			<expression>
+				<sum>
+					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<value>0.045</value>
+				</sum>
+			</expression>
+		</max>
 		<max-rate-of-change>
 			<condition>
 				<and>
@@ -85,7 +116,7 @@
 					</not-equals>
 				</and>
 			</condition>
-			<value>0.1</value>
+			<value>0.08</value>
 		</max-rate-of-change>
 		<max-rate-of-change>2</max-rate-of-change>
 	</filter>
@@ -106,7 +137,7 @@
 	</filter>
 	
 	<pid-controller>
-		<name>IT-CONTROLLER: IAS THRUST</name>
+		<name>IT-CONTROLLER: Knots</name>
 		<debug>false</debug>
 		<enable>
 			<condition>
@@ -217,7 +248,7 @@
 			</condition>
 		</enable>
 		<input>/it-autoflight/internal/current-speed-input</input>
-		<reference>/it-autoflight/internal/kts</reference>
+		<reference>/it-autoflight/internal/athr-kts</reference>
 		<output>/controls/engines/throttle-cmd-pid</output>
 		<config>
 			<Kp>0.055</Kp>
@@ -229,7 +260,7 @@
 	</pid-controller>
 	
 	<pid-controller>
-		<name>IT-CONTROLLER: MACH THRUST</name>
+		<name>IT-CONTROLLER: Mach</name>
 		<debug>false</debug>
 		<enable>
 			<condition>
@@ -341,11 +372,11 @@
 		</enable>
 		<input>
 			<property>/it-autoflight/internal/current-mach-input</property>
-			<scale>1000.0</scale>
+			<scale>1000</scale>
 		</input>
 		<reference>
-			<property>/it-autoflight/internal/mach</property>
-			<scale>1000.0</scale>
+			<property>/it-autoflight/internal/athr-mach</property>
+			<scale>1000</scale>
 		</reference>
 		<output>/controls/engines/throttle-cmd-pid</output>
 		<config>
@@ -358,7 +389,7 @@
 	</pid-controller>
 	
 	<filter>
-		<name>IT-CONTROLLER: IDLE THRUST</name>
+		<name>IT-CONTROLLER: Idle Limit</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -464,12 +495,12 @@
 				</and>
 			</condition>
 		</enable>
-		<input>0.0</input>
+		<input>0</input>
 		<output>/controls/engines/throttle-cmd-pid</output>
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: LIMIT THRUST</name>
+		<name>IT-CONTROLLER: Thrust Limit</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -575,12 +606,12 @@
 				</and>
 			</condition>
 		</enable>
-		<input>1.0</input>
+		<input>1</input>
 		<output>/controls/engines/throttle-cmd-pid</output>
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: FEEDBACK IF DISABLED</name>
+		<name>IT-CONTROLLER: Throttle Inactive Sync</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>

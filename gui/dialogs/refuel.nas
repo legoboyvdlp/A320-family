@@ -63,8 +63,6 @@ var refuelClass = {
 
 		me._svg = me._root.createChild("group");
 		canvas.parsesvg(me._svg, "Aircraft/A320-family/gui/dialogs/refuel.svg");
-
-		amount.setValue(math.round((pts.Consumables.Fuel.totalFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
 		
 		me._HI_LVL_L = me._svg.getElementById("HI-LVL-L");
 		me._HI_LVL_C = me._svg.getElementById("HI-LVL-C");
@@ -405,8 +403,8 @@ var refuelClass = {
 				me._Mode_refuel.show();
 				me._Mode_off.hide();
 				me._Mode_defuel.hide();
+				systems.fuelSvc.Nodes.requestFuelLbs.setValue(pts.Consumables.Fuel.totalFuelLbs.getValue());
 				systems.fuelSvc.refuel();
-				
 			}
 		});
 
@@ -484,6 +482,9 @@ var refuelClass = {
 			me._timerUp.stop();
 		});
 
+
+		amount.setValue(math.round((systems.fuelSvc.Nodes.requestFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
+		
 		me._timerf();
 		me._timer.start();
 	},

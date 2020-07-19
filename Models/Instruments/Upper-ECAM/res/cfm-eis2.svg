@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="cfm-eis2.svg">
   <metadata
      id="metadata375">
@@ -40,10 +40,10 @@
      inkscape:window-width="1366"
      inkscape:window-height="705"
      id="namedview371"
-     showgrid="false"
-     inkscape:zoom="0.50000001"
-     inkscape:cx="659.36853"
-     inkscape:cy="512.09207"
+     showgrid="true"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="832.32702"
+     inkscape:cy="561.61738"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -1852,4 +1852,16 @@
          id="tspan1108"
          sodipodi:role="line">LINE 8</tspan></text>
   </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30px;line-height:1.25;font-family:'Liberation Sabs';-inkscape-font-specification:'Liberation Sabs';letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="650.08069"
+     y="575.68427"
+     id="SlatAlphaLock"
+     inkscape:label="#text4800"><tspan
+       sodipodi:role="line"
+       id="tspan4798"
+       x="650.08069"
+       y="575.68427"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.25px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#0dc04b;fill-opacity:1;stroke-width:0.75">A-LOCK</tspan></text>
 </svg>

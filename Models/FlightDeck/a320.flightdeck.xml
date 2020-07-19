@@ -1157,16 +1157,22 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<and>
+						<not>
+							<property>/it-autoflight/output/ap1</property>
+							<property>/it-autoflight/output/ap2</property>
+						</not>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-2</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+					</and>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -1235,16 +1241,22 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<and>
+						<not>
+							<property>/it-autoflight/output/ap1</property>
+							<property>/it-autoflight/output/ap2</property>
+						</not>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-2</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+					</and>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -4323,7 +4335,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.0f</format>
-		<property>it-autoflight/input/spd-kts</property>
+		<property>it-autoflight/input/kts</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -4349,7 +4361,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%0.3f</format>
-		<property>it-autoflight/input/spd-mach</property>
+		<property>it-autoflight/input/mach</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>

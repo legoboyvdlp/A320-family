@@ -132,7 +132,7 @@ var latRev = {
 		
 		var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.index + 1, me.computer);
 		if (returny == 0) {
-			notInDataBase(me.computer);
+			mcdu_message(me.computer, "NOT IN DATA BASE");
 		} elsif (returny == 1) {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		} else {

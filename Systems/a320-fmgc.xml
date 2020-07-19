@@ -65,20 +65,34 @@
 		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-1"> <!-- 2 and 3 are the same but 1 is different -->
 			<function>
 				<ifthen>
-					<and>
-						<gt>
-							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
-							<value>5</value> <!-- todo - find proper value -->
-						</gt>
-						<gt>
-							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
-							<value>5</value>
-						</gt>
-						<lt>
-							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
-							<value>5</value>
-						</lt>
-					</and>
+					<or>
+						<eq>
+							<property>/systems/navigation/adr/operating-1</property>
+							<value>0</value>
+						</eq>
+						<and>
+							<gt>
+								<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+								<value>5</value> <!-- todo - find proper value -->
+							</gt>
+							<gt>
+								<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+								<value>5</value>
+							</gt>
+							<lt>
+								<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+								<value>5</value>
+							</lt>
+							<eq>
+								<property>/systems/navigation/adr/operating-2</property>
+								<value>1</value>
+							</eq>
+							<eq>
+								<property>/systems/navigation/adr/operating-3</property>
+								<value>1</value>
+							</eq>
+						</and>
+					</or>
 					<value>1</value>
 					<value>0</value>
 				</ifthen>
@@ -88,20 +102,34 @@
 		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-2"> <!-- 1 and 3 are the same but 2 is different -->
 			<function>
 				<ifthen>
-					<and>
-						<gt>
-							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
-							<value>5</value> <!-- todo - find proper value -->
-						</gt>
-						<gt>
-							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
-							<value>5</value>
-						</gt>
-						<lt>
-							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
-							<value>5</value>
-						</lt>
-					</and>
+					<or>
+						<eq>
+							<property>/systems/navigation/adr/operating-2</property>
+							<value>0</value>
+						</eq>
+						<and>
+							<lt>
+								<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+								<value>5</value>
+							</lt>
+							<gt>
+								<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+								<value>5</value>
+							</gt>
+							<gt>
+								<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+								<value>5</value>
+							</gt>
+							<eq>
+								<property>/systems/navigation/adr/operating-1</property>
+								<value>1</value>
+							</eq>
+							<eq>
+								<property>/systems/navigation/adr/operating-3</property>
+								<value>1</value>
+							</eq>
+						</and>
+					</or>
 					<value>1</value>
 					<value>0</value>
 				</ifthen>
@@ -111,20 +139,34 @@
 		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-3"> <!-- 1 and 2 are the same but 3 is different -->
 			<function>
 				<ifthen>
-					<and>
-						<gt>
-							<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
-							<value>5</value> <!-- todo - find proper value -->
-						</gt>
-						<gt>
-							<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
-							<value>5</value>
-						</gt>
-						<lt>
-							<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
-							<value>5</value>
-						</lt>
-					</and>
+					<or>
+						<eq>
+							<property>/systems/navigation/adr/operating-3</property>
+							<value>0</value>
+						</eq>
+						<and>
+							<gt>
+								<property>/systems/fmgc/cas-compare/cas-1-to-3</property>
+								<value>5</value>
+							</gt>
+							<lt>
+								<property>/systems/fmgc/cas-compare/cas-2-to-1</property>
+								<value>5</value>
+							</lt>
+							<gt>
+								<property>/systems/fmgc/cas-compare/cas-2-to-3</property>
+								<value>5</value>
+							</gt>
+							<eq>
+								<property>/systems/navigation/adr/operating-1</property>
+								<value>1</value>
+							</eq>
+							<eq>
+								<property>/systems/navigation/adr/operating-2</property>
+								<value>1</value>
+							</eq>
+						</and>
+					</or>
 					<value>1</value>
 					<value>0</value>
 				</ifthen>
@@ -144,6 +186,19 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/systems/fmgc/active-airspeed-1">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/fmgc/active-airspeed-src-1</property>
+						<value>1</value>
+					</eq>
+					<property>/systems/navigation/adr/output/cas-1</property>
+					<property>/systems/navigation/adr/output/cas-3</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/systems/fmgc/active-airspeed-src-2">
 			<function>
 				<ifthen>
@@ -153,6 +208,19 @@
 					</eq>
 					<value>3</value>
 					<value>2</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/fmgc/active-airspeed-2">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/fmgc/active-airspeed-src-2</property>
+						<value>2</value>
+					</eq>
+					<property>/systems/navigation/adr/output/cas-2</property>
+					<property>/systems/navigation/adr/output/cas-3</property>
 				</ifthen>
 			</function>
 		</fcs_function>

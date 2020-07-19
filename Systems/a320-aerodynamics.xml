@@ -6,8 +6,6 @@
 	
 	<property value="0.0">ice/wingL</property>
 	<property value="0.0">ice/wingR</property>
-	<property value="0">rubbish/landL</property>
-	<property value="0">rubbish/landR</property>
 	
 	<axis name="LIFT">
 		

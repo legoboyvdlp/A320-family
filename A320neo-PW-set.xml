@@ -14,6 +14,7 @@
 			<livery>
 				<file>Airbus</file>
 			</livery>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/PW-NEO</livery-dir>
 		</model>
 		
 		<sound>
@@ -169,11 +170,5 @@
 		<type>A320-271N</type>
 		<eng>PW1133-JM</eng>
 	</MCDUC>
-	
-	<nasal>
-		<specific>
-			<file>Aircraft/A320-family/Nasal/Libraries/a320livery-neopw.nas</file>
-		</specific>
-	</nasal>
 
 </PropertyList>

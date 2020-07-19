@@ -1,1 +1,0 @@
-aircraft.livery.init("Aircraft/A320-family/Models/Liveries/A320/CFM-100");

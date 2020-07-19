@@ -9,6 +9,7 @@ var fuelSvc = {
 	Nodes: {
 		requestLbs: props.globals.getNode("services/fuel-truck/request-lbs"),
 		requestTotalLbs: props.globals.getNode("services/fuel-truck/request-total-lbs"),
+		requestFuelLbs: props.globals.initNode("services/fuel-truck/fuel-on-board-at-request", pts.Consumables.Fuel.totalFuelLbs.getValue(), "DOUBLE"),
 	},
 	
 	newRequest: func() {

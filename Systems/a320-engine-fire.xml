@@ -2,7 +2,7 @@
 
 <system name="A320: Engine Fire">
 
-	<channel name="Engine Fire">
+	<channel name="Engine Fire" execrate="8">
 		<fcs_function name="enginefire1">
               <function>
 				<sum>
@@ -73,7 +73,7 @@
         </fcs_function>
 	</channel>
 	
-	<channel name="Cargo Fire">
+	<channel name="Cargo Fire" execrate="8">
 		<fcs_function name="fwdfire">
               <function>
 				<sum>
