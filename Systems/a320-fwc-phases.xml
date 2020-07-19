@@ -14,7 +14,7 @@
         </actuator>
 	</channel>
 	
-	<channel name="FWC Phase Logic and Switches">
+	<channel name="FWC Phase Logic and Switches" execrate="4">
 		
 		<switch name="/ECAM/flipflop/speed-gt-80-set">
 			<default value="0"/>

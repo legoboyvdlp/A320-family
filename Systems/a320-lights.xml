@@ -2,7 +2,7 @@
 
 <system name="A320: Lights">
 
-	<channel name="Lights">
+	<channel name="Interior Lights" execrate="8">
 		<switch name="/controls/lighting/reading-light-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-flood-knb">
@@ -68,7 +68,7 @@
 		</switch>
 	</channel>
 	
-	<channel name="Exterior Lights">
+	<channel name="Exterior Lights" execrate="8">
 		
 		<switch name="/sim/model/lights/nose-lights">
 			<default value="0"/>
