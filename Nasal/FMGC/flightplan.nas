@@ -207,11 +207,7 @@ var flightPlanController = {
 		me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 		if (me.num[2].getValue() > 2) {
 			for (var i = 0; i <= 2; i += 1) {
-				if (i == 2) {
-					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
-				} elsif (me.temporaryFlag[i]) {
-					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
-				}
+				me.flightplans[i].getWP(me.currentToWptIndexTemp).hidden = 1;
 			}
 		}
 	},
