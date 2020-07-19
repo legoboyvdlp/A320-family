@@ -33,6 +33,18 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="hydraulics/rudder-swing">
+			<function>
+				<table>
+					<independentVar lookup="row">/velocities/airspeed-kt</independentVar> <!-- rudder is rather large at 7m2... so it doesn't take much speed to stop it -->
+					<tableData>
+						 12  1.0
+						 35  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<actuator name="spoilers/anti-droop-cmd">
 			<input>fbw/spoiler-output</input>
 			<rate_limit sense="incr">0.9</rate_limit>
@@ -421,8 +433,43 @@
 			</clipto>
 		</summer>
 		
+		<fcs_function name="hydraulics/rudder/swing-deg">
+			<function>
+				<product>
+					<property>hydraulics/rudder-swing</property>
+					<sin>
+						<toradians><difference>
+							<property>/orientation/heading-deg</property>
+							<property>/environment/wind-from-heading-deg</property>
+						</difference></toradians>
+					</sin>
+					<property>/environment/wind-speed-kt</property>
+					<value>1.6666</value>
+				</product>
+			</function>
+			<clipto>
+				<min>-25.0</min>
+				<max>25.0</max>
+			</clipto>
+		</fcs_function>
+		
+		<aerosurface_scale name="hydraulics/rudder/swing-norm">
+			<input>hydraulics/rudder/swing-deg</input>
+			<domain>
+				<min>-25</min>
+				<max> 25</max>
+			</domain>
+			<range>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</range>
+		</aerosurface_scale>
+		
 		<switch name="hydraulics/rudder/switch">
-			<default value="hydraulics/rudder/summer"/>
+			<default value="hydraulics/rudder/swing-norm"/>
+			<test logic="AND" value="hydraulics/rudder/summer">
+				hydraulics/rudder/pressure-switch-or ne 0
+			</test>
 			<clipto>
 				<min>fbw/yaw/max-deg-scale-neg</min>
 				<max>fbw/yaw/max-deg-scale</max>
@@ -436,7 +483,7 @@
 		
 		<switch name="hydraulics/rudder/rate">
 			<default value="80"/>
-			<test logic="OR" value="0">
+			<test logic="OR" value="25"> <!-- returns to center from centering spring / damping / aero -->
 				hydraulics/rudder/pressure-switch-or eq 0
 			</test>
 		</switch>
