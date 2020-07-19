@@ -207,7 +207,9 @@ var flightPlanController = {
 		me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 		if (me.num[2].getValue() > 2) {
 			for (var i = 0; i <= 2; i += 1) {
-				me.flightplans[i].getWP(me.currentToWptIndexTemp).hidden = 1;
+				if (me.temporaryFlag[i] or i == 2) {
+					me.flightplans[i].getWP(me.currentToWptIndexTemp).hidden = 1;
+				}
 			}
 		}
 	},
@@ -349,12 +351,21 @@ var flightPlanController = {
 			
 			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
 			
-			for (var i = 0; i < indexWP; i = i + 1) {
-				me.flightplans[plan].getWP(i).hidden = 1;
-			}
+			print(indexWP);
+			#for (var i = 0; i < indexWP; i = i + 1) {
+			#	me.flightplans[plan].getWP(i).hidden = 1;
+			#}
 			
-			me.insertTP(plan, indexWP);
-			me.currentToWptIndex.setValue(indexWP + 1);
+			me.insertTP(plan, indexWP - 1);
+			for (var i = 0; i < indexWP - 1; i = i + 1) {
+				if (me.temporaryFlag[0]) {
+					me.deleteWP(i, 0, 1);
+				}
+				if (me.temporaryFlag[1]) {
+					me.deleteWP(i, 0, 1);
+				}
+				me.deleteWP(i, 2, 1);
+			}
 		}
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(me.currentToWptIndex.getValue() + 1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
