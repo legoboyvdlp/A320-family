@@ -137,6 +137,7 @@ var flightPlanController = {
 				}
 			}
 			if (me.currentToWptIndex.getValue() == 0) {
+				print("Setting 1");
 				me.currentToWptIndex.setValue(1);
 			}
 			me.flightPlanChanged(2);
@@ -173,7 +174,6 @@ var flightPlanController = {
 		if (canvas_mcdu.myArrival[1] != nil) { canvas_mcdu.myArrival[1].reset(); }
 		if (canvas_mcdu.myDeparture[0] != nil) { canvas_mcdu.myDeparture[0].reset(); }
 		if (canvas_mcdu.myDeparture[1] != nil) { canvas_mcdu.myDeparture[1].reset(); }
-		#todo if plan = 2, kill any tmpy flightplan
 		me.flightPlanChanged(plan);
 	},
 	
@@ -200,15 +200,13 @@ var flightPlanController = {
 		if (!me.active.getBoolValue()) { return; }
 		me.calculateTimeAltitudeOnSequence();
 		
-		# todo setlistener on sim/time/warp to recompute predictions
-		
 		# Advancing logic
 		me.currentToWptIndexTemp = me.currentToWptIndex.getValue();
 		me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
-		if (me.num[2].getValue() > 2) {
+		if (me.num[2].getValue() > 2 and me.currentToWptIndexTemp >= 1) {
 			for (var i = 0; i <= 2; i += 1) {
-				if (me.temporaryFlag[i] or i == 2) {
-					me.flightplans[i].getWP(me.currentToWptIndexTemp).hidden = 1;
+				if (i == 2 or me.temporaryFlag[i]) {
+					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
 				}
 			}
 		}
@@ -297,6 +295,7 @@ var flightPlanController = {
 			
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
 			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5 + (me.flightplans[n].departure_runway.length * M2NM)), "1500", "sid"), 1);
+			me.flightplans[n].getWP(1).fly_type = "flyOver";
 			fmgc.windController.insertWind(n, 1, 0, "1500");
 		}
 		me.flightPlanChanged(n);
@@ -318,6 +317,7 @@ var flightPlanController = {
 				hdg = hdg - 360;
 			}
 			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, hdg, 5), "CF", "star"), me.arrivalIndex[n]);
+			me.flightplan[n].getWP(me.arrivalIndex[n]).fly_type = "flyOver";
 			fmgc.windController.insertWind(n, me.arrivalIndex[n], 0, "CF");
 		}
 		me.flightPlanChanged(n);
@@ -343,6 +343,7 @@ var flightPlanController = {
 			me.flightplans[plan].insertWP(createWP(waypointGhost, waypointGhost.id), me.currentToWptIndex.getValue() + 1);
 			fmgc.windController.insertWind(plan, me.currentToWptIndex.getValue() + 1, 0, waypointGhost.id);
 			me.addDiscontinuity(me.currentToWptIndex.getValue() + 2, plan);
+			print(me.currentToWptIndex.getValue());
 			me.currentToWptIndex.setValue(me.currentToWptIndex.getValue() + 1);
 		} else {
 			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
@@ -352,9 +353,6 @@ var flightPlanController = {
 			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
 			
 			print(indexWP);
-			#for (var i = 0; i < indexWP; i = i + 1) {
-			#	me.flightplans[plan].getWP(i).hidden = 1;
-			#}
 			
 			me.insertTP(plan, indexWP - 1);
 			for (var i = 0; i < indexWP - 1; i = i + 1) {

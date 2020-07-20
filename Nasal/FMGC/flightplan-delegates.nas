@@ -47,7 +47,7 @@ var A320GPSDeleagte = {
         # setprop(GPSPath ~ '/config/enable-fly-by', 1);
 		
 		# Set maximum lateral deviation for sequencing to 5 miles
-		setprop(GPSPath ~ '/config/overflight-arm-distance', 5);
+		setprop(GPSPath ~ '/config/over-flight-arm-distance', 5);
 
         # make FlightPlan behaviour match GPS config state
         fp.followLegTrackToFix = getprop(GPSPath ~ '/config/follow-leg-track-to-fix') or 0;
@@ -134,7 +134,7 @@ var A320GPSDeleagte = {
     {
         if (!me.flightplan.active)
             return;
-		
+		flightPlanController.autoSequencing();
         var mode = me._modeProp.getValue();
         if (mode == 'dto') {
             # direct-to is done, check if we should resume the following leg
