@@ -271,16 +271,17 @@ var ITAF = {
 		
 		# Autoland Logic
 		if (Output.latTemp == 2) {
-			if (Position.gearAglFtTemp <= 150) {
+			if (Position.gearAglFtTemp <= 50) { # ALIGN
 				me.setLatMode(4);
 			}
 		}
 		if (Output.vertTemp == 2) {
-			if (Position.gearAglFtTemp <= 300 and Position.gearAglFtTemp >= 5) {
+			if (Position.gearAglFtTemp <= 400 and Position.gearAglFtTemp >= 5) {
 				Text.vert.setValue("LAND");
-			}
-			if (Position.gearAglFtTemp <= 100 and Position.gearAglFtTemp >= 5) {
-				me.setVertMode(6);
+
+				if (Position.gearAglFtTemp <= 100) { # switch to internal flare logic at 100 feet -- but on FMA at 50!
+					me.setVertMode(6);
+				}
 			}
 		} else if (Output.vertTemp == 6) {
 			if (Position.gearAglFtTemp <= 50 and Position.gearAglFtTemp >= 5) {
@@ -318,14 +319,15 @@ var ITAF = {
 		
 		# Altitude Hold Min/Max Reset
 		if (Internal.altCaptureActive) {
-			if (abs(Internal.altDiff) <= 25) {
+			if (abs(Internal.altDiff) <= 20) {
 				me.resetClimbRateLim();
 				Text.vert.setValue("ALT HLD");
 			}
 		}
 		
 		# Thrust Mode Selector
-		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1Temp or Output.ap2Temp) and Position.gearAglFt.getValue() <= 18 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
+		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1Temp or Output.ap2Temp) and Position.gearAglFt.getValue() <= 30 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
+			# Manual says 40 feet -- but video reference shows 30!
 			Output.thrMode.setValue(1);
 			Text.thr.setValue("RETARD");
 		} else if (Output.vertTemp == 4) {
@@ -373,7 +375,6 @@ var ITAF = {
 		}
 	},
 	slowLoop: func() {
-		Input.bankLimitSWTemp = Input.bankLimitSW.getValue();
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWPTemp = FPLN.currentWP.getValue();
@@ -384,7 +385,7 @@ var ITAF = {
 		} else if (Velocities.trueAirspeedKtTemp >= 340) {
 			Internal.bankLimitAuto = 20;
 		} else {
-			Internal.bankLimitAuto = 25;
+			Internal.bankLimitAuto = 30;
 		}
 		
 		Internal.bankLimit.setValue(Internal.bankLimitAuto);
