@@ -136,10 +136,10 @@ var flightPlanController = {
 					mcdu.isNoTransArr[2] = 0;
 				}
 			}
-			if (me.currentToWptIndex.getValue() == 0) {
-				print("Setting 1");
-				me.currentToWptIndex.setValue(1);
-			}
+			#if (me.currentToWptIndex.getValue() == 0) {
+			#	print("Setting 1");
+			#	me.currentToWptIndex.setValue(1);
+			#}
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
@@ -147,8 +147,9 @@ var flightPlanController = {
 			me.flightPlanChanged(n);
 			return; 
 		}
-		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
+		me.flightPlanChanged(2);
+		me.resetFlightplan(n);
 		if (canvas_mcdu.myDirTo[n] != nil) {
 			canvas_mcdu.myDirTo[n].updateTmpy();
 		}

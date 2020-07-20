@@ -197,7 +197,7 @@ var A320GPSDeleagte = {
         var wow = getprop('gear/gear[0]/wow');
 
         if (!wow and
-            (activeRunway != nil) and
+            (activeRunway != nil) and (me.flightplan.destination_runway != nil) and 
             (activeRunway.id == me.flightplan.destination_runway.id))
         {
             me.landingCheck = maketimer(2.0, me, A320GPSDeleagte._landingCheckTimeout);
