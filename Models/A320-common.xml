@@ -379,37 +379,37 @@
 	</model>
 	
 	<light>
-	  <name>Top Beacon Compositor</name>
+	  <name>Bottom Beacon Compositor</name>
 	  <type>point</type>
 	  <position>
 		<x-m>-3.97011</x-m>
 		<y-m>-0.001032</y-m>
-		<z-m>-2.50394</z-m>
+		<z-m>-2.52394</z-m>
 	  </position>
 	  <ambient>
-		<r>1.0</r>
-		<g>0.0</g>
-		<b>0.0</b>
+		<r>0.78</r>
+		<g>0.00</g>
+		<b>0.00</b>
 		<a>1</a>
 	  </ambient>
 	  <diffuse>
-		<r>1.0</r>
-		<g>0.0</g>
-		<b>0.0</b>
+		<r>0.78</r>
+		<g>0.00</g>
+		<b>0.00</b>
 		<a>1</a>
 	  </diffuse>
 	  <specular>
-		<r>0.95</r>
-		<g>0.0</g>
-		<b>0.0</b>
+		<r>0.98</r>
+		<g>0.00</g>
+		<b>0.00</b>
 		<a>1</a>
 	  </specular>
 	  <attenuation>
 		<c>1.0</c>
-		<l>0.7</l>
-		<q>1.8</q>
+		<l>2.25</l>
+		<q>12.0</q>
 	  </attenuation>
-	  <range-m>7</range-m>
+	  <range-m>2.5</range-m>
 	</light>
 	
 	<light>
@@ -421,111 +421,111 @@
 		<z-m>1.94988</z-m>
 	  </position>
 	  <ambient>
-		<r>1.0</r>
-		<g>0.0</g>
-		<b>0.0</b>
+		<r>0.78</r>
+		<g>0.00</g>
+		<b>0.00</b>
 		<a>1</a>
 	  </ambient>
 	  <diffuse>
-		<r>1.0</r>
-		<g>0.0</g>
-		<b>0.0</b>
+		<r>0.78</r>
+		<g>0.00</g>
+		<b>0.00</b>
 		<a>1</a>
 	  </diffuse>
 	  <specular>
-		<r>0.95</r>
-		<g>0.0</g>
-		<b>0.0</b>
+		<r>0.98</r>
+		<g>0.00</g>
+		<b>0.00</b>
 		<a>1</a>
 	  </specular>
 	  <attenuation>
 		<c>1.0</c>
-		<l>0.7</l>
-		<q>1.8</q>
+		<l>2.25</l>
+		<q>12.0</q>
 	  </attenuation>
-	  <range-m>7</range-m>
+	  <range-m>2.5</range-m>
 	</light>
 	
 	<light>
 	  <name>Landing Light Left Compositor</name>
 	  <type>spot</type>
 	  <position>
-		<x-m>-2.09668</x-m>
-		<y-m>-2.23631</y-m>
-		<z-m>-1.72072</z-m>
+		<x-m>-2.080</x-m>
+		<y-m>-2.22016</y-m>
+		<z-m>-1.69034</z-m>
 	  </position>
 	  <direction>
 		<x>-1.0</x>
 		<y>0</y>
-		<z>-0.013</z>
+		<z>-0.055</z>
 	  </direction>
 	  <ambient>
-		<r>1.0</r>
-		<g>1.0</g>
-		<b>1.0</b>
+		<r>1.00</r>
+		<g>0.9765</g>
+		<b>0.9922</b>
 		<a>1</a>
 	  </ambient>
 	  <diffuse>
-		<r>1.0</r>
-		<g>1.0</g>
-		<b>1.0</b>
+		<r>1.00</r>
+		<g>0.9765</g>
+		<b>0.9922</b>
 		<a>1</a>
 	  </diffuse>
 	  <specular>
-		<r>1.0</r>
-		<g>1.0</g>
-		<b>1.0</b>
+		<r>1.00</r>
+		<g>0.9765</g>
+		<b>0.9922</b>
 		<a>1</a>
 	  </specular>
 	  <attenuation>
 		<c>1.0</c>
-		<l>0.7</l>
-		<q>1.8</q>
+		<l>0.9</l>
+		<q>3.0</q>
 	  </attenuation>
 	  <spot-exponent>5</spot-exponent>
-	  <spot-cutoff>40</spot-cutoff>
-	  <range-m>7</range-m>
+	  <spot-cutoff>10</spot-cutoff>
+	  <range-m>5</range-m>
 	</light>
 	
 	<light>
 	  <name>Landing Light Right Compositor</name>
 	  <type>spot</type>
 	  <center>
-		<x-m>-2.11117</x-m>
-		<y-m> 2.2341</y-m>
-		<z-m>-1.57985</z-m>
+		<x-m>-2.080</x-m>
+		<y-m> 2.22016</y-m>
+		<z-m>-1.69034</z-m>
 	  </center>
 	  <direction>
 		<x>-1.0</x>
 		<y>0</y>
-		<z>-0.013</z>
+		<z>-0.055</z>
 	  </direction>
 	  <ambient>
-		<r>1.0</r>
-		<g>1.0</g>
-		<b>1.0</b>
+		<r>1.00</r>
+		<g>0.9765</g>
+		<b>0.9922</b>
 		<a>1</a>
 	  </ambient>
 	  <diffuse>
-		<r>1.0</r>
-		<g>1.0</g>
-		<b>1.0</b>
+		<r>1.00</r>
+		<g>0.9765</g>
+		<b>0.9922</b>
 		<a>1</a>
 	  </diffuse>
 	  <specular>
-		<r>1.0</r>
-		<g>1.0</g>
-		<b>1.0</b>
+		<r>1.00</r>
+		<g>0.9765</g>
+		<b>0.9922</b>
 		<a>1</a>
 	  </specular>
 	  <attenuation>
 		<c>1.0</c>
-		<l>0.7</l>
-		<q>1.8</q>
+		<l>0.9</l>
+		<q>3.0</q>
 	  </attenuation>
 	  <spot-exponent>5</spot-exponent>
-	  <spot-cutoff>40</spot-cutoff>
-	  <range-m>7</range-m>
+	  <spot-cutoff>10</spot-cutoff>
+	  <range-m>5</range-m>
 	</light>
 	
 	<animation>
