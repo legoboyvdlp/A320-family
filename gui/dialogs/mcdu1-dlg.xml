@@ -466,6 +466,16 @@
 			<legend>ATC</legend>
 			<pref-height>25</pref-height>
 			<pref-width>40</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>mcdu.pagebutton("atc", 0);</script>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-1</property>
+						<value>110</value>
+					</greater-than-equals>
+				</condition>
+			</binding>
 		</button>
 		
 		<button>

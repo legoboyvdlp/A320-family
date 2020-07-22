@@ -4314,6 +4314,9 @@
 		<atc>
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
+		<atsu>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
+		</atsu>
 		<dmc>
 			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>
