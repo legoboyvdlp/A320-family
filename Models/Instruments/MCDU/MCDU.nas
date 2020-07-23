@@ -684,7 +684,7 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L1S"].setText(" ATC FLT NBR");
 				me["Simple_L2S"].setText(" ATC CENTER");
-				me["Simple_C2"].setText("------------  ");
+				me["Simple_C2"].setText("------------   ");
 				me["Simple_R2"].setText("NOTIFY ");
 				me["Simple_C5"].setText("NOTIFICATION UNAVAILABLE");
 				
@@ -787,7 +787,7 @@ var canvas_MCDU_base = {
 				me["Simple_L1S"].setText("ACTIVE ATC");
 				me["Simple_L2S"].setText("NEXT ATC");
 				me["Simple_L2"].setText("----");
-				me["Simple_C1"].setText("-------------    ");
+				me["Simple_C1"].setText("-------------     ");
 				me["Simple_R1"].setText("NOTIFIED ");
 				me["Simple_R3S"].setText("MAX UPLINK DELAY");
 				me["Simple_R3"].setText("NONE");
@@ -815,13 +815,13 @@ var canvas_MCDU_base = {
 			}
 			
 			if (atsu.ADS.state == 0) {
-				me["Simple_C4S"].setText("---------------ADS - OFF-------");
+				me["Simple_C4S"].setText("--------------ADS - OFF--------");
 				me["Simple_L4"].setText(" SET ARMED");
 			} elsif (atsu.ADS.state == 1) {
-				me["Simple_C4S"].setText("--------------ADS - ARMED------");
+				me["Simple_C4S"].setText("-------------ADS - ARMED-------");
 				me["Simple_L4"].setText(" SET OFF");
 			} elsif (atsu.ADS.state == 2) {
-				me["Simple_C4S"].setText("------------ADS - CONNECTED----");
+				me["Simple_C4S"].setText("-----------ADS - CONNECTED-----");
 				me["Simple_L4"].setText(" SET OFF");
 			}
 		} else if (page == "COMMMENU") {
