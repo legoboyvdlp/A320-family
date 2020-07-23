@@ -2896,4 +2896,34 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
   </g>
+  <g
+       style="opacity:0.97000002;stroke:#179ab7;stroke-opacity:1"
+       id="COMM-ADS"
+       inkscape:label="#g4324"
+       transform="matrix(1.0807111,0,0,1.0807111,-1029.7034,213.33078)">
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path1273"
+         d="M 998.71909,284.70793 H 970.18944"
+         style="fill:none;stroke:#179ab7;stroke-width:4.07999992;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#179ab7;stroke-width:4.07999992;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 994.54102,294.79468 -20.17351,-20.1735"
+         id="path1275"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path1277"
+         d="m 984.45427,298.97275 -10e-6,-28.52964"
+         style="fill:none;stroke:#179ab7;stroke-width:4.07999992;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#179ab7;stroke-width:4.07999992;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 974.36752,294.79468 20.17349,-20.1735"
+         id="path1279"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+    </g>
 </svg>
