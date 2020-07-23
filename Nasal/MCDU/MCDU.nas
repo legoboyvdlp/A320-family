@@ -265,6 +265,14 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(1);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATSUDLINK") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
+			setprop("/MCDU[" ~ i ~ "]/page", "COMMINIT");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
+			if (atsu.CompanyCall.frequency != 999.99) {
+				atsu.CompanyCall.tune();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -414,6 +422,12 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(4);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(4);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CONNECTSTATUS") {
+			if (atsu.ADS.state != 0) {
+				atsu.ADS.setState(0);
+			} else {
+				atsu.ADS.setState(1);
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -528,8 +542,12 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myClosestAirport[i].freeze();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU" or getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU2") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATSUDLINK");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION" or getprop("/MCDU[" ~ i ~ "]/page") == "CONNECTSTATUS") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
+			setprop("/MCDU[" ~ i ~ "]/page", "ATSUDLINK");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMINIT" or getprop("/MCDU[" ~ i ~ "]/page") == "COMMSTATUS" or getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
+			setprop("/MCDU[" ~ i ~ "]/page", "COMMMENU");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -584,6 +602,14 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED"); # todo spawn new waypoints page
 			}
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
+			setprop("/MCDU[" ~ i ~ "]/page", "COMMSTATUS");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
+			if (atsu.CompanyCall.frequency != 999.99) {
+				atsu.CompanyCall.ack();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -609,6 +635,8 @@ var rskbutton = func(btn, i) {
 			if (result == 1) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
+			setprop("/MCDU[" ~ i ~ "]/page", "COMPANYCALL");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -774,6 +802,8 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
+			setprop("/MCDU[" ~ i ~ "]/page", "CONNECTSTATUS");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -820,6 +850,12 @@ var rskbutton = func(btn, i) {
 					canvas_mcdu.myPilotWP[i].deleteCmd();
 				}
 			}
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION") {
+			setprop("/MCDU[" ~ i ~ "]/page", "CONNECTSTATUS");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATSUDLINK") {
+			setprop("/MCDU[" ~ i ~ "]/page", "COMMMENU");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CONNECTSTATUS") {
+			setprop("/MCDU[" ~ i ~ "]/page", "NOTIFICATION");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -954,7 +990,7 @@ var pagebutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
 		} else if (btn == "mcdu") {
 			var page = getprop("/MCDU[" ~ i ~ "]/page");
-			if (page != "ATSUDLINK" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION") {
+			if (page != "ATSUDLINK" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
 				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", getprop("/MCDU[" ~ i ~ "]/page"));
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", getprop("/MCDU[" ~ i ~ "]/page"));
