@@ -58,7 +58,7 @@
 		<object-name>BRT</object-name>
 		<action>
 			<button>0</button>
-			<repeatable>false</repeatable>
+			<repeatable>true</repeatable>
 			<binding>
 				<condition>
 					<greater-than-equals>
@@ -70,7 +70,7 @@
 				<property>controls/lighting/DU/mcdu2</property>
 				<min>0.0</min>
 				<max>1.0</max>
-				<step>0.2</step>
+				<step>0.05</step>
 				<wrap>false</wrap>
 			</binding>
 		</action>
@@ -81,7 +81,7 @@
 		<object-name>DIM</object-name>
 		<action>
 			<button>0</button>
-			<repeatable>false</repeatable>
+			<repeatable>true</repeatable>
 			<binding>
 				<condition>
 					<greater-than-equals>
@@ -93,7 +93,7 @@
 				<property>controls/lighting/DU/mcdu2</property>
 				<min>0.0</min>
 				<max>1.0</max>
-				<step>-0.2</step>
+				<step>-0.05</step>
 				<wrap>false</wrap>
 			</binding>
 		</action>
