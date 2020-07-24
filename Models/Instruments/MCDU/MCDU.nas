@@ -5440,8 +5440,8 @@ var canvas_MCDU_base = {
 			} else { 
 				var sign = "R"; 
 			}
-			forindex (var item; myLatRev[i].arrowsMatrix[matrixArrow]) {
-				if (myLatRev[i].arrowsMatrix[matrixArrow][item] == 1) {
+			forindex (var item; dynamic.arrowsMatrix[matrixArrow]) {
+				if (dynamic.arrowsMatrix[matrixArrow][item] == 1) {
 					me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
 				} else {
 					me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
@@ -5456,8 +5456,8 @@ var canvas_MCDU_base = {
 			} else { 
 				var sign = "R"; 
 			}
-			forindex (var item; myDeparture[i].fontMatrix[matrixFont]) {
-				if (myDeparture[i].fontMatrix[matrixFont][item] == 1) {
+			forindex (var item; dynamic.fontMatrix[matrixFont]) {
+				if (dynamic.fontMatrix[matrixFont][item] == 1) {
 					me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
 					me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
 				} else {
