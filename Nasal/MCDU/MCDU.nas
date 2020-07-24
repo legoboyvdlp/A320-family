@@ -339,6 +339,8 @@ var lskbutton = func(btn, i) {
 			} else {
 				mcdu_scratchpad.scratchpads[i].empty();
 			}
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
+			setprop("/MCDU[" ~ i ~ "]/page", "DATAMODE");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -554,7 +556,7 @@ var lskbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATSUDLINK");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMINIT" or getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY" or getprop("/MCDU[" ~ i ~ "]/page") == "COMMSTATUS" or getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMINIT" or getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY" or getprop("/MCDU[" ~ i ~ "]/page") == "DATAMODE"  or getprop("/MCDU[" ~ i ~ "]/page") == "COMMSTATUS" or getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
 			setprop("/MCDU[" ~ i ~ "]/page", "COMMMENU");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
@@ -1004,7 +1006,7 @@ var pagebutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
 		} else if (btn == "mcdu") {
 			var page = getprop("/MCDU[" ~ i ~ "]/page");
-			if (page != "ATSUDLINK" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
+			if (page != "ATSUDLINK" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
 				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", getprop("/MCDU[" ~ i ~ "]/page"));
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", getprop("/MCDU[" ~ i ~ "]/page"));

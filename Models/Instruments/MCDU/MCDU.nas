@@ -271,7 +271,7 @@ var canvas_MCDU_base = {
 	"FUELPRED_ZFWCG","FUELPRED_ZFWCG_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
-	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
+	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -333,10 +333,20 @@ var canvas_MCDU_base = {
 		} else {
 			me["COMM-ADS"].show();
 		}
-		if (page != "COMMINIT" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "COMMSTATUS") {
+		if (page != "VOICEDIRECTORY") {
+			me["MODEVHF3"].hide();
+		} else {
+			me["MODEVHF3"].show();
+		}
+		if (page != "COMMINIT" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMSTATUS") {
 			me["PRINTPAGE"].hide();
 		} else {
 			me["PRINTPAGE"].show();
+			if (page == "DATAMODE" or page == "COMMINIT") {
+				me["PRINTPAGE"].setColor(BLUE);
+			} else {
+				me["PRINTPAGE"].setColor(WHITE);
+			}
 		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -960,6 +970,80 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L4"].setText(" ---.--");
 			}
+		} else if (page == "DATAMODE") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me["Simple"].show();
+				me["Simple_Center"].show();
+				me["FPLN"].hide();
+				me["DIRTO_TMPY_group"].hide();
+				me["INITA"].hide();
+				me["IRSINIT"].hide();
+				me["INITB"].hide();
+				me["FUELPRED"].hide();
+				me["PROG"].hide();
+				me["PERFTO"].hide();
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].show();
+				me["Simple_Title"].setText("VHF3 DATA MODE");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(-1, 1, 1, 1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, 1, -1, -1);
+				me.showLeftArrow(-1, 1, 1, 1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				me.showRight(-1, 1, 1, -1, -1, 1);
+				me.showRightS(1, 1, 1, -1, -1, 1);
+				me.showRightArrow(-1, 1, 1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeft("wht", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("grn", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftArrow("wht", "blu", "blu", "blu", "wht", "wht");
+				me.colorCenterS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightS("grn", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "blu", "blu", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setFontSize(normal);
+				me["Simple_C1S"].setFontSize(normal);
+				me["Simple_R1S"].setFontSize(normal);
+				me["Simple_L1S"].setText(" AUTO");
+				me["Simple_C1S"].setText("SITA725 ");
+				me["Simple_L2S"].setText(" SITA725");
+				me["Simple_L2"].setText(" EUROPE");
+				me["Simple_L3S"].setText(" SITA550");
+				me["Simple_L3"].setText(" ASIA/AUST");
+				me["Simple_L4S"].setText(" AVICOM");
+				me["Simple_L4"].setText(" JAPAN");
+				me["Simple_R1S"].setText(" 131.725");
+				me["Simple_R2S"].setText("ARINC ");
+				me["Simple_R2"].setText("USA ");
+				me["Simple_R3S"].setText("AIRCANADA ");
+				me["Simple_R3"].setText("CANADA ");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" COMM MENU");
+				me["Simple_R6S"].setText("PAGE ");
+				me["Simple_R6"].setText("PRINT ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else if (page == "COMMINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -991,8 +1075,8 @@ var canvas_MCDU_base = {
 				me.colorLeft("wht", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				me["Simple_L2S"].setText(" A/C REGISTR");
