@@ -303,7 +303,7 @@ var canvas_MCDU_base = {
 		me["PERFGA"].hide();
 		me["Simple_Title"].show();
 	},
-	hideAllArrows: func(i) {
+	hideAllArrows: func() {
 		me["Simple_L1_Arrow"].hide();
 		me["Simple_L2_Arrow"].hide();
 		me["Simple_L3_Arrow"].hide();
