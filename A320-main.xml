@@ -1394,6 +1394,14 @@
 		<steep-ils-avail type="bool">0</steep-ils-avail>
 		<enable-ecam-actions>0</enable-ecam-actions>
 		<test-canvas type="bool">0</test-canvas>
+		<model-options>
+			<registration type="string">G-EZTB</registration>
+			<three-letter type="string">EZY</three-letter>
+			<two-letter type="string">U2</two-letter>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft> <!-- Iridium / inmarsat satcom + wireless -->
+			<wifi-fwd type="bool">0</wifi-fwd> <!-- Fly-fy-->
+		</model-options>
 	</options>
 	
 	<instrumentation n="0">
@@ -4335,6 +4343,9 @@
 		<atc>
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
+		<atsu>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
+		</atsu>
 		<dmc>
 			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>
