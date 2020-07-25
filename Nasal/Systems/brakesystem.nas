@@ -1,3 +1,9 @@
+# A3XX Autobrake and Braking
+# Joshua Davidson (Octal450)
+
+# Copyright (c) 2020 Josh Davidson (Octal450)
+
+
 ##########################################################################
 # Simple Brake Simulation System
 # 2010, Thorsten Brehm
@@ -63,7 +69,7 @@ var BrakeSystem =
 		setprop("gear/gear[1]/Lbrake-thermal-energy",0.0);
 		setprop("gear/gear[2]/Rbrake-thermal-energy",0.0);
 
-		setprop("controls/gear/brake-fans",0);
+		setprop("/controls/gear/brake-fans",0);
 		setprop("gear/gear[1]/Lbrake-smoke",0);
 		setprop("gear/gear[2]/Rbrake-smoke",0);
 		setprop("gear/gear[1]/L-Thrust",0);
@@ -80,21 +86,21 @@ var BrakeSystem =
 		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat") or 0;
 		var atemp  =  getprop("environment/temperature-degc") or 0;
 		var vmach  =  getprop("velocities/mach") or 0;
-		var tatdegc = getprop("systems/navigation/probes/tat-1/compute-tat");
+		var tatdegc = getprop("/systems/navigation/probes/tat-1/compute-tat");
 
 		setprop("gear/gear[1]/L1brake-temp-degc",tatdegc+getprop("gear/gear[1]/L1error-temp-degc"));
 		setprop("gear/gear[1]/L2brake-temp-degc",tatdegc+getprop("gear/gear[1]/L2error-temp-degc"));
 		setprop("gear/gear[2]/R3brake-temp-degc",tatdegc+getprop("gear/gear[2]/R3error-temp-degc"));
 		setprop("gear/gear[2]/R4brake-temp-degc",tatdegc+getprop("gear/gear[2]/R4error-temp-degc"));
 
-		setprop("sim/animation/fire-services",0);
+		setprop("/sim/animation/fire-services",0);
 		me.LastSimTime = 0.0;
 	},
 
 	# update brake energy
 	update : func()
 	{
-		var CurrentTime = getprop("sim/time/elapsed-sec");
+		var CurrentTime = getprop("/sim/time/elapsed-sec");
 		var dt = CurrentTime - me.LastSimTime;
 		var LThermalEnergy = getprop("gear/gear[1]/Lbrake-thermal-energy");
 		var RThermalEnergy = getprop("gear/gear[2]/Rbrake-thermal-energy");
@@ -107,12 +113,12 @@ var BrakeSystem =
 		var L_thrust_lb = getprop("engines/engine[0]/thrust_lb");
 		var R_thrust_lb = getprop("engines/engine[1]/thrust_lb");
 
-		if (getprop("sim/freeze/replay-state")==0 and dt<1.0) {
+		if (getprop("/sim/freeze/replay-state")==0 and dt<1.0) {
 			var OnGround = getprop("gear/gear[1]/wow");
 			#cooling effect: adjust cooling factor by a value proportional to the environment temp (m.CoolingFactor + environment temp-degc * 0.00001)
 			var LCoolingRatio = me.CoolingFactor+(tatdegc*0.000001);
 			var RCoolingRatio = me.CoolingFactor+(tatdegc*0.000001);
-			if (getprop("controls/gear/brake-fans")) {
+			if (getprop("/controls/gear/brake-fans")) {
 				#increase CoolingRatio if Brake Fans are active
 				LCoolingRatio = LCoolingRatio * 3;
 				RCoolingRatio = RCoolingRatio * 3;
@@ -169,8 +175,8 @@ var BrakeSystem =
 				var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
 
 				LThermalEnergy += (Mass * getprop("gear/gear[1]/compression-norm") * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
-				if (getprop("services/chocks/enable")) {
-					if (!getprop("controls/gear/brake-parking")) {
+				if (getprop("/services/chocks/enable")) {
+					if (!getprop("/controls/gear/brake-parking")) {
 						# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
 						LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);					
 					} else {
@@ -179,7 +185,7 @@ var BrakeSystem =
 						LThermalEnergy = (LThermalEnergy * math.exp(LnCoolFactor * dt)) + (L_Thrust * dt);
 					};
 				} else {
-					if (!getprop("controls/gear/brake-parking")) {
+					if (!getprop("/controls/gear/brake-parking")) {
 						if (LBrakeLevel>0) {
 							if (V2_L>0)	{
 								#LThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2) + L_thrust;
@@ -202,8 +208,8 @@ var BrakeSystem =
 				};
 
 				RThermalEnergy += (Mass * getprop("gear/gear[2]/compression-norm") * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
-				if (getprop("services/chocks/enable")) {
-					if (!getprop("controls/gear/brake-parking")) {
+				if (getprop("/services/chocks/enable")) {
+					if (!getprop("/controls/gear/brake-parking")) {
 						# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
 						RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
 					} else {
@@ -212,7 +218,7 @@ var BrakeSystem =
 						RThermalEnergy = (RThermalEnergy * math.exp(RnCoolFactor * dt)) + (R_Thrust * dt);
 					};
 				} else {
-					if (!getprop("controls/gear/brake-parking")) {
+					if (!getprop("/controls/gear/brake-parking")) {
 						if (RBrakeLevel>0) {
 							if (V2_R>0)	{
 								#RThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2) + R_thrust;
@@ -304,13 +310,13 @@ var BrakeSystem =
 		} else {
 			# stop smoke processing
 			setprop("gear/gear[1]/Lbrake-smoke",0);
-			setprop("sim/animation/fire-services",0);
+			setprop("/sim/animation/fire-services",0);
 			me.LSmokeActive = 0;
 		};
 		if (getprop("gear/gear[1]/Lbrake-thermal-energy") > 1.5) {
-			setprop("sim/animation/fire-services",1);
+			setprop("/sim/animation/fire-services",1);
 		} else {
-			setprop("sim/animation/fire-services",0);		
+			setprop("/sim/animation/fire-services",0);		
 		};
 
 	},
@@ -344,21 +350,102 @@ var BrakeSystem =
 			me.RSmokeActive = 0;
 		};
 		if (getprop("gear/gear[2]/Rbrake-thermal-energy") > 1.5) {
-			setprop("sim/animation/fire-services",1);		
+			setprop("/sim/animation/fire-services",1);		
 		} else {
-			setprop("sim/animation/fire-services",0);		
+			setprop("/sim/animation/fire-services",0);		
 		};
 	},
 };
 
 var BrakeSys = BrakeSystem.new();
 
-setlistener("sim/signals/fdm-initialized",
+#############
+# Autobrake #
+#############
+
+var Autobrake = {
+	active: props.globals.initNode("/controls/autobrake/active", 0, "BOOL"),
+	mode: props.globals.initNode("/controls/autobrake/mode", 0, "INT"),
+	decel: props.globals.initNode("/controls/autobrake/decel-rate", 0, "DOUBLE"),
+	_wow0: 0,
+	_gnd_speed: 0,
+	_mode: 0,
+	_active: 0,
+	init: func() {
+		me.active.setBoolValue(0);
+		me.mode.setValue(0);
+		me.decel.setValue(0);
+	},
+	arm_autobrake: func(mode) {
+		me._wow0 = pts.Gear.wow[0].getBoolValue();
+		me._gnd_speed = pts.Velocities.groundspeed.getValue();
+		if (mode == 0) { # OFF
+			absChk.stop();
+			if (me.active.getBoolValue()) {
+				me.active.setBoolValue(0);
+				pts.Controls.Gear.brake[0].setValue(0);
+				pts.Controls.Gear.brake[1].setValue(0);
+			}
+			me.decel.setValue(0);
+			me.mode.setValue(0);
+		} else if (mode == 1 and !me._wow0) { # LO
+			me.decel.setValue(2.0);
+			me.mode.setValue(1);
+			absChk.start();
+		} else if (mode == 2 and !me._wow0) { # MED
+			me.decel.setValue(3);
+			me.mode.setValue(2);
+			absChk.start();
+		} else if (mode == 3 and me._wow0 and me._gnd_speed < 40) { # MAX
+			me.decel.setValue(6);
+			me.mode.setValue(3);
+			absChk.start();
+		}
+	},
+	loop: func() {
+		me._wow0 = pts.Gear.wow[0].getBoolValue();
+		me._gnd_speed = pts.Velocities.groundspeed.getValue();
+		me._mode = me.mode.getValue();
+		me._active = me.active.getBoolValue();
+		if (me._gnd_speed > 72) {
+			if (me._mode != 0 and pts.Controls.Engines.Engine.throttle[0].getValue() < 0.15 and pts.Controls.Engines.Engine.throttle[1].getValue() < 0.15 and me._wow0) {
+				me.active.setBoolValue(1);
+			} elsif (me._active) {
+				me.active.setBoolValue(0);
+				pts.Controls.Gear.brake[0].setValue(0);
+				pts.Controls.Gear.brake[1].setValue(0);
+			}
+		}
+		
+		if (me._mode == 3 and !pts.Controls.Gear.gearDown.getBoolValue()) {
+			me.arm_autobrake(0);
+		}
+		if (me._mode != 0 and me._wow0 and me._active and (pts.Controls.Gear.brake[0].getValue() > 0.05 or pts.Controls.Gear.brake[1].getValue() > 0.05)) {
+			me.arm_autobrake(0);
+		}
+	},
+};
+
+# Override FG's generic brake
+controls.applyBrakes = func(v, which = 0) {
+	if (!pts.Acconfig.running.getBoolValue()) {
+		if (which <= 0) {
+			pts.Controls.Gear.brake[0].setValue(v);
+		}
+		if (which >= 0) {
+			pts.Controls.Gear.brake[1].setValue(v);
+		}
+	}
+}
+setlistener("/sim/signals/fdm-initialized",
 	# executed on _every_ FDM reset (but not installing new listeners)
 	func(idle) { BrakeSys.reset(); },
 0,0);
 
-settimer(func()
-	{
-		BrakeSys.update();
-	}, 5);
+settimer(func() { BrakeSys.update(); }, 5);
+
+
+# Autobrake loop
+var absChk = maketimer(0.2, func {
+	Autobrake.loop();
+});
