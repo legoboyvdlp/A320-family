@@ -216,6 +216,7 @@ var systemsInit = func {
 	dmc.DMController.init();
 	fmgc.flightPlanController.init();
 	fmgc.windController.init();
+	atsu.CompanyCall.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {

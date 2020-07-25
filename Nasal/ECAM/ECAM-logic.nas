@@ -2385,6 +2385,12 @@ var messages_right_memo = func {
 		ignition.active = 0;
 	}
 	
+	if ((phaseVarMemo3 <= 2 or phaseVarMemo3 == 6 or phaseVarMemo3 >= 9) and atsu.CompanyCall.frequency != 999.99 and !atsu.CompanyCall.received) {
+		company_call.active = 1;
+	} else {
+		company_call.active = 0;
+	}
+	
 	if (getprop("controls/pneumatics/switches/apu") == 1 and getprop("engines/engine[2]/n1") >= 95) {
 		apu_bleed.active = 1;
 	} else {
