@@ -5457,10 +5457,7 @@ var canvas_MCDU_base = {
 				var sign = "R"; 
 			}
 			forindex (var item; dynamic.arrowsMatrix[matrixArrow]) {
-				if (item == 5) { 
-					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[0][5] ~ "/b"));
-					continue;
-				}
+				if (item == 5) { continue; }
 				if (dynamic.arrowsMatrix[matrixArrow][item] == 1) {
 					me["arrow" ~ (item + 1) ~ sign].show();
 					me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/b"));
