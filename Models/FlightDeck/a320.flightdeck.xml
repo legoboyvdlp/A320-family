@@ -456,23 +456,6 @@
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
-		<object-name>atc_0</object-name>
-		<object-name>atc_1</object-name>
-		<object-name>atc_2</object-name>
-		<object-name>atc_3</object-name>
-		<object-name>atc_4</object-name>
-		<object-name>atc_5</object-name>
-		<object-name>atc_6</object-name>
-		<object-name>atc_7</object-name>
-		<object-name>atc_abv</object-name>
-		<object-name>atc_body</object-name>
-		<object-name>atc_clr</object-name>
-		<object-name>atc_fail</object-name>
-		<object-name>atc_ident</object-name>
-		<object-name>atc_screen</object-name>
-		<object-name>atc_stby</object-name>
-		<object-name>atc_sys</object-name>
-		<object-name>atc_thrt</object-name>
 		<object-name>ecam_body</object-name>
 		<object-name>ecam_switch_body</object-name>
 		<object-name>engine_body</object-name>
@@ -5793,6 +5776,7 @@
 		<object-name>iesi_btn_plus</object-name>
 		<object-name>iesi_btn_minus</object-name>
 		<object-name>iesi_btn_rst</object-name>
+		<object-name>dcduBtnGlare</object-name>
 		<condition>
 			<not>
 				<and>
@@ -5900,6 +5884,7 @@
 		<object-name>iesi_btn_plus</object-name>
 		<object-name>iesi_btn_minus</object-name>
 		<object-name>iesi_btn_rst</object-name>
+		<object-name>dcduBtnGlare</object-name>
 		<condition>
 			<and>
 				<not>
@@ -7565,6 +7550,11 @@
 		<object-name>rear_breakers</object-name>
 		<object-name>DoorC</object-name>
 		<object-name>ddrmi_inside</object-name>
+		<object-name>dcduBodyL</object-name>
+		<object-name>dcduBodyR</object-name>
+		<object-name>dcduBtnL</object-name>
+		<object-name>dcduBtnR</object-name>
+		<object-name>dcduBtnGlare</object-name>
 	</effect>
 	
 	<animation>
@@ -8589,6 +8579,27 @@
 		<axis>
 			<object-name>WindowOpenerFo.axis</object-name>
 		</axis>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/display-less-dirt</inherits-from>
+		<object-name>dcduScreenL</object-name>
+		<object-name>dcduScreenR</object-name>
+	</effect>
+	
+	<animation>
+		<name>Panel lighting (Dome) </name>
+		<type>material</type>
+		<object-name>dcduBodyL</object-name>
+		<object-name>dcduBodyR</object-name>
+		<object-name>dcduBtnL</object-name>
+		<object-name>dcduBtnR</object-name>
+		<emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
 	</animation>
 
 </PropertyList>
