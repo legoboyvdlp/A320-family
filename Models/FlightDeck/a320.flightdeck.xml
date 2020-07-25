@@ -7552,8 +7552,26 @@
 		<object-name>ddrmi_inside</object-name>
 		<object-name>dcduBodyL</object-name>
 		<object-name>dcduBodyR</object-name>
-		<object-name>dcduBtnL</object-name>
-		<object-name>dcduBtnR</object-name>
+		<object-name>dcduBtnL.L1</object-name>
+		<object-name>dcduBtnL.L2</object-name>
+		<object-name>dcduBtnL.R1</object-name>
+		<object-name>dcduBtnL.R2</object-name>
+		<object-name>dcduBtnL.brt</object-name>
+		<object-name>dcduBtnL.dim</object-name>
+		<object-name>dcduBtnL.msgminus</object-name>
+		<object-name>dcduBtnL.msgplus</object-name>
+		<object-name>dcduBtnL.pgeminus</object-name>
+		<object-name>dcduBtnL.pgeplus</object-name>
+		<object-name>dcduBtnR.L1</object-name>
+		<object-name>dcduBtnR.L2</object-name>
+		<object-name>dcduBtnR.R1</object-name>
+		<object-name>dcduBtnR.R2</object-name>
+		<object-name>dcduBtnR.brt</object-name>
+		<object-name>dcduBtnR.dim</object-name>
+		<object-name>dcduBtnR.msgminus</object-name>
+		<object-name>dcduBtnR.msgplus</object-name>
+		<object-name>dcduBtnR.pgeminus</object-name>
+		<object-name>dcduBtnR.pgeplus</object-name>
 		<object-name>dcduBtnGlare</object-name>
 	</effect>
 	
@@ -8592,8 +8610,26 @@
 		<type>material</type>
 		<object-name>dcduBodyL</object-name>
 		<object-name>dcduBodyR</object-name>
-		<object-name>dcduBtnL</object-name>
-		<object-name>dcduBtnR</object-name>
+		<object-name>dcduBtnL.L1</object-name>
+		<object-name>dcduBtnL.L2</object-name>
+		<object-name>dcduBtnL.R1</object-name>
+		<object-name>dcduBtnL.R2</object-name>
+		<object-name>dcduBtnL.brt</object-name>
+		<object-name>dcduBtnL.dim</object-name>
+		<object-name>dcduBtnL.msgminus</object-name>
+		<object-name>dcduBtnL.msgplus</object-name>
+		<object-name>dcduBtnL.pgeminus</object-name>
+		<object-name>dcduBtnL.pgeplus</object-name>
+		<object-name>dcduBtnR.L1</object-name>
+		<object-name>dcduBtnR.L2</object-name>
+		<object-name>dcduBtnR.R1</object-name>
+		<object-name>dcduBtnR.R2</object-name>
+		<object-name>dcduBtnR.brt</object-name>
+		<object-name>dcduBtnR.dim</object-name>
+		<object-name>dcduBtnR.msgminus</object-name>
+		<object-name>dcduBtnR.msgplus</object-name>
+		<object-name>dcduBtnR.pgeminus</object-name>
+		<object-name>dcduBtnR.pgeplus</object-name>
 		<emission>
 			<red>0.3</red>
 			<green>0.3</green>
