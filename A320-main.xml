@@ -4314,6 +4314,9 @@
 		<canvas_iesi>
 			<file>Aircraft/A320-family/Models/Instruments/IESI/IESI.nas</file>
 		</canvas_iesi>
+		<canvas_dcdu>
+			<file>Aircraft/A320-family/Models/Instruments/DCDU/DCDU.nas</file>
+		</canvas_dcdu>
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>

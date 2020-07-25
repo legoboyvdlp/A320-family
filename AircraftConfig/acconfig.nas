@@ -82,6 +82,7 @@ setprop("/systems/acconfig/options/save-state", 0);
 setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
 setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
+setprop("/systems/acconfig/options/dcdu-rate", 1);
 setprop("/systems/acconfig/options/uecam-rate", 1);
 setprop("/systems/acconfig/options/lecam-rate", 1);
 setprop("/systems/acconfig/options/iesi-rate", 1);

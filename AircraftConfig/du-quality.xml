@@ -206,6 +206,37 @@
 				<live>1</live>
 			</text>
 			
+			<text>
+				<row>5</row>
+				<col>0</col>
+				<halign>left</halign>
+				<label>DCDU:</label>
+			</text>
+			
+			<slider>
+				<row>5</row>
+				<col>1</col>
+				<pref-width>250</pref-width>
+				<property>/systems/acconfig/options/dcdu-rate</property>
+				<min>1</min>
+				<max>5</max>
+				<step>0.5</step>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			
+			<text>
+				<row>5</row>
+				<col>2</col>
+				<halign>left</halign>
+				<border>1</border>
+				<label>999</label>
+				<property>/systems/acconfig/options/dcdu-rate</property>
+				<live>1</live>
+			</text>
+			
 		</group>
 	
 	</group>

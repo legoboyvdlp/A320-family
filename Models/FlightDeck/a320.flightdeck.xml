@@ -8606,6 +8606,20 @@
 	</effect>
 	
 	<animation>
+		<type>pick</type>
+		<object-name>dcduScreenL</object-name>
+		<object-name>dcduScreenR</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>canvas_dcdu.showDCDU();</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
 		<name>Panel lighting (Dome) </name>
 		<type>material</type>
 		<object-name>dcduBodyL</object-name>
