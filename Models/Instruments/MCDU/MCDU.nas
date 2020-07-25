@@ -4150,7 +4150,7 @@ var canvas_MCDU_base = {
 				if (myDeparture[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myDeparture[i].title[0] ~ myDeparture[i].title[1] ~ myDeparture[i].title[2]));
 					
-					me.dynamicPageArrowFunc(myDeparture[i]);
+					me.dynamicPageArrowFuncDepArr(myDeparture[i]);
 					me.dynamicPageFontFunc(myDeparture[i]);
 					
 					me.dynamicPageFunc(myDeparture[i].L1, "Simple_L1");
@@ -4317,7 +4317,7 @@ var canvas_MCDU_base = {
 				if (myArrival[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myArrival[i].title[0] ~ myArrival[i].title[1] ~ myArrival[i].title[2]));
 					
-					me.dynamicPageArrowFunc(myArrival[i]);
+					me.dynamicPageArrowFuncDepArr(myArrival[i]);
 					me.dynamicPageFontFunc(myArrival[i]);
 					
 					me.dynamicPageFunc(myArrival[i].L1, "Simple_L1");
@@ -4403,7 +4403,7 @@ var canvas_MCDU_base = {
 					me["Simple_Title"].setText(sprintf("%s", myHold[i].title[0] ~ myHold[i].title[1] ~ myHold[i].title[2]));
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/b"));
 					
-					me.dynamicPageArrowFunc(myHold[i]);
+					me.dynamicPageArrowFuncDepArr(myHold[i]);
 					me.dynamicPageFontFunc(myHold[i]);
 					
 					me.dynamicPageFunc(myHold[i].L1, "Simple_L1");
@@ -4489,7 +4489,7 @@ var canvas_MCDU_base = {
 					me["Simple_Title"].setText(sprintf("%s", myAirways[i].title[0] ~ myAirways[i].title[1] ~ myAirways[i].title[2]));
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/b"));
 					
-					me.dynamicPageArrowFunc(myAirways[i]);
+					me.dynamicPageArrowFuncDepArr(myAirways[i]);
 					me.dynamicPageFontFunc(myAirways[i]);
 					
 					me.dynamicPageFunc(myAirways[i].L1, "Simple_L1");
@@ -4653,7 +4653,7 @@ var canvas_MCDU_base = {
 					me["Simple_Title"].setText(sprintf("%s", myDirTo[i].title[0]));
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/b"));
 					
-					me.dynamicPageArrowFunc(myDirTo[i]);
+					me.dynamicPageArrowFuncDepArr(myDirTo[i]);
 					me.dynamicPageFontFunc(myDirTo[i]);
 					
 					if (fmgc.flightPlanController.temporaryFlag[i] and mcdu.dirToFlag) {
@@ -5449,6 +5449,27 @@ var canvas_MCDU_base = {
 			}
 		}
 	},
+	dynamicPageArrowFuncDepArr: func (dynamic) {
+		forindex (var matrixArrow; dynamic.arrowsMatrix) {
+			if (matrixArrow == 0) { 
+				var sign = "L"; 
+			} else { 
+				var sign = "R"; 
+			}
+			forindex (var item; dynamic.arrowsMatrix[matrixArrow]) {
+				if (item == 5) { 
+					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[0][5] ~ "/b"));
+					continue;
+				}
+				if (dynamic.arrowsMatrix[matrixArrow][item] == 1) {
+					me["arrow" ~ (item + 1) ~ sign].show();
+					me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/b"));
+				} else {
+					me["arrow" ~ (item + 1) ~ sign].hide();
+				}
+			}
+		}
+	},
 	dynamicPageFontFunc: func (dynamic) {
 		forindex (var matrixFont; dynamic.fontMatrix) {
 			if (matrixFont == 0) { 
@@ -5467,6 +5488,7 @@ var canvas_MCDU_base = {
 			}
 		}
 	},
+	
 	updateScratchpad: func(i) {
 		me["Scratchpad"].setText(sprintf("%s", mcdu_scratchpad.scratchpads[i].scratchpad));
 		var color_selected = mcdu_scratchpad.scratchpads[i].scratchpadColour;
