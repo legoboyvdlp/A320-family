@@ -183,6 +183,7 @@ var postInit = func() {
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
+	ldgElev: props.globals.getNode("/FMGC/internal/ldg-elev", 1),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
@@ -809,8 +810,6 @@ var masterFMGC = maketimer(0.2, func {
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
 	if (destination_rwy != nil and phase >= 2) {
-		var airport = airportinfo(fmgc.FMGCInternal.arrApt);
-		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
 		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = destination_rwy.ils_frequency_mhz;
 		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
@@ -1097,6 +1096,15 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 	if (getprop("/FMGC/internal/fuel-pred-time") == -99) {
 		timer5fuelPred.start();
 		setprop("/FMGC/internal/fuel-pred-time", pts.Sim.Time.elapsedSec.getValue());
+	}
+}, 0, 0);
+
+
+setlistener("/FMGC/internal/tofrom-set", func() {
+	if (fmgc.FMGCInternal.toFromSet) {
+		FMGCNodes.ldgElev.setValue(airportinfo(fmgc.FMGCInternal.arrApt).elevation * M2FT); # eventually should be runway elevation
+	} else {
+		FMGCNodes.ldgElev.setValue(-9999);
 	}
 }, 0, 0);
 

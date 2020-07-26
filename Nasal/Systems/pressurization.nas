@@ -26,11 +26,16 @@ var CabinPressureController = {
 	},
 };
 
+# ADIRS:
+# Sys 1 prio 1 --> 2 --> 3
+# Sys 2 prio 2 --> 1 --> 3
+
 var CPCController = {
 	CPCS: [nil, nil],
 	activeCPC: nil,
-	mode: 0, # 0 = auto, 1 = semi-auto, 2 = manual
-	phase: 0, # 0 = GN 1 = TO 2 = CI 3 = AB 4 = CR 5 = DI
+	mode: props.globals.getNode("/systems/pressurization/active-mode", 1), # 0 = auto, 1 = semi-auto, 2 = manual
+	phase: props.globals.getNode("/systems/pressurization/active-phase", 1), # 0 = GN 1 = TO 2 = CI 3 = AB 4 = CR 5 = DI
+	bothCPCOff: props.globals.getNode("/systems/pressurization/both-cpcs-off", 1),
 	takeoffAltSet: 0,
 	takeoffAlt: props.globals.getNode("/systems/pressurization/logic/takeoff-altitude-ft", 1),
 	init: func() {
@@ -48,8 +53,8 @@ var CPCController = {
 	},
 	setMode: func(mode) {
 		if (mode >= 0 and mode <= 2) {
-			me.mode = mode;
-			if (me.mode == 0) {
+			me.mode.setValue(mode);
+			if (mode == 0) {
 				me.switchActive();
 			}
 		}
@@ -58,6 +63,10 @@ var CPCController = {
 		if (me.CPCS[0] != nil and me.CPCS[1] != nil) {
 			me.CPCS[0].update();
 			me.CPCS[1].update();
+		}
+		
+		if (me.CPCS[0].failed and me.CPCS[1].failed) {
+			me.bothCPCOff.setValue(1);
 		}
 		
 		if (me.activeCPC == 0 and me.CPCS[0].failed and me.CPCS[1].failed != 0) {
@@ -84,7 +93,7 @@ var phaseSignal = {
 		if (CPCController.phase != me.phaseStart) { return; }
 		if (me.node.getValue() == 1) {
 			print("Condition true, switching to phase " ~ me.phaseEnd);
-			CPCController.phase = me.phaseEnd;
+			CPCController.phase.setValue(me.phaseEnd);
 		}
 	},
 };
@@ -132,7 +141,7 @@ var PRESS = {
 			phaseSignal.new("/systems/pressurization/logic/cruise-to-climb", 4, 2);
 			phaseSignal.new("/systems/pressurization/logic/cruise-to-descent", 4, 5);
 			phaseSignal.new("/systems/pressurization/logic/descent-to-climb", 5, 2);
-			phaseSignal.new("/systems/pressurization/logic/descent-to-ground", 5, 0);
+			phaseSignal.new("/systems/pressurization/logic/descent-to-gnd", 5, 0);
 			phaseSignal.new("/systems/pressurization/logic/abort-to-climb", 3, 2);
 			phaseSignal.new("/systems/pressurization/logic/climb-to-descent", 2, 5);
 			listenersRegistered = 1;

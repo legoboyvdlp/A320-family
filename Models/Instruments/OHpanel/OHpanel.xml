@@ -4712,7 +4712,7 @@
 		<type>knob</type>
 		<object-name>LdgElevKnb</object-name>
 		<property>/controls/pressurization/ldg-elev</property>
-		<factor>16.8750000026</factor>
+		<factor>15</factor>
 		<axis>
 			<x>-1</x>
 			<y>0</y>
@@ -4729,7 +4729,7 @@
 				<property>/controls/pressurization/ldg-elev</property>
 				<factor>1</factor>
 				<min>0</min>
-				<max>16</max> 
+				<max>18</max> 
 				<wrap>false</wrap>
 			</binding>
 		</action>

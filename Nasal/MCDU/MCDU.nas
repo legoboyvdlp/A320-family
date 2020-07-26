@@ -170,7 +170,9 @@ var MCDU_reset = func(i) {
 	# DES PERF
 
 	# APPR PERF
-	setprop("/FMGC/internal/dest-qnh", -1);
+	setprop("/FMGC/internal/dest-qnh-inhg", -1);
+	setprop("/FMGC/internal/dest-qnh-hpa", -1);
+	setprop("/FMGC/internal/dest-qnh-is-hpa", 0);
 	setprop("/FMGC/internal/dest-temp", -999);
 	setprop("/FMGC/internal/dest-mag", -1);
 	setprop("/FMGC/internal/dest-wind", -1);
@@ -181,7 +183,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/baro", 99999);
 	setprop("/FMGC/internal/radio", 99999);
 	setprop("/FMGC/internal/radio-no", 0);
-	setprop("/FMGC/internal/ldg-elev", 0);
+	fmgc.FMGCNodes.ldgElev.setValue(-9999);
 	setprop("/FMGC/internal/ldg-config-3-set", 0);
 	setprop("/FMGC/internal/ldg-config-f-set", 1);
 	

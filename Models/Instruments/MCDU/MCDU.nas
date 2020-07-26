@@ -178,7 +178,9 @@ var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
 # DES PERF
 
 # APPR PERF
-var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
+var dest_qnh_inhg = props.globals.getNode("/FMGC/internal/dest-qnh-inhg", 1);
+var dest_qnh_hpa = props.globals.getNode("/FMGC/internal/dest-qnh-hpa", 1);
+var dest_qnh_is_hpa = props.globals.getNode("/FMGC/internal/dest-qnh-is-hpa", 1);
 var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
 var dest_mag = props.globals.getNode("/FMGC/internal/dest-mag", 1);
 var dest_wind = props.globals.getNode("/FMGC/internal/dest-wind", 1);
@@ -3612,11 +3614,11 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L0S"].setText("DEST");
 			me["Simple_L1S"].setText("QNH");
-			if (dest_qnh.getValue() != -1) {
-				if (dest_qnh.getValue() < 100) {
-					me["Simple_L1"].setText(sprintf("%4.2f", dest_qnh.getValue()));
+			if (dest_qnh_is_hpa.getValue() != -1 and dest_qnh_inhg.getValue() != -1) {
+				if (dest_qnh_hpa.getValue() < 100) {
+					me["Simple_L1"].setText(sprintf("%4.2f", dest_qnh_inhg.getValue()));
 				} else {
-					me["Simple_L1"].setText(sprintf("%4.0f", dest_qnh.getValue()));
+					me["Simple_L1"].setText(sprintf("%4.0f", dest_qnh_hpa.getValue()));
 				}
 				me.fontLeft(default, 0, 0, 0, 0, 0);
 			} else {

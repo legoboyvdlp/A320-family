@@ -8,12 +8,24 @@ var perfAPPRInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/dest-qnh", -1);
+			setprop("/FMGC/internal/dest-qnh-inhg", -1);
+			setprop("/FMGC/internal/dest-qnh-hpa", -1);
 			mcdu_scratchpad.scratchpads[i].empty();
-		} else if (num(scratchpad) != nil and (scratchpad >= 28.06 and scratchpad <= 31.01) or (scratchpad >= 745 and scratchpad <= 1050)) {
+		} else if (num(scratchpad) != nil) {
 			# doesn't support accidental temp input yet
-			setprop("/FMGC/internal/dest-qnh", scratchpad);
-			mcdu_scratchpad.scratchpads[i].empty();
+			if (scratchpad >= 28.06 and scratchpad <= 31.01) {
+				setprop("/FMCG/internal/dest-qnh-is-hpa", 0);
+				setprop("/FMGC/internal/dest-qnh-inhg", scratchpad);
+				setprop("/FMGC/internal/dest-qnh-hpa", scratchpad * 33.863886666667);
+				mcdu_scratchpad.scratchpads[i].empty();
+			} elsif (scratchpad >= 745 and scratchpad <= 1050) {
+				setprop("/FMCG/internal/dest-qnh-is-hpa", 1);
+				setprop("/FMGC/internal/dest-qnh-inhg", scratchpad * 0.02952998307);
+				setprop("/FMGC/internal/dest-qnh-hpa", scratchpad);
+				mcdu_scratchpad.scratchpads[i].empty();
+			} else {
+			mcdu_message(i, "NOT ALLOWED");
+				}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -88,7 +100,7 @@ var perfAPPRInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/baro", 99999);
 			mcdu_scratchpad.scratchpads[i].empty();
-		} else if (int(scratchpad) != nil and scratchpad >= getprop("/FMGC/internal/ldg-elev") and scratchpad <= 5000 + getprop("/FMGC/internal/ldg-elev")) {
+		} else if (int(scratchpad) != nil and scratchpad >= fmgc.FMGCnodes.ldgElev.getValue() and scratchpad <= 5000 + fmgc.FMGCnodes.ldgElev.getValue()) {
 			if (getprop("/FMGC/internal/radio-no") == 0) {
 				setprop("/FMGC/internal/radio", 99999);
 			}

@@ -1334,6 +1334,9 @@
 			<logic>
 				<takeoff-altitude-ft type="double">-9999</takeoff-altitude-ft>
 			</logic>
+			<active-mode type="int">0</active-mode>
+			<active-phase type="int">0</active-phase>
+			<both-cpcs-off type="bool">0</both-cpcs-off>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
