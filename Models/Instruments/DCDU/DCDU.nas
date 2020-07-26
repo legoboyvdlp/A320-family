@@ -75,8 +75,8 @@ var canvas_DCDU = {
 setlistener("sim/signals/fdm-initialized", func {
 	DCDU_display = canvas.new({
 		"name": "DCDU",
-		"size": [512, 512],
-		"view": [512, 512],
+		"size": [765, 512],
+		"view": [765, 512],
 		"mipmapping": 1
 	});
 	DCDU_display.addPlacement({"node": "dcduScreenL"});
@@ -100,6 +100,6 @@ var DCDU_update = maketimer(0.05, func {
 });
 
 var showDCDU = func {
-	var dlg = canvas.Window.new([256, 256], "dialog").set("resize", 1);
+	var dlg = canvas.Window.new([383, 256], "dialog").set("resize", 1);
 	dlg.setCanvas(DCDU_display);
 }
