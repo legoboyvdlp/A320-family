@@ -44,7 +44,7 @@ var A320GPSDeleagte = {
         setprop(GPSPath ~ '/config/delegate-sequencing', 1);
 		
         # enable 2020.2 C++ turn anticipation
-        # setprop(GPSPath ~ '/config/enable-fly-by', 1);
+        setprop(GPSPath ~ '/config/enable-fly-by', 1);
 		
 		# Set maximum lateral deviation for sequencing to 5 miles
 		setprop(GPSPath ~ '/config/over-flight-arm-distance', 5);

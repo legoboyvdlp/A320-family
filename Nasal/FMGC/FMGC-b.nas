@@ -16,18 +16,6 @@ var FPLN = {
 	currentCourse: 0,
 	currentWP: props.globals.getNode("/autopilot/route-manager/current-wp", 1),
 	currentWPTemp: 0,
-	deltaAngle: 0,
-	deltaAngleRad: 0,
-	distCoeff: 0,
-	maxBank: 0,
-	maxBankLimit: 0,
-	nextCourse: 0,
-	R: 0,
-	radius: 0,
-	turnDist: 0,
-	wp0Dist: props.globals.getNode("/autopilot/route-manager/wp[0]/dist", 1),
-	wpFlyFrom: 0,
-	wpFlyTo: 0,
 };
 
 
@@ -394,51 +382,6 @@ var ITAF = {
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
 			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getBoolValue()) {
 				me.setLatMode(3);
-			}
-		}
-		
-		# Waypoint Advance Logic
-		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
-			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
-				Velocities.groundspeedMps = Velocities.groundspeedKt.getValue() * 0.5144444444444;
-				FPLN.wpFlyFrom = FPLN.currentWPTemp;
-				if (FPLN.wpFlyFrom < 0) {
-					FPLN.wpFlyFrom = 0;
-				}
-				FPLN.currentCourse = flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).leg_bearing;
-				FPLN.wpFlyTo = FPLN.currentWPTemp + 1;
-				FPLN.nextCourse = flightPlanController.flightplans[2].getWP(FPLN.wpFlyTo).leg_bearing;
-				FPLN.maxBankLimit = Internal.bankLimit.getValue();
-
-				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
-				FPLN.maxBank = FPLN.deltaAngle * 1.5;
-				if (FPLN.maxBank > FPLN.maxBankLimit) {
-					FPLN.maxBank = FPLN.maxBankLimit;
-				}
-				FPLN.radius = (Velocities.groundspeedMps * Velocities.groundspeedMps) / (9.81 * math.tan(FPLN.maxBank / 57.2957795131));
-				FPLN.deltaAngleRad = (180 - FPLN.deltaAngle) / 114.5915590262;
-				FPLN.R = FPLN.radius / math.sin(FPLN.deltaAngleRad);
-				FPLN.distCoeff = FPLN.deltaAngle * -0.011111 + 2;
-				if (FPLN.distCoeff < 1) {
-					FPLN.distCoeff = 1;
-				}
-				FPLN.turnDist = math.cos(FPLN.deltaAngleRad) * FPLN.R * FPLN.distCoeff / 1852;
-				if (Gear.wow0.getBoolValue() and FPLN.turnDist < 1) {
-					FPLN.turnDist = 1;
-				}
-				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
-				
-				# Advance logic done by flightplan controller
-				
-				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
-				#	flightPlanController.autoSequencing();
-				#}
-				
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
-					flightPlanController.autoSequencing();
-				} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
-					flightPlanController.autoSequencing();
-				}
 			}
 		}
 	},

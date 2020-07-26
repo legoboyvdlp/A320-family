@@ -544,12 +544,12 @@ var masterFMGC = maketimer(0.2, func {
 	altSel = getprop("/it-autoflight/input/alt");
 	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
 	
-	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
+	if (FMGCInternal.phase == 1 and (n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0) { # rejected takeoff
 		FMGCInternal.phase = 0;
 		setprop("systems/pressurization/mode", "GN");
 	}
 	
-	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
+	if (FMGCInternal.phase == 0 and gear0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
 		FMGCInternal.phase = 1;
 		setprop("systems/pressurization/mode", "TO");
 	}
