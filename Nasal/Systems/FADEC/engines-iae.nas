@@ -377,3 +377,12 @@ setlistener("/systems/pneumatics/psi/engine-2-psi", func {
 		}
 	}
 }, 0, 0);
+
+setlistener("/engines/engine[0]/state", func() {
+	setprop("/sim/sound/shutdown[0]", getprop("/engines/engine[0]/state"));
+}, 0, 0);
+
+
+setlistener("/engines/engine[1]/state", func() {
+	setprop("/sim/sound/shutdown[1]", getprop("/engines/engine[1]/state"));
+}, 0, 0);
