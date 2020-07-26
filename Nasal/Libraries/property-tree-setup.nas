@@ -149,6 +149,11 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	Input: {
+		Selected: {
+			engine: [props.globals.getNode("/sim/input/selected/engine[0]", 1),props.globals.getNode("/sim/input/selected/engine[1]", 1)],
+		}
+	},
 	Multiplay: {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},
