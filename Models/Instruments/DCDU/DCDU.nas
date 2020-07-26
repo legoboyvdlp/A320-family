@@ -12,7 +12,7 @@ var dcdu_rate = props.globals.getNode("/systems/acconfig/options/dcdu-rate", 1);
 var canvas_DCDU_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "LiberationMonoCustom.ttf";
 		};
 		
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
