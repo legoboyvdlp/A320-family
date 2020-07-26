@@ -4,6 +4,10 @@
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
 
+var Acconfig = {
+	running: props.globals.getNode("/systems/acconfig/autoconfig-running"),
+};
+
 var APU = {
 	masterSw: props.globals.getNode("/controls/apu/master"),
 	rpm: props.globals.getNode("/engines/engine[2]/n1"),
@@ -37,6 +41,7 @@ var Controls = {
 		rudderTrim: props.globals.getNode("/controls/flight/rudder-trim"),
 	},
 	Gear: {
+		brake: [props.globals.getNode("/controls/gear/brake-left"),props.globals.getNode("/controls/gear/brake-right")],
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 	},
@@ -144,6 +149,11 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	Input: {
+		Selected: {
+			engine: [props.globals.getNode("/sim/input/selected/engine[0]", 1),props.globals.getNode("/sim/input/selected/engine[1]", 1)],
+		}
+	},
 	Multiplay: {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},

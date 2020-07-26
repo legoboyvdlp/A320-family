@@ -7,7 +7,7 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/A320.wav</path>
 			<condition>
-				<property>/sim/current-view/internal</property>
+				<property>/sim/sound/internal-custom</property>
 			</condition>
 			<volume>
 				<property>/engines/engine[2]/n1</property>
@@ -26,7 +26,7 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/x320_apu.wav</path>
 			<condition>
-				<not><property>/sim/current-view/internal</property></not>
+				<not><property>/sim/sound/internal-custom</property></not>
 			</condition>
 			<volume>
 				<property>/engines/engine[2]/n1</property>
@@ -44,7 +44,7 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/yellowHydPump.wav</path>
 			<condition>
-				<property>controls/hydraulic/elec-pump-yellow</property>
+				<property>/systems/hydraulic/sources/yellow-elec/pump-operate</property>
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
