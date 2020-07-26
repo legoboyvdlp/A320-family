@@ -112,13 +112,13 @@ var closestAirportPage = {
 		}
 		if (size(id) > 4) {
 			mcdu_message(me.computer, "NOT ALLOWED");
+		} elsif (airportinfo(id) == nil) {
+			mcdu_message(me.computer, "NOT IN DATA BASE");
+		} else {
+			me.manAirport = airportinfo(id);
+			me.L5 = [id, nil, "grn"];
+			me.R5 = ["----", nil, "grn"];
 		}
-		if (airportinfo(id) == nil) {
-			notInDataBase(me.computer);
-		}
-		me.manAirport = airportinfo(id);
-		me.L5 = [id, nil, "grn"];
-		me.R5 = ["----", nil, "grn"];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	}
 };

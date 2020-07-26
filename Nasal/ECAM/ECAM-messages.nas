@@ -226,6 +226,35 @@ var warnings				  = std.Vector.new([
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
+	# FAC and Rudder System
+	var fac12Fault            = warning.new(msg: "AUTO FLT FAC 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fac12FaultRud         = warning.new(msg: "RUD WITH CARE ABV 160 KT",  colour: "c"),
+	var fac12FaultFac         = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	var fac12FaultSuccess     = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var fac12FaultFacOff      = warning.new(msg: " -FAC 1+2............OFF",  colour: "c"),
+	var yawDamperSysFault     = warning.new(msg: "AUTO FLT YAW DAMPER SYS",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var yawDamperSysFaultFac  = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	# var rudderTrimSysFault    = warning.new(msg: "AUTO FLT RUD TRIM SYS",     colour: "a", aural: 1, light: 1, isMainMsg: 1), not implemented
+	# var rudderTrimSysFaultFac = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	var rudTravLimSysFault    = warning.new(msg: "AUTO FLT RUD TRV LIM SYS",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var rudTravLimSysFaultRud = warning.new(msg: "RUD WITH CARE ABV 160 KT",  colour: "c"),
+	var rudTravLimSysFaultFac = warning.new(msg: " -FAC 1+2....OFF THEN ON",  colour: "c"),
+	var fac1Fault             = warning.new(msg: "AUTO FLT FAC 1 FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fac1FaultFac          = warning.new(msg: " -FAC 1......OFF THEN ON",  colour: "c"),
+	var fac1FaultSuccess      = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var fac1FaultFacOff       = warning.new(msg: " -FAC 1..............OFF",  colour: "c"),
+	var fac2Fault             = warning.new(msg: "AUTO FLT FAC 2 FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fac2FaultFac          = warning.new(msg: " -FAC 2......OFF THEN ON",  colour: "c"),
+	var fac2FaultSuccess      = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var fac2FaultFacOff       = warning.new(msg: " -FAC 2..............OFF",  colour: "c"),
+	
+	var yawDamper1Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 1",     colour: "a", isMainMsg: 1),
+	var yawDamper2Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 2",     colour: "a", isMainMsg: 1),
+	# var rudTrim1Fault         = warning.new(msg: "AUTO FLT RUD TRIM1 FAULT",  colour: "a", isMainMsg: 1), not implemented
+	# var rudTrim2Fault         = warning.new(msg: "AUTO FLT RUD TRIM2 FAULT",  colour: "a", isMainMsg: 1), not implemented
+	var rudTravLimSys1Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 1",    colour: "a", isMainMsg: 1),
+	var rudTravLimSys2Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 2",    colour: "a", isMainMsg: 1),
+	
 	# FCU fault
 	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var fcuFaultBaro          = warning.new(msg: " -PFD BARO REF: STD ONLY",  colour: "c"),
@@ -460,7 +489,7 @@ var memos                = std.Vector.new([
 	var terr_stby        = memo.new(msg: "TERR STBY"   ), # Not yet implemented
 	var tcas_stby        = memo.new(msg: "TCAS STBY"   ), # Not yet implemented
 	var acars_call       = memo.new(msg: "ACARS CALL"  ), # Not yet implemented
-	var company_call     = memo.new(msg: "COMPANY CALL"), # Not yet implemented
+	var company_call     = memo.new(msg: "COMPANY CALL"),
 	var satcom_alert     = memo.new(msg: "SATCOM ALERT"), # Not yet implemented
 	var acars_msg        = memo.new(msg: "ACARS MSG"   ), # Not yet implemented
 	var company_msg      = memo.new(msg: "COMPANY MSG" ), # Not yet implemented

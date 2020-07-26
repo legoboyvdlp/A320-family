@@ -536,6 +536,11 @@
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
+			<fbw>
+				<yaw>
+					<max-deg-switch type="double">25</max-deg-switch>
+				</yaw>
+			</fbw>
 			<zero type="int">0</zero>
 		</jsbsim>
 	</fdm>
@@ -609,6 +614,8 @@
 		<alpha-hld type="bool">0</alpha-hld>
 		<degrade-law type="int">0</degrade-law>
 		<law type="int">0</law>
+		<degrade-yaw-law type="int">0</degrade-yaw-law>
+		<yaw-law type="int">0</yaw-law>
 		<roll-lim type="string">33</roll-lim>
 		<roll-back type="bool">0</roll-back>
 		<override type="bool">0</override>
@@ -911,7 +918,7 @@
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
 			<seatbelt-sign type="double">0.0</seatbelt-sign>
-			<annun-test>0</annun-test>
+			<annun-test type="int">0</annun-test>
 			<qnh-knb>100000</qnh-knb>
 			<strobe type="double">0.0</strobe>
 			<beacon type="bool">0</beacon>
@@ -1121,6 +1128,10 @@
 				<sec3 type="bool">0</sec3>
 				<fac1 type="bool">0</fac1>
 				<fac2 type="bool">0</fac2>
+				<rtlu-1 type="bool">0</rtlu-1>
+				<rtlu-2 type="bool">0</rtlu-2>
+				<yaw-damper-1 type="bool">0</yaw-damper-1>
+				<yaw-damper-2 type="bool">0</yaw-damper-2>
 			</fctl>
 			<fuel>
 				<left-tank-pump-1 type="bool">0</left-tank-pump-1>
@@ -1165,7 +1176,6 @@
 				<trim-valve-cabin-fwd type="bool">0</trim-valve-cabin-fwd>
 				<x-bleed-valve type="bool">0</x-bleed-valve>
 			</pneumatics>
-			<rudder type="bool">0</rudder>
 			<spoilers>
 				<spoiler-l1 type="bool">0</spoiler-l1>
 				<spoiler-l2 type="bool">0</spoiler-l2>
@@ -1192,6 +1202,7 @@
 			<sec3 type="bool">0</sec3>
 			<fac1 type="bool">0</fac1>
 			<fac2 type="bool">0</fac2>
+			<yawdamper-active type="bool">0</yawdamper-active>
 		</fctl>
 		<fire n="0">
 			<apu>
@@ -1370,6 +1381,14 @@
 		<steep-ils-avail type="bool">0</steep-ils-avail>
 		<enable-ecam-actions>0</enable-ecam-actions>
 		<test-canvas type="bool">0</test-canvas>
+		<model-options>
+			<registration type="string">G-EZTB</registration>
+			<three-letter type="string">EZY</three-letter>
+			<two-letter type="string">U2</two-letter>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft> <!-- Iridium / inmarsat satcom + wireless -->
+			<wifi-fwd type="bool">0</wifi-fwd> <!-- Fly-fy-->
+		</model-options>
 	</options>
 	
 	<instrumentation n="0">
@@ -4200,7 +4219,6 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
@@ -4313,6 +4331,9 @@
 		<atc>
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
+		<atsu>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
+		</atsu>
 		<dmc>
 			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>

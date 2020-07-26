@@ -686,7 +686,7 @@
 				/systems/electrical/bus/ac-2 ne 0
 			</test>
 			<test logic="AND" value="1">
-				/instrumentation/airspeed-indicator/indicated-speed-kt gt 100
+				/instrumentation/airspeed-indicator/indicated-speed-kt ge 100
 				/systems/electrical/bus/ac-1 eq 0
 				/systems/electrical/bus/ac-2 eq 0
 				gear/unit[0]/WOW eq 0
@@ -1392,11 +1392,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/relay/dc-ess-feed-tr/contact-pos eq 0
-				/systems/electrical/relay/tr-contactor-1/contact-pos eq 1
-				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
-				/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 0
+				<test logic="OR">
+					/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 0
+					/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 0
+				</test>
 				/controls/electrical/switches/emer-gen-test eq 0
-				/systems/electrical/bus/dc-1 ge 25
 			</test>
 		</switch>
 		
@@ -1541,7 +1541,7 @@
 			</test>
 			<test logic="OR" value="3"> <!-- BAT -->
 				<test logic="AND">
-					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 					<test logic="OR">
 						/controls/electrical/switches/bat-1 eq 1
 						/controls/electrical/switches/bat-2 eq 1
@@ -1573,7 +1573,7 @@
             </test>
             <test logic="OR" value="/systems/electrical/sources/bat-1/volt">
 				<test logic="AND">
-					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 					/controls/electrical/switches/bat-1 eq 1
 					/systems/electrical/bus/dc-bat-src eq 3
 					/systems/electrical/sources/bat-1/volt ge 25
@@ -1588,7 +1588,7 @@
             </test>
             <test logic="OR" value="/systems/electrical/sources/bat-2/volt">
 				<test logic="AND">
-					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 					/controls/electrical/switches/bat-2 eq 1
 					/systems/electrical/bus/dc-bat-src eq 3
 					/systems/electrical/sources/bat-2/volt ge 25

@@ -124,6 +124,46 @@
 				<live>true</live>
 			</checkbox>
 			
+			<checkbox>
+				<label>RTLU1</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/rtlu-1</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>RTLU2</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/rtlu-2</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Yaw Damper 1</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/yaw-damper-1</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Yaw Damper 2</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/yaw-damper-2</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
 			<group>
 				<layout>hbox</layout>
 

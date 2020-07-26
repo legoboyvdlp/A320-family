@@ -13,38 +13,38 @@ var eng_common_init = func {
 	# nada
 }
 
-# Various Other Stuff
+# Engine thrust commands
 var doIdleThrust = func {
 	# Idle does not respect selected engines, because it is used to respond
 	# to "Retard" and both engines must be idle for spoilers to deploy
-	setprop("/controls/engines/engine[0]/throttle", 0.0);
-	setprop("/controls/engines/engine[1]/throttle", 0.0);
+	pts.Controls.Engines.Engine.throttle[0].setValue(0.0);
+	pts.Controls.Engines.Engine.throttle[1].setValue(0.0);
 }
 
 var doCLThrust = func {
-	if (getprop("/sim/input/selected/engine[0]") == 1) {
-		setprop("/controls/engines/engine[0]/throttle", 0.63);
+	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
+		pts.Controls.Engines.Engine.throttle[0].setValue(0.63);
 	}
-	if (getprop("/sim/input/selected/engine[1]") == 1) {
-		setprop("/controls/engines/engine[1]/throttle", 0.63);
+	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
+		pts.Controls.Engines.Engine.throttle[1].setValue(0.63);
 	}
 }
 
 var doMCTThrust = func {
-	if (getprop("/sim/input/selected/engine[0]") == 1) {
-		setprop("/controls/engines/engine[0]/throttle", 0.8);
+	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
+		pts.Controls.Engines.Engine.throttle[0].setValue(0.80);
 	}
-	if (getprop("/sim/input/selected/engine[1]") == 1) {
-		setprop("/controls/engines/engine[1]/throttle", 0.8);
+	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
+		pts.Controls.Engines.Engine.throttle[1].setValue(0.80);
 	}
 }
 
 var doTOGAThrust = func {
-	if (getprop("/sim/input/selected/engine[0]") == 1) {
-		setprop("/controls/engines/engine[0]/throttle", 1.0);
+	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
+		pts.Controls.Engines.Engine.throttle[0].setValue(1.00);
 	}
-	if (getprop("/sim/input/selected/engine[1]") == 1) {
-		setprop("/controls/engines/engine[1]/throttle", 1.0);
+	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
+		pts.Controls.Engines.Engine.throttle[1].setValue(1.00);
 	}
 }
 

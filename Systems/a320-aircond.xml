@@ -5,7 +5,7 @@
 	<property value="0">/systems/air-conditioning/packs/pack-flow-1-norm</property>
 	<property value="0">/systems/air-conditioning/packs/pack-flow-2-norm</property>
 	
-	<channel name="Valves">
+	<channel name="Valves" execrate="8">
 	
 		<switch name="/systems/air-conditioning/valves/flow-control-valve-1-cmd">
 			<default value="0"/>
@@ -100,7 +100,7 @@
 		
 	</channel>
 	
-	<channel name="Packs">
+	<channel name="Packs" execrate="8">
 		
 		<switch name="/systems/air-conditioning/packs/single-pack">
 			<default value="0"/>
@@ -727,11 +727,11 @@
 		</actuator>
 	</channel>
 	
-	<channel name="Recirculation">
+	<channel name="Recirculation" execrate="8">
 		
 	</channel>
 	
-	<channel name="Mass flow">
+	<channel name="Mass flow" execrate="8">
 		
 		<fcs_function name="/systems/air-conditioning/mass-flow-fresh-kg_s">
 			<function>
@@ -798,7 +798,7 @@
 		
 	</channel>
 	
-	<channel name="Warnings">
+	<channel name="Warnings" execrate="8">
 	
 		<switch name="/systems/air-conditioning/warnings/pack-1-ovht">
 			<default value="0"/>

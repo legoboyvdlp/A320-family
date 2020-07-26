@@ -6,7 +6,7 @@
 	
 	<property value="0">hydraulics/spoiler-l2/main-cmd-feedback</property>
 	
-	<channel name="Spoiler Logic">
+	<channel name="Spoiler Logic" execrate="2">
 		
 		<switch name="spoilers/main-gear-or">
 			<default value="0"/>
