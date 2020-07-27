@@ -203,7 +203,7 @@
 				/FMGC/internal/dest-qnh-hpa ne -1
 			</test>
 			<test logic="OR" value="/instrumentation/altimeter/setting-hpa"> <!-- todo: check validity of ADIRS info + probably link to FCU code -->
-				/instrumentation/altimeter/inhg eq 0
+				/FMGC/FCU-working eq 1 <!-- confirm, is altimeter from FCU or where? -->
 			</test>
 		</switch>
 		
@@ -227,6 +227,38 @@
 			</test>
 		</switch>
 		
+		<fcs_function name="/systems/pressurization/logic/landing-psi-offset">
+			<function>
+				<product>
+					<v>0.0145038</v> <!-- hpa to psi -->
+					<difference>
+						<property>/systems/pressurization/logic/destination-qnh</property> 
+						<v>1013.25</v> <!-- 1012 = -1.25 hpa --> 
+					</difference>
+				</product>
+			</function>	
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/landing-psi">
+			<function>
+				<sum>
+					<property>/systems/pressurization/logic/landing-psi-offset</property>
+					<product>
+						<v>14.6959488</v>
+						<pow>
+							<difference>
+								<v>1</v>
+								<product>
+									<v>0.00000687558</v>
+									<property>/systems/pressurization/logic/landing-elev</property>
+								</product>
+							</difference>
+							<v>5.25588</v>
+						</pow>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
 	</channel>
 	
 	<channel name="RPCU" execrate="8">
@@ -241,6 +273,7 @@
 		<switch name="/systems/pressurization/rpcu-command-open">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/pressurization/rpcu-active eq 1
 				<test logic="AND">
 					/gear/gear[1]/wow eq 1
 					/gear/gear[2]/wow eq 1
@@ -265,6 +298,250 @@
 		</switch>
 	</channel>
 	
+	<channel name="Control Logic" execrate="8">
+	
+		<!-- Ground -->
+		<switch name="/systems/pressurization/logic/gnd/active">
+			<default value="0"/>
+			<test value="1">
+				/systems/pressurization/active-phase eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/gnd/target-vs">
+			<default value="/systems/pressurization/logic/gnd/max-rate"/>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/gnd/target-psi">
+			<function>
+				<product>
+					<v>0.491154</v>
+					<property>/environment/pressure-inhg</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/gnd/target-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/logic/gnd/target-psi</property>
+					<property>/systems/pressurization/cabinpsi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<!-- Takeoff -->
+		<switch name="/systems/pressurization/logic/takeoff/active">
+			<default value="0"/>
+			<test value="1">
+				/systems/pressurization/active-phase eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/takeoff/target-vs">
+			<default value="/systems/pressurization/logic/takeoff/max-rate"/>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/takeoff/target-psi">
+			<function>
+				<sum>
+					<v>0.1</v>
+					<product>
+						<v>0.491154</v>
+						<property>/environment/pressure-inhg</property>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/takeoff/target-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/logic/takeoff/target-psi</property>
+					<property>/systems/pressurization/cabinpsi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<!-- Climb -->
+		<switch name="/systems/pressurization/logic/climb/active">
+			<default value="0"/>
+			<test value="1">
+				/systems/pressurization/active-phase eq 2
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/climb/target-vs">
+			<function>
+				<product>
+					<v>0.19736842105</v>
+					<property>/instrumentation/gps/indicated-vertical-speed</property>
+				</product>
+			</function>
+			<clipto>
+				<min>0</min>
+				<max>/systems/pressurization/logic/climb/max-rate</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/climb/target-psi">
+			<function>
+				<difference>
+					<product>
+						<v>0.491154</v>
+						<property>/environment/pressure-inhg</property>
+					</product>
+					<value>8.06</value>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/climb/target-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/logic/climb/target-psi</property>
+					<property>/systems/pressurization/cabinpsi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<!-- Abort -->
+		<switch name="/systems/pressurization/logic/abort/active">
+			<default value="0"/>
+			<test value="1">
+				/systems/pressurization/active-phase eq 3
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/abort/target-vs">
+			<function>
+				<product>
+					<v>0.19736842105</v>
+					<property>/instrumentation/gps/indicated-vertical-speed</property>
+				</product>
+			</function>
+			<clipto>
+				<min>/systems/pressurization/logic/abort/max-rate</min>
+				<max>0</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/abort/target-psi">
+			<function>
+				<sum>
+					<v>0.1</v>
+					<property>/systems/pressurization/logic/takeoff-psi</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/abort/target-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/logic/abort/target-psi</property>
+					<property>/systems/pressurization/cabinpsi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<!-- Cruise -->
+		
+		<switch name="/systems/pressurization/logic/cruise/active">
+			<default value="0"/>
+			<test value="1">
+				/systems/pressurization/active-phase eq 4
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/logic/cruise/target-vs">
+			<default value="0"/>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/cruise/landing-alt-difference">
+			<function>
+				<difference>
+					<property>/systems/pressurization/cabinalt</property>
+					<property>/systems/pressurization/logic/landing-elev</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/cruise/target-alt-psi">
+			<function>
+				<sum>
+					<product>
+						<v>0.00039473684</v>
+						<property>/systems/pressurization/logic/cruise/landing-alt-difference</property>
+					</product>
+					<property>/systems/pressurization/logic/cruise/cabinpsi-memo-cruise</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pressurization/logic/cruise/target-psi">
+			<default value="/systems/pressurization/logic/cruise/cabinpsi-memo-cruise"/>
+			<test logic="OR" value="/systems/pressurization/logic/cruise/target-alt-psi">
+				/systems/pressurization/logic/cruise/landing-alt-difference le -3800
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/cruise/target-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/logic/cruise/target-psi</property>
+					<property>/systems/pressurization/cabinpsi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<!-- Descent -->
+		<switch name="/systems/pressurization/logic/descent/active">
+			<default value="0"/>
+			<test value="1">
+				/systems/pressurization/active-phase eq 5
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/descent/target-vs">
+			<function>
+				<product>
+					<v>0.19736842105</v>
+					<property>/instrumentation/gps/indicated-vertical-speed</property>
+				</product>
+			</function>
+			<clipto>
+				<min>/systems/pressurization/logic/descent/max-rate</min>
+				<max>0</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/descent/target-psi">
+			<function>
+				<sum>
+					<v>0.1</v>
+					<property>/systems/pressurization/logic/landing-psi</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/descent/target-psi-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/logic/descent/target-psi</property>
+					<property>/systems/pressurization/cabinpsi</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pressurization/logic/outflow-valve-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/active-phase eq 0
+			</test> <!-- should be a 55 sec delay on touchdown, but nvm... -->
+		</switch>
+		
+	</channel>
+	
 	<channel name="Pressurization Valves" execrate="8">
 	
 		<switch name="/systems/pressurization/valves/safety-valve">
@@ -274,6 +551,46 @@
 				/systems/pressurization/deltap-norm ge 8.6
 			</test>
 		</switch>
+		<switch name="/systems/pressurization/valves/outflow-valve-cmd">
+			<default value="/systems/pressurization/logic/outflow-valve-cmd"/>
+			<test logic="AND" value="0">
+				/controls/pressurization/ditching eq 1
+			</test>
+			<test logic="AND" value="0">
+				/systems/pressurization/active-mode ne 2
+				/controls/pneumatics/switches/ram-air eq 1
+			</test>
+			<test logic="AND" value="0">
+				/systems/pressurization/active-mode ne 2
+				/systems/pressurization/cabinpsi lt 8.300505
+			</test>
+			<test logic="AND" value="1">
+				/systems/pressurization/rpcu-command-open eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pressurization/valves/outflow-valve-rate">
+			<default value="0"/>
+			<test logic="AND" value="0.2">
+				/systems/pressurization/active-mode ne 2
+				/systems/pressurization/active-cpc eq 0
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+			<test logic="AND" value="0.2"> <!-- via 6PN CB -->
+				/systems/pressurization/active-mode ne 2
+				/systems/pressurization/active-cpc eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="0.2"> <!-- via 11PB CB -->
+				/systems/pressurization/active-mode eq 2
+				/systems/electrical/bus/dc-bat ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pressurization/valves/outflow-valve">
+			<input>/systems/pressurization/valves/outflow-valve-cmd</input>
+			<rate_limit>/systems/pressurization/valves/outflow-valve-rate</rate_limit>
+		</actuator>
 		
 	</channel>
 	

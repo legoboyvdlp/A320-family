@@ -1332,13 +1332,33 @@
 		
 		<pressurization>
 			<logic>
+				<abort>
+					<max-rate type="double">-750</max-rate>
+				</abort>
+				<climb>
+					<max-rate type="double">500</max-rate>
+				</climb>
+				<cruise>
+					<cabinpsi-memo-cruise type="double">14.7</cabinpsi-memo-cruise>
+				</cruise>
+				<descent>
+					<max-rate type="double">-750</max-rate>
+				</descent>
+				<gnd>
+					<max-rate type="double">500</max-rate>
+				</gnd>
+				<takeoff>
+					<max-rate type="double">-400</max-rate>
+				</takeoff>
 				<takeoff-altitude-ft type="double">-9999</takeoff-altitude-ft>
+				<takeoff-psi type="double">-9999</takeoff-psi>
+				<landing-psi type="double">-9999</landing-psi>
 			</logic>
+			<active-cpc type="int">0</active-cpc>
 			<active-mode type="int">0</active-mode>
 			<active-phase type="int">0</active-phase>
 			<both-cpcs-off type="bool">0</both-cpcs-off>
 			<cabinpsi type="double">14.7</cabinpsi>
-			<ditchingpb type="double">14.7</ditchingpb>
 			<man-target-vs type="double">0</man-target-vs>
 		</pressurization>
 		

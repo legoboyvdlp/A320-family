@@ -16,6 +16,7 @@ var initInputA = func(key, i) {
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 			fmgc.updateARPT();
+			fmgc.updateLdgElev();
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 1;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
@@ -32,6 +33,7 @@ var initInputA = func(key, i) {
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
+					fmgc.updateLdgElev();
 					#fmgc.FMGCInternal.altSelected = 1;
 					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 				} else {

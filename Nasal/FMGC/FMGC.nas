@@ -209,16 +209,16 @@ var trimReset = func {
 ###############
 
 var updateARPT = func {
-	setprop("autopilot/route-manager/departure/airport", fmgc.FMGCInternal.depApt);
-	setprop("autopilot/route-manager/destination/airport", fmgc.FMGCInternal.arrApt);
-	setprop("autopilot/route-manager/alternate/airport", fmgc.FMGCInternal.altAirport);
+	setprop("/autopilot/route-manager/departure/airport", fmgc.FMGCInternal.depApt);
+	setprop("/autopilot/route-manager/destination/airport", fmgc.FMGCInternal.arrApt);
+	setprop("/autopilot/route-manager/alternate/airport", fmgc.FMGCInternal.altAirport);
 	if (getprop("/autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
 	}
 }
 
 updateRouteManagerAlt = func() {
-	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	setprop("/autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
 };
 
 ########
@@ -1100,13 +1100,13 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 }, 0, 0);
 
 
-setlistener("/FMGC/internal/tofrom-set", func() {
+updateLdgElev = func() {
 	if (fmgc.FMGCInternal.toFromSet) {
 		FMGCNodes.ldgElev.setValue(airportinfo(fmgc.FMGCInternal.arrApt).elevation * M2FT); # eventually should be runway elevation
 	} else {
-		FMGCNodes.ldgElev.setValue(-9999);
+		FMGCNodes.ldgElev.setValue(0);
 	}
-}, 0, 0);
+}
 
 # Maketimers
 var timer30secLanding = maketimer(1, func() {

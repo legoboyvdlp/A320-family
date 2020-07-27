@@ -1,6 +1,5 @@
 # A3XX Pressurization System
 # Copyright (c) 2020 Jonathan Redpath (legoboyvdlp)
-# In CRZ go to the setting given by the ECAM. No rush. it is not an emergency. One toggle movement up or down equals cabin rate change of 50'/min.
 
 var CabinPressureController = {
 	new: func(elecNode) {
@@ -33,15 +32,19 @@ var CabinPressureController = {
 
 var CPCController = {
 	CPCS: [nil, nil],
-	activeCPC: nil,
 	mode: props.globals.getNode("/systems/pressurization/active-mode", 1), # 0 = auto, 1 = semi-auto, 2 = manual
 	phase: props.globals.getNode("/systems/pressurization/active-phase", 1), # 0 = GN 1 = TO 2 = CI 3 = AB 4 = CR 5 = DI
+	activeCPC: props.globals.getNode("/systems/pressurization/active-cpc", 1),
 	bothCPCOff: props.globals.getNode("/systems/pressurization/both-cpcs-off", 1),
 	takeoffAltSet: 0,
 	takeoffAlt: props.globals.getNode("/systems/pressurization/logic/takeoff-altitude-ft", 1),
+	takeoffPsiSet: 0,
+	takeoffPsi: props.globals.getNode("/systems/pressurization/logic/takeoff-psi", 1),
 	targetVS: props.globals.getNode("/systems/pressurization/man-target-vs", 1),
+	cabinPsi: props.globals.getNode("/systems/pressurization/cabinpsi", 1),
+	cabinPsiMemo: props.globals.getNode("/systems/pressurization/logic/cruise/cabinpsi-memo-cruise", 1),
 	init: func() {
-		me.activeCPC = rand() >= 0.5 ? 1 : 0;
+		me.activeCPC.setValue(rand() >= 0.5 ? 1 : 0);
 		me.CPCS = [CabinPressureController.new("/systems/electrical/bus/dc-ess"),CabinPressureController.new("/systems/electrical/bus/dc-2")];
 	},
 	resetFail: func() {
@@ -51,7 +54,7 @@ var CPCController = {
 		}
 	},
 	switchActive: func() {
-		me.activeCPC = !me.activeCPC;
+		me.activeCPC.setValue(!me.activeCPC.getValue());
 	},
 	setManVs: func(d) {
 		if (me.mode.getValue() != 2) { return; }
@@ -75,9 +78,9 @@ var CPCController = {
 			me.bothCPCOff.setValue(1);
 		}
 		
-		if (me.activeCPC == 0 and me.CPCS[0].failed and me.CPCS[1].failed != 0) {
+		if (me.activeCPC.getValue() == 0 and me.CPCS[0].failed and me.CPCS[1].failed != 0) {
 			me.switchActive();
-		} elsif (me.activeCPC == 1 and me.CPCS[1].failed and !me.CPCS[0].failed) {
+		} elsif (me.activeCPC.getValue() == 1 and me.CPCS[1].failed and !me.CPCS[0].failed) {
 			me.switchActive();
 		}
 	}
@@ -89,17 +92,43 @@ var phaseSignal = {
 		signal.phaseStart = phaseStart;
 		signal.phaseEnd = phaseEnd;
 		signal.node = props.globals.getNode(nodePath, 1);
+		signal.runningTimer = 0;
 		print("Registering listener for " ~ nodePath);
 		signal.listener = setlistener(signal.node, func() { signal.phaseFunc(); }, 0, 0);
 	},
 	del: func() {
 		removelistener(me.listener);
 	},
+	checkPhase: func(phase) {
+		me.runningTimer = 0;
+		if (CPCController.phase.getValue() == phase) {
+			return 1;
+		}
+		return 0;
+	},
 	phaseFunc: func() {
-		if (CPCController.phase != me.phaseStart) { return; }
+		if (CPCController.phase.getValue() != me.phaseStart) { return; }
 		if (me.node.getValue() == 1) {
 			print("Condition true, switching to phase " ~ me.phaseEnd);
 			CPCController.phase.setValue(me.phaseEnd);
+			if (me.phaseEnd == 0 and me.runningTimer == 0) {
+				CPCController.takeoffAltSet = 0;
+				CPCController.takeoffAlt.setValue(-9999);
+				CPCController.takeoffPsiSet = 0;
+				CPCController.takeoffPsi.setValue(-9999);
+				me.runningTimer = 1;
+				print("Will run timer in 70 seconds");
+				settimer(func() {
+					print("Alright, starting check");
+					if (me.checkPhase(0) == 1) {
+						print("Phase still zero, switching");
+						CPCController.switchActive();
+					}
+				}, 70);
+			}
+			if (me.phaseEnd == 4) {
+				CPCController.cabinPsiMemo.setValue(CPCController.cabinPsi.getValue());
+			}
 		}
 	},
 };
@@ -109,6 +138,10 @@ setlistener("/gear/gear[1]/wow", func() {
 		if (!CPCController.takeoffAltSet) {
 			CPCController.takeoffAlt.setValue(getprop("/systems/navigation/adr/computation/baro-alt-corrected-1-capt"));
 			CPCController.takeoffAltSet = 1;
+		}
+		if (!CPCController.takeoffPsiSet) {
+			CPCController.takeoffPsi.setValue(getprop("/environment/pressure-inhg") * 0.491154);
+			CPCController.takeoffPsiSet = 1;
 		}
 	}
 }, 0, 0);
