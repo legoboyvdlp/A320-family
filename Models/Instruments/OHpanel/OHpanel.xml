@@ -4618,84 +4618,10 @@
 
 	<!-- Cabin Pressurization -->
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>ManVSCTLSwitch</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pressurization/man-vs-ctl</property>
-				<value>1</value>
-			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/pressurization/man-vs-ctl</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pressurization/man-vs-ctl</property>
-				<value>-1</value>
-			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/pressurization/man-vs-ctl</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-		<action>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pressurization/man-vs-ctl</property>
-				<value>1</value>
-			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/pressurization/man-vs-ctl</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-		<action>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pressurization/man-vs-ctl</property>
-				<value>-1</value>
-			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/pressurization/man-vs-ctl</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-	</animation>
-
-	<animation>
-		<name>Man VS rotate</name>
-		<type>rotate</type>
-		<object-name>ManVSCTLSwitch</object-name>
-		<property>controls/pressurization/man-vs-ctl</property>
-		<interpolation>
-			<entry><ind>-1</ind><dep>-35</dep></entry>
-			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>35</dep></entry>
-		</interpolation>
+		<property>/controls/pressurization/man-vs-ctl</property>
+		<factor>25</factor>
 		<axis>
 			<x>0</x>
 			<y>1</y>
@@ -4706,8 +4632,45 @@
 			<y-m> 0.0433</y-m>
 			<z-m>-0.2186</z-m>
 		</center>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>/controls/pressurization/man-vs-ctl</property>
+				<factor>1</factor>
+				<min>-1</min>
+				<max>1</max>                
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<release>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/pressurization/man-vs-ctl</property>
+				<value>0</value>
+			</binding>
+		</release>
+		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>5</drag-scale-px>
+		<increase>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					systems.CPCController.setManVs(1);
+				</script>
+			</binding>
+		</increase>
+		<decrease>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					systems.CPCController.setManVs(-1);
+				</script>
+			</binding>
+		</decrease>
 	</animation>
-
+	
 	<animation>
 		<type>knob</type>
 		<object-name>LdgElevKnb</object-name>
@@ -4756,7 +4719,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-					if (systems.CPCController.mode == 0) {
+					if (systems.CPCController.mode.getValue() == 0) {
 						systems.CPCController.setMode(2);
 					} else {
 						systems.CPCController.setMode(0);

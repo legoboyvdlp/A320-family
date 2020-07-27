@@ -1,5 +1,6 @@
 # A3XX Pressurization System
 # Copyright (c) 2020 Jonathan Redpath (legoboyvdlp)
+# In CRZ go to the setting given by the ECAM. No rush. it is not an emergency. One toggle movement up or down equals cabin rate change of 50'/min.
 
 var CabinPressureController = {
 	new: func(elecNode) {
@@ -38,6 +39,7 @@ var CPCController = {
 	bothCPCOff: props.globals.getNode("/systems/pressurization/both-cpcs-off", 1),
 	takeoffAltSet: 0,
 	takeoffAlt: props.globals.getNode("/systems/pressurization/logic/takeoff-altitude-ft", 1),
+	targetVS: props.globals.getNode("/systems/pressurization/man-target-vs", 1),
 	init: func() {
 		me.activeCPC = rand() >= 0.5 ? 1 : 0;
 		me.CPCS = [CabinPressureController.new("/systems/electrical/bus/dc-ess"),CabinPressureController.new("/systems/electrical/bus/dc-2")];
@@ -50,6 +52,10 @@ var CPCController = {
 	},
 	switchActive: func() {
 		me.activeCPC = !me.activeCPC;
+	},
+	setManVs: func(d) {
+		if (me.mode.getValue() != 2) { return; }
+		me.targetVS.setValue(me.targetVS.getValue() + -d*50);
 	},
 	setMode: func(mode) {
 		if (mode >= 0 and mode <= 2) {
@@ -109,11 +115,11 @@ setlistener("/gear/gear[1]/wow", func() {
 
 setlistener("/controls/pressurization/ldg-elev", func() {
 	if (PRESS.Switches.ldgElev.getValue() == 0) {
-		if (CPCController.mode == 1) {
+		if (CPCController.mode.getValue() == 1) {
 			CPCController.setMode(0);
 		}
 	} else {
-		if (CPCController.mode == 0) {
+		if (CPCController.mode.getValue() == 0) {
 			CPCController.setMode(1);
 		}
 	}

@@ -1339,6 +1339,7 @@
 			<both-cpcs-off type="bool">0</both-cpcs-off>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
+			<man-target-vs type="double">0</man-target-vs>
 		</pressurization>
 		
 		<pitot n="0">
