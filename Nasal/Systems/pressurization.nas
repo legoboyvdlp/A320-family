@@ -41,7 +41,7 @@ var CPCController = {
 	takeoffPsiSet: 0,
 	takeoffPsi: props.globals.getNode("/systems/pressurization/logic/takeoff-psi", 1),
 	targetVS: props.globals.getNode("/systems/pressurization/man-target-vs", 1),
-	cabinPsi: props.globals.getNode("/systems/pressurization/cabinpsi", 1),
+	cabinPsi: props.globals.getNode("/systems/pressurization/cabin-pressure-psi", 1),
 	cabinPsiMemo: props.globals.getNode("/systems/pressurization/logic/cruise/cabinpsi-memo-cruise", 1),
 	init: func() {
 		me.activeCPC.setValue(rand() >= 0.5 ? 1 : 0);

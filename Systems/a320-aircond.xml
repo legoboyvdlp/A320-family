@@ -740,7 +740,7 @@
 						<property>/systems/air-conditioning/packs/pack-factor</property>
 						<property>/systems/air-conditioning/packs/pack-flow</property>
 						<product>
-							<property>/systems/pressurization/cabinpsi</property>
+							<property>/systems/pressurization/cabin-pressure-psi</property>
 							<value>68.9476</value>
 						</product>
 						<value>0.928</value>

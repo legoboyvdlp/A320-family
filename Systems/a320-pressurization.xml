@@ -1,7 +1,10 @@
 <!-- Copyright (c) 2020 Jonathan Redpath (legoboyvdlp) -->
 
 <system name="A320: Pressurization">
-
+	<property value="0.001">/systems/pressurization/outflow-total-kg_s</property>
+	<property value="14.7">/systems/pressurization/cabin-pressure-psi</property>
+	<property value="0">/systems/pressurization/cabin-mass-kg</property>
+	
 	<channel name="Pressurization Logic Controller" execrate="8">
 		
 		<summer name="/systems/pressurization/logic/alt-change-takeoff">
@@ -325,7 +328,7 @@
 			<function>
 				<difference>
 					<property>/systems/pressurization/logic/gnd/target-psi</property>
-					<property>/systems/pressurization/cabinpsi</property>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
@@ -358,7 +361,7 @@
 			<function>
 				<difference>
 					<property>/systems/pressurization/logic/takeoff/target-psi</property>
-					<property>/systems/pressurization/cabinpsi</property>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
@@ -400,7 +403,7 @@
 			<function>
 				<difference>
 					<property>/systems/pressurization/logic/climb/target-psi</property>
-					<property>/systems/pressurization/cabinpsi</property>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
@@ -439,7 +442,7 @@
 			<function>
 				<difference>
 					<property>/systems/pressurization/logic/abort/target-psi</property>
-					<property>/systems/pressurization/cabinpsi</property>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
@@ -489,7 +492,7 @@
 			<function>
 				<difference>
 					<property>/systems/pressurization/logic/cruise/target-psi</property>
-					<property>/systems/pressurization/cabinpsi</property>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
@@ -528,7 +531,7 @@
 			<function>
 				<difference>
 					<property>/systems/pressurization/logic/descent/target-psi</property>
-					<property>/systems/pressurization/cabinpsi</property>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
@@ -562,7 +565,7 @@
 			</test>
 			<test logic="AND" value="0">
 				/systems/pressurization/active-mode ne 2
-				/systems/pressurization/cabinpsi lt 8.300505
+				/systems/pressurization/cabin-pressure-psi lt 8.300505
 			</test>
 			<test logic="AND" value="1">
 				/systems/pressurization/rpcu-command-open eq 1
@@ -591,6 +594,73 @@
 			<input>/systems/pressurization/valves/outflow-valve-cmd</input>
 			<rate_limit>/systems/pressurization/valves/outflow-valve-rate</rate_limit>
 		</actuator>
+		
+	</channel>
+	
+	<channel name="Pressure Calculations" execrate="8">
+		
+		<fcs_function name="/systems/pressurization/outflow-total-kg_s">
+			<function>
+				<product>
+					<property>/systems/pressurization/valves/outflow-valve</property>
+					<value>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/cabin-mass-now">
+			<function>
+				<sum>
+					<quotient>
+						<product>
+							<product>
+								<property>/systems/pressurization/cabin-pressure-psi</property>
+								<v>6894.76</v>
+							</product>
+							<v>330</v>
+						</product>
+						<product>
+							<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
+							<v>287.05</v>
+						</product>
+					</quotient>
+					<property>/systems/pressurization/cabin-mass-kg</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="rubbish/cabin-mass-kg">
+			<function>
+				<sum>
+					<property>/systems/pressurization/cabin-mass-kg</property>
+					<product>
+						<property>/systems/air-conditioning/mass-flow-total-kg_s</property>
+						<property>simulation/channel-dt</property>
+					</product>
+					<product>
+						<property>-/systems/pressurization/outflow-total-kg_s</property>
+						<property>simulation/channel-dt</property>
+					</product>
+				</sum>
+			</function>
+            <output>/systems/pressurization/cabin-mass-kg</output>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/cabin-pressure-psi">
+			<function>
+				<product>
+					<v>0.00014503768</v>
+					<quotient>
+						<product>
+							<property>/systems/pressurization/cabin-mass-now</property>
+							<v>287.05</v>
+							<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
+						</product>
+						<v>330</v>
+					</quotient>
+				</product>
+			</function>
+		</fcs_function>
 		
 	</channel>
 	

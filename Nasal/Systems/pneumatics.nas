@@ -118,7 +118,7 @@ var PNEU = {
 		setprop("/systems/pressurization/diff-to-target", "0");
 		setprop("/systems/pressurization/targetvs", "0");
 		setprop("/systems/pressurization/ambientpsi", "0");
-		setprop("/systems/pressurization/cabinpsi", "0");
+		setprop("/systems/pressurization/cabin-pressure-psi", "0");
 		setprop("/systems/pressurization/manvs-cmd", "0");
 		setprop("/systems/pressurization/pack-1-out-temp", 0);
 		setprop("/systems/pressurization/pack-2-out-temp", 0);
@@ -183,7 +183,7 @@ var PNEU = {
 		cabinalt = getprop("/systems/pressurization/cabinalt");
 		targetalt = getprop("/systems/pressurization/targetalt");
 		ambient = getprop("/systems/pressurization/ambientpsi");
-		cabinpsi = getprop("/systems/pressurization/cabinpsi");
+		cabinpsi = getprop("/systems/pressurization/cabin-pressure-psi");
 		state1 = getprop("/systems/thrust/state1");
 		state2 = getprop("/systems/thrust/state2");
 		vs = getprop("/systems/pressurization/vs-norm");

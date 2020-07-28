@@ -393,7 +393,7 @@
 				</table>
 			</expression>
 		</input>
-		<output>/systems/pressurization/cabinpsi-target</output>
+		<output>/systems/pressurization/cabin-pressure-psi-target</output>
 	</filter>
 	
 	<filter>
@@ -417,9 +417,9 @@
 					<value>1</value>
 				</not>
 			</condition>
-			<property>/systems/pressurization/cabinpsi-target</property>
+			<property>/systems/pressurization/cabin-pressure-psi-target</property>
 		</input>
-		<output>/systems/pressurization/cabinpsi</output>
+		<output>/systems/pressurization/cabin-pressure-psi</output>
 	</filter>
 
 	<filter>
