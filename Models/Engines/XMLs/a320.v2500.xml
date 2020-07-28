@@ -408,7 +408,7 @@
 	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-IAE</inherits-from>
 		<object-name>EngineIAEV2500L</object-name>
 		<object-name>EngineIAEV2500R</object-name>
 		<object-name>ReverserLDoor</object-name>
@@ -416,13 +416,13 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-IAE</inherits-from>
 		<object-name>PylonIAEV2500L</object-name>
 		<object-name>PylonIAEV2500R</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-IAE</inherits-from>
 		<object-name>IntakeIAEV2500L</object-name>
 		<object-name>IntakeIAEV2500R</object-name>
 	</effect>

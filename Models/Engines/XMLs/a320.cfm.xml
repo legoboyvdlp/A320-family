@@ -518,7 +518,7 @@
 	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-CFM</inherits-from>
 		<object-name>EngineCFM56L</object-name>
 		<object-name>EngineCFM56R</object-name>
 		<object-name>ReverserLDoor1</object-name>
@@ -532,13 +532,13 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-CFM</inherits-from>
 		<object-name>PylonCFM56L</object-name>
 		<object-name>PylonCFM56R</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-CFM</inherits-from>
 		<object-name>IntakeCFM56L</object-name>
 		<object-name>IntakeCFM56R</object-name>
 	</effect>

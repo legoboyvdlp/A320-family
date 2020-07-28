@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <PropertyList>
-	<name>reflection-correction</name>
+	<name>reflection</name>
 	<inherits-from>Effects/model-combined-deferred</inherits-from>
 	<parameters>
 		<reflection-enabled type="int">1</reflection-enabled>
 		<reflection-dynamic type="int">1</reflection-dynamic>
 		<reflect_map-enabled type="int">0</reflect_map-enabled>
-		<reflection-correction type="float"><use>/sim/model/reflection/reflection-correction-chrome</use></reflection-correction>
+		<reflection-correction type="float"><use>/sim/model/reflection/reflection-correction-wing</use></reflection-correction>
 		<reflection-type type="int">2</reflection-type>
-		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction-chrome</use></ambient-correction>
+		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction-wing</use></ambient-correction>
 		<lightmap-enabled type="int">0</lightmap-enabled>
 		<lightmap-multi type="int">0</lightmap-multi>
 		<normalmap-enabled type="int">1</normalmap-enabled>
@@ -29,8 +29,8 @@
 			</images>
 		</texture>
 	</parameters>
-		
-		<!-- ####################
+	
+	<!-- ####################
     ### NORMALMAP INCLUDE ###
     ######################### -->
     <generate>

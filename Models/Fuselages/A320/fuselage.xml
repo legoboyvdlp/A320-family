@@ -33,7 +33,7 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
 		<object-name>Wings</object-name>
 		<object-name>FlapL1</object-name>
 		<object-name>FlapL2</object-name>
