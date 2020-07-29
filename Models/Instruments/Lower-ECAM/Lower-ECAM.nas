@@ -236,6 +236,7 @@ var gear_door_L = props.globals.getNode("/systems/hydraulic/gear/door-left", 1);
 var gear_door_R = props.globals.getNode("/systems/hydraulic/gear/door-right", 1);
 var gear_door_N = props.globals.getNode("/systems/hydraulic/gear/door-nose", 1);
 var gear_down = props.globals.getNode("/controls/gear/gear-down", 1);
+var press_delta_p = props.globals.getNode("/systems/pressurization/cabin-delta-p", 1);
 var press_vs_norm = props.globals.getNode("/systems/pressurization/cabin-rate-fpm", 1);
 var cabinalt = props.globals.getNode("/systems/pressurization/cabin-altitude", 1);
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
@@ -2687,11 +2688,12 @@ var canvas_lowerECAM_press = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "PRESS-Cab-VS", "PRESS-Cab-VS-neg", "PRESS-Cab-Alt"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit", "PRESS-Cab-VS", "PRESS-Cab-VS-neg", "PRESS-Cab-Alt", "PRESS-deltaP"];
 	},
 	update: func() {
-		me["PRESS-Cab-VS"].setText(sprintf("%4.0f", press_vs_norm.getValue()));
-		me["PRESS-Cab-Alt"].setText(sprintf("%4.0f", cabinalt.getValue()));
+		me["PRESS-Cab-VS"].setText(sprintf("%4.0f", math.round(press_vs_norm.getValue(), 50)));
+		me["PRESS-Cab-Alt"].setText(sprintf("%4.0f", math.round(cabinalt.getValue(), 50)));
+		me["PRESS-deltaP"].setText(sprintf("%3.1f", press_delta_p.getValue()));
 
 
 		me.updateBottomStatus();

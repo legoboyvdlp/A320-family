@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="press.svg">
   <metadata
      id="metadata375">
@@ -42,7 +42,7 @@
      id="namedview371"
      showgrid="true"
      inkscape:zoom="0.88"
-     inkscape:cx="397.64824"
+     inkscape:cx="483.96442"
      inkscape:cy="880.3857"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -773,32 +773,6 @@
        style="font-size:27.24699974px;line-height:0">0</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dbe4a;fill-opacity:1;stroke:none;stroke-width:4.99181652px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="169.68008"
-     y="538.0921"
-     id="PRESS-deltaP-period"
-     inkscape:label="#text3720"
-     transform="scale(1.3534057,0.73887673)"><tspan
-       sodipodi:role="line"
-       id="tspan5559"
-       x="169.68008"
-       y="538.0921"
-       style="font-size:59.90160751px;line-height:0;fill:#0dbe4a;fill-opacity:1;stroke-width:4.99181652px">.</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dbe4a;fill-opacity:1;stroke:none;stroke-width:2.27059054px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="278.09778"
-     y="360.78436"
-     id="PRESS-deltaP-Decimal"
-     inkscape:label="#text3720"
-     transform="scale(0.9147857,1.0931522)"><tspan
-       sodipodi:role="line"
-       id="tspan5595"
-       x="278.09778"
-       y="360.78436"
-       style="font-size:27.24699974px;line-height:0">1</tspan></text>
-  <text
-     xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dbe4a;fill-opacity:1;stroke:none;stroke-width:2.27059054px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="236.23238"
      y="362.90103"
@@ -809,7 +783,7 @@
        id="tspan5615"
        x="236.23238"
        y="362.90103"
-       style="font-size:27.24699974px;line-height:0">4</tspan></text>
+       style="font-size:27.24699974px;line-height:0">4.0</tspan></text>
   <path
      style="fill:none;fill-opacity:1;stroke:#cecdce;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="m 659.99998,693.99998 c 13.21791,-26.25 30,-46.5515 67.5,-56.25"

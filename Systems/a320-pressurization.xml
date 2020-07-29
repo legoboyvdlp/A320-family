@@ -635,7 +635,7 @@
 					<quotient>
 						<product>
 							<property>/systems/pressurization/cabin-mass-kg</property>
-							<v>287.05</v>
+							<v>287.058</v>
 							<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
 						</product>
 						<v>330</v>
@@ -675,10 +675,19 @@
 			</test>
 		</switch>
 		
-		<washout_filter name="/systems/pressurization/cabin-rate-fpm">
+		<washout_filter name="/systems/pressurization/cabin-rate-fps">
 			<input>/systems/pressurization/cabin-altitude</input>
 			<c1>/systems/pressurization/cabin-rate-c1</c1>
 		</washout_filter>
+		
+		<fcs_function name="/systems/pressurization/cabin-rate-fpm">
+			<function>
+				<product>
+					<v>60</v>
+					<property>/systems/pressurization/cabin-rate-fps</property>
+				</product>
+			</function>
+		</fcs_function>
 	</channel>
 	
 </system>
