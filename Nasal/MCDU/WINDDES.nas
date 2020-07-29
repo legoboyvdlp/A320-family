@@ -135,7 +135,7 @@ var windDESPage = {
 		
 		me.L6 = [" RETURN", nil, "wht"];
 		
-		if (getprop("/FMGC/internal/alt-set")) {
+		if (fmgc.FMGCInternal.altAirportSet) {
 			var windStore = fmgc.windController.des_winds[computer_temp].alt1;
 			if (windStore.heading != 0 and windStore.magnitude != 0) {
 				me.R1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude), "ALTN WIND ", "blu"];
@@ -228,7 +228,7 @@ var windDESPage = {
 				if (size(winds) < 3) {
 					mcdu_message(me.computer, "NOT ALLOWED");
 					# not implemented yet
-				} else if (size(winds[0]) >= 0 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
+				} else if (size(winds) == 3 and size(winds[0]) >= 0 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
 				size(winds[1]) >= 0 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200 and
 				size(winds[2]) >= 4 and size(winds[2]) <= 5 and (winds[2] == "GRND" or (num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
 				(num(split("FL", winds[2])[1]) != nil and split("FL", winds[2])[1] >= 10 and split("FL", winds[2])[1] <= 390))) {
@@ -328,26 +328,8 @@ var windDESPage = {
 		}
 	},
 	pushButtonRight: func(index) {
-		if (index == 1 and getprop("/FMGC/internal/alt-set")) {
-			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) >= 3 and size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) <= 7) {
-				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
-				if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
-				size(winds[1]) >= 1 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200) {
-					me.makeTmpy();
-					var computer_temp = 2;
-					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-						computer_temp = me.computer;
-					}
-					#print(computer_temp);
-					fmgc.windController.des_winds[computer_temp].alt1.heading = winds[0];
-					fmgc.windController.des_winds[computer_temp].alt1.magnitude = winds[1];
-					mcdu_scratchpad.scratchpads[me.computer].empty();
-					me._setupPageWithData();
-					me.updateTmpy();
-				} else {
-					mcdu_message(me.computer, "NOT ALLOWED");
-				}
-			} else if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+		if (index == 1 and fmgc.FMGCInternal.altAirportSet) {
+			if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
 				var computer_temp = 2;
 				if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 					computer_temp = me.computer;
@@ -357,6 +339,24 @@ var windDESPage = {
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 				me._setupPageWithData();
 				me.updateTmpy();
+			} else if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) >= 3 and size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) <= 7) {
+				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
+				# to-do, allow independent entry
+				if (size(winds) == 2 and size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
+				size(winds[1]) >= 1 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200) {
+					me.makeTmpy();
+					var computer_temp = 2;
+					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+						computer_temp = me.computer;
+					}
+					fmgc.windController.des_winds[computer_temp].alt1.heading = winds[0];
+					fmgc.windController.des_winds[computer_temp].alt1.magnitude = winds[1];
+					mcdu_scratchpad.scratchpads[me.computer].empty();
+					me._setupPageWithData();
+					me.updateTmpy();
+				} else {
+					mcdu_message(me.computer, "NOT ALLOWED");
+				}
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}

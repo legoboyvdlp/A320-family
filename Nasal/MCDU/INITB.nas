@@ -71,7 +71,7 @@ var initInputB = func(key, i) {
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
-	} else if (key == "L4" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating") and getprop("/FMGC/internal/alt-set")) {
+	} else if (key == "L4" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating") and fmgc.FMGCInternal.altAirportSet) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/alt-fuel", 0.0);
 			setprop("/FMGC/internal/alt-time", "0000");
