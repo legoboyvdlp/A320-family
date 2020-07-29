@@ -1358,8 +1358,12 @@
 			<active-mode type="int">0</active-mode>
 			<active-phase type="int">0</active-phase>
 			<both-cpcs-off type="bool">0</both-cpcs-off>
-			<cabinpsi type="double">14.7</cabinpsi>
+			<cabin-delta-p type="double">0</cabin-delta-p>
+			<cabin-mass-kg type="double">400</cabin-mass-kg>
+			<cabin-mass-offset type="double">0</cabin-mass-offset>
+			<cabin-pressure-psi type="double">14.7</cabin-pressure-psi>
 			<man-target-vs type="double">0</man-target-vs>
+			<outflow-total-kg_s type="double">0</outflow-total-kg_s>
 		</pressurization>
 		
 		<pitot n="0">

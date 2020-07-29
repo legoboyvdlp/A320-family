@@ -544,33 +544,27 @@ var masterFMGC = maketimer(0.2, func {
 	
 	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
 		FMGCInternal.phase = 0;
-		setprop("systems/pressurization/mode", "GN");
 	}
 	
 	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
 		FMGCInternal.phase = 1;
-		setprop("systems/pressurization/mode", "TO");
 	}
 	
 	if (FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
 		FMGCInternal.phase = 2;
-		setprop("systems/pressurization/mode", "TO");
 	}
 	
 	if (FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
 		FMGCInternal.phase = 3;
-		setprop("systems/pressurization/mode", "CR");
 	}
 	
 	if (FMGCInternal.crzFl >= 200) {
 		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
 			FMGCInternal.phase = 4;
-			setprop("systems/pressurization/mode", "DE");
 		}
 	} else {
 		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			FMGCInternal.phase = 4;
-			setprop("systems/pressurization/mode", "DE");
 		}
 	}
 	
@@ -857,26 +851,12 @@ var reset_FMGC = func {
 	setprop("it-autoflight/input/kts", spd);
 	setprop("it-autoflight/input/hdg", hdg);
 	setprop("it-autoflight/input/alt", alt);
-	setprop("systems/pressurization/mode", "GN");
-	setprop("systems/pressurization/vs", "0");
-	setprop("systems/pressurization/targetvs", "0");
-	setprop("systems/pressurization/vs-norm", "0");
-	setprop("systems/pressurization/deltap", "0");
-	setprop("systems/pressurization/outflowpos", "0");
-	setprop("systems/pressurization/deltap-norm", "0");
-	setprop("systems/pressurization/outflowpos-norm", "0");
-	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
-	setprop("systems/pressurization/cabinalt", altitude);
-	setprop("systems/pressurization/targetalt", altitude); 
-	setprop("systems/pressurization/diff-to-target", "0");
-	setprop("systems/pressurization/targetvs", "0");
 	setprop("systems/ventilation/cabin/fans", 0); # aircon fans
 	setprop("systems/ventilation/avionics/fan", 0);
 	setprop("systems/ventilation/avionics/extractvalve", "0");
 	setprop("systems/ventilation/avionics/inletvalve", "0");
 	setprop("systems/ventilation/lavatory/extractfan", 0);
 	setprop("systems/ventilation/lavatory/extractvalve", "0");
-	setprop("systems/pressurization/ambientpsi", "0");
 }
 
 #################

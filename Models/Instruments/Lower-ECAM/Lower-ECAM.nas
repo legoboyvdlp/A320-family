@@ -236,8 +236,8 @@ var gear_door_L = props.globals.getNode("/systems/hydraulic/gear/door-left", 1);
 var gear_door_R = props.globals.getNode("/systems/hydraulic/gear/door-right", 1);
 var gear_door_N = props.globals.getNode("/systems/hydraulic/gear/door-nose", 1);
 var gear_down = props.globals.getNode("/controls/gear/gear-down", 1);
-var press_vs_norm = props.globals.getNode("/systems/pressurization/vs-norm", 1);
-var cabinalt = props.globals.getNode("/systems/pressurization/cabinalt-norm", 1);
+var press_vs_norm = props.globals.getNode("/systems/pressurization/cabin-rate-fpm", 1);
+var cabinalt = props.globals.getNode("/systems/pressurization/cabin-altitude", 1);
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 
 # Create Nodes:

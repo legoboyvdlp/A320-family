@@ -448,10 +448,10 @@ setlistener("/controls/flight/elevator-trim", func {
 var lightsLoop = maketimer(0.2, func {
 	# signs
 	
-	if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
-		setprop("/controls/lighting/seatbelt-sign", 1);
-		setprop("/controls/lighting/no-smoking-sign", 1);
-	} else {
+	#if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
+	#	setprop("/controls/lighting/seatbelt-sign", 1);
+	#	setprop("/controls/lighting/no-smoking-sign", 1);
+	#} else {
 		if (getprop("/controls/switches/seatbelt-sign") == 1) {
 			 if (getprop("/controls/lighting/seatbelt-sign") == 0) {
 				setprop("/controls/lighting/seatbelt-sign", 1);
@@ -473,7 +473,7 @@ var lightsLoop = maketimer(0.2, func {
 		} else {
 			setprop("/controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
 		}
-	}
+	#}
 });
 
 var pilotComfortTwoPos = func(prop) {

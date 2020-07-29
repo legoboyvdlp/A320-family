@@ -4,7 +4,6 @@
 # Local vars
 var cabinalt = nil;
 var targetalt = nil;
-var ambient = nil;
 var cabinpsi = nil;
 var state1 = nil;
 var state2 = nil;
@@ -104,22 +103,6 @@ var PNEU = {
 		me.resetFail();
 		
 		# Legacy pressurization system
-		setprop("/systems/pressurization/vs", "0");
-		setprop("/systems/pressurization/targetvs", "0");
-		setprop("/systems/pressurization/vs-norm", "0");
-		setprop("/systems/pressurization/deltap", "0");
-		setprop("/systems/pressurization/outflowpos", "0");
-		setprop("/systems/pressurization/deltap-norm", "0");
-		setprop("/systems/pressurization/outflowpos-norm", "0");
-		setprop("/systems/pressurization/outflowpos-man", "0.5");
-		setprop("/systems/pressurization/outflowpos-norm-cmd", "0");
-		setprop("/systems/pressurization/cabinalt", getprop("instrumentation/altimeter/indicated-altitude-ft"));
-		setprop("/systems/pressurization/targetalt", getprop("instrumentation/altimeter/indicated-altitude-ft")); 
-		setprop("/systems/pressurization/diff-to-target", "0");
-		setprop("/systems/pressurization/targetvs", "0");
-		setprop("/systems/pressurization/ambientpsi", "0");
-		setprop("/systems/pressurization/cabin-pressure-psi", "0");
-		setprop("/systems/pressurization/manvs-cmd", "0");
 		setprop("/systems/pressurization/pack-1-out-temp", 0);
 		setprop("/systems/pressurization/pack-2-out-temp", 0);
 		setprop("/systems/pressurization/pack-1-bypass", 0);
@@ -180,34 +163,8 @@ var PNEU = {
 		}
 		
 		# Legacy pressurization
-		cabinalt = getprop("/systems/pressurization/cabinalt");
-		targetalt = getprop("/systems/pressurization/targetalt");
-		ambient = getprop("/systems/pressurization/ambientpsi");
-		cabinpsi = getprop("/systems/pressurization/cabin-pressure-psi");
-		state1 = getprop("/systems/thrust/state1");
-		state2 = getprop("/systems/thrust/state2");
-		vs = getprop("/systems/pressurization/vs-norm");
-		manvs = getprop("/systems/pressurization/manvs-cmd");
-		pause = getprop("/sim/freeze/master");
 		auto = getprop("/controls/pressurization/mode-sel");
-		speed = getprop("velocities/groundspeed-kt");
 		ditch = getprop("/controls/pressurization/ditching");
-		outflowpos = getprop("/systems/pressurization/outflowpos");
-		targetvs = getprop("/systems/pressurization/targetvs");
-		
-		setprop("/systems/pressurization/diff-to-target", targetalt - cabinalt); 
-		setprop("/systems/pressurization/deltap", cabinpsi - ambient); 
-		
-		if (vs != targetvs and !wowl and !wowr) {
-			setprop("/systems/pressurization/vs", targetvs);
-		}
-		
-		if (cabinalt != targetalt and !wowl and !wowr and !pause and auto) {
-			setprop("/systems/pressurization/cabinalt", cabinalt + ((vs / 60) / 10));
-		} else if (!auto and !pause) {
-			setprop("/systems/pressurization/cabinalt", cabinalt + ((manvs / 60) / 10));
-		}
-		
 		if (ditch and auto) {
 			setprop("/systems/pressurization/outflowpos", "1");
 			setprop("/systems/ventilation/avionics/extractvalve", "1");
@@ -224,10 +181,10 @@ var PNEU = {
 		
 		
 		# Oxygen
-		if (cabinalt > 13500) { 
-			setprop("/controls/oxygen/masksDeploy", 1);
-			setprop("/controls/oxygen/masksSys", 1);
-		}
+		#if (cabinalt > 13500) { 
+		#	setprop("/controls/oxygen/masksDeploy", 1);
+		#	setprop("/controls/oxygen/masksSys", 1);
+		#}
 	},
 };
 

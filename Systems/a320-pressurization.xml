@@ -1,10 +1,9 @@
 <!-- Copyright (c) 2020 Jonathan Redpath (legoboyvdlp) -->
 
 <system name="A320: Pressurization">
-	<property value="0.001">/systems/pressurization/outflow-total-kg_s</property>
-	<property value="14.7">/systems/pressurization/cabin-pressure-psi</property>
-	<property value="0">/systems/pressurization/cabin-mass-kg</property>
-	
+	<property value="0">/systems/air-conditioning/mass-flow-total-kg_s</property>
+	<property value="0">/systems/pressurization/outflow-total-kg_s</property>
+	<property value="0">outflowpos</property>
 	<channel name="Pressurization Logic Controller" execrate="8">
 		
 		<summer name="/systems/pressurization/logic/alt-change-takeoff">
@@ -296,7 +295,7 @@
 					/systems/pressurization/active-mode eq 2
 					/systems/pressurization/both-cpcs-off eq 1
 				</test>
-				/systems/pressurization/outflowpos-norm ne 1.0
+				/systems/pressurization/valves/outflow-valve ne 1.0
 			</test>
 		</switch>
 	</channel>
@@ -463,7 +462,8 @@
 		<fcs_function name="/systems/pressurization/logic/cruise/landing-alt-difference">
 			<function>
 				<difference>
-					<property>/systems/pressurization/cabinalt</property>
+					<!--<property>/systems/pressurization/cabinalt</property>-->
+					<value>8000</value>
 					<property>/systems/pressurization/logic/landing-elev</property>
 				</difference>
 			</function>
@@ -537,7 +537,7 @@
 		</fcs_function>
 		
 		<switch name="/systems/pressurization/logic/outflow-valve-cmd">
-			<default value="0"/>
+			<default value="outflowpos"/>
 			<test logic="AND" value="1">
 				/systems/pressurization/active-phase eq 0
 			</test> <!-- should be a 55 sec delay on touchdown, but nvm... -->
@@ -550,8 +550,8 @@
 		<switch name="/systems/pressurization/valves/safety-valve">
 			<default value="0"/>
 			<test logic="OR" value="1"> <!-- near instant, no need for actuator -->
-				/systems/pressurization/deltap-norm le -1
-				/systems/pressurization/deltap-norm ge 8.6
+				/systems/pressurization/cabin-delta-p le -1
+				/systems/pressurization/cabin-delta-p ge 8.6
 			</test>
 		</switch>
 		<switch name="/systems/pressurization/valves/outflow-valve-cmd">
@@ -599,40 +599,23 @@
 	
 	<channel name="Pressure Calculations" execrate="8">
 		
-		<fcs_function name="/systems/pressurization/outflow-total-kg_s">
-			<function>
-				<product>
-					<property>/systems/pressurization/valves/outflow-valve</property>
-					<value>
-				</product>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/systems/pressurization/cabin-mass-now">
+		<fcs_function name="/systems/pressurization/cabin-mass-kg">
 			<function>
 				<sum>
-					<quotient>
-						<product>
-							<product>
-								<property>/systems/pressurization/cabin-pressure-psi</property>
-								<v>6894.76</v>
-							</product>
-							<v>330</v>
-						</product>
-						<product>
-							<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
-							<v>287.05</v>
-						</product>
-					</quotient>
-					<property>/systems/pressurization/cabin-mass-kg</property>
+					<property>/systems/pressurization/cabin-mass-now</property>
+					<property>/systems/pressurization/cabin-mass-offset</property>
+					<!--<product>
+						<property>/systems/pressurization/outflow-total-kg_s</property>
+						<property>simulation/channel-dt</property>
+					</product>-->
 				</sum>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="rubbish/cabin-mass-kg">
+		<fcs_function name="/systems/pressurization/cabin-mass-offset">
 			<function>
 				<sum>
-					<property>/systems/pressurization/cabin-mass-kg</property>
+					<property>/systems/pressurization/cabin-mass-offset</property>
 					<product>
 						<property>/systems/air-conditioning/mass-flow-total-kg_s</property>
 						<property>simulation/channel-dt</property>
@@ -643,7 +626,6 @@
 					</product>
 				</sum>
 			</function>
-            <output>/systems/pressurization/cabin-mass-kg</output>
 		</fcs_function>
 		
 		<fcs_function name="/systems/pressurization/cabin-pressure-psi">
@@ -652,12 +634,87 @@
 					<v>0.00014503768</v>
 					<quotient>
 						<product>
-							<property>/systems/pressurization/cabin-mass-now</property>
+							<property>/systems/pressurization/cabin-mass-kg</property>
 							<v>287.05</v>
 							<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
 						</product>
 						<v>330</v>
 					</quotient>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<!--<fcs_function name="/systems/pressurization/cabin-delta-p">
+			<function>
+				<difference>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
+					<product>
+						<v>0.491154</v>
+						<property>/environment/pressure-inhg</property>
+					</product>
+				</difference>
+			</function>
+		</fcs_function>-->
+		
+		<fcs_function name="/systems/pressurization/cabin-altitude">
+			<function>
+				<product>
+					<v>-1</v>
+					<quotient>
+						<sum>
+							<pow>
+								<quotient>
+									<product>
+										<property>/systems/pressurization/cabin-pressure-psi</property>
+										<v>6894.76</v>
+									</product>
+									<v>101325</v>
+								</quotient>
+								<v>0.19026309698</v>
+							</pow>
+							<v>-1</v>
+						</sum>
+						<v>0.0000225577</v>
+					</quotient>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pressurization/cabin-rate-c1">
+			<default value="1"/>
+			<test value="100">
+				/sim/time/elapsed-sec lt 10
+			</test>
+		</switch>
+		
+		<washout_filter name="/systems/pressurization/cabin-rate-fpm">
+			<input>/systems/pressurization/cabin-altitude</input>
+			<c1>/systems/pressurization/cabin-rate-c1</c1>
+		</washout_filter>
+		
+		<fcs_function name="/systems/pressurization/outflow-total-kg_s">
+			<function>
+				<product>
+					<value>0.60</value> <!-- Cd -->
+					<value>0.78539816339</value> <!-- pi / 4 -->
+					<product>
+						<v>0.1156</v>
+						<property>/systems/pressurization/valves/outflow-valve</property>
+					</product>
+					<value>1.225</value> <!-- density of dry air -->
+					<pow>
+						<quotient>
+							<product>
+								<v>2</v>
+								<property>/systems/pressurization/cabin-delta-p</property>
+							</product>
+							<product>
+								<v>1.225</v>
+								<v>0.98663664</v>
+							</product>
+						</quotient>
+						<v>0.5</v>
+					</pow>
 				</product>
 			</function>
 		</fcs_function>

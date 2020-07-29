@@ -190,3 +190,11 @@ var PRESS = {
 		CPCController.loop();
 	},
 };
+
+var calc_mass_on_init = func() {
+	var x = getprop("/environment/pressure-inhg") * 3386.387623492971 * 330;
+	var y = 287.05 * getprop("/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin");
+	return (x / y);
+};
+
+setprop("/systems/pressurization/cabin-mass-now", calc_mass_on_init());
