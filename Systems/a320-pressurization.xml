@@ -644,18 +644,6 @@
 			</function>
 		</fcs_function>
 		
-		<!--<fcs_function name="/systems/pressurization/cabin-delta-p">
-			<function>
-				<difference>
-					<property>/systems/pressurization/cabin-pressure-psi</property>
-					<product>
-						<v>0.491154</v>
-						<property>/environment/pressure-inhg</property>
-					</product>
-				</difference>
-			</function>
-		</fcs_function>-->
-		
 		<fcs_function name="/systems/pressurization/cabin-altitude">
 			<function>
 				<product>
@@ -691,34 +679,6 @@
 			<input>/systems/pressurization/cabin-altitude</input>
 			<c1>/systems/pressurization/cabin-rate-c1</c1>
 		</washout_filter>
-		
-		<fcs_function name="/systems/pressurization/outflow-total-kg_s">
-			<function>
-				<product>
-					<value>0.60</value> <!-- Cd -->
-					<value>0.78539816339</value> <!-- pi / 4 -->
-					<product>
-						<v>0.1156</v>
-						<property>/systems/pressurization/valves/outflow-valve</property>
-					</product>
-					<value>1.225</value> <!-- density of dry air -->
-					<pow>
-						<quotient>
-							<product>
-								<v>2</v>
-								<property>/systems/pressurization/cabin-delta-p</property>
-							</product>
-							<product>
-								<v>1.225</v>
-								<v>0.98663664</v>
-							</product>
-						</quotient>
-						<v>0.5</v>
-					</pow>
-				</product>
-			</function>
-		</fcs_function>
-		
 	</channel>
 	
 </system>

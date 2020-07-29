@@ -1363,7 +1363,6 @@
 			<cabin-mass-offset type="double">0</cabin-mass-offset>
 			<cabin-pressure-psi type="double">14.7</cabin-pressure-psi>
 			<man-target-vs type="double">0</man-target-vs>
-			<outflow-total-kg_s type="double">0</outflow-total-kg_s>
 		</pressurization>
 		
 		<pitot n="0">
