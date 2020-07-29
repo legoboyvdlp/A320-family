@@ -327,7 +327,10 @@ var windCRZPage = {
 		} else if (me.items >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) >= 5 and size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) <= 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
-				if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
+				if (size(winds) < 3) {
+					mcdu_message(me.computer, "NOT ALLOWED");
+					# not implemented yet
+				} else if (size(winds[0]) >= 1 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
 				size(winds[1]) >= 1 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200 and
 				size(winds[2]) >= 4 and size(winds[2]) <= 5 and ((num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
 				(num(split("FL", winds[2])[1]) != nil and split("FL", winds[2])[1] >= 10 and split("FL", winds[2])[1] <= 390))) {

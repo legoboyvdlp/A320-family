@@ -142,14 +142,22 @@ var FMGCInternal = {
 	vmo_mmo: 0,
 	
 	# PERF
+	transAlt: 18000,
+	transAltSet: 0,
+	
+	# PERF TO
 	v1: 0,
 	v1set: 0,
 	vr: 0,
 	vrset: 0,
 	v2: 0,
 	v2set: 0,
-	transAlt: 18000,
-	transAltSet: 0,
+	
+	# PERF APPR
+	destMag: 0,
+	destMagSet: 0,
+	destWind: 0,
+	destWindSet: 0,
 	
 	# INIT A
 	altAirport: "",
@@ -609,7 +617,6 @@ var masterFMGC = maketimer(0.2, func {
 	tow = getprop("/FMGC/internal/tow") or 0;
 	lw = getprop("/FMGC/internal/lw") or 0;
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
-	dest_wind = getprop("/FMGC/internal/dest-wind") or 0;
 	
 	# current speeds
 	clean = 2 * weight_lbs * 0.45359237 + 85;
@@ -636,12 +643,12 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	setprop("/FMGC/internal/computed-speeds/vls", vls);
 	if (!getprop("/FMGC/internal/vapp-speed-set")) {
-		if (dest_wind < 5) {
+		if (fmgc.FMGCInternal.destWind < 5) {
 			vapp = vls + 5;
-		} else if (dest_wind > 15) {
+		} else if (fmgc.FMGCInternal.destWind > 15) {
 			vapp = vls + 15;
 		} else {
-			vapp = vls + dest_wind;
+			vapp = vls + fmgc.FMGCInternal.destWind;
 		}
 		setprop("/FMGC/internal/computed-speeds/vapp", vapp);
 	}
@@ -704,12 +711,12 @@ var masterFMGC = maketimer(0.2, func {
 		}
 		setprop("/FMGC/internal/computed-speeds/vls_appr", vls_appr);
 		if (!getprop("/FMGC/internal/vapp-speed-set")) {
-			if (dest_wind < 5) {
+			if (fmgc.FMGCInternal.destWind < 5) {
 				vapp_appr = vls_appr + 5;
-			} else if (dest_wind > 15) {
+			} else if (fmgc.FMGCInternal.destWind > 15) {
 				vapp_appr = vls_appr + 15;
 			} else {
-				vapp_appr = vls_appr + dest_wind;
+				vapp_appr = vls_appr + fmgc.FMGCInternal.destWind;
 			}
 			setprop("/FMGC/internal/computed-speeds/vapp_appr", vapp_appr);
 		}

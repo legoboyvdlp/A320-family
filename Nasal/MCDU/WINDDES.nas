@@ -191,6 +191,22 @@ var windDESPage = {
 		me._setupPageWithData();
 		me.updateTmpy();
 	},
+	returnGRND: func() {
+		var wind = fmgc.windController.des_winds[2];
+		if (wind.wind5.altitude == "GRND") {
+			return [wind.wind5.heading, wind.wind5.magnitude];
+		} else if (wind.wind4.altitude == "GRND") {
+			return [wind.wind4.heading, wind.wind4.magnitude];
+		} else if (wind.wind3.altitude == "GRND") {
+			return [wind.wind3.heading, wind.wind3.magnitude];
+		} else if (wind.wind2.altitude == "GRND") {
+			return [wind.wind2.heading, wind.wind2.magnitude];
+		} else if (wind.wind1.altitude == "GRND") {
+			return [wind.wind1.heading, wind.wind1.magnitude];
+		} else {
+			return nil;
+		}
+	},
 	pushButtonLeft: func(index) {
 		if (index == 6 and fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			if (canvas_mcdu.myFpln[me.computer] != nil) {
@@ -209,7 +225,10 @@ var windDESPage = {
 		} else if (me.items >= index) {
 			if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) >= 5 and size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) <= 13) {
 				var winds = split("/", mcdu_scratchpad.scratchpads[me.computer].scratchpad);
-				if (size(winds[0]) >= 0 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
+				if (size(winds) < 3) {
+					mcdu_message(me.computer, "NOT ALLOWED");
+					# not implemented yet
+				} else if (size(winds[0]) >= 0 and size(winds[0]) <= 3 and num(winds[0]) != nil and winds[0] >= 0 and winds[0] <= 360 and
 				size(winds[1]) >= 0 and size(winds[1]) <= 3 and num(winds[1]) != nil and winds[1] >= 0 and winds[1] <= 200 and
 				size(winds[2]) >= 4 and size(winds[2]) <= 5 and (winds[2] == "GRND" or (num(winds[2]) != nil and winds[2] >= 1000 and winds[2] <= 39000) or
 				(num(split("FL", winds[2])[1]) != nil and split("FL", winds[2])[1] >= 10 and split("FL", winds[2])[1] <= 390))) {
@@ -218,11 +237,6 @@ var windDESPage = {
 					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 						computer_temp = me.computer;
 					}
-					# if (winds[2] == "GRND") {
-# 						setprop("/FMGC/internal/dest-mag-grnd", winds[0]);
-# 						setprop("/FMGC/internal/dest-wind-grnd", winds[1]);
-# 					}
-					#print(computer_temp);
 					if (index == 5) {
 						fmgc.windController.des_winds[computer_temp].wind5.heading = winds[0];
 						fmgc.windController.des_winds[computer_temp].wind5.magnitude = winds[1];
