@@ -190,15 +190,15 @@ var windDESPage = {
 	returnGRND: func() {
 		var wind = fmgc.windController.des_winds[2];
 		if (wind.wind5.altitude == "GRND") {
-			return [wind.wind5.heading, wind.wind5.magnitude];
+			return [geo.normdeg(wind.wind5.heading - getprop("/environment/magnetic-variation-deg")), wind.wind5.magnitude];
 		} else if (wind.wind4.altitude == "GRND") {
-			return [wind.wind4.heading, wind.wind4.magnitude];
+			return [geo.normdeg(wind.wind4.heading - getprop("/environment/magnetic-variation-deg")), wind.wind4.magnitude];
 		} else if (wind.wind3.altitude == "GRND") {
-			return [wind.wind3.heading, wind.wind3.magnitude];
+			return [geo.normdeg(wind.wind3.heading - getprop("/environment/magnetic-variation-deg")), wind.wind3.magnitude];
 		} else if (wind.wind2.altitude == "GRND") {
-			return [wind.wind2.heading, wind.wind2.magnitude];
+			return [geo.normdeg(wind.wind2.heading - getprop("/environment/magnetic-variation-deg")), wind.wind2.magnitude];
 		} else if (wind.wind1.altitude == "GRND") {
-			return [wind.wind1.heading, wind.wind1.magnitude];
+			return [geo.normdeg(wind.wind1.heading - getprop("/environment/magnetic-variation-deg")), wind.wind1.magnitude];
 		} else {
 			return nil;
 		}
