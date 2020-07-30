@@ -4251,6 +4251,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->

@@ -244,6 +244,7 @@ var systemsLoop = maketimer(0.1, func {
 	dmc.DMController.loop();
 	systems.APUController.loop();
 	systems.HFLoop();
+	atsu.ATSU.loop();
 	
 	groundspeed = pts.Velocities.groundspeed.getValue();
 	if ((groundAir.getBoolValue() or groundCart.getBoolValue()) and ((groundspeed > 2) or (!pts.Controls.Gear.parkingBrake.getBoolValue() and !chocks.getBoolValue()))) {
