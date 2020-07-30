@@ -4,8 +4,8 @@
 var wind = {
 	new: func() {
 		var w = {parents: [wind]};
-		w.heading = 0;
-		w.magnitude = 0;
+		w.heading = -1;
+		w.magnitude = -1;
 		w.altitude = "";
 		w.set = 0;
 		return w;
@@ -24,8 +24,8 @@ var wind = {
 var alt_wind = {
 	new: func() {
 		var aw = {parents: [alt_wind]};
-		aw.heading = 0;
-		aw.magnitude = 0;
+		aw.heading = -1;
+		aw.magnitude = -1;
 		aw.set = 0;
 		return aw;
 	},
@@ -42,7 +42,7 @@ var alt_wind = {
 var sat_temp = {
 	new: func() {
 		var st = {parents: [sat_temp]};
-		st.temp = 0;
+		st.temp = -999;
 		st.altitude = "";
 		st.set = 0;
 		return st;

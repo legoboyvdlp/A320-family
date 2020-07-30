@@ -275,28 +275,28 @@ var windDESPage = {
 				}
 				if (me.items == index) {
 					if (index == 5) {
-						fmgc.windController.des_winds[computer_temp].wind5.heading = 0;
-						fmgc.windController.des_winds[computer_temp].wind5.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind5.heading = -1;
+						fmgc.windController.des_winds[computer_temp].wind5.magnitude = -1;
 						fmgc.windController.des_winds[computer_temp].wind5.altitude = "";
 						fmgc.windController.des_winds[computer_temp].wind5.set = 0;
 					} else if (index == 4) {
-						fmgc.windController.des_winds[computer_temp].wind4.heading = 0;
-						fmgc.windController.des_winds[computer_temp].wind4.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind4.heading = -1;
+						fmgc.windController.des_winds[computer_temp].wind4.magnitude = -1;
 						fmgc.windController.des_winds[computer_temp].wind4.altitude = "";
 						fmgc.windController.des_winds[computer_temp].wind4.set = 0;
 					} else if (index == 3) {
-						fmgc.windController.des_winds[computer_temp].wind3.heading = 0;
-						fmgc.windController.des_winds[computer_temp].wind3.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind3.heading = -1;
+						fmgc.windController.des_winds[computer_temp].wind3.magnitude = -1;
 						fmgc.windController.des_winds[computer_temp].wind3.altitude = "";
 						fmgc.windController.des_winds[computer_temp].wind3.set = 0;
 					} else if (index == 2) {
-						fmgc.windController.des_winds[computer_temp].wind2.heading = 0;
-						fmgc.windController.des_winds[computer_temp].wind2.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind2.heading = -1;
+						fmgc.windController.des_winds[computer_temp].wind2.magnitude = -1;
 						fmgc.windController.des_winds[computer_temp].wind2.altitude = "";
 						fmgc.windController.des_winds[computer_temp].wind2.set = 0;
 					} else if (index == 1) {
-						fmgc.windController.des_winds[computer_temp].wind1.heading = 0;
-						fmgc.windController.des_winds[computer_temp].wind1.magnitude = 0;
+						fmgc.windController.des_winds[computer_temp].wind1.heading = -1;
+						fmgc.windController.des_winds[computer_temp].wind1.magnitude = -1;
 						fmgc.windController.des_winds[computer_temp].wind1.altitude = "";
 						fmgc.windController.des_winds[computer_temp].wind1.set = 0;
 					}
@@ -325,8 +325,8 @@ var windDESPage = {
 						fmgc.windController.des_winds[computer_temp].wind4.altitude = fmgc.windController.des_winds[computer_temp].wind5.altitude;
 						fmgc.windController.des_winds[computer_temp].wind4.set = fmgc.windController.des_winds[computer_temp].wind5.set;
 					}
-					fmgc.windController.des_winds[computer_temp].wind5.heading = 0;
-					fmgc.windController.des_winds[computer_temp].wind5.magnitude = 0;
+					fmgc.windController.des_winds[computer_temp].wind5.heading = -1;
+					fmgc.windController.des_winds[computer_temp].wind5.magnitude = -1;
 					fmgc.windController.des_winds[computer_temp].wind5.altitude = "";
 					fmgc.windController.des_winds[computer_temp].wind5.set = 0;
 				}
@@ -348,8 +348,8 @@ var windDESPage = {
 				if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 					computer_temp = me.computer;
 				}
-				fmgc.windController.des_winds[computer_temp].alt1.heading = 0;
-				fmgc.windController.des_winds[computer_temp].alt1.magnitude = 0;
+				fmgc.windController.des_winds[computer_temp].alt1.heading = -1;
+				fmgc.windController.des_winds[computer_temp].alt1.magnitude = -1;
 				fmgc.windController.des_winds[computer_temp].alt1.set = 0;
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 				me._setupPageWithData();
