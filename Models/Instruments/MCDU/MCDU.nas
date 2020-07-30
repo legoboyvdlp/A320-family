@@ -631,7 +631,6 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L1"].setText(" WEATHER TYPE");
 				me["Simple_L1S"].setText(" " ~ atsu.AOC.selectedType);
-				me["Simple_L6"].setText(" RETURN");
 				me["Simple_R1S"].setText("STA 1 ");
 				me["Simple_R2"].setText("[    ]");
 				me["Simple_R2S"].setText("STA 2 ");
@@ -660,6 +659,10 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("[    ]");
 				me["WEATHERREQSEND"].hide();
 			}
+			
+			me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
+			me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);
 		} else if (page == "WEATHERTYPE") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -689,7 +692,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "RECEIVEDMSGS") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me.defaultHideWithCenter();
+				me.defaultHide();
 				me["Simple_Title"].show();
 				me["arrowsDepArr"].hide();
 				me.hideAllArrowsButL6();
@@ -700,8 +703,6 @@ var canvas_MCDU_base = {
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
-				me.fontCenter(default, default, default, default, default, default);
-				me.fontCenterS(default, default, default, default, default, default);
 				me.fontRight(default, default, default, default, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 				
@@ -712,14 +713,18 @@ var canvas_MCDU_base = {
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				me.showRight(-1, -1, -1, -1, -1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				
 				if (myReceivedMessages[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myReceivedMessages[i].title));
 				
 					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myReceivedMessages[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myReceivedMessages[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myReceivedMessages[i].arrowsColour[0][5] ~ "/b"));
 					
-					if (mcdu.receivedMessagesDatabase.getCountPages() > 1) {
+					if (mcdu.ReceivedMessagesDatabase.getCountPages() > 1) {
 						me["Simple_PageNum"].show();
-						me["Simple_PageNum"].setText(myReceivedMessages.getPageNumStr());
+						me["Simple_PageNum"].setText(myReceivedMessages[i].getPageNumStr());
 						me["ArrowLeft"].show();
 						me["ArrowRight"].show();
 					} else {
@@ -729,37 +734,23 @@ var canvas_MCDU_base = {
 					}
 					
 					me.dynamicPageFontFunc(myReceivedMessages[i]);
+					me.dynamicPageArrowFunc(myReceivedMessages[i]);
 					
 					me.dynamicPageFunc(myReceivedMessages[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myReceivedMessages[i].L2, "Simple_L2");
 					me.dynamicPageFunc(myReceivedMessages[i].L3, "Simple_L3");
 					me.dynamicPageFunc(myReceivedMessages[i].L4, "Simple_L4");
 					me.dynamicPageFunc(myReceivedMessages[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myReceivedMessages[i].L6, "Simple_L6");
-					
+					me["Simple_L6"].setColor(WHITE);
 					me.colorLeft(myReceivedMessages[i].L1[2],myReceivedMessages[i].L2[2],myReceivedMessages[i].L3[2],myReceivedMessages[i].L4[2],myReceivedMessages[i].L5[2],myReceivedMessages[i].L6[2]);
-					
-					me.dynamicPageFunc(myReceivedMessages[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myReceivedMessages[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myReceivedMessages[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myReceivedMessages[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myReceivedMessages[i].C5, "Simple_C5");
-					
-					me.colorCenter(myReceivedMessages[i].C1[2],myReceivedMessages[i].C2[2],myReceivedMessages[i].C3[2],myReceivedMessages[i].C4[2],myReceivedMessages[i].C5[2],myReceivedMessages[i].C6[2]);
-					
-					me["Simple_C6"].hide();
-					me["Simple_C6S"].hide();
-						
-					me.dynamicPageFunc(myReceivedMessages[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myReceivedMessages[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myReceivedMessages[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myReceivedMessages[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myReceivedMessages[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myReceivedMessages[i].R6, "Simple_R6");
-					
-					me.colorRight(myReceivedMessages[i].R1[2],myReceivedMessages[i].R2[2],myReceivedMessages[i].R3[2],myReceivedMessages[i].R4[2],myReceivedMessages[i].R5[2],myReceivedMessages[i].R6[2]);
 				}
 				pageSwitch[i].setBoolValue(1);
+			}
+				
+			if (myReceivedMessages[i] != nil) {
+				me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+				me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
+				me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);
 			}
 		} else if (page == "ATCMENU") {
 			if (!pageSwitch[i].getBoolValue()) {

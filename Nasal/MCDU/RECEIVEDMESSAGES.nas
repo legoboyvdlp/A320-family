@@ -18,7 +18,7 @@ var receivedMessagesPage = {
 	computer: nil,
 	size: 0,
 	getPageNumStr: func() {
-		return me.curPage ~ "/" ~ receivedMessagesDatabase.getCountPages();
+		return me.curPage ~ "/" ~ ReceivedMessagesDatabase.getCountPages();
 	},
 	new: func(computer) {
 		var ap = {parents:[receivedMessagesPage]};
@@ -34,14 +34,16 @@ var receivedMessagesPage = {
 	scrollLeft: func() {
 		me.curPage -= 1;
 		if (me.curPage < 1) {
-			me.curPage = receivedMessagesDatabase.getCountPages();
+			me.curPage = ReceivedMessagesDatabase.getCountPages();
 		}
+		me.update();
 	},
 	scrollRight: func() {
 		me.curPage += 1;
-		if (me.curPage > receivedMessagesDatabase.getCountPages()) {
+		if (me.curPage > ReceivedMessagesDatabase.getCountPages()) {
 			me.curPage = 1;
 		}
+		me.update();
 	},
 	_clearPage: func() {
 		me.L1 = [nil, nil, "ack"];
@@ -57,10 +59,10 @@ var receivedMessagesPage = {
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 	},
 	_setupPageWithData: func() {
-		me.title = "RECEIVED MESSAGES";
+		me.title = "RECEIVED MESSAGES      ";
 		me.L6 = [" RETURN", nil, "wht"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
-		me.arrowsColour = [["wht", "wht", "wht", "wht", "wht", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+		me.arrowsColour = [["blu", "blu", "blu", "blu", "blu", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
@@ -70,64 +72,65 @@ var receivedMessagesPage = {
 		var message = nil;
 		
 		if (me.size >= (me.curPage * 5) + -4) {
-			message = ReceivedMessagesDatabase.database[-5 + (me.curPage * 5)];
-			me.L1[0] = left(message.body, 16);
-			me.L1[2] = "wht";
+			message = ReceivedMessagesDatabase.database.vector[-5 + (me.curPage * 5)];
+			me.L1[0] = " " ~ left(message.body, 23);
+			me.L1[2] = "blu";
 			if (!message.viewed) {
-				me.L1[1] = message.time ~ "        NEW"; 
+				me.L1[1] = " " ~ message.time ~ "                  NEW"; 
 			} else {
-				me.L1[1] = message.time ~ "     VIEWED"; 
+				me.L1[1] = " " ~ message.time ~ "               VIEWED"; 
 			}
 			me.arrowsMatrix[0][0] = 1;
 		}
 
 		if (me.size >= (me.curPage * 5) + -3) {
-			message = ReceivedMessagesDatabase.database[-4 + (me.curPage * 5)];
-			me.L2[0] = left(message.body, 16);
-			me.L2[2] = "wht";
+			message = ReceivedMessagesDatabase.database.vector[-4 + (me.curPage * 5)];
+			me.L2[0] = " " ~ left(message.body, 23);
+			me.L2[2] = "blu";
 			if (!message.viewed) {
-				me.L2[1] = message.time ~ "        NEW"; 
+				me.L2[1] = " " ~ message.time ~ "                  NEW"; 
 			} else {
-				me.L2[1] = message.time ~ "     VIEWED"; 
+				me.L2[1] = " " ~ message.time ~ "               VIEWED"; 
 			}
 			me.arrowsMatrix[0][1] = 1;
 		}
 		
 		if (me.size >= (me.curPage * 5) + -2) {
-			message = ReceivedMessagesDatabase.database[-3 + (me.curPage * 5)];
-			me.L3[0] = left(message.body, 16);
-			me.L3[2] = "wht";
+			message = ReceivedMessagesDatabase.database.vector[-3 + (me.curPage * 5)];
+			me.L3[0] = " " ~ left(message.body, 23);
+			me.L3[2] = "blu";
 			if (!message.viewed) {
-				me.L3[1] = message.time ~ "        NEW"; 
+				me.L3[1] = " " ~ message.time ~ "                  NEW"; 
 			} else {
-				me.L3[1] = message.time ~ "     VIEWED"; 
+				me.L3[1] = " " ~ message.time ~ "               VIEWED"; 
 			}
 			me.arrowsMatrix[0][2] = 1;
 		}
 		
 		if (me.size >= (me.curPage * 5) + -1) {
-			message = ReceivedMessagesDatabase.database[-2 + (me.curPage * 5)];
-			me.L4[0] = left(message.body, 16);
-			me.L4[2] = "wht";
+			message = ReceivedMessagesDatabase.database.vector[-2 + (me.curPage * 5)];
+			me.L4[0] = " " ~ left(message.body, 23);
+			me.L4[2] = "blu";
 			if (!message.viewed) {
-				me.L4[1] = message.time ~ "        NEW"; 
+				me.L4[1] = " " ~ message.time ~ "                  NEW"; 
 			} else {
-				me.L4[1] = message.time ~ "     VIEWED"; 
+				me.L4[1] = " " ~ message.time ~ "               VIEWED"; 
 			}
 			me.arrowsMatrix[0][3] = 1;
 		}
 		
 		if (me.size >= (me.curPage * 5) + 0) {
-			message = ReceivedMessagesDatabase.database[-1 + (me.curPage * 5)];
-			me.L5[0] = left(message.body, 16);
-			me.L5[2] = "wht";
+			message = ReceivedMessagesDatabase.database.vector[-1 + (me.curPage * 5)];
+			me.L5[0] = " " ~ left(message.body, 23);
+			me.L5[2] = "blu";
 			if (!message.viewed) {
-				me.L5[1] = message.time ~ "        NEW"; 
+				me.L5[1] = " " ~ message.time ~ "                  NEW"; 
 			} else {
-				me.L5[1] = message.time ~ "     VIEWED"; 
+				me.L5[1] = " " ~ message.time ~ "               VIEWED"; 
 			}
 			me.arrowsMatrix[0][4] = 1;
 		}
+		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 };
 
@@ -137,16 +140,23 @@ var ACARSMessage = {
 		message.time = time;
 		message.body = body;
 		message.viewed = 0;
+		return message;
 	},
 };
 
 var ReceivedMessagesDatabase = {
 	database: std.Vector.new(),
 	addMessage: func(message) {
-		me.database.insert(message);
+		me.database.insert(0, message);
+		if (canvas_mcdu.myReceivedMessages[0] != nil) {
+			canvas_mcdu.myReceivedMessages[0].update();
+		}
+		if (canvas_mcdu.myReceivedMessages[1] != nil) {
+			canvas_mcdu.myReceivedMessages[1].update();
+		}
 	},
 	getCountPages: func() {
-		return math.ceil(me.database.size() / 4);
+		return math.ceil(me.database.size() / 5);
 	},
 	getSize: func() {
 		return me.database.size();

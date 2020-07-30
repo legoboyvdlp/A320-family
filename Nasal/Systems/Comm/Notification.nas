@@ -99,6 +99,7 @@ var AOC = {
 	sent: 0,
 	sentTime: nil,
 	received: 0,
+	receivedTime: nil,
 	newStation: func(airport) {
 		if (size(airport) == 3 or size(airport) == 4) {
 			if (size(findAirportsByICAO(airport)) == 0) {
@@ -163,6 +164,11 @@ var AOC = {
 		settimer(func() {
 			me.received = 1;
 			mcdu.mcdu_message(i, "WX UPLINK");
+			
+			var receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", receivedTime)[0] ~ "." ~ split(":", receivedTime)[1] ~ "Z";
+			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastMETAR);
+			mcdu.ReceivedMessagesDatabase.addMessage(message);
 		}, math.max(rand()*6, 2.25));
 	},
 	processTAF: func(r, i) {
@@ -173,6 +179,11 @@ var AOC = {
 		settimer(func() {
 			me.received = 1;
 			mcdu.mcdu_message(i, "WX UPLINK");
+			
+			var receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", receivedTime)[0] ~ "." ~ split(":", receivedTime)[1] ~ "Z";
+			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastTAF);
+			mcdu.ReceivedMessagesDatabase.addMessage(message);
 		}, math.max(rand()*6, 2.25));
 	},
 };
