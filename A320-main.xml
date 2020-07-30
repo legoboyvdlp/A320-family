@@ -633,6 +633,7 @@
 		<active-fmgc-channel type="int">0</active-fmgc-channel>
 		<internal>
 			<cost-index type="int">0</cost-index>
+			<to-state type="bool">0</to-state>
 		</internal>
 	</FMGC>
 	
