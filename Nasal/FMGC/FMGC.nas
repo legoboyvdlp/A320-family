@@ -857,6 +857,7 @@ var reset_FMGC = func {
 	FMGCinit();
 	flightPlanController.reset();
 	windController.reset();
+	windController.init();
 	
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
