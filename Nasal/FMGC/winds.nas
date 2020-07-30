@@ -123,6 +123,12 @@ var windController = {
 		me.windSizes[n] = 0;
 	},
 	
+	resetDesWinds: func() {
+		me.des_winds[0] = 0;
+		me.des_winds[1] = 0;
+		me.des_winds[2] = waypoint_winds.new("descent", "waypoint", 1);
+	},
+	
 	copyClbWind: func(n) {
 		var id = me.clb_winds[n].id;
 		var type = me.clb_winds[n].type;
