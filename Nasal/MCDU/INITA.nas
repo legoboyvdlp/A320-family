@@ -177,6 +177,7 @@ var initInputA = func(key, i) {
 			fmgc.FMGCInternal.arrApt = "";
 			fmgc.FMGCInternal.toFromSet = 0;
 			fmgc.FMGCNodes.toFromSet.setValue(0);
+			fmgc.windController.resetDesWinds();
 			setprop("/FMGC/internal/align-ref-lat", 0);
 			setprop("/FMGC/internal/align-ref-long", 0);
 			setprop("/FMGC/internal/align-ref-lat-edit", 0);
@@ -186,9 +187,7 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
 			fmgc.flightPlanController.reset(2);
-			fmgc.windController.reset(2);
 			fmgc.flightPlanController.init();
-			fmgc.windController.init();
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
@@ -202,6 +201,9 @@ var initInputA = func(key, i) {
 					var tos = size(fromto[1]);
 					if (froms == 4 and tos == 4) {
 						#route
+						if (fmgc.FMGCInternal.toFromSet == 1 and fmgc.FMGCInternal.arrApt != fromto[1]) {
+							fmgc.windController.resetDesWinds();
+						}
 						fmgc.FMGCInternal.depApt = fromto[0];
 						fmgc.FMGCInternal.arrApt = fromto[1];
 						fmgc.FMGCInternal.toFromSet = 1;
