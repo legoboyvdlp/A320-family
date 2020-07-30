@@ -4,17 +4,19 @@
 var wind = {
 	new: func() {
 		var w = {parents: [wind]};
-		w.heading = 0;
-		w.magnitude = 0;
+		w.heading = -1;
+		w.magnitude = -1;
 		w.altitude = "";
+		w.set = 0;
 		return w;
 	},
 	
-	newcopy: func(heading, magnitude, altitude) {
+	newcopy: func(heading, magnitude, altitude, set) {
 		var w = {parents: [wind]};
 		w.heading = heading;
 		w.magnitude = magnitude;
 		w.altitude = altitude;
+		w.set = set;
 		return w;
 	}
 };
@@ -22,15 +24,17 @@ var wind = {
 var alt_wind = {
 	new: func() {
 		var aw = {parents: [alt_wind]};
-		aw.heading = 0;
-		aw.magnitude = 0;
+		aw.heading = -1;
+		aw.magnitude = -1;
+		aw.set = 0;
 		return aw;
 	},
 	
-	newcopy: func(heading, magnitude) {
+	newcopy: func(heading, magnitude, set) {
 		var aw = {parents: [alt_wind]};
-		aw.heading = heading ;
+		aw.heading = heading;
 		aw.magnitude = magnitude;
+		aw.set = set;
 		return aw;
 	}
 };
@@ -38,15 +42,17 @@ var alt_wind = {
 var sat_temp = {
 	new: func() {
 		var st = {parents: [sat_temp]};
-		st.temp = 0;
+		st.temp = -999;
 		st.altitude = "";
+		st.set = 0;
 		return st;
 	},
 	
-	newcopy: func(temp, altitude) {
+	newcopy: func(temp, altitude, set) {
 		var st = {parents: [sat_temp]};
 		st.temp = temp;
 		st.altitude = altitude;
+		st.set = set;
 		return st;
 	}
 };
@@ -117,17 +123,23 @@ var windController = {
 		me.windSizes[n] = 0;
 	},
 	
+	resetDesWinds: func() {
+		me.des_winds[0] = 0;
+		me.des_winds[1] = 0;
+		me.des_winds[2] = waypoint_winds.new("descent", "waypoint", 1);
+	},
+	
 	copyClbWind: func(n) {
 		var id = me.clb_winds[n].id;
 		var type = me.clb_winds[n].type;
 		var includeWind = me.clb_winds[n].includeWind;
-		var wind1 = wind.newcopy(me.clb_winds[n].wind1.heading, me.clb_winds[n].wind1.magnitude, me.clb_winds[n].wind1.altitude);
-		var wind2 = wind.newcopy(me.clb_winds[n].wind2.heading, me.clb_winds[n].wind2.magnitude, me.clb_winds[n].wind2.altitude);
-		var wind3 = wind.newcopy(me.clb_winds[n].wind3.heading, me.clb_winds[n].wind3.magnitude, me.clb_winds[n].wind3.altitude);
-		var wind4 = wind.newcopy(me.clb_winds[n].wind4.heading, me.clb_winds[n].wind4.magnitude, me.clb_winds[n].wind4.altitude);
-		var wind5 = wind.newcopy(me.clb_winds[n].wind5.heading, me.clb_winds[n].wind5.magnitude, me.clb_winds[n].wind5.altitude);
-		var sat1 = sat_temp.newcopy(me.clb_winds[n].sat1.temp, me.clb_winds[n].sat1.altitude);
-		var alt1 = alt_wind.newcopy(me.clb_winds[n].alt1.heading, me.clb_winds[n].alt1.magnitude);
+		var wind1 = wind.newcopy(me.clb_winds[n].wind1.heading, me.clb_winds[n].wind1.magnitude, me.clb_winds[n].wind1.altitude, me.clb_winds[n].wind1.set);
+		var wind2 = wind.newcopy(me.clb_winds[n].wind2.heading, me.clb_winds[n].wind2.magnitude, me.clb_winds[n].wind2.altitude, me.clb_winds[n].wind2.set);
+		var wind3 = wind.newcopy(me.clb_winds[n].wind3.heading, me.clb_winds[n].wind3.magnitude, me.clb_winds[n].wind3.altitude, me.clb_winds[n].wind3.set);
+		var wind4 = wind.newcopy(me.clb_winds[n].wind4.heading, me.clb_winds[n].wind4.magnitude, me.clb_winds[n].wind4.altitude, me.clb_winds[n].wind4.set);
+		var wind5 = wind.newcopy(me.clb_winds[n].wind5.heading, me.clb_winds[n].wind5.magnitude, me.clb_winds[n].wind5.altitude, me.clb_winds[n].wind5.set);
+		var sat1 = sat_temp.newcopy(me.clb_winds[n].sat1.temp, me.clb_winds[n].sat1.altitude, me.clb_winds[n].sat1.set);
+		var alt1 = alt_wind.newcopy(me.clb_winds[n].alt1.heading, me.clb_winds[n].alt1.magnitude, me.clb_winds[n].alt1.set);
 		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1);
 	},
 	
@@ -135,13 +147,13 @@ var windController = {
 		var id = me.crz_winds[n].id;
 		var type = me.crz_winds[n].type;
 		var includeWind = me.crz_winds[n].includeWind;
-		var wind1 = wind.newcopy(me.crz_winds[n].wind1.heading, me.crz_winds[n].wind1.magnitude, me.crz_winds[n].wind1.altitude);
-		var wind2 = wind.newcopy(me.crz_winds[n].wind2.heading, me.crz_winds[n].wind2.magnitude, me.crz_winds[n].wind2.altitude);
-		var wind3 = wind.newcopy(me.crz_winds[n].wind3.heading, me.crz_winds[n].wind3.magnitude, me.crz_winds[n].wind3.altitude);
-		var wind4 = wind.newcopy(me.crz_winds[n].wind4.heading, me.crz_winds[n].wind4.magnitude, me.crz_winds[n].wind4.altitude);
-		var wind5 = wind.newcopy(me.crz_winds[n].wind5.heading, me.crz_winds[n].wind5.magnitude, me.crz_winds[n].wind5.altitude);
-		var sat1 = sat_temp.newcopy(me.crz_winds[n].sat1.temp, me.crz_winds[n].sat1.altitude);
-		var alt1 = alt_wind.newcopy(me.crz_winds[n].alt1.heading, me.crz_winds[n].alt1.magnitude);
+		var wind1 = wind.newcopy(me.crz_winds[n].wind1.heading, me.crz_winds[n].wind1.magnitude, me.crz_winds[n].wind1.altitude, me.crz_winds[n].wind1.set);
+		var wind2 = wind.newcopy(me.crz_winds[n].wind2.heading, me.crz_winds[n].wind2.magnitude, me.crz_winds[n].wind2.altitude, me.crz_winds[n].wind2.set);
+		var wind3 = wind.newcopy(me.crz_winds[n].wind3.heading, me.crz_winds[n].wind3.magnitude, me.crz_winds[n].wind3.altitude, me.crz_winds[n].wind3.set);
+		var wind4 = wind.newcopy(me.crz_winds[n].wind4.heading, me.crz_winds[n].wind4.magnitude, me.crz_winds[n].wind4.altitude, me.crz_winds[n].wind4.set);
+		var wind5 = wind.newcopy(me.crz_winds[n].wind5.heading, me.crz_winds[n].wind5.magnitude, me.crz_winds[n].wind5.altitude, me.crz_winds[n].wind5.set);
+		var sat1 = sat_temp.newcopy(me.crz_winds[n].sat1.temp, me.crz_winds[n].sat1.altitude, me.crz_winds[n].sat1.set);
+		var alt1 = alt_wind.newcopy(me.crz_winds[n].alt1.heading, me.crz_winds[n].alt1.magnitude, me.crz_winds[n].alt1.set);
 		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1);
 	},
 	
@@ -149,13 +161,13 @@ var windController = {
 		var id = me.des_winds[n].id;
 		var type = me.des_winds[n].type;
 		var includeWind = me.des_winds[n].includeWind;
-		var wind1 = wind.newcopy(me.des_winds[n].wind1.heading, me.des_winds[n].wind1.magnitude, me.des_winds[n].wind1.altitude);
-		var wind2 = wind.newcopy(me.des_winds[n].wind2.heading, me.des_winds[n].wind2.magnitude, me.des_winds[n].wind2.altitude);
-		var wind3 = wind.newcopy(me.des_winds[n].wind3.heading, me.des_winds[n].wind3.magnitude, me.des_winds[n].wind3.altitude);
-		var wind4 = wind.newcopy(me.des_winds[n].wind4.heading, me.des_winds[n].wind4.magnitude, me.des_winds[n].wind4.altitude);
-		var wind5 = wind.newcopy(me.des_winds[n].wind5.heading, me.des_winds[n].wind5.magnitude, me.des_winds[n].wind5.altitude);
-		var sat1 = sat_temp.newcopy(me.des_winds[n].sat1.temp, me.des_winds[n].sat1.altitude);
-		var alt1 = alt_wind.newcopy(me.des_winds[n].alt1.heading, me.des_winds[n].alt1.magnitude);
+		var wind1 = wind.newcopy(me.des_winds[n].wind1.heading, me.des_winds[n].wind1.magnitude, me.des_winds[n].wind1.altitude, me.des_winds[n].wind1.set);
+		var wind2 = wind.newcopy(me.des_winds[n].wind2.heading, me.des_winds[n].wind2.magnitude, me.des_winds[n].wind2.altitude, me.des_winds[n].wind2.set);
+		var wind3 = wind.newcopy(me.des_winds[n].wind3.heading, me.des_winds[n].wind3.magnitude, me.des_winds[n].wind3.altitude, me.des_winds[n].wind3.set);
+		var wind4 = wind.newcopy(me.des_winds[n].wind4.heading, me.des_winds[n].wind4.magnitude, me.des_winds[n].wind4.altitude, me.des_winds[n].wind4.set);
+		var wind5 = wind.newcopy(me.des_winds[n].wind5.heading, me.des_winds[n].wind5.magnitude, me.des_winds[n].wind5.altitude, me.des_winds[n].wind5.set);
+		var sat1 = sat_temp.newcopy(me.des_winds[n].sat1.temp, me.des_winds[n].sat1.altitude, me.des_winds[n].sat1.set);
+		var alt1 = alt_wind.newcopy(me.des_winds[n].alt1.heading, me.des_winds[n].alt1.magnitude, me.des_winds[n].alt1.set);
 		return waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1);
 	},
 	
@@ -165,13 +177,13 @@ var windController = {
 			var id = me.winds[n][i].id;
 			var type = me.winds[n][i].type;
 			var includeWind = me.winds[n][i].includeWind;
-			var wind1 = wind.newcopy(me.winds[n][i].wind1.heading, me.winds[n][i].wind1.magnitude, me.winds[n][i].wind1.altitude);
-			var wind2 = wind.newcopy(me.winds[n][i].wind2.heading, me.winds[n][i].wind2.magnitude, me.winds[n][i].wind2.altitude);
-			var wind3 = wind.newcopy(me.winds[n][i].wind3.heading, me.winds[n][i].wind3.magnitude, me.winds[n][i].wind3.altitude);
-			var wind4 = wind.newcopy(me.winds[n][i].wind4.heading, me.winds[n][i].wind4.magnitude, me.winds[n][i].wind4.altitude);
-			var wind5 = wind.newcopy(me.winds[n][i].wind5.heading, me.winds[n][i].wind5.magnitude, me.winds[n][i].wind5.altitude);
-			var sat1 = sat_temp.newcopy(me.winds[n][i].sat1.temp, me.winds[n][i].sat1.altitude);
-			var alt1 = alt_wind.newcopy(me.winds[n][i].alt1.heading, me.winds[n][i].alt1.magnitude);
+			var wind1 = wind.newcopy(me.winds[n][i].wind1.heading, me.winds[n][i].wind1.magnitude, me.winds[n][i].wind1.altitude, me.winds[n][i].wind1.set);
+			var wind2 = wind.newcopy(me.winds[n][i].wind2.heading, me.winds[n][i].wind2.magnitude, me.winds[n][i].wind2.altitude, me.winds[n][i].wind2.set);
+			var wind3 = wind.newcopy(me.winds[n][i].wind3.heading, me.winds[n][i].wind3.magnitude, me.winds[n][i].wind3.altitude, me.winds[n][i].wind3.set);
+			var wind4 = wind.newcopy(me.winds[n][i].wind4.heading, me.winds[n][i].wind4.magnitude, me.winds[n][i].wind4.altitude, me.winds[n][i].wind4.set);
+			var wind5 = wind.newcopy(me.winds[n][i].wind5.heading, me.winds[n][i].wind5.magnitude, me.winds[n][i].wind5.altitude, me.winds[n][i].wind5.set);
+			var sat1 = sat_temp.newcopy(me.winds[n][i].sat1.temp, me.winds[n][i].sat1.altitude, me.winds[n][i].sat1.set);
+			var alt1 = alt_wind.newcopy(me.winds[n][i].alt1.heading, me.winds[n][i].alt1.magnitude, me.winds[n][i].alt1.set);
 			append(tempWind, waypoint_winds.newcopy(id, type, includeWind, wind1, wind2, wind3, wind4, wind5, sat1, alt1));
 		}
 		return tempWind;
