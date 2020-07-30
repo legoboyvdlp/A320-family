@@ -154,15 +154,17 @@ var vertRev = {
 				fmgc.windController.accessPage[me.computer] = "VERTREV";
 				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDDES");
 			} else if (me.wp.wp_role == nil and me.wp.wp_type == "navaid") {
-				if (canvas_mcdu.myCRZWIND[me.computer] == nil) {
-					cur_location = 0;
-					for (i = 0; i < size(fmgc.windController.nav_indicies[me.plan]); i += 1) {
-						if (fmgc.windController.nav_indicies[me.plan][i] == me.index) {
-							cur_location = i;
-						}
+				cur_location = 0;
+				for (i = 0; i < size(fmgc.windController.nav_indicies[me.plan]); i += 1) {
+					if (fmgc.windController.nav_indicies[me.plan][i] == me.index) {
+						cur_location = i;
 					}
+				}
+				if (canvas_mcdu.myCRZWIND[me.computer] == nil) {
 					canvas_mcdu.myCRZWIND[me.computer] = windCRZPage.new(me.computer, me.wp, cur_location);
 				} else {
+					canvas_mcdu.myCRZWIND[me.computer].waypoint = me.wp;
+					canvas_mcdu.myCRZWIND[me.computer].cur_location = cur_location;
 					canvas_mcdu.myCRZWIND[me.computer].reload();
 				}
 				fmgc.windController.accessPage[me.computer] = "VERTREV";

@@ -180,10 +180,6 @@ var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
 # APPR PERF
 var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
 var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
-var dest_mag = props.globals.getNode("/FMGC/internal/dest-mag", 1);
-var dest_wind = props.globals.getNode("/FMGC/internal/dest-wind", 1);
-# var grnd_mag = props.globals.getNode("/FMGC/internal/dest-mag-grnd", 1);
-# var grnd_wind = props.globals.getNode("/FMGC/internal/dest-wind-grnd", 1);
 var vapp_speed_set = props.globals.getNode("/FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
@@ -3632,12 +3628,20 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L3S"].setText("MAG WIND");
-			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
-				me["Simple_L3"].setText(sprintf("%03.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
-			# } else if (grnd_mag.getValue() != -1 and grnd_wind.getValue() != -1) {
-# 				me["Simple_L3"].setText(sprintf("%03.0fg", grnd_mag.getValue()) ~ sprintf("/%.0f", grnd_wind.getValue()));
+			if (fmgc.FMGCInternal.destMagSet and fmgc.FMGCInternal.destWindSet) {
+				me["Simple_L3"].setText(sprintf("%03.0fg", fmgc.FMGCInternal.destMag) ~ sprintf("/%.0f", fmgc.FMGCInternal.destWind));
+				me["Simple_L3"].setFontSize(normal);
 			} else {
-				me["Simple_L3"].setText("---g/---");;
+				me["Simple_L3"].setFontSize(small);
+				if (myDESWIND[i] != nil and myDESWIND[i].returnGRND() != nil) {
+					var result = myDESWIND[i].returnGRND();
+					me["Simple_L3"].setText(sprintf("%03.0fg", result[0]) ~ sprintf("/%.0f", result[1]));
+				} else if (myDESWIND[math.abs(i-1)] != nil and myDESWIND[math.abs(i-1)].returnGRND() != nil) {
+					var result = myDESWIND[math.abs(i-1)].returnGRND();
+					me["Simple_L3"].setText(sprintf("%03.0fg", result[0]) ~ sprintf("/%.0f", result[1]));
+				} else {
+					me["Simple_L3"].setText("---g/---");
+				}
 			}
 			
 			me["Simple_L4S"].setText("TRANS FL");
