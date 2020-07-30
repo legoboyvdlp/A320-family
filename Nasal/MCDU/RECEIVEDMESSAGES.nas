@@ -1,4 +1,4 @@
-var receivedMessages = {
+var receivedMessagesPage = {
 	title: nil,
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
