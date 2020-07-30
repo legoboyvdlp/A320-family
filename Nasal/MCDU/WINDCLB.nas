@@ -53,17 +53,13 @@ var windCLBPage = {
 			computer_temp = me.computer;
 		}
 		
-		#debug.dump(fmgc.windController.clb_winds[0]);
-		#debug.dump(fmgc.windController.clb_winds[1]);
-		#debug.dump(fmgc.windController.clb_winds[2]);
-		
-		if (fmgc.windController.clb_winds[computer_temp] == 0 or fmgc.windController.clb_winds[computer_temp].wind1.altitude == "") {
+		if (fmgc.windController.clb_winds[computer_temp] == 0 or !fmgc.windController.clb_winds[computer_temp].wind1.set) {
 			me.items = 1;
-		} else if (fmgc.windController.clb_winds[computer_temp].wind2.altitude == "") {
+		} else if (!fmgc.windController.clb_winds[computer_temp].wind2.set) {
 			me.items = 2;
-		} else if (fmgc.windController.clb_winds[computer_temp].wind3.altitude == "") {
+		} else if (!fmgc.windController.clb_winds[computer_temp].wind3.set) {
 			me.items = 3;
-		} else if (fmgc.windController.clb_winds[computer_temp].wind4.altitude == "") {
+		} else if (!fmgc.windController.clb_winds[computer_temp].wind4.set) {
 			me.items = 4;
 		} else {
 			me.items = 5;
@@ -71,7 +67,7 @@ var windCLBPage = {
 		
 		if (me.items >= 5) {
 			var windStore = fmgc.windController.clb_winds[computer_temp].wind5;
-			if (windStore.altitude != "") {
+			if (windStore.set) {
 				me.L5 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			} else {
@@ -84,7 +80,7 @@ var windCLBPage = {
 		
 		if (me.items >= 4) {
 			var windStore = fmgc.windController.clb_winds[computer_temp].wind4;
-			if (windStore.altitude != "") {
+			if (windStore.set) {
 				me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			} else {
@@ -97,7 +93,7 @@ var windCLBPage = {
 		
 		if (me.items >= 3) {
 			var windStore = fmgc.windController.clb_winds[computer_temp].wind3;
-			if (windStore.altitude != "") {
+			if (windStore.set) {
 				me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			} else {
@@ -110,7 +106,7 @@ var windCLBPage = {
 		
 		if (me.items >= 2) {
 			var windStore = fmgc.windController.clb_winds[computer_temp].wind2;
-			if (windStore.altitude != "") {
+			if (windStore.set) {
 				me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			} else {
@@ -123,7 +119,7 @@ var windCLBPage = {
 		
 		if (me.items >= 1) {
 			var windStore = fmgc.windController.clb_winds[computer_temp].wind1;
-			if (windStore.altitude != "") {
+			if (windStore.set) {
 				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			} else {
@@ -205,27 +201,31 @@ var windCLBPage = {
 					if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 						computer_temp = me.computer;
 					}
-					#print(computer_temp);
 					if (index == 5) {
 						fmgc.windController.clb_winds[computer_temp].wind5.heading = winds[0];
 						fmgc.windController.clb_winds[computer_temp].wind5.magnitude = winds[1];
 						fmgc.windController.clb_winds[computer_temp].wind5.altitude = winds[2];
+						fmgc.windController.clb_winds[computer_temp].wind5.set = 1;
 					} else if (index == 4) {
 						fmgc.windController.clb_winds[computer_temp].wind4.heading = winds[0];
 						fmgc.windController.clb_winds[computer_temp].wind4.magnitude = winds[1];
 						fmgc.windController.clb_winds[computer_temp].wind4.altitude = winds[2];
+						fmgc.windController.clb_winds[computer_temp].wind4.set = 1;
 					} else if (index == 3) {
 						fmgc.windController.clb_winds[computer_temp].wind3.heading = winds[0];
 						fmgc.windController.clb_winds[computer_temp].wind3.magnitude = winds[1];
 						fmgc.windController.clb_winds[computer_temp].wind3.altitude = winds[2];
+						fmgc.windController.clb_winds[computer_temp].wind3.set = 1;
 					} else if (index == 2) {
 						fmgc.windController.clb_winds[computer_temp].wind2.heading = winds[0];
 						fmgc.windController.clb_winds[computer_temp].wind2.magnitude = winds[1];
 						fmgc.windController.clb_winds[computer_temp].wind2.altitude = winds[2];
+						fmgc.windController.clb_winds[computer_temp].wind2.set = 1;
 					} else if (index == 1) {
 						fmgc.windController.clb_winds[computer_temp].wind1.heading = winds[0];
 						fmgc.windController.clb_winds[computer_temp].wind1.magnitude = winds[1];
 						fmgc.windController.clb_winds[computer_temp].wind1.altitude = winds[2];
+						fmgc.windController.clb_winds[computer_temp].wind1.set = 1;
 					}
 					mcdu_scratchpad.scratchpads[me.computer].empty();
 					if (me.items == index and index != 5) {
@@ -246,44 +246,57 @@ var windCLBPage = {
 						fmgc.windController.clb_winds[computer_temp].wind5.heading = 0;
 						fmgc.windController.clb_winds[computer_temp].wind5.magnitude = 0;
 						fmgc.windController.clb_winds[computer_temp].wind5.altitude = "";
+						fmgc.windController.clb_winds[computer_temp].wind5.set = 0;
 					} else if (index == 4) {
 						fmgc.windController.clb_winds[computer_temp].wind4.heading = 0;
 						fmgc.windController.clb_winds[computer_temp].wind4.magnitude = 0;
 						fmgc.windController.clb_winds[computer_temp].wind4.altitude = "";
+						fmgc.windController.clb_winds[computer_temp].wind4.set = 0;
 					} else if (index == 3) {
 						fmgc.windController.clb_winds[computer_temp].wind3.heading = 0;
 						fmgc.windController.clb_winds[computer_temp].wind3.magnitude = 0;
 						fmgc.windController.clb_winds[computer_temp].wind3.altitude = "";
+						fmgc.windController.clb_winds[computer_temp].wind3.set = 0;
 					} else if (index == 2) {
 						fmgc.windController.clb_winds[computer_temp].wind2.heading = 0;
 						fmgc.windController.clb_winds[computer_temp].wind2.magnitude = 0;
 						fmgc.windController.clb_winds[computer_temp].wind2.altitude = "";
+						fmgc.windController.clb_winds[computer_temp].wind2.set = 0;
 					} else if (index == 1) {
 						fmgc.windController.clb_winds[computer_temp].wind1.heading = 0;
 						fmgc.windController.clb_winds[computer_temp].wind1.magnitude = 0;
 						fmgc.windController.clb_winds[computer_temp].wind1.altitude = "";
+						fmgc.windController.clb_winds[computer_temp].wind1.set = 0;
 					}
 				} else {
 					if (index <= 1) {
 						fmgc.windController.clb_winds[computer_temp].wind1.heading = fmgc.windController.clb_winds[computer_temp].wind2.heading;
 						fmgc.windController.clb_winds[computer_temp].wind1.magnitude = fmgc.windController.clb_winds[computer_temp].wind2.magnitude;
 						fmgc.windController.clb_winds[computer_temp].wind1.altitude = fmgc.windController.clb_winds[computer_temp].wind2.altitude;
+						fmgc.windController.clb_winds[computer_temp].wind1.set = fmgc.windController.clb_winds[computer_temp].wind2.set;
 					}
 					if (index <= 2) {
 						fmgc.windController.clb_winds[computer_temp].wind2.heading = fmgc.windController.clb_winds[computer_temp].wind3.heading;
 						fmgc.windController.clb_winds[computer_temp].wind2.magnitude = fmgc.windController.clb_winds[computer_temp].wind3.magnitude;
 						fmgc.windController.clb_winds[computer_temp].wind2.altitude = fmgc.windController.clb_winds[computer_temp].wind3.altitude;
+						fmgc.windController.clb_winds[computer_temp].wind2.set = fmgc.windController.clb_winds[computer_temp].wind3.set;
 					}
 					if (index <= 3) {
 						fmgc.windController.clb_winds[computer_temp].wind3.heading = fmgc.windController.clb_winds[computer_temp].wind4.heading;
 						fmgc.windController.clb_winds[computer_temp].wind3.magnitude = fmgc.windController.clb_winds[computer_temp].wind4.magnitude;
 						fmgc.windController.clb_winds[computer_temp].wind3.altitude = fmgc.windController.clb_winds[computer_temp].wind4.altitude;
+						fmgc.windController.clb_winds[computer_temp].wind3.set = fmgc.windController.clb_winds[computer_temp].wind4.set;
 					}
 					if (index <= 4) {
 						fmgc.windController.clb_winds[computer_temp].wind4.heading = fmgc.windController.clb_winds[computer_temp].wind5.heading;
 						fmgc.windController.clb_winds[computer_temp].wind4.magnitude = fmgc.windController.clb_winds[computer_temp].wind5.magnitude;
 						fmgc.windController.clb_winds[computer_temp].wind4.altitude = fmgc.windController.clb_winds[computer_temp].wind5.altitude;
-					}	
+						fmgc.windController.clb_winds[computer_temp].wind4.set = fmgc.windController.clb_winds[computer_temp].wind5.set;
+					}
+					fmgc.windController.clb_winds[computer_temp].wind5.heading = 0;
+					fmgc.windController.clb_winds[computer_temp].wind5.magnitude = 0;
+					fmgc.windController.clb_winds[computer_temp].wind5.altitude = "";
+					fmgc.windController.clb_winds[computer_temp].wind5.set = 0;
 				}
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 				me.items -= 1;
