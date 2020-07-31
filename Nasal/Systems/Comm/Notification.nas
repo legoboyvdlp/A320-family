@@ -120,41 +120,56 @@ var AOC = {
 		me.received = 0;
 		var sentTime = left(getprop("/sim/time/gmt-string"), 5);
 		me.sentTime = split(":", sentTime)[0] ~ "." ~ split(":", sentTime)[1] ~ "Z";
+		
 		if (me.selectedType == "HOURLY WX") {
-			me.fetchMETAR(atsu.AOC.station, i);
-			return 0;
+			var result = me.fetchMETAR(atsu.AOC.station, i);
+			if (result == 0) {
+				return 0;
+			} elsif (result == 1) {
+				return 3;
+			} elsif (result == 2) {
+				return 4;
+			}
 		}
 		
 		if (me.selectedType == "TERM FCST") {
-			me.fetchTAF(atsu.AOC.station, i);
-			return 0;
+			var result = me.fetchTAF(atsu.AOC.station, i); 
+			if (result == 0) {
+				return 0;
+			} elsif (result == 1) {
+				return 3;
+			} elsif (result == 2) {
+				return 4;
+			}
 		}
 	},
 	fetchMETAR: func(airport, i) {
-		if (ecam.vhf3_voice.active) {
-			mcdu.mcdu_message(i, "VHF3 VOICE MSG NOT GEN");
-			return;
-		}
 		if (!ATSU.working) {
-			mcdu.mcdu_message(i, "NO COMM MSG NOT GEN");
-			return;
+			me.sent = 0;
+			return 2;
+		}
+		if (ecam.vhf3_voice.active) {
+			me.sent = 0;
+			return 1;
 		}
 		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
 			.fail(func print("Download failed!"))
 			.done(func(r) me.processMETAR(r, i));
+		return 0;
 	},
 	fetchTAF: func(airport, i) {
-		if (ecam.vhf3_voice.active) {
-			mcdu_message(i, "VHF3 VOICE MSG NOT GEN");
-			return;
-		}
 		if (!ATSU.working) {
-			mcdu_message(i, "NO COMM MSG NOT GEN");
-			return;
+			me.sent = 0;
+			return 2;
+		}
+		if (ecam.vhf3_voice.active) {
+			me.sent = 0;
+			return 1;
 		}
 		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
 			.fail(func print("Download failed!"))
 			.done(func(r) me.processTAF(r, i));
+		return 0;
 	},
 	processMETAR: func(r, i) {
 		var raw = r.response;

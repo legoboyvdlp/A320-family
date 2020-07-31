@@ -861,7 +861,11 @@ var rskbutton = func(btn, i) {
 			var result = atsu.AOC.sendReq(i);
 			if (result == 1) {
 				mcdu_message(i, "NOT ALLOWED");
-			} else {
+			} elsif (result == 3) {
+				mcdu.mcdu_message(i, "VHF3 VOICE MSG NOT GEN");
+			} elsif (result == 4) {
+				mcdu.mcdu_message(i, "NO COMM MSG NOT GEN");
+			}  else {
 				mcdu_scratchpad.scratchpads[i].empty();
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY") {
