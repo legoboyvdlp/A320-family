@@ -2986,4 +2986,34 @@
        d="m 974.36752,294.79468 20.17349,-20.1735"
        style="fill:none;stroke:#ffffff;stroke-width:4.07999992;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
+  <g
+   transform="matrix(1.0807111,0,0,1.0807111,-76.462145,331.52578)"
+   inkscape:label="#g4324"
+   id="WEATHERREQSEND"
+   style="stroke:#179ab7;stroke-opacity:1">
+  <path
+	 style="fill:none;stroke:#179ab7;stroke-width:4.08;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+	 d="M 998.71909,284.70793 H 970.18944"
+	 id="path1181"
+	 inkscape:connector-curvature="0"
+	 sodipodi:nodetypes="cc" />
+  <path
+	 sodipodi:nodetypes="cc"
+	 inkscape:connector-curvature="0"
+	 id="path1183"
+	 d="m 994.54102,294.79468 -20.17351,-20.1735"
+	 style="fill:none;stroke:#179ab7;stroke-width:4.08;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <path
+	 style="fill:none;stroke:#179ab7;stroke-width:4.08;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+	 d="m 984.45427,298.97275 -10e-6,-28.52964"
+	 id="path1185"
+	 inkscape:connector-curvature="0"
+	 sodipodi:nodetypes="cc" />
+  <path
+	 sodipodi:nodetypes="cc"
+	 inkscape:connector-curvature="0"
+	 id="path1187"
+	 d="m 974.36752,294.79468 20.17349,-20.1735"
+	 style="fill:none;stroke:#179ab7;stroke-width:4.08;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+</g>
 </svg>

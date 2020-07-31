@@ -50,11 +50,12 @@ var windCRZPage = {
 		return nil;
 	},
 	_setupPageWithData: func() {
-		
-		if (me.singleCRZ == 1) {
+		if (me.waypoint == nil) {
 			me.title = ["","CRZ WIND",""];
+			me.singleCRZ = 1;
 		} else {
 			me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+			me.singleCRZ = 0;
 		}
 		me.titleColour = "wht";
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 1, 0]];
@@ -488,8 +489,7 @@ var windCRZPage = {
 				}
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 				me.items -= 1;
-				me._setupPageWithData();
-				me.updateTmpy();
+				me.reload();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
