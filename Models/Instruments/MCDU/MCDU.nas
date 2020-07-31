@@ -2335,7 +2335,7 @@ var canvas_MCDU_base = {
 									me["Simple_C3"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
 								}
 							}
-							if (fmgc.FMGCInternal.crzSet == 1) {
+							if (fmgc.FMGCInternal.altAirportSet) {
 								me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
 								me["Simple_L4"].setColor(BLUE);
 								me["Simple_C4"].show();
@@ -2614,7 +2614,7 @@ var canvas_MCDU_base = {
 						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
 					}
 				}
-				if (fmgc.FMGCInternal.crzSet == 1) {
+				if (fmgc.FMGCInternal.altAirportSet) {
 					me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
 					me["Simple_L4"].setColor(BLUE);
 					me["Simple_C4"].show();
