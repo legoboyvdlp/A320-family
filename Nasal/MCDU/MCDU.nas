@@ -278,6 +278,8 @@ var lskbutton = func(btn, i) {
 		}  else if (getprop("/MCDU[" ~ i ~ "]/page") == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "HOURLY WX";
 			setprop("/MCDU[" ~ i ~ "]/page", "WEATHERREQ");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(1);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -346,6 +348,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "DATAMODE");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(2);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -397,6 +401,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "VOICEDIRECTORY");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(3);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -443,6 +449,8 @@ var lskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(4);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -498,6 +506,8 @@ var lskbutton = func(btn, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "NOTIFICATION");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(5);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -561,6 +571,9 @@ var lskbutton = func(btn, i) {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WEATHERREQ" or getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
 			setprop("/MCDU[" ~ i ~ "]/page", "AOCMENU");
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSG") {
+			setprop("/MCDU[" ~ i ~ "]/page", "RECEIVEDMSGS");
+			canvas_mcdu.myReceivedMessages[i].update();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATSUDLINK");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMINIT" or getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY" or getprop("/MCDU[" ~ i ~ "]/page") == "DATAMODE"  or getprop("/MCDU[" ~ i ~ "]/page") == "COMMSTATUS" or getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
@@ -941,6 +954,8 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myPilotWP[i].scrollLeft();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].scrollLeft();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSG") {
+			canvas_mcdu.myReceivedMessage[i].scrollLeft();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU2");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU2") {
@@ -971,6 +986,8 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myPilotWP[i].scrollRight();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].scrollRight();
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RECEIVEDMSG") {
+			canvas_mcdu.myReceivedMessage[i].scrollRight();
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
 			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU2");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU2") {

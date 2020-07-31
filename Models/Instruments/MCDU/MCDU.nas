@@ -17,6 +17,7 @@ var myHold = [nil, nil];
 var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
 var myClosestAirport = [nil, nil];
+var myReceivedMessage = [nil, nil];
 var myReceivedMessages = [nil, nil];
 var myPilotWP = [nil, nil];
 var myWind = [nil, nil];
@@ -698,6 +699,7 @@ var canvas_MCDU_base = {
 				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
+				me["Simple_L6S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
@@ -741,13 +743,125 @@ var canvas_MCDU_base = {
 					me.dynamicPageFunc(myReceivedMessages[i].L3, "Simple_L3");
 					me.dynamicPageFunc(myReceivedMessages[i].L4, "Simple_L4");
 					me.dynamicPageFunc(myReceivedMessages[i].L5, "Simple_L5");
-					me["Simple_L6"].setColor(WHITE);
 					me.colorLeft(myReceivedMessages[i].L1[2],myReceivedMessages[i].L2[2],myReceivedMessages[i].L3[2],myReceivedMessages[i].L4[2],myReceivedMessages[i].L5[2],myReceivedMessages[i].L6[2]);
+					me["Simple_L6"].setColor(WHITE);
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
 				
 			if (myReceivedMessages[i] != nil) {
+				me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+				me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
+				me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);
+			}
+		} else if (page == "RECEIVEDMSG") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].show();
+				me["arrowsDepArr"].hide();
+				me.hideAllArrowsButL6();
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_L6S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(small, small, small, small, small, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenterS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				me.showRight(-1, -1, -1, -1, -1, -1);
+				me.showRightS(1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				
+				
+				if (myReceivedMessage[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myReceivedMessage[i].title));
+				
+					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myReceivedMessage[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myReceivedMessage[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myReceivedMessage[i].arrowsColour[0][5] ~ "/b"));
+					
+					forindex (var matrixFont; myReceivedMessages[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myReceivedMessages[i].fontMatrix[matrixFont]) {
+							if (myReceivedMessages[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+							}
+						}
+					}
+					
+					me.dynamicPageArrowFunc(myReceivedMessage[i]);
+					
+					if (myReceivedMessage[i].L1[0] != nil) {
+						me["Simple_L1"].setText(myReceivedMessage[i].L1[0]);
+						me["Simple_L1"].show();
+					} else { me["Simple_L1"].hide(); }
+					if (myReceivedMessage[i].L1[1] != nil) {
+						me["Simple_L1S"].setText(myReceivedMessage[i].L1[1]);
+						me["Simple_L1S"].show();
+					} else { me["Simple_L1S"].hide(); }
+					if (myReceivedMessage[i].L2[0] != nil) {
+						me["Simple_L2"].setText(myReceivedMessage[i].L2[0]);
+						me["Simple_L2"].show();
+					} else { me["Simple_L2"].hide(); }
+					if (myReceivedMessage[i].L2[1] != nil) {
+						me["Simple_L2S"].setText(myReceivedMessage[i].L2[1]);
+						me["Simple_L2S"].show();
+					} else { me["Simple_L2S"].hide(); }
+					if (myReceivedMessage[i].L3[0] != nil) {
+						me["Simple_L3"].setText(myReceivedMessage[i].L3[0]);
+						me["Simple_L3"].show();
+					} else { me["Simple_L3"].hide(); }
+					if (myReceivedMessage[i].L3[1] != nil) {
+						me["Simple_L3S"].setText(myReceivedMessage[i].L3[1]);
+						me["Simple_L3S"].show();
+					} else { me["Simple_L3S"].hide(); }
+					if (myReceivedMessage[i].L4[0] != nil) {
+						me["Simple_L4"].setText(myReceivedMessage[i].L4[0]);
+						me["Simple_L4"].show();
+					} else { me["Simple_L4"].hide(); }
+					if (myReceivedMessage[i].L4[1] != nil) {
+						me["Simple_L4S"].setText(myReceivedMessage[i].L4[1]);
+						me["Simple_L4S"].show();
+					} else { me["Simple_L4S"].hide(); }
+					if (myReceivedMessage[i].L5[0] != nil) {
+						me["Simple_L5"].setText(myReceivedMessage[i].L5[0]);
+						me["Simple_L5"].show();
+					} else { me["Simple_L5"].hide(); }
+					if (myReceivedMessage[i].L5[1] != nil) {
+						me["Simple_L5S"].setText(myReceivedMessage[i].L5[1]);
+						me["Simple_L5S"].show();
+					} else { me["Simple_L5S"].hide(); }
+					
+					me["Simple_C1S"].setText(myReceivedMessage[i].C1[1]);
+					me["Simple_R1S"].setText(myReceivedMessage[i].R1[1]);
+					me.colorLeft(myReceivedMessage[i].L1[2],myReceivedMessage[i].L2[2],myReceivedMessage[i].L3[2],myReceivedMessage[i].L4[2],myReceivedMessage[i].L5[2],myReceivedMessage[i].L6[2]);
+					me["Simple_L6"].setColor(WHITE);
+					me["Simple_C1S"].setColor(GREEN);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+				
+			if (myReceivedMessage[i] != nil) {
 				me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
 				me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
 				me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);

@@ -889,6 +889,8 @@ var reset_FMGC = func {
 	setprop("systems/ventilation/lavatory/extractvalve", "0");
 	setprop("systems/pressurization/ambientpsi", "0");
 	setprop("systems/pressurization/cabinpsi", "0");
+	
+	mcdu.ReceivedMessagesDatabase.clearDatabase();
 }
 
 #################
