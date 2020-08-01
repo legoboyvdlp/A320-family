@@ -179,6 +179,47 @@ var FMGCInternal = {
 	tropo: 36090,
 	tropoSet: 0,
 	toFromSet: 0,
+	
+	# INIT B
+	zfw: 0,
+	zfwSet: 0,
+	zfwcg: 25.0,
+	zfwcgSet: 0,
+	block: 0.0,
+	blockSet: 0,
+	taxiFuel: 0.4,
+	taxiFuelSet: 0,
+	tripFuel: 0,
+	tripTime: "0000",
+	rteRsv: 0,
+	rteRsvSet: 0,
+	rtePercent: 5.0,
+	rtePercentSet: 0,
+	altFuel: 0,
+	altFuelSet: 0,
+	altTime: "0000",
+	finalFuel: 0,
+	finalFuelSet: 0,
+	finalTime: "0030",
+	finalTimeSet: 0,
+	minDestFob: 0,
+	minDestFobSet: 0,
+	tow: 0,
+	lw: 0,
+	tripWind: "HD000",
+	tripWindValue: 0,
+	fffqSensor: "FF+FQ",
+	extraFuel: 0,
+	extraTime: "0000",
+	
+	# FUELPRED
+	priUtc: "0000",
+	altUtc: "0000",
+	priEfob: 0,
+	altEfob: 0,
+	fob: 0,
+	fuelPredGw: 0,
+	cg: 0,
 };
 
 var postInit = func() {
@@ -238,13 +279,13 @@ updateRouteManagerAlt = func() {
 var updateFuel = func {
 	# Check engine status
 	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
-		setprop("/FMGC/internal/block", sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1)));
+		FMGCInternal.block = sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1));
 	}
 
 	# Calculate (final) holding fuel
-	if (getprop("/FMGC/internal/final-fuel-set")) {
-		final_fuel = 1000 * getprop("/FMGC/internal/final-fuel");
-		zfw = 1000 * getprop("/FMGC/internal/zfw");
+	if (FMGCInternal.finalFuelSet) {
+		final_fuel = 1000 * FMGCInternal.finalFuel;
+		zfw = 1000 * FMGCInternal.zfw;
 		final_time = final_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
 		if (final_time < 0) {
 			final_time = 0;
@@ -254,35 +295,35 @@ var updateFuel = func {
 		if (num(final_time) >= 60) {
 			final_min = int(math.mod(final_time, 60));
 			final_hour = int((final_time - final_min) / 60);
-			setprop("/FMGC/internal/final-time", sprintf("%02d", final_hour) ~ sprintf("%02d", final_min));
+			FMGCInternal.finalTime = sprintf("%02d", final_hour) ~ sprintf("%02d", final_min);
 		} else {
-			setprop("/FMGC/internal/final-time", sprintf("%04d", final_time));
+			FMGCInternal.finalTime = sprintf("%04d", final_time);
 		}	
 	} else {
-		if (!getprop("/FMGC/internal/final-time-set")) {
-			setprop("/FMGC/internal/final-time", "0030");
+		if (!FMGCInternal.finalTimeSet) {
+			FMGCInternal.finalTime = "0030";
 		}
-		final_time = int(getprop("/FMGC/internal/final-time"));
+		final_time = int(FMGCInternal.finalTime);
 		if (final_time >= 100) {
 			final_time = final_time - 100 + 60; # can't be set above 90 (0130)
 		}
-		zfw = 1000 * getprop("/FMGC/internal/zfw");
+		zfw = 1000 * FMGCInternal.zfw;
 		final_fuel = final_time * 2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903); # x2 for 2 engines
 		if (final_fuel < 0) {
 			final_fuel = 0;
 		} else if (final_fuel > 80000) {
 			final_fuel = 80000;
 		}
-		setprop("/FMGC/internal/final-fuel", final_fuel / 1000);
+		FMGCInternal.finalFuel = final_fuel / 1000;
 	}
 	
 	# Calculate alternate fuel
-	if (!getprop("/FMGC/internal/alt-fuel-set") and fmgc.FMGCInternal.altAirportSet) {
+	if (!FMGCInternal.altFuelSet and FMGCInternal.altAirportSet) {
 		#calc
-	} else if (getprop("/FMGC/internal/alt-fuel-set") and fmgc.FMGCInternal.altAirportSet) {
+	} else if (FMGCInternal.altFuelSet and FMGCInternal.altAirportSet) {
 		#dummy calc for now
-		alt_fuel = 1000 * num(getprop("/FMGC/internal/alt-fuel"));
-		zfw = 1000 * getprop("/FMGC/internal/zfw");
+		alt_fuel = 1000 * num(FMGCInternal.altFuel);
+		zfw = 1000 * FMGCInternal.zfw;
 		alt_time = alt_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
 		if (alt_time < 0) {
 			alt_time = 0;
@@ -292,32 +333,32 @@ var updateFuel = func {
 		if (num(alt_time) >= 60) {
 			alt_min = int(math.mod(alt_time, 60));
 			alt_hour = int((alt_time - alt_min) / 60);
-			setprop("/FMGC/internal/alt-time", sprintf("%02d", alt_hour) ~ sprintf("%02d", alt_min));
+			FMGCInternal.altTime = sprintf("%02d", alt_hour) ~ sprintf("%02d", alt_min);
 		} else {
-			setprop("/FMGC/internal/alt-time", sprintf("%04d", alt_time));
+			FMGCInternal.altTime = sprintf("%04d", alt_time);
 		}
-	} else if (!getprop("/FMGC/internal/alt-fuel-set")) {
-		setprop("/FMGC/internal/alt-fuel", 0.0);
-		setprop("/FMGC/internal/alt-time", "0000");
+	} else if (!FMGCInternal.altFuelSet) {
+		FMGCInternal.altFuel = 0.0;
+		FMGCInternal.altTime = "0000";
 	}
 	
 	# Calculate min dest fob (final + alternate)
-	if (!getprop("/FMGC/internal/min-dest-fob-set")) {
-		setprop("/FMGC/internal/min-dest-fob", num(getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel")));
+	if (!FMGCInternal.minDestFobSet) {
+		FMGCInternal.minDestFob = num(FMGCInternal.altFuel + FMGCInternal.finalFuel);
 	}
 	
-	if (getprop("/FMGC/internal/zfw-set")) {
-		setprop("/FMGC/internal/lw", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel")));
+	if (FMGCInternal.zfwSet) {
+		FMGCInternal.lw = num(FMGCInternal.zfw + FMGCInternal.altFuel + FMGCInternal.finalFuel);
 	}
 	
 	# Calculate trip fuel
-	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and getprop("/FMGC/internal/zfw-set")) {
+	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
 		crz = FMGCInternal.crzFl;
 		temp = FMGCInternal.crzTemp;
 		dist = flightPlanController.arrivalDist;
 		
-		trpWind = getprop("/FMGC/internal/trip-wind");
-		wind_value = getprop("/FMGC/internal/trip-wind-value");
+		trpWind = FMGCInternal.tripWind;
+		wind_value = FMGCInternal.tripWindValue;
 		if (find("HD", trpWind) != -1 or find("-", trpWind) != -1 or find("H", trpWind) != -1) {
 			wind_value = wind_value * -1;
 		}
@@ -349,54 +390,54 @@ var updateFuel = func {
 		#	trip_fuel = trip_fuel * 1.02;
 		#}
 		
-		zfw = getprop("/FMGC/internal/zfw");
+		zfw = FMGCInternal.zfw;
 		landing_weight_correction = 9.951e+00 + (dist*-2.064e+00) + (dist*dist*2.030e-03) + (dist*dist*dist*8.179e-08) + (dist*dist*dist*dist*-3.941e-11) + (dist*dist*dist*dist*dist*2.443e-15) + (crz*2.771e+00) + (dist*crz*3.067e-02) + (dist*dist*crz*-1.861e-05) + (dist*dist*dist*crz*2.516e-10) + (dist*dist*dist*dist*crz*5.452e-14) + (crz*crz*-4.483e-02) + (dist*crz*crz*-1.645e-04) + (dist*dist*crz*crz*5.212e-08) + (dist*dist*dist*crz*crz*-8.721e-13) + (crz*crz*crz*2.609e-04) + (dist*crz*crz*crz*3.898e-07) + (dist*dist*crz*crz*crz*-4.617e-11) + (crz*crz*crz*crz*-6.488e-07) + (dist*crz*crz*crz*crz*-3.390e-10) + (crz*crz*crz*crz*crz*5.835e-10);
-		trip_fuel = trip_fuel + (landing_weight_correction * (getprop("/FMGC/internal/lw") * 1000 - 121254.24421) / 2204.622622);
+		trip_fuel = trip_fuel + (landing_weight_correction * (FMGCInternal.lw * 1000 - 121254.24421) / 2204.622622);
 		if (trip_fuel < 400) {
 			trip_fuel = 400;
 		} else if (trip_fuel > 80000) {
 			trip_fuel = 80000;
 		}
 
-		setprop("/FMGC/internal/trip-fuel", trip_fuel / 1000);
+		FMGCInternal.tripFuel = trip_fuel / 1000;
 		if (num(trip_time) >= 60) {
 			trip_min = int(math.mod(trip_time, 60));
 			trip_hour = int((trip_time - trip_min) / 60);
-			setprop("/FMGC/internal/trip-time", sprintf("%02d", trip_hour) ~ sprintf("%02d", trip_min));
+			FMGCInternal.tripTime = sprintf("%02d", trip_hour) ~ sprintf("%02d", trip_min);
 		} else {
-			setprop("/FMGC/internal/trip-time", sprintf("%04d", trip_time));
+			FMGCInternal.tripTime = sprintf("%04d", trip_time);
 		}
 	} else {
-		setprop("/FMGC/internal/trip-fuel", 0.0);
-		setprop("/FMGC/internal/trip-time", "0000");
+		FMGCInternal.tripFuel = 0.0;
+		FMGCInternal.tripTime = "0000";
 	}
 	
 	# Calculate reserve fuel
-	if (getprop("/FMGC/internal/rte-rsv-set")) {
-		if (num(getprop("/FMGC/internal/trip-fuel")) == 0.0) {
-			setprop("/FMGC/internal/rte-percent", 0.0);
+	if (FMGCInternal.rteRsvSet) {
+		if (num(FMGCInternal.tripFuel) == 0.0) {
+			FMGCInternal.rtePercent = 0.0;
 		} else {
-			if (num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0) <= 15.0) {
-				setprop("/FMGC/internal/rte-percent", num(getprop("/FMGC/internal/rte-rsv") / getprop("/FMGC/internal/trip-fuel") * 100.0));
+			if (num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0) <= 15.0) {
+				FMGCInternal.rtePercent = num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0);
 			} else {
-				setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
+				FMGCInternal.rtePercent = 15.0; # need reasearch on this value
 			}
 		}
-	} else if (getprop("/FMGC/internal/rte-percent-set")) {
-		setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * getprop("/FMGC/internal/rte-percent") / 100.0));
+	} else if (FMGCInternal.rtePercentSet) {
+		FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
 	} else {
-		if (num(getprop("/FMGC/internal/trip-fuel")) == 0.0) {
-			setprop("/FMGC/internal/rte-percent", 5.0);
+		if (num(FMGCInternal.tripFuel) == 0.0) {
+			FMGCInternal.rtePercent = 5.0;
 		} else {
-			setprop("/FMGC/internal/rte-rsv", num(getprop("/FMGC/internal/trip-fuel") * getprop("/FMGC/internal/rte-percent") / 100.0));
+			FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
 		}
 	}
 	
 	# Calcualte extra fuel
-	if (getprop("/FMGC/internal/block-set")) {
-		extra_fuel = 1000 * num(getprop("/FMGC/internal/block") - getprop("/FMGC/internal/trip-fuel") - getprop("/FMGC/internal/min-dest-fob") - getprop("/FMGC/internal/taxi-fuel") - getprop("/FMGC/internal/rte-rsv"));
-		setprop("/FMGC/internal/extra-fuel", extra_fuel / 1000);
-		lw = 1000 * getprop("/FMGC/internal/lw");
+	if (FMGCInternal.blockSet) {
+		extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+		FMGCInternal.extraFuel = extra_fuel / 1000;
+		lw = 1000 * FMGCInternal.lw;
 		extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
 		if (extra_time < 0) {
 			extra_time = 0;
@@ -406,19 +447,19 @@ var updateFuel = func {
 		if (num(extra_time) >= 60) {
 			extra_min = int(math.mod(extra_time, 60));
 			extra_hour = int((extra_time - extra_min) / 60);
-			setprop("/FMGC/internal/extra-time", sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min));
+			FMGCInternal.extraTime = sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min);
 		} else {
-			setprop("/FMGC/internal/extra-time", sprintf("%04d", extra_time));
+			FMGCInternal.extraTime = sprintf("%04d", extra_time);
 		}
-		if (getprop("/FMGC/internal/extra-fuel") > -0.1 and getprop("/FMGC/internal/extra-fuel") < 0.1) {
-			setprop("/FMGC/internal/extra-fuel", 0.0);
+		if (FMGCInternal.extraFuel > -0.1 and FMGCInternal.extraFuel < 0.1) {
+			FMGCInternal.extraFuel = 0.0;
 		}
 	} else {
-		setprop("/FMGC/internal/block", num(getprop("/FMGC/internal/alt-fuel") + getprop("/FMGC/internal/final-fuel") + getprop("/FMGC/internal/trip-fuel") + getprop("/FMGC/internal/rte-rsv") + getprop("/FMGC/internal/taxi-fuel")));
-		setprop("/FMGC/internal/block-set", 1);
+		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
+		FMGCInternal.blockSet = 1;
 	}
 	
-	setprop("/FMGC/internal/tow", num(getprop("/FMGC/internal/zfw") + getprop("/FMGC/internal/block") - getprop("/FMGC/internal/taxi-fuel")));
+	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
 }
 
 ############################
