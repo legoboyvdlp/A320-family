@@ -3141,10 +3141,10 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if ((fmgc.FMGCInternal.zfwSet and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 1) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_to")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_to")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_to")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 1) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_to));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_to));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_to));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -3754,11 +3754,11 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 			
 			me["Simple_L5S"].setText(" VAPP");
-			if ((fmgc.FMGCInternal.zfwSet and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 5) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
-				me["Simple_C5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vls_appr")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 5) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
+				me["Simple_C5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vls_appr));
 				me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 				me.fontLeft(0, 0, 0, 0, default, 0);
 				if (vapp_speed_set.getValue()) {
@@ -3853,10 +3853,10 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
-			if ((fmgc.FMGCInternal.zfwSet and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 6) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 6) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
