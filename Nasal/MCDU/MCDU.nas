@@ -658,7 +658,9 @@ var rskbutton = func(btn, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "2") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+			initInputA("R2",i);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R2",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
 			perfAPPRInput("R2",i);

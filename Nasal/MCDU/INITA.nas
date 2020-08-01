@@ -240,6 +240,12 @@ var initInputA = func(key, i) {
 				mcdu_message(i, "TMPY F-PLN EXISTS");
 			}
 		}
+	} else if (key == "R2") {
+		if (getprop("/FMGC/simbrief-username") == "") {
+			mcdu.mcdu_message(i, "MISSING USERNAME")
+		} else {
+			Simbrief.SimbriefParser.fetch(getprop("/FMGC/simbrief-username"), i);
+		}
 	} else if (key == "R3") {
 		setprop("MCDU[" ~ i ~ "]/page", "IRSINIT");
 	} else if (key == "R4") {
