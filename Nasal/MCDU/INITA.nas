@@ -211,25 +211,7 @@ var initInputA = func(key, i) {
 						mcdu_scratchpad.scratchpads[i].empty();
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
-						#ref lat
-						dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
-						degrees = int(dms);
-						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-						sign = degrees >= 0 ? "N" : "S";
-						setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
-						setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
-						setprop("/FMGC/internal/align-ref-lat-sign", sign);
-						#ref long
-						dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
-						degrees = int(dms);
-						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-						sign = degrees >= 0 ? "E" : "W";
-						setprop("/FMGC/internal/align-ref-long-degrees", degrees);
-						setprop("/FMGC/internal/align-ref-long-minutes", minutes);
-						setprop("/FMGC/internal/align-ref-long-sign", sign);
-						#ref edit
-						setprop("/FMGC/internal/align-ref-lat-edit", 0);
-						setprop("/FMGC/internal/align-ref-long-edit", 0);
+						fmgc.updateArptLatLon();
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
@@ -242,10 +224,16 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R2") {
-		if (getprop("/FMGC/simbrief-username") == "") {
-			mcdu.mcdu_message(i, "MISSING USERNAME")
+		if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
+			if (getprop("/FMGC/simbrief-username") == "") {
+				mcdu.mcdu_message(i, "MISSING USERNAME")
+			} elsif (!Simbrief.SimbriefParser.inhibit) {
+				Simbrief.SimbriefParser.fetch(getprop("/FMGC/simbrief-username"), i);
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
-			Simbrief.SimbriefParser.fetch(getprop("/FMGC/simbrief-username"), i);
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R3") {
 		setprop("MCDU[" ~ i ~ "]/page", "IRSINIT");

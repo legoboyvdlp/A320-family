@@ -224,6 +224,28 @@ var updateARPT = func {
 	}
 }
 
+var updateArptLatLon = func {
+	#ref lat
+	dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+	degrees = int(dms);
+	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+	sign = degrees >= 0 ? "N" : "S";
+	setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
+	setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
+	setprop("/FMGC/internal/align-ref-lat-sign", sign);
+	#ref long
+	dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+	degrees = int(dms);
+	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+	sign = degrees >= 0 ? "E" : "W";
+	setprop("/FMGC/internal/align-ref-long-degrees", degrees);
+	setprop("/FMGC/internal/align-ref-long-minutes", minutes);
+	setprop("/FMGC/internal/align-ref-long-sign", sign);
+	#ref edit
+	setprop("/FMGC/internal/align-ref-lat-edit", 0);
+	setprop("/FMGC/internal/align-ref-long-edit", 0);
+}
+
 updateRouteManagerAlt = func() {
 	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
 };

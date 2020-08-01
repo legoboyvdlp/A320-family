@@ -167,7 +167,6 @@ var flightPlanController = {
 			me.currentToWptIndex.setValue(0);
 			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
-		
 		me.addDiscontinuity(1, plan);
 		# reset mcdu if it exists
 		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }

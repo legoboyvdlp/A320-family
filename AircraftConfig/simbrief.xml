@@ -45,7 +45,11 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>3. Please enter your username in the following dialog box (not case sensitive)</label>
+			<label>3. GIGO... there is no sanity check on inputs!</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>4. Please enter your username in the following dialog box (not case sensitive)</label>
 		</text>
 		<group>
 			<layout>hbox</layout>
