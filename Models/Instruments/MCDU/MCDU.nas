@@ -1963,7 +1963,11 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("----/----------");
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
-				me["INITA_InitRequest"].show();
+				if (!Simbrief.SimbriefParser.inhibit) {
+					me["INITA_InitRequest"].show();
+				} else {
+					me["INITA_InitRequest"].hide();
+				}
 			}
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();

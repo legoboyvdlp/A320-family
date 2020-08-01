@@ -186,6 +186,7 @@ var initInputA = func(key, i) {
 			}
 			fmgc.flightPlanController.reset(2);
 			fmgc.flightPlanController.init();
+			Simbrief.SimbriefParser.inhibit = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
