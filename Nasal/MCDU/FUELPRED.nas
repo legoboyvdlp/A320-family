@@ -7,7 +7,7 @@ var fuelPredInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L3" and getprop("/FMGC/internal/block-confirmed") and !getprop("/FMGC/internal/fuel-calculating")) {
 		if (scratchpad == "CLR") {
-			fmgc.FMGCInternal.rteRsv = 0.05 * num(fmgc.FMGCInternal.tripFuel);
+			fmgc.FMGCInternal.rteRsv = 0.05 * fmgc.FMGCInternal.tripFuel;
 			fmgc.FMGCInternal.rteRsvSet = 0;
 			fmgc.FMGCInternal.rtePercent = 5.0;
 			fmgc.FMGCInternal.rtePercentSet = 0;
@@ -19,7 +19,7 @@ var fuelPredInput = func(key, i) {
 			if (tfs >= 2 and tfs <= 5 and find("/", scratchpad) == 0) {
 				var perc = num(split("/", scratchpad)[1]);
 				if (perc != nil and perc >= 0.0 and perc <= 15.0) {
-					fmgc.FMGCInternal.rteRsv = num(perc) / 100 * num(fmgc.FMGCInternal.tripFuel);
+					fmgc.FMGCInternal.rteRsv = perc / 100 * fmgc.FMGCInternal.tripFuel;
 					fmgc.FMGCInternal.rteRsvSet = 0;
 					fmgc.FMGCInternal.rtePercent = perc;
 					fmgc.FMGCInternal.rtePercentSet = 1;
@@ -29,8 +29,8 @@ var fuelPredInput = func(key, i) {
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7) {
 					fmgc.FMGCInternal.rteRsv = scratchpad;
 					fmgc.FMGCInternal.rteRsvSet = 1;
-					if (scratchpad / num(fmgc.FMGCInternal.tripFuel) * 100 <= 15.0) {
-						fmgc.FMGCInternal.rtePercent = scratchpad / num(fmgc.FMGCInternal.tripFuel) * 100;
+					if (scratchpad / fmgc.FMGCInternal.tripFuel * 100 <= 15.0) {
+						fmgc.FMGCInternal.rtePercent = scratchpad / fmgc.FMGCInternal.tripFuel * 100;
 					} else {
 						fmgc.FMGCInternal.rtePercent = 15.0; # need reasearch on this value
 					}
@@ -110,7 +110,7 @@ var fuelPredInput = func(key, i) {
 				fmgc.FMGCInternal.minDestFobSet = 1;
 				setprop("/FMGC/internal/fuel-calculating", 1);
 				mcdu_scratchpad.scratchpads[i].empty();
-				if (num(fmgc.FMGCInternal.minDestFob) < num(fmgc.FMGCInternal.finalFuel + fmgc.FMGCInternal.altFuel)) {
+				if (fmgc.FMGCInternal.minDestFob < fmgc.FMGCInternal.finalFuel + fmgc.FMGCInternal.altFuel) {
 					mcdu_message(i, "CHECK MIN DEST FOB");
 				}
 			} else {
@@ -130,7 +130,7 @@ var fuelPredInput = func(key, i) {
 				fmgc.FMGCInternal.zfw = sprintf("%3.1f", math.round(zfw / 1000, 0.1));
 				fmgc.FMGCInternal.zfwSet = 1;
 				if (fmgc.FMGCInternal.blockSet != 1) {
-					fmgc.FMGCInternal.block = num(getprop("consumables/fuel/total-fuel-lbs") / 1000);
+					fmgc.FMGCInternal.block = getprop("consumables/fuel/total-fuel-lbs") / 1000;
 					fmgc.FMGCInternal.blockSet = 1;
 					setprop("/FMGC/internal/fuel-request-set", 1);
 					setprop("/FMGC/internal/fuel-calculating", 1);
@@ -151,7 +151,7 @@ var fuelPredInput = func(key, i) {
 						fmgc.FMGCInternal.zfwcg = zfwcg;
 						fmgc.FMGCInternal.zfwcgSet = 1;
 						if (fmgc.FMGCInternal.blockSet != 1) {
-							fmgc.FMGCInternal.block = num(getprop("consumables/fuel/total-fuel-lbs") / 1000);
+							fmgc.FMGCInternal.block = getprop("consumables/fuel/total-fuel-lbs") / 1000;
 							fmgc.FMGCInternal.blockSet = 1;
 							setprop("/FMGC/internal/fuel-request-set", 1);
 							setprop("/FMGC/internal/fuel-calculating", 1);
@@ -178,7 +178,7 @@ var fuelPredInput = func(key, i) {
 					fmgc.FMGCInternal.zfw = scratchpad;
 					fmgc.FMGCInternal.zfwSet = 1;
 					if (fmgc.FMGCInternal.blockSet != 1) {
-						fmgc.FMGCInternal.block = num(getprop("consumables/fuel/total-fuel-lbs") / 1000);
+						fmgc.FMGCInternal.block = getprop("consumables/fuel/total-fuel-lbs") / 1000;
 						fmgc.FMGCInternal.blockSet = 1;
 						setprop("/FMGC/internal/fuel-request-set", 1);
 						setprop("/FMGC/internal/fuel-calculating", 1);

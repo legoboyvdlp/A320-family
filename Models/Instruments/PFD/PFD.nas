@@ -1207,7 +1207,7 @@ var canvas_PFD_1 = {
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
-				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
+				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.FMGC_vls >= 420) {
@@ -1231,7 +1231,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
-				me.FMGC_vsw = getprop("/FMGC/internal/computed-speeds/vsw");
+				me.FMGC_vsw = fmgc.FMGCInternal.vsw;
 				if (me.FMGC_vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
 				} else if (me.FMGC_vsw >= 420) {
@@ -1262,14 +1262,14 @@ var canvas_PFD_1 = {
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					if (getprop("/FMGC/internal/vapp-speed-set")) {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+						vapp = fmgc.FMGCInternal.vapp;
 					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (fmgc.FMGCInternal.phase == 6) {
-					clean = getprop("/FMGC/internal/computed-speeds/clean");
+					clean = fmgc.FMGCInternal.clean;
 					tgt_ias = clean;
 					tgt_kts = clean;
 				}
@@ -1409,7 +1409,7 @@ var canvas_PFD_1 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = getprop("/FMGC/internal/computed-speeds/slat");
+				tgt_S = fmgc.FMGCInternal.slat;
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -1443,7 +1443,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = getprop("/FMGC/internal/computed-speeds/flap2");
+				tgt_F = fmgc.FMGCInternal.flap2;
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1477,7 +1477,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = getprop("/FMGC/internal/computed-speeds/flap3");
+				tgt_F = fmgc.FMGCInternal.flap3;
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1516,7 +1516,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = getprop("/FMGC/internal/computed-speeds/clean");
+				tgt_clean = fmgc.FMGCInternal.clean;
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
@@ -1945,7 +1945,7 @@ var canvas_PFD_2 = {
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
-				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
+				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.FMGC_vls >= 420) {
@@ -1969,7 +1969,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
-				me.FMGC_vsw = getprop("/FMGC/internal/computed-speeds/vsw");
+				me.FMGC_vsw = fmgc.FMGCInternal.vsw;
 				if (me.FMGC_vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
 				} else if (me.FMGC_vsw >= 420) {
@@ -2000,14 +2000,14 @@ var canvas_PFD_2 = {
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					if (getprop("/FMGC/internal/vapp-speed-set")) {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+						vapp = fmgc.FMGCInternal.vapp;
 					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (fmgc.FMGCInternal.phase == 6) {
-					clean = getprop("/FMGC/internal/computed-speeds/clean");
+					clean = fmgc.FMGCInternal.clean;
 					tgt_ias = clean;
 					tgt_kts = clean;
 				}
@@ -2148,7 +2148,7 @@ var canvas_PFD_2 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = tgt_S = getprop("/FMGC/internal/computed-speeds/slat");
+				tgt_S = tgt_S = fmgc.FMGCInternal.slat;
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -2182,7 +2182,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = getprop("/FMGC/internal/computed-speeds/flap2");
+				tgt_F = tgt_S = fmgc.FMGCInternal.flap2;
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2216,7 +2216,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = getprop("/FMGC/internal/computed-speeds/flap3");
+				tgt_F = tgt_S = fmgc.FMGCInternal.flap3;
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2255,7 +2255,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = tgt_S = getprop("/FMGC/internal/computed-speeds/clean");
+				tgt_clean = tgt_S = fmgc.FMGCInternal.clean;
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
