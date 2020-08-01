@@ -50,6 +50,13 @@ var SimbriefParser = {
 		fmgc.FMGCInternal.crzTemp = (((me.store1.getChild("initial_altitude").getValue() / 1000) * -2) + 15) + me.store1.getChild("avg_temp_dev").getValue();
 		fmgc.FMGCInternal.crzTempSet = 1;
 		fmgc.FMGCInternal.crzProg = me.store1.getChild("initial_altitude").getValue() / 100;
+		if (me.store1.getChild("avg_wind_comp").getValue() >= 0) {
+			setprop("/FMGC/internal/trip-wind", "TL" ~ me.store1.getChild("avg_wind_comp").getValue());
+			setprop("/FMGC/internal/trip-wind-value", me.store1.getChild("avg_wind_comp").getValue());
+		} else {
+			setprop("/FMGC/internal/trip-wind", "HD" ~ me.store1.getChild("avg_wind_comp").getValue());
+			setprop("/FMGC/internal/trip-wind-value", me.store1.getChild("avg_wind_comp").getValue());
+		}
 		
 		fmgc.FMGCInternal.altAirport = me.store2.getChild("icao_code").getValue();
 		fmgc.FMGCInternal.altAirportSet = 1;
@@ -70,16 +77,85 @@ var SimbriefParser = {
 		fmgc.FMGCInternal.altSelected = 0;
 		fmgc.updateArptLatLon();
 		fmgc.updateARPT();
+		call(func() {
+			fmgc.flightPlanController.flightplans[3].departure_runway = airportinfo(fmgc.FMGCInternal.depApt).runways[me.store1.getChild("plan_rwy").getValue()];
+			fmgc.flightPlanController.flightplans[3].destination_runway = airportinfo(fmgc.FMGCInternal.arrApt).runways[me.store2.getChild("plan_rwy").getValue()];
+		});
 		
+		me.store1 = me.OFP.getChild("navlog").getChildren();
+		var firstIsSID = 0;
+		var SIDID = "";
+		if (me.store1[0].getChild("is_sid_star").getValue() == 1) {
+			if (fmgc.flightPlanController.flightplans[3].departure.getSid(me.store1[0].getChild("via_airway").getValue()) != nil) {
+				firstIsSID = 1;
+				SIDID = me.store1[0].getChild("via_airway").getValue();
+			}
+		}
+		var lastIsSTAR = 0;
+		var STARID = "";
+		if (me.store1[-1].getChild("is_sid_star").getValue() == 1) {
+			if (fmgc.flightPlanController.flightplans[3].destination.getStar(me.store1[-1].getChild("via_airway").getValue()) != nil) {
+				lastIsSTAR = 1;
+				STARID = me.store1[-1].getChild("via_airway").getValue();
+			}
+		}
 		
+		var lastSIDIndex = -999;
+		var firstSTARIndex = -999;
+		var TOCinSIDflag = 0;
+		var TODinSTARflag = 0;
+		for (var i = 0; i < size(me.store1); i = i + 1) {
+			if (firstIsSID) {
+				if (me.store1[i].getChild("is_sid_star").getValue() == 0 or me.store1[i].getChild("via_airway").getValue() != SIDID) {
+					lastSIDIndex = i - 1;
+					break;
+				}
+			}
+		}
+			
+		for (var i = lastSIDIndex == -999 ? 0 : lastSIDIndex; i < size(me.store1); i = i + 1) {
+			if (STARID != "") {
+				if (me.store1[i].getChild("is_sid_star").getValue() == 1 and me.store1[i].getChild("via_airway").getValue() == STARID) {
+					firstSTARIndex = i;
+					break;
+				}
+			}
+		}
+		
+		var max = firstSTARIndex == -999 ? size(me.store1) - 1 : firstSTARIndex - 1;
+		for (var i = lastSIDIndex == -999 ? 0 : lastSIDIndex + 2; i < max; i = i + 1) {
+			if (me.store1[i].getChild("ident").getValue() == "TOC" or me.store1[i].getChild("ident").getValue() == "TOD") { continue; }
+			var coord = geo.Coord.new();
+			coord.set_latlon(me.store1[i].getChild("pos_lat").getValue(), me.store1[i].getChild("pos_long").getValue());
+			var WP = createWP(coord, me.store1[i].getChild("ident").getValue());
+			fmgc.flightPlanController.flightplans[3].appendWP(WP);
+		}
+		fmgc.flightPlanController.flightplans[3].sid = fmgc.flightPlanController.flightplans[3].departure.getSid(SIDID);
+		fmgc.flightPlanController.flightplans[3].star = fmgc.flightPlanController.flightplans[3].destination.getStar(STARID);
 		fmgc.flightPlanController.destroyTemporaryFlightPlan(3, 1);
 		
 		fmgc.windController.updatePlans();
 		fmgc.updateRouteManagerAlt();
-		if (getprop("/FMGC/internal/block-confirmed")) {
-			setprop("/FMGC/internal/fuel-calculating", 0);
-			setprop("/FMGC/internal/fuel-calculating", 1);
+		
+		
+		# INITB
+		me.store1 = me.OFP.getChild("fuel");
+		setprop("/FMGC/internal/taxi-fuel", me.store1.getChild("taxi").getValue() / 1000);
+		setprop("/FMGC/internal/taxi-fuel-set", 1);
+		setprop("/FMGC/internal/alt-fuel", me.store1.getChild("alternate_burn").getValue() / 1000);
+		setprop("/FMGC/internal/alt-fuel-set", 1);
+		setprop("/FMGC/internal/final-fuel", me.store1.getChild("reserve").getValue() / 1000);
+		setprop("/FMGC/internal/final-fuel-set", 1);
+		setprop("/FMGC/internal/rte-rsv", me.store1.getChild("contingency").getValue() / 1000);
+		setprop("/FMGC/internal/rte-rsv-set", 1);
+		if ((me.store1.getChild("contingency").getValue() / 1000) / num(getprop("/FMGC/internal/trip-fuel")) * 100 <= 15.0) {
+			setprop("/FMGC/internal/rte-percent", (me.store1.getChild("contingency").getValue() / 1000) / num(getprop("/FMGC/internal/trip-fuel")) * 100);
+		} else {
+			setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
 		}
+		setprop("/FMGC/internal/block",  me.store1.getChild("plan_ramp").getValue() / 1000);
+		setprop("/FMGC/internal/block-set", 1);
+		setprop("/FMGC/internal/block-calculating", 0);
 		
 	},
 };

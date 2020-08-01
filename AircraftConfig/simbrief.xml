@@ -49,7 +49,11 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>4. Please enter your username in the following dialog box (not case sensitive)</label>
+			<label>4. If you don't have the SID / STAR in Navigraph data, it won't work!</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>5. Please enter your username in the following dialog box (not case sensitive)</label>
 		</text>
 		<group>
 			<layout>hbox</layout>
