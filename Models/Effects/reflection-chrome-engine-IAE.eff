@@ -13,7 +13,7 @@
 		<lightmap-multi type="int">0</lightmap-multi>
 		<normalmap-enabled type="int">1</normalmap-enabled>
 		<texture n="2">
-			<image>Aircraft/A320-family/Models/Effects/res/Fuse-Main-Normal.png</image>
+			<image>Aircraft/A320-family/Models/Effects/res/Engine-IAE-V2500-Normal.png</image>
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
 		</texture>
