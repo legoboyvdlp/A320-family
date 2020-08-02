@@ -898,7 +898,7 @@ var reset_FMGC = func {
 #################
 
 var ManagedSPD = maketimer(0.25, func {
-	if (FMGCInternal.crzSet and FMGCInternal.costIndex) {
+	if (FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
 		if (getprop("/it-autoflight/input/spd-managed") == 1) {
 			altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 			mode = getprop("/modes/pfd/fma/pitch-mode");
