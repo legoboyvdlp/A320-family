@@ -647,23 +647,29 @@
 		<fcs_function name="/systems/pressurization/cabin-altitude">
 			<function>
 				<product>
-					<v>-1</v>
 					<quotient>
-						<sum>
-							<pow>
-								<quotient>
-									<product>
-										<property>/systems/pressurization/cabin-pressure-psi</property>
-										<v>6894.76</v>
-									</product>
-									<v>101325</v>
-								</quotient>
-								<v>0.19026309698</v>
-							</pow>
-							<v>-1</v>
-						</sum>
-						<v>0.0000225577</v>
+						<product>
+							<sum>
+								<pow>
+									<quotient>
+										<v>1013.25</v>
+										<product>
+											<property>/systems/pressurization/cabin-pressure-psi</property>
+											<v>68.9476</v>
+										</product>
+									</quotient>
+									<v>0.19022256039</v>
+								</pow>
+								<v>-1</v>
+							</sum>	
+							<sum>
+								<v>273.15</v>
+								<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
+							</sum>
+						</product>
+						<v>0.0065</v>
 					</quotient>
+					<v>1.450376807</v>
 				</product>
 			</function>
 		</fcs_function>
