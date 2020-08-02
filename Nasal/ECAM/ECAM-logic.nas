@@ -2426,6 +2426,7 @@ var messages_right_memo = func {
 	} else {
 		vhf3_voice.active = 0;
 	}
+	
 	if (getprop("controls/autobrake/mode") == 1 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_lo.active = 1;
 	} else {
