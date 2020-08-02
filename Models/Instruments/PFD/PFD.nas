@@ -73,7 +73,6 @@ var alt_diff = props.globals.getNode("/instrumentation/pfd/alt-diff", 1);
 var ground_diff = props.globals.getNode("/instrumentation/pfd/ground-diff", 1);
 var landing_diff = props.globals.getNode("/instrumentation/pfd/landing-diff", 1);
 var ap_alt = props.globals.getNode("/it-autoflight/internal/alt", 1);
-var alt_agl = props.globals.getNode("/position/altitude-agl-ft", 1);
 var vs_needle = props.globals.getNode("/instrumentation/pfd/vs-needle", 1);
 var vs_digit = props.globals.getNode("/instrumentation/pfd/vs-digit-trans", 1);
 var ap_vs_pfd = props.globals.getNode("/it-autoflight/internal/vert-speed-fpm-pfd", 1);
@@ -131,8 +130,6 @@ var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
 # Create Nodes:
-var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
-var vs_needle_trans = props.globals.initNode("/instrumentation/pfd/vs-digit-trans", 0.0, "DOUBLE");
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
 var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
 var landing_diff = props.globals.initNode("/instrumentation/pfd/landing-diff", 0.0, "DOUBLE");
@@ -889,6 +886,19 @@ var canvas_PFD_base = {
 			me["VS_digit"].setText(sprintf("%02d", vs_pfd_cur));
 		}
 		
+		var vs_itaf = fmgc.Internal.vs.getValue();
+		var gearAgl = gear_agl.getValue();
+		
+		if (abs(vs_itaf) >= 6000 or (vs_itaf <= -2000 and gearAgl <= 2500) or (vs_itaf <= -1200 and gearAgl <= 1000)) {
+			me["VS_digit"].setColor(0.7333,0.3803,0);
+			me["VS_pointer"].setColor(0.7333,0.3803,0);
+			me["VS_pointer"].setColorFill(0.7333,0.3803,0);
+		} else {
+			me["VS_digit"].setColor(0.0509,0.7529,0.2941);
+			me["VS_pointer"].setColor(0.0509,0.7529,0.2941);
+			me["VS_pointer"].setColorFill(0.0509,0.7529,0.2941);
+		}
+		
 		# ILS		
 		me["LOC_pointer"].setTranslation(loc.getValue() * 197, 0);	
 		me["GS_pointer"].setTranslation(0, gs.getValue() * -197);
@@ -1531,7 +1541,7 @@ var canvas_PFD_1 = {
 				}
 			}
 			
-			if (alt_agl.getValue() < 400) {
+			if (gear_agl.getValue() < 400) {
 				me["S_target"].hide();
 				me["F_target"].hide();
 			}
@@ -2270,7 +2280,7 @@ var canvas_PFD_2 = {
 				}
 			}
 			
-			if (alt_agl.getValue() < 400) {
+			if (gear_agl.getValue() < 400) {
 				me["S_target"].hide();
 				me["F_target"].hide();
 			}
