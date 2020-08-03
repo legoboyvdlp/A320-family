@@ -269,6 +269,15 @@
 							</script>
 						</binding>
 					</item>
+					<item>
+						<label>Simbrief</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								acconfig.simbrief_dlg.open();
+							</script>
+						</binding>
+					</item>
 				</menu>
 				<menu n="103">
 					<label>DU</label>
@@ -633,7 +642,9 @@
 		<active-fmgc-channel type="int">0</active-fmgc-channel>
 		<internal>
 			<cost-index type="int">0</cost-index>
+			<to-state type="bool">0</to-state>
 		</internal>
+		<simbrief-username type="string"></simbrief-username>
 	</FMGC>
 	
 	<controls>
@@ -1372,6 +1383,14 @@
 		<steep-ils-avail type="bool">0</steep-ils-avail>
 		<enable-ecam-actions>0</enable-ecam-actions>
 		<test-canvas type="bool">0</test-canvas>
+		<model-options>
+			<registration type="string">G-EZTB</registration>
+			<three-letter type="string">EZY</three-letter>
+			<two-letter type="string">U2</two-letter>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft> <!-- Iridium / inmarsat satcom + wireless -->
+			<wifi-fwd type="bool">0</wifi-fwd> <!-- Fly-fy-->
+		</model-options>
 	</options>
 	
 	<instrumentation n="0">
@@ -4201,7 +4220,6 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/brakes.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/brakesystem.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fire.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
@@ -4243,6 +4261,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
@@ -4314,6 +4333,9 @@
 		<atc>
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
+		<atsu>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
+		</atsu>
 		<dmc>
 			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
 		</dmc>
@@ -4324,6 +4346,9 @@
 		<save>
 			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
 		</save>
+		<Simbrief>
+			<file>Aircraft/A320-family/Nasal/FMGC/SimbriefParser.nas</file>
+		</Simbrief>
 	</nasal>
 
 	<maintainance>

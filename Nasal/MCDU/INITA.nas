@@ -175,6 +175,7 @@ var initInputA = func(key, i) {
 			fmgc.FMGCInternal.arrApt = "";
 			fmgc.FMGCInternal.toFromSet = 0;
 			fmgc.FMGCNodes.toFromSet.setValue(0);
+			fmgc.windController.resetDesWinds();
 			setprop("/FMGC/internal/align-ref-lat", 0);
 			setprop("/FMGC/internal/align-ref-long", 0);
 			setprop("/FMGC/internal/align-ref-lat-edit", 0);
@@ -184,9 +185,8 @@ var initInputA = func(key, i) {
 				setprop("/FMGC/internal/fuel-calculating", 1);
 			}
 			fmgc.flightPlanController.reset(2);
-			fmgc.windController.reset(2);
 			fmgc.flightPlanController.init();
-			fmgc.windController.init();
+			Simbrief.SimbriefParser.inhibit = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
@@ -200,6 +200,9 @@ var initInputA = func(key, i) {
 					var tos = size(fromto[1]);
 					if (froms == 4 and tos == 4) {
 						#route
+						if (fmgc.FMGCInternal.toFromSet == 1 and fmgc.FMGCInternal.arrApt != fromto[1]) {
+							fmgc.windController.resetDesWinds();
+						}
 						fmgc.FMGCInternal.depApt = fromto[0];
 						fmgc.FMGCInternal.arrApt = fromto[1];
 						fmgc.FMGCInternal.toFromSet = 1;
@@ -208,25 +211,7 @@ var initInputA = func(key, i) {
 						mcdu_scratchpad.scratchpads[i].empty();
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
-						#ref lat
-						dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
-						degrees = int(dms);
-						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-						sign = degrees >= 0 ? "N" : "S";
-						setprop("/FMGC/internal/align-ref-lat-degrees", degrees);
-						setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
-						setprop("/FMGC/internal/align-ref-lat-sign", sign);
-						#ref long
-						dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
-						degrees = int(dms);
-						minutes = sprintf("%.1f",abs((dms - degrees) * 60));
-						sign = degrees >= 0 ? "E" : "W";
-						setprop("/FMGC/internal/align-ref-long-degrees", degrees);
-						setprop("/FMGC/internal/align-ref-long-minutes", minutes);
-						setprop("/FMGC/internal/align-ref-long-sign", sign);
-						#ref edit
-						setprop("/FMGC/internal/align-ref-lat-edit", 0);
-						setprop("/FMGC/internal/align-ref-long-edit", 0);
+						fmgc.updateArptLatLon();
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
@@ -237,6 +222,18 @@ var initInputA = func(key, i) {
 			} else {
 				mcdu_message(i, "TMPY F-PLN EXISTS");
 			}
+		}
+	} else if (key == "R2") {
+		if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
+			if (getprop("/FMGC/simbrief-username") == "") {
+				mcdu.mcdu_message(i, "MISSING USERNAME")
+			} elsif (!Simbrief.SimbriefParser.inhibit) {
+				Simbrief.SimbriefParser.fetch(getprop("/FMGC/simbrief-username"), i);
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
+		} else {
+			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R3") {
 		setprop("MCDU[" ~ i ~ "]/page", "IRSINIT");

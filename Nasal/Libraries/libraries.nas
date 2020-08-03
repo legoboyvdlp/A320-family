@@ -188,7 +188,7 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.eng_init();
 	systems.APUController.init();
-	systems.autobrake_init();
+	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
 	fmgc.windController.reset();
@@ -212,6 +212,7 @@ var systemsInit = func {
 	dmc.DMController.init();
 	fmgc.flightPlanController.init();
 	fmgc.windController.init();
+	atsu.CompanyCall.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
@@ -243,6 +244,7 @@ var systemsLoop = maketimer(0.1, func {
 	dmc.DMController.loop();
 	systems.APUController.loop();
 	systems.HFLoop();
+	atsu.ATSU.loop();
 	
 	groundspeed = pts.Velocities.groundspeed.getValue();
 	if ((groundAir.getBoolValue() or groundCart.getBoolValue()) and ((groundspeed > 2) or (!pts.Controls.Gear.parkingBrake.getBoolValue() and !chocks.getBoolValue()))) {
@@ -530,7 +532,7 @@ setlistener("/controls/flight/auto-coordination", func {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
-});
+}, 0, 0);
 
 ##############
 # Legacy FCU #

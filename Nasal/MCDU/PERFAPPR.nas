@@ -30,8 +30,10 @@ var perfAPPRInput = func(key, i) {
 	} else if (key == "L3") {
 		var tfs = size(scratchpad);
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/dest-mag", -1);
-			setprop("/FMGC/internal/dest-wind", -1);
+			fmgc.FMGCInternal.destMag = 0;
+			fmgc.FMGCInternal.destMagSet = 0;
+			fmgc.FMGCInternal.destWind = 0;
+			fmgc.FMGCInternal.destWindSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (tfs >= 3 and tfs <= 7 and find("/", scratchpad) != -1) {
 			var weather = split("/", scratchpad);
@@ -39,8 +41,10 @@ var perfAPPRInput = func(key, i) {
 			var winds = size(weather[1]);
 			if (mags >= 1 and mags <= 3 and winds >= 1 and winds <= 3) {
 				if (num(weather[0]) != nil and num(weather[1]) != nil and int(weather[0]) >= 0 and int(weather[0]) <= 360 and int(weather[1]) >= 0 and int(weather[1]) <= 200) {
-					setprop("/FMGC/internal/dest-mag", weather[0]);
-					setprop("/FMGC/internal/dest-wind", weather[1]);
+					fmgc.FMGCInternal.destMag = weather[0];
+					fmgc.FMGCInternal.destMagSet = 1;
+					fmgc.FMGCInternal.destWind = weather[1];
+					fmgc.FMGCInternal.destWindSet = 1;
 					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
 				} else {
