@@ -330,9 +330,9 @@ updateRouteManagerAlt = func() {
 
 var updateFuel = func {
 	# Check engine status
-	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
-		FMGCInternal.block = sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1));
-	}
+	# if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
+	# 		FMGCInternal.block = sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1));
+	# }
 
 	# Calculate (final) holding fuel
 	if (FMGCInternal.finalFuelSet) {
