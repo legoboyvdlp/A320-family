@@ -139,6 +139,7 @@ var SimbriefParser = {
 		
 		# INITB
 		me.store1 = me.OFP.getChild("fuel");
+		me.store2 = me.OFP.getChild("weights");
 		fmgc.FMGCInternal.taxiFuel = me.store1.getChild("taxi").getValue() / 1000;
 		fmgc.FMGCInternal.taxiFuelSet = 1;
 		fmgc.FMGCInternal.altFuel = me.store1.getChild("alternate_burn").getValue() / 1000;
@@ -153,9 +154,15 @@ var SimbriefParser = {
 			fmgc.FMGCInternal.rtePercent = 15.0
 		}
 		fmgc.FMGCInternal.rtePercentSet = 0;
-		fmgc.FMGCInternal.block =  me.store1.getChild("plan_ramp").getValue() / 1000;
+		fmgc.FMGCInternal.block = me.store1.getChild("plan_ramp").getValue() / 1000;
 		fmgc.FMGCInternal.blockSet = 1;
+		fmgc.FMGCInternal.zfw = me.store2.getChild("est_zfw").getValue() / 1000;
+		fmgc.FMGCInternal.zfwSet = 1;
+		fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
+		setprop("/FMGC/internal/fuel-request-set", 1);
+		setprop("/FMGC/internal/fuel-calculating", 1);
 		setprop("/FMGC/internal/block-calculating", 0);
+		setprop("/FMGC/internal/block-confirmed", 1);
 		
 	},
 };
