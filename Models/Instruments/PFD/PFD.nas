@@ -73,7 +73,6 @@ var alt_diff = props.globals.getNode("/instrumentation/pfd/alt-diff", 1);
 var ground_diff = props.globals.getNode("/instrumentation/pfd/ground-diff", 1);
 var landing_diff = props.globals.getNode("/instrumentation/pfd/landing-diff", 1);
 var ap_alt = props.globals.getNode("/it-autoflight/internal/alt", 1);
-var alt_agl = props.globals.getNode("/position/altitude-agl-ft", 1);
 var vs_needle = props.globals.getNode("/instrumentation/pfd/vs-needle", 1);
 var vs_digit = props.globals.getNode("/instrumentation/pfd/vs-digit-trans", 1);
 var ap_vs_pfd = props.globals.getNode("/it-autoflight/internal/vert-speed-fpm-pfd", 1);
@@ -131,8 +130,6 @@ var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
 # Create Nodes:
-var vs_needle = props.globals.initNode("/instrumentation/pfd/vs-needle", 0.0, "DOUBLE");
-var vs_needle_trans = props.globals.initNode("/instrumentation/pfd/vs-digit-trans", 0.0, "DOUBLE");
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
 var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
 var landing_diff = props.globals.initNode("/instrumentation/pfd/landing-diff", 0.0, "DOUBLE");
@@ -889,6 +886,19 @@ var canvas_PFD_base = {
 			me["VS_digit"].setText(sprintf("%02d", vs_pfd_cur));
 		}
 		
+		var vs_itaf = fmgc.Internal.vs.getValue();
+		var gearAgl = gear_agl.getValue();
+		
+		if (abs(vs_itaf) >= 6000 or (vs_itaf <= -2000 and gearAgl <= 2500) or (vs_itaf <= -1200 and gearAgl <= 1000)) {
+			me["VS_digit"].setColor(0.7333,0.3803,0);
+			me["VS_pointer"].setColor(0.7333,0.3803,0);
+			me["VS_pointer"].setColorFill(0.7333,0.3803,0);
+		} else {
+			me["VS_digit"].setColor(0.0509,0.7529,0.2941);
+			me["VS_pointer"].setColor(0.0509,0.7529,0.2941);
+			me["VS_pointer"].setColorFill(0.0509,0.7529,0.2941);
+		}
+		
 		# ILS		
 		me["LOC_pointer"].setTranslation(loc.getValue() * 197, 0);	
 		me["GS_pointer"].setTranslation(0, gs.getValue() * -197);
@@ -1197,7 +1207,7 @@ var canvas_PFD_1 = {
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
-				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
+				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.FMGC_vls >= 420) {
@@ -1221,7 +1231,7 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
-				me.FMGC_vsw = getprop("/FMGC/internal/computed-speeds/vsw");
+				me.FMGC_vsw = fmgc.FMGCInternal.vsw;
 				if (me.FMGC_vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
 				} else if (me.FMGC_vsw >= 420) {
@@ -1252,14 +1262,14 @@ var canvas_PFD_1 = {
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					if (getprop("/FMGC/internal/vapp-speed-set")) {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+						vapp = fmgc.FMGCInternal.vapp;
 					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (fmgc.FMGCInternal.phase == 6) {
-					clean = getprop("/FMGC/internal/computed-speeds/clean");
+					clean = fmgc.FMGCInternal.clean;
 					tgt_ias = clean;
 					tgt_kts = clean;
 				}
@@ -1399,7 +1409,7 @@ var canvas_PFD_1 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = getprop("/FMGC/internal/computed-speeds/slat");
+				tgt_S = fmgc.FMGCInternal.slat;
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -1433,7 +1443,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = getprop("/FMGC/internal/computed-speeds/flap2");
+				tgt_F = fmgc.FMGCInternal.flap2;
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1467,7 +1477,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = getprop("/FMGC/internal/computed-speeds/flap3");
+				tgt_F = fmgc.FMGCInternal.flap3;
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -1506,7 +1516,7 @@ var canvas_PFD_1 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = getprop("/FMGC/internal/computed-speeds/clean");
+				tgt_clean = fmgc.FMGCInternal.clean;
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
@@ -1531,7 +1541,7 @@ var canvas_PFD_1 = {
 				}
 			}
 			
-			if (alt_agl.getValue() < 400) {
+			if (gear_agl.getValue() < 400) {
 				me["S_target"].hide();
 				me["F_target"].hide();
 			}
@@ -1935,7 +1945,7 @@ var canvas_PFD_2 = {
 			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
-				me.FMGC_vls = getprop("/FMGC/internal/computed-speeds/vls_min");
+				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
 				if (me.FMGC_vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.FMGC_vls >= 420) {
@@ -1959,7 +1969,7 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
 				}
-				me.FMGC_vsw = getprop("/FMGC/internal/computed-speeds/vsw");
+				me.FMGC_vsw = fmgc.FMGCInternal.vsw;
 				if (me.FMGC_vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
 				} else if (me.FMGC_vsw >= 420) {
@@ -1990,14 +2000,14 @@ var canvas_PFD_2 = {
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
 					if (getprop("/FMGC/internal/vapp-speed-set")) {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp_appr");
+						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
-						vapp = getprop("/FMGC/internal/computed-speeds/vapp");
+						vapp = fmgc.FMGCInternal.vapp;
 					}
 					tgt_ias = vapp;
 					tgt_kts = vapp;
 				} else if (fmgc.FMGCInternal.phase == 6) {
-					clean = getprop("/FMGC/internal/computed-speeds/clean");
+					clean = fmgc.FMGCInternal.clean;
 					tgt_ias = clean;
 					tgt_kts = clean;
 				}
@@ -2138,7 +2148,7 @@ var canvas_PFD_2 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = tgt_S = getprop("/FMGC/internal/computed-speeds/slat");
+				tgt_S = tgt_S = fmgc.FMGCInternal.slat;
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -2172,7 +2182,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = getprop("/FMGC/internal/computed-speeds/flap2");
+				tgt_F = tgt_S = fmgc.FMGCInternal.flap2;
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2206,7 +2216,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = getprop("/FMGC/internal/computed-speeds/flap3");
+				tgt_F = tgt_S = fmgc.FMGCInternal.flap3;
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2245,7 +2255,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = tgt_S = getprop("/FMGC/internal/computed-speeds/clean");
+				tgt_clean = tgt_S = fmgc.FMGCInternal.clean;
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
@@ -2270,7 +2280,7 @@ var canvas_PFD_2 = {
 				}
 			}
 			
-			if (alt_agl.getValue() < 400) {
+			if (gear_agl.getValue() < 400) {
 				me["S_target"].hide();
 				me["F_target"].hide();
 			}
