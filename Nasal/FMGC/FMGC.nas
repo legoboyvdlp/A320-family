@@ -329,11 +329,6 @@ updateRouteManagerAlt = func() {
 #
 
 var updateFuel = func {
-	# Check engine status
-	# if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
-	# 		FMGCInternal.block = sprintf("%3.1f", math.round(getprop("/consumables/fuel/total-fuel-lbs") / 1000, 0.1));
-	# }
-
 	# Calculate (final) holding fuel
 	if (FMGCInternal.finalFuelSet) {
 		final_fuel = 1000 * FMGCInternal.finalFuel;
@@ -485,9 +480,23 @@ var updateFuel = func {
 		}
 	}
 	
+	# extra fuel calcs
+	updateEnrouteFuel();
+	
+	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
+}
+
+var updateEnrouteFuel = func {
+	fmgc.FMGCInternal.fob = num(getprop("/consumables/fuel/total-fuel-lbs") / 1000);
+	fmgc.FMGCInternal.fuelPredGw = num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000);
+	
 	# Calcualte extra fuel
 	if (FMGCInternal.blockSet) {
-		extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+		if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
+			extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+		} else {
+			extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+		}
 		FMGCInternal.extraFuel = extra_fuel / 1000;
 		lw = 1000 * FMGCInternal.lw;
 		extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
@@ -506,12 +515,11 @@ var updateFuel = func {
 		if (FMGCInternal.extraFuel > -0.1 and FMGCInternal.extraFuel < 0.1) {
 			FMGCInternal.extraFuel = 0.0;
 		}
-	} else {
-		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
-		FMGCInternal.blockSet = 1;
 	}
-	
-	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
+	# else {
+# 		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
+# 		FMGCInternal.blockSet = 1;
+# 	}
 }
 
 ############################
@@ -701,6 +709,11 @@ var masterFMGC = maketimer(0.2, func {
 	} else {
 		FMGCInternal.maxspeed = getprop("/it-fbw/speeds/vmo-mmo");
 	}
+	
+	############################
+	# fuel
+	############################
+	updateEnrouteFuel();
 	
 	############################
 	# calculate speeds
