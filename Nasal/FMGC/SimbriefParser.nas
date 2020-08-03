@@ -51,12 +51,11 @@ var SimbriefParser = {
 		fmgc.FMGCInternal.crzTempSet = 1;
 		fmgc.FMGCInternal.crzProg = me.store1.getChild("initial_altitude").getValue() / 100;
 		if (me.store1.getChild("avg_wind_comp").getValue() >= 0) {
-			setprop("/FMGC/internal/trip-wind", "TL" ~ me.store1.getChild("avg_wind_comp").getValue());
-			setprop("/FMGC/internal/trip-wind-value", me.store1.getChild("avg_wind_comp").getValue());
+			fmgc.FMGCInternal.tripWind = "TL" ~ me.store1.getChild("avg_wind_comp").getValue();
 		} else {
-			setprop("/FMGC/internal/trip-wind", "HD" ~ me.store1.getChild("avg_wind_comp").getValue());
-			setprop("/FMGC/internal/trip-wind-value", me.store1.getChild("avg_wind_comp").getValue());
+			fmgc.FMGCInternal.tripWind = "HD" ~ me.store1.getChild("avg_wind_comp").getValue();
 		}
+		fmgc.FMGCInternal.tripWindValue = me.store1.getChild("avg_wind_comp").getValue();
 		
 		fmgc.FMGCInternal.altAirport = me.store2.getChild("icao_code").getValue();
 		fmgc.FMGCInternal.altAirportSet = 1;
@@ -140,21 +139,22 @@ var SimbriefParser = {
 		
 		# INITB
 		me.store1 = me.OFP.getChild("fuel");
-		setprop("/FMGC/internal/taxi-fuel", me.store1.getChild("taxi").getValue() / 1000);
-		setprop("/FMGC/internal/taxi-fuel-set", 1);
-		setprop("/FMGC/internal/alt-fuel", me.store1.getChild("alternate_burn").getValue() / 1000);
-		setprop("/FMGC/internal/alt-fuel-set", 1);
-		setprop("/FMGC/internal/final-fuel", me.store1.getChild("reserve").getValue() / 1000);
-		setprop("/FMGC/internal/final-fuel-set", 1);
-		setprop("/FMGC/internal/rte-rsv", me.store1.getChild("contingency").getValue() / 1000);
-		setprop("/FMGC/internal/rte-rsv-set", 1);
-		if ((me.store1.getChild("contingency").getValue() / 1000) / num(getprop("/FMGC/internal/trip-fuel")) * 100 <= 15.0) {
-			setprop("/FMGC/internal/rte-percent", (me.store1.getChild("contingency").getValue() / 1000) / num(getprop("/FMGC/internal/trip-fuel")) * 100);
+		fmgc.FMGCInternal.taxiFuel = me.store1.getChild("taxi").getValue() / 1000;
+		fmgc.FMGCInternal.taxiFuelSet = 1;
+		fmgc.FMGCInternal.altFuel = me.store1.getChild("alternate_burn").getValue() / 1000;
+		fmgc.FMGCInternal.altFuelSet = 1;
+		fmgc.FMGCInternal.finalFuel = me.store1.getChild("reserve").getValue() / 1000;
+		fmgc.FMGCInternal.finalFuelSet = 1;
+		fmgc.FMGCInternal.rteRsv = me.store1.getChild("contingency").getValue() / 1000;
+		fmgc.FMGCInternal.rteRsvSet = 1;
+		if ((me.store1.getChild("contingency").getValue() / 1000) / num(fmgc.FMGCInternal.tripFuel) * 100 <= 15.0) {
+			fmgc.FMGCInternal.rtePercent = (me.store1.getChild("contingency").getValue() / 1000) / num(fmgc.FMGCInternal.tripFuel) * 100;
 		} else {
-			setprop("/FMGC/internal/rte-percent", 15.0); # need reasearch on this value
+			fmgc.FMGCInternal.rtePercent = 15.0
 		}
-		setprop("/FMGC/internal/block",  me.store1.getChild("plan_ramp").getValue() / 1000);
-		setprop("/FMGC/internal/block-set", 1);
+		fmgc.FMGCInternal.rtePercentSet = 0;
+		fmgc.FMGCInternal.block =  me.store1.getChild("plan_ramp").getValue() / 1000;
+		fmgc.FMGCInternal.blockSet = 1;
 		setprop("/FMGC/internal/block-calculating", 0);
 		
 	},
