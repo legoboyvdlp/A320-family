@@ -225,12 +225,20 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "R2") {
 		if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
-			if (getprop("/FMGC/simbrief-username") == "") {
-				mcdu.mcdu_message(i, "MISSING USERNAME")
-			} elsif (!Simbrief.SimbriefParser.inhibit) {
-				Simbrief.SimbriefParser.fetch(getprop("/FMGC/simbrief-username"), i);
+			if (!ecam.vhf3_voice.active) {
+				if (atsu.ATSU.working) {
+					if (getprop("/FMGC/simbrief-username") == "") {
+						mcdu.mcdu_message(i, "MISSING USERNAME")
+					} elsif (!Simbrief.SimbriefParser.inhibit) {
+						Simbrief.SimbriefParser.fetch(getprop("/FMGC/simbrief-username"), i);
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+				} else {
+					mcdu_message(i, "NO COMM MSG NOT GEN");
+				}
 			} else {
-				mcdu_message(i, "NOT ALLOWED");
+				mcdu_message(i, "VHF3 VOICE MSG NOT GEN");
 			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");

@@ -1203,9 +1203,6 @@ var canvas_MCDU_base = {
 				me.colorRightS("grn", "blu", "blu", "wht", "wht", "blu");
 				me.colorRightArrow("wht", "blu", "blu", "wht", "wht", "wht");
 				
-				me["Simple_L1S"].setFontSize(normal);
-				me["Simple_C1S"].setFontSize(normal);
-				me["Simple_R1S"].setFontSize(normal);
 				me["Simple_L1S"].setText(" AUTO");
 				me["Simple_C1S"].setText("SITA725 ");
 				me["Simple_L2S"].setText(" SITA725");
