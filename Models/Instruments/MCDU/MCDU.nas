@@ -2765,10 +2765,6 @@ var canvas_MCDU_base = {
 					}
 				}
 				me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
-				
-				fmgc.FMGCInternal.fob = num(getprop("/consumables/fuel/total-fuel-lbs") / 1000);
-				fmgc.FMGCInternal.fuelPredGw = num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000);
-				fmgc.FMGCInternal.cg = num(getprop("/FMGC/internal/zfwcg"));
 				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob));
 				me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
 				me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));

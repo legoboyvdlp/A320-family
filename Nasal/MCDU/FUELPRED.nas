@@ -132,11 +132,14 @@ var fuelPredInput = func(key, i) {
 				if (fmgc.FMGCInternal.blockSet != 1) {
 					fmgc.FMGCInternal.block = getprop("consumables/fuel/total-fuel-lbs") / 1000;
 					fmgc.FMGCInternal.blockSet = 1;
+					fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 					setprop("/FMGC/internal/fuel-request-set", 1);
 					setprop("/FMGC/internal/fuel-calculating", 1);
 					setprop("/FMGC/internal/block-calculating", 0);
 					setprop("/FMGC/internal/block-confirmed", 1);
-				}
+				} else if (getprop("/FMGC/internal/block-confirmed")) {
+					setprop("/FMGC/internal/fuel-calculating", 1);
+				} 
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else if (find("/", scratchpad) != -1) {
 				var zfwi = split("/", scratchpad);
@@ -144,7 +147,7 @@ var fuelPredInput = func(key, i) {
 				var zfwcg = num(zfwi[1]);
 				var zfws = size(zfwi[0]);
 				var zfwcgs = size(zfwi[1]);
-				if (zfw != nil and zfws > 0 and zfws <= 5 and size(split(".", zfwi[0])[1]) <= 1 and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and size(split(".", zfwi[1])[1]) <= 1) {
+				if (zfw != nil and zfws > 0 and zfws <= 5 and (find(".", zfwi[0]) == -1 or size(split(".", zfwi[0])[1]) <= 1) and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and (find(".", zfwi[1]) == -1 or size(split(".", zfwi[1])[1]) <= 1)) {
 					if (zfw >= zfw_min and zfw <= zfw_max and zfwcg >= 8.0 and zfwcg <= 45.0) {
 						fmgc.FMGCInternal.zfw = zfw;
 						fmgc.FMGCInternal.zfwSet = 1;
@@ -153,16 +156,19 @@ var fuelPredInput = func(key, i) {
 						if (fmgc.FMGCInternal.blockSet != 1) {
 							fmgc.FMGCInternal.block = getprop("consumables/fuel/total-fuel-lbs") / 1000;
 							fmgc.FMGCInternal.blockSet = 1;
+							fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 							setprop("/FMGC/internal/fuel-request-set", 1);
 							setprop("/FMGC/internal/fuel-calculating", 1);
 							setprop("/FMGC/internal/block-calculating", 0);
 							setprop("/FMGC/internal/block-confirmed", 1);
-						}
+						} else if (getprop("/FMGC/internal/block-confirmed")) {
+							setprop("/FMGC/internal/fuel-calculating", 1);
+						} 
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
 						mcdu_message(i, "ENTRY OUT OF RANGE");
 					}
-				} else if (zfws == 0 and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and size(split(".", zfwi[1])[1]) <= 1) {
+				} else if (zfws == 0 and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and (find(".", zfwi[1]) == -1 or size(split(".", zfwi[1])[1]) <= 1)) {
 					if (zfwcg >= 8.0 and zfwcg <= 45.0) {
 						fmgc.FMGCInternal.zfwcg = zfwcg;
 						fmgc.FMGCInternal.zfwcgSet = 1;
@@ -173,17 +179,20 @@ var fuelPredInput = func(key, i) {
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
-			} else if (num(scratchpad) != nil and size(scratchpad) > 0 and size(scratchpad) <= 5 and size(split(".", scratchpad)[1]) <= 1) {
+			} else if (num(scratchpad) != nil and size(scratchpad) > 0 and size(scratchpad) <= 5 and (find(".", scratchpad) == -1 or size(split(".", scratchpad)[1]) <= 1)) {
 				if (scratchpad >= zfw_min and scratchpad <= zfw_max) {
 					fmgc.FMGCInternal.zfw = scratchpad;
 					fmgc.FMGCInternal.zfwSet = 1;
 					if (fmgc.FMGCInternal.blockSet != 1) {
 						fmgc.FMGCInternal.block = getprop("consumables/fuel/total-fuel-lbs") / 1000;
 						fmgc.FMGCInternal.blockSet = 1;
+						fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 						setprop("/FMGC/internal/fuel-request-set", 1);
 						setprop("/FMGC/internal/fuel-calculating", 1);
 						setprop("/FMGC/internal/block-calculating", 0);
 						setprop("/FMGC/internal/block-confirmed", 1);
+					} else if (getprop("/FMGC/internal/block-confirmed")) {
+						setprop("/FMGC/internal/fuel-calculating", 1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {

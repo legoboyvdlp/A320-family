@@ -9,6 +9,12 @@
     <name>simbrief</name>
     <layout>vbox</layout>
     
+	<nasal>
+		<close>
+			acconfig.writeSettings();
+		</close>
+	</nasal>
+	
     <group>
         <layout>hbox</layout>
         <text>
@@ -49,25 +55,30 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>4. Please enter your username in the following dialog box (not case sensitive)</label>
+			<label>4. Please enter your username in the following text field (not case sensitive)</label>
 		</text>
 		<group>
 			<layout>hbox</layout>
-			<text>
-				<halign>left</halign>
-				<label>Username: </label>
-			</text>
-			
 			<input>
 				<width>200</width>
 				<height>25</height>	
+				<label>Username</label>
 				<property>/FMGC/simbrief-username</property>
                 <binding>
                     <command>dialog-apply</command>
                 </binding>
-                <live>true</live>
+				<live type="bool">true</live>
 			</input>
 		</group>
+		
+	   <button>
+			<x>40</x>
+			<y>10</y>
+			<legend>Apply / Exit</legend>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
 	</group>
     
 </PropertyList>

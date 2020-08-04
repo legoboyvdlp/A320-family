@@ -210,7 +210,7 @@ var readSettings = func {
 	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
 	setprop("/options/system/fo-view", getprop("/systems/acconfig/options/fo-view"));
-	setprop("/FMGC/internal/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
+	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
 }
 
 var writeSettings = func {
