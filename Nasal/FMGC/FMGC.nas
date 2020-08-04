@@ -461,7 +461,7 @@ var updateFuel = func {
 	
 	# Calculate reserve fuel
 	if (FMGCInternal.rteRsvSet) {
-		if (num(FMGCInternal.tripFuel) == 0.0) {
+		if (num(FMGCInternal.tripFuel) <= 0.0) {
 			FMGCInternal.rtePercent = 0.0;
 		} else {
 			if (num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0) <= 15.0) {
@@ -473,53 +473,48 @@ var updateFuel = func {
 	} else if (FMGCInternal.rtePercentSet) {
 		FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
 	} else {
-		if (num(FMGCInternal.tripFuel) == 0.0) {
+		if (num(FMGCInternal.tripFuel) <= 0.0) {
 			FMGCInternal.rtePercent = 5.0;
 		} else {
 			FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
 		}
 	}
 	
-	# extra fuel calcs
-	updateEnrouteFuel();
-	
-	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
-}
-
-var updateEnrouteFuel = func {
+	# Misc fuel claclulations
+	if (getprop("/FMGC/internal/block-calculating")) {
+		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
+		FMGCInternal.blockSet = 1;
+	}
 	fmgc.FMGCInternal.fob = num(getprop("/consumables/fuel/total-fuel-lbs") / 1000);
 	fmgc.FMGCInternal.fuelPredGw = num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000);
+	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
 	
 	# Calcualte extra fuel
-	if (FMGCInternal.blockSet) {
-		if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
-			extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
-		} else {
-			extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
-		}
-		FMGCInternal.extraFuel = extra_fuel / 1000;
-		lw = 1000 * FMGCInternal.lw;
-		extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
-		if (extra_time < 0) {
-			extra_time = 0;
-		} else if (extra_time > 480) {
-			extra_time = 480;
-		}
-		if (num(extra_time) >= 60) {
-			extra_min = int(math.mod(extra_time, 60));
-			extra_hour = int((extra_time - extra_min) / 60);
-			FMGCInternal.extraTime = sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min);
-		} else {
-			FMGCInternal.extraTime = sprintf("%04d", extra_time);
-		}
-		if (FMGCInternal.extraFuel > -0.1 and FMGCInternal.extraFuel < 0.1) {
-			FMGCInternal.extraFuel = 0.0;
-		}
+	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
+		extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+	} else {
+		extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
 	}
-	# else {
-# 		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
-# 		FMGCInternal.blockSet = 1;
-# 	}
+	FMGCInternal.extraFuel = extra_fuel / 1000;
+	lw = 1000 * FMGCInternal.lw;
+	extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
+	if (extra_time < 0) {
+		extra_time = 0;
+	} else if (extra_time > 480) {
+		extra_time = 480;
+	}
+	if (num(extra_time) >= 60) {
+		extra_min = int(math.mod(extra_time, 60));
+		extra_hour = int((extra_time - extra_min) / 60);
+		FMGCInternal.extraTime = sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min);
+	} else {
+		FMGCInternal.extraTime = sprintf("%04d", extra_time);
+	}
+	if (FMGCInternal.extraFuel > -0.1 and FMGCInternal.extraFuel < 0.1) {
+		FMGCInternal.extraFuel = 0.0;
+	}
+	
+	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
 }
 
 ############################
@@ -713,7 +708,7 @@ var masterFMGC = maketimer(0.2, func {
 	############################
 	# fuel
 	############################
-	updateEnrouteFuel();
+	updateFuel();
 	
 	############################
 	# calculate speeds
@@ -1249,7 +1244,7 @@ var timer48gpsAlign3 = maketimer(1, func() {
 
 var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
-		updateFuel();
+		#updateFuel();
 		setprop("/FMGC/internal/block-calculating", 0);
 		setprop("/FMGC/internal/block-fuel-time", -99); 
 		timer3blockFuel.stop();
@@ -1258,7 +1253,7 @@ var timer3blockFuel = maketimer(1, func() {
 
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
-		updateFuel();
+		#updateFuel();
 		setprop("/FMGC/internal/fuel-calculating", 0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
 		timer5fuelPred.stop();
