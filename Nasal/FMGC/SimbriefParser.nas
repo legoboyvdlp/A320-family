@@ -10,9 +10,9 @@ var SimbriefParser = {
 	fetch: func(username, i) {
 		me.inhibit = 1;
 		var stamp = systime();
-		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/simbrief" ~ stamp ~ ".xml")
+		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
 			.fail(func mcdu.mcdu_message(i, "SIMBRIEF FAILED"))
-			.done(func me.read(getprop('/sim/fg-home') ~ "/Export/simbrief" ~ stamp ~ ".xml", i));
+			.done(func me.read(getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml", i));
 	},
 	read: func(xml, i) {
 		var data = io.readxml(xml);
