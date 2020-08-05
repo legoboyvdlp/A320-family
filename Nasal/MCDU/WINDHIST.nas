@@ -176,6 +176,12 @@ var windHISTPage = {
 					fmgc.windController.clb_winds[2].wind5.altitude = hist_winds.wind5.altitude;
 					fmgc.windController.clb_winds[2].wind5.set = 1;
 				}
+				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
+					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
+				} else {
+					canvas_mcdu.myCLBWIND[me.computer].reload();
+				}
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCLB");
 			} else {
 				mcdu_message(me.computer, "NO WINDS");
 			}

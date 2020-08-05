@@ -893,12 +893,6 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
 			canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
-			if (canvas_mcdu.myCLBWIND[i] == nil) {
-				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
-			} else {
-				canvas_mcdu.myCLBWIND[i].reload();
-			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R6",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
