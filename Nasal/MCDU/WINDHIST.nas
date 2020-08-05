@@ -43,9 +43,27 @@ var windHISTPage = {
 		me.title = "HISTORY WIND";
 		me.titleColour = "wht";
 		
+		var lastIndex = 0;
+		
+		if (fmgc.windController.hist_winds.wind5.altitude != "") {
+			lastIndex = 5;
+		} else if (fmgc.windController.hist_winds.wind4.altitude != "") {
+			lastIndex = 4;
+		} else if (fmgc.windController.hist_winds.wind3.altitude != "") {
+			lastIndex = 3;
+		} else if (fmgc.windController.hist_winds.wind2.altitude != "") {
+			lastIndex = 2;
+		} else if (fmgc.windController.hist_winds.wind1.altitude != "") {
+			lastIndex = 1;
+		}
+		
 		if (fmgc.windController.hist_winds.wind1.altitude != "") {
-			me.L1 = [sprintf("%03d/", fmgc.windController.hist_winds.wind1.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind1.magnitude), "", "grn"];
-			me.C1 = [fmgc.windController.hist_winds.wind1.altitude, "", "grn"];
+			me.L1 = [sprintf("%03d°/", fmgc.windController.hist_winds.wind1.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind1.magnitude), "", "grn"];
+			if (lastIndex == 1) {
+				me.C1 = ["       " ~ fmgc.windController.hist_winds.wind1.altitude ~ " CRZ FL", "", "grn"];
+			} else {
+				me.C1 = [fmgc.windController.hist_winds.wind1.altitude, "", "grn"];
+			}
 			fmgc.windController.hist_winds.wind1.set = 1;
 		} else {
 			me.L1 = ["", "", "grn"];
@@ -55,8 +73,12 @@ var windHISTPage = {
 		}
 		
 		if (fmgc.windController.hist_winds.wind2.altitude != "") {
-			me.L2 = [sprintf("%03d/", fmgc.windController.hist_winds.wind2.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind2.magnitude), "", "grn"];
-			me.C2 = [fmgc.windController.hist_winds.wind2.altitude, "", "grn"];
+			me.L2 = [sprintf("%03d°/", fmgc.windController.hist_winds.wind2.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind2.magnitude), "", "grn"];
+			if (lastIndex == 2) {
+				me.C2 = ["       " ~ fmgc.windController.hist_winds.wind2.altitude ~ " CRZ FL", "", "grn"];
+			} else {
+				me.C2 = [fmgc.windController.hist_winds.wind2.altitude, "", "grn"];
+			}
 			fmgc.windController.hist_winds.wind2.set = 1;
 		} else {
 			me.L2 = ["", "", "grn"];
@@ -66,8 +88,12 @@ var windHISTPage = {
 		}
 		
 		if (fmgc.windController.hist_winds.wind3.altitude != "") {
-			me.L3 = [sprintf("%03d/", fmgc.windController.hist_winds.wind3.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind3.magnitude), "", "grn"];
-			me.C3 = [fmgc.windController.hist_winds.wind3.altitude, "", "grn"];
+			me.L3 = [sprintf("%03d°/", fmgc.windController.hist_winds.wind3.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind3.magnitude), "", "grn"];
+			if (lastIndex == 3) {
+				me.C3 = ["       " ~ fmgc.windController.hist_winds.wind3.altitude ~ " CRZ FL", "", "grn"];
+			} else {
+				me.C3 = [fmgc.windController.hist_winds.wind3.altitude, "", "grn"];
+			}
 			fmgc.windController.hist_winds.wind3.set = 1;
 		} else {
 			me.L3 = ["", "", "grn"];
@@ -77,8 +103,12 @@ var windHISTPage = {
 		}
 		
 		if (fmgc.windController.hist_winds.wind4.altitude != "") {
-			me.L4 = [sprintf("%03d/", fmgc.windController.hist_winds.wind4.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind4.magnitude), "", "grn"];
-			me.C4 = [fmgc.windController.hist_winds.wind4.altitude, "", "grn"];
+			me.L4 = [sprintf("%03d°/", fmgc.windController.hist_winds.wind4.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind4.magnitude), "", "grn"];
+			if (lastIndex == 4) {
+				me.C4 = ["       " ~ fmgc.windController.hist_winds.wind4.altitude ~ " CRZ FL", "", "grn"];
+			} else {
+				me.C4 = [fmgc.windController.hist_winds.wind4.altitude, "", "grn"];
+			}
 			fmgc.windController.hist_winds.wind4.set = 1;
 		} else {
 			me.L4 = ["", "", "grn"];
@@ -88,8 +118,12 @@ var windHISTPage = {
 		}
 		
 		if (fmgc.windController.hist_winds.wind5.altitude != "") {
-			me.L5 = [sprintf("%03d/", fmgc.windController.hist_winds.wind5.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind5.magnitude), "", "grn"];
-			me.C5 = [fmgc.windController.hist_winds.wind5.altitude, "", "grn"];
+			me.L5 = [sprintf("%03d°/", fmgc.windController.hist_winds.wind5.heading) ~ sprintf("%03d", fmgc.windController.hist_winds.wind5.magnitude), "", "grn"];
+			if (lastIndex == 5) {
+				me.C5 = ["       " ~ fmgc.windController.hist_winds.wind5.altitude ~ " CRZ FL", "", "grn"];
+			} else {
+				me.C5 = [fmgc.windController.hist_winds.wind5.altitude, "", "grn"];
+			}
 			fmgc.windController.hist_winds.wind5.set = 1;
 		} else {
 			me.L5 = ["", "", "grn"];

@@ -94,6 +94,10 @@ var windController = {
 	crz_winds: [0, 0, 0],
 	des_winds: [0, 0, 0],
 	hist_winds: 0,
+	fl050_wind: [-1, -1, ""],
+	fl150_wind: [-1, -1, ""],
+	fl250_wind: [-1, -1, ""],
+	flcrz_wind: [-1, -1, ""],
 	winds: [[], [], []], #waypoint winds used if route includes navaids
 	nav_indicies: [[], [], []],
 	windSizes: [0, 0, 0],
@@ -261,16 +265,37 @@ var windController = {
 		}
 	},
 	# write - write to hist wind file, called whenever winds changed
-	# note - using previous descent winds, in future actually record the values
 	write: func() {
 		if (me.des_winds[2] != 0) {
 			var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWinds.txt";
 			var file = io.open(path, "wb");
-			io.write(file, me.des_winds[2].wind1.heading ~ "," ~ me.des_winds[2].wind1.magnitude ~ "," ~ me.des_winds[2].wind1.altitude ~ "\n");
-			io.write(file, me.des_winds[2].wind2.heading ~ "," ~ me.des_winds[2].wind2.magnitude ~ "," ~ me.des_winds[2].wind2.altitude ~ "\n");
-			io.write(file, me.des_winds[2].wind3.heading ~ "," ~ me.des_winds[2].wind3.magnitude ~ "," ~ me.des_winds[2].wind3.altitude ~ "\n");
-			io.write(file, me.des_winds[2].wind4.heading ~ "," ~ me.des_winds[2].wind4.magnitude ~ "," ~ me.des_winds[2].wind4.altitude ~ "\n");
-			io.write(file, me.des_winds[2].wind5.heading ~ "," ~ me.des_winds[2].wind5.magnitude ~ "," ~ me.des_winds[2].wind5.altitude ~ "\n");
+			var winds_added = 0;
+			
+			if (me.fl050_wind[2] != "") {
+				io.write(file, me.fl050_wind[0] ~ "," ~ me.fl050_wind[1] ~ "," ~ me.fl050_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			if (me.fl150_wind[2] != "") {
+				io.write(file, me.fl150_wind[0] ~ "," ~ me.fl150_wind[1] ~ "," ~ me.fl150_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			if (me.fl250_wind[2] != "") {
+				io.write(file, me.fl250_wind[0] ~ "," ~ me.fl250_wind[1] ~ "," ~ me.fl250_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			if (me.flcrz_wind[2] != "") {
+				io.write(file, me.flcrz_wind[0] ~ "," ~ me.flcrz_wind[1] ~ "," ~ me.flcrz_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			while (winds_added < 5) {
+				io.write(file, "-1,-1,\n");
+				winds_added += 1;
+			}
+			
 			io.close(file);
 		} else {
 			print("no wind data");
@@ -457,7 +482,5 @@ var windController = {
 		if (canvas_mcdu.myHISTWIND[0] != nil) {
 			canvas_mcdu.myHISTWIND[0].reload();
 		}
-		
-		me.write();
 	}
 };

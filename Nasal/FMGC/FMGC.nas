@@ -711,6 +711,48 @@ var masterFMGC = maketimer(0.2, func {
 	updateFuel();
 	
 	############################
+	# wind
+	############################
+	if (FMGCInternal.phase == 3 or FMGCInternal.phase == 4 or FMGCInternal.phase == 6) {
+		var windsDidChange = 0;
+		if (FMGCInternal.crzFt > 5000 and alt > 4980 and alt < 5020) {
+			if (sprintf("%03d", getprop("/environment/wind-from-heading-deg/")) != fmgc.windController.fl050_wind[0] or sprintf("%03d", getprop("/environment/wind-speed-kt/")) != fmgc.windController.fl050_wind[1]) {
+				fmgc.windController.fl050_wind[0] = sprintf("%03d", getprop("/environment/wind-from-heading-deg/"));
+				fmgc.windController.fl050_wind[1] = sprintf("%03d", getprop("/environment/wind-speed-kt/"));
+				fmgc.windController.fl050_wind[2] = "FL050";
+				windsDidChange = 1;
+			}
+		}
+		if (FMGCInternal.crzFt > 15000 and alt > 14980 and alt < 15020) {
+			if (sprintf("%03d", getprop("/environment/wind-from-heading-deg/")) != fmgc.windController.fl150_wind[0] or sprintf("%03d", getprop("/environment/wind-speed-kt/")) != fmgc.windController.fl150_wind[1]) {
+				fmgc.windController.fl150_wind[0] = sprintf("%03d", getprop("/environment/wind-from-heading-deg/"));
+				fmgc.windController.fl150_wind[1] = sprintf("%03d", getprop("/environment/wind-speed-kt/"));
+				fmgc.windController.fl150_wind[2] = "FL150";
+				windsDidChange = 1;
+			}
+		}
+		if (FMGCInternal.crzFt > 25000 and alt > 24980 and alt < 25020) {
+			if (sprintf("%03d", getprop("/environment/wind-from-heading-deg/")) != fmgc.windController.fl250_wind[0] or sprintf("%03d", getprop("/environment/wind-speed-kt/")) != fmgc.windController.fl250_wind[1]) {
+				fmgc.windController.fl250_wind[0] = sprintf("%03d", getprop("/environment/wind-from-heading-deg/"));
+				fmgc.windController.fl250_wind[1] = sprintf("%03d", getprop("/environment/wind-speed-kt/"));
+				fmgc.windController.fl250_wind[2] = "FL250";
+				windsDidChange = 1;
+			}
+		}
+		if (FMGCInternal.crzSet and alt > FMGCInternal.crzFt - 20 and alt < FMGCInternal.crzFt + 20) {
+			if (sprintf("%03d", getprop("/environment/wind-from-heading-deg/")) != fmgc.windController.flcrz_wind[0] or sprintf("%03d", getprop("/environment/wind-speed-kt/")) != fmgc.windController.flcrz_wind[1]) {
+				fmgc.windController.flcrz_wind[0] = sprintf("%03d", getprop("/environment/wind-from-heading-deg/"));
+				fmgc.windController.flcrz_wind[1] = sprintf("%03d", getprop("/environment/wind-speed-kt/"));
+				fmgc.windController.flcrz_wind[2] = "FL" ~ FMGCInternal.crzFl;
+				windsDidChange = 1;
+			}
+		}
+		if (windsDidChange) {
+			fmgc.windController.write();
+		}
+	}
+	
+	############################
 	# calculate speeds
 	############################
 	flap = getprop("/controls/flight/flaps-pos");
