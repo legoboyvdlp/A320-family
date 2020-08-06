@@ -525,8 +525,6 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(6);
-		#} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
-		#	canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
 			if (canvas_mcdu.myCLBWIND[i] == nil) {
 				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
@@ -592,12 +590,16 @@ var rskbutton = func(btn, i) {
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
 			initInputB("R1",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
-			if (canvas_mcdu.myHISTWIND[i] == nil) {
-				canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
+			if (fmgc.FMGCInternal.phase == 0) {
+				if (canvas_mcdu.myHISTWIND[i] == nil) {
+					canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
+				} else {
+					canvas_mcdu.myHISTWIND[i].reload();
+				}
+				setprop("MCDU[" ~ i ~ "]/page", "WINDHIST");
 			} else {
-				canvas_mcdu.myHISTWIND[i].reload();
+				mcdu_message(i, "NOT ALLOWED");
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDHIST");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(1);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
@@ -889,8 +891,8 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myCRZWIND[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(6);
-		#} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
-		#	canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
+		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
+			canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
 			perfTOInput("R6",i);
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
