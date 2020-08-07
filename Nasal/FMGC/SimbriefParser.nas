@@ -82,55 +82,57 @@ var SimbriefParser = {
 		});
 		
 		me.store1 = me.OFP.getChild("navlog").getChildren();
-		var firstIsSID = 0;
-		var SIDID = "";
-		if (me.store1[0].getChild("is_sid_star").getValue() == 1) {
-			if (fmgc.flightPlanController.flightplans[3].departure.getSid(me.store1[0].getChild("via_airway").getValue()) != nil) {
-				firstIsSID = 1;
-				SIDID = me.store1[0].getChild("via_airway").getValue();
-			}
-		}
-		var lastIsSTAR = 0;
-		var STARID = "";
-		if (me.store1[-1].getChild("is_sid_star").getValue() == 1) {
-			if (fmgc.flightPlanController.flightplans[3].destination.getStar(me.store1[-1].getChild("via_airway").getValue()) != nil) {
-				lastIsSTAR = 1;
-				STARID = me.store1[-1].getChild("via_airway").getValue();
-			}
-		}
-		
-		var lastSIDIndex = -999;
-		var firstSTARIndex = -999;
-		var TOCinSIDflag = 0;
-		var TODinSTARflag = 0;
-		for (var i = 0; i < size(me.store1); i = i + 1) {
-			if (firstIsSID) {
-				if (me.store1[i].getChild("is_sid_star").getValue() == 0 or me.store1[i].getChild("via_airway").getValue() != SIDID) {
-					lastSIDIndex = i - 1;
-					break;
+		if (size(me.store1) != 0) {
+			var firstIsSID = 0;
+			var SIDID = "";
+			if (me.store1[0].getChild("is_sid_star").getValue() == 1) {
+				if (fmgc.flightPlanController.flightplans[3].departure.getSid(me.store1[0].getChild("via_airway").getValue()) != nil) {
+					firstIsSID = 1;
+					SIDID = me.store1[0].getChild("via_airway").getValue();
 				}
 			}
-		}
+			var lastIsSTAR = 0;
+			var STARID = "";
+			if (me.store1[-1].getChild("is_sid_star").getValue() == 1) {
+				if (fmgc.flightPlanController.flightplans[3].destination.getStar(me.store1[-1].getChild("via_airway").getValue()) != nil) {
+					lastIsSTAR = 1;
+					STARID = me.store1[-1].getChild("via_airway").getValue();
+				}
+			}
 			
-		for (var i = lastSIDIndex == -999 ? 0 : lastSIDIndex; i < size(me.store1); i = i + 1) {
-			if (STARID != "") {
-				if (me.store1[i].getChild("is_sid_star").getValue() == 1 and me.store1[i].getChild("via_airway").getValue() == STARID) {
-					firstSTARIndex = i;
-					break;
+			var lastSIDIndex = -999;
+			var firstSTARIndex = -999;
+			var TOCinSIDflag = 0;
+			var TODinSTARflag = 0;
+			for (var i = 0; i < size(me.store1); i = i + 1) {
+				if (firstIsSID) {
+					if (me.store1[i].getChild("is_sid_star").getValue() == 0 or me.store1[i].getChild("via_airway").getValue() != SIDID) {
+						lastSIDIndex = i - 1;
+						break;
+					}
 				}
 			}
+				
+			for (var i = lastSIDIndex == -999 ? 0 : lastSIDIndex; i < size(me.store1); i = i + 1) {
+				if (STARID != "") {
+					if (me.store1[i].getChild("is_sid_star").getValue() == 1 and me.store1[i].getChild("via_airway").getValue() == STARID) {
+						firstSTARIndex = i;
+						break;
+					}
+				}
+			}
+			
+			var max = firstSTARIndex == -999 ? size(me.store1) - 1 : firstSTARIndex - 1;
+			for (var i = lastSIDIndex == -999 ? 0 : lastSIDIndex + 2; i < max; i = i + 1) {
+				if (me.store1[i].getChild("ident").getValue() == "TOC" or me.store1[i].getChild("ident").getValue() == "TOD") { continue; }
+				var coord = geo.Coord.new();
+				coord.set_latlon(me.store1[i].getChild("pos_lat").getValue(), me.store1[i].getChild("pos_long").getValue());
+				var WP = createWP(coord, me.store1[i].getChild("ident").getValue());
+				fmgc.flightPlanController.flightplans[3].appendWP(WP);
+			}
+			fmgc.flightPlanController.flightplans[3].sid = fmgc.flightPlanController.flightplans[3].departure.getSid(SIDID);
+			fmgc.flightPlanController.flightplans[3].star = fmgc.flightPlanController.flightplans[3].destination.getStar(STARID);
 		}
-		
-		var max = firstSTARIndex == -999 ? size(me.store1) - 1 : firstSTARIndex - 1;
-		for (var i = lastSIDIndex == -999 ? 0 : lastSIDIndex + 2; i < max; i = i + 1) {
-			if (me.store1[i].getChild("ident").getValue() == "TOC" or me.store1[i].getChild("ident").getValue() == "TOD") { continue; }
-			var coord = geo.Coord.new();
-			coord.set_latlon(me.store1[i].getChild("pos_lat").getValue(), me.store1[i].getChild("pos_long").getValue());
-			var WP = createWP(coord, me.store1[i].getChild("ident").getValue());
-			fmgc.flightPlanController.flightplans[3].appendWP(WP);
-		}
-		fmgc.flightPlanController.flightplans[3].sid = fmgc.flightPlanController.flightplans[3].departure.getSid(SIDID);
-		fmgc.flightPlanController.flightplans[3].star = fmgc.flightPlanController.flightplans[3].destination.getStar(STARID);
 		fmgc.flightPlanController.destroyTemporaryFlightPlan(3, 1);
 		
 		fmgc.windController.updatePlans();
