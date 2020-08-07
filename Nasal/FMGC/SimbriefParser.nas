@@ -11,7 +11,7 @@ var SimbriefParser = {
 		me.inhibit = 1;
 		var stamp = systime();
 		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
-			.fail(func mcdu.mcdu_message(i, "SIMBRIEF FAILED"))
+			.fail(func mcdu.mcdu_message(i, "SIMBRIEF DOWNLOAD FAILED"))
 			.done(func me.read(getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml", i));
 	},
 	read: func(xml, i) {
@@ -35,7 +35,7 @@ var SimbriefParser = {
 		
 		me.store1 = me.OFP.getChild("general");
 		me.store2 = me.OFP.getChild("alternate");
-		fmgc.FMGCInternal.flightNum = me.store1.getChild("icao_airline").getValue() ~ me.store1.getChild("flight_number").getValue();
+		fmgc.FMGCInternal.flightNum = me.store1.getChild("icao_airline").getValue() or "" ~ me.store1.getChild("flight_number").getValue() or "";
 		fmgc.FMGCInternal.flightNumSet = 1;
 		fmgc.FMGCInternal.costIndex = me.store1.getChild("costindex").getValue();
 		fmgc.FMGCInternal.costIndexSet = 1;
