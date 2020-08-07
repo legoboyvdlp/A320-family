@@ -93,6 +93,11 @@ var windController = {
 	clb_winds: [0, 0, 0],
 	crz_winds: [0, 0, 0],
 	des_winds: [0, 0, 0],
+	hist_winds: 0,
+	fl050_wind: [-1, -1, ""],
+	fl150_wind: [-1, -1, ""],
+	fl250_wind: [-1, -1, ""],
+	flcrz_wind: [-1, -1, ""],
 	winds: [[], [], []], #waypoint winds used if route includes navaids
 	nav_indicies: [[], [], []],
 	windSizes: [0, 0, 0],
@@ -104,6 +109,8 @@ var windController = {
 		me.clb_winds[2] = waypoint_winds.new("climb", "waypoint", 1);
 		me.crz_winds[2] = waypoint_winds.new("cruize", "waypoint", 1);
 		me.des_winds[2] = waypoint_winds.new("descent", "waypoint", 1);
+		me.hist_winds = waypoint_winds.new("history", "waypoint", 1);
+		me.read();
 	},
 	
 	reset: func() {
@@ -216,6 +223,83 @@ var windController = {
 		me.resetWind(n);
 		me.waypointsChanged();
 		#me.temporaryFlag[n] = 0;
+	},
+	# read - read from hist wind file, create one if it doesn't exist
+	read: func() {
+		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWinds.txt";
+		# create file if it doesn't exist
+		if (io.stat(path) == nil) {
+			me.write();
+		}
+		var file = io.open(path);
+		if (file != nil) {
+			var line = io.readln(file);
+			var temp_line = split(",", line);
+			me.hist_winds.wind1.heading = temp_line[0];
+			me.hist_winds.wind1.magnitude = temp_line[1];
+			me.hist_winds.wind1.altitude = temp_line[2];
+			
+			line = io.readln(file);
+			temp_line = split(",", line);
+			me.hist_winds.wind2.heading = temp_line[0];
+			me.hist_winds.wind2.magnitude = temp_line[1];
+			me.hist_winds.wind2.altitude = temp_line[2];
+			
+			line = io.readln(file);
+			temp_line = split(",", line);
+			me.hist_winds.wind3.heading = temp_line[0];
+			me.hist_winds.wind3.magnitude = temp_line[1];
+			me.hist_winds.wind3.altitude = temp_line[2];
+			
+			line = io.readln(file);
+			temp_line = split(",", line);
+			me.hist_winds.wind4.heading = temp_line[0];
+			me.hist_winds.wind4.magnitude = temp_line[1];
+			me.hist_winds.wind4.altitude = temp_line[2];
+			
+			line = io.readln(file);
+			temp_line = split(",", line);
+			me.hist_winds.wind5.heading = temp_line[0];
+			me.hist_winds.wind5.magnitude = temp_line[1];
+			me.hist_winds.wind5.altitude = temp_line[2];
+		}
+	},
+	# write - write to hist wind file, called whenever winds changed
+	write: func() {
+		if (me.des_winds[2] != 0) {
+			var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWinds.txt";
+			var file = io.open(path, "wb");
+			var winds_added = 0;
+			
+			if (me.fl050_wind[2] != "") {
+				io.write(file, me.fl050_wind[0] ~ "," ~ me.fl050_wind[1] ~ "," ~ me.fl050_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			if (me.fl150_wind[2] != "") {
+				io.write(file, me.fl150_wind[0] ~ "," ~ me.fl150_wind[1] ~ "," ~ me.fl150_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			if (me.fl250_wind[2] != "") {
+				io.write(file, me.fl250_wind[0] ~ "," ~ me.fl250_wind[1] ~ "," ~ me.fl250_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			if (me.flcrz_wind[2] != "") {
+				io.write(file, me.flcrz_wind[0] ~ "," ~ me.flcrz_wind[1] ~ "," ~ me.flcrz_wind[2] ~ "\n");
+				winds_added += 1;
+			}
+			
+			while (winds_added < 5) {
+				io.write(file, "-1,-1,\n");
+				winds_added += 1;
+			}
+			
+			io.close(file);
+		} else {
+			print("no wind data");
+		}
 	},
 	
 	insertWind: func(plan, index, value, id) {
