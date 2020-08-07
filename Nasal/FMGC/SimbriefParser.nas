@@ -35,7 +35,7 @@ var SimbriefParser = {
 		
 		me.store1 = me.OFP.getChild("general");
 		me.store2 = me.OFP.getChild("alternate");
-		fmgc.FMGCInternal.flightNum = me.store1.getChild("icao_airline").getValue() or "" ~ me.store1.getChild("flight_number").getValue() or "";
+		fmgc.FMGCInternal.flightNum = (me.store1.getChild("icao_airline").getValue() or "") ~ (me.store1.getChild("flight_number").getValue() or "");
 		fmgc.FMGCInternal.flightNumSet = 1;
 		fmgc.FMGCInternal.costIndex = me.store1.getChild("costindex").getValue();
 		fmgc.FMGCInternal.costIndexSet = 1;
