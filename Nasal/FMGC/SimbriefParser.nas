@@ -11,8 +11,12 @@ var SimbriefParser = {
 		me.inhibit = 1;
 		var stamp = systime();
 		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
-			.fail(func mcdu.mcdu_message(i, "SIMBRIEF DOWNLOAD FAILED"))
+			.fail(func me.failure(i))
 			.done(func me.read(getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml", i));
+	},
+	failure: func(i) {
+		mcdu.mcdu_message(i, "SIMBRIEF DOWNLOAD FAILED");
+		me.inhibit = 0;
 	},
 	read: func(xml, i) {
 		var data = io.readxml(xml);
