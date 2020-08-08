@@ -716,10 +716,10 @@ var masterFMGC = maketimer(0.2, func {
 	if (FMGCInternal.phase == 3 or FMGCInternal.phase == 4 or FMGCInternal.phase == 6) {
 		var windsDidChange = 0;
 		if (FMGCInternal.crzFt > 5000 and alt > 4980 and alt < 5020) {
-			if (sprintf("%03d", getprop("/environment/wind-from-heading-deg/")) != fmgc.windController.fl050_wind[0] or sprintf("%03d", getprop("/environment/wind-speed-kt/")) != fmgc.windController.fl050_wind[1]) {
-				fmgc.windController.fl050_wind[0] = sprintf("%03d", getprop("/environment/wind-from-heading-deg/"));
-				fmgc.windController.fl050_wind[1] = sprintf("%03d", getprop("/environment/wind-speed-kt/"));
-				fmgc.windController.fl050_wind[2] = "FL050";
+			if (sprintf("%03d", getprop("/environment/wind-from-heading-deg/")) != fmgc.windController.fl50_wind[0] or sprintf("%03d", getprop("/environment/wind-speed-kt/")) != fmgc.windController.fl50_wind[1]) {
+				fmgc.windController.fl50_wind[0] = sprintf("%03d", getprop("/environment/wind-from-heading-deg/"));
+				fmgc.windController.fl50_wind[1] = sprintf("%03d", getprop("/environment/wind-speed-kt/"));
+				fmgc.windController.fl50_wind[2] = "FL50";
 				windsDidChange = 1;
 			}
 		}
