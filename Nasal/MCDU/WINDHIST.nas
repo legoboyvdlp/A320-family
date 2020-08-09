@@ -179,13 +179,11 @@ var windHISTPage = {
 	pushButtonRight: func(index) {
 		if (index == 6) {
 			var hist_winds = fmgc.windController.hist_winds;
-			if (hist_winds.wind1.set or hist_winds.wind2.set or hist_winds.wind2.set or hist_winds.wind2.set or hist_winds.wind2.set) {
-				if (hist_winds.wind1.set) {
-					fmgc.windController.clb_winds[2].wind1.heading = hist_winds.wind1.heading;
-					fmgc.windController.clb_winds[2].wind1.magnitude = hist_winds.wind1.magnitude;
-					fmgc.windController.clb_winds[2].wind1.altitude = hist_winds.wind1.altitude;
-					fmgc.windController.clb_winds[2].wind1.set = 1;
-				}
+			if (hist_winds.wind1.set) {
+				fmgc.windController.clb_winds[2].wind1.heading = hist_winds.wind1.heading;
+				fmgc.windController.clb_winds[2].wind1.magnitude = hist_winds.wind1.magnitude;
+				fmgc.windController.clb_winds[2].wind1.altitude = hist_winds.wind1.altitude;
+				fmgc.windController.clb_winds[2].wind1.set = 1;
 				if (hist_winds.wind2.set) {
 					fmgc.windController.clb_winds[2].wind2.heading = hist_winds.wind2.heading;
 					fmgc.windController.clb_winds[2].wind2.magnitude = hist_winds.wind2.magnitude;

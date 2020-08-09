@@ -131,8 +131,16 @@ var SimbriefParser = {
 				if (me.store1[i].getChild("ident").getValue() == "TOC" or me.store1[i].getChild("ident").getValue() == "TOD") { continue; }
 				var coord = geo.Coord.new();
 				coord.set_latlon(me.store1[i].getChild("pos_lat").getValue(), me.store1[i].getChild("pos_long").getValue());
-				var WP = createWP(coord, me.store1[i].getChild("ident").getValue());
-				fmgc.flightPlanController.flightplans[3].appendWP(WP);
+				var fixes = findFixesByID(coord, me.store1[i].getChild("ident").getValue());
+				var navaids = findNavaidsByID(coord, me.store1[i].getChild("ident").getValue());
+				if (size(fixes) > 0) {
+					fmgc.flightPlanController.flightplans[3].appendWP(createWPFrom(fixes[0]));
+				} else if (size(navaids) > 0) {
+					fmgc.flightPlanController.flightplans[3].appendWP(createWPFrom(navaids[0]));
+				} else {
+					var WP = createWP(coord, me.store1[i].getChild("ident").getValue());
+					fmgc.flightPlanController.flightplans[3].appendWP(WP);
+				}
 			}
 			fmgc.flightPlanController.flightplans[3].sid = fmgc.flightPlanController.flightplans[3].departure.getSid(SIDID);
 			fmgc.flightPlanController.flightplans[3].star = fmgc.flightPlanController.flightplans[3].destination.getStar(STARID);

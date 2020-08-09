@@ -232,7 +232,7 @@ var canvas_MCDU_base = {
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
 	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
-	"WIND","WIND_CANCEL","WIND_INSERT_star","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -3877,11 +3877,6 @@ var canvas_MCDU_base = {
 		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
-				# if (page == "WINDCRZ") {
- 				#	up/down arrows show
- 				# } else {
- 				#	up/down arrows hide
- 				# }
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
@@ -3926,8 +3921,7 @@ var canvas_MCDU_base = {
 				}
 				
 				if (page == "WINDHIST") {
-					var hist_winds = fmgc.windController.hist_winds;
-					if (hist_winds.wind1.set or hist_winds.wind2.set or hist_winds.wind2.set or hist_winds.wind2.set or hist_winds.wind2.set) {
+					if (fmgc.windController.hist_winds.wind1.set) {
 						me["WIND_INSERT_star"].show();
 					} else {
 						me["WIND_INSERT_star"].hide();
@@ -3946,9 +3940,24 @@ var canvas_MCDU_base = {
 				if (myWind[i] != nil) {
 					if (page == "WINDCRZ") {
 						me["Simple_Title"].setText(sprintf("%s", myWind[i].title[0] ~ myWind[i].title[1] ~ myWind[i].title[2]));
+						if (fmgc.flightPlanController.temporaryFlag[i]) {
+							if (size(fmgc.windController.nav_indicies[i]) > 1) {
+								me["WIND_UPDOWN"].show();
+							} else {
+								me["WIND_UPDOWN"].hide();
+							}
+						} else {
+							if (size(fmgc.windController.nav_indicies[2]) > 1) {
+								me["WIND_UPDOWN"].show();
+							} else {
+								me["WIND_UPDOWN"].hide();
+							}
+						}
 					} else {
 						me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
+						me["WIND_UPDOWN"].hide();
 					}
+					
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/b"));
 					
 					me.dynamicPageArrowFunc(myWind[i]);
