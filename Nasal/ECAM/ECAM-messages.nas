@@ -225,6 +225,10 @@ var warnings				  = std.Vector.new([
 	
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var gpwsFault             = warning.new(msg: "NAV GPWS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var gpwsFaultOff		  = warning.new(msg: "-GPWS...............OFF",   colour: "c"),
+	var gpwsTerrFault         = warning.new(msg: "NAV GPWS TERR DET FAULT",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var gpwsTerrFaultOff	  = warning.new(msg: "-GPWS TERR..........OFF",   colour: "c"),
 	
 	# FAC and Rudder System
 	var fac12Fault            = warning.new(msg: "AUTO FLT FAC 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),

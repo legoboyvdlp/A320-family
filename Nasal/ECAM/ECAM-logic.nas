@@ -1167,11 +1167,23 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_lim_1);
 	}
 	
-	
 	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 7 and systems.ELEC.Bus.ac1.getValue() >= 110 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(tcasFault);
+	}
+	
+	if (warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
+		gpwsTerrFault.active = 1;
+		
+		if (!getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit")) {
+			gpwsTerrFaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(gpwsTerrFaultOff);
+		}
+	} else {
+		ECAM_controller.warningReset(gpwsTerrFault);
+		ECAM_controller.warningReset(gpwsTerrFaultOff);
 	}
 	
 	if (fac12Fault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and warningNodes.Logic.fac12Fault.getBoolValue()) {

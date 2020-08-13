@@ -87,6 +87,7 @@ var warningNodes = {
 		trimAirFault: props.globals.initNode("/ECAM/warnings/timer/trim-air-fault"),
 		yawDamper1Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-1-fault"),
 		yawDamper2Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-2-fault"),
+		navTerrFault: props.globals.initNode("/ECAM/warnings/timer/nav-gpws-terr-fault"),
 	},
 	Flipflops: {
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
