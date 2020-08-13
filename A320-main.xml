@@ -214,6 +214,10 @@
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
 			<spdbrk-click type="bool">0</spdbrk-click>
+			<relay-batt-1 type="bool">0</relay-batt-1>
+			<relay-batt-2 type="bool">0</relay-batt-2>
+			<relay-apu type="bool">0</relay-apu>
+			<relay-ext type="bool">0</relay-ext>
 		</sounde>
 
 		<instrumentation>
