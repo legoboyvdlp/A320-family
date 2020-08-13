@@ -137,8 +137,6 @@ var ELEC = {
 		me.Switch.idg1Disc.setBoolValue(1);
 		me.Switch.idg2Disc.setBoolValue(1);
 		me.Switch.emerElecManOn.setBoolValue(0);
-		me.Source.Bat1.percent.setValue(math.round((rand() * 50) + 50 , 0.1)); # Random between 50 and 100
-		me.Source.Bat2.percent.setValue(math.round((rand() * 50) + 50 , 0.1)); # Random between 50 and 100
 	},
 	resetFail: func() {
 		me.Fail.acEssBusFault.setBoolValue(0);

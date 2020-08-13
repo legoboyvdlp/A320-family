@@ -172,9 +172,11 @@
 			<default value="0"/>
 			<test logic="AND" value="40">
 				/systems/electrical/sources/bat-1/load-kw ne 0
+				/systems/electrical/sources/bat-1/direction eq 1
 			</test>
 			<test logic="AND" value="2">
 				/systems/electrical/sources/bat-1/contact eq 1
+				/systems/electrical/sources/bat-1/direction eq -1
 			</test>
 		</switch>
 		
@@ -342,9 +344,11 @@
 			<default value="0"/>
 			<test logic="AND" value="40">
 				/systems/electrical/sources/bat-2/load-kw ne 0
+				/systems/electrical/sources/bat-2/direction eq 1
 			</test>
 			<test logic="AND" value="2">
 				/systems/electrical/sources/bat-2/contact eq 1
+				/systems/electrical/sources/bat-2/direction eq -1
 			</test>
 		</switch>
 		
