@@ -1678,7 +1678,7 @@
 	</animation>
 
 	<!-- GPWS -->
-	<!--animation>
+	<animation>
 		<name>GPWS terrain system pick</name>
 		<type>pick</type>
 		<object-name>GPWSTerrBtn1</object-name>
@@ -1696,14 +1696,14 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+				<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
-	</animation-->
+	</animation>
 
 	<animation>
 		<type>select</type>
@@ -1716,7 +1716,7 @@
 						<value>0</value>
 					</equals>
 					<equals>
-						<property>instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 						<value>0</value>
 					</equals>
 				</and>
@@ -1734,7 +1734,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+					<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -1829,7 +1829,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+				<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1844,7 +1844,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+					<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
 					<value>1</value>
 				</equals>
 				<equals>

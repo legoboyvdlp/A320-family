@@ -94,7 +94,7 @@ var windController = {
 	crz_winds: [0, 0, 0],
 	des_winds: [0, 0, 0],
 	hist_winds: 0,
-	fl050_wind: [-1, -1, ""],
+	fl50_wind: [-1, -1, ""],
 	fl150_wind: [-1, -1, ""],
 	fl250_wind: [-1, -1, ""],
 	flcrz_wind: [-1, -1, ""],
@@ -271,8 +271,8 @@ var windController = {
 			var file = io.open(path, "wb");
 			var winds_added = 0;
 			
-			if (me.fl050_wind[2] != "") {
-				io.write(file, me.fl050_wind[0] ~ "," ~ me.fl050_wind[1] ~ "," ~ me.fl050_wind[2] ~ "\n");
+			if (me.fl50_wind[2] != "") {
+				io.write(file, me.fl50_wind[0] ~ "," ~ me.fl50_wind[1] ~ "," ~ me.fl50_wind[2] ~ "\n");
 				winds_added += 1;
 			}
 			

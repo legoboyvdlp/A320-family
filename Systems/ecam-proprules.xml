@@ -472,7 +472,7 @@
 	</flipflop>
 	
 	<flipflop>
-		<type>RS</type>
+		<type>SR</type>
 		<S>
 			<equals>
 				<property>/ECAM/warnings/timer/prv-1-not-shut-apu-output</property>
@@ -486,7 +486,7 @@
 	</flipflop>
 	
 	<flipflop>
-		<type>RS</type>
+		<type>SR</type>
 		<S>
 			<equals>
 				<property>/ECAM/warnings/timer/prv-2-not-shut-apu-output</property>

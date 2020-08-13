@@ -519,27 +519,31 @@ var windCRZPage = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			computer_temp = me.computer;
 		}
-		if (me.cur_location < size(fmgc.windController.nav_indicies[computer_temp]) - 1) {
-			me.cur_location = me.cur_location + 1;
-		} else {
-			me.cur_location = 0;
+		if (size(fmgc.windController.nav_indicies[computer_temp]) > 1) {
+			if (me.cur_location < size(fmgc.windController.nav_indicies[computer_temp]) - 1) {
+				me.cur_location = me.cur_location + 1;
+			} else {
+				me.cur_location = 0;
+			}
+			me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+			me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
+			me.reload();
 		}
-		me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
-		me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
-		me.reload();
 	},
 	pushButtonDown: func() {
 		var computer_temp = 2;
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			computer_temp = me.computer;
 		}
-		if (me.cur_location > 0) {
-			me.cur_location = me.cur_location - 1;
-		} else {
-			me.cur_location = size(fmgc.windController.nav_indicies[computer_temp]) - 1;
+		if (size(fmgc.windController.nav_indicies[computer_temp]) > 1) {
+			if (me.cur_location > 0) {
+				me.cur_location = me.cur_location - 1;
+			} else {
+				me.cur_location = size(fmgc.windController.nav_indicies[computer_temp]) - 1;
+			}
+			me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+			me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
+			me.reload();
 		}
-		me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
-		me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
-		me.reload();
 	}
 };
