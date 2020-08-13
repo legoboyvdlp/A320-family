@@ -1663,7 +1663,7 @@
 			<property>/sim/sounde/relay-batt-1</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.8</factor>
+				<factor>0.4</factor>
 			</volume>
 		</relay>
 		
@@ -1674,7 +1674,7 @@
 			<property>/sim/sounde/relay-batt-2</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.8</factor>
+				<factor>0.4</factor>
 			</volume>
 		</relay>
 		
