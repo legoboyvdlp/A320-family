@@ -223,7 +223,7 @@ var SystemDisplay = {
 	},
 	update: func() {
 		phase = pts.ECAM.fwcWarningPhase.getValue();
-		APUMaster = pts.APU.masterSw.getValue();
+		APUMaster = systems.APUNodes.Controls.master.getValue();
 		APURPM = pts.APU.rpm.getValue();
 		engModeSel = pts.Controls.Engines.startSw.getValue();
 		elapsedSec = pts.Sim.Time.elapsedSec.getValue();

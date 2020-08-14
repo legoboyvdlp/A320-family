@@ -32,8 +32,6 @@ var eng2AgentTimerTime = props.globals.initNode("/systems/fire/engine2/agent1-ti
 var eng1Agent2TimerTime = props.globals.initNode("/systems/fire/engine1/agent2-timer-time", 0, "INT");
 var eng2Agent2TimerTime = props.globals.initNode("/systems/fire/engine2/agent2-timer-time", 0, "INT");
 var apuAgentTimerTime = props.globals.initNode("/systems/fire/apu/agent-timer-time", 0, "INT");
-var wow = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
-var apuMaster = props.globals.getNode("/controls/apu/master", 1);
 
 var fire_init = func {
 	setprop("/controls/OH/protectors/fwddisch", 0);
@@ -56,7 +54,6 @@ var engFireDetectorUnit = {
 	loopTwo: 0,
 	condition: 100,
 	fireProp: "",
-	wow: "",
 	new: func(sys, fireProp, testProp) {
 		var eF = {parents:[engFireDetectorUnit]};
 		eF.sys = sys;
@@ -65,7 +62,6 @@ var engFireDetectorUnit = {
 		eF.loopTwo = 0;
 		eF.fireProp = props.globals.getNode(fireProp, 1);
 		eF.testProp = props.globals.getNode(testProp, 1);
-		eF.wow = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
 		eF.condition = 100;
 		return eF;
 	},
@@ -175,7 +171,7 @@ var engFireDetectorUnit = {
 			eng2FireWarn.setBoolValue(1);
 		} elsif (system == 2) {
 			apuFireWarn.setBoolValue(1);
-			if (me.wow.getValue() == 1) {
+			if (pts.Fdm.JSBsim.Position.wow.getValue() == 1) {
 				systems.APUController.APU.emergencyStop();
 				settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
 					extinguisherBottles.vector[4].discharge();

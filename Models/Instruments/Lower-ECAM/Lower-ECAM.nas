@@ -73,7 +73,6 @@ var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/final-deg",
 var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1);
 var gw = props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
-var apu_master = props.globals.getNode("/controls/apu/master", 1);
 var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
 var switch_bleedapu = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
 var apuBleedNotOn = props.globals.getNode("/systems/pneumatics/warnings/apu-bleed-not-on", 1);
@@ -610,7 +609,7 @@ var canvas_lowerECAM_apu = {
 			me["APUGenHz"].setColor(0.7333,0.3803,0);
 		}
 
-		if (apu_master.getValue() == 1 or apu_rpm.getValue() >= 94.9) {
+		if (systems.APUNodes.Controls.master.getValue() == 1 or apu_rpm.getValue() >= 94.9) {
 			me["APUGenbox"].show();
 			me["APUGenHz"].show();
 			me["APUGenVolt"].show();
@@ -634,9 +633,9 @@ var canvas_lowerECAM_apu = {
 			me["APUGenOnline"].hide();
 		}
 
-		if ((apu_master.getValue() == 0) or ((apu_master.getValue() == 1) and (gen_apu.getValue() == 1) and (apu_rpm.getValue() > 94.9))) {
+		if ((systems.APUNodes.Controls.master.getValue() == 0) or ((systems.APUNodes.Controls.master.getValue() == 1) and (gen_apu.getValue() == 1) and (apu_rpm.getValue() > 94.9))) {
 			me["APUGentext"].setColor(0.8078,0.8039,0.8078);
-		} else if ((apu_master.getValue() == 1) and (gen_apu.getValue() == 0) and (apu_rpm.getValue() < 94.9)) { 
+		} else if ((systems.APUNodes.Controls.master.getValue() == 1) and (gen_apu.getValue() == 0) and (apu_rpm.getValue() < 94.9)) { 
 			me["APUGentext"].setColor(0.7333,0.3803,0);
 		}
 
@@ -670,7 +669,7 @@ var canvas_lowerECAM_apu = {
 		
 
 		# APU N and EGT
-		if (apu_master.getValue() == 1) {
+		if (systems.APUNodes.Controls.master.getValue() == 1) {
 			me["APUN"].setColor(0.0509,0.7529,0.2941);
 			me["APUN"].setText(sprintf("%s", math.round(apu_rpm.getValue() or 0)));
 			me["APUEGT"].setColor(0.0509,0.7529,0.2941);
@@ -795,7 +794,7 @@ var canvas_lowerECAM_bleed = {
 		# APU BLEED valve
 		var apu_valve_state2 = apu_valve_state.getValue();
 		
-		if (apu_master.getValue()) {
+		if (systems.APUNodes.Controls.master.getValue()) {
 			me["BLEED-APU-LINES"].show();
 			if (apu_valve_state2 == 1) {
 				me["BLEED-APU-CIRCLE"].setRotation(0);
@@ -1647,7 +1646,7 @@ var canvas_lowerECAM_elec = {
 		}
 
 		# APU
-		if (apu_master.getValue() == 0) {
+		if (systems.APUNodes.Controls.master.getValue() == 0) {
 			me["APU-content"].hide();
 			me["APUGEN-off"].hide();
 			me["APU-border"].hide();

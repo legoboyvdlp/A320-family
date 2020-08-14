@@ -24,7 +24,6 @@ var Transponder = {
 	serviceableNode: props.globals.getNode("instrumentation/transponder/serviceable", 1),
 	knobNode: props.globals.getNode("instrumentation/transponder/inputs/knob-mode", 1),
 	identNode: props.globals.getNode("instrumentation/transponder/inputs/ident-btn", 1),
-	wowNode: props.globals.getNode("fdm/jsbsim/position/wow"),
 	ac1Node: props.globals.getNode("systems/electrical/bus/ac-1", 1),
 	tcasNode: props.globals.getNode("instrumentation/tcas/inputs/mode"),
 	aglNode: props.globals.getNode("position/gear-agl-ft", 1),
@@ -84,7 +83,7 @@ var Transponder = {
 				me.setMode(4); # on
 			}
 		} else if (me.mode >= 3) {
-			if (me.wowNode.getBoolValue()) {
+			if (pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
 				if (me.knobNode.getValue() != 3) {
 					me.setMode(3); # gnd
 				}
