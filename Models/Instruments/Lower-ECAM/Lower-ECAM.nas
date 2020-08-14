@@ -1842,7 +1842,7 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
-			if (systems.ELEC.Bus.ac2.getValue() >= 110) {
+			if (systems.ELEC.Bus.ac1.getValue() >= 110) {
 				me["ELEC-Line-AC1-ACESS"].show();
 			} else {
 				me["ELEC-Line-AC1-ACESS"].hide();
@@ -1861,7 +1861,7 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") == 1) {
-			if (systems.ELEC.Bus.ac2.getValue() < 110) {
+			if (systems.ELEC.Bus.ac1.getValue() < 110) {
 				me["ELEC-Line-AC1-TR1"].setColorFill(0.7333,0.3803,0);
 			} else {
 				me["ELEC-Line-AC1-TR1"].setColorFill(0.0509,0.7529,0.2941);
