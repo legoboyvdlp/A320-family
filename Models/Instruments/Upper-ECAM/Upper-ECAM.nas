@@ -40,7 +40,6 @@ var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash"
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var et = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
-var acess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
 var eng_option = props.globals.getNode("/options/eng", 1);
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3", 1);
 var rev_1 = props.globals.getNode("/engines/engine[0]/reverser-pos-norm", 1);
@@ -143,7 +142,7 @@ var canvas_upperECAM_base = {
 	updateDu3: func() {
 		var elapsedtime = et.getValue();
 		
-		if (acess.getValue() >= 110) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
 			if (du3_offtime.getValue() + 3 < elapsedtime) {
 				if (wow0.getValue() == 1) {
 					if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
@@ -170,7 +169,7 @@ var canvas_upperECAM_base = {
 		var elapsedtime = et.getValue();
 		
 		cur_eng_option = eng_option.getValue();
-		if (acess.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
 			if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime) {
 				upperECAM_cfm_eis2.page.hide();
 				upperECAM_iae_eis2.page.hide();

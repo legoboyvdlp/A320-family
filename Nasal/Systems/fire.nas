@@ -33,8 +33,6 @@ var eng1Agent2TimerTime = props.globals.initNode("/systems/fire/engine1/agent2-t
 var eng2Agent2TimerTime = props.globals.initNode("/systems/fire/engine2/agent2-timer-time", 0, "INT");
 var apuAgentTimerTime = props.globals.initNode("/systems/fire/apu/agent-timer-time", 0, "INT");
 var wow = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
-var dcbatNode = props.globals.getNode("/systems/electrical/bus/dc-bat", 1);
-var dcessNode = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 var apuMaster = props.globals.getNode("/controls/apu/master", 1);
 
 var fire_init = func {
@@ -661,7 +659,7 @@ setlistener("/controls/fire/test-btn-1", func() {
 	if (getprop("/systems/failures/engine-left-fire")) { return; }
 	
 	if (testBtn.getValue() == 1) {
-		if (dcbatNode.getValue() > 25 or dcessNode.getValue() > 25) {
+		if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 			eng1FireWarn.setBoolValue(1);
 		}
 	} else {
@@ -673,7 +671,7 @@ setlistener("/controls/fire/test-btn-1", func() {
 setlistener("/controls/fire/test-btn-2", func() {
 	if (getprop("/systems/failures/engine-right-fire")) { return; }
 	if (testBtn2.getValue() == 1) {
-		if (dcbatNode.getValue() > 25 or dcessNode.getValue() > 25) {
+		if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 			eng2FireWarn.setBoolValue(1);
 		}
 	} else {
@@ -685,7 +683,7 @@ setlistener("/controls/fire/test-btn-2", func() {
 setlistener("/controls/fire/apu-test-btn", func() {
 	if (getprop("/systems/failures/apu-fire")) { return; }
 	if (apuTestBtn.getValue() == 1) {
-		if (dcbatNode.getValue() > 25 or dcessNode.getValue() > 25) {
+		if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 			apuFireWarn.setBoolValue(1);
 		}
 	} else {
@@ -695,7 +693,7 @@ setlistener("/controls/fire/apu-test-btn", func() {
 }, 0, 0);
 
 setlistener("/controls/fire/cargo/test", func() {
-	if (getprop("/systems/failures/aft-cargo-fire") or getprop("/systems/failures/fwd-cargo-fire") or dcbatNode.getValue() < 25 or dcessNode.getValue() < 25) { return; }
+	if (getprop("/systems/failures/aft-cargo-fire") or getprop("/systems/failures/fwd-cargo-fire") or systems.ELEC.Bus.dcBat.getValue() < 25 or systems.ELEC.Bus.dcEss.getValue() < 25) { return; }
 	if (cargoTestBtn.getBoolValue()) {
 		cargoTestTime.setValue(elapsedTime.getValue());
 		cargoTestChecker.start();
@@ -709,7 +707,7 @@ setlistener("/controls/fire/cargo/test", func() {
 }, 0, 0);
 
 var doCargoTest = func() {
-	if (dcbatNode.getValue() >= 25 or dcessNode.getValue() >= 25) {
+	if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 		aftCargoFireWarn.setBoolValue(1);
 		fwdCargoFireWarn.setBoolValue(1);
 		cargoTestTime2.setValue(elapsedTime.getValue());
@@ -728,7 +726,7 @@ var doCargoTest2 = func() {
 
 var doCargoTest3 = func() {
 	dischTest.setBoolValue(0);
-	if (dcbatNode.getValue() >= 25 or dcessNode.getValue() >= 25) {
+	if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 		aftCargoFireWarn.setBoolValue(1);
 		fwdCargoFireWarn.setBoolValue(1);
 		cargoTestTime4.setValue(elapsedTime.getValue());

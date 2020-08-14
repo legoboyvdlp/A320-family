@@ -43,7 +43,6 @@ LBS2KGS = 0.4535924;
 # Fetch Nodes
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var elapsed_sec = props.globals.getNode("/sim/time/elapsed-sec", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
 var autoconfig_running = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var lighting_du4 = props.globals.getNode("/controls/lighting/DU/du4", 1);
 var ecam_page = props.globals.getNode("/ECAM/Lower/page", 1);
@@ -137,9 +136,6 @@ var tr1_volts = props.globals.getNode("/systems/electrical/relay/tr-contactor-1/
 var tr2_volts = props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output", 1);
 var tr1_amps = props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output-amp", 1);
 var tr2_amps = props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output-amp", 1);
-var dc1 = props.globals.getNode("/systems/electrical/bus/dc-1", 1);
-var dc2 = props.globals.getNode("/systems/electrical/bus/dc-2", 1);
-var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 var switch_emer_gen = props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt", 1);
 var switch_gen1 = props.globals.getNode("/controls/electrical/switches/gen-1", 1);
 var switch_gen2 = props.globals.getNode("/controls/electrical/switches/gen-2", 1);
@@ -151,10 +147,6 @@ var ext_volts = props.globals.getNode("/systems/electrical/sources/ext/output-vo
 var ext_hz = props.globals.getNode("/systems/electrical/sources/ext/output-hertz", 1);
 var galleyshed = props.globals.getNode("/systems/electrical/some-electric-thingie/galley-shed", 1);
 var switch_galley = props.globals.getNode("/controls/electrical/switches/galley", 1);
-var dcbat = props.globals.getNode("/systems/electrical/bus/dc-bat", 1);
-var ac_ess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
-var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
 var switch_ac_ess_feed = props.globals.getNode("/controls/electrical/switches/ac-ess-feed", 1);
 var tr1_fault = props.globals.getNode("/systems/failures/electrical/tr-1", 1);
 var tr2_fault = props.globals.getNode("/systems/failures/electrical/tr-2", 1);
@@ -272,7 +264,7 @@ var canvas_lowerECAM_base = {
 	updateDu4: func() {
 		var elapsedtime = elapsed_sec.getValue();
 		
-		if (ac2.getValue() >= 110) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			if (du4_offtime.getValue() + 3 < elapsedtime) {
 				if (gear0_wow.getValue() == 1) {
 					if (autoconfig_running.getValue() != 1 and du4_test.getValue() != 1) {
@@ -298,7 +290,7 @@ var canvas_lowerECAM_base = {
 	update: func() {
 		var elapsedtime = elapsed_sec.getValue();
 		
-		if (ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
 			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime) {
 				lowerECAM_apu.page.hide();
 				lowerECAM_bleed.page.hide();
@@ -1739,31 +1731,31 @@ var canvas_lowerECAM_elec = {
 		}
 
 		# Bus indicators
-		if (dcbat.getValue() > 25) {
+		if (systems.ELEC.Bus.dcBat.getValue() > 25) {
 			me["ELEC-DCBAT-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (dc1.getValue() > 25) {
+		if (systems.ELEC.Bus.dc1.getValue() > 25) {
 			me["ELEC-DC1-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-DC1-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (dc2.getValue() > 25) {
+		if (systems.ELEC.Bus.dc2.getValue() > 25) {
 			me["ELEC-DC2-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-DC2-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (dc_ess.getValue() > 25) {
+		if (systems.ELEC.Bus.dcEss.getValue() > 25) {
 			me["ELEC-DCESS-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-DCESS-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac_ess.getValue() >= 110) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
 			me["ELEC-ACESS-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-ACESS-label"].setColor(0.7333,0.3803,0);
@@ -1775,13 +1767,13 @@ var canvas_lowerECAM_elec = {
 			me["ACESS-SHED"].show();
 		}
 
-		if (ac1.getValue() >= 110) {
+		if (systems.ELEC.Bus.ac1.getValue() >= 110) {
 			me["ELEC-AC1-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-AC1-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (ac2.getValue() >= 110) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			me["ELEC-AC2-label"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["ELEC-AC2-label"].setColor(0.7333,0.3803,0);
@@ -1813,13 +1805,13 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-GEN2-AC2"].hide();
 		}
 
-		if (ac1.getValue() >= 110) {
+		if (systems.ELEC.Bus.ac1.getValue() >= 110) {
 			me["AC1-in"].show();
 		} else {
 			me["AC1-in"].hide();
 		}
 
-		if (ac2.getValue() >= 110) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			me["AC2-in"].show();
 		} else {
 			me["AC2-in"].hide();
@@ -1850,7 +1842,7 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/ac-ess-feed-1/contact-pos") == 1) {
-			if (ac1.getValue() >= 110) {
+			if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 				me["ELEC-Line-AC1-ACESS"].show();
 			} else {
 				me["ELEC-Line-AC1-ACESS"].hide();
@@ -1858,7 +1850,7 @@ var canvas_lowerECAM_elec = {
 			me["ELEC-Line-AC2-ACESS"].hide();
 		} elsif (getprop("/systems/electrical/relay/ac-ess-feed-2/contact-pos") == 1) {
 			me["ELEC-Line-AC1-ACESS"].hide();
-			if (ac2.getValue() >= 110) {
+			if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 				me["ELEC-Line-AC2-ACESS"].show();
 			} else {
 				me["ELEC-Line-AC2-ACESS"].hide();
@@ -1869,7 +1861,7 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/tr-contactor-1/contact-pos") == 1) {
-			if (ac1.getValue() < 110) {
+			if (systems.ELEC.Bus.ac2.getValue() < 110) {
 				me["ELEC-Line-AC1-TR1"].setColorFill(0.7333,0.3803,0);
 			} else {
 				me["ELEC-Line-AC1-TR1"].setColorFill(0.0509,0.7529,0.2941);
@@ -1882,7 +1874,7 @@ var canvas_lowerECAM_elec = {
 		}
 
 		if (getprop("/systems/electrical/relay/tr-contactor-2/contact-pos") == 1) {
-			if (ac2.getValue() < 110) {
+			if (systems.ELEC.Bus.ac2.getValue() < 110) {
 				me["ELEC-Line-AC2-TR2"].setColorFill(0.7333,0.3803,0);
 			} else {
 				me["ELEC-Line-AC2-TR2"].setColorFill(0.0509,0.7529,0.2941);
