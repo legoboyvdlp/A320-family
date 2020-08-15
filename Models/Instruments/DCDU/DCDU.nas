@@ -65,10 +65,28 @@ var canvas_DCDU = {
 		return m;
 	},
 	getKeys: func() {
-		return [];
+		return ["ActiveATC","MessageTimeStamp","ADSConnection","RecallMode","LinkLost","Recall","Close"];
 	},
 	update: func() {
+		me["MessageTimeStamp"].hide();
+		me["RecallMode"].hide();
+		me["LinkLost"].hide();
+		me["Recall"].hide();
+		me["Close"].hide();
 		
+		if (atsu.ADS.state == 2) {
+			me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
+			me["ADSConnection"].show();
+		} else {
+			me["ADSConnection"].hide();
+		}
+		
+		if (atsu.notificationSystem.notifyAirport != nil and atsu.notificationSystem.hasNotified) {
+			me["ActiveATC"].setText("ACTIVE ATC : " ~ atsu.notificationSystem.notifyAirport ~ " CTL");
+			me["ActiveATC"].show();
+		} else {
+			me["ActiveATC"].hide();
+		}
 	}
 };
 

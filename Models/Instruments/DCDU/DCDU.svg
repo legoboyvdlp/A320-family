@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="DCDU.svg"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    id="svg2"
    version="1.1"
    viewBox="0 0 766 511.99999"
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,15 +39,15 @@
      showguides="true"
      inkscape:current-layer="svg2"
      inkscape:window-maximized="1"
-     inkscape:window-y="1071"
-     inkscape:window-x="1591"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
      inkscape:cy="584.24639"
-     inkscape:cx="122.8885"
+     inkscape:cx="-87.724347"
      inkscape:zoom="0.53867065"
      showgrid="true"
      id="namedview371"
-     inkscape:window-height="1001"
-     inkscape:window-width="1920"
+     inkscape:window-height="705"
+     inkscape:window-width="1366"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -88,17 +88,17 @@
      id="ActiveATC"
      y="132.97688"
      x="37.514263"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:84.68554688px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.57481146"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.57481146"
      xml:space="preserve"
      inkscape:label="#text5162"><tspan
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.13053513px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#0dc04b;fill-opacity:1;stroke-width:0.57481146"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.13053513px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#0dc04b;fill-opacity:1;stroke-width:0.57481146"
        y="132.97688"
        x="37.514263"
        id="tspan5160"
        sodipodi:role="line">ACTIVE ATC: KZAK CTL</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.15383148px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.59857637"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.59857637"
      x="560.51617"
      y="479.12161"
      id="Recall"
@@ -108,35 +108,36 @@
        id="tspan5092"
        x="560.51617"
        y="479.12161"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.15383148px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#cecdcd;fill-opacity:1;stroke-width:0.59857637">RECALL*</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.15383148px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#cecdcd;fill-opacity:1;stroke-width:0.59857637">RECALL*</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:84.68554688px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.57481146"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.57481146"
      x="32.59433"
      y="48.478069"
-     id="text5114"
-     transform="scale(1.0070509,0.99299846)"><tspan
+     id="MessageTimeStamp"
+     transform="scale(1.0070509,0.99299846)"
+     inkscape:label="#text5114"><tspan
        sodipodi:role="line"
        id="tspan5112"
        x="32.59433"
        y="48.478069"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36.69707108px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#0dc04b;fill-opacity:1;stroke-width:0.57481146">1557Z  FROM EDDY</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36.69707108px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#0dc04b;fill-opacity:1;stroke-width:0.57481146">1557Z  FROM EDDY</tspan></text>
   <text
      inkscape:label="#text5094"
      id="Close"
      y="478.7305"
      x="584.94989"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.15383148px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.59857637"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.59857637"
      xml:space="preserve"
      transform="scale(0.99615047,1.0038644)"><tspan
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.15383148px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#179ab7;fill-opacity:1;stroke-width:0.59857637"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.15383148px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#179ab7;fill-opacity:1;stroke-width:0.59857637"
        y="478.7305"
        x="584.94989"
        id="tspan5116"
        sodipodi:role="line">CLOSE*</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:83.76890564px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56858957"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56858957"
      x="272.53543"
      y="392.9798"
      id="LinkLost"
@@ -146,16 +147,16 @@
        id="tspan5120"
        x="272.53543"
        y="392.9798"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.50755692px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#bb6100;fill-opacity:1;stroke-width:0.56858957">LINK LOST</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.50755692px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#bb6100;fill-opacity:1;stroke-width:0.56858957">LINK LOST</tspan></text>
   <text
      inkscape:label="#text5122"
      id="RecallMode"
      y="392.9798"
      x="253.65471"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:83.76890564px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56858957"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56858957"
      xml:space="preserve"
      transform="scale(0.99615047,1.0038644)"><tspan
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.50755692px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#cecdcd;fill-opacity:1;stroke-width:0.56858957"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.50755692px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#cecdcd;fill-opacity:1;stroke-width:0.56858957"
        y="392.9798"
        x="253.65471"
        id="tspan5124"
@@ -164,13 +165,13 @@
      transform="scale(1.0070509,0.99299846)"
      id="ADSConnection"
      y="308.93784"
-     x="376.82465"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:84.68554688px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.57481146"
+     x="342.26044"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.57481146"
      xml:space="preserve"
      inkscape:label="#text5158"><tspan
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36.69707108px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#0dc04b;fill-opacity:1;stroke-width:0.57481146"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36.69707108px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';fill:#0dc04b;fill-opacity:1;stroke-width:0.57481146"
        y="308.93784"
-       x="376.82465"
+       x="342.26044"
        id="tspan5156"
        sodipodi:role="line">ADS CONNECTED(2)</tspan></text>
 </svg>
