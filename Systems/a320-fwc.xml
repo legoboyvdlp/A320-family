@@ -335,6 +335,13 @@
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/nav-gpws-terr-fault">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/nav-gpws-terr-fault</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1.0</rate_limit> <!-- 1 second -->
+		</actuator>
 	</channel>
 	
 	<channel name="ECAM" execrate="8">
@@ -1436,6 +1443,19 @@
 				/ECAM/warnings/logic/yaw-damper-2-fault-yellow eq 0
 				/ECAM/warnings/logic/yaw-damper-1-fault eq 1
 				/ECAM/warnings/logic/yaw-damper-2-fault eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/nav-gpws-terr-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/irs-in-align eq 0
+				/systems/navigation/adr/operating-1 eq 1
+				/systems/electrical/bus/ac-1 ge 110
+				/ECAM/warning-phase ne 1
+				/ECAM/warning-phase ne 10
+				/FMGC/FCU-working eq 1
+				/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit eq 1
 			</test>
 		</switch>
 	</channel>

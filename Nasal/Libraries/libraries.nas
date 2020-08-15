@@ -134,6 +134,28 @@ setlistener("/sim/sounde/spdbrk-click", func {
 	}, 0.4);
 });
 
+var relayBatt1 = func {
+  setprop("/sim/sounde/relay-batt-1",1);
+  settimer(func {setprop("/sim/sounde/relay-batt-1",0);},0.35);
+}
+var relayBatt2 = func {
+  setprop("/sim/sounde/relay-batt-2",1);
+  settimer(func {setprop("/sim/sounde/relay-batt-2",0);},0.35);
+}
+var relayApu = func {
+  setprop("/sim/sounde/relay-apu",1);
+  settimer(func {setprop("/sim/sounde/relay-apu",0);},0.35);
+}
+var relayExt = func {
+  setprop("/sim/sounde/relay-ext",1);
+  settimer(func {setprop("/sim/sounde/relay-ext",0);},0.35);
+}
+
+setlistener("/systems/electrical/sources/bat-1/contact", relayBatt1, nil, 0);
+setlistener("/systems/electrical/sources/bat-2/contact", relayBatt2, nil, 0);
+setlistener("/systems/electrical/relay/apu-glc/contact-pos", relayApu, nil, 0);
+setlistener("/systems/electrical/relay/ext-epc/contact-pos", relayExt, nil, 0);
+
 #########
 # Doors #
 #########

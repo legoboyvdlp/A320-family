@@ -74,8 +74,6 @@ var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
 var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
 
 #ACCONFIG
-var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
 var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
 var acType = props.globals.getNode("/MCDUC/type", 1);
@@ -111,49 +109,11 @@ var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 # ROUTE SELECTION
 
 # INT-B
-var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
-var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
-var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
-var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
-var block = props.globals.getNode("/FMGC/internal/block", 1);
-var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
-var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
-var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
-var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
-var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
-var rte_rsv_set = props.globals.getNode("/FMGC/internal/rte-rsv-set", 1);
-var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
-var rte_percent_set = props.globals.getNode("/FMGC/internal/rte-percent-set", 1);
-var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
-var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
-var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
-var final_time = props.globals.getNode("/FMGC/internal/final-time", 1);
-var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
-var tow = props.globals.getNode("/FMGC/internal/tow", 1);
-var lw = props.globals.getNode("/FMGC/internal/lw", 1);
-var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
-var trip_wind_value = props.globals.getNode("/FMGC/internal/trip-wind-value", 1);
-var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
-var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
-var taxi_fuel_set = props.globals.getNode("/FMGC/internal/taxi-fuel-set", 1);
-var rte_set = props.globals.getNode("/FMGC/internal/rte-set", 1);
-var alt_fuel_set = props.globals.getNode("/FMGC/internal/alt-fuel-set", 1);
-var final_fuel_set = props.globals.getNode("/FMGC/internal/final-fuel-set", 1);
-var final_time_set = props.globals.getNode("/FMGC/internal/final-time-set", 1);
-var min_dest_fob_set = props.globals.getNode("/FMGC/internal/min-dest-fob-set", 1);
 
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 var engrdy = props.globals.getNode("/engines/ready", 1);
-var pri_utc = props.globals.getNode("/FMGC/internal/pri-utc", 1);
-var alt_utc = props.globals.getNode("/FMGC/internal/alt-utc", 1);
-var pri_efob = props.globals.getNode("/FMGC/internal/pri-efob", 1);
-var alt_efob = props.globals.getNode("/FMGC/internal/alt-efob", 1);
-var fob = props.globals.getNode("/FMGC/internal/fob", 1);
-var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
-var gw = props.globals.getNode("/FMGC/internal/fuel-pred-gw", 1);
-var cg = props.globals.getNode("/FMGC/internal/cg", 1);
 
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
@@ -269,7 +229,8 @@ var canvas_MCDU_base = {
 	"FUELPRED_ZFWCG","FUELPRED_ZFWCG_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
-	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
+	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -294,6 +255,7 @@ var canvas_MCDU_base = {
 		me["IRSINIT"].hide();
 		me["INITB"].hide();
 		me["FUELPRED"].hide();
+		me["WIND"].hide();
 		me["PROG"].hide();
 		me["PERFTO"].hide();
 		me["arrowsDepArr"].hide();
@@ -310,6 +272,7 @@ var canvas_MCDU_base = {
 		me["IRSINIT"].hide();
 		me["INITB"].hide();
 		me["FUELPRED"].hide();
+		me["WIND"].hide();
 		me["PROG"].hide();
 		me["PERFTO"].hide();
 	},
@@ -408,6 +371,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
@@ -1241,9 +1205,6 @@ var canvas_MCDU_base = {
 				me.colorRightS("grn", "blu", "blu", "wht", "wht", "blu");
 				me.colorRightArrow("wht", "blu", "blu", "wht", "wht", "wht");
 				
-				me["Simple_L1S"].setFontSize(normal);
-				me["Simple_C1S"].setFontSize(normal);
-				me["Simple_R1S"].setFontSize(normal);
 				me["Simple_L1S"].setText(" AUTO");
 				me["Simple_C1S"].setText("SITA725 ");
 				me["Simple_L2S"].setText(" SITA725");
@@ -1445,6 +1406,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].show();
@@ -1860,6 +1822,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -1963,7 +1926,11 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("----/----------");
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
-				me["INITA_InitRequest"].show();
+				if (!Simbrief.SimbriefParser.inhibit) {
+					me["INITA_InitRequest"].show();
+				} else {
+					me["INITA_InitRequest"].hide();
+				}
 			}
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
@@ -2020,6 +1987,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].show();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -2237,6 +2205,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].show();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -2283,7 +2252,7 @@ var canvas_MCDU_base = {
 			}
 					
 			me["Simple_L1S"].setText("TAXI");
-			me["Simple_L1"].setText(sprintf("%2.1f", taxi_fuel.getValue()));
+			me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel));
 			me["Simple_L2S"].setText("TRIP/TIME");
 			me["Simple_L3S"].setText("RTE RSV/PCT");
 			me["Simple_L4S"].setText("ALTN/TIME");
@@ -2292,7 +2261,7 @@ var canvas_MCDU_base = {
 			me["Simple_R2S"].setText("BLOCK");
 			me["Simple_R4S"].setText("TOW/   LW");
 			me["Simple_R5S"].setText("TRIP WIND");
-			me["Simple_R5"].setText(trip_wind.getValue());
+			me["Simple_R5"].setText(fmgc.FMGCInternal.tripWind);
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
 			me["Simple_Title"].setColor(1, 1, 1);
@@ -2300,21 +2269,21 @@ var canvas_MCDU_base = {
 			if (!getprop("/FMGC/internal/fuel-request-set")) {
 				me["Simple_L2"].setText("---.-/----");
 				me["Simple_L3"].setText("---.-");
-				me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+				me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 				me["Simple_L4"].setText("---.-/----");
 				me["Simple_C4"].hide();
 				me["Simple_L5"].setText("---.-");
-				me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+				me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 				me["Simple_L6"].setText("---.-");
-				if (blockSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.blockSet) {
 					me["Simple_R2"].show(); 
 					me["INITB_Block"].hide();
-					me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+					me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
 				} else {
 					me["Simple_R2"].hide(); 
 					me["INITB_Block"].show();
 				}
-				if (zfwSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.zfwSet) {
 					me["Simple_R3S"].show();
 					me["Simple_R3"].show(); 
 					me["Simple_R3S"].setText("FUEL");
@@ -2343,11 +2312,11 @@ var canvas_MCDU_base = {
 				if (getprop("/FMGC/internal/block-calculating")) {
 					me["Simple_L2"].setText("---.-/----");
 					me["Simple_L3"].setText("---.-");
-					me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 					me["Simple_L4"].setText("---.-/----");
 					me["Simple_C4"].hide();
 					me["Simple_L5"].setText("---.-");
-					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+					me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 					me["Simple_L6"].setText("---.-");
 					me["Simple_R2"].show();
 					me["Simple_R2"].setText("---.-");
@@ -2369,15 +2338,15 @@ var canvas_MCDU_base = {
 					if (!getprop("/FMGC/internal/block-confirmed")) {
 						me["Simple_L2"].setText("---.-/----");
 						me["Simple_L3"].setText("---.-");
-						me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+						me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 						me["Simple_L4"].setText("---.-/----");
 						me["Simple_C4"].hide();
 						me["Simple_L5"].setText("---.-");
-						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 						me["Simple_L6"].setText("---.-");
 						me["Simple_R2"].show(); 
 						me["INITB_Block"].hide();
-						me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+						me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
 						me["Simple_R3S"].show();
 						me["Simple_R3"].show(); 
 						me["Simple_R3S"].setText("BLOCK");
@@ -2385,10 +2354,10 @@ var canvas_MCDU_base = {
 						me["Simple_R3_Arrow"].show();
 						me["Simple_R3_Arrow"].setColor(AMBER);
 						me["Simple_C4B"].show();
-						if (num(tow.getValue()) >= 100.0) {
-							me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+						if (num(fmgc.FMGCInternal.tow) >= 100.0) {
+							me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
 						} else {
-							me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+							me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
 						}
 						me["Simple_R4"].setText("---.-");
 						me["Simple_R6"].setText("---.-/----");
@@ -2400,37 +2369,37 @@ var canvas_MCDU_base = {
 						if (getprop("/FMGC/internal/fuel-calculating")) {
 							me["Simple_L2"].setText("---.-/----");
 							me["Simple_L3"].setText("---.-");
-							if (rte_rsv_set.getValue() == 1) {
-								me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-							} else if (rte_percent_set.getValue() == 1) {
-								me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+							if (fmgc.FMGCInternal.rteRsvSet) {
+								me["Simple_C3"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+							} else if (fmgc.FMGCInternal.rtePercentSet) {
+								me["Simple_C3"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
 							} else {
-								me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+								me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 							}
 							me["Simple_L4"].setText("---.-/----");
 							me["Simple_C4"].hide();
 							me["Simple_L5"].setText("---.-");
-							if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
-								me["Simple_C5"].setText(sprintf("/%s         ", final_time.getValue()));
-							} else if (final_fuel_set.getValue() == 1) {
-								me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
-							} else if (final_time_set.getValue() == 1) {
-								me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+							if (fmgc.FMGCInternal.finalFuelSet and fmgc.FMGCInternal.finalTimeSet) {
+								me["Simple_C5"].setText(sprintf("/%s         ", fmgc.FMGCInternal.finalTime));
+							} else if (fmgc.FMGCInternal.finalFuelSet) {
+								me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
+							} else if (fmgc.FMGCInternal.finalTimeSet) {
+								me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
 							} else {
-								me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+								me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 							}
 							me["Simple_L6"].setText("---.-");
 							me["Simple_R2"].show(); 
 							me["INITB_Block"].hide();
-							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_C4B"].show();
-							if (num(tow.getValue()) >= 100.0) {
-								me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+							if (num(fmgc.FMGCInternal.tow) >= 100.0) {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
 							} else {
-								me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
 							}
 							me["Simple_R4"].setText("---.-");
 							me["Simple_R6"].setText("---.-/----");
@@ -2438,54 +2407,54 @@ var canvas_MCDU_base = {
 							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
 							me.colorRight("ack", "blu", "ack", "wht", "ack", "wht");
 						} else {
-							me["Simple_L2"].setText(sprintf("%.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
-							me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
-							if (rte_rsv_set.getValue() == 1) {
-								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
-								} else if (num(rte_rsv.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
-								} else if (num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+							me["Simple_L2"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.tripTime, fmgc.FMGCInternal.tripFuel));
+							me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+							if (fmgc.FMGCInternal.rteRsvSet) {
+								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
 								} else {
-									me["Simple_C3"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+									me["Simple_C3"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
 								}
-							} else if (rte_percent_set.getValue() == 1) {
-								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
-								} else if (num(rte_rsv.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-								} else if (num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+							} else if (fmgc.FMGCInternal.rtePercentSet) {
+								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f              ", fmgc.FMGCInternal.rtePercent));
 								} else {
-									me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+									me["Simple_C3"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
 								}
 							} else {
-								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
-								} else if (num(rte_rsv.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
-								} else if (num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                   ", fmgc.FMGCInternal.rtePercent));
 								} else {
-									me["Simple_C3"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+									me["Simple_C3"].setText(sprintf("/%.1f                    ", fmgc.FMGCInternal.rtePercent));
 								}
 							}
 							if (fmgc.FMGCInternal.altAirportSet) {
-								me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+								me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
 								me["Simple_L4"].setColor(BLUE);
 								me["Simple_C4"].show();
-								if (alt_fuel_set.getValue() == 1) {
-									if (num(alt_fuel.getValue()) > 9.9) {
-										me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+								if (fmgc.FMGCInternal.altFuelSet) {
+									if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+										me["Simple_C4"].setText(sprintf("/%s               ", fmgc.FMGCInternal.altTime));
 									} else {
-										me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+										me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 									}
 								} else {
-									if (num(alt_fuel.getValue()) > 9.9) {
-										me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+									if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+										me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 									} else {
-										me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+										me["Simple_C4"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.altTime));
 									}
 								}
 							} else {
@@ -2493,42 +2462,42 @@ var canvas_MCDU_base = {
 								me["Simple_L4"].setColor(WHITE);
 								me["Simple_C4"].hide();
 							}
-							me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
-							if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+							me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+							if (fmgc.FMGCInternal.finalTimeSet and fmgc.FMGCInternal.finalFuelSet) {
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
 								}
-							} else if (final_time_set.getValue() == 1) {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s            ", final_time.getValue()));
+							} else if (fmgc.FMGCInternal.finalTimeSet) {
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s            ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s              ", fmgc.FMGCInternal.finalTime));
 								}
-							} else if (final_fuel_set.getValue() == 1) {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+							} else if (fmgc.FMGCInternal.finalFuelSet) {
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s                  ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s                  ", fmgc.FMGCInternal.finalTime));
 								}
 							} else {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s                 ", final_time.getValue()));
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s                   ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.finalTime));
 								}
 							}
-							me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
+							me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
 							me["Simple_R2"].show(); 
 							me["INITB_Block"].hide();
-							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_C4B"].hide();
-							me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
-							me["Simple_R6"].setText(sprintf("%.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+							me["Simple_R4"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.tow) ~ sprintf("%4.1f", fmgc.FMGCInternal.lw));
+							me["Simple_R6"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
 				
 							me.colorLeft("ack", "grn", "blu", "ack", "blu", "blu");
 							me.colorRight("ack", "blu", "ack", "grn", "ack", "grn");
@@ -2538,21 +2507,21 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R1S"].setText("ZFW/ZFWCG");
-			me["Simple_R1"].setText(sprintf("%3.1f", zfwcg.getValue()));
+			me["Simple_R1"].setText(sprintf("%3.1f", fmgc.FMGCInternal.zfwcg));
 			me["INITB_ZFWCG"].hide();
 			me["INITB_ZFWCG_S"].show();
 			me["Simple_R1"].show();
-			if (zfwcgSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.zfwcgSet) {
 				me["Simple_R1"].setFontSize(normal);
 			} else {
 				me["Simple_R1"].setFontSize(small);
 			}
 			
-			if (zfwSet.getValue() == 1) {
-				if (zfw.getValue() < 100) {
-					me["Simple_C1"].setText("          " ~ sprintf("%3.1f", zfw.getValue()));
+			if (fmgc.FMGCInternal.zfwSet) {
+				if (fmgc.FMGCInternal.zfw < 100) {
+					me["Simple_C1"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
 				} else {
-					me["Simple_C1"].setText("         " ~ sprintf("%3.1f", zfw.getValue()));
+					me["Simple_C1"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
 				}
 				me["Simple_C1"].show();
 				me["INITB_ZFW"].hide();
@@ -2561,16 +2530,16 @@ var canvas_MCDU_base = {
 				me["INITB_ZFW"].show();
 			}
 
-			if (taxi_fuel_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.taxiFuelSet) {
 				me["Simple_L1"].setFontSize(normal);
 			} else {
 				me["Simple_L1"].setFontSize(small);
 			}
 			
-			if (rte_rsv_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.rteRsvSet) {
 				me["Simple_L3"].setFontSize(normal);
 				me["Simple_C3"].setFontSize(small);
-			} else if (rte_percent_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.rtePercentSet) {
 				me["Simple_L3"].setFontSize(small);
 				me["Simple_C3"].setFontSize(normal);
 			} else {
@@ -2578,19 +2547,19 @@ var canvas_MCDU_base = {
 				me["Simple_C3"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1 and fmgc.FMGCInternal.crzSet == 1) {
+			if (fmgc.FMGCInternal.altFuelSet and fmgc.FMGCInternal.crzSet) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.finalFuelSet and fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(normal);
-			} else if (final_fuel_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalFuelSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(small);
-			} else if (final_time_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(small);
 				me["Simple_C5"].setFontSize(normal);
 			} else {
@@ -2598,7 +2567,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setFontSize(small);
 			}
 			
-			if (min_dest_fob_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.minDestFobSet) {
 				me["Simple_L6"].setFontSize(normal);
 			} else {
 				me["Simple_L6"].setFontSize(small);
@@ -2614,6 +2583,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].show();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -2694,20 +2664,20 @@ var canvas_MCDU_base = {
 			
 			if (!getprop("/FMGC/internal/fuel-request-set") or !getprop("/FMGC/internal/block-confirmed") or getprop("/FMGC/internal/fuel-calculating")) {
 				me["Simple_L3"].setText("---.-");
-				if (rte_rsv_set.getValue() == 1) {
-					me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-				} else if (rte_percent_set.getValue() == 1) {
-					me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+				if (fmgc.FMGCInternal.rteRsvSet) {
+					me["Simple_C3B"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+				} else if (fmgc.FMGCInternal.rtePercentSet) {
+					me["Simple_C3B"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
 				} else {
-					me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					me["Simple_C3B"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 				}
 				me["Simple_L4"].setText("---.-/----");
 				me["Simple_C4"].hide();
 				me["Simple_L5"].setText("---.-");
-				if (final_fuel_set.getValue() == 1 or final_time_set.getValue() == 1) {
-					me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+				if (fmgc.FMGCInternal.finalFuelSet or fmgc.FMGCInternal.finalTimeSet) {
+					me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
 				} else {
-					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+					me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 				}
 				me["Simple_L6"].setText("---.-");
 				
@@ -2718,53 +2688,53 @@ var canvas_MCDU_base = {
 				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");
 				me.colorRight("ack", "ack", "ack", "wht", "wht", "wht");
 			} else {
-				me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
-				if (rte_rsv_set.getValue() == 1) {
-					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
-					} else if (num(rte_rsv.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
-					} else if (num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+				me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+				if (fmgc.FMGCInternal.rteRsvSet) {
+					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
 					} else {
-						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
 					}
-				} else if (rte_percent_set.getValue() == 1) {
-					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
-					} else if (num(rte_rsv.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-					} else if (num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+				} else if (fmgc.FMGCInternal.rtePercentSet) {
+					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f              ", fmgc.FMGCInternal.rtePercent));
 					} else {
-						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
 					}
 				} else {
-					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
-					} else if (num(rte_rsv.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
-					} else if (num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                   ", fmgc.FMGCInternal.rtePercent));
 					} else {
-						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+						me["Simple_C3B"].setText(sprintf("/%.1f                    ", fmgc.FMGCInternal.rtePercent));
 					}
 				}
 				if (fmgc.FMGCInternal.altAirportSet) {
-					me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+					me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
 					me["Simple_L4"].setColor(BLUE);
 					me["Simple_C4"].show();
-					if (alt_fuel_set.getValue() == 1) {
-						if (num(alt_fuel.getValue()) > 9.9) {
-							me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+					if (fmgc.FMGCInternal.altFuelSet) {
+						if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s               ", fmgc.FMGCInternal.altTime));
 						} else {
-							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+							me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 						}
 					} else {
-						if (num(alt_fuel.getValue()) > 9.9) {
-							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 						} else {
-							me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+							me["Simple_C4"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.altTime));
 						}
 					}
 				} else {
@@ -2772,61 +2742,57 @@ var canvas_MCDU_base = {
 					me["Simple_L4"].setColor(WHITE);
 					me["Simple_C4"].hide();
 				}
-				me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
-				if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+				me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+				if (fmgc.FMGCInternal.finalTimeSet and fmgc.FMGCInternal.finalFuelSet) {
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
 					}
-				} else if (final_time_set.getValue() == 1) {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s            ", final_time.getValue()));
+				} else if (fmgc.FMGCInternal.finalTimeSet) {
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s            ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s              ", fmgc.FMGCInternal.finalTime));
 					}
-				} else if (final_fuel_set.getValue() == 1) {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+				} else if (fmgc.FMGCInternal.finalFuelSet) {
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s                  ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s                  ", fmgc.FMGCInternal.finalTime));
 					}
 				} else {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s                 ", final_time.getValue()));
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s                   ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.finalTime));
 					}
 				}
-				me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
-				
-				setprop("/FMGC/internal/fob", num(getprop("/consumables/fuel/total-fuel-lbs") / 1000));
-				setprop("/FMGC/internal/fuel-pred-gw", num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000));
-				setprop("/FMGC/internal/cg", num(getprop("/FMGC/internal/zfwcg")));
-				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fffq_sensor.getValue(), fob.getValue()));
-				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
-				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+				me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
+				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob));
+				me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
+				me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
 				
 				me.colorLeft("ack", "ack", "blu", "ack", "blu", "blu");
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
 			}
 			
 			me["Simple_R3S"].setText("ZFW/ZFWCG");
-			me["Simple_R3"].setText(sprintf("%3.1f", zfwcg.getValue()));
+			me["Simple_R3"].setText(sprintf("%3.1f", fmgc.FMGCInternal.zfwcg));
 			me["Simple_R3"].show();
 			me["FUELPRED_ZFWCG"].hide();
 			me["FUELPRED_ZFWCG_S"].show();
-			if (zfwcgSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.zfwcgSet) {
 				me["Simple_R3"].setFontSize(normal);
 			} else {
 				me["Simple_R3"].setFontSize(small);
 			}
 			
-			if (zfwSet.getValue() == 1) {
-				if (zfw.getValue() < 100) {
-					me["Simple_C3"].setText("          " ~ sprintf("%3.1f", zfw.getValue()));
+			if (fmgc.FMGCInternal.zfwSet) {
+				if (fmgc.FMGCInternal.zfw < 100) {
+					me["Simple_C3"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
 				} else {
-					me["Simple_C3"].setText("         " ~ sprintf("%3.1f", zfw.getValue()));
+					me["Simple_C3"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
 				}
 				me["Simple_C3"].show();
 				me["FUELPRED_ZFW"].hide();
@@ -2835,10 +2801,10 @@ var canvas_MCDU_base = {
 				me["FUELPRED_ZFW"].show();
 			}
 			
-			if (rte_rsv_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.rteRsvSet) {
 				me["Simple_L3"].setFontSize(normal);
 				me["Simple_C3B"].setFontSize(small);
-			} else if (rte_percent_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.rtePercentSet) {
 				me["Simple_L3"].setFontSize(small);
 				me["Simple_C3B"].setFontSize(normal);
 			} else {
@@ -2846,19 +2812,19 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1 and fmgc.FMGCInternal.crzSet == 1) {
+			if (fmgc.FMGCInternal.altFuelSet and fmgc.FMGCInternal.crzSet == 1) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.finalFuelSet and fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(normal);
-			} else if (final_fuel_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalFuelSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(small);
-			} else if (final_time_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(small);
 				me["Simple_C5"].setFontSize(normal);
 			} else {
@@ -2866,7 +2832,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setFontSize(small);
 			}
 			
-			if (min_dest_fob_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.minDestFobSet) {
 				me["Simple_L6"].setFontSize(normal);
 			} else {
 				me["Simple_L6"].setFontSize(small);
@@ -2896,6 +2862,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].show();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -3026,6 +2993,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].show();
 				me["arrowsDepArr"].hide();
@@ -3179,10 +3147,10 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 1) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_to")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_to")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_to")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 1) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_to));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_to));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_to));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -3792,12 +3760,12 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 			
 			me["Simple_L5S"].setText(" VAPP");
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 5) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
-				me["Simple_C5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vls_appr")));
-				me["Simple_L5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vapp_appr")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 5) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
+				me["Simple_C5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vls_appr));
+				me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 				me.fontLeft(0, 0, 0, 0, default, 0);
 				if (vapp_speed_set.getValue()) {
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
@@ -3810,7 +3778,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
 				if (vapp_speed_set.getValue()) {
-					me["Simple_L5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vapp_appr")));
+					me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 					me.fontLeft(0, 0, 0, 0, default, 0);
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
@@ -3891,10 +3859,10 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or fmgc.FMGCInternal.phase == 6) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 6) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -3907,14 +3875,10 @@ var canvas_MCDU_base = {
 		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
-				# if (page == "WINDCRZ") {
- 				#	up/down arrows show
- 				# } else {
- 				#	up/down arrows hide
- 				# }
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
+				me["WIND"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
@@ -3954,12 +3918,44 @@ var canvas_MCDU_base = {
 					me.fontSizeCenter(small, small, small, small, small, normal);
 				}
 				
+				if (page == "WINDHIST") {
+					if (fmgc.windController.hist_winds.wind1.set) {
+						me["WIND_INSERT_star"].show();
+					} else {
+						me["WIND_INSERT_star"].hide();
+					}
+					me["WIND_CANCEL"].hide();
+				} else {
+					if (fmgc.flightPlanController.temporaryFlag[i]) {
+						me["WIND_CANCEL"].show();
+						me["WIND_INSERT_star"].show();
+					} else {
+						me["WIND_CANCEL"].hide();
+						me["WIND_INSERT_star"].hide();
+					}
+				}
+				
 				if (myWind[i] != nil) {
 					if (page == "WINDCRZ") {
 						me["Simple_Title"].setText(sprintf("%s", myWind[i].title[0] ~ myWind[i].title[1] ~ myWind[i].title[2]));
+						if (fmgc.flightPlanController.temporaryFlag[i]) {
+							if (size(fmgc.windController.nav_indicies[i]) > 1) {
+								me["WIND_UPDOWN"].show();
+							} else {
+								me["WIND_UPDOWN"].hide();
+							}
+						} else {
+							if (size(fmgc.windController.nav_indicies[2]) > 1) {
+								me["WIND_UPDOWN"].show();
+							} else {
+								me["WIND_UPDOWN"].hide();
+							}
+						}
 					} else {
 						me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
+						me["WIND_UPDOWN"].hide();
 					}
+					
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/b"));
 					
 					me.dynamicPageArrowFunc(myWind[i]);
@@ -4540,6 +4536,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].show();
@@ -4605,6 +4602,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();

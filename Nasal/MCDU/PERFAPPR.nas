@@ -81,7 +81,7 @@ var perfAPPRInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 			setprop("/FMGC/internal/vapp-speed-set", 1);
-			setprop("/FMGC/internal/computed-speeds/vapp_appr", scratchpad);
+			fmgc.FMGCInternal.vapp_appr = scratchpad;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			mcdu_message(i, "NOT ALLOWED");

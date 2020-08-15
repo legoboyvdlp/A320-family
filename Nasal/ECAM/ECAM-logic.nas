@@ -12,10 +12,8 @@ var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen
 
 var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
-var wowNode    = props.globals.getNode("/fdm/jsbsim/position/wow", 1);
 var apu_rpm    = props.globals.getNode("/engines/engine[2]/n1", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
-var apumaster  = props.globals.getNode("/controls/apu/master", 1);
 var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
 var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
 var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
@@ -226,7 +224,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(dualFailmasteroff);
 		}
 		
-		if (dualFailapuoff.clearFlag == 0 and apumaster.getBoolValue()) {
+		if (dualFailapuoff.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue()) {
 			dualFailapuoff.active = 1;
 		} else {
 			ECAM_controller.warningReset(dualFailapuoff);
@@ -1167,11 +1165,23 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_lim_1);
 	}
 	
-	
 	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 7 and systems.ELEC.Bus.ac1.getValue() >= 110 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(tcasFault);
+	}
+	
+	if (warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
+		gpwsTerrFault.active = 1;
+		
+		if (!getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit")) {
+			gpwsTerrFaultOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(gpwsTerrFaultOff);
+		}
+	} else {
+		ECAM_controller.warningReset(gpwsTerrFault);
+		ECAM_controller.warningReset(gpwsTerrFaultOff);
 	}
 	
 	if (fac12Fault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and warningNodes.Logic.fac12Fault.getBoolValue()) {
@@ -1298,7 +1308,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(apuAutoShutdown);
 	}
 	
-	if (apuAutoShutdownMast.clearFlag == 0 and pts.APU.masterSw.getValue() and apuAutoShutdown.active == 1) {
+	if (apuAutoShutdownMast.clearFlag == 0 and systems.APUNodes.Controls.master.getValue() and apuAutoShutdown.active == 1) {
 		apuAutoShutdownMast.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuAutoShutdownMast);
@@ -2471,7 +2481,7 @@ var messages_right_memo = func {
 }
 
 setlistener("/engines/engine[0]/state", func() {
-	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and wowNode.getValue() == 0) {
+	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and !pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
 		dualFailNode.setBoolValue(1);
 	} else {
 		dualFailNode.setBoolValue(0);
@@ -2479,7 +2489,7 @@ setlistener("/engines/engine[0]/state", func() {
 }, 0, 0);
 
 setlistener("/engines/engine[1]/state", func() {
-	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and wowNode.getValue() == 0) {
+	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and !pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
 		dualFailNode.setBoolValue(1);
 	} else {
 		dualFailNode.setBoolValue(0);

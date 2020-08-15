@@ -228,6 +228,10 @@
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
 			<spdbrk-click type="bool">0</spdbrk-click>
+			<relay-batt-1 type="bool">0</relay-batt-1>
+			<relay-batt-2 type="bool">0</relay-batt-2>
+			<relay-apu type="bool">0</relay-apu>
+			<relay-ext type="bool">0</relay-ext>
 		</sounde>
 
 		<instrumentation>
@@ -280,6 +284,15 @@
 							<command>nasal</command>
 							<script>
 							acconfig.loadflightplan_dlg.open();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Simbrief</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								acconfig.simbrief_dlg.open();
 							</script>
 						</binding>
 					</item>
@@ -655,6 +668,7 @@
 			<cost-index type="int">0</cost-index>
 			<to-state type="bool">0</to-state>
 		</internal>
+		<simbrief-username type="string"></simbrief-username>
 	</FMGC>
 	
 	<controls>
@@ -4360,6 +4374,9 @@
 		<save>
 			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
 		</save>
+		<Simbrief>
+			<file>Aircraft/A320-family/Nasal/FMGC/SimbriefParser.nas</file>
+		</Simbrief>
 	</nasal>
 
 	<maintainance>

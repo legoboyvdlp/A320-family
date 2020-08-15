@@ -19,7 +19,7 @@ var APUNodes = {
 
 var APU = {
 	state: 0, # off, power up, watch, starting preparation, starting, run, cooldown, shutdown
-	inletFlap: aircraft.door.new("controls/apu/inlet-flap", 12),
+	inletFlap: aircraft.door.new("/controls/apu/inlet-flap", 12),
 	fuelValveCmd: props.globals.getNode("/systems/fuel/valves/apu-lp-valve-cmd"),
 	fuelValvePos: props.globals.getNode("/systems/fuel/valves/apu-lp-valve"),
 	inletFlapPos: props.globals.getNode("/controls/apu/inlet-flap/position-norm"),
@@ -95,7 +95,7 @@ var APU = {
 		me.checkOil();
 		me.listenSignals = 1;
 		settimer(func() { 
-			if (APUNodes.Controls.master.getValue() and !getprop("systems/acconfig/autoconfig-running")) { 
+			if (APUNodes.Controls.master.getValue() and !getprop("/systems/acconfig/autoconfig-running")) { 
 				me.setState(2);
 			}
 		}, 3);
@@ -103,7 +103,7 @@ var APU = {
 	},
 	startCommand: func(fast = 0) {
 		if (me.listenSignals and (me.state == 1 or me.state == 2)) {
-			me.signals.startInProgress.setValue(1);
+			me.signals.startInProgress.setBoolValue(1);
 			me.setState(3);
 			checkApuStartTimer.start();
 			me.fastStart = fast;
@@ -137,7 +137,7 @@ var APU = {
 	waitStart2: func() {
 		if (pts.APU.rpm.getValue() >= 99.9) {
 			me.GenericControls.starter.setValue(0);
-			me.signals.startInProgress.setValue(0);
+			me.signals.startInProgress.setBoolValue(0);
 			me.signals.available.setValue(1);
 			me.setState(5);
 			apuStartTimer2.stop();
@@ -187,11 +187,14 @@ var APU = {
 	# Signal generators / receivers
 	stop: func() {
 		if (me.listenStopSignal and me.state == 4) {
-			me.signals.startInProgress.setValue(0);
+			me.signals.startInProgress.setBoolValue(0);
 			me.stopAPU();
 			me.setState(7);
 			shutdownTimer.start();
 		} else {
+			if (me.signals.startInProgress.getBoolValue()) {
+				me.signals.startInProgress.setBoolValue(0);
+			}
 			if (me.signals.bleedWasUsed) {
 				if (me.bleedTime == 0) { me.shutBleed(); }
 				if (120 - (pts.Sim.Time.elapsedSec.getValue() - me.bleedTime) > 0) {
@@ -290,7 +293,7 @@ var APUController = {
 };
 
 var _masterTime = 0;
-setlistener("controls/apu/master", func() {
+setlistener("/controls/apu/master", func() {
 	if (APUController.APU != nil) {
 		if (APUNodes.Controls.master.getValue() and APUController.APU.state == 0) {
 			shutdownTimer.stop();
@@ -304,7 +307,7 @@ setlistener("controls/apu/master", func() {
 	}
 }, 0, 0);
 
-setlistener("controls/pneumatics/switches/apu", func() {
+setlistener("/controls/pneumatics/switches/apu", func() {
 	if (APUController.APU != nil) {
 		if (APUNodes.Controls.bleed.getValue()) {
 			APUController.APU.signals.bleedWasUsed = 1;
