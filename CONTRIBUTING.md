@@ -3,9 +3,9 @@
 These examples will show the Guidelines for contributing. Please follow this at all times, or your contribution will not be merged.
 
 ## Basic Guidelines:
-- Use Tabs to indent code, DO NOT USE SPACE.
-- Use lowerCamelCase or underscores for naming Nasal variables/functions (someFunction, some_function).
-- Comments optional for XML, mandatory for Nasal.
+- Use Tabs to indent code
+- Use lowerCamelCase for naming Nasal variables/functions (someFunction)
+- Please document your code!
 - Do not add a comment to every line, only to functions/groups of code.
 - Remove .bak or .blend files, unless absolutely needed.
 - Leave one extra line at the bottom of each file.

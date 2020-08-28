@@ -23,6 +23,7 @@ To install navdata, create a folder FMSDATA, and add it to your additional scene
 
 ## Installation
 If you have issues installing, please check INSTALL.MD!
+Specifically, make sure you remove -dev from the folder name!
 
 ## External tools
 Some external tools you might want to checkout and use with this Model.  
