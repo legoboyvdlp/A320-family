@@ -4337,6 +4337,9 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
+		<canvas_qnh>
+			<file>Aircraft/A320-family/Nasal/Displays/CanvasQNH.nas</file>
+		</canvas_qnh>
 		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
 			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
 		</mcdu_scratchpad>
