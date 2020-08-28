@@ -2916,4 +2916,36 @@
 		</axis>
 	</animation>
 	
+	
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>WindshildWiperL</object-name>
+		<property>/fdm/jsbsim/fcs/left-wiper-pos-norm</property>
+		<factor>-45</factor>
+		<axis>
+			<x1-m>-17.4353</x1-m>
+			<y1-m>-0.119353</y1-m>
+			<z1-m>0.290889</z1-m>
+			<x2-m>-17.4268</x2-m>
+			<y2-m>-0.115183</y2-m>
+			<z2-m>0.282531</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>WindshieldWiperR</object-name>
+		<property>/fdm/jsbsim/fcs/right-wiper-pos-norm</property>
+		<factor>45</factor>
+		<axis>
+			<x1-m>-17.4335</x1-m>
+			<y1-m>0.119445</y1-m>
+			<z1-m>0.29116</z1-m>
+			<x2-m>-17.4249</x2-m>
+			<y2-m>0.115275</y2-m>
+			<z2-m>0.282805</z2-m>
+		</axis>
+	</animation>
+	
 </PropertyList>

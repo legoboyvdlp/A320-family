@@ -7242,23 +7242,22 @@
 		</action>
 	</animation>
 
-	<!--animation>
+	<animation>
 		<type>rotate</type>
 		<object-name>LeftWiperKnb</object-name>
 		<property>controls/switches/wiperLspd</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>-50</dep></entry>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>50</dep></entry>
-			<entry><ind>2</ind><dep>100</dep></entry>
+			<entry><ind>1</ind><dep>-60</dep></entry>
+			<entry><ind>2</ind><dep>-110</dep></entry>
 		</interpolation>
 		<axis>
-			<x1-m>0.00608</x1-m>
-			<y1-m>-0.21485</y1-m>
-			<z1-m>-0.26721</z1-m>
-			<x2-m>0.00095</x2-m>
-			<y2-m>-0.21591</y2-m>
-			<z2-m>-0.26721</z2-m>
+			<x1-m>-0.003475</x1-m>
+			<y1-m>-0.216042</y1-m>
+			<z1-m>-0.267275</z1-m>
+			<x2-m>-0.002396</x2-m>
+			<y2-m>-0.215907</y2-m>
+			<z2-m>-0.267275</z2-m>
 		</axis>
 	</animation>
 
@@ -7267,14 +7266,26 @@
 		<object-name>LeftWiperKnb</object-name>
 		<action>
 			<button>0</button>
+			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>controls/switches/wiperLspd</property>
-				<value>-1</value>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
+				<step>1</step>
+				<min>0</min>
+				<max>2</max>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/wiperLspd</property>
+				<step>-1</step>
+				<min>0</min>
+				<max>2</max>
 			</binding>
 		</action>
 	</animation>
@@ -7284,18 +7295,17 @@
 		<object-name>RightWiperKnb</object-name>
 		<property>controls/switches/wiperRspd</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>-50</dep></entry>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>50</dep></entry>
-			<entry><ind>2</ind><dep>100</dep></entry>
+			<entry><ind>1</ind><dep>-60</dep></entry>
+			<entry><ind>2</ind><dep>-110</dep></entry>
 		</interpolation>
 		<axis>
-			<x1-m>0.00608</x1-m>
-			<y1-m>-0.21485</y1-m>
-			<z1-m>-0.26721</z1-m>
-			<x2-m>0.00095</x2-m>
-			<y2-m>-0.21591</y2-m>
-			<z2-m>-0.26721</z2-m>
+			<x1-m>-0.003475</x1-m>
+			<y1-m>0.216042</y1-m>
+			<z1-m>-0.267275</z1-m>
+			<x2-m>-0.002396</x2-m>
+			<y2-m>0.215907</y2-m>
+			<z2-m>-0.267275</z2-m>
 		</axis>
 	</animation>
 
@@ -7304,17 +7314,29 @@
 		<object-name>RightWiperKnb</object-name>
 		<action>
 			<button>0</button>
+			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>controls/switches/wiperRspd</property>
-				<value>-1</value>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
+				<step>1</step>
+				<min>0</min>
+				<max>2</max>
 			</binding>
 		</action>
-	</animation-->
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/wiperRspd</property>
+				<step>-1</step>
+				<min>0</min>
+				<max>2</max>
+			</binding>
+		</action>
+	</animation>
 
 	<animation>
 		<type>pick</type>

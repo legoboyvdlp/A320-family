@@ -1174,5 +1174,103 @@
 		</switch>
 	
 	</channel>
+	
+	<channel name="Wipers">
+	
+		<switch name="fcs/left-wiper-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				fcs/left-wiper-pos-norm gt 0.001
+				fcs/left-wiper-has-been-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				fcs/left-wiper-has-been-1 eq 0
+				/controls/switches/wiperLspd ne 0
+			</test>
+		</switch>
+		
+		<switch name="fcs/left-wiper-has-been-1">
+			<default value="0"/>
+			<test value="0">
+				fcs/left-wiper-pos-norm le 0.001
+			</test>
+			<test value="1">
+				fcs/left-wiper-has-been-1 eq 1
+			</test>
+			<test value="1">
+				fcs/left-wiper-pos-norm ge 0.999
+			</test>
+		</switch>
+		
+		<switch name="fcs/left-wiper-speed">
+			<default value="0"/>
+			<test logic="AND" value="fcs/left-wiper-speed">
+				/controls/switches/wiperLspd eq 0
+				fcs/left-wiper-pos-norm ge 0.001
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+			<test logic="AND" value="4">
+				/controls/switches/wiperLspd eq 1
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+			<test logic="AND" value="7">
+				/controls/switches/wiperLspd eq 2
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="fcs/left-wiper-pos-norm">
+			<input>fcs/left-wiper-cmd</input>
+			<rate_limit>fcs/left-wiper-speed</rate_limit>
+		</actuator>
+		
+		<switch name="fcs/right-wiper-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				fcs/right-wiper-pos-norm gt 0.001
+				fcs/right-wiper-has-been-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				fcs/right-wiper-has-been-1 eq 0
+				/controls/switches/wiperRspd ne 0
+			</test>
+		</switch>
+		
+		<switch name="fcs/right-wiper-has-been-1">
+			<default value="0"/>
+			<test value="0">
+				fcs/right-wiper-pos-norm le 0.001
+			</test>
+			<test value="1">
+				fcs/right-wiper-has-been-1 eq 1
+			</test>
+			<test value="1">
+				fcs/right-wiper-pos-norm ge 0.999
+			</test>
+		</switch>
+		
+		<switch name="fcs/right-wiper-speed">
+			<default value="0"/>
+			<test logic="AND" value="fcs/right-wiper-speed">
+				/controls/switches/wiperRspd eq 0
+				fcs/right-wiper-pos-norm ge 0.001
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="4">
+				/controls/switches/wiperRspd eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="7">
+				/controls/switches/wiperRspd eq 2
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="fcs/right-wiper-pos-norm">
+			<input>fcs/right-wiper-cmd</input>
+			<rate_limit>fcs/right-wiper-speed</rate_limit>
+		</actuator>
+		
+	</channel>
 
 </system>

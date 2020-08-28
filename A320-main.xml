@@ -960,6 +960,8 @@
 			<landing-lights-r type="float">0.0</landing-lights-r>
 			<LrainRpt type="bool">0</LrainRpt>
 			<RrainRpt type="bool">0</RrainRpt>
+			<wiperLspd type="int">0</wiperLspd>
+			<wiperRspd type="int">0</wiperRspd>
 			<emerCallLtO type="bool">0</emerCallLtO>
 			<emerCallLtC type="bool">0</emerCallLtC>
 			<cabinCall type="bool">0</cabinCall>

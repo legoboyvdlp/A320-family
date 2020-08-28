@@ -24,8 +24,8 @@ var resetView = func() {
 		interpolate("sim/current-view/pitch-offset-deg", -14.6, 0.66);
 		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
 		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
+		interpolate("sim/current-view/y-offset-m", 0.545, 0.66); 
+		interpolate("sim/current-view/z-offset-m", -16.193, 0.66);
 		
 		if (_shakeFlag) {
 			setprop("/sim/rendering/headshake/enabled", 1);
