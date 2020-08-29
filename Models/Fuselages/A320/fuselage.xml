@@ -98,6 +98,11 @@
 		<object-name>SideStayR1</object-name>
 	</effect>
 	
+	<effect>
+		<inherits-from>Effects/glass</inherits-from>
+		<object-name>Windsheild</object-name>
+    </effect>
+	
 	<!-- Animations -->
 	
 	<!-- Belly -->
