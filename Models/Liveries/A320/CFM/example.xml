@@ -5,7 +5,8 @@
 		<model>
 			<livery>
 				<name>ICAO Airline Name (Extra Info)</name>
-				<texture>Liveries/A320/CFM/texture.png</texture>
+				<texture-fuselage>Liveries/A320/CFM/texture.png</texture-fuselage>
+				<texture-engine>Liveries/A320/CFM/texture.png</texture-engine>
 			</livery>
 		</model>
 	</sim>

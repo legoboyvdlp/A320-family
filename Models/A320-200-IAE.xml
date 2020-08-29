@@ -15,4 +15,14 @@
 		<name>EnginesCFM</name>
 		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.v2500.xml</path>
 	</model>
+	
+	<!-- Nasal code -->
+	<nasal>
+		<load>
+			var livery_update = aircraft.livery_update.new("Aircraft/A320-family/Models/Liveries/A320/IAE");
+		</load>
+		<unload>
+			livery_update.stop();
+		</unload>
+	</nasal>
 </PropertyList>

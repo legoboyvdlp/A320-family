@@ -30,6 +30,10 @@
 		<object-name>RatDoorL</object-name>
 		<object-name>RatDoorR</object-name>
 		<object-name>ApuFlap</object-name>
+		<object-name>AvionicsVentDoor</object-name>
+		<object-name>OutflowValveDoor1</object-name>
+		<object-name>OutflowValveDoor2</object-name>
+		<object-name>GPUServiceDoor</object-name>
 	</effect>
 	
 	<effect>
@@ -98,10 +102,75 @@
 		<object-name>SideStayR1</object-name>
 	</effect>
 	
-	<effect>
-		<inherits-from>Effects/glass</inherits-from>
-		<object-name>Windsheild</object-name>
-    </effect>
+	<animation>
+		<type>material</type>
+		<!-- Fuselage -->
+		<object-name>AileronL</object-name>
+		<object-name>AileronR</object-name>
+		<object-name>Antenna1</object-name>
+		<object-name>Antenna2</object-name>
+		<object-name>ApuFlap</object-name>
+		<object-name>AvionicsVentDoor</object-name>
+		<object-name>Cargo1</object-name>
+		<object-name>Cargo2</object-name>
+		<object-name>Cargo3</object-name>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR4</object-name>
+		<object-name>ElevatorL</object-name>
+		<object-name>ElevatorR</object-name>
+		<object-name>EngineFairingL</object-name>
+		<object-name>EngineFairingR</object-name>
+		<object-name>FairingL1</object-name>
+		<object-name>FairingL2</object-name>
+		<object-name>FairingL3</object-name>
+		<object-name>FairingR1</object-name>
+		<object-name>FairingR2</object-name>
+		<object-name>FairingR3</object-name>
+		<object-name>FlapL1</object-name>
+		<object-name>FlapL2</object-name>
+		<object-name>FlapR1</object-name>
+		<object-name>FlapR2</object-name>
+		<object-name>Fuselage</object-name>
+		<object-name>GPUServiceDoor</object-name>
+		<object-name>Hstabs</object-name>
+		<object-name>MLGGearDoorL</object-name>
+		<object-name>MLGGearDoorR</object-name>
+		<object-name>MLGWingDoorL1</object-name>
+		<object-name>MLGWingDoorL2</object-name>
+		<object-name>MLGWingDoorR1</object-name>
+		<object-name>MLGWingDoorR1</object-name>
+		<object-name>NLGAftDoorL</object-name>
+		<object-name>NLGAftDoorR</object-name>
+		<object-name>NLGFittingPanel</object-name>
+		<object-name>NLGForewardDoorL</object-name>
+		<object-name>NLGForewardDoorR</object-name>
+		<object-name>OutflowValveDoor1</object-name>
+		<object-name>OutflowValveDoor2</object-name>
+		<object-name>RatDoorL</object-name>
+		<object-name>RatDoorR</object-name>
+		<object-name>Sharklet</object-name>
+		<object-name>SlatL1</object-name>
+		<object-name>SlatL2</object-name>
+		<object-name>SlatR1</object-name>
+		<object-name>SlatR2</object-name>
+		<object-name>SpoilerL1</object-name>
+		<object-name>SpoilerL2</object-name>
+		<object-name>SpoilerL3</object-name>
+		<object-name>SpoilerL4</object-name>
+		<object-name>SpoilerL5</object-name>
+		<object-name>SpoilerR1</object-name>
+		<object-name>SpoilerR2</object-name>
+		<object-name>SpoilerR3</object-name>
+		<object-name>SpoilerR4</object-name>
+		<object-name>SpoilerR5</object-name>
+		<object-name>Wings</object-name>
+		<object-name>WingtipFence</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-fuselage</texture-prop>
+		<texture>Fuse-Main.png</texture>
+	</animation>
 	
 	<!-- Animations -->
 	
