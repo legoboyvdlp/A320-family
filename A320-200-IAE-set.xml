@@ -12,7 +12,7 @@
 		<model>
 			<path>Aircraft/A320-family/Models/A320-200-IAE.xml</path>
 			<livery>
-				<file>Airbus</file>
+				<file>SAS</file>
 			</livery>
 			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/IAE</livery-dir>
 		</model>
