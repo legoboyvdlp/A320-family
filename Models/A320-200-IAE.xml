@@ -12,7 +12,7 @@
 	</model>
 	
 	<model>
-		<name>EnginesCFM</name>
+		<name>EnginesIAE</name>
 		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.v2500.xml</path>
 	</model>
 	
