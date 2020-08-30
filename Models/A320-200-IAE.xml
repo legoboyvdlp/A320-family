@@ -15,7 +15,23 @@
 		<name>EnginesIAE</name>
 		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.v2500.xml</path>
 	</model>
-	
+
+	<animation>
+		<type>material</type>
+		<!-- Fuselage -->
+		<object-name>EngineIAEV2500L</object-name>
+		<object-name>EngineIAEV2500R</object-name>
+		<object-name>ReverserLDoor</object-name>
+		<object-name>ReverserRDoor</object-name>
+		<object-name>PylonIAEV2500L</object-name>
+		<object-name>PylonIAEV2500R</object-name>
+		<object-name>IntakeIAEV2500L</object-name>
+		<object-name>IntakeIAEV2500R</object-name>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-engine</texture-prop>
+		<texture>engine-IAE-V2500.png</texture>
+	</animation>
+
 	<!-- Nasal code -->
 	<nasal>
 		<load>

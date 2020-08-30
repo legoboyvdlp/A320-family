@@ -15,6 +15,28 @@
 		<name>EnginesCFM</name>
 		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.cfm.xml</path>
 	</model>
+
+	<animation>
+		<type>material</type>
+		<!-- Fuselage -->
+		<object-name>EngineCFM56L</object-name>
+		<object-name>EngineCFM56R</object-name>
+		<object-name>ReverserLDoor1</object-name>
+		<object-name>ReverserLDoor2</object-name>
+		<object-name>ReverserLDoor3</object-name>
+		<object-name>ReverserLDoor4</object-name>
+		<object-name>ReverserRDoor1</object-name>
+		<object-name>ReverserRDoor2</object-name>
+		<object-name>ReverserRDoor3</object-name>
+		<object-name>ReverserRDoor4</object-name>
+		<object-name>PylonCFM56L</object-name>
+		<object-name>PylonCFM56R</object-name>
+		<object-name>IntakeCFM56L</object-name>
+		<object-name>IntakeCFM56R</object-name>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-engine</texture-prop>
+		<texture>engine-CFM56.png</texture>
+	</animation>
 	
 	<!-- Nasal code -->
 	<nasal>
