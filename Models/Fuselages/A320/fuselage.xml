@@ -167,7 +167,7 @@
 		<object-name>SpoilerR5</object-name>
 		<object-name>Wings</object-name>
 		<object-name>WingtipFence</object-name>
-		<property-base>sim/model/livery</property-base>
+		<property-base>sim/model/livery/</property-base>
 		<texture-prop>texture-fuselage</texture-prop>
 		<texture>Fuse-Main.png</texture>
 	</animation>

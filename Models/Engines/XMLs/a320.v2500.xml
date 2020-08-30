@@ -438,7 +438,7 @@
 		<object-name>PylonIAEV2500R</object-name>
 		<object-name>IntakeIAEV2500L</object-name>
 		<object-name>IntakeIAEV2500R</object-name>
-		<property-base>sim/model/livery</property-base>
+		<property-base>sim/model/livery/</property-base>
 		<texture-prop>texture-engine</texture-prop>
 		<texture>engine-IAE-V2500.png</texture>
 	</animation>
