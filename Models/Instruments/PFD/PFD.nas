@@ -216,7 +216,7 @@ var canvas_PFD_base = {
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV", "fixed_aircraft_outline_1","fixed_aircraft_outline_2"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -1014,6 +1014,22 @@ var canvas_PFD_base = {
 		me.AI_horizon_hdg_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
 		me["AI_heading"].update();
 	},
+	
+	dimFixedAircraftOutline: func() {
+		var r = 0.345098039;
+		var g = 0.349019608;
+		var b = 0.058823529;
+		me["fixed_aircraft_outline_1"].setColor(r, g, b);
+		me["fixed_aircraft_outline_2"].setColor(r, g, b);
+	},
+
+	undimFixedAircraftOutline: func() {
+			var r = 0.788235294;
+			var g = 0.819607843;
+			var b = 0.129411765;
+			me["fixed_aircraft_outline_1"].setColor(r, g, b);
+			me["fixed_aircraft_outline_2"].setColor(r, g, b);
+	},
 };
 
 var canvas_PFD_1 = {
@@ -1089,9 +1105,11 @@ var canvas_PFD_1 = {
 		# TODO - Hide FPV if error on PFD1
 		if (ap_trk_sw.getValue() == 0) {
 			me["FPV"].hide();	
+			me.undimFixedAircraftOutline();
 		} else {
-			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, math.clamp(aoa_1.getValue(), -9.9, 9.9)*FPV_Y_COEFFICIENT);
+			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa_1.getValue(), -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
 			me["FPV"].show();
+			me.dimFixedAircraftOutline();
 		}
 
 		# ILS
@@ -1837,10 +1855,12 @@ var canvas_PFD_2 = {
 		# TODO - Deal with situation if AOA not available from ADR2
 		# TODO - Hide FPV if error on PFD2
 		if (ap_trk_sw.getValue() == 0) {
-			me["FPV"].hide();	
+			me["FPV"].hide();
+			me.undimFixedAircraftOutline();
 		} else {
-			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, math.clamp(aoa_2.getValue(), -9.9, 9.9)*FPV_Y_COEFFICIENT);
+			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa_2.getValue(), -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
 			me["FPV"].show();
+			me.dimFixedAircraftOutline();
 		}
 
 		# ILS

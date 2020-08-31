@@ -1396,9 +1396,10 @@
       <path
          sodipodi:nodetypes="cccccccccccc"
          inkscape:connector-curvature="0"
-         id="rect4760-1"
+         id="fixed_aircraft_outline_1"
          d="m 279.39676,473.84829 20.67975,-1.3e-4 v 15.43882 0 l 1.8e-4,25.65723 h -15.4389 l -0.14628,-25.65723 v 0 l -81.2588,-5e-5 v -15.43891 l 76.16405,2.1e-4 z"
-         style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.54375;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.54375;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:label="fixed_aircraft_outline_1" />
     </g>
     <g
        id="g4856"
@@ -1420,9 +1421,10 @@
       <path
          style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.54375;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 279.39676,473.84829 20.67975,-1.3e-4 v 15.43882 0 l 1.8e-4,25.65723 h -15.4389 l -0.14628,-25.65723 v 0 l -81.2588,-5e-5 v -15.43891 l 76.16405,2.1e-4 z"
-         id="path4854"
+         id="fixed_aircraft_outline_2"
          inkscape:connector-curvature="0"
-         sodipodi:nodetypes="cccccccccccc" />
+         sodipodi:nodetypes="cccccccccccc"
+         inkscape:label="fixed_aircraft_outline_2" />
     </g>
     <path
        style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:3.19995;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
