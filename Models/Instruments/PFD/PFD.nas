@@ -130,6 +130,13 @@ var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
 var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
+var adr_1_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-1", 1);
+var adr_2_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-2", 1);
+var adr_3_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-3", 1);
+var adr_1_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-fault", 1);
+var adr_2_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-fault", 1);
+var adr_3_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-fault", 1);
+var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 
 # Create Nodes:
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
@@ -1015,6 +1022,8 @@ var canvas_PFD_base = {
 		me["AI_heading"].update();
 	},
 	
+	# dim the yellow outline of fixed aircraft symbol on PFDs
+	# eg when crew select TRK-FPA
 	dimFixedAircraftOutline: func() {
 		var r = 0.345098039;
 		var g = 0.349019608;
@@ -1023,13 +1032,30 @@ var canvas_PFD_base = {
 		me["fixed_aircraft_outline_2"].setColor(r, g, b);
 	},
 
+	# undim the yellow outline of fixed aircraft symbol on PFDs
 	undimFixedAircraftOutline: func() {
-			var r = 0.788235294;
-			var g = 0.819607843;
-			var b = 0.129411765;
-			me["fixed_aircraft_outline_1"].setColor(r, g, b);
-			me["fixed_aircraft_outline_2"].setColor(r, g, b);
+		var r = 0.788235294;
+		var g = 0.819607843;
+		var b = 0.129411765;
+		me["fixed_aircraft_outline_1"].setColor(r, g, b);
+		me["fixed_aircraft_outline_2"].setColor(r, g, b);
 	},
+
+	# Get Angle of Attack from ADR1 or, depending on Switching panel, ADR3
+	getAOAForPFD1: func() {
+		if (air_data_switch.getValue() != -1 and adr_1_switch.getValue() and !adr_1_fault.getValue()) return aoa_1.getValue();
+		if (air_data_switch.getValue() == -1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
+		return nil;
+	},
+	
+	# Get Angle of Attack from ADR2 or, depending on Switching panel, ADR3
+	getAOAForPFD2: func() {
+		if (air_data_switch.getValue() != 1 and adr_2_switch.getValue() and !adr_2_fault.getValue()) return aoa_2.getValue();
+		if (air_data_switch.getValue() == 1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
+		return nil;
+	},
+
+
 };
 
 var canvas_PFD_1 = {
@@ -1101,13 +1127,12 @@ var canvas_PFD_1 = {
 		
 		# FPV
 		# If TRK FPA selected on the FCU, display FPV on PFD1
-		# TODO - Deal with situation if AOA not available from ADR1
-		# TODO - Hide FPV if error on PFD1
-		if (ap_trk_sw.getValue() == 0) {
+		var aoa = me.getAOAForPFD1();
+		if (ap_trk_sw.getValue() == 0 or aoa == nil) {
 			me["FPV"].hide();	
 			me.undimFixedAircraftOutline();
 		} else {
-			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa_1.getValue(), -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
+			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa, -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
 			me["FPV"].show();
 			me.dimFixedAircraftOutline();
 		}
@@ -1852,13 +1877,12 @@ var canvas_PFD_2 = {
 		
 		# FPV
 		# If TRK FPA selected on the FCU, display FPV on PFD2
-		# TODO - Deal with situation if AOA not available from ADR2
-		# TODO - Hide FPV if error on PFD2
-		if (ap_trk_sw.getValue() == 0) {
+		var aoa = me.getAOAForPFD2();
+		if (ap_trk_sw.getValue() == 0 or aoa == nil) {
 			me["FPV"].hide();
 			me.undimFixedAircraftOutline();
 		} else {
-			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa_2.getValue(), -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
+			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa, -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
 			me["FPV"].show();
 			me.dimFixedAircraftOutline();
 		}
