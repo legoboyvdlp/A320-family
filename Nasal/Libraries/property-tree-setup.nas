@@ -9,7 +9,6 @@ var Acconfig = {
 };
 
 var APU = {
-	masterSw: props.globals.getNode("/controls/apu/master"),
 	rpm: props.globals.getNode("/engines/engine[2]/n1"),
 };
 
@@ -73,6 +72,9 @@ var Fdm = {
 		Fbw: {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
+		},
+		Position: {
+			wow: props.globals.getNode("/fdm/jsbsim/position/wow"),
 		},
 		Propulsion: {
 			Engine: {

@@ -37,8 +37,6 @@ var wow2 = props.globals.getNode("/gear/gear[2]/wow");
 var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
 var roll = props.globals.getNode("/orientation/roll-deg", 1);
 var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
-var acess = props.globals.getNode("/systems/electrical/bus/ac-ess", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
 var du1_lgt = props.globals.getNode("/controls/lighting/DU/du1", 1);
 var du6_lgt = props.globals.getNode("/controls/lighting/DU/du6", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
@@ -218,7 +216,7 @@ var canvas_PFD_base = {
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
-		if (acess.getValue() >= 110) {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
 			if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
 				if (wow0.getValue() == 1) {
 					if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
@@ -243,7 +241,7 @@ var canvas_PFD_base = {
 	},
 	updateDu6: func() {
 		var elapsedtime_act = elapsedtime.getValue();
-		if (ac2.getValue() >= 110) {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
 				if (wow0.getValue() == 1) {
 					if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
@@ -272,7 +270,7 @@ var canvas_PFD_base = {
 		if (acconfig_mismatch.getValue() == "0x000") {
 			PFD_1_mismatch.page.hide();
 			PFD_2_mismatch.page.hide();
-			if (acess.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
+			if (systems.ELEC.Bus.acEss.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
 				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1) {
 					PFD_1_test.update();
 					updateL = 0;
@@ -295,7 +293,7 @@ var canvas_PFD_base = {
 				PFD_1_test.page.hide();
 				PFD_1.page.hide();
 			}
-			if (ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
+			if (systems.ELEC.Bus.ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
 				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1) {
 					PFD_2_test.update();
 					updateR = 0;
