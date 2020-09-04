@@ -1456,7 +1456,7 @@ var canvas_MCDU_base = {
 				
 				
 				me["Simple_L5"].setText("[   ]");
-				me["Simple_L6"].setText(sprintf("%+3.1d/%+3.1d",idleFactor.getValue(),perfFactor.getValue());
+				me["Simple_L6"].setText(sprintf("%+3.1d/%+3.1d",idleFactor.getValue(),perfFactor.getValue()));
 				me["Simple_L1S"].setText(" ENG");
 				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
 				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
