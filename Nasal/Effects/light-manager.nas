@@ -106,17 +106,17 @@ var light_manager = {
 		me.light2_ypos =  0.0;
 		me.light2_zpos =  2.0;
 		
-		me.light3_xpos =  -2.0;
-		me.light3_ypos =  18.0;
-		me.light3_zpos =  2.0;
+		me.light3_xpos =  1.86;
+		me.light3_ypos =  16.66;
+		me.light3_zpos =   2.0;
 		
-		me.light4_xpos =  -2.0;
-		me.light4_ypos =  -18.0;
-		me.light4_zpos =  2.0;
+		me.light4_xpos =  1.86;
+		me.light4_ypos = -16.66;
+		me.light3_zpos =   2.0;
 		
-		me.light5_xpos =  -25.0;
-		me.light5_ypos =  0.0;
-		me.light5_zpos =  2.0;
+		me.light5_xpos = -19.8;
+		me.light5_ypos =   0.0;
+		me.light3_zpos =   2.0;
 		
  
 		# color values
@@ -126,24 +126,24 @@ var light_manager = {
 		me.light2_r = 0.6;
 		me.light2_g = 0.6;
 		me.light2_b = 0.6;
-		me.light3_r = 0.4;
+		me.light3_r = 0.6;
 		me.light3_g = 0.0;
 		me.light3_b = 0.0;
 		me.light4_r = 0.0;
-		me.light4_g = 0.4;
+		me.light4_g = 0.6;
 		me.light4_b = 0.0;
-		me.light5_r = 0.4;
-		me.light5_g = 0.4;
-		me.light5_b = 0.4;
+		me.light5_r = 0.6;
+		me.light5_g = 0.6;
+		me.light5_b = 0.6;
 
 		# spot size
 		me.light1_size = 12;
 		me.light1_stretch = 6;
 		me.light2_size = 6;
 		me.light2_stretch = 6;
-		me.light3_size = 4;
-		me.light4_size = 4;
-		me.light5_size = 5;
+		me.light3_size = 6;
+		me.light4_size = 6;
+		me.light5_size = 6;
 		
 		
 		setprop("sim/rendering/als-secondary-lights/flash-radius", 13);
