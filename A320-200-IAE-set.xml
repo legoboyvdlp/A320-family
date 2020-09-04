@@ -158,15 +158,9 @@
 	</limits>
 	
 	<options n="0">
-		<EIS2 type="bool">0</EIS2>
 		<eng type="string">IAE</eng>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">40</maxflap>
 	</options>
-	
-	<MCDUC n="0">
-		<type>A320-232</type>
-		<eng>V2527-A5</eng>
-	</MCDUC>
 
 </PropertyList>

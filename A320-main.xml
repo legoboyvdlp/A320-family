@@ -1413,6 +1413,13 @@
 		<steep-ils-avail type="bool">0</steep-ils-avail>
 		<enable-ecam-actions>0</enable-ecam-actions>
 		<test-canvas type="bool">0</test-canvas>
+		<engine-name type="string"></engine-name>
+		<model-number type="string"></model-number>
+		<EIS2 type="bool">0</EIS2>
+		<company-options>
+			<idle-factor type="string">0.0</idle-factor>
+			<perf-factor type="string">0.0</perf-factor>
+		</company-options>
 		<model-options>
 			<registration type="string">G-EZTB</registration>
 			<three-letter type="string">EZY</three-letter>

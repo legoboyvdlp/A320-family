@@ -76,8 +76,10 @@ var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
 #ACCONFIG
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
 var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
-var acType = props.globals.getNode("/MCDUC/type", 1);
-var engType = props.globals.getNode("/MCDUC/eng", 1);
+var acType = props.globals.getNode("/options/model-number", 1);
+var engType = props.globals.getNode("/options/engine-name", 1);
+var idleFactor = props.globals.getNode("/options/company-options/idle-factor", 1);
+var perfFactor = props.globals.getNode("/options/company-options/perf-factor", 1);
 var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
 var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
 var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
@@ -1454,7 +1456,7 @@ var canvas_MCDU_base = {
 				
 				
 				me["Simple_L5"].setText("[   ]");
-				me["Simple_L6"].setText("+4.0/+0.0");
+				me["Simple_L6"].setText(sprintf("%+3.1d/%+3.1d",idleFactor.getValue(),perfFactor.getValue());
 				me["Simple_L1S"].setText(" ENG");
 				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
 				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");

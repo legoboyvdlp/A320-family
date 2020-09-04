@@ -158,15 +158,9 @@
 	</limits>
 	
 	<options n="0">
-		<EIS2 type="bool">0</EIS2>
 		<eng type="string">CFM</eng>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 	</options>
 	
-	<MCDUC n="0">
-		<type>A320-214</type>
-		<eng>CFM56-5B4</eng>
-	</MCDUC>
-
 </PropertyList>

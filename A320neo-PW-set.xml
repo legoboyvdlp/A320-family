@@ -158,15 +158,9 @@
 	</limits>
 	
 	<options n="0">
-		<EIS2 type="bool">1</EIS2>
 		<eng type="string">CFM</eng> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM ECAM, and no N1 mode switches -->
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 	</options>
-	
-	<MCDUC n="0">
-		<type>A320-271N</type>
-		<eng>PW1133-JM</eng>
-	</MCDUC>
 
 </PropertyList>
