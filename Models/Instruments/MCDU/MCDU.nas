@@ -72,6 +72,7 @@ var MAGENTA = [0.6902,0.3333,0.7541];
 # Fetch nodes:
 var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
 var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 
 #ACCONFIG
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
@@ -156,6 +157,10 @@ var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
 var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
+
+# Conversion factor pounds to kilogram
+LBS2KGS = 0.4535924;
+
 
 # Create Nodes:
 var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
@@ -1454,7 +1459,7 @@ var canvas_MCDU_base = {
 				
 				
 				me["Simple_L5"].setText("[   ]");
-				me["Simple_L6"].setText("+4.0/+0.0");
+				me["Simple_L6"].setText("+0.0/+1.0");
 				me["Simple_L1S"].setText(" ENG");
 				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
 				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
@@ -2252,7 +2257,11 @@ var canvas_MCDU_base = {
 			}
 					
 			me["Simple_L1S"].setText("TAXI");
-			me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel));
+			if (acconfig_weight_kgs.getValue() == 1) {
+				me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel * LBS2KGS));
+			} else {
+				me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel));
+			}
 			me["Simple_L2S"].setText("TRIP/TIME");
 			me["Simple_L3S"].setText("RTE RSV/PCT");
 			me["Simple_L4S"].setText("ALTN/TIME");
@@ -2278,7 +2287,11 @@ var canvas_MCDU_base = {
 				if (fmgc.FMGCInternal.blockSet) {
 					me["Simple_R2"].show(); 
 					me["INITB_Block"].hide();
-					me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+					} else {
+						me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+					}
 				} else {
 					me["Simple_R2"].hide(); 
 					me["INITB_Block"].show();
@@ -2346,7 +2359,11 @@ var canvas_MCDU_base = {
 						me["Simple_L6"].setText("---.-");
 						me["Simple_R2"].show(); 
 						me["INITB_Block"].hide();
-						me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+						if (acconfig_weight_kgs.getValue() == 1) {
+							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+						} else {
+							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+						}
 						me["Simple_R3S"].show();
 						me["Simple_R3"].show(); 
 						me["Simple_R3S"].setText("BLOCK");
@@ -2355,9 +2372,17 @@ var canvas_MCDU_base = {
 						me["Simple_R3_Arrow"].setColor(AMBER);
 						me["Simple_C4B"].show();
 						if (num(fmgc.FMGCInternal.tow) >= 100.0) {
-							me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+							} else {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
+							}
 						} else {
-							me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+							} else {
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
+							}
 						}
 						me["Simple_R4"].setText("---.-");
 						me["Simple_R6"].setText("---.-/----");
@@ -2391,15 +2416,27 @@ var canvas_MCDU_base = {
 							me["Simple_L6"].setText("---.-");
 							me["Simple_R2"].show(); 
 							me["INITB_Block"].hide();
-							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+							} else {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+							}
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_C4B"].show();
 							if (num(fmgc.FMGCInternal.tow) >= 100.0) {
-								me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
+								if (acconfig_weight_kgs.getValue() == 1) {
+									me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+								} else {
+									me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
+								}
 							} else {
-								me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
+								if (acconfig_weight_kgs.getValue() == 1) {
+									me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+								} else {
+									me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
+								}
 							}
 							me["Simple_R4"].setText("---.-");
 							me["Simple_R6"].setText("---.-/----");
@@ -2407,8 +2444,16 @@ var canvas_MCDU_base = {
 							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
 							me.colorRight("ack", "blu", "ack", "wht", "ack", "wht");
 						} else {
-							me["Simple_L2"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.tripTime, fmgc.FMGCInternal.tripFuel));
-							me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L2"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.tripTime, fmgc.FMGCInternal.tripFuel * LBS2KGS));
+							} else {
+								me["Simple_L2"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.tripTime, fmgc.FMGCInternal.tripFuel));
+							}
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv * LBS2KGS));
+							} else {
+								me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+							}
 							if (fmgc.FMGCInternal.rteRsvSet) {
 								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
 									me["Simple_C3"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
@@ -2441,7 +2486,11 @@ var canvas_MCDU_base = {
 								}
 							}
 							if (fmgc.FMGCInternal.altAirportSet) {
-								me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
+								if (acconfig_weight_kgs.getValue() == 1) {
+									me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel * LBS2KGS));
+								} else {
+									me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
+								}
 								me["Simple_L4"].setColor(BLUE);
 								me["Simple_C4"].show();
 								if (fmgc.FMGCInternal.altFuelSet) {
@@ -2462,7 +2511,11 @@ var canvas_MCDU_base = {
 								me["Simple_L4"].setColor(WHITE);
 								me["Simple_C4"].hide();
 							}
-							me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel * LBS2KGS));
+							} else {
+								me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+							}
 							if (fmgc.FMGCInternal.finalTimeSet and fmgc.FMGCInternal.finalFuelSet) {
 								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
 									me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
@@ -2488,16 +2541,30 @@ var canvas_MCDU_base = {
 									me["Simple_C5"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.finalTime));
 								}
 							}
-							me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob * LBS2KGS));
+							} else {
+								me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
+							}
 							me["Simple_R2"].show(); 
 							me["INITB_Block"].hide();
-							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+							} else {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+							}
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_C4B"].hide();
-							me["Simple_R4"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.tow) ~ sprintf("%4.1f", fmgc.FMGCInternal.lw));
-							me["Simple_R6"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
+							
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_R4"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.tow * LBS2KGS) ~ sprintf("%4.1f", fmgc.FMGCInternal.lw * LBS2KGS));
+								me["Simple_R6"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel * LBS2KGS));
+							} else {
+								me["Simple_R4"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.tow) ~ sprintf("%4.1f", fmgc.FMGCInternal.lw));
+								me["Simple_R6"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
+							}
 				
 							me.colorLeft("ack", "grn", "blu", "ack", "blu", "blu");
 							me.colorRight("ack", "blu", "ack", "grn", "ack", "grn");
@@ -2519,9 +2586,17 @@ var canvas_MCDU_base = {
 			
 			if (fmgc.FMGCInternal.zfwSet) {
 				if (fmgc.FMGCInternal.zfw < 100) {
-					me["Simple_C1"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C1"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C1"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
 				} else {
-					me["Simple_C1"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C1"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C1"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
 				}
 				me["Simple_C1"].show();
 				me["INITB_ZFW"].hide();
@@ -2688,7 +2763,11 @@ var canvas_MCDU_base = {
 				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");
 				me.colorRight("ack", "ack", "ack", "wht", "wht", "wht");
 			} else {
-				me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+				if (acconfig_weight_kgs.getValue() == 1) {
+					me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv * LBS2KGS));
+				} else {
+					me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+				}
 				if (fmgc.FMGCInternal.rteRsvSet) {
 					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
 						me["Simple_C3B"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
@@ -2721,7 +2800,11 @@ var canvas_MCDU_base = {
 					}
 				}
 				if (fmgc.FMGCInternal.altAirportSet) {
-					me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel * LBS2KGS));
+					} else {
+						me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
+					}
 					me["Simple_L4"].setColor(BLUE);
 					me["Simple_C4"].show();
 					if (fmgc.FMGCInternal.altFuelSet) {
@@ -2742,7 +2825,11 @@ var canvas_MCDU_base = {
 					me["Simple_L4"].setColor(WHITE);
 					me["Simple_C4"].hide();
 				}
-				me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+				if (acconfig_weight_kgs.getValue() == 1) {
+					me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel * LBS2KGS));
+				} else {
+					me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+				}
 				if (fmgc.FMGCInternal.finalTimeSet and fmgc.FMGCInternal.finalFuelSet) {
 					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
 						me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
@@ -2768,10 +2855,17 @@ var canvas_MCDU_base = {
 						me["Simple_C5"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.finalTime));
 					}
 				}
-				me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
-				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob));
-				me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
-				me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
+				if (acconfig_weight_kgs.getValue() == 1) {
+					me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob * LBS2KGS));
+					me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob * LBS2KGS));
+					me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw * LBS2KGS) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
+					me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel * LBS2KGS));
+				} else {
+					me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
+					me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob));
+					me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
+					me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
+				}
 				
 				me.colorLeft("ack", "ack", "blu", "ack", "blu", "blu");
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
@@ -2790,9 +2884,17 @@ var canvas_MCDU_base = {
 			
 			if (fmgc.FMGCInternal.zfwSet) {
 				if (fmgc.FMGCInternal.zfw < 100) {
-					me["Simple_C3"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C3"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C3"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
 				} else {
-					me["Simple_C3"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C3"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C3"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
 				}
 				me["Simple_C3"].show();
 				me["FUELPRED_ZFW"].hide();
