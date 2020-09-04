@@ -1417,8 +1417,8 @@
 		<model-number type="string"></model-number>
 		<EIS2 type="bool">0</EIS2>
 		<company-options>
-			<idle-factor type="string">0.0</idle-factor>
-			<perf-factor type="string">0.0</perf-factor>
+			<idle-factor type="string">+0.0</idle-factor>
+			<perf-factor type="string">+0.0</perf-factor>
 		</company-options>
 		<model-options>
 			<registration type="string">G-EZTB</registration>

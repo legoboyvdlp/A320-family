@@ -16,8 +16,8 @@
 		<model-number type="string">A320-214</model-number>
 		<EIS2 type="bool">1</EIS2>
 		<company-options>
-			<idle-factor>0.0</idle-factor>
-			<perf-factor>0.0</perf-factor>
+			<idle-factor>+0.0</idle-factor>
+			<perf-factor>+1.0</perf-factor>
 		</company-options>
 		<model-options>
 			<registration type="string">AB-CDE</registration>
