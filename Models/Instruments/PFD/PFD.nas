@@ -15,7 +15,7 @@ var updateR = 0;
 var elapsedtime = 0;
 var altTens = 0;
 var altPolarity = "";
-var FPV_Y_COEFFICIENT = 12.5;
+var track_diff = 0;
 
 # Fetch nodes:
 var state1 = props.globals.getNode("/systems/thrust/state1", 1);
@@ -138,6 +138,7 @@ var adr_2_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr
 var adr_3_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-fault", 1);
 var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 
+
 # Create Nodes:
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
 var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
@@ -148,7 +149,7 @@ var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground
 var hdg_diff = props.globals.initNode("/instrumentation/pfd/hdg-diff", 0.0, "DOUBLE");
 var hdg_scale = props.globals.initNode("/instrumentation/pfd/heading-scale", 0.0, "DOUBLE");
 var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBLE");
-var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
+#var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -972,7 +973,8 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		me["TRK_pointer"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, 0);
+		track_diff = track.getValue() - heading.getValue();
+		me["TRK_pointer"].setTranslation((math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416, 0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
@@ -1023,20 +1025,20 @@ var canvas_PFD_base = {
 	},
 	
 	# dim the yellow outline of fixed aircraft symbol on PFDs
-	# eg when crew select TRK-FPA
-	dimFixedAircraftOutline: func() {
+	# eg when crew select TRK
+	# 1 == dim 
+	# 0 == undim
+	dimFixedAircraftOutline: func(dim_bool) {
 		var r = 0.345098039;
 		var g = 0.349019608;
 		var b = 0.058823529;
-		me["fixed_aircraft_outline_1"].setColor(r, g, b);
-		me["fixed_aircraft_outline_2"].setColor(r, g, b);
-	},
+		
+		if (dim_bool == 0) {
+			r = 0.788235294;
+			g = 0.819607843;
+			b = 0.129411765;
+		} 
 
-	# undim the yellow outline of fixed aircraft symbol on PFDs
-	undimFixedAircraftOutline: func() {
-		var r = 0.788235294;
-		var g = 0.819607843;
-		var b = 0.129411765;
 		me["fixed_aircraft_outline_1"].setColor(r, g, b);
 		me["fixed_aircraft_outline_2"].setColor(r, g, b);
 	},
@@ -1053,6 +1055,22 @@ var canvas_PFD_base = {
 		if (air_data_switch.getValue() != 1 and adr_2_switch.getValue() and !adr_2_fault.getValue()) return aoa_2.getValue();
 		if (air_data_switch.getValue() == 1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
 		return nil;
+	},
+
+	# Returns Y translation value for FPV - accounting for angle of roll
+	# (On the PFD the FPA is perpendicular to the artificial horizon which is not always horizontal)
+	getFPVYTranslation: func(track_x_translation, fpa_deg) {
+
+		var FPV_Y_COEFFICIENT = 12.5; # query if it should be 12.5 or  11.825
+		var pitch_px = pitch.getValue() * FPV_Y_COEFFICIENT;
+		var roll_rad = roll.getValue() * D2R;
+
+		var pitch_y_translation = math.tan(roll_rad) * (( pitch_px/math.sin(roll_rad)) + track_x_translation); 
+				
+		var fpa_y_translation = (fpa_deg * FPV_Y_COEFFICIENT)/math.cos(roll_rad);
+		
+		return pitch_y_translation + ((-1) * fpa_y_translation);
+
 	},
 
 
@@ -1130,11 +1148,13 @@ var canvas_PFD_1 = {
 		var aoa = me.getAOAForPFD1();
 		if (ap_trk_sw.getValue() == 0 or aoa == nil) {
 			me["FPV"].hide();	
-			me.undimFixedAircraftOutline();
+			me.dimFixedAircraftOutline(0);
 		} else {
-			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa, -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
+			var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
+			var fpa_deg = pitch.getValue() - aoa;
+			me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
 			me["FPV"].show();
-			me.dimFixedAircraftOutline();
+			me.dimFixedAircraftOutline(1);
 		}
 
 		# ILS
@@ -1880,11 +1900,13 @@ var canvas_PFD_2 = {
 		var aoa = me.getAOAForPFD2();
 		if (ap_trk_sw.getValue() == 0 or aoa == nil) {
 			me["FPV"].hide();
-			me.undimFixedAircraftOutline();
+			me.dimFixedAircraftOutline(0);
 		} else {
-			me["FPV"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, (math.clamp(aoa, -9.9, 9.9)*FPV_Y_COEFFICIENT)/math.cos(math.abs(roll_cur)*D2R));
+			var fpa_deg = pitch.getValue() - aoa;
+			var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
+			me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
 			me["FPV"].show();
-			me.dimFixedAircraftOutline();
+			me.dimFixedAircraftOutline(1);
 		}
 
 		# ILS
