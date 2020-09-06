@@ -5,24 +5,15 @@
 		<model>
 			<livery>
 				<name>SAS Scandinavian (OY-KAM)</name>
-				<texture-fuselage>Fuselages\A320\res\Fuse-Main.png</texture-fuselage>
-				<texture-engine>Engines\Models\engine-IAE-V2500.png</texture-engine>
+				<texture-fuselage>Liveries/A320/IAE/SAS-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/A320/IAE/SAS-engine.png</texture-engine>
 			</livery>
 		</model>
 	</sim>
 	
 	<options>
-		<engine-name type="string">V2527-A5</engine-name>
-		<model-number type="string">A320-232</model-number>
 		<EIS2 type="bool">1</EIS2>
-		<company-options>
-			<idle-factor type="string">+0.0</idle-factor>
-			<perf-factor type="string">+0.0</perf-factor>
-		</company-options>
 		<model-options>
-			<registration type="string">OY-KAM</registration>
-			<three-letter type="string">SAS</three-letter>
-			<two-letter type="string">SK</two-letter>
 			<sharklet type="bool">0</sharklet>
 			<wifi-aft type="bool">1</wifi-aft>
 			<wifi-fwd type="bool">0</wifi-fwd>

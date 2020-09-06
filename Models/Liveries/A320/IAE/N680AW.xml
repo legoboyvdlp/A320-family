@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>N680AW(Unpainted)</name>
+				<texture-fuselage>Fuselages\A320\res\Fuse-Main.png</texture-fuselage>
+				<texture-engine>Engines\Models\engine-IAE-V2500.png</texture-engine>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<EIS2 type="bool">1</EIS2>
+		<model-options>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft>
+			<wifi-fwd type="bool">0</wifi-fwd>
+		</model-options>
+	</options>
+</PropertyList>
