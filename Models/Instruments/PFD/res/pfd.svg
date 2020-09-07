@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="pfd.svg"
-   inkscape:version="1.0beta2 (2b71d25, 2019-12-03)"
+   inkscape:version="1.0 (262b4497e3, 2020-09-04)"
    id="svg2"
    version="1.1"
    viewBox="0 0 1024 1024"
@@ -39,15 +39,15 @@
      showguides="true"
      inkscape:current-layer="svg2"
      inkscape:window-maximized="1"
-     inkscape:window-y="23"
+     inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:cy="886.5494"
-     inkscape:cx="916.44902"
-     inkscape:zoom="2.1546825"
+     inkscape:cy="686.37792"
+     inkscape:cx="635.80596"
+     inkscape:zoom="4.309365"
      showgrid="true"
      id="namedview371"
-     inkscape:window-height="1035"
-     inkscape:window-width="1920"
+     inkscape:window-height="835"
+     inkscape:window-width="1600"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -6658,9 +6658,35 @@
        x="61.095329"
        y="74.429939"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.9995px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">FLX</tspan></text>
-  <path
-     style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:5.877913;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     d="m 447.59808,482.4841 v 9.38782 h 1.06691 v -9.38782 z m 0.38115,12.7416 a 16.427645,16.427645 0 0 0 -16.42755,16.42754 16.427645,16.427645 0 0 0 16.42755,16.42754 16.427645,16.427645 0 0 0 16.42754,-16.42754 16.427645,16.427645 0 0 0 -16.42754,-16.42754 z m -54.20078,16.02956 v 0.35359 h 36.64816 v -0.35359 z m 71.88043,0.35359 v 0.35512 h 36.64664 v -0.35512 z"
-     id="FPV"
-     inkscape:connector-curvature="0" />
+  <g
+     id="FPV">
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:5.92816;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path1861"
+       cx="447.75107"
+       cy="513.21716"
+       r="15.372474" />
+    <rect
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:6.225;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1865"
+       width="38.245033"
+       height="6.3569298"
+       x="392.05685"
+       y="509.83191" />
+    <rect
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:6.225;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1869"
+       width="38.245033"
+       height="6.3569298"
+       x="465.55685"
+       y="509.83191" />
+    <rect
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:3.94089;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1871"
+       width="14.447689"
+       height="6.7442465"
+       x="-495.71423"
+       y="444.54013"
+       transform="rotate(-90)" />
+  </g>
 </svg>
