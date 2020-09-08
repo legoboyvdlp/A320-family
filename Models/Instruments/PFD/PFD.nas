@@ -149,7 +149,9 @@ var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground
 var hdg_diff = props.globals.initNode("/instrumentation/pfd/hdg-diff", 0.0, "DOUBLE");
 var hdg_scale = props.globals.initNode("/instrumentation/pfd/heading-scale", 0.0, "DOUBLE");
 var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBLE");
-#var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
+# This always seems to return 0 if TRK FPA selected, which is incorrect. I don't know how/where this value is set.
+# So I've commented it out and calculate it using the difference between magnetic track and heading.
+#var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE"); 
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -1057,11 +1059,12 @@ var canvas_PFD_base = {
 		return nil;
 	},
 
-	# Returns Y translation value for FPV - accounting for angle of roll
-	# (On the PFD the FPA is perpendicular to the artificial horizon which is not always horizontal)
+	# Returns Y (vertical) translation value for FPV - accounting for angle of roll
+	# (On the PFD the FPA is perpendicular to the artificial horizon, which is not always horizontal.)
 	getFPVYTranslation: func(track_x_translation, fpa_deg) {
 
-		var FPV_Y_COEFFICIENT = 12.5; # query if it should be 12.5 or  11.825
+		var FPV_Y_COEFFICIENT = 12.5; # query if it should be 12.5 or 11.825
+		
 		var pitch_px = pitch.getValue() * FPV_Y_COEFFICIENT;
 		var roll_rad = roll.getValue() * D2R;
 
@@ -1145,14 +1148,20 @@ var canvas_PFD_1 = {
 		
 		# FPV
 		# If TRK FPA selected on the FCU, display FPV on PFD1
-		var aoa = me.getAOAForPFD1();
-		if (ap_trk_sw.getValue() == 0 or aoa == nil) {
+		if (ap_trk_sw.getValue() == 0 ) {
 			me["FPV"].hide();	
 			me.dimFixedAircraftOutline(0);
 		} else {
-			var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
-			var fpa_deg = pitch.getValue() - aoa;
-			me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
+			var aoa = me.getAOAForPFD1();	
+			if (aoa == nil or (systems.ADIRS.ADIRunits[0].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == -1)){
+				me["FPV"].setTranslation(0, 0);
+				me["FPV"].setColor(1, 0, 0);
+			} else {
+				var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
+				var fpa_deg = pitch.getValue() - aoa;
+				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
+				me["FPV"].setColor(0.050980392, 0.752941176, 0.290196078);	
+			}
 			me["FPV"].show();
 			me.dimFixedAircraftOutline(1);
 		}
@@ -1897,14 +1906,20 @@ var canvas_PFD_2 = {
 		
 		# FPV
 		# If TRK FPA selected on the FCU, display FPV on PFD2
-		var aoa = me.getAOAForPFD2();
-		if (ap_trk_sw.getValue() == 0 or aoa == nil) {
-			me["FPV"].hide();
+		if (ap_trk_sw.getValue() == 0 ) {
+			me["FPV"].hide();	
 			me.dimFixedAircraftOutline(0);
 		} else {
-			var fpa_deg = pitch.getValue() - aoa;
-			var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
-			me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
+			var aoa = me.getAOAForPFD2();
+			if (aoa == nil or (systems.ADIRS.ADIRunits[1].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == 1)) {
+				me["FPV"].setTranslation(0, 0);
+				me["FPV"].setColor(1, 0, 0);
+			} else {
+				var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
+				var fpa_deg = pitch.getValue() - aoa;
+				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
+				me["FPV"].setColor(0.050980392, 0.752941176, 0.290196078);	
+			}
 			me["FPV"].show();
 			me.dimFixedAircraftOutline(1);
 		}
