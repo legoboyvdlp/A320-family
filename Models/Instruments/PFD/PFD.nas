@@ -976,7 +976,7 @@ var canvas_PFD_base = {
 		}
 		
 		track_diff = track.getValue() - heading.getValue();
-		me["TRK_pointer"].setTranslation((math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416, 0);
+		me["TRK_pointer"].setTranslation(me.getTrackDiffPixels(track_diff),0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
@@ -1026,7 +1026,7 @@ var canvas_PFD_base = {
 		me["AI_heading"].update();
 	},
 	
-	# dim the yellow outline of fixed aircraft symbol on PFDs
+	# Dim the yellow outline of fixed aircraft symbol on PFDs
 	# eg when crew select TRK
 	# 1 == dim 
 	# 0 == undim
@@ -1074,6 +1074,12 @@ var canvas_PFD_base = {
 		
 		return pitch_y_translation + ((-1) * fpa_y_translation);
 
+	},
+
+	# Convert difference between magnetic heading and track measured in degrees to pixel for display on PFDs
+	# And set max and minimum values
+	getTrackDiffPixels: func(track_diff_deg) {
+		return ((math.clamp(track_diff_deg, -23.62, 23.62) / 10) * 98.5416);
 	},
 
 
@@ -1157,7 +1163,7 @@ var canvas_PFD_1 = {
 				me["FPV"].setTranslation(0, 0);
 				me["FPV"].setColor(1, 0, 0);
 			} else {
-				var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
+				var track_x_translation = me.getTrackDiffPixels(track_diff); 
 				var fpa_deg = pitch.getValue() - aoa;
 				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
 				me["FPV"].setColor(0.050980392, 0.752941176, 0.290196078);	
@@ -1915,7 +1921,7 @@ var canvas_PFD_2 = {
 				me["FPV"].setTranslation(0, 0);
 				me["FPV"].setColor(1, 0, 0);
 			} else {
-				var track_x_translation = (math.clamp(track_diff, -23.62, 23.62) / 10) * 98.5416; 
+				var track_x_translation = me.getTrackDiffPixels(track_diff);
 				var fpa_deg = pitch.getValue() - aoa;
 				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
 				me["FPV"].setColor(0.050980392, 0.752941176, 0.290196078);	
