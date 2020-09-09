@@ -1160,16 +1160,16 @@ var canvas_PFD_1 = {
 		} else {
 			var aoa = me.getAOAForPFD1();	
 			if (aoa == nil or (systems.ADIRS.ADIRunits[0].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == -1)){
-				me["FPV"].setTranslation(0, 0);
-				me["FPV"].setColor(1, 0, 0);
+				me["FPV"].hide();	
+				me.dimFixedAircraftOutline(0);
 			} else {
 				var track_x_translation = me.getTrackDiffPixels(track_diff); 
 				var fpa_deg = pitch.getValue() - aoa;
 				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
-				me["FPV"].setColor(0.050980392, 0.752941176, 0.290196078);	
+				me["FPV"].show();
+				me.dimFixedAircraftOutline(1);
 			}
-			me["FPV"].show();
-			me.dimFixedAircraftOutline(1);
+
 		}
 
 		# ILS
@@ -1918,16 +1918,15 @@ var canvas_PFD_2 = {
 		} else {
 			var aoa = me.getAOAForPFD2();
 			if (aoa == nil or (systems.ADIRS.ADIRunits[1].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == 1)) {
-				me["FPV"].setTranslation(0, 0);
-				me["FPV"].setColor(1, 0, 0);
+				me["FPV"].hide();	
+				me.dimFixedAircraftOutline(0);
 			} else {
 				var track_x_translation = me.getTrackDiffPixels(track_diff);
 				var fpa_deg = pitch.getValue() - aoa;
 				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
-				me["FPV"].setColor(0.050980392, 0.752941176, 0.290196078);	
+				me["FPV"].show();
+				me.dimFixedAircraftOutline(1);
 			}
-			me["FPV"].show();
-			me.dimFixedAircraftOutline(1);
 		}
 
 		# ILS
