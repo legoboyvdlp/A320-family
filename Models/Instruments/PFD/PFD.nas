@@ -1165,6 +1165,12 @@ var canvas_PFD_1 = {
 			} else {
 				var track_x_translation = me.getTrackDiffPixels(track_diff); 
 				var fpa_deg = pitch.getValue() - aoa;
+				if (fpa_deg > 9.9 or fpa_deg < -9.9) {
+					fpa_deg = math.clamp(fpa_deg, -9.9, 9.9);
+					me["FPV"].setColor(1, 0, 0);
+				} else {
+					me["FPV"].setColor(0.066666667, 0.752941176, 0.294117647);
+				}
 				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
 				me["FPV"].show();
 				me.dimFixedAircraftOutline(1);
@@ -1923,6 +1929,12 @@ var canvas_PFD_2 = {
 			} else {
 				var track_x_translation = me.getTrackDiffPixels(track_diff);
 				var fpa_deg = pitch.getValue() - aoa;
+				if (fpa_deg > 9.9 or fpa_deg < -9.9) {
+					fpa_deg = math.clamp(fpa_deg, -9.9, 9.9);
+					me["FPV"].setColor(1, 0, 0);
+				} else {
+					me["FPV"].setColor(0.066666667, 0.752941176, 0.294117647);
+				}
 				me["FPV"].setTranslation(track_x_translation, me.getFPVYTranslation(track_x_translation, fpa_deg));
 				me["FPV"].show();
 				me.dimFixedAircraftOutline(1);
