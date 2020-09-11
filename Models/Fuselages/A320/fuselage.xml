@@ -2940,7 +2940,7 @@
 	
 	<animation>
 		<type>rotate</type>
-		<object-name>WindshieldWiperR</object-name>
+		<object-name>WindshildWiperR</object-name>
 		<property>/fdm/jsbsim/fcs/right-wiper-pos-norm</property>
 		<factor>45</factor>
 		<axis>
