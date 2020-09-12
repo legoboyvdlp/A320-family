@@ -8,10 +8,7 @@ var ambient = nil;
 var cabinpsi = nil;
 var state1 = nil;
 var state2 = nil;
-var stateL = nil;
-var stateR = nil;
 var pressmode = nil;
-var wowc = nil;
 var wowl = nil;
 var wowr = nil;
 var vs = nil;
@@ -163,26 +160,8 @@ var PNEU = {
 		me.Fail.xbleed.setBoolValue(0);
 	},
 	loop: func() {
-		stateL = getprop("engines/engine[0]/state");
-		stateR = getprop("engines/engine[1]/state");
-		wowc = getprop("gear/gear[0]/wow");
 		wowl = getprop("gear/gear[1]/wow");
 		wowr = getprop("gear/gear[2]/wow");
-		eng1_starter = getprop("/systems/pneumatics/valves/starter-valve-1");
-		eng2_starter = getprop("/systems/pneumatics/valves/starter-valve-2");
-		if (stateL == 1 or stateR == 1 or stateL == 2 or stateR == 2) {
-			setprop("/systems/pneumatics/start-psi", 18);
-		} else {
-			setprop("/systems/pneumatics/start-psi", 0);
-		}
-		
-		if (getprop("/controls/engines/engine-start-switch") == 2 and wowc == 1 and (stateL != 3 or stateR != 3)) {
-			setprop("/systems/pneumatics/starting", 1);
-		} else if (wowc == 1 and eng1_starter == 1 or eng2_starter == 1) {
-			setprop("/systems/pneumatics/starting", 1);
-		} else {
-			setprop("/systems/pneumatics/starting", 0);
-		}
 		
 		# Legacy pressurization
 		cabinalt = getprop("/systems/pressurization/cabinalt");
