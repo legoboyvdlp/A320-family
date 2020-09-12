@@ -4,14 +4,11 @@
 # Copyright (c) 2019 Jonathan Redpath
 
 var accum = 0;
-var parking = 0;
-var askidnws_sw = 0;
 var down = 0;
 
 var HYD = {
 	Brakes: {
 		accumPressPsi: props.globals.initNode("/systems/hydraulic/brakes/accumulator-pressure-psi", 0, "INT"),
-		accumPressPsi1: props.globals.initNode("/systems/hydraulic/brakes/accumulator-pressure-psi-1", 0, "INT"),
 		leftPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-left-psi", 0, "INT"),
 		rightPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-right-psi", 0, "INT"),
 		askidSw: props.globals.initNode("/systems/hydraulic/brakes/askidnwssw", 1, "BOOL"),
@@ -86,22 +83,11 @@ var HYD = {
 	},
 	loop: func() {
 		accum = me.Brakes.accumPressPsi.getValue();
-		parking = getprop("/controls/gear/brake-parking");
-		askidnws_sw = me.Brakes.askidSw.getBoolValue();
 		
-		if (!parking and askidnws_sw and me.Psi.green.getValue() > 2500) {
-			# set mode to on
-			me.Brakes.mode.setValue(1);
-		} else if ((!parking and askidnws_sw and me.Psi.yellow.getValue() > 2500) or (!parking and askidnws_sw and accum > 0)) {
-			# set mode to altn
-			me.Brakes.mode.setValue(2);
-		} else {
-			# set mode to off
-			me.Brakes.mode.setValue(0);
-		}
-		
-		if (me.Brakes.mode.getValue() == 2 and me.Psi.yellow.getValue() > 2500 and accum < 700) {
-			me.Brakes.accumPressPsi.setValue(me.Brakes.accumPressPsi.getValue() + 50);
+		if (me.Brakes.mode.getValue() == 2) {
+			if (me.Psi.yellow.getValue() > 2500 and accum < 700) {
+				me.Brakes.accumPressPsi.setValue(me.Brakes.accumPressPsi.getValue() + 50);
+			}
 		}
 	},
 };

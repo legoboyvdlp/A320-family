@@ -132,12 +132,9 @@ var PNEU = {
 		setprop("/systems/pressurization/pack-2-comp-out-temp", 0);
 		setprop("/systems/pressurization/pack-1-valve", 0);
 		setprop("/systems/pressurization/pack-2-valve", 0);
-		setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
-		setprop("/systems/ventilation/avionics/fan", 0);
-		setprop("/systems/ventilation/avionics/extractvalve", "0");
-		setprop("/systems/ventilation/avionics/inletvalve", "0");
-		setprop("/systems/ventilation/lavatory/extractfan", 0);
-		setprop("/systems/ventilation/lavatory/extractvalve", "0");
+		#setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
+		#setprop("/systems/ventilation/avionics/extractvalve", "0");
+		#setprop("/systems/ventilation/avionics/inletvalve", "0");
 		setprop("/controls/oxygen/masksDeploy", 0);
 		setprop("/controls/oxygen/masksDeployMan", 0);
 		setprop("/controls/oxygen/masksReset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
@@ -199,20 +196,11 @@ var PNEU = {
 			setprop("/systems/pressurization/cabinalt", cabinalt + ((manvs / 60) / 10));
 		}
 		
-		if (ditch and auto) {
-			setprop("/systems/pressurization/outflowpos", "1");
-			setprop("/systems/ventilation/avionics/extractvalve", "1");
-			setprop("/systems/ventilation/avionics/inletvalve", "1");
-		}
-		
-		if (systems.ELEC.Bus.dcEss.getValue() >= 25 or systems.ELEC.Bus.acEss.getValue() > 110) {
-			setprop("/systems/ventilation/avionics/fan", 1);
-			setprop("/systems/ventilation/lavatory/extractfan", 1);
-		} else {
-			setprop("/systems/ventilation/avionics/fan", 0);
-			setprop("/systems/ventilation/lavatory/extractfan", 0);
-		}
-		
+		#if (ditch and auto) {
+			#setprop("/systems/pressurization/outflowpos", "1");
+			#setprop("/systems/ventilation/avionics/extractvalve", "1");
+			#setprop("/systems/ventilation/avionics/inletvalve", "1");
+		#}
 		
 		# Oxygen
 		if (cabinalt > 13500) { 
