@@ -7204,14 +7204,37 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<or>
+							<not>
+								<property>gear/gear[1]/wow</property>
+							</not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</or>
+					</and>
 				</condition>
-				<command>property-toggle</command>
+				<command>property-assign</command>
 				<property>controls/switches/LrainRpt</property>
+				<value>1</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/switches/LrainRpt</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/oh-btn", 1);</script>
@@ -7227,14 +7250,37 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<or>
+							<not>
+								<property>gear/gear[1]/wow</property>
+							</not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</or>
+					</and>
 				</condition>
-				<command>property-toggle</command>
+				<command>property-assign</command>
 				<property>controls/switches/RrainRpt</property>
+				<value>1</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/switches/RrainRpt</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/oh-btn", 1);</script>
