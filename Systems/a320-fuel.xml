@@ -410,6 +410,16 @@
 	
 	<channel name="Flow Rates" execrate="2">
 	
+		<summer name="/systems/fuel/fuel-used-1">
+			<input>/systems/fuel/offset-left</input>
+			<input>propulsion/engine[0]/fuel-used-lbs</input>
+		</summer>
+		
+		<summer name="/systems/fuel/fuel-used-2">
+			<input>/systems/fuel/offset-right</input>
+			<input>propulsion/engine[1]/fuel-used-lbs</input>
+		</summer>
+		
 		<switch name="/systems/fuel/feed-left-inner">
 			<default value="0"/>
 			<test logic="OR" value="1">
