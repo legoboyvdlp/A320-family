@@ -1280,6 +1280,8 @@
 			<valves>
 				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
 			</valves>
+			<offset-left type="double">0</offset-left>
+			<offset-right type="double">0</offset-right>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 			<mode-fault type="bool">0</mode-fault>

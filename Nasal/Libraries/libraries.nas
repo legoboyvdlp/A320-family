@@ -252,17 +252,16 @@ var systemsLoop = maketimer(0.1, func {
 	systems.ELEC.loop();
 	systems.PNEU.loop();
 	systems.HYD.loop();
-	systems.FUEL.loop();
 	systems.ADIRS.loop();
+	systems.APUController.loop();
 	ecam.ECAM.loop();
-	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop();
 	dmc.DMController.loop();
-	systems.APUController.loop();
-	systems.HFLoop();
 	atsu.ATSU.loop();
+	libraries.BUTTONS.update();
+	systems.HFLoop();
 	
 	groundspeed = pts.Velocities.groundspeed.getValue();
 	if ((groundAir.getBoolValue() or groundCart.getBoolValue()) and ((groundspeed > 2) or (!pts.Controls.Gear.parkingBrake.getBoolValue() and !chocks.getBoolValue()))) {
