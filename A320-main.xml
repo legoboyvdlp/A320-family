@@ -99,12 +99,12 @@
 				<nose-lights type="double">0</nose-lights>
 			</lights>
 			<reflection>
-				<ambient-correction type="double">0.10</ambient-correction>
-				<reflection-correction type="double">-0.25</reflection-correction>
-				<ambient-correction-chrome type="double">0.15</ambient-correction-chrome>
-				<reflection-correction-chrome type="double">0.05</reflection-correction-chrome>
+				<ambient-correction type="double">0.15</ambient-correction>
+				<reflection-correction type="double">-0.09</reflection-correction>
+				<ambient-correction-chrome type="double">-0.05</ambient-correction-chrome>
+				<reflection-correction-chrome type="double">0.45</reflection-correction-chrome>
 				<ambient-correction-wing type="double">0.00</ambient-correction-wing>
-				<reflection-correction-wing type="double">-0.55</reflection-correction-wing>
+				<reflection-correction-wing type="double">-0.15</reflection-correction-wing>
 			</reflection>
 		</model>
 		
@@ -1280,6 +1280,8 @@
 			<valves>
 				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
 			</valves>
+			<offset-left type="double">0</offset-left>
+			<offset-right type="double">0</offset-right>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 			<mode-fault type="bool">0</mode-fault>

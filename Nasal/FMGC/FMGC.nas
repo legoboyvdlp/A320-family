@@ -1013,12 +1013,6 @@ var reset_FMGC = func {
 	setprop("systems/pressurization/diff-to-target", "0");
 	setprop("systems/pressurization/ditchingpb", 0);
 	setprop("systems/pressurization/targetvs", "0");
-	setprop("systems/ventilation/cabin/fans", 0); # aircon fans
-	setprop("systems/ventilation/avionics/fan", 0);
-	setprop("systems/ventilation/avionics/extractvalve", "0");
-	setprop("systems/ventilation/avionics/inletvalve", "0");
-	setprop("systems/ventilation/lavatory/extractfan", 0);
-	setprop("systems/ventilation/lavatory/extractvalve", "0");
 	setprop("systems/pressurization/ambientpsi", "0");
 	setprop("systems/pressurization/cabinpsi", "0");
 	

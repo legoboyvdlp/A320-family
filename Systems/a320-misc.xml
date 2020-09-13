@@ -1,0 +1,32 @@
+<!-- Airbus A320 Misc Systems -->
+
+<!-- Copyright (c) 2020 Jonathan Redpath -->
+
+<system name="A320: APU">
+
+    <channel name="CVR" execrate="8">
+	
+		<switch name="/controls/CVR/power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess ge 110
+				<test logic="OR">
+					/gear/gear[1]/wow eq 1
+					/gear/gear[2]/wow eq 1
+				</test>
+				<test logic="OR">
+					/controls/CVR/gndctl eq 1
+					/engines/engine[0]/state eq 3
+					/engines/engine[1]/state eq 3
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess ge 110
+				/gear/gear[1]/wow eq 0
+				/gear/gear[2]/wow eq 0
+			</test>
+		</switch>
+		
+	</channel>
+
+</system>
