@@ -33,8 +33,6 @@
 		<object-name>PylonCFM56R</object-name>
 		<object-name>IntakeCFM56L</object-name>
 		<object-name>IntakeCFM56R</object-name>
-		<property-base>sim/model/livery/</property-base>
-		<texture-prop>texture-engine</texture-prop>
 		<texture>engine-CFM56.png</texture>
 	</animation>
 	
