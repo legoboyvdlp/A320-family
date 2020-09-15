@@ -127,7 +127,7 @@ var unRevThrust = func {
 			interpolate("/engines/engine[1]/reverser-pos-norm", 0, 1.0);
 			pts.Controls.Engines.Engine.throttleRev[1].setValue(0);
 			pts.Controls.Engines.Engine.reverser[1].setValue(0);
-			pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[1].setValue(3.14);
+			pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[1].setValue(0);
 		}
 	}
 }
