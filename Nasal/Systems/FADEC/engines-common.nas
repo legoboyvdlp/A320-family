@@ -3,7 +3,7 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
-if (getprop("/options/eng") == "IAE") {
+if (pts.Options.eng.getValue() == "IAE") {
 	io.include("engines-iae.nas");
 } else {
 	io.include("engines-cfm.nas");
@@ -50,87 +50,84 @@ var doTOGAThrust = func {
 
 # Reverse Thrust System
 var toggleFastRevThrust = func {
-	var state1 = getprop("/systems/thrust/state1");
-	var state2 = getprop("/systems/thrust/state2");
-	if (state1 == "IDLE" and state2 == "IDLE" and getprop("/controls/engines/engine[0]/reverser") == "0" and getprop("/controls/engines/engine[1]/reverser") == "0" and getprop("/gear/gear[1]/wow") == 1 and getprop("/gear/gear[2]/wow") == 1) {
-		if (getprop("/sim/input/selected/engine[0]") == 1) {
+	if (pts.Systems.Thrust.state[0].getValue() == "IDLE" and pts.Systems.Thrust.state[1].getValue() == "IDLE" and pts.Controls.Engines.Engine.reverser[0].getValue() == "0" and pts.Controls.Engines.Engine.reverser[1].getValue() == "0" and pts.Gear.wow[1].getValue() == 1 and pts.Gear.wow[2].getValue() == 1) {
+		if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
 			interpolate("/engines/engine[0]/reverser-pos-norm", 1, 1.4);
-			setprop("/controls/engines/engine[0]/reverser", 1);
-			setprop("/controls/engines/engine[0]/throttle-rev", 0.65);
-			setprop("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad", 3.14);
+			pts.Controls.Engines.Engine.reverser[0].setValue(1);
+			pts.Controls.Engines.Engine.throttleRev[0].setValue(0.65);
+			pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[0].setValue(3.14);
 		}
-		if (getprop("/sim/input/selected/engine[1]") == 1) {
+		if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
 			interpolate("/engines/engine[1]/reverser-pos-norm", 1, 1.4);
-			setprop("/controls/engines/engine[1]/reverser", 1);
-			setprop("/controls/engines/engine[1]/throttle-rev", 0.65);
-			setprop("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad", 3.14);
+			pts.Controls.Engines.Engine.reverser[1].setValue(1);
+			pts.Controls.Engines.Engine.throttleRev[1].setValue(0.65);
+			pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[1].setValue(3.14);
 		}
-	} else if ((getprop("/controls/engines/engine[0]/reverser") == "1") or (getprop("/controls/engines/engine[1]/reverser") == "1")) {
-		setprop("/controls/engines/engine[0]/throttle-rev", 0);
-		setprop("/controls/engines/engine[1]/throttle-rev", 0);
+	} else if (pts.Controls.Engines.Engine.reverser[0].getValue() == "1" or pts.Controls.Engines.Engine.reverser[1].getValue() == "1") {
 		interpolate("/engines/engine[0]/reverser-pos-norm", 0, 1.0);
 		interpolate("/engines/engine[1]/reverser-pos-norm", 0, 1.0);
-		setprop("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad", 0);
-		setprop("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad", 0);
-		setprop("/controls/engines/engine[0]/reverser", 0);
-		setprop("/controls/engines/engine[1]/reverser", 0);
+		pts.Controls.Engines.Engine.throttleRev[0].setValue(0);
+		pts.Controls.Engines.Engine.throttleRev[1].setValue(0);
+		pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[0].setValue(0);
+		pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[1].setValue(0);
+		pts.Controls.Engines.Engine.reverser[0].setValue(0);
+		pts.Controls.Engines.Engine.reverser[1].setValue(0);
 	}
 }
 
 var doRevThrust = func {
-	if (getprop("/gear/gear[1]/wow") != 1 and getprop("/gear/gear[2]/wow") != 1) {
+	if (pts.Gear.wow[1].getValue() != 1 and pts.Gear.wow[2].getValue() != 1) {
 		# Can't select reverse if not on the ground
 		return;
 	}
-	if (getprop("/sim/input/selected/engine[0]") == 1 and getprop("/controls/engines/engine[0]/reverser") == "1") {
-		var pos = getprop("/controls/engines/engine[0]/throttle-rev");
+	if (pts.Sim.Input.Selected.engine[0].getBoolValue() and pts.Controls.Engines.Engine.reverser[0].getValue() == "1") {
+		var pos = pts.Controls.Engines.Engine.throttleRev[0].getValue();
 		if (pos < 0.649) {
-			setprop("/controls/engines/engine[0]/throttle-rev", pos + 0.15);
+			pts.Controls.Engines.Engine.throttleRev[0].setValue(pos + 0.15);
 		}
 	}
-	if (getprop("/sim/input/selected/engine[1]") == 1 and getprop("/controls/engines/engine[1]/reverser") == "1") {
-		var pos = getprop("/controls/engines/engine[1]/throttle-rev");
+	if (pts.Sim.Input.Selected.engine[1].getBoolValue() and pts.Controls.Engines.Engine.reverser[1].getValue() == "1") {
+		var pos = pts.Controls.Engines.Engine.throttleRev[1].getValue();
 		if (pos < 0.649) {
-			setprop("/controls/engines/engine[1]/throttle-rev", pos + 0.15);
+			pts.Controls.Engines.Engine.throttleRev[1].setValue(pos + 0.15);
 		}
 	}
-	var state1 = getprop("/systems/thrust/state1");
-	var state2 = getprop("/systems/thrust/state2");
-	if (getprop("/sim/input/selected/engine[0]") == 1 and state1 == "IDLE" and getprop("/controls/engines/engine[0]/reverser") == "0") {
-		setprop("/controls/engines/engine[0]/throttle-rev", 0.05);
+	
+	if (pts.Sim.Input.Selected.engine[0].getBoolValue() and pts.Systems.Thrust.state[0].getValue() == "IDLE" and pts.Controls.Engines.Engine.reverser[0].getValue() == "0") {
 		interpolate("/engines/engine[0]/reverser-pos-norm", 1, 1.4);
-		setprop("/controls/engines/engine[0]/reverser", 1);
-		setprop("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad", 3.14);
+		pts.Controls.Engines.Engine.throttleRev[0].setValue(0.05);
+		pts.Controls.Engines.Engine.reverser[0].setValue(1);
+		pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[0].setValue(3.14);
 	}
-	if (getprop("/sim/input/selected/engine[1]") == 1 and state2 == "IDLE" and getprop("/controls/engines/engine[1]/reverser") == "0") {
-		setprop("/controls/engines/engine[1]/throttle-rev", 0.05);
+	if (pts.Sim.Input.Selected.engine[1].getBoolValue() and pts.Systems.Thrust.state[1].getValue() == "IDLE" and pts.Controls.Engines.Engine.reverser[1].getValue() == "0") {
 		interpolate("/engines/engine[1]/reverser-pos-norm", 1, 1.4);
-		setprop("/controls/engines/engine[1]/reverser", 1);
-		setprop("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad", 3.14);
+		pts.Controls.Engines.Engine.throttleRev[1].setValue(0.05);
+		pts.Controls.Engines.Engine.reverser[1].setValue(1);
+		pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[1].setValue(3.14);
 	}
 }
 
 var unRevThrust = func {
-	if (getprop("/sim/input/selected/engine[0]") == 1 and getprop("/controls/engines/engine[0]/reverser") == "1") {
-		var pos = getprop("/controls/engines/engine[0]/throttle-rev");
+	if (pts.Sim.Input.Selected.engine[0].getBoolValue() and pts.Controls.Engines.Engine.reverser[0].getValue() == "1") {
+		var pos = pts.Controls.Engines.Engine.throttleRev[0].getValue();
 		if (pos > 0.051) {
-			setprop("/controls/engines/engine[0]/throttle-rev", pos - 0.15);
+			pts.Controls.Engines.Engine.throttleRev[0].setValue(pos - 0.15);
 		} else {
-			setprop("/controls/engines/engine[0]/throttle-rev", 0);
 			interpolate("/engines/engine[0]/reverser-pos-norm", 0, 1.0);
-			setprop("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad", 0);
-			setprop("/controls/engines/engine[0]/reverser", 0);
+			pts.Controls.Engines.Engine.throttleRev[0].setValue(0);
+			pts.Controls.Engines.Engine.reverser[0].setValue(0);
+			pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[0].setValue(0);
 		}
 	}
-	if (getprop("/sim/input/selected/engine[1]") == 1 and getprop("/controls/engines/engine[1]/reverser") == "1") {
-		var pos = getprop("/controls/engines/engine[1]/throttle-rev");
+	if (pts.Sim.Input.Selected.engine[1].getBoolValue() and pts.Controls.Engines.Engine.reverser[1].getValue() == "1") {
+		var pos = pts.Controls.Engines.Engine.throttleRev[1].getValue();
 		if (pos > 0.051) {
-			setprop("/controls/engines/engine[1]/throttle-rev", pos - 0.15);
+			pts.Controls.Engines.Engine.throttleRev[1].setValue(pos - 0.15);
 		} else {
-			setprop("/controls/engines/engine[1]/throttle-rev", 0);
 			interpolate("/engines/engine[1]/reverser-pos-norm", 0, 1.0);
-			setprop("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad", 0);
-			setprop("/controls/engines/engine[1]/reverser", 0);
+			pts.Controls.Engines.Engine.throttleRev[1].setValue(0);
+			pts.Controls.Engines.Engine.reverser[1].setValue(0);
+			pts.Fdm.JSBsim.Propulsion.Engine.reverserAngle[1].setValue(3.14);
 		}
 	}
 }
