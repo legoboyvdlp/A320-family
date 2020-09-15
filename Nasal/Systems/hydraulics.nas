@@ -3,9 +3,6 @@
 
 # Copyright (c) 2019 Jonathan Redpath
 
-var accum = 0;
-var down = 0;
-
 var HYD = {
 	Brakes: {
 		accumPressPsi: props.globals.initNode("/systems/hydraulic/brakes/accumulator-pressure-psi", 0, "INT"),
@@ -82,10 +79,8 @@ var HYD = {
 		me.Fail.yellowLeak.setBoolValue(0);
 	},
 	loop: func() {
-		accum = me.Brakes.accumPressPsi.getValue();
-		
 		if (me.Brakes.mode.getValue() == 2) {
-			if (me.Psi.yellow.getValue() > 2500 and accum < 700) {
+			if (me.Psi.yellow.getValue() > 2500 and me.Brakes.accumPressPsi.getValue() < 700) {
 				me.Brakes.accumPressPsi.setValue(me.Brakes.accumPressPsi.getValue() + 50);
 			}
 		}
@@ -93,8 +88,7 @@ var HYD = {
 };
 
 setlistener("/controls/gear/gear-down", func {
-	down = getprop("/controls/gear/gear-down");
-	if (!down and (getprop("gear/gear[0]/wow") or getprop("gear/gear[1]/wow") or getprop("gear/gear[2]/wow"))) {
-		setprop("/controls/gear/gear-down", 1);
+	if (!pts.Controls.Gear.gearDown.getValue() and (pts.Gear.wow[0].getValue() or pts.Gear.wow[1].getValue() or pts.Gear.wow[2].getValue())) {
+		pts.Controls.Gear.gearDown.setValue(1);
 	}
 });

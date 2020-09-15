@@ -241,7 +241,7 @@ var ECAM_controller = {
 		me.reset();
 	},
 	loop: func() {
-		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !getprop("systems/acconfig/acconfig-running")) {
+		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !pts.Acconfig.running.getBoolValue()) {
 			# update FWC phases
 			phaseLoop();
 			
@@ -274,7 +274,7 @@ var ECAM_controller = {
 		# write to ECAM
 		var counter = 0;
 		
-		if (!getprop("systems/acconfig/autoconfig-running")) {
+		if (!pts.Acconfig.running.getBoolValue()) {
 			foreach (var w; warnings.vector) {
 				if (w.active == 1) {
 					if (counter < 9) {

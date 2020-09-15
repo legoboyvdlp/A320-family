@@ -162,7 +162,7 @@ var ELEC = {
 	loop: func() {
 		# Autopilot Disconnection routines
 		if (me.Bus.dcEssShed.getValue() < 25) {
-			if (getprop("it-autoflight/output/ap1") == 1 and !me._timer1On) {
+			if (fmgc.Output.ap1.getValue() and !me._timer1On) {
 				me._timer1On = 1;
 				settimer(func() {
 					if (me.Bus.dcEssShed.getValue() < 25) {
@@ -177,7 +177,7 @@ var ELEC = {
 		}
 		
 		if (me.Bus.dc2.getValue() < 25) {
-			if (getprop("it-autoflight/output/ap2") == 1 and !me._timer2On) {
+			if (fmgc.Output.ap2.getValue() and !me._timer2On) {
 				me._timer2On = 1;
 				settimer(func() {
 					if (me.Bus.dc2.getValue() < 25) {
