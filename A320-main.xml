@@ -719,6 +719,7 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
 				<reverser type="double">0</reverser>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
@@ -736,6 +737,7 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
 				<reverser type="double">0</reverser>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
