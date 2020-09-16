@@ -46,8 +46,8 @@
      inkscape:zoom="6.0943624"
      showgrid="true"
      id="namedview371"
-     inkscape:window-height="835"
-     inkscape:window-width="1600"
+     inkscape:window-height="1015"
+     inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -6659,7 +6659,9 @@
        y="74.429939"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.9995px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">FLX</tspan></text>
   <g
-     id="FPV">
+     id="FPV"
+     style="stroke:#11c04b;stroke-opacity:1"
+     transform="translate(0.03412367,-0.04316723)">
     <circle
        style="fill:none;fill-opacity:1;stroke:#11c04b;stroke-width:5.92816;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path1861"
