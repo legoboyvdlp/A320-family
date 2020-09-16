@@ -1138,7 +1138,6 @@ var canvas_PFD_1 = {
 		
 		# FPV
 		# If TRK FPA selected on the FCU, display FPV on PFD1
-		# Display FPV in red and freeze if FPA outside the range of -9.9 degrees or 9.9 degrees
 		if (ap_trk_sw.getValue() == 0 ) {
 			me["FPV"].hide();	
 			me.dimFixedAircraftOutline(0);
@@ -1155,15 +1154,16 @@ var canvas_PFD_1 = {
 				AICenter = me["AI_center"].getCenter();
 				var track_x_translation = me.getTrackDiffPixels(track_diff); 
 
-				if (fpa_deg > 9.9) {
-					alpha_deg = alpha_deg + (fpa_deg - 9.9);
-					me["FPV"].setColor(1, 0, 0);
-				} else if (fpa_deg < -9.9) {
-					alpha_deg = alpha_deg + (fpa_deg + 9.9);
-					me["FPV"].setColor(1, 0, 0);
-				} else {
-					me["FPV"].setColor(0.066666667, 0.752941176, 0.294117647);
-				}
+				# Display FPV in red if FPA greater or less plus or minus 9.9 degrees
+				# if (fpa_deg > 9.9) {
+				# 	alpha_deg = alpha_deg + (fpa_deg - 9.9);
+				# 	me["FPV"].setColor(1, 0, 0);
+				# } else if (fpa_deg < -9.9) {
+				# 	alpha_deg = alpha_deg + (fpa_deg + 9.9);
+				# 	me["FPV"].setColor(1, 0, 0);
+				# } else {
+				# 	me["FPV"].setColor(0.066666667, 0.752941176, 0.294117647);
+				# }
 
 				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(alpha_deg, -20, 20) * 12.5); 
 				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
@@ -1914,7 +1914,6 @@ var canvas_PFD_2 = {
 		
 		# FPV
 		# If TRK FPA selected on the FCU, display FPV on PFD2
-		# Display FPV in red and freeze if FPA outside the range of -9.9 degrees or 9.9 degrees
 		if (ap_trk_sw.getValue() == 0 ) {
 			me["FPV"].hide();	
 			me.dimFixedAircraftOutline(0);
@@ -1931,15 +1930,16 @@ var canvas_PFD_2 = {
 				AICenter = me["AI_center"].getCenter();
 				var track_x_translation = me.getTrackDiffPixels(track_diff);
 
-				if (fpa_deg > 9.9) {
-					alpha_deg = alpha_deg + (fpa_deg - 9.9);
-					me["FPV"].setColor(1, 0, 0);
-				} else if (fpa_deg < -9.9) {
-					alpha_deg = alpha_deg + (fpa_deg + 9.9);
-					me["FPV"].setColor(1, 0, 0);
-				} else {
-					me["FPV"].setColor(0.066666667, 0.752941176, 0.294117647);
-				}
+				# Display FPV in red if FPA greater or less plus or minus 9.9 degrees
+				# if (fpa_deg > 9.9) {
+				# 	alpha_deg = alpha_deg + (fpa_deg - 9.9);
+				# 	me["FPV"].setColor(1, 0, 0);
+				# } else if (fpa_deg < -9.9) {
+				# 	alpha_deg = alpha_deg + (fpa_deg + 9.9);
+				# 	me["FPV"].setColor(1, 0, 0);
+				# } else {
+				# 	me["FPV"].setColor(0.066666667, 0.752941176, 0.294117647);
+				# }
 
 				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(alpha_deg, -20, 20) * 12.5);
 				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
