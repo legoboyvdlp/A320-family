@@ -45,6 +45,7 @@ var Controls = {
 		brake: [props.globals.getNode("/controls/gear/brake-left"),props.globals.getNode("/controls/gear/brake-right")],
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
+		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
 };
 
@@ -57,17 +58,20 @@ var Engines = {
 		eprActual: [props.globals.getNode("/engines/engine[0]/epr-actual"), props.globals.getNode("/engines/engine[1]/epr-actual")],
 		n1Actual: [props.globals.getNode("/engines/engine[0]/n1-actual"), props.globals.getNode("/engines/engine[1]/n1-actual")],
 		n2Actual: [props.globals.getNode("/engines/engine[0]/n2-actual"), props.globals.getNode("/engines/engine[1]/n2-actual")],
+		thrust: [props.globals.getNode("/engines/engine[0]/thrust-lb"), props.globals.getNode("/engines/engine[1]/thrust-lb")],
 		state: [props.globals.getNode("/engines/engine[0]/state"), props.globals.getNode("/engines/engine[1]/state")],
 	},
 };
 
 var Environment = {
 	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
+	tempDegC: props.globals.getNode("/environment/temperature-degc"),
 };
 
 var Fdm = {
 	JSBsim: {
 		Fcs: {
+			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
 			slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
 		},
@@ -75,10 +79,14 @@ var Fdm = {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
 		},
+		Inertia: {
+			weightLbs: props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs"),
+		},
 		Position: {
 			wow: props.globals.getNode("/fdm/jsbsim/position/wow"),
 		},
 		Propulsion: {
+			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),
 			Engine: {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
 				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
@@ -163,6 +171,7 @@ var Sim = {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},
 	pause: props.globals.getNode("/sim/freeze/master"),
+	replayState: props.globals.getNode("/sim/freeze/replay-state"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
 	},
@@ -179,7 +188,9 @@ var Systems = {
 };
 
 var Velocities = {
+	airspeed: props.globals.getNode("/velocities/airspeed-kt"),
 	groundspeed: props.globals.getNode("/velocities/groundspeed-kt"),
+	mach: props.globals.getNode("/velocities/mach"),
 };
 
 setprop("/systems/acconfig/property-tree-setup-loaded", 1);
