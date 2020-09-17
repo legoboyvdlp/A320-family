@@ -206,6 +206,7 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.eng_init();
 	systems.APUController.init();
+	systems.BrakeSys.reset();
 	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
@@ -254,6 +255,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.HYD.loop();
 	systems.ADIRS.loop();
 	systems.APUController.loop();
+	systems.BrakeSys.update();
 	ecam.ECAM.loop();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();

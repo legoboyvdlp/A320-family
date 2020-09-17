@@ -236,14 +236,21 @@ var status = {
 var ECAM_controller = {
 	_recallCounter: 0,
 	_noneActive: 0,
+	counter: 0,
 	init: func() {
 		ECAMloopTimer.start();
+		me.counter = 0;
 		me.reset();
 	},
 	loop: func() {
 		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !pts.Acconfig.running.getBoolValue()) {
 			# update FWC phases
-			phaseLoop();
+			if (me.counter == 0) {
+				phaseLoop();
+				me.counter = 1;
+				return;
+			}
+			me.counter = 0;
 			
 			# check active messages
 			messages_priority_3();
