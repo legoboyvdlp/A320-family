@@ -977,7 +977,7 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		track_diff = track.getValue() - heading.getValue();
+		track_diff = geo.normdeg180(track.getValue() - heading.getValue());
 		me["TRK_pointer"].setTranslation(me.getTrackDiffPixels(track_diff),0);
 		split_ils = split("/", ils_data1.getValue());
 		
