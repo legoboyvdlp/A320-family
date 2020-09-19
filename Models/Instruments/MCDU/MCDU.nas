@@ -159,7 +159,7 @@ var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode
 var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
 
 # Conversion factor pounds to kilogram
-LBS2KGS = 0.4535924;
+var LBS2KGS = 0.4535924;
 
 
 # Create Nodes:
