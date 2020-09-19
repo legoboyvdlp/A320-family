@@ -55,6 +55,18 @@
 		<output>/sim/sound/internal-custom</output>
 	</logic>
 	
+	<logic>
+		<input>
+			<not>
+				<equals>
+					<property>/sim/sound/internal-custom</property>
+					<value>1</value>
+				</equals>
+			</not>
+		</input>
+		<output>/sim/sound/external-custom</output>
+	</logic>
+	
 	<!-- Misc -->
 	<filter>
 		<type>gain</type>

@@ -17,15 +17,6 @@ var egt_lightdn_time = 10;
 var shutdown_time = 20;
 var egt_shutdown_time = 20;
 
-setprop("/controls/engines/engine[0]/reverser", 0);
-setprop("/controls/engines/engine[1]/reverser", 0);
-setprop("/controls/engines/engine[0]/igniter-a", 0);
-setprop("/controls/engines/engine[1]/igniter-a", 0);
-setprop("/controls/engines/engine[0]/igniter-b", 0);
-setprop("/controls/engines/engine[1]/igniter-b", 0);
-setprop("/controls/engines/engine[0]/last-igniter", "B");
-setprop("/controls/engines/engine[1]/last-igniter", "B");
-
 var eng_init = func {
 	setprop("/controls/engines/engine[0]/man-start", 0);
 	setprop("/controls/engines/engine[1]/man-start", 0);

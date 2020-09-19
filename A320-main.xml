@@ -5,7 +5,11 @@
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
-
+	
+		<animation>
+			<fire-services type="bool">0</fire-services>
+		</animation>
+		
 		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
 		<checklists include="A32X-Checklists.xml"/>
@@ -719,6 +723,11 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
+				<reverser type="double">0</reverser>
+				<igniter-a type="bool">0</igniter-a>
+				<igniter-b type="bool">0</igniter-b>
+				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="1">
 				<cutoff type="bool">true</cutoff>
@@ -732,6 +741,11 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
+				<reverser type="double">0</reverser>
+				<igniter-a type="bool">0</igniter-a>
+				<igniter-b type="bool">0</igniter-b>
+				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="2">
 				<cutoff type="bool">true</cutoff>
@@ -789,6 +803,7 @@
 			</refuel>
 		</fuel>
 		<gear>
+			<brake-fans type="bool">0</brake-fans>
 			<brake-parking type="bool">0</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
@@ -987,12 +1002,18 @@
 			<caster-angle-deg-damped type="double">0</caster-angle-deg-damped>
 		</gear>
 		<gear n="1">
+			<Lbrake-smoke type="double">0</Lbrake-smoke>
+			<L1brake-temp-degc type="double">15</L1brake-temp-degc>
+			<L2brake-temp-degc type="double">15</L2brake-temp-degc>
 			<tyre-smoke type="int">0</tyre-smoke>
 			<sprayspeed-ms type="double">0</sprayspeed-ms>
 			<spray-density type="double">0</spray-density>
 			<caster-angle-deg-damped type="double">0</caster-angle-deg-damped>
 		</gear>
 		<gear n="2">
+			<Rbrake-smoke type="double">0</Rbrake-smoke>
+			<R3brake-temp-degc type="double">15</R3brake-temp-degc>
+			<R4brake-temp-degc type="double">15</R4brake-temp-degc>
 			<tyre-smoke type="int">0</tyre-smoke>
 			<sprayspeed-ms type="double">0</sprayspeed-ms>
 			<spray-density type="double">0</spray-density>
@@ -1254,6 +1275,8 @@
 			<valves>
 				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
 			</valves>
+			<offset-left type="double">0</offset-left>
+			<offset-right type="double">0</offset-right>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 			<mode-fault type="bool">0</mode-fault>
