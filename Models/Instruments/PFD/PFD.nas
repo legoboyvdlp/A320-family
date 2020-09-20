@@ -976,13 +976,15 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		track_diff = geo.normdeg180(track.getValue() - heading.getValue());
+
+		var heading_deg = heading.getValue();
+		track_diff = geo.normdeg180(track.getValue() - heading_deg);
 		me["TRK_pointer"].setTranslation(me.getTrackDiffPixels(track_diff),0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
 			magnetic_hdg = ils_crs.getValue();
-			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
+			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading_deg);
 			if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
 				me["CRS_pointer"].setTranslation((magnetic_hdg_dif / 10) * 98.5416, 0);
 				me["ILS_HDG_R"].hide();
