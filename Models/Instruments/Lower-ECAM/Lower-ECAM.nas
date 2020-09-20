@@ -42,7 +42,6 @@ LBS2KGS = 0.4535924;
 
 # Fetch Nodes
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
-var elapsed_sec = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var rate = props.globals.getNode("/systems/acconfig/options/lecam-rate", 1);
 var autoconfig_running = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var lighting_du4 = props.globals.getNode("/controls/lighting/DU/du4", 1);
@@ -63,8 +62,6 @@ var oil_qt2 = props.globals.getNode("/ECAM/Lower/Oil-QT[1]", 1);
 var oil_psi1 = props.globals.getNode("/ECAM/Lower/Oil-PSI[0]", 1);
 var oil_psi2 = props.globals.getNode("/ECAM/Lower/Oil-PSI[1]", 1);
 var bleedapu = props.globals.getNode("/systems/pneumatics/source/apu-psi", 1);
-var oil_psi_actual1 = props.globals.getNode("/engines/engine[0]/oil-psi-actual", 1);
-var oil_psi_actual2 = props.globals.getNode("/engines/engine[1]/oil-psi-actual", 1);
 var aileron_ind_left = props.globals.getNode("/ECAM/Lower/aileron-ind-left", 1);
 var aileron_ind_right = props.globals.getNode("/ECAM/Lower/aileron-ind-right", 1);
 var elevator_ind_left = props.globals.getNode("/ECAM/Lower/elevator-ind-left", 1);
@@ -75,7 +72,6 @@ var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1)
 var gw = props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
 var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
-var switch_bleedapu = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
 var apuBleedNotOn = props.globals.getNode("/systems/pneumatics/warnings/apu-bleed-not-on", 1);
 var apu_valve = props.globals.getNode("/systems/pneumatics/valves/apu-bleed-valve-cmd", 1);
 var apu_valve_state = props.globals.getNode("/systems/pneumatics/valves/apu-bleed-valve", 1);
@@ -86,8 +82,6 @@ var hp_valve1_state = props.globals.getNode("/systems/pneumatics/valves/engine-1
 var hp_valve2_state = props.globals.getNode("/systems/pneumatics/valves/engine-2-hp-valve", 1);
 var hp_valve1 = props.globals.getNode("/systems/pneumatics/valves/engine-1-hp-valve-cmd", 1);
 var hp_valve2 = props.globals.getNode("/systems/pneumatics/valves/engine-2-hp-valve-cmd", 1);
-var eng_valve1_cmd = props.globals.getNode("/controls/pneumatics/switches/bleed-1", 1);
-var eng_valve2_cmd = props.globals.getNode("/controls/pneumatics/switches/bleed-2", 1);
 var eng_valve1 = props.globals.getNode("/systems/pneumatics/valves/engine-1-prv-valve", 1);
 var eng_valve2 = props.globals.getNode("/systems/pneumatics/valves/engine-2-prv-valve", 1);
 var precooler1_psi = props.globals.getNode("/systems/pneumatics/psi/engine-1-psi", 1);
@@ -150,28 +144,6 @@ var spoiler_R2 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r2/final-
 var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r3/final-deg", 1);
 var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
 var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
-var spoiler_L1_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l1", 1);
-var spoiler_L2_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l2", 1);
-var spoiler_L3_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l3", 1);
-var spoiler_L4_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l4", 1);
-var spoiler_L5_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-l5", 1);
-var spoiler_R1_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r1", 1);
-var spoiler_R2_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r2", 1);
-var spoiler_R3_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r3", 1);
-var spoiler_R4_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r4", 1);
-var spoiler_R5_fail = props.globals.getNode("/systems/failures/spoilers/spoiler-r5", 1);
-var elac1 = props.globals.getNode("/systems/fctl/elac1", 1);
-var elac2 = props.globals.getNode("/systems/fctl/elac2", 1);
-var sec1 = props.globals.getNode("/systems/fctl/sec1", 1);
-var sec2 = props.globals.getNode("/systems/fctl/sec2", 1);
-var sec3 = props.globals.getNode("/systems/fctl/sec3", 1);
-var elac1_fail = props.globals.getNode("/systems/failures/fctl/elac1", 1);
-var elac2_fail = props.globals.getNode("/systems/failures/fctl/elac2", 1);
-var sec1_fail = props.globals.getNode("/systems/failures/fctl/sec1", 1);
-var sec2_fail = props.globals.getNode("/systems/failures/fctl/sec2", 1);
-var sec3_fail = props.globals.getNode("/systems/failures/fctl/sec3", 1);
-var eng1_n1 = props.globals.getNode("/engines/engine[0]/n1-actual", 1);
-var eng2_n1 = props.globals.getNode("/engines/engine[1]/n1-actual", 1);
 var total_fuel_lbs = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
 var fadec1 = props.globals.getNode("/systems/fadec/powered1", 1);
 var fadec2 = props.globals.getNode("/systems/fadec/powered2", 1);
@@ -226,7 +198,7 @@ var canvas_lowerECAM_base = {
 		return [];
 	},
 	updateDu4: func() {
-		var elapsedtime = elapsed_sec.getValue();
+		var elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		
 		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
 			if (du4_offtime.getValue() + 3 < elapsedtime) {
@@ -252,7 +224,7 @@ var canvas_lowerECAM_base = {
 		}
 	},
 	update: func() {
-		var elapsedtime = elapsed_sec.getValue();
+		var elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		
 		if (systems.ELEC.Bus.ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
 			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime) {
@@ -742,7 +714,7 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# ENG BLEED valve 1
-		var eng_valve_state = eng_valve1_cmd.getValue();
+		var eng_valve_state = systems.PNEU.Switch.bleed1.getValue();
 
 		if (eng_valve1.getValue() == 0) {
 			me["BLEED-ENG-1"].setRotation(0);
@@ -790,7 +762,7 @@ var canvas_lowerECAM_bleed = {
 		}
 			
 		# ENG BLEED valve 2
-		eng_valve_state = eng_valve2_cmd.getValue();
+		eng_valve_state = systems.PNEU.Switch.bleed2.getValue();
 
 		if (eng_valve2.getValue() == 0) {
 			me["BLEED-ENG-2"].setRotation(0);
@@ -836,7 +808,7 @@ var canvas_lowerECAM_bleed = {
 		if (bmc1working.getValue()) {
 			var precooler_temp = precooler1_temp.getValue();
 			me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
-			if (eng_valve1_cmd.getValue() and (precooler_temp < 150 or precooler1_ovht.getValue())) {
+			if (systems.PNEU.Switch.bleed1.getValue() and (precooler_temp < 150 or precooler1_ovht.getValue())) {
 				me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
 			} else {
 				me["BLEED-Precooler-1-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
@@ -850,7 +822,7 @@ var canvas_lowerECAM_bleed = {
 		if (bmc2working.getValue()) {
 			var precooler_temp = precooler2_temp.getValue();
 			me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
-			if (eng_valve2_cmd.getValue() and (precooler_temp < 150 or precooler2_ovht.getValue())) {
+			if (systems.PNEU.Switch.bleed2.getValue() and (precooler_temp < 150 or precooler2_ovht.getValue())) {
 				me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
 			} else {
 				me["BLEED-Precooler-2-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
@@ -1930,7 +1902,7 @@ var canvas_lowerECAM_eng = {
 		me["OilQT2-needle"].setRotation((oil_qt2.getValue() + 90) * D2R);
 
 		# Oil Pressure
-		if (oil_psi_actual1.getValue() >= 20) {
+		if (pts.Engines.Engine.oilPsi[0].getValue() >= 20) {
 			me["OilPSI1"].setColor(0.0509,0.7529,0.2941);
 			me["OilPSI1-needle"].setColor(0.0509,0.7529,0.2941);
 		} else {
@@ -1938,7 +1910,7 @@ var canvas_lowerECAM_eng = {
 			me["OilPSI1-needle"].setColor(1,0,0);
 		}
 
-		if (oil_psi_actual2.getValue() >= 20) {
+		if (pts.Engines.Engine.oilPsi[1].getValue() >= 20) {
 			me["OilPSI2"].setColor(0.0509,0.7529,0.2941);
 			me["OilPSI2-needle"].setColor(0.0509,0.7529,0.2941);
 		} else {
@@ -1946,8 +1918,8 @@ var canvas_lowerECAM_eng = {
 			me["OilPSI2-needle"].setColor(1,0,0);
 		}
 
-		me["OilPSI1"].setText(sprintf("%s", math.round(oil_psi_actual1.getValue())));
-		me["OilPSI2"].setText(sprintf("%s", math.round(oil_psi_actual2.getValue())));
+		me["OilPSI1"].setText(sprintf("%s", math.round(pts.Engines.Engine.oilPsi[0].getValue())));
+		me["OilPSI2"].setText(sprintf("%s", math.round(pts.Engines.Engine.oilPsi[1].getValue())));
 
 		me["OilPSI1-needle"].setRotation((oil_psi1.getValue() + 90) * D2R);
 		me["OilPSI2-needle"].setRotation((oil_psi2.getValue() + 90) * D2R);
@@ -2123,7 +2095,7 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		# Spoiler Fail
-		if (spoiler_L1_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl1.getValue() or green_psi < 1500) {
 			me["spoiler1Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler1Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L1.getValue() < 1.5) {
@@ -2137,7 +2109,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler1Lf"].hide();
 		}
 
-		if (spoiler_L2_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl2.getValue() or yellow_psi < 1500) {
 			me["spoiler2Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler2Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L2.getValue() < 1.5) {
@@ -2151,7 +2123,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler2Lf"].hide();
 		}
 
-		if (spoiler_L3_fail.getValue() or blue_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl3.getValue() or blue_psi < 1500) {
 			me["spoiler3Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler3Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L3.getValue() < 1.5) {
@@ -2165,7 +2137,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler3Lf"].hide();
 		}
 
-		if (spoiler_L4_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl4.getValue() or yellow_psi < 1500) {
 			me["spoiler4Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler4Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L4.getValue() < 1.5) {
@@ -2179,7 +2151,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler4Lf"].hide();
 		}
 
-		if (spoiler_L5_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl5.getValue() or green_psi < 1500) {
 			me["spoiler5Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler5Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L5.getValue() < 1.5) {
@@ -2193,7 +2165,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler5Lf"].hide();
 		}
 
-		if (spoiler_R1_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr1.getValue() or green_psi < 1500) {
 			me["spoiler1Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler1Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R1.getValue() < 1.5) {
@@ -2207,7 +2179,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler1Rf"].hide();
 		}
 
-		if (spoiler_R2_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr2.getValue() or yellow_psi < 1500) {
 			me["spoiler2Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler2Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R2.getValue() < 1.5) {
@@ -2221,7 +2193,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler2Rf"].hide();
 		}
 
-		if (spoiler_R3_fail.getValue() or blue_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr3.getValue() or blue_psi < 1500) {
 			me["spoiler3Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler3Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R3.getValue() < 1.5) {
@@ -2235,7 +2207,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler3Rf"].hide();
 		}
 
-		if (spoiler_R4_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr4.getValue() or yellow_psi < 1500) {
 			me["spoiler4Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler4Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R4.getValue() < 1.5) {
@@ -2249,7 +2221,7 @@ var canvas_lowerECAM_fctl = {
 			me["spoiler4Rf"].hide();
 		}
 
-		if (spoiler_R5_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr5.getValue() or green_psi < 1500) {
 			me["spoiler5Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler5Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R5.getValue() < 1.5) {
@@ -2264,42 +2236,42 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		# Flight Computers
-		if (elac1.getValue()) {
+		if (fbw.FBW.Computers.elac1.getValue()) {
 			me["elac1"].setColor(0.0509,0.7529,0.2941);
 			me["path4249"].setColor(0.0509,0.7529,0.2941);
-		} else if ((elac1.getValue() == 0) or (elac1_fail.getValue())) {
+		} else if (!fbw.FBW.Computers.elac1.getValue() or fbw.FBW.Failures.elac1.getValue()) {
 			me["elac1"].setColor(0.7333,0.3803,0);
 			me["path4249"].setColor(0.7333,0.3803,0);
 		}
 
-		if (elac2.getValue()) {
+		if (fbw.FBW.Computers.elac2.getValue()) {
 			me["elac2"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3"].setColor(0.0509,0.7529,0.2941);
-		} else if ((elac2.getValue() == 0) or (elac2_fail.getValue())) {
+		} else if (!fbw.FBW.Computers.elac2.getValue() or fbw.FBW.Failures.elac2.getValue()) {
 			me["elac2"].setColor(0.7333,0.3803,0);
 			me["path4249-3"].setColor(0.7333,0.3803,0);
 		}
 
-		if (sec1.getValue()) {
+		if (fbw.FBW.Computers.sec1.getValue()) {
 			me["sec1"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6-7"].setColor(0.0509,0.7529,0.2941);
-		} else if ((sec1.getValue() == 0) or (sec1_fail.getValue())) {
+		} else if (!fbw.FBW.Computers.sec1.getValue() or fbw.FBW.Failures.sec1.getValue()) {
 			me["sec1"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6-7"].setColor(0.7333,0.3803,0);
 		}
 
-		if (sec2.getValue()) {
+		if (fbw.FBW.Computers.sec2.getValue()) {
 			me["sec2"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6-7-5"].setColor(0.0509,0.7529,0.2941);
-		} else if ((sec2.getValue() == 0) or (sec2_fail.getValue())) {
+		} else if (!fbw.FBW.Computers.sec2.getValue() or fbw.FBW.Failures.sec2.getValue()) {
 			me["sec2"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6-7-5"].setColor(0.7333,0.3803,0);
 		}
 
-		if (sec3.getValue()) {
+		if (fbw.FBW.Computers.sec3.getValue()) {
 			me["sec3"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6"].setColor(0.0509,0.7529,0.2941);
-		} else if ((sec3.getValue() == 0) or (sec3_fail.getValue())) {
+		} else if (!fbw.FBW.Computers.sec3.getValue() or fbw.FBW.Failures.sec3.getValue()) {
 			me["sec3"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6"].setColor(0.7333,0.3803,0);
 		}
@@ -2371,7 +2343,7 @@ var canvas_lowerECAM_fuel = {
 	update: func() {
 		_weight_kgs = acconfig_weight_kgs.getValue();
 
-		if (eng1_n1.getValue() <= 18.8) {
+		if (pts.Engines.Engine.n1Actual[0].getValue() <= 18.8) {
 			me["ENG1idFFlow"].setColor(0.7333,0.3803,0);
 			me["FUEL-ENG-1-label"].setColor(0.7333,0.3803,0);
 		} else {
@@ -2379,7 +2351,7 @@ var canvas_lowerECAM_fuel = {
 			me["FUEL-ENG-1-label"].setColor(0.8078,0.8039,0.8078);
 		}
 
-		if (eng2_n1.getValue() <= 18.5) {
+		if (pts.Engines.Engine.n1Actual[1].getValue() <= 18.5) {
 			me["ENG2idFFlow"].setColor(0.7333,0.3803,0);
 			me["FUEL-ENG-2-label"].setColor(0.7333,0.3803,0);
 		} else {
@@ -3238,7 +3210,7 @@ var canvas_lowerECAM_wheel = {
 		}
 
 		# Spoiler Fail
-		if (spoiler_L1_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl1.getValue() or green_psi < 1500) {
 			me["spoiler1Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler1Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L1.getValue() < 1.5) {
@@ -3252,7 +3224,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler1Lf"].hide();
 		}
 
-		if (spoiler_L2_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl2.getValue() or yellow_psi < 1500) {
 			me["spoiler2Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler2Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L2.getValue() < 1.5) {
@@ -3266,7 +3238,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler2Lf"].hide();
 		}
 
-		if (spoiler_L3_fail.getValue() or blue_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl3.getValue() or blue_psi < 1500) {
 			me["spoiler3Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler3Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L3.getValue() < 1.5) {
@@ -3280,7 +3252,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler3Lf"].hide();
 		}
 
-		if (spoiler_L4_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl4.getValue() or yellow_psi < 1500) {
 			me["spoiler4Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler4Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L4.getValue() < 1.5) {
@@ -3294,7 +3266,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler4Lf"].hide();
 		}
 
-		if (spoiler_L5_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerl5.getValue() or green_psi < 1500) {
 			me["spoiler5Lex"].setColor(0.7333,0.3803,0);
 			me["spoiler5Lrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_L5.getValue() < 1.5) {
@@ -3308,7 +3280,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler5Lf"].hide();
 		}
 
-		if (spoiler_R1_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr1.getValue() or green_psi < 1500) {
 			me["spoiler1Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler1Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R1.getValue() < 1.5) {
@@ -3322,7 +3294,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler1Rf"].hide();
 		}
 
-		if (spoiler_R2_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr2.getValue() or yellow_psi < 1500) {
 			me["spoiler2Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler2Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R2.getValue() < 1.5) {
@@ -3336,7 +3308,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler2Rf"].hide();
 		}
 
-		if (spoiler_R3_fail.getValue() or blue_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr3.getValue() or blue_psi < 1500) {
 			me["spoiler3Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler3Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R3.getValue() < 1.5) {
@@ -3350,7 +3322,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler3Rf"].hide();
 		}
 
-		if (spoiler_R4_fail.getValue() or yellow_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr4.getValue() or yellow_psi < 1500) {
 			me["spoiler4Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler4Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R4.getValue() < 1.5) {
@@ -3364,7 +3336,7 @@ var canvas_lowerECAM_wheel = {
 			me["spoiler4Rf"].hide();
 		}
 
-		if (spoiler_R5_fail.getValue() or green_psi < 1500) {
+		if (fbw.FBW.Failures.spoilerr5.getValue() or green_psi < 1500) {
 			me["spoiler5Rex"].setColor(0.7333,0.3803,0);
 			me["spoiler5Rrt"].setColor(0.7333,0.3803,0);
 			if (spoiler_R5.getValue() < 1.5) {
@@ -3505,7 +3477,7 @@ var canvas_lowerECAM_test = {
 		return ["Test_white","Test_text"];
 	},
 	update: func() {
-		var elapsedtime = elapsed_sec.getValue();
+		var elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		if (du4_test_time.getValue() + 1 >= elapsedtime) {
 			me["Test_white"].show();
 			me["Test_text"].hide();

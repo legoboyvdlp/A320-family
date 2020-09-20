@@ -77,8 +77,6 @@ var fadecpowerup = props.globals.getNode("/systems/fadec/powerup", 1);
 var thr_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
 var n1_limit = props.globals.getNode("/controls/engines/n1-limit", 1);
 var epr_limit = props.globals.getNode("/controls/engines/epr-limit", 1);
-var n1mode1 = props.globals.getNode("/systems/fadec/n1mode1", 1);
-var n1mode2 = props.globals.getNode("/systems/fadec/n1mode2", 1);
 var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
 var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
 var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
@@ -1103,7 +1101,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["N12-XX"].show();
 		}
 		
-		if (eng1_n1mode.getValue() == 1 and n1mode1.getValue() == 1) {
+		if (eng1_n1mode.getValue() == 1 and fadec.Fadec.n1Mode[0].getValue() == 1) {
 			me["N11-thr"].show();
 			me["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 		} else {
@@ -1111,7 +1109,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["N11-ylim"].hide();
 		}
 		
-		if (eng2_n1mode.getValue() == 1 and n1mode2.getValue() == 1) {
+		if (eng2_n1mode.getValue() == 1 and fadec.Fadec.n1Mode[1].getValue() == 1) {
 			me["N12-thr"].show();
 			me["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 		} else {
