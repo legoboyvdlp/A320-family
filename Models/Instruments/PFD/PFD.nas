@@ -976,13 +976,15 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		track_diff = geo.normdeg180(track.getValue() - heading.getValue());
+
+		var heading_deg = heading.getValue();
+		track_diff = geo.normdeg180(track.getValue() - heading_deg);
 		me["TRK_pointer"].setTranslation(me.getTrackDiffPixels(track_diff),0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
 			magnetic_hdg = ils_crs.getValue();
-			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
+			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading_deg);
 			if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
 				me["CRS_pointer"].setTranslation((magnetic_hdg_dif / 10) * 98.5416, 0);
 				me["ILS_HDG_R"].hide();
@@ -1025,24 +1027,6 @@ var canvas_PFD_base = {
 		me.AI_horizon_hdg_trans.setTranslation(me.middleOffset, horizon_pitch.getValue() * 11.825);
 		me.AI_horizon_hdg_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
 		me["AI_heading"].update();
-	},
-	
-	# Dim the yellow outline of fixed aircraft symbol on PFDs (when crew select TRK-FPA)
-	# 1 == dim 
-	# 0 == undim
-	dimFixedAircraftOutline: func(dim_bool) {
-		var r = 0.345098039;
-		var g = 0.349019608;
-		var b = 0.058823529;
-		
-		if (dim_bool == 0) {
-			r = 0.788235294;
-			g = 0.819607843;
-			b = 0.129411765;
-		} 
-
-		me["fixed_aircraft_outline_1"].setColor(r, g, b);
-		me["fixed_aircraft_outline_2"].setColor(r, g, b);
 	},
 
 	# Get Angle of Attack from ADR1 or, depending on Switching panel, ADR3
@@ -1138,12 +1122,10 @@ var canvas_PFD_1 = {
 		# If TRK FPA selected, display FPV on PFD1
 		if (ap_trk_sw.getValue() == 0 ) {
 			me["FPV"].hide();	
-			me.dimFixedAircraftOutline(0);
 		} else {
 			var aoa = me.getAOAForPFD1();	
 			if (aoa == nil or (systems.ADIRS.ADIRunits[0].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == -1)){
 				me["FPV"].hide();	
-				me.dimFixedAircraftOutline(0);
 			} else {
 				var roll_deg = roll.getValue() or 0; 
 				AICenter = me["AI_center"].getCenter();
@@ -1153,7 +1135,6 @@ var canvas_PFD_1 = {
 				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
 				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
-				me.dimFixedAircraftOutline(1);
 			}
 
 		}
@@ -1899,12 +1880,10 @@ var canvas_PFD_2 = {
 		# If TRK FPA selected, display FPV on PFD2
 		if (ap_trk_sw.getValue() == 0 ) {
 			me["FPV"].hide();	
-			me.dimFixedAircraftOutline(0);
 		} else {
 			var aoa = me.getAOAForPFD2();
 			if (aoa == nil or (systems.ADIRS.ADIRunits[1].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == 1)) {
 				me["FPV"].hide();	
-				me.dimFixedAircraftOutline(0);
 			} else {
 				var roll_deg = roll.getValue() or 0;	
 				AICenter = me["AI_center"].getCenter();
@@ -1914,7 +1893,6 @@ var canvas_PFD_2 = {
 				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
 				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
-				me.dimFixedAircraftOutline(1);
 			}
 		}
 

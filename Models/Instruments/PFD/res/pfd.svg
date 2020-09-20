@@ -46,8 +46,8 @@
      inkscape:zoom="6.0943624"
      showgrid="true"
      id="namedview371"
-     inkscape:window-height="1015"
-     inkscape:window-width="1920"
+     inkscape:window-height="835"
+     inkscape:window-width="1600"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -6660,35 +6660,35 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.9995px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">FLX</tspan></text>
   <g
      id="FPV"
-     style="stroke:#11c04b;stroke-opacity:1"
-     transform="translate(0.03412367,-0.04316723)">
-    <circle
-       style="fill:none;fill-opacity:1;stroke:#11c04b;stroke-width:5.92816;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path1861"
-       cx="448.1662"
-       cy="513.59192"
-       r="15.372474" />
+     inkscape:label="#g4866"
+     transform="translate(4.3177635,10.931087)">
     <rect
-       style="fill:none;fill-opacity:1;stroke:#11c04b;stroke-width:4.42405;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1869"
-       width="40.045986"
-       height="3.0663724"
-       x="465.87289"
-       y="511.68826" />
+       transform="rotate(90)"
+       style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4864"
+       width="12.8"
+       height="4.7999878"
+       x="471.06799"
+       y="-446.19958" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 460.89737,502.24844 c 0,9.44871 -7.65969,17.1084 -17.1084,17.1084 -9.44871,0 -17.1084,-7.65969 -17.1084,-17.1084 0,-9.44871 7.65969,-17.1084 17.1084,-17.1084 9.44871,0 17.1084,7.65969 17.1084,17.1084 z"
+       id="path4858"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="zzzzz" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#11c04b;stroke-width:4.42405;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect2947"
-       width="40.045986"
-       height="3.0663724"
-       x="389.94388"
-       y="511.68826" />
+       y="499.80042"
+       x="412.66745"
+       height="4.7999878"
+       width="12.8"
+       id="rect4860"
+       style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#11c04b;stroke-width:3.82266;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect2956"
-       width="18.900246"
-       height="3.3959746"
-       x="479.94556"
-       y="-449.89334"
-       transform="rotate(90)" />
+       style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4862"
+       width="12.8"
+       height="4.7999878"
+       x="462.13199"
+       y="499.80042" />
   </g>
 </svg>
