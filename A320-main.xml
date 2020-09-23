@@ -195,11 +195,6 @@
 			<autopilot n="13">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</autopilot>
-			<wingflexer include="Systems/wingflexer-params.xml"/>
-			<property-rule n="100">
-				<name>Generic Wing Flexer</name>
-				<path>Aircraft/Generic/wingflexer.xml</path>
-			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
