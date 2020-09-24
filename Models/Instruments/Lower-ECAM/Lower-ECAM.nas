@@ -145,9 +145,6 @@ var spoiler_R3 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r3/final-
 var spoiler_R4 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r4/final-deg", 1);
 var spoiler_R5 = props.globals.getNode("/fdm/jsbsim/hydraulics/spoiler-r5/final-deg", 1);
 var total_fuel_lbs = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
-var fadec1 = props.globals.getNode("/systems/fadec/powered1", 1);
-var fadec2 = props.globals.getNode("/systems/fadec/powered2", 1);
-var fadecPowerUp = props.globals.getNode("/systems/fadec/powerup", 1);
 var fuel_flow1 = props.globals.getNode("/engines/engine[0]/fuel-flow_actual", 1);
 var fuel_flow2 = props.globals.getNode("/engines/engine[1]/fuel-flow_actual", 1);
 var fuel_left_outer_temp = props.globals.getNode("/consumables/fuel/tank[0]/temperature_degC", 1);
@@ -2375,7 +2372,7 @@ var canvas_lowerECAM_fuel = {
 			me["FFlow-weight-unit"].setText("LBS/MIN");
 		}
 
-		if (fadec1.getValue() and fadec2.getValue() or fadecPowerUp.getValue()) {
+		if (fadec.FADEC.Power.powered1.getValue() and fadec.FADEC.Power.powered2.getValue() or fadec.FADEC.Power.powerup.getValue()) {
 			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
 			if (_weight_kgs == 1) {
 				me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((fuel_flow1.getValue() + fuel_flow2.getValue()) * LBS2KGS) / 60, 10)));
