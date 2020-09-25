@@ -209,11 +209,6 @@
 			<autopilot n="13">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</autopilot>
-			<wingflexer include="Systems/wingflexer-params.xml"/>
-			<property-rule n="100">
-				<name>Generic Wing Flexer</name>
-				<path>Aircraft/Generic/wingflexer.xml</path>
-			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
@@ -731,6 +726,9 @@
 		</electrical>
 		<engines>
 			<engine-start-switch type="int">1</engine-start-switch>
+			<epr-limit type="double">0.0</epr-limit>
+			<n1-limit type="double">0.0</n1-limit>
+			<thrust-limit type="string">TOGA</thrust-limit>
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
 				<cutoff-switch type="bool">true</cutoff-switch>
@@ -1150,6 +1148,12 @@
 				</bat-2>
 			</sources>
 		</electrical>
+		
+		<fadec>
+			<n1mode1 type="bool">0</n1mode1>
+			<n1mode2 type="bool">0</n1mode2>
+		</fadec>
+		
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
@@ -1250,6 +1254,7 @@
 			<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
 			<cargo-aft-fire type="bool">0</cargo-aft-fire>
 		</failures>
+		
 		<fctl n="0">
 			<elac1 type="bool">0</elac1>
 			<elac2 type="bool">0</elac2>
@@ -1260,6 +1265,7 @@
 			<fac2 type="bool">0</fac2>
 			<yawdamper-active type="bool">0</yawdamper-active>
 		</fctl>
+		
 		<fire n="0">
 			<apu>
 				<temperature type="double">0</temperature>
@@ -1307,6 +1313,7 @@
 			<fuel-used-2 type="double">0</fuel-used-2>
 			<mode-fault type="bool">0</mode-fault>
 		</fuel>
+		
 		<hydraulic n="0">
 			<sources>
 				<ptu>
@@ -1415,6 +1422,23 @@
 		<static n="2">
 			<serviceable type="bool">1</serviceable>
 		</static>
+		
+		<thrust>
+			<alpha-floor type="bool">0</alpha-floor>
+			<clbreduc-ft type="double">1500</clbreduc-ft>
+			<eng-out type="bool">0</eng-out>
+			<lim-flex type="bool">0</lim-flex>
+			<lvrclb type="bool">0</lvrclb>
+			<state1 type="string">IDLE</state1>
+			<state2 type="string">IDLE</state2>
+			<toga-lk type="bool">0</toga-lk>
+			<thr-locked type="bool">0</thr-locked>
+			<thr-locked-alert type="bool">0</thr-locked-alert>
+			<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
+			<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
+			<thr-locked-flash type="bool">0</thr-locked-flash>
+			<thr-locked-time type="double">0</thr-locked-time>
+		</thrust>
 		
 		<navigation>
 			<aligned-1 type="bool">0</aligned-1>

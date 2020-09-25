@@ -44,12 +44,6 @@ var eng_option = props.globals.getNode("/options/eng", 1);
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3", 1);
 var rev_1 = props.globals.getNode("/engines/engine[0]/reverser-pos-norm", 1);
 var rev_2 = props.globals.getNode("/engines/engine[1]/reverser-pos-norm", 1);
-var eng1_n1mode = props.globals.getNode("/systems/fadec/eng1/n1", 1);
-var eng1_eprmode = props.globals.getNode("/systems/fadec/eng1/epr", 1);
-var eng2_n1mode = props.globals.getNode("/systems/fadec/eng2/n1", 1);
-var eng2_eprmode = props.globals.getNode("/systems/fadec/eng2/epr", 1);
-var eng1_n2mode = props.globals.getNode("/systems/fadec/eng1/n2", 1);
-var eng2_n2mode = props.globals.getNode("/systems/fadec/eng2/n2", 1);
 var fuel = props.globals.getNode("/consumables/fuel/total-fuel-lbs", 1);
 var modeautobrake = props.globals.getNode("/controls/autobrake/mode", 1);
 var speedbrakearm = props.globals.getNode("/controls/flight/speedbrake-arm", 1);
@@ -67,18 +61,12 @@ var eng1_epr = props.globals.getNode("/engines/engine[0]/epr-actual", 1);
 var eng2_epr = props.globals.getNode("/engines/engine[1]/epr-actual", 1);
 var eng1_egt = props.globals.getNode("/engines/engine[0]/egt-actual", 1);
 var eng2_egt = props.globals.getNode("/engines/engine[1]/egt-actual", 1);
-var eng1_egtmode = props.globals.getNode("/systems/fadec/eng1/egt", 1);
-var eng2_egtmode = props.globals.getNode("/systems/fadec/eng2/egt", 1);
-var eng1_ffmode = props.globals.getNode("/systems/fadec/eng1/ff", 1);
-var eng2_ffmode = props.globals.getNode("/systems/fadec/eng2/ff", 1);
 var fadecpower_1 = props.globals.getNode("/systems/fadec/powered1", 1);
 var fadecpower_2 = props.globals.getNode("/systems/fadec/powered2", 1);
 var fadecpowerup = props.globals.getNode("/systems/fadec/powerup", 1);
 var thr_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
 var n1_limit = props.globals.getNode("/controls/engines/n1-limit", 1);
 var epr_limit = props.globals.getNode("/controls/engines/epr-limit", 1);
-var n1mode1 = props.globals.getNode("/systems/fadec/n1mode1", 1);
-var n1mode2 = props.globals.getNode("/systems/fadec/n1mode2", 1);
 var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
 var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
 var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
@@ -198,10 +186,10 @@ var canvas_upperECAM_base = {
 		rev_1_cur = rev_1.getValue();
 		rev_2_cur = rev_2.getValue();
 		cur_eng_option = eng_option.getValue();
-		if (rev_1_cur >= 0.01 and eng1_n1mode.getValue() == 1 and cur_eng_option == "CFM") {
+		if (rev_1_cur >= 0.01 and fadec.FADEC.Eng1.n1 == 1 and cur_eng_option == "CFM") {
 			me["REV1"].show();
 			me["REV1-box"].show();
-		} else if (rev_1_cur >= 0.01 and eng1_eprmode.getValue() == 1 and cur_eng_option == "IAE") {
+		} else if (rev_1_cur >= 0.01 and fadec.FADEC.Eng1.epr == 1 and cur_eng_option == "IAE") {
 			me["REV1"].show();
 			me["REV1-box"].show();
 		} else {
@@ -215,10 +203,10 @@ var canvas_upperECAM_base = {
 			me["REV1"].setColor(0.7333,0.3803,0);
 		}
 		
-		if (rev_2_cur >= 0.01 and eng2_n1mode.getValue() == 1 and cur_eng_option == "CFM") {
+		if (rev_2_cur >= 0.01 and fadec.FADEC.Eng2.n1 == 1 and cur_eng_option == "CFM") {
 			me["REV2"].show();
 			me["REV2-box"].show();
-		} else if (rev_2_cur >= 0.01 and eng2_eprmode.getValue() == 1 and cur_eng_option == "IAE") {
+		} else if (rev_2_cur >= 0.01 and fadec.FADEC.Eng2.epr == 1 and cur_eng_option == "IAE") {
 			me["REV2"].show();
 			me["REV2-box"].show();
 		} else {
@@ -656,12 +644,8 @@ var canvas_upperECAM_cfm_eis2 = {
 		N1_lim_cur = N1_lim.getValue();
 		N1_thr_1_act = N1_thr_1.getValue();
 		N1_thr_2_act = N1_thr_2.getValue();
-		n1mode_1 = eng1_n1mode.getValue();
-		n1mode_2 = eng2_n1mode.getValue();
 		rev_1_act = rev_1.getValue();
 		rev_2_act = rev_2.getValue();
-		ff_1 = eng1_ffmode.getValue();
-		ff_2 = eng2_ffmode.getValue();
 		EGT_1_cur = EGT_1.getValue();
 		EGT_2_cur = EGT_2.getValue();
 		n2cur_1 = eng1_n2.getValue();
@@ -681,7 +665,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		me["N12-thr"].setRotation((N1_thr_2_act + 90) * D2R);
 		me["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
 		
-		if (n1mode_1 == 1) {
+		if (fadec.FADEC.Eng1.n1 == 1) {
 			me["N11-scale"].setColor(0.8078,0.8039,0.8078);
 			me["N11-scale2"].setColor(1,0,0);
 			me["N11"].show();
@@ -711,13 +695,13 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["N11-XX-box"].show();
 		}
 		
-		if (rev_1_act < 0.01 and n1mode_1 == 1) {
+		if (rev_1_act < 0.01 and fadec.FADEC.Eng1.n1 == 1) {
 			me["N11-thr"].show();
 		} else {
 			me["N11-thr"].hide();
 		}
 		
-		if (n1mode_2 == 1) {
+		if (fadec.FADEC.Eng2.n1 == 1) {
 			me["N12-scale"].setColor(0.8078,0.8039,0.8078);
 			me["N12-scale2"].setColor(1,0,0);
 			me["N12"].show();
@@ -747,7 +731,7 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["N12-XX-box"].show();
 		}
 		
-		if (rev_2_act < 0.01 and n1mode_2 == 1) {
+		if (rev_2_act < 0.01 and fadec.FADEC.Eng2.n1 == 1) {
 			me["N12-thr"].show();
 		} else {
 			me["N12-thr"].hide();
@@ -760,7 +744,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		me["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
 		me["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
 		
-		if (eng1_egtmode.getValue() == 1) {
+		if (fadec.FADEC.Eng1.egt == 1) {
 			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT1-scale2"].setColor(1,0,0);
 			me["EGT1"].show();
@@ -778,7 +762,7 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["EGT1-XX"].show();
 		}
 		
-		if (eng2_egtmode.getValue() == 1) {
+		if (fadec.FADEC.Eng2.egt == 1) {
 			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT2-scale2"].setColor(1,0,0);
 			me["EGT2"].show();
@@ -803,7 +787,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		me["N22"].setText(sprintf("%s", math.floor(n2cur_2 + 0.05)));
 		me["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(n2cur_2 + 0.05, 1))));
 		
-		if (eng1_n2mode.getValue() == 1) {
+		if (fadec.FADEC.Eng1.n2 == 1) {
 			me["N21"].show();
 			me["N21-decimal"].show();
 			me["N21-decpnt"].show();
@@ -815,7 +799,7 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["N21-XX"].show();
 		}
 		
-		if (eng2_n2mode.getValue() == 1) {
+		if (fadec.FADEC.Eng2.n2 == 1) {
 			me["N22"].show();
 			me["N22-decimal"].show();
 			me["N22-decpnt"].show();
@@ -838,7 +822,7 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["FFlow-weight-unit"].setText("LBS/H");
 		}
 		
-		if (ff_1 == 1) {
+		if (fadec.FADEC.Eng1.ff == 1) {
 			me["FF1"].show();
 			me["FF1-XX"].hide();
 		} else {
@@ -846,7 +830,7 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["FF1-XX"].show();
 		}
 		
-		if (ff_2 == 1) {
+		if (fadec.FADEC.Eng2.ff == 1) {
 			me["FF2"].show();
 			me["FF2-XX"].hide();
 		} else {
@@ -913,12 +897,8 @@ var canvas_upperECAM_iae_eis2 = {
 		EPR_lim_cur = EPR_lim.getValue();
 		EPR_thr_1_act = EPR_thr_1.getValue();
 		EPR_thr_2_act = EPR_thr_2.getValue();
-		eprmode1 = eng1_eprmode.getValue();
-		eprmode2 = eng2_eprmode.getValue();
 		rev_1_act = rev_1.getValue();
 		rev_2_act = rev_2.getValue();
-		ff_1 = eng1_ffmode.getValue();
-		ff_2 = eng2_ffmode.getValue();
 		EGT_1_cur = EGT_1.getValue();
 		EGT_2_cur = EGT_2.getValue();
 		n2cur_1 = eng1_n2.getValue();
@@ -937,7 +917,7 @@ var canvas_upperECAM_iae_eis2 = {
 		me["EPR2-thr"].setRotation((EPR_thr_2_act + 90) * D2R);
 		me["EPR2-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
 		
-		if (eprmode1 == 1) {
+		if (fadec.FADEC.Eng1.epr == 1) {
 			me["EPR1-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EPR1"].show();
 			me["EPR1-decpnt"].show();
@@ -963,13 +943,13 @@ var canvas_upperECAM_iae_eis2 = {
 			me["EPR1-XX2"].show();
 		}
 		
-		if (rev_1_act < 0.01 and eprmode1 == 1) {
+		if (rev_1_act < 0.01 and fadec.FADEC.Eng1.epr == 1) {
 			me["EPR1-thr"].show();
 		} else {
 			me["EPR1-thr"].hide();
 		}
 		
-		if (eprmode2 == 1) {
+		if (fadec.FADEC.Eng2.epr == 1) {
 			me["EPR2-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EPR2"].show();
 			me["EPR2-decpnt"].show();
@@ -995,7 +975,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["EPR2-XX2"].show();
 		}
 		
-		if (rev_2_act < 0.01 and eprmode2 == 1) {
+		if (rev_2_act < 0.01 and fadec.FADEC.Eng2.epr == 1) {
 			me["EPR2-thr"].show();
 		} else {
 			me["EPR2-thr"].hide();
@@ -1008,7 +988,7 @@ var canvas_upperECAM_iae_eis2 = {
 		me["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
 		me["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
 		
-		if (eng1_egtmode.getValue() == 1) {
+		if (fadec.FADEC.Eng1.egt == 1) {
 			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT1-scale2"].setColor(1,0,0);
 			me["EGT1"].show();
@@ -1026,7 +1006,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["EGT1-XX"].show();
 		}
 		
-		if (eng2_egtmode.getValue() == 1) {
+		if (fadec.FADEC.Eng2.egt == 1) {
 			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT2-scale2"].setColor(1,0,0);
 			me["EGT2"].show();
@@ -1059,7 +1039,7 @@ var canvas_upperECAM_iae_eis2 = {
 		me["N12-thr"].setRotation((N1_thr_2.getValue() + 90) * D2R);
 		me["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
 		
-		if (eng1_n1mode.getValue() == 1) {
+		if (fadec.FADEC.Eng1.n1 == 1) {
 			me["N11-scale"].setColor(0.8078,0.8039,0.8078);
 			me["N11-scale2"].setColor(1,0,0);
 			me["N11"].show();
@@ -1081,7 +1061,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["N11-XX"].show();
 		}
 		
-		if (eng2_n1mode.getValue() == 1) {
+		if (fadec.FADEC.Eng2.n1 == 1) {
 			me["N12-scale"].setColor(0.8078,0.8039,0.8078);
 			me["N12-scale2"].setColor(1,0,0);
 			me["N12"].show();
@@ -1103,7 +1083,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["N12-XX"].show();
 		}
 		
-		if (eng1_n1mode.getValue() == 1 and n1mode1.getValue() == 1) {
+		if (fadec.FADEC.Eng1.n1 == 1 and fadec.Fadec.n1Mode[0].getValue() == 1) {
 			me["N11-thr"].show();
 			me["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 		} else {
@@ -1111,7 +1091,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["N11-ylim"].hide();
 		}
 		
-		if (eng2_n1mode.getValue() == 1 and n1mode2.getValue() == 1) {
+		if (fadec.FADEC.Eng2.n1 == 1 and fadec.Fadec.n1Mode[1].getValue() == 1) {
 			me["N12-thr"].show();
 			me["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 		} else {
@@ -1125,7 +1105,7 @@ var canvas_upperECAM_iae_eis2 = {
 		me["N22"].setText(sprintf("%s", math.floor(eng2_n2.getValue() + 0.05)));
 		me["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(eng2_n2.getValue() + 0.05, 1))));
 		
-		if (eng1_n2mode.getValue() == 1) {
+		if (fadec.FADEC.Eng1.n2 == 1) {
 			me["N21"].show();
 			me["N21-decimal"].show();
 			me["N21-decpnt"].show();
@@ -1137,7 +1117,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["N21-XX"].show();
 		}
 		
-		if (eng2_n2mode.getValue() == 1) {
+		if (fadec.FADEC.Eng2.n2 == 1) {
 			me["N22"].show();
 			me["N22-decimal"].show();
 			me["N22-decpnt"].show();
@@ -1162,7 +1142,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["FFlow2-weight-unit"].setText("LBS/H");
 		}
 		
-		if (ff_1 == 1) {
+		if (fadec.FADEC.Eng1.ff == 1) {
 			me["FF1"].show();
 			me["FF1-XX"].hide();
 		} else {
@@ -1170,7 +1150,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["FF1-XX"].show();
 		}
 		
-		if (ff_2 == 1) {
+		if (fadec.FADEC.Eng2.ff == 1) {
 			me["FF2"].show();
 			me["FF2-XX"].hide();
 		} else {

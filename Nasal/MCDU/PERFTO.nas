@@ -100,8 +100,8 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
-			setprop("systems/thrust/clbreduc-ft", "1500");
-			setprop("/FMGC/internal/accel-agl-ft", "1500");
+			setprop("systems/thrust/clbreduc-ft", 1500);
+			setprop("/FMGC/internal/accel-agl-ft", 1500);
 			setprop("MCDUC/thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {

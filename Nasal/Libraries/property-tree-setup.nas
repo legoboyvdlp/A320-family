@@ -25,6 +25,9 @@ var Controls = {
 			cutoffSw: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],
 			firePb: [props.globals.getNode("/controls/engines/engine[0]/fire-btn"), props.globals.getNode("/controls/engines/engine[1]/fire-btn")],
 			throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
+			throttleFdm: [props.globals.getNode("/controls/engines/engine[0]/throttle-fdm"), props.globals.getNode("/controls/engines/engine[1]/throttle-fdm")],
+			throttleOutput: [props.globals.getNode("/controls/engines/engine[0]/throttle-output"), props.globals.getNode("/controls/engines/engine[1]/throttle-output")],
+			throttlePos: [props.globals.getNode("/controls/engines/engine[0]/throttle-pos"), props.globals.getNode("/controls/engines/engine[1]/throttle-pos")],
 			throttleRev: [props.globals.getNode("/controls/engines/engine[0]/throttle-rev"), props.globals.getNode("/controls/engines/engine[1]/throttle-rev")],
 			reverser: [props.globals.getNode("/controls/engines/engine[0]/reverser"), props.globals.getNode("/controls/engines/engine[1]/reverser")],
 		},
@@ -58,6 +61,7 @@ var Engines = {
 		eprActual: [props.globals.getNode("/engines/engine[0]/epr-actual"), props.globals.getNode("/engines/engine[1]/epr-actual")],
 		n1Actual: [props.globals.getNode("/engines/engine[0]/n1-actual"), props.globals.getNode("/engines/engine[1]/n1-actual")],
 		n2Actual: [props.globals.getNode("/engines/engine[0]/n2-actual"), props.globals.getNode("/engines/engine[1]/n2-actual")],
+		oilPsi: [props.globals.getNode("/engines/engine[0]/oil-psi-actual"), props.globals.getNode("/engines/engine[1]/oil-psi-actual")],
 		thrust: [props.globals.getNode("/engines/engine[0]/thrust-lb"), props.globals.getNode("/engines/engine[1]/thrust-lb")],
 		state: [props.globals.getNode("/engines/engine[0]/state"), props.globals.getNode("/engines/engine[1]/state")],
 	},
@@ -70,6 +74,10 @@ var Environment = {
 
 var Fdm = {
 	JSBsim: {
+		Aero: {
+			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
+			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-norm"),
+		},
 		Fcs: {
 			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
@@ -183,6 +191,7 @@ var Sim = {
 
 var Systems = {
 	Thrust: {
+		engOut: props.globals.getNode("/systems/thrust/eng-out"),
 		state: [props.globals.getNode("/systems/thrust/state1"), props.globals.getNode("/systems/thrust/state2")],
 	},
 };
