@@ -250,6 +250,17 @@ var FMGCInternal = {
 	fob: 0,
 	fuelPredGw: 0,
 	cg: 0,
+	
+	# NAV
+	clbFuel: 0,
+	clbTime: 0,
+	clbDist: 0,
+	clbSet: 0,
+	
+	desFuel: 0,
+	desTime: 0,
+	desDist: 0,
+	desSet: 0,
 };
 
 var postInit = func() {
@@ -490,7 +501,7 @@ var updateFuel = func {
 	fmgc.FMGCInternal.fuelPredGw = num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000);
 	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
 	
-	# Calcualte extra fuel
+	# Calculate extra fuel
 	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
 		extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
 	} else {
@@ -516,6 +527,19 @@ var updateFuel = func {
 	}
 	
 	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
+	
+	# Calculate climb fuel
+	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
+		crz = FMGCInternal.crzFl;
+		isa = FMGCInternal.crzTemp - (15 - (2 * fmgc.FMGCInternal.crzFl / 10)); # crz temp minus ISA
+		tow = FMGCInternal.tow;
+		
+		FMGCInternal.clbFuel = 1.421156e-02 + (crz*3.236393e+03) + (crz*crz*1.120007e+00) + (crz*crz*crz*-2.722871e-03) + (crz*crz*crz*crz*7.256755e-06) + (crz*crz*crz*crz*crz*-1.612218e-08) + (crz*crz*crz*crz*crz*crz*1.326596e-11) + (tow*-4.622486e+03) + (crz*tow*-2.590295e+02) + (crz*crz*tow*-5.394492e-02) + (crz*crz*crz*tow*5.946143e-05) + (crz*crz*crz*crz*tow*6.535434e-10) + (crz*crz*crz*crz*crz*tow*1.188938e-12) + (tow*tow*3.649302e+02) + (crz*tow*tow*8.221278e+00) + (crz*crz*tow*tow*1.098608e-03) + (crz*crz*crz*tow*tow*-1.031488e-06) + (crz*crz*crz*crz*tow*tow*4.634445e-11) + (tow*tow*tow*-1.144583e+01) + (crz*tow*tow*tow*-1.294717e-01) + (crz*crz*tow*tow*tow*-9.251952e-06) + (crz*crz*crz*tow*tow*tow*5.595368e-09) + (tow*tow*tow*tow*1.785113e-01) + (crz*tow*tow*tow*tow*1.011794e-03) + (crz*crz*tow*tow*tow*tow*2.662747e-08) + (tow*tow*tow*tow*tow*-1.384418e-03) + (crz*tow*tow*tow*tow*tow*-3.138214e-06) + (tow*tow*tow*tow*tow*tow*4.271205e-06) + (isa*-2.910550e+04) + (crz*isa*1.285581e+01) + (crz*crz*isa*-1.272942e-02) + (crz*crz*crz*isa*-3.925488e-06) + (crz*crz*crz*crz*isa*4.165313e-08) + (crz*crz*crz*crz*crz*isa*-1.131495e-11) + (tow*isa*2.291444e+03) + (crz*tow*isa*-7.748285e-01) + (crz*crz*tow*isa*6.871028e-04) + (crz*crz*crz*tow*isa*-4.508741e-07) + (crz*crz*crz*crz*tow*isa*-4.787712e-10) + (tow*tow*isa*-7.164238e+01) + (crz*tow*tow*isa*1.686471e-02) + (crz*crz*tow*tow*isa*-9.823789e-06) + (crz*crz*crz*tow*tow*isa*7.170984e-09) + (tow*tow*tow*isa*1.112663e+00) + (crz*tow*tow*tow*isa*-1.592490e-04) + (crz*crz*tow*tow*tow*isa*3.528409e-08) + (tow*tow*tow*tow*isa*-8.587720e-03) + (crz*tow*tow*tow*tow*isa*5.600170e-07) + (tow*tow*tow*tow*tow*isa*2.635888e-05) + (isa*isa*-6.049159e+00) + (crz*isa*isa*9.271569e-03) + (crz*crz*isa*isa*-4.787863e-05) + (crz*crz*crz*isa*isa*1.544306e-07) + (crz*crz*crz*crz*isa*isa*-1.189408e-10) + (tow*isa*isa*3.567406e-01) + (crz*tow*isa*isa*-2.742607e-04) + (crz*crz*tow*isa*isa*4.071973e-07) + (crz*crz*crz*tow*isa*isa*-1.120882e-09) + (tow*tow*isa*isa*-7.946516e-03) + (crz*tow*tow*isa*isa*3.685281e-06) + (crz*crz*tow*tow*isa*isa*9.913623e-10) + (tow*tow*tow*isa*isa*7.883941e-05) + (crz*tow*tow*tow*isa*isa*-2.140361e-08) + (tow*tow*tow*tow*isa*isa*-2.925840e-07) + (isa*isa*isa*-1.556897e+00) + (crz*isa*isa*isa*3.820685e-03) + (crz*crz*isa*isa*isa*-1.536057e-06) + (crz*crz*crz*isa*isa*isa*4.479777e-10) + (tow*isa*isa*isa*6.404284e-02) + (crz*tow*isa*isa*isa*-1.043392e-04) + (crz*crz*tow*isa*isa*isa*4.147683e-08) + (tow*tow*isa*isa*isa*-9.053946e-04) + (crz*tow*tow*isa*isa*isa*7.853240e-07) + (tow*tow*tow*isa*isa*isa*4.355346e-06) + (isa*isa*isa*isa*7.111483e-04) + (crz*isa*isa*isa*isa*4.605684e-07) + (crz*crz*isa*isa*isa*isa*-2.085822e-09) + (tow*isa*isa*isa*isa*-2.278531e-05) + (crz*tow*isa*isa*isa*isa*3.146128e-09) + (tow*tow*isa*isa*isa*isa*1.714468e-07) + (isa*isa*isa*isa*isa*2.890019e-04) + (crz*isa*isa*isa*isa*isa*-9.768280e-07) + (tow*isa*isa*isa*isa*isa*-3.504238e-06) + (isa*isa*isa*isa*isa*isa*-2.382194e-09);
+		#FMGCInternal.clbTime = 
+		#FMGCInternal.clbDist = 
+		FMGCInternal.clbSet = 1;
+	}
+	
 }
 
 ############################
