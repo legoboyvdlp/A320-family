@@ -1171,7 +1171,7 @@ setlistener("/gear/gear[1]/wow", func() {
 		setprop("/FMGC/internal/landing-time", -99);
 	}
 	
-	if (getprop("/gear/gear[1]/wow") == 1 and getprop("/FMGC/internal/landing-time") == -99) {
+	if (pts.Gear.wow[1].getValue() and getprop("/FMGC/internal/landing-time") == -99) {
 		timer30secLanding.start();
 		setprop("/FMGC/internal/landing-time", pts.Sim.Time.elapsedSec.getValue());
 	}
