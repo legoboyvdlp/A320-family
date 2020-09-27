@@ -185,6 +185,17 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/ldg-config-f-set", 1);
 	
 	# GA PERF
+	
+	# NAV
+	fmgc.FMGCInternal.clbFuel = 0;
+	fmgc.FMGCInternal.clbTime = 0;
+	fmgc.FMGCInternal.clbDist = 0;
+	fmgc.FMGCInternal.clbSet = 0;
+	
+	fmgc.FMGCInternal.desFuel = 0;
+	fmgc.FMGCInternal.desTime = 0;
+	fmgc.FMGCInternal.desDist = 0;
+	fmgc.FMGCInternal.desSet = 0;
 }
 
 var setMode = func(will) {
