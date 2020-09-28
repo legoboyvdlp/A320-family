@@ -170,6 +170,7 @@ var FMGCInternal = {
 	flap2_appr: 0,
 	vls_appr: 0,
 	vapp_appr: 0,
+	vappSpeedSet: 0,
 	
 	# PERF
 	transAlt: 18000,
@@ -188,6 +189,9 @@ var FMGCInternal = {
 	destMagSet: 0,
 	destWind: 0,
 	destWindSet: 0,
+	radioNo: 0,
+	ldgConfig3: 0,
+	ldgConfigFull: 0,
 	
 	# INIT A
 	altAirport: "",
@@ -774,7 +778,7 @@ var masterFMGC = maketimer(0.2, func {
 	FMGCInternal.slat = FMGCInternal.vs1g_clean * 1.23;
 	FMGCInternal.flap2 = FMGCInternal.vs1g_conf_2 * 1.47;
 	FMGCInternal.flap3 = FMGCInternal.vs1g_conf_3 * 1.36;
-	if (getprop("/FMGC/internal/ldg-config-3-set")) {
+	if (FMGCInternal.ldgConfig3) {
 		FMGCInternal.vls = FMGCInternal.vs1g_conf_3 * 1.23;
 	} else {
 		FMGCInternal.vls = FMGCInternal.vs1g_conf_full * 1.23
@@ -782,7 +786,7 @@ var masterFMGC = maketimer(0.2, func {
 	if (FMGCInternal.vls < 113) {
 		FMGCInternal.vls = 113;
 	}
-	if (!getprop("/FMGC/internal/vapp-speed-set")) {
+	if (!fmgc.FMGCInternal.vappSpeedSet) {
 		if (FMGCInternal.destWind < 5) {
 			FMGCInternal.vapp = FMGCInternal.vls + 5;
 		} else if (FMGCInternal.destWind > 15) {
@@ -824,7 +828,7 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.slat_appr = FMGCInternal.slat;
 		FMGCInternal.flap2_appr = FMGCInternal.flap2;
 		FMGCInternal.vls_appr = FMGCInternal.vls;
-		if (!getprop("/FMGC/internal/vapp-speed-set")) {
+		if (!fmgc.FMGCInternal.vappSpeedSet) {
 			FMGCInternal.vapp_appr = FMGCInternal.vapp;
 		}
 	} else {
@@ -838,7 +842,7 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.vs1g_conf_full_appr = -0.0007 * FMGCInternal.lw * FMGCInternal.lw + 0.6002 * FMGCInternal.lw + 38.479;
 		FMGCInternal.slat_appr = FMGCInternal.vs1g_clean_appr * 1.23;
 		FMGCInternal.flap2_appr = FMGCInternal.vs1g_conf_2_appr * 1.47;
-		if (getprop("/FMGC/internal/ldg-config-3-set")) {
+		if (FMGCInternal.ldgConfig3) {
 			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_3_appr * 1.23;
 		} else {
 			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_full_appr * 1.23
@@ -846,7 +850,7 @@ var masterFMGC = maketimer(0.2, func {
 		if (FMGCInternal.vls_appr < 113) {
 			FMGCInternal.vls_appr = 113;
 		}
-		if (!getprop("/FMGC/internal/vapp-speed-set")) {
+		if (!fmgc.FMGCInternal.vappSpeedSet) {
 			if (FMGCInternal.destWind < 5) {
 				FMGCInternal.vapp_appr = FMGCInternal.vls_appr + 5;
 			} else if (FMGCInternal.destWind > 15) {

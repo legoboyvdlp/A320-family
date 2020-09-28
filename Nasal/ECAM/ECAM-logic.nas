@@ -39,6 +39,9 @@ var alt200 = nil;
 var alt750 = nil;
 var bigThree = nil;
 
+var altAlertSteady = 0;
+var altAlertFlash = 0;
+
 var messages_priority_3 = func {
 	phaseVar3 = phaseNode.getValue();
 	
@@ -780,21 +783,21 @@ var messages_priority_3 = func {
 	}
 	
 	if (alt750 and alt200 and !altAlertInhibit) {
-		setprop("ECAM/flipflop/alt-alert-2-rs-set", 1);
+		setprop("/ECAM/flipflop/alt-alert-2-rs-set", 1);
 	} else {
-		setprop("ECAM/flipflop/alt-alert-2-rs-set", 0);
+		setprop("/ECAM/flipflop/alt-alert-2-rs-set", 0);
 	}
 	
 	if (getprop("/ECAM/flipflop/alt-alert-rs-reset") or (!alt750 and !alt200 and !altAlertInhibit)) {
-		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 1);
+		setprop("/ECAM/flipflop/alt-alert-2-rs-reset", 1);
 	} else {
-		setprop("ECAM/flipflop/alt-alert-2-rs-reset", 0);
+		setprop("/ECAM/flipflop/alt-alert-2-rs-reset", 0);
 	}
 	
 	if (alt750 and !alt200 and !altAlertInhibit and getprop("/ECAM/flipflop/alt-alert-2-rs-output")) {
-		setprop("ECAM/flipflop/alt-alert-3-rs-set", 1);
+		setprop("/ECAM/flipflop/alt-alert-3-rs-set", 1);
 	} else {
-		setprop("ECAM/flipflop/alt-alert-3-rs-set", 0);
+		setprop("/ECAM/flipflop/alt-alert-3-rs-set", 0);
 	}
 	
 	if ((!alt750 and !alt200 and !altAlertInhibit and getprop("/ECAM/flipflop/alt-alert-rs-output")) or (!alt750 and !alt200 and !altAlertInhibit and getprop("/ECAM/flipflop/alt-alert-3-rs-output")) or getprop("/ECAM/flipflop/alt-alert-3-rs-set")) {
@@ -815,15 +818,15 @@ var messages_priority_3 = func {
 	}
 	
 	if (FWC.Timer.gnd.getValue() != 1 and getprop("/ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
-		setprop("ECAM/alt-alert-steady", 1);
+		altAlertSteady = 1;
 	} else {
-		setprop("ECAM/alt-alert-steady", 0);
+		altAlertSteady = 0;
 	}
 	
 	if (FWC.Timer.gnd.getValue() != 1 and bigThree) {
-		setprop("ECAM/alt-alert-flash", 1);
+		altAlertFlash = 1;
 	} else {
-		setprop("ECAM/alt-alert-flash", 0);
+		altAlertFlash = 0;
 	}
 	
 	if (!systems.cargoTestBtn.getBoolValue()) {
@@ -2025,21 +2028,21 @@ var messages_priority_0 = func {
 var messages_config_memo = func {
 	phaseVarMemo = phaseNode.getValue();
 	if (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input") == 4 or getprop("/controls/flight/speedbrake") != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
-		setprop("ECAM/to-config-normal", 0);
+		setprop("/ECAM/to-config-normal", 0);
 	} else {
-		setprop("ECAM/to-config-normal", 1);
+		setprop("/ECAM/to-config-normal", 1);
 	}
 	
 	if (getprop("/ECAM/to-config-test") and (phaseVarMemo == 2 or phaseVarMemo == 9)) {
-		setprop("ECAM/to-config-set", 1);
+		setprop("/ECAM/to-config-set", 1);
 	} else {
-		setprop("ECAM/to-config-set", 0);
+		setprop("/ECAM/to-config-set", 0);
 	}
 	
 	if (!getprop("/ECAM/to-config-normal") or phaseVarMemo == 6) {
-		setprop("ECAM/to-config-reset", 1);
+		setprop("/ECAM/to-config-reset", 1);
 	} else {
-		setprop("ECAM/to-config-reset", 0);
+		setprop("/ECAM/to-config-reset", 0);
 	}
 	
 	if (getprop("/controls/autobrake/mode") == 3) {
@@ -2083,15 +2086,15 @@ var messages_config_memo = func {
 	}
 	
 	if (getprop("/ECAM/to-config-test") and (phaseVarMemo == 2 or phaseVarMemo == 9)) {
-		setprop("ECAM/to-memo-set", 1);
+		setprop("/ECAM/to-memo-set", 1);
 	} else {
-		setprop("ECAM/to-memo-set", 0);
+		setprop("/ECAM/to-memo-set", 0);
 	}
 	
 	if (phaseVarMemo == 1 or phaseVarMemo == 3 or phaseVarMemo == 6 or phaseVarMemo == 10) {
-		setprop("ECAM/to-memo-reset", 1);
+		setprop("/ECAM/to-memo-reset", 1);
 	} else {
-		setprop("ECAM/to-memo-reset", 0);
+		setprop("/ECAM/to-memo-reset", 0);
 	}
 	
 	if ((phaseVarMemo == 2 and getprop("/ECAM/engine-start-time") != 0 and getprop("/ECAM/engine-start-time") + 120 < getprop("/sim/time/elapsed-sec")) or getprop("/ECAM/to-memo-flipflop")) {
@@ -2152,27 +2155,27 @@ var messages_config_memo = func {
 	
 	gear_agl_cur = pts.Position.gearAglFt.getValue();
 	if (gear_agl_cur < 2000) {
-		setprop("ECAM/ldg-memo-set", 1);
+		setprop("/ECAM/ldg-memo-set", 1);
 	} else {
-		setprop("ECAM/ldg-memo-set", 0);
+		setprop("/ECAM/ldg-memo-set", 0);
 	}
 	
 	if (gear_agl_cur > 2200) {
-		setprop("ECAM/ldg-memo-reset", 1);
+		setprop("/ECAM/ldg-memo-reset", 1);
 	} else {
-		setprop("ECAM/ldg-memo-reset", 0);
+		setprop("/ECAM/ldg-memo-reset", 0);
 	}
 	
 	if (gear_agl_cur > 2200) {
-		setprop("ECAM/ldg-memo-2200-set", 1);
+		setprop("/ECAM/ldg-memo-2200-set", 1);
 	} else {
-		setprop("ECAM/ldg-memo-2200-set", 0);
+		setprop("/ECAM/ldg-memo-2200-set", 0);
 	}
 	
 	if (phaseVarMemo != 6 and phaseVarMemo != 7 and phaseVarMemo != 8) {
-		setprop("ECAM/ldg-memo-2200-reset", 1);
+		setprop("/ECAM/ldg-memo-2200-reset", 1);
 	} else {
-		setprop("ECAM/ldg-memo-2200-reset", 0);
+		setprop("/ECAM/ldg-memo-2200-reset", 0);
 	}
 	
 	if ((phaseVarMemo == 6 and getprop("/ECAM/ldg-memo-flipflop") and getprop("/ECAM/ldg-memo-2200-flipflop")) or phaseVarMemo == 7 or phaseVarMemo == 8) {

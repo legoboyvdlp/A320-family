@@ -190,6 +190,7 @@ var Sim = {
 		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
 	},
+	Version: props.globals.getNode("/sim/version/flightgear"),
 };
 
 var Systems = {
