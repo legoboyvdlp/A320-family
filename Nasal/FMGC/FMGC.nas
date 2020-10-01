@@ -528,7 +528,7 @@ var updateFuel = func {
 	
 	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
 	
-	# Calculate climb fuel
+	# Calculate climb/descent fuel
 	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
 		crz = FMGCInternal.crzFl;
 		temp = FMGCInternal.crzTemp - 15 + (2 * crz / 10); # crz temp minus ISA
@@ -542,8 +542,16 @@ var updateFuel = func {
 		#print("Fuel: ", FMGCInternal.clbFuel);
 		#print("Time: ", FMGCInternal.clbTime);
 		#print("Dist: ", FMGCInternal.clbDist);
+		
+		FMGCInternal.desFuel = 0; # 
+		FMGCInternal.desTime = 0; # 
+		FMGCInternal.desDist = 0; # 
+		FMGCInternal.desSet = 1;
+		
+		#print("Fuel: ", FMGCInternal.desFuel);
+		#print("Time: ", FMGCInternal.desTime);
+		#print("Dist: ", FMGCInternal.desDist);
 	}
-	
 }
 
 ############################
