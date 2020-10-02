@@ -8,8 +8,7 @@ var tyresmoke_2 = aircraft.tyresmoke.new(2, 0, 0.8, 0);
 
 # =============================== listeners ===============================
 setlistener("gear/gear[0]/position-norm", func {
-	var gear = getprop("gear/gear[0]/position-norm");
-	if (gear == 1 ){
+	if (pts.Gear.position[0].getValue()){
 		run_tyresmoke0 = 1;
 	}else{
 		run_tyresmoke0 = 0;
@@ -17,8 +16,7 @@ setlistener("gear/gear[0]/position-norm", func {
 },1,0);
 
 setlistener("gear/gear[1]/position-norm", func {
-	var gear = getprop("gear/gear[1]/position-norm");
-	if (gear == 1 ){
+	if (pts.Gear.position[1].getValue()){
 		run_tyresmoke1 = 1;
 	}else{
 		run_tyresmoke1 = 0;
@@ -26,8 +24,7 @@ setlistener("gear/gear[1]/position-norm", func {
 },1,0);
 
 setlistener("gear/gear[2]/position-norm", func {
-	var gear = getprop("gear/gear[2]/position-norm");
-	if (gear == 1 ){
+	if (pts.Gear.position[2].getValue()){
 		run_tyresmoke2 = 1;
 	}else{
 		run_tyresmoke2 = 0;

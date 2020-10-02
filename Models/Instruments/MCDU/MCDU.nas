@@ -142,13 +142,9 @@ var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
 # APPR PERF
 var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
 var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
-var vapp_speed_set = props.globals.getNode("/FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
 var baro = props.globals.getNode("/FMGC/internal/baro", 1);
-var radio_no = props.globals.getNode("/FMGC/internal/radio-no", 1);
-var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 1);
-var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 1);
 
 # GA PERF
 
@@ -3730,7 +3726,7 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
-			} else if (getprop("/FMGC/internal/radio-no")) {
+			} else if (fmgc.FMGCInternal.radioNo) {
 				me["Simple_R3"].setText("NO");
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
@@ -3743,7 +3739,7 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("LDG CONF  ");
 			me["Simple_R4"].setText("CONF3  ");
 			me["Simple_R5"].setText("FULL  ");
-			if (ldg_config_3_set.getValue() == 1 and ldg_config_f_set.getValue() == 0) {
+			if (fmgc.FMGCInternal.ldgConfig3 == 1 and fmgc.FMGCInternal.ldgConfigFull == 0) {
 				me["PERFAPPR_LDG_3"].hide();
 				me["PERFAPPR_LDG_F"].show();
 				me.fontSizeRight(0, 0, 0, normal, small, 0);
@@ -3767,7 +3763,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vls_appr));
 				me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 				me.fontLeft(0, 0, 0, 0, default, 0);
-				if (vapp_speed_set.getValue()) {
+				if (fmgc.FMGCInternal.vappSpeedSet) {
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
@@ -3777,7 +3773,7 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setText(" ---");
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
-				if (vapp_speed_set.getValue()) {
+				if (fmgc.FMGCInternal.vappSpeedSet) {
 					me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 					me.fontLeft(0, 0, 0, 0, default, 0);
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);

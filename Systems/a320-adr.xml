@@ -75,51 +75,19 @@
 		
 		<fcs_function name="/systems/navigation/probes/tat-1/compute-tat">
 			<function>
-				<difference>
-					<product>
-						<sum>
-							<property>/environment/temperature-degc</property> <!-- SAT -->
-							<value>273.15</value>
-						</sum>
-						<sum>
-							<value>1</value>
-							<product>
-								<value>0.2</value> <!-- ratio of specific heats - 1 / 2 -->
-								<value>0.995</value> <!-- empirical recovery factor -->
-								<pow>
-									<property>velocities/mach</property> <!-- going to use the pure value of mach here and then calculate another value -->
-									<value>2</value>
-								</pow>
-							</product>
-						</sum>
-					</product>
-					<value>273.15</value>
-				</difference>
+				<product>
+					<value>0.995</value> <!-- empirical recovery factor -->
+					<property>propulsion/tat-c</property>
+				</product>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/probes/tat-2/compute-tat">
 			<function>
-				<difference>
-					<product>
-						<sum>
-							<property>/environment/temperature-degc</property> <!-- SAT -->
-							<value>273.15</value>
-						</sum>
-						<sum>
-							<value>1</value>
-							<product>
-								<value>0.2</value> <!-- ratio of specific heats - 1 / 2 -->
-								<value>0.996</value> <!-- empirical recovery factor -->
-								<pow>
-									<property>velocities/mach</property> <!-- going to use the pure value of mach here and then calculate another value -->
-									<value>2</value>
-								</pow>
-							</product>
-						</sum>
-					</product>
-					<value>273.15</value>
-				</difference>
+				<product>
+					<value>0.996</value> <!-- empirical recovery factor -->
+					<property>propulsion/tat-c</property>
+				</product>
 			</function>
 		</fcs_function>
 		

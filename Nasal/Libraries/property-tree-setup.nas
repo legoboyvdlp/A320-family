@@ -25,6 +25,11 @@ var Controls = {
 			cutoffSw: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],
 			firePb: [props.globals.getNode("/controls/engines/engine[0]/fire-btn"), props.globals.getNode("/controls/engines/engine[1]/fire-btn")],
 			throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
+			throttleFdm: [props.globals.getNode("/controls/engines/engine[0]/throttle-fdm"), props.globals.getNode("/controls/engines/engine[1]/throttle-fdm")],
+			throttleOutput: [props.globals.getNode("/controls/engines/engine[0]/throttle-output"), props.globals.getNode("/controls/engines/engine[1]/throttle-output")],
+			throttlePos: [props.globals.getNode("/controls/engines/engine[0]/throttle-pos"), props.globals.getNode("/controls/engines/engine[1]/throttle-pos")],
+			throttleRev: [props.globals.getNode("/controls/engines/engine[0]/throttle-rev"), props.globals.getNode("/controls/engines/engine[1]/throttle-rev")],
+			reverser: [props.globals.getNode("/controls/engines/engine[0]/reverser"), props.globals.getNode("/controls/engines/engine[1]/reverser")],
 		},
 	},
 	Flight: {
@@ -43,6 +48,7 @@ var Controls = {
 		brake: [props.globals.getNode("/controls/gear/brake-left"),props.globals.getNode("/controls/gear/brake-right")],
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
+		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
 };
 
@@ -52,33 +58,49 @@ var ECAM = {
 
 var Engines = {
 	Engine: {
+		egtActual: [props.globals.getNode("/engines/engine[0]/egt-actual"), props.globals.getNode("/engines/engine[1]/egt-actual")],
 		eprActual: [props.globals.getNode("/engines/engine[0]/epr-actual"), props.globals.getNode("/engines/engine[1]/epr-actual")],
+		fuelFlow: [props.globals.getNode("/engines/engine[0]/fuel-flow_actual"), props.globals.getNode("/engines/engine[1]/fuel-flow_actual")],
 		n1Actual: [props.globals.getNode("/engines/engine[0]/n1-actual"), props.globals.getNode("/engines/engine[1]/n1-actual")],
 		n2Actual: [props.globals.getNode("/engines/engine[0]/n2-actual"), props.globals.getNode("/engines/engine[1]/n2-actual")],
+		oilPsi: [props.globals.getNode("/engines/engine[0]/oil-psi-actual"), props.globals.getNode("/engines/engine[1]/oil-psi-actual")],
+		thrust: [props.globals.getNode("/engines/engine[0]/thrust-lb"), props.globals.getNode("/engines/engine[1]/thrust-lb")],
+		reverser: [props.globals.getNode("/engines/engine[0]/reverser-pos-norm"), props.globals.getNode("/engines/engine[1]/reverser-pos-norm")],
 		state: [props.globals.getNode("/engines/engine[0]/state"), props.globals.getNode("/engines/engine[1]/state")],
 	},
 };
 
 var Environment = {
 	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
+	tempDegC: props.globals.getNode("/environment/temperature-degc"),
 };
 
 var Fdm = {
 	JSBsim: {
+		Aero: {
+			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
+		},
 		Fcs: {
+			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
 			slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
+			slatLocked: props.globals.getNode("/fdm/jsbsim/fcs/slat-locked"),
 		},
 		Fbw: {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
 		},
+		Inertia: {
+			weightLbs: props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs"),
+		},
 		Position: {
 			wow: props.globals.getNode("/fdm/jsbsim/position/wow"),
 		},
 		Propulsion: {
+			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),
 			Engine: {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
+				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
 			},
 		},
 	},
@@ -92,9 +114,9 @@ var FMGC = {
 
 var Gear = {
 	compression: [props.globals.getNode("/gear/gear[0]/compression-norm"), props.globals.getNode("/gear/gear[1]/compression-norm"), props.globals.getNode("/gear/gear[2]/compression-norm")],
-	wow: [props.globals.getNode("/gear/gear[0]/wow"), props.globals.getNode("/gear/gear[1]/wow"), props.globals.getNode("/gear/gear[2]/wow")],
 	position: [props.globals.getNode("/gear/gear[0]/position-norm"), props.globals.getNode("/gear/gear[1]/position-norm"), props.globals.getNode("/gear/gear[2]/position-norm")],
 	rollspeed: [props.globals.getNode("/gear/gear[0]/rollspeed-ms"), props.globals.getNode("/gear/gear[1]/rollspeed-ms"), props.globals.getNode("/gear/gear[2]/rollspeed-ms")],
+	wow: [props.globals.getNode("/gear/gear[0]/wow"), props.globals.getNode("/gear/gear[1]/wow"), props.globals.getNode("/gear/gear[2]/wow")],
 };
 
 var Instrumentation = {
@@ -160,6 +182,7 @@ var Sim = {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},
 	pause: props.globals.getNode("/sim/freeze/master"),
+	replayState: props.globals.getNode("/sim/freeze/replay-state"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
 	},
@@ -167,10 +190,20 @@ var Sim = {
 		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
 	},
+	Version: props.globals.getNode("/sim/version/flightgear"),
+};
+
+var Systems = {
+	Thrust: {
+		engOut: props.globals.getNode("/systems/thrust/eng-out"),
+		state: [props.globals.getNode("/systems/thrust/state1"), props.globals.getNode("/systems/thrust/state2")],
+	},
 };
 
 var Velocities = {
+	airspeed: props.globals.getNode("/velocities/airspeed-kt"),
 	groundspeed: props.globals.getNode("/velocities/groundspeed-kt"),
+	mach: props.globals.getNode("/velocities/mach"),
 };
 
 setprop("/systems/acconfig/property-tree-setup-loaded", 1);

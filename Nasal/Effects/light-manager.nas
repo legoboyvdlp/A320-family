@@ -197,15 +197,15 @@ var light_manager = {
 			var sh = math.sin(heading);
 			var ch = math.cos(heading);
 			
-			if ((ll1 == 1 and getprop("systems/electrical/bus/ac-1") != 0) and (ll2 == 1 and getprop("systems/electrical/bus/ac-2") !=0)) {
+			if ((ll1 == 1 and systems.ELEC.Bus.ac1.getValue() != 0) and (ll2 == 1 and systems.ELEC.Bus.ac2.getValue() != 0)) {
 				me.light1_ypos =  0.0;
 				me.light1_setSize(16);
 				me.light1_on();
-			} else if (ll1 == 1 and getprop("systems/electrical/bus/ac-1") != 0) {
+			} else if (ll1 == 1 and systems.ELEC.Bus.ac1.getValue() != 0) {
 				me.light1_ypos =  3.0;
 				me.light1_setSize(12);
 				me.light1_on();
-			} else if (ll2 == 1 and getprop("systems/electrical/bus/ac-2") !=0) {
+			} else if (ll2 == 1 and systems.ELEC.Bus.ac2.getValue() != 0) {
 				me.light1_ypos =  -3.0;
 				me.light1_setSize(12);
 				me.light1_on();

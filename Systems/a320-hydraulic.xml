@@ -500,6 +500,27 @@
 		
 	</channel>
 	
+	<channel name="Brakes" execrate="8">
+		
+		<switch name="/systems/hydraulic/brakes/mode">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/gear/brake-parking ne 1
+				/systems/hydraulic/brakes/askidnwssw eq 1
+				/systems/hydraulic/green-psi ge 2500
+			</test>
+			<test logic="AND" value="2">
+				/controls/gear/brake-parking ne 1
+				/systems/hydraulic/brakes/askidnwssw eq 1
+				/systems/hydraulic/yellow-psi ge 2500
+			</test>
+			<test logic="AND" value="2">
+				/controls/gear/brake-parking ne 1
+				/systems/hydraulic/brakes/accumulator-pressure-psi ge 0
+			</test>
+		</switch>
+	</channel>
+	
 	<channel name="Lights" execrate="8">
 	
 		<switch name="/systems/hydraulic/lights/blue-elec-fault">

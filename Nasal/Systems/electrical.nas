@@ -17,38 +17,38 @@ var ELEC = {
 	_timer2On: 0,
 	EmerElec: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config"),
 	Bus: {
-		acEss: props.globals.getNode("systems/electrical/bus/ac-ess"),
-		acEssShed: props.globals.getNode("systems/electrical/bus/ac-ess-shed"),
-		ac1: props.globals.getNode("systems/electrical/bus/ac-1"),
-		ac2: props.globals.getNode("systems/electrical/bus/ac-2"),
-		dcBat: props.globals.getNode("systems/electrical/bus/dc-bat"),
-		dcEss: props.globals.getNode("systems/electrical/bus/dc-ess"),
-		dcEssShed: props.globals.getNode("systems/electrical/bus/dc-ess-shed"),
-		dc1: props.globals.getNode("systems/electrical/bus/dc-1"),
-		dc2: props.globals.getNode("systems/electrical/bus/dc-2"),
-		dcHot1: props.globals.getNode("systems/electrical/bus/dc-hot-1"),
-		dcHot2: props.globals.getNode("systems/electrical/bus/dc-hot-2"),
+		acEss: props.globals.getNode("/systems/electrical/bus/ac-ess"),
+		acEssShed: props.globals.getNode("/systems/electrical/bus/ac-ess-shed"),
+		ac1: props.globals.getNode("/systems/electrical/bus/ac-1"),
+		ac2: props.globals.getNode("/systems/electrical/bus/ac-2"),
+		dcBat: props.globals.getNode("/systems/electrical/bus/dc-bat"),
+		dcEss: props.globals.getNode("/systems/electrical/bus/dc-ess"),
+		dcEssShed: props.globals.getNode("/systems/electrical/bus/dc-ess-shed"),
+		dc1: props.globals.getNode("/systems/electrical/bus/dc-1"),
+		dc2: props.globals.getNode("/systems/electrical/bus/dc-2"),
+		dcHot1: props.globals.getNode("/systems/electrical/bus/dc-hot-1"),
+		dcHot2: props.globals.getNode("/systems/electrical/bus/dc-hot-2"),
 	},
 	Fail: {
-		acEssBusFault: props.globals.getNode("systems/failures/electrical/ac-ess-bus"),
-		ac1BusFault: props.globals.getNode("systems/failures/electrical/ac-1-bus"),
-		ac2BusFault: props.globals.getNode("systems/failures/electrical/ac-2-bus"),
-		bat1Fault: props.globals.getNode("systems/failures/electrical/bat-1"),
-		bat2Fault: props.globals.getNode("systems/failures/electrical/bat-2"),
-		dcBatBusFault: props.globals.getNode("systems/failures/electrical/dc-bat-bus"),
-		dcEssBusFault: props.globals.getNode("systems/failures/electrical/dc-ess-bus"),
-		dc1BusFault: props.globals.getNode("systems/failures/electrical/dc-1-bus"),
-		dc2BusFault: props.globals.getNode("systems/failures/electrical/dc-2-bus"),
-		emerGenFault: props.globals.getNode("systems/failures/electrical/emer-gen"),
-		essTrFault: props.globals.getNode("systems/failures/electrical/ess-tr"),
-		gen1Fault: props.globals.getNode("systems/failures/electrical/gen-1"),
-		gen2Fault: props.globals.getNode("systems/failures/electrical/gen-2"),
-		genApuFault: props.globals.getNode("systems/failures/electrical/apu"),
-		idg1Fault: props.globals.getNode("systems/failures/electrical/idg-1"), # oil leak or low press
-		idg2Fault: props.globals.getNode("systems/failures/electrical/idg-2"),
-		statInvFault: props.globals.getNode("systems/failures/electrical/stat-inv"),
-		tr1Fault: props.globals.getNode("systems/failures/electrical/tr-1"),
-		tr2Fault: props.globals.getNode("systems/failures/electrical/tr-2"),
+		acEssBusFault: props.globals.getNode("/systems/failures/electrical/ac-ess-bus"),
+		ac1BusFault: props.globals.getNode("/systems/failures/electrical/ac-1-bus"),
+		ac2BusFault: props.globals.getNode("/systems/failures/electrical/ac-2-bus"),
+		bat1Fault: props.globals.getNode("/systems/failures/electrical/bat-1"),
+		bat2Fault: props.globals.getNode("/systems/failures/electrical/bat-2"),
+		dcBatBusFault: props.globals.getNode("/systems/failures/electrical/dc-bat-bus"),
+		dcEssBusFault: props.globals.getNode("/systems/failures/electrical/dc-ess-bus"),
+		dc1BusFault: props.globals.getNode("/systems/failures/electrical/dc-1-bus"),
+		dc2BusFault: props.globals.getNode("/systems/failures/electrical/dc-2-bus"),
+		emerGenFault: props.globals.getNode("/systems/failures/electrical/emer-gen"),
+		essTrFault: props.globals.getNode("/systems/failures/electrical/ess-tr"),
+		gen1Fault: props.globals.getNode("/systems/failures/electrical/gen-1"),
+		gen2Fault: props.globals.getNode("/systems/failures/electrical/gen-2"),
+		genApuFault: props.globals.getNode("/systems/failures/electrical/apu"),
+		idg1Fault: props.globals.getNode("/systems/failures/electrical/idg-1"), # oil leak or low press
+		idg2Fault: props.globals.getNode("/systems/failures/electrical/idg-2"),
+		statInvFault: props.globals.getNode("/systems/failures/electrical/stat-inv"),
+		tr1Fault: props.globals.getNode("/systems/failures/electrical/tr-1"),
+		tr2Fault: props.globals.getNode("/systems/failures/electrical/tr-2"),
 	},
 	Generic: {
 		adf: props.globals.initNode("/systems/electrical/outputs/adf", 0, "DOUBLE"),
@@ -69,39 +69,86 @@ var ELEC = {
 		turnCoordinator: props.globals.initNode("/systems/electrical/outputs/turn-coordinator", 0, "DOUBLE"),
 	},
 	Light: {
+		bat1Fault: props.globals.getNode("/systems/electrical/light/bat-1-fault"),
+		bat2Fault: props.globals.getNode("/systems/electrical/light/bat-2-fault"),
 	},
 	Misc: {
 	},
 	Relay: {
-		essTrContactor: props.globals.getNode("systems/electrical/relay/dc-ess-feed-tr/contact-pos"),
+		acEssFeed1: props.globals.getNode("/systems/electrical/relay/ac-ess-feed-1/contact-pos"),
+		acEssFeed2: props.globals.getNode("/systems/electrical/relay/ac-ess-feed-2/contact-pos"),
+		acEssEmerGenFeed: props.globals.getNode("/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos"),
+		acTie1: props.globals.getNode("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos"),
+		acTie2: props.globals.getNode("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"),
+		apuGlc: props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos"),
+		dcEssFeedBat: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-bat/contact-pos"),
+		essTrContactor: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/contact-pos"),
+		extEpc: props.globals.getNode("/systems/electrical/relay/ext-epc/contact-pos"),
+		dcTie1: props.globals.getNode("/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos"),
+		dcTie2: props.globals.getNode("/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos"),
+		glc1: props.globals.getNode("/systems/electrical/relay/gen-1-glc/contact-pos"),
+		glc2: props.globals.getNode("/systems/electrical/relay/gen-2-glc/contact-pos"),
+		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
+		tr2Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/contact-pos"),
 	},
 	SomeThing: {
-		emerGenSignal: props.globals.getNode("systems/electrical/some-electric-thingie/emer-gen-operate"),
+		emerGenSignal: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-gen-operate"),
+		galley: props.globals.getNode("/systems/electrical/some-electric-thingie/galley-shed"),
 	},
 	Source: {
+		APU: {
+			volts: props.globals.getNode("/systems/electrical/sources/apu/output-volt"),
+			hertz: props.globals.getNode("/systems/electrical/sources/apu/output-hertz"),
+			contact: props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos"),
+		},
 		Bat1: {
-			volt: props.globals.getNode("systems/electrical/sources/bat-1/volt"),
-			amps: props.globals.getNode("systems/electrical/sources/bat-1/amps"),
-			contact: props.globals.getNode("systems/electrical/sources/bat-1/contact"),
-			percent: props.globals.getNode("systems/electrical/sources/bat-1/percent"),
-			time: props.globals.getNode("systems/electrical/sources/bat-1/time"),
+			volt: props.globals.getNode("/systems/electrical/sources/bat-1/volt"),
+			amps: props.globals.getNode("/systems/electrical/sources/bat-1/amps"),
+			contact: props.globals.getNode("/systems/electrical/sources/bat-1/contact"),
+			percent: props.globals.getNode("/systems/electrical/sources/bat-1/percent"),
+			direction: props.globals.getNode("/systems/electrical/sources/bat-1/direction"),
+			time: props.globals.getNode("/systems/electrical/sources/bat-1/time"),
 		},
 		Bat2: {
-			volt: props.globals.getNode("systems/electrical/sources/bat-2/volt"),
-			amps: props.globals.getNode("systems/electrical/sources/bat-2/amps"),
-			contact: props.globals.getNode("systems/electrical/sources/bat-2/contact"),
-			percent: props.globals.getNode("systems/electrical/sources/bat-2/percent"),
-			time: props.globals.getNode("systems/electrical/sources/bat-2/time"),
+			volt: props.globals.getNode("/systems/electrical/sources/bat-2/volt"),
+			amps: props.globals.getNode("/systems/electrical/sources/bat-2/amps"),
+			contact: props.globals.getNode("/systems/electrical/sources/bat-2/contact"),
+			percent: props.globals.getNode("/systems/electrical/sources/bat-2/percent"),
+			direction: props.globals.getNode("/systems/electrical/sources/bat-2/direction"),
+			time: props.globals.getNode("/systems/electrical/sources/bat-2/time"),
+		},
+		EmerGen: {
+			volts: props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt"),
+			hertz: props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz"),
+		},
+		Ext: {
+			volts: props.globals.getNode("/systems/electrical/sources/ext/output-volt"),
+			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
+			hertz: props.globals.getNode("/systems/electrical/sources/ext/output-hertz"),
+		},
+		tr1: {
+			outputVolt: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output"),
+			outputAmp: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output-amp"),
+		},
+		tr2: {
+			outputVolt: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output"),
+			outputAmp: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output-amp"),
 		},
 		trEss: {
-			outputVolt: props.globals.getNode("systems/electrical/sources/tr-ess/output-volt"),
-			outputAmp: props.globals.getNode("systems/electrical/sources/tr-ess/output-amp"),
+			outputVolt: props.globals.getNode("/systems/electrical/sources/tr-ess/output-volt"),
+			outputAmp: props.globals.getNode("/systems/electrical/sources/tr-ess/output-amp"),
+			outputVoltRelay: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output"),
+			outputAmpRelay: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output-amp"),
 		},
 		IDG1: {
-			gcrRelay: props.globals.getNode("systems/electrical/sources/idg-1/gcr-relay"),
+			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-1/gcr-relay"),
+			hertz: props.globals.getNode("/systems/electrical/sources/idg-1/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/idg-1/output-volt"),
 		},
 		IDG2: {
-			gcrRelay: props.globals.getNode("systems/electrical/sources/idg-1/gcr-relay"),
+			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-2/gcr-relay"),
+			hertz: props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/idg-2/output-volt"),
 		},
 	},
 	Switch: {
@@ -162,7 +209,7 @@ var ELEC = {
 	loop: func() {
 		# Autopilot Disconnection routines
 		if (me.Bus.dcEssShed.getValue() < 25) {
-			if (getprop("it-autoflight/output/ap1") == 1 and !me._timer1On) {
+			if (fmgc.Output.ap1.getValue() and !me._timer1On) {
 				me._timer1On = 1;
 				settimer(func() {
 					if (me.Bus.dcEssShed.getValue() < 25) {
@@ -177,7 +224,7 @@ var ELEC = {
 		}
 		
 		if (me.Bus.dc2.getValue() < 25) {
-			if (getprop("it-autoflight/output/ap2") == 1 and !me._timer2On) {
+			if (fmgc.Output.ap2.getValue() and !me._timer2On) {
 				me._timer2On = 1;
 				settimer(func() {
 					if (me.Bus.dc2.getValue() < 25) {

@@ -794,7 +794,7 @@ var canvas_PFD_base = {
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 					}
-				} else if (getprop("/FMGC/internal/radio-no")) {
+				} else if (fmgc.FMGCInternal.radioNo) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
@@ -835,7 +835,7 @@ var canvas_PFD_base = {
 					me["FMA_dhn"].setText(sprintf("%.0f", getprop("/FMGC/internal/baro")));
 					me["FMA_dhn"].show();
 					me["FMA_nodh"].hide();
-				} else if (getprop("/FMGC/internal/radio-no")) {
+				} else if (fmgc.FMGCInternal.radioNo) {
 					me["FMA_dh"].setText("BARO");
 					me["FMA_dh"].show();
 					me["FMA_dhn"].setText("100");
@@ -1259,7 +1259,7 @@ var canvas_PFD_1 = {
 			
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
-					if (getprop("/FMGC/internal/vapp-speed-set")) {
+					if (fmgc.FMGCInternal.vappSpeedSet) {
 						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
 						vapp = fmgc.FMGCInternal.vapp;
@@ -1690,13 +1690,13 @@ var canvas_PFD_1 = {
 				me["ground"].hide();
 			}
 			
-			if (!getprop("/ECAM/alt-alert-flash") and !getprop("/ECAM/alt-alert-steady")) {
+			if (!ecam.altAlertFlash and !ecam.altAlertSteady) {
 				alt_going1 = 0;
 				amber_going1 = 0;
 				me["ALT_box_flash"].hide();
 				me["ALT_box_amber"].hide();
 			} else {
-				if (getprop("/ECAM/alt-alert-flash")) {
+				if (ecam.altAlertFlash) {
 					if (alt_going1 == 1) {
 						me["ALT_box_flash"].hide(); 
 						altTimer1.stop();
@@ -1714,7 +1714,7 @@ var canvas_PFD_1 = {
 					} else {
 						me["ALT_box_amber"].show(); 
 					}
-				} elsif (getprop("/ECAM/alt-alert-steady")) {
+				} elsif (ecam.altAlertSteady) {
 					if (amber_going1 == 1) {
 						me["ALT_box"].show();
 						me["ALT_box_amber"].hide();
@@ -1997,7 +1997,7 @@ var canvas_PFD_2 = {
 				
 			if (managed_spd.getValue() == 1) {
 				if (getprop("/FMGC/internal/decel") == 1) {
-					if (getprop("/FMGC/internal/vapp-speed-set")) {
+					if (fmgc.FMGCInternal.vappSpeedSet) {
 						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
 						vapp = fmgc.FMGCInternal.vapp;
@@ -2428,13 +2428,13 @@ var canvas_PFD_2 = {
 				me["ground"].hide();
 			}
 			
-			if (!getprop("/ECAM/alt-alert-flash") and !getprop("/ECAM/alt-alert-steady")) {
+			if (!ecam.altAlertFlash and !ecam.altAlertSteady) {
 				alt_going2 = 0;
 				amber_going2 = 0;
 				me["ALT_box_flash"].hide();
 				me["ALT_box_amber"].hide();
 			} else {
-				if (getprop("/ECAM/alt-alert-flash")) {
+				if (ecam.altAlertFlash) {
 					if (alt_going2 == 1) {
 						me["ALT_box_flash"].hide(); 
 						altTimer2.stop();
@@ -2452,7 +2452,7 @@ var canvas_PFD_2 = {
 					} else {
 						me["ALT_box_amber"].hide(); 
 					}
-				} elsif (getprop("/ECAM/alt-alert-steady")) {
+				} elsif (ecam.altAlertSteady) {
 					if (amber_going2 == 1) {
 						me["ALT_box"].show();
 						me["ALT_box_amber"].hide();

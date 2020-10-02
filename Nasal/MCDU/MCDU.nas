@@ -149,14 +149,14 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
 	
-	setprop("FMGC/internal/accel-agl-ft", "1500"); #eventually set to 1500 above runway
+	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("FMGC/internal/to-flap", 0);
-	setprop("FMGC/internal/to-ths", "0.0");
-	setprop("FMGC/internal/flap-ths-set", 0);
-	setprop("FMGC/internal/flex", 0);
-	setprop("FMGC/internal/flex-set", 0);
-	setprop("FMGC/internal/eng-out-reduc", "1500");
+	setprop("/FMGC/internal/to-flap", 0);
+	setprop("/FMGC/internal/to-ths", "0.0");
+	setprop("/FMGC/internal/flap-ths-set", 0);
+	setprop("/FMGC/internal/flex", 0);
+	setprop("/FMGC/internal/flex-set", 0);
+	setprop("/FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
 	fmgc.FMGCInternal.transAlt = 18000;
 	
@@ -175,14 +175,14 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.destMagSet = 0;
 	fmgc.FMGCInternal.destWind = 0;
 	fmgc.FMGCInternal.destWindSet = 0;
-	setprop("/FMGC/internal/vapp-speed-set", 0);
+	fmgc.FMGCInternal.vappSpeedSet = 0;
 	setprop("/FMGC/internal/final", "");
 	setprop("/FMGC/internal/baro", 99999);
 	setprop("/FMGC/internal/radio", 99999);
-	setprop("/FMGC/internal/radio-no", 0);
+	fmgc.FMGCInternal.radioNo = 0;
 	setprop("/FMGC/internal/ldg-elev", 0);
-	setprop("/FMGC/internal/ldg-config-3-set", 0);
-	setprop("/FMGC/internal/ldg-config-f-set", 1);
+	fmgc.FMGCInternal.ldgConfig3 = 0;
+	fmgc.FMGCInternal.ldgConfigFull = 1;
 	
 	# GA PERF
 }

@@ -1027,12 +1027,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 
 # For Canvas Nav Display.
 setlistener("/it-autoflight/input/hdg", func {
-	setprop("autopilot/settings/heading-bug-deg", getprop("it-autoflight/input/hdg"));
-});
+	setprop("/autopilot/settings/heading-bug-deg", Input.hdg.getValue());
+}, 0, 0);
 
 setlistener("/it-autoflight/internal/alt", func {
-	setprop("autopilot/settings/target-altitude-ft", getprop("it-autoflight/internal/alt"));
-});
+	setprop("/autopilot/settings/target-altitude-ft", Internal.alt.getValue());
+}, 0, 0);
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);
 var slowLoopTimer = maketimer(1, ITAF, ITAF.slowLoop);
