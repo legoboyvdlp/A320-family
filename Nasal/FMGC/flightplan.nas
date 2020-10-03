@@ -52,6 +52,8 @@ var flightPlanController = {
 	fromWptAlt: nil,
 	_timeTemp: nil,
 	_altTemp: nil,
+	tocPoint: nil,
+	todPoint: nil,
 	
 	init: func() {
 		me.resetFlightplan(2);
@@ -292,6 +294,16 @@ var flightPlanController = {
 	insertPPOS: func(n, index = 0) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "PPOS"), index);
 		fmgc.windController.insertWind(n, index, 0, "PPOS");
+	},
+	
+	insertTOC: func(n, pos, index) {
+		me.flightplans[n].insertWP(createWP(pos, "(T/C)"), index);
+		fmgc.windController.insertWind(n, index, 0, "(T/C)");
+	},
+	
+	insertTOD: func(n, pos, index) {
+		me.flightplans[n].insertWP(createWP(pos, "(T/D)"), index);
+		fmgc.windController.insertWind(n, index, 0, "(T/D)");
 	},
 	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
