@@ -108,6 +108,9 @@ setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
 setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 
+var blockCalculating = props.globals.initNode("/FMGC/internal/block-calculating", 0, "BOOL");
+var fuelCalculating = props.globals.initNode("/FMGC/internal/fuel-calculating", 0, "BOOL");
+
 var FMGCinit = func {
 	FMGCInternal.takeoffState = 0;
 	FMGCInternal.minspeed = 0;
@@ -1291,6 +1294,7 @@ var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
 		#updateFuel();
 		fmgc.FMGCInternal.blockCalculating = 0;
+		fmgc.blockCalculating.setValue(0);
 		setprop("/FMGC/internal/block-fuel-time", -99); 
 		timer3blockFuel.stop();
 	}
@@ -1300,6 +1304,7 @@ var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
 		#updateFuel();
 		fmgc.FMGCInternal.fuelCalculating = 0;
+		fmgc.fuelCalculating.setValue(0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
 		timer5fuelPred.stop();
 	}

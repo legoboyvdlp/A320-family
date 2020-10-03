@@ -2262,7 +2262,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_Title"].setColor(1, 1, 1);
 			
-			if (!getprop("/FMGC/internal/fuel-request-set")) {
+			if (!fmgc.FMGCInternal.fuelRequest) {
 				me["Simple_L2"].setText("---.-/----");
 				me["Simple_L3"].setText("---.-");
 				me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
@@ -2305,7 +2305,7 @@ var canvas_MCDU_base = {
 			
 				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
 				
-				if (getprop("/FMGC/internal/block-calculating")) {
+				if (fmgc.FMGCInternal.blockCalculating) {
 					me["Simple_L2"].setText("---.-/----");
 					me["Simple_L3"].setText("---.-");
 					me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
@@ -2331,7 +2331,7 @@ var canvas_MCDU_base = {
 					me.colorRight("ack", "wht", "grn", "wht", "ack", "wht");
 					me["Simple_R3S"].setColor(GREEN);
 				} else {
-					if (!getprop("/FMGC/internal/block-confirmed")) {
+					if (!fmgc.FMGCInternal.blockConfirmed) {
 						me["Simple_L2"].setText("---.-/----");
 						me["Simple_L3"].setText("---.-");
 						me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
@@ -2362,7 +2362,7 @@ var canvas_MCDU_base = {
 						me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
 						me["Simple_R3S"].setColor(AMBER);
 					} else {
-						if (getprop("/FMGC/internal/fuel-calculating")) {
+						if (fmgc.FMGCInternal.fuelCalculating) {
 							me["Simple_L2"].setText("---.-/----");
 							me["Simple_L3"].setText("---.-");
 							if (fmgc.FMGCInternal.rteRsvSet) {
@@ -2658,7 +2658,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (!getprop("/FMGC/internal/fuel-request-set") or !getprop("/FMGC/internal/block-confirmed") or getprop("/FMGC/internal/fuel-calculating")) {
+			if (!fmgc.FMGCInternal.fuelRequest or !fmgc.FMGCInternal.blockConfirmed or fmgc.FMGCInternal.fuelCalculating) {
 				me["Simple_L3"].setText("---.-");
 				if (fmgc.FMGCInternal.rteRsvSet) {
 					me["Simple_C3B"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));

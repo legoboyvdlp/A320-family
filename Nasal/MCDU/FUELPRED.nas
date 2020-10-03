@@ -12,6 +12,7 @@ var fuelPredInput = func(key, i) {
 			fmgc.FMGCInternal.rtePercent = 5.0;
 			fmgc.FMGCInternal.rtePercentSet = 0;
 			fmgc.FMGCInternal.fuelCalculating = 1;
+			fmgc.fuelCalculating.setValue(1);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (fmgc.FMGCInternal.tripFuel != 0) {
 			var tf = num(scratchpad);
@@ -24,6 +25,7 @@ var fuelPredInput = func(key, i) {
 					fmgc.FMGCInternal.rtePercent = perc;
 					fmgc.FMGCInternal.rtePercentSet = 1;
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			} else if (tfs >= 1 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 21.7) {
@@ -36,6 +38,7 @@ var fuelPredInput = func(key, i) {
 					}
 					fmgc.FMGCInternal.rtePercentSet = 0;
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 					mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -49,6 +52,7 @@ var fuelPredInput = func(key, i) {
 			fmgc.FMGCInternal.altTime = "0000";
 			fmgc.FMGCInternal.altFuelSet = 0;
 			fmgc.FMGCInternal.fuelCalculating = 1;
+			fmgc.fuelCalculating.setValue(1);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
@@ -58,6 +62,7 @@ var fuelPredInput = func(key, i) {
 				fmgc.FMGCInternal.altTime = "0000";
 				fmgc.FMGCInternal.altFuelSet = 1;
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -72,6 +77,7 @@ var fuelPredInput = func(key, i) {
 			fmgc.FMGCInternal.finalFuelSet = 0;
 			fmgc.FMGCInternal.finalTimeSet = 0;
 			fmgc.FMGCInternal.fuelCalculating = 1;
+			fmgc.fuelCalculating.setValue(1);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
@@ -80,6 +86,7 @@ var fuelPredInput = func(key, i) {
 				fmgc.FMGCInternal.finalFuel = tf;
 				fmgc.FMGCInternal.finalFuelSet = 1;
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -91,6 +98,7 @@ var fuelPredInput = func(key, i) {
 				fmgc.FMGCInternal.finalTime = scratchpad;
 				fmgc.FMGCInternal.finalTimeSet = 1;
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -101,6 +109,7 @@ var fuelPredInput = func(key, i) {
 			fmgc.FMGCInternal.minDestFob = 0;
 			fmgc.FMGCInternal.minDestFobSet = 0;
 			fmgc.FMGCInternal.fuelCalculating = 1;
+			fmgc.fuelCalculating.setValue(1);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
@@ -109,6 +118,7 @@ var fuelPredInput = func(key, i) {
 				fmgc.FMGCInternal.minDestFob = tf;
 				fmgc.FMGCInternal.minDestFobSet = 1;
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.minDestFob < fmgc.FMGCInternal.finalFuel + fmgc.FMGCInternal.altFuel) {
 					mcdu_message(i, "CHECK MIN DEST FOB");
@@ -135,10 +145,13 @@ var fuelPredInput = func(key, i) {
 					fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 					fmgc.FMGCInternal.fuelRequest = 1;
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 					fmgc.FMGCInternal.blockCalculating = 0;
+					fmgc.blockCalculating.setValue(0);
 					fmgc.FMGCInternal.blockConfirmed = 1;
 				} else if (fmgc.FMGCInternal.blockConfirmed) {
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				} 
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else if (find("/", scratchpad) != -1) {
@@ -159,10 +172,13 @@ var fuelPredInput = func(key, i) {
 							fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 							fmgc.FMGCInternal.fuelRequest = 1;
 							fmgc.FMGCInternal.fuelCalculating = 1;
+							fmgc.fuelCalculating.setValue(1);
 							fmgc.FMGCInternal.blockCalculating = 0;
+							fmgc.blockCalculating.setValue(0);
 							fmgc.FMGCInternal.blockConfirmed = 1;
 						} else if (fmgc.FMGCInternal.blockConfirmed) {
 							fmgc.FMGCInternal.fuelCalculating = 1;
+							fmgc.fuelCalculating.setValue(1);
 						} 
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
@@ -189,10 +205,13 @@ var fuelPredInput = func(key, i) {
 						fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 						fmgc.FMGCInternal.fuelRequest = 1;
 						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
 						fmgc.FMGCInternal.blockCalculating = 0;
+						fmgc.blockCalculating.setValue(0);
 						fmgc.FMGCInternal.blockConfirmed = 1;
 					} else if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {

@@ -127,8 +127,10 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.extraTime = "0000";
 	fmgc.FMGCInternal.fuelRequest = 0;
 	fmgc.FMGCInternal.blockCalculating = 0;
+	fmgc.blockCalculating.setValue(0);
 	fmgc.FMGCInternal.blockConfirmed = 0;
 	fmgc.FMGCInternal.fuelCalculating = 0;
+	fmgc.fuelCalculating.setValue(0);
 	
 	# FUELPRED
 	fmgc.FMGCInternal.priUtc = "0000";

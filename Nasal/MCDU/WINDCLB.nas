@@ -180,7 +180,9 @@ var windCLBPage = {
 				# push update to fuel
 				if (fmgc.FMGCInternal.blockConfirmed) {
 					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();
@@ -318,7 +320,9 @@ var windCLBPage = {
 				# push update to fuel
 				if (fmgc.FMGCInternal.blockConfirmed) {
 					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();

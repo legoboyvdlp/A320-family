@@ -438,7 +438,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				# push update to fuel
 				if (fmgc.FMGCInternal.blockConfirmed) {
 					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			} else {
 				if (canvas_mcdu.myLatRev[me.computer] != nil) {
@@ -479,7 +481,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				# push update to fuel
 				if (fmgc.FMGCInternal.blockConfirmed) {
 					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
 					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");

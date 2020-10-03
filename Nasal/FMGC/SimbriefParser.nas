@@ -175,7 +175,9 @@ var SimbriefParser = {
 		fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
 		fmgc.FMGCInternal.fuelRequest = 1;
 		fmgc.FMGCInternal.fuelCalculating = 1;
+		fmgc.fuelCalculating.setValue(1);
 		fmgc.FMGCInternal.blockCalculating = 0;
+		fmgc.blockCalculating.setValue(0);
 		fmgc.FMGCInternal.blockConfirmed = 1;
 		
 	},

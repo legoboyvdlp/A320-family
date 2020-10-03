@@ -12,7 +12,9 @@ var initInputA = func(key, i) {
 			fmgc.windController.updatePlans();
 			if (fmgc.FMGCInternal.blockConfirmed) {
 				fmgc.FMGCInternal.fuelCalculating = 0;
+				fmgc.fuelCalculating.setValue(0);
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 			fmgc.updateARPT();
@@ -28,7 +30,9 @@ var initInputA = func(key, i) {
 					fmgc.windController.updatePlans();
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.fuelCalculating.setValue(0);
 						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
@@ -92,7 +96,9 @@ var initInputA = func(key, i) {
 			fmgc.FMGCInternal.crzTempSet = 0;
 			if (fmgc.FMGCInternal.blockConfirmed) {
 				fmgc.FMGCInternal.fuelCalculating = 0;
+				fmgc.fuelCalculating.setValue(0);
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 			}
 			mcdu_scratchpad.scratchpads[i].empty();	
 		} else if (find("/", scratchpad) != -1) {
@@ -112,7 +118,9 @@ var initInputA = func(key, i) {
 					fmgc.FMGCInternal.crzTempSet = 1;
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.fuelCalculating.setValue(0);
 						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
@@ -131,7 +139,9 @@ var initInputA = func(key, i) {
 					fmgc.FMGCInternal.crzProg = crz;
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.fuelCalculating.setValue(0);
 						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
@@ -159,7 +169,9 @@ var initInputA = func(key, i) {
 					fmgc.FMGCInternal.crzProg = crz;
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.fuelCalculating.setValue(0);
 						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
@@ -182,7 +194,9 @@ var initInputA = func(key, i) {
 			setprop("/FMGC/internal/align-ref-long-edit", 0);
 			if (fmgc.FMGCInternal.blockConfirmed) {
 				fmgc.FMGCInternal.fuelCalculating = 0;
+				fmgc.fuelCalculating.setValue(0);
 				fmgc.FMGCInternal.fuelCalculating = 1;
+				fmgc.fuelCalculating.setValue(1);
 			}
 			fmgc.flightPlanController.reset(2);
 			fmgc.flightPlanController.init();
