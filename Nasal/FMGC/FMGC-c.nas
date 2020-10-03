@@ -17,7 +17,6 @@ var flx = nil;
 var gear1 = nil;
 var gear2 = nil;
 var gs_defl = nil;
-var lat = nil;
 var latText = nil;
 var MCPalt = nil;
 var nav_defl = nil;
