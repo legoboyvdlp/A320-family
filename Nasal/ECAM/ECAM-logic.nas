@@ -2097,7 +2097,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/to-memo-reset", 0);
 	}
 	
-	if ((phaseVarMemo == 2 and getprop("/ECAM/engine-start-time") != 0 and getprop("/ECAM/engine-start-time") + 120 < getprop("/sim/time/elapsed-sec")) or getprop("/ECAM/to-memo-flipflop")) {
+	if ((phaseVarMemo == 2 and getprop("/ECAM/engine-start-time") != 0 and getprop("/ECAM/engine-start-time") + 120 < pts.Sim.Time.elapsedSec.getValue()) or getprop("/ECAM/to-memo-flipflop")) {
 		toMemoLine1.active = 1;
 		toMemoLine2.active = 1;
 		toMemoLine3.active = 1;

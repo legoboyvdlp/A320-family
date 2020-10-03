@@ -148,6 +148,10 @@ var Instrumentation = {
 			pnlModeNum: [props.globals.initNode("/instrumentation/efis[0]/mfd/pnl_mode-num", 2, "INT"), props.globals.initNode("/instrumentation/efis[1]/mfd/pnl_mode-num", 2, "INT")],
 		},
 	},
+	Nav: {
+		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
+		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
+	},
 	TCAS: {
 		Inputs: {
 			mode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
