@@ -59,12 +59,12 @@ var SimbriefParser = {
 		fmgc.FMGCInternal.crzTemp = (((me.store1.getChild("initial_altitude").getValue() / 1000) * -2) + 15) + me.store1.getChild("avg_temp_dev").getValue();
 		fmgc.FMGCInternal.crzTempSet = 1;
 		fmgc.FMGCInternal.crzProg = me.store1.getChild("initial_altitude").getValue() / 100;
-		if (me.store1.getChild("avg_wind_comp").getValue() >= 0) {
-			fmgc.FMGCInternal.tripWind = "TL" ~ me.store1.getChild("avg_wind_comp").getValue();
+		if (num(me.store1.getChild("avg_wind_comp").getValue()) >= 0) {
+			fmgc.FMGCInternal.tripWind = "TL" ~ abs(me.store1.getChild("avg_wind_comp").getValue());
 		} else {
-			fmgc.FMGCInternal.tripWind = "HD" ~ me.store1.getChild("avg_wind_comp").getValue();
+			fmgc.FMGCInternal.tripWind = "HD" ~ abs(me.store1.getChild("avg_wind_comp").getValue());
 		}
-		fmgc.FMGCInternal.tripWindValue = me.store1.getChild("avg_wind_comp").getValue();
+		fmgc.FMGCInternal.tripWindValue = abs(me.store1.getChild("avg_wind_comp").getValue());
 		
 		fmgc.FMGCInternal.altAirport = me.store2.getChild("icao_code").getValue();
 		fmgc.FMGCInternal.altAirportSet = 1;
