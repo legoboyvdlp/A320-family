@@ -16,6 +16,9 @@ var fuelPredInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (fmgc.FMGCInternal.tripFuel != 0) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 2 and tfs <= 5 and find("/", scratchpad) == 0) {
 				var perc = num(split("/", scratchpad)[1]);
@@ -56,6 +59,9 @@ var fuelPredInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 10.0) {
 				fmgc.FMGCInternal.altFuel = tf;
@@ -81,6 +87,9 @@ var fuelPredInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 10.0) {
 				fmgc.FMGCInternal.finalFuel = tf;
@@ -93,6 +102,9 @@ var fuelPredInput = func(key, i) {
 			}
 		} else {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs == 4 and tf != nil and ((tf >= 0 and tf <= 59) or (tf >= 100 and tf <= 130))) {
 				fmgc.FMGCInternal.finalTime = scratchpad;
@@ -113,6 +125,9 @@ var fuelPredInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 5 and tf != nil and tf >= 0 and tf <= 80.0) {
 				fmgc.FMGCInternal.minDestFob = tf;
@@ -155,6 +170,9 @@ var fuelPredInput = func(key, i) {
 				} 
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else if (find("/", scratchpad) != -1) {
+				if (acconfig_weight_kgs.getValue() == 1) {
+					scratchpad = scratchpad / LBS2KGS;
+				}
 				var zfwi = split("/", scratchpad);
 				var zfw = num(zfwi[0]);
 				var zfwcg = num(zfwi[1]);
@@ -196,6 +214,9 @@ var fuelPredInput = func(key, i) {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (num(scratchpad) != nil and size(scratchpad) > 0 and size(scratchpad) <= 5 and (find(".", scratchpad) == -1 or size(split(".", scratchpad)[1]) <= 1)) {
+				if (acconfig_weight_kgs.getValue() == 1) {
+					scratchpad = scratchpad / LBS2KGS;
+				}
 				if (scratchpad >= zfw_min and scratchpad <= zfw_max) {
 					fmgc.FMGCInternal.zfw = scratchpad;
 					fmgc.FMGCInternal.zfwSet = 1;

@@ -2,6 +2,10 @@
 
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
+# Conversion factor pounds to kilogram
+var LBS2KGS = 0.4535924;
+
 var initInputB = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1" and !fmgc.FMGCInternal.fuelCalculating) {
@@ -16,8 +20,11 @@ var initInputB = func(key, i) {
 				fmgc.blockCalculating.setValue(1);
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
-		} else {
+		} else {	
 			var tfs = size(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				scratchpad = scratchpad / LBS2KGS;
+			}
 			if (tfs >= 1 and tfs <= 4) {
 				if (num(scratchpad) != nil and scratchpad >= 0.0 and scratchpad <= 9.9) {
 					fmgc.FMGCInternal.taxiFuel = scratchpad;
@@ -48,6 +55,9 @@ var initInputB = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (fmgc.FMGCInternal.tripFuel != 0) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 2 and tfs <= 5 and find("/", scratchpad) == 0) {
 				var perc = num(split("/", scratchpad)[1]);
@@ -88,6 +98,9 @@ var initInputB = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 10.0) {
 				fmgc.FMGCInternal.altFuel = tf;
@@ -113,6 +126,9 @@ var initInputB = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 4 and tf != nil and tf >= 0 and tf <= 10.0) {
 				fmgc.FMGCInternal.finalFuel = tf;
@@ -145,6 +161,9 @@ var initInputB = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (find(".", scratchpad) != -1) {
 			var tf = num(scratchpad);
+			if (acconfig_weight_kgs.getValue() == 1) {
+				tf = tf / LBS2KGS;
+			}
 			var tfs = size(scratchpad);
 			if (tfs >= 3 and tfs <= 5 and tf != nil and tf >= 0 and tf <= 80.0) {
 				fmgc.FMGCInternal.minDestFob = tf;
@@ -167,6 +186,7 @@ var initInputB = func(key, i) {
 		} else {
 			var zfw_min = 80.6; #make based on performance
 			var zfw_max = 134.5; #61,000 kg, make based on performance
+
 			if (size(scratchpad) == 0) {
 				var zfw = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue();
 				fmgc.FMGCInternal.zfw = sprintf("%3.1f", math.round(zfw / 1000, 0.1));
@@ -188,6 +208,9 @@ var initInputB = func(key, i) {
 				}
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else if (find("/", scratchpad) != -1) {
+				if (acconfig_weight_kgs.getValue() == 1) {
+					scratchpad = scratchpad / LBS2KGS;
+				}
 				var zfwi = split("/", scratchpad);
 				var zfw = num(zfwi[0]);
 				var zfwcg = num(zfwi[1]);
@@ -230,6 +253,9 @@ var initInputB = func(key, i) {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (num(scratchpad) != nil and size(scratchpad) > 0 and size(scratchpad) <= 5 and (find(".", scratchpad) == -1 or size(split(".", scratchpad)[1]) <= 1)) {
+				if (acconfig_weight_kgs.getValue() == 1) {
+					scratchpad = scratchpad / LBS2KGS;
+				}
 				if (scratchpad >= zfw_min and scratchpad <= zfw_max) {
 					fmgc.FMGCInternal.zfw = scratchpad;
 					fmgc.FMGCInternal.zfwSet = 1;
@@ -314,6 +340,10 @@ var initInputB = func(key, i) {
 					fmgc.FMGCInternal.blockConfirmed = 1;
 				}
 			} else if (tfs >= 1 and tfs <= 5) {
+				if (acconfig_weight_kgs.getValue() == 1) {
+					scratchpad = scratchpad / LBS2KGS;
+				}
+
 				if (num(scratchpad) != nil and scratchpad >= 1.0 and scratchpad <= maxblock) {
 					fmgc.FMGCInternal.block = scratchpad;
 					fmgc.FMGCInternal.blockSet = 1;
