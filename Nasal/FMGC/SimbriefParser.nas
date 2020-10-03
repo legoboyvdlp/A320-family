@@ -173,10 +173,10 @@ var SimbriefParser = {
 		fmgc.FMGCInternal.zfw = me.store2.getChild("est_zfw").getValue() / 1000;
 		fmgc.FMGCInternal.zfwSet = 1;
 		fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
-		setprop("/FMGC/internal/fuel-request-set", 1);
-		setprop("/FMGC/internal/fuel-calculating", 1);
-		setprop("/FMGC/internal/block-calculating", 0);
-		setprop("/FMGC/internal/block-confirmed", 1);
+		fmgc.FMGCInternal.fuelRequest = 1;
+		fmgc.FMGCInternal.fuelCalculating = 1;
+		fmgc.FMGCInternal.blockCalculating = 0;
+		fmgc.FMGCInternal.blockConfirmed = 1;
 		
 	},
 };

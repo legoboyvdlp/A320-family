@@ -10,9 +10,9 @@ var initInputA = func(key, i) {
 			fmgc.FMGCInternal.altAirport = "";
 			fmgc.FMGCInternal.altAirportSet = 0;
 			fmgc.windController.updatePlans();
-			if (getprop("/FMGC/internal/block-confirmed")) {
-				setprop("/FMGC/internal/fuel-calculating", 0);
-				setprop("/FMGC/internal/fuel-calculating", 1);
+			if (fmgc.FMGCInternal.blockConfirmed) {
+				fmgc.FMGCInternal.fuelCalculating = 0;
+				fmgc.FMGCInternal.fuelCalculating = 1;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 			fmgc.updateARPT();
@@ -26,9 +26,9 @@ var initInputA = func(key, i) {
 					fmgc.FMGCInternal.altAirport = scratchpad;
 					fmgc.FMGCInternal.altAirportSet = 1;
 					fmgc.windController.updatePlans();
-					if (getprop("/FMGC/internal/block-confirmed")) {
-						setprop("/FMGC/internal/fuel-calculating", 0);
-						setprop("/FMGC/internal/fuel-calculating", 1);
+					if (fmgc.FMGCInternal.blockConfirmed) {
+						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.FMGCInternal.fuelCalculating = 1;
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
@@ -90,9 +90,9 @@ var initInputA = func(key, i) {
 			updateCrzLvlCallback();
 			fmgc.FMGCInternal.crzTemp = 15;
 			fmgc.FMGCInternal.crzTempSet = 0;
-			if (getprop("/FMGC/internal/block-confirmed")) {
-				setprop("/FMGC/internal/fuel-calculating", 0);
-				setprop("/FMGC/internal/fuel-calculating", 1);
+			if (fmgc.FMGCInternal.blockConfirmed) {
+				fmgc.FMGCInternal.fuelCalculating = 0;
+				fmgc.FMGCInternal.fuelCalculating = 1;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();	
 		} else if (find("/", scratchpad) != -1) {
@@ -110,9 +110,9 @@ var initInputA = func(key, i) {
 				if (temp >= -99 and temp <= 99) {
 					fmgc.FMGCInternal.crzTemp = temp;
 					fmgc.FMGCInternal.crzTempSet = 1;
-					if (getprop("/FMGC/internal/block-confirmed")) {
-						setprop("/FMGC/internal/fuel-calculating", 0);
-						setprop("/FMGC/internal/fuel-calculating", 1);
+					if (fmgc.FMGCInternal.blockConfirmed) {
+						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.FMGCInternal.fuelCalculating = 1;
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
@@ -129,9 +129,9 @@ var initInputA = func(key, i) {
 					fmgc.FMGCInternal.crzTemp = temp;
 					fmgc.FMGCInternal.crzTempSet = 1;
 					fmgc.FMGCInternal.crzProg = crz;
-					if (getprop("/FMGC/internal/block-confirmed")) {
-						setprop("/FMGC/internal/fuel-calculating", 0);
-						setprop("/FMGC/internal/fuel-calculating", 1);
+					if (fmgc.FMGCInternal.blockConfirmed) {
+						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.FMGCInternal.fuelCalculating = 1;
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
@@ -157,9 +157,9 @@ var initInputA = func(key, i) {
 					fmgc.FMGCInternal.crzSet = 1;
 					updateCrzLvlCallback();
 					fmgc.FMGCInternal.crzProg = crz;
-					if (getprop("/FMGC/internal/block-confirmed")) {
-						setprop("/FMGC/internal/fuel-calculating", 0);
-						setprop("/FMGC/internal/fuel-calculating", 1);
+					if (fmgc.FMGCInternal.blockConfirmed) {
+						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.FMGCInternal.fuelCalculating = 1;
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
@@ -180,9 +180,9 @@ var initInputA = func(key, i) {
 			setprop("/FMGC/internal/align-ref-long", 0);
 			setprop("/FMGC/internal/align-ref-lat-edit", 0);
 			setprop("/FMGC/internal/align-ref-long-edit", 0);
-			if (getprop("/FMGC/internal/block-confirmed")) {
-				setprop("/FMGC/internal/fuel-calculating", 0);
-				setprop("/FMGC/internal/fuel-calculating", 1);
+			if (fmgc.FMGCInternal.blockConfirmed) {
+				fmgc.FMGCInternal.fuelCalculating = 0;
+				fmgc.FMGCInternal.fuelCalculating = 1;
 			}
 			fmgc.flightPlanController.reset(2);
 			fmgc.flightPlanController.init();
@@ -224,7 +224,7 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R2") {
-		if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
+		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
 			if (!ecam.vhf3_voice.active) {
 				if (atsu.ATSU.working) {
 					if (getprop("/FMGC/simbrief-username") == "") {

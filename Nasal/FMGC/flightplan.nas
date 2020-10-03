@@ -758,9 +758,9 @@ var flightPlanController = {
 		fmgc.windController.updatePlans();
 			
 		# push update to fuel
-		if (getprop("/FMGC/internal/block-confirmed")) {
-			setprop("/FMGC/internal/fuel-calculating", 0);
-			setprop("/FMGC/internal/fuel-calculating", 1);
+		if (fmgc.FMGCInternal.blockConfirmed) {
+			fmgc.FMGCInternal.fuelCalculating = 0;
+			fmgc.FMGCInternal.fuelCalculating = 1;
 		}
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},

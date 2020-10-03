@@ -148,6 +148,13 @@ var Instrumentation = {
 			pnlModeNum: [props.globals.initNode("/instrumentation/efis[0]/mfd/pnl_mode-num", 2, "INT"), props.globals.initNode("/instrumentation/efis[1]/mfd/pnl_mode-num", 2, "INT")],
 		},
 	},
+	MKVII: {
+		Inputs: {
+			Discretes: {
+				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override"),
+			},
+		},
+	},
 	Nav: {
 		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),

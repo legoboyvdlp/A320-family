@@ -2268,7 +2268,7 @@ var messages_memo = func {
 		outr_tk_fuel_xfrd.active = 0;
 	}
 
-	if (getprop("/consumables/fuel/total-fuel-lbs") < 6000 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # assuming US short ton 2000lb
+	if (pts.Consumables.Fuel.totalFuelLbs.getValue() < 6000 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # assuming US short ton 2000lb
 		fob_3T.active = 1;
 	} else {
 		fob_3T.active = 0;

@@ -221,6 +221,10 @@ var FMGCInternal = {
 	zfwcgSet: 0,
 	block: 0.0,
 	blockSet: 0,
+	blockCalculating: 0,
+	blockConfirmed: 0,
+	fuelCalculating: 0,
+	fuelRequest: 0,
 	taxiFuel: 0.4,
 	taxiFuelSet: 0,
 	tripFuel: 0,
@@ -281,8 +285,8 @@ setlistener("/gear/gear[0]/wow", func {
 }, 0, 0);
 
 var trimReset = func {
-	flaps = getprop("/controls/flight/flaps-pos");
-	if (pts.Gear.wow[0].getBoolValue() and !FMGCInternal.takeoffState and (flaps >= 5 or (flaps >= 4 and getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override") == 1))) {
+	flaps = pts.Controls.Flight.flapsPos.getValue();
+	if (pts.Gear.wow[0].getBoolValue() and !FMGCInternal.takeoffState and (flaps >= 5 or (flaps >= 4 and pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue() == 1))) {
 		interpolate("/controls/flight/elevator-trim", 0.0, 1.5);
 	}
 }
@@ -486,16 +490,16 @@ var updateFuel = func {
 	}
 	
 	# Misc fuel claclulations
-	if (getprop("/FMGC/internal/block-calculating")) {
+	if (fmgc.FMGCInternal.blockCalculating) {
 		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
 		FMGCInternal.blockSet = 1;
 	}
-	fmgc.FMGCInternal.fob = num(getprop("/consumables/fuel/total-fuel-lbs") / 1000);
-	fmgc.FMGCInternal.fuelPredGw = num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000);
+	fmgc.FMGCInternal.fob = num(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000);
+	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000);
 	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
 	
 	# Calcualte extra fuel
-	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
+	if (num(pts.Engines.Engine.n1Actual[0].getValue()) > 0 or num(pts.Engines.Engine.n1Actual[1].getValue()) > 0) {
 		extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
 	} else {
 		extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
@@ -614,8 +618,8 @@ var radios = maketimer(1, func() {
 });
 
 var masterFMGC = maketimer(0.2, func {
-	n1_left = getprop("/engines/engine[0]/n1-actual");
-	n1_right = getprop("/engines/engine[1]/n1-actual");
+	n1_left = pts.Engines.Engine.n1Actual[0].getValue();
+	n1_right = pts.Engines.Engine.n1Actual[1].getValue();
 	flaps = getprop("/controls/flight/flaps-pos");
 	modelat = getprop("/modes/pfd/fma/roll-mode");
 	mode = getprop("/modes/pfd/fma/pitch-mode");
@@ -761,7 +765,7 @@ var masterFMGC = maketimer(0.2, func {
 	# calculate speeds
 	############################
 	flap = getprop("/controls/flight/flaps-pos");
-	weight_lbs = getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000;
+	weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	
 	# current speeds
@@ -1286,7 +1290,7 @@ var timer48gpsAlign3 = maketimer(1, func() {
 var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
 		#updateFuel();
-		setprop("/FMGC/internal/block-calculating", 0);
+		fmgc.FMGCInternal.blockCalculating = 0;
 		setprop("/FMGC/internal/block-fuel-time", -99); 
 		timer3blockFuel.stop();
 	}
@@ -1295,7 +1299,7 @@ var timer3blockFuel = maketimer(1, func() {
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
 		#updateFuel();
-		setprop("/FMGC/internal/fuel-calculating", 0);
+		fmgc.FMGCInternal.fuelCalculating = 0;
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
 		timer5fuelPred.stop();
 	}
