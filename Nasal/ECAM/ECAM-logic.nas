@@ -808,13 +808,13 @@ var messages_priority_3 = func {
 	
 	if (FWC.Timer.gnd.getValue() != 1 and (FWC.Monostable.altAlert1Output.getValue() or bigThree)) {
 		if (!getprop("/sim/sound/warnings/cchord-inhibit")) {
-			setprop("sim/sound/warnings/cchord", 1);
+			setprop("/sim/sound/warnings/cchord", 1);
 		} else {
-			setprop("sim/sound/warnings/cchord", 0);
+			setprop("/sim/sound/warnings/cchord", 0);
 		}
 	} else {
-		setprop("sim/sound/warnings/cchord", 0);
-		setprop("sim/sound/warnings/cchord-inhibit", 0);
+		setprop("/sim/sound/warnings/cchord", 0);
+		setprop("/sim/sound/warnings/cchord-inhibit", 0);
 	}
 	
 	if (FWC.Timer.gnd.getValue() != 1 and getprop("/ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {

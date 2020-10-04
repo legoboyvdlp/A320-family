@@ -120,7 +120,7 @@ var PitotIcing = [props.globals.getNode("/systems/pitot[0]/icing"),props.globals
 var PitotServicable = [props.globals.getNode("/systems/pitot[0]/serviceable", 1),props.globals.getNode("/systems/pitot[1]/serviceable", 1),props.globals.getNode("/systems/pitot[2]/serviceable"), 1];
 
 var icingInit = func {
-	iceables = props.globals.getNode("sim/model/icing", 1).getChildren("iceable");
+	iceables = props.globals.getNode("/sim/model/icing", 1).getChildren("iceable");
 	forindex(var i; iceables) {
 		iceables[i] = Iceable.new(iceables[i]);
 	}

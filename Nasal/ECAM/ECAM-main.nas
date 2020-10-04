@@ -40,7 +40,7 @@ var clrLight = 0;
 var ECAM = {
 	_cachePage: "",
 	init: func() {
-		setprop("systems/gear/landing-gear-warning-light", 0);
+		setprop("/systems/gear/landing-gear-warning-light", 0);
 		page = props.globals.initNode("/ECAM/Lower/page", "door", "STRING");
 		apuLight = props.globals.initNode("/ECAM/Lower/light/apu", 0, "BOOL");
 		bleedLight = props.globals.initNode("/ECAM/Lower/light/bleed", 0, "BOOL");
