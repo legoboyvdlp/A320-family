@@ -4,7 +4,7 @@
 
 var radnavInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
-	if (!getprop("systems/radio/rmp[0]/nav") and !getprop("systems/radio/rmp[1]/nav")) {
+	if (!getprop("/systems/radio/rmp[0]/nav") and !getprop("/systems/radio/rmp[1]/nav")) {
 		if (key == "L1") {
 			if (scratchpad == "CLR") {
 				setprop("/FMGC/internal/vor1freq-set", 0);

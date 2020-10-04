@@ -523,7 +523,7 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (latMode.getValue() != 0) {
 		showHDG.setBoolValue(1);
-		var hdgnow = getprop("/it-autoflight/input/hdg");
-		setprop("/modes/fcu/hdg-time", pts.Sim.Time.elapsedSec.getValue());
+		var hdgnow = fmgc.Input.hdg.getValue();
+		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }

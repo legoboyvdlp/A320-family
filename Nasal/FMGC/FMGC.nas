@@ -108,6 +108,9 @@ setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
 setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 
+var blockCalculating = props.globals.initNode("/FMGC/internal/block-calculating", 0, "BOOL");
+var fuelCalculating = props.globals.initNode("/FMGC/internal/fuel-calculating", 0, "BOOL");
+
 var FMGCinit = func {
 	FMGCInternal.takeoffState = 0;
 	FMGCInternal.minspeed = 0;
@@ -168,6 +171,7 @@ var FMGCInternal = {
 	flap2_appr: 0,
 	vls_appr: 0,
 	vapp_appr: 0,
+	vappSpeedSet: 0,
 	
 	# PERF
 	transAlt: 18000,
@@ -186,6 +190,9 @@ var FMGCInternal = {
 	destMagSet: 0,
 	destWind: 0,
 	destWindSet: 0,
+	radioNo: 0,
+	ldgConfig3: 0,
+	ldgConfigFull: 0,
 	
 	# INIT A
 	altAirport: "",
@@ -215,6 +222,10 @@ var FMGCInternal = {
 	zfwcgSet: 0,
 	block: 0.0,
 	blockSet: 0,
+	blockCalculating: 0,
+	blockConfirmed: 0,
+	fuelCalculating: 0,
+	fuelRequest: 0,
 	taxiFuel: 0.4,
 	taxiFuelSet: 0,
 	tripFuel: 0,
@@ -275,8 +286,8 @@ setlistener("/gear/gear[0]/wow", func {
 }, 0, 0);
 
 var trimReset = func {
-	flaps = getprop("/controls/flight/flaps-pos");
-	if (pts.Gear.wow[0].getBoolValue() and !FMGCInternal.takeoffState and (flaps >= 5 or (flaps >= 4 and getprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override") == 1))) {
+	flaps = pts.Controls.Flight.flapsPos.getValue();
+	if (pts.Gear.wow[0].getBoolValue() and !FMGCInternal.takeoffState and (flaps >= 5 or (flaps >= 4 and pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue() == 1))) {
 		interpolate("/controls/flight/elevator-trim", 0.0, 1.5);
 	}
 }
@@ -480,16 +491,16 @@ var updateFuel = func {
 	}
 	
 	# Misc fuel claclulations
-	if (getprop("/FMGC/internal/block-calculating")) {
+	if (fmgc.FMGCInternal.blockCalculating) {
 		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
 		FMGCInternal.blockSet = 1;
 	}
-	fmgc.FMGCInternal.fob = num(getprop("/consumables/fuel/total-fuel-lbs") / 1000);
-	fmgc.FMGCInternal.fuelPredGw = num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000);
+	fmgc.FMGCInternal.fob = num(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000);
+	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000);
 	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
 	
 	# Calcualte extra fuel
-	if (num(getprop("/engines/engine[0]/n1-actual")) > 0 or num(getprop("/engines/engine[1]/n1-actual")) > 0) {
+	if (num(pts.Engines.Engine.n1Actual[0].getValue()) > 0 or num(pts.Engines.Engine.n1Actual[1].getValue()) > 0) {
 		extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
 	} else {
 		extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
@@ -608,8 +619,8 @@ var radios = maketimer(1, func() {
 });
 
 var masterFMGC = maketimer(0.2, func {
-	n1_left = getprop("/engines/engine[0]/n1-actual");
-	n1_right = getprop("/engines/engine[1]/n1-actual");
+	n1_left = pts.Engines.Engine.n1Actual[0].getValue();
+	n1_right = pts.Engines.Engine.n1Actual[1].getValue();
 	flaps = getprop("/controls/flight/flaps-pos");
 	modelat = getprop("/modes/pfd/fma/roll-mode");
 	mode = getprop("/modes/pfd/fma/pitch-mode");
@@ -646,33 +657,33 @@ var masterFMGC = maketimer(0.2, func {
 	
 	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
 		FMGCInternal.phase = 0;
-		setprop("systems/pressurization/mode", "GN");
+		setprop("/systems/pressurization/mode", "GN");
 	}
 	
 	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
 		FMGCInternal.phase = 1;
-		setprop("systems/pressurization/mode", "TO");
+		setprop("/systems/pressurization/mode", "TO");
 	}
 	
 	if (FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
 		FMGCInternal.phase = 2;
-		setprop("systems/pressurization/mode", "TO");
+		setprop("/systems/pressurization/mode", "TO");
 	}
 	
 	if (FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
 		FMGCInternal.phase = 3;
-		setprop("systems/pressurization/mode", "CR");
+		setprop("/systems/pressurization/mode", "CR");
 	}
 	
 	if (FMGCInternal.crzFl >= 200) {
 		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
 			FMGCInternal.phase = 4;
-			setprop("systems/pressurization/mode", "DE");
+			setprop("/systems/pressurization/mode", "DE");
 		}
 	} else {
 		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			FMGCInternal.phase = 4;
-			setprop("systems/pressurization/mode", "DE");
+			setprop("/systems/pressurization/mode", "DE");
 		}
 	}
 	
@@ -688,7 +699,7 @@ var masterFMGC = maketimer(0.2, func {
 	
 	if ((FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
 		FMGCInternal.phase = 6;
-		setprop("systems/pressurization/mode", "TO");
+		setprop("/systems/pressurization/mode", "TO");
 		setprop("/it-autoflight/input/toga", 1);
 	}
 	
@@ -755,7 +766,7 @@ var masterFMGC = maketimer(0.2, func {
 	# calculate speeds
 	############################
 	flap = getprop("/controls/flight/flaps-pos");
-	weight_lbs = getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000;
+	weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	
 	# current speeds
@@ -772,7 +783,7 @@ var masterFMGC = maketimer(0.2, func {
 	FMGCInternal.slat = FMGCInternal.vs1g_clean * 1.23;
 	FMGCInternal.flap2 = FMGCInternal.vs1g_conf_2 * 1.47;
 	FMGCInternal.flap3 = FMGCInternal.vs1g_conf_3 * 1.36;
-	if (getprop("/FMGC/internal/ldg-config-3-set")) {
+	if (FMGCInternal.ldgConfig3) {
 		FMGCInternal.vls = FMGCInternal.vs1g_conf_3 * 1.23;
 	} else {
 		FMGCInternal.vls = FMGCInternal.vs1g_conf_full * 1.23
@@ -780,7 +791,7 @@ var masterFMGC = maketimer(0.2, func {
 	if (FMGCInternal.vls < 113) {
 		FMGCInternal.vls = 113;
 	}
-	if (!getprop("/FMGC/internal/vapp-speed-set")) {
+	if (!fmgc.FMGCInternal.vappSpeedSet) {
 		if (FMGCInternal.destWind < 5) {
 			FMGCInternal.vapp = FMGCInternal.vls + 5;
 		} else if (FMGCInternal.destWind > 15) {
@@ -822,7 +833,7 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.slat_appr = FMGCInternal.slat;
 		FMGCInternal.flap2_appr = FMGCInternal.flap2;
 		FMGCInternal.vls_appr = FMGCInternal.vls;
-		if (!getprop("/FMGC/internal/vapp-speed-set")) {
+		if (!fmgc.FMGCInternal.vappSpeedSet) {
 			FMGCInternal.vapp_appr = FMGCInternal.vapp;
 		}
 	} else {
@@ -836,7 +847,7 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.vs1g_conf_full_appr = -0.0007 * FMGCInternal.lw * FMGCInternal.lw + 0.6002 * FMGCInternal.lw + 38.479;
 		FMGCInternal.slat_appr = FMGCInternal.vs1g_clean_appr * 1.23;
 		FMGCInternal.flap2_appr = FMGCInternal.vs1g_conf_2_appr * 1.47;
-		if (getprop("/FMGC/internal/ldg-config-3-set")) {
+		if (FMGCInternal.ldgConfig3) {
 			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_3_appr * 1.23;
 		} else {
 			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_full_appr * 1.23
@@ -844,7 +855,7 @@ var masterFMGC = maketimer(0.2, func {
 		if (FMGCInternal.vls_appr < 113) {
 			FMGCInternal.vls_appr = 113;
 		}
-		if (!getprop("/FMGC/internal/vapp-speed-set")) {
+		if (!fmgc.FMGCInternal.vappSpeedSet) {
 			if (FMGCInternal.destWind < 5) {
 				FMGCInternal.vapp_appr = FMGCInternal.vls_appr + 5;
 			} else if (FMGCInternal.destWind > 15) {
@@ -999,23 +1010,23 @@ var reset_FMGC = func {
 	setprop("it-autoflight/input/kts", spd);
 	setprop("it-autoflight/input/hdg", hdg);
 	setprop("it-autoflight/input/alt", alt);
-	setprop("systems/pressurization/mode", "GN");
-	setprop("systems/pressurization/vs", "0");
-	setprop("systems/pressurization/targetvs", "0");
-	setprop("systems/pressurization/vs-norm", "0");
-	setprop("systems/pressurization/auto", 1);
-	setprop("systems/pressurization/deltap", "0");
-	setprop("systems/pressurization/outflowpos", "0");
-	setprop("systems/pressurization/deltap-norm", "0");
-	setprop("systems/pressurization/outflowpos-norm", "0");
+	setprop("/systems/pressurization/mode", "GN");
+	setprop("/systems/pressurization/vs", "0");
+	setprop("/systems/pressurization/targetvs", "0");
+	setprop("/systems/pressurization/vs-norm", "0");
+	setprop("/systems/pressurization/auto", 1);
+	setprop("/systems/pressurization/deltap", "0");
+	setprop("/systems/pressurization/outflowpos", "0");
+	setprop("/systems/pressurization/deltap-norm", "0");
+	setprop("/systems/pressurization/outflowpos-norm", "0");
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
-	setprop("systems/pressurization/cabinalt", altitude);
-	setprop("systems/pressurization/targetalt", altitude); 
-	setprop("systems/pressurization/diff-to-target", "0");
-	setprop("systems/pressurization/ditchingpb", 0);
-	setprop("systems/pressurization/targetvs", "0");
-	setprop("systems/pressurization/ambientpsi", "0");
-	setprop("systems/pressurization/cabinpsi", "0");
+	setprop("/systems/pressurization/cabinalt", altitude);
+	setprop("/systems/pressurization/targetalt", altitude); 
+	setprop("/systems/pressurization/diff-to-target", "0");
+	setprop("/systems/pressurization/ditchingpb", 0);
+	setprop("/systems/pressurization/targetvs", "0");
+	setprop("/systems/pressurization/ambientpsi", "0");
+	setprop("/systems/pressurization/cabinpsi", "0");
 	
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
 }
@@ -1169,7 +1180,7 @@ setlistener("/gear/gear[1]/wow", func() {
 		setprop("/FMGC/internal/landing-time", -99);
 	}
 	
-	if (getprop("/gear/gear[1]/wow") == 1 and getprop("/FMGC/internal/landing-time") == -99) {
+	if (pts.Gear.wow[1].getValue() and getprop("/FMGC/internal/landing-time") == -99) {
 		timer30secLanding.start();
 		setprop("/FMGC/internal/landing-time", pts.Sim.Time.elapsedSec.getValue());
 	}
@@ -1280,7 +1291,8 @@ var timer48gpsAlign3 = maketimer(1, func() {
 var timer3blockFuel = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
 		#updateFuel();
-		setprop("/FMGC/internal/block-calculating", 0);
+		fmgc.FMGCInternal.blockCalculating = 0;
+		fmgc.blockCalculating.setValue(0);
 		setprop("/FMGC/internal/block-fuel-time", -99); 
 		timer3blockFuel.stop();
 	}
@@ -1289,7 +1301,8 @@ var timer3blockFuel = maketimer(1, func() {
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
 		#updateFuel();
-		setprop("/FMGC/internal/fuel-calculating", 0);
+		fmgc.FMGCInternal.fuelCalculating = 0;
+		fmgc.fuelCalculating.setValue(0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
 		timer5fuelPred.stop();
 	}

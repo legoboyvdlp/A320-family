@@ -5,9 +5,9 @@
 
 var SwitchingPanel = {
 	Switches: {
-		attHdg: props.globals.getNode("controls/navigation/switching/att-hdg"),
-		airData: props.globals.getNode("controls/navigation/switching/air-data"),
-		eisDmc: props.globals.getNode("controls/navigation/switching/eis-dmc"),
+		attHdg: props.globals.getNode("/controls/navigation/switching/att-hdg"),
+		airData: props.globals.getNode("/controls/navigation/switching/air-data"),
+		eisDmc: props.globals.getNode("/controls/navigation/switching/eis-dmc"),
 	},
 	
 	doAirData: func(newAirData) {

@@ -29,7 +29,7 @@ var _R_turn_min = 0;
 var _invalid = 0;
 
 # Make top-down view point north in old FG.
-var __fg_version = num(string.replace(getprop("sim/version/flightgear"),".",""));
+var __fg_version = num(string.replace(getprop("/sim/version/flightgear"),".",""));
 if (__fg_version < 201920) {
 	_top_view_heading_offset_deg = 94.5;
 }
@@ -144,14 +144,14 @@ var top_view = func() {
 		return;
 	}
 	_top_view_index = view.indexof("Chase View Without Yaw");
-	_reset_view_index = getprop("sim/current-view/view-number");
-	setprop("sim/current-view/view-number", _top_view_index);
-	_view_pitch_offset_deg = getprop("sim/current-view/pitch-offset-deg");
-	_view_heading_offset_deg = getprop("sim/current-view/heading-offset-deg");
-	_view_z_offset = getprop("sim/current-view/z-offset-m");
-	setprop("sim/current-view/z-offset-m", -500.0);
-	setprop("sim/current-view/heading-offset-deg", _top_view_heading_offset_deg);
-	setprop("sim/current-view/pitch-offset-deg", 90.0);
+	_reset_view_index = getprop("/sim/current-view/view-number");
+	setprop("/sim/current-view/view-number", _top_view_index);
+	_view_pitch_offset_deg = getprop("/sim/current-view/pitch-offset-deg");
+	_view_heading_offset_deg = getprop("/sim/current-view/heading-offset-deg");
+	_view_z_offset = getprop("/sim/current-view/z-offset-m");
+	setprop("/sim/current-view/z-offset-m", -500.0);
+	setprop("/sim/current-view/heading-offset-deg", _top_view_heading_offset_deg);
+	setprop("/sim/current-view/pitch-offset-deg", 90.0);
 	_view_listener = setlistener("/sim/current-view/name", func {
 		_finalize_top_view();
 	}, 0, 0);
@@ -164,11 +164,11 @@ var _finalize_top_view = func() {
 	removelistener(_view_listener);
 	_view_listener = nil;
 	# Go back to the view to restore settings, in case user has switched away.
-	setprop("sim/current-view/view-number", _top_view_index);
-	setprop("sim/current-view/z-offset-m", _view_z_offset);
-	setprop("sim/current-view/heading-offset-deg", _view_heading_offset_deg);
-	setprop("sim/current-view/pitch-offset-deg", _view_pitch_offset_deg);
-	setprop("sim/current-view/view-number", _reset_view_index);
+	setprop("/sim/current-view/view-number", _top_view_index);
+	setprop("/sim/current-view/z-offset-m", _view_z_offset);
+	setprop("/sim/current-view/heading-offset-deg", _view_heading_offset_deg);
+	setprop("/sim/current-view/pitch-offset-deg", _view_pitch_offset_deg);
+	setprop("/sim/current-view/view-number", _reset_view_index);
 	if (!_show) {
 		_clear_user_point_models();
 		_clear_waypoint_models();
@@ -330,7 +330,7 @@ var _check_turn_radius = func() {
 		}
 	}
 
-	setprop("sim/model/autopush/route/invalid", _invalid);
+	setprop("/sim/model/autopush/route/invalid", _invalid);
 }
 
 setlistener("/sim/model/autopush/route/show", func(p) {
@@ -351,7 +351,7 @@ setlistener("/sim/model/autopush/route/show", func(p) {
 var enter = func() {
 	clear();
 	top_view();
-	_R_turn_min = getprop("sim/model/autopush/min-turn-radius-m");
+	_R_turn_min = getprop("/sim/model/autopush/min-turn-radius-m");
 	var wp = geo.aircraft_position();
 	var H = geo.elevation(wp.lat(), wp.lon());
 	if (H != nil) {
@@ -362,7 +362,7 @@ var enter = func() {
 		_add(geo.click_position());
 	});
 	# This property can be overridden manually, if needed.
-	var wingspan = getprop("sim/model/autopush/route/wingspan-m");
+	var wingspan = getprop("/sim/model/autopush/route/wingspan-m");
 	if ((wingspan == nil) or (wingspan == 0.0)) {
 		# JSBSim
 		wingspan = getprop("fdm/jsbsim/metrics/bw-ft");
@@ -372,7 +372,7 @@ var enter = func() {
 			# YAsim
 			wingspan = getprop("fdm/yasim/model/wings/wing/wing-span");
 		}
-		setprop("sim/model/autopush/route/wingspan-m", wingspan);
+		setprop("/sim/model/autopush/route/wingspan-m", wingspan);
 	}
 }
 

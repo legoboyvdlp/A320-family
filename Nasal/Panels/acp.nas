@@ -32,7 +32,7 @@ var init = func() {
 }
 
 var update_com1 = func() {	
-	if (getprop("systems/acconfig/options/fo-view") == 1) {
+	if (getprop("/systems/acconfig/options/fo-view") == 1) {
 		if (vhf1_fo_recive.getValue()) {
 			com1_volume.setValue(vhf1_fo_volume.getValue());
 		} else {
@@ -48,7 +48,7 @@ var update_com1 = func() {
 }
 
 var update_com2 = func() {	
-	if (getprop("systems/acconfig/options/fo-view") == 1) {
+	if (getprop("/systems/acconfig/options/fo-view") == 1) {
 		if (vhf2_fo_recive.getValue()) {
 			com2_volume.setValue(vhf2_fo_volume.getValue());
 		} else {

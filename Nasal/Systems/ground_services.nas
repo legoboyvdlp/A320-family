@@ -11,31 +11,31 @@ var ground_services = {
 		me.ice_time = 0;
 		
 		# Catering Truck
-		setprop("services/catering/scissor-deg", 0);
-		setprop("services/catering/position-norm", 0);
+		setprop("/services/catering/scissor-deg", 0);
+		setprop("/services/catering/position-norm", 0);
 		
 		# De-icing Truck
-		setprop("services/deicing_truck/enable", 0);
-		setprop("services/deicing_truck/de-ice", 0);
+		setprop("/services/deicing_truck/enable", 0);
+		setprop("/services/deicing_truck/de-ice", 0);
 		
 		# Set them all to 0 if the aircraft is not stationary
 		if (getprop("velocities/groundspeed-kt") >= 2) {
-			setprop("services/chocks/enable", 0);
-			setprop("services/fuel-truck/enable", 0);
-			setprop("services/deicing_truck/enable", 0);
-			setprop("services/catering/enable", 0);
+			setprop("/services/chocks/enable", 0);
+			setprop("/services/fuel-truck/enable", 0);
+			setprop("/services/deicing_truck/enable", 0);
+			setprop("/services/catering/enable", 0);
 		}
 
 		me.reset();
 	},
 	update : func {
 		# Catering Truck Controls
-		var cater_pos = getprop("services/catering/position-norm");
+		var cater_pos = getprop("/services/catering/position-norm");
 		var scissor_deg = 3.325 * (1/D2R) * math.asin(cater_pos / (2 * 3.6612));
-		setprop("services/catering/scissor-deg", scissor_deg);
+		setprop("/services/catering/scissor-deg", scissor_deg);
 		
 		# De-icing Truck
-		if (getprop("services/deicing_truck/enable") and getprop("services/deicing_truck/de-ice")) {
+		if (getprop("/services/deicing_truck/enable") and getprop("/services/deicing_truck/de-ice")) {
 			if (me.ice_time == 2) {
 				door.move(1);
 				ground_message ("Lifting De-icing Crane...");
@@ -58,7 +58,7 @@ var ground_services = {
 			
 			if (me.ice_time == 900) {
 				ground_message("De-icing Completed!", 1, 1, 1);
-				setprop("services/deicing_truck/de-ice", 0);
+				setprop("/services/deicing_truck/de-ice", 0);
 			}
 		
 		} else {
@@ -79,7 +79,7 @@ var ground_services = {
 };
 
 var ground_message = func (string) {
-	setprop("sim/messages/ground", string);
+	setprop("/sim/messages/ground", string);
 }
 
 setlistener("sim/signals/fdm-initialized", func {

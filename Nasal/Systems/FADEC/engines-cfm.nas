@@ -199,7 +199,7 @@ var auto_start_one = func {
 }
 
 var eng_one_auto_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n2-actual") >= 22) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 22) {
 		eng_one_auto_start.stop();
 		setprop("/engines/engine[0]/state", 2);
 		setprop("/controls/engines/engine[0]/cutoff", 0);
@@ -219,7 +219,7 @@ var eng_one_auto_start = maketimer(0.5, func {
 });
 
 var eng_one_man_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n2-actual") >= 16.7) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 16.7) {
 		eng_one_man_start.stop();
 		setprop("/engines/engine[0]/state", 2);
 		setprop("/controls/engines/engine[0]/cutoff", 0);
@@ -239,7 +239,7 @@ var eng_one_egt_check = maketimer(0.5, func {
 }); 
 
 var eng_one_n2_check = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n2-actual") >= 43.0) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 43.0) {
 		if (getprop("/controls/engines/engine[0]/igniter-a") != 0) {
 			setprop("/controls/engines/engine[0]/igniter-a", 0);
 		}
@@ -247,7 +247,7 @@ var eng_one_n2_check = maketimer(0.5, func {
 			setprop("/controls/engines/engine[0]/igniter-b", 0);
 		}
 	}
-	if (getprop("/engines/engine[0]/n2-actual") >= 57.0) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 57.0) {
 		eng_one_n2_check.stop();
 		setprop("/systems/pneumatics/valves/starter-valve-1", 0);
 		setprop("/engines/engine[0]/state", 3);
@@ -262,7 +262,7 @@ var auto_start_two = func {
 }
 
 var eng_two_auto_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n2-actual") >= 22) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 22) {
 		eng_two_auto_start.stop();
 		setprop("/engines/engine[1]/state", 2);
 		setprop("/controls/engines/engine[1]/cutoff", 0);
@@ -282,7 +282,7 @@ var eng_two_auto_start = maketimer(0.5, func {
 });
 
 var eng_two_man_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n2-actual") >= 16.7) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 16.7) {
 		eng_two_man_start.stop();
 		setprop("/engines/engine[1]/state", 2);
 		setprop("/controls/engines/engine[1]/cutoff", 0);
@@ -302,7 +302,7 @@ var eng_two_egt_check = maketimer(0.5, func {
 });
 
 var eng_two_n2_check = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n2-actual") >= 50.0) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 50.0) {
 		if (getprop("/controls/engines/engine[1]/igniter-a") != 0) {
 			setprop("/controls/engines/engine[1]/igniter-a", 0);
 		}
@@ -310,7 +310,7 @@ var eng_two_n2_check = maketimer(0.5, func {
 			setprop("/controls/engines/engine[1]/igniter-b", 0);
 		}
 	}
-	if (getprop("/engines/engine[1]/n2-actual") >= 57.0) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 57.0) {
 		eng_two_n2_check.stop();
 		setprop("/systems/pneumatics/valves/starter-valve-2", 0);
 		setprop("/engines/engine[1]/state", 3);
