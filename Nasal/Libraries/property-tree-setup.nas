@@ -50,6 +50,9 @@ var Controls = {
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
+	Switches: {
+		annunTest: props.globals.getNode("/controls/switches/annun-test"),
+	},
 };
 
 var ECAM = {
@@ -90,6 +93,11 @@ var Fdm = {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
 		},
+		Hydraulics: {
+			Rudder: {
+				trimDeg: props.globals.getNode("fdm/jsbsim/hydraulics/rudder/trim-deg"),
+			},
+		},
 		Inertia: {
 			weightLbs: props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs"),
 		},
@@ -129,6 +137,10 @@ var Instrumentation = {
 		oldQnh: props.globals.getNode("/instrumentation/altimeter[0]/oldqnh"),
 		settingInhg: props.globals.getNode("/instrumentation/altimeter[0]/setting-inhg"),
 		std: props.globals.getNode("/instrumentation/altimeter[0]/std"),
+	},
+	Clock: {
+		indicatedString: props.globals.getNode("/instrumentation/clock/indicated-string"),
+		indicatedStringShort: props.globals.getNode("/instrumentation/clock/indicated-short-string"),
 	},
 	Efis: {
 		Inputs: {
@@ -200,6 +212,11 @@ var Sim = {
 	Time: {
 		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
+		UTC: {
+			day: props.globals.getNode("/sim/time/utc/day"),
+			month: props.globals.getNode("/sim/time/utc/month"),
+			year: props.globals.getNode("/sim/time/utc/year"),
+		},
 	},
 	Version: props.globals.getNode("/sim/version/flightgear"),
 };
