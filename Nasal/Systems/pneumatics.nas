@@ -98,6 +98,7 @@ var PNEU = {
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
 	},
+	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
 		me.resetFail();
 		

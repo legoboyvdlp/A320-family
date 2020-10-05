@@ -2069,7 +2069,7 @@ var messages_config_memo = func {
 		toMemoLine3.colour = "c";
 	}
 	
-	if (getprop("/controls/flight/flaps-pos") > 0 and getprop("/controls/flight/flaps-pos") < 5) {
+	if (pts.Controls.Flight.flapsPos.getValue() > 0 and pts.Controls.Flight.flapsPos.getValue() < 5) {
 		toMemoLine4.msg = "    FLAPS T.O";
 		toMemoLine4.colour = "g";
 	} else {
@@ -2136,7 +2136,7 @@ var messages_config_memo = func {
 	}
 	
 	if (getprop("it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
-		if (getprop("/controls/flight/flaps-pos") == 4) {
+		if (pts.Controls.Flight.flapsPos.getValue() == 4) {
 			ldgMemoLine4.msg = "    FLAPS CONF 3";
 			ldgMemoLine4.colour = "g";
 		} else {
@@ -2144,7 +2144,7 @@ var messages_config_memo = func {
 			ldgMemoLine4.colour = "c";
 		}
 	} else {
-		if (getprop("/controls/flight/flaps-pos") == 5) {
+		if (pts.Controls.Flight.flapsPos.getValue() == 5) {
 			ldgMemoLine4.msg = "    FLAPS FULL";
 			ldgMemoLine4.colour = "g";
 		} else {
