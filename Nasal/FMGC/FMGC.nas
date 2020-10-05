@@ -952,7 +952,7 @@ var reset_FMGC = func {
 	FMGCInternal.phase = 0;
 	fd1 = Input.fd1.getValue();
 	fd2 = Input.fd2.getValue();
-	spd = Input.spd.getValue();
+	spd = Input.kts.getValue();
 	hdg = Input.hdg.getValue();
 	alt = Input.alt.getValue();
 	
