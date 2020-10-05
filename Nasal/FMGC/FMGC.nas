@@ -890,7 +890,11 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	} else if (flap == 5) { # FULL
 		FMGCInternal.vsw = FMGCInternal.vs1g_conf_full;
-		FMGCInternal.minspeed = FMGCInternal.vapp;
+		if (FMGCInternal.vappSpeedSet) {
+			FMGCInternal.minspeed = FMGCInternal.vapp_appr;
+		} else {
+			FMGCInternal.minspeed = FMGCInternal.vapp;
+		}
 		
 		if (FMGCInternal.takeoffState) {
 			FMGCInternal.vls_min = FMGCInternal.vs1g_clean * 1.13;
