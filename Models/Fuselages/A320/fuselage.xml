@@ -100,6 +100,16 @@
 		<object-name>MLGFittingR</object-name>
 		<object-name>SideStayL1</object-name>
 		<object-name>SideStayR1</object-name>
+		<object-name>SpoilerActuatorRodL5</object-name>
+		<object-name>SpoilerActuatorRodL4</object-name>
+		<object-name>SpoilerActuatorRodL3</object-name>
+		<object-name>SpoilerActuatorRodL2</object-name>
+		<object-name>SpoilerActuatorRodL1</object-name>
+		<object-name>SpoilerActuatorRodR5</object-name>
+		<object-name>SpoilerActuatorRodR4</object-name>
+		<object-name>SpoilerActuatorRodR3</object-name>
+		<object-name>SpoilerActuatorRodR2</object-name>
+		<object-name>SpoilerActuatorRodR1</object-name>
 	</effect>
 	
 	
