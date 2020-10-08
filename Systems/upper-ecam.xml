@@ -489,7 +489,7 @@
 	</filter>
 	
 	<filter>
-		<name>Flap Indicator</name>
+		<name>Slat Indicator</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -508,7 +508,7 @@
 	</filter>
 	
 	<filter>
-		<name>Flap Indicator</name>
+		<name>Slat Indicator</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
