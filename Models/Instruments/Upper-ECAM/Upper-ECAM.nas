@@ -41,6 +41,10 @@ var fadecpowerup = props.globals.getNode("/systems/fadec/powerup", 1);
 var thr_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
 var n1_limit = props.globals.getNode("/controls/engines/n1-limit", 1);
 var epr_limit = props.globals.getNode("/controls/engines/epr-limit", 1);
+var flapXOffset = props.globals.getNode("/ECAM/Upper/FlapX", 1);
+var flapYOffset = props.globals.getNode("/ECAM/Upper/FlapY", 1);
+var slatXOffset = props.globals.getNode("/ECAM/Upper/SlatX", 1);
+var slatYOffset = props.globals.getNode("/ECAM/Upper/SlatY", 1);
 var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
 var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
 var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
@@ -297,6 +301,9 @@ var canvas_upperECAM_base = {
 			me["SlatAlphaLock"].hide();	
 		}
 		
+		me["FlapIndicator"].setTranslation(flapXOffset.getValue(),flapYOffset.getValue());
+		me["SlatIndicator"].setTranslation(slatXOffset.getValue(),slatYOffset.getValue());
+		
 		# FOB
 		if (acconfig_weight_kgs.getValue())
 		{
@@ -345,7 +352,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock"];
+		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator"];
 	},
 	update: func() {
 		# N1

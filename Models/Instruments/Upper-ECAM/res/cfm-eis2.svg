@@ -42,7 +42,7 @@
      id="namedview371"
      showgrid="true"
      inkscape:zoom="0.50000001"
-     inkscape:cx="419.64115"
+     inkscape:cx="676.98926"
      inkscape:cy="1000.4352"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -1385,4 +1385,28 @@
        x="650.08069"
        y="575.68427"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.25px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#0dc04b;fill-opacity:1;stroke-width:0.75">A-LOCK</tspan></text>
+  <path
+     style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+     d="m 928.84849,661.23101 -11.44541,-16.90649 38.53701,7.25587 v 15.15993 l -27.0916,-5.50931"
+     id="FlapIndicator"
+     sodipodi:nodetypes="ccccc"
+     inkscape:label="#path1093" />
+  <path
+     style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+     d="m 530.43575,645.52404 24.69434,-5.55908 -11.10498,15.46142 -24.69434,5.56055 z"
+     id="SlatIndicator"
+     inkscape:label="#path1114" />
+  <path
+     style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+     d="M 917.40308,644.32452 725.61039,596.89138"
+     id="FlapLine"
+     sodipodi:nodetypes="cc"
+     inkscape:label="#path1103" />
+  <path
+     style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+     d="M 555.1301,639.96496 681.86618,598.43228"
+     id="SlatLine"
+     inkscape:path-effect="#path-effect1121"
+     inkscape:original-d="M 555.1301 "
+     inkscape:label="#path1119" />
 </svg>
