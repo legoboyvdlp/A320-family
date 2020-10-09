@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="45.254834"
-     inkscape:cx="924.41731"
-     inkscape:cy="570.58297"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="990.71576"
+     inkscape:cy="484.51174"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -1412,4 +1412,12 @@
      d="m 530.43575,645.52404 24.69434,-5.55908 -11.10498,15.46142 -24.69434,5.56055 z"
      id="SlatIndicator"
      inkscape:label="#path1114" />
+  <rect
+     style="opacity:0.5;fill:none;fill-opacity:1;stroke:none;stroke-width:4.07583141;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     id="FlapLine_clip"
+     width="193.06065"
+     height="50.843338"
+     x="718.86694"
+     y="594.42938"
+     inkscape:label="#rect1023" />
 </svg>
