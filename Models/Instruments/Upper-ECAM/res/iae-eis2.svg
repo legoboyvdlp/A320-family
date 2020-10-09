@@ -97,11 +97,6 @@
      height="8.496521"
      x="691.55396"
      y="692.57446" />
-  <path
-     id="path4447"
-     style="fill:none;fill-rule:evenodd;stroke:#575757;stroke-width:5.19999981;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     d="m 718.11442,596.89138 11.4047,16.81213 m -36.4425,-17.34853 -10.5797,15.51213 m 11.1047,-15.46213 24.4703,0.46213 m -35.5703,14.98787 47.0582,1.94289"
-     inkscape:connector-curvature="0" />
   <text
      inkscape:label="#text4219"
      id="FlapTxt"
@@ -115,6 +110,13 @@
        x="729.04968"
        id="tspan4331"
        sodipodi:role="line">1+F</tspan></text>
+  <path
+     style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.23279285;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 917.38445,644.30596 720.66027,597.47244"
+     id="FlapLine"
+     sodipodi:nodetypes="cc"
+     inkscape:label="#path1103"
+     inkscape:connector-curvature="0" />
   <g
      id="FlapDots"
      inkscape:label="#g4344"
@@ -1753,6 +1755,20 @@
        x="650.08069"
        y="575.68427"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.25px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#0dc04b;fill-opacity:1;stroke-width:0.75">A-LOCK</tspan></text>
+   <path
+     style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.44862556;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     d="M 555.26245,639.8335 691.24239,597.33411"
+     id="SlatLine"
+     inkscape:original-d="m 555.22993,639.86602 135.34892,-43.9598"
+     inkscape:label="#path1119"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     id="path4447"
+     style="fill:none;fill-rule:evenodd;stroke:#575757;stroke-width:5.19999981;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     d="m 718.11442,596.89138 11.4047,16.81213 m -35.92874,-17.24909 -11.09346,15.41269 m 11.13785,-15.41241 24.43715,0.41241 m -35.5703,14.98787 47.0582,1.94289"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccccccc" />
   <path
      style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
      d="m 928.84849,661.23101 -11.44541,-16.90649 38.53701,7.25587 v 15.15993 l -27.0916,-5.50931"
@@ -1764,19 +1780,4 @@
      d="m 530.43575,645.52404 24.69434,-5.55908 -11.10498,15.46142 -24.69434,5.56055 z"
      id="SlatIndicator"
      inkscape:label="#path1114" />
-  <path
-     style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.21424198;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="M 917.39582,644.31733 724.49265,596.89857"
-     id="FlapLine"
-     sodipodi:nodetypes="cc"
-     inkscape:label="#path1103"
-     inkscape:connector-curvature="0" />
-  <path
-     style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0dc04b;stroke-width:5.39704323;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 555.22993,639.86602 131.22392,-43.2098"
-     id="SlatLine"
-     inkscape:original-d="M 555.1301,639.96496 689.17868,595.24478"
-     inkscape:label="#path1119"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cc" />
 </svg>
