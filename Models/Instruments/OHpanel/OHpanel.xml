@@ -3087,6 +3087,42 @@
 			</and>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>IDG1Prot</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/OH/protectors/idg1</property>
+			</binding>
+			<binding>
+				<condition>
+					<not>
+						<property>controls/OH/protectors/idg1</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>IDG1Prot</object-name>
+		<property>controls/OH/protectors/idg1</property>
+		<factor>-145</factor>
+		<axis>
+			<x1-m>-0.00898</x1-m>
+			<y1-m>-0.14623</y1-m>
+			<z1-m>-0.03502</z1-m>
+			<x2-m>-0.00898</x2-m>
+			<y2-m>-0.12327</y2-m>
+			<z2-m>-0.03502</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>IDG 1 pick</name>
@@ -3098,16 +3134,28 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/OH/protectors/idg1</property>
+							<value>1</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-1-disc</property>
 				<value>0</value>
 			</binding>
 			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/idg1</property>
+						<value>1</value>
+					</equals>
+				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-1-disc-momentary</property>
 				<value>1</value>
@@ -3116,6 +3164,17 @@
 				<binding>
 					<command>property-assign</command>
 					<property>controls/electrical/switches/idg-1-disc-momentary</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/idg1</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/idg1</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -3527,6 +3586,42 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>IDG2Prot</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/OH/protectors/idg2</property>
+			</binding>
+			<binding>
+				<condition>
+					<not>
+						<property>controls/OH/protectors/idg2</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>IDG2Prot</object-name>
+		<property>controls/OH/protectors/idg2</property>
+		<factor>-145</factor>
+		<axis>
+			<x1-m>-0.00898</x1-m>
+			<y1-m> 0.12327</y1-m>
+			<z1-m>-0.03502</z1-m>
+			<x2-m>-0.00898</x2-m>
+			<y2-m> 0.14623</y2-m>
+			<z2-m>-0.03502</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>IDG 2 pick</name>
@@ -3538,16 +3633,28 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/OH/protectors/idg2</property>
+							<value>1</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-2-disc</property>
 				<value>0</value>
 			</binding>
 			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/idg2</property>
+						<value>1</value>
+					</equals>
+				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-2-disc-momentary</property>
 				<value>1</value>
@@ -3556,6 +3663,17 @@
 				<binding>
 					<command>property-assign</command>
 					<property>controls/electrical/switches/idg-2-disc-momentary</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/idg2</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/idg2</property>
 					<value>0</value>
 				</binding>
 			</mod-up>

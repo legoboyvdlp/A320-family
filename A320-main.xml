@@ -909,8 +909,8 @@
 				<eng2-manstart type="bool">0</eng2-manstart>
 				<eng1-n1 type="bool">0</eng1-n1>
 				<eng2-n1 type="bool">0</eng2-n1>
-				<IDG1 type="bool">0</IDG1>
-				<IDG2 type="bool">0</IDG2>
+				<idg1 type="bool">0</idg1>
+				<idg2 type="bool">0</idg2>
 				<maskman type="bool">0</maskman>
 				<ramair type="bool">0</ramair>
 				<ratman type="bool">0</ratman>
