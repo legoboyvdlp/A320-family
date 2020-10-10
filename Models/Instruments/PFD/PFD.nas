@@ -1271,7 +1271,7 @@ var canvas_PFD_1 = {
 					me["VLS_min"].hide();
 					me["ALPHA_PROT"].hide();
 					me["ALPHA_MAX"].hide();
-					me["ALPHA_SW"].show();
+					me["ALPHA_SW"].hide();
 				}
 			}
 			
