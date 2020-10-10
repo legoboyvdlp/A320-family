@@ -41,9 +41,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
      inkscape:window-x="-8"
-     inkscape:cy="403.87968"
-     inkscape:cx="219.11987"
-     inkscape:zoom="2.1546825"
+     inkscape:cy="567.21927"
+     inkscape:cx="992.76655"
+     inkscape:zoom="1.0773413"
      showgrid="true"
      id="namedview371"
      inkscape:window-height="705"
@@ -2607,14 +2607,6 @@
      width="33.21196"
      id="LOC_pointer"
      style="fill:none;fill-opacity:1;stroke:#b055be;stroke-width:4.0350337;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  <rect
-     style="display:inline;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:3.22735;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-     id="ground_ref"
-     width="16.287683"
-     height="2088.8245"
-     x="857.0014"
-     y="512.75592"
-     inkscape:label="ground_ref" />
   <g
      inkscape:label="#g4828"
      id="ALT_group2">
@@ -6503,6 +6495,14 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
   </g>
+  <rect
+     style="display:inline;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:3.22735;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+     id="ground_ref"
+     width="16.287683"
+     height="2088.8245"
+     x="857.0014"
+     y="512.75592"
+     inkscape:label="ground_ref" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
