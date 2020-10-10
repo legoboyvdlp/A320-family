@@ -505,7 +505,7 @@
 					<entry><ind> 0.0</ind><dep>-200</dep></entry>
 					<entry><ind>10.0</ind><dep>-135</dep></entry>
 					<entry><ind>15.0</ind><dep>-95</dep></entry>
-					<entry><ind>20.0</ind><dep>-50</dep></entry>
+					<entry><ind>20.0</ind><dep>-48.5</dep></entry>
 					<entry><ind>35.0</ind><dep>0</dep></entry>
 				</table>
 			</expression>
@@ -523,7 +523,7 @@
 					<entry><ind> 0.0</ind><dep>-200</dep></entry>
 					<entry><ind>10.0</ind><dep>-135</dep></entry>
 					<entry><ind>15.0</ind><dep>-95</dep></entry>
-					<entry><ind>20.0</ind><dep>-50</dep></entry>
+					<entry><ind>20.0</ind><dep>-48.5</dep></entry>
 					<entry><ind>40.0</ind><dep>0</dep></entry>
 				</table>
 			</expression>
@@ -549,7 +549,7 @@
 					<entry><ind> 0.0</ind><dep>-49</dep></entry>
 					<entry><ind>10.0</ind><dep>-33</dep></entry>
 					<entry><ind>15.0</ind><dep>-23</dep></entry>
-					<entry><ind>20.0</ind><dep>-12</dep></entry>
+					<entry><ind>20.0</ind><dep>-11.25</dep></entry>
 					<entry><ind>35.0</ind><dep>0</dep></entry>
 				</table>
 			</expression>
@@ -567,7 +567,7 @@
 					<entry><ind> 0.0</ind><dep>-49</dep></entry>
 					<entry><ind>10.0</ind><dep>-33</dep></entry>
 					<entry><ind>15.0</ind><dep>-23</dep></entry>
-					<entry><ind>20.0</ind><dep>-12</dep></entry>
+					<entry><ind>20.0</ind><dep>-11.25</dep></entry>
 					<entry><ind>40.0</ind><dep>0</dep></entry>
 				</table>
 			</expression>
