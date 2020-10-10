@@ -6656,4 +6656,21 @@
        x="61.095329"
        y="74.429939"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.9995px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">FLX</tspan></text>
+  <text
+     inkscape:label="#text1607"
+     id="spdLimError"
+     y="749.95782"
+     x="143.42143"
+     style="font-style:normal;font-weight:normal;font-size:30.00000191px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.99999875px;line-height:0.5;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ff0000;fill-opacity:1;stroke-width:0.75"
+       y="749.95782"
+       x="143.42143"
+       id="tspan1605-4"
+       sodipodi:role="line">SPD</tspan><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.99999875px;line-height:0.5;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ff0000;fill-opacity:1;stroke-width:0.75"
+       y="787.45782"
+       x="143.42143"
+       sodipodi:role="line"
+       id="tspan1860">LIM</tspan></text>
 </svg>
