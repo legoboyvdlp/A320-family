@@ -3371,7 +3371,7 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("/it-autoflight/input/kts-mach")) {
+				if (fmgc.Input.ktsMach.getValue()) {
 					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
 					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
@@ -3389,10 +3389,10 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("/it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
+			if (fmgc.Input.ktsMach.getValue()) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", fmgc.FMGCInternal.mngSpd));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("/FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %s", int(fmgc.FMGCInternal.mngSpd)));
 			}
 			
 			me["Simple_L5S"].setText(" EXPEDITE");
@@ -3512,7 +3512,7 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("/it-autoflight/input/kts-mach")) {
+				if (fmgc.Input.ktsMach.getValue()) {
 					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
 					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
@@ -3532,10 +3532,10 @@ var canvas_MCDU_base = {
 			me["Simple_L2S"].setText(" CI");
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("/it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
+			if (fmgc.Input.ktsMach.getValue()) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", fmgc.FMGCInternal.mngSpd));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("/FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %s", int(fmgc.FMGCInternal.mngSpd)));
 			}
 			
 			me["Simple_R1S"].setText("DEST EFOB");
@@ -3660,7 +3660,7 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("/it-autoflight/input/kts-mach")) {
+				if (fmgc.Input.ktsMach.getValue()) {
 					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
 					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/kts")));
@@ -3680,10 +3680,10 @@ var canvas_MCDU_base = {
 			me["Simple_L2S"].setText(" CI");
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("/it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
+			if (fmgc.Input.ktsMach.getValue()) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", fmgc.FMGCInternal.mngSpd));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %3.0f", getprop("/FMGC/internal/mng-spd")));
+				me["Simple_L3"].setText(sprintf(" %3.0f", fmgc.FMGCInternal.mngSpd));
 			}
 			
 			me["Simple_L5"].setText(" EXPEDITE");
