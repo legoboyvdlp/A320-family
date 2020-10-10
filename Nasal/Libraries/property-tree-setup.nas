@@ -50,6 +50,9 @@ var Controls = {
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
+	Switches: {
+		annunTest: props.globals.getNode("/controls/switches/annun-test"),
+	},
 };
 
 var ECAM = {
@@ -73,6 +76,8 @@ var Engines = {
 var Environment = {
 	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
 	tempDegC: props.globals.getNode("/environment/temperature-degc"),
+	windFromHdg: props.globals.getNode("/environment/wind-from-heading-deg"),
+	windSpeedKt: props.globals.getNode("/environment/wind-speed-kt"),
 };
 
 var Fdm = {
@@ -89,6 +94,11 @@ var Fdm = {
 		Fbw: {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
+		},
+		Hydraulics: {
+			Rudder: {
+				trimDeg: props.globals.getNode("fdm/jsbsim/hydraulics/rudder/trim-deg"),
+			},
 		},
 		Inertia: {
 			weightLbs: props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs"),
@@ -130,6 +140,10 @@ var Instrumentation = {
 		settingInhg: props.globals.getNode("/instrumentation/altimeter[0]/setting-inhg"),
 		std: props.globals.getNode("/instrumentation/altimeter[0]/std"),
 	},
+	Clock: {
+		indicatedString: props.globals.getNode("/instrumentation/clock/indicated-string"),
+		indicatedStringShort: props.globals.getNode("/instrumentation/clock/indicated-short-string"),
+	},
 	Efis: {
 		Inputs: {
 			arpt: [props.globals.initNode("/instrumentation/efis[0]/inputs/arpt", 0, "BOOL"), props.globals.initNode("/instrumentation/efis[1]/inputs/arpt", 0, "BOOL")],
@@ -147,6 +161,17 @@ var Instrumentation = {
 		Mfd: {
 			pnlModeNum: [props.globals.initNode("/instrumentation/efis[0]/mfd/pnl_mode-num", 2, "INT"), props.globals.initNode("/instrumentation/efis[1]/mfd/pnl_mode-num", 2, "INT")],
 		},
+	},
+	MKVII: {
+		Inputs: {
+			Discretes: {
+				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override"),
+			},
+		},
+	},
+	Nav: {
+		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
+		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
 	},
 	TCAS: {
 		Inputs: {
@@ -189,6 +214,11 @@ var Sim = {
 	Time: {
 		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
+		UTC: {
+			day: props.globals.getNode("/sim/time/utc/day"),
+			month: props.globals.getNode("/sim/time/utc/month"),
+			year: props.globals.getNode("/sim/time/utc/year"),
+		},
 	},
 	Version: props.globals.getNode("/sim/version/flightgear"),
 };

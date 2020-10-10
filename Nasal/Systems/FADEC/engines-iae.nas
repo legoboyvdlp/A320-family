@@ -80,7 +80,7 @@ var start_one_mancheck = func {
 			settimer(start_one_mancheck_b, 0.5);
 		}
 	} else {
-		if (getprop("/engines/engine[0]/state") == 1 or getprop("/engines/engine[0]/state") == 2) {
+		if (pts.Engines.Engine.state[0].getValue() == 1 or pts.Engines.Engine.state[0].getValue() == 2) {
 			setprop("/systems/pneumatics/valves/starter-valve-1", 0);
 			setprop("/engines/engine[0]/state", 0);
 			setprop("/controls/engines/engine[0]/starter", 0);
@@ -163,7 +163,7 @@ var start_two_mancheck = func {
 			settimer(start_two_mancheck_b, 0.5);
 		}
 	} else {
-		if (getprop("/engines/engine[1]/state") == 1 or getprop("/engines/engine[1]/state") == 2) {
+		if (pts.Engines.Engine.state[1].getValue() == 1 or pts.Engines.Engine.state[1].getValue() == 2) {
 			setprop("/systems/pneumatics/valves/starter-valve-2", 0);
 			setprop("/engines/engine[1]/state", 0);
 			setprop("/controls/engines/engine[1]/starter", 0);
@@ -199,7 +199,7 @@ var auto_start_one = func {
 }
 
 var eng_one_auto_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n1-actual") >= 4.7) {
+	if (pts.Engines.Engine.n1Actual[0].getValue() >= 4.7) {
 		eng_one_auto_start.stop();
 		setprop("/engines/engine[0]/state", 2);
 		setprop("/controls/engines/engine[0]/cutoff", 0);
@@ -219,7 +219,7 @@ var eng_one_auto_start = maketimer(0.5, func {
 });
 
 var eng_one_man_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n2-actual") >= 16.7) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 16.7) {
 		eng_one_man_start.stop();
 		setprop("/engines/engine[0]/state", 2);
 		setprop("/controls/engines/engine[0]/cutoff", 0);
@@ -239,7 +239,7 @@ var eng_one_egt_check = maketimer(0.5, func {
 });
 
 var eng_one_n2_check = maketimer(0.5, func {
-	if (getprop("/engines/engine[0]/n2-actual") >= 43.0) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 43.0) {
 		if (getprop("/controls/engines/engine[0]/igniter-a") != 0) {
 			setprop("/controls/engines/engine[0]/igniter-a", 0);
 		}
@@ -247,7 +247,7 @@ var eng_one_n2_check = maketimer(0.5, func {
 			setprop("/controls/engines/engine[0]/igniter-b", 0);
 		}
 	}
-	if (getprop("/engines/engine[0]/n2-actual") >= 57.0) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 57.0) {
 		eng_one_n2_check.stop();
 		setprop("/systems/pneumatics/valves/starter-valve-1", 0);
 		setprop("/engines/engine[0]/state", 3);
@@ -262,7 +262,7 @@ var auto_start_two = func {
 }
 
 var eng_two_auto_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n1-actual") >= 4.7) {
+	if (pts.Engines.Engine.n1Actual[1].getValue() >= 4.7) {
 		eng_two_auto_start.stop();
 		setprop("/engines/engine[1]/state", 2);
 		setprop("/controls/engines/engine[1]/cutoff", 0);
@@ -282,7 +282,7 @@ var eng_two_auto_start = maketimer(0.5, func {
 });
 
 var eng_two_man_start = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n2-actual") >= 16.7) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 16.7) {
 		eng_two_man_start.stop();
 		setprop("/engines/engine[1]/state", 2);
 		setprop("/controls/engines/engine[1]/cutoff", 0);
@@ -302,7 +302,7 @@ var eng_two_egt_check = maketimer(0.5, func {
 });
 
 var eng_two_n2_check = maketimer(0.5, func {
-	if (getprop("/engines/engine[1]/n2-actual") >= 43.0) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 43.0) {
 		if (getprop("/controls/engines/engine[1]/igniter-a") != 0) {
 			setprop("/controls/engines/engine[1]/igniter-a", 0);
 		}
@@ -310,7 +310,7 @@ var eng_two_n2_check = maketimer(0.5, func {
 			setprop("/controls/engines/engine[1]/igniter-b", 0);
 		}
 	}
-	if (getprop("/engines/engine[1]/n2-actual") >= 57.0) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 57.0) {
 		eng_two_n2_check.stop();
 		setprop("/systems/pneumatics/valves/starter-valve-2", 0);
 		setprop("/engines/engine[1]/state", 3);
@@ -319,23 +319,23 @@ var eng_two_n2_check = maketimer(0.5, func {
 
 # Various Other Stuff
 setlistener("/controls/engines/engine-start-switch", func {
-	if (getprop("/engines/engine[0]/state") == 0) {
+	if (pts.Engines.Engine.state[0].getValue() == 0) {
 		start_one_check();
 		start_one_mancheck();
 	}
-	if (getprop("/engines/engine[1]/state") == 0) {
+	if (pts.Engines.Engine.state[1].getValue() == 0) {
 		start_two_check();
 		start_two_mancheck();
 	}
 	if ((getprop("/controls/engines/engine-start-switch") == 0) or (getprop("/controls/engines/engine-start-switch") == 1)) {
-		if (getprop("/engines/engine[0]/state") == 1 or getprop("/engines/engine[0]/state") == 2) {
+		if (pts.Engines.Engine.state[0].getValue() == 1 or pts.Engines.Engine.state[0].getValue() == 2) {
 			setprop("/controls/engines/engine[0]/starter", 0);
 			setprop("/controls/engines/engine[0]/cutoff", 1);
 			setprop("/systems/pneumatics/valves/starter-valve-1", 0);
 			setprop("/engines/engine[0]/state", 0);
 			interpolate(engines[0].getNode("egt-actual"), 0, egt_shutdown_time);
 		}
-		if (getprop("/engines/engine[1]/state") == 1 or getprop("/engines/engine[1]/state") == 2) {
+		if (pts.Engines.Engine.state[1].getValue() == 1 or pts.Engines.Engine.state[1].getValue() == 2) {
 			setprop("/controls/engines/engine[1]/starter", 0);
 			setprop("/controls/engines/engine[1]/cutoff", 1);
 			setprop("/systems/pneumatics/valves/starter-valve-2", 0);
@@ -347,7 +347,7 @@ setlistener("/controls/engines/engine-start-switch", func {
 
 setlistener("/systems/pneumatics/psi/engine-1-psi", func {
 	if (systems.PNEU.Psi.engine1.getValue() < 24.5) {
-		if (getprop("/engines/engine[0]/state") == 1 or getprop("/engines/engine[0]/state") == 2) {
+		if (pts.Engines.Engine.state[0].getValue() == 1 or pts.Engines.Engine.state[0].getValue() == 2) {
 			setprop("/controls/engines/engine[0]/starter", 0);
 			setprop("/controls/engines/engine[0]/cutoff", 1);
 			setprop("/systems/pneumatics/valves/starter-valve-1", 0);
@@ -359,7 +359,7 @@ setlistener("/systems/pneumatics/psi/engine-1-psi", func {
 
 setlistener("/systems/pneumatics/psi/engine-2-psi", func {
 	if (systems.PNEU.Psi.engine2.getValue() < 24.5) {
-		if (getprop("/engines/engine[1]/state") == 1 or getprop("/engines/engine[1]/state") == 2) {
+		if (pts.Engines.Engine.state[1].getValue() == 1 or pts.Engines.Engine.state[1].getValue() == 2) {
 			setprop("/controls/engines/engine[1]/starter", 0);
 			setprop("/controls/engines/engine[1]/cutoff", 1);
 			setprop("/systems/pneumatics/valves/starter-valve-2", 0);
@@ -370,10 +370,10 @@ setlistener("/systems/pneumatics/psi/engine-2-psi", func {
 }, 0, 0);
 
 setlistener("/engines/engine[0]/state", func() {
-	setprop("/sim/sound/shutdown[0]", getprop("/engines/engine[0]/state"));
+	setprop("/sim/sound/shutdown[0]", pts.Engines.Engine.state[0].getValue());
 }, 0, 0);
 
 
 setlistener("/engines/engine[1]/state", func() {
-	setprop("/sim/sound/shutdown[1]", getprop("/engines/engine[1]/state"));
+	setprop("/sim/sound/shutdown[1]", pts.Engines.Engine.state[1].getValue());
 }, 0, 0);

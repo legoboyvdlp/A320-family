@@ -492,7 +492,7 @@ var takeoff = func {
 		# The same as taxi, except we set some things afterwards.
 		taxi();
 		var eng_one_chk_c = setlistener("/engines/engine[0]/state", func {
-			if (getprop("/engines/engine[0]/state") == 3) {
+			if (pts.Engines.Engine.state[0].getValue() == 3) {
 				removelistener(eng_one_chk_c);
 				setprop("/controls/switches/strobe", 1.0);
 				setprop("/controls/lighting/taxi-light-switch", 1);

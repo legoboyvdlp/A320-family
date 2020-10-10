@@ -12,7 +12,7 @@ var leftOverflow  = props.globals.initNode("/ECAM/warnings/overflow-left", 0, "B
 var rightOverflow = props.globals.initNode("/ECAM/warnings/overflow-right", 0, "BOOL");
 var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
-var dc_ess = props.globals.getNode("systems/electrical/bus/dc-ess", 1);
+var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
 var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL")];

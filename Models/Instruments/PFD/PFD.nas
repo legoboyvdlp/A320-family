@@ -2023,7 +2023,6 @@ var canvas_PFD_2 = {
 				me["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 			}
 			
-			tgt_ias = at_tgt_ias.getValue();
 			if (tgt_ias <= 30) {
 				me.ASItrgt = 0 - me.ASI;
 			} else if (tgt_ias >= 420) {
@@ -2146,7 +2145,7 @@ var canvas_PFD_2 = {
 				me["F_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_S = tgt_S = fmgc.FMGCInternal.slat;
+				tgt_S = fmgc.FMGCInternal.slat;
 			
 				if (tgt_S <= 30) {
 					me.Strgt = 0 - me.ASI;
@@ -2180,7 +2179,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = fmgc.FMGCInternal.flap2;
+				tgt_F = fmgc.FMGCInternal.flap2;
 				
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2214,7 +2213,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["clean_speed"].hide();
 				
-				tgt_F = tgt_S = fmgc.FMGCInternal.flap3;
+				tgt_F = fmgc.FMGCInternal.flap3;
 					
 				if (tgt_F <= 30) {
 					me.Ftrgt = 0 - me.ASI;
@@ -2253,7 +2252,7 @@ var canvas_PFD_2 = {
 				me["S_target"].hide();
 				me["F_target"].hide();
 				
-				tgt_clean = tgt_S = fmgc.FMGCInternal.clean;
+				tgt_clean = fmgc.FMGCInternal.clean;
 				
 				me.cleantrgt = tgt_clean - 30 - me.ASI;
 				me.SPDcleantrgtdiff = tgt_clean - ind_spd;

@@ -41,6 +41,14 @@ var fadecpowerup = props.globals.getNode("/systems/fadec/powerup", 1);
 var thr_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
 var n1_limit = props.globals.getNode("/controls/engines/n1-limit", 1);
 var epr_limit = props.globals.getNode("/controls/engines/epr-limit", 1);
+var flapXOffset = props.globals.getNode("/ECAM/Upper/FlapX", 1);
+var flapYOffset = props.globals.getNode("/ECAM/Upper/FlapY", 1);
+var slatXOffset = props.globals.getNode("/ECAM/Upper/SlatX", 1);
+var slatYOffset = props.globals.getNode("/ECAM/Upper/SlatY", 1);
+var flapXTranslate = props.globals.getNode("/ECAM/Upper/FlapXtrans", 1);
+var flapYTranslate = props.globals.getNode("/ECAM/Upper/FlapYtrans", 1);
+var slatXTranslate = props.globals.getNode("/ECAM/Upper/SlatXtrans", 1);
+var slatYTranslate = props.globals.getNode("/ECAM/Upper/SlatYtrans", 1);
 var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
 var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
 var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
@@ -119,6 +127,21 @@ var canvas_upperECAM_base = {
 		var svg_keys = me.getKeys();
 		foreach(var key; svg_keys) {
 			me[key] = canvas_group.getElementById(key);
+			
+			var clip_el = canvas_group.getElementById(key ~ "_clip");
+			if (clip_el != nil) {
+				clip_el.setVisible(0);
+				var tran_rect = clip_el.getTransformedBounds();
+
+				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+				tran_rect[1], # 0 ys
+				tran_rect[2], # 1 xe
+				tran_rect[3], # 2 ye
+				tran_rect[0]); #3 xs
+				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
+				me[key].set("clip", clip_rect);
+				me[key].set("clip-frame", canvas.Element.PARENT);
+			}
 		}
 		
 		# set font
@@ -297,6 +320,11 @@ var canvas_upperECAM_base = {
 			me["SlatAlphaLock"].hide();	
 		}
 		
+		me["FlapIndicator"].setTranslation(flapXOffset.getValue(),flapYOffset.getValue());
+		me["SlatIndicator"].setTranslation(slatXOffset.getValue(),slatYOffset.getValue());
+		me["FlapLine"].setTranslation(flapXTranslate.getValue(),flapYTranslate.getValue());
+		me["SlatLine"].setTranslation(slatXTranslate.getValue(),slatYTranslate.getValue());
+		
 		# FOB
 		if (acconfig_weight_kgs.getValue())
 		{
@@ -345,7 +373,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock"];
+		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine"];
 	},
 	update: func() {
 		# N1
@@ -604,7 +632,7 @@ var canvas_upperECAM_iae_eis2 = {
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
 		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock"];
+		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine"];
 	},
 	update: func() {
 		N1_1_cur = N1_1.getValue();
@@ -927,6 +955,21 @@ var canvas_upperECAM_test = {
 		var svg_keys = me.getKeys();
 		foreach(var key; svg_keys) {
 			me[key] = canvas_group.getElementById(key);
+			
+			var clip_el = canvas_group.getElementById(key ~ "_clip");
+			if (clip_el != nil) {
+				clip_el.setVisible(0);
+				var tran_rect = clip_el.getTransformedBounds();
+
+				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+				tran_rect[1], # 0 ys
+				tran_rect[2], # 1 xe
+				tran_rect[3], # 2 ye
+				tran_rect[0]); #3 xs
+				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
+				me[key].set("clip", clip_rect);
+				me[key].set("clip-frame", canvas.Element.PARENT);
+			}
 		}
 
 		me.page = canvas_group;

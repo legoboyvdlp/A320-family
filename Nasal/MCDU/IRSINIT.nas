@@ -82,17 +82,17 @@ var initInputIRS = func(key, i) {
 	} else if (key == "R6") {
 		setprop("FMGC/internal/align-ref-lat-edit", 0);
 		setprop("FMGC/internal/align-ref-long-edit", 0);
-		if (fmgc.FMGCInternal.toFromSet and getprop("systems/navigation/adr/any-adr-on") == 1) {
+		if (fmgc.FMGCInternal.toFromSet and getprop("/systems/navigation/adr/any-adr-on") == 1) {
 			if (getprop("FMGC/internal/align-set") == 0) {
 				setprop("FMGC/internal/align-set", 1);
 			} else {
-				setprop("controls/adirs/mcducbtn", 1);
+				setprop("/controls/adirs/mcducbtn", 1);
 				setprop("FMGC/internal/align-set", 0);
 				setprop("MCDU[" ~ i ~ "]/page", "INITA");
 			}
 		} else if (!fmgc.FMGCInternal.toFromSet) {
 			# setprop("MCDU[" ~ i ~ "]/scratchpad", "SELECT REFERENCE");
-		} else if (getprop("systems/navigation/adr/any-adr-on") == 0) {
+		} else if (getprop("/systems/navigation/adr/any-adr-on") == 0) {
 			# setprop("MCDU[" ~ i ~ "]/scratchpad", "IRS NOT ALIGNED");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");

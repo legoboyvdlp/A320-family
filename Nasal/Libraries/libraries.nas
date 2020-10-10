@@ -50,7 +50,7 @@ setlistener("/sim/sounde/btn1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -59,7 +59,7 @@ setlistener("/sim/sounde/oh-btn", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/oh-btn").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/oh-btn").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -68,7 +68,7 @@ setlistener("/sim/sounde/btn3", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn3").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn3").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -77,7 +77,7 @@ setlistener("/sim/sounde/knb1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/knb1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/knb1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -86,21 +86,21 @@ setlistener("/sim/sounde/switch1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/switch1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/switch1").setBoolValue(0);
 	}, 0.05);
 });
 
 setlistener("/controls/lighting/seatbelt-sign", func {
-	props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(0);
 	}, 2);
 }, 0, 0);
 
 setlistener("/controls/lighting/no-smoking-sign", func {
-	props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(0);
 	}, 1);
 }, 0, 0);
 
