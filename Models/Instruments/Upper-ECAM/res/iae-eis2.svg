@@ -1788,4 +1788,12 @@
      x="718.86694"
      y="594.42938"
      inkscape:label="#rect1023" />
+  <rect
+     inkscape:label="#rect1023"
+     y="594.05438"
+     x="554.93781"
+     height="48.089657"
+     width="137.63597"
+     id="SlatLine_clip"
+     style="opacity:0.5;fill:none;fill-opacity:1;stroke:none;stroke-width:3.34691048;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" />
 </svg>

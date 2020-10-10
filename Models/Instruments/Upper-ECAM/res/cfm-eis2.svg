@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="11.313709"
-     inkscape:cx="1211.5956"
-     inkscape:cy="524.36594"
+     inkscape:zoom="1"
+     inkscape:cx="718.57047"
+     inkscape:cy="505.8628"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -1420,4 +1420,12 @@
      x="718.86694"
      y="594.42938"
      inkscape:label="#rect1023" />
+  <rect
+     inkscape:label="#rect1023"
+     y="594.05438"
+     x="554.93781"
+     height="48.089657"
+     width="137.63597"
+     id="SlatLine_clip"
+     style="opacity:0.5;fill:none;fill-opacity:1;stroke:none;stroke-width:3.34691048;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" />
 </svg>

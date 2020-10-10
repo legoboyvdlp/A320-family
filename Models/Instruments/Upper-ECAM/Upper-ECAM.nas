@@ -47,6 +47,8 @@ var slatXOffset = props.globals.getNode("/ECAM/Upper/SlatX", 1);
 var slatYOffset = props.globals.getNode("/ECAM/Upper/SlatY", 1);
 var flapXTranslate = props.globals.getNode("/ECAM/Upper/FlapXtrans", 1);
 var flapYTranslate = props.globals.getNode("/ECAM/Upper/FlapYtrans", 1);
+var slatXTranslate = props.globals.getNode("/ECAM/Upper/SlatXtrans", 1);
+var slatYTranslate = props.globals.getNode("/ECAM/Upper/SlatYtrans", 1);
 var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
 var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
 var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
@@ -321,6 +323,8 @@ var canvas_upperECAM_base = {
 		me["FlapIndicator"].setTranslation(flapXOffset.getValue(),flapYOffset.getValue());
 		me["SlatIndicator"].setTranslation(slatXOffset.getValue(),slatYOffset.getValue());
 		me["FlapLine"].setTranslation(flapXTranslate.getValue(),flapYTranslate.getValue());
+		me["SlatLine"].setTranslation(slatXTranslate.getValue(),slatYTranslate.getValue());
+		
 		# FOB
 		if (acconfig_weight_kgs.getValue())
 		{
