@@ -551,6 +551,10 @@ var updateFuel = func {
 		#print("Fuel: ", FMGCInternal.desFuel);
 		#print("Time: ", FMGCInternal.desTime);
 		#print("Dist: ", FMGCInternal.desDist);
+		
+		flightPlanController.calculateVerticalPoints(0);
+		flightPlanController.calculateVerticalPoints(1);
+		flightPlanController.calculateVerticalPoints(2);
 	}
 }
 
