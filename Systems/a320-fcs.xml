@@ -317,7 +317,7 @@
 		<aerosurface_scale name="hydraulics/elevator-trim/cmd-deg">
 			<input>/controls/flight/elevator-trim</input>
 			<domain>
-				<min>-1.00</min>
+				<min>-1.0</min>
 				<max>0.296296</max>
 			</domain>
 			<range>
