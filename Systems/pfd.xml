@@ -325,6 +325,7 @@
 					<entry><ind>-15.0</ind><dep>-13.75</dep></entry>
 					<entry><ind>-10.0</ind><dep>-10.00</dep></entry>
 					<entry><ind>  0.0</ind><dep>  0.00</dep></entry>
+					<entry><ind> 27.5</ind><dep> 27.50</dep></entry>
 					<entry><ind> 30.0</ind><dep> 28.75</dep></entry>
 					<entry><ind> 50.0</ind><dep> 38.75</dep></entry>
 					<entry><ind> 80.0</ind><dep> 53.75</dep></entry>
@@ -333,8 +334,6 @@
 			</expression>
 		</input>
 		<output>/instrumentation/pfd/pitch-deg-non-linear</output>
-		<min>-57.50</min>
-		<max> 63.75</max>
 	</filter>
 	
 	<filter>
