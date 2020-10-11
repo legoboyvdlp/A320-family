@@ -212,7 +212,7 @@ var canvas_PFD_base = {
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","spdLimError"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -1066,6 +1066,14 @@ var canvas_PFD_1 = {
 			me["VS_group"].hide();
 		}
 		
+		# Apparently SPD LIM only on captains PFD. I find this odd. But manual says it.
+		# Spd Lim Error
+		if (!fbw.FBW.Computers.fac1.getValue() and !fbw.FBW.Computers.fac2.getValue()) {
+			me["spdLimError"].show();
+		} else {
+			me["spdLimError"].hide();
+		}
+		
 		# FD
 		if (fd1_act == 1 and ((!wow1_act and !wow2_act and roll_mode_cur != " ") or roll_mode_cur != " ") and ap_trk_sw.getValue() == 0 and pitch_cur < 25 and pitch_cur > -13 and roll_cur < 45 and roll_cur > -45) {
 			me["FD_roll"].show();
@@ -1202,8 +1210,14 @@ var canvas_PFD_1 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
-
+			
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
+				me["ASI_max"].show();
+			} else {
+				me["ASI_max"].hide();
+			}
+			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
 				if (me.FMGC_vls <= 30) {
@@ -1237,19 +1251,27 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
 				}
-				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
-				me["VLS_min"].show();
-				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
-				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
-				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-				if (getprop("/it-fbw/law") == 0) {
-					me["ALPHA_PROT"].show();
-					me["ALPHA_MAX"].show();
-					me["ALPHA_SW"].hide();
+				
+				if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+					me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
+					me["VLS_min"].show();
+					if (getprop("/it-fbw/law") == 0) {
+						me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
+						me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
+						me["ALPHA_PROT"].show();
+						me["ALPHA_MAX"].show();
+						me["ALPHA_SW"].hide();
+					} else {
+						me["ALPHA_PROT"].hide();
+						me["ALPHA_MAX"].hide();
+						me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
+						me["ALPHA_SW"].show();
+					}
 				} else {
+					me["VLS_min"].hide();
 					me["ALPHA_PROT"].hide();
 					me["ALPHA_MAX"].hide();
-					me["ALPHA_SW"].show();
+					me["ALPHA_SW"].hide();
 				}
 			}
 			
@@ -1403,145 +1425,147 @@ var canvas_PFD_1 = {
 				}
 			}
 			
-			if (flap_config.getValue() == '1') {
-				me["F_target"].hide();
-				me["clean_speed"].hide();
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				if (flap_config.getValue() == '1') {
+					me["F_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_S = fmgc.FMGCInternal.slat;
 				
-				tgt_S = fmgc.FMGCInternal.slat;
-			
-				if (tgt_S <= 30) {
-					me.Strgt = 0 - me.ASI;
-				} else if (tgt_S >= 420) {
-					me.Strgt = 390 - me.ASI;
-				} else {
-					me.Strgt = tgt_S - 30 - me.ASI;
-				}
-			
-				me.SPDstrgtdiff = tgt_S - ind_spd;
-			
-				if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42) {
-					me["S_target"].show();
-					me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					if (tgt_S <= 30) {
+						me.Strgt = 0 - me.ASI;
+					} else if (tgt_S >= 420) {
+						me.Strgt = 390 - me.ASI;
+					} else {
+						me.Strgt = tgt_S - 30 - me.ASI;
+					}
+				
+					me.SPDstrgtdiff = tgt_S - ind_spd;
+				
+					if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["S_target"].show();
+						me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					} else {
+						me["S_target"].hide();
+					}
+					
+					tgt_flap = 200;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '2') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap2;
+					
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 185;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '3') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap3;
+						
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 177;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '4') {
+					me["S_target"].hide();
+					me["F_target"].hide();
+					me["clean_speed"].hide();	
+					me["flap_max"].hide();
 				} else {
 					me["S_target"].hide();
-				}
-				
-				tgt_flap = 200;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '2') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap2;
-				
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
 					me["F_target"].hide();
-				}
-				
-				tgt_flap = 185;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '3') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap3;
 					
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
-					me["F_target"].hide();
-				}
+					tgt_clean = fmgc.FMGCInternal.clean;
+					
+					me.cleantrgt = tgt_clean - 30 - me.ASI;
+					me.SPDcleantrgtdiff = tgt_clean - ind_spd;
 				
-				tgt_flap = 177;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
+					if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
+						me["clean_speed"].show();
+						me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
+					} else {
+						me["clean_speed"].hide();
+					}	
+					
+					tgt_flap = 230;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
 				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
 				}
-			} else if (flap_config.getValue() == '4') {
-				me["S_target"].hide();
-				me["F_target"].hide();
-				me["clean_speed"].hide();	
-				me["flap_max"].hide();
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
-				
-				tgt_clean = fmgc.FMGCInternal.clean;
-				
-				me.cleantrgt = tgt_clean - 30 - me.ASI;
-				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
-			
-				if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
-					me["clean_speed"].show();
-					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
-				} else {
-					me["clean_speed"].hide();
-				}	
-				
-				tgt_flap = 230;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			}
-			
-			if (gear_agl.getValue() < 400) {
-				me["S_target"].hide();
-				me["F_target"].hide();
+				me["clean_speed"].hide();
+				me["flap_max"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
@@ -1803,6 +1827,7 @@ var canvas_PFD_2 = {
 			me["VS_error"].show();
 			me["VS_group"].hide();
 		}
+		me["spdLimError"].hide();
 		
 		# FD
 		if (fd2_act == 1 and ((!wow1_act and !wow2_act and roll_mode_cur != " ") or roll_mode_cur != " ") and ap_trk_sw.getValue() == 0 and pitch_cur < 25 and pitch_cur > -13 and roll_cur < 45 and roll_cur > -45) {
@@ -1940,8 +1965,13 @@ var canvas_PFD_2 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
-
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
+				me["ASI_max"].show();
+			} else {
+				me["ASI_max"].hide();
+			}
+			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
 				if (me.FMGC_vls <= 30) {
@@ -1975,19 +2005,27 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
 				}
-				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
-				me["VLS_min"].show();
-				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
-				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
-				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-				if (getprop("/it-fbw/law") == 0) {
-					me["ALPHA_PROT"].show();
-					me["ALPHA_MAX"].show();
-					me["ALPHA_SW"].hide();
+				
+				if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+					me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
+					me["VLS_min"].show();
+					if (getprop("/it-fbw/law") == 0) {
+						me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
+						me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
+						me["ALPHA_PROT"].show();
+						me["ALPHA_MAX"].show();
+						me["ALPHA_SW"].hide();
+					} else {
+						me["ALPHA_PROT"].hide();
+						me["ALPHA_MAX"].hide();
+						me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
+						me["ALPHA_SW"].show();
+					}
 				} else {
+					me["VLS_min"].hide();
 					me["ALPHA_PROT"].hide();
 					me["ALPHA_MAX"].hide();
-					me["ALPHA_SW"].show();
+					me["ALPHA_SW"].hide();
 				}
 			}
 			
@@ -2141,145 +2179,147 @@ var canvas_PFD_2 = {
 				}
 			}
 			
-			if (flap_config.getValue() == '1') {
-				me["F_target"].hide();
-				me["clean_speed"].hide();
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				if (flap_config.getValue() == '1') {
+					me["F_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_S = fmgc.FMGCInternal.slat;
 				
-				tgt_S = fmgc.FMGCInternal.slat;
-			
-				if (tgt_S <= 30) {
-					me.Strgt = 0 - me.ASI;
-				} else if (tgt_S >= 420) {
-					me.Strgt = 390 - me.ASI;
-				} else {
-					me.Strgt = tgt_S - 30 - me.ASI;
-				}
-			
-				me.SPDstrgtdiff = tgt_S - ind_spd;
-			
-				if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42) {
-					me["S_target"].show();
-					me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					if (tgt_S <= 30) {
+						me.Strgt = 0 - me.ASI;
+					} else if (tgt_S >= 420) {
+						me.Strgt = 390 - me.ASI;
+					} else {
+						me.Strgt = tgt_S - 30 - me.ASI;
+					}
+				
+					me.SPDstrgtdiff = tgt_S - ind_spd;
+				
+					if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["S_target"].show();
+						me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					} else {
+						me["S_target"].hide();
+					}
+					
+					tgt_flap = 200;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '2') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap2;
+					
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 185;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '3') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap3;
+						
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 177;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '4') {
+					me["S_target"].hide();
+					me["F_target"].hide();
+					me["clean_speed"].hide();	
+					me["flap_max"].hide();
 				} else {
 					me["S_target"].hide();
-				}
-				
-				tgt_flap = 200;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '2') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap2;
-				
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
 					me["F_target"].hide();
-				}
-				
-				tgt_flap = 185;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '3') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap3;
 					
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
-					me["F_target"].hide();
-				}
+					tgt_clean = fmgc.FMGCInternal.clean;
+					
+					me.cleantrgt = tgt_clean - 30 - me.ASI;
+					me.SPDcleantrgtdiff = tgt_clean - ind_spd;
 				
-				tgt_flap = 177;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
+					if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
+						me["clean_speed"].show();
+						me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
+					} else {
+						me["clean_speed"].hide();
+					}	
+					
+					tgt_flap = 230;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
 				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
 				}
-			} else if (flap_config.getValue() == '4') {
-				me["S_target"].hide();
-				me["F_target"].hide();
-				me["clean_speed"].hide();	
-				me["flap_max"].hide();
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
-				
-				tgt_clean = fmgc.FMGCInternal.clean;
-				
-				me.cleantrgt = tgt_clean - 30 - me.ASI;
-				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
-			
-				if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
-					me["clean_speed"].show();
-					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
-				} else {
-					me["clean_speed"].hide();
-				}	
-				
-				tgt_flap = 230;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			}
-			
-			if (gear_agl.getValue() < 400) {
-				me["S_target"].hide();
-				me["F_target"].hide();
+				me["clean_speed"].hide();
+				me["flap_max"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;

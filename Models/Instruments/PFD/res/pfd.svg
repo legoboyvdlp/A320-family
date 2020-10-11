@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="pfd.svg"
-   inkscape:version="1.0beta2 (2b71d25, 2019-12-03)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    id="svg2"
    version="1.1"
    viewBox="0 0 1024 1024"
@@ -39,15 +39,15 @@
      showguides="true"
      inkscape:current-layer="svg2"
      inkscape:window-maximized="1"
-     inkscape:window-y="23"
-     inkscape:window-x="0"
-     inkscape:cy="886.5494"
-     inkscape:cx="916.44902"
-     inkscape:zoom="2.1546825"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="567.21927"
+     inkscape:cx="992.76655"
+     inkscape:zoom="1.0773413"
      showgrid="true"
      id="namedview371"
-     inkscape:window-height="1035"
-     inkscape:window-width="1920"
+     inkscape:window-height="705"
+     inkscape:window-width="1366"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -2607,14 +2607,6 @@
      width="33.21196"
      id="LOC_pointer"
      style="fill:none;fill-opacity:1;stroke:#b055be;stroke-width:4.0350337;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  <rect
-     style="display:inline;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:3.22735;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-     id="ground_ref"
-     width="16.287683"
-     height="2088.8245"
-     x="857.0014"
-     y="512.75592"
-     inkscape:label="ground_ref" />
   <g
      inkscape:label="#g4828"
      id="ALT_group2">
@@ -6503,6 +6495,14 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
   </g>
+  <rect
+     style="display:inline;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:3.22735;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+     id="ground_ref"
+     width="16.287683"
+     height="2088.8245"
+     x="857.0014"
+     y="512.75592"
+     inkscape:label="ground_ref" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -6656,4 +6656,21 @@
        x="61.095329"
        y="74.429939"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.9995px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">FLX</tspan></text>
+  <text
+     inkscape:label="#text1607"
+     id="spdLimError"
+     y="742.30011"
+     x="135.06754"
+     style="font-style:normal;font-weight:normal;font-size:30.00000191px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:0.5;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ff0000;fill-opacity:1;stroke-width:0.75"
+       y="742.30011"
+       x="135.06754"
+       id="tspan1605-4"
+       sodipodi:role="line">SPD</tspan><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:0.5;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ff0000;fill-opacity:1;stroke-width:0.75"
+       y="779.80011"
+       x="135.06754"
+       sodipodi:role="line"
+       id="tspan1860">LIM</tspan></text>
 </svg>

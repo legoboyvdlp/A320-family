@@ -880,6 +880,8 @@ var canvas_upperECAM_iae_eis2 = {
 		}
 		
 		# FF
+		fuel1 = pts.Engines.Engine.fuelFlow[0].getValue();
+		fuel2 = pts.Engines.Engine.fuelFlow[1].getValue();
 		if (acconfig_weight_kgs.getValue()) {
 			me["FF1"].setText(sprintf("%s", math.round(fuel1 * LBS2KGS, 10)));
 			me["FF2"].setText(sprintf("%s", math.round(fuel2 * LBS2KGS, 10)));
