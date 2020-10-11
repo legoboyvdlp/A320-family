@@ -96,8 +96,11 @@ var Fdm = {
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
 		},
 		Hydraulics: {
+			ElevatorTrim: {
+				cmdDeg: props.globals.getNode("/fdm/jsbsim/hydraulics/elevator-trim/cmd-deg"),
+			},
 			Rudder: {
-				trimDeg: props.globals.getNode("fdm/jsbsim/hydraulics/rudder/trim-deg"),
+				trimDeg: props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/trim-deg"),
 			},
 		},
 		Inertia: {
