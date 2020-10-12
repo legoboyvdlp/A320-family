@@ -12,7 +12,7 @@ var PFD1_display = nil;
 var PFD2_display = nil;
 var updateL = 0;
 var updateR = 0;
-var elapsedtime = 0;
+var et = 0;
 var altTens = 0;
 var altPolarity = "";
 
