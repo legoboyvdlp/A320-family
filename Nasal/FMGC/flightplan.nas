@@ -726,23 +726,9 @@ var flightPlanController = {
 	},
 	
 	calculateVerticalPoints: func(n) {
-		#print("Changed verticle points for - ", n);
-		if (me.getPlanSizeNoDiscont(n) <= 1) { 
+		print("Changed verticle points for - ", n);
+		if (me.getPlanSizeNoDiscont(n) <= 1) {
 			return;			
-		}
-	
-		me.indexTOC = me.getIndexOfTOC(n);
-		if (me.indexTOC != -99) {
-			me.flightplans[n].deleteWP(me.indexTOC);
-			fmgc.windController.deleteWind(n, me.indexTOC);
-			me.flightPlanChanged(n, 0);
-		}
-		
-		me.indexTOD = me.getIndexOfTOD(n);
-		if (me.indexTOD != -99) {
-			me.flightplans[n].deleteWP(me.indexTOD);
-			fmgc.windController.deleteWind(n, me.indexTOD);
-			me.flightPlanChanged(n, 0);
 		}
 		
 		if (fmgc.FMGCInternal.clbSet and fmgc.FMGCInternal.desSet) {
@@ -773,10 +759,39 @@ var flightPlanController = {
 # 			}
 			#me.todPoint = me.flightplans[n].pathGeod(me.indexTOD, -me.tod_distance);
 			
-			me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
+			if (me.getIndexOfTOC(n) != -99) {
+ 				me.toc_distance_old = 0;
+ 				for (var wpt = me.indexTOC; wpt > 0; wpt -= 1) {
+ 					me.toc_distance_old += me.flightplans[n].getWP(wpt - 1).leg_distance;
+ 				}
+				if (abs(me.toc_distance_old - me.toc_distance) > 1) {
+					me.flightplans[n].deleteWP(me.indexTOC);
+					fmgc.windController.deleteWind(n, me.indexTOC);
+					me.flightPlanChanged(n, 0);
+					me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
+					me.flightPlanChanged(n, 0);
+				}
+ 			} else if (me.indexTOC != 0) {
+ 				me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
+ 				me.flightPlanChanged(n, 0);
+ 			}
+			
 			#me.insertTOD(n, {lat: me.todPoint.lat, lon: me.todPoint.lon}, me.indexTOD);
 			
-			me.flightPlanChanged(n, 0);
+		} else {
+			me.indexTOC = me.getIndexOfTOC(n);
+			if (me.indexTOC != -99) {
+				me.flightplans[n].deleteWP(me.indexTOC);
+				fmgc.windController.deleteWind(n, me.indexTOC);
+				me.flightPlanChanged(n, 0);
+			}
+		
+			me.indexTOD = me.getIndexOfTOD(n);
+			if (me.indexTOD != -99) {
+				me.flightplans[n].deleteWP(me.indexTOD);
+				fmgc.windController.deleteWind(n, me.indexTOD);
+				me.flightPlanChanged(n, 0);
+			}
 		}
 	},
 	
@@ -840,7 +855,7 @@ var flightPlanController = {
 		}
 	},
 	
-	flightPlanChanged: func(n) {
+	flightPlanChanged: func(n, fuelContinue = 1) {
 		sizeWP = size(wpID[n]);
 		for (var counter = sizeWP; counter < me.flightplans[n].getPlanSize(); counter += 1) { # create new properties if they are required
 			append(wpID[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/text", "", "STRING"));
@@ -851,20 +866,14 @@ var flightPlanController = {
 			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
-		
-		# pre-fuel calc update
 		me.updatePlans();
 		fmgc.windController.updatePlans();
 			
 		# push update to fuel
-		if (getprop("/FMGC/internal/block-confirmed")) {
+		if (getprop("/FMGC/internal/block-confirmed") and fuelContinue) {
 			setprop("/FMGC/internal/fuel-calculating", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 		}
-		
-		# post-fuel calc update
-		me.updatePlans();
-		fmgc.windController.updatePlans();
 		
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
