@@ -120,10 +120,10 @@ var ELEC = {
 		EmerGen: {
 			volts: props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt"),
 			hertz: props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz"),
+			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
 		},
 		Ext: {
 			volts: props.globals.getNode("/systems/electrical/sources/ext/output-volt"),
-			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
 			hertz: props.globals.getNode("/systems/electrical/sources/ext/output-hertz"),
 		},
 		tr1: {

@@ -1538,7 +1538,7 @@
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-				<factor>0.35</factor>
+				<factor>0.25</factor>
             </volume>
         </switch>
 		

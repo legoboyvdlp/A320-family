@@ -656,6 +656,15 @@
 			<gain>/systems/electrical/sources/si-1/inverter-gain</gain>
 		</pure_gain>
 		
+		<switch name="/systems/electrical/sources/si-1/fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/bat-1/volt lt 23.5
+				/systems/electrical/sources/si-1/output-volt lt 110
+				/systems/electrical/sources/si-1/output-volt ge 120
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/si-1/output-hertz">
 			<default value="0"/>
 			<test logic="AND" value="400">
