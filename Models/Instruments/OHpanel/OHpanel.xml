@@ -3134,7 +3134,11 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<and>
+					<and>	
+						<greater-than-equals>
+							<property>/engines/engine[0]/n2-actual</property>
+							<value>14.0</value>
+						</greater-than-equals>
 						<greater-than-equals>
 							<property>systems/electrical/bus/dc-ess</property>
 							<value>25</value>
@@ -3634,6 +3638,10 @@
 			<binding>
 				<condition>
 					<and>
+						<greater-than-equals>
+							<property>/engines/engine[1]/n2-actual</property>
+							<value>14.0</value>
+						</greater-than-equals>
 						<greater-than-equals>
 							<property>systems/electrical/bus/dc-ess</property>
 							<value>25</value>
