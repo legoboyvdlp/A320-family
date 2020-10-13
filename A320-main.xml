@@ -116,32 +116,37 @@
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/cockpit.png</path>
+				<path>Aircraft/A320-family/Splash/cockpit.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/cockpit2.png</path>
+				<path>Aircraft/A320-family/Splash/cockpit2.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/cockpit3.png</path>
+				<path>Aircraft/A320-family/Splash/cockpit3.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/wing1.png</path>
+				<path>Aircraft/A320-family/Splash/wing1.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/wing2.png</path>
+				<path>Aircraft/A320-family/Splash/wing2.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/wing3.png</path>
+				<path>Aircraft/A320-family/Splash/ext1.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Aircraft/A320-family/Splash/ext2.png</path>
 			</preview>
 		</previews>
 	
