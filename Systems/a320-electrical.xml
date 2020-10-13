@@ -770,6 +770,14 @@
 		</switch>
 		
 		<!-- Source Relays -->
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-powered">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/sources/idg-1/pmg-volt ge 110
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/idg-1/gcu-1-fault">
 			<default value="0"/>
 			<test logic="OR" value="0">
@@ -802,6 +810,14 @@
 			<default value="0"/>
 			<test value="/systems/electrical/sources/idg-1/output-volt">
 				/systems/electrical/relay/gen-1-glc/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-powered">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/sources/idg-2/pmg-volt ge 110
 			</test>
 		</switch>
 		

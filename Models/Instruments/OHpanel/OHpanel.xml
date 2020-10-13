@@ -3140,7 +3140,7 @@
 							<value>14.0</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>systems/electrical/bus/dc-bat</property>
 							<value>25</value>
 						</greater-than-equals>
 						<equals>
@@ -3214,16 +3214,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<property>/systems/electrical/sources/idg-1/gcu-1-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/gen-1</property>
@@ -3536,16 +3527,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<property>/systems/electrical/sources/idg-2/gcu-2-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/gen-2</property>
@@ -3643,7 +3625,7 @@
 							<value>14.0</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>systems/electrical/bus/dc-bat</property>
 							<value>25</value>
 						</greater-than-equals>
 						<equals>
