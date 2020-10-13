@@ -153,9 +153,9 @@ var ELEC = {
 	},
 	Switch: {
 		acEssFeed: props.globals.getNode("/controls/electrical/switches/ac-ess-feed"),
-		busTie: props.globals.getNode("/controls/electrical/switches/bus-tie"),
 		bat1: props.globals.getNode("/controls/electrical/switches/bat-1"),
 		bat2: props.globals.getNode("/controls/electrical/switches/bat-2"),
+		busTie: props.globals.getNode("/controls/electrical/switches/bus-tie"),
 		emerGenTest: props.globals.getNode("/controls/electrical/switches/emer-gen-test"),
 		extPwr: props.globals.getNode("/controls/electrical/switches/ext-pwr"),
 		galley: props.globals.getNode("/controls/electrical/switches/galley"),
