@@ -525,27 +525,15 @@
 		</pure_gain>
 		
 		<!-- APU gen -->
-		<pure_gain name="/systems/electrical/sources/apu/drive-rpm-input">
+		<pure_gain name="/systems/electrical/sources/apu/drive-rpm">
 			<input>/engines/engine[2]/n1</input>
 			<gain>240.34</gain>
-		</pure_gain>
-		
-		<switch name="/systems/electrical/sources/apu/working">
-			<default value="1"/>
-			<test logic="OR" value="0">
-				/controls/apu/fire-btn eq 1
-			</test>
-		</switch>
-		
-		<pure_gain name="/systems/electrical/sources/apu/drive-rpm">
-			<input>/systems/electrical/sources/apu/drive-rpm-input</input>
-			<gain>/systems/electrical/sources/apu/working</gain>
 		</pure_gain>
 		
 		<fcs_function name="/systems/electrical/sources/apu/pmg-volt">
 			<function>
 				<product>
-					<property>/systems/electrical/sources/apu/drive-rpm-input</property>
+					<property>/systems/electrical/sources/apu/drive-rpm</property>
 					<quotient>
 						<value>115</value>
 						<value>24000</value>
@@ -558,7 +546,7 @@
 			<function>
 				<quotient>
 					<product>
-						<property>/systems/electrical/sources/apu/drive-rpm-input</property>
+						<property>/systems/electrical/sources/apu/drive-rpm</property>
 						<value>2</value> <!-- Number of poles in generator -->
 					</product>
 					<value>120</value>
@@ -569,9 +557,10 @@
 		<switch name="/systems/electrical/sources/apu/gcr-relay">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/controls/apu/fire-btn ne 1
 				/controls/electrical/switches/apu eq 1
 				/systems/failures/electrical/apu ne 1
-				/systems/electrical/sources/apu/drive-rpm-input ge 23000
+				/systems/electrical/sources/apu/drive-rpm ge 22800
 			</test>
 		</switch>
 		
@@ -934,16 +923,70 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/sources/apu/gcu-powered">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/sources/apu/pmg-volt ge 101.5
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/apu/gcu-voltage-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/apu/gcu-voltage-trip eq 1
+				/controls/electrical/switches/apu eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/apu-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/apu/output-volt lt 101.5
+					/systems/electrical/sources/apu/output-volt gt 130
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/apu/gcu-frequency-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/apu/gcu-frequency-trip eq 1
+				/controls/electrical/switches/apu eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/apu-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/apu/output-hertz lt 361
+					/systems/electrical/sources/apu/output-hertz gt 435
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/apu/gcu-fault">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+				/sim/time/elapsed-sec lt 10
+			</test>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/apu/gcu-voltage-trip eq 1
+				/systems/electrical/sources/apu/gcu-frequency-trip eq 1
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/relay/apu-glc/contact-pos">
 			<default value="0"/>
+			<test logic="OR" value="0">
+				/sim/time/elapsed-sec lt 10
+			</test>	
 			<test logic="AND" value="1">
 				/controls/apu/master eq 1
 				/controls/electrical/switches/apu eq 1
-				/systems/electrical/sources/apu/output-volt ge 110
-				/systems/electrical/sources/apu/output-volt lt 130
-				/systems/electrical/sources/apu/output-hertz ge 390
-				/systems/electrical/sources/apu/output-hertz le 410
+				/systems/electrical/sources/apu/output-volt ge 101.5
+				/systems/electrical/sources/apu/output-volt le 130
+				/systems/electrical/sources/apu/output-hertz ge 361
+				/systems/electrical/sources/apu/output-hertz le 435
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
+				/systems/electrical/sources/apu/gcu-fault ne 1 <!-- software trip -->
 			</test>
 		</switch>
 		
@@ -1870,11 +1913,16 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/electrical/switches/apu eq 1
-				/systems/electrical/relay/apu-glc/contact-pos eq 0
-				/systems/electrical/relay/ext-epc/contact-pos eq 0
-				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
-				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
-				/systems/electrical/sources/apu/drive-rpm gt 2000
+				<test logic="OR">
+					/systems/electrical/sources/apu/gcu-fault eq 1
+					<test logic="AND">
+						/systems/electrical/relay/apu-glc/contact-pos eq 0
+						/systems/electrical/relay/ext-epc/contact-pos eq 0
+						/systems/electrical/relay/gen-1-glc/contact-pos eq 0
+						/systems/electrical/relay/gen-2-glc/contact-pos eq 0
+					</test>
+				</test>
+				/systems/electrical/sources/apu/drive-rpm gt 22800
 			</test>
 		</switch>
 		

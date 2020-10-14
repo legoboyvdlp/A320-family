@@ -3338,10 +3338,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-bat</property>
-						<value>25</value>
-					</greater-than-equals> <!-- control is on DC BAT bus 301PP via 11 PB - so if you enter EMER ELEC with it turned off, too bad -->
+					<property>/systems/electrical/sources/apu/gcu-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/apu</property>
