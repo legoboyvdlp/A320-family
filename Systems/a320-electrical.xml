@@ -5,6 +5,8 @@
 <system name="A320: Electrical">	
 	
 	<property value="0">/systems/electrical/some-electric-thingie/rat-deploy</property>
+	<property value="0">/systems/electrical/relay/gen-1-glc/contact-pos</property>
+	<property value="0">/systems/electrical/relay/gen-2-glc/contact-pos</property>
 	
 	<channel name="Main Electrical" execrate="8">
 		
@@ -778,31 +780,61 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-voltage-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-1/gcu-1-voltage-trip eq 1
+				/controls/electrical/switches/gen-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-1-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-1/output-volt lt 110
+					/systems/electrical/sources/idg-1/output-volt gt 130
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-frequency-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-1/gcu-1-frequency-trip eq 1
+				/controls/electrical/switches/gen-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-1-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-1/output-hertz lt 363
+					/systems/electrical/sources/idg-1/output-hertz gt 433
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/idg-1/gcu-1-fault">
 			<default value="0"/>
 			<test logic="OR" value="0">
 				/systems/acconfig/autoconfig-running eq 1
 				/sim/time/elapsed-sec lt 10
 			</test>
-			<test logic="AND" value="1">
-				/systems/electrical/sources/idg-1/gcu-1-fault eq 1
-				/controls/electrical/switches/gen-1 eq 1
-			</test>
 			<test logic="OR" value="1">
-				/systems/electrical/sources/idg-1/output-volt lt 110
-				/systems/electrical/sources/idg-1/output-volt gt 130
-				/systems/electrical/sources/idg-1/output-hertz lt 363
-				/systems/electrical/sources/idg-1/output-hertz gt 433
+				/systems/electrical/sources/idg-1/gcu-1-voltage-trip eq 1
+				/systems/electrical/sources/idg-1/gcu-1-frequency-trip eq 1
 				/systems/electrical/sources/idg-1/drive-rpm lt 4730
 			</test>
 		</switch>
 		
 		<switch name="/systems/electrical/relay/gen-1-glc/contact-pos">
 			<default value="0"/>
+			<test logic="OR" value="0">
+				/sim/time/elapsed-sec lt 10
+			</test>	
 			<test logic="AND" value="1">
 				/controls/electrical/switches/gen-1 eq 1
-				/systems/electrical/sources/idg-1/gcu-1-fault eq 0
-				/controls/electrical/switches/gen-1-line-contactor ne 1
+				/systems/electrical/sources/idg-1/output-hertz ge 363
+				/systems/electrical/sources/idg-1/output-hertz le 433
+				/systems/electrical/sources/idg-1/output-volt ge 110
+				/systems/electrical/sources/idg-1/output-volt le 130
+				/systems/electrical/sources/idg-1/gcu-1-fault ne 1 <!-- software trip -->
 			</test>
 		</switch>
 		
@@ -821,30 +853,61 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-voltage-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-2/gcu-2-voltage-trip eq 1
+				/controls/electrical/switches/gen-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-2-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-2/output-volt lt 110
+					/systems/electrical/sources/idg-2/output-volt gt 130
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-frequency-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-2/gcu-2-frequency-trip eq 1
+				/controls/electrical/switches/gen-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-2-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-2/output-hertz lt 363
+					/systems/electrical/sources/idg-2/output-hertz gt 433
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/idg-2/gcu-2-fault">
 			<default value="0"/>
 			<test logic="OR" value="0">
 				/systems/acconfig/autoconfig-running eq 1
 				/sim/time/elapsed-sec lt 10
 			</test>
-			<test logic="AND" value="1">
-				/systems/electrical/sources/idg-2/gcu-2-fault eq 1
-				/controls/electrical/switches/gen-2 eq 1
-			</test>
 			<test logic="OR" value="1">
-				/systems/electrical/sources/idg-2/output-volt lt 110
-				/systems/electrical/sources/idg-2/output-volt gt 130
-				/systems/electrical/sources/idg-2/output-hertz lt 363
-				/systems/electrical/sources/idg-2/output-hertz gt 433
+				/systems/electrical/sources/idg-2/gcu-2-voltage-trip eq 1
+				/systems/electrical/sources/idg-2/gcu-2-frequency-trip eq 1
 				/systems/electrical/sources/idg-2/drive-rpm lt 4730
 			</test>
 		</switch>
 		
 		<switch name="/systems/electrical/relay/gen-2-glc/contact-pos">
 			<default value="0"/>
+			<test logic="OR" value="0">
+				/sim/time/elapsed-sec lt 10
+			</test>	
 			<test logic="AND" value="1">
 				/controls/electrical/switches/gen-2 eq 1
-				/systems/electrical/sources/idg-2/gcu-2-fault eq 0
+				/systems/electrical/sources/idg-2/output-hertz ge 363
+				/systems/electrical/sources/idg-2/output-hertz le 433
+				/systems/electrical/sources/idg-2/output-volt ge 110
+				/systems/electrical/sources/idg-2/output-volt le 130
+				/systems/electrical/sources/idg-2/gcu-2-fault ne 1 <!-- software trip -->
 			</test>
 		</switch>
 		
