@@ -212,8 +212,26 @@ var warnings				  = std.Vector.new([
 	var dcBusEssShedIcing     = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
 	
 	# AC ESS BUS SHED
-	var acBusEssShed          = warning.new(msg: "ELEC DC ESS BUS SHED",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var acBusEssShed          = warning.new(msg: "ELEC AC ESS BUS SHED",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var acBusEssShedAtc       = warning.new(msg: " -ATC..............SYS 2",  colour: "c"),
+	
+	# GEN 1 FAULT
+	var gen1fault             = warning.new(msg: "ELEC GEN 1 FAULT",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var gen1faultGen          = warning.new(msg: "-GEN 1......OFF THEN ON",   colour: "c"),
+	var gen1faultGen2         = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var gen1faultGen3         = warning.new(msg: "-GEN 1..............OFF",   colour: "c"),
+	
+	# GEN 2 FAULT
+	var gen2fault             = warning.new(msg: "ELEC GEN 2 FAULT",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var gen2faultGen          = warning.new(msg: "-GEN 2......OFF THEN ON",   colour: "c"),
+	var gen2faultGen2         = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var gen2faultGen3         = warning.new(msg: "-GEN 2..............OFF",   colour: "c"),
+	
+	# APU GEN FAULT
+	var apuGenfault             = warning.new(msg: "ELEC APU GEN FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var apuGenfaultGen          = warning.new(msg: "-APU GEN....OFF THEN ON", colour: "c"),
+	var apuGenfaultGen2         = warning.new(msg: "   •IF UNSUCCESSFUL :", colour: "w"),
+	var apuGenfaultGen3         = warning.new(msg: "-APU GEN............OFF", colour: "c"),
 	
 	# Autothrust
 	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, isMainMsg: 1),
