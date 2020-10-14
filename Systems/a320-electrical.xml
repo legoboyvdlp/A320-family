@@ -1070,10 +1070,24 @@
 		</switch>
 		
 		<!-- AC ESS Relays -->
+		<switch name="/systems/electrical/relay/ac-ess-feed-1/auto-switch">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/ac-1 lt 110
+			</test>
+		</switch>
+		
+		<actuator name="/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer">
+			<input>/systems/electrical/relay/ac-ess-feed-1/auto-switch</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.33333333333</rate_limit> <!-- 3 seconds -->
+		</actuator>
+		
 		<switch name="/systems/electrical/relay/ac-ess-feed-1/contact-pos"> <!-- TODO: via 1XC CB on 123VU -->
 			<default value="0"/>
 			<test logic="AND" value="1"> <!-- old AC ESS FEED supply mode -->
 				/controls/electrical/switches/ac-ess-feed eq 0
+				/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer lt 1
 				/controls/electrical/switches/emer-gen-test eq 0
 			</test>
 		</switch>
@@ -1088,7 +1102,10 @@
 		<switch name="/systems/electrical/relay/ac-ess-feed-2/contact-pos"> <!-- TODO: via 2XC CB on 123VU -->
 			<default value="0"/>
 			<test logic="AND" value="1"> <!-- old AC ESS FEED supply mode -->
-				/controls/electrical/switches/ac-ess-feed eq 1
+				<test logic="OR">
+					/controls/electrical/switches/ac-ess-feed eq 1
+					/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer eq 1
+				</test>
 				/controls/electrical/switches/emer-gen-test eq 0
 			</test>
 		</switch>
@@ -1862,7 +1879,6 @@
 		</switch>
 		
 		<actuator name="/systems/electrical/some-electric-thingie/static-inverter-timer">
-            <description>Timer for the ECAM system</description>
             <input>/systems/electrical/relay/ac-ess-feed-inverter/contact-pos</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->

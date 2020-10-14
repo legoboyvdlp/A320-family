@@ -11,8 +11,6 @@
 	<!-- No button lights without power! -->
 	<animation>
 		<type>select</type>
-		<object-name>ACESSFeedBtn1F</object-name>
-		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>ACPack1Btn1F</object-name>
 		<object-name>ACPack1Btn2O</object-name>
 		<object-name>ACPack2Btn1F</object-name>
@@ -95,6 +93,8 @@
 
 	<animation>
 		<type>select</type>
+		<object-name>ACESSFeedBtn1F</object-name>
+		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>AftCargoIsoBtn1F</object-name>
 		<object-name>AftCargoIsoBtn2O</object-name>
 		<object-name>AftCargoSmkBtn1S</object-name>
@@ -3273,12 +3273,12 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
 						</greater-than-equals>
 					</or>
 				</condition>
