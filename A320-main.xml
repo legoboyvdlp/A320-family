@@ -231,6 +231,7 @@
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
+			<pushbutton type="bool">0</pushbutton>
 			<spdbrk-click type="bool">0</spdbrk-click>
 			<relay-batt-1 type="bool">0</relay-batt-1>
 			<relay-batt-2 type="bool">0</relay-batt-2>

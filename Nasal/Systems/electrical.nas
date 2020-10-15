@@ -120,10 +120,10 @@ var ELEC = {
 		EmerGen: {
 			volts: props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt"),
 			hertz: props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz"),
+			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
 		},
 		Ext: {
 			volts: props.globals.getNode("/systems/electrical/sources/ext/output-volt"),
-			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
 			hertz: props.globals.getNode("/systems/electrical/sources/ext/output-hertz"),
 		},
 		tr1: {
@@ -153,9 +153,9 @@ var ELEC = {
 	},
 	Switch: {
 		acEssFeed: props.globals.getNode("/controls/electrical/switches/ac-ess-feed"),
-		busTie: props.globals.getNode("/controls/electrical/switches/bus-tie"),
 		bat1: props.globals.getNode("/controls/electrical/switches/bat-1"),
 		bat2: props.globals.getNode("/controls/electrical/switches/bat-2"),
+		busTie: props.globals.getNode("/controls/electrical/switches/bus-tie"),
 		emerGenTest: props.globals.getNode("/controls/electrical/switches/emer-gen-test"),
 		extPwr: props.globals.getNode("/controls/electrical/switches/ext-pwr"),
 		galley: props.globals.getNode("/controls/electrical/switches/galley"),

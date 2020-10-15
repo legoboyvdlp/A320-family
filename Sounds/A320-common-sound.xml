@@ -1529,6 +1529,20 @@
 		</switch>
 		
 		<switch>
+            <name>Pushbutton</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/A320-family/Sounds/Cockpit/pushbutton.wav</path>
+            <condition>
+				<property>/sim/sounde/pushbutton</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+				<factor>0.25</factor>
+            </volume>
+        </switch>
+		
+		<switch>
 			<name>Flaps Lever</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/A320_flaplever.wav</path>

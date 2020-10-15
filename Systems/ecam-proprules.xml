@@ -564,6 +564,39 @@
             <value>1.0</value>
         </time>
         <S>
+			<not><property>/controls/electrical/switches/apu</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/apu-elec-gen-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/electrical/switches/gen-1</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/gen-1-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/electrical/switches/gen-2</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/gen-2-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
 			<not><property>/ECAM/warnings/logic/wai-ground-pulse-set</property></not>
         </S>
         <output>/ECAM/warnings/logic/wai-ground-pulse</output>
@@ -796,4 +829,70 @@
 		<output>/ECAM/warnings/flipflop/pack-2-off</output>
 	</flipflop>
 	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-1-fault-set-output</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-1-fault-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-1-fault</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-1-fault-on-off-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-1-fault-on-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-1-fault-on-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-2-fault-set-output</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-2-fault-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-2-fault</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-2-fault-on-off-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-2-fault-on-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-2-fault-on-off</output>
+	</flipflop>
+	
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/timer/apu-gen-fault-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/timer/apu-gen-fault-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/apu-gen-fault</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/apu-gen-fault-on-off-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/apu-gen-fault-on-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/apu-gen-fault-on-off</output>
+	</flipflop>
 </PropertyList>

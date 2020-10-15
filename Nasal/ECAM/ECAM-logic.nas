@@ -1139,6 +1139,72 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
 	
+	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+		gen1fault.active = 1;
+		if (!warningNodes.Flipflops.gen1FaultOnOff.getValue()) {
+			gen1faultGen.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen1faultGen);
+		}
+		
+		if (systems.ELEC.Switch.gen1.getBoolValue()) {
+			gen1faultGen2.active = 1;
+			gen1faultGen3.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen1faultGen2);
+			ECAM_controller.warningReset(gen1faultGen3);
+		}
+	} else {
+		ECAM_controller.warningReset(gen1fault);
+		ECAM_controller.warningReset(gen1faultGen);
+		ECAM_controller.warningReset(gen1faultGen2);
+		ECAM_controller.warningReset(gen1faultGen3);
+	}
+	
+	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+		gen2fault.active = 1;
+		if (!warningNodes.Flipflops.gen2FaultOnOff.getValue()) {
+			gen2faultGen.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen2faultGen);
+		}
+		
+		if (systems.ELEC.Switch.gen2.getBoolValue()) {
+			gen2faultGen2.active = 1;
+			gen2faultGen3.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen2faultGen2);
+			ECAM_controller.warningReset(gen2faultGen3);
+		}
+	} else {
+		ECAM_controller.warningReset(gen2fault);
+		ECAM_controller.warningReset(gen2faultGen);
+		ECAM_controller.warningReset(gen2faultGen2);
+		ECAM_controller.warningReset(gen2faultGen3);
+	}
+	
+	if (apuGenfault.clearFlag == 0 and warningNodes.Flipflops.apuGenFault.getValue() and (phaseVar2 <= 3 or phaseVar2 == 6 or phaseVar2 >= 9)) {
+		apuGenfault.active = 1;
+		if (!warningNodes.Flipflops.apuGenFaultOnOff.getValue()) {
+			apuGenfaultGen.active = 1;
+		} else {
+			ECAM_controller.warningReset(apuGenfaultGen);
+		}
+		
+		if (systems.ELEC.Switch.genApu.getBoolValue()) {
+			apuGenfaultGen2.active = 1;
+			apuGenfaultGen3.active = 1;
+		} else {
+			ECAM_controller.warningReset(apuGenfaultGen2);
+			ECAM_controller.warningReset(apuGenfaultGen3);
+		}
+	} else {
+		ECAM_controller.warningReset(apuGenfault);
+		ECAM_controller.warningReset(apuGenfaultGen);
+		ECAM_controller.warningReset(apuGenfaultGen2);
+		ECAM_controller.warningReset(apuGenfaultGen3);
+	}
+	
 	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar2 != 4 and phaseVar2 != 8 and phaseVar2 != 10) {
 		athr_offw.active = 1;
 		athr_offw_1.active = 1;
