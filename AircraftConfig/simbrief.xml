@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+
+<!-- A3XX Load Flightplans -->
+
+<PropertyList>
+
+    <name>simbrief</name>
+    <layout>vbox</layout>
+    
+	<nasal>
+		<close>
+			acconfig.writeSettings();
+		</close>
+	</nasal>
+	
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Simbrief API</label>
+        </text>
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+        
+    <hrule/>
+        
+    <group>
+		<layout>vbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>This dialog allows users to pull their flightplan from simbrief.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>1. ACARS is only available if VHF3 is not in voice mode, and the appropriate electrical power is available.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>2. Flightplan uplink is only available before engine start, if a flightplan is not yet entered in the MCDU</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>3. GIGO... there is no sanity check on inputs!</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>4. Please enter your username in the following text field (not case sensitive)</label>
+		</text>
+		<group>
+			<layout>hbox</layout>
+			<input>
+				<width>200</width>
+				<height>25</height>	
+				<label>Username</label>
+				<property>/FMGC/simbrief-username</property>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+				<live type="bool">true</live>
+			</input>
+		</group>
+		
+	   <button>
+			<x>40</x>
+			<y>10</y>
+			<legend>Apply / Exit</legend>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+    
+</PropertyList>

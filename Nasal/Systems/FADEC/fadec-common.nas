@@ -8,10 +8,6 @@ if (getprop("options/eng") == "IAE") {
 	io.include("fadec-cfm.nas");
 }
 
-var Output = {
-	limFlex: props.globals.getNode("/systems/thrust/lim-flex"),
-};
-
 var thr1 = 0;
 var thr2 = 0;
 var state1 = 0;
@@ -31,179 +27,184 @@ var flaps = 0;
 var alphaProt = 0;
 var togaLock = 0;
 var gs = 0;
-setprop("systems/thrust/alpha-floor", 0);
-setprop("systems/thrust/toga-lk", 0);
-setprop("systems/thrust/epr/toga-lim", 0.0);
-setprop("systems/thrust/epr/mct-lim", 0.0);
-setprop("systems/thrust/epr/flx-lim", 0.0);
-setprop("systems/thrust/epr/clb-lim", 0.0);
-setprop("systems/thrust/n1/toga-lim", 0.0);
-setprop("systems/thrust/n1/mct-lim", 0.0);
-setprop("systems/thrust/n1/flx-lim", 0.0);
-setprop("systems/thrust/n1/clb-lim", 0.0);
-setprop("engines/flx-thr", 0.0);
-setprop("controls/engines/thrust-limit", "TOGA");
-setprop("controls/engines/epr-limit", 0.0);
-setprop("controls/engines/n1-limit", 0.0);
-setprop("systems/thrust/state1", "IDLE");
-setprop("systems/thrust/state2", "IDLE");
-setprop("systems/thrust/lvrclb", 0);
-setprop("systems/thrust/clbreduc-ft", "1500");
-setprop("systems/thrust/toga-lim", 0.0);
-setprop("systems/thrust/mct-lim", 0.0);
-setprop("systems/thrust/clb-lim", 0.0);
-setprop("systems/thrust/lim-flex", 0);
-setprop("engines/flex-derate", 0);
-setprop("systems/thrust/eng-out", 0);
-setprop("systems/thrust/thr-locked", 0);
-setprop("systems/thrust/thr-locked-alert", 0);
-setprop("systems/thrust/thr-locked-flash", 0);
-setprop("systems/thrust/thr-lock-time", 0);
-setprop("systems/thrust/thr-lock-cmd[0]", 0);
-setprop("systems/thrust/thr-lock-cmd[1]", 0);
+setprop("/systems/thrust/epr/toga-lim", 0.0);
+setprop("/systems/thrust/epr/mct-lim", 0.0);
+setprop("/systems/thrust/epr/flx-lim", 0.0);
+setprop("/systems/thrust/epr/clb-lim", 0.0);
+setprop("/systems/thrust/n1/toga-lim", 0.0);
+setprop("/systems/thrust/n1/mct-lim", 0.0);
+setprop("/systems/thrust/n1/flx-lim", 0.0);
+setprop("/systems/thrust/n1/clb-lim", 0.0);
+setprop("/systems/thrust/toga-lim", 0.0);
+setprop("/systems/thrust/mct-lim", 0.0);
+setprop("/systems/thrust/clb-lim", 0.0);
+setprop("/engines/flex-derate", 0);
+setprop("/engines/flx-thr", 0.0);
 
 setlistener("/sim/signals/fdm-initialized", func {
 	thrust_loop.start();
 	thrust_flash.start();
 });
 
+var Fadec = {
+	n1Mode: [props.globals.getNode("/systems/fadec/n1mode1"), props.globals.getNode("/systems/fadec/n1mode2")],
+};
+
+var Thrust = {
+	alphaFloor: props.globals.getNode("/systems/thrust/alpha-floor"),
+	clbReduc: props.globals.getNode("/systems/thrust/clbreduc-ft"),
+	eprLimit: props.globals.getNode("/controls/engines/epr-limit"),
+	n1Limit: props.globals.getNode("/controls/engines/n1-limit"),
+	limFlex: props.globals.getNode("/systems/thrust/lim-flex"),
+	lvrClb: props.globals.getNode("/systems/thrust/lvrclb"),
+	togaLk: props.globals.getNode("/systems/thrust/toga-lk"),
+	thrustLimit: props.globals.getNode("/controls/engines/thrust-limit"),
+	Lock: {
+		thrLockAlert: props.globals.getNode("/systems/thrust/thr-locked-alert"),
+		thrLockCmd: props.globals.getNode("/systems/thrust/thr-locked"),
+		thrLockCmdN1: [props.globals.getNode("/systems/thrust/thr-lock-cmd[0]"), props.globals.getNode("/systems/thrust/thr-lock-cmd[1]")],
+		thrLockFlash: props.globals.getNode("/systems/thrust/thr-locked-flash"),
+		thrLockTime: props.globals.getNode("/systems/thrust/thr-locked-time"),
+	},
+};
+
 setlistener("/controls/engines/engine[0]/throttle-pos", func {
-	engstate1 = getprop("engines/engine[0]/state");
-	engstate2 = getprop("engines/engine[1]/state");
-	thr1 = getprop("controls/engines/engine[0]/throttle-pos");
-	if (getprop("systems/thrust/alpha-floor") == 0 and getprop("systems/thrust/toga-lk") == 0) {
+	engstate1 = pts.Engines.Engine.state[0].getValue();
+	engstate2 = pts.Engines.Engine.state[1].getValue();
+	thr1 = pts.Controls.Engines.Engine.throttlePos[0].getValue();
+	if (!Thrust.alphaFloor.getValue() and !Thrust.togaLk.getValue()) {
 		if (thr1 < 0.01) {
-			setprop("systems/thrust/state1", "IDLE");
+			pts.Systems.Thrust.state[0].setValue("IDLE");
 			unflex();
 			atoff_request();
 		} else if (thr1 >= 0.01 and thr1 < 0.60) {
-			setprop("systems/thrust/state1", "MAN");
+			pts.Systems.Thrust.state[0].setValue("MAN");
 			unflex();
 		} else if (thr1 >= 0.60 and thr1 < 0.65) {
-			setprop("systems/thrust/state1", "CL");
+			pts.Systems.Thrust.state[0].setValue("CL");
 			unflex();
 		} else if (thr1 >= 0.65 and thr1 < 0.78) {
-			setprop("systems/thrust/state1", "MAN THR");
+			pts.Systems.Thrust.state[0].setValue("MAN THR");
 			unflex();
 		} else if (thr1 >= 0.78 and thr1 < 0.83) {
-			if (getprop("systems/thrust/eng-out") != 1) {
-				if (getprop("controls/engines/thrust-limit") == "FLX") {
-					if (getprop("gear/gear[0]/wow") == 1 and (engstate1 == 3 or engstate2 == 3)) {
-						setprop("it-autoflight/input/athr", 1);
+			if (pts.Systems.Thrust.engOut.getValue() != 1) {
+				if (Thrust.thrustLimit.getValue() == "FLX") {
+					if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
+						fmgc.Input.athr.setValue(1);
 					}
-					setprop("controls/engines/engine[0]/throttle-fdm", 0.99);
+					pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
 				} else {
-					setprop("controls/engines/engine[0]/throttle-fdm", 0.95);
+					pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.95);
 				}
 			}
-			setprop("systems/thrust/state1", "MCT");
+			pts.Systems.Thrust.state[0].setValue("MCT");
 		} else if (thr1 >= 0.83 and thr1 < 0.95) {
-			setprop("systems/thrust/state1", "MAN THR");
+			pts.Systems.Thrust.state[0].setValue("MAN THR");
 			unflex();
 		} else if (thr1 >= 0.95) {
-			if (getprop("gear/gear[0]/wow") == 1 and (engstate1 == 3 or engstate2 == 3)) {
-				setprop("it-autoflight/input/athr", 1);
+			if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
+				fmgc.Input.athr.setValue(1);
 			}
-			setprop("controls/engines/engine[0]/throttle-fdm", 0.99);
-			setprop("systems/thrust/state1", "TOGA");
+			pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
+			pts.Systems.Thrust.state[0].setValue("TOGA");
 			unflex();
 		}
 	} else {
 		if (thr1 < 0.01) {
-			setprop("systems/thrust/state1", "IDLE");
+			pts.Systems.Thrust.state[0].setValue("IDLE");
 		} else if (thr1 >= 0.01 and thr1 < 0.60) {
-			setprop("systems/thrust/state1", "MAN");
+			pts.Systems.Thrust.state[0].setValue("MAN");
 		} else if (thr1 >= 0.60 and thr1 < 0.65) {
-			setprop("systems/thrust/state1", "CL");
+			pts.Systems.Thrust.state[0].setValue("CL");
 		} else if (thr1 >= 0.65 and thr1 < 0.78) {
-			setprop("systems/thrust/state1", "MAN THR");
+			pts.Systems.Thrust.state[0].setValue("MAN THR");
 		} else if (thr1 >= 0.78 and thr1 < 0.83) {
-			setprop("systems/thrust/state1", "MCT");
+			pts.Systems.Thrust.state[0].setValue("MCT");
 		} else if (thr1 >= 0.83 and thr1 < 0.95) {
-			setprop("systems/thrust/state1", "MAN THR");
+			pts.Systems.Thrust.state[0].setValue("MAN THR");
 		} else if (thr1 >= 0.95) {
-			setprop("systems/thrust/state1", "TOGA");
+			pts.Systems.Thrust.state[0].setValue("TOGA");
 		}
-		setprop("controls/engines/engine[0]/throttle-fdm", 0.99);
+		pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
 	}
 }, 0, 0);
 
 setlistener("/controls/engines/engine[1]/throttle-pos", func {
-	engstate1 = getprop("engines/engine[0]/state");
-	engstate2 = getprop("engines/engine[1]/state");
-	thr2 = getprop("controls/engines/engine[1]/throttle-pos");
-	if (getprop("systems/thrust/alpha-floor") == 0 and getprop("systems/thrust/toga-lk") == 0) {
+	engstate1 = pts.Engines.Engine.state[0].getValue();
+	engstate2 = pts.Engines.Engine.state[1].getValue();
+	thr2 = pts.Controls.Engines.Engine.throttlePos[1].getValue();
+	if (!Thrust.alphaFloor.getValue() and !Thrust.togaLk.getValue()) {
 		if (thr2 < 0.01) {
-			setprop("systems/thrust/state2", "IDLE");
+			pts.Systems.Thrust.state[1].setValue("IDLE");
 			unflex();
 			atoff_request();
 		} else if (thr2 >= 0.01 and thr2 < 0.60) {
-			setprop("systems/thrust/state2", "MAN");
+			pts.Systems.Thrust.state[1].setValue("MAN");
 			unflex();
 		} else if (thr2 >= 0.60 and thr2 < 0.65) {
-			setprop("systems/thrust/state2", "CL");
+			pts.Systems.Thrust.state[1].setValue("CL");
 			unflex();
 		} else if (thr2 >= 0.65 and thr2 < 0.78) {
-			setprop("systems/thrust/state2", "MAN THR");
+			pts.Systems.Thrust.state[1].setValue("MAN THR");
 			unflex();
 		} else if (thr2 >= 0.78 and thr2 < 0.83) {
-			if (getprop("systems/thrust/eng-out") != 1) {
-				if (getprop("controls/engines/thrust-limit") == "FLX") {
-					if (getprop("gear/gear[0]/wow") == 1 and (engstate1 == 3 or engstate2 == 3)) {
-						setprop("it-autoflight/input/athr", 1);
+			if (pts.Systems.Thrust.engOut.getValue() != 1) {
+				if (Thrust.thrustLimit.getValue() == "FLX") {
+					if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
+						fmgc.Input.athr.setValue(1);
 					}
-					setprop("controls/engines/engine[1]/throttle-fdm", 0.99);
+					pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 				} else {
-					setprop("controls/engines/engine[1]/throttle-fdm", 0.95);
+					pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.95);
 				}
 			}
-			setprop("systems/thrust/state2", "MCT");
+			pts.Systems.Thrust.state[1].setValue("MCT");
 		} else if (thr2 >= 0.83 and thr2 < 0.95) {
-			setprop("systems/thrust/state2", "MAN THR");
+			pts.Systems.Thrust.state[1].setValue("MAN THR");
 			unflex();
 		} else if (thr2 >= 0.95) {
-			if (getprop("gear/gear[0]/wow") == 1 and (engstate1 == 3 or engstate2 == 3)) {
-				setprop("it-autoflight/input/athr", 1);
+			if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
+				fmgc.Input.athr.setValue(1);
 			}
-			setprop("controls/engines/engine[1]/throttle-fdm", 0.99);
-			setprop("systems/thrust/state2", "TOGA");
+			pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
+			pts.Systems.Thrust.state[1].setValue("TOGA");
 			unflex();
 		}
 	} else {
 		if (thr2 < 0.01) {
-			setprop("systems/thrust/state2", "IDLE");
+			pts.Systems.Thrust.state[1].setValue("IDLE");
 		} else if (thr2 >= 0.01 and thr2 < 0.60) {
-			setprop("systems/thrust/state2", "MAN");
+			pts.Systems.Thrust.state[1].setValue("MAN");
 		} else if (thr2 >= 0.60 and thr2 < 0.65) {
-			setprop("systems/thrust/state2", "CL");
+			pts.Systems.Thrust.state[1].setValue("CL");
 		} else if (thr2 >= 0.65 and thr2 < 0.78) {
-			setprop("systems/thrust/state2", "MAN THR");
+			pts.Systems.Thrust.state[1].setValue("MAN THR");
 		} else if (thr2 >= 0.78 and thr2 < 0.83) {
-			setprop("systems/thrust/state2", "MCT");
+			pts.Systems.Thrust.state[1].setValue("MCT");
 		} else if (thr2 >= 0.83 and thr2 < 0.95) {
-			setprop("systems/thrust/state2", "MAN THR");
+			pts.Systems.Thrust.state[1].setValue("MAN THR");
 		} else if (thr2 >= 0.95) {
-			setprop("systems/thrust/state2", "TOGA");
+			pts.Systems.Thrust.state[1].setValue("TOGA");
 		}
-		setprop("controls/engines/engine[1]/throttle-fdm", 0.99);
+		pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 	}
 }, 0, 0);
 
 # Alpha Floor and Toga Lock
 setlistener("/it-autoflight/input/athr", func {
-	if (getprop("systems/thrust/alpha-floor") == 1) {
-		setprop("it-autoflight/input/athr", 1);
+	if (Thrust.alphaFloor.getValue()) {
+		fmgc.Input.athr.setValue(1);
 	} else {
-		setprop("systems/thrust/toga-lk", 0);
+		Thrust.togaLk.setValue(0);
 	}
 });
 
 # Checks if all throttles are in the IDLE position, before tuning off the A/THR.
 var atoff_request = func {
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
-	if ((state1 == "IDLE") and (state2 == "IDLE") and (getprop("systems/thrust/alpha-floor") == 0) and (getprop("systems/thrust/toga-lk") == 0)) {
-		if (getprop("it-autoflight/input/athr") == 1 and pts.Position.gearAglFt.getValue() > 50) {
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	if (state1 == "IDLE" and state2 == "IDLE" and !Thrust.alphaFloor.getValue() and !Thrust.togaLk.getValue()) {
+		if (fmgc.Input.athr.getValue() and pts.Position.gearAglFt.getValue() > 50) {
 			fcu.athrOff("soft");
 		} elsif (pts.Position.gearAglFt.getValue() < 50) {
 			fcu.athrOff("none");
@@ -212,66 +213,66 @@ var atoff_request = func {
 }
 
 var thrust_loop = maketimer(0.04, func {
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
-	engstate1 = getprop("engines/engine[0]/state");
-	engstate2 = getprop("engines/engine[1]/state");
-	thr1 = getprop("controls/engines/engine[0]/throttle-pos");
-	thr2 = getprop("controls/engines/engine[1]/throttle-pos");
-	eprtoga = getprop("systems/thrust/epr/toga-lim");
-	eprmct = getprop("systems/thrust/epr/mct-lim");
-	eprflx = getprop("systems/thrust/epr/flx-lim");
-	eprclb = getprop("systems/thrust/epr/clb-lim");
-	n1toga = getprop("systems/thrust/n1/toga-lim");
-	n1mct = getprop("systems/thrust/n1/mct-lim");
-	n1flx = getprop("systems/thrust/n1/flx-lim");
-	n1clb = getprop("systems/thrust/n1/clb-lim");
-	gs = getprop("velocities/groundspeed-kt");
-	if (getprop("FMGC/internal/flex-set") == 1 and getprop("systems/fadec/n1mode1") == 0 and getprop("systems/fadec/n1mode2") == 0 and getprop("gear/gear[1]/wow") == 1 and getprop("gear/gear[2]/wow") == 1 and gs < 40) {
-		setprop("systems/thrust/lim-flex", 1);
-	} else if (getprop("FMGC/internal/flex-set") == 0 or engstate1 != 3 or engstate2 != 3) {
-		setprop("systems/thrust/lim-flex", 0);
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	engstate1 = pts.Engines.Engine.state[0].getValue();
+	engstate2 = pts.Engines.Engine.state[1].getValue();
+	thr1 = pts.Controls.Engines.Engine.throttlePos[0].getValue();
+	thr2 = pts.Controls.Engines.Engine.throttlePos[1].getValue();
+	eprtoga = getprop("/systems/thrust/epr/toga-lim");
+	eprmct = getprop("/systems/thrust/epr/mct-lim");
+	eprflx = getprop("/systems/thrust/epr/flx-lim");
+	eprclb = getprop("/systems/thrust/epr/clb-lim");
+	n1toga = getprop("/systems/thrust/n1/toga-lim");
+	n1mct = getprop("/systems/thrust/n1/mct-lim");
+	n1flx = getprop("/systems/thrust/n1/flx-lim");
+	n1clb = getprop("/systems/thrust/n1/clb-lim");
+	gs = pts.Velocities.groundspeed.getValue();
+	if (fmgc.FMGCNodes.flexSet.getValue() and !Fadec.n1Mode[0].getValue() and !Fadec.n1Mode[1].getValue() and pts.Gear.wow[1].getValue() and pts.Gear.wow[2].getValue() and gs < 40) {
+		Thrust.limFlex.setValue(1);
+	} else if (!fmgc.FMGCNodes.flexSet.getValue() or engstate1 != 3 or engstate2 != 3) {
+		Thrust.limFlex.setValue(0);
 	}
-	if (getprop("controls/engines/engine[0]/reverser") == "1" or getprop("controls/engines/engine[1]/reverser") == "1") {
-		setprop("controls/engines/thrust-limit", "MREV");
-		setprop("controls/engines/epr-limit", 1.000);
-		setprop("controls/engines/n1-limit", 0.0);
-	} else if (getprop("gear/gear[1]/wow") == 0 or getprop("gear/gear[2]/wow") == 0 or (engstate1 != 3 and engstate2 != 3)) {
-		if ((state1 == "TOGA" or state2 == "TOGA" or (state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)) or getprop("systems/thrust/alpha-floor") == 1 or getprop("systems/thrust/toga-lk") == 1) {
-			setprop("controls/engines/thrust-limit", "TOGA");
-			setprop("controls/engines/epr-limit", eprtoga);
-			setprop("controls/engines/n1-limit", n1toga);
-		} else if ((state1 == "MCT" or state2 == "MCT" or (state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and getprop("systems/thrust/lim-flex") == 0) {
-			setprop("controls/engines/thrust-limit", "MCT");
-			setprop("controls/engines/epr-limit", eprmct);
-			setprop("controls/engines/n1-limit", n1mct);
-		} else if ((state1 == "MCT" or state2 == "MCT" or (state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and getprop("systems/thrust/lim-flex") == 1) {
-			setprop("controls/engines/thrust-limit", "FLX");
-			setprop("controls/engines/epr-limit", eprflx);
-			setprop("controls/engines/n1-limit", n1flx);
+	if (pts.Controls.Engines.Engine.reverser[0].getValue() or pts.Controls.Engines.Engine.reverser[1].getValue()) {
+		Thrust.thrustLimit.setValue("MREV");
+		Thrust.eprLimit.setValue(1.0);
+		Thrust.n1Limit.setValue(0.0);
+	} else if (!pts.Gear.wow[1].getValue() or !pts.Gear.wow[2].getValue() or (engstate1 != 3 and engstate2 != 3)) {
+		if ((state1 == "TOGA" or state2 == "TOGA" or (state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)) or Thrust.alphaFloor.getValue() or Thrust.togaLk.getValue()) {
+			Thrust.thrustLimit.setValue("TOGA");
+			Thrust.eprLimit.setValue(eprtoga);
+			Thrust.n1Limit.setValue(n1toga);
+		} else if ((state1 == "MCT" or state2 == "MCT" or (state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and !Thrust.limFlex.getValue()) {
+			Thrust.thrustLimit.setValue("MCT");
+			Thrust.eprLimit.setValue(eprmct);
+			Thrust.n1Limit.setValue(n1mct);
+		} else if ((state1 == "MCT" or state2 == "MCT" or (state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and Thrust.limFlex.getValue()) {
+			Thrust.thrustLimit.setValue("FLX");
+			Thrust.eprLimit.setValue(eprflx);
+			Thrust.n1Limit.setValue(n1flx);
 		} else if (state1 == "CL" or state2 == "CL" or state1 == "MAN" or state2 == "MAN" or state1 == "IDLE" or state2 == "IDLE") {
-			setprop("controls/engines/thrust-limit", "CLB");
-			setprop("controls/engines/epr-limit", eprclb);
-			setprop("controls/engines/n1-limit", n1clb);
+			Thrust.thrustLimit.setValue("CLB");
+			Thrust.eprLimit.setValue(eprclb);
+			Thrust.n1Limit.setValue(n1clb);
 		}
-	} else if (getprop("FMGC/internal/flex-set") == 1 and getprop("systems/fadec/n1mode1") == 0 and getprop("systems/fadec/n1mode2") == 0) {
-		if ((state1 == "TOGA" or state2 == "TOGA" or (state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)) or getprop("systems/thrust/alpha-floor") == 1 or getprop("systems/thrust/toga-lk") == 1) {
-			setprop("controls/engines/thrust-limit", "TOGA");
-			setprop("controls/engines/epr-limit", eprtoga);
-			setprop("controls/engines/n1-limit", n1toga);
+	} else if (fmgc.FMGCNodes.flexSet.getValue() and !Fadec.n1Mode[0].getValue() and !Fadec.n1Mode[1].getValue()) {
+		if ((state1 == "TOGA" or state2 == "TOGA" or (state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)) or Thrust.alphaFloor.getValue() or Thrust.togaLk.getValue()) {
+			Thrust.thrustLimit.setValue("TOGA");
+			Thrust.eprLimit.setValue(eprtoga);
+			Thrust.n1Limit.setValue(n1toga);
 		} else {
-			setprop("controls/engines/thrust-limit", "FLX");
-			setprop("controls/engines/epr-limit", eprflx);
-			setprop("controls/engines/n1-limit", n1flx);
+			Thrust.thrustLimit.setValue("FLX");
+			Thrust.eprLimit.setValue(eprflx);
+			Thrust.n1Limit.setValue(n1flx);
 		}
 	} else {
-		setprop("controls/engines/thrust-limit", "TOGA");
-		setprop("controls/engines/epr-limit", eprtoga);
-		setprop("controls/engines/n1-limit", n1toga);
+		Thrust.thrustLimit.setValue("TOGA");
+		Thrust.eprLimit.setValue(eprtoga);
+		Thrust.n1Limit.setValue(n1toga);
 	}
 	
-	alpha = getprop("fdm/jsbsim/aero/alpha-deg");
-	flaps = getprop("controls/flight/flaps-pos");
+	alpha = pts.Fdm.JSBsim.Aero.alpha.getValue();
+	flaps = pts.Controls.Flight.flapsPos.getValue();
 	if (flaps == 0) {
 		alphaProt = 9.5;
 	} else if (flaps == 1 or flaps == 2 or flaps == 3) {
@@ -281,116 +282,117 @@ var thrust_loop = maketimer(0.04, func {
 	} else if (flaps == 5) {
 		alphaProt = 13.0;
 	}
+	
 	togaLock = alphaProt - 1;
-	if (getprop("gear/gear[1]/wow") == 0 and getprop("gear/gear[2]/wow") == 0 and getprop("it-fbw/law") == 0 and (getprop("systems/thrust/eng-out") == 0 or (getprop("systems/thrust/eng-out") == 1 and flaps == 0)) and getprop("systems/fadec/n1mode1") == 0 
-	and getprop("systems/fadec/n1mode2") == 0) {
+	if (!pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue() and fbw.FBW.activeLaw.getValue() == 0 and (!pts.Systems.Thrust.engOut.getValue() or (pts.Systems.Thrust.engOut.getValue() and flaps == 0)) and !Fadec.n1Mode[0].getValue() 
+	and !Fadec.n1Mode[1].getValue()) {
 		if (alpha > alphaProt and pts.Position.gearAglFt.getValue() >= 100) {
-			setprop("systems/thrust/alpha-floor", 1);
-			setprop("systems/thrust/toga-lk", 0);
-			setprop("it-autoflight/input/athr", 1);
-			setprop("controls/engines/engine[0]/throttle-fdm", 0.99);
-			setprop("controls/engines/engine[1]/throttle-fdm", 0.99);
-		} else if (getprop("systems/thrust/alpha-floor") == 1 and alpha < togaLock) {
-			setprop("systems/thrust/alpha-floor", 0);
-			setprop("it-autoflight/input/athr", 1);
-			setprop("systems/thrust/toga-lk", 1);
-			setprop("controls/engines/engine[0]/throttle-fdm", 0.99);
-			setprop("controls/engines/engine[1]/throttle-fdm", 0.99);
+			Thrust.alphaFloor.setValue(1);
+			Thrust.togaLk.setValue(0);
+			fmgc.Input.athr.setValue(1);
+			pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
+			pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
+		} else if (Thrust.alphaFloor.getValue() and alpha < togaLock) {
+			fmgc.Input.athr.setValue(1);
+			Thrust.alphaFloor.setValue(0);
+			Thrust.togaLk.setValue(1);
+			pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
+			pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 		}
 	} else {
-		setprop("systems/thrust/alpha-floor", 0);
-		setprop("systems/thrust/toga-lk", 0);
+		Thrust.alphaFloor.setValue(0);
+		Thrust.togaLk.setValue(0);
 	}
 });
 
 var unflex = func {
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
-	if (state1 != "MCT" and state2 != "MCT" and getprop("gear/gear[1]/wow") == 0 and getprop("gear/gear[2]/wow") == 0) {
-		setprop("systems/thrust/lim-flex", 0);
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	if (state1 != "MCT" and state2 != "MCT" and !pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue()) {
+		Thrust.limFlex.setValue(0);
 	}
 }
 
 var thrust_flash = maketimer(0.5, func {
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
 	
-	if (getprop("gear/gear[1]/wow") == 0 and getprop("gear/gear[2]/wow") == 0 and (getprop("engines/engine[0]/state") != 3 or getprop("engines/engine[1]/state") != 3)) {
-		setprop("systems/thrust/eng-out", 1);
+	if (!pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue() and (pts.Engines.Engine.state[0].getValue() != 3 or pts.Engines.Engine.state[1].getValue() != 3)) {
+		pts.Systems.Thrust.engOut.setValue(1)
 	} else {
-		setprop("systems/thrust/eng-out", 0);
+		pts.Systems.Thrust.engOut.setValue(0)
 	}
 	
-	if (state1 == "CL" and state2 == "CL" and getprop("systems/thrust/eng-out") != 1) {
-		setprop("systems/thrust/lvrclb", 0);
-	} else if (state1 == "MCT" and state2 == "MCT" and getprop("systems/thrust/lim-flex") != 1 and getprop("systems/thrust/eng-out") == 1) {
-		setprop("systems/thrust/lvrclb", 0);
+	if (state1 == "CL" and state2 == "CL" and pts.Systems.Thrust.engOut.getValue() != 1) {
+		Thrust.lvrClb.setValue(0);
+	} else if (state1 == "MCT" and state2 == "MCT" and !Thrust.limFlex.getValue() and pts.Systems.Thrust.engOut.getValue()) {
+		Thrust.lvrClb.setValue(0);
 	} else {
-		var status = getprop("systems/thrust/lvrclb");
+		var status = Thrust.lvrClb.getValue();
 		if (status == 0) {
-			if (getprop("gear/gear[0]/wow") == 0) {
-				if (getprop("systems/thrust/state1") == "MAN" or getprop("systems/thrust/state2") == "MAN") {
-					setprop("systems/thrust/lvrclb", 1);
+			if (!pts.Gear.wow[0].getValue()) {
+				if (pts.Systems.Thrust.state[0].getValue() == "MAN" or pts.Systems.Thrust.state[1].getValue() == "MAN") {
+					Thrust.lvrClb.setValue(1);
 				} else {
-					if (getprop("instrumentation/altimeter/indicated-altitude-ft") >= getprop("systems/thrust/clbreduc-ft") and getprop("gear/gear[1]/wow") == 0 and getprop("gear/gear[2]/wow") == 0) {
-						setprop("systems/thrust/lvrclb", 1);
-					} else if ((state1 == "CL" and state2 != "CL") or (state1 != "CL" and state2 == "CL") and getprop("systems/thrust/eng-out") != 1) {
-						setprop("systems/thrust/lvrclb", 1);
+					if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= Thrust.clbReduc.getValue() and !pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue()) {
+						Thrust.lvrClb.setValue(1);
+					} else if ((state1 == "CL" and state2 != "CL") or (state1 != "CL" and state2 == "CL") and pts.Systems.Thrust.engOut.getValue() != 1) {
+						Thrust.lvrClb.setValue(1);
 					} else {
-						setprop("systems/thrust/lvrclb", 0);
+						Thrust.lvrClb.setValue(0);
 					}
 				}
 			}
 		} else if (status == 1) {
-			setprop("systems/thrust/lvrclb", 0);
+			Thrust.lvrClb.setValue(0);
 		}
 	}
 });
 
 var lockThr = func() {
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
-	if ((state1 == "CL" and state2 == "CL" and getprop("systems/thrust/eng-out") == 0) or (state1 == "MCT" and state2 == "MCT" and getprop("systems/thrust/eng-out") == 1)) {
-		setprop("systems/thrust/thr-lock-time", getprop("sim/time/elapsed-sec"));
-		setprop("systems/thrust/thr-locked", 1);
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	if ((state1 == "CL" and state2 == "CL" and !pts.Systems.Thrust.engOut.getValue()) or (state1 == "MCT" and state2 == "MCT" and pts.Systems.Thrust.engOut.getValue())) {
+		Thrust.Lock.thrLockTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Thrust.Lock.thrLockCmd.setValue(1);
 		lockTimer.start();
 	}
 }
 
 var checkLockThr = func() {
-	if (getprop("systems/thrust/thr-lock-time") + 5 > getprop("sim/time/elapsed-sec")) { return; }
+	if (Thrust.Lock.thrLockTime.getValue() + 5 > pts.Sim.Time.elapsedSec.getValue()) { return; }
 	
 	if (fmgc.Output.athr.getBoolValue()) {
 		lockTimer.stop();
-		setprop("systems/thrust/thr-locked", 0);
-		setprop("systems/thrust/thr-locked-alert", 0);
-		setprop("systems/thrust/thr-lock-time", 0);
-		setprop("systems/thrust/thr-locked-flash", 0);
+		Thrust.Lock.thrLockCmd.setValue(0);
+		Thrust.Lock.thrLockAlert.setValue(0);
+		Thrust.Lock.thrLockTime.setValue(0);
+		Thrust.Lock.thrLockFlash.setValue(0);
 		return;
 	}
 	
-	if (getprop("systems/thrust/thr-locked") == 0) {
+	if (!Thrust.Lock.thrLockCmd.getValue()) {
 		lockTimer.stop();
-		setprop("systems/thrust/thr-locked", 0);
-		setprop("systems/thrust/thr-locked-alert", 0);
-		setprop("systems/thrust/thr-lock-time", 0);
-		setprop("systems/thrust/thr-locked-flash", 0);
+		Thrust.Lock.thrLockCmd.setValue(0);
+		Thrust.Lock.thrLockAlert.setValue(0);
+		Thrust.Lock.thrLockTime.setValue(0);
+		Thrust.Lock.thrLockFlash.setValue(0);
 		return;
 	}
 	
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
 	
-	if ((state1 != "CL" and state2 != "CL" and getprop("systems/thrust/eng-out") == 0) or (state1 != "MCT" and state2 != "MCT" and getprop("systems/thrust/eng-out") == 1)) {
+	if ((state1 != "CL" and state2 != "CL" and !pts.Systems.Thrust.engOut.getValue()) or (state1 != "MCT" and state2 != "MCT" and pts.Systems.Thrust.engOut.getValue())) {
 		lockTimer.stop();
-		setprop("systems/thrust/thr-locked", 0);
-		setprop("systems/thrust/thr-locked-alert", 0);
-		setprop("systems/thrust/thr-lock-time", 0);
-		setprop("systems/thrust/thr-locked-flash", 0);
-	} elsif ((state1 == "CL" and state2 == "CL" and getprop("systems/thrust/eng-out") == 0) or (state1 == "MCT" and state2 == "MCT" and getprop("systems/thrust/eng-out") == 1)) {
-		setprop("systems/thrust/thr-locked-alert", 1);
-		setprop("systems/thrust/thr-lock-time", getprop("sim/time/elapsed-sec"));
-		setprop("systems/thrust/thr-locked-flash", 1);
+		Thrust.Lock.thrLockCmd.setValue(0);
+		Thrust.Lock.thrLockAlert.setValue(0);
+		Thrust.Lock.thrLockTime.setValue(0);
+		Thrust.Lock.thrLockFlash.setValue(0);
+	} elsif ((state1 == "CL" and state2 == "CL" and !pts.Systems.Thrust.engOut.getValue()) or (state1 == "MCT" and state2 == "MCT" and pts.Systems.Thrust.engOut.getValue())) {
+		Thrust.Lock.thrLockAlert.setValue(1);
+		Thrust.Lock.thrLockTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Thrust.Lock.thrLockFlash.setValue(1);
 		lockTimer.stop();
 		lockTimer2.start();
 	}
@@ -399,49 +401,49 @@ var checkLockThr = func() {
 var checkLockThr2 = func() {
 	if (fmgc.Output.athr.getBoolValue()) {
 		lockTimer2.stop();
-		setprop("systems/thrust/thr-locked", 0);
-		setprop("systems/thrust/thr-locked-alert", 0);
-		setprop("systems/thrust/thr-lock-time", 0);
-		setprop("systems/thrust/thr-locked-flash", 0);
+		Thrust.Lock.thrLockCmd.setValue(0);
+		Thrust.Lock.thrLockAlert.setValue(0);
+		Thrust.Lock.thrLockTime.setValue(0);
+		Thrust.Lock.thrLockFlash.setValue(0);
 		return;
 	}
 	
-	if (getprop("systems/thrust/thr-locked") == 0) {
+	if (!Thrust.Lock.thrLockCmd.getValue()) {
 		lockTimer2.stop();
-		setprop("systems/thrust/thr-locked", 0);
-		setprop("systems/thrust/thr-locked-alert", 0);
-		setprop("systems/thrust/thr-lock-time", 0);
-		setprop("systems/thrust/thr-locked-flash", 0);
+		Thrust.Lock.thrLockCmd.setValue(0);
+		Thrust.Lock.thrLockAlert.setValue(0);
+		Thrust.Lock.thrLockTime.setValue(0);
+		Thrust.Lock.thrLockFlash.setValue(0);
 		return;
 	}
 	
-	if (getprop("systems/thrust/thr-lock-time") + 5 < getprop("sim/time/elapsed-sec")) { 
-		setprop("systems/thrust/thr-locked-flash", 0);
+	if (Thrust.Lock.thrLockTime.getValue() + 5 < pts.Sim.Time.elapsedSec.getValue()) {
+		Thrust.Lock.thrLockFlash.setValue(0);
 		settimer(func() {
-			setprop("systems/thrust/thr-locked-flash", 1);
-			setprop("systems/thrust/thr-lock-time", getprop("sim/time/elapsed-sec"));
+			Thrust.Lock.thrLockFlash.setValue(1);
+			Thrust.Lock.thrLockTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 			ecam.athr_lock.noRepeat = 0;
 			ecam.athr_lock.noRepeat2 = 0;
 		}, 0.2);
 	}
 	
-	state1 = getprop("systems/thrust/state1");
-	state2 = getprop("systems/thrust/state2");
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
 	
 	
-	if ((state1 != "CL" and state2 != "CL" and getprop("systems/thrust/eng-out") == 0) or (state1 != "MCT" and state2 != "MCT" and getprop("systems/thrust/eng-out") == 1)) {
+	if ((state1 != "CL" and state2 != "CL" and !pts.Systems.Thrust.engOut.getValue()) or (state1 != "MCT" and state2 != "MCT" and pts.Systems.Thrust.engOut.getValue())) {
 		lockTimer2.stop();
-		setprop("systems/thrust/thr-locked", 0);
-		setprop("systems/thrust/thr-locked-alert", 0);
-		setprop("systems/thrust/thr-lock-time", 0);
-		setprop("systems/thrust/thr-locked-flash", 0);
+		Thrust.Lock.thrLockCmd.setValue(0);
+		Thrust.Lock.thrLockAlert.setValue(0);
+		Thrust.Lock.thrLockFlash.setValue(0);
+		Thrust.Lock.thrLockTime.setValue(0);
 	}
 }
 
 setlistener("/systems/thrust/thr-locked", func {
-	if (getprop("systems/thrust/thr-locked") == 1) {
-		setprop("systems/thrust/thr-lock-cmd[0]", getprop("controls/engines/engine[0]/throttle-output"));
-		setprop("systems/thrust/thr-lock-cmd[1]", getprop("controls/engines/engine[1]/throttle-output"));
+	if (Thrust.Lock.thrLockCmd.getValue()) {
+		Thrust.Lock.thrLockCmdN1[0].setValue(pts.Controls.Engines.Engine.throttleOutput[0].getValue());
+		Thrust.Lock.thrLockCmdN1[1].setValue(pts.Controls.Engines.Engine.throttleOutput[1].getValue());
 	}
 }, 0, 0);
 

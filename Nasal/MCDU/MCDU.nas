@@ -3,6 +3,9 @@
 # Copyright (c) 2020 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
+var pageNode = [props.globals.getNode("/MCDU[0]/page"), props.globals.getNode("/MCDU[1]/page")];
+var page = nil;
+
 var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
 	MCDU_reset(i);
@@ -14,7 +17,7 @@ var MCDU_reset = func(i) {
 	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
-	setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
+	pageNode[i].setValue("MCDU");
 	
 	setprop("/FMGC/keyboard-left", 0);
 	setprop("/FMGC/keyboard-right", 0);
@@ -92,50 +95,51 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.altSelected = 0;
 
 	# INT-B
-	setprop("/FMGC/internal/zfw", 0);
-	setprop("/FMGC/internal/zfw-set", 0);
-	setprop("/FMGC/internal/zfwcg", 25.0);
-	setprop("/FMGC/internal/zfwcg-set", 0);
-	setprop("/FMGC/internal/block", 0.0);
-	setprop("/FMGC/internal/block-set", 0);
-	setprop("/FMGC/internal/taxi-fuel", 0.4);
-	setprop("/FMGC/internal/taxi-fuel-set", 0);
-	setprop("/FMGC/internal/trip-fuel", 0);
-	setprop("/FMGC/internal/trip-time", "0000");
-	setprop("/FMGC/internal/rte-rsv", 0);
-	setprop("/FMGC/internal/rte-rsv-set", 0);
-	setprop("/FMGC/internal/rte-percent", 5.0);
-	setprop("/FMGC/internal/rte-percent-set", 0);
-	setprop("/FMGC/internal/alt-fuel", 0);
-	setprop("/FMGC/internal/alt-fuel-set", 0);
-	setprop("/FMGC/internal/alt-time", "0000");
-	setprop("/FMGC/internal/final-fuel", 0);
-	setprop("/FMGC/internal/final-fuel-set", 0);
-	setprop("/FMGC/internal/final-time", "0030");
-	setprop("/FMGC/internal/final-time-set", 0);
-	setprop("/FMGC/internal/min-dest-fob", 0);
-	setprop("/FMGC/internal/min-dest-fob-set", 0);
-	setprop("/FMGC/internal/tow", 0);
-	setprop("/FMGC/internal/lw", 0);
-	setprop("/FMGC/internal/trip-wind", "HD000");
-	setprop("/FMGC/internal/trip-wind-value", 0);
-	setprop("/FMGC/internal/fffq-sensor", "FF+FQ");
-	setprop("/FMGC/internal/extra-fuel", 0);
-	setprop("/FMGC/internal/extra-time", "0000");
-	setprop("/FMGC/internal/fuel-request-set", 0);
-	setprop("/FMGC/internal/block-calculating", 0);
-	setprop("/FMGC/internal/block-confirmed", 0);
-	setprop("/FMGC/internal/fuel-calculating", 0);
+	fmgc.FMGCInternal.zfw = 0;
+	fmgc.FMGCInternal.zfwSet = 0;
+	fmgc.FMGCInternal.zfwcg = 25.0;
+	fmgc.FMGCInternal.zfwcgSet = 0;
+	fmgc.FMGCInternal.block = 0.0;
+	fmgc.FMGCInternal.blockSet = 0;
+	fmgc.FMGCInternal.taxiFuel = 0.4;
+	fmgc.FMGCInternal.taxiFuelSet = 0;
+	fmgc.FMGCInternal.tripFuel = 0;
+	fmgc.FMGCInternal.tripTime = "0000";
+	fmgc.FMGCInternal.rteRsv = 0;
+	fmgc.FMGCInternal.rteRsvSet = 0;
+	fmgc.FMGCInternal.rtePercent = 5.0;
+	fmgc.FMGCInternal.rtePercentSet = 0;
+	fmgc.FMGCInternal.altFuel = 0;
+	fmgc.FMGCInternal.altFuelSet = 0;
+	fmgc.FMGCInternal.altTime = "0000";
+	fmgc.FMGCInternal.finalFuel = 0;
+	fmgc.FMGCInternal.finalFuelSet = 0;
+	fmgc.FMGCInternal.finalTime = "0030";
+	fmgc.FMGCInternal.finalTimeSet = 0;
+	fmgc.FMGCInternal.minDestFob = 0;
+	fmgc.FMGCInternal.minDestFobSet = 0;
+	fmgc.FMGCInternal.tow = 0;
+	fmgc.FMGCInternal.lw = 0;
+	fmgc.FMGCInternal.tripWind = "HD000";
+	fmgc.FMGCInternal.tripWindValue = 0;
+	fmgc.FMGCInternal.fffqSensor = "FF+FQ";
+	fmgc.FMGCInternal.extraFuel = 0;
+	fmgc.FMGCInternal.extraTime = "0000";
+	fmgc.FMGCInternal.fuelRequest = 0;
+	fmgc.FMGCInternal.blockCalculating = 0;
+	fmgc.blockCalculating.setValue(0);
+	fmgc.FMGCInternal.blockConfirmed = 0;
+	fmgc.FMGCInternal.fuelCalculating = 0;
+	fmgc.fuelCalculating.setValue(0);
 	
 	# FUELPRED
-	setprop("/FMGC/internal/alt-airport", "");
-	setprop("/FMGC/internal/pri-utc", "0000");
-	setprop("/FMGC/internal/alt-utc", "0000");
-	setprop("/FMGC/internal/pri-efob", 0);
-	setprop("/FMGC/internal/alt-efob", 0);
-	setprop("/FMGC/internal/fob", 0);
-	setprop("/FMGC/internal/fuel-pred-gw", 0);
-	setprop("/FMGC/internal/cg", 0);
+	fmgc.FMGCInternal.priUtc = "0000";
+	fmgc.FMGCInternal.altUtc = "0000";
+	fmgc.FMGCInternal.priEfob = 0;
+	fmgc.FMGCInternal.altEfob = 0;
+	fmgc.FMGCInternal.fob = 0;
+	fmgc.FMGCInternal.fuelPredGw = 0;
+	fmgc.FMGCInternal.cg = 0;
 	
 	# PROG
 	fmgc.FMGCInternal.crzProg = 100;
@@ -149,14 +153,14 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
-	setprop("FMGC/internal/accel-agl-ft", "1500"); #eventually set to 1500 above runway
+	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("FMGC/internal/to-flap", 0);
-	setprop("FMGC/internal/to-ths", "0.0");
-	setprop("FMGC/internal/flap-ths-set", 0);
-	setprop("FMGC/internal/flex", 0);
-	setprop("FMGC/internal/flex-set", 0);
-	setprop("FMGC/internal/eng-out-reduc", "1500");
+	setprop("/FMGC/internal/to-flap", 0);
+	setprop("/FMGC/internal/to-ths", "0.0");
+	setprop("/FMGC/internal/flap-ths-set", 0);
+	setprop("/FMGC/internal/flex", 0);
+	setprop("/FMGC/internal/flex-set", 0);
+	setprop("/FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
 	fmgc.FMGCInternal.transAlt = 18000;
 	fmgc.FMGCInternal.transAltSet = 0;
@@ -176,14 +180,14 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.destMagSet = 0;
 	fmgc.FMGCInternal.destWind = 0;
 	fmgc.FMGCInternal.destWindSet = 0;
-	setprop("/FMGC/internal/vapp-speed-set", 0);
+	fmgc.FMGCInternal.vappSpeedSet = 0;
 	setprop("/FMGC/internal/final", "");
 	setprop("/FMGC/internal/baro", 99999);
 	setprop("/FMGC/internal/radio", 99999);
-	setprop("/FMGC/internal/radio-no", 0);
+	fmgc.FMGCInternal.radioNo = 0;
 	setprop("/FMGC/internal/ldg-elev", 0);
-	setprop("/FMGC/internal/ldg-config-3-set", 0);
-	setprop("/FMGC/internal/ldg-config-f-set", 1);
+	fmgc.FMGCInternal.ldgConfig3 = 0;
+	fmgc.FMGCInternal.ldgConfigFull = 1;
 	
 	# GA PERF
 }
@@ -198,8 +202,9 @@ var setMode = func(will) {
 }
 
 var lskbutton = func(btn, i) {
+	page = pageNode[i].getValue();
 	if (btn == "1") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "MCDU") {
+		if (page == "MCDU") {
 			if (getprop("/MCDU[" ~ i ~ "]/atsu-active") == 1) {
 				mcdu_message(i, "NOT ALLOWED");
 			} else {
@@ -207,77 +212,84 @@ var lskbutton = func(btn, i) {
 					mcdu_message(i, "WAIT FOR SYSTEM RESPONSE");
 					setprop("/MCDU[" ~ i ~ "]/active", 1);
 					settimer(func(){
-						setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
+						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 						mcdu_scratchpad.scratchpads[i].empty();
 						setprop("/MCDU[" ~ i ~ "]/active", 2);
 					}, 2);
 				} else {
-					setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
+					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			initInputIRS("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PROGTO") {
+		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PROGCLB") {
+		} else if (page == "PROGCLB") {
 			progCLBInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PROGCRZ") {
+		} else if (page == "PROGCRZ") {
 			progCRZInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PROGDES") {
+		} else if (page == "PROGDES") {
 			progDESInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
+		} else if (page == "DATA") {
 			dataInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("L1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 0) {
 				if (canvas_mcdu.myDeparture[i] != nil) {
 					canvas_mcdu.myDeparture[i].del();
 				}
 				canvas_mcdu.myDeparture[i] = nil;
 				canvas_mcdu.myDeparture[i] = departurePage.new(canvas_mcdu.myLatRev[i].title[2], i);
-				setprop("/MCDU[" ~ i ~ "]/page", "DEPARTURE");
+				pageNode[i].setValue("DEPARTURE");
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldL1(mcdu_scratchpad.scratchpads[i].scratchpad);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATSUDLINK") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "COMMINIT");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
+		} else if (page == "ATSUDLINK") {
+			pageNode[i].setValue("ATCMENU");
+		} else if (page == "COMMMENU") {
+			pageNode[i].setValue("COMMINIT");
+		} else if (page == "COMPANYCALL") {
 			if (atsu.CompanyCall.frequency != 999.99) {
 				atsu.CompanyCall.tune();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "WEATHERREQ") {
+			pageNode[i].setValue("WEATHERTYPE");
+		}  else if (page == "WEATHERTYPE") {
+			atsu.AOC.selectedType = "HOURLY WX";
+			pageNode[i].setValue("WEATHERREQ");
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(1);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "2") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "MCDU") {
+		if (page == "MCDU") {
 			if (getprop("/MCDU[" ~ i ~ "]/active") == 1) {
 				mcdu_message(i, "NOT ALLOWED");
 			} else {
@@ -285,52 +297,52 @@ var lskbutton = func(btn, i) {
 					mcdu_message(i, "WAIT FOR SYSTEM RESPONSE");
 					setprop("/MCDU[" ~ i ~ "]/atsu-active", 1);
 					settimer(func(){
-						setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
+						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
 						mcdu_scratchpad.scratchpads[i].empty();
 						setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
 					}, 2);
 				} else {
-					setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
+					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		} else if (page == "INITA") {
 			initInputA("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(2);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
+		} else if (page == "PERFCLB") {
 			perfCLBInput("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
+		} else if (page == "PERFCRZ") {
 			perfCRZInput("L2",i); 
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFDES") {
+		} else if (page == "PERFDES") {
 			perfDESInput("L2",i); 
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
+		} else if (page == "DATA") {
 			dataInput("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("L2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION") {
+		} else if (page == "NOTIFICATION") {
 			var result = atsu.notificationSystem.inputAirport(mcdu_scratchpad.scratchpads[i].scratchpad);
 			if (result == 1) {
 				mcdu_message(i, "NOT ALLOWED");
@@ -339,225 +351,236 @@ var lskbutton = func(btn, i) {
 			} else {
 				mcdu_scratchpad.scratchpads[i].empty();
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "DATAMODE");
+		} else if (page == "COMMMENU") {
+			pageNode[i].setValue("DATAMODE");
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(2);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			fuelPredInput("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
+		} else if (page == "STATUS") {
 			statusInput("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("L3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type != 0 and canvas_mcdu.myLatRev[i].type != 1) {
 				if (canvas_mcdu.myHold[i] != nil) {
 					canvas_mcdu.myHold[i].del();
 				}
 				canvas_mcdu.myHold[i] = nil;
 				canvas_mcdu.myHold[i] = holdPage.new(i, canvas_mcdu.myLatRev[i].wpt);
-				setprop("/MCDU[" ~ i ~ "]/page", "HOLD");
+				pageNode[i].setValue("HOLD");
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "VOICEDIRECTORY");
+		} else if (page == "COMMMENU") {
+			pageNode[i].setValue("VOICEDIRECTORY");
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(3);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "4") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
-			setprop("/MCDU[" ~ i ~ "]/page", "STATUS");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		if (page == "DATA") {
+			pageNode[i].setValue("STATUS");
+		} else if (page == "INITB") {
 			initInputB("L4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			fuelPredInput("L4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("L4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("L4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("L4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CONNECTSTATUS") {
+		} else if (page == "CONNECTSTATUS") {
 			if (atsu.ADS.state != 0) {
 				atsu.ADS.setState(0);
 			} else {
 				atsu.ADS.setState(1);
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY") {
+		} else if (page == "VOICEDIRECTORY") {
 			if (atsu.CompanyCall.frequency != 999.99) { 
 				atsu.CompanyCall.tune(); 
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(4);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "5") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			fuelPredInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
+		} else if (page == "PERFCLB") {
 			perfCLBInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
+		} else if (page == "PERFCRZ") {
 			perfCRZInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFDES") {
+		} else if (page == "PERFDES") {
 			perfDESInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFGA") {
+		} else if (page == "PERFGA") {
 			perfGAInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
+		} else if (page == "DATA") {
 			dataInput("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
+		} else if (page == "DATA2") {
 			data2Input("L5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV") {
+		} else if (page == "VERTREV") {
 			canvas_mcdu.myVertRev[i].pushButtonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
+		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
+		} else if (page == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].manAirportCall(mcdu_scratchpad.scratchpads[i].scratchpad);
 			mcdu_scratchpad.scratchpads[i].empty();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "NOTIFICATION");
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].leftKey(5);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "6") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			fuelPredInput("L6",i);
-		} else if (getprop("MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			initInputIRS("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonLeft(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(6);
-		#} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
-		#	canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
+		} else if (page == "WINDHIST") {
 			if (canvas_mcdu.myCLBWIND[i] == nil) {
 				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
 			} else {
 				canvas_mcdu.myCLBWIND[i].reload();
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ROUTESELECTION") {
+			pageNode[i].setValue("WINDCLB");
+		} else if (page == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
+		} else if (page == "PERFCLB") {
 			perfCLBInput("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
+		} else if (page == "PERFCRZ") {
 			perfCRZInput("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFDES") {
+		} else if (page == "PERFDES") {
 			perfDESInput("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFGA") {
+		} else if (page == "PERFGA") {
 			perfGAInput("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("L6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV" or getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV" or getprop("/MCDU[" ~ i ~ "]/page") == "DUPLICATENAMES") {
-			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "LATREV" or page == "VERTREV" or page == "DUPLICATENAMES") {
+			pageNode[i].setValue("F-PLNA");
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE" or getprop("/MCDU[" ~ i ~ "]/page") == "HOLD" or getprop("/MCDU[" ~ i ~ "]/page") == "AIRWAYS") {
+		} else if (page == "DEPARTURE" or page == "HOLD" or page == "AIRWAYS") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+				pageNode[i].setValue("F-PLNA");
 			} else {
-				setprop("/MCDU[" ~ i ~ "]/page", "LATREV");
+				pageNode[i].setValue("LATREV");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldL6();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CLOSESTAIRPORT") {
+		} else if (page == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].freeze();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU" or getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATSUDLINK");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION" or getprop("/MCDU[" ~ i ~ "]/page") == "CONNECTSTATUS") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATSUDLINK");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMINIT" or getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY" or getprop("/MCDU[" ~ i ~ "]/page") == "DATAMODE"  or getprop("/MCDU[" ~ i ~ "]/page") == "COMMSTATUS" or getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
-			setprop("/MCDU[" ~ i ~ "]/page", "COMMMENU");
+		} else if (page == "AOCMENU" or page == "ATCMENU" or page == "ATCMENU2") {
+			pageNode[i].setValue("ATSUDLINK");
+		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS") {
+			pageNode[i].setValue("ATCMENU");
+		} else if (page == "WEATHERREQ" or page == "RECEIVEDMSGS") {
+			pageNode[i].setValue("AOCMENU");
+		} else if (page == "RECEIVEDMSG") {
+			pageNode[i].setValue("RECEIVEDMSGS");
+			canvas_mcdu.myReceivedMessages[i].update();
+		} else if (page == "COMMMENU") {
+			pageNode[i].setValue("ATSUDLINK");
+		} else if (page == "COMMINIT" or page == "VOICEDIRECTORY" or page == "DATAMODE"  or page == "COMMSTATUS" or page == "COMPANYCALL") {
+			pageNode[i].setValue("COMMMENU");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -565,29 +588,34 @@ var lskbutton = func(btn, i) {
 }
 
 var rskbutton = func(btn, i) {
+	page = pageNode[i].getValue();
 	if (btn == "1") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("R1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			initInputIRS("R1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("R1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
-			if (canvas_mcdu.myHISTWIND[i] == nil) {
-				canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
+		} else if (page == "WINDCLB") {
+			if (fmgc.FMGCInternal.phase == 0) {
+				if (canvas_mcdu.myHISTWIND[i] == nil) {
+					canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
+				} else {
+					canvas_mcdu.myHISTWIND[i].reload();
+				}
+				pageNode[i].setValue("WINDHIST");
 			} else {
-				canvas_mcdu.myHISTWIND[i].reload();
+				mcdu_message(i, "NOT ALLOWED");
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDHIST");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("R1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("R1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("R1",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 1) {
 				if (canvas_mcdu.myArrival[i] != nil) {
 					canvas_mcdu.myArrival[i].del();
@@ -595,104 +623,129 @@ var rskbutton = func(btn, i) {
 				canvas_mcdu.myArrival[i] = nil;
 				canvas_mcdu.myArrival[i] = arrivalPage.new(canvas_mcdu.myLatRev[i].title[2], i);
 				canvas_mcdu.myArrival[i]._setupPageWithData();
-				setprop("/MCDU[" ~ i ~ "]/page", "ARRIVAL");
+				pageNode[i].setValue("ARRIVAL");
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(1);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
+		} else if (page == "DATA2") {
 			if (fmgc.WaypointDatabase.getCount() > 0) {
 				if (canvas_mcdu.myPilotWP[i] != nil) {
 					canvas_mcdu.myPilotWP[i].del();
 				}
 				canvas_mcdu.myPilotWP[i] = nil;
 				canvas_mcdu.myPilotWP[i] = pilotWaypointPage.new(i);
-				setprop("/MCDU[" ~ i ~ "]/page", "PILOTWP");
+				pageNode[i].setValue("PILOTWP");
 			} else {
 				mcdu_message(i, "NOT ALLOWED"); # todo spawn new waypoints page
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "COMMSTATUS");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMPANYCALL") {
+		} else if (page == "COMMMENU") {
+			pageNode[i].setValue("COMMSTATUS");
+		} else if (page == "COMPANYCALL") {
 			if (atsu.CompanyCall.frequency != 999.99) {
 				atsu.CompanyCall.ack();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "ATSUDLINK") {
+			pageNode[i].setValue("AOCMENU");
+		} else if (page == "WEATHERREQ") {
+			var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
+			if (result == 1) {
+				mcdu_message(i, "NOT ALLOWED");
+			} elsif (result == 2) {
+				mcdu_message(i, "NOT IN DATA BASE");
+			} else {
+				mcdu_scratchpad.scratchpads[i].empty();
+			}
+		} else if (page == "WEATHERTYPE") {
+			atsu.AOC.selectedType = "TERM FCST";
+			pageNode[i].setValue("WEATHERREQ");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "2") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		if (page == "INITA") {
+			initInputA("R2",i);
+		} else if (page == "INITB") {
 			initInputB("R2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("R2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("R2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("R2",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(2);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION") {
+		} else if (page == "NOTIFICATION") {
 			var result = atsu.notificationSystem.notify();
 			if (result == 1) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "COMMMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "COMPANYCALL");
+		} else if (page == "COMMMENU") {
+			pageNode[i].setValue("COMPANYCALL");
+		} else if (page == "AOCMENU") {
+			pageNode[i].setValue("WEATHERREQ");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			fuelPredInput("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
+		} else if (page == "PRINTFUNC") {
 			printInput("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("R3",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(3);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type != 2) {
 				canvas_mcdu.myLatRev[i].nextWpt();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(3);
+		} else if (page == "AOCMENU") {
+			if (canvas_mcdu.myReceivedMessages[i] != nil) {
+				canvas_mcdu.myReceivedMessages[i].del();
+			}
+			canvas_mcdu.myReceivedMessages[i] = nil;
+			canvas_mcdu.myReceivedMessages[i] = receivedMessagesPage.new(i);
+			pageNode[i].setValue("RECEIVEDMSGS");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "4") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("R4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
+		} else if (page == "FUELPRED") {
 			fuelPredInput("R4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			if (canvas_mcdu.myCLBWIND[i] == nil) {
 				canvas_mcdu.myCLBWIND[i] = windCLBPage.new(i);
 			} else {
 				canvas_mcdu.myCLBWIND[i].reload();
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDCLB");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+			pageNode[i].setValue("WINDCLB");
+		} else if (page == "WINDDES") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
 				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
@@ -722,30 +775,30 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+			pageNode[i].setValue("WINDCRZ");
+		} else if (page == "PERFTO") {
 			perfTOInput("R4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("R4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
+		} else if (page == "PRINTFUNC2") {
 			printInput2("R4",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(4);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(4);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "5") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB") {
+		} else if (page == "INITB") {
 			initInputB("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
 				if (fmgc.FMGCInternal.toFromSet and size(fmgc.windController.nav_indicies[i]) > 0) {
 					if (canvas_mcdu.myCRZWIND[i] != nil) {
@@ -775,46 +828,57 @@ var rskbutton = func(btn, i) {
 					}
 				}
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDCRZ");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+			pageNode[i].setValue("WINDCRZ");
+		} else if (page == "WINDCRZ") {
 			if (canvas_mcdu.myDESWIND[i] == nil) {
 				canvas_mcdu.myDESWIND[i] = windDESPage.new(i, "");
 			} else {
 				canvas_mcdu.myDESWIND[i].reload();
 			}
-			setprop("MCDU[" ~ i ~ "]/page", "WINDDES");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "STATUS") {
+			pageNode[i].setValue("WINDDES");
+		} else if (page == "STATUS") {
 			statusInput("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "PERFTO") {
 			perfTOInput("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFGA") {
+		} else if (page == "PERFGA") {
 			perfGAInput("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "RADNAV") {
+		} else if (page == "RADNAV") {
 			radnavInput("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
+		} else if (page == "DATA") {
 			dataInput("R5",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(5);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "LATREV") {
+		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 3) {
 				if (canvas_mcdu.myAirways[i] != nil) {
 					canvas_mcdu.myAirways[i].del();
 				}
 				canvas_mcdu.myAirways[i] = nil;
 				canvas_mcdu.myAirways[i] = airwaysPage.new(i, canvas_mcdu.myLatRev[i].wpt);
-				setprop("/MCDU[" ~ i ~ "]/page", "AIRWAYS");	
+				pageNode[i].setValue("AIRWAYS");	
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "CONNECTSTATUS");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VOICEDIRECTORY") {
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "WEATHERREQ") {
+			var result = atsu.AOC.sendReq(i);
+			if (result == 1) {
+				mcdu_message(i, "NOT ALLOWED");
+			} elsif (result == 3) {
+				mcdu.mcdu_message(i, "VHF3 VOICE MSG NOT GEN");
+			} elsif (result == 4) {
+				mcdu.mcdu_message(i, "NO COMM MSG NOT GEN");
+			}  else {
+				mcdu_scratchpad.scratchpads[i].empty();
+			}
+		} else if (page == "VOICEDIRECTORY") {
 			for (var i = 0; i < 3; i = i + 1) {
 				if (getprop("/systems/radio/rmp[" ~ i ~ "]/sel_chan") == "vhf3") {
 					rmp.transfer(i + 1);
@@ -824,39 +888,39 @@ var rskbutton = func(btn, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "6") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		if (page == "INITA") {
 			initInputA("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			initInputIRS("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCLB") {
+		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonRight(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonRight(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDDES") {
+		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(6);
-		#} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDHIST") {
-		#	canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFTO") {
+		} else if (page == "WINDHIST") {
+			canvas_mcdu.myHISTWIND[i].pushButtonRight(6);
+		} else if (page == "PERFTO") {
 			perfTOInput("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCLB") {
+		} else if (page == "PERFCLB") {
 			perfCLBInput("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFCRZ") {
+		} else if (page == "PERFCRZ") {
 			perfCRZInput("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFDES") {
+		} else if (page == "PERFDES") {
 			perfDESInput("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PERFAPPR") {
+		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R6",i);
-		} else if ((getprop("/MCDU[" ~ i ~ "]/page") == "DATA") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") or (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2")) {
+		} else if ((page == "DATA") or (page == "PRINTFUNC") or (page == "PRINTFUNC2")) {
 			mcdu_message(i, "AOC DISABLED");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
+		} else if (page == "INITA") {
 			initInputA("R6",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "VERTREV") {
-			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "VERTREV") {
+			pageNode[i].setValue("F-PLNA");
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldR6();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PILOTWP") {
+		} else if (page == "PILOTWP") {
 			if (canvas_mcdu.myPilotWP[i] != nil) {
 				if (fmgc.WaypointDatabase.confirm[i]) {
 					fmgc.WaypointDatabase.confirm[i] = 0;
@@ -866,12 +930,12 @@ var rskbutton = func(btn, i) {
 					canvas_mcdu.myPilotWP[i].deleteCmd();
 				}
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "NOTIFICATION") {
-			setprop("/MCDU[" ~ i ~ "]/page", "CONNECTSTATUS");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATSUDLINK") {
-			setprop("/MCDU[" ~ i ~ "]/page", "COMMMENU");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "CONNECTSTATUS") {
-			setprop("/MCDU[" ~ i ~ "]/page", "NOTIFICATION");
+		} else if (page == "NOTIFICATION") {
+			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "ATSUDLINK") {
+			pageNode[i].setValue("COMMMENU");
+		} else if (page == "CONNECTSTATUS") {
+			pageNode[i].setValue("NOTIFICATION");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -879,121 +943,131 @@ var rskbutton = func(btn, i) {
 }
 
 var arrowbutton = func(btn, i) {
+	page = pageNode[i].getValue();
 	if (btn == "left") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
-			setprop("/MCDU[" ~ i ~ "]/page", "DATA2");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
-				setprop("/MCDU[" ~ i ~ "]/page", "INITB");
+		if (page == "DATA") {
+			pageNode[i].setValue("DATA2");
+		} else if (page == "DATA2") {
+			pageNode[i].setValue("DATA");
+		} else if (page == "INITA") {
+			if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+				pageNode[i].setValue("INITB");
 			} else {
-				setprop("/MCDU[" ~ i ~ "]/page", "FUELPRED");
+				pageNode[i].setValue("FUELPRED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB" or getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
-			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC2");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "INITB" or page == "FUELPRED") {
+			pageNode[i].setValue("INITA");
+		} else if (page == "PRINTFUNC") {
+			pageNode[i].setValue("PRINTFUNC2");
+		} else if (page == "PRINTFUNC2") {
+			pageNode[i].setValue("PRINTFUNC");
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollLeft();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].scrollLeft();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PILOTWP") {
+		} else if (page == "PILOTWP") {
 			canvas_mcdu.myPilotWP[i].scrollLeft();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU2");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].scrollLeft();
+		} else if (page == "RECEIVEDMSG") {
+			canvas_mcdu.myReceivedMessage[i].scrollLeft();
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("ATCMENU2");
+		} else if (page == "ATCMENU2") {
+			pageNode[i].setValue("ATCMENU");
 		}
 	} else if (btn == "right") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA") {
-			setprop("/MCDU[" ~ i ~ "]/page", "DATA2");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DATA2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
-			if (getprop("engines/engine[0]/state") != 3 and getprop("engines/engine[1]/state") != 3) {
-				setprop("/MCDU[" ~ i ~ "]/page", "INITB");
+		if (page == "DATA") {
+			pageNode[i].setValue("DATA2");
+		} else if (page == "DATA2") {
+			pageNode[i].setValue("DATA");
+		} else if (page == "INITA") {
+			if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+				pageNode[i].setValue("INITB");
 			} else {
-				setprop("/MCDU[" ~ i ~ "]/page", "FUELPRED");
+				pageNode[i].setValue("FUELPRED");
 			}
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITB" or getprop("/MCDU[" ~ i ~ "]/page") == "FUELPRED") {
-			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC") {
-			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC2");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PRINTFUNC2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "INITB" or page == "FUELPRED") {
+			pageNode[i].setValue("INITA");
+		} else if (page == "PRINTFUNC") {
+			pageNode[i].setValue("PRINTFUNC2");
+		} else if (page == "PRINTFUNC2") {
+			pageNode[i].setValue("PRINTFUNC");
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollRight();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].scrollRight();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "PILOTWP") {
+		} else if (page == "PILOTWP") {
 			canvas_mcdu.myPilotWP[i].scrollRight();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU2");
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ATCMENU2") {
-			setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
+		} else if (page == "RECEIVEDMSGS") {
+			canvas_mcdu.myReceivedMessages[i].scrollRight();
+		} else if (page == "RECEIVEDMSG") {
+			canvas_mcdu.myReceivedMessage[i].scrollRight();
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("ATCMENU2");
+		} else if (page == "ATCMENU2") {
+			pageNode[i].setValue("ATCMENU");
 		}
 	} else if (btn == "up") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollUp();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollUp();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].scrollUp();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].scrollUp();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			initInputIRS("up",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonUp();
 		}
 	} else if (btn == "down") {
-		if (getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNA" or getprop("/MCDU[" ~ i ~ "]/page") == "F-PLNB") {
+		if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollDn();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DEPARTURE") {
+		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollDn();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "ARRIVAL") {
+		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].scrollDn();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "DIRTO") {
+		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].scrollDn();
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "IRSINIT") {
+		} else if (page == "IRSINIT") {
 			initInputIRS("down",i);
-		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "WINDCRZ") {
+		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonDown();
 		}
 	}
 }
 
 var pagebutton = func(btn, i) {
+	page = pageNode[i].getValue();
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
-	if (getprop("/MCDU[" ~ i ~ "]/page") != "MCDU") {
+	if (page != "MCDU") {
 		if (btn == "radnav") {
-			setprop("/MCDU[" ~ i ~ "]/page", "RADNAV");
+			pageNode[i].setValue("RADNAV");
 		} else if (btn == "prog") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGTO");
+				pageNode[i].setValue("PROGTO");
 			} else if (fmgc.FMGCInternal.phase == 2) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGCLB");
+				pageNode[i].setValue("PROGCLB");
 			} else if (fmgc.FMGCInternal.phase == 3) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGCRZ");
+				pageNode[i].setValue("PROGCRZ");
 			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
-				setprop("MCDU[" ~ i ~ "]/page", "PROGDES");
+				pageNode[i].setValue("PROGDES");
 			}
 		} else if (btn == "perf") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
-				setprop("MCDU[" ~ i ~ "]/page", "PERFTO");
+				pageNode[i].setValue("PERFTO");
 			} else if (fmgc.FMGCInternal.phase == 2) {
-				setprop("MCDU[" ~ i ~ "]/page", "PERFCLB");
+				pageNode[i].setValue("PERFCLB");
 			} else if (fmgc.FMGCInternal.phase == 3) {
-				setprop("MCDU[" ~ i ~ "]/page", "PERFCRZ");
+				pageNode[i].setValue("PERFCRZ");
 			} else if (fmgc.FMGCInternal.phase == 4) {
-				setprop("MCDU[" ~ i ~ "]/page", "PERFDES");
+				pageNode[i].setValue("PERFDES");
 			} else if (fmgc.FMGCInternal.phase == 5) {
-				setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
+				pageNode[i].setValue("PERFAPPR");
 			} else if (fmgc.FMGCInternal.phase == 6) {
-				setprop("MCDU[" ~ i ~ "]/page", "PERFGA");
+				pageNode[i].setValue("PERFGA");
 			} else if (fmgc.FMGCInternal.phase == 7) {
 				fmgc.reset_FMGC();
 			}
@@ -1001,18 +1075,18 @@ var pagebutton = func(btn, i) {
 			if (fmgc.FMGCInternal.phase == 7) {
 				fmgc.reset_FMGC();
 			}
-			setprop("/MCDU[" ~ i ~ "]/page", "INITA");
+			pageNode[i].setValue("INITA");
 		} else if (btn == "data") {
-			setprop("/MCDU[" ~ i ~ "]/page", "DATA");
+			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
-			var page = getprop("/MCDU[" ~ i ~ "]/page");
-			if (page != "ATSUDLINK" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
-				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", getprop("/MCDU[" ~ i ~ "]/page"));
+			var page = page;
+			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
+				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
 			} else {
-				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", getprop("/MCDU[" ~ i ~ "]/page"));
+				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
 			}
 			mcdu_message(i, "SELECT DESIRED SYSTEM");
-			setprop("/MCDU[" ~ i ~ "]/page", "MCDU");
+			pageNode[i].setValue("MCDU");
 		} else if (btn == "f-pln" or btn == "airport") {
 			if (canvas_mcdu.myFpln[i] == nil) {
 				canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
@@ -1030,10 +1104,10 @@ var pagebutton = func(btn, i) {
 			} else {
 				canvas_mcdu.myFpln[i].scroll = 0;
 			}
-			setprop("/MCDU[" ~ i ~ "]/page", "F-PLNA");
+			pageNode[i].setValue("F-PLNA");
 			
 		} else if (btn == "fuel-pred") {
-			setprop("/MCDU[" ~ i ~ "]/page", "FUELPRED");
+			pageNode[i].setValue("FUELPRED");
 		} else if (btn == "dirto") {
 			if (fmgc.flightPlanController.temporaryFlag[i] and !dirToFlag) {
 				mcdu_message(i, "INSERT/ERASE TMPY FIRST");
@@ -1041,25 +1115,26 @@ var pagebutton = func(btn, i) {
 			} elsif (canvas_mcdu.myDirTo[i] == nil) {
 				canvas_mcdu.myDirTo[i] = dirTo.new(i);
 			}
-			setprop("/MCDU[" ~ i ~ "]/page", "DIRTO");
+			pageNode[i].setValue("DIRTO");
 		} else if (btn == "atc") {
 			if (getprop("/MCDU[" ~ i ~ "]/atsu-active") != 2) {
 				mcdu_message(i, "WAIT FOR SYSTEM RESPONSE");
 				setprop("/MCDU[" ~ i ~ "]/atsu-active", 1);
 				settimer(func(){
-					setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
+					pageNode[i].setValue("ATCMENU");
 					mcdu_scratchpad.scratchpads[i].empty();
 					setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
 				}, 2);
 			} else {
-				setprop("/MCDU[" ~ i ~ "]/page", "ATCMENU");
+				pageNode[i].setValue("ATCMENU");
 			}
 		}
 	}
 }
 
 var button = func(btn, i) {
-	if (getprop("/MCDU[" ~ i ~ "]/page") != "MCDU") {
+	page = pageNode[i].getValue();
+	if (page != "MCDU") {
 		var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 		if (btn == "SLASH") {
 			mcdu_scratchpad.scratchpads[i].addChar("/");
@@ -1088,9 +1163,9 @@ var mcdu_message = func(i, string, overrideStr = "") {
 }
 
 var screenFlash = func(time, i) {
-	var page = getprop("/MCDU[" ~ i ~ "]/page");
-	setprop("/MCDU[" ~ i ~ "]/page", "NONE");
+	page = pageNode[i].getValue();
+	pageNode[i].setValue("NONE");
 	settimer(func {
-		setprop("/MCDU[" ~ i ~ "]/page", page);
+		pageNode[i].setValue(page);
 	}, time);
 }

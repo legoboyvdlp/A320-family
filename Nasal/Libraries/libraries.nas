@@ -11,7 +11,6 @@ print("------------------------------------------------");
 setprop("/autopilot/route-manager/disable-fms", 1);
 
 setprop("/sim/replay/was-active", 0);
-
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
@@ -54,7 +53,7 @@ setlistener("/sim/sounde/btn1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -63,7 +62,7 @@ setlistener("/sim/sounde/oh-btn", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/oh-btn").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/oh-btn").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -72,7 +71,7 @@ setlistener("/sim/sounde/btn3", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn3").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn3").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -81,7 +80,7 @@ setlistener("/sim/sounde/knb1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/knb1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/knb1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -90,21 +89,21 @@ setlistener("/sim/sounde/switch1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/switch1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/switch1").setBoolValue(0);
 	}, 0.05);
 });
 
 setlistener("/controls/lighting/seatbelt-sign", func {
-	props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(0);
 	}, 2);
 }, 0, 0);
 
 setlistener("/controls/lighting/no-smoking-sign", func {
-	props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(0);
 	}, 1);
 }, 0, 0);
 
@@ -137,6 +136,28 @@ setlistener("/sim/sounde/spdbrk-click", func {
 		spdbrk_click.setBoolValue(0);
 	}, 0.4);
 });
+
+var relayBatt1 = func {
+  setprop("/sim/sounde/relay-batt-1",1);
+  settimer(func {setprop("/sim/sounde/relay-batt-1",0);},0.35);
+}
+var relayBatt2 = func {
+  setprop("/sim/sounde/relay-batt-2",1);
+  settimer(func {setprop("/sim/sounde/relay-batt-2",0);},0.35);
+}
+var relayApu = func {
+  setprop("/sim/sounde/relay-apu",1);
+  settimer(func {setprop("/sim/sounde/relay-apu",0);},0.35);
+}
+var relayExt = func {
+  setprop("/sim/sounde/relay-ext",1);
+  settimer(func {setprop("/sim/sounde/relay-ext",0);},0.35);
+}
+
+setlistener("/systems/electrical/sources/bat-1/contact", relayBatt1, nil, 0);
+setlistener("/systems/electrical/sources/bat-2/contact", relayBatt2, nil, 0);
+setlistener("/systems/electrical/relay/apu-glc/contact-pos", relayApu, nil, 0);
+setlistener("/systems/electrical/relay/ext-epc/contact-pos", relayExt, nil, 0);
 
 #########
 # Doors #
@@ -192,6 +213,7 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.eng_init();
 	systems.APUController.init();
+	systems.BrakeSys.reset();
 	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
@@ -238,15 +260,16 @@ var systemsLoop = maketimer(0.1, func {
 	systems.ELEC.loop();
 	systems.PNEU.loop();
 	systems.HYD.loop();
-	systems.FUEL.loop();
 	systems.ADIRS.loop();
+	systems.APUController.loop();
+	systems.BrakeSys.update();
 	ecam.ECAM.loop();
-	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop();
 	dmc.DMController.loop();
-	systems.APUController.loop();
+	atsu.ATSU.loop();
+	libraries.BUTTONS.update();
 	systems.HFLoop();
 	
 	groundspeed = pts.Velocities.groundspeed.getValue();
@@ -433,7 +456,7 @@ controls.elevatorTrim = func(d) {
     if (systems.HYD.Psi.green.getValue() >= 1500) {
         slewProp("/controls/flight/elevator-trim", d * 0.0185); # Rate in JSB normalized (0.125 / 13.5)
     } else {
-		 slewProp("/controls/flight/elevator-trim", d * 0.0092) # Rate in JSB normalized (0.125 / 13.5)
+		slewProp("/controls/flight/elevator-trim", d * 0.0092) # Rate in JSB normalized (0.125 / 13.5)
 	}
 }
 
@@ -442,6 +465,23 @@ setlistener("/controls/flight/elevator-trim", func {
         pts.Controls.Flight.elevatorTrim.setValue(0.296296);
     }
 }, 0, 0);
+
+# For the cockpit rotation and anywhere else you want to use it
+var cmdDegCalc = 0;
+var slewPitchWheel = func(d) {
+	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.ElevatorTrim.cmdDeg.getValue(), 0.1);
+	if (d > 0) { # DN
+		if (cmdDegCalc < 4) {
+			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	} else { # UP
+		if (cmdDegCalc > -13.5) {
+			cmdDegCalc = (cmdDegCalc - 0.1) / 13.5; # Subtract and normalize
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	}
+}
 
 ##########
 # Lights #

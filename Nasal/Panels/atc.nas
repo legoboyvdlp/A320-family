@@ -6,7 +6,7 @@
 var idCode = props.globals.getNode("instrumentation/transponder/id-code", 1);
 
 var guiModes = ['OFF', 'STANDBY', 'TEST', 'GROUND', 'ON', 'ALTITUDE'];
-var guiNode = props.globals.getNode("sim/gui/dialogs/radios/transponder-mode", 1);
+var guiNode = props.globals.getNode("/sim/gui/dialogs/radios/transponder-mode", 1);
 var forLoopFlag = 0;
 
 var altimeter = props.globals.initNode("/instrumentation/transponder/altimeter-input-src", 0, "INT");
@@ -24,11 +24,10 @@ var Transponder = {
 	serviceableNode: props.globals.getNode("instrumentation/transponder/serviceable", 1),
 	knobNode: props.globals.getNode("instrumentation/transponder/inputs/knob-mode", 1),
 	identNode: props.globals.getNode("instrumentation/transponder/inputs/ident-btn", 1),
-	wowNode: props.globals.getNode("fdm/jsbsim/position/wow"),
-	ac1Node: props.globals.getNode("systems/electrical/bus/ac-1", 1),
+	ac1Node: props.globals.getNode("/systems/electrical/bus/ac-1", 1),
 	tcasNode: props.globals.getNode("instrumentation/tcas/inputs/mode"),
 	aglNode: props.globals.getNode("position/gear-agl-ft", 1),
-	electricNode: props.globals.getNode("systems/electrical/outputs/transponder", 1), # communicate to generic systems
+	electricNode: props.globals.getNode("/systems/electrical/outputs/transponder", 1), # communicate to generic systems
 	new: func(elecSrc, ADIRS) {
 		var t = {parents:[Transponder]};
 		t.mode = 1;
@@ -84,7 +83,7 @@ var Transponder = {
 				me.setMode(4); # on
 			}
 		} else if (me.mode >= 3) {
-			if (me.wowNode.getBoolValue()) {
+			if (pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
 				if (me.knobNode.getValue() != 3) {
 					me.setMode(3); # gnd
 				}
@@ -146,7 +145,7 @@ var transponderPanel = {
 	failLight: 0,
 	clearFlag: 0,
 	keypad: func(keyNum) {
-		if (props.globals.getNode("controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("systems/electrical/bus/dc-ess", 1).getValue() < 25) {
+		if (props.globals.getNode("/controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("/systems/electrical/bus/dc-ess", 1).getValue() < 25) {
 			return;
 		}
 		if (keyNum < 0 or keyNum > 7) {
@@ -164,7 +163,7 @@ var transponderPanel = {
 		}
 	},
 	clearKey: func() {
-		if (props.globals.getNode("controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("systems/electrical/bus/dc-ess", 1).getValue() < 25) {
+		if (props.globals.getNode("/controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("/systems/electrical/bus/dc-ess", 1).getValue() < 25) {
 			return;
 		}
 		if (me.codeDisp != "") {
@@ -216,7 +215,7 @@ var transponderPanel = {
 			return;
 		}
 		me.failLight = newFail;
-		props.globals.getNode("systems/atc/failed").setBoolValue(me.failLight);
+		props.globals.getNode("/systems/atc/failed").setBoolValue(me.failLight);
 	},
 	identSwitch: func() {
 		Transponders.vector[me.atcSel - 1].ident();

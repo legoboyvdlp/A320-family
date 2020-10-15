@@ -2,6 +2,17 @@
 # Jonathan Redpath
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
+var ATSU = {
+	working: 0,
+	loop: func() {
+		if (systems.ELEC.Bus.ac1.getValue() >= 110 or systems.ELEC.Bus.dc1.getValue() >= 25) {
+			me.working = 1;
+		} else {
+			me.working = 0;
+		}
+	}
+};
+
 var notificationSystem = {
 	notifyAirport: nil,
 	hasNotified: 0,
@@ -77,5 +88,117 @@ var CompanyCall = {
 				}
 			}
 		}
+	},
+};
+
+var AOC = {
+	station: nil,
+	selectedType: "HOURLY WX", # 0 = METAR 1 = TAF
+	lastMETAR: nil,
+	lastTAF: nil,
+	sent: 0,
+	sentTime: nil,
+	received: 0,
+	receivedTime: nil,
+	newStation: func(airport) {
+		if (size(airport) == 3 or size(airport) == 4) {
+			if (size(findAirportsByICAO(airport)) == 0) {
+				return 2;
+			} else {
+				me.station = airport;
+				return 0;
+			}
+		} else {
+			return 1;
+		}
+	},
+	sendReq: func(i) {
+		if (me.station == nil or (me.sent and !me.received)) {
+			return 1;
+		}
+		me.sent = 1;
+		me.received = 0;
+		var sentTime = left(getprop("/sim/time/gmt-string"), 5);
+		me.sentTime = split(":", sentTime)[0] ~ "." ~ split(":", sentTime)[1] ~ "Z";
+		
+		if (me.selectedType == "HOURLY WX") {
+			var result = me.fetchMETAR(atsu.AOC.station, i);
+			if (result == 0) {
+				return 0;
+			} elsif (result == 1) {
+				return 3;
+			} elsif (result == 2) {
+				return 4;
+			}
+		}
+		
+		if (me.selectedType == "TERM FCST") {
+			var result = me.fetchTAF(atsu.AOC.station, i); 
+			if (result == 0) {
+				return 0;
+			} elsif (result == 1) {
+				return 3;
+			} elsif (result == 2) {
+				return 4;
+			}
+		}
+	},
+	fetchMETAR: func(airport, i) {
+		if (!ATSU.working) {
+			me.sent = 0;
+			return 2;
+		}
+		if (ecam.vhf3_voice.active) {
+			me.sent = 0;
+			return 1;
+		}
+		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
+			.fail(func print("Download failed!"))
+			.done(func(r) me.processMETAR(r, i));
+		return 0;
+	},
+	fetchTAF: func(airport, i) {
+		if (!ATSU.working) {
+			me.sent = 0;
+			return 2;
+		}
+		if (ecam.vhf3_voice.active) {
+			me.sent = 0;
+			return 1;
+		}
+		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
+			.fail(func print("Download failed!"))
+			.done(func(r) me.processTAF(r, i));
+		return 0;
+	},
+	processMETAR: func(r, i) {
+		var raw = r.response;
+		raw = split("<raw_text>", raw)[1];
+		raw = split("</raw_text>", raw)[0];
+		me.lastMETAR = raw;
+		settimer(func() {
+			me.received = 1;
+			mcdu.mcdu_message(i, "WX UPLINK");
+			
+			var receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", receivedTime)[0] ~ "." ~ split(":", receivedTime)[1] ~ "Z";
+			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastMETAR);
+			mcdu.ReceivedMessagesDatabase.addMessage(message);
+		}, math.max(rand()*6, 2.25));
+	},
+	processTAF: func(r, i) {
+		var raw = r.response;
+		raw = split("<raw_text>", raw)[1];
+		raw = split("</raw_text>", raw)[0];
+		me.lastTAF = raw;
+		settimer(func() {
+			me.received = 1;
+			mcdu.mcdu_message(i, "WX UPLINK");
+			
+			var receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", receivedTime)[0] ~ "." ~ split(":", receivedTime)[1] ~ "Z";
+			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastTAF);
+			mcdu.ReceivedMessagesDatabase.addMessage(message);
+		}, math.max(rand()*6, 2.25));
 	},
 };

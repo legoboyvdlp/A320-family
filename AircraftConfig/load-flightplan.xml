@@ -74,6 +74,10 @@
 			<halign>left</halign>
 			<label>If you have a NAVIGRAPH subcription, we reccomend to load them in the MCDU instead of here.</label>
 		</text>
+		<text>
+			<halign>left</halign>
+			<label>Minimum FGFS version for use of this feature (due to bugs in prior versions) is 2020.1.3.</label>
+		</text>
 		<group>
 			<layout>hbox</layout>
 			<text>
@@ -85,7 +89,29 @@
 				<legend>Load flightplan</legend>
 				<equal>true</equal>
 				<enable>
-					<property>FMGC/internal/tofrom-set</property>
+					<and>
+						<property>FMGC/internal/tofrom-set</property>
+						<not>
+							<or>
+								<equals>
+									<property>/sim/version/flightgear</property>
+									<value>2019.2.0</value>
+								</equals>
+								<equals>
+									<property>/sim/version/flightgear</property>
+									<value>2020.1.0</value>
+								</equals>
+								<equals>
+									<property>/sim/version/flightgear</property>
+									<value>2020.1.1</value>
+								</equals>
+								<equals>
+									<property>/sim/version/flightgear</property>
+									<value>2020.1.2</value>
+								</equals>
+							</or>
+						</not>
+					</and>
 				</enable>
 				<binding>
 					<command>nasal</command>

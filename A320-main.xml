@@ -5,7 +5,11 @@
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
-
+	
+		<animation>
+			<fire-services type="bool">0</fire-services>
+		</animation>
+		
 		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
 		<checklists include="A32X-Checklists.xml"/>
@@ -191,11 +195,6 @@
 			<autopilot n="13">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</autopilot>
-			<wingflexer include="Systems/wingflexer-params.xml"/>
-			<property-rule n="100">
-				<name>Generic Wing Flexer</name>
-				<path>Aircraft/Generic/wingflexer.xml</path>
-			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
@@ -213,7 +212,12 @@
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
+			<pushbutton type="bool">0</pushbutton>
 			<spdbrk-click type="bool">0</spdbrk-click>
+			<relay-batt-1 type="bool">0</relay-batt-1>
+			<relay-batt-2 type="bool">0</relay-batt-2>
+			<relay-apu type="bool">0</relay-apu>
+			<relay-ext type="bool">0</relay-ext>
 		</sounde>
 
 		<instrumentation>
@@ -266,6 +270,15 @@
 							<command>nasal</command>
 							<script>
 							acconfig.loadflightplan_dlg.open();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Simbrief</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								acconfig.simbrief_dlg.open();
 							</script>
 						</binding>
 					</item>
@@ -633,7 +646,9 @@
 		<active-fmgc-channel type="int">0</active-fmgc-channel>
 		<internal>
 			<cost-index type="int">0</cost-index>
+			<to-state type="bool">0</to-state>
 		</internal>
+		<simbrief-username type="string"></simbrief-username>
 	</FMGC>
 	
 	<controls>
@@ -692,6 +707,9 @@
 		</electrical>
 		<engines>
 			<engine-start-switch type="int">1</engine-start-switch>
+			<epr-limit type="double">0.0</epr-limit>
+			<n1-limit type="double">0.0</n1-limit>
+			<thrust-limit type="string">TOGA</thrust-limit>
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
 				<cutoff-switch type="bool">true</cutoff-switch>
@@ -704,6 +722,11 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
+				<reverser type="double">0</reverser>
+				<igniter-a type="bool">0</igniter-a>
+				<igniter-b type="bool">0</igniter-b>
+				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="1">
 				<cutoff type="bool">true</cutoff>
@@ -717,6 +740,11 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
+				<reverser type="double">0</reverser>
+				<igniter-a type="bool">0</igniter-a>
+				<igniter-b type="bool">0</igniter-b>
+				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="2">
 				<cutoff type="bool">true</cutoff>
@@ -774,6 +802,7 @@
 			</refuel>
 		</fuel>
 		<gear>
+			<brake-fans type="bool">0</brake-fans>
 			<brake-parking type="bool">0</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
@@ -881,8 +910,8 @@
 				<eng2-manstart type="bool">0</eng2-manstart>
 				<eng1-n1 type="bool">0</eng1-n1>
 				<eng2-n1 type="bool">0</eng2-n1>
-				<IDG1 type="bool">0</IDG1>
-				<IDG2 type="bool">0</IDG2>
+				<idg1 type="bool">0</idg1>
+				<idg2 type="bool">0</idg2>
 				<maskman type="bool">0</maskman>
 				<ramair type="bool">0</ramair>
 				<ratman type="bool">0</ratman>
@@ -972,12 +1001,18 @@
 			<caster-angle-deg-damped type="double">0</caster-angle-deg-damped>
 		</gear>
 		<gear n="1">
+			<Lbrake-smoke type="double">0</Lbrake-smoke>
+			<L1brake-temp-degc type="double">15</L1brake-temp-degc>
+			<L2brake-temp-degc type="double">15</L2brake-temp-degc>
 			<tyre-smoke type="int">0</tyre-smoke>
 			<sprayspeed-ms type="double">0</sprayspeed-ms>
 			<spray-density type="double">0</spray-density>
 			<caster-angle-deg-damped type="double">0</caster-angle-deg-damped>
 		</gear>
 		<gear n="2">
+			<Rbrake-smoke type="double">0</Rbrake-smoke>
+			<R3brake-temp-degc type="double">15</R3brake-temp-degc>
+			<R4brake-temp-degc type="double">15</R4brake-temp-degc>
 			<tyre-smoke type="int">0</tyre-smoke>
 			<sprayspeed-ms type="double">0</sprayspeed-ms>
 			<spray-density type="double">0</spray-density>
@@ -1088,6 +1123,12 @@
 				</bat-2>
 			</sources>
 		</electrical>
+		
+		<fadec>
+			<n1mode1 type="bool">0</n1mode1>
+			<n1mode2 type="bool">0</n1mode2>
+		</fadec>
+		
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
@@ -1188,6 +1229,7 @@
 			<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
 			<cargo-aft-fire type="bool">0</cargo-aft-fire>
 		</failures>
+		
 		<fctl n="0">
 			<elac1 type="bool">0</elac1>
 			<elac2 type="bool">0</elac2>
@@ -1198,6 +1240,7 @@
 			<fac2 type="bool">0</fac2>
 			<yawdamper-active type="bool">0</yawdamper-active>
 		</fctl>
+		
 		<fire n="0">
 			<apu>
 				<temperature type="double">0</temperature>
@@ -1239,10 +1282,13 @@
 			<valves>
 				<apu-lp-valve-cmd type="bool">0</apu-lp-valve-cmd>
 			</valves>
+			<offset-left type="double">0</offset-left>
+			<offset-right type="double">0</offset-right>
 			<fuel-used-1 type="double">0</fuel-used-1>
 			<fuel-used-2 type="double">0</fuel-used-2>
 			<mode-fault type="bool">0</mode-fault>
 		</fuel>
+		
 		<hydraulic n="0">
 			<sources>
 				<ptu>
@@ -1351,6 +1397,23 @@
 		<static n="2">
 			<serviceable type="bool">1</serviceable>
 		</static>
+		
+		<thrust>
+			<alpha-floor type="bool">0</alpha-floor>
+			<clbreduc-ft type="double">1500</clbreduc-ft>
+			<eng-out type="bool">0</eng-out>
+			<lim-flex type="bool">0</lim-flex>
+			<lvrclb type="bool">0</lvrclb>
+			<state1 type="string">IDLE</state1>
+			<state2 type="string">IDLE</state2>
+			<toga-lk type="bool">0</toga-lk>
+			<thr-locked type="bool">0</thr-locked>
+			<thr-locked-alert type="bool">0</thr-locked-alert>
+			<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
+			<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
+			<thr-locked-flash type="bool">0</thr-locked-flash>
+			<thr-locked-time type="double">0</thr-locked-time>
+		</thrust>
 		
 		<navigation>
 			<aligned-1 type="bool">0</aligned-1>
@@ -4251,6 +4314,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
@@ -4334,6 +4398,9 @@
 		<save>
 			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
 		</save>
+		<Simbrief>
+			<file>Aircraft/A320-family/Nasal/FMGC/SimbriefParser.nas</file>
+		</Simbrief>
 	</nasal>
 
 	<maintainance>

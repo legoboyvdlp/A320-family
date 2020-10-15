@@ -544,9 +544,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -575,9 +574,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -606,9 +604,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -637,9 +634,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -668,9 +664,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>1</x>
@@ -699,9 +694,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>1</x>
@@ -730,9 +724,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<reference-dist>30</reference-dist>
 		<position>
@@ -753,9 +746,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<reference-dist>30</reference-dist>
 		<position>

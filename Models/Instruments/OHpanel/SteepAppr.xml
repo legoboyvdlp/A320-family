@@ -14,11 +14,11 @@
 		<condition>
 			<or>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc1</property>
+					<property>systems/electrical/bus/dc-1</property>
 					<value>25</value>
 				</greater-than-equals>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc2</property>
+					<property>systems/electrical/bus/dc-2</property>
 					<value>25</value>
 				</greater-than-equals>
 			</or>
@@ -39,11 +39,11 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc1</property>
+							<property>systems/electrical/bus/dc-1</property>
 							<value>25</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc2</property>
+							<property>systems/electrical/bus/dc-2</property>
 							<value>25</value>
 						</greater-than-equals>
 					</or>
@@ -53,7 +53,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>

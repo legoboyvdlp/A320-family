@@ -2,6 +2,9 @@
 
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
+var wind = nil;
+var magVar = nil;
+
 var windDESPage = {
 	title: nil,
 	titleColour: "wht",
@@ -72,7 +75,7 @@ var windDESPage = {
 				me.L5 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			} else {
-				me.L5 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L5 = ["[  ]/°[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			}
 		} else {
@@ -85,7 +88,7 @@ var windDESPage = {
 				me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			} else {
-				me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			}
 		} else {
@@ -98,7 +101,7 @@ var windDESPage = {
 				me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			} else {
-				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			}
 		} else {
@@ -111,7 +114,7 @@ var windDESPage = {
 				me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			} else {
-				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			}
 		} else {
@@ -124,7 +127,7 @@ var windDESPage = {
 				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			} else {
-				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+				me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			}
 		}
@@ -137,7 +140,7 @@ var windDESPage = {
 				me.R1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude), "ALTN WIND ", "blu"];
 				me.fontMatrix[1][0] = 1;
 			} else {
-				me.R1 = ["[  ]/[  ]", "ALTN WIND ", "blu"];
+				me.R1 = ["[  ]°/[  ]", "ALTN WIND ", "blu"];
 				me.fontMatrix[1][0] = 1;
 			}
 		} else {
@@ -188,17 +191,18 @@ var windDESPage = {
 		me.updateTmpy();
 	},
 	returnGRND: func() {
-		var wind = fmgc.windController.des_winds[2];
+		wind = fmgc.windController.des_winds[2];
+		magVar = pts.Environment.magVar.getValue();
 		if (wind.wind5.altitude == "GRND") {
-			return [geo.normdeg(wind.wind5.heading - getprop("/environment/magnetic-variation-deg")), wind.wind5.magnitude];
+			return [geo.normdeg(wind.wind5.heading - magVar), wind.wind5.magnitude];
 		} else if (wind.wind4.altitude == "GRND") {
-			return [geo.normdeg(wind.wind4.heading - getprop("/environment/magnetic-variation-deg")), wind.wind4.magnitude];
+			return [geo.normdeg(wind.wind4.heading - magVar), wind.wind4.magnitude];
 		} else if (wind.wind3.altitude == "GRND") {
-			return [geo.normdeg(wind.wind3.heading - getprop("/environment/magnetic-variation-deg")), wind.wind3.magnitude];
+			return [geo.normdeg(wind.wind3.heading - magVar), wind.wind3.magnitude];
 		} else if (wind.wind2.altitude == "GRND") {
-			return [geo.normdeg(wind.wind2.heading - getprop("/environment/magnetic-variation-deg")), wind.wind2.magnitude];
+			return [geo.normdeg(wind.wind2.heading - magVar), wind.wind2.magnitude];
 		} else if (wind.wind1.altitude == "GRND") {
-			return [geo.normdeg(wind.wind1.heading - getprop("/environment/magnetic-variation-deg")), wind.wind1.magnitude];
+			return [geo.normdeg(wind.wind1.heading - magVar), wind.wind1.magnitude];
 		} else {
 			return nil;
 		}
@@ -210,9 +214,11 @@ var windDESPage = {
 			} else {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 				# push update to fuel
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();
@@ -382,9 +388,11 @@ var windDESPage = {
 			} else {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 				# push update to fuel
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();

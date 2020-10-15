@@ -8,10 +8,7 @@ var ambient = nil;
 var cabinpsi = nil;
 var state1 = nil;
 var state2 = nil;
-var stateL = nil;
-var stateR = nil;
 var pressmode = nil;
-var wowc = nil;
 var wowl = nil;
 var wowr = nil;
 var vs = nil;
@@ -101,6 +98,7 @@ var PNEU = {
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
 	},
+	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
 		me.resetFail();
 		
@@ -135,12 +133,9 @@ var PNEU = {
 		setprop("/systems/pressurization/pack-2-comp-out-temp", 0);
 		setprop("/systems/pressurization/pack-1-valve", 0);
 		setprop("/systems/pressurization/pack-2-valve", 0);
-		setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
-		setprop("/systems/ventilation/avionics/fan", 0);
-		setprop("/systems/ventilation/avionics/extractvalve", "0");
-		setprop("/systems/ventilation/avionics/inletvalve", "0");
-		setprop("/systems/ventilation/lavatory/extractfan", 0);
-		setprop("/systems/ventilation/lavatory/extractvalve", "0");
+		#setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
+		#setprop("/systems/ventilation/avionics/extractvalve", "0");
+		#setprop("/systems/ventilation/avionics/inletvalve", "0");
 		setprop("/controls/oxygen/masksDeploy", 0);
 		setprop("/controls/oxygen/masksDeployMan", 0);
 		setprop("/controls/oxygen/masksReset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
@@ -163,34 +158,16 @@ var PNEU = {
 		me.Fail.xbleed.setBoolValue(0);
 	},
 	loop: func() {
-		stateL = getprop("engines/engine[0]/state");
-		stateR = getprop("engines/engine[1]/state");
-		wowc = getprop("gear/gear[0]/wow");
 		wowl = getprop("gear/gear[1]/wow");
 		wowr = getprop("gear/gear[2]/wow");
-		eng1_starter = getprop("/systems/pneumatics/valves/starter-valve-1");
-		eng2_starter = getprop("/systems/pneumatics/valves/starter-valve-2");
-		if (stateL == 1 or stateR == 1 or stateL == 2 or stateR == 2) {
-			setprop("/systems/pneumatics/start-psi", 18);
-		} else {
-			setprop("/systems/pneumatics/start-psi", 0);
-		}
-		
-		if (getprop("/controls/engines/engine-start-switch") == 2 and wowc == 1 and (stateL != 3 or stateR != 3)) {
-			setprop("/systems/pneumatics/starting", 1);
-		} else if (wowc == 1 and eng1_starter == 1 or eng2_starter == 1) {
-			setprop("/systems/pneumatics/starting", 1);
-		} else {
-			setprop("/systems/pneumatics/starting", 0);
-		}
 		
 		# Legacy pressurization
 		cabinalt = getprop("/systems/pressurization/cabinalt");
 		targetalt = getprop("/systems/pressurization/targetalt");
 		ambient = getprop("/systems/pressurization/ambientpsi");
 		cabinpsi = getprop("/systems/pressurization/cabinpsi");
-		state1 = getprop("/systems/thrust/state1");
-		state2 = getprop("/systems/thrust/state2");
+		state1 = pts.Systems.Thrust.state[0].getValue();
+		state2 = pts.Systems.Thrust.state[1].getValue();
 		pressmode = getprop("/systems/pressurization/mode");
 		vs = getprop("/systems/pressurization/vs-norm");
 		manvs = getprop("/systems/pressurization/manvs-cmd");
@@ -220,20 +197,11 @@ var PNEU = {
 			setprop("/systems/pressurization/cabinalt", cabinalt + ((manvs / 60) / 10));
 		}
 		
-		if (ditch and auto) {
-			setprop("/systems/pressurization/outflowpos", "1");
-			setprop("/systems/ventilation/avionics/extractvalve", "1");
-			setprop("/systems/ventilation/avionics/inletvalve", "1");
-		}
-		
-		if (systems.ELEC.Bus.dcEss.getValue() >= 25 or systems.ELEC.Bus.acEss.getValue() > 110) {
-			setprop("/systems/ventilation/avionics/fan", 1);
-			setprop("/systems/ventilation/lavatory/extractfan", 1);
-		} else {
-			setprop("/systems/ventilation/avionics/fan", 0);
-			setprop("/systems/ventilation/lavatory/extractfan", 0);
-		}
-		
+		#if (ditch and auto) {
+			#setprop("/systems/pressurization/outflowpos", "1");
+			#setprop("/systems/ventilation/avionics/extractvalve", "1");
+			#setprop("/systems/ventilation/avionics/inletvalve", "1");
+		#}
 		
 		# Oxygen
 		if (cabinalt > 13500) { 

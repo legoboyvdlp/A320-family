@@ -12,7 +12,7 @@ var leftOverflow  = props.globals.initNode("/ECAM/warnings/overflow-left", 0, "B
 var rightOverflow = props.globals.initNode("/ECAM/warnings/overflow-right", 0, "BOOL");
 var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
-var dc_ess = props.globals.getNode("systems/electrical/bus/dc-ess", 1);
+var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
 var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL")];
@@ -87,10 +87,17 @@ var warningNodes = {
 		trimAirFault: props.globals.initNode("/ECAM/warnings/timer/trim-air-fault"),
 		yawDamper1Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-1-fault"),
 		yawDamper2Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-2-fault"),
+		navTerrFault: props.globals.initNode("/ECAM/warnings/timer/nav-gpws-terr-fault"),
 	},
 	Flipflops: {
+		apuGenFault: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault"),
+		apuGenFaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault-on-off"),
 		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
 		bleed2LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output"),
+		gen1Fault: props.globals.initNode("/ECAM/warnings/flipflop/gen-1-fault"),
+		gen2Fault: props.globals.initNode("/ECAM/warnings/flipflop/gen-2-fault"),
+		gen1FaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/gen-1-fault-on-off"),
+		gen2FaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/gen-2-fault-on-off"),
 		pack1Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-1-ovht"),
 		pack2Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-2-ovht"),
 	},
@@ -235,14 +242,21 @@ var status = {
 var ECAM_controller = {
 	_recallCounter: 0,
 	_noneActive: 0,
+	counter: 0,
 	init: func() {
 		ECAMloopTimer.start();
+		me.counter = 0;
 		me.reset();
 	},
 	loop: func() {
-		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !getprop("systems/acconfig/acconfig-running")) {
+		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !pts.Acconfig.running.getBoolValue()) {
 			# update FWC phases
-			phaseLoop();
+			if (me.counter == 0) {
+				phaseLoop();
+				me.counter = 1;
+				return;
+			}
+			me.counter = 0;
 			
 			# check active messages
 			messages_priority_3();
@@ -273,7 +287,7 @@ var ECAM_controller = {
 		# write to ECAM
 		var counter = 0;
 		
-		if (!getprop("systems/acconfig/autoconfig-running")) {
+		if (!pts.Acconfig.running.getBoolValue()) {
 			foreach (var w; warnings.vector) {
 				if (w.active == 1) {
 					if (counter < 9) {

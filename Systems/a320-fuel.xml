@@ -410,6 +410,16 @@
 	
 	<channel name="Flow Rates" execrate="2">
 	
+		<summer name="/systems/fuel/fuel-used-1">
+			<input>/systems/fuel/offset-left</input>
+			<input>propulsion/engine[0]/fuel-used-lbs</input>
+		</summer>
+		
+		<summer name="/systems/fuel/fuel-used-2">
+			<input>/systems/fuel/offset-right</input>
+			<input>propulsion/engine[1]/fuel-used-lbs</input>
+		</summer>
+		
 		<switch name="/systems/fuel/feed-left-inner">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -542,6 +552,32 @@
 			</test>
 		</switch>
 		
+		<switch name="rubbish/pipes-unusable-volume-1">
+			<default value="0"/>
+			<test logic="AND" value="1.5">
+				/systems/acconfig/autoconfig-running eq 0
+				/systems/fuel/valves/engine-1-lp-valve eq 0
+			</test>
+			<output>propulsion/tank[5]/unusable-volume-gal</output>
+		</switch>
+		
+		<switch name="rubbish/pipes-unusable-volume-2">
+			<default value="0"/>
+			<test logic="AND" value="1.5">
+				/systems/acconfig/autoconfig-running eq 0
+				/systems/fuel/valves/engine-2-lp-valve eq 0
+			</test>
+			<output>propulsion/tank[6]/unusable-volume-gal</output>
+		</switch>
+		
+		<switch name="rubbish/pipes-unusable-volume-apu">
+			<default value="0"/>
+			<test logic="AND" value="1.5">
+				/systems/acconfig/autoconfig-running eq 0
+				/systems/fuel/valves/apu-lp-valve eq 0
+			</test>
+			<output>propulsion/tank[7]/unusable-volume-gal</output>
+		</switch>
 		<!-- Feed system -->
 		
 		<switch name="/systems/fuel/internal/apu-source"> <!-- this only when all pumps off -->
@@ -773,7 +809,7 @@
 		<summer name="/systems/fuel/internal/eng-1-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-eng-1</input>
 			<input>/systems/fuel/internal/right-wing-tank-eng-1</input>
-			<input>/systems/fuel/internal/center-tank-eng-2</input>
+			<input>/systems/fuel/internal/center-tank-eng-1</input>
 			<output>propulsion/tank[5]/external-flow-rate-pps</output>
 		</summer>
 		

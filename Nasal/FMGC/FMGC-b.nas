@@ -28,7 +28,6 @@ var Gear = {
 };
 
 var Misc = {
-	acEss: props.globals.getNode("/systems/electrical/bus/ac-ess", 1),
 	elapsedSec: props.globals.getNode("/sim/time/elapsed-sec", 1),
 	fbwLaw: props.globals.getNode("/it-fbw/law", 1),
 	flapNorm: props.globals.getNode("/surface-positions/flap-pos-norm", 1),
@@ -387,7 +386,7 @@ var ITAF = {
 	},
 	ap1Master: func(s) {
 		if (s == 1) {
-			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and Misc.acEss.getValue() >= 110 and Misc.fbwLaw.getValue() == 0 and Position.gearAglFt.getValue() >= 100) {
+			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and Misc.fbwLaw.getValue() == 0 and Position.gearAglFt.getValue() >= 100) {
 				me.revertBasicMode();
 				Output.ap1.setBoolValue(1);
 				Output.latTemp = Output.lat.getValue();
@@ -408,7 +407,7 @@ var ITAF = {
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
-			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and Misc.acEss.getValue() >= 110 and Misc.fbwLaw.getValue() == 0 and Position.gearAglFt.getValue() >= 100) {
+			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and Misc.fbwLaw.getValue() == 0 and Position.gearAglFt.getValue() >= 100) {
 				me.revertBasicMode();
 				Output.ap2.setBoolValue(1);
 				Output.latTemp = Output.lat.getValue();
@@ -438,7 +437,7 @@ var ITAF = {
 	},
 	athrMaster: func(s) {
 		if (s == 1) {
-			if (Misc.acEss.getValue() >= 110) {
+			if (systems.ELEC.Bus.acEss.getValue() >= 110) {
 				Output.athr.setBoolValue(1);
 				Custom.ThrLock.setValue(0);
 				Custom.Sound.enableAthrOff = 1;
@@ -973,12 +972,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 
 # For Canvas Nav Display.
 setlistener("/it-autoflight/input/hdg", func {
-	setprop("autopilot/settings/heading-bug-deg", getprop("/it-autoflight/input/hdg"));
-});
+	setprop("/autopilot/settings/heading-bug-deg", Input.hdg.getValue());
+}, 0, 0);
 
 setlistener("/it-autoflight/internal/alt", func {
-	setprop("autopilot/settings/target-altitude-ft", getprop("/it-autoflight/internal/alt"));
-});
+	setprop("/autopilot/settings/target-altitude-ft", Internal.alt.getValue());
+}, 0, 0);
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);
 var slowLoopTimer = maketimer(1, ITAF, ITAF.slowLoop);
