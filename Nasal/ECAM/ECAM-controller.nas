@@ -15,7 +15,7 @@ var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
-var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL")];
+var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL")];
 var warningFlash = props.globals.initNode("/ECAM/warnings/master-warning-flash", 0, "BOOL");
 
 var lineIndex = 0;
@@ -100,6 +100,8 @@ var warningNodes = {
 		gen2FaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/gen-2-fault-on-off"),
 		pack1Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-1-ovht"),
 		pack2Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-2-ovht"),
+		eng1ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle"),
+		eng2ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle"),
 	},
 };
 
@@ -158,7 +160,7 @@ var warning = {
 		me.noRepeat = 1;
 	},
 	sound: func() {
-		if (me.aural > 2) { return; }
+		if (me.aural > 3) { return; }
 		if (me.active == 0 and me.wasActive == 1) {
 			aural[me.aural].setBoolValue(0); 
 			me.wasActive = 0;
@@ -172,7 +174,7 @@ var warning = {
 				aural[me.aural].setBoolValue(1);
 			}, 0.15);
 		} else {
-				aural[me.aural].setBoolValue(1);
+			aural[me.aural].setBoolValue(1);
 		}
 		me.noRepeat2 = 1;
     },

@@ -60,6 +60,13 @@ var messages_priority_3 = func {
 		stallVoice.setValue(0);
 	}
 	
+	# FCTL FLAPS NOT ZERO
+	if (flap_not_zero.clearFlag == 0 and phaseVar3 == 6 and pts.Controls.Flight.flapsInput.getValue() != 0 and pts.Instrumentation.Altimeter.indicatedFt.getValue() > 22000) {
+		flap_not_zero.active = 1;
+	} else {
+		ECAM_controller.warningReset(flap_not_zero);
+	}
+	
 	if ((phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
 		overspeed.active = 1;
 		if (getprop("/systems/navigation/adr/computation/overspeed-vmo") or getprop("/systems/navigation/adr/computation/overspeed-mmo")) {
@@ -87,13 +94,6 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(overspeedGear);
 		ECAM_controller.warningReset(overspeedFlap);
 		overspeedFlap.msg = "-VFE................XXX";
-	}
-	
-	# FCTL FLAPS NOT ZERO
-	if ((flap_not_zero.clearFlag == 0) and phaseVar3 == 6 and getprop("/controls/flight/flaps-input") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
-		flap_not_zero.active = 1;
-	} else {
-		ECAM_controller.warningReset(flap_not_zero);
 	}
 	
 	# ENG DUAL FAIL
@@ -275,6 +275,31 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(dualFailevac);
 		ECAM_controller.warningReset(dualFailbatt);
 		ECAM_controller.warningReset(dualFailtouch);
+	}
+	
+	# ENG ABV IDLE
+	if (eng1ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 1 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng1ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
+		eng1ThrLvrAbvIdle.active = 1;
+		if (eng1ThrLvrAbvIdle2.clearFlag == 0) {
+			eng1ThrLvrAbvIdle2.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1ThrLvrAbvIdle2);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1ThrLvrAbvIdle);
+		ECAM_controller.warningReset(eng1ThrLvrAbvIdle2);
+	}
+	
+	if (eng2ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 1 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng2ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
+		eng2ThrLvrAbvIdle.active = 1;
+		if (eng2ThrLvrAbvIdle2.clearFlag == 0) {
+			eng2ThrLvrAbvIdle2.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2ThrLvrAbvIdle2);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2ThrLvrAbvIdle);
+		ECAM_controller.warningReset(eng2ThrLvrAbvIdle2);
 	}
 	
 	# ENG FIRE
@@ -699,7 +724,7 @@ var messages_priority_3 = func {
 	}
 	
 	# CONFIG
-	if ((slats_config.clearFlag == 0) and (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input")) == 4 and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((slats_config.clearFlag == 0) and (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue()) == 4 and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		slats_config.active = 1;
 		slats_config_1.active = 1;
 	} else {
@@ -707,7 +732,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(slats_config_1);
 	}
 	
-	if ((flaps_config.clearFlag == 0) and (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input") == 4) and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((flaps_config.clearFlag == 0) and (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4) and phaseVar3 >= 3 and phaseVar3 <= 4) {
 		flaps_config.active = 1;
 		flaps_config_1.active = 1;
 	} else {
@@ -2094,7 +2119,7 @@ var messages_priority_0 = func {
 
 var messages_config_memo = func {
 	phaseVarMemo = phaseNode.getValue();
-	if (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input") == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("/ECAM/to-config-normal", 0);
 	} else {
 		setprop("/ECAM/to-config-normal", 1);

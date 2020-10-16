@@ -403,6 +403,66 @@
 		<type>monostable</type>
 		<inverted type="bool">true</inverted>
 		<time>
+			<value>4.5</value>
+		</time>
+		<S>
+			<property>ECAM/phases/monostable/phase-8</property>
+		</S>
+		<output>ECAM/phases/monostable/phase-8-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-retard-case-2</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-retard-case-2</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-reverse</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-1-reverse-fall</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-reverse</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-2-reverse-fall</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
 			<value>3.0</value>
 		</time>
 		<S>
@@ -894,5 +954,27 @@
 			<property>/ECAM/warnings/logic/apu-gen-fault-on-off-reset</property>
 		</R>
 		<output>/ECAM/warnings/flipflop/apu-gen-fault-on-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle</output>
 	</flipflop>
 </PropertyList>

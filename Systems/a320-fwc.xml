@@ -1661,4 +1661,221 @@
 		
 	</channel>
 
+	<channel name="ENG" execrate="8">
+		
+		<switch name="/ECAM/warnings/logic/eng/ground-spoilers">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/spoilers/max-spoiler eq 1
+				/fdm/jsbsim/spoilers/main-cmd gt 0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/ground-spoilers-output">
+			<input>/ECAM/warnings/logic/eng/ground-spoilers</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">2</rate_limit> <!-- 0.5 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/ground-retard">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/timer/ground-calc eq 0
+				/ECAM/warning-phase eq 6
+				/ECAM/warning-phase eq 7
+				/ECAM/warnings/logic/eng/ground-spoilers-output eq 1
+				/ECAM/phases/monostable/phase-8-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output">
+			<input>/ECAM/warnings/logic/eng/eng-1-tla-abv-6</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-idle">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[0]/throttle-lever lt 0.055
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-tla-idle-output">
+			<input>/ECAM/warnings/logic/eng/eng-1-tla-idle</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-reverse">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/reverser-pos-norm gt 0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-reverse-output">
+			<input>/ECAM/warnings/logic/eng/eng-1-reverse</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output">
+			<input>/ECAM/warnings/logic/eng/eng-2-tla-abv-6</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-idle">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[1]/throttle-lever lt 0.055
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-tla-idle-output">
+			<input>/ECAM/warnings/logic/eng/eng-2-tla-idle</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-reverse">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[1]/reverser-pos-norm gt 0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-reverse-output">
+			<input>/ECAM/warnings/logic/eng/eng-2-reverse</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-retard-case-1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output eq 1
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-2-reverse-output eq 1
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-2-reverse eq 1
+						/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output eq 0
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-retard-case-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output eq 1
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-2-reverse-fall eq 0
+						/ECAM/warnings/logic/eng/eng-2-tla-idle eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-retard-case-1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-1-reverse-output eq 1
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-1-reverse eq 1
+						/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output eq 0
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-retard-case-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-1-reverse-fall eq 0
+						/ECAM/warnings/logic/eng/eng-1-tla-idle eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/ground-retard eq 1
+				/velocities/groundspeed-kt gt 40
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-1-retard-case-1 eq 1
+					/ECAM/warnings/logic/eng/eng-1-retard-case-2 eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/eng/ground-retard eq 0
+				<test logic="AND">
+					/ECAM/warnings/logic/eng/eng-1-retard-case-1 eq 0
+					/ECAM/warnings/logic/eng/eng-1-retard-case-2 eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/ground-retard eq 1
+				/velocities/groundspeed-kt gt 40
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-2-retard-case-1 eq 1
+					/ECAM/warnings/logic/eng/eng-2-retard-case-2 eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/eng/ground-retard eq 0
+				<test logic="AND">
+					/ECAM/warnings/logic/eng/eng-2-retard-case-1 eq 0
+					/ECAM/warnings/logic/eng/eng-2-retard-case-2 eq 0
+				</test>
+			</test>
+		</switch>
+		
+	</channel>
+	
 </system>

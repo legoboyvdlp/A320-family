@@ -11,12 +11,12 @@
 
 var warnings				  = std.Vector.new([
 	var stall                 = warning.new(msg: "", aural: 2),
-	var flap_not_zero         = warning.new(msg: "F/CTL FLAP LVR NOT ZERO",   colour: "r", aural: 0, light: 0),
+	var flap_not_zero         = warning.new(msg: "F/CTL FLAP LVR NOT ZERO",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	
-	var overspeed          = warning.new(msg: "OVER SPEED",                colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var overspeedVMO       = warning.new(msg: "-VMO/MMO.......350 /.82",   colour: "r"),
-	var overspeedGear      = warning.new(msg: "-VLE...........280 /.67",   colour: "r"),
-	var overspeedFlap      = warning.new(msg: "-VFE................XXX",   colour: "r"),
+	var overspeed             = warning.new(msg: "OVER SPEED",                colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var overspeedVMO          = warning.new(msg: "-VMO/MMO.......350 /.82",   colour: "r"),
+	var overspeedGear         = warning.new(msg: "-VLE...........280 /.67",   colour: "r"),
+	var overspeedFlap         = warning.new(msg: "-VFE................XXX",   colour: "r"),
 	
 	# DUAL ENG FAIL
 	var dualFail              = warning.new(msg: "ENG DUAL FAILURE",          colour: "r", aural: 0, light: 0, isMainMsg: 1),
@@ -47,6 +47,14 @@ var warnings				  = std.Vector.new([
 	var dualFailapuoff        = warning.new(msg: " -APU MASTER SW......OFF",  colour: "c"),
 	var dualFailevac          = warning.new(msg: " -EVAC..........INITIATE",  colour: "c"),
 	var dualFailbatt          = warning.new(msg: " -BAT 1+2............OFF",  colour: "c"),
+	
+	# ENG 1 THR LEVER ABV IDLE
+	var eng1ThrLvrAbvIdle     = warning.new(msg: "ENG 1 THR LEVER ABV IDLE", colour: "r", aural: 3, light: 0, isMainMsg: 1),
+	var eng1ThrLvrAbvIdle2    = warning.new(msg: " -THR LEVER 1.......IDLE", colour: "c"),
+	
+	# ENG 2 THR LEVER ABV IDLE
+	var eng2ThrLvrAbvIdle     = warning.new(msg: "ENG 2 THR LEVER ABV IDLE", colour: "r", aural: 3, light: 0, isMainMsg: 1),
+	var eng2ThrLvrAbvIdle2    = warning.new(msg: " -THR LEVER 2.......IDLE", colour: "c"),
 	
 	# ENG 1 FIRE (flight)
 	var eng1Fire              = warning.new(msg: "ENG 1 FIRE",                colour: "r", aural: 0, light: 0, isMainMsg: 1),
