@@ -20,10 +20,10 @@ var warnings				  = std.Vector.new([
 	
 	var allEngFail            = warning.new(msg: "ENG ALL ENGINES FAILURE",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var allEngFailElec        = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
-	var allEngFailSPD1 = warning.new(msg: " OPT RELIGHT SPD.260/.77",  colour: "c"),
-	var allEngFailSPD2 = warning.new(msg: " OPT RELIGHT SPD.270/.77",  colour: "c"),
-	var allEngFailSPD3 = warning.new(msg: " OPT RELIGHT SPD.280/.77",  colour: "c"),
-	var allEngFailSPD4 = warning.new(msg: " OPT RELIGHT SPD.300/.77",  colour: "c"),
+	var allEngFailSPD1        = warning.new(msg: " OPT RELIGHT SPD.260/.77",  colour: "c"),
+	var allEngFailSPD2        = warning.new(msg: " OPT RELIGHT SPD.270/.77",  colour: "c"),
+	var allEngFailSPD3        = warning.new(msg: " OPT RELIGHT SPD.280/.77",  colour: "c"),
+	var allEngFailSPD4        = warning.new(msg: " OPT RELIGHT SPD.300/.77",  colour: "c"),
 	var allEngFailAPU         = warning.new(msg: " -APU..............START",  colour: "c"),
 	var allEngFailLevers      = warning.new(msg: " -THR LEVERS........IDLE",  colour: "c"),
 	var allEngFailFAC         = warning.new(msg: " -FAC 1......OFF THEN ON",  colour: "c"),
@@ -105,23 +105,38 @@ var warnings				  = std.Vector.new([
 	var rud_trim_config_1     = warning.new(msg: "   NOT IN T.O. RANGE",      colour: "r", aural: 0, light: 0),
 	var park_brk_config       = warning.new(msg: "CONFIG PARK BRK ON",        colour: "r", aural: 0, light: 0),
 	
+	# FCTL L+R ELEV FAULT
+	var lrElevFault           = warning.new(msg: "F/CTL L+R ELEV FAULT",      colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var lrElevFaultSpeed      = warning.new(msg: " MAX SPEED.......320/.77",  colour: "c"),
+	var lrElevFaultTrim       = warning.new(msg: " -MAN PITCH TRIM.....USE",  colour: "c"),
+	var lrElevFaultSpdBrk     = warning.new(msg: " SPD BRK......DO NOT USE",  colour: "c"),
+	
+	# Gear not down
+	var gearNotDown           = warning.new(msg: "L/G GEAR NOT DOWN",         colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	
+	var gearNotDownLocked     = warning.new(msg: "L/G GEAR NOT DOWNLOCKED",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var gearNotDownLockedRec  = warning.new(msg: " -L/G LEVER......RECYCLE",  colour: "c"),
+	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "c"),
+	var gearNotDownLocked120  = warning.new(msg: "    AFTER 120S:",           colour: "c"),
+	var gearNotDownLockedGrav = warning.new(msg: " -L/G.........GRVTY EXTN",  colour: "c"),
+	
 	# Autopilot off involuntary
 	var ap_offw				  = warning.new(msg: "AUTO FLT AP OFF",			  colour: "r", light: 0, isMainMsg: 1),
 	
 	# Cargo smoke
 	var cargoSmokeFwd         = warning.new(msg: "SMOKE FWD CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var cargoSmokeFwdAgent    = warning.new(msg: "-AGENT............DISCH",   colour: "c"),
+	var cargoSmokeFwdAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
 	var cargoSmokeAft         = warning.new(msg: "SMOKE AFT CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var cargoSmokeAftAgent    = warning.new(msg: "-AGENT............DISCH",   colour: "c"),
+	var cargoSmokeAftAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
 	
 	# ESS Bus on Bat
 	var essBusOnBat           = warning.new(msg: "ELEC ESS BUSES ON BAT",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var essBusOnBatLGUplock   = warning.new(msg: "  •WHEN L/G UPLOCKED :",    colour: "w"),
-	var essBusOnBatManOn      = warning.new(msg: "-EMER ELEC PWR...MAN ON",   colour: "c"),
-	var essBusOnBatRetract    = warning.new(msg: " •IF L/G RETRACT FAULT:",   colour: "w"),
-	var essBusOnBatMinSpeed   = warning.new(msg: "MIN RAT SPD......180 KT",   colour: "c"),
-	var essBusOnBatLGCB       = warning.new(msg: "-LGCIU1 C/B (C09)..PULL",   colour: "c"),
-	var essBusOnBatManOn2     = warning.new(msg: "-EMER ELEC PWR...MAN ON",   colour: "c"),
+	var essBusOnBatLGUplock   = warning.new(msg: "   •WHEN L/G UPLOCKED :",   colour: "w"),
+	var essBusOnBatManOn      = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
+	var essBusOnBatRetract    = warning.new(msg: "  •IF L/G RETRACT FAULT:",  colour: "w"),
+	var essBusOnBatMinSpeed   = warning.new(msg: " MIN RAT SPD......180 KT",  colour: "c"),
+	var essBusOnBatLGCB       = warning.new(msg: " -LGCIU1 C/B (C09)..PULL",  colour: "c"),
+	var essBusOnBatManOn2     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
 	
 	# Emer Config
 	var emerconfig            = warning.new(msg: "ELEC EMER CONFIG",          colour: "r", aural: 0, light: 0, isMainMsg: 1),

@@ -2026,4 +2026,145 @@
 		
 	</channel>
 	
+	<channel name="FCTL" execrate="8">
+		
+		<switch name="/ECAM/warnings/fctl/lrElevFault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 1
+				/ECAM/warning-phase ne 10
+				<test logic="OR">
+					hydraulics/elevator-l/pressure-switch-or eq 0
+					/systems/failures/elevator-left eq 1
+				</test>
+				<test logic="OR">
+					hydraulics/elevator-r/pressure-switch-or eq 0
+					/systems/failures/elevator-right eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/lrElevFault-output">
+			<input>/ECAM/warnings/fctl/lrElevFault</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-down-not-cancellable">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
+					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
+				</test>
+				/ECAM/phases/to-power-set eq 0
+				<test logic="OR">
+					fcs/slat-pos-deg gt 16
+					fcs/flap-pos-deg gt 18
+				</test>
+				<test logic="OR">
+					/gear/gear[0]/position-norm ne 1
+					/gear/gear[1]/position-norm ne 1
+					/gear/gear[2]/position-norm ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-down-cancellable">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/fctl/gear-not-down-not-cancellable ne 1
+				/instrumentation/altimeter[0]/indicated-altitude-ft lt 18500
+				<test logic="OR">
+					<test logic="AND">
+						/engines/engine[0]/n1-actual lt 75
+						/engines/engine[1]/n1-actual lt 75
+					</test>
+					<test logic="AND">
+						/engines/engine[0]/n1-actual lt 97
+						/controls/engines/engine[1]/cutoff-switch eq 1
+					</test>
+					<test logic="AND">
+						/engines/engine[1]/n1-actual lt 97
+						/controls/engines/engine[0]/cutoff-switch eq 1
+					</test>
+				</test>
+				<test logic="OR">
+					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
+					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
+				</test>
+				/ECAM/phases/to-power-set eq 0
+				<test logic="OR">
+					/gear/gear[0]/position-norm ne 1
+					/gear/gear[1]/position-norm ne 1
+					/gear/gear[2]/position-norm ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/gear-lever-down">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/gear/gear-down eq 1
+				<test logic="OR">
+					/ECAM/warning-phase eq 6
+					/ECAM/warning-phase eq 7
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-downlocked-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/fctl/gear-lever-down-pulse eq 1
+				/ECAM/warnings/fctl/gear-lever-down eq 1
+				<test logic="OR">
+					/gear/gear[0]/position-norm ne 1
+					/gear/gear[1]/position-norm ne 1
+					/gear/gear[2]/position-norm ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-downlocked-reset">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 8
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-down-locked-set-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/fctl/gear-lever-down eq 1
+				<test logic="OR">
+					/gear/gear[0]/position-norm ne 1
+					/gear/gear[1]/position-norm ne 1
+					/gear/gear[2]/position-norm ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/gear-not-down-locked-set-output">
+			<input>/ECAM/warnings/fctl/gear-not-down-locked-set-input</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 30 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-down-locked-set">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/fctl/gear-not-down-locked-set-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/gear-not-down-locked-reset">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[0]/position-norm eq 1
+				/gear/gear[1]/position-norm eq 1
+				/gear/gear[2]/position-norm eq 1
+			</test>
+		</switch>
+	</channel>
 </system>

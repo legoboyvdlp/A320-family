@@ -60,6 +60,10 @@ var warningNodes = {
 		fac2Fault: props.globals.initNode("/ECAM/warnings/logic/fac-2-fault"),
 		stallWarn: props.globals.initNode("/ECAM/warnings/logic/stall/stall-warn-on"),
 		yawDamper12Fault: props.globals.initNode("/ECAM/warnings/logic/yaw-damper-12-fault"),
+		gearNotDown1: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-not-cancellable"),
+		gearNotDown2: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-cancellable"),
+		gearNotDownLocked: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-locked"),
+		gearNotDownLockedFlipflop: props.globals.initNode("/ECAM/warnings/fctl/gear-not-downlocked-output"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -79,6 +83,7 @@ var warningNodes = {
 		eng2AiceNotClsd: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-open-output"),
 		eng1AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-1-closed-output"),
 		eng2AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-closed-output"),
+		LRElevFault: props.globals.initNode("/ECAM/warnings/fctl/lrElevFault-output"),
 		waiLhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-left"),
 		waiRhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-right"),
 		pack1Fault: props.globals.initNode("/ECAM/warnings/timer/pack-1-fault-2"),

@@ -628,6 +628,66 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(park_brk_config);
 	}
 	
+	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue()) {
+		lrElevFault.active = 1;
+		if (lrElevFaultSpeed.clearFlag == 0) {
+			lrElevFaultSpeed.active = 1;
+		} else {
+			ECAM_controller.warningReset(lrElevFaultSpeed);
+		}
+		if (lrElevFaultTrim.clearFlag == 0) {
+			lrElevFaultTrim.active = 1;
+		} else {
+			ECAM_controller.warningReset(lrElevFaultTrim);
+		}
+		if (lrElevFaultSpdBrk.clearFlag == 0) {
+			lrElevFaultSpdBrk.active = 1;
+		} else {
+			ECAM_controller.warningReset(lrElevFaultSpdBrk);
+		}
+	} else {
+		ECAM_controller.warningReset(lrElevFault);
+		ECAM_controller.warningReset(lrElevFaultSpeed);
+		ECAM_controller.warningReset(lrElevFaultTrim);
+		ECAM_controller.warningReset(lrElevFaultSpdBrk);
+	}
+	
+	if (gearNotDown.clearFlag == 0 and (warningNodes.Logic.gearNotDown1.getBoolValue() or warningNodes.Logic.gearNotDown2.getBoolValue()) and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5) {
+		gearNotDown.active = 1;
+	} else {
+		ECAM_controller.warningReset(gearNotDown);
+	}
+	
+	if (gearNotDownLocked.clearFlag == 0 and warningNodes.Logic.gearNotDownLocked.getBoolValue() and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5 and phaseVar3 != 8) {
+		gearNotDownLocked.active = 1;
+		
+		if (gearNotDownLockedRec.clearFlag == 0 and warningNodes.Logic.gearNotDownLockedFlipflop.getBoolValue()) {
+			gearNotDownLockedRec.active = 1;
+			gearNotDownLockedWork.active = 1;
+		} else {
+			ECAM_controller.warningReset(gearNotDownLockedRec);
+			ECAM_controller.warningReset(gearNotDownLockedWork);
+		}
+		
+		if (gearNotDownLocked120.clearFlag == 0) {
+			gearNotDownLocked120.active = 1;
+		} else {
+			ECAM_controller.warningReset(gearNotDownLocked120);
+		}
+		
+		if (gearNotDownLockedGrav.clearFlag == 0) {
+			gearNotDownLockedGrav.active = 1;
+		} else {
+			ECAM_controller.warningReset(gearNotDownLockedGrav);
+		}
+	} else {
+		ECAM_controller.warningReset(gearNotDownLocked);
+		ECAM_controller.warningReset(gearNotDownLockedRec);
+		ECAM_controller.warningReset(gearNotDownLockedWork);
+		ECAM_controller.warningReset(gearNotDownLocked120);
+		ECAM_controller.warningReset(gearNotDownLockedGrav);
+	}
+	
 	# AUTOFLT
 	if ((ap_offw.clearFlag == 0) and apWarn.getValue() == 2) {
 		ap_offw.active = 1;

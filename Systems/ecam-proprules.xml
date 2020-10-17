@@ -591,6 +591,17 @@
             <value>1.0</value>
         </time>
         <S>
+			<not><property>/ECAM/warnings/fctl/gear-lever-down</property></not>
+        </S>
+        <output>/ECAM/warnings/fctl/gear-lever-down-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
 			<not><property>/controls/pneumatics/switches/bleed-1</property></not>
         </S>
         <output>/ECAM/warnings/logic/bleed-sw1-pulse</output>
@@ -1035,6 +1046,28 @@
 			<property>/ECAM/warnings/config/park-brk/park-brk-reset</property>
 		</R>
 		<output>/ECAM/warnings/config/park-brk/park-brk-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/gear-not-downlocked-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/gear-not-downlocked-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/gear-not-downlocked-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/fctl/gear-not-down-locked-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/gear-not-down-locked-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/gear-not-down-locked</output>
 	</flipflop>
 	
 </PropertyList>
