@@ -977,4 +977,64 @@
 		</R>
 		<output>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle</output>
 	</flipflop>
+	
+	<!-- falling edge detector, take inverse -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-4</property>
+		</S>
+		<output>/ECAM/warnings/logic/stall/phase-4-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-5</property>
+		</S>
+		<output>/ECAM/warnings/logic/stall/phase-5-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-8</property>
+		</S>
+		<output>/ECAM/warnings/logic/stall/phase-8-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/stall/phase-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/stall/phase-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/config/park-brk/park-brk-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/config/park-brk/park-brk-reset</property>
+		</R>
+		<output>/ECAM/warnings/config/park-brk/park-brk-output</output>
+	</flipflop>
+	
 </PropertyList>

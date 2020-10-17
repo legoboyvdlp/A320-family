@@ -48,15 +48,11 @@ var messages_priority_3 = func {
 	
 	# Stall
 	# todo - altn law and emer cancel flipflops page 2440
-	if (phaseVar3 >= 5 and phaseVar3 <= 7 and (getprop("/fdm/jsbsim/fcs/slat-pos-deg") <= 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 15 or getprop("/systems/navigation/adr/output/aoa-2") > 15 or getprop("/systems/navigation/adr/output/aoa-3") > 15)) or (getprop("/fdm/jsbsim/fcs/slat-pos-deg") > 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 23 or getprop("/systems/navigation/adr/output/aoa-2") > 23 or getprop("/systems/navigation/adr/output/aoa-3") > 23))) {
+	if (warningNodes.Logic.stallWarn.getValue()) {
 		stall.active = 1;
-	} else {
-		ECAM_controller.warningReset(stall);
-	}
-	
-	if (stall.active) {
 		stallVoice.setValue(1);
 	} else {
+		ECAM_controller.warningReset(stall);
 		stallVoice.setValue(0);
 	}
 	
@@ -764,7 +760,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(rud_trim_config_1);
 	}
 	
-	if ((park_brk_config.clearFlag == 0) and pts.Controls.Gear.parkingBrake.getValue() == 1 and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((park_brk_config.clearFlag == 0) and warningNodes.Flipflops.parkBrk.getValue() and phaseVar3 >= 2 and phaseVar3 <= 3) {
 		park_brk_config.active = 1;
 	} else {
 		ECAM_controller.warningReset(park_brk_config);
@@ -2227,7 +2223,7 @@ var messages_config_memo = func {
 		ldgMemoLine3.colour = "c";
 	}
 	
-	if (getprop("it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
+	if (getprop("/it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
 		if (pts.Controls.Flight.flapsPos.getValue() == 4) {
 			ldgMemoLine4.msg = "    FLAPS CONF 3";
 			ldgMemoLine4.colour = "g";

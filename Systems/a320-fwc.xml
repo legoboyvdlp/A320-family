@@ -1661,6 +1661,106 @@
 		
 	</channel>
 
+	<channel name="STALL" execrate="8">
+		
+		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-set">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/logic/stall/phase-8-output eq 0
+					/ECAM/warning-phase eq 7
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/logic/stall/phase-4-output eq 0
+					/ECAM/warning-phase eq 5
+				</test>
+			</test>
+		</switch>
+				
+		<switch name="/ECAM/warnings/logic/stall/phase-4">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 4
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/stall/phase-5">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+			</test>
+		</switch>
+				
+		<switch name="/ECAM/warnings/logic/stall/phase-8">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 8
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/stall/phase-5-output eq 0
+				/ECAM/warning-phase eq 6
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/stall/stall-warn-inhibit">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 1500
+				/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 1500
+				<!-- /it-fbw/law ne 0 confirm -->
+				/ECAM/warnings/logic/stall/phase-flipflop eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/stall/stall-warn">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND">
+						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						<test logic="OR">
+							/systems/navigation/adr/output/aoa-1 ge 15
+							/systems/navigation/adr/output/aoa-2 ge 15
+							/systems/navigation/adr/output/aoa-3 ge 15 
+						</test>
+					</test>
+					<test logic="AND">
+						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						<test logic="OR">
+							/systems/navigation/adr/output/aoa-1 ge 23
+							/systems/navigation/adr/output/aoa-2 ge 23
+							/systems/navigation/adr/output/aoa-3 ge 23 
+						</test>
+					</test>
+				</test>
+				<!-- /it-fbw/law ne 0 confirm... -->
+				<test logic="OR">
+					/systems/navigation/adr/operating-1 eq 1
+					/systems/navigation/adr/operating-2 eq 1
+					/systems/navigation/adr/operating-3 eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/stall/stall-warn-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 5
+					/ECAM/warning-phase eq 6
+					/ECAM/warning-phase eq 7
+				</test>
+				/ECAM/warnings/logic/stall/stall-warn eq 1
+				/ECAM/warnings/logic/stall/stall-warn-inhibit eq 0
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="ENG" execrate="8">
 		
 		<switch name="/ECAM/warnings/logic/eng/ground-spoilers">
@@ -1873,6 +1973,26 @@
 					/ECAM/warnings/logic/eng/eng-2-retard-case-1 eq 0
 					/ECAM/warnings/logic/eng/eng-2-retard-case-2 eq 0
 				</test>
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="Config" execrate="8">
+		
+		<switch name="/ECAM/warnings/config/park-brk/park-brk-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 3
+				/controls/gear/brake-parking eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/config/park-brk/park-brk-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/gear/brake-parking eq 0
+				/ECAM/warning-phase eq 5
 			</test>
 		</switch>
 		

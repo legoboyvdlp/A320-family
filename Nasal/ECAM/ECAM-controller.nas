@@ -58,6 +58,7 @@ var warningNodes = {
 		fac12Fault: props.globals.initNode("/ECAM/warnings/logic/fac-12-fault"),
 		fac1Fault: props.globals.initNode("/ECAM/warnings/logic/fac-1-fault"),
 		fac2Fault: props.globals.initNode("/ECAM/warnings/logic/fac-2-fault"),
+		stallWarn: props.globals.initNode("/ECAM/warnings/logic/stall/stall-warn-on"),
 		yawDamper12Fault: props.globals.initNode("/ECAM/warnings/logic/yaw-damper-12-fault"),
 	},
 	Timers: {
@@ -100,6 +101,7 @@ var warningNodes = {
 		gen2FaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/gen-2-fault-on-off"),
 		pack1Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-1-ovht"),
 		pack2Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-2-ovht"),
+		parkBrk: props.globals.initNode("/ECAM/warnings/config/park-brk/park-brk-output"),
 		eng1ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle"),
 		eng2ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle"),
 	},
