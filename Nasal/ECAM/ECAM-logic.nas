@@ -90,185 +90,94 @@ var messages_priority_3 = func {
 		overspeedFlap.msg = "-VFE................XXX";
 	}
 	
-	# ENG DUAL FAIL
+	# ENG ALL ENGINE FAILURE
 	
-	if (phaseVar3 >= 5 and phaseVar3 <= 7 and dualFailNode.getBoolValue() and dualFail.clearFlag == 0) {
-		dualFail.active = 1;
-	} else {
-		ECAM_controller.warningReset(dualFail);
-	}
-	
-	if (dualFail.active == 1) {
-		if (getprop("/controls/engines/engine-start-switch") != 2 and dualFailModeSel.clearFlag == 0) {
-			dualFailModeSel.active = 1;
+	if (allEngFail.clearFlag == 0 and dualFailNode.getBoolValue()) {
+		allEngFail.active = 1;
+		
+		if (allEngFailElec.clearFlag == 0 and getprop("/systems/electrical/relay/emer-glc/contact-pos") == 0) {
+			allEngFailElec.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailModeSel);
+			ECAM_controller.warningReset(allEngFailElec);
 		}
 		
-		if (getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01 and dualFailLevers.clearFlag == 0) {
-			dualFailLevers.active = 1;
+		if (allEngFailSPD1.clearFlag == 0 and allEngFailSPD2.clearFlag == 0 and allEngFailSPD3.clearFlag == 0 and allEngFailSPD4.clearFlag == 0) {
+			if (find("LEAP", getprop("/MCDUC/eng"))) {
+				allEngFailSPD2.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD1);
+				ECAM_controller.warningReset(allEngFailSPD3);
+				ECAM_controller.warningReset(allEngFailSPD4);
+			} elsif (find("V2527", getprop("/MCDUC/eng"))) {
+				allEngFailSPD3.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD1);
+				ECAM_controller.warningReset(allEngFailSPD2);
+				ECAM_controller.warningReset(allEngFailSPD4);
+			} elsif (find("PW11", getprop("/MCDUC/eng"))) {
+				allEngFailSPD1.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD2);
+				ECAM_controller.warningReset(allEngFailSPD3);
+				ECAM_controller.warningReset(allEngFailSPD4);
+			} else {
+				allEngFailSPD4.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD1);
+				ECAM_controller.warningReset(allEngFailSPD2);
+				ECAM_controller.warningReset(allEngFailSPD3);
+			}
 		} else {
-			ECAM_controller.warningReset(dualFailLevers);
+			ECAM_controller.warningReset(allEngFailSPD1);
+			ECAM_controller.warningReset(allEngFailSPD2);
+			ECAM_controller.warningReset(allEngFailSPD3);
+			ECAM_controller.warningReset(allEngFailSPD4);
 		}
 		
-		if (engOpt.getValue() == "IAE" and dualFailRelightSPD.clearFlag == 0) {
-			dualFailRelightSPD.active = 1;
+		if (allEngFailAPU.clearFlag == 0 and !systems.APUNodes.Controls.master.getBoolValue() and systems.ELEC.Switch.genApu.getValue() and !systems.APUNodes.Controls.fire.getValue() and !systems.APU.signals.autoshutdown and !systems.APU.signals.emer and pts.Instrumentation.Altimeter.indicatedFt.getValue() < 22500) {
+			allEngFailAPU.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailRelightSPD);
+			ECAM_controller.warningReset(allEngFailAPU);
 		}
 		
-		if (engOpt.getValue() != "IAE" and dualFailRelightSPDCFM.clearFlag == 0) {
-			dualFailRelightSPDCFM.active = 1;
+		if (allEngFailLevers.clearFlag == 0 and (pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 or pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01)) {
+			allEngFailLevers.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailRelightSPDCFM);
+			ECAM_controller.warningReset(allEngFailLevers);
 		}
 		
-		if (emerGen.getValue() == 0 and dualFailElec.clearFlag == 0) {
-			dualFailElec.active = 1;
+		if (allEngFailFAC.clearFlag == 0 and fbw.FBW.Computers.fac1.getBoolValue() == 0) {
+			allEngFailFAC.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailElec);
+			ECAM_controller.warningReset(allEngFailFAC);
 		}
 		
-		if (dualFailRadio.clearFlag == 0) {
-			dualFailRadio.active = 1;
+		if (allEngFailGlide.clearFlag == 0) {
+			allEngFailGlide.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailRadio);
+			ECAM_controller.warningReset(allEngFailGlide);
 		}
 		
-		if (getprop("/systems/fctl/fac1-healthy-signal") == 0 and dualFailFAC.clearFlag == 0) {
-			dualFailFAC.active = 1;
+		if (allEngFailDiversion.clearFlag == 0) {
+			allEngFailDiversion.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailFAC);
+			ECAM_controller.warningReset(allEngFailDiversion);
 		}
 		
-		
-		if (dualFailMasters.clearFlag == 0) {
-			dualFailRelight.active = 1; # assumption
-			dualFailMasters.active = 1;
+		if (allEngFailProc.clearFlag == 0) {
+			allEngFailProc.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailRelight);
-			ECAM_controller.warningReset(dualFailMasters);
-		}
-		
-		if (dualFailSPDGD.clearFlag == 0) {
-			dualFailSuccess.active = 1; # assumption
-			dualFailSPDGD.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailSuccess);
-			ECAM_controller.warningReset(dualFailSPDGD);
-		}
-		
-		if (dualFailAPU.clearFlag == 0) {
-			dualFailAPU.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPU);
-		}
-		
-		if (dualFailAPUwing.clearFlag == 0 and pts.APU.rpm.getValue() > 94.9 and wing_pb.getBoolValue()) {
-			dualFailAPUwing.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPUwing);
-		}
-		
-		if (dualFailAPUbleed.clearFlag == 0 and pts.APU.rpm.getValue() > 94.9 and !apu_bleedSw.getBoolValue()) {
-			dualFailAPUbleed.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPUbleed);
-		}
-		
-		if (dualFailMastersAPU.clearFlag == 0) {
-			dualFailMastersAPU.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailMastersAPU);
-		}
-		
-		if (dualFailflap.clearFlag == 0) {
-			dualFailAPPR.active = 1; # assumption
-			dualFailflap.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPPR);
-			ECAM_controller.warningReset(dualFailflap);
-		}
-		
-		if (dualFailcabin.clearFlag == 0) {
-			dualFailcabin.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailcabin);
-		}
-		
-		if (dualFailrudd.clearFlag == 0) {
-			dualFailrudd.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailrudd);
-		}
-		
-		if (dualFailgear.clearFlag == 0 and gear.getValue() != 1) {
-			dualFail5000.active = 1; # according to doc
-			dualFailgear.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailgear);
-			ECAM_controller.warningReset(dualFail5000);
-		}
-		
-		if (dualFailfinalspeed.clearFlag == 0) {
-			dualFailfinalspeed.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailfinalspeed);
-		}
-		
-		if (dualFailmasteroff.clearFlag == 0 and (!pts.Controls.Engines.Engine.cutoffSw[0].getValue() or !pts.Controls.Engines.Engine.cutoffSw[1].getValue())) {
-			dualFailmasteroff.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailmasteroff);
-		}
-		
-		if (dualFailapuoff.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue()) {
-			dualFailapuoff.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailapuoff);
-		}
-		
-		if (dualFailevac.clearFlag == 0) {
-			dualFailevac.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailevac);
-		}
-		
-		if (dualFailbatt.clearFlag == 0) { # elec power lost when batt goes off anyway I guess
-			dualFailbatt.active = 1;
-			dualFailtouch.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailbatt);
-			ECAM_controller.warningReset(dualFailtouch);
+			ECAM_controller.warningReset(allEngFailProc);
 		}
 	} else {
-		ECAM_controller.warningReset(dualFailModeSel);
-		ECAM_controller.warningReset(dualFailLevers);
-		ECAM_controller.warningReset(dualFailRelightSPD);
-		ECAM_controller.warningReset(dualFailRelightSPDCFM);
-		ECAM_controller.warningReset(dualFailElec);
-		ECAM_controller.warningReset(dualFailRadio);
-		ECAM_controller.warningReset(dualFailFAC);
-		ECAM_controller.warningReset(dualFailRelight);
-		ECAM_controller.warningReset(dualFailMasters);
-		ECAM_controller.warningReset(dualFailSuccess);
-		ECAM_controller.warningReset(dualFailSPDGD);
-		ECAM_controller.warningReset(dualFailAPU);
-		ECAM_controller.warningReset(dualFailAPUwing);
-		ECAM_controller.warningReset(dualFailAPUbleed);
-		ECAM_controller.warningReset(dualFailMastersAPU);
-		ECAM_controller.warningReset(dualFailAPPR);
-		ECAM_controller.warningReset(dualFailflap);
-		ECAM_controller.warningReset(dualFailcabin);
-		ECAM_controller.warningReset(dualFailrudd);
-		ECAM_controller.warningReset(dualFailgear);
-		ECAM_controller.warningReset(dualFail5000);
-		ECAM_controller.warningReset(dualFailfinalspeed);
-		ECAM_controller.warningReset(dualFailmasteroff);
-		ECAM_controller.warningReset(dualFailapuoff);
-		ECAM_controller.warningReset(dualFailevac);
-		ECAM_controller.warningReset(dualFailbatt);
-		ECAM_controller.warningReset(dualFailtouch);
+		ECAM_controller.warningReset(allEngFail);
+		ECAM_controller.warningReset(allEngFailElec);
+		ECAM_controller.warningReset(allEngFailSPD1);
+		ECAM_controller.warningReset(allEngFailSPD2);
+		ECAM_controller.warningReset(allEngFailSPD3);
+		ECAM_controller.warningReset(allEngFailSPD4);
+		ECAM_controller.warningReset(allEngFailAPU);
+		ECAM_controller.warningReset(allEngFailLevers);
+		ECAM_controller.warningReset(allEngFailFAC);
+		ECAM_controller.warningReset(allEngFailGlide);
+		ECAM_controller.warningReset(allEngFailDiversion);
+		ECAM_controller.warningReset(allEngFailProc);
 	}
 	
 	# ENG ABV IDLE
@@ -317,7 +226,7 @@ var messages_priority_3 = func {
 	
 	if (eng1Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng1FireFllever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01) {
+			if (eng1FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
 				eng1FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireFllever);
@@ -383,7 +292,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng1FireGnlever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
+			if (eng1FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
 				eng1FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnlever);
@@ -472,7 +381,7 @@ var messages_priority_3 = func {
 	
 	if (eng2Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng2FireFllever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
+			if (eng2FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
 				eng2FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireFllever);
@@ -538,7 +447,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng2FireGnlever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
+			if (eng2FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
 				eng2FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnlever);
@@ -627,7 +536,7 @@ var messages_priority_3 = func {
 	
 	# APU Fire
 	if (apuFire.active == 1) {
-		if (apuFirePB.clearFlag == 0 and !getprop("/controls/apu/fire-btn")) {
+		if (apuFirePB.clearFlag == 0 and !systems.APUNodes.Controls.fire.getValue()) {
 			apuFirePB.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFirePB);
@@ -637,13 +546,13 @@ var messages_priority_3 = func {
 			apuFireAgentTimer.msg = " -AGENT AFT " ~ getprop("/systems/fire/apu/agent-timer") ~ " S...DISCH";
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("/controls/apu/fire-btn") and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") != 0) {
+		if (apuFireAgent.clearFlag == 0 and systems.APUNodes.Controls.fire.getValue() and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") != 0) {
 			apuFireAgentTimer.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgentTimer);
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("/controls/apu/fire-btn") and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") == 0) {
+		if (apuFireAgent.clearFlag == 0 and systems.APUNodes.Controls.fire.getValue() and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") == 0) {
 			apuFireAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgent);
@@ -930,7 +839,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigFuelG2);
 		}
 		
-		if (getprop("/systems/fctl/fac1-healthy-signal") == 0 and emerconfigFAC.clearFlag == 0) {
+		if (fbw.FBW.Computers.fac1.getBoolValue() == 0 and emerconfigFAC.clearFlag == 0) {
 			emerconfigFAC.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigFAC);
