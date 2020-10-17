@@ -661,24 +661,35 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(apuFireMaster);
 	}
 	
-	# CONFIG
-	if ((slats_config.clearFlag == 0) and (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue()) == 4 and phaseVar3 >= 3 and phaseVar3 <= 4) {
-		slats_config.active = 1;
-		slats_config_1.active = 1;
+	if ((getprop("/ECAM/to-config-test") and (phaseVar3 == 1 or phaseVar3 == 2 or phaseVar3 == 9)) or phaseVar3 == 3 or phaseVar3 == 4) {
+		takeoffConfig = 1;
+	} else {
+		takeoffConfig = 0;
+	}
+	
+	if ((pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4) and takeoffConfig) {
+		if (slats_config.clearFlag == 0) {
+			slats_config.active = 1;
+			slats_config_1.active = 1;
+		} else {
+			ECAM_controller.warningReset(slats_config);
+			ECAM_controller.warningReset(slats_config_1);
+		}
+		if (flaps_config.clearFlag == 0) {
+			flaps_config.active = 1;
+			flaps_config_1.active = 1;
+		} else {
+			ECAM_controller.warningReset(flaps_config);
+			ECAM_controller.warningReset(flaps_config_1);
+		}
 	} else {
 		ECAM_controller.warningReset(slats_config);
 		ECAM_controller.warningReset(slats_config_1);
-	}
-	
-	if ((flaps_config.clearFlag == 0) and (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4) and phaseVar3 >= 3 and phaseVar3 <= 4) {
-		flaps_config.active = 1;
-		flaps_config_1.active = 1;
-	} else {
 		ECAM_controller.warningReset(flaps_config);
 		ECAM_controller.warningReset(flaps_config_1);
 	}
 	
-	if ((spd_brk_config.clearFlag == 0) and pts.Controls.Flight.speedbrake.getValue() != 0 and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((spd_brk_config.clearFlag == 0) and pts.Controls.Flight.speedbrake.getValue() != 0 and takeoffConfig) {
 		spd_brk_config.active = 1;
 		spd_brk_config_1.active = 1;
 	} else {
@@ -686,7 +697,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(spd_brk_config_1);
 	}
 	
-	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65) and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 2.6 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -2.6) and takeoffConfig) {
 		pitch_trim_config.active = 1;
 		pitch_trim_config_1.active = 1;
 	} else {
@@ -694,7 +705,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(pitch_trim_config_1);
 	}
 	
-	if ((rud_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((rud_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.6 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.6) and takeoffConfig) {
 		rud_trim_config.active = 1;
 		rud_trim_config_1.active = 1;
 	} else {
@@ -2063,7 +2074,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/to-config-normal", 1);
 	}
 	
-	if (getprop("/ECAM/to-config-test") and (phaseVarMemo == 2 or phaseVarMemo == 9)) {
+	if (getprop("/ECAM/to-config-test") and (phaseVarMemo == 1 or phaseVarMemo == 2 or phaseVarMemo == 9)) {
 		setprop("/ECAM/to-config-set", 1);
 	} else {
 		setprop("/ECAM/to-config-set", 0);
