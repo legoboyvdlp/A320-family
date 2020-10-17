@@ -15,8 +15,6 @@ var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
 var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
 var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
-var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
-var cutoff2    = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
 var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
@@ -218,7 +216,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(dualFailfinalspeed);
 		}
 		
-		if (dualFailmasteroff.clearFlag == 0 and (!cutoff1.getBoolValue() or !cutoff2.getBoolValue())) {
+		if (dualFailmasteroff.clearFlag == 0 and (!pts.Controls.Engines.Engine.cutoffSw[0].getValue() or !pts.Controls.Engines.Engine.cutoffSw[1].getValue())) {
 			dualFailmasteroff.active = 1;
 		} else {
 			ECAM_controller.warningReset(dualFailmasteroff);
@@ -299,13 +297,13 @@ var messages_priority_3 = func {
 	}
 	
 	# ENG FIRE
-	if ((eng1FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnevacBat.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
+	if ((eng1FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnEvac.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng1Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1Fire);
 	}
 	
-	if ((eng2FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnevacBat.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
+	if ((eng2FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnEvac.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng2Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2Fire);
@@ -325,7 +323,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireFllever);
 			}
 			
-			if (eng1FireFlmaster.clearFlag == 0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
+			if (eng1FireFlmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
 				eng1FireFlmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireFlmaster);
@@ -399,7 +397,19 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnparkbrk);
 			}
 			
-			if (eng1FireGnmaster.clearFlag == 0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
+			if (eng1FireGnATC.clearFlag == 0) {
+				eng1FireGnATC.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FireGnATC);
+			}
+			
+			if (eng1FireGncrew.clearFlag == 0) {
+				eng1FireGncrew.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FireGncrew);
+			}
+			
+			if (eng1FireGnmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
 				eng1FireGnmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnmaster);
@@ -423,58 +433,22 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnAgent2);
 			}
 			
-			if (eng1FireGnmaster2.clearFlag == 0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
-				eng1FireGnmaster2.active = 1;
+			if (eng1FireGnEvac.clearFlag == 0) {
+				eng1FireGnEvac.active = 1;
 			} else {
-				ECAM_controller.warningReset(eng1FireGnmaster2);
-			}
-			
-			if (eng1FireGnATC.clearFlag == 0) {
-				eng1FireGnATC.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnATC);
-			}
-			
-			if (eng1FireGncrew.clearFlag == 0) {
-				eng1FireGncrew.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGncrew);
-			}
-			
-			if (eng1FireGnevacSw.clearFlag == 0) {
-				eng1FireGnevac.active = 1;
-				eng1FireGnevacSw.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnevac);
-				ECAM_controller.warningReset(eng1FireGnevacSw);
-			}
-			
-			if (eng1FireGnevacApu.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue() and pts.APU.rpm.getValue() > 99) {
-				eng1FireGnevacApu.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnevacApu);
-			}
-			
-			if (eng1FireGnevacBat.clearFlag == 0 and (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue())) {
-				eng1FireGnevacBat.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnevacBat);
+				ECAM_controller.warningReset(eng1FireGnEvac);
 			}
 		} else {
 			ECAM_controller.warningReset(eng1FireGnlever);
 			ECAM_controller.warningReset(eng1FireGnstopped);
 			ECAM_controller.warningReset(eng1FireGnparkbrk);
+			ECAM_controller.warningReset(eng1FireGnATC);
+			ECAM_controller.warningReset(eng1FireGncrew);
 			ECAM_controller.warningReset(eng1FireGnmaster);
 			ECAM_controller.warningReset(eng1FireGnPB);
 			ECAM_controller.warningReset(eng1FireGnAgent1);
 			ECAM_controller.warningReset(eng1FireGnAgent2);
-			ECAM_controller.warningReset(eng1FireGnmaster2);
-			ECAM_controller.warningReset(eng1FireGnATC);
-			ECAM_controller.warningReset(eng1FireGncrew);
-			ECAM_controller.warningReset(eng1FireGnevac);
-			ECAM_controller.warningReset(eng1FireGnevacSw);
-			ECAM_controller.warningReset(eng1FireGnevacApu);
-			ECAM_controller.warningReset(eng1FireGnevacBat);
+			ECAM_controller.warningReset(eng1FireGnEvac);
 		}
 	} else {
 		ECAM_controller.warningReset(eng1FireFllever);
@@ -487,17 +461,13 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(eng1FireGnlever);
 		ECAM_controller.warningReset(eng1FireGnstopped);
 		ECAM_controller.warningReset(eng1FireGnparkbrk);
+		ECAM_controller.warningReset(eng1FireGnATC);
+		ECAM_controller.warningReset(eng1FireGncrew);
 		ECAM_controller.warningReset(eng1FireGnmaster);
 		ECAM_controller.warningReset(eng1FireGnPB);
 		ECAM_controller.warningReset(eng1FireGnAgent1);
 		ECAM_controller.warningReset(eng1FireGnAgent2);
-		ECAM_controller.warningReset(eng1FireGnmaster2);
-		ECAM_controller.warningReset(eng1FireGnATC);
-		ECAM_controller.warningReset(eng1FireGncrew);
-		ECAM_controller.warningReset(eng1FireGnevac);
-		ECAM_controller.warningReset(eng1FireGnevacSw);
-		ECAM_controller.warningReset(eng1FireGnevacApu);
-		ECAM_controller.warningReset(eng1FireGnevacBat);
+		ECAM_controller.warningReset(eng1FireGnEvac);
 	}
 	
 	if (eng2Fire.active == 1) {
@@ -508,7 +478,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireFllever);
 			}
 			
-			if (eng2FireFlmaster.clearFlag == 0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
+			if (eng2FireFlmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
 				eng2FireFlmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireFlmaster);
@@ -582,7 +552,19 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnparkbrk);
 			}
 			
-			if (eng2FireGnmaster.clearFlag == 0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
+			if (eng2FireGnATC.clearFlag == 0) {
+				eng2FireGnATC.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FireGnATC);
+			}
+			
+			if (eng2FireGncrew.clearFlag == 0) {
+				eng2FireGncrew.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FireGncrew);
+			}
+			
+			if (eng2FireGnmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
 				eng2FireGnmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnmaster);
@@ -606,58 +588,22 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnAgent2);
 			}
 			
-			if (eng2FireGnmaster2.clearFlag == 0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
-				eng2FireGnmaster2.active = 1;
+			if (eng2FireGnEvac.clearFlag == 0) {
+				eng2FireGnEvac.active = 1;
 			} else {
-				ECAM_controller.warningReset(eng2FireGnmaster2);
-			}
-			
-			if (eng2FireGnATC.clearFlag == 0) {
-				eng2FireGnATC.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnATC);
-			}
-			
-			if (eng2FireGncrew.clearFlag == 0) {
-				eng2FireGncrew.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGncrew);
-			}
-			
-			if (eng2FireGnevacSw.clearFlag == 0) {
-				eng2FireGnevac.active = 1;
-				eng2FireGnevacSw.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnevac);
-				ECAM_controller.warningReset(eng2FireGnevacSw);
-			}
-			
-			if (eng2FireGnevacApu.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue() and pts.APU.rpm.getValue() > 99) {
-				eng2FireGnevacApu.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnevacApu);
-			}
-			
-			if (eng2FireGnevacBat.clearFlag == 0 and (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue())) {
-				eng2FireGnevacBat.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnevacBat);
+				ECAM_controller.warningReset(eng2FireGnEvac);
 			}
 		} else {
 			ECAM_controller.warningReset(eng2FireGnlever);
 			ECAM_controller.warningReset(eng2FireGnstopped);
 			ECAM_controller.warningReset(eng2FireGnparkbrk);
+			ECAM_controller.warningReset(eng2FireGnATC);
+			ECAM_controller.warningReset(eng2FireGncrew);
 			ECAM_controller.warningReset(eng2FireGnmaster);
 			ECAM_controller.warningReset(eng2FireGnPB);
 			ECAM_controller.warningReset(eng2FireGnAgent1);
 			ECAM_controller.warningReset(eng2FireGnAgent2);
-			ECAM_controller.warningReset(eng2FireGnmaster2);
-			ECAM_controller.warningReset(eng2FireGnATC);
-			ECAM_controller.warningReset(eng2FireGncrew);
-			ECAM_controller.warningReset(eng2FireGnevac);
-			ECAM_controller.warningReset(eng2FireGnevacSw);
-			ECAM_controller.warningReset(eng2FireGnevacApu);
-			ECAM_controller.warningReset(eng2FireGnevacBat);
+			ECAM_controller.warningReset(eng2FireGnEvac);
 		}
 	} else {
 		ECAM_controller.warningReset(eng2FireFllever);
@@ -670,17 +616,13 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(eng2FireGnlever);
 		ECAM_controller.warningReset(eng2FireGnstopped);
 		ECAM_controller.warningReset(eng2FireGnparkbrk);
+		ECAM_controller.warningReset(eng2FireGnATC);
+		ECAM_controller.warningReset(eng2FireGncrew);
 		ECAM_controller.warningReset(eng2FireGnmaster);
 		ECAM_controller.warningReset(eng2FireGnPB);
 		ECAM_controller.warningReset(eng2FireGnAgent1);
 		ECAM_controller.warningReset(eng2FireGnAgent2);
-		ECAM_controller.warningReset(eng2FireGnmaster2);
-		ECAM_controller.warningReset(eng2FireGnATC);
-		ECAM_controller.warningReset(eng2FireGncrew);
-		ECAM_controller.warningReset(eng2FireGnevac);
-		ECAM_controller.warningReset(eng2FireGnevacSw);
-		ECAM_controller.warningReset(eng2FireGnevacApu);
-		ECAM_controller.warningReset(eng2FireGnevacBat);
+		ECAM_controller.warningReset(eng2FireGnEvac);
 	}
 	
 	# APU Fire

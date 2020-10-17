@@ -1797,7 +1797,7 @@
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="AND" value="1">
 				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
 				/ECAM/phases/to-power-set eq 0
 			</test>
@@ -1850,7 +1850,7 @@
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="AND" value="1">
 				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
 				/ECAM/phases/to-power-set eq 0
 			</test>
