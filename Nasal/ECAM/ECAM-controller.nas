@@ -64,6 +64,12 @@ var warningNodes = {
 		gearNotDown2: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-cancellable"),
 		gearNotDownLocked: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-locked"),
 		gearNotDownLockedFlipflop: props.globals.initNode("/ECAM/warnings/fctl/gear-not-downlocked-output"),
+		blueGreen: props.globals.initNode("/ECAM/warnings/hyd/blue-green-failure"),
+		blueGreenFuel: props.globals.initNode("/ECAM/warnings/hyd/blue-green-fuel-consumpt"),
+		blueYellow: props.globals.initNode("/ECAM/warnings/hyd/blue-yellow-failure"),
+		blueYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/blue-yellow-fuel-consumpt"),
+		greenYellow: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-failure"),
+		greenYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-fuel-consumpt"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),

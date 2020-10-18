@@ -961,6 +961,196 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(emerconfigProt);
 		ECAM_controller.warningReset(emerconfigMaxSpeed);
 	}
+	
+	if (hydBYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueYellow.getValue()) {
+		hydBYloPr.active = 1;
+		if (hydBYloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
+			hydBYloPrRat.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrRat);
+		}
+		
+		if (hydBYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+			hydBYloPrYElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrYElec);
+		}
+		
+		if (hydBYloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+			hydBYloPrRatOn.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrRatOn);
+		}
+		
+		if (hydBYloPrBElec.clearFlag == 0 and systems.HYD.Switch.blueElec.getValue()) {
+			hydBYloPrBElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrBElec);
+		}
+		
+		if (hydBYloPrYEng.clearFlag == 0 and systems.HYD.Switch.yellowEDP.getValue()) {
+			hydBYloPrYEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrYEng);
+		}
+		
+		if (hydBYloPrMaxSpd.clearFlag == 0) {
+			hydBYloPrMaxSpd.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrMaxSpd);
+		}
+		
+		if (hydBYloPrMnvrCare.clearFlag == 0) {
+			hydBYloPrMnvrCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrMnvrCare);
+		}
+		
+		if (hydBYloPrGaPitch.clearFlag == 0) {
+			hydBYloPrGaPitch.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrGaPitch);
+		}
+		
+		if (hydBYloPrFuelCnsmpt.clearFlag == 0 and warningNodes.Logic.blueYellowFuel.getValue()) {
+			hydBYloPrFuelCnsmpt.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrFuelCnsmpt);
+		}
+		
+		if (hydBYloPrFmsPredict.clearFlag == 0 and warningNodes.Logic.blueYellowFuel.getValue()) {
+			hydBYloPrFmsPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrFmsPredict);
+		}
+	} else {
+		ECAM_controller.warningReset(hydBYloPr);
+		ECAM_controller.warningReset(hydBYloPrRat);
+		ECAM_controller.warningReset(hydBYloPrYElec);
+		ECAM_controller.warningReset(hydBYloPrRatOn);
+		ECAM_controller.warningReset(hydBYloPrBElec);
+		ECAM_controller.warningReset(hydBYloPrYEng);
+		ECAM_controller.warningReset(hydBYloPrMaxSpd);
+		ECAM_controller.warningReset(hydBYloPrMnvrCare);
+		ECAM_controller.warningReset(hydBYloPrGaPitch);
+		ECAM_controller.warningReset(hydBYloPrFuelCnsmpt);
+		ECAM_controller.warningReset(hydBYloPrFmsPredict);
+	}
+	
+	if (hydGBloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueGreen.getValue()) {
+		hydGBloPr.active = 1;
+		if (hydGBloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
+			hydGBloPrRat.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrRat);
+		}
+		
+		if (hydGBloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+			hydGBloPrRatOn.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrRatOn);
+		}
+		
+		if (hydGBloPrBElec.clearFlag == 0 and systems.HYD.Switch.blueElec.getValue()) {
+			hydGBloPrBElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrBElec);
+		}
+		
+		if (hydGBloPrGEng.clearFlag == 0 and systems.HYD.Switch.greenEDP.getValue()) {
+			hydGBloPrGEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrGEng);
+		}
+		
+		if (hydGBloPrMnvrCare.clearFlag == 0) {
+			hydGBloPrMnvrCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrMnvrCare);
+		}
+		
+		if (hydGBloPrGaPitch.clearFlag == 0) {
+			hydGBloPrGaPitch.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrGaPitch);
+		}
+		
+		if (hydGBloPrFuelCnsmpt.clearFlag == 0 and warningNodes.Logic.blueGreenFuel.getValue()) {
+			hydGBloPrFuelCnsmpt.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrFuelCnsmpt);
+		}
+		
+		if (hydGBloPrFmsPredict.clearFlag == 0 and warningNodes.Logic.blueGreenFuel.getValue()) {
+			hydGBloPrFmsPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrFmsPredict);
+		}
+	} else {
+		ECAM_controller.warningReset(hydGBloPr);
+		ECAM_controller.warningReset(hydGBloPrRat);
+		ECAM_controller.warningReset(hydGBloPrRatOn);
+		ECAM_controller.warningReset(hydGBloPrBElec);
+		ECAM_controller.warningReset(hydGBloPrGEng);
+		ECAM_controller.warningReset(hydGBloPrMnvrCare);
+		ECAM_controller.warningReset(hydGBloPrGaPitch);
+		ECAM_controller.warningReset(hydGBloPrFuelCnsmpt);
+		ECAM_controller.warningReset(hydGBloPrFmsPredict);
+	}
+	
+	if (hydGYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.greenYellow.getValue()) {
+		hydGYloPr.active = 1;
+		if (hydGYloPrPtu.clearFlag == 0 and systems.HYD.Switch.ptu.getValue() != 0) {
+			hydGYloPrPtu.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrPtu);
+		}
+		
+		if (hydGYloPrGEng.clearFlag == 0 and systems.HYD.Switch.greenEDP.getValue()) {
+			hydGYloPrGEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrGEng);
+		}
+		
+		if (hydGYloPrYEng.clearFlag == 0 and systems.HYD.Switch.yellowEDP.getValue()) {
+			hydGYloPrYEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrYEng);
+		}
+		
+		if (hydGYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+			hydGYloPrYElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrYElec);
+		}
+		
+		if (hydGYloPrMnvrCare.clearFlag == 0) {
+			hydGYloPrMnvrCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrMnvrCare);
+		}
+		
+		if (hydGYloPrFuelCnsmpt.clearFlag == 0 and warningNodes.Logic.greenYellowFuel.getValue()) {
+			hydGYloPrFuelCnsmpt.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrFuelCnsmpt);
+		}
+		
+		if (hydGYloPrFmsPredict.clearFlag == 0 and warningNodes.Logic.greenYellowFuel.getValue()) {
+			hydGYloPrFmsPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrFmsPredict);
+		}
+	} else {
+		ECAM_controller.warningReset(hydGYloPr);
+		ECAM_controller.warningReset(hydGYloPrPtu);
+		ECAM_controller.warningReset(hydGYloPrGEng);
+		ECAM_controller.warningReset(hydGYloPrYEng);
+		ECAM_controller.warningReset(hydGYloPrYElec);
+		ECAM_controller.warningReset(hydGYloPrMnvrCare);
+		ECAM_controller.warningReset(hydGYloPrFuelCnsmpt);
+		ECAM_controller.warningReset(hydGYloPrFmsPredict);
+	}
 }
 
 var messages_priority_2 = func {

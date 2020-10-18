@@ -1374,7 +1374,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/hydraulic/green-psi lt 1500
-				/ECAM/warning-phase eq 1
+				/ECAM/warning-phase ne 1
 			</test>
 		</switch>
 		
@@ -1419,7 +1419,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/hydraulic/yellow-psi lt 1500
-				/ECAM/warning-phase eq 1
+				/ECAM/warning-phase ne 1
 			</test>
 		</switch>
 		
@@ -2167,4 +2167,210 @@
 			</test>
 		</switch>
 	</channel>
+	
+	<channel name="Hydraulic" execrate="8">
+	
+		<switch name="/ECAM/warnings/hyd/engines-2-online">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/hyd/engines-2-online-output">
+			<input>/ECAM/warnings/hyd/engines-2-online</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">1</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/hyd/engines-2-off-in-air">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/state ne 3
+				/engines/engine[1]/state ne 3
+				/ECAM/timer/ground-calc eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/hyd/engines-2-off-in-air-output">
+			<input>/ECAM/warnings/hyd/engines-2-off-in-air</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/hyd/engine-1-start">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/state eq 3
+				<test logic="AND">
+					/ECAM/warning-phase ne 1
+					/ECAM/warning-phase ne 2
+					/ECAM/warning-phase ne 9
+					/ECAM/warning-phase ne 10
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/hyd/engine-1-start-output">
+			<input>/ECAM/warnings/hyd/engine-1-start</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">1</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/hyd/engine-2-start">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[1]/state eq 3
+				<test logic="AND">
+					/ECAM/warning-phase ne 1
+					/ECAM/warning-phase ne 2
+					/ECAM/warning-phase ne 9
+					/ECAM/warning-phase ne 10
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/hyd/engine-2-start-output">
+			<input>/ECAM/warnings/hyd/engine-2-start</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">1</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/hyd/blue-abnorm-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulics/warnings/blue-lo-pr eq 1
+				<test logic="OR">
+					/ECAM/warnings/hyd/engines-2-online eq 1
+					/ECAM/warnings/hyd/engines-2-off-in-air-output eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/green-abnorm-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulics/warnings/green-lo-pr eq 1
+				/ECAM/warnings/hyd/engine-1-start-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/yellow-abnorm-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulics/warnings/yellow-lo-pr eq 1
+				/ECAM/warnings/hyd/engine-2-start-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/blue-dual-failure">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+					/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+					/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/green-dual-failure">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+					/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+					/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/yellow-dual-failure">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+					/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+					/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/blue-green-failure">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/blue-yellow-failure">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/green-yellow-failure">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/blue-green-fuel-consumpt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/blue-yellow-fuel-consumpt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					fcs/flap-pos-deg ne 0
+					hydraulics/spoiler-l1/final-deg gt 0
+					hydraulics/spoiler-r1/final-deg gt 0
+					hydraulics/spoiler-l2/final-deg gt 0
+					hydraulics/spoiler-r2/final-deg gt 0
+					hydraulics/spoiler-l4/final-deg gt 0
+					hydraulics/spoiler-r4/final-deg gt 0
+					hydraulics/spoiler-l5/final-deg gt 0
+					hydraulics/spoiler-r5/final-deg gt 0
+					<!-- aileron servo -->
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/green-yellow-fuel-consumpt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+	</channel>
+	
 </system>

@@ -587,6 +587,40 @@
 				/systems/hydraulic/green-qty lt 3.5
 			</test>
 		</switch>
+		
+		<switch name="/systems/hydraulics/warnings/blue-lo-pr">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/blue-psi lt 1750
+					/systems/hydraulics/warnings/blue-lo-pr eq 1
+				</test>
+				/systems/hydraulic/blue-psi lt 1450
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulics/warnings/green-lo-pr">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/green-psi lt 1750
+					/systems/hydraulics/warnings/green-lo-pr eq 1
+				</test>
+				/systems/hydraulic/green-psi lt 1450
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulics/warnings/yellow-lo-pr">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/yellow-psi lt 1750
+					/systems/hydraulics/warnings/yellow-lo-pr eq 1
+				</test>
+				/systems/hydraulic/yellow-psi lt 1450
+			</test>
+		</switch>
+		
 	</channel>
 	
 </system>
