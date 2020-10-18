@@ -1207,6 +1207,7 @@
 				<right-tank-pump-1 type="bool">0</right-tank-pump-1>
 				<right-tank-pump-2 type="bool">0</right-tank-pump-2>
 			</fuel>
+			<gear type="bool">0</gear>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>

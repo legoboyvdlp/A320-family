@@ -857,8 +857,15 @@
 	
 	<channel name="Landing Gear">
 		
+		<switch name="gear/gear-cmd-switch">
+			<default value="gear/gear-cmd-norm"/>
+			<test logic="OR" value="gear/gear-pos-norm">
+				/systems/failures/gear eq 1
+			</test>
+		</switch>
+		
 		<kinematic name="rubbish/gear-pos-norm">
-			<input>gear/gear-cmd-norm</input>
+			<input>gear/gear-cmd-switch</input>
 			<traverse>
 				<setting>
 					<position>0</position>
