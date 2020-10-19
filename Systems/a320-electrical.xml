@@ -1055,14 +1055,14 @@
 			<test value="0">
 				/controls/electrical/switches/bus-tie eq 0
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="1"> <!-- give power to other side -->
 				/systems/electrical/relay/gen-1-glc/contact-pos eq 1
 				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
 				/systems/electrical/relay/apu-glc/contact-pos eq 0
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
 				/controls/electrical/switches/bus-tie eq 1
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="1"> <!-- fetch power from other side -->
 				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
 				/systems/electrical/bus/ac-bus-tie ge 110
 				/controls/electrical/switches/bus-tie eq 1
@@ -1081,14 +1081,14 @@
 			<test value="0">
 				/controls/electrical/switches/bus-tie eq 0
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="1">  <!-- give power to other side -->
 				/systems/electrical/relay/gen-2-glc/contact-pos eq 1
 				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
 				/systems/electrical/relay/apu-glc/contact-pos eq 0
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
 				/controls/electrical/switches/bus-tie eq 1
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="1">  <!-- fetch power from other side -->
 				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
 				/systems/electrical/bus/ac-bus-tie ge 110
 				/controls/electrical/switches/bus-tie eq 1
@@ -1121,6 +1121,7 @@
 			<test logic="AND" value="1"> <!-- old AC ESS FEED supply mode -->
 				/controls/electrical/switches/ac-ess-feed eq 0
 				/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer lt 1
+				/systems/electrical/relay/emer-glc/output lt 110
 				/controls/electrical/switches/emer-gen-test eq 0
 			</test>
 		</switch>
@@ -1139,6 +1140,7 @@
 					/controls/electrical/switches/ac-ess-feed eq 1
 					/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer eq 1
 				</test>
+				/systems/electrical/relay/emer-glc/output lt 110
 				/controls/electrical/switches/emer-gen-test eq 0
 			</test>
 		</switch>
@@ -1419,6 +1421,13 @@
         </switch>
 		
 		<!-- Transformer Rectifiers -->
+		<switch name="/systems/electrical/sources/tr-1/working">
+			<default value="0"/>
+			<test logic="OR" value="0.24347826086956523">
+				/systems/failures/electrical/tr-1 ne 1
+			</test>
+		</switch>
+		
 		<pure_gain name="/systems/electrical/sources/tr-1/output-volt">
 			<input>/systems/electrical/bus/ac-1</input> <!-- TODO: via 2PU1 CB -->
 			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
@@ -1435,6 +1444,13 @@
 				</table>
 			</function>
 		</fcs_function>
+		
+		<switch name="/systems/electrical/sources/tr-2/working">
+			<default value="0"/>
+			<test logic="OR" value="0.24347826086956523">
+				/systems/failures/electrical/tr-2 ne 1
+			</test>
+		</switch>
 		
 		<pure_gain name="/systems/electrical/sources/tr-2/output-volt">
 			<input>/systems/electrical/bus/ac-2</input> <!-- TODO: via 2PU2 CB -->
@@ -1461,7 +1477,7 @@
 		</switch>
 		
 		<pure_gain name="/systems/electrical/sources/ess-tr/output-volt">
-			<input>/systems/electrical/bus/ac-ess</input> <!-- TODO: via 2PU1 CB -->
+			<input>/systems/electrical/bus/ac-ess</input> <!-- TODO: via 15XE CB -->
 			<gain>/systems/electrical/sources/ess-tr/working</gain> <!-- AC to DC converter -->
 		</pure_gain>
 		
@@ -1478,12 +1494,25 @@
 		</fcs_function>
 		
 		<!-- Transformer Rectifier Contactors (Relays) -->
+		<switch name="/systems/electrical/relay/tr-contactor-1/fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/tr-contactor-1/fault eq 1
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/sources/tr-1/output-volt lt 25
+					/systems/electrical/sources/tr-1/output-amp eq 0
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/relay/tr-contactor-1/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/electrical/sources/tr-1/output-volt ne 0
-				/systems/electrical/sources/tr-1/output-amp ne 0
-				/systems/failures/electrical/tr-1 eq 0
+				/systems/electrical/relay/tr-contactor-1/fault eq 0
 			</test>
 		</switch>
 		
@@ -1501,12 +1530,26 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/relay/tr-contactor-2/fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/tr-contactor-2/fault eq 1
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/sources/tr-2/output-volt lt 25
+					/systems/electrical/sources/tr-2/output-amp eq 0
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/relay/tr-contactor-2/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/electrical/sources/tr-2/output-volt ne 0
-				/systems/electrical/sources/tr-2/output-amp ne 0
-				/systems/failures/electrical/tr-2 eq 0
+				/systems/electrical/relay/tr-contactor-2/fault eq 0
+				<!-- ground service NE 1 -->
 			</test>
 		</switch>
 		
@@ -1521,6 +1564,48 @@
 			<default value="0"/>
 			<test value="/systems/electrical/sources/tr-2/output-amp">
 				/systems/electrical/relay/tr-contactor-2/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/ess-tr-contactor/fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/ess-tr-contactor/fault eq 1
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/relay/emer-glc/output ge 110
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/sources/ess-tr/output-volt lt 25
+					/systems/electrical/sources/ess-tr/output-amp eq 0
+				</test>
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/relay/emer-glc/output ge 110
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/ess-tr-contactor/contact-pos">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/ess-tr-contactor/fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/ess-tr-contactor/output">
+			<default value="0"/>
+			<test value="/systems/electrical/sources/ess-tr/output-volt">
+				/systems/electrical/relay/ess-tr-contactor/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/ess-tr-contactor/output-amp">
+			<default value="0"/>
+			<test value="/systems/electrical/sources/ess-tr/output-amp">
+				/systems/electrical/relay/ess-tr-contactor/contact-pos eq 1
 			</test>
 		</switch>
 		
@@ -1583,13 +1668,13 @@
 					/systems/electrical/relay/tr-contactor-2/output lt 25
 					/systems/electrical/relay/emer-glc/output ge 110
 				</test>
-				/systems/electrical/sources/ess-tr/output-volt ge 25
+				/systems/electrical/relay/ess-tr-contactor/output ge 25
 			</test>
 		</switch>
 		
 		<switch name="/systems/electrical/relay/dc-ess-feed-tr/output">
 			<default value="0"/>
-			<test value="/systems/electrical/sources/ess-tr/output-volt">
+			<test value="/systems/electrical/relay/ess-tr-contactor/output">
 				/systems/electrical/relay/dc-ess-feed-tr/contact-pos eq 1
 			</test>
 		</switch>
@@ -1916,7 +2001,7 @@
 		</switch>
 		
 		<actuator name="/systems/electrical/some-electric-thingie/static-inverter-timer">
-            <input>/systems/electrical/relay/ac-ess-feed-inverter/contact-pos</input>
+            <input>/systems/electrical/sources/si-1/inverter-control/relay-2xb</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
         </actuator>
