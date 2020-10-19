@@ -1643,13 +1643,6 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/electrical/relay/dc-ess-shed-switch/output">
-			<default value="0"/>
-			<test value="/systems/electrical/bus/dc-ess">
-				/systems/electrical/relay/dc-ess-shed-switch/contact-pos eq 1
-			</test>
-		</switch>
-		
 		<!-- DC Service Bus -->
 		<switch name="/systems/electrical/relay/dc-svc-bus-contactor-tr/contact-pos"> <!-- TODO: via 1PX CB on 124VU -->
 			<default value="0"/>
@@ -1850,7 +1843,7 @@
 		
 		<pure_gain name="/systems/electrical/bus/dc-ess-shed">
 			<input>/systems/electrical/bus/dc-ess</input>
-			<gain>1</gain>
+			<gain>/systems/electrical/relay/dc-ess-shed-switch/contact-pos</gain>
 		</pure_gain>
 		
 		<!-- Hot Buses -->
