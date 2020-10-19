@@ -199,7 +199,6 @@ var canvas_PFD_base = {
 				me[key].set("clip", clip_rect);
 				me[key].set("clip-frame", canvas.Element.PARENT);
 			}
-			print("Adding key " ~ key);
 		}
 		
 		me.AI_horizon_trans = me["AI_horizon"].createTransform();
