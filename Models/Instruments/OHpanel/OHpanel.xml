@@ -25,16 +25,12 @@
 		<object-name>BatteryBtn21F</object-name>
 		<object-name>BusTieBtn2O</object-name>
 		<object-name>DitchBtn2O</object-name>
-		<object-name>ELAC1Btn1F</object-name>
-		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerExtLtBtn2O</object-name>
 		<object-name>Eng1AntiIceBtn1F</object-name>
 		<object-name>Eng1AntiIceBtn2O</object-name>
 		<object-name>Eng2AntiIceBtn1F</object-name>
 		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
-		<object-name>FAC1Btn1F</object-name>
-		<object-name>FAC1Btn2O</object-name>
 		<object-name>IR1Btn1F</object-name>
 		<object-name>IR1Btn2O</object-name>
 		<object-name>IR2Btn1F</object-name>
@@ -42,8 +38,6 @@
 		<object-name>IR3Btn1F</object-name>
 		<object-name>IR3Btn2O</object-name>
 		<object-name>RamAirBtn2O</object-name>
-		<object-name>SEC1Btn1F</object-name>
-		<object-name>SEC1Btn2O</object-name>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
@@ -73,10 +67,16 @@
 		<object-name>Eng1FireAgt2Btn2D</object-name>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
 		<object-name>Eng2FireAgt2Btn2D</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
 		<object-name>Gen1Btn1F</object-name>
 		<object-name>Gen1Btn2O</object-name>
 		<object-name>Gen2Btn1F</object-name>
 		<object-name>Gen2Btn2O</object-name>
+		<object-name>SEC1Btn1F</object-name>
+		<object-name>SEC1Btn2O</object-name>
 		<condition>
 			<or>
 				<greater-than-equals>
