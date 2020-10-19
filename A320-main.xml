@@ -460,6 +460,15 @@
 							<value>1</value>
 						</binding>
 					</item>
+					<item>
+						<label>Canvas QRH</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								canvas_qrh.createCanvasQRH();
+							</script>
+						</binding>
+					</item>
 				</menu>
 			</default>
 		</menubar>
@@ -4360,6 +4369,15 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
+<<<<<<< Updated upstream
+=======
+		<canvas_qnh>
+			<file>Aircraft/A320-family/Nasal/Displays/CanvasQNH.nas</file>
+		</canvas_qnh>
+		<canvas_qrh>
+			<file>Aircraft/A320-family/Nasal/QRH/QRH.nas</file>
+		</canvas_qrh>
+>>>>>>> Stashed changes
 		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
 			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
 		</mcdu_scratchpad>
