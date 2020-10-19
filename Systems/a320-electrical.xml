@@ -91,10 +91,10 @@
 			<default value="0"/>
 			<test logic="AND" value="0">
 				/systems/electrical/sources/bat-1/contact eq 0
-				/systems/electrical/sources/si-1/inverter-active eq 0
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 0
 			</test>
 			<test logic="AND" value="1">
-				/systems/electrical/sources/si-1/inverter-active eq 1
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- drain -->
 				/systems/electrical/sources/bat-1/contact eq 1
@@ -263,10 +263,10 @@
 			<default value="0"/>
 			<test logic="AND" value="0">
 				/systems/electrical/sources/bat-2/contact eq 0
-				/systems/electrical/sources/si-1/inverter-active eq 0
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 0
 			</test>
 			<test logic="AND" value="1">
-				/systems/electrical/sources/si-1/inverter-active eq 1
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- drain -->
 				/systems/electrical/sources/bat-2/contact eq 1
@@ -602,48 +602,81 @@
 		</fcs_function>
 		
 		<!-- Static Inverter -->
-		<switch name="/systems/electrical/sources/si-1/inverter-active">
+		<switch name="/systems/electrical/sources/si-1/inverter-control/relay-7xb"> <!-- 7XB -->
 			<default value="0"/>
-			<test value="0">
-				/systems/failures/electrical/stat-inv eq 1
-			</test>
-			<test logic="AND" value="1">
-				/systems/electrical/some-electric-thingie/emer-gen-operate eq 1
-				/systems/electrical/sources/emer-gen/coupled ne 1
-			</test>
-			<test logic="AND" value="1">
-				/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
-				/instrumentation/airspeed-indicator/indicated-speed-kt ge 50
-				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
-				/sim/time/elapsed-sec gt 10
-			</test>
-			<test logic="AND" value="1">
-				/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
-				/controls/electrical/switches/bat-1 eq 1
-				/controls/electrical/switches/bat-2 eq 1
-				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
-				/sim/time/elapsed-sec gt 10
+			<test logic="OR" value="1">
+				/systems/navigation/adr/output/cas-1 gt 50
+				/controls/electrical/switches/emer-gen-test eq 1
 			</test>
 		</switch>
-		
+
+		<switch name="/systems/electrical/sources/si-1/inverter-control/contactor-power-flow-through-7XB">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/si-1/inverter-control/relay-7xb eq 0
+				/systems/electrical/sources/bat-1/contact eq 1
+				/systems/electrical/sources/bat-2/contact eq 1
+				/systems/electrical/bus/dc-hot-2 ge 23
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/si-1/inverter-control/relay-7xb eq 1
+				/systems/electrical/bus/dc-hot-2 ge 23
+			</test>
+		</switch>
+
+		<switch name="/systems/electrical/sources/si-1/inverter-control/contactor-power-flow-to-timer">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/si-1/inverter-control/contactor-power-flow-through-7XB eq 1
+				/systems/electrical/bus/ac-1 lt 110
+				/systems/electrical/bus/ac-2 lt 110
+				/systems/electrical/relay/emer-glc/output lt 110
+			</test>
+		</switch>
+
+		<actuator name="/systems/electrical/sources/si-1/inverter-control/timer">
+			<input>/systems/electrical/sources/si-1/inverter-control/contactor-power-flow-to-timer</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">12.5</rate_limit> <!-- 80 milliseconds -->
+		</actuator>
+			
+		<switch name="/systems/electrical/sources/si-1/inverter-control/relay-2xb"> <!-- 2XB --> <!-- CONTROLS DC HOT 2 TO DC ESS, DC HOT 1 to STAT INV -->
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/si-1/inverter-control/timer eq 1
+			</test>
+		</switch>
+
 		<fcs_function name="/systems/electrical/sources/si-1/inverter-gain">
 			<function>
-				<ifthen>
-					<eq>
-						<property>/systems/electrical/sources/si-1/inverter-active</property>
-						<value>1</value>
-					</eq>
-					<quotient>
-						<value>115</value>
-						<property>/systems/electrical/sources/bat-1/volt</property>
-					</quotient>
-					<value>0</value>
-				</ifthen>
+				<product>
+					<ifthen>
+						<eq>
+							<property>/systems/failures/electrical/stat-inv</property>
+							<value>1</value>
+						</eq>
+						<value>0</value>
+						<quotient>
+							<value>115</value>
+							<property>/systems/electrical/sources/bat-1/volt</property>
+						</quotient>
+					</ifthen>
+					<property>/systems/electrical/sources/si-1/inverter-control/relay-2xb</property>
+				</product>
 			</function>
 		</fcs_function>
 		
+		<switch name="/systems/electrical/sources/si-1/inverter-control/contactor-power-flow-to-ac-ess-contactor">
+			<default value="0"/>
+			<test logic="AND" value="1"> <!-- todo CB 10XE -->
+				/systems/electrical/sources/si-1/inverter-control/relay-7xb eq 1
+				/systems/electrical/relay/ac-ess-feed-1/output lt 110
+				/systems/electrical/relay/ac-ess-feed-2/output lt 110
+			</test>
+		</switch>
+
 		<pure_gain name="/systems/electrical/sources/si-1/output-volt">
-			<input>/systems/electrical/sources/bat-1/volt</input> <!-- inverter feeds directly from batteries -->
+			<input>/systems/electrical/sources/bat-1/volt</input>
 			<gain>/systems/electrical/sources/si-1/inverter-gain</gain>
 		</pure_gain>
 		
@@ -1142,11 +1175,7 @@
 		<switch name="/systems/electrical/relay/ac-ess-feed-inverter/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/instrumentation/airspeed-indicator/indicated-speed-kt ge 50
-				/systems/electrical/bus/ac-1 eq 0
-				/systems/electrical/bus/ac-2 eq 0
-				/controls/electrical/switches/emer-gen-test eq 0
-				/systems/electrical/relay/emer-glc/output lt 110
+				/systems/electrical/sources/si-1/inverter-control/contactor-power-flow-to-ac-ess-contactor eq 1
 			</test>
 		</switch>
 		
@@ -1161,7 +1190,7 @@
 		<switch name="/systems/electrical/relay/ac-ess-shed-switch/contact-pos">
 			<default value="1"/>
 			<test logic="OR" value="0"> <!-- TODO: confirm these conditions are for galley, NOT ESS -->
-				/systems/electrical/sources/si-1/inverter-active eq 1
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 1
 				/controls/electrical/switches/emer-gen-test eq 1
 			</test>
 		</switch>
@@ -1591,11 +1620,25 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/relay/dc-ess-feed-inv/contact-pos">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/dc-ess-feed-inv/output">
+			<default value="0"/>
+			<test value="/systems/electrical/bus/dc-hot-2">
+				/systems/electrical/relay/dc-ess-feed-inv/contact-pos eq 1
+			</test>
+		</switch>
+		
 		<!-- DC Ess Shedding -->
 		<switch name="/systems/electrical/relay/dc-ess-shed-switch/contact-pos">
 			<default value="1"/>
 			<test logic="OR" value="0"> <!-- TODO: confirm these conditions are for galley, NOT ESS -->
-				/systems/electrical/sources/si-1/inverter-active eq 1
+				/systems/electrical/sources/si-1/inverter-control/relay-2xb eq 1
 				/controls/electrical/switches/emer-gen-test eq 1
 			</test>
 		</switch>
@@ -1798,6 +1841,7 @@
 					<value>0</value>
 					<max>
 						<property>/systems/electrical/relay/dc-ess-feed-bat/output</property>
+						<property>/systems/electrical/relay/dc-ess-feed-inv/output</property>
 						<property>/systems/electrical/relay/dc-ess-feed-tr/output</property>
 					</max>
 				</ifthen>
