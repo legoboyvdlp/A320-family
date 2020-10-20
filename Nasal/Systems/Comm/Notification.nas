@@ -150,7 +150,7 @@ var AOC = {
 	},
 	downloadFail: func(i, r = nil) {
 		mcdu.mcdu_message(i,"NO ANSWER TO REQUEST");
-		debug.dump("HTTP failure " ~ r.response);
+		debug.dump("HTTP failure " ~ r.status);
 		me.sent = 0;
 	},
 	fetchMETAR: func(airport, i) {
