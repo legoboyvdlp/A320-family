@@ -772,6 +772,7 @@
 		<switch name="/systems/electrical/sources/idg-1/gcu-1-voltage-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/sources/idg-1/gcu-1-voltage-trip eq 1
 				/controls/electrical/switches/gen-1 eq 1
 			</test>
@@ -787,6 +788,7 @@
 		<switch name="/systems/electrical/sources/idg-1/gcu-1-frequency-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/sources/idg-1/gcu-1-frequency-trip eq 1
 				/controls/electrical/switches/gen-1 eq 1
 			</test>
@@ -845,6 +847,7 @@
 		<switch name="/systems/electrical/sources/idg-2/gcu-2-voltage-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/sources/idg-2/gcu-2-voltage-trip eq 1
 				/controls/electrical/switches/gen-2 eq 1
 			</test>
@@ -860,6 +863,7 @@
 		<switch name="/systems/electrical/sources/idg-2/gcu-2-frequency-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/sources/idg-2/gcu-2-frequency-trip eq 1
 				/controls/electrical/switches/gen-2 eq 1
 			</test>
@@ -934,6 +938,7 @@
 		<switch name="/systems/electrical/sources/apu/gcu-voltage-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/sources/apu/gcu-voltage-trip eq 1
 				/controls/electrical/switches/apu eq 1
 			</test>
@@ -949,6 +954,7 @@
 		<switch name="/systems/electrical/sources/apu/gcu-frequency-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/acconfig/autoconfig-running ne 1
 				/systems/electrical/sources/apu/gcu-frequency-trip eq 1
 				/controls/electrical/switches/apu eq 1
 			</test>
