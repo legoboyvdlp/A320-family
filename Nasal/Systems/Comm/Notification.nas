@@ -148,6 +148,11 @@ var AOC = {
 			}
 		}
 	},
+	downloadFail: func(i, r = nil) {
+		mcdu.mcdu_message(i,"NO ANSWER TO REQUEST");
+		debug.dump("HTTP failure " ~ r.response);
+		me.sent = 0;
+	},
 	fetchMETAR: func(airport, i) {
 		if (!ATSU.working) {
 			me.sent = 0;
@@ -169,7 +174,7 @@ var AOC = {
 		}
 		
 		http.load(serverString ~ airport)
-			.fail(func(r) print("Download failed; try changing your server to NOAA"))
+			.fail(func(r) me.downloadFail(i, r))
 			.done(func(r) me.processMETAR(r, i));
 		return 0;
 	},
@@ -183,7 +188,7 @@ var AOC = {
 			return 1;
 		}
 		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
-			.fail(func print("Download failed!"))
+			.fail(func(r) me.downloadFail(i))
 			.done(func(r) me.processTAF(r, i));
 		return 0;
 	},
