@@ -879,7 +879,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "ATCMENU2") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me.defaultHide();
+				me.defaultHideWithCenter();
 				me["Simple_Title"].setText("ATC MENU");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("2/2");
@@ -891,6 +891,8 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(-1, -1, -1, -1, -1, 1);
 				me.showLeftArrow(1, 1, -1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
 				me.showRight(1, -1, -1, -1, -1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(1, -1, -1, -1, -1, -1);
@@ -898,10 +900,13 @@ var canvas_MCDU_base = {
 				me["Simple_C4B"].hide();
 				
 				me.standardFontSize();
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
 				me.standardFontColour();
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 			
 				me["Simple_L1"].setText(" DEPART REQ");
 				me["Simple_L2"].setText(" OCEANIC REQ");
+				me["Simple_C1S"].setText(" -------- ATS623 PAGE -------- ");
 				me["Simple_L6S"].setText(" ATSU DLK");
 				me["Simple_L6"].setText(" RETURN");
 				
@@ -1184,47 +1189,60 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("VHF3 DATA MODE");
 				me.defaultPageNumbers();
 				
-				me.showLeft(-1, 1, 1, 1, -1, 1);
+				me.showLeft(1, 1, 1, -1, -1, 1);
 				me["Simple_L0S"].hide();
-				me.showLeftS(1, 1, 1, 1, -1, -1);
-				me.showLeftArrow(-1, 1, 1, 1, -1, 1);
+				me.showLeftS(1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(-1, 1, 1, -1, -1, 1);
 				me.showCenter(-1, -1, -1, -1, -1, -1);
 				me.showCenterS(1, -1, -1, -1, -1, -1);
-				me.showRight(-1, 1, 1, -1, -1, 1);
-				me.showRightS(1, 1, 1, -1, -1, 1);
+				me.showRight(1, 1, 1, -1, -1, 1);
+				me.showRightS(1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
 				me.standardFontSize();
 				
-				me.colorLeft("wht", "blu", "blu", "blu", "wht", "wht");
-				me.colorLeftS("grn", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeft("grn", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("wht", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftArrow("wht", "blu", "blu", "blu", "wht", "wht");
 				me.colorCenterS("grn", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "blu", "blu", "wht", "wht", "blu");
-				me.colorRightS("grn", "blu", "blu", "wht", "wht", "blu");
+				me.colorRight("grn", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightS("wht", "blu", "blu", "wht", "wht", "blu");
 				me.colorRightArrow("wht", "blu", "blu", "wht", "wht", "wht");
 				
-				me["Simple_L1S"].setText(" AUTO");
-				me["Simple_C1S"].setText("SITA725 ");
-				me["Simple_L2S"].setText(" SITA725");
-				me["Simple_L2"].setText(" EUROPE");
-				me["Simple_L3S"].setText(" SITA550");
-				me["Simple_L3"].setText(" ASIA/AUST");
-				me["Simple_L4S"].setText(" AVICOM");
-				me["Simple_L4"].setText(" JAPAN");
-				me["Simple_R1S"].setText(" 131.725");
-				me["Simple_R2S"].setText("ARINC ");
-				me["Simple_R2"].setText("USA ");
-				me["Simple_R3S"].setText("AIRCANADA ");
-				me["Simple_R3"].setText("CANADA ");
+				me["Simple_L1S"].setText(" ATIS");
+				me["Simple_C1S"].setText("ACTIVE SERVERS");
+				me["Simple_L2"].setText(" FAA");
+				me["Simple_L3"].setText(" VATSIM");
+				me["Simple_R1S"].setText("METAR ");
+				me["Simple_R2"].setText("NOAA ");
+				me["Simple_R3"].setText("VATSIM ");
 				me["Simple_L6S"].setText(" RETURN TO");
 				me["Simple_L6"].setText(" COMM MENU");
 				me["Simple_R6S"].setText("PAGE ");
 				me["Simple_R6"].setText("PRINT ");
 				
 				pageSwitch[i].setBoolValue(1);
+			}
+			if (atsu.AOC.server == 1) {
+				me["Simple_R1"].setText("VATSIM ");
+				me["Simple_R2_Arrow"].show();
+				me["Simple_R3_Arrow"].hide();
+			} elsif (atsu.AOC.server == 0) {
+				me["Simple_R1"].setText("NOAA ");
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].show();
+			}
+			
+			if (atsu.ATIS.server == 1) {
+				me["Simple_L1"].setText(" VATSIM");
+				me["Simple_L2_Arrow"].show();
+				me["Simple_L3_Arrow"].hide();
+			} elsif (atsu.ATIS.server == 0) {
+				me["Simple_L1"].setText(" FAA");
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].show();
 			}
 		} else if (page == "COMMINIT") {
 			if (!pageSwitch[i].getBoolValue()) {

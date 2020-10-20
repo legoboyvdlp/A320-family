@@ -935,6 +935,21 @@
 			<max-dist>100.0</max-dist>
 		</retard>
 		
+		<retard>
+			<name>retard2</name>
+			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>/sim/sound/warnings/retard</property> <!-- must be EMER CANCEL -->
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
+			</volume>
+			<reference-dist>20.0</reference-dist>
+			<max-dist>100.0</max-dist>
+		</retard>
+		
 		<apoff>
 			<name>apoff-looped</name>
 			<mode>looped</mode>

@@ -460,6 +460,15 @@
 							<value>1</value>
 						</binding>
 					</item>
+					<item>
+						<label>Canvas QRH</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								canvas_qrh.createCanvasQRH();
+							</script>
+						</binding>
+					</item>
 				</menu>
 			</default>
 		</menubar>
@@ -1176,6 +1185,7 @@
 				<right-tank-pump-1 type="bool">0</right-tank-pump-1>
 				<right-tank-pump-2 type="bool">0</right-tank-pump-2>
 			</fuel>
+			<gear type="bool">0</gear>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>
@@ -4359,6 +4369,9 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
+		<canvas_qrh>
+			<file>Aircraft/A320-family/Nasal/QRH/QRH.nas</file>
+		</canvas_qrh>
 		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
 			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
 		</mcdu_scratchpad>
