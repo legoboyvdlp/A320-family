@@ -20,12 +20,14 @@ var vertRev = {
 	arrAirport: nil,
 	index: nil,
 	computer: nil,
-	new: func(type, id, index, computer) {
+	new: func(type, id, index, computer, wp, plan) {
 		var vr = {parents:[vertRev]};
 		vr.type = type; # 0 = origin 1 = destination 2 = wpt not ppos 3 = ppos 4 = cruise wpt 5 = climb wpt (3 + 4 not needed yet)
 		vr.id = id;
 		vr.index = index;
 		vr.computer = computer;
+		vr.wp = wp;
+		vr.plan = plan;
 		vr._setupPageWithData();
 		vr._checkTmpy();
 		return vr;
@@ -53,7 +55,7 @@ var vertRev = {
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
-		} if (me.type == 2) { 
+		} elsif (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
@@ -124,7 +126,7 @@ var vertRev = {
 		}
 	},
 	updateR5: func() {
-		if (getprop("FMGC/internal/cruise-lvl-set") and (getprop("FMGC/status/phase") < 4 or getprop("FMGC/status/phase") == 7)) {
+		if (fmgc.FMGCInternal.crzSet and (fmgc.FMGCInternal.phase < 4 or fmgc.FMGCInternal.phase == 7)) {
 			me.R5 = ["STEP ALTS ", nil, "wht"];
 			me.arrowsMatrix[1][4] = 1;
 		} else {
@@ -132,9 +134,57 @@ var vertRev = {
 			me.arrowsMatrix[1][4] = 0;
 		}
 	},
+	pushButtonLeft: func(index) {
+		if (index == 5) {
+			#print("role: ", me.wp.wp_role, ", type: ", me.wp.wp_type);
+			if (me.wp.wp_role == "sid") {
+				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
+					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
+				} else {
+					canvas_mcdu.myCLBWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCLB");
+			} else if (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed") {
+				if (canvas_mcdu.myDESWIND[me.computer] == nil) {
+					canvas_mcdu.myDESWIND[me.computer] = windDESPage.new(me.computer);
+				} else {
+					canvas_mcdu.myDESWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDDES");
+			} else if (me.wp.wp_role == nil and me.wp.wp_type == "navaid") {
+				cur_location = 0;
+				for (i = 0; i < size(fmgc.windController.nav_indicies[me.plan]); i += 1) {
+					if (fmgc.windController.nav_indicies[me.plan][i] == me.index) {
+						cur_location = i;
+					}
+				}
+				if (canvas_mcdu.myCRZWIND[me.computer] == nil) {
+					canvas_mcdu.myCRZWIND[me.computer] = windCRZPage.new(me.computer, me.wp, cur_location);
+				} else {
+					canvas_mcdu.myCRZWIND[me.computer].waypoint = me.wp;
+					canvas_mcdu.myCRZWIND[me.computer].cur_location = cur_location;
+					canvas_mcdu.myCRZWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCRZ");
+			} else {
+				if (canvas_mcdu.myCRZWIND[me.computer] == nil) {
+					canvas_mcdu.myCRZWIND[me.computer] = windCRZPage.new(me.computer, nil, 0);
+				} else {
+					canvas_mcdu.myCRZWIND[me.computer].reload();
+				}
+				fmgc.windController.accessPage[me.computer] = "VERTREV";
+				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCRZ");
+			}
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
+		}
+	},
 };
 
-setlistener("FMGC/internal/cruise-lvl-set", func() {
+var updateCrzLvlCallback = func () {
 	if (canvas_mcdu.myVertRev[0] != nil) { 
 		canvas_mcdu.myVertRev[0].updateR5();
 	}
@@ -142,9 +192,9 @@ setlistener("FMGC/internal/cruise-lvl-set", func() {
 	if (canvas_mcdu.myVertRev[1] != nil) { 
 		canvas_mcdu.myVertRev[1].updateR5();
 	}
-}, 0, 0);
+};
 
-setlistener("FMGC/status/phase", func() {
+var updatePhaseCallback = func() {
 	if (canvas_mcdu.myVertRev[0] != nil) { 
 		canvas_mcdu.myVertRev[0].updateR5();
 	}
@@ -152,4 +202,4 @@ setlistener("FMGC/status/phase", func() {
 	if (canvas_mcdu.myVertRev[1] != nil) { 
 		canvas_mcdu.myVertRev[1].updateR5();
 	}
-}, 0, 0);
+};

@@ -1,8 +1,6 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # APPR PERF
-var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 1);
-var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 1);
 
 var perfAPPRInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
@@ -30,19 +28,21 @@ var perfAPPRInput = func(key, i) {
 	} else if (key == "L3") {
 		var tfs = size(scratchpad);
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/dest-mag", -1);
-			setprop("/FMGC/internal/dest-wind", -1);
+			fmgc.FMGCInternal.destMag = 0;
+			fmgc.FMGCInternal.destMagSet = 0;
+			fmgc.FMGCInternal.destWind = 0;
+			fmgc.FMGCInternal.destWindSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (tfs >= 3 and tfs <= 7 and find("/", scratchpad) != -1) {
 			var weather = split("/", scratchpad);
-			var mag = int(weather[0]);
 			var mags = size(weather[0]);
-			var wind = int(weather[1]);
 			var winds = size(weather[1]);
 			if (mags >= 1 and mags <= 3 and winds >= 1 and winds <= 3) {
-				if (mag != nil and wind != nil and mag >= 0 and mag <= 360 and wind >= 0 and wind <= 200) {
-					setprop("/FMGC/internal/dest-mag", weather[0]);
-					setprop("/FMGC/internal/dest-wind", weather[1]);
+				if (num(weather[0]) != nil and num(weather[1]) != nil and int(weather[0]) >= 0 and int(weather[0]) <= 360 and int(weather[1]) >= 0 and int(weather[1]) <= 200) {
+					fmgc.FMGCInternal.destMag = weather[0];
+					fmgc.FMGCInternal.destMagSet = 1;
+					fmgc.FMGCInternal.destWind = weather[1];
+					fmgc.FMGCInternal.destWindSet = 1;
 					mcdu_scratchpad.scratchpads[i].empty();
 					fmgc.updateARPT();
 				} else {
@@ -75,11 +75,11 @@ var perfAPPRInput = func(key, i) {
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/vapp-speed-set", 0);
+			fmgc.FMGCInternal.vappSpeedSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-			setprop("/FMGC/internal/vapp-speed-set", 1);
-			setprop("/FMGC/internal/computed-speeds/vapp_appr", scratchpad);
+			fmgc.FMGCInternal.vappSpeedSet = 1;
+			fmgc.FMGCInternal.vapp_appr = scratchpad;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
@@ -91,7 +91,7 @@ var perfAPPRInput = func(key, i) {
 			setprop("/FMGC/internal/baro", 99999);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= getprop("/FMGC/internal/ldg-elev") and scratchpad <= 5000 + getprop("/FMGC/internal/ldg-elev")) {
-			if (getprop("/FMGC/internal/radio-no") == 0) {
+			if (!fmgc.FMGCInternal.radioNo) {
 				setprop("/FMGC/internal/radio", 99999);
 			}
 			setprop("/FMGC/internal/baro", scratchpad);
@@ -102,31 +102,31 @@ var perfAPPRInput = func(key, i) {
 	} else if (key == "R3") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/radio", 99999);
-			setprop("/FMGC/internal/radio-no", 0);
+			fmgc.FMGCInternal.radioNo = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (scratchpad == "NO") {
 			setprop("/FMGC/internal/radio", 99999);
-			setprop("/FMGC/internal/radio-no", 1);
+			fmgc.FMGCInternal.radioNo = 1;
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 700) {
 			setprop("/FMGC/internal/baro", 99999);
-			setprop("/FMGC/internal/radio-no", 0);
+			fmgc.FMGCInternal.radioNo = 0;
 			setprop("/FMGC/internal/radio", scratchpad);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R4") {
-		if (scratchpad == "" and ldg_config_f_set.getValue() == 1 and ldg_config_3_set.getValue() == 0) {
-			setprop("/FMGC/internal/ldg-config-3-set", 1);
-			setprop("/FMGC/internal/ldg-config-f-set", 0);
+		if (scratchpad == "" and fmgc.FMGCInternal.ldgConfigFull == 1 and fmgc.FMGCInternal.ldgConfig3 == 0) {
+			fmgc.FMGCInternal.ldgConfig3 = 1;
+			fmgc.FMGCInternal.ldgConfigFull = 0;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "R5") {
-		if (scratchpad == "" and ldg_config_3_set.getValue() == 1 and ldg_config_f_set.getValue() == 0) {
-			setprop("/FMGC/internal/ldg-config-3-set", 0);
-			setprop("/FMGC/internal/ldg-config-f-set", 1);
+		if (scratchpad == "" and fmgc.FMGCInternal.ldgConfig3 == 1 and fmgc.FMGCInternal.ldgConfigFull == 0) {
+			fmgc.FMGCInternal.ldgConfig3 = 0;
+			fmgc.FMGCInternal.ldgConfigFull = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}

@@ -230,6 +230,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/hydraulic/switches/yellow-elec eq 1
+				/systems/failures/hydraulic/yellow-elec ne 1
 				<test logic="OR"> <!-- TODO: via 3XX CB 122VU -->
 					/systems/electrical/sources/ext/output-volt ge 110
 					/systems/electrical/bus/ac-2 ge 110
@@ -239,20 +240,13 @@
 		
 		<fcs_function name="/systems/hydraulic/sources/yellow-elec/source-psi">
 			<function>
-				<ifthen>
-					<nq>
-						<property>/systems/failures/hydraulic/yellow-elec</property>
-						<value>1</value>
-					</nq>
-					<table>
-						<independentVar lookup="row">/systems/hydraulic/sources/yellow-elec/pump-operate</independentVar>
-						<tableData>
-							 0    0
-							 1  3000
-						</tableData>
-					</table>
-					<value>0</value>
-				</ifthen>
+				<table>
+					<independentVar lookup="row">/systems/hydraulic/sources/yellow-elec/pump-operate</independentVar>
+					<tableData>
+						 0    0
+						 1  3000
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
@@ -500,6 +494,27 @@
 		
 	</channel>
 	
+	<channel name="Brakes" execrate="8">
+		
+		<switch name="/systems/hydraulic/brakes/mode">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/gear/brake-parking ne 1
+				/systems/hydraulic/brakes/askidnwssw eq 1
+				/systems/hydraulic/green-psi ge 2500
+			</test>
+			<test logic="AND" value="2">
+				/controls/gear/brake-parking ne 1
+				/systems/hydraulic/brakes/askidnwssw eq 1
+				/systems/hydraulic/yellow-psi ge 2500
+			</test>
+			<test logic="AND" value="2">
+				/controls/gear/brake-parking ne 1
+				/systems/hydraulic/brakes/accumulator-pressure-psi ge 0
+			</test>
+		</switch>
+	</channel>
+	
 	<channel name="Lights" execrate="8">
 	
 		<switch name="/systems/hydraulic/lights/blue-elec-fault">
@@ -566,6 +581,40 @@
 				/systems/hydraulic/green-qty lt 3.5
 			</test>
 		</switch>
+		
+		<switch name="/systems/hydraulics/warnings/blue-lo-pr">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/blue-psi lt 1750
+					/systems/hydraulics/warnings/blue-lo-pr eq 1
+				</test>
+				/systems/hydraulic/blue-psi lt 1450
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulics/warnings/green-lo-pr">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/green-psi lt 1750
+					/systems/hydraulics/warnings/green-lo-pr eq 1
+				</test>
+				/systems/hydraulic/green-psi lt 1450
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulics/warnings/yellow-lo-pr">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/yellow-psi lt 1750
+					/systems/hydraulics/warnings/yellow-lo-pr eq 1
+				</test>
+				/systems/hydraulic/yellow-psi lt 1450
+			</test>
+		</switch>
+		
 	</channel>
 	
 </system>

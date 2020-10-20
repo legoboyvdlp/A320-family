@@ -534,7 +534,7 @@
        style="font-size:57.48457718px;line-height:1.25;fill:#0dbe4a;fill-opacity:1;stroke-width:1.43711448">-</tspan></text>
   <rect
      style="fill:#0dbe4a;fill-opacity:1;stroke:none;stroke-width:1.60198247;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="PRESS-Alt-needel"
+     id="PRESS-Alt-needle"
      width="2.9978156"
      height="101.25005"
      x="353.5022"
@@ -543,7 +543,7 @@
      inkscape:label="#rect5105-6-0-7-4-5-6-7" />
   <rect
      style="fill:#0dbe4a;fill-opacity:1;stroke:none;stroke-width:1.60198259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="PRESS-VS-needel"
+     id="PRESS-VS-needle"
      width="2.9978156"
      height="101.25005"
      x="331.0022"
@@ -559,7 +559,7 @@
      inkscape:label="#APUN-scale" />
   <rect
      style="fill:#0dbe4a;fill-opacity:1;stroke:none;stroke-width:1.60198259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="PRESS-deltaP-needel"
+     id="PRESS-deltaP-needle"
      width="2.9978156"
      height="101.25005"
      x="352.75"
@@ -849,7 +849,7 @@
      y="861.18341"
      transform="rotate(-67.5)" />
   <g
-     id="PRESS-Inlet-Needel"
+     id="PRESS-Inlet-needle"
      inkscape:label="#g5744">
     <rect
        transform="rotate(90)"
@@ -868,7 +868,7 @@
   </g>
   <g
      transform="matrix(-1,0,0,1,739.49999,-0.75002256)"
-     id="PRESS-Outlet-Needel"
+     id="PRESS-Outlet-needle"
      inkscape:label="#g5744">
     <rect
        transform="rotate(90)"
@@ -887,7 +887,7 @@
   </g>
   <g
      transform="translate(455.99998,-24.145591)"
-     id="PRESS-Man-Needel"
+     id="PRESS-Man-needle"
      inkscape:label="#g5744">
     <rect
        transform="rotate(90)"
@@ -906,7 +906,7 @@
   </g>
   <g
      transform="rotate(-90,502.87498,368.875)"
-     id="PRESS-Safety-Needel"
+     id="PRESS-Safety-needle"
      inkscape:label="#g5744">
     <rect
        transform="rotate(90)"

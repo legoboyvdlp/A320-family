@@ -4,7 +4,7 @@
 
 <system name="A320: ADR">
 
-    <channel name="ADR Inputs">
+    <channel name="ADR Inputs" execrate="2">
 		
 		<fcs_function name="aero/alpha-deg-corrected">
 			<function>
@@ -75,51 +75,19 @@
 		
 		<fcs_function name="/systems/navigation/probes/tat-1/compute-tat">
 			<function>
-				<difference>
-					<product>
-						<sum>
-							<property>/environment/temperature-degc</property> <!-- SAT -->
-							<value>273.15</value>
-						</sum>
-						<sum>
-							<value>1</value>
-							<product>
-								<value>0.2</value> <!-- ratio of specific heats - 1 / 2 -->
-								<value>0.995</value> <!-- empirical recovery factor -->
-								<pow>
-									<property>velocities/mach</property> <!-- going to use the pure value of mach here and then calculate another value -->
-									<value>2</value>
-								</pow>
-							</product>
-						</sum>
-					</product>
-					<value>273.15</value>
-				</difference>
+				<product>
+					<value>0.995</value> <!-- empirical recovery factor -->
+					<property>propulsion/tat-c</property>
+				</product>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/probes/tat-2/compute-tat">
 			<function>
-				<difference>
-					<product>
-						<sum>
-							<property>/environment/temperature-degc</property> <!-- SAT -->
-							<value>273.15</value>
-						</sum>
-						<sum>
-							<value>1</value>
-							<product>
-								<value>0.2</value> <!-- ratio of specific heats - 1 / 2 -->
-								<value>0.996</value> <!-- empirical recovery factor -->
-								<pow>
-									<property>velocities/mach</property> <!-- going to use the pure value of mach here and then calculate another value -->
-									<value>2</value>
-								</pow>
-							</product>
-						</sum>
-					</product>
-					<value>273.15</value>
-				</difference>
+				<product>
+					<value>0.996</value> <!-- empirical recovery factor -->
+					<property>propulsion/tat-c</property>
+				</product>
 			</function>
 		</fcs_function>
 		
@@ -143,7 +111,7 @@
 		
     </channel>
 	
-	<channel name="ADR Computation">
+	<channel name="ADR Computation" execrate="2">
 	
 		<sensor name="/systems/navigation/adr/computation/baro-alt-1-capt">
 			<input>/instrumentation/altimeter[0]/pressure-alt-ft</input>
@@ -770,7 +738,7 @@
 		
 	</channel>
 	
-	<channel name="ADR Output"> <!-- todo - need lowpass? -->
+	<channel name="ADR Output" execrate="2"> <!-- todo - need lowpass? -->
 	
 		<pure_gain name="/systems/navigation/adr/output/aoa-1">
 			<input>/systems/navigation/probes/aoa-1</input>

@@ -6,7 +6,7 @@
 	
 	<property value="0">hydraulics/spoiler-l2/main-cmd-feedback</property>
 	
-	<channel name="Spoiler Logic">
+	<channel name="Spoiler Logic" execrate="2">
 		
 		<switch name="spoilers/main-gear-or">
 			<default value="0"/>
@@ -112,7 +112,7 @@
 			<test logic="AND" value="spoilers/main-cmd">
 				/systems/hydraulic/green-psi ge 1500
 				spoilers/main-gear-and eq 1
-				/systems/failures/spoiler-l1 eq 0
+				/systems/failures/spoilers/spoiler-l1 eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -199,18 +199,18 @@
 			<test logic="AND" value="hydraulics/spoiler-l2/air-extended">
 				/systems/hydraulic/yellow-psi ge 1500
 				spoilers/main-gear-and eq 0
-				/systems/failures/spoiler-l2 eq 0
+				/systems/failures/spoilers/spoiler-l2 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-l2/ground-extended">
 				/systems/hydraulic/yellow-psi ge 1500
 				spoilers/main-gear-and eq 1
-				/systems/failures/spoiler-l2 eq 0
+				/systems/failures/spoilers/spoiler-l2 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-l2/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
-				/systems/failures/spoiler-l2 eq 0
+				/systems/failures/spoilers/spoiler-l2 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -266,12 +266,12 @@
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-l3/extended">
 				/systems/hydraulic/blue-psi ge 1500
-				/systems/failures/spoiler-l3 eq 0
+				/systems/failures/spoilers/spoiler-l3 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-l3/retracted">
 				/systems/hydraulic/blue-psi ge 1500
-				/systems/failures/spoiler-l3 eq 0
+				/systems/failures/spoilers/spoiler-l3 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -327,12 +327,12 @@
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-l4/extended">
 				/systems/hydraulic/yellow-psi ge 1500
-				/systems/failures/spoiler-l4 eq 0
+				/systems/failures/spoilers/spoiler-l4 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-l4/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
-				/systems/failures/spoiler-l4 eq 0
+				/systems/failures/spoilers/spoiler-l4 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -389,12 +389,12 @@
 			<test logic="AND" value="hydraulics/spoiler-l5/ground-extended">
 				/systems/hydraulic/green-psi ge 1500
 				spoilers/main-gear-and eq 1
-				/systems/failures/spoiler-l5 eq 0
+				/systems/failures/spoilers/spoiler-l5 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-l5/retracted">
 				/systems/hydraulic/green-psi ge 1500
-				/systems/failures/spoiler-l5 eq 0
+				/systems/failures/spoilers/spoiler-l5 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -424,7 +424,7 @@
 			<test logic="AND" value="spoilers/main-cmd">
 				/systems/hydraulic/green-psi ge 1500
 				spoilers/main-gear-and eq 1
-				/systems/failures/spoiler-r1 eq 0
+				/systems/failures/spoilers/spoiler-r1 eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -511,18 +511,18 @@
 			<test logic="AND" value="hydraulics/spoiler-r2/air-extended">
 				/systems/hydraulic/yellow-psi ge 1500
 				spoilers/main-gear-and eq 0
-				/systems/failures/spoiler-r2 eq 0
+				/systems/failures/spoilers/spoiler-r2 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r2/ground-extended">
 				/systems/hydraulic/yellow-psi ge 1500
 				spoilers/main-gear-and eq 1
-				/systems/failures/spoiler-r2 eq 0
+				/systems/failures/spoilers/spoiler-r2 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r2/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
-				/systems/failures/spoiler-r2 eq 0
+				/systems/failures/spoilers/spoiler-r2 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -578,12 +578,12 @@
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-r3/extended">
 				/systems/hydraulic/blue-psi ge 1500
-				/systems/failures/spoiler-r3 eq 0
+				/systems/failures/spoilers/spoiler-r3 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r3/retracted">
 				/systems/hydraulic/blue-psi ge 1500
-				/systems/failures/spoiler-r3 eq 0
+				/systems/failures/spoilers/spoiler-r3 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -639,12 +639,12 @@
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-r4/extended">
 				/systems/hydraulic/yellow-psi ge 1500
-				/systems/failures/spoiler-r4 eq 0
+				/systems/failures/spoilers/spoiler-r4 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r4/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
-				/systems/failures/spoiler-r4 eq 0
+				/systems/failures/spoilers/spoiler-r4 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
@@ -701,12 +701,12 @@
 			<test logic="AND" value="hydraulics/spoiler-r5/ground-extended">
 				/systems/hydraulic/green-psi ge 1500
 				spoilers/main-gear-and eq 1
-				/systems/failures/spoiler-r5 eq 0
+				/systems/failures/spoilers/spoiler-r5 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r5/retracted">
 				/systems/hydraulic/green-psi ge 1500
-				/systems/failures/spoiler-r5 eq 0
+				/systems/failures/spoilers/spoiler-r5 eq 0
 				spoilers/main-cmd eq 0
 			</test>
 			<clipto>

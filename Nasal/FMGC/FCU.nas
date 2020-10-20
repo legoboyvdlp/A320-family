@@ -2,37 +2,37 @@
 # Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
-var fd1 = props.globals.getNode("it-autoflight/output/fd1", 1);
-var fd2 = props.globals.getNode("it-autoflight/output/fd2", 1);
-var ap1 = props.globals.getNode("it-autoflight/output/ap1", 1);
-var ap2 = props.globals.getNode("it-autoflight/output/ap2", 1);
-var athr = props.globals.getNode("it-autoflight/output/athr", 1);
-var fd1Input = props.globals.getNode("it-autoflight/input/fd1", 1);
-var fd2Input = props.globals.getNode("it-autoflight/input/fd2", 1);
-var ap1Input = props.globals.getNode("it-autoflight/input/ap1", 1);
-var ap2Input = props.globals.getNode("it-autoflight/input/ap2", 1);
-var athrInput = props.globals.getNode("it-autoflight/input/athr", 1);
-var ktsMach = props.globals.getNode("it-autoflight/input/kts-mach", 1);
-var iasSet = props.globals.getNode("it-autoflight/input/spd-kts", 1);
-var machSet = props.globals.getNode("it-autoflight/input/spd-mach", 1);
-var hdgSet = props.globals.getNode("it-autoflight/input/hdg", 1);
-var altSet = props.globals.getNode("it-autoflight/input/alt", 1);
-var altSetMode = props.globals.getNode("it-autoflight/config/altitude-dial-mode", 1);
-var vsSet = props.globals.getNode("it-autoflight/input/vs", 1);
-var fpaSet = props.globals.getNode("it-autoflight/input/fpa", 1);
-var iasNow = props.globals.getNode("instrumentation/airspeed-indicator/indicated-speed-kt", 1);
-var machNow = props.globals.getNode("instrumentation/airspeed-indicator/indicated-mach", 1);
-var spdManaged = props.globals.getNode("it-autoflight/input/spd-managed", 1);
-var showHDG = props.globals.getNode("it-autoflight/custom/show-hdg", 1);
-var trkFpaSW = props.globals.getNode("it-autoflight/custom/trk-fpa", 1);
-var latMode = props.globals.getNode("it-autoflight/output/lat", 1);
-var vertMode = props.globals.getNode("it-autoflight/output/vert", 1);
-var fpaModeInput = props.globals.getNode("it-autoflight/input/fpa", 1);
-var latModeInput = props.globals.getNode("it-autoflight/input/lat", 1);
-var vertModeInput = props.globals.getNode("it-autoflight/input/vert", 1);
-var vsModeInput = props.globals.getNode("it-autoflight/input/vs", 1);
-var locArm = props.globals.getNode("it-autoflight/output/loc-armed", 1);
-var apprArm = props.globals.getNode("it-autoflight/output/appr-armed", 1);
+var fd1 = props.globals.getNode("/it-autoflight/output/fd1", 1);
+var fd2 = props.globals.getNode("/it-autoflight/output/fd2", 1);
+var ap1 = props.globals.getNode("/it-autoflight/output/ap1", 1);
+var ap2 = props.globals.getNode("/it-autoflight/output/ap2", 1);
+var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
+var fd1Input = props.globals.getNode("/it-autoflight/input/fd1", 1);
+var fd2Input = props.globals.getNode("/it-autoflight/input/fd2", 1);
+var ap1Input = props.globals.getNode("/it-autoflight/input/ap1", 1);
+var ap2Input = props.globals.getNode("/it-autoflight/input/ap2", 1);
+var athrInput = props.globals.getNode("/it-autoflight/input/athr", 1);
+var ktsMach = props.globals.getNode("/it-autoflight/input/kts-mach", 1);
+var iasSet = props.globals.getNode("/it-autoflight/input/kts", 1);
+var machSet = props.globals.getNode("/it-autoflight/input/mach", 1);
+var hdgSet = props.globals.getNode("/it-autoflight/input/hdg", 1);
+var altSet = props.globals.getNode("/it-autoflight/input/alt", 1);
+var altSetMode = props.globals.getNode("/it-autoflight/config/altitude-dial-mode", 1);
+var vsSet = props.globals.getNode("/it-autoflight/input/vs", 1);
+var fpaSet = props.globals.getNode("/it-autoflight/input/fpa", 1);
+var iasNow = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
+var machNow = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
+var spdManaged = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
+var showHDG = props.globals.getNode("/it-autoflight/custom/show-hdg", 1);
+var trkFpaSW = props.globals.getNode("/it-autoflight/custom/trk-fpa", 1);
+var latMode = props.globals.getNode("/it-autoflight/output/lat", 1);
+var vertMode = props.globals.getNode("/it-autoflight/output/vert", 1);
+var fpaModeInput = props.globals.getNode("/it-autoflight/input/fpa", 1);
+var latModeInput = props.globals.getNode("/it-autoflight/input/lat", 1);
+var vertModeInput = props.globals.getNode("/it-autoflight/input/vert", 1);
+var vsModeInput = props.globals.getNode("/it-autoflight/input/vs", 1);
+var locArm = props.globals.getNode("/it-autoflight/output/loc-armed", 1);
+var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 
 var FCU = {
@@ -103,6 +103,7 @@ var FCUController = {
 			if (!ap1.getBoolValue()) {
 				ap1Input.setValue(1);
 				ecam.apWarnNode.setValue(0);
+				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 1);
 			}
@@ -112,6 +113,7 @@ var FCUController = {
 		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
 			if (!ap2.getBoolValue()) {
 				ap2Input.setValue(1);
+				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 2);
 			}
@@ -155,13 +157,13 @@ var FCUController = {
 			if (ap1.getBoolValue() or ap2.getBoolValue()) {
 				apOff("soft", 0);
 			} else {
-				if (getprop("it-autoflight/sound/apoffsound") == 1 or getprop("it-autoflight/sound/apoffsound2") == 1) {
-					setprop("it-autoflight/sound/apoffsound", 0);
-					setprop("it-autoflight/sound/apoffsound2", 0);
+				if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
+					setprop("/it-autoflight/sound/apoffsound", 0);
+					setprop("/it-autoflight/sound/apoffsound2", 0);
 				}
-				if (getprop("it-autoflight/output/ap-warning") != 0) {
-					setprop("it-autoflight/output/ap-warning", 0);
-					setprop("ECAM/warnings/master-warning-light", 0);
+				if (getprop("/it-autoflight/output/ap-warning") != 0) {
+					setprop("/it-autoflight/output/ap-warning", 0);
+					ecam.lights[0].setValue(0);
 				}
 			}
 		}
@@ -176,11 +178,11 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (athr.getBoolValue()) {
 				athrOff("soft");
-				setprop("ECAM/warnings/master-caution-light", 1);
+				ecam.lights[1].setValue(1);
 			} else {
-				if (getprop("it-autoflight/output/athr-warning") == 1) {
-					setprop("it-autoflight/output/athr-warning", 0);
-					setprop("ECAM/warnings/master-caution-light", 0);
+				if (getprop("/it-autoflight/output/athr-warning") == 1) {
+					setprop("/it-autoflight/output/athr-warning", 0);
+					ecam.lights[1].setValue(0);
 				}
 			}
 		}
@@ -196,7 +198,7 @@ var FCUController = {
 	},
 	SPDPush: func() {
 		if (me.FCUworking) {
-			if (getprop("FMGC/internal/cruise-lvl-set") == 1 and getprop("FMGC/internal/cost-index-set") == 1) {
+			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
 				spdManaged.setBoolValue(1);
 				fmgc.ManagedSPD.start();
 			}
@@ -329,11 +331,13 @@ var FCUController = {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				latModeInput.setValue(2);
-				if (vertTemp == 2 or vertTemp == 6) {
-					me.VSPull();
-				} else {
-					fmgc.ITAF.disarmGS();
+				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
+					latModeInput.setValue(2);
+					if (vertTemp == 2 or vertTemp == 6) {
+						me.VSPull();
+					} else {
+						fmgc.ITAF.disarmGS();
+					}
 				}
 			}
 		}
@@ -345,7 +349,7 @@ var FCUController = {
 	},
 	ALTPush: func() {
 		if (me.FCUworking) {
-			# setprop("it-autoflight/input/vert", 8); # He don't work yet m8
+			# setprop("/it-autoflight/input/vert", 8); # He don't work yet m8
 		}
 	},
 	ALTPull: func() {
@@ -465,7 +469,9 @@ var FCUController = {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				vertModeInput.setValue(2);
+				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
+					vertModeInput.setValue(2);
+				}
 			}
 		}
 	},
@@ -517,7 +523,7 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (latMode.getValue() != 0) {
 		showHDG.setBoolValue(1);
-		var hdgnow = getprop("it-autoflight/input/hdg");
-		setprop("modes/fcu/hdg-time", getprop("sim/time/elapsed-sec"));
+		var hdgnow = fmgc.Input.hdg.getValue();
+		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }

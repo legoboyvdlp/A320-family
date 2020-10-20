@@ -170,12 +170,17 @@ var MessageController = {
 		TypeIMessage.new("LIST OF 20 IN USE"),TypeIMessage.new("PILOT ELEMENT RETAINED"),TypeIMessage.new("NOT ALLOWED"),
 		TypeIMessage.new("NOT IN DATA BASE"),TypeIMessage.new("ONLY SPD ENTRY ALLOWED"),TypeIMessage.new("REVISION IN PROGRESS"),
 		TypeIMessage.new("TMPY F-PLN EXISTS", 1),TypeIMessage.new("SELECT DESIRED SYSTEM"),TypeIMessage.new("SELECT HDG/TRK FIRST"),
-		TypeIMessage.new("USING COST INDEX N", 1),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),
+		TypeIMessage.new("USING COST INDEX N", 1),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),TypeIMessage.new("RWY/LS MISMATCH"),
+		TypeIMessage.new("VHF3 VOICE MSG NOT GEN"),TypeIMessage.new("NO COMM MSG NOT GEN"),TypeIMessage.new("WX UPLINK"),
+		TypeIMessage.new("SIMBRIEF DOWNLOAD FAILED"),TypeIMessage.new("MISSING USERNAME"),TypeIMessage.new("AOC ACT F-PLN UPLINK"),
 	]),
 	typeIIMessages: std.Vector.new([
 		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),
-		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),
+		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),TypeIIMessage.new("V1/VR/V2 DISAGREE", "amb", 0),
+		TypeIIMessage.new("TO SPEED TOO LOW", "amb", 0),
 	]),
+	
+	# to speed to low - new on a320, margin against vmcg / vs1g
 
 	getTypeIMsgByText: func(text) {
 		return me.getMsgByText(text, me.typeIMessages.vector);

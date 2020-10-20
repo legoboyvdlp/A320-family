@@ -127,12 +127,12 @@
 	<flipflop>
 		<type>SR</type>
 		<S>
-			<property>ECAM/phases/flipflop/gear-set</property>
+			<property>ECAM/flipflop/radar-altimeter-5-set</property>
 		</S>
 		<R>
-			<property>ECAM/phases/flipflop/gear-reset</property>
+			<property>ECAM/flipflop/radar-altimeter-5-reset</property>
 		</R>
-		<output>ECAM/phases/flipflop/gear-output</output>
+		<output>ECAM/flipflop/radar-altimeter-5-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -169,6 +169,17 @@
 	</flipflop>
 	
 	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>ECAM/flipflop/speed-gt-80-set</property>
+		</S>
+		<R>
+			<property>ECAM/flipflop/speed-gt-80-reset</property>
+		</R>
+		<output>ECAM/phases/speed-gt-80</output>
+	</flipflop>
+	
+	<flipflop>
 		<type>monostable</type>
 		<time>
 			<value>2.0</value>
@@ -180,6 +191,18 @@
 		</S>
 		<output>ECAM/phases/monostable-80kt</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>2.0</value>
+		</time>
+		<S>
+			<property>/ECAM/ground-calc-immediate</property>
+		</S>
+		<output>ECAM/phases/monostable/gnd-output</output>
+	</flipflop>
+	
 	
 	<flipflop>
 		<type>monostable</type>
@@ -380,6 +403,66 @@
 		<type>monostable</type>
 		<inverted type="bool">true</inverted>
 		<time>
+			<value>4.5</value>
+		</time>
+		<S>
+			<property>ECAM/phases/monostable/phase-8</property>
+		</S>
+		<output>ECAM/phases/monostable/phase-8-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-retard-case-2</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-retard-case-2</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-reverse</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-1-reverse-fall</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-reverse</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/eng-2-reverse-fall</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
 			<value>3.0</value>
 		</time>
 		<S>
@@ -398,6 +481,593 @@
 			<property>ECAM/phases/to-power-set</property>
 		</S>
 		<output>ECAM/phases/monostable/to-power-set-output</output>
+	</flipflop>
+	
+	<!-- when -pulse is true and switch is true -->
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+            <not><property>/controls/ice-protection/wing</property></not>
+        </S>
+        <output>/ECAM/phases/wing-anti-ice-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>180.0</value>
+        </time>
+        <S>
+            <not><property>/ECAM/phases/monostable/phase-6-180</property></not>
+        </S>
+        <output>/ECAM/phases/monostable/phase-6-180-pulse</output>
+    </flipflop>
+	
+	<!-- falling edge detectors -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>10.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/timer/xbleed-fault-output</property>
+		</S>
+		<output>/ECAM/warnings/timer/xbleed-fault-output-10</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>15.0</value>
+		</time>
+		<S>
+			<property>/controls/engines/engine[0]/fire-btn</property>
+		</S>
+		<output>/ECAM/warnings/timer/xbleed-fault-output-15</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/prv-1-not-shut-apu-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/prv-1-not-shut-apu-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/prv-1-not-shut-apu-flipflop-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/prv-2-not-shut-apu-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/prv-2-not-shut-apu-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/prv-2-not-shut-apu-flipflop-output</output>
+	</flipflop>
+	
+	<!-- falling edge detector, take inverse -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/systems/pneumatics/valves/engine-1-prv-valve-disag</property>
+		</S>
+		<output>/ECAM/warnings/logic/engine-1-prv-valve-falling-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/systems/pneumatics/valves/engine-2-prv-valve-disag</property>
+		</S>
+		<output>/ECAM/warnings/logic/engine-2-prv-valve-falling-pulse</output>
+	</flipflop>
+	
+	<!-- rising detector: when -pulse is true and switch is true -->
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/fctl/gear-lever-down</property></not>
+        </S>
+        <output>/ECAM/warnings/fctl/gear-lever-down-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/bleed-1</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/bleed-sw1-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/bleed-2</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/bleed-sw2-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/apu</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/apu-bleed-sw-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/electrical/switches/apu</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/apu-elec-gen-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/electrical/switches/gen-1</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/gen-1-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/electrical/switches/gen-2</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/gen-2-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/wai-ground-pulse-set</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/wai-ground-pulse</output>
+    </flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/timer/phase-1-input</property></not>
+        </S>
+        <output>/ECAM/warnings/timer/phase-1-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/wai-phase-9-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/wai-phase-9-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/phase-10-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-10-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/pack-1</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/pack-1-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/controls/pneumatics/switches/pack-2</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/pack-2-pulse</output>
+	</flipflop>
+	
+	<!-- Bleed Low Temp -->
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/bleed-1-low-temp-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-low-temp-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/timer/bleed-2-low-temp-output</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-low-temp-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output</output>
+	</flipflop>
+	
+	<!-- falling detector, when this is false, and switch is false -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/controls/ice-protection/wing</property>
+		</S>
+		<output>/ECAM/warnings/logic/wai-falling-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/bleed-1-off-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-1-off-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-1-off-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/bleed-2-off-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/bleed-2-off-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/bleed-2-off-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/logic/wing-anti-ice-flipflop-set</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/wing-anti-ice-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/wing-anti-ice-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/logic/wing-anti-ice-left-closed-set</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/wing-anti-ice-left-closed-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/wing-anti-ice-left-closed</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/logic/wing-anti-ice-right-closed-set</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/wing-anti-ice-right-closed-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/wing-anti-ice-right-closed</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/proc-wai-shutdown-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/proc-wai-shutdown-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/proc-wai-shutdown-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/wing-anti-ice-gnd-fault-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/wing-anti-ice-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/wing-anti-ice-gnd-fault-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/systems/air-conditioning/warnings/pack-1-ovht-fault</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-1-ovht-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-1-ovht</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/systems/air-conditioning/warnings/pack-2-ovht-fault</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-2-ovht-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-2-ovht</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/timer/pack-1-fault-5</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-1-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-1-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/timer/pack-2-fault-5</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/pack-2-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/pack-2-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-1-fault-set-output</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-1-fault-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-1-fault</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-1-fault-on-off-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-1-fault-on-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-1-fault-on-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-2-fault-set-output</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-2-fault-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-2-fault</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/gen-2-fault-on-off-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/gen-2-fault-on-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/gen-2-fault-on-off</output>
+	</flipflop>
+	
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/timer/apu-gen-fault-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/timer/apu-gen-fault-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/apu-gen-fault</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/apu-gen-fault-on-off-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/apu-gen-fault-on-off-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/apu-gen-fault-on-off</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle</output>
+	</flipflop>
+	
+	<!-- falling edge detector, take inverse -->
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-4</property>
+		</S>
+		<output>/ECAM/warnings/logic/stall/phase-4-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-5</property>
+		</S>
+		<output>/ECAM/warnings/logic/stall/phase-5-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-8</property>
+		</S>
+		<output>/ECAM/warnings/logic/stall/phase-8-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/stall/phase-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/stall/phase-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/stall/phase-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/config/park-brk/park-brk-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/config/park-brk/park-brk-reset</property>
+		</R>
+		<output>/ECAM/warnings/config/park-brk/park-brk-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/gear-not-downlocked-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/gear-not-downlocked-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/gear-not-downlocked-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/fctl/gear-not-down-locked-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/gear-not-down-locked-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/gear-not-down-locked</output>
 	</flipflop>
 	
 </PropertyList>

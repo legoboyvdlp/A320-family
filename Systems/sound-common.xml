@@ -55,6 +55,18 @@
 		<output>/sim/sound/internal-custom</output>
 	</logic>
 	
+	<logic>
+		<input>
+			<not>
+				<equals>
+					<property>/sim/sound/internal-custom</property>
+					<value>1</value>
+				</equals>
+			</not>
+		</input>
+		<output>/sim/sound/external-custom</output>
+	</logic>
+	
 	<!-- Misc -->
 	<filter>
 		<type>gain</type>
@@ -203,12 +215,12 @@
 	
 	<filter>
 		<type>gain</type>
-		<gain>0.025</gain>
+		<gain>1</gain>
 		<input>
 			<condition>
 				<property>/sim/sound/internal-custom</property>
 			</condition>
-			<property>/systems/pneumatic/pack-psi</property>
+			<property>/systems/air-conditioning/mass-flow-cockpit-kg_s</property>
 		</input>
 		<input>0</input>
 		<output>/sim/sound/other/air-con</output>

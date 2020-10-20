@@ -4,9 +4,8 @@
 
 <aerodynamics>
 	
-	<property value="0.0">ice/wing</property>
-	<property value="0">rubbish/landL</property>
-	<property value="0">rubbish/landR</property>
+	<property value="0.0">ice/wingL</property>
+	<property value="0.0">ice/wingR</property>
 	
 	<axis name="LIFT">
 		
@@ -143,18 +142,35 @@
 			</product>
 		</function>
 		
-		<function name="aero/coefficient/CLicew">
+		<function name="aero/coefficient/CLicewl">
 			<description>Lift_decrease_due_to_ice_on_wing</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<table>
-					<independentVar>ice/wing</independentVar>
+					<independentVar>ice/wingL</independentVar>
+					<tableData>
+						0.0  0.00
+						0.5 -0.05
+						1.0 -0.15
+						2.0 -1.25
+					</tableData>
+				</table>
+			</product>
+		</function>
+		
+		<function name="aero/coefficient/CLicewr">
+			<description>Lift_decrease_due_to_ice_on_wing</description>
+			<product>
+				<property>aero/qbar-psf</property>
+				<property>metrics/Sw-sqft</property>
+				<table>
+					<independentVar>ice/wingR</independentVar>
 					<tableData>
 						0.0  0.0
-						0.5 -0.1
-						1.0 -0.3
-						2.0 -1.5
+						0.5 -0.05
+						1.0 -0.15
+						2.0 -1.25
 					</tableData>
 				</table>
 			</product>
@@ -337,18 +353,35 @@
 			</product>
 		</function>
 		
-		<function name="aero/force/Drag_wingice">
+		<function name="aero/force/Drag_wingicel">
 			<description>Drag_due_to_ice_on_wing</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<table>
-					<independentVar>ice/wing</independentVar>
+					<independentVar>ice/wingL</independentVar>
 					<tableData>
 						0.0  0.000
-						0.5  0.004
-						1.0  0.010
-						2.0  0.100
+						0.5  0.002
+						1.0  0.005
+						2.0  0.050
+					</tableData>
+				</table>
+			</product>
+		</function>
+		
+		<function name="aero/force/Drag_wingicer">
+			<description>Drag_due_to_ice_on_wing</description>
+			<product>
+				<property>aero/qbar-psf</property>
+				<property>metrics/Sw-sqft</property>
+				<table>
+					<independentVar>ice/wingR</independentVar>
+					<tableData>
+						0.0  0.000
+						0.5  0.002
+						1.0  0.005
+						2.0  0.050
 					</tableData>
 				</table>
 			</product>

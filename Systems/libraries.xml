@@ -1352,5 +1352,18 @@
 		</input>
 		<output>/instrumentation/pfd/minimums-plus-100</output>
 	</filter>
+	
+	<logic>
+		<!-- somewhat confusing : this input is not 'are the flaps in landing configration', but rather,
+		'are the flaps NOT in a landing configuration'. There is a configuration bit to flip
+		the sense of this, if required. -->
+		<input>
+			<less-than>
+				<property>/controls/flight/flaps</property>
+				<value>0.8</value>
+			</less-than>
+		</input>
+		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
+	</logic>
 
 </PropertyList>

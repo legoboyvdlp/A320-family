@@ -6,17 +6,23 @@
 var perfTOInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
-		if (getprop("/FMGC/status/phase") != 1) {
+		if (fmgc.FMGCInternal.phase != 1) {
 			if (scratchpad == "CLR") {
-				setprop("/FMGC/internal/v1", 0);
-				setprop("/FMGC/internal/v1-set", 0);
+				fmgc.FMGCInternal.v1 = 0;
+				fmgc.FMGCInternal.v1set = 0;
+				fmgc.FMGCNodes.v1.setValue(0);
+				fmgc.FMGCNodes.v1set.setValue(0);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				var tfs = size(scratchpad);
 				if (tfs == 3) {
 					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-						setprop("/FMGC/internal/v1", scratchpad);
-						setprop("/FMGC/internal/v1-set", 1);
+						fmgc.FMGCInternal.v1 = scratchpad;
+						fmgc.FMGCInternal.v1set = 1;
+						
+						# for sounds:
+						fmgc.FMGCNodes.v1.setValue(scratchpad);
+						fmgc.FMGCNodes.v1set.setValue(1);
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
@@ -29,17 +35,17 @@ var perfTOInput = func(key, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L2") {
-		if (getprop("/FMGC/status/phase") != 1) {
+		if (fmgc.FMGCInternal.phase != 1) {
 			if (scratchpad == "CLR") {
-				setprop("/FMGC/internal/vr", 0);
-				setprop("/FMGC/internal/vr-set", 0);
+				fmgc.FMGCInternal.vr = 0;
+				fmgc.FMGCInternal.vrset = 0;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				var tfs = size(scratchpad);
 				if (tfs == 3) {
 					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-						setprop("/FMGC/internal/vr", scratchpad);
-						setprop("/FMGC/internal/vr-set", 1);
+						fmgc.FMGCInternal.vr = scratchpad;
+						fmgc.FMGCInternal.vrset = 1;
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
@@ -52,19 +58,20 @@ var perfTOInput = func(key, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (key == "L3") {
-		if (getprop("/FMGC/status/phase") != 1) {
+		if (fmgc.FMGCInternal.phase != 1) {
 			if (scratchpad == "CLR") {
-				setprop("/FMGC/internal/v2", 0);
-				setprop("/FMGC/internal/v2-set", 0);
-				setprop("it-autoflight/settings/togaspd", 157);
+				fmgc.FMGCInternal.v2 = 0;
+				fmgc.FMGCInternal.v2set = 0;
+				setprop("/it-autoflight/settings/togaspd", 157);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				var tfs = size(scratchpad);
 				if (tfs == 3) {
 					if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
-						setprop("/FMGC/internal/v2", scratchpad);
-						setprop("/FMGC/internal/v2-set", 1);
-						setprop("it-autoflight/settings/togaspd", scratchpad);
+						fmgc.FMGCInternal.v2 = scratchpad;
+						fmgc.FMGCInternal.v2set = 1;
+						fmgc.updatePitchArm2();
+						setprop("/it-autoflight/settings/togaspd", scratchpad);
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
@@ -93,8 +100,8 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
-			setprop("systems/thrust/clbreduc-ft", "1500");
-			setprop("/FMGC/internal/accel-agl-ft", "1500");
+			setprop("/systems/thrust/clbreduc-ft", 1500);
+			setprop("/FMGC/internal/accel-agl-ft", 1500);
 			setprop("MCDUC/thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
@@ -106,7 +113,7 @@ var perfTOInput = func(key, i) {
 				var acc = thracc[1];
 				var accs = size(acc);
 				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= 400 and thrred <= 39000 and int(acc) != nil and (accs == 3 or accs == 4 or accs == 5) and acc >= 400 and acc <= 39000) {
-					setprop("systems/thrust/clbreduc-ft", int(thrred / 10) * 10);
+					setprop("/systems/thrust/clbreduc-ft", int(thrred / 10) * 10);
 					setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 					setprop("MCDUC/thracc-set", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
@@ -117,7 +124,7 @@ var perfTOInput = func(key, i) {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= 400 and scratchpad <= 39000) {
-				setprop("systems/thrust/clbreduc-ft", int(scratchpad / 10) * 10);
+				setprop("/systems/thrust/clbreduc-ft", int(scratchpad / 10) * 10);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");

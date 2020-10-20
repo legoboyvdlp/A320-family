@@ -400,4 +400,256 @@
 		<output>/ECAM/Upper/N1ylim</output>
 	</filter>
 	
+	<filter>
+		<name>Flap Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>35</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-192</dep></entry>
+					<entry><ind>10.0</ind><dep>-135</dep></entry>
+					<entry><ind>15.0</ind><dep>-89</dep></entry>
+					<entry><ind>20.0</ind><dep>-43</dep></entry>
+					<entry><ind>35.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>40</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-192</dep></entry>
+					<entry><ind>10.0</ind><dep>-135</dep></entry>
+					<entry><ind>15.0</ind><dep>-89</dep></entry>
+					<entry><ind>20.0</ind><dep>-43</dep></entry>
+					<entry><ind>40.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/FlapX</output>
+	</filter>
+	
+	<filter>
+		<name>Flap Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>35</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-47</dep></entry>
+					<entry><ind>10.0</ind><dep>-33</dep></entry>
+					<entry><ind>15.0</ind><dep>-21</dep></entry>
+					<entry><ind>20.0</ind><dep>-10</dep></entry>
+					<entry><ind>35.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>40</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-47</dep></entry>
+					<entry><ind>10.0</ind><dep>-33</dep></entry>
+					<entry><ind>15.0</ind><dep>-21</dep></entry>
+					<entry><ind>20.0</ind><dep>-10</dep></entry>
+					<entry><ind>40.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/FlapY</output>
+	</filter>
+	
+	<filter>
+		<name>Flap Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>35</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-200</dep></entry>
+					<entry><ind>10.0</ind><dep>-135</dep></entry>
+					<entry><ind>15.0</ind><dep>-95</dep></entry>
+					<entry><ind>20.0</ind><dep>-48.5</dep></entry>
+					<entry><ind>35.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>40</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-200</dep></entry>
+					<entry><ind>10.0</ind><dep>-135</dep></entry>
+					<entry><ind>15.0</ind><dep>-95</dep></entry>
+					<entry><ind>20.0</ind><dep>-48.5</dep></entry>
+					<entry><ind>40.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/FlapXtrans</output>
+	</filter>
+	
+	<filter>
+		<name>Flap Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>35</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-49</dep></entry>
+					<entry><ind>10.0</ind><dep>-33</dep></entry>
+					<entry><ind>15.0</ind><dep>-23</dep></entry>
+					<entry><ind>20.0</ind><dep>-11.25</dep></entry>
+					<entry><ind>35.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>options/maxflap</property>
+					<value>40</value>
+				</equals>
+			</condition>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-49</dep></entry>
+					<entry><ind>10.0</ind><dep>-33</dep></entry>
+					<entry><ind>15.0</ind><dep>-23</dep></entry>
+					<entry><ind>20.0</ind><dep>-11.25</dep></entry>
+					<entry><ind>40.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/FlapYtrans</output>
+	</filter>
+	
+	<filter>
+		<name>Slat Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/slat-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>131</dep></entry>
+					<entry><ind>18.0</ind><dep>92</dep></entry>
+					<entry><ind>22.0</ind><dep>46</dep></entry>
+					<entry><ind>27.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/SlatX</output>
+	</filter>
+	
+	<filter>
+		<name>Slat Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/slat-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-42</dep></entry>
+					<entry><ind>18.0</ind><dep>-28</dep></entry>
+					<entry><ind>22.0</ind><dep>-14</dep></entry>
+					<entry><ind>27.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/SlatY</output>
+	</filter>
+	
+	<filter>
+		<name>Slat Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/slat-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>135</dep></entry>
+					<entry><ind>18.0</ind><dep>95</dep></entry>
+					<entry><ind>22.0</ind><dep>50</dep></entry>
+					<entry><ind>27.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/SlatXtrans</output>
+	</filter>
+	
+	<filter>
+		<name>Slat Indicator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/fcs/slat-pos-deg</property>
+					<entry><ind> 0.0</ind><dep>-43</dep></entry>
+					<entry><ind>18.0</ind><dep>-29</dep></entry>
+					<entry><ind>22.0</ind><dep>-15</dep></entry>
+					<entry><ind>27.0</ind><dep>0</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/ECAM/Upper/SlatYtrans</output>
+	</filter>
+	
 </PropertyList>

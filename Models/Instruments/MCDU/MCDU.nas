@@ -17,9 +17,17 @@ var myHold = [nil, nil];
 var myAirways = [nil, nil];
 var myDuplicate = [nil, nil];
 var myClosestAirport = [nil, nil];
+var myReceivedMessage = [nil, nil];
+var myReceivedMessages = [nil, nil];
 var myPilotWP = [nil, nil];
+var myWind = [nil, nil];
+var myCLBWIND = [nil, nil];
+var myCRZWIND = [nil, nil];
+var myDESWIND = [nil, nil];
+var myHISTWIND = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
-var symbol = "helvetica_medium.txf";
+#var symbol = "helvetica_medium.txf";
+var symbol = "LiberationMonoCustom.ttf";
 var normal = 70;
 var small = 56;
 var page = "";
@@ -64,10 +72,9 @@ var MAGENTA = [0.6902,0.3333,0.7541];
 # Fetch nodes:
 var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
 var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 
 #ACCONFIG
-var ac1 = props.globals.getNode("/systems/electrical/bus/ac-1", 1);
-var ac2 = props.globals.getNode("/systems/electrical/bus/ac-2", 1);
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
 var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
 var acType = props.globals.getNode("/MCDUC/type", 1);
@@ -95,90 +102,24 @@ var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-de
 var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
 
 # INT-A
-var flightNum = props.globals.getNode("/MCDUC/flight-num", 1);
-var flightNumSet = props.globals.getNode("/MCDUC/flight-num-set", 1);
-var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
-var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
-var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
-var alt_airport = props.globals.getNode("/FMGC/internal/alt-airport", 1);
-var altSet = props.globals.getNode("/FMGC/internal/alt-set", 1);
-var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
-var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
-var cruiseFL = props.globals.getNode("/FMGC/internal/cruise-fl", 1);
-var cruiseSet = props.globals.getNode("/FMGC/internal/cruise-lvl-set", 1);
-var cruiseTemp = props.globals.getNode("/FMGC/internal/cruise-temp", 1);
-var cruiseTempSet = props.globals.getNode("/FMGC/internal/cruise-temp-set", 1);
-var tropo = props.globals.getNode("/FMGC/internal/tropo", 1);
-var tropoSet = props.globals.getNode("/FMGC/internal/tropo-set", 1);
-var gndtemp = props.globals.getNode("/FMGC/internal/gndtemp", 1);
-var gndtempSet = props.globals.getNode("/FMGC/internal/gndtemp-set", 1);
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
 # IRSINIT variables
 var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 
 # ROUTE SELECTION
-var alt_selected = props.globals.getNode("/FMGC/internal/alt-selected", 1);
 
 # INT-B
-var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
-var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
-var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
-var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
-var block = props.globals.getNode("/FMGC/internal/block", 1);
-var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
-var taxi_fuel = props.globals.getNode("/FMGC/internal/taxi-fuel", 1);
-var trip_fuel = props.globals.getNode("/FMGC/internal/trip-fuel", 1);
-var trip_time = props.globals.getNode("/FMGC/internal/trip-time", 1);
-var rte_rsv = props.globals.getNode("/FMGC/internal/rte-rsv", 1);
-var rte_rsv_set = props.globals.getNode("/FMGC/internal/rte-rsv-set", 1);
-var rte_percent = props.globals.getNode("/FMGC/internal/rte-percent", 1);
-var rte_percent_set = props.globals.getNode("/FMGC/internal/rte-percent-set", 1);
-var alt_fuel = props.globals.getNode("/FMGC/internal/alt-fuel", 1);
-var alt_time = props.globals.getNode("/FMGC/internal/alt-time", 1);
-var final_fuel = props.globals.getNode("/FMGC/internal/final-fuel", 1);
-var final_time = props.globals.getNode("/FMGC/internal/final-time", 1);
-var min_dest_fob = props.globals.getNode("/FMGC/internal/min-dest-fob", 1);
-var tow = props.globals.getNode("/FMGC/internal/tow", 1);
-var lw = props.globals.getNode("/FMGC/internal/lw", 1);
-var trip_wind = props.globals.getNode("/FMGC/internal/trip-wind", 1);
-var trip_wind_value = props.globals.getNode("/FMGC/internal/trip-wind-value", 1);
-var extra_fuel = props.globals.getNode("/FMGC/internal/extra-fuel", 1);
-var extra_time = props.globals.getNode("/FMGC/internal/extra-time", 1);
-var taxi_fuel_set = props.globals.getNode("/FMGC/internal/taxi-fuel-set", 1);
-var rte_set = props.globals.getNode("/FMGC/internal/rte-set", 1);
-var alt_fuel_set = props.globals.getNode("/FMGC/internal/alt-fuel-set", 1);
-var final_fuel_set = props.globals.getNode("/FMGC/internal/final-fuel-set", 1);
-var final_time_set = props.globals.getNode("/FMGC/internal/final-time-set", 1);
-var min_dest_fob_set = props.globals.getNode("/FMGC/internal/min-dest-fob-set", 1);
 
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 var engrdy = props.globals.getNode("/engines/ready", 1);
-var pri_utc = props.globals.getNode("/FMGC/internal/pri-utc", 1);
-var alt_utc = props.globals.getNode("/FMGC/internal/alt-utc", 1);
-var pri_efob = props.globals.getNode("/FMGC/internal/pri-efob", 1);
-var alt_efob = props.globals.getNode("/FMGC/internal/alt-efob", 1);
-var fob = props.globals.getNode("/FMGC/internal/fob", 1);
-var fffq_sensor = props.globals.getNode("/FMGC/internal/fffq-sensor", 1);
-var gw = props.globals.getNode("/FMGC/internal/fuel-pred-gw", 1);
-var cg = props.globals.getNode("/FMGC/internal/cg", 1);
-
-# PROG
-var cruiseFL_prog = props.globals.getNode("/FMGC/internal/cruise-fl-prog", 1);
 
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 
 # TO PERF
-var v1 = props.globals.getNode("/FMGC/internal/v1", 1);
-var v1Set = props.globals.getNode("/FMGC/internal/v1-set", 1);
-var vr = props.globals.getNode("/FMGC/internal/vr", 1);
-var vrSet = props.globals.getNode("/FMGC/internal/vr-set", 1);
-var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
-var v2Set = props.globals.getNode("/FMGC/internal/v2-set", 1);
-
 var clbReducFt = props.globals.getNode("/systems/thrust/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
@@ -202,21 +143,20 @@ var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
 # APPR PERF
 var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
 var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
-var dest_mag = props.globals.getNode("/FMGC/internal/dest-mag", 1);
-var dest_wind = props.globals.getNode("/FMGC/internal/dest-wind", 1);
-var vapp_speed_set = props.globals.getNode("/FMGC/internal/vapp-speed-set", 1);
 var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
 var baro = props.globals.getNode("/FMGC/internal/baro", 1);
-var radio_no = props.globals.getNode("/FMGC/internal/radio-no", 1);
-var ldg_config_3_set = props.globals.getNode("/FMGC/internal/ldg-config-3-set", 1);
-var ldg_config_f_set = props.globals.getNode("/FMGC/internal/ldg-config-f-set", 1);
 
 # GA PERF
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
+var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
+
+# Conversion factor pounds to kilogram
+var LBS2KGS = 0.4535924;
+
 
 # Create Nodes:
 var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
@@ -286,11 +226,12 @@ var canvas_MCDU_base = {
 	"Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
 	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C4B","Simple_C5","Simple_C6","Simple_C1S",
 	"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
-	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFW_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
-	"FUELPRED_ZFWCG","FUELPRED_ZFW_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
+	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFWCG_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
+	"FUELPRED_ZFWCG","FUELPRED_ZFWCG_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
-	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star"];
+	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -306,8 +247,121 @@ var canvas_MCDU_base = {
 			MCDU_2.page.hide();
 		}
 	},
+	defaultHide: func() {
+		me["Simple"].show();
+		me["Simple_Center"].hide();
+		me["FPLN"].hide();
+		me["DIRTO_TMPY_group"].hide();
+		me["INITA"].hide();
+		me["IRSINIT"].hide();
+		me["INITB"].hide();
+		me["FUELPRED"].hide();
+		me["WIND"].hide();
+		me["PROG"].hide();
+		me["PERFTO"].hide();
+		me["arrowsDepArr"].hide();
+		me["PERFAPPR"].hide();
+		me["PERFGA"].hide();
+		me["Simple_Title"].show();
+	},
+	defaultHideWithCenter: func() {
+		me["Simple"].show();
+		me["Simple_Center"].show();
+		me["FPLN"].hide();
+		me["DIRTO_TMPY_group"].hide();
+		me["INITA"].hide();
+		me["IRSINIT"].hide();
+		me["INITB"].hide();
+		me["FUELPRED"].hide();
+		me["WIND"].hide();
+		me["PROG"].hide();
+		me["PERFTO"].hide();
+	},
+	defaultPageNumbers: func() {
+		me["Simple_Title"].setColor(1, 1, 1);
+		me["Simple_PageNum"].setText("X/X");
+		me["Simple_PageNum"].hide();
+		me["ArrowLeft"].hide();
+		me["ArrowRight"].hide();
+	},
+	hideAllArrows: func() {
+		me["Simple_L1_Arrow"].hide();
+		me["Simple_L2_Arrow"].hide();
+		me["Simple_L3_Arrow"].hide();
+		me["Simple_L4_Arrow"].hide();
+		me["Simple_L5_Arrow"].hide();
+		me["Simple_L6_Arrow"].hide();
+		me["Simple_R1_Arrow"].hide();
+		me["Simple_R2_Arrow"].hide();
+		me["Simple_R3_Arrow"].hide();
+		me["Simple_R4_Arrow"].hide();
+		me["Simple_R5_Arrow"].hide();
+		me["Simple_R6_Arrow"].hide();
+	},
+	hideAllArrowsButL6: func() {
+		me["Simple_L1_Arrow"].hide();
+		me["Simple_L2_Arrow"].hide();
+		me["Simple_L3_Arrow"].hide();
+		me["Simple_L4_Arrow"].hide();
+		me["Simple_L5_Arrow"].hide();
+		me["Simple_L6_Arrow"].show();
+		me["Simple_R1_Arrow"].hide();
+		me["Simple_R2_Arrow"].hide();
+		me["Simple_R3_Arrow"].hide();
+		me["Simple_R4_Arrow"].hide();
+		me["Simple_R5_Arrow"].hide();
+		me["Simple_R6_Arrow"].hide();
+	},
+	standardFontSize: func() {
+		me.fontLeft(default, default, default, default, default, default);
+		me.fontLeftS(default, default, default, default, default, default);
+		me.fontRight(default, default, default, default, default, default);
+		me.fontRightS(default, default, default, default, default, default);
+		me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+		me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+	},
+	standardFontColour: func() {
+		me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
+		if (page != "NOTIFICATION") {
+			me["NOTIFY"].hide();
+			me["NOTIFY_FLTNBR"].hide();
+			me["NOTIFY_AIRPORT"].hide();
+		}
+		if (page != "COMPANYCALL") {
+			me["COCALL"].hide();
+			me["COCALLTUNE"].hide();
+		}
+		if (page != "CONNECTSTATUS") {
+			me["COMM-ADS"].hide();
+		} else {
+			me["COMM-ADS"].show();
+		}
+		if (page != "VOICEDIRECTORY") {
+			me["MODEVHF3"].hide();
+		} else {
+			me["MODEVHF3"].show();
+		}
+		if (page != "WEATHERREQ") {
+			me["WEATHERREQSEND"].hide();
+		}
+		if (page != "COMMINIT" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMSTATUS") {
+			me["PRINTPAGE"].hide();
+		} else {
+			me["PRINTPAGE"].show();
+			if (page == "DATAMODE" or page == "COMMINIT") {
+				me["PRINTPAGE"].setColor(BLUE);
+			} else {
+				me["PRINTPAGE"].setColor(WHITE);
+			}
+		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -318,6 +372,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["PERFAPPR"].hide();
@@ -332,18 +387,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.hideAllArrows();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -358,8 +402,8 @@ var canvas_MCDU_base = {
 			
 			if (myFpln[i] != nil) {
 				
-				if (flightNumSet.getValue()) {
-					me["FPLN_Callsign"].setText(flightNum.getValue());
+				if (fmgc.FMGCInternal.flightNumSet) {
+					me["FPLN_Callsign"].setText(fmgc.FMGCInternal.flightNum);
 					me["FPLN_Callsign"].show();
 				} else {
 					me["FPLN_Callsign"].hide();
@@ -424,52 +468,24 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "MCDU") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].hide();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
-				me["PERFAPPR"].hide();
-				me["PERFGA"].hide();
-				me["Simple_Title"].show();
+				me.defaultHide();
 				me["Simple_Title"].setText("MCDU MENU");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, -1, -1);
 				me["Simple_L0S"].hide();
 				me.showLeftS(-1, -1, -1, -1, -1, -1);
 				me.showLeftArrow(1, 1, 1, 1, -1, -1);
-				me.showRight(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, -1, -1, -1, -1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
-				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
-				
-				me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				
+				me.standardFontSize();
+				me.standardFontColour();
+				me["Simple_L3"].setText(" AIDS");
+				me["Simple_L4"].setText(" CFDS");
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -483,10 +499,922 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].setText(" FMGC");
 				me["Simple_L1"].setColor(0.0509,0.7529,0.2941);
 			}
-			me["Simple_L2"].setText(" ACARS");
-			me["Simple_L3"].setText(" AIDS");
-			me["Simple_L4"].setText(" CFDS");
-			me["Simple_R6"].setText("RETURN ");
+			
+			if (activeAtsu[i].getValue() == 0) {
+				me["Simple_L2"].setText(" ATSU");
+				me["Simple_L2"].setColor(1,1,1);
+			} else if (activeAtsu[i].getValue() == 1) {
+				me["Simple_L2"].setText(" ATSU(SEL)");
+				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+			} else if (activeAtsu[i].getValue() == 2) {
+				me["Simple_L2"].setText(" ATSU");
+				me["Simple_L2"].setColor(0.0509,0.7529,0.2941);
+			}
+		} else if (page == "ATSUDLINK") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATSU DATALINK");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, -1, -1, -1, -1, -1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(1, -1, -1, -1, -1, -1);
+				me.showRight(1, -1, -1, -1, -1, 1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(1, -1, -1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me.standardFontColour();
+				me["Simple_L1"].setText(" ATC MENU");
+				me["Simple_R1"].setText("AOC MENU ");
+				me["Simple_R6"].setText("COMM MENU ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "AOCMENU") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("AOC MENU");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, 1, -1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(1, 1, 1, -1, 1, 1);
+				me.showRight(1, 1, 1, 1, 1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(1, 1, 1, 1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me.standardFontColour();
+				
+				me["Simple_L1"].setText(" PREFLIGHT");
+				me["Simple_L2"].setText(" ENROUTE");
+				me["Simple_L3"].setText(" POSTFLIGHT");
+				me["Simple_L5"].setText(" SNAG");
+				me["Simple_L6S"].setText(" ATSU DLK");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1"].setText("FLT LOG ");
+				me["Simple_R2"].setText("WEATHER REQ ");
+				me["Simple_R3"].setText("RCVD MSGS ");
+				me["Simple_R4"].setText("REPORTS ");
+				me["Simple_R5"].setText("CONFIG ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "WEATHERREQ") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("WEATHER REQ");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, -1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, -1, 1, -1);
+				me.showRightS(1, 1, 1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(symbol, symbol, symbol, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "wht", "blu", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1"].setText(" WEATHER TYPE");
+				me["Simple_L1S"].setText(" " ~ atsu.AOC.selectedType);
+				me["Simple_R1S"].setText("STA 1 ");
+				me["Simple_R2"].setText("[    ]");
+				me["Simple_R2S"].setText("STA 2 ");
+				me["Simple_R3"].setText("[    ]");
+				me["Simple_R3S"].setText("STA 3 ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.AOC.station != nil) {
+				me["Simple_R1"].setFont(default);
+				me["Simple_R1"].setText(atsu.AOC.station);
+				if (atsu.AOC.sent and !atsu.AOC.received) {
+					me["WEATHERREQSEND"].hide();
+				} else {
+					me["WEATHERREQSEND"].show();
+				}
+				
+				if (atsu.AOC.sent) {
+					me["Simple_R5"].setText(atsu.AOC.sentTime ~ " SEND ");
+				} else {
+					me["Simple_R5"].setText("SEND ");
+				}
+			} else {
+				me["Simple_R5"].setText("SEND ");
+				me["Simple_R1"].setFont(symbol);
+				me["Simple_R1"].setText("[    ]");
+				me["WEATHERREQSEND"].hide();
+			}
+			
+			me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
+			me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);
+		} else if (page == "WEATHERTYPE") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("WEATHER TYPE");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, 1, -1, -1, -1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(1, 1, 1, -1, -1, -1);
+				me.showRight(1, 1, 1, -1, -1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(1, 1, 1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me.standardFontColour();
+				
+				me["Simple_L1"].setText(" HOURLY WX");
+				me["Simple_L2"].setText(" AREA FCST");
+				me["Simple_L3"].setText(" FLD CONDX");
+				me["Simple_R1"].setText("TERM FCST ");
+				me["Simple_R2"].setText("NOTAMS ");
+				me["Simple_R3"].setText("SEVERE WX ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "RECEIVEDMSGS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].show();
+				me["arrowsDepArr"].hide();
+				me.hideAllArrowsButL6();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_L6S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me.showRight(-1, -1, -1, -1, -1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				
+				if (myReceivedMessages[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myReceivedMessages[i].title));
+				
+					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myReceivedMessages[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myReceivedMessages[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myReceivedMessages[i].arrowsColour[0][5] ~ "/b"));
+					
+					if (mcdu.ReceivedMessagesDatabase.getCountPages() > 1) {
+						me["Simple_PageNum"].show();
+						me["Simple_PageNum"].setText(myReceivedMessages[i].getPageNumStr());
+						me["ArrowLeft"].show();
+						me["ArrowRight"].show();
+					} else {
+						me["Simple_PageNum"].hide();
+						me["ArrowLeft"].hide();
+						me["ArrowRight"].hide();
+					}
+					
+					me.dynamicPageFontFunc(myReceivedMessages[i]);
+					me.dynamicPageArrowFunc(myReceivedMessages[i]);
+					
+					me.dynamicPageFunc(myReceivedMessages[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myReceivedMessages[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myReceivedMessages[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myReceivedMessages[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myReceivedMessages[i].L5, "Simple_L5");
+					me.colorLeft(myReceivedMessages[i].L1[2],myReceivedMessages[i].L2[2],myReceivedMessages[i].L3[2],myReceivedMessages[i].L4[2],myReceivedMessages[i].L5[2],myReceivedMessages[i].L6[2]);
+					me["Simple_L6"].setColor(WHITE);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+				
+			if (myReceivedMessages[i] != nil) {
+				me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+				me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
+				me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);
+			}
+		} else if (page == "RECEIVEDMSG") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].show();
+				me["arrowsDepArr"].hide();
+				me.hideAllArrowsButL6();
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_L6S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(small, small, small, small, small, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenterS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				me.showRight(-1, -1, -1, -1, -1, -1);
+				me.showRightS(1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				
+				
+				if (myReceivedMessage[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myReceivedMessage[i].title));
+				
+					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myReceivedMessage[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myReceivedMessage[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myReceivedMessage[i].arrowsColour[0][5] ~ "/b"));
+					
+					forindex (var matrixFont; myReceivedMessages[i].fontMatrix) {
+						if (matrixFont == 0) { 
+							var sign = "L"; 
+						} else { 
+							var sign = "R"; 
+						}
+						forindex (var item; myReceivedMessages[i].fontMatrix[matrixFont]) {
+							if (myReceivedMessages[i].fontMatrix[matrixFont][item] == 1) {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+							} else {
+								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+							}
+						}
+					}
+					
+					me.dynamicPageArrowFunc(myReceivedMessage[i]);
+					
+					if (myReceivedMessage[i].L1[0] != nil) {
+						me["Simple_L1"].setText(myReceivedMessage[i].L1[0]);
+						me["Simple_L1"].show();
+					} else { me["Simple_L1"].hide(); }
+					if (myReceivedMessage[i].L1[1] != nil) {
+						me["Simple_L1S"].setText(myReceivedMessage[i].L1[1]);
+						me["Simple_L1S"].show();
+					} else { me["Simple_L1S"].hide(); }
+					if (myReceivedMessage[i].L2[0] != nil) {
+						me["Simple_L2"].setText(myReceivedMessage[i].L2[0]);
+						me["Simple_L2"].show();
+					} else { me["Simple_L2"].hide(); }
+					if (myReceivedMessage[i].L2[1] != nil) {
+						me["Simple_L2S"].setText(myReceivedMessage[i].L2[1]);
+						me["Simple_L2S"].show();
+					} else { me["Simple_L2S"].hide(); }
+					if (myReceivedMessage[i].L3[0] != nil) {
+						me["Simple_L3"].setText(myReceivedMessage[i].L3[0]);
+						me["Simple_L3"].show();
+					} else { me["Simple_L3"].hide(); }
+					if (myReceivedMessage[i].L3[1] != nil) {
+						me["Simple_L3S"].setText(myReceivedMessage[i].L3[1]);
+						me["Simple_L3S"].show();
+					} else { me["Simple_L3S"].hide(); }
+					if (myReceivedMessage[i].L4[0] != nil) {
+						me["Simple_L4"].setText(myReceivedMessage[i].L4[0]);
+						me["Simple_L4"].show();
+					} else { me["Simple_L4"].hide(); }
+					if (myReceivedMessage[i].L4[1] != nil) {
+						me["Simple_L4S"].setText(myReceivedMessage[i].L4[1]);
+						me["Simple_L4S"].show();
+					} else { me["Simple_L4S"].hide(); }
+					if (myReceivedMessage[i].L5[0] != nil) {
+						me["Simple_L5"].setText(myReceivedMessage[i].L5[0]);
+						me["Simple_L5"].show();
+					} else { me["Simple_L5"].hide(); }
+					if (myReceivedMessage[i].L5[1] != nil) {
+						me["Simple_L5S"].setText(myReceivedMessage[i].L5[1]);
+						me["Simple_L5S"].show();
+					} else { me["Simple_L5S"].hide(); }
+					
+					me["Simple_C1S"].setText(myReceivedMessage[i].C1[1]);
+					me["Simple_R1S"].setText(myReceivedMessage[i].R1[1]);
+					me.colorLeft(myReceivedMessage[i].L1[2],myReceivedMessage[i].L2[2],myReceivedMessage[i].L3[2],myReceivedMessage[i].L4[2],myReceivedMessage[i].L5[2],myReceivedMessage[i].L6[2]);
+					me["Simple_L6"].setColor(WHITE);
+					me["Simple_C1S"].setColor(GREEN);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+				
+			if (myReceivedMessage[i] != nil) {
+				me._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+				me.receivedTime = split(":", me._receivedTime)[0] ~ "." ~ split(":", me._receivedTime)[1] ~ "Z";
+				me["Simple_L6"].setText(" RETURN " ~ me.receivedTime);
+			}
+		} else if (page == "ATCMENU") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATC MENU");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("1/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, -1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(1, 1, -1, 1, 1, 1);
+				me.showRight(1, 1, 1, -1, 1, 1);
+				me.showRightS(-1, -1, -1, -1, 1, -1);
+				me.showRightArrow(1, 1, 1, -1, 1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "amb");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "amb");
+				
+			
+				me["Simple_L1"].setText(" LAT REQ");
+				me["Simple_L2"].setText(" WHEN CAN WE");
+				me["Simple_L4"].setText(" MSG RECORD");
+				me["Simple_L5"].setText(" NOTIFICATION");
+				me["Simple_L6S"].setText(" ATSU DLK");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1"].setText("VERT REQ ");
+				me["Simple_R2"].setText("OTHER ");
+				me["Simple_R3"].setText("TEXT ");
+				me["Simple_R3"].setText("REPORTS ");
+				me["Simple_R5"].setText("STATUS ");
+				me["Simple_R5S"].setText("CONNECTION ");
+				me["Simple_R6"].setText("EMERGENCY ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "ATCMENU2") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].setText("ATC MENU");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("2/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(1, 1, -1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				me.showRight(1, -1, -1, -1, -1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, -1);
+				me.showRightArrow(1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.standardFontColour();
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+			
+				me["Simple_L1"].setText(" DEPART REQ");
+				me["Simple_L2"].setText(" OCEANIC REQ");
+				me["Simple_C1S"].setText(" -------- ATS623 PAGE -------- ");
+				me["Simple_L6S"].setText(" ATSU DLK");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1"].setText("ATIS ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "NOTIFICATION") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].show();
+				me["Simple_Title"].setText("NOTIFICATION");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, -1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(-1, 1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, -1, -1, -1);
+				me.showRight(-1, 1, -1, -1, -1, 1);
+				me.showRightS(-1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(small, normal, normal, normal, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, small, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeft("grn", "blu", "grn", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "amb", "wht");
+				me.colorRight("wht", "blu", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setText(" ATC FLT NBR");
+				me["Simple_L2S"].setText(" ATC CENTER");
+				me["Simple_C2"].setText("------------   ");
+				me["Simple_R2"].setText("NOTIFY ");
+				me["Simple_C5"].setText("NOTIFICATION UNAVAILABLE");
+				
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_R6"].setText("STATUS ");
+				me["Simple_R6S"].setText("CONNECTION ");
+				
+			
+				if (fmgc.FMGCInternal.flightNumSet) {
+					me["NOTIFY_FLTNBR"].hide();
+					me["Simple_L1"].setText(fmgc.FMGCInternal.flightNum);
+					me["Simple_L1"].show();
+					me["Simple_C5"].hide();
+				} else {
+					me["Simple_L1"].hide();
+					me["NOTIFY_FLTNBR"].show();
+					me["Simple_C5"].show();
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.notificationSystem.notifyAirport != nil) {
+				if (!atsu.notificationSystem.hasNotified) {
+					me["Simple_L2"].setText(atsu.notificationSystem.notifyAirport);
+					me["Simple_L2"].show();	
+					me["NOTIFY_AIRPORT"].hide();
+				} else {
+					me["Simple_L2"].hide();
+					me["NOTIFY_AIRPORT"].show();
+				}
+			} else {
+				me["Simple_L2"].hide();
+				me["NOTIFY_AIRPORT"].show();
+			}
+			
+			if (atsu.notificationSystem.hasNotified) {
+				me["NOTIFY"].hide();
+				me["Simple_L3"].setText(atsu.notificationSystem.notifyAirport);
+				me["Simple_L3"].show();	
+				me["Simple_L3S"].setText(" ATC NOTIFIED");
+				me["Simple_L3S"].show();	
+			} else {
+				me["NOTIFY"].show();
+				me["Simple_L3"].hide();	
+				me["Simple_L3S"].hide();	
+			}
+		} else if (page == "CONNECTSTATUS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].show();
+				me["Simple_Title"].setText("CONNECTION STATUS");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, -1, 1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, -1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, 1, -1, -1);
+				me.showRight(1, -1, 1, -1, 1, 1);
+				me.showRightS(-1, -1, 1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenter(small, normal, small, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, small, normal);
+				
+				me.colorLeft("grn", "wht", "wht", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setText("ACTIVE ATC");
+				me["Simple_L2S"].setText("NEXT ATC");
+				me["Simple_L2"].setText("----");
+				me["Simple_C1"].setText("-------------     ");
+				me["Simple_R1"].setText("NOTIFIED ");
+				me["Simple_R3S"].setText("MAX UPLINK DELAY");
+				me["Simple_R3"].setText("NONE");
+				
+				me["Simple_R5"].setText("ADS DETAIL");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_R6"].setText("NOTIFICATION ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.notificationSystem.notifyAirport != nil) {
+				if (atsu.notificationSystem.hasNotified) {
+					me["Simple_L1"].setText(atsu.notificationSystem.notifyAirport);
+				} else {
+					me["Simple_L1"].setText("----");
+					me["Simple_C1"].hide();
+					me["Simple_R1"].hide();
+				}
+			} else {
+				me["Simple_L1"].setText("----");
+				me["Simple_C1"].hide();
+				me["Simple_R1"].hide();
+			}
+			
+			if (atsu.ADS.state == 0) {
+				me["Simple_C4S"].setText("--------------ADS - OFF--------");
+				me["Simple_L4"].setText(" SET ARMED");
+			} elsif (atsu.ADS.state == 1) {
+				me["Simple_C4S"].setText("-------------ADS - ARMED-------");
+				me["Simple_L4"].setText(" SET OFF");
+			} elsif (atsu.ADS.state == 2) {
+				me["Simple_C4S"].setText("-----------ADS - CONNECTED-----");
+				me["Simple_L4"].setText(" SET OFF");
+			}
+		} else if (page == "COMMMENU") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("COMM MENU");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, 1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, -1, 1);
+				me.showLeftArrow(1, 1, 1, -1, -1, 1);
+				me.showRight(1, 1, -1, 1, -1, -1);
+				me.showRightS(1, 1, -1, -1, -1, -1);
+				me.showRightArrow(1, 1, -1, 1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, small, normal);
+				me.standardFontColour();
+				me["Simple_L1S"].setText(" COMM");
+				me["Simple_L1"].setText(" INIT");
+				me["Simple_L2S"].setText(" VHF3");
+				me["Simple_L2"].setText(" DATA MODE");
+				me["Simple_L3S"].setText(" VHF3 VOICE");
+				me["Simple_L3"].setText(" DIRECTORY");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" ATSU DLK");
+				me["Simple_R1S"].setText("COMM ");
+				me["Simple_R1"].setText("STATUS ");
+				me["Simple_R2S"].setText("COMPANY ");
+				me["Simple_R2"].setText("CALL ");
+				me["Simple_R4"].setText("MAINTENANCE ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "VOICEDIRECTORY") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].show();
+				me["Simple_Title"].setText("VHF3 VOICE DIRECTORY");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, -1, -1, 1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, 1, -1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				me.showRight(1, -1, -1, -1, 1, 1);
+				me.showRightS(1, -1, -1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenterS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setText(" OPS");
+				me["Simple_L1"].setText(" 132.225");
+				me["Simple_L4S"].setText(" CO CALL");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" COMM MENU");
+				me["Simple_R1S"].setText("MAINT ");
+				me["Simple_R1"].setText("132.400 ");
+				me["Simple_R5S"].setText("MODE ");
+				me["Simple_R6S"].setText("PAGE ");
+				me["Simple_R6"].setText("PRINT ");
+				me["Simple_C1S"].setFontSize(normal);
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			if (ecam.vhf3_voice.active) {
+				me["Simple_C1S"].setText("VOICE");
+				me["Simple_R5"].setText("DATA ");
+			} else {
+				me["Simple_C1S"].setText("DATA");
+				me["Simple_R5"].setText("VOICE ");
+			}
+			if (atsu.CompanyCall.frequency != 999.99) {
+				me["Simple_L4"].setText(" " ~ sprintf("%5.2f", atsu.CompanyCall.frequency));
+			} else {
+				me["Simple_L4"].setText(" ---.--");
+			}
+		} else if (page == "DATAMODE") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();
+				me["Simple_Title"].show();
+				me["Simple_Title"].setText("VHF3 DATA MODE");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, 1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, -1, -1);
+				me.showLeftArrow(-1, 1, 1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(1, -1, -1, -1, -1, -1);
+				me.showRight(1, 1, 1, -1, -1, 1);
+				me.showRightS(1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, 1, 1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("grn", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("wht", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftArrow("wht", "blu", "blu", "blu", "wht", "wht");
+				me.colorCenterS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("grn", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightS("wht", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "blu", "blu", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setText(" ATIS");
+				me["Simple_C1S"].setText("ACTIVE SERVERS");
+				me["Simple_L2"].setText(" FAA");
+				me["Simple_L3"].setText(" VATSIM");
+				me["Simple_R1S"].setText("METAR ");
+				me["Simple_R2"].setText("NOAA ");
+				me["Simple_R3"].setText("VATSIM ");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" COMM MENU");
+				me["Simple_R6S"].setText("PAGE ");
+				me["Simple_R6"].setText("PRINT ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			if (atsu.AOC.server == 1) {
+				me["Simple_R1"].setText("VATSIM ");
+				me["Simple_R2_Arrow"].show();
+				me["Simple_R3_Arrow"].hide();
+			} elsif (atsu.AOC.server == 0) {
+				me["Simple_R1"].setText("NOAA ");
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R3_Arrow"].show();
+			}
+			
+			if (atsu.ATIS.server == 1) {
+				me["Simple_L1"].setText(" VATSIM");
+				me["Simple_L2_Arrow"].show();
+				me["Simple_L3_Arrow"].hide();
+			} elsif (atsu.ATIS.server == 0) {
+				me["Simple_L1"].setText(" FAA");
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L3_Arrow"].show();
+			}
+		} else if (page == "COMMINIT") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("COMM INIT");
+				me.defaultPageNumbers();
+				
+				me.showLeft(-1, 1, 1, 1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, 1, 1, 1, -1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, -1, 1, -1, -1, 1);
+				me.showRightS(-1, -1, 1, -1, -1, 1);
+				me.showRightArrow(-1, -1, 1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, small, normal);
+				
+				me.colorLeft("wht", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L2S"].setText(" A/C REGISTR");
+				me["Simple_L2"].setText(getprop("/options/model-options/registration"));
+				me["Simple_L3S"].setText(" ACARS A/L ID");
+				me["Simple_L3"].setText(getprop("/options/model-options/two-letter"));
+				me["Simple_L4S"].setText(" STANDARD A/L ID");
+				me["Simple_L4"].setText(getprop("/options/model-options/three-letter"));
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_R3S"].setText("VHF3 ");
+				me["Simple_R3"].setText("SCAN SEL ");
+				me["Simple_R6S"].setText("PAGE ");
+				me["Simple_R6"].setText("PRINT ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "COMMSTATUS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("COMM STATUS");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, -1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, -1, 1, 1, 1);
+				me.showRightS(-1, 1, 1, 1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, small, normal, normal, small, normal);
+				me.fontSizeRight(normal, small, normal, small, small, normal);
+				
+				me.colorLeft("wht", "grn", "grn", "wht", "grn", "wht");
+				me.colorLeftS("wht", "grn", "grn", "wht", "grn", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "grn", "wht", "grn", "grn", "wht");
+				me.colorRightS("wht", "grn", "grn", "wht", "grn", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1"].setText(" VHF3");
+				me["Simple_L2S"].setText(" OP");
+				me["Simple_L2"].setText(" COMM");
+				me["Simple_L4"].setText(" SATCOM");
+				me["Simple_L5"].setText(" COMM");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" COMM MENU");
+				me["Simple_R1"].setText("HF1 ");
+				me["Simple_R2S"].setText("OP ");
+				me["Simple_R2"].setText("COMM ");
+				me["Simple_R3S"].setText("VOICE ");
+				me["Simple_R4S"].setText("HF2 ");
+				me["Simple_R4S"].setFontSize(normal);
+				me["Simple_R4"].setText("OP ");
+				me["Simple_R5S"].setText("COMM ");
+				me["Simple_R5"].setText("VOICE ");
+				me["Simple_R6S"].setText("PAGE ");
+				me["Simple_R6"].setText("PRINT ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			me["Simple_L3S"].setText(ecam.vhf3_voice.active == 1 ? " VOICE " : " DATA");
+			me["Simple_L5S"].setText(getprop("/options/model-options/wifi-aft") ? " OP" : " NOT INST");
+			me["Simple_L5"].setText(getprop("/options/model-options/wifi-aft") ? " COMM" : " DLK INOP");
+		} else if (page == "COMPANYCALL") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("COMPANY CALL");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, -1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, -1, -1, -1, -1, 1);
+				me.showRightS(1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(normal, small, normal, normal, small, normal);
+				me.fontSizeRight(normal, small, normal, small, small, normal);
+				
+				me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setText(" VHF3 TUNE");
+				me["Simple_L2S"].setText(" TEXT");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" COMM MENU");
+				me["Simple_R1S"].setText("CO CALL ");
+				me["Simple_R1"].setText("CLEAR ");
+				me["Simple_R6S"].setText("CALL ");
+				me["Simple_R6"].setText("PRINT ");
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.CompanyCall.received) {
+				me["COCALL"].hide();
+			} else {
+				me["COCALL"].show();
+			}
+			
+			if (atsu.CompanyCall.frequency != 999.99) {
+				if (atsu.CompanyCall.tuned) {
+					me["COCALLTUNE"].hide();
+				} else {
+					me["COCALLTUNE"].show();
+				}
+			} else {
+				me["COCALLTUNE"].hide();
+			}
+			
+			if (atsu.CompanyCall.activeMsg != "") {
+				me["Simple_L2"].setText(sprintf("%s", atsu.CompanyCall.activeMsg));
+				me["Simple_L2"].show();
+			} else {
+				me["Simple_L2"].hide();
+			}
+			
+			if (atsu.CompanyCall.frequency != 999.99) {
+				me["Simple_L1"].setText(" " ~ sprintf("%5.2f", atsu.CompanyCall.frequency));
+			} else {
+				me["Simple_L1"].setText(" ---.--");
+			}
 		} else if (page == "STATUS") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -497,6 +1425,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].show();
@@ -515,11 +1444,7 @@ var canvas_MCDU_base = {
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, -1, 1, 1);
 				me["Simple_L0S"].hide();
@@ -548,7 +1473,7 @@ var canvas_MCDU_base = {
 				
 				
 				me["Simple_L5"].setText("[   ]");
-				me["Simple_L6"].setText("+4.0/+0.0");
+				me["Simple_L6"].setText("+0.0/+1.0");
 				me["Simple_L1S"].setText(" ENG");
 				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
 				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
@@ -592,7 +1517,7 @@ var canvas_MCDU_base = {
 				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
 			}
 			
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {
 				me["Simple_L5"].show();
 				me["Simple_L5S"].show();
 			} else {
@@ -601,20 +1526,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "DATA") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].hide();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
-				me["PERFAPPR"].hide();
-				me["PERFGA"].hide();
-				me["Simple_Title"].show();
+				me.defaultHide();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("1/2");
@@ -632,21 +1544,8 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
-				
-				me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				
+				me.standardFontSize();
+				me.standardFontColour();
 				# why is this needed?
 				me["Simple_L5"].show();
 				
@@ -667,20 +1566,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "DATA2") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].hide();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
-				me["PERFAPPR"].hide();
-				me["PERFGA"].hide();
-				me["Simple_Title"].show();
+				me.defaultHide();
 				me["Simple_Title"].setText("DATA INDEX");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].setText("2/2");
@@ -698,21 +1584,8 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
-				
-				me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				
+				me.standardFontSize();
+				me.standardFontColour();
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -734,20 +1607,7 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("PILOTS ");
 		} else if (page == "PILOTWP") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].hide();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
-				me["PERFAPPR"].hide();
-				me["PERFGA"].hide();
-				me["Simple_Title"].show();
+				me.defaultHide();
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
@@ -756,13 +1616,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -773,41 +1627,11 @@ var canvas_MCDU_base = {
 					
 					me["Simple_Title"].setText(sprintf("%s", myPilotWP[i].title ~ "       "));
 					
-					forindex (var matrixArrow; myPilotWP[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myPilotWP[i].arrowsMatrix[matrixArrow]) {
-							if (myPilotWP[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
-							} else {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
-							}
-						}
-					}
+					me.dynamicPageArrowFunc(myPilotWP[i]);
 					me.colorLeftArrow(myPilotWP[i].arrowsColour[0][0],myPilotWP[i].arrowsColour[0][1],myPilotWP[i].arrowsColour[0][2],myPilotWP[i].arrowsColour[0][3],myPilotWP[i].arrowsColour[0][4],myPilotWP[i].arrowsColour[0][5]);
 					me.colorRightArrow(myPilotWP[i].arrowsColour[1][0],myPilotWP[i].arrowsColour[1][1],myPilotWP[i].arrowsColour[1][2],myPilotWP[i].arrowsColour[1][3],myPilotWP[i].arrowsColour[1][4],myPilotWP[i].arrowsColour[1][5]);
 					
-					
-					forindex (var matrixFont; myPilotWP[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myPilotWP[i].fontMatrix[matrixFont]) {
-							if (myPilotWP[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
-					
+					me.dynamicPageFontFunc(myPilotWP[i]);
 					
 					me.dynamicPageFunc(myPilotWP[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myPilotWP[i].L2, "Simple_L2");
@@ -831,26 +1655,13 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "POSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("POSITION MONITOR");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
@@ -864,13 +1675,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeft("wht", "wht", "wht", "wht", "grn", "blu");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -900,26 +1705,9 @@ var canvas_MCDU_base = {
 			me["Simple_C5S"].setText("IRS2");
 		} else if (page == "RADNAV") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].hide();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
-				me["PERFAPPR"].hide();
-				me["PERFGA"].hide();
-				me["Simple_Title"].show();
+				me.defaultHide();
 				me["Simple_Title"].setText("RADIO NAV");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, 1, -1);
 				me["Simple_L0S"].hide();
@@ -978,7 +1766,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
-				me["Simple_L5"].setText("[    ]/[     . ]");
+				me["Simple_L5"].setText("[   ]/[     ]");
 			}
 			
 			if (vor2FreqSet.getValue() == 1) {
@@ -998,7 +1786,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 
-				me["Simple_R5"].setText("[     . ]/[    ]");
+				me["Simple_R5"].setText("[     ]/[   ]");
 			}
 			
 			me["Simple_L1"].setText(" " ~ vor1.getValue());
@@ -1012,13 +1800,37 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("ADF1/FREQ");
 			me["Simple_R1"].setText(" " ~ vor2.getValue());
 			me["Simple_R2"].setText(sprintf("%3.0f", vor2CRS.getValue()));
-			me["Simple_R3"].setText("[   ]/[    ]");
+			me["Simple_R3"].setText("[  ]/[   ]");
 			me["Simple_R4"].setText("-.-   [   ]");
 			me["Simple_R1S"].setText("FREQ/VOR2");
 			me["Simple_R2S"].setText("CRS");
 			me["Simple_R3S"].setText("CHAN/ MLS");
 			me["Simple_R4S"].setText("SLOPE   CRS");
 			me["Simple_R5S"].setText("FREQ/ADF2");
+			
+			if (getprop("systems/radio/rmp[0]/nav") or getprop("systems/radio/rmp[1]/nav")) {
+				me["Simple_L1"].hide();
+				me["Simple_L2"].hide();
+				me["Simple_L3"].hide();
+				me["Simple_L4"].hide();
+				me["Simple_L5"].hide();
+				me["Simple_R1"].hide();
+				me["Simple_R2"].hide();
+				me["Simple_R3"].hide();
+				me["Simple_R4"].hide();
+				me["Simple_R5"].hide();
+			} else {
+				me["Simple_L1"].show();
+				me["Simple_L2"].show();
+				me["Simple_L3"].show();
+				me["Simple_L4"].show();
+				me["Simple_L5"].show();
+				me["Simple_R1"].show();
+				me["Simple_R2"].show();
+				me["Simple_R3"].show();
+				me["Simple_R4"].show();
+				me["Simple_R5"].show();
+			}
 		} else if (page == "INITA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -1029,6 +1841,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -1070,53 +1883,54 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (flightNumSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.flightNumSet) {
 				me["INITA_FltNbr"].hide();
 				me["Simple_L3"].show();
 			} else {
 				me["INITA_FltNbr"].show();
 				me["Simple_L3"].hide();
 			}
-			if (toFromSet.getValue() != 1 and costIndexSet.getValue() != 1) {
+			
+			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.costIndexSet) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(1,1,1);
 				me["Simple_L5"].show();
 				me["Simple_L5"].setText("---");
-			} else if (costIndexSet.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.costIndexSet) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(0.0901,0.6039,0.7176);
 				me["Simple_L5"].show();
-				me["Simple_L5"].setText(sprintf("%s", costIndex.getValue()));
+				me["Simple_L5"].setText(sprintf("%s", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["INITA_CostIndex"].show();
 				me["Simple_L5"].hide();
 			}
-			if (toFromSet.getValue() != 1 and cruiseSet.getValue() != 1) {
+			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} else if (cruiseSet.getValue() == 1 and cruiseTempSet.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
-			} else if (cruiseSet.getValue() == 1) {
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
+			} else if (fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				setprop("/FMGC/internal/cruise-temp", 15 - (2 * cruiseFL.getValue() / 10));
-				setprop("/FMGC/internal/cruise-temp-set", 1);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue()) ~ sprintf("/%sg", cruiseTemp.getValue()));
+				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
+				fmgc.FMGCInternal.crzTempSet = 1;
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(0.7333,0.3803,0);
 				me["Simple_L6"].setText("         g");
 			}
-			if (toFromSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.toFromSet) {
 				me["INITA_CoRoute"].hide();
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				if (altSet.getValue() == 1) {
-					me["Simple_L2"].setText(alt_airport.getValue());
+				if (fmgc.FMGCInternal.altAirportSet) {
+					me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 				} else {
 					me["Simple_L2"].setText("NONE");
 				}
@@ -1131,7 +1945,11 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText("----/----------");
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
-				me["INITA_InitRequest"].show();
+				if (!Simbrief.SimbriefParser.inhibit) {
+					me["INITA_InitRequest"].show();
+				} else {
+					me["INITA_InitRequest"].hide();
+				}
 			}
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
@@ -1142,24 +1960,24 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setColor(WHITE);
 				me.showRightArrow(0, 0, 1, 0, 0, 0);
 			}
-			if (tropoSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.tropoSet) {
 				me["Simple_R5"].setFontSize(normal); 
 			} else {
 				me["Simple_R5"].setFontSize(small); 
 			}
 			
 			me["Simple_R6S"].setText("GND TEMP");
-			if (getprop("/FMGC/status/phase") == 0 and !getprop("/FMGC/internal/gndtemp-set")) {
-				setprop("/FMGC/internal/gndtemp", 15 - (2 * getprop("/position/gear-agl-ft") / 1000));
-				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
+			if (fmgc.FMGCInternal.phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
+				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
+				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
 				me["Simple_R6"].setFontSize(small); 
 			} else {
-				if (getprop("/FMGC/internal/gndtemp-set")) {
+				if (fmgc.FMGCInternal.gndTempSet) {
 					me["Simple_R6"].setFontSize(normal); 
 				} else {
 					me["Simple_R6"].setFontSize(small); 
 				}
-				me["Simple_R6"].setText(sprintf("%.0fg", gndtemp.getValue()));
+				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
 			}
 			
 			me["Simple_L1S"].setText(" CO RTE");
@@ -1168,16 +1986,16 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("COST INDEX");
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			me["Simple_L1"].setText("NONE");
-			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
+			me["Simple_L3"].setText(sprintf("%s", fmgc.FMGCInternal.flightNum));
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
 			me["Simple_R5S"].setText("TROPO");
 			
-			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
+			me["Simple_R1"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("IRS INIT ");
 			me["Simple_R4"].setText("WIND ");
-			me["Simple_R5"].setText(sprintf("%5.0f", tropo.getValue()));
+			me["Simple_R5"].setText(sprintf("%5.0f", fmgc.FMGCInternal.tropo));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
@@ -1188,6 +2006,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].show();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -1195,11 +2014,7 @@ var canvas_MCDU_base = {
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("IRS INIT");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, -1, -1, -1, 1);
 				me["Simple_L0S"].hide();
@@ -1247,7 +2062,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT_2"].hide();
 			}
 			
-			if (toFromSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.toFromSet) {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
@@ -1357,26 +2172,13 @@ var canvas_MCDU_base = {
 
 		} else if (page == "ROUTESELECTION") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("ROUTE SELECTION");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, -1, -1, -1, -1, 1);
 				me["Simple_L0S"].hide();
@@ -1402,12 +2204,12 @@ var canvas_MCDU_base = {
 			me["Simple_L1"].setText("NONE");
 			me["Simple_L6"].setText(" RETURN");
 
-			if (toFromSet.getValue() == 1 and alt_selected.getValue() == 0) {
-				me["Simple_Title"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
-			} else if (toFromSet.getValue() == 0 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
-				me["Simple_Title"].setText(sprintf("%s", alt_airport.getValue()));
-			} else if (toFromSet.getValue() == 1 and alt_airport.getValue() != "" and alt_selected.getValue() == 1) {
-				me["Simple_Title"].setText(sprintf("%s", arrArpt.getValue() ~ "/" ~ alt_airport.getValue()));
+			if (fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
+			} else if (!fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.altAirport));
+			} else if (fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.arrApt ~ "/" ~ fmgc.FMGCInternal.altAirport));
 			} else {
 				me["Simple_Title"].setText("ROUTE SELECTION");
 			}
@@ -1422,6 +2224,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].show();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -1451,7 +2254,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(small, small, small, small, small, small);
-				me.fontSizeCenter(small, small, small, small, small, small);
+				me.fontSizeCenter(normal, small, small, small, small, small);
 				me.fontSizeRight(normal, normal, normal, small, small, small);
 				me["Simple_C4B"].setFontSize(small);
 				
@@ -1468,7 +2271,11 @@ var canvas_MCDU_base = {
 			}
 					
 			me["Simple_L1S"].setText("TAXI");
-			me["Simple_L1"].setText(sprintf("%2.1f", taxi_fuel.getValue()));
+			if (acconfig_weight_kgs.getValue() == 1) {
+				me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel * LBS2KGS));
+			} else {
+				me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel));
+			}
 			me["Simple_L2S"].setText("TRIP/TIME");
 			me["Simple_L3S"].setText("RTE RSV/PCT");
 			me["Simple_L4S"].setText("ALTN/TIME");
@@ -1477,29 +2284,33 @@ var canvas_MCDU_base = {
 			me["Simple_R2S"].setText("BLOCK");
 			me["Simple_R4S"].setText("TOW/   LW");
 			me["Simple_R5S"].setText("TRIP WIND");
-			me["Simple_R5"].setText(trip_wind.getValue());
+			me["Simple_R5"].setText(fmgc.FMGCInternal.tripWind);
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
 			me["Simple_Title"].setColor(1, 1, 1);
 			
-			if (!getprop("/FMGC/internal/fuel-request-set")) {
+			if (!fmgc.FMGCInternal.fuelRequest) {
 				me["Simple_L2"].setText("---.-/----");
 				me["Simple_L3"].setText("---.-");
-				me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+				me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 				me["Simple_L4"].setText("---.-/----");
 				me["Simple_C4"].hide();
 				me["Simple_L5"].setText("---.-");
-				me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+				me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 				me["Simple_L6"].setText("---.-");
-				if (blockSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.blockSet) {
 					me["Simple_R2"].show(); 
 					me["INITB_Block"].hide();
-					me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+					} else {
+						me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+					}
 				} else {
 					me["Simple_R2"].hide(); 
 					me["INITB_Block"].show();
 				}
-				if (zfwSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.zfwSet) {
 					me["Simple_R3S"].show();
 					me["Simple_R3"].show(); 
 					me["Simple_R3S"].setText("FUEL");
@@ -1525,14 +2336,14 @@ var canvas_MCDU_base = {
 			
 				me["Simple_Title"].setText("INIT FUEL PREDICTION ");
 				
-				if (getprop("/FMGC/internal/block-calculating")) {
+				if (fmgc.FMGCInternal.blockCalculating) {
 					me["Simple_L2"].setText("---.-/----");
 					me["Simple_L3"].setText("---.-");
-					me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 					me["Simple_L4"].setText("---.-/----");
 					me["Simple_C4"].hide();
 					me["Simple_L5"].setText("---.-");
-					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+					me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 					me["Simple_L6"].setText("---.-");
 					me["Simple_R2"].show();
 					me["Simple_R2"].setText("---.-");
@@ -1551,18 +2362,22 @@ var canvas_MCDU_base = {
 					me.colorRight("ack", "wht", "grn", "wht", "ack", "wht");
 					me["Simple_R3S"].setColor(GREEN);
 				} else {
-					if (!getprop("/FMGC/internal/block-confirmed")) {
+					if (!fmgc.FMGCInternal.blockConfirmed) {
 						me["Simple_L2"].setText("---.-/----");
 						me["Simple_L3"].setText("---.-");
-						me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+						me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 						me["Simple_L4"].setText("---.-/----");
 						me["Simple_C4"].hide();
 						me["Simple_L5"].setText("---.-");
-						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 						me["Simple_L6"].setText("---.-");
 						me["Simple_R2"].show(); 
 						me["INITB_Block"].hide();
-						me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+						if (acconfig_weight_kgs.getValue() == 1) {
+							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+						} else {
+							me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+						}
 						me["Simple_R3S"].show();
 						me["Simple_R3"].show(); 
 						me["Simple_R3S"].setText("BLOCK");
@@ -1570,10 +2385,18 @@ var canvas_MCDU_base = {
 						me["Simple_R3_Arrow"].show();
 						me["Simple_R3_Arrow"].setColor(AMBER);
 						me["Simple_C4B"].show();
-						if (num(tow.getValue()) >= 100.0) {
-							me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+						if (num(fmgc.FMGCInternal.tow) >= 100.0) {
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+							} else {
+								me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
+							}
 						} else {
-							me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+							} else {
+								me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
+							}
 						}
 						me["Simple_R4"].setText("---.-");
 						me["Simple_R6"].setText("---.-/----");
@@ -1582,40 +2405,52 @@ var canvas_MCDU_base = {
 						me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
 						me["Simple_R3S"].setColor(AMBER);
 					} else {
-						if (getprop("/FMGC/internal/fuel-calculating")) {
+						if (fmgc.FMGCInternal.fuelCalculating) {
 							me["Simple_L2"].setText("---.-/----");
 							me["Simple_L3"].setText("---.-");
-							if (rte_rsv_set.getValue() == 1) {
-								me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-							} else if (rte_percent_set.getValue() == 1) {
-								me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+							if (fmgc.FMGCInternal.rteRsvSet) {
+								me["Simple_C3"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+							} else if (fmgc.FMGCInternal.rtePercentSet) {
+								me["Simple_C3"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
 							} else {
-								me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+								me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 							}
 							me["Simple_L4"].setText("---.-/----");
 							me["Simple_C4"].hide();
 							me["Simple_L5"].setText("---.-");
-							if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
-								me["Simple_C5"].setText(sprintf("/%s         ", final_time.getValue()));
-							} else if (final_fuel_set.getValue() == 1) {
-								me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
-							} else if (final_time_set.getValue() == 1) {
-								me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+							if (fmgc.FMGCInternal.finalFuelSet and fmgc.FMGCInternal.finalTimeSet) {
+								me["Simple_C5"].setText(sprintf("/%s         ", fmgc.FMGCInternal.finalTime));
+							} else if (fmgc.FMGCInternal.finalFuelSet) {
+								me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
+							} else if (fmgc.FMGCInternal.finalTimeSet) {
+								me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
 							} else {
-								me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+								me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 							}
 							me["Simple_L6"].setText("---.-");
 							me["Simple_R2"].show(); 
 							me["INITB_Block"].hide();
-							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+							} else {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+							}
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_C4B"].show();
-							if (num(tow.getValue()) >= 100.0) {
-								me["Simple_C4B"].setText(sprintf("              %4.1f/", tow.getValue()));
+							if (num(fmgc.FMGCInternal.tow) >= 100.0) {
+								if (acconfig_weight_kgs.getValue() == 1) {
+									me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+								} else {
+									me["Simple_C4B"].setText(sprintf("              %4.1f/", fmgc.FMGCInternal.tow));
+								}
 							} else {
-								me["Simple_C4B"].setText(sprintf("               %4.1f/", tow.getValue()));
+								if (acconfig_weight_kgs.getValue() == 1) {
+									me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow * LBS2KGS));
+								} else {
+									me["Simple_C4B"].setText(sprintf("               %4.1f/", fmgc.FMGCInternal.tow));
+								}
 							}
 							me["Simple_R4"].setText("---.-");
 							me["Simple_R6"].setText("---.-/----");
@@ -1623,54 +2458,66 @@ var canvas_MCDU_base = {
 							me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
 							me.colorRight("ack", "blu", "ack", "wht", "ack", "wht");
 						} else {
-							me["Simple_L2"].setText(sprintf("%.1f/" ~ trip_time.getValue(), trip_fuel.getValue()));
-							me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
-							if (rte_rsv_set.getValue() == 1) {
-								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
-								} else if (num(rte_rsv.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
-								} else if (num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L2"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.tripTime, fmgc.FMGCInternal.tripFuel * LBS2KGS));
+							} else {
+								me["Simple_L2"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.tripTime, fmgc.FMGCInternal.tripFuel));
+							}
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv * LBS2KGS));
+							} else {
+								me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+							}
+							if (fmgc.FMGCInternal.rteRsvSet) {
+								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
 								} else {
-									me["Simple_C3"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+									me["Simple_C3"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
 								}
-							} else if (rte_percent_set.getValue() == 1) {
-								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
-								} else if (num(rte_rsv.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-								} else if (num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+							} else if (fmgc.FMGCInternal.rtePercentSet) {
+								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f              ", fmgc.FMGCInternal.rtePercent));
 								} else {
-									me["Simple_C3"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+									me["Simple_C3"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
 								}
 							} else {
-								if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
-								} else if (num(rte_rsv.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
-								} else if (num(rte_percent.getValue()) > 9.9) {
-									me["Simple_C3"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+								if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
+								} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+									me["Simple_C3"].setText(sprintf("/%.1f                   ", fmgc.FMGCInternal.rtePercent));
 								} else {
-									me["Simple_C3"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+									me["Simple_C3"].setText(sprintf("/%.1f                    ", fmgc.FMGCInternal.rtePercent));
 								}
 							}
-							if (altSet.getValue() == 1) {
-								me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+							if (fmgc.FMGCInternal.altAirportSet) {
+								if (acconfig_weight_kgs.getValue() == 1) {
+									me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel * LBS2KGS));
+								} else {
+									me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
+								}
 								me["Simple_L4"].setColor(BLUE);
 								me["Simple_C4"].show();
-								if (alt_fuel_set.getValue() == 1) {
-									if (num(alt_fuel.getValue()) > 9.9) {
-										me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+								if (fmgc.FMGCInternal.altFuelSet) {
+									if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+										me["Simple_C4"].setText(sprintf("/%s               ", fmgc.FMGCInternal.altTime));
 									} else {
-										me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+										me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 									}
 								} else {
-									if (num(alt_fuel.getValue()) > 9.9) {
-										me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+									if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+										me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 									} else {
-										me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+										me["Simple_C4"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.altTime));
 									}
 								}
 							} else {
@@ -1678,42 +2525,60 @@ var canvas_MCDU_base = {
 								me["Simple_L4"].setColor(WHITE);
 								me["Simple_C4"].hide();
 							}
-							me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
-							if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel * LBS2KGS));
+							} else {
+								me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+							}
+							if (fmgc.FMGCInternal.finalTimeSet and fmgc.FMGCInternal.finalFuelSet) {
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
 								}
-							} else if (final_time_set.getValue() == 1) {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s            ", final_time.getValue()));
+							} else if (fmgc.FMGCInternal.finalTimeSet) {
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s            ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s              ", fmgc.FMGCInternal.finalTime));
 								}
-							} else if (final_fuel_set.getValue() == 1) {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+							} else if (fmgc.FMGCInternal.finalFuelSet) {
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s                  ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s                  ", fmgc.FMGCInternal.finalTime));
 								}
 							} else {
-								if (num(final_fuel.getValue()) > 9.9) {
-									me["Simple_C5"].setText(sprintf("/%s                 ", final_time.getValue()));
+								if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+									me["Simple_C5"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.finalTime));
 								} else {
-									me["Simple_C5"].setText(sprintf("/%s                   ", final_time.getValue()));
+									me["Simple_C5"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.finalTime));
 								}
 							}
-							me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob * LBS2KGS));
+							} else {
+								me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
+							}
 							me["Simple_R2"].show(); 
 							me["INITB_Block"].hide();
-							me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block * LBS2KGS));
+							} else {
+								me["Simple_R2"].setText(sprintf("%3.1f", fmgc.FMGCInternal.block));
+							}
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
 							me["Simple_R3_Arrow"].hide();
 							me["Simple_C4B"].hide();
-							me["Simple_R4"].setText(sprintf("%4.1f/", tow.getValue()) ~ sprintf("%4.1f", lw.getValue()));
-							me["Simple_R6"].setText(sprintf("%.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+							
+							if (acconfig_weight_kgs.getValue() == 1) {
+								me["Simple_R4"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.tow * LBS2KGS) ~ sprintf("%4.1f", fmgc.FMGCInternal.lw * LBS2KGS));
+								me["Simple_R6"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel * LBS2KGS));
+							} else {
+								me["Simple_R4"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.tow) ~ sprintf("%4.1f", fmgc.FMGCInternal.lw));
+								me["Simple_R6"].setText(sprintf("%.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
+							}
 				
 							me.colorLeft("ack", "grn", "blu", "ack", "blu", "blu");
 							me.colorRight("ack", "blu", "ack", "grn", "ack", "grn");
@@ -1722,38 +2587,48 @@ var canvas_MCDU_base = {
 				}
 			}
 			
-			me["Simple_R1S"].setText("ZFWCG/   ZFW");
-			me["Simple_R1"].setText(sprintf("%3.1f", zfw.getValue()));
-			if (zfwcgSet.getValue() == 1) {
-				me["Simple_C1"].setFontSize(normal); 
-				me["Simple_C1"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["INITB_ZFWCG"].hide();
+			me["Simple_R1S"].setText("ZFW/ZFWCG");
+			me["Simple_R1"].setText(sprintf("%3.1f", fmgc.FMGCInternal.zfwcg));
+			me["INITB_ZFWCG"].hide();
+			me["INITB_ZFWCG_S"].show();
+			me["Simple_R1"].show();
+			if (fmgc.FMGCInternal.zfwcgSet) {
+				me["Simple_R1"].setFontSize(normal);
 			} else {
-				me["Simple_C1"].setFontSize(small);
-				me["Simple_C1"].setText("           " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["INITB_ZFWCG"].hide();
+				me["Simple_R1"].setFontSize(small);
 			}
 			
-			if (zfwSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.zfwSet) {
+				if (fmgc.FMGCInternal.zfw < 100) {
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C1"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C1"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
+				} else {
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C1"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C1"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
+				}
+				me["Simple_C1"].show();
 				me["INITB_ZFW"].hide();
-				me["INITB_ZFW_S"].show();
-				me["Simple_R1"].show(); 
 			} else {
+				me["Simple_C1"].hide();
 				me["INITB_ZFW"].show();
-				me["INITB_ZFW_S"].hide();
-				me["Simple_R1"].hide(); 
 			}
-			
-			if (taxi_fuel_set.getValue() == 1) {
+
+			if (fmgc.FMGCInternal.taxiFuelSet) {
 				me["Simple_L1"].setFontSize(normal);
 			} else {
 				me["Simple_L1"].setFontSize(small);
 			}
 			
-			if (rte_rsv_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.rteRsvSet) {
 				me["Simple_L3"].setFontSize(normal);
 				me["Simple_C3"].setFontSize(small);
-			} else if (rte_percent_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.rtePercentSet) {
 				me["Simple_L3"].setFontSize(small);
 				me["Simple_C3"].setFontSize(normal);
 			} else {
@@ -1761,19 +2636,19 @@ var canvas_MCDU_base = {
 				me["Simple_C3"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.altFuelSet and fmgc.FMGCInternal.crzSet) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.finalFuelSet and fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(normal);
-			} else if (final_fuel_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalFuelSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(small);
-			} else if (final_time_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(small);
 				me["Simple_C5"].setFontSize(normal);
 			} else {
@@ -1781,7 +2656,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setFontSize(small);
 			}
 			
-			if (min_dest_fob_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.minDestFobSet) {
 				me["Simple_L6"].setFontSize(normal);
 			} else {
 				me["Simple_L6"].setFontSize(small);
@@ -1797,6 +2672,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].show();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -1828,7 +2704,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
-				me.fontSizeCenter(small, small, small, small, small, small);
+				me.fontSizeCenter(small, small, normal, small, small, small);
 				me.fontSizeRight(normal, normal, normal, small, small, small);
 				me["Simple_C3B"].setFontSize(small);
 				
@@ -1845,15 +2721,15 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (!engrdy.getBoolValue() or toFromSet.getValue() != 1) {
+			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
 				me["Simple_L1"].setText("----");
 			} else {
-				me["Simple_L1"].setText(arrArpt.getValue());
+				me["Simple_L1"].setText(fmgc.FMGCInternal.arrApt);
 			}
-			if (!engrdy.getBoolValue() or alt_airport.getValue() == "") {
+			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
 				me["Simple_L2"].setText("----");
 			} else {
-				me["Simple_L2"].setText(alt_airport.getValue());
+				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
 			
 			me["Simple_L1S"].setText("AT");
@@ -1875,22 +2751,22 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			if (!getprop("/FMGC/internal/fuel-request-set") or !getprop("/FMGC/internal/block-confirmed") or getprop("/FMGC/internal/fuel-calculating")) {
+			if (!fmgc.FMGCInternal.fuelRequest or !fmgc.FMGCInternal.blockConfirmed or fmgc.FMGCInternal.fuelCalculating) {
 				me["Simple_L3"].setText("---.-");
-				if (rte_rsv_set.getValue() == 1) {
-					me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-				} else if (rte_percent_set.getValue() == 1) {
-					me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
+				if (fmgc.FMGCInternal.rteRsvSet) {
+					me["Simple_C3B"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+				} else if (fmgc.FMGCInternal.rtePercentSet) {
+					me["Simple_C3B"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
 				} else {
-					me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
+					me["Simple_C3B"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
 				}
 				me["Simple_L4"].setText("---.-/----");
 				me["Simple_C4"].hide();
 				me["Simple_L5"].setText("---.-");
-				if (final_fuel_set.getValue() == 1 or final_time_set.getValue() == 1) {
-					me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+				if (fmgc.FMGCInternal.finalFuelSet or fmgc.FMGCInternal.finalTimeSet) {
+					me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
 				} else {
-					me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+					me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 				}
 				me["Simple_L6"].setText("---.-");
 				
@@ -1901,53 +2777,61 @@ var canvas_MCDU_base = {
 				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");
 				me.colorRight("ack", "ack", "ack", "wht", "wht", "wht");
 			} else {
-				me["Simple_L3"].setText(sprintf("%.1f", rte_rsv.getValue()));
-				if (rte_rsv_set.getValue() == 1) {
-					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
-					} else if (num(rte_rsv.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                ", rte_percent.getValue()));
-					} else if (num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
+				if (acconfig_weight_kgs.getValue() == 1) {
+					me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv * LBS2KGS));
+				} else {
+					me["Simple_L3"].setText(sprintf("%.1f", fmgc.FMGCInternal.rteRsv));
+				}
+				if (fmgc.FMGCInternal.rteRsvSet) {
+					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
 					} else {
-						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
 					}
-				} else if (rte_percent_set.getValue() == 1) {
-					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f            ", rte_percent.getValue()));
-					} else if (num(rte_rsv.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f             ", rte_percent.getValue()));
-					} else if (num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f              ", rte_percent.getValue()));
+				} else if (fmgc.FMGCInternal.rtePercentSet) {
+					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f            ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f             ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f              ", fmgc.FMGCInternal.rtePercent));
 					} else {
-						me["Simple_C3B"].setText(sprintf("/%.1f               ", rte_percent.getValue()));
+						me["Simple_C3B"].setText(sprintf("/%.1f               ", fmgc.FMGCInternal.rtePercent));
 					}
 				} else {
-					if (num(rte_rsv.getValue()) > 9.9 and num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                 ", rte_percent.getValue()));
-					} else if (num(rte_rsv.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                  ", rte_percent.getValue()));
-					} else if (num(rte_percent.getValue()) > 9.9) {
-						me["Simple_C3B"].setText(sprintf("/%.1f                   ", rte_percent.getValue()));
+					if (num(fmgc.FMGCInternal.rteRsv) > 9.9 and num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                 ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rteRsv) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                  ", fmgc.FMGCInternal.rtePercent));
+					} else if (num(fmgc.FMGCInternal.rtePercent) > 9.9) {
+						me["Simple_C3B"].setText(sprintf("/%.1f                   ", fmgc.FMGCInternal.rtePercent));
 					} else {
-						me["Simple_C3B"].setText(sprintf("/%.1f                    ", rte_percent.getValue()));
+						me["Simple_C3B"].setText(sprintf("/%.1f                    ", fmgc.FMGCInternal.rtePercent));
 					}
 				}
-				if (altSet.getValue() == 1) {
-					me["Simple_L4"].setText(sprintf("%.1f", alt_fuel.getValue()));
+				if (fmgc.FMGCInternal.altAirportSet) {
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel * LBS2KGS));
+					} else {
+						me["Simple_L4"].setText(sprintf("%.1f", fmgc.FMGCInternal.altFuel));
+					}
 					me["Simple_L4"].setColor(BLUE);
 					me["Simple_C4"].show();
-					if (alt_fuel_set.getValue() == 1) {
-						if (num(alt_fuel.getValue()) > 9.9) {
-							me["Simple_C4"].setText(sprintf("/%s               ", alt_time.getValue()));
+					if (fmgc.FMGCInternal.altFuelSet) {
+						if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s               ", fmgc.FMGCInternal.altTime));
 						} else {
-							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+							me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 						}
 					} else {
-						if (num(alt_fuel.getValue()) > 9.9) {
-							me["Simple_C4"].setText(sprintf("/%s                 ", alt_time.getValue()));
+						if (num(fmgc.FMGCInternal.altFuel) > 9.9) {
+							me["Simple_C4"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.altTime));
 						} else {
-							me["Simple_C4"].setText(sprintf("/%s                   ", alt_time.getValue()));
+							me["Simple_C4"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.altTime));
 						}
 					}
 				} else {
@@ -1955,71 +2839,88 @@ var canvas_MCDU_base = {
 					me["Simple_L4"].setColor(WHITE);
 					me["Simple_C4"].hide();
 				}
-				me["Simple_L5"].setText(sprintf("%.1f", final_fuel.getValue()));
-				if (final_time_set.getValue() == 1 and final_fuel_set.getValue() == 1) {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s           ", final_time.getValue()));
+				if (acconfig_weight_kgs.getValue() == 1) {
+					me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel * LBS2KGS));
+				} else {
+					me["Simple_L5"].setText(sprintf("%.1f", fmgc.FMGCInternal.finalFuel));
+				}
+				if (fmgc.FMGCInternal.finalTimeSet and fmgc.FMGCInternal.finalFuelSet) {
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s           ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s             ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s             ", fmgc.FMGCInternal.finalTime));
 					}
-				} else if (final_time_set.getValue() == 1) {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s            ", final_time.getValue()));
+				} else if (fmgc.FMGCInternal.finalTimeSet) {
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s            ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s              ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s              ", fmgc.FMGCInternal.finalTime));
 					}
-				} else if (final_fuel_set.getValue() == 1) {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s               ", final_time.getValue()));
+				} else if (fmgc.FMGCInternal.finalFuelSet) {
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s               ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s                  ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s                  ", fmgc.FMGCInternal.finalTime));
 					}
 				} else {
-					if (num(final_fuel.getValue()) > 9.9) {
-						me["Simple_C5"].setText(sprintf("/%s                 ", final_time.getValue()));
+					if (num(fmgc.FMGCInternal.finalFuel) > 9.9) {
+						me["Simple_C5"].setText(sprintf("/%s                 ", fmgc.FMGCInternal.finalTime));
 					} else {
-						me["Simple_C5"].setText(sprintf("/%s                   ", final_time.getValue()));
+						me["Simple_C5"].setText(sprintf("/%s                   ", fmgc.FMGCInternal.finalTime));
 					}
 				}
-				me["Simple_L6"].setText(sprintf("%.1f", min_dest_fob.getValue()));
-				
-				setprop("/FMGC/internal/fob", num(getprop("/consumables/fuel/total-fuel-lbs") / 1000));
-				setprop("/FMGC/internal/fuel-pred-gw", num(getprop("/fdm/jsbsim/inertia/weight-lbs") / 1000));
-				setprop("/FMGC/internal/cg", num(getprop("/FMGC/internal/zfwcg")));
-				me["Simple_R4"].setText(sprintf("%4.1f/" ~ fffq_sensor.getValue(), fob.getValue()));
-				me["Simple_R5"].setText(sprintf("%4.1f/", gw.getValue()) ~ sprintf("%4.1f", cg.getValue()));
-				me["Simple_R6"].setText(sprintf("%4.1f/" ~ extra_time.getValue(), extra_fuel.getValue()));
+				if (acconfig_weight_kgs.getValue() == 1) {
+					me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob * LBS2KGS));
+					me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob * LBS2KGS));
+					me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw * LBS2KGS) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
+					me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel * LBS2KGS));
+				} else {
+					me["Simple_L6"].setText(sprintf("%.1f", fmgc.FMGCInternal.minDestFob));
+					me["Simple_R4"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.fffqSensor, fmgc.FMGCInternal.fob));
+					me["Simple_R5"].setText(sprintf("%4.1f/", fmgc.FMGCInternal.fuelPredGw) ~ sprintf("%4.1f", fmgc.FMGCInternal.cg));
+					me["Simple_R6"].setText(sprintf("%4.1f/" ~ fmgc.FMGCInternal.extraTime, fmgc.FMGCInternal.extraFuel));
+				}
 				
 				me.colorLeft("ack", "ack", "blu", "ack", "blu", "blu");
 				me.colorRight("ack", "ack", "blu", "grn", "grn", "grn");
 			}
 			
-			me["Simple_R3S"].setText("ZFWCG/ZFW");
-			me["Simple_R3"].setText(sprintf("%3.1f", zfw.getValue()));
-			if (zfwcgSet.getValue() == 1) {
-				me["Simple_C3"].setFontSize(normal); 
-				me["Simple_C3"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["FUELPRED_ZFWCG"].hide();
+			me["Simple_R3S"].setText("ZFW/ZFWCG");
+			me["Simple_R3"].setText(sprintf("%3.1f", fmgc.FMGCInternal.zfwcg));
+			me["Simple_R3"].show();
+			me["FUELPRED_ZFWCG"].hide();
+			me["FUELPRED_ZFWCG_S"].show();
+			if (fmgc.FMGCInternal.zfwcgSet) {
+				me["Simple_R3"].setFontSize(normal);
 			} else {
-				me["Simple_C3"].setFontSize(small);
-				me["Simple_C3"].setText("           " ~ sprintf("%3.1f", zfwcg.getValue()));
-				me["FUELPRED_ZFWCG"].hide();
+				me["Simple_R3"].setFontSize(small);
 			}
 			
-			if (zfwSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.zfwSet) {
+				if (fmgc.FMGCInternal.zfw < 100) {
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C3"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C3"].setText("          " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
+				} else {
+					if (acconfig_weight_kgs.getValue() == 1) {
+						me["Simple_C3"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw * LBS2KGS));
+					} else {
+						me["Simple_C3"].setText("         " ~ sprintf("%3.1f", fmgc.FMGCInternal.zfw));
+					}
+				}
+				me["Simple_C3"].show();
 				me["FUELPRED_ZFW"].hide();
-				me["FUELPRED_ZFW_S"].show();
-				me["Simple_R3"].show(); 
 			} else {
+				me["Simple_C3"].hide();
 				me["FUELPRED_ZFW"].show();
-				me["FUELPRED_ZFW_S"].hide();
-				me["Simple_R3"].hide(); 
 			}
 			
-			if (rte_rsv_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.rteRsvSet) {
 				me["Simple_L3"].setFontSize(normal);
 				me["Simple_C3B"].setFontSize(small);
-			} else if (rte_percent_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.rtePercentSet) {
 				me["Simple_L3"].setFontSize(small);
 				me["Simple_C3B"].setFontSize(normal);
 			} else {
@@ -2027,19 +2928,19 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].setFontSize(small);
 			}
 			
-			if (alt_fuel_set.getValue() == 1 and altSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.altFuelSet and fmgc.FMGCInternal.crzSet == 1) {
 				me["Simple_L4"].setFontSize(normal);
 			} else {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (final_fuel_set.getValue() == 1 and final_time_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.finalFuelSet and fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(normal);
-			} else if (final_fuel_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalFuelSet) {
 				me["Simple_L5"].setFontSize(normal);
 				me["Simple_C5"].setFontSize(small);
-			} else if (final_time_set.getValue() == 1) {
+			} else if (fmgc.FMGCInternal.finalTimeSet) {
 				me["Simple_L5"].setFontSize(small);
 				me["Simple_C5"].setFontSize(normal);
 			} else {
@@ -2047,23 +2948,23 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setFontSize(small);
 			}
 			
-			if (min_dest_fob_set.getValue() == 1) {
+			if (fmgc.FMGCInternal.minDestFobSet) {
 				me["Simple_L6"].setFontSize(normal);
 			} else {
 				me["Simple_L6"].setFontSize(small);
 			}
 			
 		} else if (page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES") {
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGTO");
 				page = "PROGTO";
-			} else if (getprop("/FMGC/status/phase") == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGCLB");
 				page = "PROGCLB";
-			} else if (getprop("/FMGC/status/phase") == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGCRZ");
 				page = "PROGCRZ";
-			} else if (getprop("/FMGC/status/phase") == 4 or getprop("/FMGC/status/phase") == 5 or getprop("/FMGC/status/phase") == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGDES");
 				page = "PROGDES";
 			}
@@ -2077,21 +2978,22 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].show();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				
-				if (flightNumSet.getValue() == 1) {
+				if (fmgc.FMGCInternal.flightNumSet) {
 					if (page == "PROGTO") {
-						me["Simple_Title"].setText(sprintf("TAKE OFF %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("TAKE OFF %s", fmgc.FMGCInternal.flightNum));
 					} else if (page == "PROGCLB") {
-						me["Simple_Title"].setText(sprintf("CLIMB %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("CLIMB %s", fmgc.FMGCInternal.flightNum));
 					} else if (page == "PROGCRZ") {
-						me["Simple_Title"].setText(sprintf("CRUISE %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("CRUISE %s", fmgc.FMGCInternal.flightNum));
 					} else if (page == "PROGDES") {
-						me["Simple_Title"].setText(sprintf("DESCENT %s", flightNum.getValue()));
+						me["Simple_Title"].setText(sprintf("DESCENT %s", fmgc.FMGCInternal.flightNum));
 					}
 				} else {
 					if (page == "PROGTO") {
@@ -2157,11 +3059,11 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (cruiseSet.getValue() == 1 and page != "PROGDES") {
-				if (getprop("/it-autoflight/input/alt") > cruiseFL_prog.getValue() * 100) {
+			if (fmgc.FMGCInternal.crzSet and page != "PROGDES") {
+				if (getprop("/it-autoflight/input/alt") > fmgc.FMGCInternal.crzProg * 100) {
 					me["Simple_L1"].setText(sprintf("%s", "FL" ~ getprop("/it-autoflight/input/alt") / 100));
 				} else {
-					me["Simple_L1"].setText(sprintf("%s", "FL" ~ cruiseFL_prog.getValue()));
+					me["Simple_L1"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzProg));
 				}
 			} else {
 				me["Simple_L1"].setText("----");
@@ -2207,6 +3109,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].show();
 				me["arrowsDepArr"].hide();
@@ -2252,9 +3155,6 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
-			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
-			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
 			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
 			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
@@ -2264,7 +3164,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R2"].setText("[    ]  ");
+			me["Simple_R2"].setText("[   ]  ");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
 			me["Simple_R1S"].setText("RWY ");
@@ -2280,7 +3180,7 @@ var canvas_MCDU_base = {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 0 or getprop("/FMGC/status/phase") == 7) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {
 				me["Simple_L6_Arrow"].show(); 
 				me["Simple_L6"].show();
 				me["Simple_L6S"].show();
@@ -2290,7 +3190,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 			}
 			
-			if (getprop("/FMGC/status/phase") == 1) {
+			if (fmgc.FMGCInternal.phase == 1) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2302,27 +3202,33 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("TAKE OFF");
 			}
 			
-			if (v1Set.getValue() == 1) {
+			if (fmgc.FMGCInternal.v1set) {
 				me["PERFTO_V1"].hide();
+				me["Simple_L1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
 				me["Simple_L1"].show();
 			} else {
 				me["PERFTO_V1"].show();
 				me["Simple_L1"].hide();
 			}
-			if (vrSet.getValue() == 1) {
+			
+			if (fmgc.FMGCInternal.vrset) {
 				me["PERFTO_VR"].hide();
+				me["Simple_L2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vr));
 				me["Simple_L2"].show();
 			} else {
 				me["PERFTO_VR"].show();
 				me["Simple_L2"].hide();
 			}
-			if (v2Set.getValue() == 1) {
+			
+			if (fmgc.FMGCInternal.v2set) {
 				me["PERFTO_V2"].hide();
+				me["Simple_L3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 				me["Simple_L3"].show();
 			} else {
 				me["PERFTO_V2"].show();
 				me["Simple_L3"].hide();
 			}
+			
 			if (thrAccSet.getValue() == 1) {
 				me["Simple_L5"].setFontSize(normal);
 			} else {
@@ -2340,7 +3246,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R3"].setFont(symbol); 
 				me["Simple_R3"].setFontSize(small); 
-				me["Simple_R3"].setText("[  ]/[      ]");
+				me["Simple_R3"].setText("[  ]/[    ]");
 			}
 			if (flexSet.getValue() == 1) {
 				me["Simple_R4"].setFont(default); 
@@ -2357,10 +3263,10 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 1) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_to")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_to")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_to")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 1) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_to));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_to));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_to));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -2372,26 +3278,13 @@ var canvas_MCDU_base = {
 			me["Simple_C3S"].setText("CLEAN  ");
 		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("CLB");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
@@ -2428,7 +3321,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 2) {
+			if (fmgc.FMGCInternal.phase == 2) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showLeftS(0, 0, 0, 0, 1, 0);
@@ -2458,7 +3351,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("/FMGC/status/phase") == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2494,28 +3387,28 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+				if (fmgc.Input.ktsMach.getValue()) {
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}		
 			
 			me["Simple_L2S"].setText(" CI");
-			if (costIndexSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.costIndexSet) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %s", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
 			}
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("/it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
+			if (fmgc.Input.ktsMach.getValue()) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", fmgc.FMGCInternal.mngSpd));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("/FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %s", int(fmgc.FMGCInternal.mngSpd)));
 			}
 			
 			me["Simple_L5S"].setText(" EXPEDITE");
@@ -2539,26 +3432,13 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 		} else if (page == "PERFCRZ") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("CRZ");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, -1, 1);
 				me["Simple_L0S"].hide();
@@ -2594,7 +3474,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 3) {
+			if (fmgc.FMGCInternal.phase == 3) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 
 				if (managedSpeed.getValue() == 1) {
@@ -2618,7 +3498,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("/FMGC/status/phase") == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2648,17 +3528,17 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+				if (fmgc.Input.ktsMach.getValue()) {
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/spd-kts"))));
+					me["Simple_L4"].setText(sprintf(" %s", int(getprop("/it-autoflight/input/kts"))));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
 			
-			if (costIndexSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.costIndexSet) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %s", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %s", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
@@ -2668,10 +3548,10 @@ var canvas_MCDU_base = {
 			me["Simple_L2S"].setText(" CI");
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("/it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
+			if (fmgc.Input.ktsMach.getValue()) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", fmgc.FMGCInternal.mngSpd));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %s", int(getprop("/FMGC/internal/mng-spd"))));
+				me["Simple_L3"].setText(sprintf(" %s", int(fmgc.FMGCInternal.mngSpd)));
 			}
 			
 			me["Simple_R1S"].setText("DEST EFOB");
@@ -2689,26 +3569,13 @@ var canvas_MCDU_base = {
 			
 		} else if (page == "PERFDES") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("DES");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
@@ -2745,7 +3612,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 4) {
+			if (fmgc.FMGCInternal.phase == 4) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showRight(0, 1, 0, 1, 0, 0);
@@ -2774,7 +3641,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (getprop("/FMGC/status/phase") == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -2809,17 +3676,17 @@ var canvas_MCDU_base = {
 				me.fontLeft(0, 0, 0, symbol, 0, 0);
 			} else {
 				me["Simple_L1"].setText("SELECTED");
-				if (getprop("/it-autoflight/input/kts-mach")) {
-					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/spd-mach")));
+				if (fmgc.Input.ktsMach.getValue()) {
+					me["Simple_L4"].setText(sprintf(" %3.3f", getprop("/it-autoflight/input/mach")));
 				} else {
-					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/spd-kts")));
+					me["Simple_L4"].setText(sprintf(" %3.0f", getprop("/it-autoflight/input/kts")));
 				}
 				me.fontLeft(0, 0, 0, default, 0, 0);
 			}
 			
-			if (costIndexSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.costIndexSet) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf(" %2.0f", costIndex.getValue()));
+				me["Simple_L2"].setText(sprintf(" %2.0f", fmgc.FMGCInternal.costIndex));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText(" ---");
@@ -2829,10 +3696,10 @@ var canvas_MCDU_base = {
 			me["Simple_L2S"].setText(" CI");
 			
 			me["Simple_L3S"].setText(" MANAGED");
-			if (getprop("/it-autoflight/input/kts-mach")) {
-				me["Simple_L3"].setText(sprintf(" %3.3f", getprop("/FMGC/internal/mng-spd")));
+			if (fmgc.Input.ktsMach.getValue()) {
+				me["Simple_L3"].setText(sprintf(" %3.3f", fmgc.FMGCInternal.mngSpd));
 			} else {
-				me["Simple_L3"].setText(sprintf(" %3.0f", getprop("/FMGC/internal/mng-spd")));
+				me["Simple_L3"].setText(sprintf(" %3.0f", fmgc.FMGCInternal.mngSpd));
 			}
 			
 			me["Simple_L5"].setText(" EXPEDITE");
@@ -2860,26 +3727,13 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 		} else if (page == "PERFAPPR") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].show();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("APPR");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].show();
@@ -2914,7 +3768,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 5) {
+			if (fmgc.FMGCInternal.phase == 5) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -2942,10 +3796,20 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L3S"].setText("MAG WIND");
-			if (dest_mag.getValue() != -1 and dest_wind.getValue() != -1) {
-				me["Simple_L3"].setText(sprintf("%03.0fg", dest_mag.getValue()) ~ sprintf("/%.0f", dest_wind.getValue()));
+			if (fmgc.FMGCInternal.destMagSet and fmgc.FMGCInternal.destWindSet) {
+				me["Simple_L3"].setText(sprintf("%03.0fg", fmgc.FMGCInternal.destMag) ~ sprintf("/%.0f", fmgc.FMGCInternal.destWind));
+				me["Simple_L3"].setFontSize(normal);
 			} else {
-				me["Simple_L3"].setText("---g/---");;
+				me["Simple_L3"].setFontSize(small);
+				if (myDESWIND[i] != nil and myDESWIND[i].returnGRND() != nil) {
+					var result = myDESWIND[i].returnGRND();
+					me["Simple_L3"].setText(sprintf("%03.0fg", result[0]) ~ sprintf("/%.0f", result[1]));
+				} else if (myDESWIND[math.abs(i-1)] != nil and myDESWIND[math.abs(i-1)].returnGRND() != nil) {
+					var result = myDESWIND[math.abs(i-1)].returnGRND();
+					me["Simple_L3"].setText(sprintf("%03.0fg", result[0]) ~ sprintf("/%.0f", result[1]));
+				} else {
+					me["Simple_L3"].setText("---g/---");
+				}
 			}
 			
 			me["Simple_L4S"].setText("TRANS FL");
@@ -2982,7 +3846,7 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
-			} else if (getprop("/FMGC/internal/radio-no")) {
+			} else if (fmgc.FMGCInternal.radioNo) {
 				me["Simple_R3"].setText("NO");
 				me.fontRight(0, 0, default, 0, 0, 0);
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
@@ -2995,7 +3859,7 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("LDG CONF  ");
 			me["Simple_R4"].setText("CONF3  ");
 			me["Simple_R5"].setText("FULL  ");
-			if (ldg_config_3_set.getValue() == 1 and ldg_config_f_set.getValue() == 0) {
+			if (fmgc.FMGCInternal.ldgConfig3 == 1 and fmgc.FMGCInternal.ldgConfigFull == 0) {
 				me["PERFAPPR_LDG_3"].hide();
 				me["PERFAPPR_LDG_F"].show();
 				me.fontSizeRight(0, 0, 0, normal, small, 0);
@@ -3012,14 +3876,14 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 			
 			me["Simple_L5S"].setText(" VAPP");
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 5) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
-				me["Simple_C5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vls_appr")));
-				me["Simple_L5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vapp_appr")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 5) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
+				me["Simple_C5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vls_appr));
+				me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 				me.fontLeft(0, 0, 0, 0, default, 0);
-				if (vapp_speed_set.getValue()) {
+				if (fmgc.FMGCInternal.vappSpeedSet) {
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
@@ -3029,8 +3893,8 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setText(" ---");
 				me["Simple_C3"].setText(" ---");
 				me["Simple_C5"].setText(" ---");
-				if (vapp_speed_set.getValue()) {
-					me["Simple_L5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/vapp_appr")));
+				if (fmgc.FMGCInternal.vappSpeedSet) {
+					me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 					me.fontLeft(0, 0, 0, 0, default, 0);
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
@@ -3046,26 +3910,13 @@ var canvas_MCDU_base = {
 			me["Simple_C5S"].setText("VLS   ");
 		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].show();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("GO AROUND");
-				me["Simple_Title"].setColor(1, 1, 1);
-				me["Simple_PageNum"].setText("X/X");
-				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].hide();
-				me["ArrowRight"].hide();
+				me.defaultPageNumbers();
 				
 				me.showLeft(-1, -1, -1, -1, 1, 1);
 				me["Simple_L0S"].hide();
@@ -3100,7 +3951,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/status/phase") == 6) {
+			if (fmgc.FMGCInternal.phase == 6) {
 				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
 			} else {
 				me["Simple_Title"].setColor(1, 1, 1);
@@ -3124,10 +3975,10 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
-			if ((zfwSet.getValue() == 1 and blockSet.getValue() == 1) or getprop("/FMGC/status/phase") == 6) {
-				me["Simple_C1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/flap2_appr")));
-				me["Simple_C2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/slat_appr")));
-				me["Simple_C3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/computed-speeds/clean_appr")));
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 6) {
+				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
 			} else {
 				me["Simple_C1"].setText(" ---");
 				me["Simple_C2"].setText(" ---");
@@ -3137,22 +3988,13 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-		} else if (page == "LATREV") {
+		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
+				me.defaultHideWithCenter();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
+				me["WIND"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
@@ -3166,7 +4008,121 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				if (page == "WINDCLB") {
+					myWind = myCLBWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				} else if (page == "WINDCRZ") {
+					myWind = myCRZWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "amb", "wht", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				} else if (page == "WINDDES") {
+					myWind = myDESWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "amb");
+					me.colorRightS("wht", "wht", "amb", "wht", "wht", "amb");
+					me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				} else if (page == "WINDHIST") {
+					myWind = myHISTWIND;
+					me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+					me.fontSizeCenter(small, small, small, small, small, normal);
+				}
+				
+				if (page == "WINDHIST") {
+					if (fmgc.windController.hist_winds.wind1.set) {
+						me["WIND_INSERT_star"].show();
+					} else {
+						me["WIND_INSERT_star"].hide();
+					}
+					me["WIND_CANCEL"].hide();
+				} else {
+					if (fmgc.flightPlanController.temporaryFlag[i]) {
+						me["WIND_CANCEL"].show();
+						me["WIND_INSERT_star"].show();
+					} else {
+						me["WIND_CANCEL"].hide();
+						me["WIND_INSERT_star"].hide();
+					}
+				}
+				
+				if (myWind[i] != nil) {
+					if (page == "WINDCRZ") {
+						me["Simple_Title"].setText(sprintf("%s", myWind[i].title[0] ~ myWind[i].title[1] ~ myWind[i].title[2]));
+						if (fmgc.flightPlanController.temporaryFlag[i]) {
+							if (size(fmgc.windController.nav_indicies[i]) > 1) {
+								me["WIND_UPDOWN"].show();
+							} else {
+								me["WIND_UPDOWN"].hide();
+							}
+						} else {
+							if (size(fmgc.windController.nav_indicies[2]) > 1) {
+								me["WIND_UPDOWN"].show();
+							} else {
+								me["WIND_UPDOWN"].hide();
+							}
+						}
+					} else {
+						me["Simple_Title"].setText(sprintf("%s", myWind[i].title));
+						me["WIND_UPDOWN"].hide();
+					}
+					
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myWind[i].titleColour ~ "/b"));
+					
+					me.dynamicPageArrowFunc(myWind[i]);
+					me.colorLeftArrow(myWind[i].arrowsColour[0][0],myWind[i].arrowsColour[0][1],myWind[i].arrowsColour[0][2],myWind[i].arrowsColour[0][3],myWind[i].arrowsColour[0][4],myWind[i].arrowsColour[0][5]);
+					
+					me.dynamicPageFontFunc(myWind[i]);
+					
+					me.dynamicPageFunc(myWind[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myWind[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myWind[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myWind[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myWind[i].L5, "Simple_L5");
+					me.dynamicPageFunc(myWind[i].L6, "Simple_L6");
+					
+					me.colorLeft(myWind[i].L1[2],myWind[i].L2[2],myWind[i].L3[2],myWind[i].L4[2],myWind[i].L5[2],myWind[i].L6[2]);
+					
+					me.dynamicPageFunc(myWind[i].C1, "Simple_C1");
+					me.dynamicPageFunc(myWind[i].C2, "Simple_C2");
+					me.dynamicPageFunc(myWind[i].C3, "Simple_C3");
+					me.dynamicPageFunc(myWind[i].C4, "Simple_C4");
+					me.dynamicPageFunc(myWind[i].C5, "Simple_C5");
+					me.dynamicPageFunc(myWind[i].C6, "Simple_C6");
+					
+					me.colorCenter(myWind[i].C1[2],myWind[i].C2[2],myWind[i].C3[2],myWind[i].C4[2],myWind[i].C5[2],myWind[i].C6[2]);
+					
+					me.dynamicPageFunc(myWind[i].R1, "Simple_R1");
+					me.dynamicPageFunc(myWind[i].R2, "Simple_R2");
+					me.dynamicPageFunc(myWind[i].R3, "Simple_R3");
+					me.dynamicPageFunc(myWind[i].R4, "Simple_R4");
+					me.dynamicPageFunc(myWind[i].R5, "Simple_R5");
+					me.dynamicPageFunc(myWind[i].R6, "Simple_R6");
+					
+					me.colorRight(myWind[i].R1[2],myWind[i].R2[2],myWind[i].R3[2],myWind[i].R4[2],myWind[i].R5[2],myWind[i].R6[2]);
+				}
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "LATREV") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["arrowsDepArr"].hide();
+				me["Simple_PageNum"].setText("X/X");
+				me["Simple_PageNum"].hide();
+				me["Simple_Title"].show();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3176,6 +4132,8 @@ var canvas_MCDU_base = {
 				
 				if (myLatRev[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myLatRev[i].title[0] ~ myLatRev[i].title[1] ~ myLatRev[i].title[2]));
+					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myLatRev[i].titleColour ~ "/b"));
+					
 					
 					if (myLatRev[i].subtitle[0] != nil) {
 						me["Simple_Center"].show();
@@ -3195,39 +4153,11 @@ var canvas_MCDU_base = {
 					} else {
 						me["Simple_Center"].hide();
 					}
-					forindex (var matrixArrow; myLatRev[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myLatRev[i].arrowsMatrix[matrixArrow]) {
-							if (myLatRev[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
-							} else {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
-							}
-						}
-					}
+					
+					me.dynamicPageArrowFunc(myLatRev[i]);
 					me.colorLeftArrow(myLatRev[i].arrowsColour[0][0],myLatRev[i].arrowsColour[0][1],myLatRev[i].arrowsColour[0][2],myLatRev[i].arrowsColour[0][3],myLatRev[i].arrowsColour[0][4],myLatRev[i].arrowsColour[0][5]);
 					
-					
-					forindex (var matrixFont; myLatRev[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myLatRev[i].fontMatrix[matrixFont]) {
-							if (myLatRev[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageFontFunc(myLatRev[i]);
 					
 					me.dynamicPageFunc(myLatRev[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myLatRev[i].L2, "Simple_L2");
@@ -3251,16 +4181,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "VERTREV") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -3272,13 +4193,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3307,39 +4222,11 @@ var canvas_MCDU_base = {
 					} else {
 						me["Simple_Center"].hide();
 					}
-					forindex (var matrixArrow; myVertRev[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myVertRev[i].arrowsMatrix[matrixArrow]) {
-							if (myVertRev[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
-							} else {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
-							}
-						}
-					}
+					
+					me.dynamicPageArrowFunc(myVertRev[i]);
 					me.colorLeftArrow(myVertRev[i].arrowsColour[0][0],myVertRev[i].arrowsColour[0][1],myVertRev[i].arrowsColour[0][2],myVertRev[i].arrowsColour[0][3],myVertRev[i].arrowsColour[0][4],myVertRev[i].arrowsColour[0][5]);
 					
-					
-					forindex (var matrixFont; myVertRev[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myVertRev[i].fontMatrix[matrixFont]) {
-							if (myVertRev[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageFontFunc(myVertRev[i]);
 					
 					me.dynamicPageFunc(myVertRev[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myVertRev[i].L2, "Simple_L2");
@@ -3363,46 +4250,20 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "DEPARTURE") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3411,42 +4272,8 @@ var canvas_MCDU_base = {
 				if (myDeparture[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myDeparture[i].title[0] ~ myDeparture[i].title[1] ~ myDeparture[i].title[2]));
 					
-					forindex (var matrixArrow; myDeparture[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myDeparture[i].arrowsMatrix[matrixArrow]) {
-							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[0][5] ~ "/b"));
-								continue;
-							}
-							if (myDeparture[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myDeparture[i].arrowsColour[matrixArrow][item] ~ "/b"));
-							} else {
-								me["arrow" ~ (item + 1) ~ sign].hide();
-							}
-						}
-					}
-					
-					forindex (var matrixFont; myDeparture[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myDeparture[i].fontMatrix[matrixFont]) {
-							if (myDeparture[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageArrowFuncDepArr(myDeparture[i]);
+					me.dynamicPageFontFunc(myDeparture[i]);
 					
 					me.dynamicPageFunc(myDeparture[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myDeparture[i].L2, "Simple_L2");
@@ -3481,16 +4308,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "DUPLICATENAMES") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["arrowsDepArr"].hide();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
@@ -3502,13 +4320,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3519,39 +4331,10 @@ var canvas_MCDU_base = {
 				if (myDuplicate[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myDuplicate[i].title));
 					
-					forindex (var matrixArrow; myDuplicate[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myDuplicate[i].arrowsMatrix[matrixArrow]) {
-							if (myDuplicate[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
-							} else {
-								me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
-							}
-						}
-					}
+					me.dynamicPageArrowFunc(myDuplicate[i]);
 					me.colorLeftArrow(myDuplicate[i].arrowsColour[0][0],myDuplicate[i].arrowsColour[0][1],myDuplicate[i].arrowsColour[0][2],myDuplicate[i].arrowsColour[0][3],myDuplicate[i].arrowsColour[0][4],myDuplicate[i].arrowsColour[0][5]);
 					
-					
-					forindex (var matrixFont; myDuplicate[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myDuplicate[i].fontMatrix[matrixFont]) {
-							if (myDuplicate[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageFontFunc(myDuplicate[i]);
 					
 					me.dynamicPageFunc(myDuplicate[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myDuplicate[i].L2, "Simple_L2");
@@ -3586,90 +4369,37 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "ARRIVAL") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
-				
+				me.hideAllArrowsButL6();
+				me["arrow2L"].hide();
+				me["arrow2R"].hide();
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				if (myArrival[i].arrowsMatrix[0][1]) {
+					me["Simple_L2_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][1] ~ "/b"));
+					me["Simple_L2_Arrow"].show();
+				} else {
+					me["Simple_L2_Arrow"].hide();
+				}
 				
 				if (myArrival[i] != nil) {
 					me["Simple_Title"].setText(sprintf("%s", myArrival[i].title[0] ~ myArrival[i].title[1] ~ myArrival[i].title[2]));
 					
-					forindex (var matrixArrow; myArrival[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myArrival[i].arrowsMatrix[matrixArrow]) {
-							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[0][5] ~ "/b"));
-								continue;
-							}
-							if (myArrival[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myArrival[i].arrowsColour[matrixArrow][item] ~ "/b"));
-							} else {
-								me["arrow" ~ (item + 1) ~ sign].hide();
-							}
-						}
-					}
-					
-					forindex (var matrixFont; myArrival[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myArrival[i].fontMatrix[matrixFont]) {
-							if (myArrival[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageArrowFuncDepArr(myArrival[i]);
+					me.dynamicPageFontFunc(myArrival[i]);
 					
 					me.dynamicPageFunc(myArrival[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myArrival[i].L2, "Simple_L2");
@@ -3704,34 +4434,14 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "HOLD") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				me["arrowsDepArr"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
@@ -3754,42 +4464,8 @@ var canvas_MCDU_base = {
 					me["Simple_Title"].setText(sprintf("%s", myHold[i].title[0] ~ myHold[i].title[1] ~ myHold[i].title[2]));
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].titleColour ~ "/b"));
 					
-					forindex (var matrixArrow; myHold[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myHold[i].arrowsMatrix[matrixArrow]) {
-							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[0][5] ~ "/b"));
-								continue;
-							}
-							if (myHold[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myHold[i].arrowsColour[matrixArrow][item] ~ "/b"));
-							} else {
-								me["arrow" ~ (item + 1) ~ sign].hide();
-							}
-						}
-					}
-					
-					forindex (var matrixFont; myHold[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myHold[i].fontMatrix[matrixFont]) {
-							if (myHold[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageArrowFuncDepArr(myHold[i]);
+					me.dynamicPageFontFunc(myHold[i]);
 					
 					me.dynamicPageFunc(myHold[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myHold[i].L2, "Simple_L2");
@@ -3824,34 +4500,14 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "AIRWAYS") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				me["arrowsDepArr"].show();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].show();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
@@ -3874,42 +4530,8 @@ var canvas_MCDU_base = {
 					me["Simple_Title"].setText(sprintf("%s", myAirways[i].title[0] ~ myAirways[i].title[1] ~ myAirways[i].title[2]));
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].titleColour ~ "/b"));
 					
-					forindex (var matrixArrow; myAirways[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myAirways[i].arrowsMatrix[matrixArrow]) {
-							if (item == 5) { 
-								me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[0][5] ~ "/b"));
-								continue;
-							}
-							if (myAirways[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myAirways[i].arrowsColour[matrixArrow][item] ~ "/b"));
-							} else {
-								me["arrow" ~ (item + 1) ~ sign].hide();
-							}
-						}
-					}
-					
-					forindex (var matrixFont; myAirways[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myAirways[i].fontMatrix[matrixFont]) {
-							if (myAirways[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageArrowFuncDepArr(myAirways[i]);
+					me.dynamicPageFontFunc(myAirways[i]);
 					
 					me.dynamicPageFunc(myAirways[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myAirways[i].L2, "Simple_L2");
@@ -3944,16 +4566,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "CLOSESTAIRPORT") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me["Simple"].show();
-				me["Simple_Center"].show();
-				me["FPLN"].hide();
-				me["DIRTO_TMPY_group"].hide();
-				me["INITA"].hide();
-				me["IRSINIT"].hide();
-				me["INITB"].hide();
-				me["FUELPRED"].hide();
-				me["PROG"].hide();
-				me["PERFTO"].hide();
+				me.defaultHideWithCenter();
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["Simple_Title"].show();
@@ -3995,22 +4608,8 @@ var canvas_MCDU_base = {
 					me["Simple_L6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[0][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[0][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[0][5] ~ "/b"));
 					me["Simple_R6_Arrow"].setColor(getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[1][5] ~ "/r"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[1][5] ~ "/g"), getprop("/MCDUC/colors/" ~ myClosestAirport[i].arrowsColour[1][5] ~ "/b"));
 					
-					forindex (var matrixFont; myClosestAirport[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myClosestAirport[i].fontMatrix[matrixFont]) {
-							if (myClosestAirport[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					
+					me.dynamicPageFontFunc(myClosestAirport[i]);
 					
 					me.dynamicPageFunc(myClosestAirport[i].L1, "Simple_L1");
 					me.dynamicPageFunc(myClosestAirport[i].L2, "Simple_L2");
@@ -4053,6 +4652,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].show();
@@ -4063,30 +4663,13 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].show();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
-				me["Simple_L1_Arrow"].hide();
-				me["Simple_L2_Arrow"].hide();
-				me["Simple_L3_Arrow"].hide();
-				me["Simple_L4_Arrow"].hide();
-				me["Simple_L5_Arrow"].hide();
-				me["Simple_L6_Arrow"].hide();
-				me["Simple_R1_Arrow"].hide();
-				me["Simple_R2_Arrow"].hide();
-				me["Simple_R3_Arrow"].hide();
-				me["Simple_R4_Arrow"].hide();
-				me["Simple_R5_Arrow"].hide();
-				me["Simple_R6_Arrow"].hide();
+				me.hideAllArrows();
 				
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
-				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -4097,39 +4680,8 @@ var canvas_MCDU_base = {
 					me["Simple_Title"].setText(sprintf("%s", myDirTo[i].title[0]));
 					me["Simple_Title"].setColor(getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/r"), getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/g"), getprop("/MCDUC/colors/" ~ myDirTo[i].titleColour ~ "/b"));
 					
-					forindex (var matrixArrow; myDirTo[i].arrowsMatrix) {
-						if (matrixArrow == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myDirTo[i].arrowsMatrix[matrixArrow]) {
-							if (item == 5) { continue; }
-							if (myDirTo[i].arrowsMatrix[matrixArrow][item] == 1) {
-								me["arrow" ~ (item + 1) ~ sign].show();
-								me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ myDirTo[i].arrowsColour[matrixArrow][item] ~ "/b"));
-							} else {
-								me["arrow" ~ (item + 1) ~ sign].hide();
-							}
-						}
-					}
-					
-					forindex (var matrixFont; myDirTo[i].fontMatrix) {
-						if (matrixFont == 0) { 
-							var sign = "L"; 
-						} else { 
-							var sign = "R"; 
-						}
-						forindex (var item; myDirTo[i].fontMatrix[matrixFont]) {
-							if (myDirTo[i].fontMatrix[matrixFont][item] == 1) {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
-							} else {
-								me["Simple_" ~ sign ~ (item + 1)].setFont(default);
-								me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
-							}
-						}
-					}
+					me.dynamicPageArrowFuncDepArr(myDirTo[i]);
+					me.dynamicPageFontFunc(myDirTo[i]);
 					
 					if (fmgc.flightPlanController.temporaryFlag[i] and mcdu.dirToFlag) {
 						me["DIRTO_TMPY_group"].show();
@@ -4166,6 +4718,7 @@ var canvas_MCDU_base = {
 				me["IRSINIT"].hide();
 				me["INITB"].hide();
 				me["FUELPRED"].hide();
+				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
 				me["arrowsDepArr"].hide();
@@ -4908,6 +5461,59 @@ var canvas_MCDU_base = {
 			}
 		}
 	},
+	dynamicPageArrowFunc: func (dynamic) {
+		forindex (var matrixArrow; dynamic.arrowsMatrix) {
+			if (matrixArrow == 0) { 
+				var sign = "L"; 
+			} else { 
+				var sign = "R"; 
+			}
+			forindex (var item; dynamic.arrowsMatrix[matrixArrow]) {
+				if (dynamic.arrowsMatrix[matrixArrow][item] == 1) {
+					me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].show();
+				} else {
+					me["Simple_" ~ sign ~ (item + 1) ~ "_Arrow"].hide();
+				}
+			}
+		}
+	},
+	dynamicPageArrowFuncDepArr: func (dynamic) {
+		forindex (var matrixArrow; dynamic.arrowsMatrix) {
+			if (matrixArrow == 0) { 
+				var sign = "L"; 
+			} else { 
+				var sign = "R"; 
+			}
+			forindex (var item; dynamic.arrowsMatrix[matrixArrow]) {
+				if (item == 5) { continue; }
+				if (dynamic.arrowsMatrix[matrixArrow][item] == 1) {
+					me["arrow" ~ (item + 1) ~ sign].show();
+					me["arrow" ~ (item + 1) ~ sign].setColor(getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/r"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/g"), getprop("/MCDUC/colors/" ~ dynamic.arrowsColour[matrixArrow][item] ~ "/b"));
+				} else {
+					me["arrow" ~ (item + 1) ~ sign].hide();
+				}
+			}
+		}
+	},
+	dynamicPageFontFunc: func (dynamic) {
+		forindex (var matrixFont; dynamic.fontMatrix) {
+			if (matrixFont == 0) { 
+				var sign = "L"; 
+			} else { 
+				var sign = "R"; 
+			}
+			forindex (var item; dynamic.fontMatrix[matrixFont]) {
+				if (dynamic.fontMatrix[matrixFont][item] == 1) {
+					me["Simple_" ~ sign ~ (item + 1)].setFont(symbol);
+					me["Simple_" ~ sign ~ (item + 1)].setFontSize(small);
+				} else {
+					me["Simple_" ~ sign ~ (item + 1)].setFont(default);
+					me["Simple_" ~ sign ~ (item + 1)].setFontSize(normal);
+				}
+			}
+		}
+	},
+	
 	updateScratchpad: func(i) {
 		me["Scratchpad"].setText(sprintf("%s", mcdu_scratchpad.scratchpads[i].scratchpad));
 		var color_selected = mcdu_scratchpad.scratchpads[i].scratchpadColour;

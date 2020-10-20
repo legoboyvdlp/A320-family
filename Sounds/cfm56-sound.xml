@@ -88,6 +88,48 @@
 	</engine>
 	
 	<engine>
+		<name>a320_shutdown_left</name>
+		<mode>once</mode>
+		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_shutdown.wav</path>
+		<condition>
+			<equals>
+				<property>/sim/sound/shutdown[0]</property>
+				<value>0</value>
+			</equals>
+		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>1</factor>
+		</volume>
+		<position>
+			<x>0</x>
+			<y>20</y>
+			<z>0</z>
+		</position>
+	</engine>
+	
+	<engine>
+		<name>a320_shutdown_right</name>
+		<mode>once</mode>
+		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_shutdown.wav</path>
+		<condition>
+			<equals>
+				<property>/sim/sound/shutdown[1]</property>
+				<value>0</value>
+			</equals>
+		</condition>
+		<volume>
+			<property>/sim/sound/internal-custom</property>
+			<factor>1</factor>
+		</volume>
+		<position>
+			<x>0</x>
+			<y>-20</y>
+			<z>0</z>
+		</position>
+	</engine>
+	
+	<engine>
 		<name>a320_cockpit_idle_1</name>
 		<mode>looped</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/cockpit/cfm-idle.wav</path>
@@ -502,9 +544,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -533,9 +574,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -564,9 +604,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -595,9 +634,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>-1</x>
@@ -626,9 +664,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>1</x>
@@ -657,9 +694,8 @@
 			</equals>
 		</condition>
 		<volume>
-			<property>/sim/sound/internal-custom</property>
-			<factor>-1</factor>
-			<offset>1</offset>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
 		</volume>
 		<orientation>
 			<x>1</x>
@@ -670,6 +706,50 @@
 			<outer-gain>0.01</outer-gain>
 		</orientation>
 		<reference-dist>60</reference-dist>
+		<position>
+			<x>0</x>
+			<y>-20</y>
+			<z>0</z>
+		</position>
+	</engine>
+	
+	<engine>
+		<name>a320_external_shutdown_left</name>
+		<mode>once</mode>
+		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/external/cfm-shutdown.wav</path>
+		<condition>
+			<equals>
+				<property>/sim/sound/shutdown[0]</property>
+				<value>0</value>
+			</equals>
+		</condition>
+		<volume>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
+		</volume>
+		<reference-dist>30</reference-dist>
+		<position>
+			<x>0</x>
+			<y>20</y>
+			<z>0</z>
+		</position>
+	</engine>
+	
+	<engine>
+		<name>a320_external_shutdown_right</name>
+		<mode>once</mode>
+		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/external/cfm-shutdown.wav</path>
+		<condition>
+			<equals>
+				<property>/sim/sound/shutdown[1]</property>
+				<value>0</value>
+			</equals>
+		</condition>
+		<volume>
+			<property>/sim/sound/external-custom</property>
+			<factor>1</factor>
+		</volume>
+		<reference-dist>30</reference-dist>
 		<position>
 			<x>0</x>
 			<y>-20</y>

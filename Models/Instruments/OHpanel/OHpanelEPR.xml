@@ -14,11 +14,11 @@
 		<condition>
 			<or>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc1</property>
+					<property>systems/electrical/bus/dc-1</property>
 					<value>25</value>
 				</greater-than-equals>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc2</property>
+					<property>systems/electrical/bus/dc-2</property>
 					<value>25</value>
 				</greater-than-equals>
 			</or>
@@ -42,11 +42,11 @@
 						</equals>
 						<or>
 							<greater-than-equals>
-								<property>systems/electrical/bus/dc1</property>
+								<property>systems/electrical/bus/dc-1</property>
 								<value>25</value>
 							</greater-than-equals>
 							<greater-than-equals>
-								<property>systems/electrical/bus/dc2</property>
+								<property>systems/electrical/bus/dc-2</property>
 								<value>25</value>
 							</greater-than-equals>
 						</or>
@@ -56,6 +56,11 @@
 				<property>controls/fadec/n1mode1</property>
 			</binding>
 			<binding>
+				<command>property-assign</command>
+				<property>controls/OH/protectors/eng1-n1</property>
+				<value>0</value>
+			</binding>
+			<binding>
 				<condition>
 					<equals>
 						<property>controls/OH/protectors/eng1-n1</property>
@@ -63,35 +68,30 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
 	
 	<animation>
 		<type>pick</type>
-		<object-name>Eng1N1Btn</object-name>
-		<object-name>Eng1N1Btn2O</object-name>
 		<object-name>Eng1N1Prot</object-name>
 		<action>
-			<button>1</button>
+			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-assign</command>
+				<command>property-toggle</command>
 				<property>controls/OH/protectors/eng1-n1</property>
-				<value>1</value>
 			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/OH/protectors/eng1-n1</property>
-					<value>0</value>
-				</binding>
-				<binding>
-					<command>nasal</command>
-					<script>setprop("sim/sounde/oh-cover", 1);</script>
-				</binding>
-			</mod-up>
+			<binding>
+				<condition>
+					<not>
+				<property>controls/OH/protectors/eng1-n1</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	
@@ -143,11 +143,11 @@
 						</equals>
 						<or>
 							<greater-than-equals>
-								<property>systems/electrical/bus/dc1</property>
+								<property>systems/electrical/bus/dc-1</property>
 								<value>25</value>
 							</greater-than-equals>
 							<greater-than-equals>
-								<property>systems/electrical/bus/dc2</property>
+								<property>systems/electrical/bus/dc-2</property>
 								<value>25</value>
 							</greater-than-equals>
 						</or>
@@ -157,6 +157,11 @@
 				<property>controls/fadec/n1mode2</property>
 			</binding>
 			<binding>
+				<command>property-assign</command>
+				<property>controls/OH/protectors/eng2-n1</property>
+				<value>0</value>
+			</binding>
+			<binding>
 				<condition>
 					<equals>
 						<property>controls/OH/protectors/eng2-n1</property>
@@ -164,35 +169,30 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
 	
 	<animation>
 		<type>pick</type>
-		<object-name>Eng2N1Btn</object-name>
-		<object-name>Eng2N1Btn2O</object-name>
 		<object-name>Eng2N1Prot</object-name>
 		<action>
-			<button>1</button>
+			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-assign</command>
+				<command>property-toggle</command>
 				<property>controls/OH/protectors/eng2-n1</property>
-				<value>1</value>
 			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/OH/protectors/eng2-n1</property>
-					<value>0</value>
-				</binding>
-				<binding>
-					<command>nasal</command>
-					<script>setprop("sim/sounde/oh-cover", 1);</script>
-				</binding>
-			</mod-up>
+			<binding>
+				<condition>
+					<not>
+				<property>controls/OH/protectors/eng2-n1</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	

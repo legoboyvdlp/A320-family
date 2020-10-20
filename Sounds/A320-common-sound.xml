@@ -7,7 +7,7 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/A320.wav</path>
 			<condition>
-				<property>/sim/current-view/internal</property>
+				<property>/sim/sound/internal-custom</property>
 			</condition>
 			<volume>
 				<property>/engines/engine[2]/n1</property>
@@ -26,7 +26,7 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/x320_apu.wav</path>
 			<condition>
-				<not><property>/sim/current-view/internal</property></not>
+				<not><property>/sim/sound/internal-custom</property></not>
 			</condition>
 			<volume>
 				<property>/engines/engine[2]/n1</property>
@@ -44,7 +44,7 @@
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/yellowHydPump.wav</path>
 			<condition>
-				<property>controls/hydraulic/elec-pump-yellow</property>
+				<property>/systems/hydraulic/sources/yellow-elec/pump-operate</property>
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
@@ -165,7 +165,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/FMGC/status/to-state</property>
+						<property>/FMGC/internal/to-state</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -935,6 +935,21 @@
 			<max-dist>100.0</max-dist>
 		</retard>
 		
+		<retard>
+			<name>retard2</name>
+			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>/sim/sound/warnings/retard</property> <!-- must be EMER CANCEL -->
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
+			</volume>
+			<reference-dist>20.0</reference-dist>
+			<max-dist>100.0</max-dist>
+		</retard>
+		
 		<apoff>
 			<name>apoff-looped</name>
 			<mode>looped</mode>
@@ -1064,13 +1079,14 @@
 			</condition>
 			<volume>
 				<property>/sim/sound/other/air-con</property>
+				<factor>6</factor>
 			</volume>
 		</ac>
 		
 		<wow>
 			<mode>once</mode>
 			<name>wow0</name>
-			<path>Aircraft/A320-family/Sounds/SASA/Touch-Main.wav</path> <!-- Nose seemed to harsh -->
+			<path>Aircraft/A320-family/Sounds/SASA/Touch-Main.wav</path>
 			<condition>
 				<property>gear/gear[0]/wow</property>
 			</condition>
@@ -1528,6 +1544,20 @@
 		</switch>
 		
 		<switch>
+            <name>Pushbutton</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/A320-family/Sounds/Cockpit/pushbutton.wav</path>
+            <condition>
+				<property>/sim/sounde/pushbutton</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+				<factor>0.25</factor>
+            </volume>
+        </switch>
+		
+		<switch>
 			<name>Flaps Lever</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/A320_flaplever.wav</path>
@@ -1538,6 +1568,21 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
+				<factor>0.75</factor>
+			</volume>
+		</switch>
+
+		<switch>
+			<name>Speedbrake Lever</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/SASA/A320_flaplever.wav</path>
+			<condition>
+				<and>
+					<property>/sim/sounde/spdbrk-click</property>
+					<property>/sim/current-view/internal</property>
+				</and>
+			</condition>
+			<volume>
 				<factor>0.75</factor>
 			</volume>
 		</switch>
@@ -1644,10 +1689,10 @@
 			<name>RelayBatt1</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
-			<property>/systems/electrical/sources/bat-1/contact</property>
+			<property>/sim/sounde/relay-batt-1</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.8</factor>
+				<factor>0.4</factor>
 			</volume>
 		</relay>
 		
@@ -1655,10 +1700,10 @@
 			<name>RelayBatt2</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
-			<property>/systems/electrical/sources/bat-2/contact</property>
+			<property>/sim/sounde/relay-batt-2</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.8</factor>
+				<factor>0.4</factor>
 			</volume>
 		</relay>
 		
@@ -1666,7 +1711,7 @@
 			<name>RelayEXT</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-external.wav</path>
-			<property>/systems/electrical/relay/ext-epc/contact-pos</property>
+			<property>/sim/sounde/relay-ext</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>
@@ -1677,7 +1722,7 @@
 			<name>RelayAPU</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-apu.wav</path>
-			<property>/systems/electrical/relay/apu-glc/contact-pos</property>
+			<property>/sim/sounde/relay-apu</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>
@@ -2019,5 +2064,65 @@
 			</condition>
 			<volume>0.05</volume>
 		</pushback>
+
+        <gear-screech>
+            <name>gear-screech</name>
+            <mode>once</mode>
+            <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
+            <condition>
+				<and>
+					<or>
+						<greater-than>
+							<property>/fdm/jsbsim/fcs/left-brake-cmd-norm</property>
+							<value>0.95</value>
+						</greater-than>
+						<greater-than>
+							<property>/fdm/jsbsim/fcs/right-brake-cmd-norm</property>
+							<value>0.95</value>
+						</greater-than>
+					</or>
+					<greater-than>
+						<property>/velocities/groundspeed-kt</property>
+						<value>5</value>
+					</greater-than>
+				</and>
+            </condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2</factor>
+			</volume>
+            <reference-dist>10</reference-dist>
+            <max-dist>200.0</max-dist>
+        </gear-screech>
+
+        <gear-screech-looped>
+            <name>gear-screech looped</name>
+            <mode>looped</mode>
+            <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
+            <condition>
+				<and>
+					<or>
+						<greater-than>
+							<property>/fdm/jsbsim/gear/unit[0]/slip-angle-deg</property>
+							<value>35</value>
+						</greater-than>
+						<greater-than>
+							<property>/fdm/jsbsim/gear/unit[0]/side_friction_coeff</property>
+							<value>0.95</value>
+						</greater-than>
+					</or>
+					<greater-than>
+						<property>/velocities/groundspeed-kt</property>
+						<value>5</value>
+					</greater-than>
+				</and>
+            </condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2</factor>
+			</volume>
+            <reference-dist>10</reference-dist>
+            <max-dist>200.0</max-dist>
+        </gear-screech-looped>
 	  </fx>
 </PropertyList>

@@ -1,5 +1,6 @@
 var latRev = {
 	title: [nil, nil, nil],
+	titleColour: "wht",
 	subtitle: [nil, nil],
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
@@ -36,6 +37,7 @@ var latRev = {
 	_checkTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			me.L6 = [" F-PLN", " TMPY", "yel"];
+			me.titleColour = "yel";
 			me.arrowsColour[0][5] = "yel";
 			me.R2[2] = "yel";
 			me.R3[2] = "yel";
@@ -50,7 +52,7 @@ var latRev = {
 			me.L3 = [" HOLD", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R1 = ["FIX INFO ", nil, "wht"];
-			me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
+			me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
 			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
@@ -75,7 +77,7 @@ var latRev = {
 				me.L2 = [" OFFSET", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R2 = ["[      ]°/[    ]°/[  ]", "LL XING/INCR/NO", "blu"];
+				me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
 				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
@@ -130,7 +132,7 @@ var latRev = {
 		
 		var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.index + 1, me.computer);
 		if (returny == 0) {
-			notInDataBase(me.computer);
+			mcdu_message(me.computer, "NOT IN DATA BASE");
 		} elsif (returny == 1) {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		} else {

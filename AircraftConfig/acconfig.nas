@@ -21,60 +21,41 @@ var spinning = maketimer(0.05, func {
 });
 
 var failReset = func {
-	# Put IntegratedSystems Fail Reset Functions here
+	systems.ELEC.resetFail();
+	systems.PNEU.resetFail();
 }
 
 var failResetOld = func {
-	setprop("/systems/failures/elac1", 0);
-	setprop("/systems/failures/elac2", 0);
-	setprop("/systems/failures/sec1", 0);
-	setprop("/systems/failures/sec2", 0);
-	setprop("/systems/failures/sec3", 0);
-	setprop("/systems/failures/fac1", 0);
-	setprop("/systems/failures/fac2", 0);
+	setprop("/systems/failures/fctl/elac1", 0);
+	setprop("/systems/failures/fctl/elac2", 0);
+	setprop("/systems/failures/fctl/sec1", 0);
+	setprop("/systems/failures/fctl/sec2", 0);
+	setprop("/systems/failures/fctl/sec3", 0);
+	setprop("/systems/failures/fctl/fac1", 0);
+	setprop("/systems/failures/fctl/fac2", 0);
+	setprop("/systems/failures/fctl/rtlu-1", 0);
+	setprop("/systems/failures/fctl/rtlu-2", 0);
 	setprop("/systems/failures/aileron-left", 0);
 	setprop("/systems/failures/aileron-right", 0);
 	setprop("/systems/failures/elevator-left", 0);
 	setprop("/systems/failures/elevator-right", 0);
-	setprop("/systems/failures/rudder", 0);
-	setprop("/systems/failures/spoiler-l1", 0);
-	setprop("/systems/failures/spoiler-l2", 0);
-	setprop("/systems/failures/spoiler-l3", 0);
-	setprop("/systems/failures/spoiler-l4", 0);
-	setprop("/systems/failures/spoiler-l5", 0);
-	setprop("/systems/failures/spoiler-r1", 0);
-	setprop("/systems/failures/spoiler-r2", 0);
-	setprop("/systems/failures/spoiler-r3", 0);
-	setprop("/systems/failures/spoiler-r4", 0);
-	setprop("/systems/failures/spoiler-r5", 0);
-	setprop("/systems/failures/elec-ac-ess", 0);
-	setprop("/systems/failures/elec-batt1", 0);
-	setprop("/systems/failures/elec-batt2", 0);
-	setprop("/systems/failures/elec-galley", 0);
-	setprop("/systems/failures/elec-genapu", 0);
-	setprop("/systems/failures/elec-gen1", 0);
-	setprop("/systems/failures/elec-gen2", 0);
-	setprop("/systems/failures/bleed-apu", 0);
-	setprop("/systems/failures/bleed-ext", 0);
-	setprop("/systems/failures/bleed-eng1", 0);
-	setprop("/systems/failures/bleed-eng2", 0);
-	setprop("/systems/failures/pack1", 0);
-	setprop("/systems/failures/pack2", 0);
+	setprop("/systems/failures/spoilers/spoiler-l1", 0);
+	setprop("/systems/failures/spoilers/spoiler-l2", 0);
+	setprop("/systems/failures/spoilers/spoiler-l3", 0);
+	setprop("/systems/failures/spoilers/spoiler-l4", 0);
+	setprop("/systems/failures/spoilers/spoiler-l5", 0);
+	setprop("/systems/failures/spoilers/spoiler-r1", 0);
+	setprop("/systems/failures/spoilers/spoiler-r2", 0);
+	setprop("/systems/failures/spoilers/spoiler-r3", 0);
+	setprop("/systems/failures/spoilers/spoiler-r4", 0);
+	setprop("/systems/failures/spoilers/spoiler-r5", 0);
 	setprop("/systems/failures/hyd-blue", 0);
 	setprop("/systems/failures/hyd-green", 0);
 	setprop("/systems/failures/hyd-yellow", 0);
-	setprop("/systems/failures/ptu", 0);
 	setprop("/systems/failures/pump-blue", 0);
 	setprop("/systems/failures/pump-green", 0);
 	setprop("/systems/failures/pump-yellow-eng", 0);
 	setprop("/systems/failures/pump-yellow-elec", 0);
-	setprop("/systems/failures/tank0pump1", 0);
-	setprop("/systems/failures/tank0pump2", 0);
-	setprop("/systems/failures/tank1pump1", 0);
-	setprop("/systems/failures/tank1pump2", 0);
-	setprop("/systems/failures/tank2pump1", 0);
-	setprop("/systems/failures/tank2pump2", 0);
-	setprop("/systems/failures/fuelmode", 0);
 	setprop("/systems/failures/cargo-aft-fire", 0);
 	setprop("/systems/failures/cargo-fwd-fire", 0);
 	setprop("/systems/failures/engine-left-fire", 0);
@@ -121,6 +102,7 @@ var error_mismatch = gui.Dialog.new("/sim/gui/dialogs/acconfig/error/mismatch/di
 var fuel_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/fuel/dialog", "Aircraft/A320-family/AircraftConfig/fuel.xml");
 var groundservices_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/groundsrvc/dialog", "Aircraft/A320-family/AircraftConfig/groundservices.xml");
 var loadflightplan_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/loadfpln/dialog","Aircraft/A320-family/AircraftConfig/load-flightplan.xml");
+var simbrief_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/simbrief/dialog","Aircraft/A320-family/AircraftConfig/simbrief.xml");
 var du_quality = gui.Dialog.new("/sim/gui/dialogs/acconfig/du-quality/dialog", "Aircraft/A320-family/AircraftConfig/du-quality.xml");
 var rendering_dlg = gui.Dialog.new("/sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
 spinning.start();
@@ -131,6 +113,7 @@ var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
 setprop("/systems/acconfig/options/fo-view", 0);
+setprop("/systems/acconfig/options/simbrief-username", "");
 
 setlistener("/systems/acconfig/new-revision", func {
 	if (getprop("/systems/acconfig/new-revision") > current_revision) {
@@ -247,6 +230,7 @@ var readSettings = func {
 	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
 	setprop("/options/system/fo-view", getprop("/systems/acconfig/options/fo-view"));
+	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
 }
 
 var writeSettings = func {
@@ -258,6 +242,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/autopush/show-route", getprop("/sim/model/autopush/route/show"));
 	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
 	setprop("/systems/acconfig/options/fo-view", getprop("/options/system/fo-view"));
+	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 
@@ -375,11 +360,11 @@ var beforestart_b = func {
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
 	setprop("/controls/electrical/switches/gen-2", 1);
-	setprop("/controls/pneumatic/switches/bleedapu", 1);
-	setprop("/controls/pneumatic/switches/bleed1", 1);
-	setprop("/controls/pneumatic/switches/bleed2", 1);
-	setprop("/controls/pneumatic/switches/pack1", 1);
-	setprop("/controls/pneumatic/switches/pack2", 1);
+	setprop("/controls/pneumatics/switches/apu", 1);
+	setprop("/controls/pneumatics/switches/bleed-1", 1);
+	setprop("/controls/pneumatics/switches/bleed-2", 1);
+	setprop("/controls/pneumatics/switches/pack-1", 1);
+	setprop("/controls/pneumatics/switches/pack-2", 1);
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
@@ -462,11 +447,11 @@ var taxi_b = func {
 	setprop("/controls/electrical/switches/galley", 1);
 	setprop("/controls/electrical/switches/gen-1", 1);
 	setprop("/controls/electrical/switches/gen-2", 1);
-	setprop("/controls/pneumatic/switches/bleedapu", 1);
-	setprop("/controls/pneumatic/switches/bleed1", 1);
-	setprop("/controls/pneumatic/switches/bleed2", 1);
-	setprop("/controls/pneumatic/switches/pack1", 1);
-	setprop("/controls/pneumatic/switches/pack2", 1);
+	setprop("/controls/pneumatics/switches/apu", 1);
+	setprop("/controls/pneumatics/switches/bleed-1", 1);
+	setprop("/controls/pneumatics/switches/bleed-2", 1);
+	setprop("/controls/pneumatics/switches/pack-1", 1);
+	setprop("/controls/pneumatics/switches/pack-2", 1);
 	setprop("/controls/adirs/ir[0]/knob","1");
 	setprop("/controls/adirs/ir[1]/knob","1");
 	setprop("/controls/adirs/ir[2]/knob","1");
@@ -497,7 +482,7 @@ var taxi_b = func {
 	if (pts.Instrumentation.Altimeter.std.getBoolValue()) {
 		libraries.toggleSTD();
 	}
-	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/pressure-sea-level-inhg"));
+	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
@@ -512,7 +497,7 @@ var taxi_d = func {
 	# After Start items.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);
-	setprop("/controls/pneumatic/switches/bleedapu", 0);
+	setprop("/controls/pneumatics/switches/apu", 0);
 	setprop("/controls/gear/brake-left", 0);
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
@@ -527,7 +512,7 @@ var takeoff = func {
 		# The same as taxi, except we set some things afterwards.
 		taxi();
 		var eng_one_chk_c = setlistener("/engines/engine[0]/state", func {
-			if (getprop("/engines/engine[0]/state") == 3) {
+			if (pts.Engines.Engine.state[0].getValue() == 3) {
 				removelistener(eng_one_chk_c);
 				setprop("/controls/switches/strobe", 1.0);
 				setprop("/controls/lighting/taxi-light-switch", 1);
@@ -538,7 +523,7 @@ var takeoff = func {
 				setprop("/controls/atc/mode-knob", 4);
 				atc.transponderPanel.modeSwitch(5);
 				setprop("/controls/flight/elevator-trim", -0.07);
-				systems.arm_autobrake(3);
+				systems.Autobrake.arm_autobrake(3);
 				setprop("/ECAM/to-config-test", 1);
 				settimer(func {
 					setprop("/ECAM/to-config-test", 0);

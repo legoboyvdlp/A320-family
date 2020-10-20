@@ -5,6 +5,8 @@
 <system name="A320: Electrical">	
 	
 	<property value="0">/systems/electrical/some-electric-thingie/rat-deploy</property>
+	<property value="0">/systems/electrical/relay/gen-1-glc/contact-pos</property>
+	<property value="0">/systems/electrical/relay/gen-2-glc/contact-pos</property>
 	
 	<channel name="Main Electrical" execrate="8">
 		
@@ -172,9 +174,11 @@
 			<default value="0"/>
 			<test logic="AND" value="40">
 				/systems/electrical/sources/bat-1/load-kw ne 0
+				/systems/electrical/sources/bat-1/direction eq 1
 			</test>
 			<test logic="AND" value="2">
 				/systems/electrical/sources/bat-1/contact eq 1
+				/systems/electrical/sources/bat-1/direction eq -1
 			</test>
 		</switch>
 		
@@ -342,9 +346,11 @@
 			<default value="0"/>
 			<test logic="AND" value="40">
 				/systems/electrical/sources/bat-2/load-kw ne 0
+				/systems/electrical/sources/bat-2/direction eq 1
 			</test>
 			<test logic="AND" value="2">
 				/systems/electrical/sources/bat-2/contact eq 1
+				/systems/electrical/sources/bat-2/direction eq -1
 			</test>
 		</switch>
 		
@@ -357,7 +363,6 @@
 		<switch name="/systems/electrical/sources/idg-1/working">
 			<default value="1"/>
 			<test logic="OR" value="0">
-				/controls/engines/engine[0]/fire-btn eq 1
 				/systems/failures/electrical/idg-1 eq 1
 				/controls/electrical/switches/idg-1-disc eq 0
 			</test>
@@ -376,8 +381,8 @@
 				</quotient>
 			</function>
 			<clipto>
-				<min>1.3</min>
-				<max>2.8</max>
+				<min>1.315</min>
+				<max>2.667</max>
 			</clipto>
 		</fcs_function>
 		
@@ -419,7 +424,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/failures/electrical/gen-1 ne 1
-				/systems/electrical/sources/idg-1/csd-rpm ge 11500
+				/controls/engines/engine[0]/fire-btn eq 0
+				/systems/electrical/sources/idg-1/drive-rpm ge 4730
 			</test>
 		</switch>
 		
@@ -442,7 +448,6 @@
 		<switch name="/systems/electrical/sources/idg-2/working">
 			<default value="1"/>
 			<test logic="OR" value="0">
-				/controls/engines/engine[1]/fire-btn eq 1
 				/systems/failures/electrical/idg-2 eq 1
 				/controls/electrical/switches/idg-2-disc eq 0
 			</test>
@@ -461,8 +466,8 @@
 				</quotient>
 			</function>
 			<clipto>
-				<min>1.3</min>
-				<max>2.8</max>
+				<min>1.315</min>
+				<max>2.667</max>
 			</clipto>
 		</fcs_function>
 		
@@ -504,7 +509,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/failures/electrical/gen-2 ne 1
-				/systems/electrical/sources/idg-2/csd-rpm ge 11500
+				/controls/engines/engine[1]/fire-btn eq 0
+				/systems/electrical/sources/idg-2/drive-rpm ge 4730
 			</test>
 		</switch>
 		
@@ -519,27 +525,15 @@
 		</pure_gain>
 		
 		<!-- APU gen -->
-		<pure_gain name="/systems/electrical/sources/apu/drive-rpm-input">
+		<pure_gain name="/systems/electrical/sources/apu/drive-rpm">
 			<input>/engines/engine[2]/n1</input>
 			<gain>240.34</gain>
-		</pure_gain>
-		
-		<switch name="/systems/electrical/sources/apu/working">
-			<default value="1"/>
-			<test logic="OR" value="0">
-				/controls/apu/fire-btn eq 1
-			</test>
-		</switch>
-		
-		<pure_gain name="/systems/electrical/sources/apu/drive-rpm">
-			<input>/systems/electrical/sources/apu/drive-rpm-input</input>
-			<gain>/systems/electrical/sources/apu/working</gain>
 		</pure_gain>
 		
 		<fcs_function name="/systems/electrical/sources/apu/pmg-volt">
 			<function>
 				<product>
-					<property>/systems/electrical/sources/apu/drive-rpm-input</property>
+					<property>/systems/electrical/sources/apu/drive-rpm</property>
 					<quotient>
 						<value>115</value>
 						<value>24000</value>
@@ -552,7 +546,7 @@
 			<function>
 				<quotient>
 					<product>
-						<property>/systems/electrical/sources/apu/drive-rpm-input</property>
+						<property>/systems/electrical/sources/apu/drive-rpm</property>
 						<value>2</value> <!-- Number of poles in generator -->
 					</product>
 					<value>120</value>
@@ -563,9 +557,10 @@
 		<switch name="/systems/electrical/sources/apu/gcr-relay">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/controls/apu/fire-btn ne 1
 				/controls/electrical/switches/apu eq 1
 				/systems/failures/electrical/apu ne 1
-				/systems/electrical/sources/apu/drive-rpm-input ge 23000
+				/systems/electrical/sources/apu/drive-rpm ge 22800
 			</test>
 		</switch>
 		
@@ -652,6 +647,15 @@
 			<gain>/systems/electrical/sources/si-1/inverter-gain</gain>
 		</pure_gain>
 		
+		<switch name="/systems/electrical/sources/si-1/fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/bat-1/volt lt 23.5
+				/systems/electrical/sources/si-1/output-volt lt 110
+				/systems/electrical/sources/si-1/output-volt ge 120
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/si-1/output-hertz">
 			<default value="0"/>
 			<test logic="AND" value="400">
@@ -686,7 +690,7 @@
 				/systems/electrical/bus/ac-2 ne 0
 			</test>
 			<test logic="AND" value="1">
-				/instrumentation/airspeed-indicator/indicated-speed-kt gt 100
+				/instrumentation/airspeed-indicator/indicated-speed-kt ge 100
 				/systems/electrical/bus/ac-1 eq 0
 				/systems/electrical/bus/ac-2 eq 0
 				gear/unit[0]/WOW eq 0
@@ -757,15 +761,69 @@
 		</switch>
 		
 		<!-- Source Relays -->
-		<switch name="/systems/electrical/relay/gen-1-glc/contact-pos">
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-powered">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/sources/idg-1/pmg-volt ge 110
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-voltage-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-1/gcu-1-voltage-trip eq 1
 				/controls/electrical/switches/gen-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-1-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-1/output-volt lt 110
+					/systems/electrical/sources/idg-1/output-volt gt 130
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-frequency-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-1/gcu-1-frequency-trip eq 1
+				/controls/electrical/switches/gen-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-1-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-1/output-hertz lt 363
+					/systems/electrical/sources/idg-1/output-hertz gt 433
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-1/gcu-1-fault">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+				/sim/time/elapsed-sec lt 10
+			</test>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/idg-1/gcu-1-voltage-trip eq 1
+				/systems/electrical/sources/idg-1/gcu-1-frequency-trip eq 1
+				/systems/electrical/sources/idg-1/drive-rpm lt 4730
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/gen-1-glc/contact-pos">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/sim/time/elapsed-sec lt 10
+			</test>	
+			<test logic="AND" value="1">
+				/controls/electrical/switches/gen-1 eq 1
+				/systems/electrical/sources/idg-1/output-hertz ge 363
+				/systems/electrical/sources/idg-1/output-hertz le 433
 				/systems/electrical/sources/idg-1/output-volt ge 110
 				/systems/electrical/sources/idg-1/output-volt le 130
-				/systems/electrical/sources/idg-1/output-hertz ge 390
-				/systems/electrical/sources/idg-1/output-hertz le 410
-				/controls/electrical/switches/gen-1-line-contactor ne 1
+				/systems/electrical/sources/idg-1/gcu-1-fault ne 1 <!-- software trip -->
 			</test>
 		</switch>
 		
@@ -776,14 +834,69 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/electrical/relay/gen-2-glc/contact-pos">
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-powered">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/sources/idg-2/pmg-volt ge 110
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-voltage-trip">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-2/gcu-2-voltage-trip eq 1
 				/controls/electrical/switches/gen-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-2-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-2/output-volt lt 110
+					/systems/electrical/sources/idg-2/output-volt gt 130
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-frequency-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/idg-2/gcu-2-frequency-trip eq 1
+				/controls/electrical/switches/gen-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/gen-2-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/idg-2/output-hertz lt 363
+					/systems/electrical/sources/idg-2/output-hertz gt 433
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/idg-2/gcu-2-fault">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+				/sim/time/elapsed-sec lt 10
+			</test>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/idg-2/gcu-2-voltage-trip eq 1
+				/systems/electrical/sources/idg-2/gcu-2-frequency-trip eq 1
+				/systems/electrical/sources/idg-2/drive-rpm lt 4730
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/relay/gen-2-glc/contact-pos">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/sim/time/elapsed-sec lt 10
+			</test>	
+			<test logic="AND" value="1">
+				/controls/electrical/switches/gen-2 eq 1
+				/systems/electrical/sources/idg-2/output-hertz ge 363
+				/systems/electrical/sources/idg-2/output-hertz le 433
 				/systems/electrical/sources/idg-2/output-volt ge 110
-				/systems/electrical/sources/idg-2/output-volt lt 130
-				/systems/electrical/sources/idg-2/output-hertz ge 390
-				/systems/electrical/sources/idg-2/output-hertz le 410
+				/systems/electrical/sources/idg-2/output-volt le 130
+				/systems/electrical/sources/idg-2/gcu-2-fault ne 1 <!-- software trip -->
 			</test>
 		</switch>
 		
@@ -810,16 +923,70 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/sources/apu/gcu-powered">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				/systems/electrical/sources/apu/pmg-volt ge 101.5
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/apu/gcu-voltage-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/apu/gcu-voltage-trip eq 1
+				/controls/electrical/switches/apu eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/apu-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/apu/output-volt lt 101.5
+					/systems/electrical/sources/apu/output-volt gt 130
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/apu/gcu-frequency-trip">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/sources/apu/gcu-frequency-trip eq 1
+				/controls/electrical/switches/apu eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/relay/apu-glc/contact-pos eq 1
+				<test logic="OR">
+					/systems/electrical/sources/apu/output-hertz lt 361
+					/systems/electrical/sources/apu/output-hertz gt 435
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/sources/apu/gcu-fault">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+				/sim/time/elapsed-sec lt 10
+			</test>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/apu/gcu-voltage-trip eq 1
+				/systems/electrical/sources/apu/gcu-frequency-trip eq 1
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/relay/apu-glc/contact-pos">
 			<default value="0"/>
+			<test logic="OR" value="0">
+				/sim/time/elapsed-sec lt 10
+			</test>	
 			<test logic="AND" value="1">
 				/controls/apu/master eq 1
 				/controls/electrical/switches/apu eq 1
-				/systems/electrical/sources/apu/output-volt ge 110
-				/systems/electrical/sources/apu/output-volt lt 130
-				/systems/electrical/sources/apu/output-hertz ge 390
-				/systems/electrical/sources/apu/output-hertz le 410
+				/systems/electrical/sources/apu/output-volt ge 101.5
+				/systems/electrical/sources/apu/output-volt le 130
+				/systems/electrical/sources/apu/output-hertz ge 361
+				/systems/electrical/sources/apu/output-hertz le 435
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
+				/systems/electrical/sources/apu/gcu-fault ne 1 <!-- software trip -->
 			</test>
 		</switch>
 		
@@ -903,10 +1070,24 @@
 		</switch>
 		
 		<!-- AC ESS Relays -->
+		<switch name="/systems/electrical/relay/ac-ess-feed-1/auto-switch">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/ac-1 lt 110
+			</test>
+		</switch>
+		
+		<actuator name="/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer">
+			<input>/systems/electrical/relay/ac-ess-feed-1/auto-switch</input>
+			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.33333333333</rate_limit> <!-- 3 seconds -->
+		</actuator>
+		
 		<switch name="/systems/electrical/relay/ac-ess-feed-1/contact-pos"> <!-- TODO: via 1XC CB on 123VU -->
 			<default value="0"/>
 			<test logic="AND" value="1"> <!-- old AC ESS FEED supply mode -->
 				/controls/electrical/switches/ac-ess-feed eq 0
+				/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer lt 1
 				/controls/electrical/switches/emer-gen-test eq 0
 			</test>
 		</switch>
@@ -921,7 +1102,10 @@
 		<switch name="/systems/electrical/relay/ac-ess-feed-2/contact-pos"> <!-- TODO: via 2XC CB on 123VU -->
 			<default value="0"/>
 			<test logic="AND" value="1"> <!-- old AC ESS FEED supply mode -->
-				/controls/electrical/switches/ac-ess-feed eq 1
+				<test logic="OR">
+					/controls/electrical/switches/ac-ess-feed eq 1
+					/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer eq 1
+				</test>
 				/controls/electrical/switches/emer-gen-test eq 0
 			</test>
 		</switch>
@@ -989,13 +1173,38 @@
 			</test>
 		</switch>
 		
+		<!-- Galleys -->
+		<fcs_function name="/systems/electrical/some-electric-thingie/galley-shed-sum">
+			<function>
+				<sum>
+					<property>/systems/electrical/relay/apu-glc/contact-pos</property>
+					<property>/systems/electrical/relay/ext-epc/contact-pos</property>
+					<property>/systems/electrical/relay/gen-1-glc/contact-pos</property>
+					<property>/systems/electrical/relay/gen-2-glc/contact-pos</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<switch name="/systems/electrical/relay/galley-bus-1-shed-switch/contact-pos">
-			<default value="1"/>
-			<test logic="OR" value="0">
+			<default value="0"/>
+			<test logic="AND" value="1">
 				/controls/electrical/switches/galley eq 1
-				<test logic="AND">
-					/systems/electrical/relay/gen-1-glc/output ne 0
-					/systems/electrical/relay/gen-2-glc/output ne 0
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/wow eq 0
+						/systems/electrical/some-electric-thingie/galley-shed-sum gt 1
+					</test>
+					<test logic="AND">
+						/gear/gear[1]/wow eq 1
+						<test logic="OR">
+							/systems/electrical/relay/apu-glc/output ge 110
+							/systems/electrical/relay/ext-epc/output ge 110
+							<test logic="AND">
+								/systems/electrical/relay/gen-1-glc/output ge 110
+								/systems/electrical/relay/gen-2-glc/output ge 110
+							</test>
+						</test>
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -1008,12 +1217,25 @@
 		</switch>
 		
 		<switch name="/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos">
-			<default value="1"/>
-			<test logic="OR" value="0">
+			<default value="0"/>
+			<test logic="AND" value="1">
 				/controls/electrical/switches/galley eq 1
-				<test logic="AND">
-					/systems/electrical/relay/gen-1-glc/output ne 0
-					/systems/electrical/relay/gen-2-glc/output ne 0
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/wow eq 0
+						/systems/electrical/some-electric-thingie/galley-shed-sum gt 1
+					</test>
+					<test logic="AND">
+						/gear/gear[1]/wow eq 1
+						<test logic="OR">
+							/systems/electrical/relay/apu-glc/output ge 110
+							/systems/electrical/relay/ext-epc/output ge 110
+							<test logic="AND">
+								/systems/electrical/relay/gen-1-glc/output ge 110
+								/systems/electrical/relay/gen-2-glc/output ge 110
+							</test>
+						</test>
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -1022,6 +1244,14 @@
 			<default value="0"/>
 			<test value="/systems/electrical/bus/ac-2">
 				/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/electrical/some-electric-thingie/galley-shed">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/relay/galley-bus-1-shed-switch/contact-pos eq 0
+				/systems/electrical/relay/galley-bus-2-shed-switch/contact-pos eq 0
 			</test>
 		</switch>
 		
@@ -1346,11 +1576,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/relay/dc-ess-feed-tr/contact-pos eq 0
-				/systems/electrical/relay/tr-contactor-1/contact-pos eq 1
-				/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 1
-				/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 0
+				<test logic="OR">
+					/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos eq 0
+					/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos eq 0
+				</test>
 				/controls/electrical/switches/emer-gen-test eq 0
-				/systems/electrical/bus/dc-1 ge 25
 			</test>
 		</switch>
 		
@@ -1367,13 +1597,6 @@
 			<test logic="OR" value="0"> <!-- TODO: confirm these conditions are for galley, NOT ESS -->
 				/systems/electrical/sources/si-1/inverter-active eq 1
 				/controls/electrical/switches/emer-gen-test eq 1
-			</test>
-		</switch>
-		
-		<switch name="/systems/electrical/relay/dc-ess-shed-switch/output">
-			<default value="0"/>
-			<test value="/systems/electrical/bus/dc-ess">
-				/systems/electrical/relay/dc-ess-shed-switch/contact-pos eq 1
 			</test>
 		</switch>
 		
@@ -1495,7 +1718,7 @@
 			</test>
 			<test logic="OR" value="3"> <!-- BAT -->
 				<test logic="AND">
-					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 					<test logic="OR">
 						/controls/electrical/switches/bat-1 eq 1
 						/controls/electrical/switches/bat-2 eq 1
@@ -1527,7 +1750,7 @@
             </test>
             <test logic="OR" value="/systems/electrical/sources/bat-1/volt">
 				<test logic="AND">
-					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 					/controls/electrical/switches/bat-1 eq 1
 					/systems/electrical/bus/dc-bat-src eq 3
 					/systems/electrical/sources/bat-1/volt ge 25
@@ -1542,7 +1765,7 @@
             </test>
             <test logic="OR" value="/systems/electrical/sources/bat-2/volt">
 				<test logic="AND">
-					/instrumentation/airspeed-indicator/indicated-speed-kt lt 50
+					/instrumentation/airspeed-indicator/indicated-speed-kt lt 100
 					/controls/electrical/switches/bat-2 eq 1
 					/systems/electrical/bus/dc-bat-src eq 3
 					/systems/electrical/sources/bat-2/volt ge 25
@@ -1576,7 +1799,7 @@
 		
 		<pure_gain name="/systems/electrical/bus/dc-ess-shed">
 			<input>/systems/electrical/bus/dc-ess</input>
-			<gain>1</gain>
+			<gain>/systems/electrical/relay/dc-ess-shed-switch/contact-pos</gain>
 		</pure_gain>
 		
 		<!-- Hot Buses -->
@@ -1649,7 +1872,6 @@
 		</switch>
 		
 		<actuator name="/systems/electrical/some-electric-thingie/static-inverter-timer">
-            <description>Timer for the ECAM system</description>
             <input>/systems/electrical/relay/ac-ess-feed-inverter/contact-pos</input>
             <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
@@ -1700,11 +1922,16 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/electrical/switches/apu eq 1
-				/systems/electrical/relay/apu-glc/contact-pos eq 0
-				/systems/electrical/relay/ext-epc/contact-pos eq 0
-				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
-				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
-				/systems/electrical/sources/apu/drive-rpm gt 2000
+				<test logic="OR">
+					/systems/electrical/sources/apu/gcu-fault eq 1
+					<test logic="AND">
+						/systems/electrical/relay/apu-glc/contact-pos eq 0
+						/systems/electrical/relay/ext-epc/contact-pos eq 0
+						/systems/electrical/relay/gen-1-glc/contact-pos eq 0
+						/systems/electrical/relay/gen-2-glc/contact-pos eq 0
+					</test>
+				</test>
+				/systems/electrical/sources/apu/drive-rpm gt 22800
 			</test>
 		</switch>
 		
@@ -1731,7 +1958,10 @@
 			<default value="0"/>
 			<test value="1">
 				/controls/electrical/switches/gen-1 eq 1
-				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
+				<test logic="OR">
+					/systems/electrical/sources/idg-1/gcu-1-fault eq 1
+					/systems/electrical/relay/gen-1-glc/contact-pos eq 0
+				</test>
 			</test>
 		</switch>
 		
@@ -1739,7 +1969,10 @@
 			<default value="0"/>
 			<test value="1">
 				/controls/electrical/switches/gen-2 eq 1
-				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
+				<test logic="OR">
+					/systems/electrical/sources/idg-2/gcu-2-fault eq 1
+					/systems/electrical/relay/gen-2-glc/contact-pos eq 0
+				</test>
 			</test>
 		</switch>
 		
@@ -1747,7 +1980,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/failures/electrical/idg-1 eq 1
-				/systems/electrical/sources/idg-1/csd-rpm gt 2000
+				/systems/electrical/sources/idg-1/drive-rpm gt 2000
 			</test>
 			<test logic="AND" value="1">
 				/controls/electrical/switches/idg-1-disc-momentary eq 1
@@ -1758,7 +1991,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/failures/electrical/idg-2 eq 1
-				/systems/electrical/sources/idg-2/csd-rpm gt 2000
+				/systems/electrical/sources/idg-2/drive-rpm gt 2000
 			</test>
 			<test logic="AND" value="1">
 				/controls/electrical/switches/idg-2-disc-momentary eq 1

@@ -6,7 +6,7 @@
 # Distribute under the terms of GPLv2.
 
 # Conversion factor pounds to kilogram
-LBS2KGS = 0.4535924;
+var LBS2KGS = 0.4535924;
 
 if (pts.Sim.aero.getValue() == "A320-200-CFM") {
 	max_fuel = 42.8;
@@ -63,8 +63,6 @@ var refuelClass = {
 
 		me._svg = me._root.createChild("group");
 		canvas.parsesvg(me._svg, "Aircraft/A320-family/gui/dialogs/refuel.svg");
-
-		amount.setValue(math.round((pts.Consumables.Fuel.totalFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
 		
 		me._HI_LVL_L = me._svg.getElementById("HI-LVL-L");
 		me._HI_LVL_C = me._svg.getElementById("HI-LVL-C");
@@ -405,8 +403,8 @@ var refuelClass = {
 				me._Mode_refuel.show();
 				me._Mode_off.hide();
 				me._Mode_defuel.hide();
+				systems.fuelSvc.Nodes.requestFuelLbs.setValue(pts.Consumables.Fuel.totalFuelLbs.getValue());
 				systems.fuelSvc.refuel();
-				
 			}
 		});
 
@@ -484,6 +482,9 @@ var refuelClass = {
 			me._timerUp.stop();
 		});
 
+
+		amount.setValue(math.round((systems.fuelSvc.Nodes.requestFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
+		
 		me._timerf();
 		me._timer.start();
 	},
@@ -589,25 +590,45 @@ var refuelClass = {
 	_fuelAdjustDn: func() {
 		target = amount.getValue();
 		if (target > 0) {
-			amount.setValue(target - 0.1);
-			if (target - 0.1 >= 10.0) {
-				me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+			if (acconfig_weight_kgs.getValue() == 1) {
+				amount.setValue(target - 0.1 * LBS2KGS);
+				if ((target - 0.1) * LBS2KGS >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", (target - 0.1) * LBS2KGS));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", (target - 0.1) * LBS2KGS));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue((((target - 0.1) * LBS2KGS) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			} else {
-				me._FQI_pre.setText(sprintf("%2.2f", target - 0.1));
+				amount.setValue(target - 0.1);
+				if (target - 0.1 >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", target - 0.1));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			}
-			systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
 	_fuelAdjustUp: func() {
 		target = amount.getValue();
 		if (target < max_fuel) {
-			amount.setValue(target + 0.1);
-			if (target + 0.1 >= 10.0) {
-				me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+			if (acconfig_weight_kgs.getValue() == 1) {
+				amount.setValue(target + 0.1);
+				if ((target + 0.1) * LBS2KGS >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", (target + 0.1) * LBS2KGS));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", (target + 0.1) * LBS2KGS));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue((((target + 0.1) * LBS2KGS) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			} else {
-				me._FQI_pre.setText(sprintf("%2.2f", target + 0.1));
+				amount.setValue(target + 0.1);
+				if (target + 0.1 >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", target + 0.1));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			}
-			systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
 	_onClose: func() {

@@ -201,17 +201,20 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	<system file="a320-fcs"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
+	<system file="a320-fwc-phases"/>
 	<system file="a320-spoiler"/>
 	<system file="a320-electrical"/>
 	<system file="a320-hydraulic"/>
+    <system file="a320-pneumatic"/>
+    <system file="a320-aircond"/> <!-- after pneu -->
 	<system file="a320-lights"/>
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>
 	<system file="a320-apu"/>
 	<system file="a320-fmgc"/>
+	<system file="a320-misc"/>
 	
 	<flight_control name="none"/>
-	
 	<aerodynamics file="Systems/a320-aerodynamics.xml"/>
 	<external_reactions file="Systems/a320-external-reactions"/>
 

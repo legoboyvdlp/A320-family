@@ -1,0 +1,879 @@
+<!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp) -->
+
+<system name="A320: Air Conditioning">
+	<!-- JIC -->
+	<property value="0">/systems/air-conditioning/packs/pack-flow-1-norm</property>
+	<property value="0">/systems/air-conditioning/packs/pack-flow-2-norm</property>
+	
+	<channel name="Valves" execrate="8">
+	
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-1-cmd">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/air-conditioning/packs/pack-1-outlet-temp ge 260
+				/controls/engines/engine[0]/fire-btn eq 1
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-1 ne 0
+							/systems/pneumatics/valves/starter-valve-2 ne 0
+						</test>
+						/gear/gear[1]/wow eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-1 ne 0
+							<test logic="AND">
+								/systems/pneumatics/valves/crossbleed-valve eq 1
+								/systems/pneumatics/valves/starter-valve-2 ne 0
+							</test>
+						</test>
+						/gear/gear[1]/wow eq 0
+					</test>
+				</test>
+				/systems/pressurization/ditchingpb eq 1
+				/systems/pneumatics/psi/engine-1-psi le 13.8
+			</test>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-1-power">
+			<default value="0"/>
+			<test logic="AND" value="5">
+				/systems/failures/pneumatics/pack-1-valve eq 0
+				/systems/electrical/bus/dc-ess-shed ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/flow-control-valve-1">
+			<input>/systems/air-conditioning/valves/flow-control-valve-1-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/flow-control-valve-1-power</rate_limit>
+		</actuator>
+		
+	
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-2-cmd">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/air-conditioning/packs/pack-2-outlet-temp ge 260
+				/controls/engines/engine[1]/fire-btn eq 1
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-1 ne 0
+							/systems/pneumatics/valves/starter-valve-2 ne 0
+						</test>
+						/gear/gear[1]/wow eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/systems/pneumatics/valves/starter-valve-2 ne 0
+							<test logic="AND">
+								/systems/pneumatics/valves/crossbleed-valve eq 1
+								/systems/pneumatics/valves/starter-valve-1 ne 0
+							</test>
+						</test>
+						/gear/gear[1]/wow eq 0
+					</test>
+				</test>
+				/systems/pressurization/ditchingpb eq 1
+				/systems/pneumatics/psi/engine-2-psi le 13.8
+			</test>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/pack-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/flow-control-valve-2-power">
+			<default value="0"/>
+			<test logic="AND" value="5">
+				/systems/failures/pneumatics/pack-2-valve eq 0
+				/systems/electrical/bus/dc-2 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/flow-control-valve-2">
+			<input>/systems/air-conditioning/valves/flow-control-valve-2-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/flow-control-valve-2-power</rate_limit>
+		</actuator>
+		
+	</channel>
+	
+	<channel name="Packs" execrate="8">
+		
+		<switch name="/systems/air-conditioning/packs/single-pack">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+					/systems/air-conditioning/valves/flow-control-valve-2 eq 1
+				</test>
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 eq 1
+					/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+				</test>
+			</test>
+		</switch>
+	
+		<switch name="/systems/air-conditioning/packs/pack-flow">
+			<default value="/controls/pneumatics/switches/pack-flow"/>
+			<test logic="OR" value="1.2">
+				/systems/pneumatics/valves/apu-bleed-valve eq 1
+				/systems/air-conditioning/packs/single-pack eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-1-calc">
+			<function>
+				<product>
+					<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+					<property>/systems/air-conditioning/packs/pack-flow</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-flow-1">
+			<input>/systems/air-conditioning/packs/pack-flow-1-calc</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-1-norm">
+			<function>
+				<product>
+					<property>/systems/air-conditioning/packs/pack-flow-1</property>
+					<quotient>
+						<value>1</value>
+						<value>1.2</value>
+					</quotient>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-2-calc">
+			<function>
+				<product>
+					<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+					<property>/systems/air-conditioning/packs/pack-flow</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-flow-2">
+			<input>/systems/air-conditioning/packs/pack-flow-2-calc</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-flow-2-norm">
+			<function>
+				<product>
+					<property>/systems/air-conditioning/packs/pack-flow-2</property>
+					<quotient>
+						<value>1</value>
+						<value>1.2</value>
+					</quotient>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/air-conditioning/packs/pack-factor">
+			<default value="0"/>
+			<test logic="AND" value="0.0">
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+			</test>
+			<test logic="OR" value="0.6">
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 0
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 0
+			</test>
+			<test logic="AND" value="1.0">
+				/systems/air-conditioning/valves/flow-control-valve-1 eq 1
+				/systems/air-conditioning/valves/flow-control-valve-2 eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-1-outlet-temp-calc">
+			<function>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+						<value>0.5</value>
+					</gt>
+					<product>
+						<value>0.6363636</value>
+						<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+						<property>/systems/pneumatics/precooler/temp-1</property>
+					</product>
+					<property>/systems/navigation/probes/tat-1/compute-tat</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-1-outlet-temp">
+			<input>/systems/air-conditioning/packs/pack-1-outlet-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-2-outlet-temp-calc">
+			<function>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<value>0.5</value>
+					</gt>
+					<product>
+						<value>0.6363636</value>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<property>/systems/pneumatics/precooler/temp-2</property>
+					</product>
+					<property>/systems/navigation/probes/tat-2/compute-tat</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-2-outlet-temp">
+			<input>/systems/air-conditioning/packs/pack-2-outlet-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-1-output-temp-calc">
+			<function>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-1</property>
+						<value>0.5</value>
+					</gt>
+					<sum>
+						<product>
+							<value>-1</value>
+							<sum>
+								<product>
+									<value>0.76</value>
+									<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
+								</product>
+								<value>37.5</value>
+							</sum>
+						</product>
+						<property>/systems/air-conditioning/packs/pack-1-outlet-temp</property>
+					</sum>
+					<property>/systems/navigation/probes/tat-1/compute-tat</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-1-output-temp">
+			<input>/systems/air-conditioning/packs/pack-1-output-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/pack-2-output-temp-calc">
+			<function>
+				<ifthen>
+					<gt>
+						<property>/systems/air-conditioning/valves/flow-control-valve-2</property>
+						<value>0.5</value>
+					</gt>
+					<sum>
+						<product>
+							<value>-1</value>
+							<sum>
+								<product>
+									<value>0.76</value>
+									<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
+								</product>
+								<value>37.5</value>
+							</sum>
+						</product>
+						<property>/systems/air-conditioning/packs/pack-2-outlet-temp</property>
+					</sum>
+					<property>/systems/navigation/probes/tat-2/compute-tat</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/air-conditioning/packs/pack-2-output-temp">
+			<input>/systems/air-conditioning/packs/pack-2-output-temp-calc</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cockpit">
+			<function>
+				<table>
+					<independentVar lookup="row">/controls/pneumatics/switches/temp-cockpit</independentVar>
+					<tableData>
+						0.0  18
+						0.5  24
+						1.0  30
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cockpit-duct-cmd">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/air-conditioning/valves/hot-air</property>
+						<value>0</value>
+					</eq>
+					<min>
+						<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+						<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+						<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+					</min>
+					<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cockpit-duct">
+			<input>/systems/air-conditioning/packs/demand-temp/cockpit-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/trim-power-cockpit</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/temperatures/rate">
+			<default value="0.03333333333"/>
+			<test value="100">
+				/sim/time/elapsed-sec lt 20
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cockpit-temp">
+			<input>/systems/air-conditioning/packs/demand-temp/cockpit-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/temperatures/rate</rate_limit>
+		</actuator>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-aft">
+			<function>
+				<table>
+					<independentVar lookup="row">/controls/pneumatics/switches/temp-cabin-aft</independentVar>
+					<tableData>
+						0.0  18
+						0.5  24
+						1.0  30
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-aft">
+			<function>
+				<table>
+					<independentVar lookup="row">/controls/pneumatics/switches/temp-cabin-aft</independentVar>
+					<tableData>
+						0.0  18
+						0.5  24
+						1.0  30
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-aft-duct-cmd">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/air-conditioning/valves/hot-air</property>
+						<value>0</value>
+					</eq>
+					<min>
+						<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+						<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+						<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+					</min>
+					<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cabin-aft-duct">
+			<input>/systems/air-conditioning/packs/demand-temp/cabin-aft-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-aft</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cabin-aft-temp">
+			<input>/systems/air-conditioning/packs/demand-temp/cabin-aft-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/temperatures/rate</rate_limit>
+		</actuator>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-fwd">
+			<function>
+				<table>
+					<independentVar lookup="row">/controls/pneumatics/switches/temp-cabin-fwd</independentVar>
+					<tableData>
+						0.0  18
+						0.5  24
+						1.0  30
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/packs/demand-temp/cabin-fwd-duct-cmd">
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/air-conditioning/valves/hot-air</property>
+						<value>0</value>
+					</eq>
+					<min>
+						<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+						<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+						<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+					</min>
+					<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cabin-fwd-duct">
+			<input>/systems/air-conditioning/packs/demand-temp/cabin-fwd-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-fwd</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/air-conditioning/temperatures/cabin-fwd-temp">
+			<input>/systems/air-conditioning/packs/demand-temp/cabin-fwd-duct-cmd</input>
+			<rate_limit>/systems/air-conditioning/temperatures/rate</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/valves/ram-air-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/ram-air eq 1
+				/systems/pressurization/ditchingpb eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/ram-air-power">
+			<default value="0"/>
+			<test logic="AND" value="0.5">
+				/systems/electrical/bus/dc-ess-shed ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/ram-air">
+			<input>/systems/air-conditioning/valves/ram-air-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/ram-air-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/landing-switch">
+			<default value="/systems/air-conditioning/landing-switch"/>
+			<test value="1">
+				/gear/gear[1]/wow eq 0
+				/systems/air-conditioning/landing-switch eq 0
+			</test>
+			<test value="0">
+				/gear/gear[1]/wow eq 1
+				/systems/air-conditioning/landing-switch eq 1
+				/velocities/airspeed-kt lt 70
+				/ECAM/phases/to-power-set ne 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/ram-air-inlet-1-cmd">
+			<default value="/systems/air-conditioning/packs/pack-flow-1-norm"/>
+			<test logic="AND" value="0">
+				/gear/gear[1]/wow eq 1
+				/ECAM/phases/to-power-set eq 1
+			</test>
+			<test logic="AND" value="0">
+				/gear/gear[1]/wow eq 1
+				/velocities/airspeed-kt ge 70
+				/systems/air-conditioning/landing-switch eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/ram-air-inlet-1-power">
+			<default value="0"/>
+			<test logic="OR" value="0.5">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/ram-air-outlet-1"> <!-- slaved -->
+			<input>/systems/air-conditioning/valves/ram-air-inlet-1-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/ram-air-inlet-1-power</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/air-conditioning/valves/ram-air-inlet-1">
+			<input>/systems/air-conditioning/valves/ram-air-inlet-1-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/ram-air-inlet-1-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/valves/ram-air-inlet-2-cmd">
+			<default value="/systems/air-conditioning/packs/pack-flow-2-norm"/>
+			<test logic="AND" value="0">
+				/gear/gear[1]/wow eq 1
+				/ECAM/phases/to-power-set eq 1
+			</test>
+			<test logic="AND" value="0">
+				/gear/gear[1]/wow eq 1
+				/velocities/airspeed-kt ge 70
+				/systems/air-conditioning/landing-switch eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/ram-air-inlet-2-power">
+			<default value="0"/>
+			<test logic="OR" value="0.5">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/ram-air-outlet-2"> <!-- slaved -->
+			<input>/systems/air-conditioning/valves/ram-air-inlet-2-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/ram-air-inlet-2-power</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/air-conditioning/valves/ram-air-inlet-2">
+			<input>/systems/air-conditioning/valves/ram-air-inlet-2-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/ram-air-inlet-2-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/valves/hot-air-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/pneumatics/switches/hot-air eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/hot-air-power">
+			<default value="0"/>
+			<test logic="OR" value="0.5"> <!-- ?? unsure about power src, use pack controllers -->
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/hot-air">
+			<input>/systems/air-conditioning/valves/hot-air-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/hot-air-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/valves/trim-power-cockpit">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/failures/pneumatics/trim-valve-cockpit eq 1
+			</test>
+			<test logic="OR" value="0.5"> <!-- ?? unsure about power src, use pack controllers -->
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/trim-power-cabin-fwd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/failures/pneumatics/trim-valve-cabin-fwd eq 1
+			</test>
+			<test logic="OR" value="0.5"> <!-- ?? unsure about power src, use pack controllers -->
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/valves/trim-power-cabin-aft">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/failures/pneumatics/trim-valve-cabin-aft eq 1 
+			</test>
+			<test logic="OR" value="0.5"> <!-- ?? unsure about power src, use pack controllers -->
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/valves/trim-cockpit-gain">
+			<function>
+				<quotient>
+				<product>
+						<quotient>
+							<sum>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
+								</difference>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
+								</difference>
+							</sum>
+							<value>2</value>
+						</quotient>
+						<difference>
+							<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+							<min>
+								<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							</min>
+						</difference>
+					</product>
+					<value>2</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/valves/trim-aft-gain">
+			<function>
+				<quotient>
+					<product>
+						<quotient>
+							<sum>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
+								</difference>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
+								</difference>
+							</sum>
+							<value>2</value>
+						</quotient>
+						<difference>
+							<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+							<min>
+								<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							</min>
+						</difference>
+					</product>
+					<value>2</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/valves/trim-fwd-gain">
+			<function>
+				<quotient>
+					<product>
+						<quotient>
+							<sum>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-2-norm</property>
+								</difference>
+								<difference>
+									<value>1</value>
+									<property>/systems/air-conditioning/packs/pack-flow-1-norm</property>
+								</difference>
+							</sum>
+							<value>2</value>
+						</quotient>
+						<difference>
+							<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							<min>
+								<property>/systems/air-conditioning/packs/demand-temp/cockpit</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-aft</property>
+								<property>/systems/air-conditioning/packs/demand-temp/cabin-fwd</property>
+							</min>
+						</difference>
+					</product>
+					<value>2</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/air-conditioning/valves/trim-cockpit-cmd">
+			<default value="/systems/air-conditioning/valves/trim-cockpit-gain"/>
+			<test logic="AND" value="0">
+				/systems/air-conditioning/valves/hot-air eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/trim-cockpit">
+			<input>/systems/air-conditioning/valves/trim-cockpit-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/trim-power-cockpit</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/valves/trim-aft-cmd">
+			<default value="/systems/air-conditioning/valves/trim-aft-gain"/>
+			<test logic="AND" value="0">
+				/systems/air-conditioning/valves/hot-air eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/trim-aft">
+			<input>/systems/air-conditioning/valves/trim-aft-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-aft</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/air-conditioning/valves/trim-fwd-cmd">
+			<default value="/systems/air-conditioning/valves/trim-fwd-gain"/>
+			<test logic="AND" value="0">
+				/systems/air-conditioning/valves/hot-air eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/air-conditioning/valves/trim-fwd">
+			<input>/systems/air-conditioning/valves/trim-fwd-cmd</input>
+			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-fwd</rate_limit>
+		</actuator>
+	</channel>
+	
+	<channel name="Recirculation" execrate="8">
+		
+	</channel>
+	
+	<channel name="Mass flow" execrate="8">
+		
+		<fcs_function name="/systems/air-conditioning/mass-flow-fresh-kg_s">
+			<function>
+				<quotient>
+					<product>
+						<property>/systems/air-conditioning/packs/pack-factor</property>
+						<property>/systems/air-conditioning/packs/pack-flow</property>
+						<product>
+							<property>/systems/pressurization/cabinpsi</property>
+							<value>68.9476</value>
+						</product>
+						<value>0.928</value>
+					</product>
+					<product>
+						<value>2.87</value>
+						<property>/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin</property>
+					</product>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/air-conditioning/recirc/recirc-factor">
+			<default value="0"/>
+			<test logic="AND" value="0.738095">
+				/systems/air-conditioning/packs/pack-flow eq 1.0
+			</test>
+			<test logic="OR" value="0.5686275">
+				/systems/air-conditioning/packs/pack-flow eq 1.2
+			</test>
+			<test logic="AND" value="0.93998">
+				/systems/air-conditioning/packs/pack-flow eq 0.8
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/recirc/cabin-fans">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/switches/pneumatics/cabin-fans eq 1
+				/systems/failures/pneumatics/cabin-fans eq 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/air-conditioning/mass-flow-total-kg_s">
+			<function>
+				<sum>
+					<product>
+						<property>/systems/air-conditioning/recirc/recirc-factor</property>
+						<property>/systems/air-conditioning/recirc/cabin-fans</property>
+						<property>/systems/air-conditioning/mass-flow-fresh-kg_s</property>
+					</product>
+					<property>/systems/air-conditioning/mass-flow-fresh-kg_s</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/air-conditioning/mass-flow-cockpit-kg_s">
+			<function>
+				<product>
+					<value>0.14</value>
+					<property>/systems/air-conditioning/mass-flow-total-kg_s</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+	<channel name="Warnings" execrate="8">
+	
+		<switch name="/systems/air-conditioning/warnings/pack-1-ovht">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/packs/pack-1-outlet-temp ge 260
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-ovht">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/packs/pack-2-outlet-temp ge 260
+			</test>
+		</switch>
+		
+			<switch name="/systems/air-conditioning/warnings/pack-1-ovht-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/warnings/pack-1-ovht eq 1
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-ovht-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/air-conditioning/warnings/pack-2-ovht eq 1
+				/ECAM/warnings/logic/pack-1-2-fault eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-1-fault-light">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/pack-1-disagree-input eq 1
+				/systems/air-conditioning/warnings/pack-1-ovht eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-fault-light">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/pack-2-disagree-input eq 1
+				/systems/air-conditioning/warnings/pack-2-ovht eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-1-disagree">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 ne 1
+					/systems/air-conditioning/valves/flow-control-valve-1-cmd eq 1
+				</test>
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-1 ne 0
+					/systems/air-conditioning/valves/flow-control-valve-1-cmd eq 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/air-conditioning/warnings/pack-2-disagree">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-2 ne 1
+					/systems/air-conditioning/valves/flow-control-valve-2-cmd eq 1
+				</test>
+				<test logic="AND">
+					/systems/air-conditioning/valves/flow-control-valve-2 ne 0
+					/systems/air-conditioning/valves/flow-control-valve-2-cmd eq 0
+				</test>
+			</test>
+		</switch>
+		
+	</channel>
+	
+</system>

@@ -1,0 +1,1327 @@
+<!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp) -->
+
+<system name="A320: Pneumatic">
+	<channel name="Startup" execrate="8">
+		
+		<switch name="/systems/startup-power-valves">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/sim/time/elapsed-sec lt 10
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="Valves" execrate="8"> 
+	
+		<!-- apu -->
+		<switch name="/systems/pneumatics/valves/apu-bleed-valve-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[2]/n1 ge 95
+				/controls/pneumatics/switches/apu eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/apu-bleed-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/failures/pneumatics/apu-valve eq 0
+				/systems/electrical/bus/dc-ess-shed ge 25 
+				<!-- confirm, some a320 have it on dc-bat, but this makes sense, since x-bleed is on ess shed too. 
+				Definitely, some A320 have it on dc-ess-shed, but why is there any difference? -->
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/apu-bleed-valve">
+			<input>/systems/pneumatics/valves/apu-bleed-valve-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/apu-bleed-valve-power</rate_limit>
+		</actuator>
+		
+		<!-- Crossbleed -->
+		<switch name="/systems/pneumatics/valves/crossbleed-valve-cmd">
+			<default value="/systems/pneumatics/valves/crossbleed-valve-cmd"/>
+			<test logic="AND" value="0">  <!-- CB 2HV -->
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/controls/pneumatics/switches/x-bleed eq 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/controls/pneumatics/switches/x-bleed eq 2
+			</test>
+			<test logic="AND" value="0"> <!-- CB 1HV, 4HV -->
+				/systems/electrical/bus/dc-2 ge 25
+				<test logic="OR">
+					/controls/pneumatics/switches/apu eq 0
+					/systems/pneumatics/valves/apu-bleed-valve eq 0
+				</test>
+			</test>
+			<test logic="AND" value="1"> <!-- CB 1HV, 4HV -->
+				/systems/electrical/bus/dc-2 ge 25
+				/controls/pneumatics/switches/apu eq 1
+				/systems/pneumatics/valves/apu-bleed-valve ne 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/crossbleed-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="0.2">
+				/systems/failures/pneumatics/x-bleed-valve eq 0
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed ge 25 
+					/systems/electrical/bus/dc-2 ge 25 
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/crossbleed-valve">
+			<input>/systems/pneumatics/valves/crossbleed-valve-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/crossbleed-valve-power</rate_limit>
+		</actuator>
+		
+		<!-- Low Pressure valve -->
+		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-cmd">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/systems/pneumatics/valves/engine-1-hp-valve eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-lp-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="1"> <!-- pneumatic, so instant nearly -->
+				/systems/electrical/bus/dc-ess-shed ge 25
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-lp-valve">
+			<default value="/systems/pneumatics/valves/engine-1-lp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-1-lp-valve">
+				/systems/pneumatics/valves/engine-1-lp-valve-power eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-cmd">
+			<default value="1"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/pneumatics/valves/engine-2-hp-valve eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-lp-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="1"> <!-- pneumatic, so instant nearly -->
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-lp-valve">
+			<default value="/systems/pneumatics/valves/engine-2-lp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-2-lp-valve">
+				/systems/pneumatics/valves/engine-2-lp-valve-power eq 0
+			</test>
+		</switch>
+		
+		<!-- High Pressure valve -->
+		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-cmd">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/systems/pneumatics/source/engine-1-hp-psi lt 8
+				/systems/pneumatics/source/engine-1-hp-psi ge 120
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-1 eq 0
+					/systems/pneumatics/source/engine-1-hp-psi ge 110
+					/position/altitude-ft ge 15000
+					/systems/pneumatics/valves/engine-1-prv-valve eq 1
+					/systems/pneumatics/valves/engine-2-prv-valve eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-hp-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/failures/pneumatics/hp-1-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-hp-valve">
+			<default value="/systems/pneumatics/valves/engine-1-hp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-1-hp-valve">
+				/systems/pneumatics/valves/engine-1-hp-valve-power eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-cmd">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/systems/pneumatics/source/engine-2-hp-psi lt 8
+				/systems/pneumatics/source/engine-2-hp-psi ge 120
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-2 eq 0
+					/systems/pneumatics/source/engine-2-hp-psi ge 110
+					/position/altitude-ft ge 15000
+					/systems/pneumatics/valves/engine-1-prv-valve eq 1
+					/systems/pneumatics/valves/engine-2-prv-valve eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-hp-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/pneumatics/hp-2-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-hp-valve">
+			<default value="/systems/pneumatics/valves/engine-2-hp-valve-cmd"/>
+			<test value="/systems/pneumatics/valves/engine-2-hp-valve">
+				/systems/pneumatics/valves/engine-2-hp-valve-power eq 0
+			</test>
+		</switch>
+		
+		<!-- Pressure regulation valve -->
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi-cmd">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/psi/engine-1-downstream-prv gt 57
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi">
+            <input>/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi-cmd</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.0666</rate_limit> <!-- 15 seconds -->
+        </actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi eq 1
+				/systems/pneumatics/precooler/ovht-1 eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pneumatics/valves/engine-1-prv-valve-temp-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pneumatics/precooler/temp-1</independentVar>
+					<tableData>
+						235    1.0
+					    245    0.397
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-cmd">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/controls/engines/engine[0]/fire-btn eq 1
+				/controls/pneumatics/switches/bleed-1 eq 0
+				/systems/pneumatics/valves/apu-bleed-valve eq 1
+				/systems/pneumatics/valves/starter-valve-1 ne 0
+				/systems/pneumatics/psi/engine-1-upstream-src lt 8
+				/systems/pneumatics/valves/engine-1-prv-valve-autoclose-cmd eq 1
+			</test>
+			<test logic="AND" value="/systems/pneumatics/valves/engine-1-prv-valve-temp-gain">
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/failures/pneumatics/bleed-1-valve eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-1-prv-valve">
+			<input>/systems/pneumatics/valves/engine-1-prv-valve-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/engine-1-prv-valve-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-prv-valve-disag">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-cmd eq 0
+				/systems/pneumatics/valves/engine-1-prv-valve ne 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-1-prv-valve-cmd eq 1
+				/systems/pneumatics/valves/engine-1-prv-valve ne 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi-cmd">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/psi/engine-2-downstream-prv gt 57
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi">
+            <input>/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi-cmd</input>
+            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">0.0666</rate_limit> <!-- 15 seconds -->
+        </actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi eq 1
+				/systems/pneumatics/precooler/ovht-2 eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pneumatics/valves/engine-2-prv-valve-temp-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pneumatics/precooler/temp-2</independentVar>
+					<tableData>
+						235    1.0
+					    245    0.397
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-cmd">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/controls/engines/engine[1]/fire-btn eq 1
+				/controls/pneumatics/switches/bleed-2 eq 0
+				<test logic="AND">
+					/systems/pneumatics/valves/apu-bleed-valve eq 1
+					/systems/pneumatics/valves/crossbleed-valve ne 0
+				</test>
+				/systems/pneumatics/valves/starter-valve-2 ne 0
+				/systems/pneumatics/psi/engine-2-upstream-src lt 8
+				/systems/pneumatics/valves/engine-2-prv-valve-autoclose-cmd eq 1
+			</test>
+			<test logic="AND" value="/systems/pneumatics/valves/engine-2-prv-valve-temp-gain">
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/pneumatics/bleed-2-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-prv-valve-disag">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-cmd eq 0
+				/systems/pneumatics/valves/engine-2-prv-valve ne 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/engine-2-prv-valve-cmd eq 1
+				/systems/pneumatics/valves/engine-2-prv-valve ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-2-prv-valve">
+			<input>/systems/pneumatics/valves/engine-2-prv-valve-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/engine-2-prv-valve-power</rate_limit>
+		</actuator>
+		
+		<!-- Overpressure valve -->
+		<fcs_function name="/systems/pneumatics/valves/engine-1-opv-valve-cmd-schedule">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pneumatics/psi/engine-1-downstream-prv</independentVar>
+					<tableData>
+						79   1.0
+						85   0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pneumatics/valves/engine-1-opv-valve-cmd">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/valves/engine-1-opv-valve-cmd eq 0.0
+				/systems/pneumatics/psi/engine-1-downstream-prv ge 35
+			</test>
+			<test logic="OR" value="/systems/pneumatics/valves/engine-1-opv-valve-cmd-schedule">
+				/systems/pneumatics/valves/engine-1-opv-valve-cmd-schedule ne 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-1-opv-valve">
+			<input>/systems/pneumatics/valves/engine-1-opv-valve-cmd</input>
+			<rate_limit>1.0</rate_limit> <!-- pneumatically controlled -->
+		</actuator>
+		
+		<fcs_function name="/systems/pneumatics/valves/engine-2-opv-valve-cmd-schedule">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pneumatics/psi/engine-2-downstream-prv</independentVar>
+					<tableData>
+						79   1.0
+						85   0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pneumatics/valves/engine-2-opv-valve-cmd">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/valves/engine-2-opv-valve-cmd eq 0.0
+				/systems/pneumatics/psi/engine-2-downstream-prv ge 35
+			</test>
+			<test logic="OR" value="/systems/pneumatics/valves/engine-2-opv-valve-cmd-schedule">
+				/systems/pneumatics/valves/engine-2-opv-valve-cmd-schedule ne 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-2-opv-valve">
+			<input>/systems/pneumatics/valves/engine-2-opv-valve-cmd</input>
+			<rate_limit>1.0</rate_limit> <!-- pneumatically controlled -->
+		</actuator>
+		
+		<!-- Wing Anti Ice -->
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-gnd-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[1]/wow eq 1
+				/controls/ice-protection/wing eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/wing-ice-gnd">
+			<input>/systems/pneumatics/valves/wing-ice-gnd-cmd</input>
+			<rate_limit sense="incr">0.033333</rate_limit> <!-- 30 seconds -->
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-1-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/valves/wing-ice-gnd eq 1
+				/gear/gear[1]/wow eq 1
+				/controls/ice-protection/wing eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+				/systems/pneumatics/psi/engine-1-psi le 1
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/wing eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-1-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/failures/icing/wing-left-valve eq 1
+			</test>
+			<test logic="AND" value="0.5">
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed lt 25 
+					/systems/pneumatics/psi/engine-1-psi le 1
+				</test>
+				/systems/pneumatics/valves/wing-ice-1-cmd eq 0
+				/systems/pneumatics/valves/wing-ice-1 ne 0
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/bus/dc-ess-shed ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/wing-ice-1">
+			<input>/systems/pneumatics/valves/wing-ice-1-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/wing-ice-1-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-2-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/valves/wing-ice-gnd eq 1
+				/gear/gear[1]/wow eq 1
+				/controls/ice-protection/wing eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/electrical/bus/dc-ess-shed lt 25 
+				/systems/pneumatics/psi/engine-2-psi le 1
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/wing eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/wing-ice-2-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/failures/icing/wing-right-valve eq 1
+			</test>
+			<test logic="AND" value="0.5">
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess-shed lt 25 
+					/systems/pneumatics/psi/engine-2-psi le 1
+				</test>
+				/systems/pneumatics/valves/wing-ice-2-cmd eq 0
+				/systems/pneumatics/valves/wing-ice-2 ne 0
+			</test>
+			<test logic="AND" value="2">
+				/systems/electrical/bus/dc-ess-shed ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/wing-ice-2">
+			<input>/systems/pneumatics/valves/wing-ice-2-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/wing-ice-2-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-1-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/source/engine-1-hp-psi lt 7
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 lt 25 
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/leng eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-1-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/failures/icing/engine-left-valve eq 1
+			</test>
+			<test logic="AND" value="0.50">
+				<test logic="OR">
+					/systems/electrical/bus/dc-1 lt 25 
+					/systems/pneumatics/source/engine-1-hp-psi lt 7
+				</test>
+				/systems/pneumatics/valves/engine-ice-1-cmd eq 1
+				/systems/pneumatics/valves/engine-ice-1 ne 1
+			</test>
+			<test logic="AND" value="1.0">
+				/systems/electrical/bus/dc-1 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-ice-1">
+			<input>/systems/pneumatics/valves/engine-ice-1-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/engine-ice-1-power</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-2-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/pneumatics/source/engine-2-hp-psi lt 7
+			</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 lt 25 
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/reng eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/valves/engine-ice-2-power">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/startup-power-valves eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/failures/icing/engine-right-valve eq 1
+			</test>
+			<test logic="AND" value="0.50">
+				<test logic="OR">
+					/systems/electrical/bus/dc-2 lt 25 
+					/systems/pneumatics/source/engine-2-hp-psi lt 7
+				</test>
+				/systems/pneumatics/valves/engine-ice-2-cmd eq 1
+				/systems/pneumatics/valves/engine-ice-2 ne 1
+			</test>
+			<test logic="AND" value="1.0">
+				/systems/electrical/bus/dc-2 ge 25 
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/valves/engine-ice-2">
+			<input>/systems/pneumatics/valves/engine-ice-2-cmd</input>
+			<rate_limit>/systems/pneumatics/valves/engine-ice-2-power</rate_limit>
+		</actuator>
+	</channel>
+	
+	<channel name="Source PSI" execrate="8">
+	
+        <fcs_function name="/systems/pneumatics/source/apu-psi">
+            <function>
+				<ifthen>
+					<gt>
+						<property>/position/altitude-ft</property>
+						<value>20000</value>
+					</gt>
+					<value>0</value>
+					<ifthen>
+						<gt>
+							<property>/engines/engine[2]/n1</property>
+							<value>92</value>
+						</gt>
+						<difference>
+							<interpolate1d>
+								<property>/position/altitude-ft</property>
+								<value>0</value>
+								<table>
+									<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+									<independentVar lookup="column">/systems/pneumatics/valves/apu-bleed-valve</independentVar>
+									<tableData>
+											  0    1 
+										92    0    0 
+										95   16.7  2.7
+										100  58.7  50.7
+									</tableData>
+								</table>
+								<value>10000</value>
+								<table>
+									<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+									<independentVar lookup="column">/systems/pneumatics/valves/apu-bleed-valve</independentVar>
+									<tableData>
+											  0    1 
+										92    0    0 
+										95    6.7  0.1
+										100  48.7  40.7
+									</tableData>
+								</table>
+								<value>15000</value>
+								<table>
+									<independentVar lookup="row">/engines/engine[2]/n1</independentVar>
+									<independentVar lookup="column">/systems/pneumatics/valves/apu-bleed-valve</independentVar>
+									<tableData>
+											  0    1 
+										92    0    0 
+										95    2.7  0
+										100  37.7  32.7
+									</tableData>
+								</table>
+							</interpolate1d>
+							<quotient>
+								<property>/systems/navigation/probes/static-1</property>
+								<value>2.036</value>
+							</quotient>
+						</difference>
+						<value>0</value>
+					</ifthen>
+				</ifthen>
+            </function>
+			<clipto>
+				<min>0</min>
+				<max>99999999</max>
+			</clipto>
+        </fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/source/gnd-psi">
+			<function>
+				<product>
+					<property>/controls/pneumatics/switches/groundair</property>
+					<value>34</value>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/source/engine-1-hp-psi">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/n2-actual</independentVar>
+					<tableData>
+				        22.0   0.0
+				        25.0  12.0
+						44.0  22.0	   
+						60.9  72.0
+						65.0  78.0
+						70.4  96.0
+						80.4 132.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/source/engine-2-hp-psi">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[1]/n2-actual</independentVar>
+					<tableData>
+				        22.0   0.0
+				        25.0  12.0
+						44.0  22.0	   
+						60.9  72.0
+						65.0  78.0
+						70.4  96.0
+						80.4 132.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/source/engine-1-lp-psi">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/n2-actual</independentVar>
+					<tableData>
+						22.0    0.0
+					    25.0    2.0
+						60.9   18.0
+						70.4   36.0
+						80.4   44.0
+						101.4  48.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		
+		<fcs_function name="/systems/pneumatics/source/engine-2-lp-psi">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[1]/n2-actual</independentVar>
+					<tableData>
+						22.0    0.0
+					    25.0    2.0
+						60.9   18.0
+						70.4   36.0
+						80.4   44.0
+						101.4  48.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+	<channel name="System PSI" execrate="8">
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-1-upstream-src">
+			<function>
+				<ifthen>
+					<lt>
+						<property>/systems/pneumatics/valves/engine-1-hp-valve</property> <!-- lp valve opens when the airflow reduces sufficiently from hp valve -->
+						<value>0.1</value>
+					</lt>
+					<product>
+						<property>/systems/pneumatics/source/engine-1-lp-psi</property>
+						<property>/systems/pneumatics/valves/engine-1-lp-valve</property>
+					</product>
+					<product>
+						<quotient>
+							<property>/systems/pneumatics/source/engine-1-hp-psi</property>
+							<value>3</value>
+						</quotient>
+						<property>/systems/pneumatics/valves/engine-1-hp-valve</property>
+					</product>
+				</ifthen>
+			</function>
+		</fcs_function>
+	
+		<fcs_function name="/systems/pneumatics/psi/engine-2-upstream-src">
+			<function>
+				<ifthen>
+					<lt>
+						<property>/systems/pneumatics/valves/engine-2-hp-valve</property>
+						<value>0.1</value>
+					</lt>
+					<product>
+						<property>/systems/pneumatics/source/engine-2-lp-psi</property>
+						<property>/systems/pneumatics/valves/engine-2-lp-valve</property>
+					</product>
+					<product>
+						<quotient>
+							<property>/systems/pneumatics/source/engine-2-hp-psi</property>
+							<value>3</value>
+						</quotient>
+						<property>/systems/pneumatics/valves/engine-2-hp-valve</property>
+					</product>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-1-downstream-prv">
+			<function>
+				<product>
+					<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
+					<property>/systems/pneumatics/psi/engine-1-upstream-src</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-2-downstream-prv">
+			<function>
+				<product>
+					<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
+					<property>/systems/pneumatics/psi/engine-2-upstream-src</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-1-downstream-opv">
+			<function>
+				<product>
+					<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+					<property>/systems/pneumatics/psi/engine-1-downstream-prv</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-2-downstream-opv">
+			<function>
+				<product>
+					<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+					<property>/systems/pneumatics/psi/engine-2-downstream-prv</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="/systems/pneumatics/psi/engine-left-src">
+			<default value="/systems/pneumatics/psi/engine-left-src"/>
+			<test logic="AND" value="1"> <!-- apu -->
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve ge 0.5
+			</test>
+			<test logic="AND" value="2"> <!-- left engine -->
+				<test logic="OR">
+					/systems/pneumatics/psi/engine-1-downstream-opv ge /systems/pneumatics/psi/engine-2-psi
+					/systems/pneumatics/valves/crossbleed-valve eq 0
+				</test>
+				/systems/pneumatics/valves/engine-1-prv-valve ne 0
+				/systems/pneumatics/valves/engine-1-opv-valve ne 0
+			</test>
+			<test logic="AND" value="3"> <!-- left engine -->
+				/systems/pneumatics/psi/engine-1-downstream-opv lt /systems/pneumatics/psi/engine-2-psi
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/psi/engine-right-src ne 3
+			</test>
+			<test logic="AND" value="4"> <!-- gnd has lowest priority, valve forced closed if other source available -->
+				/systems/pneumatics/source/gnd-psi ne 0
+			</test>
+			<test logic="AND" value="0"> <!-- manually cancel -->
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/psi/engine-right-src">
+			<default value="/systems/pneumatics/psi/engine-right-src"/>
+			<test logic="AND" value="1"> <!-- apu -->
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/apu-bleed-valve ge 0.5
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+			</test>
+			<test logic="AND" value="2"> <!-- right engine -->
+				<test logic="OR">
+					/systems/pneumatics/psi/engine-2-downstream-opv ge /systems/pneumatics/psi/engine-1-psi
+					/systems/pneumatics/valves/crossbleed-valve eq 0
+				</test>
+				/systems/pneumatics/valves/engine-2-prv-valve ne 0
+				/systems/pneumatics/valves/engine-2-opv-valve ne 0
+			</test>
+			<test logic="AND" value="3"> <!-- left engine -->
+				/systems/pneumatics/psi/engine-2-downstream-opv lt /systems/pneumatics/psi/engine-1-psi
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+				/systems/pneumatics/psi/engine-left-src ne 3
+			</test>
+			<test logic="AND" value="4"> <!-- gnd has lowest priority, valve forced closed if other source available -->
+				/systems/pneumatics/source/gnd-psi ne 0
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+			</test>
+			<test logic="AND" value="0"> <!-- manually cancel -->
+				/systems/pneumatics/source/apu-psi ne 0
+				/systems/pneumatics/valves/crossbleed-valve eq 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-1-psi">
+			<function>
+				<switch>
+					<p>/systems/pneumatics/psi/engine-left-src</p>
+					<v>0</v>
+					<product>
+						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+						<property>/systems/pneumatics/source/apu-psi</property>
+					</product>
+					<property>/systems/pneumatics/psi/engine-1-downstream-opv</property>
+					<property>/systems/pneumatics/psi/engine-2-psi</property>
+					<property>/systems/pneumatics/source/gnd-psi</property>
+				</switch>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/psi/engine-2-psi">
+			<function>
+				<switch>
+					<p>/systems/pneumatics/psi/engine-right-src</p>
+					<v>0</v>
+					<product>
+						<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+						<property>/systems/pneumatics/valves/crossbleed-valve</property>
+						<property>/systems/pneumatics/source/apu-psi</property>
+					</product>
+					<property>/systems/pneumatics/psi/engine-2-downstream-opv</property>
+					<property>/systems/pneumatics/psi/engine-1-psi</property>
+					<property>/systems/pneumatics/source/gnd-psi</property>
+				</switch>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+	<channel name="Precooler Left" execute="/systems/pneumatics/indicating/bmc1-working"  execrate="8"> <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
+	
+		<fcs_function name="/systems/pneumatics/precooler/calc/temp-1">
+			<function>
+				<sum>
+					<value>15</value>
+					<ifthen>
+						<nq>
+							<product>
+								<property>/systems/pneumatics/valves/engine-1-prv-valve</property>
+								<property>/systems/pneumatics/valves/engine-1-opv-valve</property>
+							</product>
+							<value>0</value>
+						</nq>
+						<product>
+							<property>/engines/engine[0]/egt-actual</property>
+							<property>/systems/pneumatics/egt-1-factor</property>
+						</product>
+						<product>
+							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+							<property>/systems/apu/egt-degC</property>
+							<value>0.40</value>
+						</product>
+					</ifthen>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/pneumatics/precooler/temp-1">
+			<input>/systems/pneumatics/precooler/calc/temp-1</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<switch name="/systems/pneumatics/precooler/calc/ovht-5-true">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/precooler/temp-1 gt 290
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/precooler/calc/ovht-15-true">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/precooler/temp-1 gt 270
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/precooler/calc/ovht-55-true">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/precooler/temp-1 gt 257
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/precooler/calc/ovht-5">
+			<input>/systems/pneumatics/precooler/calc/ovht-5-true</input>
+			<rate_limit sense="incr">0.2</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/pneumatics/precooler/calc/ovht-15">
+			<input>/systems/pneumatics/precooler/calc/ovht-15-true</input>
+			<rate_limit sense="incr">0.06666</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/pneumatics/precooler/calc/ovht-55">
+			<input>/systems/pneumatics/precooler/calc/ovht-55-true</input>
+			<rate_limit sense="incr">0.018182</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/precooler/ovht-1">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/precooler/calc/ovht-5 eq 1
+				/systems/pneumatics/precooler/calc/ovht-15 eq 1
+				/systems/pneumatics/precooler/calc/ovht-55 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/ovht-1-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/ovht-1-mem eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/precooler/ovht-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/lowtemp-1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/precooler/temp-1 lt 150
+				/systems/pneumatics/valves/wing-ice-1 eq 1
+				/gear/gear[1]/wow eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/lowtemp-1-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-1-mem eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-1 eq 1
+			</test>
+		</switch>
+	</channel>
+	 
+	<channel name="Precooler Right" execute="/systems/pneumatics/indicating/bmc2-working" execrate="8">  <!-- These values come from BMC, so makes sense to not have them when BMC lacks power -->
+		
+		<fcs_function name="/systems/pneumatics/precooler/calc/temp-2">
+			<function>
+				<sum>
+					<value>15</value>
+					<ifthen>
+						<nq>
+							<product>
+								<property>/systems/pneumatics/valves/engine-2-prv-valve</property>
+								<property>/systems/pneumatics/valves/engine-2-opv-valve</property>
+							</product>
+							<value>0</value>
+						</nq>
+						<product>
+							<property>/engines/engine[1]/egt-actual</property>
+							<property>/systems/pneumatics/egt-2-factor</property>
+						</product>
+						<product>
+							<property>/systems/pneumatics/valves/apu-bleed-valve</property>
+							<property>/systems/apu/egt-degC</property>
+							<value>0.40</value>
+						</product>
+					</ifthen>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/systems/pneumatics/precooler/temp-2">
+			<input>/systems/pneumatics/precooler/calc/temp-2</input>
+			<c1>0.8</c1>
+		</lag_filter>
+		
+		<switch name="/systems/pneumatics/precooler/calc/ovht-5-true-2">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/precooler/temp-2 gt 290
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/precooler/calc/ovht-15-true-2">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/precooler/temp-2 gt 270
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/precooler/calc/ovht-55-true-2">
+			<default value="0"/>
+			<test value="1">
+				/systems/pneumatics/precooler/temp-2 gt 257
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/precooler/calc/ovht-5-2">
+			<input>/systems/pneumatics/precooler/calc/ovht-5-true-2</input>
+			<rate_limit sense="incr">0.2</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/pneumatics/precooler/calc/ovht-15-2">
+			<input>/systems/pneumatics/precooler/calc/ovht-15-true-2</input>
+			<rate_limit sense="incr">0.06666</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/pneumatics/precooler/calc/ovht-55-2">
+			<input>/systems/pneumatics/precooler/calc/ovht-55-true-2</input>
+			<rate_limit sense="incr">0.018182</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/precooler/ovht-2">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/precooler/calc/ovht-5-2 eq 1
+				/systems/pneumatics/precooler/calc/ovht-15-2 eq 1
+				/systems/pneumatics/precooler/calc/ovht-55-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/ovht-2-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/ovht-2-mem eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/precooler/ovht-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/lowtemp-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/precooler/temp-2 lt 150
+				/systems/pneumatics/valves/wing-ice-2 eq 1
+				/gear/gear[1]/wow eq 0
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/lowtemp-2-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-2-mem eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/lowtemp-2 eq 1
+			</test>
+		</switch>
+	</channel>
+	
+	<channel name="ECAM" execrate="8">
+		
+		<switch name="/systems/pneumatics/indicating/bmc1-working">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/systems/failures/pneumatics/bmc-1 ne 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/indicating/bmc2-working">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/pneumatics/bmc-2 ne 1
+			</test>
+		</switch>
+	
+		<switch name="/systems/pneumatics/warnings/apu-bleed-not-on-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/apu-bleed-valve ne 1
+				/controls/apu/master eq 1
+				/controls/pneumatics/switches/apu eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/pneumatics/warnings/apu-bleed-not-on">
+			<input>/systems/pneumatics/warnings/apu-bleed-not-on-cmd</input>
+			<rate_limit sense="incr">0.1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/crossbleed-valve-cmd eq 1
+				/systems/pneumatics/valves/crossbleed-valve ne 1
+				/controls/pneumatics/switches/x-bleed eq 2
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/crossbleed-valve-cmd eq 1
+				/systems/pneumatics/valves/crossbleed-valve ne 1
+				/controls/pneumatics/switches/x-bleed eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+	
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/crossbleed-valve-cmd eq 0
+				/systems/pneumatics/valves/crossbleed-valve ne 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/crossbleed-disag-open eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/bleed1-fault">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test logic="AND" value="0">
+				/systems/pneumatics/warnings/bleed1-fault eq 1
+				/controls/pneumatics/switches/bleed-1 eq 0
+				/ECAM/warnings/timer/bleed-1-fault-output eq 0
+				/ECAM/warnings/timer/prv-1-not-shut-output eq 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/bleed1-fault eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/bleed-1-fault-output eq 1
+				/ECAM/warnings/timer/prv-1-not-shut-output eq 1
+				/systems/pneumatics/warnings/ovht-1-mem eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/bleed2-fault">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test logic="AND" value="0">
+				/systems/pneumatics/warnings/bleed2-fault eq 1
+				/controls/pneumatics/switches/bleed-2 eq 0
+				/ECAM/warnings/timer/bleed-2-fault-output eq 0
+				/ECAM/warnings/timer/prv-2-not-shut-output eq 0
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/bleed2-fault eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/bleed-2-fault-output eq 1
+				/ECAM/warnings/timer/prv-2-not-shut-output eq 1
+				/systems/pneumatics/warnings/ovht-2-mem eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/overpress-1-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/overpress-1-mem eq 1
+				/controls/pneumatics/switches/bleed-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/psi/engine-1-downstream-prv gt 57
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/overpress-2-mem">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/warnings/overpress-2-mem eq 1
+				/controls/pneumatics/switches/bleed-2 eq 1
+			</test>
+			<test logic="AND" value="1">
+				/systems/pneumatics/psi/engine-2-downstream-prv gt 57
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/wingfault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/wing-ice-1 ne /controls/ice-protection/wing
+				/systems/pneumatics/valves/wing-ice-2 ne /controls/ice-protection/wing
+				/systems/electrical/bus/dc-ess-shed lt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/lengfault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-ice-1 ne /controls/ice-protection/leng
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/rengfault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/engine-ice-2 ne /controls/ice-protection/reng
+			</test>
+		</switch>
+		
+		<switch name="/controls/ice-protection/windowprobeheat-output">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/ice-protection/windowprobeheat eq 1
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/bus/ac-1 ge 110
+					/systems/electrical/bus/ac-2 ge 110
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				/controls/ice-protection/windowprobeheat eq 0
+				/gear/gear[1]/wow eq 1
+				<test logic="OR">
+					/engines/engine[0]/state eq 3
+					/engines/engine[1]/state eq 3
+				</test>
+				<test logic="OR">
+					/systems/electrical/bus/ac-ess ge 110
+					/systems/electrical/bus/ac-1 ge 110
+					/systems/electrical/bus/ac-2 ge 110
+				</test>
+			</test>
+		</switch>
+	</channel>
+	
+</system>

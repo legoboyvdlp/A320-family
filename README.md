@@ -21,6 +21,10 @@ It is highly reccomended to purchase a NAVIGRAPH subscription and download their
 
 To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. 
 
+## Installation
+If you have issues installing, please check INSTALL.MD!
+Specifically, make sure you remove -dev from the folder name!
+
 ## External tools
 Some external tools you might want to checkout and use with this Model.  
 NOTE: These are external tools so make sure to check their terms of use

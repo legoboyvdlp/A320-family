@@ -11,8 +11,6 @@
 	<!-- No button lights without power! -->
 	<animation>
 		<type>select</type>
-		<object-name>ACESSFeedBtn1F</object-name>
-		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>ACPack1Btn1F</object-name>
 		<object-name>ACPack1Btn2O</object-name>
 		<object-name>ACPack2Btn1F</object-name>
@@ -30,6 +28,10 @@
 		<object-name>ELAC1Btn1F</object-name>
 		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerExtLtBtn2O</object-name>
+		<object-name>Eng1AntiIceBtn1F</object-name>
+		<object-name>Eng1AntiIceBtn2O</object-name>
+		<object-name>Eng2AntiIceBtn1F</object-name>
+		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
@@ -42,6 +44,8 @@
 		<object-name>RamAirBtn2O</object-name>
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
+		<object-name>WingAntiIceBtn1F</object-name>
+		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
 		<condition>
 			<greater-than-equals>
@@ -53,8 +57,6 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>APUBleedBtn1F</object-name>
-		<object-name>APUBleedBtn2O</object-name>
 		<object-name>APUGenBtn1F</object-name>
 		<object-name>APUGenBtn2O</object-name>
 		<object-name>APUMasterBtn1F</object-name>
@@ -91,6 +93,8 @@
 
 	<animation>
 		<type>select</type>
+		<object-name>ACESSFeedBtn1F</object-name>
+		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>AftCargoIsoBtn1F</object-name>
 		<object-name>AftCargoIsoBtn2O</object-name>
 		<object-name>AftCargoSmkBtn1S</object-name>
@@ -112,15 +116,7 @@
 		<object-name>EmerCallBtn1C</object-name>
 		<object-name>EmerCallBtn2O</object-name>
 		<object-name>EmerGenInd1F</object-name>
-		<object-name>Eng1AntiIceBtn1F</object-name>
-		<object-name>Eng1AntiIceBtn2O</object-name>
-		<object-name>Eng2AntiIceBtn1F</object-name>
-		<object-name>Eng2AntiIceBtn2O</object-name>
-		<object-name>Eng1BleedBtn1F</object-name>
-		<object-name>Eng1BleedBtn2O</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
-		<object-name>Eng2BleedBtn1F</object-name>
-		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<object-name>EvacCommandBtn1E</object-name>
 		<object-name>EvacCommandBtn2O</object-name>
@@ -170,8 +166,6 @@
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
-		<object-name>WingAntiIceBtn1F</object-name>
-		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>YellowElecPump1F</object-name>
 		<object-name>YellowElecPump2O</object-name>
 		<object-name>YellowEngPump1F</object-name>
@@ -181,6 +175,28 @@
 				<property>systems/electrical/bus/dc-ess</property>
 				<value>25</value>
 			</greater-than-equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng1BleedBtn1F</object-name>
+		<object-name>Eng1BleedBtn2O</object-name>
+		<object-name>Eng2BleedBtn1F</object-name>
+		<object-name>Eng2BleedBtn2O</object-name>
+		<object-name>APUBleedBtn1F</object-name>
+		<object-name>APUBleedBtn2O</object-name>
+		<condition>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-2</property>
+					<value>25</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess-shed</property>
+					<value>25</value>
+				</greater-than-equals>
+			</or>
 		</condition>
 	</animation>
 	
@@ -339,7 +355,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -400,7 +416,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -448,7 +464,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -856,7 +872,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -918,7 +934,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -980,7 +996,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1214,7 +1230,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1226,7 +1242,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/elac1-fault</property>
+						<property>systems/fctl/lights/elac1-fault</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/fctl/switches/elac1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -1277,7 +1297,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1289,7 +1309,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/sec1</property>
+						<property>systems/fctl/lights/sec1-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -1344,7 +1364,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1356,7 +1376,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/fac1-fault</property>
+						<property>systems/fctl/lights/fac1-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -1411,7 +1431,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1423,7 +1443,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/elac2-fault</property>
+						<property>systems/fctl/lights/elac2-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -1456,7 +1476,7 @@
 		</condition>
 	</animation>
 
-	<!-- SEC 3 -->
+	<!-- SEC 2 -->
 	<animation>
 		<type>pick</type>
 		<object-name>SEC2Btn1</object-name>
@@ -1478,7 +1498,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1490,7 +1510,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/sec2</property>
+						<property>systems/fctl/lights/sec2-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -1545,7 +1565,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1557,7 +1577,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/sec3</property>
+						<property>systems/fctl/lights/sec3-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -1612,7 +1632,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1624,7 +1644,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/failures/fac2-fault</property>
+						<property>systems/fctl/lights/fac2-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -1658,7 +1678,7 @@
 	</animation>
 
 	<!-- GPWS -->
-	<!--animation>
+	<animation>
 		<name>GPWS terrain system pick</name>
 		<type>pick</type>
 		<object-name>GPWSTerrBtn1</object-name>
@@ -1676,14 +1696,14 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+				<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
-	</animation-->
+	</animation>
 
 	<animation>
 		<type>select</type>
@@ -1696,7 +1716,7 @@
 						<value>0</value>
 					</equals>
 					<equals>
-						<property>instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 						<value>0</value>
 					</equals>
 				</and>
@@ -1714,7 +1734,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+					<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -1747,7 +1767,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1809,11 +1829,11 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+				<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1824,7 +1844,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+					<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -1856,7 +1876,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1899,7 +1919,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1944,7 +1964,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2020,7 +2040,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -2106,7 +2126,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2173,7 +2193,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2240,7 +2260,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2307,7 +2327,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2375,7 +2395,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2434,7 +2454,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2446,7 +2466,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/fuel/tank0pump1-fault</property>
+						<property>systems/failures/fuel/left-tank-pump-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -2499,7 +2519,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2511,7 +2531,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/fuel/tank0pump2-fault</property>
+						<property>systems/failures/fuel/left-tank-pump-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -2564,7 +2584,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2576,7 +2596,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/fuel/tank1pump1-fault</property>
+						<property>systems/failures/fuel/center-tank-pump-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -2628,7 +2648,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2693,7 +2713,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2705,7 +2725,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/fuel/tank1pump2-fault</property>
+						<property>systems/failures/fuel/center-tank-pump-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -2758,7 +2778,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2770,7 +2790,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/fuel/tank2pump1-fault</property>
+						<property>systems/failures/fuel/right-tank-pump-1</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -2823,7 +2843,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2835,7 +2855,7 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/fuel/tank2pump2-fault</property>
+						<property>systems/failures/fuel/right-tank-pump-2</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -2889,7 +2909,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2950,7 +2970,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3017,7 +3037,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3067,6 +3087,42 @@
 			</and>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>IDG1Prot</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/OH/protectors/idg1</property>
+			</binding>
+			<binding>
+				<condition>
+					<not>
+						<property>controls/OH/protectors/idg1</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>IDG1Prot</object-name>
+		<property>controls/OH/protectors/idg1</property>
+		<factor>-145</factor>
+		<axis>
+			<x1-m>-0.00898</x1-m>
+			<y1-m>-0.14623</y1-m>
+			<z1-m>-0.03502</z1-m>
+			<x2-m>-0.00898</x2-m>
+			<y2-m>-0.12327</y2-m>
+			<z2-m>-0.03502</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>IDG 1 pick</name>
@@ -3078,16 +3134,32 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>	
+						<greater-than-equals>
+							<property>/engines/engine[0]/n2-actual</property>
+							<value>14.0</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/OH/protectors/idg1</property>
+							<value>1</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-1-disc</property>
 				<value>0</value>
 			</binding>
 			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/idg1</property>
+						<value>1</value>
+					</equals>
+				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-1-disc-momentary</property>
 				<value>1</value>
@@ -3096,6 +3168,17 @@
 				<binding>
 					<command>property-assign</command>
 					<property>controls/electrical/switches/idg-1-disc-momentary</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/idg1</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/idg1</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -3131,23 +3214,14 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<property>/systems/electrical/sources/idg-1/gcu-1-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/gen-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3199,12 +3273,12 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
 						</greater-than-equals>
 					</or>
 				</condition>
@@ -3213,7 +3287,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3264,17 +3338,14 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-bat</property>
-						<value>25</value>
-					</greater-than-equals> <!-- control is on DC BAT bus 301PP via 11 PB - so if you enter EMER ELEC with it turned off, too bad -->
+					<property>/systems/electrical/sources/apu/gcu-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/apu</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3345,7 +3416,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3389,7 +3460,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3453,23 +3524,14 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<property>/systems/electrical/sources/idg-2/gcu-2-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/gen-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3507,6 +3569,42 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>IDG2Prot</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/OH/protectors/idg2</property>
+			</binding>
+			<binding>
+				<condition>
+					<not>
+						<property>controls/OH/protectors/idg2</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/oh-cover", 1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>IDG2Prot</object-name>
+		<property>controls/OH/protectors/idg2</property>
+		<factor>-145</factor>
+		<axis>
+			<x1-m>-0.00898</x1-m>
+			<y1-m> 0.12327</y1-m>
+			<z1-m>-0.03502</z1-m>
+			<x2-m>-0.00898</x2-m>
+			<y2-m> 0.14623</y2-m>
+			<z2-m>-0.03502</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>IDG 2 pick</name>
@@ -3518,16 +3616,32 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>/engines/engine[1]/n2-actual</property>
+							<value>14.0</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>controls/OH/protectors/idg2</property>
+							<value>1</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-2-disc</property>
 				<value>0</value>
 			</binding>
 			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/idg2</property>
+						<value>1</value>
+					</equals>
+				</condition>
 				<command>property-assign</command>
 				<property>controls/electrical/switches/idg-2-disc-momentary</property>
 				<value>1</value>
@@ -3536,6 +3650,17 @@
 				<binding>
 					<command>property-assign</command>
 					<property>controls/electrical/switches/idg-2-disc-momentary</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/idg2</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/idg2</property>
 					<value>0</value>
 				</binding>
 			</mod-up>
@@ -3587,7 +3712,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -3749,7 +3874,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -3824,10 +3949,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/pack-flo</property>
-				<value>7</value>
-				<value>9</value>
-				<value>11</value>
+				<property>controls/pneumatics/switches/pack-flow</property>
+				<value>0.8</value>
+				<value>1.0</value>
+				<value>1.2</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3840,10 +3965,10 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/pack-flo</property>
-				<value>11</value>
-				<value>9</value>
-				<value>7</value>
+				<property>controls/pneumatics/switches/pack-flow</property>
+				<value>1.2</value>
+				<value>1.0</value>
+				<value>0.8</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3855,11 +3980,11 @@
 		<name>AC pack flow rotate</name>
 		<type>rotate</type>
 		<object-name>ACFlowKnb</object-name>
-		<property>controls/pneumatic/switches/pack-flo</property>
+		<property>controls/pneumatics/switches/pack-flow</property>
 		<interpolation>
-			<entry><ind> 7</ind><dep> 55</dep></entry>
-			<entry><ind> 9</ind><dep>  0</dep></entry>
-			<entry><ind>11</ind><dep>-55</dep></entry>
+			<entry><ind>0.8</ind><dep> 55</dep></entry>
+			<entry><ind>1.0</ind><dep>  0</dep></entry>
+			<entry><ind>1.2</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
 			<x>1</x>
@@ -3883,7 +4008,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/cockpit-temp</property>
+				<property>controls/pneumatics/switches/temp-cockpit</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3895,7 +4020,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/cockpit-temp</property>
+				<property>controls/pneumatics/switches/temp-cockpit</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3906,7 +4031,7 @@
 		<name>Cockpit Temp rotate</name>
 		<type>rotate</type>
 		<object-name>CockpitACKnb</object-name>
-		<property>controls/pneumatic/switches/cockpit-temp</property>
+		<property>controls/pneumatics/switches/temp-cockpit</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -3933,7 +4058,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/fwd-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3945,7 +4070,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/fwd-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3956,7 +4081,7 @@
 		<name>FWD Temp rotate</name>
 		<type>rotate</type>
 		<object-name>FwdCabinACKnb</object-name>
-		<property>controls/pneumatic/switches/fwd-temp</property>
+		<property>controls/pneumatics/switches/temp-cabin-fwd</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -3983,7 +4108,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/aft-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-aft</property>
 				<step>0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -3995,7 +4120,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/pneumatic/switches/aft-temp</property>
+				<property>controls/pneumatics/switches/temp-cabin-aft</property>
 				<step>-0.1</step>
 				<min>0</min>
 				<max>1</max>
@@ -4006,7 +4131,7 @@
 		<name>AFT Temp rotate</name>
 		<type>rotate</type>
 		<object-name>AftCabinACKnb</object-name>
-		<property>controls/pneumatic/switches/aft-temp</property>
+		<property>controls/pneumatics/switches/temp-cabin-aft</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 135</dep></entry>
 			<entry><ind>1</ind><dep>-135</dep></entry>
@@ -4033,7 +4158,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/xbleed</property>
+				<property>/controls/pneumatics/switches/x-bleed</property>
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
@@ -4049,7 +4174,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/pneumatic/switches/xbleed</property>
+				<property>/controls/pneumatics/switches/x-bleed</property>
 				<value>2</value>
 				<value>1</value>
 				<value>0</value>
@@ -4064,7 +4189,7 @@
 		<name>X-Bleed rotate</name>
 		<type>rotate</type>
 		<object-name>XbleedKnb</object-name>
-		<property>controls/pneumatic/switches/xbleed</property>
+		<property>/controls/pneumatics/switches/x-bleed</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 55</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
@@ -4106,11 +4231,11 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/pack1</property>
+				<property>controls/pneumatics/switches/pack-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4120,16 +4245,7 @@
 		<object-name>ACPack1Btn1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/pneumatic/pack1-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatic/switches/pack1</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>/systems/air-conditioning/warnings/pack-1-fault-light</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4144,7 +4260,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/pack1</property>
+					<property>controls/pneumatics/switches/pack-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4167,17 +4283,23 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess-shed</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleed1</property>
+				<property>controls/pneumatics/switches/bleed-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4189,11 +4311,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/bleed1-fault</property>
+						<property>systems/pneumatics/warnings/bleed1-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleed1</property>
+						<property>controls/pneumatics/switches/bleed-1</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4211,7 +4333,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleed1</property>
+					<property>controls/pneumatics/switches/bleed-1</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4236,21 +4358,21 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
+							<property>systems/electrical/bus/dc-2</property>
 							<value>25</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>systems/electrical/bus/dc-ess-shed</property>
 							<value>25</value>
 						</greater-than-equals>
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleedapu</property>
+				<property>controls/pneumatics/switches/apu</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4260,16 +4382,16 @@
 		<object-name>APUBleedBtn1F</object-name>
 		<condition>
 			<or>
-				<and>
+				<!--<and>
 					<equals>
-						<property>systems/pneumatic/bleedapu-fault</property>
+						<property>systems/pneumatics/bleedapu-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleedapu</property>
+						<property>controls/pneumatics/switches/apu</property>
 						<value>1</value>
 					</equals>
-				</and>
+				</and> leak not simulated yet -->
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4284,7 +4406,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleedapu</property>
+					<property>controls/pneumatics/switches/apu</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -4307,17 +4429,23 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess-shed</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/bleed2</property>
+				<property>controls/pneumatics/switches/bleed-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4329,11 +4457,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/bleed2-fault</property>
+						<property>systems/pneumatics/warnings/bleed2-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/bleed2</property>
+						<property>controls/pneumatics/switches/bleed-2</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4351,7 +4479,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/bleed2</property>
+					<property>controls/pneumatics/switches/bleed-2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4379,11 +4507,11 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/hot-air</property>
+				<property>controls/pneumatics/switches/hot-air</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4395,11 +4523,11 @@
 			<or>
 				<and>
 					<equals>
-						<property>systems/pneumatic/hotair-fault</property>
+						<property>systems/pneumatics/hotair-fault</property>
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>controls/pneumatic/switches/hot-air</property>
+						<property>controls/pneumatics/switches/hot-air</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -4417,7 +4545,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/hot-air</property>
+					<property>controls/pneumatics/switches/hot-air</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4452,11 +4580,11 @@
 					</or>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/pack2</property>
+				<property>controls/pneumatics/switches/pack-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4466,16 +4594,7 @@
 		<object-name>ACPack2Btn1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/pneumatic/pack2-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatic/switches/pack2</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<property>/systems/air-conditioning/warnings/pack-2-fault-light</property>
 				<equals>
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
@@ -4490,7 +4609,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/pack2</property>
+					<property>controls/pneumatics/switches/pack-2</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -4529,7 +4648,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/pneumatic/switches/ram-air</property>
+				<property>controls/pneumatics/switches/ram-air</property>
 			</binding>
 			<binding>
 				<condition>
@@ -4539,7 +4658,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -4591,7 +4710,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/pneumatic/switches/ram-air</property>
+					<property>controls/pneumatics/switches/ram-air</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -4730,7 +4849,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4741,7 +4860,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>systems/failures/pack2</property>
+					<property>systems/failures/pneumatics/pack-2-valve</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -4807,7 +4926,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5307,16 +5426,16 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-ess-shed</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/wing</property>
+				<property>controls/ice-protection/wing</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5327,7 +5446,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/wingfault</property>
+					<property>controls/ice-protection/wingfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5344,7 +5463,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/wing</property>
+					<property>controls/ice-protection/wing</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5368,16 +5487,16 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-1</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/leng</property>
+				<property>controls/ice-protection/leng</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5388,7 +5507,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/lengfault</property>
+					<property>controls/ice-protection/lengfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5405,7 +5524,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/leng</property>
+					<property>controls/ice-protection/leng</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5429,16 +5548,16 @@
 			<binding>
 				<condition>
 					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
+						<property>systems/electrical/bus/dc-2</property>
 						<value>25</value>
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/reng</property>
+				<property>controls/ice-protection/reng</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5449,7 +5568,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/rengfault</property>
+					<property>controls/ice-protection/rengfault</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5466,7 +5585,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/reng</property>
+					<property>controls/ice-protection/reng</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5497,13 +5616,13 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-cycle</command>
-				<property>controls/switches/windowprobeheat</property>
-				<value>0.5</value>
+				<property>controls/ice-protection/windowprobeheat</property>
+				<value>0</value>
 				<value>1</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5514,7 +5633,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/windowprobeheat</property>
+					<property>controls/ice-protection/windowprobeheat</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5542,11 +5661,11 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/switches/cabinfan</property>
+				<property>controls/switches/pneumatics/cabin-fans</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5557,7 +5676,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/switches/cabinfan</property>
+					<property>controls/switches/pneumatics/cabin-fans</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -5597,7 +5716,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5661,7 +5780,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5733,7 +5852,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5838,7 +5957,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -7190,17 +7309,40 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<or>
+							<not>
+								<property>gear/gear[1]/wow</property>
+							</not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</or>
+					</and>
 				</condition>
-				<command>property-toggle</command>
+				<command>property-assign</command>
 				<property>controls/switches/LrainRpt</property>
+				<value>1</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/switches/LrainRpt</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7213,17 +7355,40 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<or>
+							<not>
+								<property>gear/gear[1]/wow</property>
+							</not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</or>
+					</and>
 				</condition>
-				<command>property-toggle</command>
+				<command>property-assign</command>
 				<property>controls/switches/RrainRpt</property>
+				<value>1</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/switches/RrainRpt</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7321,7 +7486,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7362,7 +7527,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7414,7 +7579,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>

@@ -6,16 +6,18 @@ var perfCRZInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L2") {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/cost-index", 0);
-			setprop("/FMGC/internal/cost-index-set", 0);
+			fmgc.FMGCInternal.costIndex = 0;
+			fmgc.FMGCInternal.costIndexSet = 0;
+			fmgc.FMGCNodes.costIndex.setValue(0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var ci = int(scratchpad);
 			var cis = size(scratchpad);
 			if (cis >= 1 and cis <= 3) {
 				if (ci != nil and ci >= 0 and ci <= 999) {
-					setprop("/FMGC/internal/cost-index", ci);
-					setprop("/FMGC/internal/cost-index-set", 1);
+					fmgc.FMGCInternal.costIndex = ci;
+					fmgc.FMGCInternal.costIndexSet = 1;
+					fmgc.FMGCNodes.costIndex.setValue(fmgc.FMGCInternal.costIndex);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
@@ -25,11 +27,11 @@ var perfCRZInput = func(key, i) {
 			}
 		}
 	} else if (key == "L6") {
-		if (getprop("/FMGC/status/phase") == 3) {
+		if (fmgc.FMGCInternal.phase == 3) {
 			if (getprop("/FMGC/internal/activate-once") == 1) {
 				if (getprop("/FMGC/internal/activate-twice") == 0) {
 					setprop("/FMGC/internal/activate-twice", 1);
-					setprop("/FMGC/status/phase", 5);
+					fmgc.FMGCInternal.phase = 5;
 					setprop("/FMGC/internal/decel", 1);
 					setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 				} else {

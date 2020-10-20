@@ -3,92 +3,166 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
-setprop("FMGC/internal/cruise-ft", 10000);
-setprop("it-autoflight/internal/alt", 10000);
-setprop("modes/pfd/fma/throttle-mode", " ");
-setprop("modes/pfd/fma/pitch-mode", " ");
-setprop("modes/pfd/fma/pitch-mode-armed", " ");
-setprop("modes/pfd/fma/pitch-mode2-armed", " ");
-setprop("modes/pfd/fma/roll-mode", " ");
-setprop("modes/pfd/fma/roll-mode-armed", " ");
-setprop("modes/pfd/fma/ap-mode", " ");
-setprop("modes/pfd/fma/fd-mode", " ");
-setprop("modes/pfd/fma/at-mode", " ");
-setprop("modes/pfd/fma/athr-armed", 0);
-setprop("modes/pfd/fma/throttle-mode-box", 0);
-setprop("modes/pfd/fma/pitch-mode-box", 0);
-setprop("modes/pfd/fma/pitch-mode-armed-box", 0);
-setprop("modes/pfd/fma/pitch-mode2-armed-box", 0);
-setprop("modes/pfd/fma/roll-mode-box", 0);
-setprop("modes/pfd/fma/roll-mode-armed-box", 0);
-setprop("modes/pfd/fma/ap-mode-box", 0);
-setprop("modes/pfd/fma/fd-mode-box", 0);
-setprop("modes/pfd/fma/athr-mode-box", 0);
-setprop("modes/pfd/fma/throttle-mode-time", 0);
-setprop("modes/pfd/fma/pitch-mode-time", 0);
-setprop("modes/pfd/fma/pitch-mode-armed-time", 0);
-setprop("modes/pfd/fma/pitch-mode2-armed-time", 0);
-setprop("modes/pfd/fma/roll-mode-time", 0);
-setprop("modes/pfd/fma/roll-mode-armed-time", 0);
-setprop("modes/pfd/fma/ap-mode-time", 0);
-setprop("modes/pfd/fma/fd-mode-time", 0);
-setprop("modes/pfd/fma/athr-mode-time", 0);
-setprop("modes/fcu/hdg-time", -45);
+var at = nil;
+var athr = nil;
+var ap1 = nil;
+var ap2 = nil;
+var elapsedtime = nil;
+var engout = nil;
+var engstate1 = nil;
+var engstate2 = nil;
+var fd1 = nil;
+var fd2 = nil;
+var flx = nil;
+var gear1 = nil;
+var gear2 = nil;
+var gs_defl = nil;
+var latText = nil;
+var MCPalt = nil;
+var nav_defl = nil;
+var newfd = nil;
+var newarm = nil;
+var newap = nil;
+var newlat = nil;
+var newvert = nil;
+var newvert2arm = nil;
+var newvertarm = nil;
+var newthr = nil;
+var state1 = nil;
+var state2 = nil;
+var thr = nil;
+var thr1 = nil;
+var thr2 = nil;
+var trk = nil;
+var vert = nil;
+var vertText = nil;
 
-setlistener("sim/signals/fdm-initialized", func {
+
+var Modes = {
+	FCU: {
+		hdgTime: props.globals.initNode("/modes/fcu/hdg-time", -45, "DOUBLE")
+	},
+	PFD: {
+		FMA: {
+			athr: props.globals.initNode("/modes/pfd/fma/athr-armed", 0, "BOOL"),
+			athrBox: props.globals.initNode("/modes/pfd/fma/athr-armed-box", 0, "BOOL"),
+			athrMode: props.globals.initNode("/modes/pfd/fma/at-mode", " ", "STRING"),
+			athrModeBox: props.globals.initNode("/modes/pfd/fma/athr-mode-box", 0, "BOOL"),
+			apMode: props.globals.initNode("/modes/pfd/fma/ap-mode", " ", "STRING"),
+			apModeBox: props.globals.initNode("/modes/pfd/fma/ap-mode-box", 0, "BOOL"),
+			apModeTime: props.globals.initNode("/modes/pfd/fma/ap-mode-time", 0, "DOUBLE"),
+			athrModeTime: props.globals.initNode("/modes/pfd/fma/athr-mode-time", 0, "DOUBLE"),
+			fdMode: props.globals.initNode("/modes/pfd/fma/fd-mode", " ", "STRING"),
+			fdModeBox: props.globals.initNode("/modes/pfd/fma/fd-mode-box", 0, "BOOL"),
+			fdModeTime: props.globals.initNode("/modes/pfd/fma/fd-mode-time", 0, "DOUBLE"),
+			rollMode: props.globals.initNode("/modes/pfd/fma/roll-mode", " ", "STRING"),
+			rollModeBox: props.globals.initNode("/modes/pfd/fma/roll-mode-box", 0, "BOOL"),
+			rollModeArmed: props.globals.initNode("/modes/pfd/fma/roll-mode-armed", " ", "STRING"),
+			rollModeArmedBox: props.globals.initNode("/modes/pfd/fma/roll-mode-armed-box", 0, "BOOL"),
+			rollModeTime: props.globals.initNode("/modes/pfd/fma/roll-mode-time", 0, "DOUBLE"),
+			rollModeArmedTime: props.globals.initNode("/modes/pfd/fma/roll-mode-armed-time", 0, "DOUBLE"),
+			pitchMode: props.globals.initNode("/modes/pfd/fma/pitch-mode", " ", "STRING"),
+			pitchModeBox: props.globals.initNode("/modes/pfd/fma/pitch-mode-box", 0, "BOOL"),
+			pitchModeArmed: props.globals.initNode("/modes/pfd/fma/pitch-mode-armed", " ", "STRING"),
+			pitchModeArmedBox: props.globals.initNode("/modes/pfd/fma/pitch-mode-armed-box", 0, "BOOL"),
+			pitchMode2Armed: props.globals.initNode("/modes/pfd/fma/pitch-mode2-armed", " ", "STRING"),
+			pitchModeTime: props.globals.initNode("/modes/pfd/fma/pitch-mode-time", 0, "DOUBLE"),
+			pitchModeArmedTime: props.globals.initNode("/modes/pfd/fma/pitch-mode-armed-time", 0, "DOUBLE"),
+			pitchMode2ArmedTime: props.globals.initNode("/modes/pfd/fma/pitch-mode2-armed-time", 0, "DOUBLE"),
+			pitchMode2ArmedBox: props.globals.initNode("/modes/pfd/fma/pitch-mode2-armed-box", 0, "BOOL"),
+			throttle: props.globals.initNode("/modes/pfd/fma/throttle-mode", " ", "STRING"),
+			throttleModeBox: props.globals.initNode("/modes/pfd/fma/throttle-mode-box", 0, "BOOL"),
+			throttleModeTime: props.globals.initNode("/modes/pfd/fma/throttle-mode-time", 0, "DOUBLE"),
+		},
+	},
+};
+
+var init = func() {
+	Internal.alt.setValue(10000);
+	Modes.PFD.FMA.throttle.setValue(" ");
+	Modes.PFD.FMA.pitchMode.setValue(" ");
+	Modes.PFD.FMA.pitchModeArmed.setValue(" ");
+	Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
+	Modes.PFD.FMA.rollMode.setValue(" ");
+	Modes.PFD.FMA.rollModeArmed.setValue(" ");
+	Modes.PFD.FMA.apMode.setValue(" ");
+	Modes.PFD.FMA.fdMode.setValue(" ");
+	Modes.PFD.FMA.athrMode.setValue(" ");
+	Modes.PFD.FMA.athr.setValue(0);
+	Modes.PFD.FMA.throttleModeBox.setValue(0);
+	Modes.PFD.FMA.pitchModeBox.setValue(0);
+	Modes.PFD.FMA.pitchModeArmedBox.setValue(0);
+	Modes.PFD.FMA.pitchMode2ArmedBox.setValue(0);
+	Modes.PFD.FMA.rollModeBox.setValue(0);
+	Modes.PFD.FMA.rollModeArmedBox.setValue(0);
+	Modes.PFD.FMA.apModeBox.setValue(0);
+	Modes.PFD.FMA.fdModeBox.setValue(0);
+	Modes.PFD.FMA.athrModeBox.setValue(0);
+	Modes.PFD.FMA.throttleModeTime.setValue(0);
+	Modes.PFD.FMA.pitchModeTime.setValue(0);
+	Modes.PFD.FMA.pitchModeArmedTime.setValue(0);
+	Modes.PFD.FMA.pitchMode2ArmedTime.setValue(0);
+	Modes.PFD.FMA.rollModeTime.setValue(0);
+	Modes.PFD.FMA.rollModeArmedTime.setValue(0);
+	Modes.PFD.FMA.apModeTime.setValue(0);
+	Modes.PFD.FMA.fdModeTime.setValue(0);
+	Modes.PFD.FMA.athrModeTime.setValue(0);
 	loopFMA.start();
-});
+};
 
 # Master Thrust
 var loopFMA = maketimer(0.05, func {
-	var state1 = getprop("systems/thrust/state1");
-	var state2 = getprop("systems/thrust/state2");
-	var newthr = getprop("modes/pfd/fma/throttle-mode");
-	var thr1 = getprop("controls/engines/engine[0]/throttle-pos");
-	var thr2 = getprop("controls/engines/engine[1]/throttle-pos");
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	thr1 = pts.Controls.Engines.Engine.throttlePos[0].getValue();
+	thr2 = pts.Controls.Engines.Engine.throttlePos[1].getValue();
+	newthr = Modes.PFD.FMA.throttle.getValue();
+	engout = pts.Systems.Thrust.engOut.getValue();
+	
 	if (state1 == "TOGA" or state2 == "TOGA") {
 		if (newthr != "   ") {
-			setprop("modes/pfd/fma/throttle-mode", "   ");
+			Modes.PFD.FMA.throttle.setValue("   ");
 		}
 	} else if ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)) {
 		if (newthr != "   ") {
-			setprop("modes/pfd/fma/throttle-mode", "   ");
+			Modes.PFD.FMA.throttle.setValue("   ");
 		}
-	} else if ((state1 == "MCT" or state2 == "MCT") and getprop("systems/thrust/eng-out") != 1) {
+	} else if ((state1 == "MCT" or state2 == "MCT") and !engout) {
 		if (newthr != "  ") {
-			setprop("modes/pfd/fma/throttle-mode", "  ");
+			Modes.PFD.FMA.throttle.setValue("  ");
 		}
-	} else if (((state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and getprop("systems/thrust/eng-out") != 1) {
+	} else if (((state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and !engout) {
 		if (newthr != " ") {
-			setprop("modes/pfd/fma/throttle-mode", " ");
+			Modes.PFD.FMA.throttle.setValue(" ");
 		}
 	} else {
-		if ((getprop("it-autoflight/output/vert") == 4) or (getprop("it-autoflight/output/vert") == 6) or (getprop("it-autoflight/output/vert") == 7) or (getprop("it-autoflight/output/vert") == 8)) {
-			if (getprop("it-autoflight/output/fd1") == 0 and getprop("it-autoflight/output/fd2") == 0 and getprop("it-autoflight/output/ap1") == 0 and getprop("it-autoflight/output/ap2") == 0) {
-				loopFMA_b();
-			} else {
-				var thr = getprop("it-autoflight/output/thr-mode");
+		vert = Output.vert.getValue();
+		if (vert == 4 or vert >= 6 or vert <= 8) {
+			if (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue()) {
+				thr = Output.thrMode.getValue();
 				if (thr == 0) {
 					loopFMA_b();
 				} else if (thr == 1) {
 					if (newthr != "THR IDLE") {
-						setprop("modes/pfd/fma/throttle-mode", "THR IDLE");
+						Modes.PFD.FMA.throttle.setValue("THR IDLE");
 					}
 				} else if (thr == 2) {
-					if (state1 == "MCT" or state2 == "MCT" and getprop("systems/thrust/eng-out") == 1) {
+					if (state1 == "MCT" or state2 == "MCT" and engout) {
 						if (newthr != "THR MCT") {
-							setprop("modes/pfd/fma/throttle-mode", "THR MCT");
+							Modes.PFD.FMA.throttle.setValue("THR MCT");
 						}
 					} else if (state1 == "CL" or state2 == "CL") {
 						if (newthr != "THR CLB") {
-							setprop("modes/pfd/fma/throttle-mode", "THR CLB");
+							Modes.PFD.FMA.throttle.setValue("THR CLB");
 						}
 					} else {
 						if (newthr != "THR LVR") {
-							setprop("modes/pfd/fma/throttle-mode", "THR LVR");
+							Modes.PFD.FMA.throttle.setValue("THR LVR");
 						}
 					}
 				}
+			} else {
+				loopFMA_b();
 			}
 		} else {
 			loopFMA_b();
@@ -96,164 +170,161 @@ var loopFMA = maketimer(0.05, func {
 	}
 	
 	# A/THR Armed/Active
-	if (getprop("it-autoflight/output/athr") == 1 and (state1 == "MAN THR" or state2 == "MAN THR" or state1 == "MCT" or state2 == "MCT" or state1 == "TOGA" or state2 == "TOGA") and getprop("systems/thrust/eng-out") != 1) {
-		if (getprop("modes/pfd/fma/athr-armed") != 1) {
-			setprop("modes/pfd/fma/athr-armed", 1);
+	athr = Output.athr.getValue();
+	
+	if (athr and (state1 == "MAN THR" or state2 == "MAN THR" or state1 == "MCT" or state2 == "MCT" or state1 == "TOGA" or state2 == "TOGA") and engout != 1) {
+		if (!Modes.PFD.FMA.athr.getValue()) {
+			Modes.PFD.FMA.athr.setValue(1);
 		}
-	} else if (getprop("it-autoflight/output/athr") == 1 and ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83) or (state1 == "MCT" and getprop("controls/engines/thrust-limit") == "FLX") or 
-	(state2 == "MCT" and getprop("controls/engines/thrust-limit") == "FLX") or state1 == "TOGA" or state2 == "TOGA") and getprop("systems/thrust/eng-out") == 1) {
-		if (getprop("modes/pfd/fma/athr-armed") != 1) {
-			setprop("modes/pfd/fma/athr-armed", 1);
+	} else if (athr and ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83) or (fadec.Thrust.thrustLimit.getValue() == "FLX" and (state1 == "MCT" or state2 == "MCT")) 
+	or state1 == "TOGA" or state2 == "TOGA") and engout) {
+		if (!Modes.PFD.FMA.athr.getValue()) {
+			Modes.PFD.FMA.athr.setValue(1);
 		}
 	} else {
-		if (getprop("modes/pfd/fma/athr-armed") != 0) {
-			setprop("modes/pfd/fma/athr-armed", 0);
+		if (Modes.PFD.FMA.athr.getValue()) {
+			Modes.PFD.FMA.athr.setValue(0);
 		}
 	}
 	
 	# SRS RWY Engagement
-	var flx = getprop("systems/thrust/lim-flex");
-	var lat = getprop("it-autoflight/mode/lat");
-	var newlat = getprop("modes/pfd/fma/roll-mode");
-	var vert = getprop("it-autoflight/mode/vert");
-	var newvert = getprop("modes/pfd/fma/pitch-mode");
-	var newvertarm = getprop("modes/pfd/fma/pitch-mode2-armed");
-	var thr1 = getprop("controls/engines/engine[0]/throttle-pos");
-	var thr2 = getprop("controls/engines/engine[1]/throttle-pos");
-	var wow = getprop("gear/gear[0]/wow");
-	var engstate1 = getprop("engines/engine[0]/state");
-	var engstate2 = getprop("engines/engine[1]/state");
+	flx = fadec.Thrust.limFlex.getValue();
+	newlat = Modes.PFD.FMA.rollMode.getValue();
+	engstate1 = pts.Engines.Engine.state[0].getValue();
+	engstate2 = pts.Engines.Engine.state[1].getValue();
 	if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)))) and (engstate1 == 3 or engstate2 == 3)) {
 		# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
-		if (wow and getprop("FMGC/internal/v2-set") == 1 and getprop("it-autoflight/output/vert") != 7) {
+		gear1 = pts.Gear.wow[0].getValue();
+		if (gear1 and FMGCInternal.v2set and Output.vert.getValue() != 7) {
 			ITAF.setVertMode(7);
-			setprop("it-autoflight/mode/vert", "T/O CLB");
+			Text.vert.setValue("T/O CLB");
 		}
 	} else {
-		var gear1 = getprop("gear/gear[1]/wow");
-		var gear2 = getprop("gear/gear[2]/wow");
-		if (getprop("it-autoflight/input/lat") == 5 and (gear1 or gear2)) {
+		gear1 = pts.Gear.wow[0].getValue();
+		gear2 = pts.Gear.wow[2].getValue();
+		if (Input.lat.getValue() == 5 and (gear1 or gear2)) {
 			ITAF.setLatMode(9);
 		}
-		if (getprop("it-autoflight/output/vert") == 7 and (gear1 or gear2)) {
+		if (Input.vert.getValue() == 7 and (gear1 or gear2)) {
 			ITAF.setVertMode(9);
 		}
 	}
 	
-	var trk = getprop("it-autoflight/custom/trk-fpa");
-	if (lat == "HDG" and trk == 0) {
+	trk = Custom.trkFpa.getValue();
+	latText = Text.lat.getValue();
+	if (latText == "HDG" and trk == 0) {
 		if (newlat != "HDG") {
-			setprop("modes/pfd/fma/roll-mode", "HDG");
+			Modes.PFD.FMA.rollMode.setValue("HDG");
 		}
-	} else if (lat == "HDG" and trk == 1) {
+	} else if (latText == "HDG" and trk == 1) {
 		if (newlat != "TRACK") {
-			setprop("modes/pfd/fma/roll-mode", "TRACK");
+			Modes.PFD.FMA.rollMode.setValue("TRACK");
 		}
 	}
 	
 	# Boxes
-	var elapsedtime = getprop("sim/time/elapsed-sec");
-	if (getprop("modes/pfd/fma/ap-mode-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/ap-mode-box", 1);
+	elapsedtime = pts.Sim.Time.elapsedSec.getValue();
+	if (Modes.PFD.FMA.apModeTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.apModeBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/ap-mode-box", 0);
+		Modes.PFD.FMA.apModeBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/fd-mode-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/fd-mode-box", 1);
+	if (Modes.PFD.FMA.fdModeTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.fdModeBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/fd-mode-box", 0);
+		Modes.PFD.FMA.fdModeBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/athr-mode-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/athr-mode-box", 1);
+	if (Modes.PFD.FMA.athrModeTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.athrModeBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/athr-mode-box", 0);
+		Modes.PFD.FMA.athrModeBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/throttle-mode-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/throttle-mode-box", 1);
+	if (Modes.PFD.FMA.throttleModeTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.throttleModeBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/throttle-mode-box", 0);
+		Modes.PFD.FMA.throttleModeBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/roll-mode-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/roll-mode-box", 1);
+	if (Modes.PFD.FMA.rollModeTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.rollModeBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/roll-mode-box", 0);
+		Modes.PFD.FMA.rollModeBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/pitch-mode-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/pitch-mode-box", 1);
+	if (Modes.PFD.FMA.pitchModeTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.pitchModeBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/pitch-mode-box", 0);
+		Modes.PFD.FMA.pitchModeBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/roll-mode-armed-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/roll-mode-armed-box", 1);
+	if (Modes.PFD.FMA.rollModeArmedTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.rollModeArmedBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/roll-mode-armed-box", 0);
+		Modes.PFD.FMA.rollModeArmedBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/pitch-mode-armed-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/pitch-mode-armed-box", 1);
+	if (Modes.PFD.FMA.pitchModeArmedTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.pitchModeArmedBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/pitch-mode-armed-box", 0);
+		Modes.PFD.FMA.pitchModeArmedBox.setValue(0);
 	}
-	if (getprop("modes/pfd/fma/pitch-mode2-armed-time") + 10 >= elapsedtime) {
-		setprop("modes/pfd/fma/pitch-mode2-armed-box", 1);
+	if (Modes.PFD.FMA.pitchMode2ArmedTime.getValue() + 10 >= elapsedtime) {
+		Modes.PFD.FMA.pitchMode2ArmedBox.setValue(1);
 	} else {
-		setprop("modes/pfd/fma/pitch-mode2-armed-box", 0);
+		Modes.PFD.FMA.pitchMode2ArmedBox.setValue(0);
 	}
 });
 
 var loopFMA_b = func {
-	var newthr = getprop("modes/pfd/fma/throttle-mode");
-	if (getprop("it-autoflight/input/kts-mach") == 0) {
+	newthr = Modes.PFD.FMA.throttle.getValue();
+	if (!Input.ktsMach.getValue()) {
 		if (newthr != "SPEED") {
-			setprop("modes/pfd/fma/throttle-mode", "SPEED");
+			Modes.PFD.FMA.throttle.setValue("SPEED");
 		}
-	} else if (getprop("it-autoflight/input/kts-mach") == 1) {
+	} else {
 		if (newthr != "MACH") {
-			setprop("modes/pfd/fma/throttle-mode", "MACH");
+			Modes.PFD.FMA.throttle.setValue("MACH");
 		}
 	}
 }
 
 # Master Lateral
 setlistener("/it-autoflight/mode/lat", func {
-	var lat = getprop("it-autoflight/mode/lat");
-	var newlat = getprop("modes/pfd/fma/roll-mode");
-	if (lat == "LNAV") {
+	latText = Text.lat.getValue();
+	newlat = Modes.PFD.FMA.rollMode.getValue();
+	if (latText == "LNAV") {
 		if (newlat != "NAV") {
-			setprop("modes/pfd/fma/roll-mode", "NAV");
+			Modes.PFD.FMA.rollMode.setValue("NAV");
 		}
-	} else if (lat == "LOC") {
+	} else if (latText == "LOC") {
 		if (newlat != "LOC*" and newlat != "LOC") {
-			setprop("modes/pfd/fma/roll-mode", "LOC*");
+			Modes.PFD.FMA.rollMode.setValue("LOC*");
 			locupdate.start();
 		}
-	} else if (lat == "ALGN") {
+	} else if (latText == "ALGN") {
 		if (newlat != " ") {
-			setprop("modes/pfd/fma/roll-mode", " ");
+			Modes.PFD.FMA.rollMode.setValue(" ");
 		}
-	} else if (lat == "RLOU") {
+	} else if (latText == "RLOU") {
 		if (newlat != " ") {
-			setprop("modes/pfd/fma/roll-mode", " ");
+			Modes.PFD.FMA.rollMode.setValue(" ");
 		}
-	} else if (lat == "T/O") {
+	} else if (latText == "T/O") {
 		if (newlat != "RWY") {
-			setprop("modes/pfd/fma/roll-mode", "RWY");
+			Modes.PFD.FMA.rollMode.setValue("RWY");
 		}
-	} else if (lat == " ") {
+	} else if (latText == " ") {
 		if (newlat != " ") {
-			setprop("modes/pfd/fma/roll-mode", " ");
+			Modes.PFD.FMA.rollMode.setValue(" ");
 		}
 	}
 });
 
 var locupdate = maketimer(0.5, func {
-	var lat = getprop("it-autoflight/mode/lat");
-	var newlat = getprop("modes/pfd/fma/roll-mode");
-	var nav_defl = getprop("instrumentation/nav[0]/heading-needle-deflection-norm");
-	if (lat == "LOC") {
+	latText = Text.lat.getValue();
+	newlat = Modes.PFD.FMA.rollMode.getValue();
+	nav_defl = pts.Instrumentation.Nav.locDeflection.getValue();
+	if (latText == "LOC") {
 		if (nav_defl > -0.06 and nav_defl < 0.06) {
 			locupdate.stop();
 			if (newlat != "LOC") {
-				setprop("modes/pfd/fma/roll-mode", "LOC");
+				Modes.PFD.FMA.rollMode.setValue("LOC");
 			}
 		}
 	}
@@ -261,265 +332,250 @@ var locupdate = maketimer(0.5, func {
 
 # Master Vertical
 setlistener("/it-autoflight/mode/vert", func {
-	var vert = getprop("it-autoflight/mode/vert");
-	var newvert = getprop("modes/pfd/fma/pitch-mode");
-	var newvertarm = getprop("modes/pfd/fma/pitch-mode2-armed");
-	if (vert == "ALT HLD") {
+	vertText = Text.vert.getValue();
+	newvert = Modes.PFD.FMA.pitchMode.getValue();
+	newvertarm = Modes.PFD.FMA.pitchMode2Armed.getValue();
+	if (vertText == "ALT HLD") {
 		altvert();
 		if (newvertarm != " ") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", " ");
+			Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
 		}
-	} else if (vert == "ALT CAP") {
+	} else if (vertText == "ALT CAP") {
 		altvert();
 		if (newvertarm != " ") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", " ");
+			Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
 		}
-	} else if (vert == "V/S") {
+	} else if (vertText == "V/S") {
 		if (newvert != "V/S") {
-			setprop("modes/pfd/fma/pitch-mode", "V/S");
+			Modes.PFD.FMA.pitchMode.setValue("V/S");
 		}
 		if (newvertarm != "ALT") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", "ALT");
+			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
 		}
-	} else if (vert == "G/S") {
+	} else if (vertText == "G/S") {
 		if (newvert != "G/S*" and newvert != "G/S") {
-			setprop("modes/pfd/fma/pitch-mode", "G/S*");
+			Modes.PFD.FMA.pitchMode.setValue("G/S*");
 			gsupdate.start();
 		}
 		if (newvertarm != " ") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", " ");
+			Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
 		}
-	} else if (vert == "SPD CLB") {
+	} else if (vertText == "SPD CLB") {
 		if (newvert != "OP CLB") {
-			setprop("modes/pfd/fma/pitch-mode", "OP CLB");
+			Modes.PFD.FMA.pitchMode.setValue("OP CLB");
 		}
 		if (newvertarm != "ALT") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", "ALT");
+			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
 		}
-	} else if (vert == "SPD DES") {
+	} else if (vertText == "SPD DES") {
 		if (newvert != "OP DES") {
-			setprop("modes/pfd/fma/pitch-mode", "OP DES");
+			Modes.PFD.FMA.pitchMode.setValue("OP DES");
 		}
 		if (newvertarm != "ALT") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", "ALT");
+			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
 		}
-	} else if (vert == "FPA") {
+	} else if (vertText == "FPA") {
 		if (newvert != "FPA") {
-			setprop("modes/pfd/fma/pitch-mode", "FPA");
+			Modes.PFD.FMA.pitchMode.setValue("FPA");
 		}
 		if (newvertarm != "ALT") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", "ALT");
+			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
 		}
-	} else if (vert == "LAND") {
+	} else if (vertText == "LAND") {
 		if (newvert != "LAND") {
-			setprop("modes/pfd/fma/pitch-mode", "LAND");
+			Modes.PFD.FMA.pitchMode.setValue("LAND");
 		}
-	} else if (vert == "FLARE") {
+	} else if (vertText == "FLARE") {
 		if (newvert != "FLARE") {
-			setprop("modes/pfd/fma/pitch-mode", "FLARE");
+			Modes.PFD.FMA.pitchMode.setValue("FLARE");
 		}
-	} else if (vert == "ROLLOUT") {
+	} else if (vertText == "ROLLOUT") {
 		if (newvert != "ROLL OUT") {
-			setprop("modes/pfd/fma/pitch-mode", "ROLL OUT");
+			Modes.PFD.FMA.pitchMode.setValue("ROLL OUT");
 		}
-	} else if (vert == "T/O CLB") {
+	} else if (vertText == "T/O CLB") {
 		if (newvert != "SRS") {
-			setprop("modes/pfd/fma/pitch-mode", "SRS");
+			Modes.PFD.FMA.pitchMode.setValue("SRS");
 		}
 		updatePitchArm2();
-	} else if (vert == "G/A CLB") {
+	} else if (vertText == "G/A CLB") {
 		if (newvert != "SRS") {
-			setprop("modes/pfd/fma/pitch-mode", "SRS");
+			Modes.PFD.FMA.pitchMode.setValue("SRS");
 		}
 		if (newvertarm != "ALT") {
-			setprop("modes/pfd/fma/pitch-mode2-armed", "ALT");
+			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
 		}
-	} else if (vert == " ") {
+	} else if (vertText == " ") {
 		if (newvert != " ") {
-			setprop("modes/pfd/fma/pitch-mode", " ");
+			Modes.PFD.FMA.pitchMode.setValue(" ");
 		}
 		updatePitchArm2();
 	}
 	altvert();
 });
 
-setlistener("/FMGC/internal/v2-set", func {
-	updatePitchArm2();
-});
-
 var updatePitchArm2 = func {
-	var newvertarm = getprop("modes/pfd/fma/pitch-mode2-armed");
-	if (newvertarm != "CLB" and getprop("FMGC/internal/v2-set") == 1) {
-		setprop("modes/pfd/fma/pitch-mode2-armed", "CLB");
-	} else if (newvertarm != " " and getprop("FMGC/internal/v2-set") != 1) {
-		setprop("modes/pfd/fma/pitch-mode2-armed", " ");
+	newvertarm = Modes.PFD.FMA.pitchMode2Armed.getValue();
+	if (newvertarm != "CLB" and FMGCInternal.v2set) {
+		Modes.PFD.FMA.pitchMode2Armed.setValue("CLB");
+	} else if (newvertarm != " " and !FMGCInternal.v2set) {
+		Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
 	}
 }
 
 var gsupdate = maketimer(0.5, func {
-	var vert = getprop("it-autoflight/mode/vert");
-	var newvert = getprop("modes/pfd/fma/pitch-mode");
-	var gs_defl = getprop("instrumentation/nav[0]/gs-needle-deflection-norm");
-	if (vert == "G/S") {
+	vertText = Text.vert.getValue();
+	newvert = Modes.PFD.FMA.pitchMode.getValue();
+	gs_defl = pts.Instrumentation.Nav.gsDeflection.getValue();
+	if (vertText == "G/S") {
 		if (gs_defl > -0.06 and gs_defl < 0.06) {
 			gsupdate.stop();
 			if (newvert != "G/S") {
-				setprop("modes/pfd/fma/pitch-mode", "G/S");
+				Modes.PFD.FMA.pitchMode.setValue("G/S");
 			}
 		}
 	}
 });
 
 var altvert = func {
-	var FMGCalt = getprop("FMGC/internal/cruise-ft");
-	var MCPalt = getprop("it-autoflight/internal/alt");
-	var ALTdif = abs(FMGCalt - MCPalt);
-	var vert = getprop("it-autoflight/mode/vert");
-	var newvert = getprop("modes/pfd/fma/pitch-mode");
-	if (ALTdif <= 20) {
-		if (vert == "ALT HLD") {
+	MCPalt = Internal.alt.getValue();
+	vertText = Text.vert.getValue();
+	newvert = Modes.PFD.FMA.pitchMode.getValue();
+	
+	if (abs(fmgc.FMGCInternal.crzFt - MCPalt) <= 20) {
+		if (vertText == "ALT HLD") {
 			if (newvert != "ALT CRZ") {
-				setprop("modes/pfd/fma/pitch-mode", "ALT CRZ");
+				Modes.PFD.FMA.pitchMode.setValue("ALT CRZ");
 			}
-		} else if (vert == "ALT CAP") {
+		} else if (vertText == "ALT CAP") {
 			if (newvert != "ALT CRZ*") {
-				setprop("modes/pfd/fma/pitch-mode", "ALT CRZ*");
+				Modes.PFD.FMA.pitchMode.setValue("ALT CRZ*");
 			}
 		}
 	} else {
-		if (vert == "ALT HLD") {
+		if (vertText == "ALT HLD") {
 			if (newvert != "ALT") {
-				setprop("modes/pfd/fma/pitch-mode", "ALT");
+				Modes.PFD.FMA.pitchMode.setValue("ALT");
 			}
-		} else if (vert == "ALT CAP") {
+		} else if (vertText == "ALT CAP") {
 			if (newvert != "ALT*") {
-				setprop("modes/pfd/fma/pitch-mode", "ALT*");
+				Modes.PFD.FMA.pitchMode.setValue("ALT*");
 			}
 		}
 	}
 }
 
-setlistener("/FMGC/internal/cruise-ft", altvert);
-
 # Arm HDG or NAV
 setlistener("/it-autoflight/mode/arm", func {
-	var arm = getprop("it-autoflight/mode/arm");
-	var newarm = getprop("modes/pfd/fma/roll-mode-armed");
+	arm = Text.arm.getValue();
+	newarm = Modes.PFD.FMA.rollModeArmed.getValue();
 	if (arm == "HDG") {
 		if (newarm != "HDG") {
-			setprop("modes/pfd/fma/roll-mode-armed", " ");
+			Modes.PFD.FMA.rollModeArmed.setValue(" ");
 		}
 	} else if (arm == "LNV") {
 		if (newarm != "NAV") {
-			setprop("modes/pfd/fma/roll-mode-armed", "NAV");
+			Modes.PFD.FMA.rollModeArmed.setValue("NAV");
 		}
 	} else if (arm == " ") {
 		if (newarm != " ") {
-			setprop("modes/pfd/fma/roll-mode-armed", " ");
+			Modes.PFD.FMA.rollModeArmed.setValue(" ");
 		}
 	}
 });
 
 # Arm LOC
 setlistener("/it-autoflight/output/loc-armed", func {
-	var loca = getprop("it-autoflight/output/loc-armed");
-	var newarm = getprop("modes/pfd/fma/roll-mode-armed");
-	if (loca) {
+	newarm = Modes.PFD.FMA.rollModeArmed.getValue();
+	if (Output.locArm.getValue()) {
 		if (newarm != "LOC") {
-			setprop("modes/pfd/fma/roll-mode-armed", "LOC");
+			Modes.PFD.FMA.rollModeArmed.setValue("LOC");
 		}
 	} else {
 		if (newarm != " ") {
-			setprop("modes/pfd/fma/roll-mode-armed", " ");
+			Modes.PFD.FMA.rollModeArmed.setValue(" ");
 		}
 	}
 });
 
 # Arm G/S
 setlistener("/it-autoflight/output/appr-armed", func {
-	var appa = getprop("it-autoflight/output/appr-armed");
-	var newvert2arm = getprop("modes/pfd/fma/pitch-mode-armed");
-	if (appa) {
+	newvert2arm = Modes.PFD.FMA.pitchModeArmed.getValue();
+	if (Output.apprArm.getValue()) {
 		if (newvert2arm != "G/S") {
-			setprop("modes/pfd/fma/pitch-mode-armed", "G/S");
+			Modes.PFD.FMA.pitchModeArmed.setValue("G/S");
 		}
 	} else {
 		if (newvert2arm != " ") {
-			setprop("modes/pfd/fma/pitch-mode-armed", " ");
+			Modes.PFD.FMA.pitchModeArmed.setValue(" ");
 		}
 	}
 });
 
 # AP
 var ap = func {
-	var ap1 = getprop("it-autoflight/output/ap1");
-	var ap2 = getprop("it-autoflight/output/ap2");
-	var newap = getprop("modes/pfd/fma/ap-mode");
+	ap1 = Output.ap1.getValue();
+	ap2 = Output.ap2.getValue();
+	newap = Modes.PFD.FMA.apMode.getValue();
 	if (ap1 and ap2 and newap != "AP1+2") {
-		setprop("modes/pfd/fma/ap-mode", "AP 1+2");
+		Modes.PFD.FMA.apMode.setValue("AP 1+2");
 	} else if (ap1 and !ap2 and newap != "AP 1") {
-		setprop("modes/pfd/fma/ap-mode", "AP 1");
+		Modes.PFD.FMA.apMode.setValue("AP 1");
 	} else if (ap2 and !ap1 and newap != "AP 2") {
-		setprop("modes/pfd/fma/ap-mode", "AP 2");
+		Modes.PFD.FMA.apMode.setValue("AP 2");
 	} else if (!ap1 and !ap2) {
-		setprop("modes/pfd/fma/ap-mode", " ");
+		Modes.PFD.FMA.apMode.setValue(" ");
 	}
 }
 
 # FD
 var fd = func {
-	var fd1 = getprop("it-autoflight/output/fd1");
-	var fd2 = getprop("it-autoflight/output/fd2");
-	var newfd = getprop("modes/pfd/fma/fd-mode");
+	fd1 = Output.fd1.getValue();
+	fd2 = Output.fd2.getValue();
+	newfd = Modes.PFD.FMA.fdMode.getValue();
 	if (fd1 and fd2 and newfd != "1FD2") {
-		setprop("modes/pfd/fma/fd-mode", "1 FD 2");
+		Modes.PFD.FMA.fdMode.setValue("1 FD 2");
 	} else if (fd1 and !fd2 and newfd != "1 FD -") {
-		setprop("modes/pfd/fma/fd-mode", "1 FD -");
+		Modes.PFD.FMA.fdMode.setValue("1 FD -");
 	} else if (fd2 and !fd1 and newfd != "- FD 2") {
-		setprop("modes/pfd/fma/fd-mode", "- FD 2");
+		Modes.PFD.FMA.fdMode.setValue("- FD 2");
 	} else if (!fd1 and !fd2) {
-		setprop("modes/pfd/fma/fd-mode", " ");
+		Modes.PFD.FMA.fdMode.setValue(" ");
 	}
 }
 
 # AT
-var at = func {
-	var at = getprop("it-autoflight/output/athr");
-	var newat = getprop("modes/pfd/fma/at-mode");
-	if (at and newat != "A/THR") {
-		setprop("modes/pfd/fma/at-mode", "A/THR");
+var atMode = func {
+	at = Output.athr.getValue();
+	if (at and Modes.PFD.FMA.athrMode.getValue() != "A/THR") {
+		Modes.PFD.FMA.athrMode.setValue("A/THR");
 	} else if (!at) {
-		setprop("modes/pfd/fma/at-mode", " ");
+		Modes.PFD.FMA.athrMode.setValue(" ");
 	}
 }
 
 var boxchk = func {
-	if ((getprop("it-autoflight/output/ap1") or getprop("it-autoflight/output/ap2") or getprop("it-autoflight/output/fd1") or getprop("it-autoflight/output/fd2")) and getprop("it-autoflight/output/fma-pwr") == 0) {
-		setprop("it-autoflight/input/lat", 3);
+	if ((Output.ap1.getValue() or Output.ap2.getValue() or Output.fd1.getValue() or Output.fd2.getValue()) and !Custom.Output.fmaPower.getValue()) {
+		Input.lat.setValue(3);
 		boxchk_b();
 	}
 }
 
 var boxchk_b = func {
-	var newlat = getprop("modes/pfd/fma/roll-mode");
-	if (newlat != " ") {
-		setprop("modes/pfd/fma/roll-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.rollMode.getValue() != " ") {
+		Modes.PFD.FMA.rollModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-	var newvert = getprop("modes/pfd/fma/pitch-mode");
-	if (newvert != " ") {
-		setprop("modes/pfd/fma/pitch-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.pitchMode.getValue() != " ") {
+		Modes.PFD.FMA.pitchModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-	var newarmr = getprop("modes/pfd/fma/roll-mode-armed");
-	if (newarmr != " ") {
-		setprop("modes/pfd/fma/roll-mode-armed-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.rollModeArmed.getValue() != " ") {
+		Modes.PFD.FMA.rollModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-	var newarmp = getprop("modes/pfd/fma/pitch-mode-armed");
-	if (newarmp != " ") {
-		setprop("modes/pfd/fma/pitch-mode-armed-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.pitchModeArmed.getValue() != " ") {
+		Modes.PFD.FMA.pitchModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-	var newarmp2 = getprop("modes/pfd/fma/pitch-mode2-armed");
-	if (newarmp2 != " ") {
-		setprop("modes/pfd/fma/pitch-mode2-armed-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.pitchMode2Armed.getValue() != " ") {
+		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }
 
@@ -541,79 +597,79 @@ setlistener("/it-autoflight/output/fd2", func {
 	boxchk();
 });
 setlistener("/it-autoflight/output/athr", func {
-	at();
+	atMode();
 });
 
 # Boxes
 setlistener("/modes/pfd/fma/ap-mode", func {
-	if (getprop("modes/pfd/fma/ap-mode") != " ") {
-		setprop("modes/pfd/fma/ap-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.apMode.getValue() != " ") {
+		Modes.PFD.FMA.apModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/fd-mode", func {
-	if (getprop("modes/pfd/fma/fd-mode") != " ") {
-		setprop("modes/pfd/fma/fd-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.fdMode.getValue() != " ") {
+		Modes.PFD.FMA.fdModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/at-mode", func {
-	if (getprop("modes/pfd/fma/at-mode") != " ") {
-		setprop("modes/pfd/fma/throttle-mode-time", getprop("sim/time/elapsed-sec"));
-		setprop("modes/pfd/fma/athr-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
+		Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.athrModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/athr-armed", func {
-	if (getprop("modes/pfd/fma/at-mode") != " ") {
-		setprop("modes/pfd/fma/athr-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
+		Modes.PFD.FMA.athrModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/throttle-mode", func {
-	var state1 = getprop("systems/thrust/state1");
-	var state2 = getprop("systems/thrust/state2");
-	if (getprop("it-autoflight/output/athr") == 1 and state1 != "MCT" and state2 != "MCT" and state1 != "MAN THR" and state2 != "MAN THR" and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and 
-	getprop("systems/thrust/eng-out") != 1) {
-		setprop("modes/pfd/fma/throttle-mode-time", getprop("sim/time/elapsed-sec"));
-	} else 	if (getprop("it-autoflight/output/athr") == 1 and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and getprop("systems/thrust/eng-out") == 1) {
-		if (getprop("controls/engines/engine[0]/throttle-pos") < 0.83 and getprop("controls/engines/engine[1]/throttle-pos") < 0.83) {
-			setprop("modes/pfd/fma/throttle-mode-time", getprop("sim/time/elapsed-sec"));
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	athr = Output.athr.getValue();
+	if (athr == 1 and state1 != "MCT" and state2 != "MCT" and state1 != "MAN THR" and state2 != "MAN THR" and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and 
+	!pts.Systems.Thrust.engOut.getValue()) {
+		Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+	} else 	if (athr == 1 and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and pts.Systems.Thrust.engOut.getValue()) {
+		if (pts.Controls.Engines.Engine.throttlePos[0].getValue() < 0.83 and pts.Controls.Engines.Engine.throttlePos[1].getValue() < 0.83) {
+			Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		}
 	}
 });
 
 setlistener("/modes/pfd/fma/roll-mode", func {
-	var newlat = getprop("modes/pfd/fma/roll-mode");
-	if (newlat != " ") {
-		setprop("modes/pfd/fma/roll-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.rollMode.getValue() != " ") {
+		Modes.PFD.FMA.rollModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/pitch-mode", func {
-	var newvert = getprop("modes/pfd/fma/pitch-mode");
-	if (newvert != " ") {
-		setprop("modes/pfd/fma/pitch-mode-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.pitchMode.getValue() != " ") {
+		Modes.PFD.FMA.pitchModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/roll-mode-armed", func {
-	var newarm = getprop("modes/pfd/fma/roll-mode-armed");
-	if (newarm != " ") {
-		setprop("modes/pfd/fma/roll-mode-armed-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.rollModeArmed.getValue() != " ") {
+		Modes.PFD.FMA.rollModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/pitch-mode-armed", func {
-	var newarm = getprop("modes/pfd/fma/pitch-mode-armed");
-	if (newarm != " ") {
-		setprop("modes/pfd/fma/pitch-mode-armed-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.pitchModeArmed.getValue() != " ") {
+		Modes.PFD.FMA.pitchModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 });
 
 setlistener("/modes/pfd/fma/pitch-mode2-armed", func {
-	var newarm = getprop("modes/pfd/fma/pitch-mode2-armed");
-	if (newarm != " ") {
-		setprop("modes/pfd/fma/pitch-mode2-armed-time", getprop("sim/time/elapsed-sec"));
+	if (Modes.PFD.FMA.pitchMode2Armed != " ") {
+		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
+});
+
+setlistener("sim/signals/fdm-initialized", func {
+	init();
 });

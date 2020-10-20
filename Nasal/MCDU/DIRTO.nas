@@ -167,7 +167,7 @@ var dirTo = {
 			# fix
 			var fix = findFixesByID(text);
 			if (size(fix) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(fix) == 1 or override) {
@@ -189,7 +189,7 @@ var dirTo = {
 			# airport
 			var airport =  findAirportsByICAO(text);
 			if (size(airport) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(airport) == 1 or override) {
@@ -211,7 +211,7 @@ var dirTo = {
 			# navaid
 			var navaid =  findNavaidsByID(text);
 			if (size(navaid) == 0) {
-				notInDataBase(me.computer);
+				mcdu_message(me.computer, "NOT IN DATA BASE");
 			}
 			
 			if (size(navaid) == 1 or override) {
@@ -254,6 +254,7 @@ var dirTo = {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
@@ -264,6 +265,7 @@ var dirTo = {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
+			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 		} else {
