@@ -477,7 +477,7 @@
 		<actuator name="/systems/hydraulic/sources/ptu/ptu-loop-sound">
 			<input>/systems/hydraulic/sources/ptu/ptu-loop-sound-cmd</input>
 			<rate_limit sense="incr">1</rate_limit>
-			<rate_limit sense="decr">100</rate_limit> <!-- instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- instant -->
 		</actuator>
 		
 		<switch name="/systems/hydraulic/sources/ptu/yellow-green">

@@ -29,7 +29,7 @@ var FWC = {
 		phase5: props.globals.initNode("/ECAM/phases/monostable/phase-5", 0, "BOOL"),
 		phase7: props.globals.initNode("/ECAM/phases/monostable/phase-7", 0, "BOOL"),
 		phase9: props.globals.initNode("/ECAM/phases/monostable/phase-9", 0, "BOOL"),
-		phase1Output: props.globals.initNode("/ECAM/phases/monostable/phase-1-output"),
+		phase1Output: props.globals.initNode("/ECAM/phases/monostable/phase-1-300-output"),
 		phase5Output: props.globals.initNode("/ECAM/phases/monostable/phase-5-output"),
 		phase7Output: props.globals.initNode("/ECAM/phases/monostable/phase-7-output"),
 		phase9Output: props.globals.initNode("/ECAM/phases/monostable/phase-9-output"),
@@ -150,7 +150,7 @@ var phaseLoop = func() {
 	}
 	
 	if ((FWC.Logic.gnd.getBoolValue() and twoEngOff and myPhase == 9) and FWC.Flipflop.phase10Output.getBoolValue()) {
-		FWC.Monostable.phase1.setBoolValue(1);
+		FWC.Monostable.phase1.setBoolValue(1); # true for 300 sec then false
 	}	else {
 		FWC.Monostable.phase1.setBoolValue(0);
 	}

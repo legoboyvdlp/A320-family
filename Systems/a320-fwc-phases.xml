@@ -9,7 +9,7 @@
 		<actuator name="/ECAM/timer/ground-calc">
             <description>Timer for the ECAM phase system</description>
             <input>/ECAM/ground-calc-immediate</input>
-            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
         </actuator>
 	</channel>
@@ -80,6 +80,19 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/phases/monostable/phase-1-300-output">
+			<input>/ECAM/phases/monostable/phase-1-300</input>
+			<rate_limit sense="incr">0.00333333333</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/phases/monostable/phase-1-300-output">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/monostable/phase-1-300-output ne 1
+				/ECAM/phases/monostable/phase-1-300 eq 1
+			</test>
+		</switch>
 	</channel>
 
 </system>

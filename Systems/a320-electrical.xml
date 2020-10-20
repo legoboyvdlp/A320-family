@@ -1079,7 +1079,7 @@
 		
 		<actuator name="/systems/electrical/relay/ac-ess-feed-1/auto-switch-timer">
 			<input>/systems/electrical/relay/ac-ess-feed-1/auto-switch</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.33333333333</rate_limit> <!-- 3 seconds -->
 		</actuator>
 		
@@ -1873,7 +1873,7 @@
 		
 		<actuator name="/systems/electrical/some-electric-thingie/static-inverter-timer">
             <input>/systems/electrical/relay/ac-ess-feed-inverter/contact-pos</input>
-            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
         </actuator>
 		

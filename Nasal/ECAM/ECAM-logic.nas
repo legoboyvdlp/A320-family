@@ -1403,10 +1403,12 @@ var messages_priority_2 = func {
 	
 	if (yawDamperSysFault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and phaseVar2 != 10 and warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
 		yawDamperSysFault.active = 1;
-		yawDamperSysFaultFac.active = 1;
+		yawDamperSysFaultFac1.active = 1;
+		yawDamperSysFaultFac2.active = 1;
 	} else {
 		ECAM_controller.warningReset(yawDamperSysFault);
-		ECAM_controller.warningReset(yawDamperSysFaultFac);
+		ECAM_controller.warningReset(yawDamperSysFaultFac1);
+		ECAM_controller.warningReset(yawDamperSysFaultFac2);
 	}
 	
 	if (rudTravLimSysFault.clearFlag == 0 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and warningNodes.Logic.rtlu12Fault.getBoolValue()) {
