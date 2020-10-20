@@ -355,6 +355,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("DATAMODE");
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(2);
+		} else if (page == "DATAMODE") {
+			atsu.ATIS.server = 0;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -408,6 +410,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("VOICEDIRECTORY");
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(3);
+		} else if (page == "DATAMODE") {
+			atsu.ATIS.server = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -693,6 +697,8 @@ var rskbutton = func(btn, i) {
 			pageNode[i].setValue("COMPANYCALL");
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("WEATHERREQ");
+		} else if (page == "DATAMODE") {
+			atsu.AOC.server = 0;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -730,6 +736,8 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myReceivedMessages[i] = nil;
 			canvas_mcdu.myReceivedMessages[i] = receivedMessagesPage.new(i);
 			pageNode[i].setValue("RECEIVEDMSGS");
+		} else if (page == "DATAMODE") {
+			atsu.AOC.server = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}

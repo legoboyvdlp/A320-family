@@ -1662,9 +1662,15 @@ var canvas_lowerECAM_elec = {
 		}
 
 		# Bus indicators
-		if (systems.ELEC.Bus.dcBat.getValue() > 25) {
-			me["ELEC-DCBAT-label"].setColor(0.0509,0.7529,0.2941);
+		if (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue()) {
+			me["ELEC-DCBAT-label"].setText("DC BAT");
+			if (systems.ELEC.Bus.dcBat.getValue() > 25) {
+				me["ELEC-DCBAT-label"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
+			}
 		} else {
+			me["ELEC-DCBAT-label"].setText("XX"); # BCL not powered hence no voltage info supplied from BCL
 			me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
 		}
 

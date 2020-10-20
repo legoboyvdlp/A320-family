@@ -15,8 +15,6 @@ var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
 var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
 var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
-var cutoff1    = props.globals.getNode("/controls/engines/engine[0]/cutoff-switch", 1);
-var cutoff2    = props.globals.getNode("/controls/engines/engine[1]/cutoff-switch", 1);
 var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
@@ -48,16 +46,19 @@ var messages_priority_3 = func {
 	
 	# Stall
 	# todo - altn law and emer cancel flipflops page 2440
-	if (phaseVar3 >= 5 and phaseVar3 <= 7 and (getprop("/fdm/jsbsim/fcs/slat-pos-deg") <= 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 15 or getprop("/systems/navigation/adr/output/aoa-2") > 15 or getprop("/systems/navigation/adr/output/aoa-3") > 15)) or (getprop("/fdm/jsbsim/fcs/slat-pos-deg") > 15 and (getprop("/systems/navigation/adr/output/aoa-1") > 23 or getprop("/systems/navigation/adr/output/aoa-2") > 23 or getprop("/systems/navigation/adr/output/aoa-3") > 23))) {
+	if (warningNodes.Logic.stallWarn.getValue()) {
 		stall.active = 1;
-	} else {
-		ECAM_controller.warningReset(stall);
-	}
-	
-	if (stall.active) {
 		stallVoice.setValue(1);
 	} else {
+		ECAM_controller.warningReset(stall);
 		stallVoice.setValue(0);
+	}
+	
+	# FCTL FLAPS NOT ZERO
+	if (flap_not_zero.clearFlag == 0 and phaseVar3 == 6 and pts.Controls.Flight.flapsInput.getValue() != 0 and pts.Instrumentation.Altimeter.indicatedFt.getValue() > 22000) {
+		flap_not_zero.active = 1;
+	} else {
+		ECAM_controller.warningReset(flap_not_zero);
 	}
 	
 	if ((phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
@@ -89,202 +90,129 @@ var messages_priority_3 = func {
 		overspeedFlap.msg = "-VFE................XXX";
 	}
 	
-	# FCTL FLAPS NOT ZERO
-	if ((flap_not_zero.clearFlag == 0) and phaseVar3 == 6 and getprop("/controls/flight/flaps-input") != 0 and getprop("instrumentation/altimeter/indicated-altitude-ft") > 22000) {
-		flap_not_zero.active = 1;
+	# ENG ALL ENGINE FAILURE
+	
+	if (allEngFail.clearFlag == 0 and dualFailNode.getBoolValue()) {
+		allEngFail.active = 1;
+		
+		if (allEngFailElec.clearFlag == 0 and getprop("/systems/electrical/relay/emer-glc/contact-pos") == 0) {
+			allEngFailElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailElec);
+		}
+		
+		if (allEngFailSPD1.clearFlag == 0 and allEngFailSPD2.clearFlag == 0 and allEngFailSPD3.clearFlag == 0 and allEngFailSPD4.clearFlag == 0) {
+			if (find("LEAP", getprop("/MCDUC/eng"))) {
+				allEngFailSPD2.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD1);
+				ECAM_controller.warningReset(allEngFailSPD3);
+				ECAM_controller.warningReset(allEngFailSPD4);
+			} elsif (find("V2527", getprop("/MCDUC/eng"))) {
+				allEngFailSPD3.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD1);
+				ECAM_controller.warningReset(allEngFailSPD2);
+				ECAM_controller.warningReset(allEngFailSPD4);
+			} elsif (find("PW11", getprop("/MCDUC/eng"))) {
+				allEngFailSPD1.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD2);
+				ECAM_controller.warningReset(allEngFailSPD3);
+				ECAM_controller.warningReset(allEngFailSPD4);
+			} else {
+				allEngFailSPD4.active = 1;
+				ECAM_controller.warningReset(allEngFailSPD1);
+				ECAM_controller.warningReset(allEngFailSPD2);
+				ECAM_controller.warningReset(allEngFailSPD3);
+			}
+		} else {
+			ECAM_controller.warningReset(allEngFailSPD1);
+			ECAM_controller.warningReset(allEngFailSPD2);
+			ECAM_controller.warningReset(allEngFailSPD3);
+			ECAM_controller.warningReset(allEngFailSPD4);
+		}
+		
+		if (allEngFailAPU.clearFlag == 0 and !systems.APUNodes.Controls.master.getBoolValue() and systems.ELEC.Switch.genApu.getValue() and !systems.APUNodes.Controls.fire.getValue() and !systems.APU.signals.autoshutdown and !systems.APU.signals.emer and pts.Instrumentation.Altimeter.indicatedFt.getValue() < 22500) {
+			allEngFailAPU.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailAPU);
+		}
+		
+		if (allEngFailLevers.clearFlag == 0 and (pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 or pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01)) {
+			allEngFailLevers.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailLevers);
+		}
+		
+		if (allEngFailFAC.clearFlag == 0 and fbw.FBW.Computers.fac1.getBoolValue() == 0) {
+			allEngFailFAC.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailFAC);
+		}
+		
+		if (allEngFailGlide.clearFlag == 0) {
+			allEngFailGlide.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailGlide);
+		}
+		
+		if (allEngFailDiversion.clearFlag == 0) {
+			allEngFailDiversion.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailDiversion);
+		}
+		
+		if (allEngFailProc.clearFlag == 0) {
+			allEngFailProc.active = 1;
+		} else {
+			ECAM_controller.warningReset(allEngFailProc);
+		}
 	} else {
-		ECAM_controller.warningReset(flap_not_zero);
+		ECAM_controller.warningReset(allEngFail);
+		ECAM_controller.warningReset(allEngFailElec);
+		ECAM_controller.warningReset(allEngFailSPD1);
+		ECAM_controller.warningReset(allEngFailSPD2);
+		ECAM_controller.warningReset(allEngFailSPD3);
+		ECAM_controller.warningReset(allEngFailSPD4);
+		ECAM_controller.warningReset(allEngFailAPU);
+		ECAM_controller.warningReset(allEngFailLevers);
+		ECAM_controller.warningReset(allEngFailFAC);
+		ECAM_controller.warningReset(allEngFailGlide);
+		ECAM_controller.warningReset(allEngFailDiversion);
+		ECAM_controller.warningReset(allEngFailProc);
 	}
 	
-	# ENG DUAL FAIL
-	
-	if (phaseVar3 >= 5 and phaseVar3 <= 7 and dualFailNode.getBoolValue() and dualFail.clearFlag == 0) {
-		dualFail.active = 1;
+	# ENG ABV IDLE
+	if (eng1ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 1 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng1ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
+		eng1ThrLvrAbvIdle.active = 1;
+		if (eng1ThrLvrAbvIdle2.clearFlag == 0) {
+			eng1ThrLvrAbvIdle2.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1ThrLvrAbvIdle2);
+		}
 	} else {
-		ECAM_controller.warningReset(dualFail);
+		ECAM_controller.warningReset(eng1ThrLvrAbvIdle);
+		ECAM_controller.warningReset(eng1ThrLvrAbvIdle2);
 	}
 	
-	if (dualFail.active == 1) {
-		if (getprop("/controls/engines/engine-start-switch") != 2 and dualFailModeSel.clearFlag == 0) {
-			dualFailModeSel.active = 1;
+	if (eng2ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 1 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng2ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
+		eng2ThrLvrAbvIdle.active = 1;
+		if (eng2ThrLvrAbvIdle2.clearFlag == 0) {
+			eng2ThrLvrAbvIdle2.active = 1;
 		} else {
-			ECAM_controller.warningReset(dualFailModeSel);
-		}
-		
-		if (getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01 and dualFailLevers.clearFlag == 0) {
-			dualFailLevers.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailLevers);
-		}
-		
-		if (engOpt.getValue() == "IAE" and dualFailRelightSPD.clearFlag == 0) {
-			dualFailRelightSPD.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailRelightSPD);
-		}
-		
-		if (engOpt.getValue() != "IAE" and dualFailRelightSPDCFM.clearFlag == 0) {
-			dualFailRelightSPDCFM.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailRelightSPDCFM);
-		}
-		
-		if (emerGen.getValue() == 0 and dualFailElec.clearFlag == 0) {
-			dualFailElec.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailElec);
-		}
-		
-		if (dualFailRadio.clearFlag == 0) {
-			dualFailRadio.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailRadio);
-		}
-		
-		if (getprop("/systems/fctl/fac1-healthy-signal") == 0 and dualFailFAC.clearFlag == 0) {
-			dualFailFAC.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailFAC);
-		}
-		
-		
-		if (dualFailMasters.clearFlag == 0) {
-			dualFailRelight.active = 1; # assumption
-			dualFailMasters.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailRelight);
-			ECAM_controller.warningReset(dualFailMasters);
-		}
-		
-		if (dualFailSPDGD.clearFlag == 0) {
-			dualFailSuccess.active = 1; # assumption
-			dualFailSPDGD.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailSuccess);
-			ECAM_controller.warningReset(dualFailSPDGD);
-		}
-		
-		if (dualFailAPU.clearFlag == 0) {
-			dualFailAPU.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPU);
-		}
-		
-		if (dualFailAPUwing.clearFlag == 0 and pts.APU.rpm.getValue() > 94.9 and wing_pb.getBoolValue()) {
-			dualFailAPUwing.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPUwing);
-		}
-		
-		if (dualFailAPUbleed.clearFlag == 0 and pts.APU.rpm.getValue() > 94.9 and !apu_bleedSw.getBoolValue()) {
-			dualFailAPUbleed.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPUbleed);
-		}
-		
-		if (dualFailMastersAPU.clearFlag == 0) {
-			dualFailMastersAPU.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailMastersAPU);
-		}
-		
-		if (dualFailflap.clearFlag == 0) {
-			dualFailAPPR.active = 1; # assumption
-			dualFailflap.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailAPPR);
-			ECAM_controller.warningReset(dualFailflap);
-		}
-		
-		if (dualFailcabin.clearFlag == 0) {
-			dualFailcabin.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailcabin);
-		}
-		
-		if (dualFailrudd.clearFlag == 0) {
-			dualFailrudd.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailrudd);
-		}
-		
-		if (dualFailgear.clearFlag == 0 and gear.getValue() != 1) {
-			dualFail5000.active = 1; # according to doc
-			dualFailgear.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailgear);
-			ECAM_controller.warningReset(dualFail5000);
-		}
-		
-		if (dualFailfinalspeed.clearFlag == 0) {
-			dualFailfinalspeed.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailfinalspeed);
-		}
-		
-		if (dualFailmasteroff.clearFlag == 0 and (!cutoff1.getBoolValue() or !cutoff2.getBoolValue())) {
-			dualFailmasteroff.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailmasteroff);
-		}
-		
-		if (dualFailapuoff.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue()) {
-			dualFailapuoff.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailapuoff);
-		}
-		
-		if (dualFailevac.clearFlag == 0) {
-			dualFailevac.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailevac);
-		}
-		
-		if (dualFailbatt.clearFlag == 0) { # elec power lost when batt goes off anyway I guess
-			dualFailbatt.active = 1;
-			dualFailtouch.active = 1;
-		} else {
-			ECAM_controller.warningReset(dualFailbatt);
-			ECAM_controller.warningReset(dualFailtouch);
+			ECAM_controller.warningReset(eng2ThrLvrAbvIdle2);
 		}
 	} else {
-		ECAM_controller.warningReset(dualFailModeSel);
-		ECAM_controller.warningReset(dualFailLevers);
-		ECAM_controller.warningReset(dualFailRelightSPD);
-		ECAM_controller.warningReset(dualFailRelightSPDCFM);
-		ECAM_controller.warningReset(dualFailElec);
-		ECAM_controller.warningReset(dualFailRadio);
-		ECAM_controller.warningReset(dualFailFAC);
-		ECAM_controller.warningReset(dualFailRelight);
-		ECAM_controller.warningReset(dualFailMasters);
-		ECAM_controller.warningReset(dualFailSuccess);
-		ECAM_controller.warningReset(dualFailSPDGD);
-		ECAM_controller.warningReset(dualFailAPU);
-		ECAM_controller.warningReset(dualFailAPUwing);
-		ECAM_controller.warningReset(dualFailAPUbleed);
-		ECAM_controller.warningReset(dualFailMastersAPU);
-		ECAM_controller.warningReset(dualFailAPPR);
-		ECAM_controller.warningReset(dualFailflap);
-		ECAM_controller.warningReset(dualFailcabin);
-		ECAM_controller.warningReset(dualFailrudd);
-		ECAM_controller.warningReset(dualFailgear);
-		ECAM_controller.warningReset(dualFail5000);
-		ECAM_controller.warningReset(dualFailfinalspeed);
-		ECAM_controller.warningReset(dualFailmasteroff);
-		ECAM_controller.warningReset(dualFailapuoff);
-		ECAM_controller.warningReset(dualFailevac);
-		ECAM_controller.warningReset(dualFailbatt);
-		ECAM_controller.warningReset(dualFailtouch);
+		ECAM_controller.warningReset(eng2ThrLvrAbvIdle);
+		ECAM_controller.warningReset(eng2ThrLvrAbvIdle2);
 	}
 	
 	# ENG FIRE
-	if ((eng1FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnevacBat.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
+	if ((eng1FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnEvac.clearFlag == 0 and getprop("/systems/fire/engine1/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng1Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1Fire);
 	}
 	
-	if ((eng2FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnevacBat.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
+	if ((eng2FireFlAgent2.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnEvac.clearFlag == 0 and getprop("/systems/fire/engine2/warning-active") == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng2Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2Fire);
@@ -298,13 +226,13 @@ var messages_priority_3 = func {
 	
 	if (eng1Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng1FireFllever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01) {
+			if (eng1FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
 				eng1FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireFllever);
 			}
 			
-			if (eng1FireFlmaster.clearFlag == 0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
+			if (eng1FireFlmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
 				eng1FireFlmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireFlmaster);
@@ -364,7 +292,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng1FireGnlever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
+			if (eng1FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
 				eng1FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnlever);
@@ -378,7 +306,19 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnparkbrk);
 			}
 			
-			if (eng1FireGnmaster.clearFlag == 0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
+			if (eng1FireGnATC.clearFlag == 0) {
+				eng1FireGnATC.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FireGnATC);
+			}
+			
+			if (eng1FireGncrew.clearFlag == 0) {
+				eng1FireGncrew.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FireGncrew);
+			}
+			
+			if (eng1FireGnmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
 				eng1FireGnmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnmaster);
@@ -402,58 +342,22 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnAgent2);
 			}
 			
-			if (eng1FireGnmaster2.clearFlag == 0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
-				eng1FireGnmaster2.active = 1;
+			if (eng1FireGnEvac.clearFlag == 0) {
+				eng1FireGnEvac.active = 1;
 			} else {
-				ECAM_controller.warningReset(eng1FireGnmaster2);
-			}
-			
-			if (eng1FireGnATC.clearFlag == 0) {
-				eng1FireGnATC.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnATC);
-			}
-			
-			if (eng1FireGncrew.clearFlag == 0) {
-				eng1FireGncrew.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGncrew);
-			}
-			
-			if (eng1FireGnevacSw.clearFlag == 0) {
-				eng1FireGnevac.active = 1;
-				eng1FireGnevacSw.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnevac);
-				ECAM_controller.warningReset(eng1FireGnevacSw);
-			}
-			
-			if (eng1FireGnevacApu.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue() and pts.APU.rpm.getValue() > 99) {
-				eng1FireGnevacApu.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnevacApu);
-			}
-			
-			if (eng1FireGnevacBat.clearFlag == 0 and (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue())) {
-				eng1FireGnevacBat.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng1FireGnevacBat);
+				ECAM_controller.warningReset(eng1FireGnEvac);
 			}
 		} else {
 			ECAM_controller.warningReset(eng1FireGnlever);
 			ECAM_controller.warningReset(eng1FireGnstopped);
 			ECAM_controller.warningReset(eng1FireGnparkbrk);
+			ECAM_controller.warningReset(eng1FireGnATC);
+			ECAM_controller.warningReset(eng1FireGncrew);
 			ECAM_controller.warningReset(eng1FireGnmaster);
 			ECAM_controller.warningReset(eng1FireGnPB);
 			ECAM_controller.warningReset(eng1FireGnAgent1);
 			ECAM_controller.warningReset(eng1FireGnAgent2);
-			ECAM_controller.warningReset(eng1FireGnmaster2);
-			ECAM_controller.warningReset(eng1FireGnATC);
-			ECAM_controller.warningReset(eng1FireGncrew);
-			ECAM_controller.warningReset(eng1FireGnevac);
-			ECAM_controller.warningReset(eng1FireGnevacSw);
-			ECAM_controller.warningReset(eng1FireGnevacApu);
-			ECAM_controller.warningReset(eng1FireGnevacBat);
+			ECAM_controller.warningReset(eng1FireGnEvac);
 		}
 	} else {
 		ECAM_controller.warningReset(eng1FireFllever);
@@ -466,28 +370,24 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(eng1FireGnlever);
 		ECAM_controller.warningReset(eng1FireGnstopped);
 		ECAM_controller.warningReset(eng1FireGnparkbrk);
+		ECAM_controller.warningReset(eng1FireGnATC);
+		ECAM_controller.warningReset(eng1FireGncrew);
 		ECAM_controller.warningReset(eng1FireGnmaster);
 		ECAM_controller.warningReset(eng1FireGnPB);
 		ECAM_controller.warningReset(eng1FireGnAgent1);
 		ECAM_controller.warningReset(eng1FireGnAgent2);
-		ECAM_controller.warningReset(eng1FireGnmaster2);
-		ECAM_controller.warningReset(eng1FireGnATC);
-		ECAM_controller.warningReset(eng1FireGncrew);
-		ECAM_controller.warningReset(eng1FireGnevac);
-		ECAM_controller.warningReset(eng1FireGnevacSw);
-		ECAM_controller.warningReset(eng1FireGnevacApu);
-		ECAM_controller.warningReset(eng1FireGnevacBat);
+		ECAM_controller.warningReset(eng1FireGnEvac);
 	}
 	
 	if (eng2Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng2FireFllever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
+			if (eng2FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
 				eng2FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireFllever);
 			}
 			
-			if (eng2FireFlmaster.clearFlag == 0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
+			if (eng2FireFlmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
 				eng2FireFlmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireFlmaster);
@@ -547,7 +447,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng2FireGnlever.clearFlag == 0 and getprop("/fdm/jsbsim/fcs/throttle-lever[0]") > 0.01 and getprop("/fdm/jsbsim/fcs/throttle-lever[1]") > 0.01) {
+			if (eng2FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
 				eng2FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnlever);
@@ -561,7 +461,19 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnparkbrk);
 			}
 			
-			if (eng2FireGnmaster.clearFlag == 0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
+			if (eng2FireGnATC.clearFlag == 0) {
+				eng2FireGnATC.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FireGnATC);
+			}
+			
+			if (eng2FireGncrew.clearFlag == 0) {
+				eng2FireGncrew.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FireGncrew);
+			}
+			
+			if (eng2FireGnmaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
 				eng2FireGnmaster.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnmaster);
@@ -585,58 +497,22 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnAgent2);
 			}
 			
-			if (eng2FireGnmaster2.clearFlag == 0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
-				eng2FireGnmaster2.active = 1;
+			if (eng2FireGnEvac.clearFlag == 0) {
+				eng2FireGnEvac.active = 1;
 			} else {
-				ECAM_controller.warningReset(eng2FireGnmaster2);
-			}
-			
-			if (eng2FireGnATC.clearFlag == 0) {
-				eng2FireGnATC.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnATC);
-			}
-			
-			if (eng2FireGncrew.clearFlag == 0) {
-				eng2FireGncrew.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGncrew);
-			}
-			
-			if (eng2FireGnevacSw.clearFlag == 0) {
-				eng2FireGnevac.active = 1;
-				eng2FireGnevacSw.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnevac);
-				ECAM_controller.warningReset(eng2FireGnevacSw);
-			}
-			
-			if (eng2FireGnevacApu.clearFlag == 0 and systems.APUNodes.Controls.master.getBoolValue() and pts.APU.rpm.getValue() > 99) {
-				eng2FireGnevacApu.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnevacApu);
-			}
-			
-			if (eng2FireGnevacBat.clearFlag == 0 and (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue())) {
-				eng2FireGnevacBat.active = 1;
-			} else {
-				ECAM_controller.warningReset(eng2FireGnevacBat);
+				ECAM_controller.warningReset(eng2FireGnEvac);
 			}
 		} else {
 			ECAM_controller.warningReset(eng2FireGnlever);
 			ECAM_controller.warningReset(eng2FireGnstopped);
 			ECAM_controller.warningReset(eng2FireGnparkbrk);
+			ECAM_controller.warningReset(eng2FireGnATC);
+			ECAM_controller.warningReset(eng2FireGncrew);
 			ECAM_controller.warningReset(eng2FireGnmaster);
 			ECAM_controller.warningReset(eng2FireGnPB);
 			ECAM_controller.warningReset(eng2FireGnAgent1);
 			ECAM_controller.warningReset(eng2FireGnAgent2);
-			ECAM_controller.warningReset(eng2FireGnmaster2);
-			ECAM_controller.warningReset(eng2FireGnATC);
-			ECAM_controller.warningReset(eng2FireGncrew);
-			ECAM_controller.warningReset(eng2FireGnevac);
-			ECAM_controller.warningReset(eng2FireGnevacSw);
-			ECAM_controller.warningReset(eng2FireGnevacApu);
-			ECAM_controller.warningReset(eng2FireGnevacBat);
+			ECAM_controller.warningReset(eng2FireGnEvac);
 		}
 	} else {
 		ECAM_controller.warningReset(eng2FireFllever);
@@ -649,22 +525,18 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(eng2FireGnlever);
 		ECAM_controller.warningReset(eng2FireGnstopped);
 		ECAM_controller.warningReset(eng2FireGnparkbrk);
+		ECAM_controller.warningReset(eng2FireGnATC);
+		ECAM_controller.warningReset(eng2FireGncrew);
 		ECAM_controller.warningReset(eng2FireGnmaster);
 		ECAM_controller.warningReset(eng2FireGnPB);
 		ECAM_controller.warningReset(eng2FireGnAgent1);
 		ECAM_controller.warningReset(eng2FireGnAgent2);
-		ECAM_controller.warningReset(eng2FireGnmaster2);
-		ECAM_controller.warningReset(eng2FireGnATC);
-		ECAM_controller.warningReset(eng2FireGncrew);
-		ECAM_controller.warningReset(eng2FireGnevac);
-		ECAM_controller.warningReset(eng2FireGnevacSw);
-		ECAM_controller.warningReset(eng2FireGnevacApu);
-		ECAM_controller.warningReset(eng2FireGnevacBat);
+		ECAM_controller.warningReset(eng2FireGnEvac);
 	}
 	
 	# APU Fire
 	if (apuFire.active == 1) {
-		if (apuFirePB.clearFlag == 0 and !getprop("/controls/apu/fire-btn")) {
+		if (apuFirePB.clearFlag == 0 and !systems.APUNodes.Controls.fire.getValue()) {
 			apuFirePB.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFirePB);
@@ -674,13 +546,13 @@ var messages_priority_3 = func {
 			apuFireAgentTimer.msg = " -AGENT AFT " ~ getprop("/systems/fire/apu/agent-timer") ~ " S...DISCH";
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("/controls/apu/fire-btn") and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") != 0) {
+		if (apuFireAgent.clearFlag == 0 and systems.APUNodes.Controls.fire.getValue() and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") != 0) {
 			apuFireAgentTimer.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgentTimer);
 		}
 		
-		if (apuFireAgent.clearFlag == 0 and getprop("/controls/apu/fire-btn") and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") == 0) {
+		if (apuFireAgent.clearFlag == 0 and systems.APUNodes.Controls.fire.getValue() and !getprop("/systems/fire/apu/disch") and getprop("/systems/fire/apu/agent-timer") == 0) {
 			apuFireAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(apuFireAgent);
@@ -698,24 +570,35 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(apuFireMaster);
 	}
 	
-	# CONFIG
-	if ((slats_config.clearFlag == 0) and (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input")) == 4 and phaseVar3 >= 3 and phaseVar3 <= 4) {
-		slats_config.active = 1;
-		slats_config_1.active = 1;
+	if ((getprop("/ECAM/to-config-test") and (phaseVar3 == 1 or phaseVar3 == 2 or phaseVar3 == 9)) or phaseVar3 == 3 or phaseVar3 == 4) {
+		takeoffConfig = 1;
+	} else {
+		takeoffConfig = 0;
+	}
+	
+	if ((pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4) and takeoffConfig) {
+		if (slats_config.clearFlag == 0) {
+			slats_config.active = 1;
+			slats_config_1.active = 1;
+		} else {
+			ECAM_controller.warningReset(slats_config);
+			ECAM_controller.warningReset(slats_config_1);
+		}
+		if (flaps_config.clearFlag == 0) {
+			flaps_config.active = 1;
+			flaps_config_1.active = 1;
+		} else {
+			ECAM_controller.warningReset(flaps_config);
+			ECAM_controller.warningReset(flaps_config_1);
+		}
 	} else {
 		ECAM_controller.warningReset(slats_config);
 		ECAM_controller.warningReset(slats_config_1);
-	}
-	
-	if ((flaps_config.clearFlag == 0) and (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input") == 4) and phaseVar3 >= 3 and phaseVar3 <= 4) {
-		flaps_config.active = 1;
-		flaps_config_1.active = 1;
-	} else {
 		ECAM_controller.warningReset(flaps_config);
 		ECAM_controller.warningReset(flaps_config_1);
 	}
 	
-	if ((spd_brk_config.clearFlag == 0) and pts.Controls.Flight.speedbrake.getValue() != 0 and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((spd_brk_config.clearFlag == 0) and pts.Controls.Flight.speedbrake.getValue() != 0 and takeoffConfig) {
 		spd_brk_config.active = 1;
 		spd_brk_config_1.active = 1;
 	} else {
@@ -723,7 +606,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(spd_brk_config_1);
 	}
 	
-	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65) and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 2.6 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -2.6) and takeoffConfig) {
 		pitch_trim_config.active = 1;
 		pitch_trim_config_1.active = 1;
 	} else {
@@ -731,7 +614,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(pitch_trim_config_1);
 	}
 	
-	if ((rud_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((rud_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.6 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.6) and takeoffConfig) {
 		rud_trim_config.active = 1;
 		rud_trim_config_1.active = 1;
 	} else {
@@ -739,10 +622,70 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(rud_trim_config_1);
 	}
 	
-	if ((park_brk_config.clearFlag == 0) and pts.Controls.Gear.parkingBrake.getValue() == 1 and phaseVar3 >= 3 and phaseVar3 <= 4) {
+	if ((park_brk_config.clearFlag == 0) and warningNodes.Flipflops.parkBrk.getValue() and phaseVar3 >= 2 and phaseVar3 <= 3) {
 		park_brk_config.active = 1;
 	} else {
 		ECAM_controller.warningReset(park_brk_config);
+	}
+	
+	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue()) {
+		lrElevFault.active = 1;
+		if (lrElevFaultSpeed.clearFlag == 0) {
+			lrElevFaultSpeed.active = 1;
+		} else {
+			ECAM_controller.warningReset(lrElevFaultSpeed);
+		}
+		if (lrElevFaultTrim.clearFlag == 0) {
+			lrElevFaultTrim.active = 1;
+		} else {
+			ECAM_controller.warningReset(lrElevFaultTrim);
+		}
+		if (lrElevFaultSpdBrk.clearFlag == 0) {
+			lrElevFaultSpdBrk.active = 1;
+		} else {
+			ECAM_controller.warningReset(lrElevFaultSpdBrk);
+		}
+	} else {
+		ECAM_controller.warningReset(lrElevFault);
+		ECAM_controller.warningReset(lrElevFaultSpeed);
+		ECAM_controller.warningReset(lrElevFaultTrim);
+		ECAM_controller.warningReset(lrElevFaultSpdBrk);
+	}
+	
+	if (gearNotDown.clearFlag == 0 and (warningNodes.Logic.gearNotDown1.getBoolValue() or warningNodes.Logic.gearNotDown2.getBoolValue()) and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5) {
+		gearNotDown.active = 1;
+	} else {
+		ECAM_controller.warningReset(gearNotDown);
+	}
+	
+	if (gearNotDownLocked.clearFlag == 0 and warningNodes.Logic.gearNotDownLocked.getBoolValue() and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5 and phaseVar3 != 8) {
+		gearNotDownLocked.active = 1;
+		
+		if (gearNotDownLockedRec.clearFlag == 0 and warningNodes.Logic.gearNotDownLockedFlipflop.getBoolValue()) {
+			gearNotDownLockedRec.active = 1;
+			gearNotDownLockedWork.active = 1;
+		} else {
+			ECAM_controller.warningReset(gearNotDownLockedRec);
+			ECAM_controller.warningReset(gearNotDownLockedWork);
+		}
+		
+		if (gearNotDownLocked120.clearFlag == 0) {
+			gearNotDownLocked120.active = 1;
+		} else {
+			ECAM_controller.warningReset(gearNotDownLocked120);
+		}
+		
+		if (gearNotDownLockedGrav.clearFlag == 0) {
+			gearNotDownLockedGrav.active = 1;
+		} else {
+			ECAM_controller.warningReset(gearNotDownLockedGrav);
+		}
+	} else {
+		ECAM_controller.warningReset(gearNotDownLocked);
+		ECAM_controller.warningReset(gearNotDownLockedRec);
+		ECAM_controller.warningReset(gearNotDownLockedWork);
+		ECAM_controller.warningReset(gearNotDownLocked120);
+		ECAM_controller.warningReset(gearNotDownLockedGrav);
 	}
 	
 	# AUTOFLT
@@ -956,7 +899,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigFuelG2);
 		}
 		
-		if (getprop("/systems/fctl/fac1-healthy-signal") == 0 and emerconfigFAC.clearFlag == 0) {
+		if (fbw.FBW.Computers.fac1.getBoolValue() == 0 and emerconfigFAC.clearFlag == 0) {
 			emerconfigFAC.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigFAC);
@@ -1017,6 +960,196 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(emerconfigAltn);
 		ECAM_controller.warningReset(emerconfigProt);
 		ECAM_controller.warningReset(emerconfigMaxSpeed);
+	}
+	
+	if (hydBYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueYellow.getValue()) {
+		hydBYloPr.active = 1;
+		if (hydBYloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
+			hydBYloPrRat.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrRat);
+		}
+		
+		if (hydBYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+			hydBYloPrYElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrYElec);
+		}
+		
+		if (hydBYloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+			hydBYloPrRatOn.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrRatOn);
+		}
+		
+		if (hydBYloPrBElec.clearFlag == 0 and systems.HYD.Switch.blueElec.getValue()) {
+			hydBYloPrBElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrBElec);
+		}
+		
+		if (hydBYloPrYEng.clearFlag == 0 and systems.HYD.Switch.yellowEDP.getValue()) {
+			hydBYloPrYEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrYEng);
+		}
+		
+		if (hydBYloPrMaxSpd.clearFlag == 0) {
+			hydBYloPrMaxSpd.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrMaxSpd);
+		}
+		
+		if (hydBYloPrMnvrCare.clearFlag == 0) {
+			hydBYloPrMnvrCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrMnvrCare);
+		}
+		
+		if (hydBYloPrGaPitch.clearFlag == 0) {
+			hydBYloPrGaPitch.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrGaPitch);
+		}
+		
+		if (hydBYloPrFuelCnsmpt.clearFlag == 0 and warningNodes.Logic.blueYellowFuel.getValue()) {
+			hydBYloPrFuelCnsmpt.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrFuelCnsmpt);
+		}
+		
+		if (hydBYloPrFmsPredict.clearFlag == 0 and warningNodes.Logic.blueYellowFuel.getValue()) {
+			hydBYloPrFmsPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydBYloPrFmsPredict);
+		}
+	} else {
+		ECAM_controller.warningReset(hydBYloPr);
+		ECAM_controller.warningReset(hydBYloPrRat);
+		ECAM_controller.warningReset(hydBYloPrYElec);
+		ECAM_controller.warningReset(hydBYloPrRatOn);
+		ECAM_controller.warningReset(hydBYloPrBElec);
+		ECAM_controller.warningReset(hydBYloPrYEng);
+		ECAM_controller.warningReset(hydBYloPrMaxSpd);
+		ECAM_controller.warningReset(hydBYloPrMnvrCare);
+		ECAM_controller.warningReset(hydBYloPrGaPitch);
+		ECAM_controller.warningReset(hydBYloPrFuelCnsmpt);
+		ECAM_controller.warningReset(hydBYloPrFmsPredict);
+	}
+	
+	if (hydGBloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueGreen.getValue()) {
+		hydGBloPr.active = 1;
+		if (hydGBloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
+			hydGBloPrRat.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrRat);
+		}
+		
+		if (hydGBloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+			hydGBloPrRatOn.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrRatOn);
+		}
+		
+		if (hydGBloPrBElec.clearFlag == 0 and systems.HYD.Switch.blueElec.getValue()) {
+			hydGBloPrBElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrBElec);
+		}
+		
+		if (hydGBloPrGEng.clearFlag == 0 and systems.HYD.Switch.greenEDP.getValue()) {
+			hydGBloPrGEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrGEng);
+		}
+		
+		if (hydGBloPrMnvrCare.clearFlag == 0) {
+			hydGBloPrMnvrCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrMnvrCare);
+		}
+		
+		if (hydGBloPrGaPitch.clearFlag == 0) {
+			hydGBloPrGaPitch.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrGaPitch);
+		}
+		
+		if (hydGBloPrFuelCnsmpt.clearFlag == 0 and warningNodes.Logic.blueGreenFuel.getValue()) {
+			hydGBloPrFuelCnsmpt.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrFuelCnsmpt);
+		}
+		
+		if (hydGBloPrFmsPredict.clearFlag == 0 and warningNodes.Logic.blueGreenFuel.getValue()) {
+			hydGBloPrFmsPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGBloPrFmsPredict);
+		}
+	} else {
+		ECAM_controller.warningReset(hydGBloPr);
+		ECAM_controller.warningReset(hydGBloPrRat);
+		ECAM_controller.warningReset(hydGBloPrRatOn);
+		ECAM_controller.warningReset(hydGBloPrBElec);
+		ECAM_controller.warningReset(hydGBloPrGEng);
+		ECAM_controller.warningReset(hydGBloPrMnvrCare);
+		ECAM_controller.warningReset(hydGBloPrGaPitch);
+		ECAM_controller.warningReset(hydGBloPrFuelCnsmpt);
+		ECAM_controller.warningReset(hydGBloPrFmsPredict);
+	}
+	
+	if (hydGYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.greenYellow.getValue()) {
+		hydGYloPr.active = 1;
+		if (hydGYloPrPtu.clearFlag == 0 and systems.HYD.Switch.ptu.getValue() != 0) {
+			hydGYloPrPtu.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrPtu);
+		}
+		
+		if (hydGYloPrGEng.clearFlag == 0 and systems.HYD.Switch.greenEDP.getValue()) {
+			hydGYloPrGEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrGEng);
+		}
+		
+		if (hydGYloPrYEng.clearFlag == 0 and systems.HYD.Switch.yellowEDP.getValue()) {
+			hydGYloPrYEng.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrYEng);
+		}
+		
+		if (hydGYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+			hydGYloPrYElec.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrYElec);
+		}
+		
+		if (hydGYloPrMnvrCare.clearFlag == 0) {
+			hydGYloPrMnvrCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrMnvrCare);
+		}
+		
+		if (hydGYloPrFuelCnsmpt.clearFlag == 0 and warningNodes.Logic.greenYellowFuel.getValue()) {
+			hydGYloPrFuelCnsmpt.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrFuelCnsmpt);
+		}
+		
+		if (hydGYloPrFmsPredict.clearFlag == 0 and warningNodes.Logic.greenYellowFuel.getValue()) {
+			hydGYloPrFmsPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(hydGYloPrFmsPredict);
+		}
+	} else {
+		ECAM_controller.warningReset(hydGYloPr);
+		ECAM_controller.warningReset(hydGYloPrPtu);
+		ECAM_controller.warningReset(hydGYloPrGEng);
+		ECAM_controller.warningReset(hydGYloPrYEng);
+		ECAM_controller.warningReset(hydGYloPrYElec);
+		ECAM_controller.warningReset(hydGYloPrMnvrCare);
+		ECAM_controller.warningReset(hydGYloPrFuelCnsmpt);
+		ECAM_controller.warningReset(hydGYloPrFmsPredict);
 	}
 }
 
@@ -1137,6 +1270,72 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(acBusEssShed);
 		ECAM_controller.warningReset(acBusEssShedAtc);
+	}
+	
+	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+		gen1fault.active = 1;
+		if (!warningNodes.Flipflops.gen1FaultOnOff.getValue()) {
+			gen1faultGen.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen1faultGen);
+		}
+		
+		if (systems.ELEC.Switch.gen1.getBoolValue()) {
+			gen1faultGen2.active = 1;
+			gen1faultGen3.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen1faultGen2);
+			ECAM_controller.warningReset(gen1faultGen3);
+		}
+	} else {
+		ECAM_controller.warningReset(gen1fault);
+		ECAM_controller.warningReset(gen1faultGen);
+		ECAM_controller.warningReset(gen1faultGen2);
+		ECAM_controller.warningReset(gen1faultGen3);
+	}
+	
+	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+		gen2fault.active = 1;
+		if (!warningNodes.Flipflops.gen2FaultOnOff.getValue()) {
+			gen2faultGen.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen2faultGen);
+		}
+		
+		if (systems.ELEC.Switch.gen2.getBoolValue()) {
+			gen2faultGen2.active = 1;
+			gen2faultGen3.active = 1;
+		} else {
+			ECAM_controller.warningReset(gen2faultGen2);
+			ECAM_controller.warningReset(gen2faultGen3);
+		}
+	} else {
+		ECAM_controller.warningReset(gen2fault);
+		ECAM_controller.warningReset(gen2faultGen);
+		ECAM_controller.warningReset(gen2faultGen2);
+		ECAM_controller.warningReset(gen2faultGen3);
+	}
+	
+	if (apuGenfault.clearFlag == 0 and warningNodes.Flipflops.apuGenFault.getValue() and (phaseVar2 <= 3 or phaseVar2 == 6 or phaseVar2 >= 9)) {
+		apuGenfault.active = 1;
+		if (!warningNodes.Flipflops.apuGenFaultOnOff.getValue()) {
+			apuGenfaultGen.active = 1;
+		} else {
+			ECAM_controller.warningReset(apuGenfaultGen);
+		}
+		
+		if (systems.ELEC.Switch.genApu.getBoolValue()) {
+			apuGenfaultGen2.active = 1;
+			apuGenfaultGen3.active = 1;
+		} else {
+			ECAM_controller.warningReset(apuGenfaultGen2);
+			ECAM_controller.warningReset(apuGenfaultGen3);
+		}
+	} else {
+		ECAM_controller.warningReset(apuGenfault);
+		ECAM_controller.warningReset(apuGenfaultGen);
+		ECAM_controller.warningReset(apuGenfaultGen2);
+		ECAM_controller.warningReset(apuGenfaultGen3);
 	}
 	
 	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar2 != 4 and phaseVar2 != 8 and phaseVar2 != 10) {
@@ -2028,13 +2227,13 @@ var messages_priority_0 = func {
 
 var messages_config_memo = func {
 	phaseVarMemo = phaseNode.getValue();
-	if (getprop("/controls/flight/flaps-input") == 0 or getprop("/controls/flight/flaps-input") == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("/ECAM/to-config-normal", 0);
 	} else {
 		setprop("/ECAM/to-config-normal", 1);
 	}
 	
-	if (getprop("/ECAM/to-config-test") and (phaseVarMemo == 2 or phaseVarMemo == 9)) {
+	if (getprop("/ECAM/to-config-test") and (phaseVarMemo == 1 or phaseVarMemo == 2 or phaseVarMemo == 9)) {
 		setprop("/ECAM/to-config-set", 1);
 	} else {
 		setprop("/ECAM/to-config-set", 0);
@@ -2136,7 +2335,7 @@ var messages_config_memo = func {
 		ldgMemoLine3.colour = "c";
 	}
 	
-	if (getprop("it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
+	if (getprop("/it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
 		if (pts.Controls.Flight.flapsPos.getValue() == 4) {
 			ldgMemoLine4.msg = "    FLAPS CONF 3";
 			ldgMemoLine4.colour = "g";

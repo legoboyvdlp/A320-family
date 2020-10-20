@@ -25,7 +25,7 @@ var eng_init = func {
 
 # Trigger Startups and Stops
 setlistener("/controls/engines/engine[0]/cutoff-switch", func {
-	if (getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
+	if (pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
 		if (getprop("/systems/acconfig/autoconfig-running") == 1) {
 			fast_start_one();
 		} else {
@@ -35,7 +35,7 @@ setlistener("/controls/engines/engine[0]/cutoff-switch", func {
 				eng_one_man_start.start();
 			}
 		}
-	} else if (getprop("/controls/engines/engine[0]/cutoff-switch") == 1) {
+	} else if (pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 1) {
 		cutoff_one();
 	}
 });
@@ -75,7 +75,7 @@ setlistener("/controls/engines/engine[0]/man-start", func {
 
 var start_one_mancheck = func {
 	if (getprop("/controls/engines/engine[0]/man-start") == 1) {
-		if (getprop("/controls/engines/engine-start-switch") == 2 and (getprop("/controls/engines/engine[0]/cutoff-switch") == 1)) {
+		if (getprop("/controls/engines/engine-start-switch") == 2 and (pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 1)) {
 			setprop("/systems/pneumatics/valves/starter-valve-1", 1);
 			settimer(start_one_mancheck_b, 0.5);
 		}
@@ -96,20 +96,20 @@ var start_one_mancheck_b = func {
 }
 
 var start_one_check = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0) {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
 		setprop("/systems/pneumatics/valves/starter-valve-1", 1);
 		settimer(start_one_check_b, 0.5);
 	}
 }
 
 var start_one_check_b = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine1.getValue() and !getprop("/controls/engines/engine[0]/cutoff-switch")) {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine1.getValue() and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) {
 		auto_start_one();
 	}
 }
 
 setlistener("/controls/engines/engine[1]/cutoff-switch", func {
-	if (getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
+	if (pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
 		if (getprop("/systems/acconfig/autoconfig-running") == 1) {
 			fast_start_two();
 		} else {
@@ -119,7 +119,7 @@ setlistener("/controls/engines/engine[1]/cutoff-switch", func {
 				eng_two_man_start.start();
 			}
 		}
-	} else if (getprop("/controls/engines/engine[1]/cutoff-switch") == 1) {
+	} else if (pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 1) {
 		cutoff_two();
 	}
 });
@@ -158,7 +158,7 @@ setlistener("/controls/engines/engine[1]/man-start", func {
 
 var start_two_mancheck = func {
 	if (getprop("/controls/engines/engine[1]/man-start") == 1) {
-		if (getprop("/controls/engines/engine-start-switch") == 2 and (getprop("/controls/engines/engine[1]/cutoff-switch") == 1)) {
+		if (getprop("/controls/engines/engine-start-switch") == 2 and (pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 1)) {
 			setprop("/systems/pneumatics/valves/starter-valve-2", 1);
 			settimer(start_two_mancheck_b, 0.5);
 		}
@@ -179,14 +179,14 @@ var start_two_mancheck_b = func {
 }
 
 var start_two_check = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
 		setprop("/systems/pneumatics/valves/starter-valve-2", 1);
 		settimer(start_two_check_b, 0.5);
 	}
 }
 
 var start_two_check_b = func {
-	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine2.getValue() >= 25 and !getprop("/controls/engines/engine[1]/cutoff-switch")) {
+	if (getprop("/controls/engines/engine-start-switch") == 2 and systems.PNEU.Psi.engine2.getValue() >= 25 and !pts.Controls.Engines.Engine.cutoffSw[1].getValue()) {
 		auto_start_two();
 	}
 }

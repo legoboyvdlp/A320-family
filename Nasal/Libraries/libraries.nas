@@ -7,7 +7,6 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
-
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
@@ -462,6 +461,23 @@ setlistener("/controls/flight/elevator-trim", func {
         pts.Controls.Flight.elevatorTrim.setValue(0.296296);
     }
 }, 0, 0);
+
+# For the cockpit rotation and anywhere else you want to use it
+var cmdDegCalc = 0;
+var slewPitchWheel = func(d) {
+	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.ElevatorTrim.cmdDeg.getValue(), 0.1);
+	if (d > 0) { # DN
+		if (cmdDegCalc < 4) {
+			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	} else { # UP
+		if (cmdDegCalc > -13.5) {
+			cmdDegCalc = (cmdDegCalc - 0.1) / 13.5; # Subtract and normalize
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	}
+}
 
 ##########
 # Lights #

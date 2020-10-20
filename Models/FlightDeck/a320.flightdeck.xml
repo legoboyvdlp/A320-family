@@ -6174,9 +6174,8 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>controls/flight/elevator-trim</property>
-				<step>0.01</step>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6184,9 +6183,8 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>controls/flight/elevator-trim</property>
-				<step>-0.01</step>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(-1);</script>
 			</binding>
 		</action>
 	</animation>

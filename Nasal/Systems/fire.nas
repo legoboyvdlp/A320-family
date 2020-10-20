@@ -630,7 +630,7 @@ eng2Agent2TimerMakeTimerFunc = func() {
 }
 
 setlistener("/controls/apu/fire-btn", func() { 
-	if (getprop("/controls/apu/fire-btn") == 1) { 
+	if (systems.APUNodes.Controls.fire.getValue() == 1) { 
 		ecam.shutUpYou(); 
 		systems.APUController.APU.emergencyStop();
 		apuAgentTimerMakeTimer.stop();

@@ -150,3 +150,9 @@ var toggleSTD = func {
 		pts.Instrumentation.Altimeter.std.setBoolValue(1);
 	}
 }
+
+var pushbuttonSound = props.globals.getNode("/sim/sounde/pushbutton");
+var pushbutton = func {
+	pushbuttonSound.setValue(1);
+  settimer(func {pushbuttonSound.setValue(0);},0.20);
+}

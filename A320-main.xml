@@ -212,6 +212,7 @@
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
+			<pushbutton type="bool">0</pushbutton>
 			<spdbrk-click type="bool">0</spdbrk-click>
 			<relay-batt-1 type="bool">0</relay-batt-1>
 			<relay-batt-2 type="bool">0</relay-batt-2>
@@ -457,6 +458,15 @@
 							<command>property-assign</command>
 							<property>/controls/adirs/skip</property>
 							<value>1</value>
+						</binding>
+					</item>
+					<item>
+						<label>Canvas QRH</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								canvas_qrh.createCanvasQRH();
+							</script>
 						</binding>
 					</item>
 				</menu>
@@ -1175,6 +1185,7 @@
 				<right-tank-pump-1 type="bool">0</right-tank-pump-1>
 				<right-tank-pump-2 type="bool">0</right-tank-pump-2>
 			</fuel>
+			<gear type="bool">0</gear>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>
@@ -4358,6 +4369,9 @@
 		<canvas_mcdu>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
+		<canvas_qrh>
+			<file>Aircraft/A320-family/Nasal/QRH/QRH.nas</file>
+		</canvas_qrh>
 		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
 			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
 		</mcdu_scratchpad>
