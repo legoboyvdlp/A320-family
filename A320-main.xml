@@ -1722,6 +1722,10 @@
 			<max-range-m type="int">1219</max-range-m>
 			<serviceable type="bool">true</serviceable>
 		</radar-altimeter>
+		
+		<wxr>
+			<enabled type="bool">false</enabled>
+		</wxr>
 	</instrumentation>
 	
 	<modes>
