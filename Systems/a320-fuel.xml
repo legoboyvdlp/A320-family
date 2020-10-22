@@ -188,7 +188,7 @@
 		<actuator name="/systems/fuel/pumps/center-control-low-level">
             <description>Timer for the Fuel Center pumps</description>
             <input>/systems/fuel/quantity/center-low</input>
-            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.00333</rate_limit> <!-- 300 seconds -->
         </actuator>
 		
@@ -767,7 +767,9 @@
 				/consumables/fuel/tank[3]/level-norm lt 0.9999
 			</test>
 		</switch>
-		
+	</channel>
+	
+	<channel name="Final Flow Rates">
 		<summer name="/systems/fuel/internal/left-outer-flow-rate">
 			<input>/systems/fuel/internal/left-outer-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/left-wing-outer-to-inner-tank</input>

@@ -134,8 +134,19 @@ var receivedMessagesPage = {
 	},
 	leftKey: func(index) {
 		if (ReceivedMessagesDatabase.getSize() >= (-5 + index + (me.curPage * 5))) {
-			canvas_mcdu.myReceivedMessage[me.computer] = receivedMessagePage.new(me.computer, (-6 + index + (me.curPage * 5)));
-			setprop("MCDU[" ~ me.computer ~ "]/page", "RECEIVEDMSG");
+			if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+				ReceivedMessagesDatabase.removeAtIndex(-6 + index + (me.curPage * 5));
+				me.update();
+				if (ReceivedMessagesDatabase.getSize() < (me.curPage * 5)) {
+					me.scrollLeft();
+				}
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+			} elsif (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 0) {
+				canvas_mcdu.myReceivedMessage[me.computer] = receivedMessagePage.new(me.computer, (-6 + index + (me.curPage * 5)));
+				setprop("MCDU[" ~ me.computer ~ "]/page", "RECEIVEDMSG");
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		}
@@ -293,6 +304,9 @@ var ReceivedMessagesDatabase = {
 	},
 	getSize: func() {
 		return me.database.size();
+	},
+	removeAtIndex: func(index) {
+		return me.database.pop(index);
 	},
 	clearDatabase: func() {
 		me.database.clear();

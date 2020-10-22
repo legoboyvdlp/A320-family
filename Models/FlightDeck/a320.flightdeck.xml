@@ -6174,9 +6174,8 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>controls/flight/elevator-trim</property>
-				<step>0.01</step>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6184,9 +6183,8 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>controls/flight/elevator-trim</property>
-				<step>-0.01</step>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(-1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -8459,6 +8457,50 @@
 				<value>1</value>
 			</binding>
 		</action>
+	</animation>
+	
+	<!-- WX Radar -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>radar_sys</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/instrumentation/efis[0]/inputs/wxr</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/instrumentation/efis[1]/inputs/wxr</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/instrumentation/wxr/enabled</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>radar_sys</object-name>
+		<factor>-20</factor>
+		<property>/instrumentation/wxr/enabled</property>
+		<center>
+			<x-m>0.020282</x-m>
+			<y-m>-0.210647</y-m>
+			<z-m>-0.140496</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
 	</animation>
 
 </PropertyList>

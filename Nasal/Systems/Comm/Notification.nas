@@ -2,6 +2,10 @@
 # Jonathan Redpath
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
+var defaultServer = "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=";
+var serverString = "";
+var result = nil;
+
 var ATSU = {
 	working: 0,
 	loop: func() {
@@ -93,13 +97,14 @@ var CompanyCall = {
 
 var AOC = {
 	station: nil,
-	selectedType: "HOURLY WX", # 0 = METAR 1 = TAF
+	selectedType: "HOURLY WX",
 	lastMETAR: nil,
 	lastTAF: nil,
 	sent: 0,
 	sentTime: nil,
 	received: 0,
 	receivedTime: nil,
+	server: 0, # 0 = noaa, 1 = vatsim
 	newStation: func(airport) {
 		if (size(airport) == 3 or size(airport) == 4) {
 			if (size(findAirportsByICAO(airport)) == 0) {
@@ -143,6 +148,11 @@ var AOC = {
 			}
 		}
 	},
+	downloadFail: func(i, r = nil) {
+		mcdu.mcdu_message(i,"NO ANSWER TO REQUEST");
+		debug.dump("HTTP failure " ~ r.status);
+		me.sent = 0;
+	},
 	fetchMETAR: func(airport, i) {
 		if (!ATSU.working) {
 			me.sent = 0;
@@ -152,8 +162,19 @@ var AOC = {
 			me.sent = 0;
 			return 1;
 		}
-		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
-			.fail(func print("Download failed!"))
+		
+		serverString = "";
+		
+		if (me.server == 0) {
+			serverString = defaultServer;
+		} elsif (me.server == 1) {
+			serverString = "https://api.flybywiresim.com/metar?source=vatsim&icao=";
+		} else { # fall back to NOAA silently
+			serverString = defaultServer;
+		}
+		
+		http.load(serverString ~ airport)
+			.fail(func(r) me.downloadFail(i, r))
 			.done(func(r) me.processMETAR(r, i));
 		return 0;
 	},
@@ -167,7 +188,7 @@ var AOC = {
 			return 1;
 		}
 		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
-			.fail(func print("Download failed!"))
+			.fail(func(r) me.downloadFail(i))
 			.done(func(r) me.processTAF(r, i));
 		return 0;
 	},
@@ -200,5 +221,90 @@ var AOC = {
 			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastTAF);
 			mcdu.ReceivedMessagesDatabase.addMessage(message);
 		}, math.max(rand()*6, 2.25));
+	},
+};
+
+var ATIS = {
+	station: nil,
+	lastATIS: nil,
+	sent: 0,
+	sentTime: nil,
+	received: 0,
+	receivedTime: nil,
+	server: 0,
+	newStation: func(airport) {
+		if (size(airport) == 3 or size(airport) == 4) {
+			if (size(findAirportsByICAO(airport)) == 0) {
+				return 2;
+			} else {
+				me.station = airport;
+				return 0;
+			}
+		} else {
+			return 1;
+		}
+	},
+	sendReq: func(i) {
+		if (me.station == nil or (me.sent and !me.received)) {
+			return 1;
+		}
+		me.sent = 1;
+		me.received = 0;
+		var sentTime = left(getprop("/sim/time/gmt-string"), 5);
+		me.sentTime = split(":", sentTime)[0] ~ "." ~ split(":", sentTime)[1] ~ "Z";
+		
+		result = me.fetchATIS(atsu.ATIS.station, i);
+		if (result == 0) {
+			return 0;
+		} elsif (result == 1) {
+			return 3;
+		} elsif (result == 2) {
+			return 4;
+		}
+	},
+	fetchATIS: func(airport, i) {
+		if (!ATSU.working) {
+			me.sent = 0;
+			return 2;
+		}
+		if (ecam.vhf3_voice.active) {
+			me.sent = 0;
+			return 1;
+		}
+		
+		serverString = "";
+		
+		if (me.server == 0) {
+			serverString = "https://api.flybywiresim.com/atis?source=faa&icao=";
+		} elsif (me.server == 1) {
+			serverString = "https://api.flybywiresim.com/atis?source=vatsim&icao=";
+		} else { # fall back to FAA silently
+			serverString = "https://api.flybywiresim.com/atis?source=faa&icao=";
+		}
+		
+		http.load(serverString ~ airport)
+			.fail(func(r) return 3)
+			.done(func(r) me.processATIS(r, i));
+		return 0;
+	},
+	processATIS: func(r, i) {
+		var raw = r.response;
+		if (find("combined", raw)) {
+			raw = split('{"combined":"', raw)[1];
+			raw = split('"}', raw)[0];
+		} else {
+			raw = split('{"arr":"', raw)[1];
+			raw = split('","dep":', raw)[0];
+		}
+		me.lastATIS = raw;
+		settimer(func() {
+			me.received = 1;
+			mcdu.mcdu_message(i, "WX UPLINK");
+			
+			var receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+			me.receivedTime = split(":", receivedTime)[0] ~ "." ~ split(":", receivedTime)[1] ~ "Z";
+			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastATIS);
+			mcdu.ReceivedMessagesDatabase.addMessage(message);
+		}, math.max(rand()*10, 2.25));
 	},
 };

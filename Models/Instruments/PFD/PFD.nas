@@ -15,6 +15,8 @@ var updateR = 0;
 var elapsedtime = 0;
 var altTens = 0;
 var altPolarity = "";
+var track_diff = 0;
+var AICenter = nil;
 
 # Fetch nodes:
 var state1 = props.globals.getNode("/systems/thrust/state1", 1);
@@ -126,6 +128,16 @@ var inner_marker = props.globals.getNode("/instrumentation/marker-beacon/inner",
 var flap_config = props.globals.getNode("/controls/flight/flaps-input", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
+var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
+var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
+var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
+var adr_1_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-1", 1);
+var adr_2_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-2", 1);
+var adr_3_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-3", 1);
+var adr_1_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-fault", 1);
+var adr_2_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-fault", 1);
+var adr_3_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-fault", 1);
+var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 
 # Create Nodes:
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
@@ -137,7 +149,7 @@ var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground
 var hdg_diff = props.globals.initNode("/instrumentation/pfd/hdg-diff", 0.0, "DOUBLE");
 var hdg_scale = props.globals.initNode("/instrumentation/pfd/heading-scale", 0.0, "DOUBLE");
 var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBLE");
-var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
+#var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE"); # returns incorrect value
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -200,6 +212,9 @@ var canvas_PFD_base = {
 		me.AI_horizon_hdg_trans = me["AI_heading"].createTransform();
 		me.AI_horizon_hdg_rot = me["AI_heading"].createTransform();
 
+		me.AI_fpv_trans = me["FPV"].createTransform();
+		me.AI_fpv_rot = me["FPV"].createTransform();
+
 		me.page = canvas_group;
 
 		return me;
@@ -212,7 +227,7 @@ var canvas_PFD_base = {
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -961,12 +976,15 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		me["TRK_pointer"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, 0);
+
+		var heading_deg = heading.getValue();
+		track_diff = geo.normdeg180(track.getValue() - heading_deg);
+		me["TRK_pointer"].setTranslation(me.getTrackDiffPixels(track_diff),0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
 			magnetic_hdg = ils_crs.getValue();
-			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
+			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading_deg);
 			if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
 				me["CRS_pointer"].setTranslation((magnetic_hdg_dif / 10) * 98.5416, 0);
 				me["ILS_HDG_R"].hide();
@@ -1010,6 +1028,28 @@ var canvas_PFD_base = {
 		me.AI_horizon_hdg_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
 		me["AI_heading"].update();
 	},
+
+	# Get Angle of Attack from ADR1 or, depending on Switching panel, ADR3
+	getAOAForPFD1: func() {
+		if (air_data_switch.getValue() != -1 and adr_1_switch.getValue() and !adr_1_fault.getValue()) return aoa_1.getValue();
+		if (air_data_switch.getValue() == -1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
+		return nil;
+	},
+	
+	# Get Angle of Attack from ADR2 or, depending on Switching panel, ADR3
+	getAOAForPFD2: func() {
+		if (air_data_switch.getValue() != 1 and adr_2_switch.getValue() and !adr_2_fault.getValue()) return aoa_2.getValue();
+		if (air_data_switch.getValue() == 1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
+		return nil;
+	},
+
+	# Convert difference between magnetic heading and track measured in degrees to pixel for display on PFDs
+	# And set max and minimum values
+	getTrackDiffPixels: func(track_diff_deg) {
+		return ((math.clamp(track_diff_deg, -23.62, 23.62) / 10) * 98.5416);
+	},
+
+
 };
 
 var canvas_PFD_1 = {
@@ -1066,6 +1106,14 @@ var canvas_PFD_1 = {
 			me["VS_group"].hide();
 		}
 		
+		# Apparently SPD LIM only on captains PFD. I find this odd. But manual says it.
+		# Spd Lim Error
+		if (!fbw.FBW.Computers.fac1.getValue() and !fbw.FBW.Computers.fac2.getValue()) {
+			me["spdLimError"].show();
+		} else {
+			me["spdLimError"].hide();
+		}
+		
 		# FD
 		if (fd1_act == 1 and ((!wow1_act and !wow2_act and roll_mode_cur != " ") or roll_mode_cur != " ") and ap_trk_sw.getValue() == 0 and pitch_cur < 25 and pitch_cur > -13 and roll_cur < 45 and roll_cur > -45) {
 			me["FD_roll"].show();
@@ -1079,6 +1127,26 @@ var canvas_PFD_1 = {
 			me["FD_pitch"].hide();
 		}
 		
+		# If TRK FPA selected, display FPV on PFD1
+		if (ap_trk_sw.getValue() == 0 ) {
+			me["FPV"].hide();	
+		} else {
+			var aoa = me.getAOAForPFD1();	
+			if (aoa == nil or (systems.ADIRS.ADIRunits[0].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == -1)){
+				me["FPV"].hide();	
+			} else {
+				var roll_deg = roll.getValue() or 0; 
+				AICenter = me["AI_center"].getCenter();
+				var track_x_translation = me.getTrackDiffPixels(track_diff); 
+
+				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(aoa, -20, 20) * 12.5); 
+				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
+				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
+				me["FPV"].show();
+			}
+
+		}
+
 		# ILS
 		if (ap_ils_mode.getValue() == 1) {
 			me["LOC_scale"].show();
@@ -1202,7 +1270,13 @@ var canvas_PFD_1 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
+			
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
+				me["ASI_max"].show();
+			} else {
+				me["ASI_max"].hide();
+			}
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
@@ -1237,19 +1311,27 @@ var canvas_PFD_1 = {
 				} else {
 					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
 				}
-				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
-				me["VLS_min"].show();
-				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
-				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
-				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-				if (getprop("/it-fbw/law") == 0) {
-					me["ALPHA_PROT"].show();
-					me["ALPHA_MAX"].show();
-					me["ALPHA_SW"].hide();
+				
+				if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+					me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
+					me["VLS_min"].show();
+					if (getprop("/it-fbw/law") == 0) {
+						me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
+						me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
+						me["ALPHA_PROT"].show();
+						me["ALPHA_MAX"].show();
+						me["ALPHA_SW"].hide();
+					} else {
+						me["ALPHA_PROT"].hide();
+						me["ALPHA_MAX"].hide();
+						me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
+						me["ALPHA_SW"].show();
+					}
 				} else {
+					me["VLS_min"].hide();
 					me["ALPHA_PROT"].hide();
 					me["ALPHA_MAX"].hide();
-					me["ALPHA_SW"].show();
+					me["ALPHA_SW"].hide();
 				}
 			}
 			
@@ -1403,145 +1485,147 @@ var canvas_PFD_1 = {
 				}
 			}
 			
-			if (flap_config.getValue() == '1') {
-				me["F_target"].hide();
-				me["clean_speed"].hide();
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				if (flap_config.getValue() == '1') {
+					me["F_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_S = fmgc.FMGCInternal.slat;
 				
-				tgt_S = fmgc.FMGCInternal.slat;
-			
-				if (tgt_S <= 30) {
-					me.Strgt = 0 - me.ASI;
-				} else if (tgt_S >= 420) {
-					me.Strgt = 390 - me.ASI;
-				} else {
-					me.Strgt = tgt_S - 30 - me.ASI;
-				}
-			
-				me.SPDstrgtdiff = tgt_S - ind_spd;
-			
-				if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42) {
-					me["S_target"].show();
-					me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					if (tgt_S <= 30) {
+						me.Strgt = 0 - me.ASI;
+					} else if (tgt_S >= 420) {
+						me.Strgt = 390 - me.ASI;
+					} else {
+						me.Strgt = tgt_S - 30 - me.ASI;
+					}
+				
+					me.SPDstrgtdiff = tgt_S - ind_spd;
+				
+					if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["S_target"].show();
+						me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					} else {
+						me["S_target"].hide();
+					}
+					
+					tgt_flap = 200;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '2') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap2;
+					
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 185;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '3') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap3;
+						
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 177;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '4') {
+					me["S_target"].hide();
+					me["F_target"].hide();
+					me["clean_speed"].hide();	
+					me["flap_max"].hide();
 				} else {
 					me["S_target"].hide();
-				}
-				
-				tgt_flap = 200;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '2') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap2;
-				
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
 					me["F_target"].hide();
-				}
-				
-				tgt_flap = 185;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '3') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap3;
 					
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
-					me["F_target"].hide();
-				}
+					tgt_clean = fmgc.FMGCInternal.clean;
+					
+					me.cleantrgt = tgt_clean - 30 - me.ASI;
+					me.SPDcleantrgtdiff = tgt_clean - ind_spd;
 				
-				tgt_flap = 177;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
+					if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
+						me["clean_speed"].show();
+						me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
+					} else {
+						me["clean_speed"].hide();
+					}	
+					
+					tgt_flap = 230;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
 				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
 				}
-			} else if (flap_config.getValue() == '4') {
-				me["S_target"].hide();
-				me["F_target"].hide();
-				me["clean_speed"].hide();	
-				me["flap_max"].hide();
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
-				
-				tgt_clean = fmgc.FMGCInternal.clean;
-				
-				me.cleantrgt = tgt_clean - 30 - me.ASI;
-				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
-			
-				if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
-					me["clean_speed"].show();
-					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
-				} else {
-					me["clean_speed"].hide();
-				}	
-				
-				tgt_flap = 230;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			}
-			
-			if (gear_agl.getValue() < 400) {
-				me["S_target"].hide();
-				me["F_target"].hide();
+				me["clean_speed"].hide();
+				me["flap_max"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[0].outputs[6].getValue() - me.ASI;
@@ -1803,6 +1887,7 @@ var canvas_PFD_2 = {
 			me["VS_error"].show();
 			me["VS_group"].hide();
 		}
+		me["spdLimError"].hide();
 		
 		# FD
 		if (fd2_act == 1 and ((!wow1_act and !wow2_act and roll_mode_cur != " ") or roll_mode_cur != " ") and ap_trk_sw.getValue() == 0 and pitch_cur < 25 and pitch_cur > -13 and roll_cur < 45 and roll_cur > -45) {
@@ -1817,6 +1902,25 @@ var canvas_PFD_2 = {
 			me["FD_pitch"].hide();
 		}
 		
+		# If TRK FPA selected, display FPV on PFD2
+		if (ap_trk_sw.getValue() == 0 ) {
+			me["FPV"].hide();	
+		} else {
+			var aoa = me.getAOAForPFD2();
+			if (aoa == nil or (systems.ADIRS.ADIRunits[1].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == 1)) {
+				me["FPV"].hide();	
+			} else {
+				var roll_deg = roll.getValue() or 0;	
+				AICenter = me["AI_center"].getCenter();
+				var track_x_translation = me.getTrackDiffPixels(track_diff);
+
+				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(aoa, -20, 20) * 12.5);
+				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
+				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
+				me["FPV"].show();
+			}
+		}
+
 		# ILS
 		if (ap_ils_mode2.getValue() == 1) {
 			me["LOC_scale"].show();
@@ -1940,7 +2044,13 @@ var canvas_PFD_2 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
+			
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
+				me["ASI_max"].show();
+			} else {
+				me["ASI_max"].hide();
+			}
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !wow1.getValue() and !wow2.getValue()) {
 				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
@@ -1975,19 +2085,27 @@ var canvas_PFD_2 = {
 				} else {
 					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
 				}
-				me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
-				me["VLS_min"].show();
-				me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
-				me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
-				me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-				if (getprop("/it-fbw/law") == 0) {
-					me["ALPHA_PROT"].show();
-					me["ALPHA_MAX"].show();
-					me["ALPHA_SW"].hide();
+				
+				if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+					me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
+					me["VLS_min"].show();
+					if (getprop("/it-fbw/law") == 0) {
+						me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
+						me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
+						me["ALPHA_PROT"].show();
+						me["ALPHA_MAX"].show();
+						me["ALPHA_SW"].hide();
+					} else {
+						me["ALPHA_PROT"].hide();
+						me["ALPHA_MAX"].hide();
+						me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
+						me["ALPHA_SW"].show();
+					}
 				} else {
+					me["VLS_min"].hide();
 					me["ALPHA_PROT"].hide();
 					me["ALPHA_MAX"].hide();
-					me["ALPHA_SW"].show();
+					me["ALPHA_SW"].hide();
 				}
 			}
 			
@@ -2141,145 +2259,147 @@ var canvas_PFD_2 = {
 				}
 			}
 			
-			if (flap_config.getValue() == '1') {
-				me["F_target"].hide();
-				me["clean_speed"].hide();
+			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
+				if (flap_config.getValue() == '1') {
+					me["F_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_S = fmgc.FMGCInternal.slat;
 				
-				tgt_S = fmgc.FMGCInternal.slat;
-			
-				if (tgt_S <= 30) {
-					me.Strgt = 0 - me.ASI;
-				} else if (tgt_S >= 420) {
-					me.Strgt = 390 - me.ASI;
-				} else {
-					me.Strgt = tgt_S - 30 - me.ASI;
-				}
-			
-				me.SPDstrgtdiff = tgt_S - ind_spd;
-			
-				if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42) {
-					me["S_target"].show();
-					me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					if (tgt_S <= 30) {
+						me.Strgt = 0 - me.ASI;
+					} else if (tgt_S >= 420) {
+						me.Strgt = 390 - me.ASI;
+					} else {
+						me.Strgt = tgt_S - 30 - me.ASI;
+					}
+				
+					me.SPDstrgtdiff = tgt_S - ind_spd;
+				
+					if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["S_target"].show();
+						me["S_target"].setTranslation(0, me.Strgt * -6.6);
+					} else {
+						me["S_target"].hide();
+					}
+					
+					tgt_flap = 200;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '2') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap2;
+					
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 185;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '3') {
+					me["S_target"].hide();
+					me["clean_speed"].hide();
+					
+					tgt_F = fmgc.FMGCInternal.flap3;
+						
+					if (tgt_F <= 30) {
+						me.Ftrgt = 0 - me.ASI;
+					} else if (tgt_F >= 420) {
+						me.Ftrgt = 390 - me.ASI;
+					} else {
+						me.Ftrgt = tgt_F - 30 - me.ASI;
+					}
+				
+					me.SPDftrgtdiff = tgt_F - ind_spd;
+				
+					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and gear_agl.getValue() >= 400) {
+						me["F_target"].show();
+						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
+					} else {
+						me["F_target"].hide();
+					}
+					
+					tgt_flap = 177;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
+				
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
+				} else if (flap_config.getValue() == '4') {
+					me["S_target"].hide();
+					me["F_target"].hide();
+					me["clean_speed"].hide();	
+					me["flap_max"].hide();
 				} else {
 					me["S_target"].hide();
-				}
-				
-				tgt_flap = 200;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '2') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap2;
-				
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
 					me["F_target"].hide();
-				}
-				
-				tgt_flap = 185;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			} else if (flap_config.getValue() == '3') {
-				me["S_target"].hide();
-				me["clean_speed"].hide();
-				
-				tgt_F = fmgc.FMGCInternal.flap3;
 					
-				if (tgt_F <= 30) {
-					me.Ftrgt = 0 - me.ASI;
-				} else if (tgt_F >= 420) {
-					me.Ftrgt = 390 - me.ASI;
-				} else {
-					me.Ftrgt = tgt_F - 30 - me.ASI;
-				}
-			
-				me.SPDftrgtdiff = tgt_F - ind_spd;
-			
-				if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42) {
-					me["F_target"].show();
-					me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-				} else {
-					me["F_target"].hide();
-				}
+					tgt_clean = fmgc.FMGCInternal.clean;
+					
+					me.cleantrgt = tgt_clean - 30 - me.ASI;
+					me.SPDcleantrgtdiff = tgt_clean - ind_spd;
 				
-				tgt_flap = 177;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
+					if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
+						me["clean_speed"].show();
+						me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
+					} else {
+						me["clean_speed"].hide();
+					}	
+					
+					tgt_flap = 230;
+					me.flaptrgt = tgt_flap - 30 - me.ASI;
+					
+					me.SPDflaptrgtdiff = tgt_flap - ind_spd;
 				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
+					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
+						me["flap_max"].show();
+						me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
+					} else {
+						me["flap_max"].hide();
+					}
 				}
-			} else if (flap_config.getValue() == '4') {
-				me["S_target"].hide();
-				me["F_target"].hide();
-				me["clean_speed"].hide();	
-				me["flap_max"].hide();
 			} else {
 				me["S_target"].hide();
 				me["F_target"].hide();
-				
-				tgt_clean = fmgc.FMGCInternal.clean;
-				
-				me.cleantrgt = tgt_clean - 30 - me.ASI;
-				me.SPDcleantrgtdiff = tgt_clean - ind_spd;
-			
-				if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
-					me["clean_speed"].show();
-					me["clean_speed"].setTranslation(0, me.cleantrgt * -6.6);
-				} else {
-					me["clean_speed"].hide();
-				}	
-				
-				tgt_flap = 230;
-				me.flaptrgt = tgt_flap - 30 - me.ASI;
-				
-				me.SPDflaptrgtdiff = tgt_flap - ind_spd;
-			
-				if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-					me["flap_max"].show();
-					me["flap_max"].setTranslation(0, me.flaptrgt * -6.6);
-				} else {
-					me["flap_max"].hide();
-				}
-			}
-			
-			if (gear_agl.getValue() < 400) {
-				me["S_target"].hide();
-				me["F_target"].hide();
+				me["clean_speed"].hide();
+				me["flap_max"].hide();
 			}
 			
 			me.ASItrend = dmc.DMController.DMCs[1].outputs[6].getValue() - me.ASI;
