@@ -5,6 +5,7 @@
 
 var pageNode = [props.globals.getNode("/MCDU[0]/page"), props.globals.getNode("/MCDU[1]/page")];
 var page = nil;
+var msg = nil;
 
 var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
@@ -585,6 +586,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATSUDLINK");
 		} else if (page == "COMMINIT" or page == "VOICEDIRECTORY" or page == "DATAMODE"  or page == "COMMSTATUS" or page == "COMPANYCALL") {
 			pageNode[i].setValue("COMMMENU");
+		} else if (page == "ATIS") {
+			pageNode[i].setValue("ATCMENU2");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -666,6 +669,8 @@ var rskbutton = func(btn, i) {
 		} else if (page == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "TERM FCST";
 			pageNode[i].setValue("WEATHERREQ");
+		} else if (page == "ATCMENU2") {
+			pageNode[i].setValue("ATIS");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -884,7 +889,7 @@ var rskbutton = func(btn, i) {
 			} elsif (result == 4) {
 				mcdu.mcdu_message(i, "NO COMM MSG NOT GEN");
 			}  else {
-				mcdu_scratchpad.scratchpads[i].empty();
+				pageNode[i].setValue("AOCMENU");
 			}
 		} else if (page == "VOICEDIRECTORY") {
 			for (var i = 0; i < 3; i = i + 1) {
@@ -944,6 +949,13 @@ var rskbutton = func(btn, i) {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "CONNECTSTATUS") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "AOCMENU") {
+			msg = mcdu.ReceivedMessagesDatabase.firstUnviewed();
+			if (msg != -99) {
+				canvas_mcdu.myReceivedMessages[i] = receivedMessagesPage.new(i);
+				canvas_mcdu.myReceivedMessage[i] = receivedMessagePage.new(i, msg);
+				pageNode[i].setValue("RECEIVEDMSG");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}

@@ -545,12 +545,14 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(1, 1, 1, -1, 1, 1);
 				me.showRight(1, 1, 1, 1, 1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
-				me.showRightArrow(1, 1, 1, 1, 1, -1);
+				me.showRightArrow(1, 1, 1, 1, 1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
+				me["Simple_R6"].setColor(BLUE);
+				me["Simple_R6_Arrow"].setColor(BLUE);
 				
 				me["Simple_L1"].setText(" PREFLIGHT");
 				me["Simple_L2"].setText(" ENROUTE");
@@ -564,7 +566,16 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setText("RCVD MSGS ");
 				me["Simple_R4"].setText("REPORTS ");
 				me["Simple_R5"].setText("CONFIG ");
+				me["Simple_R6"].setText("MESSAGE ");
 				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (mcdu.ReceivedMessagesDatabase.firstUnviewed() != -99) {
+				me["Simple_R6"].show();
+				me["Simple_R6_Arrow"].show();
+			} else {
+				me["Simple_R6"].hide();
+				me["Simple_R6_Arrow"].hide();
 			}
 		} else if (page == "WEATHERREQ") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -912,6 +923,91 @@ var canvas_MCDU_base = {
 				
 				me["Simple_R1"].setText("ATIS ");
 				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "ATIS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATS623 ATIS MENU");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, 1, 1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(1, 1, 1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+			
+				me["Simple_L1S"].setText(" ARPT/TYPE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L4"].setText(" [  ]/[  ]");
+				me["Simple_L4"].setFont(symbol);
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1S"].setText("REQ ");
+				me["Simple_R1"].setText("SEND ");
+				me["Simple_R2S"].setText("REQ ");
+				me["Simple_R2"].setText("SEND ");
+				me["Simple_R3S"].setText("REQ ");
+				me["Simple_R3"].setText("SEND ");
+				me["Simple_R4S"].setText("REQ ");
+				me["Simple_R4"].setText("SEND ");
+				me["Simple_R5S"].setText("AUTO ");
+				me["Simple_R5"].setText("UPDATE ");
+				me["Simple_R6S"].setText("PRINT MANUAL ");
+				me["Simple_R6"].setText("SET AUTO ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (fmgc.FMGCInternal.depApt != "") {
+				me["Simple_L1"].setText(" " ~ fmgc.FMGCInternal.depApt ~ "/DEP");
+				me["Simple_L1"].setFont(default);
+				me["Simple_L1"].setColor(WHITE);
+				me["Simple_L1_Arrow"].show();
+			} else {
+				me["Simple_L1"].setText(" [  ]/[  ]");
+				me["Simple_L1"].setFont(symbol);
+				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L1_Arrow"].hide();
+			}
+			
+			if (fmgc.FMGCInternal.arrApt != "") {
+				me["Simple_L2"].setText(" " ~ fmgc.FMGCInternal.arrApt ~ "/ARR");
+				me["Simple_L2"].setFont(default);
+				me["Simple_L1"].setColor(WHITE);
+				me["Simple_L2_Arrow"].show();
+			} else {
+				me["Simple_L2"].setText(" [  ]/[  ]");
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L2_Arrow"].hide();
+			}
+			
+			if (fmgc.FMGCInternal.altAirportSet == 1) {
+				me["Simple_L3"].setText(" " ~ fmgc.FMGCInternal.altAirport ~ "/ARR");
+				me["Simple_L3"].setFont(default);
+				me["Simple_L1"].setColor(WHITE);
+				me["Simple_L3_Arrow"].show();
+			} else {
+				me["Simple_L3"].setText(" [  ]/[  ]");
+				me["Simple_L3"].setFont(symbol);
+				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L3_Arrow"].hide();
 			}
 		} else if (page == "NOTIFICATION") {
 			if (!pageSwitch[i].getBoolValue()) {

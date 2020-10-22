@@ -299,8 +299,16 @@ var ReceivedMessagesDatabase = {
 			canvas_mcdu.myReceivedMessages[1].update();
 		}
 	},
+	firstUnviewed: func() {
+		for (var i = 0; i < me.getSize(); i = i + 1) {
+			if (!me.database.vector[i].viewed) {
+				return i;
+			}
+		}
+		return -99;
+	},
 	getCountPages: func() {
-		return math.ceil(me.database.size() / 5);
+		return math.ceil(me.getSize() / 5);
 	},
 	getSize: func() {
 		return me.database.size();
