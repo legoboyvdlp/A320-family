@@ -289,12 +289,16 @@ var lskbutton = func(btn, i) {
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
-				if (fmgc.FMGCInternal.depApt != "") {
-					atsu.ATISInstances[0].newStation(fmgc.FMGCInternal.depApt);
+				if (atsu.ATISInstances[0].sent != 1) {
+					if (fmgc.FMGCInternal.depApt != "") {
+						atsu.ATISInstances[0].newStation(fmgc.FMGCInternal.depApt);
+					} else {
+						atsu.ATISInstances[0].station = nil;
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					atsu.ATISInstances[0].station = nil;
+					mcdu_message(i, "NOT ALLOWED");
 				}
-				mcdu_scratchpad.scratchpads[i].empty();
 			} elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
@@ -418,12 +422,16 @@ var lskbutton = func(btn, i) {
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
-				if (fmgc.FMGCInternal.arrApt != "") {
-					atsu.ATISInstances[1].newStation(fmgc.FMGCInternal.arrApt);
+				if (atsu.ATISInstances[1].sent != 1) {
+					if (fmgc.FMGCInternal.arrApt != "") {
+						atsu.ATISInstances[1].newStation(fmgc.FMGCInternal.arrApt);
+					} else {
+						atsu.ATISInstances[1].station = nil;
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					atsu.ATISInstances[1].station = nil;
+					mcdu_message(i, "NOT ALLOWED");
 				}
-				mcdu_scratchpad.scratchpads[i].empty();
 			} elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
@@ -530,12 +538,16 @@ var lskbutton = func(btn, i) {
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
-				if (fmgc.FMGCInternal.altAirportSet) {
-					atsu.ATISInstances[2].newStation(fmgc.FMGCInternal.altAirport);
+				if (atsu.ATISInstances[2].sent != 1) {
+					if (fmgc.FMGCInternal.altAirportSet) {
+						atsu.ATISInstances[2].newStation(fmgc.FMGCInternal.altAirport);
+					} else {
+						atsu.ATISInstances[2].station = nil;
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					atsu.ATISInstances[2].station = nil;
+					mcdu_message(i, "NOT ALLOWED");
 				}
-				mcdu_scratchpad.scratchpads[i].empty();
 			} elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
@@ -635,8 +647,12 @@ var lskbutton = func(btn, i) {
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
-				atsu.ATISInstances[3].station = nil;
-				mcdu_scratchpad.scratchpads[i].empty();
+				if (atsu.ATISInstances[3].sent != 1) {
+					atsu.ATISInstances[3].station = nil;
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
 			} elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
