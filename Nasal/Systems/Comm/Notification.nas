@@ -107,12 +107,7 @@ var AOC = {
 	server: 0, # 0 = noaa, 1 = vatsim
 	newStation: func(airport) {
 		if (size(airport) == 3 or size(airport) == 4) {
-			if (size(findAirportsByICAO(airport)) == 0) {
-				return 2;
-			} else {
-				me.station = airport;
-				return 0;
-			}
+			me.station = airport;
 		} else {
 			return 1;
 		}
@@ -123,9 +118,18 @@ var AOC = {
 		}
 		me.sent = 1;
 		me.received = 0;
+		
 		var sentTime = left(getprop("/sim/time/gmt-string"), 5);
 		me.sentTime = split(":", sentTime)[0] ~ "." ~ split(":", sentTime)[1] ~ "Z";
 		
+		if (size(findAirportsByICAO(me.station)) == 0) {
+			me.received = 1;
+			me.receivedTime = me.sentTime;
+			var message = mcdu.ACARSMessage.new(me.receivedTime, "INVALID STATION " ~ me.station);
+			mcdu.ReceivedMessagesDatabase.addMessage(message);
+			return 0;
+		} 
+	
 		if (me.selectedType == "HOURLY WX") {
 			var result = me.fetchMETAR(atsu.AOC.station, i);
 			if (result == 0) {
@@ -225,13 +229,18 @@ var AOC = {
 };
 
 var ATIS = {
-	station: nil,
-	lastATIS: nil,
-	sent: 0,
-	sentTime: nil,
-	received: 0,
-	receivedTime: nil,
-	server: 0,
+	new: func() {
+		var ATIS = { parents: [ATIS] };
+		ATIS.station = nil;
+		ATIS.lastATIS = nil;
+		ATIS.sent = 0;
+		ATIS.sentTime = nil;
+		ATIS.received = 0;
+		ATIS.receivedTime = nil;
+		ATIS.receivedCode = nil;
+		ATIS.server = 0;
+		return ATIS;
+	},
 	newStation: func(airport) {
 		if (size(airport) == 3 or size(airport) == 4) {
 			if (size(findAirportsByICAO(airport)) == 0) {
