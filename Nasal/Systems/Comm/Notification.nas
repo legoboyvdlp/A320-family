@@ -234,11 +234,11 @@ var ATIS = {
 		ATIS.station = nil;
 		ATIS.lastATIS = nil;
 		ATIS.sent = 0;
-		ATIS.sentTime = nil;
 		ATIS.received = 0;
 		ATIS.receivedTime = nil;
 		ATIS.receivedCode = nil;
 		ATIS.server = 0;
+		ATIS.type = 0; # 0 = arr, 1 = dep
 		return ATIS;
 	},
 	newStation: func(airport) {
@@ -259,10 +259,8 @@ var ATIS = {
 		}
 		me.sent = 1;
 		me.received = 0;
-		var sentTime = left(getprop("/sim/time/gmt-string"), 5);
-		me.sentTime = split(":", sentTime)[0] ~ "." ~ split(":", sentTime)[1] ~ "Z";
 		
-		result = me.fetchATIS(atsu.ATIS.station, i);
+		result = me.fetchATIS(me.station, i);
 		if (result == 0) {
 			return 0;
 		} elsif (result == 1) {
@@ -298,22 +296,58 @@ var ATIS = {
 	},
 	processATIS: func(r, i) {
 		var raw = r.response;
-		if (find("combined", raw)) {
+		if (r.response == "FBW_ERROR: D-ATIS not available at this airport") {
+			me.received = 0;
+			me.sent = 0;
+			mcdu.mcdu_message(i,"NO D-ATIS AVAILABLE");
+			return;
+		}
+		if (find("combined", raw) != -1) {
 			raw = split('{"combined":"', raw)[1];
 			raw = split('"}', raw)[0];
 		} else {
-			raw = split('{"arr":"', raw)[1];
-			raw = split('","dep":', raw)[0];
+			if (me.type == 0) {
+				raw = split('{"arr":"', raw)[1];
+				raw = split('","dep":', raw)[0];
+			} else {
+				raw = split('","dep":"', raw)[1];
+				raw = split('"}', raw)[0];
+			}
 		}
-		me.lastATIS = raw;
+		var code = nil;
+		if (find("INFO ", raw) != -1) {
+			code = split("INFO ", raw)[1];
+			code = split(" ", code)[0];
+			me.receivedCode = code;
+		} else if (find("information ", raw) != -1) {
+			code = split("information ", raw)[1];
+			code = split(" ", code)[0];
+			me.receivedCode = code;
+		}
+		var time = nil;
+		if (find("Time ", raw) != -1) {
+			time = split("Time ", raw)[1];
+			time = split(" ", time)[0];
+		} else if (find("TIME ", raw) != -1) {
+			time = split("TIME ", raw)[1];
+			time = split(" ", time)[0];
+		} else if (find("Z.", raw) != -1) {
+			time = split("Z.", raw)[0];
+			time = right(time, 4);
+		} else if (find("Z SPECIAL", raw) != -1) {
+			time = split("Z SPECIAL", raw)[0];
+			time = right(time, 4);
+		}
+		if (size(time) == 3) {
+			time ~= " ";
+		}
 		settimer(func() {
+			me.sent = 0;
 			me.received = 1;
-			mcdu.mcdu_message(i, "WX UPLINK");
-			
-			var receivedTime = left(getprop("/sim/time/gmt-string"), 5);
-			me.receivedTime = split(":", receivedTime)[0] ~ "." ~ split(":", receivedTime)[1] ~ "Z";
-			var message = mcdu.ACARSMessage.new(me.receivedTime, me.lastATIS);
-			mcdu.ReceivedMessagesDatabase.addMessage(message);
-		}, math.max(rand()*10, 2.25));
+			me.receivedTime = time ~ "Z";
+			me.lastATIS = raw;
+		}, math.max(rand()*10, 4.5));
 	},
 };
+
+var ATISInstances = [ATIS.new(), ATIS.new(), ATIS.new(), ATIS.new()];

@@ -231,7 +231,7 @@ var canvas_MCDU_base = {
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
 	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
-	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE","ATISSend1","ATISSend2","ATISSend3","ATISSend4"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -361,6 +361,12 @@ var canvas_MCDU_base = {
 			} else {
 				me["PRINTPAGE"].setColor(WHITE);
 			}
+		}
+		if (page != "ATIS") {
+			me["ATISSend1"].hide();
+			me["ATISSend2"].hide();
+			me["ATISSend3"].hide();
+			me["ATISSend4"].hide();
 		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -974,8 +980,8 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (fmgc.FMGCInternal.depApt != "") {
-				me["Simple_L1"].setText(" " ~ fmgc.FMGCInternal.depApt ~ "/DEP");
+			if (atsu.ATISInstances[0].station != nil) {
+				me["Simple_L1"].setText(" " ~ atsu.ATISInstances[0].station ~ "/" ~ (atsu.ATISInstances[0].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L1"].setFont(default);
 				me["Simple_L1"].setColor(WHITE);
 				me["Simple_L1_Arrow"].show();
@@ -986,28 +992,64 @@ var canvas_MCDU_base = {
 				me["Simple_L1_Arrow"].hide();
 			}
 			
-			if (fmgc.FMGCInternal.arrApt != "") {
-				me["Simple_L2"].setText(" " ~ fmgc.FMGCInternal.arrApt ~ "/ARR");
+			if (atsu.ATISInstances[1].station != nil) {
+				me["Simple_L2"].setText(" " ~ atsu.ATISInstances[1].station ~ "/" ~ (atsu.ATISInstances[1].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L2"].setFont(default);
-				me["Simple_L1"].setColor(WHITE);
+				me["Simple_L2"].setColor(WHITE);
 				me["Simple_L2_Arrow"].show();
 			} else {
 				me["Simple_L2"].setText(" [  ]/[  ]");
 				me["Simple_L2"].setFont(symbol);
-				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L2"].setColor(BLUE);
 				me["Simple_L2_Arrow"].hide();
 			}
 			
-			if (fmgc.FMGCInternal.altAirportSet == 1) {
-				me["Simple_L3"].setText(" " ~ fmgc.FMGCInternal.altAirport ~ "/ARR");
+			if (atsu.ATISInstances[2].station != nil) {
+				me["Simple_L3"].setText(" " ~ atsu.ATISInstances[2].station ~ "/" ~ (atsu.ATISInstances[2].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L3"].setFont(default);
-				me["Simple_L1"].setColor(WHITE);
+				me["Simple_L3"].setColor(WHITE);
 				me["Simple_L3_Arrow"].show();
 			} else {
 				me["Simple_L3"].setText(" [  ]/[  ]");
 				me["Simple_L3"].setFont(symbol);
-				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L3"].setColor(BLUE);
 				me["Simple_L3_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[3].station != nil) {
+				me["Simple_L4"].setText(" " ~ atsu.ATISInstances[3].station ~ "/" ~ (atsu.ATISInstances[3].type == 0 ? "ARR" : "DEP"));
+				me["Simple_L4"].setFont(default);
+				me["Simple_L4"].setColor(WHITE);
+				me["Simple_L4_Arrow"].show();
+			} else {
+				me["Simple_L4"].setText(" [  ]/[  ]");
+				me["Simple_L4"].setFont(symbol);
+				me["Simple_L4"].setColor(BLUE);
+				me["Simple_L4_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[0].sent) {
+				me["ATISSend1"].hide();
+			} else {
+				me["ATISSend1"].show();
+			}
+			
+			if (atsu.ATISInstances[1].sent) {
+				me["ATISSend2"].hide();
+			} else {
+				me["ATISSend2"].show();
+			}
+			
+			if (atsu.ATISInstances[2].sent) {
+				me["ATISSend3"].hide();
+			} else {
+				me["ATISSend3"].show();
+			}
+			
+			if (atsu.ATISInstances[3].sent) {
+				me["ATISSend4"].hide();
+			} else {
+				me["ATISSend4"].show();
 			}
 		} else if (page == "NOTIFICATION") {
 			if (!pageSwitch[i].getBoolValue()) {
