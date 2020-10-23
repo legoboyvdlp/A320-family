@@ -932,7 +932,7 @@ var canvas_MCDU_base = {
 			}
 		} else if (page == "ATIS") {
 			if (!pageSwitch[i].getBoolValue()) {
-				me.defaultHide();
+				me.defaultHideWithCenter();
 				me["Simple_Title"].setText("ATS623 ATIS MENU");
 				me["Simple_Title"].setColor(1, 1, 1);
 				me["Simple_PageNum"].hide();
@@ -943,6 +943,8 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, -1, -1, -1, -1, 1);
 				me.showLeftArrow(1, 1, 1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, -1);
@@ -954,6 +956,8 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "grn", "wht", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -964,6 +968,11 @@ var canvas_MCDU_base = {
 				me["Simple_L4"].setText(" [  ]/[  ]");
 				me["Simple_L4"].setFont(symbol);
 				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_C1"].setFontSize(small);
+				me["Simple_C2"].setFontSize(small);
+				me["Simple_C3"].setFontSize(small);
+				me["Simple_C4"].setFontSize(small);
 				
 				me["Simple_R1S"].setText("REQ ");
 				me["Simple_R1"].setText("SEND ");
@@ -980,52 +989,72 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (atsu.ATISInstances[0].station != nil) {
+			if (atsu.ATISInstances[0].station != nil) {	
 				me["Simple_L1"].setText(" " ~ atsu.ATISInstances[0].station ~ "/" ~ (atsu.ATISInstances[0].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L1"].setFont(default);
-				me["Simple_L1"].setColor(WHITE);
 				me["Simple_L1_Arrow"].show();
 			} else {
 				me["Simple_L1"].setText(" [  ]/[  ]");
 				me["Simple_L1"].setFont(symbol);
-				me["Simple_L1"].setColor(BLUE);
 				me["Simple_L1_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[0].received) {
+				me["Simple_C1"].setText(" " ~ atsu.ATISInstances[0].receivedCode ~ " " ~ atsu.ATISInstances[0].receivedTime);
+				me["Simple_C1"].show();
+			} else {
+				me["Simple_C1"].hide();
 			}
 			
 			if (atsu.ATISInstances[1].station != nil) {
 				me["Simple_L2"].setText(" " ~ atsu.ATISInstances[1].station ~ "/" ~ (atsu.ATISInstances[1].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L2"].setFont(default);
-				me["Simple_L2"].setColor(WHITE);
 				me["Simple_L2_Arrow"].show();
 			} else {
 				me["Simple_L2"].setText(" [  ]/[  ]");
 				me["Simple_L2"].setFont(symbol);
-				me["Simple_L2"].setColor(BLUE);
 				me["Simple_L2_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[1].received) {
+				me["Simple_C2"].setText(" " ~ atsu.ATISInstances[1].receivedCode ~ " " ~ atsu.ATISInstances[1].receivedTime);
+				me["Simple_C2"].show();
+			} else {
+				me["Simple_C2"].hide();
 			}
 			
 			if (atsu.ATISInstances[2].station != nil) {
 				me["Simple_L3"].setText(" " ~ atsu.ATISInstances[2].station ~ "/" ~ (atsu.ATISInstances[2].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L3"].setFont(default);
-				me["Simple_L3"].setColor(WHITE);
 				me["Simple_L3_Arrow"].show();
 			} else {
 				me["Simple_L3"].setText(" [  ]/[  ]");
 				me["Simple_L3"].setFont(symbol);
-				me["Simple_L3"].setColor(BLUE);
 				me["Simple_L3_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[2].received) {
+				me["Simple_C3"].setText(" " ~ atsu.ATISInstances[2].receivedCode ~ " " ~ atsu.ATISInstances[2].receivedTime);
+				me["Simple_C3"].show();
+			} else {
+				me["Simple_C3"].hide();
 			}
 			
 			if (atsu.ATISInstances[3].station != nil) {
 				me["Simple_L4"].setText(" " ~ atsu.ATISInstances[3].station ~ "/" ~ (atsu.ATISInstances[3].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L4"].setFont(default);
-				me["Simple_L4"].setColor(WHITE);
 				me["Simple_L4_Arrow"].show();
 			} else {
 				me["Simple_L4"].setText(" [  ]/[  ]");
 				me["Simple_L4"].setFont(symbol);
-				me["Simple_L4"].setColor(BLUE);
 				me["Simple_L4_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[3].received) {
+				me["Simple_C4"].setText(" " ~ atsu.ATISInstances[3].receivedCode ~ " " ~ atsu.ATISInstances[3].receivedTime);
+				me["Simple_C4"].show();
+			} else {
+				me["Simple_C4"].hide();
 			}
 			
 			if (atsu.ATISInstances[0].sent) {
@@ -1373,11 +1402,11 @@ var canvas_MCDU_base = {
 				me["Simple_R3_Arrow"].show();
 			}
 			
-			if (atsu.ATIS.server == 1) {
+			if (atsu.ATIS.serverSel == 1) {
 				me["Simple_L1"].setText(" VATSIM");
 				me["Simple_L2_Arrow"].show();
 				me["Simple_L3_Arrow"].hide();
-			} elsif (atsu.ATIS.server == 0) {
+			} elsif (atsu.ATIS.serverSel == 0) {
 				me["Simple_L1"].setText(" FAA");
 				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].show();

@@ -229,6 +229,7 @@ var AOC = {
 };
 
 var ATIS = {
+	serverSel: 0,
 	new: func() {
 		var ATIS = { parents: [ATIS] };
 		ATIS.station = nil;
@@ -237,11 +238,12 @@ var ATIS = {
 		ATIS.received = 0;
 		ATIS.receivedTime = nil;
 		ATIS.receivedCode = nil;
-		ATIS.server = 0;
 		ATIS.type = 0; # 0 = arr, 1 = dep
 		return ATIS;
 	},
 	newStation: func(airport) {
+		me.sent = 0;
+		me.received = 0;
 		if (size(airport) == 3 or size(airport) == 4) {
 			if (size(findAirportsByICAO(airport)) == 0) {
 				return 2;
@@ -281,9 +283,9 @@ var ATIS = {
 		
 		serverString = "";
 		
-		if (me.server == 0) {
+		if (me.serverSel == 0) {
 			serverString = "https://api.flybywiresim.com/atis?source=faa&icao=";
-		} elsif (me.server == 1) {
+		} elsif (me.serverSel == 1) {
 			serverString = "https://api.flybywiresim.com/atis?source=vatsim&icao=";
 		} else { # fall back to FAA silently
 			serverString = "https://api.flybywiresim.com/atis?source=faa&icao=";
@@ -291,7 +293,15 @@ var ATIS = {
 		
 		http.load(serverString ~ airport)
 			.fail(func(r) return 3)
-			.done(func(r) me.processATIS(r, i));
+			.done(func(r) {
+				var errs = [];
+				call(me.processATIS, [r, i], me, {}, errs); 
+				if (size(errs) > 0) {
+					print("Failed to parse ATIS for " ~ airport);
+					debug.dump(r.response);
+                    debug.printerror(errs);
+                }
+			});
 		return 0;
 	},
 	processATIS: func(r, i) {
@@ -314,19 +324,39 @@ var ATIS = {
 				raw = split('"}', raw)[0];
 			}
 		}
-		var code = nil;
+		var code = "";
 		if (find("INFO ", raw) != -1) {
 			code = split("INFO ", raw)[1];
 			code = split(" ", code)[0];
-			me.receivedCode = code;
 		} else if (find("information ", raw) != -1) {
 			code = split("information ", raw)[1];
 			code = split(" ", code)[0];
-			me.receivedCode = code;
+		} else if (find("INFORMATION ", raw) != -1) {
+			code = split("INFORMATION ", raw)[1];
+			code = split(" ", code)[0];
+		} else if  (find("ATIS ", raw) != -1) {
+			code = split("ATIS ", raw)[1];
+			code = split(" ", code)[0];
+		} else if  (find("info ", raw) != -1) {
+			code = split("info ", raw)[1];
+			code = split(" ", code)[0];
+		} else {
+			print("Failed to find a valid ATIS code for " ~ me.station);
+			debug.dump(raw);
 		}
-		var time = nil;
+		
+		if (find(".", code) != -1) {
+			code = split(".", code)[0];
+		}
+		
+		me.receivedCode = code;
+		
+		var time = "";
 		if (find("Time ", raw) != -1) {
 			time = split("Time ", raw)[1];
+			time = split(" ", time)[0];
+		} else if (find("time ", raw) != -1) {
+			time = split("time ", raw)[1];
 			time = split(" ", time)[0];
 		} else if (find("TIME ", raw) != -1) {
 			time = split("TIME ", raw)[1];
@@ -337,14 +367,24 @@ var ATIS = {
 		} else if (find("Z SPECIAL", raw) != -1) {
 			time = split("Z SPECIAL", raw)[0];
 			time = right(time, 4);
+		} else if (find("Z SPECIAL", raw) != -1) {
+			time = split("Z SPECIAL", raw)[0];
+			time = right(time, 4);
+		} else if (find("metreport", raw) != -1) {
+			time = split("metreport", raw)[0];
+			time = right(time, 4);
+		} else {
+			print("Failed to find a valid ATIS time for " ~ me.station);
+			debug.dump(raw);
 		}
+		
 		if (size(time) == 3) {
 			time ~= " ";
 		}
 		settimer(func() {
 			me.sent = 0;
 			me.received = 1;
-			me.receivedTime = time ~ "Z";
+			me.receivedTime = time;
 			me.lastATIS = raw;
 		}, math.max(rand()*10, 4.5));
 	},

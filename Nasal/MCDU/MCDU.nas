@@ -318,14 +318,13 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
 					var result = atsu.ATISInstances[0].newStation(str[0]);
 					if (result == 2) {
 						mcdu_message(i, "NOT IN DATA BASE");
 					} elsif (result == 1) {
 						mcdu_message(i, "NOT ALLOWED");
-					} elsif (result == 0) {
-						mcdu_scratchpad.scratchpads[i].empty();
 					}
 					if (str[1] == "DEP") {
 						atsu.ATISInstances[0].type = 1;
@@ -334,6 +333,7 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
@@ -418,7 +418,7 @@ var lskbutton = func(btn, i) {
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(2);
 		} else if (page == "DATAMODE") {
-			atsu.ATIS.server = 0;
+			atsu.ATIS.serverSel = 0;
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
@@ -451,14 +451,13 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
 					var result = atsu.ATISInstances[1].newStation(str[0]);
 					if (result == 2) {
 						mcdu_message(i, "NOT IN DATA BASE");
 					} elsif (result == 1) {
 						mcdu_message(i, "NOT ALLOWED");
-					} elsif (result == 0) {
-						mcdu_scratchpad.scratchpads[i].empty();
 					}
 					if (str[1] == "DEP") {
 						atsu.ATISInstances[1].type = 1;
@@ -467,11 +466,12 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else {
-				var result = atsu.ATISInstances[0].newStation(scratchpad);
+				var result = atsu.ATISInstances[1].newStation(scratchpad);
 				if (result == 2) {
 					mcdu_message(i, "NOT IN DATA BASE");
 				} elsif (result == 1) {
@@ -534,7 +534,7 @@ var lskbutton = func(btn, i) {
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(3);
 		} else if (page == "DATAMODE") {
-			atsu.ATIS.server = 1;
+			atsu.ATIS.serverSel = 1;
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
@@ -567,14 +567,13 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
 					var result = atsu.ATISInstances[2].newStation(str[0]);
 					if (result == 2) {
 						mcdu_message(i, "NOT IN DATA BASE");
 					} elsif (result == 1) {
 						mcdu_message(i, "NOT ALLOWED");
-					} elsif (result == 0) {
-						mcdu_scratchpad.scratchpads[i].empty();
 					}
 					if (str[1] == "DEP") {
 						atsu.ATISInstances[2].type = 1;
@@ -583,6 +582,7 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
@@ -672,14 +672,13 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
 					var result = atsu.ATISInstances[3].newStation(str[0]);
 					if (result == 2) {
 						mcdu_message(i, "NOT IN DATA BASE");
 					} elsif (result == 1) {
 						mcdu_message(i, "NOT ALLOWED");
-					} elsif (result == 0) {
-						mcdu_scratchpad.scratchpads[i].empty();
 					}
 					if (str[1] == "DEP") {
 						atsu.ATISInstances[3].type = 1;
@@ -688,6 +687,7 @@ var lskbutton = func(btn, i) {
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
