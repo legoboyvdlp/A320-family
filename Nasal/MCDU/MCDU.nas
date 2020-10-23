@@ -299,6 +299,13 @@ var lskbutton = func(btn, i) {
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[0].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 0);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
 			} elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
@@ -432,7 +439,14 @@ var lskbutton = func(btn, i) {
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
-			} elsif (find("/", scratchpad) != -1) {
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[1].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 1);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			}  elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
 					var result = atsu.ATISInstances[1].newStation(str[0]);
@@ -548,6 +562,13 @@ var lskbutton = func(btn, i) {
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[2].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 2);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
 			} elsif (find("/", scratchpad) != -1) {
 				var str = split("/", scratchpad);
 				if (size(str[0]) > 0 and size(str[1]) == 0) {
@@ -650,6 +671,13 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[3].sent != 1) {
 					atsu.ATISInstances[3].station = nil;
 					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[3].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 3);
+					pageNode[i].setValue("ATISDETAIL");
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
@@ -1305,6 +1333,8 @@ var arrowbutton = func(btn, i) {
 			initInputIRS("up",i);
 		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonUp();
+		} else if (page == "ATISDETAIL") {
+			canvas_mcdu.myAtis[i].scrollUp();
 		}
 	} else if (btn == "down") {
 		if (page == "F-PLNA" or page == "F-PLNB") {
@@ -1319,6 +1349,8 @@ var arrowbutton = func(btn, i) {
 			initInputIRS("down",i);
 		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonDown();
+		} else if (page == "ATISDETAIL") {
+			canvas_mcdu.myAtis[i].scrollDown();
 		}
 	}
 }

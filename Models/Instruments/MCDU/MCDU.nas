@@ -25,6 +25,7 @@ var myCLBWIND = [nil, nil];
 var myCRZWIND = [nil, nil];
 var myDESWIND = [nil, nil];
 var myHISTWIND = [nil, nil];
+var myAtis = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 #var symbol = "helvetica_medium.txf";
 var symbol = "LiberationMonoCustom.ttf";
@@ -928,6 +929,57 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText(" RETURN");
 				
 				me["Simple_R1"].setText("ATIS ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "ATISDETAIL") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(small, small, small, small, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("grn", "wht", "wht", "wht", "wht", "wht");
+				
+				
+				if (myAtis[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myAtis[i].title));
+					
+					me.dynamicPageArrowFunc(myAtis[i]);
+					me.colorLeftArrow(myAtis[i].arrowsColour[0][0],myAtis[i].arrowsColour[0][1],myAtis[i].arrowsColour[0][2],myAtis[i].arrowsColour[0][3],myAtis[i].arrowsColour[0][4],myAtis[i].arrowsColour[0][5]);
+					me.colorRightArrow(myAtis[i].arrowsColour[1][0],myAtis[i].arrowsColour[1][1],myAtis[i].arrowsColour[1][2],myAtis[i].arrowsColour[1][3],myAtis[i].arrowsColour[1][4],myAtis[i].arrowsColour[1][5]);
+					
+					me.dynamicPageFunc(myAtis[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myAtis[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myAtis[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myAtis[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myAtis[i].L5, "Simple_L5");
+					me.dynamicPageFunc(myAtis[i].L6, "Simple_L6");
+					
+					me.colorLeft(myAtis[i].L1[2],myAtis[i].L2[2],myAtis[i].L3[2],myAtis[i].L4[2],myAtis[i].L5[2],myAtis[i].L6[2]);
+					
+					me.dynamicPageFunc(myAtis[i].R1, "Simple_R1");
+					me.dynamicPageFunc(myAtis[i].R2, "Simple_R2");
+					me.dynamicPageFunc(myAtis[i].R3, "Simple_R3");
+					me.dynamicPageFunc(myAtis[i].R4, "Simple_R4");
+					me.dynamicPageFunc(myAtis[i].R5, "Simple_R5");
+					me.dynamicPageFunc(myAtis[i].R6, "Simple_R6");
+					
+					me.colorRight(myAtis[i].R1[2],myAtis[i].R2[2],myAtis[i].R3[2],myAtis[i].R4[2],myAtis[i].R5[2],myAtis[i].R6[2]);
+				}
 				pageSwitch[i].setBoolValue(1);
 			}
 		} else if (page == "ATIS") {
