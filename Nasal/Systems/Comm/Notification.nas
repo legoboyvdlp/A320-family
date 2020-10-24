@@ -386,4 +386,31 @@ var ATIS = {
 	},
 };
 
+makeNewDictionaryString("A", "ALPHA");
+makeNewDictionaryString("B", "BRAVO");
+makeNewDictionaryString("C", "CHARLIE");
+makeNewDictionaryString("D", "DELTA");
+makeNewDictionaryString("E", "ECHO");
+makeNewDictionaryString("F", "FOXTROT");
+makeNewDictionaryString("G", "GOLF");
+makeNewDictionaryString("H", "HOTEL");
+makeNewDictionaryString("I", "INDIA");
+makeNewDictionaryString("J", "JULIET");
+makeNewDictionaryString("K", "KILO");
+makeNewDictionaryString("L", "LIMA");
+makeNewDictionaryString("M", "MIKE");
+makeNewDictionaryString("N", "NOVEMBER");
+makeNewDictionaryString("O", "OSCAR");
+makeNewDictionaryString("P", "PAPA");
+makeNewDictionaryString("Q", "QUEBEC");
+makeNewDictionaryString("R", "ROMEO");
+makeNewDictionaryString("S", "SIERRA");
+makeNewDictionaryString("T", "TANGO");
+makeNewDictionaryString("U", "UNIFORM");
+makeNewDictionaryString("V", "VICTOR");
+makeNewDictionaryString("W", "WHISKEY");
+makeNewDictionaryString("X", "XRAY");
+makeNewDictionaryString("Y", "YANKEE");
+makeNewDictionaryString("Z", "ZULU");
+
 var ATISInstances = [ATIS.new(), ATIS.new(), ATIS.new(), ATIS.new()];
