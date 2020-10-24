@@ -26,33 +26,38 @@ var atisPage = {
 	new: func(computer, index) {
 		var ap = {parents:[atisPage]};
 		ap.computer = computer;
-		ap.lineOffset = 0;
+		ap.page = 1;
 		ap.index = index;
 		ap.message = atsu.ATISInstances[index].lastATIS;
 		ap._setupPageWithData();
+		ap._numPages = 1;
 		ap.update();
 		return ap;
 	},
 	del: func() {
 		return nil;
 	},
-	getNumLines: func() {
-		me._numLines = size(me.message) / 30;
-		me.lineOffset = math.ceil(me._numLines);
+	getNumPages: func() {
+		me._numPages = math.ceil(size(me.message) / 210);
+		return me._numPages;
 	},
 	scrollUp: func() {
-		me.lineOffset -= 1;
-		if (me.lineOffset < 0) {
-			me.lineOffset = me.getNumLines();
+		print(me.page);
+		me.page -= 1;
+		if (me.page < 1) {
+			me.page = me.getNumPages();
 		}
 		me.update();
+		print(me.page);
 	},
 	scrollDown: func() {
-		me.lineOffset += 1;
-		if (me.lineOffset > me.getNumLines()) {
-			me.lineOffset = 1;
+		print(me.page);
+		me.page += 1;
+		if (me.page > me.getNumPages()) {
+			me.page = 1;
 		}
 		me.update();
+		print(me.page);
 	},
 	_clearPage: func() {
 		me.L2 = [nil, nil, "wht"];
@@ -70,8 +75,7 @@ var atisPage = {
 		me.arrowsMatrix = [[0, 0, 0, 0, 1, 1], [0, 0, 0, 0, 0, 0]];
 	},
 	_setupPageWithData: func() {
-		me.title = atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP") ~ " ATIS";
-		me.title = atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP") ~ " ATIS";
+		me.title = atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP") ~ " ATIS    ";
 		me.L5 = [" PREV ATIS", nil, "wht"];
 		me.L6 = [" RETURN", " ATIS MENU", "wht"];
 		me.R6 = ["PRINT ", nil, "blu"];
@@ -83,30 +87,29 @@ var atisPage = {
 	update: func() {
 		me._clearPage();
 		var message = atsu.ATISInstances[me.index].lastATIS;
-		var start = left(message, size(message) > (30 + (me.lineOffset * 30)) ? (30 + (me.lineOffset * 30)) : size(message));
-		start = right(start, 30);
-		
-		me.L1 = [start, atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP"), "wht"];
-		# dictionary for code
+		var pageMinusOne = (me.page - 1);
+		var numberExtraChar = pageMinusOne * 210;
+		me.L1 = [substr(message, numberExtraChar, 30), atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP"), "wht"];
 		me.R1 = [" ",atsu.ATISInstances[me.index].receivedCode ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
 		if (size(message) > 30) {
-			me.L2[1] = left(split(me.L1[0], message)[1], size(message) > (60 + (me.lineOffset * 30)) ? 30 : size(message) - (30 + (me.lineOffset * 30)));
+			me.L2[1] = substr(message, numberExtraChar + 30, 30);
 		}
 		if (size(message) > 60) {
-			me.L2[0] = left(split(me.L2[1], message)[1], size(message) > (90 + (me.lineOffset * 30)) ? 30 : size(message) - (60 + (me.lineOffset * 30)));
+			me.L2[0] = substr(message, numberExtraChar + 60, 30);
 		}
 		if (size(message) > 90) {
-			me.L3[1] = left(split(me.L2[0], message)[1], size(message) > (120 + (me.lineOffset * 30)) ? 30 : size(message) - (90 + (me.lineOffset * 30)));
+			me.L3[1] = substr(message, numberExtraChar + 90, 30);
 		}
 		if (size(message) > 120) {
-			me.L3[0] = left(split(me.L3[1], message)[1], size(message) > (150 + (me.lineOffset * 30)) ? 30 : size(message) - (120 + (me.lineOffset * 30)));
+			me.L3[0] = substr(message, numberExtraChar + 120, 30);
 		}
 		if (size(message) > 150) {
-			me.L4[1] = left(split(me.L3[0], message)[1], size(message) > (180 + (me.lineOffset * 30)) ? 30 : size(message) - (150 + (me.lineOffset * 30)));
+			me.L4[1] = substr(message, numberExtraChar + 150, 30);
 		}
 		if (size(message) > 180) {
-			me.L4[0] = left(split(me.L4[1], message)[1], size(message) > (210 + (me.lineOffset * 30)) ? 30 : size(message) - (180 + (me.lineOffset * 30)));
+			me.L4[0] = substr(message, numberExtraChar + 180, 30);
 		}
+		
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 };

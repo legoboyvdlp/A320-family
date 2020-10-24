@@ -856,6 +856,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "ATIS") {
 			pageNode[i].setValue("ATCMENU2");
+		} else if (page == "ATISDETAIL") {
+			pageNode[i].setValue("ATIS");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}

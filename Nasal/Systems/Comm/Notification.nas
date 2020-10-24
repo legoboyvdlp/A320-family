@@ -324,6 +324,7 @@ var ATIS = {
 				raw = split('"}', raw)[0];
 			}
 		}
+		
 		var code = "";
 		if (find("INFO ", raw) != -1) {
 			code = split("INFO ", raw)[1];
@@ -367,12 +368,13 @@ var ATIS = {
 		} else if (find("Z SPECIAL", raw) != -1) {
 			time = split("Z SPECIAL", raw)[0];
 			time = right(time, 4);
-		} else if (find("Z SPECIAL", raw) != -1) {
-			time = split("Z SPECIAL", raw)[0];
-			time = right(time, 4);
 		} else if (find("metreport", raw) != -1) {
 			time = split("metreport", raw)[0];
 			time = right(time, 4);
+		} else if (find((code ~ " "), raw) != -1) {
+			if (size(split(" ",split(code ~ " ", raw)[1])[0]) == 4) {
+				time = split(" ",split(code ~ " ", raw)[1])[0];
+			}
 		} else {
 			print("Failed to find a valid ATIS time for " ~ me.station);
 			debug.dump(raw);
@@ -381,6 +383,8 @@ var ATIS = {
 		if (size(time) == 3) {
 			time ~= " ";
 		}
+		debug.dump(code);
+		debug.dump(time);
 		settimer(func() {
 			me.sent = 0;
 			me.received = 1;

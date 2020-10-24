@@ -232,7 +232,8 @@ var canvas_MCDU_base = {
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
 	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
-	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE","ATISSend1","ATISSend2","ATISSend3","ATISSend4"];
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE","ATISSend1","ATISSend2","ATISSend3","ATISSend4",
+	"ATISArrows"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -368,6 +369,9 @@ var canvas_MCDU_base = {
 			me["ATISSend2"].hide();
 			me["ATISSend3"].hide();
 			me["ATISSend4"].hide();
+		}
+		if (page != "ATISDETAIL") {
+			me["ATISArrows"].hide();
 		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -980,6 +984,17 @@ var canvas_MCDU_base = {
 					
 					me.colorRight(myAtis[i].R1[2],myAtis[i].R2[2],myAtis[i].R3[2],myAtis[i].R4[2],myAtis[i].R5[2],myAtis[i].R6[2]);
 				}
+				
+				if (myAtis[i].getNumPages() > 1) {
+					me["Simple_PageNum"].show();
+					me["ATISArrows"].show();
+					print(myAtis[i].page);
+					me["Simple_PageNum"].setText(myAtis[i].page ~ "/" ~ myAtis[i].getNumPages());
+				} else {
+					me["Simple_PageNum"].hide();
+					me["ATISArrows"].hide();
+				}
+				
 				pageSwitch[i].setBoolValue(1);
 			}
 		} else if (page == "ATIS") {
