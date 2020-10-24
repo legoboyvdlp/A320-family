@@ -42,22 +42,18 @@ var atisPage = {
 		return me._numPages;
 	},
 	scrollUp: func() {
-		print(me.page);
 		me.page -= 1;
 		if (me.page < 1) {
 			me.page = me.getNumPages();
 		}
 		me.update();
-		print(me.page);
 	},
 	scrollDown: func() {
-		print(me.page);
 		me.page += 1;
 		if (me.page > me.getNumPages()) {
 			me.page = 1;
 		}
 		me.update();
-		print(me.page);
 	},
 	_clearPage: func() {
 		me.L2 = [nil, nil, "wht"];

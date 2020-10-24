@@ -383,8 +383,7 @@ var ATIS = {
 		if (size(time) == 3) {
 			time ~= " ";
 		}
-		debug.dump(code);
-		debug.dump(time);
+		
 		settimer(func() {
 			me.sent = 0;
 			me.received = 1;
