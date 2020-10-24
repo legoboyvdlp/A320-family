@@ -425,7 +425,8 @@ var lskbutton = func(btn, i) {
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(2);
 		} else if (page == "DATAMODE") {
-			atsu.ATIS.serverSel = 0;
+			atsu.ATIS.serverSel.setValue("faa");
+			acconfig.writeSettings();
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
@@ -548,7 +549,8 @@ var lskbutton = func(btn, i) {
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(3);
 		} else if (page == "DATAMODE") {
-			atsu.ATIS.serverSel = 1;
+			atsu.ATIS.serverSel.setValue("vatsim");
+			acconfig.writeSettings();
 		} else if (page == "ATIS") {
 			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 			if (scratchpad == "CLR") {
@@ -979,7 +981,8 @@ var rskbutton = func(btn, i) {
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("WEATHERREQ");
 		} else if (page == "DATAMODE") {
-			atsu.AOC.server = 0;
+			atsu.AOC.server.setValue("noaa");
+			acconfig.writeSettings();
 		} else if (page == "ATIS") {
 			if (atsu.ATISInstances[1].station != nil and atsu.ATISInstances[1].sent != 1) {
 				atsu.ATISInstances[1].sendReq(i);
@@ -1024,7 +1027,8 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myReceivedMessages[i] = receivedMessagesPage.new(i);
 			pageNode[i].setValue("RECEIVEDMSGS");
 		} else if (page == "DATAMODE") {
-			atsu.AOC.server = 1;
+			atsu.AOC.server.setValue("vatsim");
+			acconfig.writeSettings();
 		} else if (page == "ATIS") {
 			if (atsu.ATISInstances[2].station != nil and atsu.ATISInstances[2].sent != 1) {
 				atsu.ATISInstances[2].sendReq(i);

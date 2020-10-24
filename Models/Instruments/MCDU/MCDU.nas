@@ -988,7 +988,6 @@ var canvas_MCDU_base = {
 				if (myAtis[i].getNumPages() > 1) {
 					me["Simple_PageNum"].show();
 					me["ATISArrows"].show();
-					print(myAtis[i].page);
 					me["Simple_PageNum"].setText(myAtis[i].page ~ "/" ~ myAtis[i].getNumPages());
 				} else {
 					me["Simple_PageNum"].hide();
@@ -1459,21 +1458,21 @@ var canvas_MCDU_base = {
 				
 				pageSwitch[i].setBoolValue(1);
 			}
-			if (atsu.AOC.server == 1) {
+			if (atsu.AOC.server.getValue() == "vatsim") {
 				me["Simple_R1"].setText("VATSIM ");
 				me["Simple_R2_Arrow"].show();
 				me["Simple_R3_Arrow"].hide();
-			} elsif (atsu.AOC.server == 0) {
+			} elsif (atsu.AOC.server.getValue() == "noaa") {
 				me["Simple_R1"].setText("NOAA ");
 				me["Simple_R2_Arrow"].hide();
 				me["Simple_R3_Arrow"].show();
 			}
 			
-			if (atsu.ATIS.serverSel == 1) {
+			if (atsu.ATIS.serverSel.getValue() == "vatsim") {
 				me["Simple_L1"].setText(" VATSIM");
 				me["Simple_L2_Arrow"].show();
 				me["Simple_L3_Arrow"].hide();
-			} elsif (atsu.ATIS.serverSel == 0) {
+			} elsif (atsu.ATIS.serverSel.getValue() == "faa") {
 				me["Simple_L1"].setText(" FAA");
 				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].show();

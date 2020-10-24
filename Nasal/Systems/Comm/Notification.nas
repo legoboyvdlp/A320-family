@@ -3,7 +3,6 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 var defaultServer = "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=";
-var serverString = "";
 var result = nil;
 
 var ATSU = {
@@ -104,7 +103,7 @@ var AOC = {
 	sentTime: nil,
 	received: 0,
 	receivedTime: nil,
-	server: 0, # 0 = noaa, 1 = vatsim
+	server: props.globals.getNode("/systems/atsu/wxr-server"),
 	newStation: func(airport) {
 		if (size(airport) == 3 or size(airport) == 4) {
 			me.station = airport;
@@ -167,13 +166,10 @@ var AOC = {
 			return 1;
 		}
 		
-		serverString = "";
-		
-		if (me.server == 0) {
-			serverString = defaultServer;
-		} elsif (me.server == 1) {
+		var serverString = "";
+		if (me.server.getValue() == "vatsim") {
 			serverString = "https://api.flybywiresim.com/metar?source=vatsim&icao=";
-		} else { # fall back to NOAA silently
+		} else {
 			serverString = defaultServer;
 		}
 		
@@ -198,8 +194,10 @@ var AOC = {
 	},
 	processMETAR: func(r, i) {
 		var raw = r.response;
-		raw = split("<raw_text>", raw)[1];
-		raw = split("</raw_text>", raw)[0];
+		if (find("<raw_text>", raw) != -1) {
+			raw = split("<raw_text>", raw)[1];
+			raw = split("</raw_text>", raw)[0];
+		}
 		me.lastMETAR = raw;
 		settimer(func() {
 			me.received = 1;
@@ -229,7 +227,7 @@ var AOC = {
 };
 
 var ATIS = {
-	serverSel: 0,
+	serverSel: props.globals.getNode("/systems/atsu/atis-server"),
 	new: func() {
 		var ATIS = { parents: [ATIS] };
 		ATIS.station = nil;
@@ -281,15 +279,7 @@ var ATIS = {
 			return 1;
 		}
 		
-		serverString = "";
-		
-		if (me.serverSel == 0) {
-			serverString = "https://api.flybywiresim.com/atis?source=faa&icao=";
-		} elsif (me.serverSel == 1) {
-			serverString = "https://api.flybywiresim.com/atis?source=vatsim&icao=";
-		} else { # fall back to FAA silently
-			serverString = "https://api.flybywiresim.com/atis?source=faa&icao=";
-		}
+		var serverString = "https://api.flybywiresim.com/atis?source=" ~ me.serverSel.getValue() ~ "&icao=";
 		
 		http.load(serverString ~ airport)
 			.fail(func(r) return 3)
@@ -383,6 +373,9 @@ var ATIS = {
 		if (size(time) == 3) {
 			time ~= " ";
 		}
+		
+		raw = string.uc(raw);
+		raw = string.replace(raw, ",", "");
 		
 		settimer(func() {
 			me.sent = 0;

@@ -1085,6 +1085,10 @@
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
 		</atc>
+		<atsu>
+			<atis-server type="string">faa</atis-server>
+			<wxr-server type="string">faa</wxr-server>
+		</atsu>
 		<apu>
 			<oil>
 				<level-l type="double">5.4</level-l>
