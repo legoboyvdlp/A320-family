@@ -175,7 +175,16 @@ var AOC = {
 		
 		http.load(serverString ~ airport)
 			.fail(func(r) me.downloadFail(i, r))
-			.done(func(r) me.processMETAR(r, i));
+			.done(func(r) {
+				var errs = [];
+				call(me.processMETAR, [r, i], me, {}, errs); 
+				if (size(errs) > 0) {
+					print("Failed to parse METAR for " ~ airport);
+					debug.dump(r.response);
+                    debug.printerror(errs);
+					mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
+                }
+			});
 		return 0;
 	},
 	fetchTAF: func(airport, i) {
@@ -189,16 +198,32 @@ var AOC = {
 		}
 		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
 			.fail(func(r) me.downloadFail(i))
-			.done(func(r) me.processTAF(r, i));
+			.done(func(r) {
+				var errs = [];
+				call(me.processTAF, [r, i], me, {}, errs); 
+				if (size(errs) > 0) {
+					print("Failed to parse TAF for " ~ airport);
+					debug.dump(r.response);
+                    debug.printerror(errs);
+					mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
+                }
+			});
 		return 0;
 	},
 	processMETAR: func(r, i) {
 		var raw = r.response;
-		if (find("<raw_text>", raw) != -1) {
+		if (me.server.getValue() == "vatsim") {
+			me.lastMETAR = raw;
+		} else if (find("<raw_text>", raw) != -1) {
 			raw = split("<raw_text>", raw)[1];
 			raw = split("</raw_text>", raw)[0];
+			me.lastMETAR = raw;
+		} else {
+			me.received = 0;
+			me.sent = 0;
+			mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
+			return;
 		}
-		me.lastMETAR = raw;
 		settimer(func() {
 			me.received = 1;
 			mcdu.mcdu_message(i, "WX UPLINK");
@@ -211,8 +236,16 @@ var AOC = {
 	},
 	processTAF: func(r, i) {
 		var raw = r.response;
-		raw = split("<raw_text>", raw)[1];
-		raw = split("</raw_text>", raw)[0];
+		if (find("<raw_text>", raw) != -1) {
+			raw = split("<raw_text>", raw)[1];
+			raw = split("</raw_text>", raw)[0];
+			me.lastTAF = raw;
+		} else {
+			me.received = 0;
+			me.sent = 0;
+			mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
+			return;
+		}
 		me.lastTAF = raw;
 		settimer(func() {
 			me.received = 1;
@@ -290,6 +323,7 @@ var ATIS = {
 					print("Failed to parse ATIS for " ~ airport);
 					debug.dump(r.response);
                     debug.printerror(errs);
+					mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
                 }
 			});
 		return 0;
