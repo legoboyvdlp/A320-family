@@ -860,6 +860,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATCMENU2");
 		} else if (page == "ATISDETAIL") {
 			pageNode[i].setValue("ATIS");
+		} else if (page == "AOCCONFIG") {
+			pageNode[i].setValue("AOCMENU");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1195,6 +1197,8 @@ var rskbutton = func(btn, i) {
 					rmp.transfer(i + 1);
 				}
 			}
+		} else if (page == "AOCMENU") {
+			pageNode[i].setValue("AOCCONFIG");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1402,7 +1406,7 @@ var pagebutton = func(btn, i) {
 			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
 			var page = page;
-			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
+			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
 				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);

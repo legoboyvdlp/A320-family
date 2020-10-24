@@ -588,6 +588,61 @@ var canvas_MCDU_base = {
 				me["Simple_R6"].hide();
 				me["Simple_R6_Arrow"].hide();
 			}
+		} else if (page == "AOCCONFIG") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].setText("AOC CONFIGURATION");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, -1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, 1, 1, 1, 1, -1);
+				me.showCenterS(1, -1, 1, -1, 1, -1);
+				me.showRight(1, -1, -1, -1, -1, 1);
+				me.showRightS(1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me.standardFontColour();
+				
+				me["Simple_L1S"].setText("A/C REG");
+				me["Simple_L1"].setFontSize(small);
+				me["Simple_L1"].setColor(GREEN);
+				me["Simple_C1S"].setColor(GREEN);
+				me["Simple_R1"].setFontSize(small);
+				me["Simple_R1"].setColor(GREEN);
+				me["Simple_R1S"].setText("TYPE");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" AOC MENU");
+				me["Simple_C2"].setText("ATSU SW AND DB PN");
+				me["Simple_C3S"].setText("998.2459.501");
+				me["Simple_C3S"].setFontSize(small);
+				me["Simple_C3S"].setColor(GREEN);
+				me["Simple_C3"].setText("998.2460.501");
+				me["Simple_C3"].setFontSize(small);
+				me["Simple_C3"].setColor(GREEN);
+				me["Simple_C4"].setText("ATSU AOC ID");
+				me["Simple_C5S"].setText("AS2TOC1015010F1");
+				me["Simple_C5S"].setFontSize(small);
+				me["Simple_C5S"].setColor(GREEN);
+				me["Simple_C5"].setText("AS2TOC1012001F2");
+				me["Simple_C5"].setFontSize(small);
+				me["Simple_C5"].setColor(GREEN);
+				me["Simple_R6"].setText("PRINT ");
+				me["Simple_R6"].setColor(BLUE);
+				me["Simple_C1"].setFontSize(small);
+				me["Simple_C1"].setColor(GREEN);
+				pageSwitch[i].setBoolValue(1);
+			}
+			me["Simple_L1"].setText(getprop("/options/model-options/registration"));
+			me["Simple_C1S"].setText(sprintf("%02.0f", getprop("/sim/time/utc/hour")) ~ sprintf("%02.0f", getprop("/sim/time/utc/minute")));
+			me["Simple_C1"].setText(sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ right(sprintf(getprop("/sim/time/utc/year")), 2));
+			me["Simple_R1S"].setText("TYPE");
+			me["Simple_R1"].setText(getprop("/MCDUC/type"));
 		} else if (page == "WEATHERREQ") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();

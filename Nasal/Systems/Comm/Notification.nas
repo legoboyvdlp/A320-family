@@ -157,7 +157,7 @@ var AOC = {
 		me.sent = 0;
 	},
 	fetchMETAR: func(airport, i) {
-		if (!ATSU.working) {
+		if (!ATSU.working or !fmgc.FMGCInternal.flightNumSet) {
 			me.sent = 0;
 			return 2;
 		}
@@ -179,7 +179,7 @@ var AOC = {
 		return 0;
 	},
 	fetchTAF: func(airport, i) {
-		if (!ATSU.working) {
+		if (!ATSU.working or !fmgc.FMGCInternal.flightNumSet) {
 			me.sent = 0;
 			return 2;
 		}

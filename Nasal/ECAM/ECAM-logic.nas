@@ -2482,6 +2482,11 @@ var messages_memo = func {
 		gpws_flap_mode_off.active = 0;
 	}
 	
+	if (!fmgc.FMGCInternal.flightNumSet and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (phaseVarMemo2 <= 2 or phaseVarMemo2 == 6 or phaseVarMemo2 >= 9)) {
+		company_datalink_stby.active = 1;
+	} else {
+		company_datalink_stby.active = 0;
+	}
 }
 
 var messages_right_memo = func {
@@ -2624,7 +2629,13 @@ var messages_right_memo = func {
 	} else {
 		ldg_lt.active = 0;
 	}
-
+	
+	if (mcdu.ReceivedMessagesDatabase.firstUnviewed() != -99 and (phaseVarMemo2 <= 2 or phaseVarMemo2 == 6 or phaseVarMemo2 >= 9)) {
+		company_msg.active = 1;
+	} else {
+		company_msg.active = 0;
+	}
+	
 	if (getprop("/controls/ice-protection/leng") == 1 or getprop("/controls/ice-protection/reng") == 1 or getprop("/systems/electrical/bus/dc-1") == 0 or getprop("/systems/electrical/bus/dc-2") == 0) {
 		eng_aice.active = 1;
 	} else {
