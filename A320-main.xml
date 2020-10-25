@@ -1577,6 +1577,10 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
+		<iesi>
+			<att-reset-cmd type="bool">false</att-reset-cmd>
+		</iesi>
+		
 		<marker-beacon n="0">
 			<serviceable type="bool">true</serviceable>
 		</marker-beacon>
