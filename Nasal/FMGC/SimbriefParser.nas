@@ -116,18 +116,48 @@ var SimbriefParser = {
 		var ident = "";
 		var coords = nil;
 		var wp = nil;
+		var _foundSID = 0;
+		var _foundSTAR = 0;
+		var _foundTOC = 0;
+		var _foundTOD = 0;
+		var _sid = nil;
+		var _star = nil;
 		
 		foreach (var ofpFix; ofpFixes) {
 			if (ofpFix.getNode("is_sid_star").getBoolValue()) {
-				# continue;
+				if (!_foundSID) {
+					_sid = fmgc.flightPlanController.flightplans[3].departure.getSid(ofpFix.getNode("via_airway").getValue());
+					if (_sid != nil) {
+						_foundSID = 1;
+					}
+				}
 			}
+			
+			if (ofpFix.getNode("is_sid_star").getBoolValue()) {
+				if (!_foundSTAR) {
+					_star = fmgc.flightPlanController.flightplans[3].destination.getStar(ofpFix.getNode("via_airway").getValue());
+					if (_star != nil) {
+						_foundSTAR = 1;
+					}
+				}
+			}
+			
+			if (ofpFix.getNode("is_sid_star").getBoolValue() and _foundSID and _foundSTAR) {
+				continue;
+			} # todo what happens if you don't find one but find the other
 			
 			ident = ofpFix.getNode("ident").getValue();
 			if (find(departureID, ident) != -1 or find(destinationID, ident) != -1) {
 				continue;
 			}
 			
-			if (ident == "TOC" or ident == "TOD") {
+			if (ident == "TOC") {
+				_foundTOC = 1;
+				continue;
+			}
+			
+			if (ident == "TOD") {
+				_foundTOC = 1;
 				continue;
 			}
 			
@@ -146,6 +176,12 @@ var SimbriefParser = {
 		}
 		
 		fmgc.flightPlanController.flightplans[3].insertWaypoints(wps, 1);
+		if (_sid != nil) {
+			fmgc.flightPlanController.flightplans[3].sid = _sid;
+		}
+		if (_star != nil) {
+			fmgc.flightPlanController.flightplans[3].star = _star;
+		}
 		fmgc.flightPlanController.destroyTemporaryFlightPlan(3, 1);
 		fmgc.windController.updatePlans();
 		fmgc.updateRouteManagerAlt();
