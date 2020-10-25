@@ -24,7 +24,7 @@ var airspeed = props.globals.getNode("/instrumentation/airspeed-indicator/indica
 var mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
 var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
 var roll =  props.globals.getNode("/orientation/roll-deg", 1);
-var skid = props.globals.getNode("/instrumentation/slip-skid-ball/indicated-slip-skid", 1);
+var skid = props.globals.getNode("/instrumentation/iesi/slip-skid", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 var altitude_ind = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
 
@@ -180,7 +180,7 @@ var canvas_IESI = {
 		me.AI_horizon_trans.setTranslation(0, pitch.getValue() * 16.74);
 		me.AI_horizon_rot.setRotation(-roll.getValue() * D2R, me["AI_center"].getCenter());
 		
-		me["AI_slipskid"].setTranslation(math.clamp(skid.getValue(), -7, 7) * -15, 0);
+		me["AI_slipskid"].setTranslation(skid.getValue(), 0);
 		me["AI_bank"].setRotation(-roll.getValue() * D2R);
 		
 		# Altitude
