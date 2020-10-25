@@ -491,5 +491,45 @@
 		<output>/instrumentation/pfd/slip-skid</output>
 		<filter-time>0.16</filter-time>
 	</filter>
+	
+	<filter>
+		<name>IESI Slip/Skid Indicator</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/accelerations/Ny</property>
+					<entry><ind>-0.20</ind><dep>-105</dep></entry>
+					<entry><ind>-0.01</ind><dep>   0</dep></entry>
+					<entry><ind> 0.00</ind><dep>   0</dep></entry>
+					<entry><ind> 0.01</ind><dep>   0</dep></entry>
+					<entry><ind> 0.20</ind><dep> 105</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/iesi/slip-skid</output>
+	</filter>
+	
+	<filter>
+		<name>IESI Pitch</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/orientation/pitch-deg</property>
+					<entry><ind>-80</ind><dep>-65</dep></entry>
+					<entry><ind>-50</ind><dep>-50</dep></entry>
+					<entry><ind> 0</ind><dep>   0</dep></entry>
+					<entry><ind> 50</ind><dep> 50</dep></entry>
+					<entry><ind> 80</ind><dep> 65</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/iesi/pitch-deg</output>
+	</filter>
 
 </PropertyList>
