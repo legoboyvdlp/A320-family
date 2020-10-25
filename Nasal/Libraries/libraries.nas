@@ -383,7 +383,7 @@ controls.stepSpoilers = func(step) {
 }
 
 var deploySpeedbrake = func {
-	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
 			pts.Controls.Flight.speedbrake.setValue(1.0);
 		}
@@ -397,7 +397,7 @@ var deploySpeedbrake = func {
 }
 
 var retractSpeedbrake = func {
-	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
 			pts.Controls.Flight.speedbrake.setValue(0.0);
 		}

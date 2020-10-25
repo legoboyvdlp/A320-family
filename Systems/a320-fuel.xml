@@ -189,7 +189,7 @@
 		<actuator name="/systems/fuel/pumps/center-control-low-level">
             <description>Timer for the Fuel Center pumps</description>
             <input>/systems/fuel/quantity/center-low</input>
-            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.00333</rate_limit> <!-- 300 seconds -->
         </actuator>
 		

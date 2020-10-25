@@ -10,259 +10,259 @@
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng1idle</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/eng2idle-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng2idle</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/eng1or2-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng1or2</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/to-inhibit-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/to-inhibit</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/ldg-inhibit-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/ldg-inhibit</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-fault-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/bleed-1-fault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-fault-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/bleed-2-fault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/apu-fault-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-bleed-fault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/xbleed-fault-output">
 			<description>Timer for the ECAM system</description>
 			<input>/systems/pneumatics/warnings/crossbleed-disag</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-apu-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-1-not-shut-apu</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-2-not-shut-apu-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-2-not-shut-apu</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-1-not-shut</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-2-not-shut-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-2-not-shut</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-and-2-low-temp-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/bleed-1-and-2-low-temp</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.00185185</rate_limit> <!-- 540 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-low-temp-output">
 			<description>Timer for the ECAM system</description>
 			<input>/systems/pneumatics/warnings/lowtemp-1-mem</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-low-temp-output">
 			<description>Timer for the ECAM system</description>
 			<input>/systems/pneumatics/warnings/lowtemp-2-mem</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/bleed-1-off-60-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-1-off-60</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/bleed-2-off-60-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-2-off-60</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/bleed-1-off-5-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-1-off-5</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-off-5-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-2-off-5</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-1-open-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-1-open</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-2-open-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-2-open</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-1-closed-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-1-closed</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-2-closed-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-2-closed</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/wing-anti-ice-flipflop-set">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-anti-ice-flipflop-set-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.0285714</rate_limit> <!-- 35 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/phase-1">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/phase-1-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/wing-anti-ice-25">
 			<description>Timer for the ECAM system</description>
 			<input>/controls/ice-protection/wing</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.04</rate_limit> <!-- 25 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-anti-ice-left-closed-set-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.066666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-anti-ice-right-closed-set-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.066666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/proc-wai-shutdown-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/proc-wai-shutdown-flipflop</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/wing-hi-pr-left">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-hi-pr-left-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.025</rate_limit> <!-- 40 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/wing-hi-pr-right">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-hi-pr-right-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.025</rate_limit> <!-- 40 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/cranking-35-sec">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/cranking-35-sec-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.028571</rate_limit> <!-- 35 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-closed">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-closed-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-closed">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-closed-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-disagree">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-disagree-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-disagree">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-disagree-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
@@ -276,98 +276,98 @@
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-5">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.20</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-5">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.20</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-2">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-warning-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.50</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-2">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-warning-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.50</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-off">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-off-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-off">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-off-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/trim-air-fault">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/trim-air-fault-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/yaw-damper-1-fault">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/yaw-damper-1-fault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/yaw-damper-2-fault">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/yaw-damper-2-fault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/nav-gpws-terr-fault">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/nav-gpws-terr-fault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1.0</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/gen-1-fault-set">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/gen-1-fault-set</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/gen-2-fault-set">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/gen-2-fault-set</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/apu-gen-fault-set">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-gen-fault-set</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/apu-gen-fault-reset">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-gen-fault-reset</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
 		</actuator>
 	</channel>
@@ -1344,7 +1344,8 @@
 				/systems/navigation/adr/operating-1 eq 1
 				/systems/navigation/adr/operating-3 eq 1
 				/systems/electrical/bus/dc-ess-shed ge 25
-				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/dc-ess ge 25
+				/systems/electrical/bus/ac-ess ge 110
 				/systems/fctl/fac1-healthy-signal eq 0
 				/systems/fctl/fac2-healthy-signal eq 1
 			</test>
@@ -1371,14 +1372,6 @@
 			</test>
 		</switch>
 		
-		<switch name="/ECAM/warnings/logic/yaw-damper-1-fault-green">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/hydraulic/green-psi lt 1500
-				/ECAM/warning-phase ne 1
-			</test>
-		</switch>
-		
 		<switch name="/ECAM/warnings/logic/yaw-damper-1-fault-adr">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1399,7 +1392,7 @@
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/ac-1 ge 110
 				/ECAM/warnings/logic/yaw-damper-1-fault-eng-start eq 0
-				/ECAM/warnings/logic/yaw-damper-1-fault-green eq 0
+				/systems/hydraulic/green-psi ge 1500
 				/ECAM/warnings/logic/yaw-damper-1-fault-adr eq 0
 				/ECAM/irs-in-align eq 0
 				/systems/fctl/yawdamper-1-active eq 0
@@ -1413,14 +1406,6 @@
 				/controls/engines/engine[0]/cutoff-switch eq 0 <!-- opposite side -->
 				/systems/hydraulic/yellow-psi lt 1500
 				/ECAM/timer/ground-calc eq 1
-			</test>
-		</switch>
-		
-		<switch name="/ECAM/warnings/logic/yaw-damper-2-fault-yellow">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/hydraulic/yellow-psi lt 1500
-				/ECAM/warning-phase ne 1
 			</test>
 		</switch>
 		
@@ -1444,7 +1429,7 @@
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/electrical/bus/ac-2 ge 110
 				/ECAM/warnings/logic/yaw-damper-2-fault-eng-start eq 0
-				/ECAM/warnings/logic/yaw-damper-2-fault-yellow eq 0
+				/systems/hydraulic/yellow-psi ge 1500
 				/ECAM/warnings/logic/yaw-damper-2-fault-adr eq 0
 				/ECAM/irs-in-align eq 0
 				/systems/fctl/yawdamper-2-active eq 0
@@ -1452,23 +1437,43 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/adr-off-input">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/systems/navigation/adr/operating-1 eq 1
+				/systems/navigation/adr/operating-2 eq 1
+				/systems/navigation/adr/operating-3 eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/adr-off">
+			<input>/ECAM/warnings/logic/adr-off-input</input>
+			<rate_limit sense="decr">120</rate_limit>
+			<rate_limit sense="incr">0.5</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/green-yellow-press-on-monostable-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulics/warnings/green-lo-pr eq 0
+				/systems/hydraulics/warnings/yellow-lo-pr eq 0
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/yaw-damper-12-fault">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/irs-in-align eq 0
-				<test logic="OR">
-					/systems/navigation/adr/operating-1 eq 1
-					/systems/navigation/adr/operating-2 eq 1
-					/systems/navigation/adr/operating-3 eq 1
-				</test>
+				/ECAM/warnings/logic/adr-off ne 1
 				<test logic="OR">
 					/systems/electrical/bus/dc-ess-shed ge 25
 					/systems/electrical/bus/ac-1 ge 110
 					/systems/electrical/bus/dc-2 ge 25
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
-				/ECAM/warnings/logic/yaw-damper-1-fault-green eq 0
-				/ECAM/warnings/logic/yaw-damper-2-fault-yellow eq 0
+				/ECAM/warnings/logic/green-yellow-press-on-monostable eq 0
+				/systems/hydraulic/green-psi ge 1500
+				/systems/hydraulic/yellow-psi ge 1500
 				/ECAM/warnings/logic/yaw-damper-1-fault eq 1
 				/ECAM/warnings/logic/yaw-damper-2-fault eq 1
 			</test>
@@ -1516,7 +1521,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/glc-1-online-2-sec">
 			<input>/systems/electrical/relay/gen-1-glc/contact-pos</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
@@ -1577,7 +1582,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/glc-2-online-2-sec">
 			<input>/systems/electrical/relay/gen-2-glc/contact-pos</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
@@ -1774,7 +1779,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/ground-spoilers-output">
 			<input>/ECAM/warnings/logic/eng/ground-spoilers</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">2</rate_limit> <!-- 0.5 seconds -->
 		</actuator>
 		
@@ -1806,13 +1811,13 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output">
 			<input>/ECAM/warnings/logic/eng/eng-1-tla-abv-6</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2-output">
 			<input>/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
@@ -1825,7 +1830,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-1-tla-idle-output">
 			<input>/ECAM/warnings/logic/eng/eng-1-tla-idle</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
@@ -1838,7 +1843,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-1-reverse-output">
 			<input>/ECAM/warnings/logic/eng/eng-1-reverse</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
@@ -1859,13 +1864,13 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output">
 			<input>/ECAM/warnings/logic/eng/eng-2-tla-abv-6</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output">
 			<input>/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
@@ -1878,7 +1883,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-2-tla-idle-output">
 			<input>/ECAM/warnings/logic/eng/eng-2-tla-idle</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
@@ -1891,7 +1896,7 @@
 		
 		<actuator name="/ECAM/warnings/logic/eng/eng-2-reverse-output">
 			<input>/ECAM/warnings/logic/eng/eng-2-reverse</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 seconds -->
 		</actuator>
 		
@@ -2047,7 +2052,7 @@
 		
 		<actuator name="/ECAM/warnings/fctl/lrElevFault-output">
 			<input>/ECAM/warnings/fctl/lrElevFault</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
 		</actuator>
 		
@@ -2148,7 +2153,7 @@
 		
 		<actuator name="/ECAM/warnings/fctl/gear-not-down-locked-set-output">
 			<input>/ECAM/warnings/fctl/gear-not-down-locked-set-input</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
@@ -2181,7 +2186,7 @@
 		
 		<actuator name="/ECAM/warnings/hyd/engines-2-online-output">
 			<input>/ECAM/warnings/hyd/engines-2-online</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit>
 		</actuator>
 		
@@ -2196,7 +2201,7 @@
 		
 		<actuator name="/ECAM/warnings/hyd/engines-2-off-in-air-output">
 			<input>/ECAM/warnings/hyd/engines-2-off-in-air</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
@@ -2215,7 +2220,7 @@
 		
 		<actuator name="/ECAM/warnings/hyd/engine-1-start-output">
 			<input>/ECAM/warnings/hyd/engine-1-start</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit>
 		</actuator>
 		
@@ -2234,7 +2239,7 @@
 		
 		<actuator name="/ECAM/warnings/hyd/engine-2-start-output">
 			<input>/ECAM/warnings/hyd/engine-2-start</input>
-			<rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit>
 		</actuator>
 		

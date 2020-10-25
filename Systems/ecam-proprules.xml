@@ -203,18 +203,6 @@
 		<output>ECAM/phases/monostable/gnd-output</output>
 	</flipflop>
 	
-	
-	<flipflop>
-		<type>monostable</type>
-		<time>
-			<value>300.0</value>
-		</time>
-		<S>
-			<property>ECAM/phases/monostable/phase-1-300</property>
-		</S>
-		<output>ECAM/phases/monostable/phase-1-output</output>
-	</flipflop>
-	
 	<flipflop>
 		<type>monostable</type>
 		<time>
@@ -1068,6 +1056,17 @@
 			<property>/ECAM/warnings/fctl/gear-not-down-locked-reset</property>
 		</R>
 		<output>/ECAM/warnings/fctl/gear-not-down-locked</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>40</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/green-yellow-press-on-monostable-input</property>
+		</S>
+		<output>/ECAM/warnings/logic/green-yellow-press-on-monostable</output>
 	</flipflop>
 	
 </PropertyList>
