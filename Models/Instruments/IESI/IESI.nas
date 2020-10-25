@@ -15,6 +15,7 @@ var mach_act = 0;
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
 var iesi_reset = props.globals.initNode("/instrumentation/iesi/att-reset", 0, "DOUBLE");
 var iesi_time = props.globals.initNode("/instrumentation/iesi/iesi-init-time", 0.0, "DOUBLE");
+var iesi_brt = props.globals.getNode("/controls/lighting/DU/iesi", 1);
 var iesi_rate = props.globals.getNode("/systems/acconfig/options/iesi-rate", 1);
 var et = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var aconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
@@ -89,7 +90,7 @@ var canvas_IESI_base = {
 		}
 		
 		if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1.getValue() >= 25 and airspeed.getValue() >= 50 and cur_time >= 5)) {
-			IESI.page.show();
+			me._showIESI = 1;
 			IESI.update();
 			
 			if (aconfig.getValue() != 1 and iesi_init.getValue() != 1) {
@@ -105,7 +106,13 @@ var canvas_IESI_base = {
 				iesi_time.setValue(cur_time - 87);
 			}
 		} else {
+			me._showIESI = 0;
 			iesi_init.setBoolValue(0);
+		}
+		
+		if (me._showIESI and iesi_brt.getValue() > 0.01) {
+			IESI.page.show();
+		} else {
 			IESI.page.hide();
 		}
 	},
