@@ -7235,7 +7235,129 @@
 		<object-name>iesi_btn_plus</object-name>
 		<object-name>iesi_btn_rst</object-name>
 	</effect>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_btn_rst</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/instrumentation/iesi/att-reset-cmd</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/iesi/att-reset-cmd</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
 
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_btn_rst</object-name>
+		<property>/instrumentation/iesi/att-reset-cmd</property>
+		<factor>0.0025</factor>
+		<axis>
+			<x1-m>-0.53312</x1-m>
+			<y1-m>-0.16166</y1-m>
+			<z1-m>0.16956</z1-m>
+			<x2-m>-0.53977</x2-m>
+			<y2-m>-0.16166</y2-m>
+			<z2-m>0.16765</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_btn_plus</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/instrumentation/iesi/plus</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/iesi</property>
+				<step>0.05</step>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/iesi/plus</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_btn_plus</object-name>
+		<property>/instrumentation/iesi/plus</property>
+		<factor>0.0025</factor>
+		<axis>
+			<x1-m>-0.53312</x1-m>
+			<y1-m>-0.16166</y1-m>
+			<z1-m>0.16956</z1-m>
+			<x2-m>-0.53977</x2-m>
+			<y2-m>-0.16166</y2-m>
+			<z2-m>0.16765</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_btn_minus</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/instrumentation/iesi/minus</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/iesi</property>
+				<step>-0.05</step>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/iesi/minus</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_btn_minus</object-name>
+		<property>/instrumentation/iesi/minus</property>
+		<factor>0.0025</factor>
+		<axis>
+			<x1-m>-0.53312</x1-m>
+			<y1-m>-0.16166</y1-m>
+			<z1-m>0.16956</z1-m>
+			<x2-m>-0.53977</x2-m>
+			<y2-m>-0.16166</y2-m>
+			<z2-m>0.16765</z2-m>
+		</axis>
+	</animation>
+	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
 <!--		<object-name>clock</object-name>-->

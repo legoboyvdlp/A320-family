@@ -871,6 +871,7 @@
 				<du4 type="double">1</du4>
 				<du5 type="double">1</du5>
 				<du6 type="double">1</du6>
+				<iesi type="double">1</iesi>
 				<mcdu1 type="double">1</mcdu1>
 				<mcdu2 type="double">1</mcdu2>
 				<dcdul type="double">1</dcdul>
@@ -1614,6 +1615,10 @@
 		<groundradar>
 			<range type="double">1.0</range>
 		</groundradar>
+		
+		<iesi>
+			<att-reset-cmd type="bool">false</att-reset-cmd>
+		</iesi>
 		
 		<marker-beacon n="0">
 			<serviceable type="bool">true</serviceable>
