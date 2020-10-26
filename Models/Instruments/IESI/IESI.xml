@@ -19,15 +19,15 @@
 		</action>
 	</animation>
 	
-	<!--animation>
+	<animation>
 		<type>material</type>
-		<object-name>pfd1.screen</object-name>
+		<object-name>iesi.screen</object-name>
 		<emission>
 			<red>1</red>
 			<green>1</green>
 			<blue>1</blue>
 			<factor-prop>controls/lighting/DU/iesi</factor-prop>
 		</emission>
-	</animation-->
+	</animation>
 
 </PropertyList>

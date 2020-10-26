@@ -846,6 +846,7 @@
 				<du4 type="double">1</du4>
 				<du5 type="double">1</du5>
 				<du6 type="double">1</du6>
+				<iesi type="double">1</iesi>
 				<mcdu1 type="double">1</mcdu1>
 				<mcdu2 type="double">1</mcdu2>
 			</DU>
@@ -1085,6 +1086,10 @@
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
 		</atc>
+		<atsu>
+			<atis-server type="string">faa</atis-server>
+			<wxr-server type="string">faa</wxr-server>
+		</atsu>
 		<apu>
 			<oil>
 				<level-l type="double">5.4</level-l>
@@ -1573,6 +1578,10 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
+		<iesi>
+			<att-reset-cmd type="bool">false</att-reset-cmd>
+		</iesi>
+		
 		<marker-beacon n="0">
 			<serviceable type="bool">true</serviceable>
 		</marker-beacon>
@@ -1722,6 +1731,10 @@
 			<max-range-m type="int">1219</max-range-m>
 			<serviceable type="bool">true</serviceable>
 		</radar-altimeter>
+		
+		<wxr>
+			<enabled type="bool">false</enabled>
+		</wxr>
 	</instrumentation>
 	
 	<modes>
@@ -4317,21 +4330,22 @@
 		</fmgc>
 		<mcdu>
 			<file>Aircraft/A320-family/Nasal/MCDU/DUPLICATE.nas</file> <!-- dynamic page - init before others as used in various pages -->
-			<file>Aircraft/A320-family/Nasal/MCDU/DIRTO.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> <!-- dynamic page - init before MCDU -->	
-			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> <!-- dynamic page - init before MCDU -->	
-			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDCLB.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/DIRTO.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> 	
+			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> 	
+			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDCLB.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>  <!-- Last Dynamic Page -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
@@ -4400,6 +4414,7 @@
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
 		<atsu>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/Dictionary.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
 		</atsu>
 		<dmc>
