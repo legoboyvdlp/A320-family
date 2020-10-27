@@ -1182,6 +1182,7 @@
 		</comm>
 		<electrical n="0">
 			<bus>
+				<ac-ess type="double">0</ac-ess>
 				<dc-1 type="double">0</dc-1>
 				<dc-2 type="double">0</dc-2>
 			</bus>
@@ -4335,6 +4336,9 @@
 	</aircraft>
 	
 	<nasal>
+        <notifications>
+            <file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
+        </notifications>
 		<pts>
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
@@ -4442,7 +4446,9 @@
 			<file>Aircraft/A320-family/Models/Instruments/ND/canvas/ND.nas</file>
 		</canvas_nd>
 		<canvas_ecam>
-			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
+			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
+			<!--<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>-->
+			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.new.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
 		<canvas_iesi>

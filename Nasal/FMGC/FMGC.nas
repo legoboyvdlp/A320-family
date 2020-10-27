@@ -247,6 +247,7 @@ var postInit = func() {
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
 	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
+	flexTemp: props.globals.initNode("/FMGC/internal/flex", 0, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),

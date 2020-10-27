@@ -118,31 +118,8 @@ var thrLimit = 0;
 
 var canvas_upperECAM_base = {
 	init: func(canvas_group, file) {
-		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
-		};
 
-		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
-
-		var svg_keys = me.getKeys();
-		foreach(var key; svg_keys) {
-			me[key] = canvas_group.getElementById(key);
-			
-			var clip_el = canvas_group.getElementById(key ~ "_clip");
-			if (clip_el != nil) {
-				clip_el.setVisible(0);
-				var tran_rect = clip_el.getTransformedBounds();
-
-				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
-				tran_rect[1], # 0 ys
-				tran_rect[2], # 1 xe
-				tran_rect[3], # 2 ye
-				tran_rect[0]); #3 xs
-				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
-				me[key].set("clip", clip_rect);
-				me[key].set("clip-frame", canvas.Element.PARENT);
-			}
-		}
+		
 		
 		# set font
 		me["ECAML1"].setFont("LiberationMonoCustom.ttf");
@@ -199,29 +176,30 @@ var canvas_upperECAM_base = {
 	update: func() {
 		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		cur_eng_option = eng_option.getValue();
-		
-		if (systems.ELEC.Bus.acEss.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
-			if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime) {
-				upperECAM_cfm_eis2.page.hide();
-				upperECAM_iae_eis2.page.hide();
-				upperECAM_test.page.show();
-				upperECAM_test.update();
+		if (1 == 0) {
+			if (systems.ELEC.Bus.acEss.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
+				if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime) {
+					upperECAM_cfm_eis2.page.hide();
+					upperECAM_iae_eis2.page.hide();
+					upperECAM_test.page.show();
+					upperECAM_test.update();
+				} else {
+					upperECAM_test.page.hide();
+					if (cur_eng_option == "CFM") {
+						upperECAM_cfm_eis2.page.show();
+						upperECAM_iae_eis2.page.hide();
+						upperECAM_cfm_eis2.update();
+					} else if (cur_eng_option == "IAE") {
+						upperECAM_cfm_eis2.page.hide();
+						upperECAM_iae_eis2.page.show();
+						upperECAM_iae_eis2.update();
+					}
+				}
 			} else {
 				upperECAM_test.page.hide();
-				if (cur_eng_option == "CFM") {
-					upperECAM_cfm_eis2.page.show();
-					upperECAM_iae_eis2.page.hide();
-					upperECAM_cfm_eis2.update();
-				} else if (cur_eng_option == "IAE") {
-					upperECAM_cfm_eis2.page.hide();
-					upperECAM_iae_eis2.page.show();
-					upperECAM_iae_eis2.update();
-				}
+				upperECAM_cfm_eis2.page.hide();
+				upperECAM_iae_eis2.page.hide();
 			}
-		} else {
-			upperECAM_test.page.hide();
-			upperECAM_cfm_eis2.page.hide();
-			upperECAM_iae_eis2.page.hide();
 		}
 	},
 	getColorString: func(color) {
@@ -241,7 +219,7 @@ var canvas_upperECAM_base = {
 			return [1,1,1];
 		}
 	},
-	updateBase: func() {
+	updateBase: func(notification) {
 		# Reversers
 		rev_1_cur = pts.Engines.Engine.reverser[0].getValue();
 		rev_2_cur = pts.Engines.Engine.reverser[1].getValue();
@@ -280,27 +258,6 @@ var canvas_upperECAM_base = {
 			me["REV2"].setColor(0.7333,0.3803,0);
 		}
 		
-		# Flap Indicator
-		flapsPos = pts.Controls.Flight.flapsPos.getValue();
-		if (flapsPos == 1) {
-			me["FlapTxt"].setText("1");
-		} else if (flapsPos == 2) {
-			me["FlapTxt"].setText("1+F");
-		} else if (flapsPos == 3) {
-			me["FlapTxt"].setText("2");
-		} else if (flapsPos == 4) {
-			me["FlapTxt"].setText("3");
-		} else if (flapsPos == 5) {
-			me["FlapTxt"].setText("FULL");
-		} else {
-			me["FlapTxt"].setText(" "); # More efficient then hide/show
-		}
-		
-		if (flapsPos > 0) {
-			me["FlapDots"].show();
-		} else {
-			me["FlapDots"].hide();
-		}
 		
 		if (pts.Fdm.JSBsim.Fcs.slatLocked.getValue()) {
 			if (slatLockGoing == 0) {
@@ -325,16 +282,6 @@ var canvas_upperECAM_base = {
 		me["FlapLine"].setTranslation(flapXTranslate.getValue(),flapYTranslate.getValue());
 		me["SlatLine"].setTranslation(slatXTranslate.getValue(),slatYTranslate.getValue());
 		
-		# FOB
-		if (acconfig_weight_kgs.getValue())
-		{
-			me["FOB-LBS"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() * LBS2KGS, 10)));
-			me["FOB-weight-unit"].setText("KG");
-		} else {
-			me["FOB-LBS"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue(), 10)));
-			me["FOB-weight-unit"].setText("LBS");
-		}
-		
 		# ECAM Messages
 		
 		me["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
@@ -358,24 +305,70 @@ var canvas_upperECAM_base = {
 		me["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
 			
 		me["ECAM_Right"].show();
+		
+		foreach(var update_item; me.update_items)
+		{
+			update_item.update(notification);
+		}
 	},
+	updateAFloor: func() {
+		if (fadec.Thrust.alphaFloor.getBoolValue()) {
+			me["aFloor"].show();
+		} else {
+			me["aFloor"].hide();
+		}
+	},
+	updateFlaps: func() {
+		# Flap Indicator
+		flapsPos = pts.Controls.Flight.flapsPos.getValue();
+		if (flapsPos == 1) {
+			me["FlapTxt"].setText("1");
+		} else if (flapsPos == 2) {
+			me["FlapTxt"].setText("1+F");
+		} else if (flapsPos == 3) {
+			me["FlapTxt"].setText("2");
+		} else if (flapsPos == 4) {
+			me["FlapTxt"].setText("3");
+		} else if (flapsPos == 5) {
+			me["FlapTxt"].setText("FULL");
+		} else {
+			me["FlapTxt"].setText(" "); # More efficient then hide/show
+		}
+		
+		if (flapsPos > 0) {
+			me["FlapDots"].show();
+		} else {
+			me["FlapDots"].hide();
+		}
+	},
+	updateFlx: func() {
+		if (fadec.Thrust.thrustLimit.getValue() == "FLX") {
+			me["FlxLimDegreesC"].show();
+			me["FlxLimTemp"].show();
+			me["FlxLimTemp"].setText(sprintf("%2.0d",fmgc.FMGCNodes.flexTemp.getValue()));
+		} else {
+			me["FlxLimDegreesC"].hide();
+			me["FlxLimTemp"].hide();
+		}
+	},
+	update_items: [
+		 props.UpdateManager.FromHashValue("fuelTotalLbs", 1, func(val) {
+			# FOB
+			
+		 }),
+	],
 };
 
 var canvas_upperECAM_cfm_eis2 = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_upperECAM_cfm_eis2, canvas_upperECAM_base]};
 		m.init(canvas_group, file);
-
+		m.updateAFloor();
+		m.updateFlx();
 		return m;
 	},
-	getKeys: func() {
-		return ["N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-box","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N11-XX2","N11-XX-box","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick",
-		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
-		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
-		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine"];
-	},
-	update: func() {
+	
+	update: func(notification) {
 		# N1
 		N1_1_cur = N1_1.getValue();
 		N1_2_cur = N1_2.getValue();
@@ -615,7 +608,7 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["N1Lim-percent"].hide();
 		}
 		
-		me.updateBase();
+		me.updateBase(notification);
 	},
 };
 
@@ -623,7 +616,8 @@ var canvas_upperECAM_iae_eis2 = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_upperECAM_iae_eis2, canvas_upperECAM_base]};
 		m.init(canvas_group, file);
-
+		m.updateAFloor();
+		m.updateFlx();
 		return m;
 	},
 	getKeys: func() {
@@ -632,9 +626,9 @@ var canvas_upperECAM_iae_eis2 = {
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
 		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine"];
+		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
 	},
-	update: func() {
+	update: func(notification) {
 		N1_1_cur = N1_1.getValue();
 		N1_2_cur = N1_2.getValue();
 		N1_1_act = pts.Engines.Engine.n1Actual[0].getValue();
@@ -942,7 +936,7 @@ var canvas_upperECAM_iae_eis2 = {
 			me["EPRLim-decimal"].hide();
 		}
 		
-		me.updateBase();
+		me.updateBase(notification);
 	},
 };
 
@@ -1009,22 +1003,58 @@ var createListenerForLine = func(prop, node, key) {
 	}, 0, 0);
 };
 
+var _init = 0;
+
+
+var UpperECAMRecipientCFM =
+{
+	new: func(_ident, group)
+	{
+		var new_class = emesary.Recipient.new(_ident);
+		new_class.MainScreen = nil;
+		new_class.Receive = func(notification)
+		{
+			if (notification.NotificationType == "FrameNotification")
+			{
+				if (new_class.MainScreen == nil)
+					new_class.MainScreen = canvas_upperECAM_cfm_eis2.new(group, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg");
+					upperECAM_cfm_eis2 = new_class.MainScreen;
+				if (!math.mod(notifications.frameNotification.FrameCount,2)){
+					new_class.MainScreen.update(notification);
+				}
+				return emesary.Transmitter.ReceiptStatus_OK;
+			}
+			return emesary.Transmitter.ReceiptStatus_NotProcessed;
+		};
+		return new_class;
+	},
+};
+
+var UpperECAMRecipientIAE =
+{
+	new: func(_ident, group)
+	{
+		var new_class = emesary.Recipient.new(_ident);
+		new_class.MainScreen = nil;
+		new_class.Receive = func(notification)
+		{
+			if (notification.NotificationType == "FrameNotification")
+			{
+				if (new_class.MainScreen == nil)
+					new_class.MainScreen = canvas_upperECAM_iae_eis2.new(group, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/iae-eis2.svg");
+					upperECAM_iae_eis2 = new_class.MainScreen;
+				if (!math.mod(notifications.frameNotification.FrameCount,2)){
+					new_class.MainScreen.update(notification);
+				}
+				return emesary.Transmitter.ReceiptStatus_OK;
+			}
+			return emesary.Transmitter.ReceiptStatus_NotProcessed;
+		};
+		return new_class;
+	},
+};
 
 setlistener("sim/signals/fdm-initialized", func {
-	upperECAM_display = canvas.new({
-		"name": "upperECAM",
-		"size": [1024, 1024],
-		"view": [1024, 1024],
-		"mipmapping": 1
-	});
-	upperECAM_display.addPlacement({"node": "uecam.screen"});
-	var group_cfm_eis2 = upperECAM_display.createGroup();
-	var group_iae_eis2 = upperECAM_display.createGroup();
-	var group_test = upperECAM_display.createGroup();
-
-	upperECAM_cfm_eis2 = canvas_upperECAM_cfm_eis2.new(group_cfm_eis2, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg");
-	upperECAM_iae_eis2 = canvas_upperECAM_iae_eis2.new(group_iae_eis2, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/iae-eis2.svg");
-	upperECAM_test = canvas_upperECAM_test.new(group_test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg");
 	
 	createListenerForLine("/ECAM/msg/linec1", ECAM_line1c, "ECAML1");
 	createListenerForLine("/ECAM/msg/linec2", ECAM_line2c, "ECAML2");
@@ -1043,6 +1073,10 @@ setlistener("sim/signals/fdm-initialized", func {
 	createListenerForLine("/ECAM/rightmsg/linec6", ECAM_line6rc, "ECAMR6");
 	createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
 	createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
+	
+	if (!_init) {
+		
+	}
 	
 	upperECAM_update.start();
 	if (rate.getValue() > 1) {
@@ -1066,7 +1100,6 @@ var showUpperECAM = func {
 setlistener("/systems/electrical/bus/ac-ess", func() {
 	canvas_upperECAM_base.updateDu3();
 }, 0, 0);
-
 
 var slatLockGoing = 0;
 var slatLockTimer = maketimer(0.50, func {
