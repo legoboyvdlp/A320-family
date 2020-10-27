@@ -184,10 +184,10 @@ var canvas_IESI = {
 		# Attitude
 		me._roll = pts.Orientation.roll.getValue();
 		me.AI_horizon_trans.setTranslation(0, pitch.getValue() * 16.74);
-		me.AI_horizon_rot.setRotation(me._roll * D2R, me["AI_center"].getCenter());
+		me.AI_horizon_rot.setRotation(-me._roll * D2R, me["AI_center"].getCenter());
 		
 		me["AI_slipskid"].setTranslation(skid.getValue(), 0);
-		me["AI_bank"].setRotation(me._roll * D2R);
+		me["AI_bank"].setRotation(-me._roll * D2R);
 		
 		# Altitude
 		me.altitude = altitude.getValue();
