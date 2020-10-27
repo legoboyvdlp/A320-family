@@ -1374,10 +1374,10 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(tcasFault);
 	}
 	
-	if (warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
+	if (gpwsTerrFault.clearFlag == 0 and warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
 		gpwsTerrFault.active = 1;
 		
-		if (!getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit")) {
+		if (gpwsTerrFaultOff.clearFlag == 0 and !getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit")) {
 			gpwsTerrFaultOff.active = 1;
 		} else {
 			ECAM_controller.warningReset(gpwsTerrFaultOff);
