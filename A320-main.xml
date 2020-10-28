@@ -5,7 +5,7 @@
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
-	
+
 		<animation>
 			<fire-services type="bool">0</fire-services>
 		</animation>
@@ -560,6 +560,11 @@
 		</current-view>
 		
 		 <minimum-fg-version>2019.2.0</minimum-fg-version>
+
+		<navdb>
+			<min-runway-length-ft>3000</min-runway-length-ft>
+		</navdb>
+
 	</sim>
 	
 	<aircraft>
