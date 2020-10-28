@@ -18,6 +18,22 @@ var ECAM_line5r = props.globals.getNode("/ECAM/rightmsg/line5", 1);
 var ECAM_line6r = props.globals.getNode("/ECAM/rightmsg/line6", 1);
 var ECAM_line7r = props.globals.getNode("/ECAM/rightmsg/line7", 1);
 var ECAM_line8r = props.globals.getNode("/ECAM/rightmsg/line8", 1);
+var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
+var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
+var ECAM_line3c = props.globals.getNode("/ECAM/msg/linec3", 1);
+var ECAM_line4c = props.globals.getNode("/ECAM/msg/linec4", 1);
+var ECAM_line5c = props.globals.getNode("/ECAM/msg/linec5", 1);
+var ECAM_line6c = props.globals.getNode("/ECAM/msg/linec6", 1);
+var ECAM_line7c = props.globals.getNode("/ECAM/msg/linec7", 1);
+var ECAM_line8c = props.globals.getNode("/ECAM/msg/linec8", 1);
+var ECAM_line1rc = props.globals.getNode("/ECAM/rightmsg/linec1", 1);
+var ECAM_line2rc = props.globals.getNode("/ECAM/rightmsg/linec2", 1);
+var ECAM_line3rc = props.globals.getNode("/ECAM/rightmsg/linec3", 1);
+var ECAM_line4rc = props.globals.getNode("/ECAM/rightmsg/linec4", 1);
+var ECAM_line5rc = props.globals.getNode("/ECAM/rightmsg/linec5", 1);
+var ECAM_line6rc = props.globals.getNode("/ECAM/rightmsg/linec6", 1);
+var ECAM_line7rc = props.globals.getNode("/ECAM/rightmsg/linec7", 1);
+var ECAM_line8rc = props.globals.getNode("/ECAM/rightmsg/linec8", 1);
 
 var canvas_upperECAM = {
 	new: func(svg) {
@@ -276,6 +292,57 @@ var canvas_upperECAM = {
 			}),
 		];
 		
+		obj.ecam_update = [
+			props.UpdateManager.FromHashValue("ecamMsg1", 1, func(val) {
+				obj["ECAML1"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg2", 1, func(val) {
+				obj["ECAML2"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg3", 1, func(val) {
+				obj["ECAML3"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg4", 1, func(val) {
+				obj["ECAML4"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg5", 1, func(val) {
+				obj["ECAML5"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg6", 1, func(val) {
+				obj["ECAML6"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg7", 1, func(val) {
+				obj["ECAML7"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg8", 1, func(val) {
+				obj["ECAML8"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg1R", 1, func(val) {
+				obj["ECAMR1"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg2R", 1, func(val) {
+				obj["ECAMR2"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg3R", 1, func(val) {
+				obj["ECAMR3"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg4R", 1, func(val) {
+				obj["ECAMR4"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg5R", 1, func(val) {
+				obj["ECAMR5"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg6R", 1, func(val) {
+				obj["ECAMR6"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg7R", 1, func(val) {
+				obj["ECAMR7"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg8R", 1, func(val) {
+				obj["ECAMR8"].setText(sprintf("%s", val));
+			}),
+		];
+		
 		obj.createListenerForLine("/ECAM/msg/linec1", ECAM_line1c, "ECAML1");
 		obj.createListenerForLine("/ECAM/msg/linec2", ECAM_line2c, "ECAML2");
 		obj.createListenerForLine("/ECAM/msg/linec3", ECAM_line3c, "ECAML3");
@@ -325,7 +392,7 @@ var canvas_upperECAM = {
 		setlistener(prop, func() {
 			me[key].setColor(me.getColorString(node.getValue()));
 		}, 0, 0);
-	};
+	},
 	update: func(notification) {
 		foreach(var update_item; me.update_items)
         {
@@ -490,24 +557,6 @@ var canvas_upperECAM = {
 			me["SlatAlphaLock"].hide();	
 		}
 		
-		obj["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
-		obj["ECAML2"].setText(sprintf("%s", ECAM_line2.getValue()));
-		obj["ECAML3"].setText(sprintf("%s", ECAM_line3.getValue()));
-		obj["ECAML4"].setText(sprintf("%s", ECAM_line4.getValue()));
-		obj["ECAML5"].setText(sprintf("%s", ECAM_line5.getValue()));
-		obj["ECAML6"].setText(sprintf("%s", ECAM_line6.getValue()));
-		obj["ECAML7"].setText(sprintf("%s", ECAM_line7.getValue()));
-		obj["ECAML8"].setText(sprintf("%s", ECAM_line8.getValue()));
-		
-		obj["ECAMR1"].setText(sprintf("%s", ECAM_line1r.getValue()));
-		obj["ECAMR2"].setText(sprintf("%s", ECAM_line2r.getValue()));
-		obj["ECAMR3"].setText(sprintf("%s", ECAM_line3r.getValue()));
-		obj["ECAMR4"].setText(sprintf("%s", ECAM_line4r.getValue()));
-		obj["ECAMR5"].setText(sprintf("%s", ECAM_line5r.getValue()));
-		obj["ECAMR6"].setText(sprintf("%s", ECAM_line6r.getValue()));
-		obj["ECAMR7"].setText(sprintf("%s", ECAM_line7r.getValue()));
-		obj["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
-		
 		if (fadec.FADEC.Eng1.n1 or fadec.FADEC.Eng2.n1) {
 			foreach(var update_item; me.update_items_fadec_powered_n1)
 			{
@@ -534,6 +583,11 @@ var canvas_upperECAM = {
 			{
 				update_item.update(notification);
 			}
+		}
+		
+		foreach (var update_item; me.ecam_update)
+		{
+			update_item.update(notification);
 		}
 	},
 };
@@ -615,6 +669,24 @@ input = {
 	fadecPower1: "/systems/fadec/power1",
 	fadecPower2: "/systems/fadec/power2",
 	fadecPowerStart: "/systems/fadec/powerup",
+	
+	# ecam
+	ecamMsg1: "/ECAM/msg/line1",
+	ecamMsg2: "/ECAM/msg/line2",
+	ecamMsg3: "/ECAM/msg/line3",
+	ecamMsg4: "/ECAM/msg/line4",
+	ecamMsg5: "/ECAM/msg/line5",
+	ecamMsg6: "/ECAM/msg/line6",
+	ecamMsg7: "/ECAM/msg/line7",
+	ecamMsg8: "/ECAM/msg/line8",
+	ecamMsg1R: "/ECAM/rightmsg/line1",
+	ecamMsg2R: "/ECAM/rightmsg/line2",
+	ecamMsg3R: "/ECAM/rightmsg/line3",
+	ecamMsg4R: "/ECAM/rightmsg/line4",
+	ecamMsg5R: "/ECAM/rightmsg/line5",
+	ecamMsg6R: "/ECAM/rightmsg/line6",
+	ecamMsg7R: "/ECAM/rightmsg/line7",
+	ecamMsg8R: "/ECAM/rightmsg/line8",
 };
 
 foreach (var name; keys(input)) {
