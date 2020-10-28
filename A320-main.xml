@@ -1488,6 +1488,7 @@
 		</pneumatics>
 		
 		<pressurization>
+			<cabinalt-norm type="double">0</cabinalt-norm>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
