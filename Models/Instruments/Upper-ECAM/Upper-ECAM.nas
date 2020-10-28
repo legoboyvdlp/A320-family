@@ -18,12 +18,7 @@ var EPR_thr_2 = props.globals.initNode("/ECAM/Upper/EPRthr[1]", 0);
 var EPR_lim = props.globals.initNode("/ECAM/Upper/EPRylim", 0, "DOUBLE");
 var EGT_1 = props.globals.initNode("/ECAM/Upper/EGT[0]", 0, "DOUBLE");
 var EGT_2 = props.globals.initNode("/ECAM/Upper/EGT[1]", 0, "DOUBLE");
-var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
-var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
-var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
-var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
 # Fetch nodes:
-var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var eng_option = props.globals.getNode("/options/eng", 1);
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3", 1);
 var flaps3_ovr = props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 1);
@@ -112,26 +107,8 @@ var canvas_upperECAM_base = {
 		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			if (du3_offtime.getValue() + 3 < elapsedtime) {
-				if (pts.Gear.wow[0].getValue()) {
-					if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
-						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(elapsedtime);
-					} else if (acconfig.getValue() and du3_test.getValue() != 1) {
-						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(elapsedtime - 30);
-					}
-				} else {
-					du3_test.setValue(1);
-					du3_test_amount.setValue(0);
-					du3_test_time.setValue(-100);
-				}
-			}
+			
 		} else {
-			du3_test.setValue(0);
-			du3_offtime.setValue(elapsedtime);
 		}
 	},
 	update: func() {

@@ -17,16 +17,6 @@
  #
  #---------------------------------------------------------------------------*/
 
-
-
-# to add properties to the FrameNotification simply send a FrameNotificationAddProperty
-# to the global transmitter. This will be received by the frameNotifcation object and
-# included in the update.
-#emesary.GlobalTransmitter.NotifyAll(new FrameNotificationAddProperty("MODULE", "wow","gear/gear[0]/wow"));
-#emesary.GlobalTransmitter.NotifyAll(new FrameNotificationAddProperty("MODULE", "engine_n2", "engines/engine[0]/n2"));
-#    
-
-
 #
 # real time exec loop.
 var frame_inc = 0;
@@ -42,14 +32,7 @@ var execLoop = func
     #    
 
     notifications.frameNotification.FrameCount = notifications.frameNotification.FrameCount + 1;
-    #
-    # framecount
-    # 0: HUD targets, Radar, RWR
-    # 1: HUD targets, RDR, VSD
-    # 2: HUD targets, HUD trig, HUD text
-    # 3: HUD targets, VSD, RDR
-    # 
-    
+	
 	if (notifications.frameNotification.frame_rate < 5) {
         frame_inc = 0.25;#4 Hz
     } elsif (notifications.frameNotification.frame_rate < 10) {
@@ -81,3 +64,4 @@ elapsed_seconds           : "/sim/time/elapsed-sec",
 foreach (var name; keys(input)) {
     emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("EXEC", name, input[name]));
 }
+emesary.GlobalTransmitter.OverrunDetection(9);

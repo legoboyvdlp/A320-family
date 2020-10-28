@@ -1,6 +1,12 @@
 var flapsPos = nil;
+var elapsedtime = nil;
 var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
+var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
+var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
+var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
+var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
+var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
 
 var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
 var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
@@ -38,8 +44,6 @@ var canvas_upperECAM = {
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
-		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
-		obj.test.setVisible(0);
 		
 		foreach(var key; obj.getKeys()) {
 			obj[key] = obj.group.getElementById(key);
@@ -58,16 +62,43 @@ var canvas_upperECAM = {
 				obj[key].set("clip-frame", canvas.Element.PARENT);
 			}
 		};
+		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
+		foreach(var key; obj.getKeysTest()) {
+			obj[key] = obj.test.getElementById(key);
+			
+			var clip_el = obj.test.getElementById(key ~ "_clip");
+			if (clip_el != nil) {
+				clip_el.setVisible(0);
+				var tran_rect = clip_el.getTransformedBounds();
+
+				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+				tran_rect[1],
+				tran_rect[2],
+				tran_rect[3],
+				tran_rect[0]);
+				obj[key].set("clip", clip_rect);
+				obj[key].set("clip-frame", canvas.Element.PARENT);
+			}
+		};
 		
 		obj.units = acconfig_weight_kgs.getValue();
 		
-		obj.powerItem = props.UpdateManager.FromHashList(["AcEssBus", "DisplayBrightness"], 0.01, func(val) {
-			if (val.DisplayBrightness > 0.01 and val.AcEssBus >= 110) {
-				obj.group.setVisible(1);
-			} else {
-				obj.group.setVisible(0);
-			}
-		});
+		obj.power = [
+			props.UpdateManager.FromHashList(["AcEssBus", "DisplayBrightness"], nil, func(val) {
+				if (val.DisplayBrightness > 0.01 and val.AcEssBus >= 110) {
+					if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
+						obj.group.setVisible(0);
+						obj.test.setVisible(1);
+					} else {
+						obj.group.setVisible(1);
+						obj.test.setVisible(0);
+					}
+				} else {
+					obj.group.setVisible(0);
+					obj.test.setVisible(0);
+				}
+			}),
+		];
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
@@ -385,7 +416,10 @@ var canvas_upperECAM = {
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp","Test_white","Test_text"];
+		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+	},
+	getKeysTest: func() {
+		return ["Test_white","Test_text"];
 	},
 	getColorString: func(color) {
 		if (color == "w") {
@@ -410,9 +444,15 @@ var canvas_upperECAM = {
 		}, 0, 0);
 	},
 	update: func(notification) {
-		me.powerItem.update(notification);
+		foreach (var powerItem; me.power) {
+			powerItem.update(notification);
+		}
 		
-		if (me.group.getVisible == 0) {
+		if (me.test.getVisible() == 1) {
+			me.updateTest();
+		}
+		
+		if (me.group.getVisible() == 0) {
 			return;
 		}
 		
@@ -654,13 +694,36 @@ var canvas_upperECAM = {
 		}
 	},
 	updateTest: func() {
-		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
-		if (du3_test_time.getValue() + 1 >= elapsedtime) {
-			obj["Test_white"].show();
-			obj["Test_text"].hide();
+		if (du3_test_time.getValue() + 1 >= pts.Sim.Time.elapsedSec.getValue()) {
+			me["Test_white"].show();
+			me["Test_text"].hide();
 		} else {
-			obj["Test_white"].hide();
-			obj["Test_text"].show();
+			me["Test_white"].hide();
+			me["Test_text"].show();
+		}
+	},
+	powerTransient: func() {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
+			if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
+				if (pts.Gear.wow[0].getValue()) {
+					if (!acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+						du3_test.setValue(1);
+						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
+					} else if (acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+						du3_test.setValue(1);
+						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+					}
+				} else {
+					du3_test.setValue(1);
+					du3_test_amount.setValue(0);
+					du3_test_time.setValue(-100);
+				}
+			}
+		} else {
+			du3_test.setValue(0);
+			du3_offtime.setValue(elapsedtime);
 		}
 	},
 };
@@ -677,9 +740,9 @@ var UpperECAMRecipient =
 			{
 				if (new_class.MainScreen == nil)
 					new_class.MainScreen = canvas_upperECAM.new("Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg", "A320 E/WD CFM");
-					if (!math.mod(notifications.frameNotification.FrameCount,2)){
+					#if (!math.mod(notifications.frameNotification.FrameCount,2)){
 						new_class.MainScreen.update(notification);
-					}
+					#}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
 			return emesary.Transmitter.ReceiptStatus_NotProcessed;
@@ -767,8 +830,6 @@ foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Upper ECAM", name, input[name]));
 }
 
-emesary.GlobalTransmitter.OverrunDetection(9);
-
 
 var showUpperECAM = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
@@ -777,6 +838,10 @@ var showUpperECAM = func {
 
 setlistener("/sim/signals/fdm-initialized", func() {
 	execLoop();
+}, 0, 0);
+
+setlistener("/systems/electrical/bus/ac-ess", func() {
+	A320EWD.MainScreen.powerTransient();
 }, 0, 0);
 
 var slatLockGoing = 0;
