@@ -1,5 +1,6 @@
 var flapsPos = nil;
 var elapsedtime = nil;
+var LBS2KGS = 0.4535924;
 var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
@@ -7,6 +8,8 @@ var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL")
 var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
+var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3");
+var eng_option = props.globals.getNode("/options/eng", 1);
 
 var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
 var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
@@ -65,40 +68,9 @@ var canvas_upperECAM = {
 		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
 		foreach(var key; obj.getKeysTest()) {
 			obj[key] = obj.test.getElementById(key);
-			
-			var clip_el = obj.test.getElementById(key ~ "_clip");
-			if (clip_el != nil) {
-				clip_el.setVisible(0);
-				var tran_rect = clip_el.getTransformedBounds();
-
-				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
-				tran_rect[1],
-				tran_rect[2],
-				tran_rect[3],
-				tran_rect[0]);
-				obj[key].set("clip", clip_rect);
-				obj[key].set("clip-frame", canvas.Element.PARENT);
-			}
 		};
 		
 		obj.units = acconfig_weight_kgs.getValue();
-		
-		obj.power = [
-			props.UpdateManager.FromHashList(["AcEssBus", "DisplayBrightness"], nil, func(val) {
-				if (val.DisplayBrightness > 0.01 and val.AcEssBus >= 110) {
-					if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
-						obj.group.setVisible(0);
-						obj.test.setVisible(1);
-					} else {
-						obj.group.setVisible(1);
-						obj.test.setVisible(0);
-					}
-				} else {
-					obj.group.setVisible(0);
-					obj.test.setVisible(0);
-				}
-			}),
-		];
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
@@ -444,9 +416,7 @@ var canvas_upperECAM = {
 		}, 0, 0);
 	},
 	update: func(notification) {
-		foreach (var powerItem; me.power) {
-			powerItem.update(notification);
-		}
+		me.updatePower();
 		
 		if (me.test.getVisible() == 1) {
 			me.updateTest();
@@ -723,7 +693,21 @@ var canvas_upperECAM = {
 			}
 		} else {
 			du3_test.setValue(0);
-			du3_offtime.setValue(elapsedtime);
+			du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		}
+	},
+	updatePower: func() {
+		if (du3_lgt.getValue() > 0.01 and systems.ELEC.Bus.acEss.getValue() >= 110) {
+			if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
+				me.group.setVisible(0);
+				me.test.setVisible(1);
+			} else {
+				me.group.setVisible(1);
+				me.test.setVisible(0);
+			}
+		} else {
+			me.group.setVisible(0);
+			me.test.setVisible(0);
 		}
 	},
 };
@@ -756,8 +740,6 @@ emesary.GlobalTransmitter.Register(A320EWD);
 
 input = {
 	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
-	AcEssBus: "/systems/electrical/bus/ac-ess",
-	DisplayBrightness: "/controls/lighting/DU/du3",
 	acconfigUnits: "/systems/acconfig/options/weight-kgs",
 	
 	# N1 parameters
@@ -830,15 +812,10 @@ foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Upper ECAM", name, input[name]));
 }
 
-
 var showUpperECAM = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(A320EWD.MainScreen.canvas);
 }
-
-setlistener("/sim/signals/fdm-initialized", func() {
-	execLoop();
-}, 0, 0);
 
 setlistener("/systems/electrical/bus/ac-ess", func() {
 	A320EWD.MainScreen.powerTransient();

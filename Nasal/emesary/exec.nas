@@ -65,3 +65,7 @@ foreach (var name; keys(input)) {
     emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("EXEC", name, input[name]));
 }
 emesary.GlobalTransmitter.OverrunDetection(9);
+
+setlistener("/sim/signals/fdm-initialized", func() {
+	execLoop();
+}, 0, 0);
