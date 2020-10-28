@@ -36,9 +36,9 @@
 			<layout>vbox</layout>
 
 			<checkbox>
-				<label>Welcome (F/A)</label>
+				<label>F/A - Boarding</label>
 				<halign>left</halign>
-				<property>/sim/sounde/welcomefa</property>
+				<property>/sim/sounde/fa_boarding</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -46,9 +46,9 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>Welcome (Capt)</label>
+				<label>F/A - Welcome</label>
 				<halign>left</halign>
-				<property>/sim/sounde/welcomecapt</property>
+				<property>/sim/sounde/fa_welcome</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -56,9 +56,9 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>Doors Departure</label>
+				<label>Cpt - Welcome</label>
 				<halign>left</halign>
-				<property>/sim/sounde/doors</property>
+				<property>/sim/sounde/cpt_welcome</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -66,9 +66,9 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>SafetyBrief</label>
+				<label>Cpt - Doors Check</label>
 				<halign>left</halign>
-				<property>/sim/sounde/safety</property>
+				<property>/sim/sounde/cpt_doors</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -76,9 +76,9 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>Prepare for Takeoff</label>
+				<label>F/A - Safety Brief </label>
 				<halign>left</halign>
-				<property>/sim/sounde/prepareto</property>
+				<property>/sim/sounde/fa_safety</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -86,9 +86,49 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>Seatbelt Turned Off</label>
+				<label>Cpt - Prepare for Takeoff</label>
 				<halign>left</halign>
-				<property>/sim/sounde/seatbelt-10k</property>
+				<property>/sim/sounde/cpt_takeoff</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>F/A - Seatbelt Turned Off</label>
+				<halign>left</halign>
+				<property>/sim/sounde/fa_seatbelt10k</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>F/A - Descent</label>
+				<halign>left</halign>
+				<property>/sim/sounde/fa_descent</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Cpt - Prepare for Landing</label>
+				<halign>left</halign>
+				<property>/sim/sounde/cpt_landing</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>F/A - Landed</label>
+				<halign>left</halign>
+				<property>/sim/sounde/fa_landed</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
