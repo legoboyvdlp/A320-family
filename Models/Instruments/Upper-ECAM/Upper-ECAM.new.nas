@@ -1,7 +1,8 @@
 var flapsPos = nil;
 var elapsedtime = nil;
 var LBS2KGS = 0.4535924;
-var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
+var slatLockGoing = 0;
+var slatLockFlash = 0;
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
@@ -171,6 +172,18 @@ var canvas_upperECAM = {
 				} else {
 					obj["FlxLimDegreesC"].hide();
 					obj["FlxLimTemp"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("slatLocked", nil, func(val) {
+				if (val) {
+					if (slatLockGoing == 0) {
+						slatLockGoing = 1;
+						slatLockTimer.start();
+					}
+				} else {
+					slatLockTimer.stop();
+					slatLockGoing = 0;
+					slatLockFlash = 0;
 				}
 			}),
 		];
@@ -459,21 +472,9 @@ var canvas_upperECAM = {
 			me.updateFF2();
 		}
 		
-		if (pts.Fdm.JSBsim.Fcs.slatLocked.getValue()) {
-			if (slatLockGoing == 0) {
-				slatLockGoing = 1;
-			}
-			if (slatLockGoing == 1) {
-				slatLockTimer.start();
-				if (slatLockFlash.getValue()) {
-					me["SlatAlphaLock"].show();	
-				} else {
-					me["SlatAlphaLock"].hide();	
-				}
-			}
+		if (slatLockFlash) {
+			me["SlatAlphaLock"].show();	
 		} else {
-			slatLockTimer.stop();
-			slatLockGoing = 0;
 			me["SlatAlphaLock"].hide();	
 		}
 		
@@ -741,6 +742,7 @@ emesary.GlobalTransmitter.Register(A320EWD);
 input = {
 	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
 	acconfigUnits: "/systems/acconfig/options/weight-kgs",
+	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
 	
 	# N1 parameters
 	N1_1: "/ECAM/Upper/N1[0]",
@@ -821,11 +823,10 @@ setlistener("/systems/electrical/bus/ac-ess", func() {
 	A320EWD.MainScreen.powerTransient();
 }, 0, 0);
 
-var slatLockGoing = 0;
 var slatLockTimer = maketimer(0.50, func {
-	if (!slatLockFlash.getBoolValue()) {
-		slatLockFlash.setBoolValue(1);
+	if (!slatLockFlash) {
+		slatLockFlash = 1;
 	} else {
-		slatLockFlash.setBoolValue(0);
+		slatLockFlash = 0;
 	}
 });
