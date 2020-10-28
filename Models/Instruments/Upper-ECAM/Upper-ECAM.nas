@@ -18,17 +18,10 @@ var EPR_thr_2 = props.globals.initNode("/ECAM/Upper/EPRthr[1]", 0);
 var EPR_lim = props.globals.initNode("/ECAM/Upper/EPRylim", 0, "DOUBLE");
 var EGT_1 = props.globals.initNode("/ECAM/Upper/EGT[0]", 0, "DOUBLE");
 var EGT_2 = props.globals.initNode("/ECAM/Upper/EGT[1]", 0, "DOUBLE");
-var N1_1 = props.globals.initNode("/ECAM/Upper/N1[0]", 0, "DOUBLE");
-var N1_2 = props.globals.initNode("/ECAM/Upper/N1[1]", 0, "DOUBLE");
-var N1_thr_1 = props.globals.initNode("/ECAM/Upper/N1thr[0]", 0, "DOUBLE");
-var N1_thr_2 = props.globals.initNode("/ECAM/Upper/N1thr[1]", 0, "DOUBLE");
-var N1_lim = props.globals.initNode("/ECAM/Upper/N1ylim", 0, "DOUBLE");
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
 var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
-var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
-
 # Fetch nodes:
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
@@ -122,22 +115,22 @@ var canvas_upperECAM_base = {
 		
 		
 		# set font
-		me["ECAML1"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML2"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML3"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML4"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML5"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML6"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML7"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML8"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR1"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR2"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR3"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR4"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR5"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR6"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR7"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR8"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML1"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML2"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML3"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML4"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML5"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML6"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML7"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML8"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR1"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR2"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR3"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR4"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR5"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR6"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR7"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR8"].setFont("LiberationMonoCustom.ttf");
 	
 
 		me.page = canvas_group;
@@ -202,163 +195,28 @@ var canvas_upperECAM_base = {
 			}
 		}
 	},
-	getColorString: func(color) {
-		if (color == "w") {
-			return [0.8078,0.8039,0.8078];
-		} else if (color == "m") {
-			return [0.6901,0.3333,0.7450];
-		} else if (color == "c") {
-			return [0.0901,0.6039,0.7176];
-		} else if (color == "g") {
-			return [0.0509,0.7529,0.2941];
-		} else if (color == "a") {
-			return [0.7333,0.3803,0];
-		} else if (color == "r") {
-			return [1,0,0];
-		} else {
-			return [1,1,1];
-		}
-	},
 	updateBase: func(notification) {
-		# Reversers
-		rev_1_cur = pts.Engines.Engine.reverser[0].getValue();
-		rev_2_cur = pts.Engines.Engine.reverser[1].getValue();
-		cur_eng_option = eng_option.getValue();
-		if (rev_1_cur >= 0.01 and fadec.FADEC.Eng1.n1 == 1 and cur_eng_option == "CFM") {
-			me["REV1"].show();
-			me["REV1-box"].show();
-		} else if (rev_1_cur >= 0.01 and fadec.FADEC.Eng1.epr == 1 and cur_eng_option == "IAE") {
-			me["REV1"].show();
-			me["REV1-box"].show();
-		} else {
-			me["REV1"].hide();
-			me["REV1-box"].hide();
-		}
-		
-		if (rev_1_cur >= 0.95) {
-			me["REV1"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["REV1"].setColor(0.7333,0.3803,0);
-		}
-		
-		if (rev_2_cur >= 0.01 and fadec.FADEC.Eng2.n1 == 1 and cur_eng_option == "CFM") {
-			me["REV2"].show();
-			me["REV2-box"].show();
-		} else if (rev_2_cur >= 0.01 and fadec.FADEC.Eng2.epr == 1 and cur_eng_option == "IAE") {
-			me["REV2"].show();
-			me["REV2-box"].show();
-		} else {
-			me["REV2"].hide();
-			me["REV2-box"].hide();
-		}
-		
-		if (rev_2_cur >= 0.95) {
-			me["REV2"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["REV2"].setColor(0.7333,0.3803,0);
-		}
-		
-		
-		if (pts.Fdm.JSBsim.Fcs.slatLocked.getValue()) {
-			if (slatLockGoing == 0) {
-				slatLockGoing = 1;
-			}
-			if (slatLockGoing == 1) {
-				slatLockTimer.start();
-				if (slatLockFlash.getValue()) {
-					me["SlatAlphaLock"].show();	
-				} else {
-					me["SlatAlphaLock"].hide();	
-				}
-			}
-		} else {
-			slatLockTimer.stop();
-			slatLockGoing = 0;
-			me["SlatAlphaLock"].hide();	
-		}
-		
-		me["FlapIndicator"].setTranslation(flapXOffset.getValue(),flapYOffset.getValue());
-		me["SlatIndicator"].setTranslation(slatXOffset.getValue(),slatYOffset.getValue());
-		me["FlapLine"].setTranslation(flapXTranslate.getValue(),flapYTranslate.getValue());
-		me["SlatLine"].setTranslation(slatXTranslate.getValue(),slatYTranslate.getValue());
 		
 		# ECAM Messages
 		
-		me["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
-		me["ECAML2"].setText(sprintf("%s", ECAM_line2.getValue()));
-		me["ECAML3"].setText(sprintf("%s", ECAM_line3.getValue()));
-		me["ECAML4"].setText(sprintf("%s", ECAM_line4.getValue()));
-		me["ECAML5"].setText(sprintf("%s", ECAM_line5.getValue()));
-		me["ECAML6"].setText(sprintf("%s", ECAM_line6.getValue()));
-		me["ECAML7"].setText(sprintf("%s", ECAM_line7.getValue()));
-		me["ECAML8"].setText(sprintf("%s", ECAM_line8.getValue()));
-			
-		me["ECAM_Left"].show();
+		obj["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
+		obj["ECAML2"].setText(sprintf("%s", ECAM_line2.getValue()));
+		obj["ECAML3"].setText(sprintf("%s", ECAM_line3.getValue()));
+		obj["ECAML4"].setText(sprintf("%s", ECAM_line4.getValue()));
+		obj["ECAML5"].setText(sprintf("%s", ECAM_line5.getValue()));
+		obj["ECAML6"].setText(sprintf("%s", ECAM_line6.getValue()));
+		obj["ECAML7"].setText(sprintf("%s", ECAM_line7.getValue()));
+		obj["ECAML8"].setText(sprintf("%s", ECAM_line8.getValue()));
 		
-		me["ECAMR1"].setText(sprintf("%s", ECAM_line1r.getValue()));
-		me["ECAMR2"].setText(sprintf("%s", ECAM_line2r.getValue()));
-		me["ECAMR3"].setText(sprintf("%s", ECAM_line3r.getValue()));
-		me["ECAMR4"].setText(sprintf("%s", ECAM_line4r.getValue()));
-		me["ECAMR5"].setText(sprintf("%s", ECAM_line5r.getValue()));
-		me["ECAMR6"].setText(sprintf("%s", ECAM_line6r.getValue()));
-		me["ECAMR7"].setText(sprintf("%s", ECAM_line7r.getValue()));
-		me["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
+		obj["ECAMR1"].setText(sprintf("%s", ECAM_line1r.getValue()));
+		obj["ECAMR2"].setText(sprintf("%s", ECAM_line2r.getValue()));
+		obj["ECAMR3"].setText(sprintf("%s", ECAM_line3r.getValue()));
+		obj["ECAMR4"].setText(sprintf("%s", ECAM_line4r.getValue()));
+		obj["ECAMR5"].setText(sprintf("%s", ECAM_line5r.getValue()));
+		obj["ECAMR6"].setText(sprintf("%s", ECAM_line6r.getValue()));
+		obj["ECAMR7"].setText(sprintf("%s", ECAM_line7r.getValue()));
+		obj["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
 			
-		me["ECAM_Right"].show();
-		
-		foreach(var update_item; me.update_items)
-		{
-			update_item.update(notification);
-		}
-	},
-	updateAFloor: func() {
-		if (fadec.Thrust.alphaFloor.getBoolValue()) {
-			me["aFloor"].show();
-		} else {
-			me["aFloor"].hide();
-		}
-	},
-	updateFlaps: func() {
-		# Flap Indicator
-		flapsPos = pts.Controls.Flight.flapsPos.getValue();
-		if (flapsPos == 1) {
-			me["FlapTxt"].setText("1");
-		} else if (flapsPos == 2) {
-			me["FlapTxt"].setText("1+F");
-		} else if (flapsPos == 3) {
-			me["FlapTxt"].setText("2");
-		} else if (flapsPos == 4) {
-			me["FlapTxt"].setText("3");
-		} else if (flapsPos == 5) {
-			me["FlapTxt"].setText("FULL");
-		} else {
-			me["FlapTxt"].setText(" "); # More efficient then hide/show
-		}
-		
-		if (flapsPos > 0) {
-			me["FlapDots"].show();
-		} else {
-			me["FlapDots"].hide();
-		}
-	},
-	updateFlx: func() {
-		if (fadec.Thrust.thrustLimit.getValue() == "FLX") {
-			me["FlxLimDegreesC"].show();
-			me["FlxLimTemp"].show();
-			me["FlxLimTemp"].setText(sprintf("%2.0d",fmgc.FMGCNodes.flexTemp.getValue()));
-		} else {
-			me["FlxLimDegreesC"].hide();
-			me["FlxLimTemp"].hide();
-		}
-	},
-	update_items: [
-		 props.UpdateManager.FromHashValue("fuelTotalLbs", 1, func(val) {
-			# FOB
-			
-		 }),
-	],
-};
-
 var canvas_upperECAM_cfm_eis2 = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_upperECAM_cfm_eis2, canvas_upperECAM_base]};
@@ -369,243 +227,39 @@ var canvas_upperECAM_cfm_eis2 = {
 	},
 	
 	update: func(notification) {
-		# N1
-		N1_1_cur = N1_1.getValue();
-		N1_2_cur = N1_2.getValue();
-		N1_1_act = pts.Engines.Engine.n1Actual[0].getValue();
-		N1_2_act = pts.Engines.Engine.n1Actual[1].getValue();
-		N1_lim_cur = N1_lim.getValue();
-		N1_thr_1_act = N1_thr_1.getValue();
-		N1_thr_2_act = N1_thr_2.getValue();
-		rev_1_act = pts.Engines.Engine.reverser[0].getValue();
-		rev_2_act = pts.Engines.Engine.reverser[1].getValue();
-		EGT_1_cur = EGT_1.getValue();
-		EGT_2_cur = EGT_2.getValue();
-		n2cur_1 = pts.Engines.Engine.n2Actual[0].getValue();
-		n2cur_2 = pts.Engines.Engine.n2Actual[1].getValue();
-		
-		me["N11"].setText(sprintf("%s", math.floor(N1_1_act + 0.05)));
-		me["N11-decimal"].setText(sprintf("%s", int(10 * math.mod(N1_1_act + 0.05, 1))));
-		
-		me["N12"].setText(sprintf("%s", math.floor(N1_2_act + 0.05)));
-		me["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(N1_2_act + 0.05, 1))));
-		
-		me["N11-needle"].setRotation((N1_1_cur + 90) * D2R);
-		me["N11-thr"].setRotation((N1_thr_1_act + 90) * D2R);
-		me["N11-ylim"].setRotation((N1_lim_cur + 90) * D2R);
-		
-		me["N12-needle"].setRotation((N1_2_cur + 90) * D2R);
-		me["N12-thr"].setRotation((N1_thr_2_act + 90) * D2R);
-		me["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
-		
-		if (fadec.FADEC.Eng1.n1 == 1) {
-			me["N11-scale"].setColor(0.8078,0.8039,0.8078);
-			me["N11-scale2"].setColor(1,0,0);
-			me["N11"].show();
-			me["N11-decimal"].show();
-			me["N11-decpnt"].show();
-			me["N11-needle"].show();
-			me["N11-ylim"].show();
-			me["N11-scaletick"].show();
-			me["N11-scalenum"].show();
-			me["N11-box"].show();
-			me["N11-XX"].hide();
-			me["N11-XX2"].hide();
-			me["N11-XX-box"].hide();
-		} else {
-			me["N11-scale"].setColor(0.7333,0.3803,0);
-			me["N11-scale2"].setColor(0.7333,0.3803,0);
-			me["N11"].hide();
-			me["N11-decimal"].hide();
-			me["N11-decpnt"].hide();
-			me["N11-needle"].hide();
-			me["N11-ylim"].hide();
-			me["N11-scaletick"].hide();
-			me["N11-scalenum"].hide();
-			me["N11-box"].hide();
-			me["N11-XX"].show();
-			me["N11-XX2"].show();
-			me["N11-XX-box"].show();
-		}
-		
-		if (rev_1_act < 0.01 and fadec.FADEC.Eng1.n1 == 1) {
-			me["N11-thr"].show();
-		} else {
-			me["N11-thr"].hide();
-		}
-		
-		if (fadec.FADEC.Eng2.n1 == 1) {
-			me["N12-scale"].setColor(0.8078,0.8039,0.8078);
-			me["N12-scale2"].setColor(1,0,0);
-			me["N12"].show();
-			me["N12-decimal"].show();
-			me["N12-decpnt"].show();
-			me["N12-needle"].show();
-			me["N12-ylim"].show();
-			me["N12-scaletick"].show();
-			me["N12-scalenum"].show();
-			me["N12-box"].show();
-			me["N12-XX"].hide();
-			me["N12-XX2"].hide();
-			me["N12-XX-box"].hide();
-		} else {
-			me["N12-scale"].setColor(0.7333,0.3803,0);
-			me["N12-scale2"].setColor(0.7333,0.3803,0);
-			me["N12"].hide();
-			me["N12-decimal"].hide();
-			me["N12-decpnt"].hide();
-			me["N12-needle"].hide();
-			me["N12-ylim"].hide();
-			me["N12-scaletick"].hide();
-			me["N12-scalenum"].hide();
-			me["N12-box"].hide();
-			me["N12-XX"].show();
-			me["N12-XX2"].show();
-			me["N12-XX-box"].show();
-		}
-		
-		if (rev_2_act < 0.01 and fadec.FADEC.Eng2.n1 == 1) {
-			me["N12-thr"].show();
-		} else {
-			me["N12-thr"].hide();
-		}
-		
-		# EGT
-		me["EGT1"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[0].getValue())));
-		me["EGT2"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[1].getValue())));
-		
-		me["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
-		me["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
-		
-		if (fadec.FADEC.Eng1.egt == 1) {
-			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EGT1-scale2"].setColor(1,0,0);
-			me["EGT1"].show();
-			me["EGT1-needle"].show();
-			me["EGT1-scaletick"].show();
-			me["EGT1-box"].show();
-			me["EGT1-XX"].hide();
-		} else {
-			me["EGT1-scale"].setColor(0.7333,0.3803,0);
-			me["EGT1-scale2"].setColor(0.7333,0.3803,0);
-			me["EGT1"].hide();
-			me["EGT1-needle"].hide();
-			me["EGT1-scaletick"].hide();
-			me["EGT1-box"].hide();
-			me["EGT1-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.egt == 1) {
-			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EGT2-scale2"].setColor(1,0,0);
-			me["EGT2"].show();
-			me["EGT2-needle"].show();
-			me["EGT2-scaletick"].show();
-			me["EGT2-box"].show();
-			me["EGT2-XX"].hide();
-		} else {
-			me["EGT2-scale"].setColor(0.7333,0.3803,0);
-			me["EGT2-scale2"].setColor(0.7333,0.3803,0);
-			me["EGT2"].hide();
-			me["EGT2-needle"].hide();
-			me["EGT2-scaletick"].hide();
-			me["EGT2-box"].hide();
-			me["EGT2-XX"].show();
-		}
-		
-		# N2
-		
-		me["N21"].setText(sprintf("%s", math.floor(n2cur_1 + 0.05)));
-		me["N21-decimal"].setText(sprintf("%s", int(10 * math.mod(n2cur_1 + 0.05, 1))));
-		me["N22"].setText(sprintf("%s", math.floor(n2cur_2 + 0.05)));
-		me["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(n2cur_2 + 0.05, 1))));
-		
-		if (fadec.FADEC.Eng1.n2 == 1) {
-			me["N21"].show();
-			me["N21-decimal"].show();
-			me["N21-decpnt"].show();
-			me["N21-XX"].hide();
-		} else {
-			me["N21"].hide();
-			me["N21-decimal"].hide();
-			me["N21-decpnt"].hide();
-			me["N21-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.n2 == 1) {
-			me["N22"].show();
-			me["N22-decimal"].show();
-			me["N22-decpnt"].show();
-			me["N22-XX"].hide();
-		} else {
-			me["N22"].hide();
-			me["N22-decimal"].hide();
-			me["N22-decpnt"].hide();
-			me["N22-XX"].show();
-		}
-		
-		# FF
-		fuel1 = pts.Engines.Engine.fuelFlow[0].getValue();
-		fuel2 = pts.Engines.Engine.fuelFlow[1].getValue();
-		
-		if (acconfig_weight_kgs.getValue()) {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1 * LBS2KGS, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2 * LBS2KGS, 10)));
-			me["FFlow-weight-unit"].setText("KG/H");
-		} else {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2, 10)));
-			me["FFlow-weight-unit"].setText("LBS/H");
-		}
-		
-		if (fadec.FADEC.Eng1.ff == 1) {
-			me["FF1"].show();
-			me["FF1-XX"].hide();
-		} else {
-			me["FF1"].hide();
-			me["FF1-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.ff == 1) {
-			me["FF2"].show();
-			me["FF2-XX"].hide();
-		} else {
-			me["FF2"].hide();
-			me["FF2-XX"].show();
-		}
 		
 		# N1 Limit
 		thrLimit = thr_limit.getValue();
 		n1Limit = n1_limit.getValue();
 		
-		me["N1Lim-mode"].setText(sprintf("%s", thrLimit));
-		me["N1Lim"].setText(sprintf("%s", math.floor(n1Limit + 0.05)));
-		me["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(n1Limit + 0.05, 1))));
+		obj["N1Lim-mode"].setText(sprintf("%s", thrLimit));
+		obj["N1Lim"].setText(sprintf("%s", math.floor(n1Limit + 0.05)));
+		obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(n1Limit + 0.05, 1))));
 		
 		fadecPower1 = fadecpower_1.getValue();
 		fadecPower2 = fadecpower_2.getValue();
 		fadecPowerStart = fadecpowerup.getValue();
 		
 		if (fadecPower1 or fadecPower2 or fadecPowerStart) {
-			me["N1Lim-mode"].show();
-			me["N1Lim-XX"].hide();
-			me["N1Lim-XX2"].hide();
+			obj["N1Lim-mode"].show();
+			obj["N1Lim-XX"].hide();
+			obj["N1Lim-XX2"].hide();
 		} else {
-			me["N1Lim-mode"].hide();
-			me["N1Lim-XX"].show();
-			me["N1Lim-XX2"].show();
+			obj["N1Lim-mode"].hide();
+			obj["N1Lim-XX"].show();
+			obj["N1Lim-XX2"].show();
 		}
 		
 		if ((fadecPower1 or fadecPower2 or fadecPowerStart) and thrLimit != "MREV") {
-			me["N1Lim"].show();
-			me["N1Lim-decpnt"].show();
-			me["N1Lim-decimal"].show();
-			me["N1Lim-percent"].show();
+			obj["N1Lim"].show();
+			obj["N1Lim-decpnt"].show();
+			obj["N1Lim-decimal"].show();
+			obj["N1Lim-percent"].show();
 		} else {
-			me["N1Lim"].hide();
-			me["N1Lim-decpnt"].hide();
-			me["N1Lim-decimal"].hide();
-			me["N1Lim-percent"].hide();
+			obj["N1Lim"].hide();
+			obj["N1Lim-decpnt"].hide();
+			obj["N1Lim-decimal"].hide();
+			obj["N1Lim-percent"].hide();
 		}
 		
 		me.updateBase(notification);
@@ -649,291 +303,291 @@ var canvas_upperECAM_iae_eis2 = {
 		n2cur_2 = pts.Engines.Engine.n2Actual[1].getValue();
 		
 		# EPR
-		me["EPR1"].setText(sprintf("%1.0f", math.floor(EPR_1_act)));
-		me["EPR1-decimal"].setText(sprintf("%03d", (EPR_1_act - int(EPR_1_act)) * 1000));
-		me["EPR2"].setText(sprintf("%1.0f", math.floor(EPR_2_act)));
-		me["EPR2-decimal"].setText(sprintf("%03d", (EPR_2_act - int(EPR_2_act)) * 1000));
+		obj["EPR1"].setText(sprintf("%1.0f", math.floor(EPR_1_act)));
+		obj["EPR1-decimal"].setText(sprintf("%03d", (EPR_1_act - int(EPR_1_act)) * 1000));
+		obj["EPR2"].setText(sprintf("%1.0f", math.floor(EPR_2_act)));
+		obj["EPR2-decimal"].setText(sprintf("%03d", (EPR_2_act - int(EPR_2_act)) * 1000));
 		
-		me["EPR1-needle"].setRotation((EPR_1_cur + 90) * D2R);
-		me["EPR1-thr"].setRotation((EPR_thr_1_act + 90) * D2R);
-		me["EPR1-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
-		me["EPR2-needle"].setRotation((EPR_2_cur + 90) * D2R);
-		me["EPR2-thr"].setRotation((EPR_thr_2_act + 90) * D2R);
-		me["EPR2-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
+		obj["EPR1-needle"].setRotation((EPR_1_cur + 90) * D2R);
+		obj["EPR1-thr"].setRotation((EPR_thr_1_act + 90) * D2R);
+		obj["EPR1-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
+		obj["EPR2-needle"].setRotation((EPR_2_cur + 90) * D2R);
+		obj["EPR2-thr"].setRotation((EPR_thr_2_act + 90) * D2R);
+		obj["EPR2-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
 		
 		if (fadec.FADEC.Eng1.epr == 1) {
-			me["EPR1-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EPR1"].show();
-			me["EPR1-decpnt"].show();
-			me["EPR1-decimal"].show();
-			me["EPR1-needle"].show();
-			me["EPR1-ylim"].show();
-			me["EPR1-scaletick"].show();
-			me["EPR1-scalenum"].show();
-			me["EPR1-box"].show();
-			me["EPR1-XX"].hide();
-			me["EPR1-XX2"].hide();
+			obj["EPR1-scale"].setColor(0.8078,0.8039,0.8078);
+			obj["EPR1"].show();
+			obj["EPR1-decpnt"].show();
+			obj["EPR1-decimal"].show();
+			obj["EPR1-needle"].show();
+			obj["EPR1-ylim"].show();
+			obj["EPR1-scaletick"].show();
+			obj["EPR1-scalenum"].show();
+			obj["EPR1-box"].show();
+			obj["EPR1-XX"].hide();
+			obj["EPR1-XX2"].hide();
 		} else {
-			me["EPR1-scale"].setColor(0.7333,0.3803,0);
-			me["EPR1"].hide();
-			me["EPR1-decpnt"].hide();
-			me["EPR1-decimal"].hide();
-			me["EPR1-needle"].hide();
-			me["EPR1-ylim"].hide();
-			me["EPR1-scaletick"].hide();
-			me["EPR1-scalenum"].hide();
-			me["EPR1-box"].hide();
-			me["EPR1-XX"].show();
-			me["EPR1-XX2"].show();
+			obj["EPR1-scale"].setColor(0.7333,0.3803,0);
+			obj["EPR1"].hide();
+			obj["EPR1-decpnt"].hide();
+			obj["EPR1-decimal"].hide();
+			obj["EPR1-needle"].hide();
+			obj["EPR1-ylim"].hide();
+			obj["EPR1-scaletick"].hide();
+			obj["EPR1-scalenum"].hide();
+			obj["EPR1-box"].hide();
+			obj["EPR1-XX"].show();
+			obj["EPR1-XX2"].show();
 		}
 		
 		if (rev_1_act < 0.01 and fadec.FADEC.Eng1.epr == 1) {
-			me["EPR1-thr"].show();
+			obj["EPR1-thr"].show();
 		} else {
-			me["EPR1-thr"].hide();
+			obj["EPR1-thr"].hide();
 		}
 		
 		if (fadec.FADEC.Eng2.epr == 1) {
-			me["EPR2-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EPR2"].show();
-			me["EPR2-decpnt"].show();
-			me["EPR2-decimal"].show();
-			me["EPR2-needle"].show();
-			me["EPR2-ylim"].show();
-			me["EPR2-scaletick"].show();
-			me["EPR2-scalenum"].show();
-			me["EPR2-box"].show();
-			me["EPR2-XX"].hide();
-			me["EPR2-XX2"].hide();
+			obj["EPR2-scale"].setColor(0.8078,0.8039,0.8078);
+			obj["EPR2"].show();
+			obj["EPR2-decpnt"].show();
+			obj["EPR2-decimal"].show();
+			obj["EPR2-needle"].show();
+			obj["EPR2-ylim"].show();
+			obj["EPR2-scaletick"].show();
+			obj["EPR2-scalenum"].show();
+			obj["EPR2-box"].show();
+			obj["EPR2-XX"].hide();
+			obj["EPR2-XX2"].hide();
 		} else {
-			me["EPR2-scale"].setColor(0.7333,0.3803,0);
-			me["EPR2"].hide();
-			me["EPR2-decpnt"].hide();
-			me["EPR2-decimal"].hide();
-			me["EPR2-needle"].hide();
-			me["EPR2-ylim"].hide();
-			me["EPR2-scaletick"].hide();
-			me["EPR2-scalenum"].hide();
-			me["EPR2-box"].hide();
-			me["EPR2-XX"].show();
-			me["EPR2-XX2"].show();
+			obj["EPR2-scale"].setColor(0.7333,0.3803,0);
+			obj["EPR2"].hide();
+			obj["EPR2-decpnt"].hide();
+			obj["EPR2-decimal"].hide();
+			obj["EPR2-needle"].hide();
+			obj["EPR2-ylim"].hide();
+			obj["EPR2-scaletick"].hide();
+			obj["EPR2-scalenum"].hide();
+			obj["EPR2-box"].hide();
+			obj["EPR2-XX"].show();
+			obj["EPR2-XX2"].show();
 		}
 		
 		if (rev_2_act < 0.01 and fadec.FADEC.Eng2.epr == 1) {
-			me["EPR2-thr"].show();
+			obj["EPR2-thr"].show();
 		} else {
-			me["EPR2-thr"].hide();
+			obj["EPR2-thr"].hide();
 		}
 		
 		# EGT
-		me["EGT1"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[0].getValue())));
-		me["EGT2"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[1].getValue())));
+		obj["EGT1"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[0].getValue())));
+		obj["EGT2"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[1].getValue())));
 		
-		me["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
-		me["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
+		obj["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
+		obj["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
 		
 		if (fadec.FADEC.Eng1.egt == 1) {
-			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EGT1-scale2"].setColor(1,0,0);
-			me["EGT1"].show();
-			me["EGT1-needle"].show();
-			me["EGT1-scaletick"].show();
-			me["EGT1-box"].show();
-			me["EGT1-XX"].hide();
+			obj["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
+			obj["EGT1-scale2"].setColor(1,0,0);
+			obj["EGT1"].show();
+			obj["EGT1-needle"].show();
+			obj["EGT1-scaletick"].show();
+			obj["EGT1-box"].show();
+			obj["EGT1-XX"].hide();
 		} else {
-			me["EGT1-scale"].setColor(0.7333,0.3803,0);
-			me["EGT1-scale2"].setColor(0.7333,0.3803,0);
-			me["EGT1"].hide();
-			me["EGT1-needle"].hide();
-			me["EGT1-scaletick"].hide();
-			me["EGT1-box"].hide();
-			me["EGT1-XX"].show();
+			obj["EGT1-scale"].setColor(0.7333,0.3803,0);
+			obj["EGT1-scale2"].setColor(0.7333,0.3803,0);
+			obj["EGT1"].hide();
+			obj["EGT1-needle"].hide();
+			obj["EGT1-scaletick"].hide();
+			obj["EGT1-box"].hide();
+			obj["EGT1-XX"].show();
 		}
 		
 		if (fadec.FADEC.Eng2.egt == 1) {
-			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EGT2-scale2"].setColor(1,0,0);
-			me["EGT2"].show();
-			me["EGT2-needle"].show();
-			me["EGT2-scaletick"].show();
-			me["EGT2-box"].show();
-			me["EGT2-XX"].hide();
+			obj["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
+			obj["EGT2-scale2"].setColor(1,0,0);
+			obj["EGT2"].show();
+			obj["EGT2-needle"].show();
+			obj["EGT2-scaletick"].show();
+			obj["EGT2-box"].show();
+			obj["EGT2-XX"].hide();
 		} else {
-			me["EGT2-scale"].setColor(0.7333,0.3803,0);
-			me["EGT2-scale2"].setColor(0.7333,0.3803,0);
-			me["EGT2"].hide();
-			me["EGT2-needle"].hide();
-			me["EGT2-scaletick"].hide();
-			me["EGT2-box"].hide();
-			me["EGT2-XX"].show();
+			obj["EGT2-scale"].setColor(0.7333,0.3803,0);
+			obj["EGT2-scale2"].setColor(0.7333,0.3803,0);
+			obj["EGT2"].hide();
+			obj["EGT2-needle"].hide();
+			obj["EGT2-scaletick"].hide();
+			obj["EGT2-box"].hide();
+			obj["EGT2-XX"].show();
 		}
 		
 		# N1
-		me["N11"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n1Actual[0].getValue() + 0.05)));
-		me["N11-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n1Actual[0].getValue() + 0.05, 1))));
+		obj["N11"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n1Actual[0].getValue() + 0.05)));
+		obj["N11-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n1Actual[0].getValue() + 0.05, 1))));
 		
-		me["N12"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n1Actual[1].getValue() + 0.05)));
-		me["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n1Actual[1].getValue() + 0.05, 1))));
+		obj["N12"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n1Actual[1].getValue() + 0.05)));
+		obj["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n1Actual[1].getValue() + 0.05, 1))));
 		
-		me["N11-needle"].setRotation((N1_1_cur + 90) * D2R);
-		me["N11-thr"].setRotation((N1_thr_1.getValue() + 90) * D2R);
-		me["N11-ylim"].setRotation((N1_lim_cur + 90) * D2R);
+		obj["N11-needle"].setRotation((N1_1_cur + 90) * D2R);
+		obj["N11-thr"].setRotation((N1_thr_1.getValue() + 90) * D2R);
+		obj["N11-ylim"].setRotation((N1_lim_cur + 90) * D2R);
 		
-		me["N12-needle"].setRotation((N1_2_cur + 90) * D2R);
-		me["N12-thr"].setRotation((N1_thr_2.getValue() + 90) * D2R);
-		me["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
+		obj["N12-needle"].setRotation((N1_2_cur + 90) * D2R);
+		obj["N12-thr"].setRotation((N1_thr_2.getValue() + 90) * D2R);
+		obj["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
 		
 		if (fadec.FADEC.Eng1.n1 == 1) {
-			me["N11-scale"].setColor(0.8078,0.8039,0.8078);
-			me["N11-scale2"].setColor(1,0,0);
-			me["N11"].show();
-			me["N11-decimal"].show();
-			me["N11-decpnt"].show();
-			me["N11-needle"].show();
-			me["N11-scaletick"].show();
-			me["N11-scalenum"].show();
-			me["N11-XX"].hide();
+			obj["N11-scale"].setColor(0.8078,0.8039,0.8078);
+			obj["N11-scale2"].setColor(1,0,0);
+			obj["N11"].show();
+			obj["N11-decimal"].show();
+			obj["N11-decpnt"].show();
+			obj["N11-needle"].show();
+			obj["N11-scaletick"].show();
+			obj["N11-scalenum"].show();
+			obj["N11-XX"].hide();
 		} else {
-			me["N11-scale"].setColor(0.7333,0.3803,0);
-			me["N11-scale2"].setColor(0.7333,0.3803,0);
-			me["N11"].hide();
-			me["N11-decimal"].hide();
-			me["N11-decpnt"].hide();
-			me["N11-needle"].hide();
-			me["N11-scaletick"].hide();
-			me["N11-scalenum"].hide();
-			me["N11-XX"].show();
+			obj["N11-scale"].setColor(0.7333,0.3803,0);
+			obj["N11-scale2"].setColor(0.7333,0.3803,0);
+			obj["N11"].hide();
+			obj["N11-decimal"].hide();
+			obj["N11-decpnt"].hide();
+			obj["N11-needle"].hide();
+			obj["N11-scaletick"].hide();
+			obj["N11-scalenum"].hide();
+			obj["N11-XX"].show();
 		}
 		
 		if (fadec.FADEC.Eng2.n1 == 1) {
-			me["N12-scale"].setColor(0.8078,0.8039,0.8078);
-			me["N12-scale2"].setColor(1,0,0);
-			me["N12"].show();
-			me["N12-decimal"].show();
-			me["N12-decpnt"].show();
-			me["N12-needle"].show();
-			me["N12-scaletick"].show();
-			me["N12-scalenum"].show();
-			me["N12-XX"].hide();
+			obj["N12-scale"].setColor(0.8078,0.8039,0.8078);
+			obj["N12-scale2"].setColor(1,0,0);
+			obj["N12"].show();
+			obj["N12-decimal"].show();
+			obj["N12-decpnt"].show();
+			obj["N12-needle"].show();
+			obj["N12-scaletick"].show();
+			obj["N12-scalenum"].show();
+			obj["N12-XX"].hide();
 		} else {
-			me["N12-scale"].setColor(0.7333,0.3803,0);
-			me["N12-scale2"].setColor(0.7333,0.3803,0);
-			me["N12"].hide();
-			me["N12-decimal"].hide();
-			me["N12-decpnt"].hide();
-			me["N12-needle"].hide();
-			me["N12-scaletick"].hide();
-			me["N12-scalenum"].hide();
-			me["N12-XX"].show();
+			obj["N12-scale"].setColor(0.7333,0.3803,0);
+			obj["N12-scale2"].setColor(0.7333,0.3803,0);
+			obj["N12"].hide();
+			obj["N12-decimal"].hide();
+			obj["N12-decpnt"].hide();
+			obj["N12-needle"].hide();
+			obj["N12-scaletick"].hide();
+			obj["N12-scalenum"].hide();
+			obj["N12-XX"].show();
 		}
 		
 		if (fadec.FADEC.Eng1.n1 == 1 and fadec.Fadec.n1Mode[0].getValue()) {
-			me["N11-thr"].show();
-			me["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
+			obj["N11-thr"].show();
+			obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 		} else {
-			me["N11-thr"].hide();
-			me["N11-ylim"].hide();
+			obj["N11-thr"].hide();
+			obj["N11-ylim"].hide();
 		}
 		
 		if (fadec.FADEC.Eng2.n1 == 1 and fadec.Fadec.n1Mode[1].getValue()) {
-			me["N12-thr"].show();
-			me["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
+			obj["N12-thr"].show();
+			obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 		} else {
-			me["N12-thr"].hide();
-			me["N12-ylim"].hide();
+			obj["N12-thr"].hide();
+			obj["N12-ylim"].hide();
 		}
 		
 		# N2
-		me["N21"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n2Actual[0].getValue() + 0.05)));
-		me["N21-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n2Actual[0].getValue() + 0.05, 1))));
-		me["N22"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n2Actual[1].getValue() + 0.05)));
-		me["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n2Actual[1].getValue() + 0.05, 1))));
+		obj["N21"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n2Actual[0].getValue() + 0.05)));
+		obj["N21-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n2Actual[0].getValue() + 0.05, 1))));
+		obj["N22"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n2Actual[1].getValue() + 0.05)));
+		obj["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n2Actual[1].getValue() + 0.05, 1))));
 		
 		if (fadec.FADEC.Eng1.n2 == 1) {
-			me["N21"].show();
-			me["N21-decimal"].show();
-			me["N21-decpnt"].show();
-			me["N21-XX"].hide();
+			obj["N21"].show();
+			obj["N21-decimal"].show();
+			obj["N21-decpnt"].show();
+			obj["N21-XX"].hide();
 		} else {
-			me["N21"].hide();
-			me["N21-decimal"].hide();
-			me["N21-decpnt"].hide();
-			me["N21-XX"].show();
+			obj["N21"].hide();
+			obj["N21-decimal"].hide();
+			obj["N21-decpnt"].hide();
+			obj["N21-XX"].show();
 		}
 		
 		if (fadec.FADEC.Eng2.n2 == 1) {
-			me["N22"].show();
-			me["N22-decimal"].show();
-			me["N22-decpnt"].show();
-			me["N22-XX"].hide();
+			obj["N22"].show();
+			obj["N22-decimal"].show();
+			obj["N22-decpnt"].show();
+			obj["N22-XX"].hide();
 		} else {
-			me["N22"].hide();
-			me["N22-decimal"].hide();
-			me["N22-decpnt"].hide();
-			me["N22-XX"].show();
+			obj["N22"].hide();
+			obj["N22-decimal"].hide();
+			obj["N22-decpnt"].hide();
+			obj["N22-XX"].show();
 		}
 		
 		# FF
 		fuel1 = pts.Engines.Engine.fuelFlow[0].getValue();
 		fuel2 = pts.Engines.Engine.fuelFlow[1].getValue();
 		if (acconfig_weight_kgs.getValue()) {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1 * LBS2KGS, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2 * LBS2KGS, 10)));
-			me["FFlow1-weight-unit"].setText("KG/H");
-			me["FFlow2-weight-unit"].setText("KG/H");
+			obj["FF1"].setText(sprintf("%s", math.round(fuel1 * LBS2KGS, 10)));
+			obj["FF2"].setText(sprintf("%s", math.round(fuel2 * LBS2KGS, 10)));
+			obj["FFlow1-weight-unit"].setText("KG/H");
+			obj["FFlow2-weight-unit"].setText("KG/H");
 		} else {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2, 10)));
-			me["FFlow1-weight-unit"].setText("LBS/H");
-			me["FFlow2-weight-unit"].setText("LBS/H");
+			obj["FF1"].setText(sprintf("%s", math.round(fuel1, 10)));
+			obj["FF2"].setText(sprintf("%s", math.round(fuel2, 10)));
+			obj["FFlow1-weight-unit"].setText("LBS/H");
+			obj["FFlow2-weight-unit"].setText("LBS/H");
 		}
 		
 		if (fadec.FADEC.Eng1.ff == 1) {
-			me["FF1"].show();
-			me["FF1-XX"].hide();
+			obj["FF1"].show();
+			obj["FF1-XX"].hide();
 		} else {
-			me["FF1"].hide();
-			me["FF1-XX"].show();
+			obj["FF1"].hide();
+			obj["FF1-XX"].show();
 		}
 		
 		if (fadec.FADEC.Eng2.ff == 1) {
-			me["FF2"].show();
-			me["FF2-XX"].hide();
+			obj["FF2"].show();
+			obj["FF2-XX"].hide();
 		} else {
-			me["FF2"].hide();
-			me["FF2-XX"].show();
+			obj["FF2"].hide();
+			obj["FF2-XX"].show();
 		}
 		
 		# EPR Limit
 		thrLimit = thr_limit.getValue();
 		eprLimit = epr_limit.getValue();
 		
-		me["EPRLim-mode"].setText(sprintf("%s", thrLimit));
-		me["EPRLim"].setText(sprintf("%1.0f", math.floor(eprLimit)));
-		me["EPRLim-decimal"].setText(sprintf("%03d", (eprLimit - int(eprLimit)) * 1000));
+		obj["EPRLim-mode"].setText(sprintf("%s", thrLimit));
+		obj["EPRLim"].setText(sprintf("%1.0f", math.floor(eprLimit)));
+		obj["EPRLim-decimal"].setText(sprintf("%03d", (eprLimit - int(eprLimit)) * 1000));
 		
 		fadecPower1 = fadecpower_1.getValue();
 		fadecPower2 = fadecpower_2.getValue();
 		fadecPowerStart = fadecpowerup.getValue();
 		
 		if (fadecPower1 or fadecPower2 or fadecPowerStart) {
-			me["EPRLim-mode"].show();
-			me["EPRLim-XX"].hide();
-			me["EPRLim-XX2"].hide();
+			obj["EPRLim-mode"].show();
+			obj["EPRLim-XX"].hide();
+			obj["EPRLim-XX2"].hide();
 		} else {
-			me["EPRLim-mode"].hide();
-			me["EPRLim-XX"].show();
-			me["EPRLim-XX2"].show();
+			obj["EPRLim-mode"].hide();
+			obj["EPRLim-XX"].show();
+			obj["EPRLim-XX2"].show();
 		}
 		
 		if ((fadecPower1 or fadecPower2 or fadecPowerStart) and thrLimit != "MREV") {
-			me["EPRLim"].show();
-			me["EPRLim-decpnt"].show();
-			me["EPRLim-decimal"].show();
+			obj["EPRLim"].show();
+			obj["EPRLim-decpnt"].show();
+			obj["EPRLim-decimal"].show();
 		} else {
-			me["EPRLim"].hide();
-			me["EPRLim-decpnt"].hide();
-			me["EPRLim-decimal"].hide();
+			obj["EPRLim"].hide();
+			obj["EPRLim-decpnt"].hide();
+			obj["EPRLim-decimal"].hide();
 		}
 		
 		me.updateBase(notification);
@@ -984,11 +638,11 @@ var canvas_upperECAM_test = {
 	update: func() {
 		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		if (du3_test_time.getValue() + 1 >= elapsedtime) {
-			me["Test_white"].show();
-			me["Test_text"].hide();
+			obj["Test_white"].show();
+			obj["Test_text"].hide();
 		} else {
-			me["Test_white"].hide();
-			me["Test_text"].show();
+			obj["Test_white"].hide();
+			obj["Test_text"].show();
 		}
 	},
 };
@@ -1001,57 +655,6 @@ var createListenerForLine = func(prop, node, key) {
 			upperECAM_cfm_eis2[key].setColor(upperECAM_cfm_eis2.getColorString(node.getValue()));
 		}
 	}, 0, 0);
-};
-
-var _init = 0;
-
-
-var UpperECAMRecipientCFM =
-{
-	new: func(_ident, group)
-	{
-		var new_class = emesary.Recipient.new(_ident);
-		new_class.MainScreen = nil;
-		new_class.Receive = func(notification)
-		{
-			if (notification.NotificationType == "FrameNotification")
-			{
-				if (new_class.MainScreen == nil)
-					new_class.MainScreen = canvas_upperECAM_cfm_eis2.new(group, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg");
-					upperECAM_cfm_eis2 = new_class.MainScreen;
-				if (!math.mod(notifications.frameNotification.FrameCount,2)){
-					new_class.MainScreen.update(notification);
-				}
-				return emesary.Transmitter.ReceiptStatus_OK;
-			}
-			return emesary.Transmitter.ReceiptStatus_NotProcessed;
-		};
-		return new_class;
-	},
-};
-
-var UpperECAMRecipientIAE =
-{
-	new: func(_ident, group)
-	{
-		var new_class = emesary.Recipient.new(_ident);
-		new_class.MainScreen = nil;
-		new_class.Receive = func(notification)
-		{
-			if (notification.NotificationType == "FrameNotification")
-			{
-				if (new_class.MainScreen == nil)
-					new_class.MainScreen = canvas_upperECAM_iae_eis2.new(group, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/iae-eis2.svg");
-					upperECAM_iae_eis2 = new_class.MainScreen;
-				if (!math.mod(notifications.frameNotification.FrameCount,2)){
-					new_class.MainScreen.update(notification);
-				}
-				return emesary.Transmitter.ReceiptStatus_OK;
-			}
-			return emesary.Transmitter.ReceiptStatus_NotProcessed;
-		};
-		return new_class;
-	},
 };
 
 setlistener("sim/signals/fdm-initialized", func {
@@ -1100,12 +703,3 @@ var showUpperECAM = func {
 setlistener("/systems/electrical/bus/ac-ess", func() {
 	canvas_upperECAM_base.updateDu3();
 }, 0, 0);
-
-var slatLockGoing = 0;
-var slatLockTimer = maketimer(0.50, func {
-	if (!slatLockFlash.getBoolValue()) {
-		slatLockFlash.setBoolValue(1);
-	} else {
-		slatLockFlash.setBoolValue(0);
-	}
-});

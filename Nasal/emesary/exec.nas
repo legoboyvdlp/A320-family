@@ -49,18 +49,21 @@ var execLoop = func
     # 2: HUD targets, HUD trig, HUD text
     # 3: HUD targets, VSD, RDR
     # 
-    if (notifications.frameNotification.frame_rate_worst < 5) {
-        frame_inc = 0.25;#3.3
-    } elsif (notifications.frameNotification.frame_rate_worst < 10) {
-        frame_inc = 0.125;#6.6
-    } elsif (notifications.frameNotification.frame_rate_worst < 15) {
-        frame_inc = 0.10;#8.3
-    } elsif (notifications.frameNotification.frame_rate_worst < 20) {
-        frame_inc = 0.075;#12.5
-    } elsif (notifications.frameNotification.frame_rate_worst < 25) {
-        frame_inc = 0.05;#14.3
+    
+	if (notifications.frameNotification.frame_rate < 5) {
+        frame_inc = 0.25;#4 Hz
+    } elsif (notifications.frameNotification.frame_rate < 10) {
+        frame_inc = 0.125;#8 Hz
+    } elsif (notifications.frameNotification.frame_rate < 15) {
+        frame_inc = 0.10;#10 Hz
+    } elsif (notifications.frameNotification.frame_rate < 20) {
+        frame_inc = 0.075;#13.3 Hz
+    } elsif (notifications.frameNotification.frame_rate < 25) {
+        frame_inc = 0.05;#20 Hz
+    } elsif (notifications.frameNotification.frame_rate < 40) {
+        frame_inc = 0.0333;#30 Hz
     } else {
-        frame_inc = 0.05;#20.0
+        frame_inc = 0.02;#50 Hz
     }
 	
     if (frame_inc != cur_frame_inc) {

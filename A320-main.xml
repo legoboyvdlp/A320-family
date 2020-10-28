@@ -611,6 +611,19 @@
 		</fuel>
 	</consumables>
 	
+	<ECAM>
+		<Upper>
+			<FlapX type="double">0</FlapX>
+			<FlapY type="double">0</FlapY>
+			<SlatX type="double">0</SlatX>
+			<SlatY type="double">0</SlatY>
+			<FlapXtrans type="double">0</FlapXtrans>
+			<FlapYtrans type="double">0</FlapYtrans>
+			<SlatXtrans type="double">0</SlatXtrans>
+			<SlatYtrans type="double">0</SlatYtrans>
+		</Upper>
+	</ECAM>
+	
 	<environment>
 		<aircraft-effects>
 			<frost-inch type="double">0</frost-inch>
