@@ -23,7 +23,6 @@ var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
 # Fetch nodes:
-var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var eng_option = props.globals.getNode("/options/eng", 1);
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3", 1);
@@ -42,30 +41,6 @@ var flapXTranslate = props.globals.getNode("/ECAM/Upper/FlapXtrans", 1);
 var flapYTranslate = props.globals.getNode("/ECAM/Upper/FlapYtrans", 1);
 var slatXTranslate = props.globals.getNode("/ECAM/Upper/SlatXtrans", 1);
 var slatYTranslate = props.globals.getNode("/ECAM/Upper/SlatYtrans", 1);
-var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
-var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
-var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
-var ECAM_line4 = props.globals.getNode("/ECAM/msg/line4", 1);
-var ECAM_line5 = props.globals.getNode("/ECAM/msg/line5", 1);
-var ECAM_line6 = props.globals.getNode("/ECAM/msg/line6", 1);
-var ECAM_line7 = props.globals.getNode("/ECAM/msg/line7", 1);
-var ECAM_line8 = props.globals.getNode("/ECAM/msg/line8", 1);
-var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
-var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
-var ECAM_line3c = props.globals.getNode("/ECAM/msg/linec3", 1);
-var ECAM_line4c = props.globals.getNode("/ECAM/msg/linec4", 1);
-var ECAM_line5c = props.globals.getNode("/ECAM/msg/linec5", 1);
-var ECAM_line6c = props.globals.getNode("/ECAM/msg/linec6", 1);
-var ECAM_line7c = props.globals.getNode("/ECAM/msg/linec7", 1);
-var ECAM_line8c = props.globals.getNode("/ECAM/msg/linec8", 1);
-var ECAM_line1r = props.globals.getNode("/ECAM/rightmsg/line1", 1);
-var ECAM_line2r = props.globals.getNode("/ECAM/rightmsg/line2", 1);
-var ECAM_line3r = props.globals.getNode("/ECAM/rightmsg/line3", 1);
-var ECAM_line4r = props.globals.getNode("/ECAM/rightmsg/line4", 1);
-var ECAM_line5r = props.globals.getNode("/ECAM/rightmsg/line5", 1);
-var ECAM_line6r = props.globals.getNode("/ECAM/rightmsg/line6", 1);
-var ECAM_line7r = props.globals.getNode("/ECAM/rightmsg/line7", 1);
-var ECAM_line8r = props.globals.getNode("/ECAM/rightmsg/line8", 1);
 var ECAM_line1rc = props.globals.getNode("/ECAM/rightmsg/linec1", 1);
 var ECAM_line2rc = props.globals.getNode("/ECAM/rightmsg/linec2", 1);
 var ECAM_line3rc = props.globals.getNode("/ECAM/rightmsg/linec3", 1);
@@ -199,23 +174,6 @@ var canvas_upperECAM_base = {
 		
 		# ECAM Messages
 		
-		obj["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
-		obj["ECAML2"].setText(sprintf("%s", ECAM_line2.getValue()));
-		obj["ECAML3"].setText(sprintf("%s", ECAM_line3.getValue()));
-		obj["ECAML4"].setText(sprintf("%s", ECAM_line4.getValue()));
-		obj["ECAML5"].setText(sprintf("%s", ECAM_line5.getValue()));
-		obj["ECAML6"].setText(sprintf("%s", ECAM_line6.getValue()));
-		obj["ECAML7"].setText(sprintf("%s", ECAM_line7.getValue()));
-		obj["ECAML8"].setText(sprintf("%s", ECAM_line8.getValue()));
-		
-		obj["ECAMR1"].setText(sprintf("%s", ECAM_line1r.getValue()));
-		obj["ECAMR2"].setText(sprintf("%s", ECAM_line2r.getValue()));
-		obj["ECAMR3"].setText(sprintf("%s", ECAM_line3r.getValue()));
-		obj["ECAMR4"].setText(sprintf("%s", ECAM_line4r.getValue()));
-		obj["ECAMR5"].setText(sprintf("%s", ECAM_line5r.getValue()));
-		obj["ECAMR6"].setText(sprintf("%s", ECAM_line6r.getValue()));
-		obj["ECAMR7"].setText(sprintf("%s", ECAM_line7r.getValue()));
-		obj["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
 			
 var canvas_upperECAM_cfm_eis2 = {
 	new: func(canvas_group, file) {
@@ -228,39 +186,13 @@ var canvas_upperECAM_cfm_eis2 = {
 	
 	update: func(notification) {
 		
-		# N1 Limit
-		thrLimit = thr_limit.getValue();
-		n1Limit = n1_limit.getValue();
 		
-		obj["N1Lim-mode"].setText(sprintf("%s", thrLimit));
-		obj["N1Lim"].setText(sprintf("%s", math.floor(n1Limit + 0.05)));
-		obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(n1Limit + 0.05, 1))));
 		
 		fadecPower1 = fadecpower_1.getValue();
 		fadecPower2 = fadecpower_2.getValue();
 		fadecPowerStart = fadecpowerup.getValue();
 		
-		if (fadecPower1 or fadecPower2 or fadecPowerStart) {
-			obj["N1Lim-mode"].show();
-			obj["N1Lim-XX"].hide();
-			obj["N1Lim-XX2"].hide();
-		} else {
-			obj["N1Lim-mode"].hide();
-			obj["N1Lim-XX"].show();
-			obj["N1Lim-XX2"].show();
-		}
 		
-		if ((fadecPower1 or fadecPower2 or fadecPowerStart) and thrLimit != "MREV") {
-			obj["N1Lim"].show();
-			obj["N1Lim-decpnt"].show();
-			obj["N1Lim-decimal"].show();
-			obj["N1Lim-percent"].show();
-		} else {
-			obj["N1Lim"].hide();
-			obj["N1Lim-decpnt"].hide();
-			obj["N1Lim-decimal"].hide();
-			obj["N1Lim-percent"].hide();
-		}
 		
 		me.updateBase(notification);
 	},
@@ -659,23 +591,7 @@ var createListenerForLine = func(prop, node, key) {
 
 setlistener("sim/signals/fdm-initialized", func {
 	
-	createListenerForLine("/ECAM/msg/linec1", ECAM_line1c, "ECAML1");
-	createListenerForLine("/ECAM/msg/linec2", ECAM_line2c, "ECAML2");
-	createListenerForLine("/ECAM/msg/linec3", ECAM_line3c, "ECAML3");
-	createListenerForLine("/ECAM/msg/linec4", ECAM_line4c, "ECAML4");
-	createListenerForLine("/ECAM/msg/linec5", ECAM_line5c, "ECAML5");
-	createListenerForLine("/ECAM/msg/linec6", ECAM_line6c, "ECAML6");
-	createListenerForLine("/ECAM/msg/linec7", ECAM_line7c, "ECAML7");
-	createListenerForLine("/ECAM/msg/linec8", ECAM_line8c, "ECAML8");
 	
-	createListenerForLine("/ECAM/rightmsg/linec1", ECAM_line1rc, "ECAMR1");
-	createListenerForLine("/ECAM/rightmsg/linec2", ECAM_line2rc, "ECAMR2");
-	createListenerForLine("/ECAM/rightmsg/linec3", ECAM_line3rc, "ECAMR3");
-	createListenerForLine("/ECAM/rightmsg/linec4", ECAM_line4rc, "ECAMR4");
-	createListenerForLine("/ECAM/rightmsg/linec5", ECAM_line5rc, "ECAMR5");
-	createListenerForLine("/ECAM/rightmsg/linec6", ECAM_line6rc, "ECAMR6");
-	createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
-	createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
 	
 	if (!_init) {
 		

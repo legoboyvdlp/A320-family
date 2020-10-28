@@ -2,6 +2,23 @@ var flapsPos = nil;
 var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 
+var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
+var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
+var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
+var ECAM_line4 = props.globals.getNode("/ECAM/msg/line4", 1);
+var ECAM_line5 = props.globals.getNode("/ECAM/msg/line5", 1);
+var ECAM_line6 = props.globals.getNode("/ECAM/msg/line6", 1);
+var ECAM_line7 = props.globals.getNode("/ECAM/msg/line7", 1);
+var ECAM_line8 = props.globals.getNode("/ECAM/msg/line8", 1);
+var ECAM_line1r = props.globals.getNode("/ECAM/rightmsg/line1", 1);
+var ECAM_line2r = props.globals.getNode("/ECAM/rightmsg/line2", 1);
+var ECAM_line3r = props.globals.getNode("/ECAM/rightmsg/line3", 1);
+var ECAM_line4r = props.globals.getNode("/ECAM/rightmsg/line4", 1);
+var ECAM_line5r = props.globals.getNode("/ECAM/rightmsg/line5", 1);
+var ECAM_line6r = props.globals.getNode("/ECAM/rightmsg/line6", 1);
+var ECAM_line7r = props.globals.getNode("/ECAM/rightmsg/line7", 1);
+var ECAM_line8r = props.globals.getNode("/ECAM/rightmsg/line8", 1);
+
 var canvas_upperECAM = {
 	new: func(svg) {
 		var obj = {parents: [canvas_upperECAM] };
@@ -225,11 +242,57 @@ var canvas_upperECAM = {
 					obj["FlxLimDegreesC"].hide();
 					obj["FlxLimTemp"].hide();
 				}
+				obj["N1Lim-mode"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("n1Limit", 0.01, func(val) {
+				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
 			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
 				obj["FlxLimTemp"].setText(sprintf("%2.0d",val));
 			}),
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart","thrustLimit"], 1, func(val) {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
+					obj["N1Lim-mode"].show();
+					obj["N1Lim-XX"].hide();
+					obj["N1Lim-XX2"].hide();
+				} else {
+					obj["N1Lim-mode"].hide();
+					obj["N1Lim-XX"].show();
+					obj["N1Lim-XX2"].show();
+				}
+				
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+					obj["N1Lim"].show();
+					obj["N1Lim-decpnt"].show();
+					obj["N1Lim-decimal"].show();
+					obj["N1Lim-percent"].show();
+				} else {
+					obj["N1Lim"].hide();
+					obj["N1Lim-decpnt"].hide();
+					obj["N1Lim-decimal"].hide();
+					obj["N1Lim-percent"].hide();
+				}
+			}),
 		];
+		
+		obj.createListenerForLine("/ECAM/msg/linec1", ECAM_line1c, "ECAML1");
+		obj.createListenerForLine("/ECAM/msg/linec2", ECAM_line2c, "ECAML2");
+		obj.createListenerForLine("/ECAM/msg/linec3", ECAM_line3c, "ECAML3");
+		obj.createListenerForLine("/ECAM/msg/linec4", ECAM_line4c, "ECAML4");
+		obj.createListenerForLine("/ECAM/msg/linec5", ECAM_line5c, "ECAML5");
+		obj.createListenerForLine("/ECAM/msg/linec6", ECAM_line6c, "ECAML6");
+		obj.createListenerForLine("/ECAM/msg/linec7", ECAM_line7c, "ECAML7");
+		obj.createListenerForLine("/ECAM/msg/linec8", ECAM_line8c, "ECAML8");
+		
+		obj.createListenerForLine("/ECAM/rightmsg/linec1", ECAM_line1rc, "ECAMR1");
+		obj.createListenerForLine("/ECAM/rightmsg/linec2", ECAM_line2rc, "ECAMR2");
+		obj.createListenerForLine("/ECAM/rightmsg/linec3", ECAM_line3rc, "ECAMR3");
+		obj.createListenerForLine("/ECAM/rightmsg/linec4", ECAM_line4rc, "ECAMR4");
+		obj.createListenerForLine("/ECAM/rightmsg/linec5", ECAM_line5rc, "ECAMR5");
+		obj.createListenerForLine("/ECAM/rightmsg/linec6", ECAM_line6rc, "ECAMR6");
+		obj.createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
+		obj.createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
 		
 		obj.page = obj.group;
 		return obj;
@@ -258,6 +321,11 @@ var canvas_upperECAM = {
 			return [1,1,1];
 		}
 	},
+	createListenerForLine: func(prop, node, key) {
+		setlistener(prop, func() {
+			me[key].setColor(me.getColorString(node.getValue()));
+		}, 0, 0);
+	};
 	update: func(notification) {
 		foreach(var update_item; me.update_items)
         {
@@ -422,6 +490,24 @@ var canvas_upperECAM = {
 			me["SlatAlphaLock"].hide();	
 		}
 		
+		obj["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
+		obj["ECAML2"].setText(sprintf("%s", ECAM_line2.getValue()));
+		obj["ECAML3"].setText(sprintf("%s", ECAM_line3.getValue()));
+		obj["ECAML4"].setText(sprintf("%s", ECAM_line4.getValue()));
+		obj["ECAML5"].setText(sprintf("%s", ECAM_line5.getValue()));
+		obj["ECAML6"].setText(sprintf("%s", ECAM_line6.getValue()));
+		obj["ECAML7"].setText(sprintf("%s", ECAM_line7.getValue()));
+		obj["ECAML8"].setText(sprintf("%s", ECAM_line8.getValue()));
+		
+		obj["ECAMR1"].setText(sprintf("%s", ECAM_line1r.getValue()));
+		obj["ECAMR2"].setText(sprintf("%s", ECAM_line2r.getValue()));
+		obj["ECAMR3"].setText(sprintf("%s", ECAM_line3r.getValue()));
+		obj["ECAMR4"].setText(sprintf("%s", ECAM_line4r.getValue()));
+		obj["ECAMR5"].setText(sprintf("%s", ECAM_line5r.getValue()));
+		obj["ECAMR6"].setText(sprintf("%s", ECAM_line6r.getValue()));
+		obj["ECAMR7"].setText(sprintf("%s", ECAM_line7r.getValue()));
+		obj["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
+		
 		if (fadec.FADEC.Eng1.n1 or fadec.FADEC.Eng2.n1) {
 			foreach(var update_item; me.update_items_fadec_powered_n1)
 			{
@@ -524,7 +610,11 @@ input = {
 	# fadec
 	alphaFloor: "/systems/thrust/alpha-floor",
 	thrustLimit: "/controls/engines/thrust-limit",
+	n1Limit: "/controls/engines/n1-limit",
 	flexTemp: "/FMGC/internal/flex",
+	fadecPower1: "/systems/fadec/power1",
+	fadecPower2: "/systems/fadec/power2",
+	fadecPowerStart: "/systems/fadec/powerup",
 };
 
 foreach (var name; keys(input)) {
