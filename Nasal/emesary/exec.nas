@@ -74,9 +74,7 @@ var execLoop = func
 
 # setup the properties to monitor for this system
 input = {
-FrameRate                 : "/sim/frame-rate",
 frame_rate                : "/sim/frame-rate",
-frame_rate_worst          : "/sim/frame-rate-worst",
 elapsed_seconds           : "/sim/time/elapsed-sec",
 };
 

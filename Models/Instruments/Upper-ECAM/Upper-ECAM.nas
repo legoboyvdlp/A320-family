@@ -98,22 +98,7 @@ var canvas_upperECAM_base = {
 		
 		
 		# set font
-		obj["ECAML1"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML2"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML3"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML4"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML5"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML6"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML7"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML8"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR1"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR2"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR3"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR4"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR5"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR6"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR7"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR8"].setFont("LiberationMonoCustom.ttf");
+		
 	
 
 		me.page = canvas_group;
@@ -178,33 +163,6 @@ var canvas_upperECAM_base = {
 			}
 		}
 	},
-	updateBase: func(notification) {
-		
-		# ECAM Messages
-		
-			
-var canvas_upperECAM_cfm_eis2 = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_upperECAM_cfm_eis2, canvas_upperECAM_base]};
-		m.init(canvas_group, file);
-		m.updateAFloor();
-		m.updateFlx();
-		return m;
-	},
-	
-	update: func(notification) {
-		
-		
-		
-		fadecPower1 = fadecpower_1.getValue();
-		fadecPower2 = fadecpower_2.getValue();
-		fadecPowerStart = fadecpowerup.getValue();
-		
-		
-		
-		me.updateBase(notification);
-	},
-};
 
 var canvas_upperECAM_iae_eis2 = {
 	new: func(canvas_group, file) {
@@ -573,57 +531,9 @@ var canvas_upperECAM_test = {
 		return m;
 	},
 	getKeys: func() {
-		return ["Test_white","Test_text"];
+		return [];
 	},
 	update: func() {
-		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
-		if (du3_test_time.getValue() + 1 >= elapsedtime) {
-			obj["Test_white"].show();
-			obj["Test_text"].hide();
-		} else {
-			obj["Test_white"].hide();
-			obj["Test_text"].show();
-		}
+		
 	},
 };
-
-var createListenerForLine = func(prop, node, key) {
-	setlistener(prop, func() {
-		if (eng_option.getValue() == "IAE") {
-			upperECAM_iae_eis2[key].setColor(upperECAM_iae_eis2.getColorString(node.getValue()));
-		} else {
-			upperECAM_cfm_eis2[key].setColor(upperECAM_cfm_eis2.getColorString(node.getValue()));
-		}
-	}, 0, 0);
-};
-
-setlistener("sim/signals/fdm-initialized", func {
-	
-	
-	
-	if (!_init) {
-		
-	}
-	
-	upperECAM_update.start();
-	if (rate.getValue() > 1) {
-		u_rateApply();
-	}
-});
-
-var u_rateApply = func {
-	upperECAM_update.restart(0.05 * rate.getValue());
-}
-
-var upperECAM_update = maketimer(0.05, func {
-	canvas_upperECAM_base.update();
-});
-
-var showUpperECAM = func {
-	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
-	dlg.setCanvas(upperECAM_display);
-}
-
-setlistener("/systems/electrical/bus/ac-ess", func() {
-	canvas_upperECAM_base.updateDu3();
-}, 0, 0);

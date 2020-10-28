@@ -622,6 +622,26 @@
 			<SlatXtrans type="double">0</SlatXtrans>
 			<SlatYtrans type="double">0</SlatYtrans>
 		</Upper>
+		<msg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</msg>
+		<rightmsg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</rightmsg>
 	</ECAM>
 	
 	<environment>

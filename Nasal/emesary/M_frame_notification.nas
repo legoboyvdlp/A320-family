@@ -61,7 +61,6 @@ var FrameNotification =
                 new_class.monitored[notification.variable] = root_node.getNode(notification.property,1);
                 new_class.properties[notification.property] = notification.variable;
 
-                print("[INFO]: (",notification.module,") FrameNotification.",notification.variable, " = ",notification.property, " -> ", new_class.monitored[notification.variable].getPath() );
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
             return emesary.Transmitter.ReceiptStatus_NotProcessed;
