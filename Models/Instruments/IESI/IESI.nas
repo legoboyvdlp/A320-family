@@ -30,6 +30,8 @@ var altimeter_mode = props.globals.getNode("/instrumentation/altimeter[0]/std", 
 var qnh_hpa = props.globals.getNode("/instrumentation/altimeter/setting-hpa", 1);
 var qnh_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 1);
 
+var _showIESI = 0;
+var _fast = 0;
 var _IESITime = 0;
 
 var canvas_IESI_base = {
@@ -68,8 +70,8 @@ var canvas_IESI_base = {
 		me.AI_horizon_trans = me["AI_horizon"].createTransform();
 		me.AI_horizon_rot = me["AI_horizon"].createTransform();
 		
-		me._showIESI = 0;
-		me._fast = 0;
+		_showIESI = 0;
+		_fast = 0;
 		_IESITime = 0.0;
 		
 		me.page = canvas_group;
@@ -86,22 +88,22 @@ var canvas_IESI_base = {
 		# todo 20W power consumption
 		if (iesi_reset.getValue() == 1) {
 			if (iesi_init.getBoolValue() and _IESITime + 90 >= et.getValue()) {
-				me._fast = 1;
+				_fast = 1;
 			} else {
-				me._fast = 0;
+				_fast = 0;
 			}
 			iesi_init.setBoolValue(0);
 		}
 		
 		if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1.getValue() >= 25 and airspeed.getValue() >= 50 and cur_time >= 5)) {
-			me._showIESI = 1;
+			_showIESI = 1;
 			IESI.update();
 			
 			if (aconfig.getValue() != 1 and iesi_init.getValue() != 1) {
 				iesi_init.setBoolValue(1);
-				if (me._fast) {
+				if (_fast) {
 					_IESITime = cur_time - 80;
-					me._fast = 0;
+					_fast = 0;
 				} else {
 					_IESITime = cur_time;
 				}
@@ -110,11 +112,11 @@ var canvas_IESI_base = {
 				_IESITime = cur_time - 87;
 			}
 		} else {
-			me._showIESI = 0;
+			_showIESI = 0;
 			iesi_init.setBoolValue(0);
 		}
 		
-		if (me._showIESI and iesi_brt.getValue() > 0.01) {
+		if (_showIESI and iesi_brt.getValue() > 0.01) {
 			IESI.page.show();
 		} else {
 			IESI.page.hide();
