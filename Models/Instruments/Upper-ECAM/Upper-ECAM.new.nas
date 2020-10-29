@@ -257,12 +257,12 @@ var canvas_upperECAM = {
 				obj["EPR2-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_1", 0.0001, func(val) {
-				obj["EPR1"].setText(sprintf("%s", math.floor(val + 0.05)));
-				obj["EPR1-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+				obj["EPR1"].setText(sprintf("%1.0f", math.floor(val)));
+				obj["EPR1-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_2", 0.0001, func(val) {
-				obj["EPR1"].setText(sprintf("%s", math.floor(val + 0.05)));
-				obj["EPR2-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+				obj["EPR2"].setText(sprintf("%1.0f", math.floor(val)));
+				obj["EPR2-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
 			}),
 			props.UpdateManager.FromHashValue("EPR_lim", 0.005, func(val) {
 				obj["EPR1-ylim"].setRotation((val + 90) * D2R);
@@ -332,7 +332,7 @@ var canvas_upperECAM = {
 			props.UpdateManager.FromHashValue("thrustLimit", nil, func(val) {
 				obj["EPRLim-mode"].setText(sprintf("%s", val));
 			}),
-			props.UpdateManager.FromHashValue("eprLimit", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("eprLimit", 0.0005, func(val) {
 				obj["EPRLim"].setText(sprintf("%1.0f", math.floor(val)));
 				obj["EPRLim-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
 			}),
@@ -1044,8 +1044,8 @@ input = {
 	fadecPower1: "/systems/fadec/powered1",
 	fadecPower2: "/systems/fadec/powered2",
 	fadecPowerStart: "/systems/fadec/powerup",
-	n1_mode_1: "/systems/fadec/n1mode1",
-	n1_mode_2: "/systems/fadec/n1mode2",
+	N1_mode_1: "/systems/fadec/n1mode1",
+	N1_mode_2: "/systems/fadec/n1mode2",
 	
 	# ecam
 	ecamMsg1: "/ECAM/msg/line1",
