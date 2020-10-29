@@ -616,6 +616,39 @@
 		</fuel>
 	</consumables>
 	
+	<ECAM>
+		<Upper>
+			<FlapX type="double">0</FlapX>
+			<FlapY type="double">0</FlapY>
+			<SlatX type="double">0</SlatX>
+			<SlatY type="double">0</SlatY>
+			<FlapXtrans type="double">0</FlapXtrans>
+			<FlapYtrans type="double">0</FlapYtrans>
+			<SlatXtrans type="double">0</SlatXtrans>
+			<SlatYtrans type="double">0</SlatYtrans>
+		</Upper>
+		<msg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</msg>
+		<rightmsg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</rightmsg>
+	</ECAM>
+	
 	<environment>
 		<aircraft-effects>
 			<frost-inch type="double">0</frost-inch>
@@ -1187,6 +1220,7 @@
 		</comm>
 		<electrical n="0">
 			<bus>
+				<ac-ess type="double">0</ac-ess>
 				<dc-1 type="double">0</dc-1>
 				<dc-2 type="double">0</dc-2>
 			</bus>
@@ -1459,6 +1493,7 @@
 		</pneumatics>
 		
 		<pressurization>
+			<cabinalt-norm type="double">0</cabinalt-norm>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
@@ -4340,6 +4375,9 @@
 	</aircraft>
 	
 	<nasal>
+        <notifications>
+            <file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
+        </notifications>
 		<pts>
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
@@ -4447,7 +4485,9 @@
 			<file>Aircraft/A320-family/Models/Instruments/ND/canvas/ND.nas</file>
 		</canvas_nd>
 		<canvas_ecam>
-			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
+			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
+			<!--<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>-->
+			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.new.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
 		<canvas_iesi>
