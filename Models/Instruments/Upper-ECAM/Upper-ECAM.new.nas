@@ -369,18 +369,22 @@ var canvas_upperECAM = {
 				if (fadec.FADEC.Eng1.n1 == 1 and val) {
 					obj["N11-thr"].show();
 					obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
+					obj["EPR1-thr"].hide();
 				} else {
 					obj["N11-thr"].hide();
 					obj["N11-ylim"].hide();
+					obj["EPR1-thr"].show();
 				}
 			}),
 			props.UpdateManager.FromHashValue("N1_mode_2", nil, func(val) {
 				if (fadec.FADEC.Eng2.n1 == 1 and val) {
 					obj["N12-thr"].show();
 					obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
+					obj["EPR2-thr"].hide();
 				} else {
 					obj["N12-thr"].hide();
 					obj["N12-ylim"].hide();
+					obj["EPR2-thr"].show();
 				}
 			}),
 		];
