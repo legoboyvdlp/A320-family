@@ -4486,8 +4486,7 @@
 		</canvas_nd>
 		<canvas_ecam>
 			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
-			<!--<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>-->
-			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.new.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
 		<canvas_iesi>
