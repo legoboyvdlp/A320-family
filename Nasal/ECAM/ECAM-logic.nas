@@ -2355,7 +2355,7 @@ var messages_memo = func {
 	
 	if ((phaseVarMemo2 == 1 or phaseVarMemo2 == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1)) {
 		irs_in_align.active = 1;
-		if (getprop("/ECAM/phases/timer/eng1or2-output")) {
+		if (FWC.Timer.eng1or2Output.getValue()) {
 			irs_in_align.colour = "a";
 		} else {
 			irs_in_align.colour = "g";

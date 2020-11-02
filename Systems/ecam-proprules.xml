@@ -206,6 +206,17 @@
 	<flipflop>
 		<type>monostable</type>
 		<time>
+			<value>2.5</value>
+		</time>
+		<S>
+			<property>/ECAM/ground-calc-immediate</property>
+		</S>
+		<output>ECAM/phases/monostable/gnd-output-2</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
 			<value>120.0</value>
 		</time>
 		<S>
@@ -372,7 +383,7 @@
 			<value>1.0</value>
 		</time>
 		<S>
-			<property>ECAM/phases/to-power-set</property>
+			<property>ECAM/phases/phase-calculation/takeoff-power</property>
 		</S>
 		<output>ECAM/phases/monostable/to-power-set-output</output>
 	</flipflop>
@@ -1008,4 +1019,14 @@
 		<output>/ECAM/warnings/altitude-alert/monostable-autopilot-output</output>
 	</flipflop>
 	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/phases/phase-calculation/altitude-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/phases/phase-calculation/altitude-flipflop-reset</property>
+		</R>
+		<output>/ECAM/phases/phase-calculation/altitude-ge-800</output>
+	</flipflop>
 </PropertyList>

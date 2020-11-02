@@ -20,13 +20,6 @@
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
-		<actuator name="/ECAM/phases/timer/eng1or2-output">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/phases/timer/eng1or2</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
-		</actuator>
-		
 		<actuator name="/ECAM/phases/timer/to-inhibit-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/to-inhibit</input>
@@ -1804,7 +1797,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
 		
@@ -1857,7 +1850,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
 		
@@ -2062,7 +2055,7 @@
 					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
 					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
 				</test>
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				<test logic="OR">
 					fcs/slat-pos-deg gt 16
 					fcs/flap-pos-deg gt 18
@@ -2098,7 +2091,7 @@
 					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
 					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
 				</test>
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				<test logic="OR">
 					/gear/gear[0]/position-norm ne 1
 					/gear/gear[1]/position-norm ne 1
