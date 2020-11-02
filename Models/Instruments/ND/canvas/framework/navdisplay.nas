@@ -433,7 +433,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine2.setRotation(hdgBugRot);
 	}
 
-	var staPtrVis = !me.in_mode("toggle_display_mode", ["PLAN"]);
+	var staPtrVis = (!me.in_mode("toggle_display_mode", ["PLAN"]) and  (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)));
 	if((me.in_mode("toggle_display_mode", ["MAP"]) and me.get_switch("toggle_display_type") == "CRT")
 	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD"))
 	{
@@ -459,7 +459,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
-		if(me.in_mode("toggle_display_mode", ["PLAN"]))
+		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (systems.ADIRS.ADIRunits[0].aligned != 1 and (systems.ADIRS.ADIRunits[2].aligned != 1 or att_switch.getValue() == 0)))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();

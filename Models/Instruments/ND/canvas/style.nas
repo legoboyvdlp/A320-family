@@ -7,6 +7,8 @@
 var ALWAYS = func 1;
 var NOTHING = func nil;
 
+var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
+
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
 		if( family == "Liberation Sans" and weight == "normal" )
@@ -517,7 +519,7 @@ canvas.NDStyles["Airbus"] = {
 				missed_constraint_color: [1,0.57,0.14]
 			},
 			predicate: func(nd, layer) {
-				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]));
+				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.toggle_cstr = nd.get_switch("toggle_cstr");
@@ -593,7 +595,7 @@ canvas.NDStyles["Airbus"] = {
 			always_update: 1,
 			update_on:["toggle_display_mode"], 
 			predicate: func(nd, layer) {
-				 var visible = nd.get_switch("toggle_display_mode") == "PLAN";
+				 var visible = (nd.get_switch("toggle_display_mode") == "PLAN" and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)));
 				 layer.group.setVisible( visible );
 				 if (visible) {
 					layer.update();
@@ -670,6 +672,24 @@ canvas.NDStyles["Airbus"] = {
 				is_true: func(nd) nd.symbols.compass_mask_ctr.show(),
 				is_false: func(nd) nd.symbols.compass_mask_ctr.hide(),
 			}
+		},
+		{
+			id: "nd_warn_memo",
+			impl: {
+				init: func(nd, symbol),
+				predicate: ALWAYS,
+				is_true: func(nd) nd.symbols.nd_warn_memo.hide(),
+				is_false: func(nd),
+			},
+		},
+		{
+			id: "nd_warn_msgbox",
+			impl: {
+				init: func(nd, symbol),
+				predicate: ALWAYS,
+				is_true: func(nd) nd.symbols.nd_warn_msgbox.hide(),
+				is_false: func(nd),
+			},
 		},
 		{
 			# TODO: taOnly doesn"t need to use getprop polling in update(), use a listener instead!
@@ -901,10 +921,41 @@ canvas.NDStyles["Airbus"] = {
 			},
 		},
 		{
+			id:"unavailARC",
+			impl: {
+				init: func(nd,symbol),
+				common: func(nd),
+				predicate: func(nd) (!nd.get_switch("toggle_centered") and nd.get_switch("toggle_display_mode") != "PLAN"
+					and (systems.ADIRS.ADIRunits[0].aligned != 1 and (systems.ADIRS.ADIRunits[2].aligned != 1 or att_switch.getValue() == 0))),
+				is_true: func(nd) {
+					nd.symbols.unavailARC.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.unavailARC.hide();
+				},
+			},
+		},
+		{
+			id:"unavailNAV",
+			impl: {
+				init: func(nd,symbol),
+				common: func(nd),
+				predicate: func(nd) (nd.get_switch("toggle_centered")
+					and (systems.ADIRS.ADIRunits[0].aligned != 1 and (systems.ADIRS.ADIRunits[2].aligned != 1 or att_switch.getValue() == 0))),
+				is_true: func(nd) {
+					nd.symbols.unavailNAV.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.unavailNAV.hide();
+				},
+			},
+		},
+		{
 			id:"compass",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (!nd.get_switch("toggle_centered") and	nd.get_switch("toggle_display_mode") != "PLAN"),
+				predicate: func(nd) (!nd.get_switch("toggle_centered") and nd.get_switch("toggle_display_mode") != "PLAN"
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) {
 					nd.symbols.compass.setRotation(-nd.userHdgTrk*D2R);
 					nd.symbols.compass.show()
@@ -916,7 +967,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"compassApp",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.get_switch("toggle_centered") and  nd.get_switch("toggle_display_mode") != "PLAN"),
+				predicate: func(nd) (nd.get_switch("toggle_centered") and  nd.get_switch("toggle_display_mode") != "PLAN"
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) {
 					nd.symbols.compassApp.setRotation(-nd.userHdgTrk*D2R);
 					nd.symbols.compassApp.show()
@@ -928,7 +980,7 @@ canvas.NDStyles["Airbus"] = {
 			id:"northUp",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) nd.get_switch("toggle_display_mode") == "PLAN",
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "PLAN" and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) nd.symbols.northUp.show(),
 				is_false: func(nd) nd.symbols.northUp.hide(),
 			}, # of northUp.impl
@@ -937,7 +989,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"planArcs",
 			impl: {
 			init: func(nd,symbol),
-				predicate: func(nd) ((nd.in_mode("toggle_display_mode", ["APP","VOR","PLAN"])) or ((nd.get_switch("toggle_display_mode") == "MAP") and (nd.get_switch("toggle_centered")))),
+				predicate: func(nd) (((nd.in_mode("toggle_display_mode", ["APP","VOR","PLAN"])) or ((nd.get_switch("toggle_display_mode") == "MAP") and (nd.get_switch("toggle_centered"))))
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) nd.symbols.planArcs.show(),
 				is_false: func(nd) nd.symbols.planArcs.hide(),
 			}, # of planArcs.impl
@@ -946,7 +999,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"rangeArcs",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP") and (!nd.get_switch("toggle_centered"))),
+				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP") and (!nd.get_switch("toggle_centered"))
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) nd.symbols.rangeArcs.show(),
 				is_false: func(nd) nd.symbols.rangeArcs.hide(),
 			}, # of rangeArcs.impl
@@ -1047,7 +1101,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"aplSymMap",
 			impl: {
 			init: func(nd,symbol),
-				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")),
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) {
 					nd.symbols.aplSymMap.set("z-index", 10);
 					nd.symbols.aplSymMap.show();
@@ -1060,7 +1115,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"aplSymMapCtr",
 			impl: {
 			init: func(nd,symbol),
-				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP" and nd.get_switch("toggle_centered")) or nd.in_mode("toggle_display_mode", ["APP","VOR"])),
+				predicate: func(nd) (((nd.get_switch("toggle_display_mode") == "MAP" and nd.get_switch("toggle_centered")) or nd.in_mode("toggle_display_mode", ["APP","VOR"]))
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) {
 					nd.symbols.aplSymMapCtr.set("z-index", 10);
 					nd.symbols.aplSymMapCtr.show();
@@ -1157,8 +1213,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"trkInd2",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["APP","VOR","MAP"]) and 
-						 nd.get_switch("toggle_centered")),
+				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["APP","VOR","MAP"]) and nd.get_switch("toggle_centered")
+					and (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) {
 					nd.symbols.trkInd2.show();
 					nd.symbols.trkInd2.setRotation((nd.aircraft_source.get_trk_mag()-nd.aircraft_source.get_hdg_mag())*D2R);
@@ -1172,7 +1228,8 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
 							 nd.get_switch("toggle_centered") and 
-							 getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val),
+							 getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val and
+							 (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1))),
 				is_true: func(nd) {
 					nd.symbols.trkline2.show();
 				},
