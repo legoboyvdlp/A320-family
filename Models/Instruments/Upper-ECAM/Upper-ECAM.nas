@@ -871,9 +871,9 @@ var canvas_upperECAM = {
 		}
 		
 		if (val.reverser_1 >= 0.95) {
-			me["REV2"].setColor(0.0509,0.7529,0.2941);
+			me["REV1"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["REV2"].setColor(0.7333,0.3803,0);
+			me["REV1"].setColor(0.7333,0.3803,0);
 		}
 	},
 	updateFadecN1Power2: func(val) {

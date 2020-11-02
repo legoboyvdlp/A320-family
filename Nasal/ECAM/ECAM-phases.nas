@@ -65,12 +65,12 @@ var FWC = {
 		eng1or2Output: props.globals.initNode("/ECAM/phases/timer/eng1or2-output", 0, "INT"),
 		toInhibitOutput: props.globals.getNode("/ECAM/phases/timer/to-inhibit-output"),
 		ldgInhibitOutput: props.globals.getNode("/ECAM/phases/timer/ldg-inhibit-output"),
-		gnd: props.globals.getNode("/ECAM/timer/ground-calc"),
+		gnd: props.globals.getNode("/ECAM/timer/ground-calc"), # ZGND
 		gnd2Sec: props.globals.getNode("/ECAM/phases/monostable/gnd-output"),
 	},
 	speed80: props.globals.initNode("/ECAM/phases/speed-gt-80", 0, "BOOL"),
 	toPower: props.globals.initNode("/ECAM/phases/to-power-set", 0, "BOOL"),
-	altChg: props.globals.getNode("it-autoflight/input/alt-is-changing", 1),
+	altChg: props.globals.getNode("/it-autoflight/input/alt-is-changing", 1),
 };
 
 var phaseLoop = func() {
