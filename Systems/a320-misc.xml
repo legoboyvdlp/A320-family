@@ -2,7 +2,7 @@
 
 <!-- Copyright (c) 2020 Jonathan Redpath -->
 
-<system name="A320: APU">
+<system name="A320: MISC">
 
     <channel name="CVR" execrate="8">
 	
@@ -26,6 +26,16 @@
 				/gear/gear[2]/wow eq 0
 			</test>
 		</switch>
+		
+	</channel>
+	
+	<channel name="IESI" execrate="8">
+		
+		<actuator name="/instrumentation/iesi/att-reset">
+			<input>/instrumentation/iesi/att-reset-cmd</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
 		
 	</channel>
 

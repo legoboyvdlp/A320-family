@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="1"
-     inkscape:cx="718.57047"
-     inkscape:cy="505.8628"
+     inkscape:zoom="0.25"
+     inkscape:cx="971.41703"
+     inkscape:cy="1420.8195"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -1428,4 +1428,43 @@
      width="137.63597"
      id="SlatLine_clip"
      style="opacity:0.5;fill:none;fill-opacity:1;stroke:none;stroke-width:3.34691048;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.71383667px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.7928459"
+     x="38.122616"
+     y="47.904297"
+     id="aFloor"
+     transform="scale(0.94595932,1.0571279)"
+     inkscape:label="#text1027"><tspan
+       sodipodi:role="line"
+       id="tspan1025"
+       x="38.122616"
+       y="47.904297"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.99999902px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#c56100;fill-opacity:1;stroke-width:0.7928459">A FLOOR</tspan></text>
+  <text
+     transform="scale(0.97051272,1.0303832)"
+     inkscape:label="#text4314"
+     id="FlxLimTemp"
+     y="122.78025"
+     x="919.25299"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40.71494293px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#179ab7;fill-opacity:1;"
+       y="122.78025"
+       x="919.25299"
+       id="tspan1029"
+       sodipodi:role="line">00</tspan></text>
+  <text
+     inkscape:label="#text4443"
+     id="FlxLimDegreesC"
+     y="108.14707"
+     x="1061.88"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     xml:space="preserve"
+     transform="scale(0.87983286,1.1365795)"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.25978088px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#179ab7;fill-opacity:1"
+       y="108.14707"
+       x="1061.88"
+       id="tspan1033"
+       sodipodi:role="line">°C</tspan></text>
 </svg>

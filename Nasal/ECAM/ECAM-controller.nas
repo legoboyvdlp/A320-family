@@ -15,7 +15,7 @@ var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
-var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL")];
+var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL")];
 var warningFlash = props.globals.initNode("/ECAM/warnings/master-warning-flash", 0, "BOOL");
 
 var lineIndex = 0;
@@ -31,6 +31,9 @@ var storeFirstWarning = nil;
 
 var warningNodes = {
 	Logic: {
+		altitudeAlert: props.globals.initNode("/ECAM/warnings/altitude-alert/c-chord"),
+		altitudeAlertSteady: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-steady"),
+		altitudeAlertFlash: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-flash"),
 		crossbleedFault: props.globals.initNode("/ECAM/warnings/logic/crossbleed-fault"),
 		crossbleedWai: props.globals.initNode("/ECAM/warnings/logic/crossbleed-wai"),
 		bleed1LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-unsucc"),

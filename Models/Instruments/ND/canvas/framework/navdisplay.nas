@@ -335,12 +335,12 @@ canvas.NavDisplay.update_sub = func(){
 canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft specific, cannot easily be reused by other aircraft
 {
 	var _time = systime();
-	# Disables WXR Live if it"s not enabled. The toggle_weather_live should be common to all 
+	# Disables WXR Live if it's not enabled. The toggle_weather_live should be common to all 
 	# ND instances.
-	var wxr_live_enabled = getprop(wxr_live_tree~"/enabled");
-	if(wxr_live_enabled == nil or wxr_live_enabled == "") 
+	var wxr_live_enabled = getprop(wxr_live_tree~'/enabled');
+	if(wxr_live_enabled == nil or wxr_live_enabled == '') 
 		wxr_live_enabled = 0;
-	me.set_switch("toggle_weather_live", wxr_live_enabled);
+	me.set_switch('toggle_weather_live', wxr_live_enabled);
 	call(me.update_sub, nil, nil, caller(0)[0]); # call this in the same namespace to "steal" its variables
 
 	# MapStructure update!
