@@ -262,7 +262,9 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>NLGFitting</object-name>
+		<object-name>NLGFitting.Placards</object-name>
 		<object-name>NLGFittingLower</object-name>
+		<object-name>NLGFittingLower.Placards</object-name>
 		<object-name>NLGFittingPanel</object-name>
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
@@ -357,6 +359,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>MLGFittingL</object-name>
+		<object-name>MLGFittingL.Placards</object-name>
 		<object-name>MLGWheelsL</object-name>
 		<object-name>MLGCablesL1</object-name>
 		<object-name>MLGCablesL2</object-name>
@@ -693,6 +696,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>MLGFittingR</object-name>
+		<object-name>MLGFittingR.Placards</object-name>
 		<object-name>MLGWheelsR</object-name>
 		<object-name>MLGCablesR1</object-name>
 		<object-name>MLGCablesR2</object-name>
@@ -1022,6 +1026,7 @@
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
 		<object-name>NLGFittingLower</object-name>
+		<object-name>NLGFittingLower.Placards</object-name>
 		<object-name>NLGTorqueLink1</object-name>
 		<property>sim/multiplay/generic/float[1]</property>
 		<factor>75</factor>
@@ -2644,6 +2649,7 @@
 		<type>pick</type>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL1.Inner</object-name>
+		<object-name>DoorL1.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2701,6 +2707,7 @@
 		<type>translate</type>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL1.Inner</object-name>
+		<object-name>DoorL1.Placards</object-name>
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2719,6 +2726,7 @@
 		<type>translate</type>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL1.Inner</object-name>
+		<object-name>DoorL1.Placards</object-name>
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2738,6 +2746,7 @@
 		<type>pick</type>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorL4.Inner</object-name>
+		<object-name>DoorL4.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2795,6 +2804,7 @@
 		<type>translate</type>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorL4.Inner</object-name>
+		<object-name>DoorL4.Placards</object-name>
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2813,6 +2823,7 @@
 		<type>translate</type>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorL4.Inner</object-name>
+		<object-name>DoorL4.Placards</object-name>
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2832,6 +2843,7 @@
 		<type>pick</type>
 		<object-name>DoorR1</object-name>
 		<object-name>DoorR1.Inner</object-name>
+		<object-name>DoorR1.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2889,6 +2901,7 @@
 		<type>translate</type>
 		<object-name>DoorR1</object-name>
 		<object-name>DoorR1.Inner</object-name>
+		<object-name>DoorR1.Placards</object-name>
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2907,6 +2920,7 @@
 		<type>translate</type>
 		<object-name>DoorR1</object-name>
 		<object-name>DoorR1.Inner</object-name>
+		<object-name>DoorR1.Placards</object-name>
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2926,6 +2940,7 @@
 		<type>pick</type>
 		<object-name>DoorR4</object-name>
 		<object-name>DoorR4.Inner</object-name>
+		<object-name>DoorR4.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2983,6 +2998,7 @@
 		<type>translate</type>
 		<object-name>DoorR4</object-name>
 		<object-name>DoorR4.Inner</object-name>
+		<object-name>DoorR4.Placards</object-name>
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -3001,6 +3017,7 @@
 		<type>translate</type>
 		<object-name>DoorR4</object-name>
 		<object-name>DoorR4.Inner</object-name>
+		<object-name>DoorR4.Placards</object-name>
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
