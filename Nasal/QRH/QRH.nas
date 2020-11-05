@@ -37,7 +37,7 @@ var createCanvasQRH = func() {
 	qrhCanvas.setLayout(myHBox);
 
 	QRH = canvas.gui.widgets.Label.new(root, canvas.style, {} )
-		.setImage("Aircraft/A320-family/Models/FlightDeck/QRH/" ~ QRHpageNo.getValue() ~ ".jpeg")
+		.setImage(resolvepath("Aircraft/A320-family/Models/FlightDeck/QRH/" ~ QRHpageNo.getValue() ~ ".jpeg"))
 		.move(0,-25)
 		.setSize(400,625);
 	myHBox.addItem(QRH);
@@ -78,11 +78,11 @@ var createCanvasQRH = func() {
 	});
 	buttonPrev.listen("clicked", func {
 		prevPage();
-		QRH.setImage("Aircraft/A320-family/Models/FlightDeck/QRH/" ~ QRHpageNo.getValue() ~ ".jpeg");
+		QRH.setImage(resolvepath("Aircraft/A320-family/Models/FlightDeck/QRH/" ~ QRHpageNo.getValue() ~ ".jpeg"));
 	});
 	buttonNext.listen("clicked", func {
 		nextPage();
-		QRH.setImage("Aircraft/A320-family/Models/FlightDeck/QRH/" ~ QRHpageNo.getValue() ~ ".jpeg");
+		QRH.setImage(resolvepath("Aircraft/A320-family/Models/FlightDeck/QRH/" ~ QRHpageNo.getValue() ~ ".jpeg"));
 	});
 
 

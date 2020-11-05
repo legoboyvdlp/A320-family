@@ -330,7 +330,7 @@ var ATIS = {
 	},
 	processATIS: func(r, i) {
 		var raw = r.response;
-		if (r.response == "FBW_ERROR: D-ATIS not available at this airport") {
+		if (r.response == "FBW_ERROR: D-ATIS not available at this airport" or find("atis not avail",r.response) != -1) {
 			me.received = 0;
 			me.sent = 0;
 			mcdu.mcdu_message(i,"NO D-ATIS AVAILABLE");

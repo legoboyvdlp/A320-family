@@ -21,13 +21,6 @@
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
-		<actuator name="/ECAM/phases/timer/eng1or2-output">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/phases/timer/eng1or2</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
-		</actuator>
-		
 		<actuator name="/ECAM/phases/timer/to-inhibit-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/to-inhibit</input>
@@ -1805,7 +1798,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
 		
@@ -1858,7 +1851,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
 		
@@ -2063,7 +2056,7 @@
 					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
 					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
 				</test>
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				<test logic="OR">
 					fcs/slat-pos-deg gt 16
 					fcs/flap-pos-deg gt 18
@@ -2099,7 +2092,7 @@
 					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
 					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
 				</test>
-				/ECAM/phases/to-power-set eq 0
+				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				<test logic="OR">
 					/gear/gear[0]/position-norm ne 1
 					/gear/gear[1]/position-norm ne 1
@@ -2374,6 +2367,190 @@
 				/ECAM/timer/ground-calc eq 0
 				/engines/engine[0]/state eq 3
 				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="Altitude Alerter" execrate="8">
+		
+		<switch name="/ECAM/warnings/altitude-alert/altInhibit">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/it-autoflight/input/alt-is-changing eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/position-norm ge 0.99
+						/gear/gear[2]/position-norm ge 0.99
+					</test>
+					<test logic="AND">
+						/controls/gear/gear-down eq 1
+						/fdm/jsbsim/fcs/slat-pos-deg ge 4
+					</test>
+				</test>
+				/it-autoflight/output/lat eq 4
+				/it-autoflight/output/vert eq 2
+				/it-autoflight/output/vert eq 6
+				<!-- /it-autoflight/output/vert eq 7 check -->
+			</test>
+		</switch>
+		
+		<fcs_function name="/ECAM/warnings/altitude-alert/altitude-difference">
+			<function>
+				<ifthen>
+					<not><property>/instrumentation/altimeter[0]/std</property></not>
+					<abs>
+						<difference>
+							<property>/systems/navigation/adr/output/baro-alt-corrected-1-capt</property>
+							<property>/it-autoflight/input/alt</property>
+						</difference>
+					</abs>
+					<abs>
+						<difference>
+							<property>/systems/navigation/adr/output/baro-alt-1-capt</property>
+							<property>/it-autoflight/input/alt</property>
+						</difference>
+					</abs>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="/ECAM/warnings/altitude-alert/alt200">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/altitude-alert/altitude-difference le 200
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/alt750">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/altitude-alert/altitude-difference le 750
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/big-3-1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/altitude-alert/altInhibit eq 0
+				/ECAM/warnings/altitude-alert/alt200 eq 1
+				/ECAM/warnings/altitude-alert/alt750 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/big-3-2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/altitude-alert/altInhibit eq 0
+				/ECAM/warnings/altitude-alert/alt200 eq 0
+				/ECAM/warnings/altitude-alert/alt750 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/big-3-all-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/altitude-alert/altInhibit eq 0
+				/ECAM/warnings/altitude-alert/alt200 eq 0
+				/ECAM/warnings/altitude-alert/alt750 eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-1-set">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/altitude-alert/big-3-1-off eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-1-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/altitude-alert/big-3-all-off eq 1
+				/ECAM/warnings/altitude-alert/flipflop-2-reset eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-2-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/altitude-alert/big-3-2-off eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-2-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/ECAM/warnings/altitude-alert/gear-downlocked-set eq 1
+					/ECAM/warnings/altitude-alert/gear-downlocked-output eq 1
+				</test>
+				/ECAM/warnings/altitude-alert/alt-is-changing eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-or-1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/altitude-alert/big-3-2-off eq 1
+				/ECAM/warnings/altitude-alert/flipflop-1 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-or-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/altitude-alert/big-3-all-off eq 1
+				/ECAM/warnings/altitude-alert/flipflop-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/flipflop-or">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/altitude-alert/flipflop-or-1 eq 1
+				/ECAM/warnings/altitude-alert/flipflop-or-2 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/monostable-autopilot">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/it-autoflight/output/ap1 eq 0
+				/it-autoflight/output/ap2 eq 0
+				/ECAM/warnings/altitude-alert/big-3-2-off eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/c-chord">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc ne 1
+				<test logic="OR">
+					<test logic="AND">
+						/ECAM/warnings/altitude-alert/monostable-autopilot eq 1
+						/ECAM/warnings/altitude-alert/monostable-autopilot-output eq 1
+					</test>
+					/ECAM/warnings/altitude-alert/flipflop-or eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/altitude-alert-steady">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/altitude-alert/big-3-2-off eq 1
+				/ECAM/warnings/altitude-alert/flipflop-or-1 eq 0
+				
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/altitude-alert/altitude-alert-flash">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/altitude-alert/flipflop-or eq 1
 			</test>
 		</switch>
 		

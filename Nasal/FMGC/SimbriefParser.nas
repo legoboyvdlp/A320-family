@@ -80,8 +80,11 @@ var SimbriefParser = {
 		if (departures != nil and size(departures) != 0 and destinations != nil and size(destinations) != 0) {
 			fmgc.flightPlanController.flightplans[3].departure = departures[0];
 			fmgc.flightPlanController.flightplans[3].destination = destinations[0];
-			fmgc.FMGCInternal.arrApt = destinationID;
 			fmgc.FMGCInternal.depApt = departureID;
+			fmgc.FMGCInternal.arrApt = destinationID;
+			
+			atsu.ATISInstances[0].newStation(departureID);
+			atsu.ATISInstances[1].newStation(destinationID);
 			
 			fmgc.FMGCInternal.toFromSet = 1;
 			fmgc.FMGCNodes.toFromSet.setValue(1);
@@ -107,6 +110,7 @@ var SimbriefParser = {
 		var alternates = findAirportsByICAO(alternateID);
 		if (alternates != nil and size(alternates) != 0) {
 			fmgc.FMGCInternal.altAirport = alternateID;
+			atsu.ATISInstances[2].newStation(alternateID);
 			fmgc.FMGCInternal.altAirportSet = 1;
 		}
 		
