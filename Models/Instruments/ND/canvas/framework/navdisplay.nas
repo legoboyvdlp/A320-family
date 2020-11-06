@@ -11,6 +11,7 @@ var _MP_dbg_lvl = canvas._MP_dbg_lvl;
 var assert_m = canvas.assert_m;
 
 var wxr_live_tree = "/instrumentation/wxr";
+var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 canvas.NavDisplay.set_switch = func(s, v) {
 	var switch = me.efis_switches[s];
@@ -433,7 +434,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine2.setRotation(hdgBugRot);
 	}
 
-	var staPtrVis = !me.in_mode("toggle_display_mode", ["PLAN"]);
+	var staPtrVis = (!me.in_mode("toggle_display_mode", ["PLAN"]) and  (me.adirs_property.getValue() == 1 or (adirs_3.getValue() == 1 and att_switch.getValue() == me.attitude_heading_setting)));
 	if((me.in_mode("toggle_display_mode", ["MAP"]) and me.get_switch("toggle_display_type") == "CRT")
 	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD"))
 	{
@@ -459,7 +460,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
-		if(me.in_mode("toggle_display_mode", ["PLAN"]))
+		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();

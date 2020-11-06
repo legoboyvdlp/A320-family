@@ -7,6 +7,8 @@ var _NUMADIRU = 3;
 
 var _selfTestTime = nil;
 
+var ADIRSnodesND = [props.globals.getNode("/instrumentation/efis[0]/nd/ir-1", 1),props.globals.getNode("/instrumentation/efis[1]/nd/ir-2", 1),props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1)];
+
 var ADIRU = {
 	# local vars
 	_alignTime: 0,
@@ -110,6 +112,7 @@ var ADIRU = {
 		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
+		ADIRSnodesND[me.num].setValue(0);
 		ADIRS.Operating.aligned[me.num].setValue(0);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
@@ -118,6 +121,7 @@ var ADIRU = {
 	stopAlignAligned: func() {
 		me.inAlign = 0;
 		me.aligned = 1;
+		ADIRSnodesND[me.num].setValue(1);
 		ADIRS.Operating.aligned[me.num].setValue(1);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
