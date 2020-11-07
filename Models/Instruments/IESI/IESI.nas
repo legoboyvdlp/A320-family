@@ -2,16 +2,11 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
-var elapsed_seconds = 0;
-var ASI = 0;
-var alt = 0;
-var airspeed_act = 0;
-var mach_act = 0;
-
 # props.nas nodes
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
 var iesi_reset = props.globals.initNode("/instrumentation/iesi/att-reset", 0, "DOUBLE");
 
+var ASI = 0;
 var _showIESI = 0;
 var _fast = 0;
 var _IESITime = 0;
@@ -57,7 +52,7 @@ var canvas_IESI = {
 		obj.middleAltOffset = nil;
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("airspeed", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("airspeed", nil, func(val) {
 				# Subtract 30, since the scale starts at 30, but don't allow less than 0, or more than 520 knots
 				if (val <= 30) {
 					ASI = 0;
@@ -111,7 +106,7 @@ var canvas_IESI = {
 				obj.altTens = num(right(sprintf("%02d", val.altitude), 2));
 				obj["ALT_tens"].setTranslation(0, obj.altTens * 3.16);
 			}),
-			props.UpdateManager.FromHashValue("mach", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("mach", nil, func(val) {
 				if (val >= 0.5) {
 					obj._machWasAbove50 = 1;
 					obj["ASI_mach_decimal"].show();
