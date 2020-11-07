@@ -117,6 +117,12 @@ var ADIRU = {
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
+		foreach (var predicate; keys(canvas_nd.ND_1.NDCpt.predicates)) {
+			call(canvas_nd.ND_1.NDCpt.predicates[predicate]);
+		}
+		foreach (var predicate; keys(canvas_nd.ND_2.NDFo.predicates)) {
+			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
+		}
 	},
 	stopAlignAligned: func() {
 		me.inAlign = 0;
@@ -125,6 +131,12 @@ var ADIRU = {
 		ADIRS.Operating.aligned[me.num].setValue(1);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
+		}
+		foreach (var predicate; keys(canvas_nd.ND_1.NDCpt.predicates)) {
+			call(canvas_nd.ND_1.NDCpt.predicates[predicate]);
+		}
+		foreach (var predicate; keys(canvas_nd.ND_2.NDFo.predicates)) {
+			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
 		}
 	},
 	alignLoop: func() {
