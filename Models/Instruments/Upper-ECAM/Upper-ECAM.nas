@@ -68,6 +68,7 @@ var canvas_upperECAM = {
 				obj[key].set("clip-frame", canvas.Element.PARENT);
 			}
 		};
+		
 		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
 		foreach(var key; obj.getKeysTest()) {
 			obj[key] = obj.test.getElementById(key);
@@ -450,8 +451,6 @@ var canvas_upperECAM = {
 		obj["ECAMR6"].setFont("LiberationMonoCustom.ttf");
 		obj["ECAMR7"].setFont("LiberationMonoCustom.ttf");
 		obj["ECAMR8"].setFont("LiberationMonoCustom.ttf");
-		
-		obj.page = obj.group;
 		
 		# cache
 		obj._cachedN1 = [nil, nil];
@@ -1090,7 +1089,7 @@ var showUpperECAM = func {
 }
 
 setlistener("/systems/electrical/bus/ac-ess", func() {
-	A320EWD.MainScreen.powerTransient();
+	if (A320EWD.MainScreen != nil) { A320EWD.MainScreen.powerTransient() }
 }, 0, 0);
 
 var slatLockTimer = maketimer(0.50, func {
