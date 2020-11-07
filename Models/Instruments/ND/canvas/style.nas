@@ -7,7 +7,7 @@
 var ALWAYS = func 1;
 var NOTHING = func nil;
 
-var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
+var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
 var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 canvas.NDStyles["Airbus"] = {
@@ -455,7 +455,7 @@ canvas.NDStyles["Airbus"] = {
 			update_on:["toggle_range","toggle_display_mode", "toggle_cstr",
 				   "toggle_wpt_idx"],
 			predicate: func(nd, layer) {
-				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]));
+				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -763,7 +763,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
 						getprop("/FMGC/flightplan[2]/active") and 
-						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveId.setText(getprop("/FMGC/flightplan[2]/current-leg"));
 					nd.symbols.wpActiveId.show();
@@ -777,7 +777,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
 						getprop("/FMGC/flightplan[2]/active") and 
-						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
 					var deg = nil;
@@ -800,9 +800,10 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDist",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
+				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
 						getprop("/FMGC/flightplan[2]/active") and 
-						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+						and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					var dst = getprop("/FMGC/flightplan[2]/current-leg-dist");
 					nd.symbols.wpActiveDist.setText(sprintf("%3.01f",dst));
@@ -815,7 +816,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDistLbl",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveDistLbl.show();
 					if(getprop("/FMGC/flightplan[2]/current-leg-dist") > 1000)
@@ -828,7 +830,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "eta",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					var etaSec = getprop("/sim/time/utc/day-seconds")+
 						getprop("/autopilot/route-manager/wp/eta-seconds");

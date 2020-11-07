@@ -25,6 +25,10 @@ var SwitchingPanel = {
 			dmc.DMController.DMCs[1].changeActiveADIRS(1);
 		}
 	},
+	doAttHdg: func(newAttHdg) {
+		if (newAttHdg < -1 or newAttHdg > 1) { return; }
+		me.Switches.attHdg.setValue(newAttHdg);
+	},
 	doEisDMC: func(newDMC) {
 		if (newDMC < -1 or newDMC > 1) { return; }
 		me.Switches.eisDMC.setValue(newDMC);
