@@ -696,78 +696,24 @@ var messages_priority_3 = func {
 	}
 	
 	# C-Chord
-	if ((pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("/systems/navigation/adr/output/baro-alt-1-capt")) < 200) or !pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("/systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 200) {
-		alt200 = 1;
-	} else {
-		alt200 = 0;
-	}
-	
-	if ((pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("/systems/navigation/adr/output/baro-alt-1-capt")) < 750) or !pts.Instrumentation.Altimeter.std.getValue() and abs(fcu.altSet.getValue() - getprop("/systems/navigation/adr/output/baro-alt-corrected-1-capt")) < 750) {
-		alt750 = 1;
-	} else {
-		alt750 = 0;
-	}
-	
-	if (FWC.altChg.getValue() or pts.Gear.position[0].getValue() == 1 or (pts.Controls.Gear.gearDown.getValue() and pts.Fdm.JSBsim.Fcs.slatDeg.getValue() > 4) or fmgc.Output.vert.getValue() == 2) {
-		altAlertInhibit = 1;
-	} else {
-		altAlertInhibit = 0;
-	}
-	
-	if (alt750 and !alt200 and !altAlertInhibit) {
-		FWC.Monostable.altAlert2.setValue(1);
-	} else {
-		FWC.Monostable.altAlert2.setValue(0);
-	}
-	
-	if ((!fcu.ap1.getBoolValue() and !fcu.ap2.getBoolValue()) and FWC.Monostable.altAlert2.getValue()) {
-		FWC.Monostable.altAlert1.setValue(1);
-	} else {
-		FWC.Monostable.altAlert1.setValue(0);
-	}
-	
-	if (alt750 and alt200 and !altAlertInhibit) {
-		setprop("/ECAM/flipflop/alt-alert-2-rs-set", 1);
-	} else {
-		setprop("/ECAM/flipflop/alt-alert-2-rs-set", 0);
-	}
-	
-	if (getprop("/ECAM/flipflop/alt-alert-rs-reset") or (!alt750 and !alt200 and !altAlertInhibit)) {
-		setprop("/ECAM/flipflop/alt-alert-2-rs-reset", 1);
-	} else {
-		setprop("/ECAM/flipflop/alt-alert-2-rs-reset", 0);
-	}
-	
-	if (alt750 and !alt200 and !altAlertInhibit and getprop("/ECAM/flipflop/alt-alert-2-rs-output")) {
-		setprop("/ECAM/flipflop/alt-alert-3-rs-set", 1);
-	} else {
-		setprop("/ECAM/flipflop/alt-alert-3-rs-set", 0);
-	}
-	
-	if ((!alt750 and !alt200 and !altAlertInhibit and getprop("/ECAM/flipflop/alt-alert-rs-output")) or (!alt750 and !alt200 and !altAlertInhibit and getprop("/ECAM/flipflop/alt-alert-3-rs-output")) or getprop("/ECAM/flipflop/alt-alert-3-rs-set")) {
-		bigThree = 1;
-	} else {
-		bigThree = 0;
-	}
-	
-	if (FWC.Timer.gnd.getValue() != 1 and (FWC.Monostable.altAlert1Output.getValue() or bigThree)) {
+	if (warningNodes.Logic.altitudeAlert.getValue()) {
 		if (!getprop("/sim/sound/warnings/cchord-inhibit")) {
-			setprop("/sim/sound/warnings/cchord", 1);
+			aural[4].setValue(1);
 		} else {
-			setprop("/sim/sound/warnings/cchord", 0);
+			aural[4].setValue(0);
 		}
 	} else {
-		setprop("/sim/sound/warnings/cchord", 0);
+		aural[4].setValue(0);
 		setprop("/sim/sound/warnings/cchord-inhibit", 0);
 	}
 	
-	if (FWC.Timer.gnd.getValue() != 1 and getprop("/ECAM/flipflop/alt-alert-3-rs-set") != 1 and alt750 and !alt200 and !altAlertInhibit) {
+	if (warningNodes.Logic.altitudeAlertSteady.getValue()) {
 		altAlertSteady = 1;
 	} else {
 		altAlertSteady = 0;
 	}
 	
-	if (FWC.Timer.gnd.getValue() != 1 and bigThree) {
+	if (warningNodes.Logic.altitudeAlertFlash.getValue()) {
 		altAlertFlash = 1;
 	} else {
 		altAlertFlash = 0;
@@ -1374,10 +1320,10 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(tcasFault);
 	}
 	
-	if (warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
+	if (gpwsTerrFault.clearFlag == 0 and warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
 		gpwsTerrFault.active = 1;
 		
-		if (!getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit")) {
+		if (gpwsTerrFaultOff.clearFlag == 0 and !getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit")) {
 			gpwsTerrFaultOff.active = 1;
 		} else {
 			ECAM_controller.warningReset(gpwsTerrFaultOff);
@@ -2409,7 +2355,7 @@ var messages_memo = func {
 	
 	if ((phaseVarMemo2 == 1 or phaseVarMemo2 == 2) and toMemoLine1.active != 1 and ldgMemoLine1.active != 1 and (systems.ADIRS.ADIRunits[0].inAlign == 1 or systems.ADIRS.ADIRunits[1].inAlign == 1 or systems.ADIRS.ADIRunits[2].inAlign == 1)) {
 		irs_in_align.active = 1;
-		if (getprop("/ECAM/phases/timer/eng1or2-output")) {
+		if (FWC.Timer.eng1or2Output.getValue()) {
 			irs_in_align.colour = "a";
 		} else {
 			irs_in_align.colour = "g";
