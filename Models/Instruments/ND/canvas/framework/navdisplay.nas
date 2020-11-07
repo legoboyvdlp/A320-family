@@ -161,6 +161,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	var make_event_handler = func(predicate, layer) func predicate(me, layer);
 
 	me.layers={}; # storage container for all ND specific layers
+	me.predicates={};
 	# look up all required layers as specified per the NDStyle hash and do the initial setup for event handling
 	var default_opts = me.options != nil and contains(me.options, "defaults") ? me.options.defaults : nil;
 	foreach(var layer; me.nd_style.layers) {
@@ -215,6 +216,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 		# pass the ND instance and the layer handle to the predicate when it is called
 		# so that it can directly access the ND instance and its own layer (without having to know the layer"s name)
 		var event_handler = make_event_handler(layer.predicate, the_layer);
+		me.predicates[layer.name] = event_handler;
 		foreach(var event; layer.update_on) {
 			# this handles timers
 			if (typeof(event)=="hash" and contains(event, "rate_hz")) {
