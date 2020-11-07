@@ -89,7 +89,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible=nd.get_switch("toggle_weather") and 
 					nd.get_switch("toggle_weather_live") and 
-					nd.get_switch("toggle_display_mode") != "PLAN";
+					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible(visible);
 				if (visible) {
 					layer.update(); 
@@ -108,7 +108,7 @@ canvas.NDStyles["Airbus"] = {
 				#print("Running storms predicate");
 				var visible=nd.get_switch("toggle_weather") and 
 					!nd.get_switch("toggle_weather_live") and 
-					nd.get_switch("toggle_display_mode") != "PLAN";
+					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible(visible);
 				if (visible) {
 					#print("storms update requested! (timer issue when closing the dialog?)");
@@ -125,7 +125,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_waypoints") and 
 					  nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					  (nd.rangeNm() <= 40);
+					  (nd.rangeNm() <= 40)  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible)
 					layer.update();
@@ -154,7 +154,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range",{rate_hz: 2}],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);# and nd.get_switch("toggle_fplan");
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -240,7 +240,7 @@ canvas.NDStyles["Airbus"] = {
 					"toggle_display_mode"],
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_airports") and 
-					  nd.in_mode("toggle_display_mode", ["MAP"]);
+					  nd.in_mode("toggle_display_mode", ["MAP"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -263,7 +263,7 @@ canvas.NDStyles["Airbus"] = {
 				# toggle visibility here
 				var visible = nd.get_switch("toggle_vor") and 
 					  nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					  (nd.rangeNm() <= 40);
+					  (nd.rangeNm() <= 40) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -292,7 +292,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_dme") and 
 					nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					(nd.rangeNm() <= 40);
+					(nd.rangeNm() <= 40) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				# toggle visibility here
 				layer.group.setVisible( visible );
 				if (visible) {
@@ -325,7 +325,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_ndb") and 
 					  nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					  (nd.rangeNm() <= 40);
+					  (nd.rangeNm() <= 40) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				# print("Running vor layer predicate");
 				# toggle visibility here
 				layer.group.setVisible( visible );
@@ -392,7 +392,6 @@ canvas.NDStyles["Airbus"] = {
 				var visible = nd.get_switch("toggle_traffic");
 				layer.group.setVisible( visible );
 				if (visible) {
-					#print("Updating MapStructure ND layer: TFC");
 					layer.update();
 				}
 			}, # end of layer update predicate
@@ -403,7 +402,7 @@ canvas.NDStyles["Airbus"] = {
 			update_on:["toggle_range","toggle_display_mode"],
 			predicate: func(nd, layer) {
 				var visible = (nd.rangeNm() <= 40) and 
-						nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) ;
+						nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ;
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -423,7 +422,7 @@ canvas.NDStyles["Airbus"] = {
 			always_update: 1,
 			update_on:["toggle_range","toggle_display_mode","toggle_wpt_idx"],
 			predicate: func(nd, layer) {
-				var visible= nd.in_mode("toggle_display_mode", ["MAP","PLAN"]);
+				var visible= nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -545,7 +544,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range",{rate_hz: 2}],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -566,7 +565,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range"],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
