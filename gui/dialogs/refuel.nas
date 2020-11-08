@@ -483,6 +483,7 @@ var refuelClass = {
 		});
 
 
+		systems.fuelSvc.Nodes.requestFuelLbs.setValue(pts.Consumables.Fuel.totalFuelLbs.getValue());
 		amount.setValue(math.round((systems.fuelSvc.Nodes.requestFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
 		
 		me._timerf();
@@ -593,11 +594,11 @@ var refuelClass = {
 			if (acconfig_weight_kgs.getValue() == 1) {
 				amount.setValue(target - 0.1 * LBS2KGS);
 				if ((target - 0.1) * LBS2KGS >= 10.0) {
-					me._FQI_pre.setText(sprintf("%2.1f", (target - 0.1) * LBS2KGS));
+					me._FQI_pre.setText(sprintf("%2.1f", (target - (0.1 * LBS2KGS)) * LBS2KGS));
 				} else {
-					me._FQI_pre.setText(sprintf("%2.2f", (target - 0.1) * LBS2KGS));
+					me._FQI_pre.setText(sprintf("%2.2f", (target - (0.1 * LBS2KGS)) * LBS2KGS));
 				}
-				systems.fuelSvc.Nodes.requestLbs.setValue((((target - 0.1) * LBS2KGS) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			} else {
 				amount.setValue(target - 0.1);
 				if (target - 0.1 >= 10.0) {
@@ -615,11 +616,11 @@ var refuelClass = {
 			if (acconfig_weight_kgs.getValue() == 1) {
 				amount.setValue(target + 0.1);
 				if ((target + 0.1) * LBS2KGS >= 10.0) {
-					me._FQI_pre.setText(sprintf("%2.1f", (target + 0.1) * LBS2KGS));
+					me._FQI_pre.setText(sprintf("%2.1f", (target + (0.1 * LBS2KGS)) * LBS2KGS));
 				} else {
-					me._FQI_pre.setText(sprintf("%2.2f", (target + 0.1) * LBS2KGS));
+					me._FQI_pre.setText(sprintf("%2.2f", (target + (0.1 * LBS2KGS)) * LBS2KGS));
 				}
-				systems.fuelSvc.Nodes.requestLbs.setValue((((target + 0.1) * LBS2KGS) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			} else {
 				amount.setValue(target + 0.1);
 				if (target + 0.1 >= 10.0) {
