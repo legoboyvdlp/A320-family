@@ -256,6 +256,7 @@ var APU = {
 		APUNodes.Controls.bleed.setValue(0);
 		me.bleedTime = pts.Sim.Time.elapsedSec.getValue();
 	},
+	_powerLost: 0,
 	update: func() {
 		me._count += 1;
 		if (me._count == 5) {
@@ -263,14 +264,22 @@ var APU = {
 			if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
 				me.autoStop();
 			}
-			
 			if (systems.ELEC.Bus.dcBat.getValue() < 25) {	
-				if (me.GenericControls.starter.getValue()) {
-					me.GenericControls.starter.setValue(0);
+				if (!me._powerLost) {
+					me._powerLost = 1;
+					settimer(func() {
+						if (me._powerLost) {
+							if (me.GenericControls.starter.getValue()) {
+								me.GenericControls.starter.setValue(0);
+							}
+							if (me.state != 0) {
+								me.autoStop();
+							}
+						}
+					}, 0.2);
 				}
-				if (me.state != 0) {
-					me.autoStop();
-				}
+			} else {
+				me._powerLost = 0;
 			}
 		}
 	},
