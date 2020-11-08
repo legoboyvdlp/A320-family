@@ -753,9 +753,12 @@ var flightPlanController = {
  				me.tocPoint_old = me.flightplans[n].getWP(me.indexTOC_old);
  				me.tocPoint_new = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
  				
- 				#print(abs(me.tocPoint_new.lat - me.tocPoint_old.lat), " ", abs(me.tocPoint_new.lon - me.tocPoint_old.lon));
+ 				c1 = geo.Coord.new();
+				c1.set_latlon(me.tocPoint_new.lat, me.tocPoint_new.lon);
+				c2 = geo.Coord.new();
+				c2.set_latlon(me.tocPoint_old.lat, me.tocPoint_old.lon);
  				
- 				if (abs(me.tocPoint_new.lat - me.tocPoint_old.lat) > 0.000001 or abs(me.tocPoint_new.lon - me.tocPoint_old.lon) > 0.000001) {
+ 				if (c1.distance_to(c2) > 0.1) {
  					me.flightplans[n].deleteWP(me.indexTOC_old);
 					fmgc.windController.deleteWind(n, me.indexTOC_old);
 					me.flightPlanChanged(n, 0);
