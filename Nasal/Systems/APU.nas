@@ -87,19 +87,25 @@ var APU = {
 	powerOn: func() {
 		# just in case
 		me.resetStuff();
-		if (systems.ELEC.Bus.dcBat.getValue() < 25) { return; }
+		if (systems.ELEC.Bus.dcBat.getValue() < 25) { 
+			settimer(func() {
+				if (systems.ELEC.Bus.dcBat.getValue() < 25) {
+					me.resetStuff();
+					return;
+				}
+			}, 0.2);
+		}
 		# apu able to receive emergency stop or start signals
 		me.setState(1);
 		me.fuelValveCmd.setValue(1);
 		me.inletFlap.open();
-		me.checkOil();
 		me.listenSignals = 1;
 		settimer(func() { 
 			if (APUNodes.Controls.master.getValue() and !getprop("/systems/acconfig/autoconfig-running")) { 
 				me.setState(2);
 			}
 		}, 3);
-		settimer(func() { me.checkOil }, 8);
+		settimer(func() { me.checkOil() }, 8);
 	},
 	startCommand: func(fast = 0) {
 		if (me.listenSignals and (me.state == 1 or me.state == 2)) {
