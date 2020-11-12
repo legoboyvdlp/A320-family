@@ -100,6 +100,16 @@
 		<object-name>MLGFittingR</object-name>
 		<object-name>SideStayL1</object-name>
 		<object-name>SideStayR1</object-name>
+		<object-name>SpoilerActuatorRodL5</object-name>
+		<object-name>SpoilerActuatorRodL4</object-name>
+		<object-name>SpoilerActuatorRodL3</object-name>
+		<object-name>SpoilerActuatorRodL2</object-name>
+		<object-name>SpoilerActuatorRodL1</object-name>
+		<object-name>SpoilerActuatorRodR5</object-name>
+		<object-name>SpoilerActuatorRodR4</object-name>
+		<object-name>SpoilerActuatorRodR3</object-name>
+		<object-name>SpoilerActuatorRodR2</object-name>
+		<object-name>SpoilerActuatorRodR1</object-name>
 	</effect>
 	
 	
@@ -252,7 +262,9 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>NLGFitting</object-name>
+		<object-name>NLGFitting.Placards</object-name>
 		<object-name>NLGFittingLower</object-name>
+		<object-name>NLGFittingLower.Placards</object-name>
 		<object-name>NLGFittingPanel</object-name>
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
@@ -347,6 +359,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>MLGFittingL</object-name>
+		<object-name>MLGFittingL.Placards</object-name>
 		<object-name>MLGWheelsL</object-name>
 		<object-name>MLGCablesL1</object-name>
 		<object-name>MLGCablesL2</object-name>
@@ -683,6 +696,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>MLGFittingR</object-name>
+		<object-name>MLGFittingR.Placards</object-name>
 		<object-name>MLGWheelsR</object-name>
 		<object-name>MLGCablesR1</object-name>
 		<object-name>MLGCablesR2</object-name>
@@ -1012,6 +1026,7 @@
 		<object-name>NLGSlidingTubeAxle</object-name>
 		<object-name>NLGWheels</object-name>
 		<object-name>NLGFittingLower</object-name>
+		<object-name>NLGFittingLower.Placards</object-name>
 		<object-name>NLGTorqueLink1</object-name>
 		<property>sim/multiplay/generic/float[1]</property>
 		<factor>75</factor>
@@ -2221,6 +2236,44 @@
 			<z2-m>-0.854871</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>SpoilerActuatorR1</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+		<factor>0.675</factor>
+		<axis>
+			<x1-m>-1.23482</x1-m>
+			<y1-m>5.41613</y1-m>
+			<z1-m>-0.827841</z1-m>
+			<x2-m>-1.22903</x2-m>
+			<y2-m>5.26015</y2-m>
+			<z2-m>-0.851441</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SpoilerActuatorRodR1</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
+			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
+			<entry><ind>20.0</ind><dep> 0.004</dep></entry>
+			<entry><ind>30.0</ind><dep> 0.016</dep></entry>
+			<entry><ind>40.0</ind><dep> 0.024</dep></entry>
+			<entry><ind>50.0</ind><dep> 0.033</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.16562</x1-m>
+			<y1-m>5.33617</y1-m>
+			<z1-m>-0.810292</z1-m>
+			<x2-m>-1.04003</x2-m>
+			<y2-m>5.33242</y2-m>
+			<z2-m>-0.754702</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<name>Right spoiler 2</name>
 		<type>rotate</type>
@@ -2236,6 +2289,44 @@
 			<z2-m>-0.557443</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>SpoilerActuatorR2</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+		<factor>0.80</factor>
+		<axis>
+			<x1-m>-0.68752</x1-m>
+			<y1-m>7.80725</y1-m>
+			<z1-m>-0.533886</z1-m>
+			<x2-m>-0.74039</x2-m>
+			<y2-m>7.65932</y2-m>
+			<z2-m>-0.549421</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SpoilerActuatorRodR2</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
+			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
+			<entry><ind>20.0</ind><dep> 0.004</dep></entry>
+			<entry><ind>30.0</ind><dep> 0.016</dep></entry>
+			<entry><ind>40.0</ind><dep> 0.024</dep></entry>
+			<entry><ind>50.0</ind><dep> 0.033</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>1.01962</x1-m>
+			<y1-m>12.3207</y1-m>
+			<z1-m>-0.075614</z1-m>
+			<x2-m>1.12682</x2-m>
+			<y2-m>12.2782</y2-m>
+			<z2-m>-0.036176</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<name>Right spoiler 3</name>
 		<type>rotate</type>
@@ -2251,6 +2342,44 @@
 			<z2-m>-0.399324</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>SpoilerActuatorR3</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+		<factor>0.80</factor>
+		<axis>
+			<x1-m>-0.105045</x1-m>
+			<y1-m>9.42908</y1-m>
+			<z1-m>-0.379897</z1-m>
+			<x2-m>-0.157915</x2-m>
+			<y2-m>9.28115</y2-m>
+			<z2-m>-0.395427</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SpoilerActuatorRodR3</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
+			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
+			<entry><ind>20.0</ind><dep> 0.004</dep></entry>
+			<entry><ind>30.0</ind><dep> 0.016</dep></entry>
+			<entry><ind>40.0</ind><dep> 0.024</dep></entry>
+			<entry><ind>50.0</ind><dep> 0.033</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>1.01962</x1-m>
+			<y1-m>12.3207</y1-m>
+			<z1-m>-0.075614</z1-m>
+			<x2-m>1.12682</x2-m>
+			<y2-m>12.2782</y2-m>
+			<z2-m>-0.036176</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<name>Right spoiler 4</name>
 		<type>rotate</type>
@@ -2266,6 +2395,44 @@
 			<z2-m>-0.251904</z2-m>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>SpoilerActuatorR4</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+		<factor>0.80</factor>
+		<axis>
+			<x1-m>0.444885</x1-m>
+			<y1-m>10.9603</y1-m>
+			<z1-m>-0.234507</z1-m>
+			<x2-m>0.39202</x2-m>
+			<y2-m>10.8124</y2-m>
+			<z2-m>-0.250037</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SpoilerActuatorRodR4</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
+			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
+			<entry><ind>20.0</ind><dep> 0.004</dep></entry>
+			<entry><ind>30.0</ind><dep> 0.016</dep></entry>
+			<entry><ind>40.0</ind><dep> 0.024</dep></entry>
+			<entry><ind>50.0</ind><dep> 0.033</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>1.01962</x1-m>
+			<y1-m>12.3207</y1-m>
+			<z1-m>-0.075614</z1-m>
+			<x2-m>1.12682</x2-m>
+			<y2-m>12.2782</y2-m>
+			<z2-m>-0.036176</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<name>Right spoiler 5</name>
 		<type>rotate</type>
@@ -2279,6 +2446,43 @@
 			<x2-m>0.708598</x2-m>
 			<y2-m>11.6987</y2-m>
 			<z2-m>-0.110857</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>SpoilerActuatorR5</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+		<factor>0.80</factor>
+		<axis>
+			<x1-m>0.96858</x1-m>
+			<y1-m>12.4253</y1-m>
+			<z1-m>-0.096347</z1-m>
+			<x2-m>0.91571</x2-m>
+			<y2-m>12.2774</y2-m>
+			<z2-m>-0.111877</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SpoilerActuatorRodR5</object-name>
+		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
+			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
+			<entry><ind>20.0</ind><dep> 0.004</dep></entry>
+			<entry><ind>30.0</ind><dep> 0.016</dep></entry>
+			<entry><ind>40.0</ind><dep> 0.024</dep></entry>
+			<entry><ind>50.0</ind><dep> 0.033</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>1.01962</x1-m>
+			<y1-m>12.3207</y1-m>
+			<z1-m>-0.075614</z1-m>
+			<x2-m>1.12682</x2-m>
+			<y2-m>12.2782</y2-m>
+			<z2-m>-0.036176</z2-m>
 		</axis>
 	</animation>
 	
@@ -2445,6 +2649,7 @@
 		<type>pick</type>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL1.Inner</object-name>
+		<object-name>DoorL1.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2502,6 +2707,7 @@
 		<type>translate</type>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL1.Inner</object-name>
+		<object-name>DoorL1.Placards</object-name>
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2520,6 +2726,7 @@
 		<type>translate</type>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL1.Inner</object-name>
+		<object-name>DoorL1.Placards</object-name>
 		<property>sim/model/door-positions/doorl1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2539,6 +2746,7 @@
 		<type>pick</type>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorL4.Inner</object-name>
+		<object-name>DoorL4.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2596,6 +2804,7 @@
 		<type>translate</type>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorL4.Inner</object-name>
+		<object-name>DoorL4.Placards</object-name>
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2614,6 +2823,7 @@
 		<type>translate</type>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorL4.Inner</object-name>
+		<object-name>DoorL4.Placards</object-name>
 		<property>sim/model/door-positions/doorl4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2633,6 +2843,7 @@
 		<type>pick</type>
 		<object-name>DoorR1</object-name>
 		<object-name>DoorR1.Inner</object-name>
+		<object-name>DoorR1.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2690,6 +2901,7 @@
 		<type>translate</type>
 		<object-name>DoorR1</object-name>
 		<object-name>DoorR1.Inner</object-name>
+		<object-name>DoorR1.Placards</object-name>
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2708,6 +2920,7 @@
 		<type>translate</type>
 		<object-name>DoorR1</object-name>
 		<object-name>DoorR1.Inner</object-name>
+		<object-name>DoorR1.Placards</object-name>
 		<property>sim/model/door-positions/doorr1/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2727,6 +2940,7 @@
 		<type>pick</type>
 		<object-name>DoorR4</object-name>
 		<object-name>DoorR4.Inner</object-name>
+		<object-name>DoorR4.Placards</object-name>
 		<action>
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
@@ -2784,6 +2998,7 @@
 		<type>translate</type>
 		<object-name>DoorR4</object-name>
 		<object-name>DoorR4.Inner</object-name>
+		<object-name>DoorR4.Placards</object-name>
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -2802,6 +3017,7 @@
 		<type>translate</type>
 		<object-name>DoorR4</object-name>
 		<object-name>DoorR4.Inner</object-name>
+		<object-name>DoorR4.Placards</object-name>
 		<property>sim/model/door-positions/doorr4/position-norm</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>

@@ -10,12 +10,12 @@ var DMC = {
 	new: func(num) {
 		var d = { parents:[DMC] };
 		d.activeADIRS = num;
-		d.airspeeds = [props.globals.getNode("systems/navigation/adr/output/cas-1", 1), props.globals.getNode("systems/navigation/adr/output/cas-2", 1), props.globals.getNode("systems/navigation/adr/output/cas-3", 1)];
-		d.altitudes = [props.globals.getNode("systems/navigation/adr/output/baro-alt-corrected-1-capt", 1), props.globals.getNode("systems/navigation/adr/output/baro-alt-corrected-2-capt", 1), props.globals.getNode("systems/navigation/adr/output/baro-alt-corrected-3-capt", 1)];
-		d.machs = [props.globals.getNode("systems/navigation/adr/output/mach-1", 1), props.globals.getNode("systems/navigation/adr/output/mach-2", 1), props.globals.getNode("systems/navigation/adr/output/mach-3", 1)];
+		d.airspeeds = [props.globals.getNode("/systems/navigation/adr/output/cas-1", 1), props.globals.getNode("/systems/navigation/adr/output/cas-2", 1), props.globals.getNode("/systems/navigation/adr/output/cas-3", 1)];
+		d.altitudes = [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-capt", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-capt", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-capt", 1)];
+		d.machs = [props.globals.getNode("/systems/navigation/adr/output/mach-1", 1), props.globals.getNode("/systems/navigation/adr/output/mach-2", 1), props.globals.getNode("/systems/navigation/adr/output/mach-3", 1)];
 		d.altitudesPfd = [props.globals.getNode("instrumentation/altimeter[0]/indicated-altitude-ft-pfd", 1), props.globals.getNode("instrumentation/altimeter[1]/indicated-altitude-ft-pfd", 1), props.globals.getNode("instrumentation/altimeter[2]/indicated-altitude-ft-pfd", 1)];
-		d.sats = [props.globals.getNode("systems/navigation/adr/output/sat-1", 1), props.globals.getNode("systems/navigation/adr/output/sat-2", 1), props.globals.getNode("systems/navigation/adr/output/sat-3", 1)];
-		d.tats = [props.globals.getNode("systems/navigation/adr/output/tat-1", 1), props.globals.getNode("systems/navigation/adr/output/tat-2", 1), props.globals.getNode("systems/navigation/adr/output/tat-3", 1)];
+		d.sats = [props.globals.getNode("/systems/navigation/adr/output/sat-1", 1), props.globals.getNode("/systems/navigation/adr/output/sat-2", 1), props.globals.getNode("/systems/navigation/adr/output/sat-3", 1)];
+		d.tats = [props.globals.getNode("/systems/navigation/adr/output/tat-1", 1), props.globals.getNode("/systems/navigation/adr/output/tat-2", 1), props.globals.getNode("/systems/navigation/adr/output/tat-3", 1)];
 		d.trends = [props.globals.getNode("instrumentation/pfd/speed-lookahead-1", 1), props.globals.getNode("instrumentation/pfd/speed-lookahead-2", 1), props.globals.getNode("instrumentation/pfd/speed-lookahead-3", 1)];
 		d.outputs = [nil, nil, nil, nil, nil, nil, nil]; # airspeed, altitude, mach, pfd altitude, sat, tat, speed trend
 		return d;
@@ -70,7 +70,7 @@ var DMController = {
 			me.DMCs = [DMC.new(0), DMC.new(1), DMC.new(2)];
 			
 			# update DMC2 to correct properties for first officer PFD
-			me.DMCs[1].altitudes = [props.globals.getNode("systems/navigation/adr/output/baro-alt-corrected-1-fo", 1), props.globals.getNode("systems/navigation/adr/output/baro-alt-corrected-2-fo", 1), props.globals.getNode("systems/navigation/adr/output/baro-alt-corrected-3-fo", 1)];
+			me.DMCs[1].altitudes = [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-fo", 1)];
 			me.DMCs[1].altitudesPfd = [props.globals.getNode("instrumentation/altimeter[3]/indicated-altitude-ft-pfd", 1), props.globals.getNode("instrumentation/altimeter[4]/indicated-altitude-ft-pfd", 1), props.globals.getNode("instrumentation/altimeter[5]/indicated-altitude-ft-pfd", 1)];
 	 
 			me._init = 1;

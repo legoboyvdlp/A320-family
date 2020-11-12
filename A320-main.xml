@@ -6,12 +6,55 @@
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
 
+		<animation>
+			<fire-services type="bool">0</fire-services>
+		</animation>
+		
 		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
+		
+		<authors>
+			<author>
+				<name>Josh Davidson</name>
+				<description>Flight Dynamics, Systems, Displays</description>
+				<nick>Octal450</nick>
+			</author>
+			<author>
+				<name>Jonathan Redpath</name>
+				<description>Systems, Displays, FMGC</description>
+				<nick>legoboyvdlp</nick>
+			</author>
+			<author>
+				<name>merspieler</name>
+				<description>Systems, Displays</description>
+			</author>
+			<author>
+				<name>Matthew Maring</name>
+				<description>Fuel predictions, FMGC</description>
+				<nick>mattmaring</nick>
+			</author>
+			<author>
+				<name>Thorsten Herrmann</name>
+				<description>Cockpit 3D model</description>
+				<nick>TH-555</nick>
+			</author>
+			<author>
+				<name>Semir Gebran</name>
+				<description>3D model</description>
+				<nick>CaptB</nick>
+			</author>
+			<author>
+				<name>vezza</name>
+				<description>Systems, Displays</description>
+			</author>
+		</authors>
 		
 		<checklists include="A32X-Checklists.xml"/>
 		
-		<status>Pre V1.0</status>
-		
+		<description>Airbus A320</description>
+		<long-description>The Airbus A320 is a family of narrow body airliners built by Airbus Industrie. First flown in 1987,
+		the aircraft is the most produced airliner ever, with over 9,500 built to date. It was one of the first airliners
+		to use digital flight controls and fly by wire, and a fully glass cockpit.</long-description>
+  
 		<hud n="0">
 			<enable3d n="0">false</enable3d>
 			<enable3d n="1">false</enable3d>
@@ -112,41 +155,48 @@
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/cockpit.png</path>
+				<path>Aircraft/A320-family/Splash/cockpit.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/cockpit2.png</path>
+				<path>Aircraft/A320-family/Splash/cockpit2.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/cockpit3.png</path>
+				<path>Aircraft/A320-family/Splash/cockpit3.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/wing1.png</path>
+				<path>Aircraft/A320-family/Splash/wing1.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/wing2.png</path>
+				<path>Aircraft/A320-family/Splash/wing2.png</path>
 			</preview>
 			<preview>
 				<type>exterior</type>
 				<splash type="bool">true</splash>
-				<path>Splash/wing3.png</path>
+				<path>Aircraft/A320-family/Splash/ext1.png</path>
+			</preview>
+			<preview>
+				<type>exterior</type>
+				<splash type="bool">true</splash>
+				<path>Aircraft/A320-family/Splash/ext2.png</path>
 			</preview>
 		</previews>
-	
+		
 		<rating>
 			<FDM type="int">4</FDM>
 			<systems type="int">5</systems>
 			<cockpit type="int">5</cockpit>
 			<model type="int">4</model>
 		</rating>
+		
+		<status>Pre V1.0</status>
 		
 		<tags>
 			<tag>transport</tag>
@@ -162,6 +212,13 @@
 			<tag>jet</tag>
 			<tag>2-engine</tag>
 		</tags>
+		
+		<urls>
+			<home-page>http://wiki.flightgear.org/Airbus_A320_Family</home-page>
+			<support>https://forum.flightgear.org</support>
+			<wikipedia>https://en.wikipedia.org/wiki/Airbus_A320_family</wikipedia>
+			<code-repository>https://github.com/legoboyvdlp/A320-family</code-repository>
+		</urls>
 		
 		<systems n="0">
 			<electrical>
@@ -205,11 +262,6 @@
 			<autopilot n="13">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</autopilot>
-			<wingflexer include="Systems/wingflexer-params.xml"/>
-			<property-rule n="100">
-				<name>Generic Wing Flexer</name>
-				<path>Aircraft/Generic/wingflexer.xml</path>
-			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
@@ -227,6 +279,7 @@
 			<oh-btn type="bool">0</oh-btn>
 			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
+			<pushbutton type="bool">0</pushbutton>
 			<spdbrk-click type="bool">0</spdbrk-click>
 			<relay-batt-1 type="bool">0</relay-batt-1>
 			<relay-batt-2 type="bool">0</relay-batt-2>
@@ -474,6 +527,15 @@
 							<value>1</value>
 						</binding>
 					</item>
+					<item>
+						<label>Canvas QRH</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								canvas_qrh.createCanvasQRH();
+							</script>
+						</binding>
+					</item>
 				</menu>
 			</default>
 		</menubar>
@@ -520,8 +582,33 @@
 		</current-view>
 		
 		 <minimum-fg-version>2019.2.0</minimum-fg-version>
+
+		<navdb>
+			<min-runway-length-ft>3000</min-runway-length-ft>
+		</navdb>
+
 	</sim>
 	
+	<aircraft>
+		<icao>
+			<wake-turbulence-category>M</wake-turbulence-category>
+			<type type="string">A320</type>
+			<equipment type="string">SDE2FGHIRWXY</equipment>
+			<surveillance type="string">S</surveillance>
+		</icao>
+		<performance>
+			<minimum>
+				<takeoff-length-ft type="int">4500</takeoff-length-ft>
+				<landing-length-ft type="int">4500</landing-length-ft>
+			</minimum>
+			<maximum>
+				<altitude-ft type="int">41000</altitude-ft>
+				<mach type="double">0.82</mach>
+				<airspeed-knots type="int">350</airspeed-knots>
+			</maximum>
+		</performance>
+	</aircraft>
+
 	<consumables>
 		<fuel>
 			<tank n="0">
@@ -550,6 +637,39 @@
 			</tank>
 		</fuel>
 	</consumables>
+	
+	<ECAM>
+		<Upper>
+			<FlapX type="double">0</FlapX>
+			<FlapY type="double">0</FlapY>
+			<SlatX type="double">0</SlatX>
+			<SlatY type="double">0</SlatY>
+			<FlapXtrans type="double">0</FlapXtrans>
+			<FlapYtrans type="double">0</FlapYtrans>
+			<SlatXtrans type="double">0</SlatXtrans>
+			<SlatYtrans type="double">0</SlatYtrans>
+		</Upper>
+		<msg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</msg>
+		<rightmsg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</rightmsg>
+	</ECAM>
 	
 	<environment>
 		<aircraft-effects>
@@ -727,6 +847,9 @@
 		</electrical>
 		<engines>
 			<engine-start-switch type="int">1</engine-start-switch>
+			<epr-limit type="double">0.0</epr-limit>
+			<n1-limit type="double">0.0</n1-limit>
+			<thrust-limit type="string">TOGA</thrust-limit>
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
 				<cutoff-switch type="bool">true</cutoff-switch>
@@ -739,6 +862,11 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
+				<reverser type="double">0</reverser>
+				<igniter-a type="bool">0</igniter-a>
+				<igniter-b type="bool">0</igniter-b>
+				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="1">
 				<cutoff type="bool">true</cutoff>
@@ -752,6 +880,11 @@
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
+				<throttle-rev type="double">0</throttle-rev>
+				<reverser type="double">0</reverser>
+				<igniter-a type="bool">0</igniter-a>
+				<igniter-b type="bool">0</igniter-b>
+				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="2">
 				<cutoff type="bool">true</cutoff>
@@ -809,6 +942,7 @@
 			</refuel>
 		</fuel>
 		<gear>
+			<brake-fans type="bool">0</brake-fans>
 			<brake-parking type="bool">0</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
@@ -843,6 +977,7 @@
 				<du4 type="double">1</du4>
 				<du5 type="double">1</du5>
 				<du6 type="double">1</du6>
+				<iesi type="double">1</iesi>
 				<mcdu1 type="double">1</mcdu1>
 				<mcdu2 type="double">1</mcdu2>
 				<dcdul type="double">1</dcdul>
@@ -920,8 +1055,8 @@
 				<eng2-manstart type="bool">0</eng2-manstart>
 				<eng1-n1 type="bool">0</eng1-n1>
 				<eng2-n1 type="bool">0</eng2-n1>
-				<IDG1 type="bool">0</IDG1>
-				<IDG2 type="bool">0</IDG2>
+				<idg1 type="bool">0</idg1>
+				<idg2 type="bool">0</idg2>
 				<maskman type="bool">0</maskman>
 				<ramair type="bool">0</ramair>
 				<ratman type="bool">0</ratman>
@@ -1013,12 +1148,18 @@
 			<caster-angle-deg-damped type="double">0</caster-angle-deg-damped>
 		</gear>
 		<gear n="1">
+			<Lbrake-smoke type="double">0</Lbrake-smoke>
+			<L1brake-temp-degc type="double">15</L1brake-temp-degc>
+			<L2brake-temp-degc type="double">15</L2brake-temp-degc>
 			<tyre-smoke type="int">0</tyre-smoke>
 			<sprayspeed-ms type="double">0</sprayspeed-ms>
 			<spray-density type="double">0</spray-density>
 			<caster-angle-deg-damped type="double">0</caster-angle-deg-damped>
 		</gear>
 		<gear n="2">
+			<Rbrake-smoke type="double">0</Rbrake-smoke>
+			<R3brake-temp-degc type="double">15</R3brake-temp-degc>
+			<R4brake-temp-degc type="double">15</R4brake-temp-degc>
 			<tyre-smoke type="int">0</tyre-smoke>
 			<sprayspeed-ms type="double">0</sprayspeed-ms>
 			<spray-density type="double">0</spray-density>
@@ -1082,6 +1223,10 @@
 			<transponder-code type="string">2000</transponder-code>
 			<failed type="bool">0</failed>
 		</atc>
+		<atsu>
+			<atis-server type="string">faa</atis-server>
+			<wxr-server type="string">faa</wxr-server>
+		</atsu>
 		<apu>
 			<oil>
 				<level-l type="double">5.4</level-l>
@@ -1106,6 +1251,7 @@
 		</comm>
 		<electrical n="0">
 			<bus>
+				<ac-ess type="double">0</ac-ess>
 				<dc-1 type="double">0</dc-1>
 				<dc-2 type="double">0</dc-2>
 			</bus>
@@ -1129,6 +1275,12 @@
 				</bat-2>
 			</sources>
 		</electrical>
+		
+		<fadec>
+			<n1mode1 type="bool">0</n1mode1>
+			<n1mode2 type="bool">0</n1mode2>
+		</fadec>
+		
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
@@ -1176,6 +1328,7 @@
 				<right-tank-pump-1 type="bool">0</right-tank-pump-1>
 				<right-tank-pump-2 type="bool">0</right-tank-pump-2>
 			</fuel>
+			<gear type="bool">0</gear>
 			<hydraulic>
 				<blue-edp type="bool">0</blue-edp>
 				<blue-elec type="bool">0</blue-elec>
@@ -1229,6 +1382,7 @@
 			<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
 			<cargo-aft-fire type="bool">0</cargo-aft-fire>
 		</failures>
+		
 		<fctl n="0">
 			<elac1 type="bool">0</elac1>
 			<elac2 type="bool">0</elac2>
@@ -1239,6 +1393,7 @@
 			<fac2 type="bool">0</fac2>
 			<yawdamper-active type="bool">0</yawdamper-active>
 		</fctl>
+		
 		<fire n="0">
 			<apu>
 				<temperature type="double">0</temperature>
@@ -1286,6 +1441,7 @@
 			<fuel-used-2 type="double">0</fuel-used-2>
 			<mode-fault type="bool">0</mode-fault>
 		</fuel>
+		
 		<hydraulic n="0">
 			<sources>
 				<ptu>
@@ -1368,6 +1524,7 @@
 		</pneumatics>
 		
 		<pressurization>
+			<cabinalt-norm type="double">0</cabinalt-norm>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
@@ -1394,6 +1551,23 @@
 		<static n="2">
 			<serviceable type="bool">1</serviceable>
 		</static>
+		
+		<thrust>
+			<alpha-floor type="bool">0</alpha-floor>
+			<clbreduc-ft type="double">1500</clbreduc-ft>
+			<eng-out type="bool">0</eng-out>
+			<lim-flex type="bool">0</lim-flex>
+			<lvrclb type="bool">0</lvrclb>
+			<state1 type="string">IDLE</state1>
+			<state2 type="string">IDLE</state2>
+			<toga-lk type="bool">0</toga-lk>
+			<thr-locked type="bool">0</thr-locked>
+			<thr-locked-alert type="bool">0</thr-locked-alert>
+			<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
+			<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
+			<thr-locked-flash type="bool">0</thr-locked-flash>
+			<thr-locked-time type="double">0</thr-locked-time>
+		</thrust>
 		
 		<navigation>
 			<aligned-1 type="bool">0</aligned-1>
@@ -1550,6 +1724,10 @@
 			<range type="double">1.0</range>
 		</groundradar>
 		
+		<iesi>
+			<att-reset-cmd type="bool">false</att-reset-cmd>
+		</iesi>
+		
 		<marker-beacon n="0">
 			<serviceable type="bool">true</serviceable>
 		</marker-beacon>
@@ -1699,6 +1877,10 @@
 			<max-range-m type="int">1219</max-range-m>
 			<serviceable type="bool">true</serviceable>
 		</radar-altimeter>
+		
+		<wxr>
+			<enabled type="bool">false</enabled>
+		</wxr>
 	</instrumentation>
 	
 	<modes>
@@ -4230,6 +4412,9 @@
 	</options>
 	
 	<nasal>
+        <notifications>
+            <file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
+        </notifications>
 		<pts>
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
@@ -4292,21 +4477,22 @@
 		</fmgc>
 		<mcdu>
 			<file>Aircraft/A320-family/Nasal/MCDU/DUPLICATE.nas</file> <!-- dynamic page - init before others as used in various pages -->
-			<file>Aircraft/A320-family/Nasal/MCDU/DIRTO.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> <!-- dynamic page - init before MCDU -->	
-			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> <!-- dynamic page - init before MCDU -->	
-			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDCLB.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> <!-- dynamic page - init before MCDU -->
-			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> <!-- dynamic page - init before MCDU -->
+			<file>Aircraft/A320-family/Nasal/MCDU/DIRTO.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/LATREV.nas</file> 	
+			<file>Aircraft/A320-family/Nasal/MCDU/VERTREV.nas</file> 	
+			<file>Aircraft/A320-family/Nasal/MCDU/DEPARTURE.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDCLB.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>  <!-- Last Dynamic Page -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
@@ -4336,6 +4522,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/ND/canvas/ND.nas</file>
 		</canvas_nd>
 		<canvas_ecam>
+			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
@@ -4351,6 +4538,9 @@
 		<canvas_qnh>
 			<file>Aircraft/A320-family/Nasal/Displays/CanvasQNH.nas</file>
 		</canvas_qnh>
+		<canvas_qrh>
+			<file>Aircraft/A320-family/Nasal/QRH/QRH.nas</file>
+		</canvas_qrh>
 		<mcdu_scratchpad> <!-- delay till after canvas mcdu -->
 			<file>Aircraft/A320-family/Nasal/FMGC/mcdu-messages.nas</file>
 		</mcdu_scratchpad>
@@ -4378,6 +4568,7 @@
 			<file>Aircraft/A320-family/Nasal/Panels/atc.nas</file>
 		</atc>
 		<atsu>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/Dictionary.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
 		</atsu>
 		<dmc>

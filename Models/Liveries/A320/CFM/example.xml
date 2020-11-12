@@ -17,7 +17,7 @@
 		<EIS2 type="bool">1</EIS2>
 		<company-options>
 			<idle-factor>+0.0</idle-factor>
-			<perf-factor>+1.0</perf-factor>
+			<perf-factor>+1.0</perf-factor> <!-- please see https://www.cockpitseeker.com/wp-content/uploads/goodies/ac/a320/pdf/data/PerfoMonitoring.pdf -->
 		</company-options>
 		<model-options>
 			<registration type="string">AB-CDE</registration>

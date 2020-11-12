@@ -38,26 +38,26 @@ var thunder_listener = func {
     var lightning_distance_norm = std.min(1.0, 1 / math.pow(lightning_distance / 5000.0, 2));
 
     settimer(func {
-        var thunder1 = getprop("sim/sound/thunder1");
-        var thunder2 = getprop("sim/sound/thunder2");
-        var thunder3 = getprop("sim/sound/thunder3");
-        var thunder4 = getprop("sim/sound/thunder4");
-        var vol = getprop("sim/current-view/internal");
+        var thunder1 = getprop("/sim/sound/thunder1");
+        var thunder2 = getprop("/sim/sound/thunder2");
+        var thunder3 = getprop("/sim/sound/thunder3");
+        var thunder4 = getprop("/sim/sound/thunder4");
+        var vol = getprop("/sim/current-view/internal");
         if (!thunder1) {
             thunderCalls = 1;
-            setprop("sim/sound/dist-thunder1", lightning_distance_norm * vol * 1.75);
+            setprop("/sim/sound/dist-thunder1", lightning_distance_norm * vol * 1.75);
         }
         else if (!thunder2) {
             thunderCalls = 2;
-            setprop("sim/sound/dist-thunder2", lightning_distance_norm * vol * 1.75);
+            setprop("/sim/sound/dist-thunder2", lightning_distance_norm * vol * 1.75);
         }
         else if (!thunder3) {
             thunderCalls = 3;
-            setprop("sim/sound/dist-thunder3", lightning_distance_norm * vol * 1.75);
+            setprop("/sim/sound/dist-thunder3", lightning_distance_norm * vol * 1.75);
         }
         else if (!thunder4) {
             thunderCalls = 4;
-            setprop("sim/sound/dist-thunder4", lightning_distance_norm * vol * 1.75);
+            setprop("/sim/sound/dist-thunder4", lightning_distance_norm * vol * 1.75);
         }
         else
             return;

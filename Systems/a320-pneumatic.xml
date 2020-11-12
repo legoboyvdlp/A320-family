@@ -214,7 +214,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi">
             <input>/systems/pneumatics/valves/engine-1-prv-valve-autoclose-psi-cmd</input>
-            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.0666</rate_limit> <!-- 15 seconds -->
         </actuator>
 		
@@ -294,7 +294,7 @@
 		
 		<actuator name="/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi">
             <input>/systems/pneumatics/valves/engine-2-prv-valve-autoclose-psi-cmd</input>
-            <rate_limit sense="decr">100</rate_limit> <!-- Instant -->
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.0666</rate_limit> <!-- 15 seconds -->
         </actuator>
 		
@@ -438,7 +438,7 @@
 		<actuator name="/systems/pneumatics/valves/wing-ice-gnd">
 			<input>/systems/pneumatics/valves/wing-ice-gnd-cmd</input>
 			<rate_limit sense="incr">0.033333</rate_limit> <!-- 30 seconds -->
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/valves/wing-ice-1-cmd">
@@ -981,19 +981,19 @@
 		<actuator name="/systems/pneumatics/precooler/calc/ovht-5">
 			<input>/systems/pneumatics/precooler/calc/ovht-5-true</input>
 			<rate_limit sense="incr">0.2</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<actuator name="/systems/pneumatics/precooler/calc/ovht-15">
 			<input>/systems/pneumatics/precooler/calc/ovht-15-true</input>
 			<rate_limit sense="incr">0.06666</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<actuator name="/systems/pneumatics/precooler/calc/ovht-55">
 			<input>/systems/pneumatics/precooler/calc/ovht-55-true</input>
 			<rate_limit sense="incr">0.018182</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/precooler/ovht-1">
@@ -1094,19 +1094,19 @@
 		<actuator name="/systems/pneumatics/precooler/calc/ovht-5-2">
 			<input>/systems/pneumatics/precooler/calc/ovht-5-true-2</input>
 			<rate_limit sense="incr">0.2</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<actuator name="/systems/pneumatics/precooler/calc/ovht-15-2">
 			<input>/systems/pneumatics/precooler/calc/ovht-15-true-2</input>
 			<rate_limit sense="incr">0.06666</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<actuator name="/systems/pneumatics/precooler/calc/ovht-55-2">
 			<input>/systems/pneumatics/precooler/calc/ovht-55-true-2</input>
 			<rate_limit sense="incr">0.018182</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/precooler/ovht-2">
@@ -1180,7 +1180,7 @@
 		<actuator name="/systems/pneumatics/warnings/apu-bleed-not-on">
 			<input>/systems/pneumatics/warnings/apu-bleed-not-on-cmd</input>
 			<rate_limit sense="incr">0.1</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
 		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open">

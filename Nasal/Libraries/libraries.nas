@@ -7,7 +7,6 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
-
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
@@ -206,6 +205,7 @@ var systemsInit = func {
 	systems.ADIRS.init();
 	systems.eng_init();
 	systems.APUController.init();
+	systems.BrakeSys.reset();
 	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
@@ -254,6 +254,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.HYD.loop();
 	systems.ADIRS.loop();
 	systems.APUController.loop();
+	systems.BrakeSys.update();
 	ecam.ECAM.loop();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
@@ -382,7 +383,7 @@ controls.stepSpoilers = func(step) {
 }
 
 var deploySpeedbrake = func {
-	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
 			pts.Controls.Flight.speedbrake.setValue(1.0);
 		}
@@ -396,7 +397,7 @@ var deploySpeedbrake = func {
 }
 
 var retractSpeedbrake = func {
-	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
 			pts.Controls.Flight.speedbrake.setValue(0.0);
 		}
@@ -456,6 +457,23 @@ setlistener("/controls/flight/elevator-trim", func {
         pts.Controls.Flight.elevatorTrim.setValue(0.296296);
     }
 }, 0, 0);
+
+# For the cockpit rotation and anywhere else you want to use it
+var cmdDegCalc = 0;
+var slewPitchWheel = func(d) {
+	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.ElevatorTrim.cmdDeg.getValue(), 0.1);
+	if (d > 0) { # DN
+		if (cmdDegCalc < 4) {
+			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	} else { # UP
+		if (cmdDegCalc > -13.5) {
+			cmdDegCalc = (cmdDegCalc - 0.1) / 13.5; # Subtract and normalize
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	}
+}
 
 ##########
 # Lights #
