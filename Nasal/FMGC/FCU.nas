@@ -157,13 +157,13 @@ var FCUController = {
 			if (ap1.getBoolValue() or ap2.getBoolValue()) {
 				apOff("soft", 0);
 			} else {
-				if (getprop("it-autoflight/sound/apoffsound") == 1 or getprop("it-autoflight/sound/apoffsound2") == 1) {
-					setprop("it-autoflight/sound/apoffsound", 0);
-					setprop("it-autoflight/sound/apoffsound2", 0);
+				if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
+					setprop("/it-autoflight/sound/apoffsound", 0);
+					setprop("/it-autoflight/sound/apoffsound2", 0);
 				}
-				if (getprop("it-autoflight/output/ap-warning") != 0) {
-					setprop("it-autoflight/output/ap-warning", 0);
-					setprop("ECAM/warnings/master-warning-light", 0);
+				if (getprop("/it-autoflight/output/ap-warning") != 0) {
+					setprop("/it-autoflight/output/ap-warning", 0);
+					ecam.lights[0].setValue(0);
 				}
 			}
 		}
@@ -178,11 +178,11 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (athr.getBoolValue()) {
 				athrOff("soft");
-				setprop("ECAM/warnings/master-caution-light", 1);
+				ecam.lights[1].setValue(1);
 			} else {
-				if (getprop("it-autoflight/output/athr-warning") == 1) {
-					setprop("it-autoflight/output/athr-warning", 0);
-					setprop("ECAM/warnings/master-caution-light", 0);
+				if (getprop("/it-autoflight/output/athr-warning") == 1) {
+					setprop("/it-autoflight/output/athr-warning", 0);
+					ecam.lights[1].setValue(0);
 				}
 			}
 		}
@@ -349,7 +349,7 @@ var FCUController = {
 	},
 	ALTPush: func() {
 		if (me.FCUworking) {
-			# setprop("it-autoflight/input/vert", 8); # He don't work yet m8
+			# setprop("/it-autoflight/input/vert", 8); # He don't work yet m8
 		}
 	},
 	ALTPull: func() {
@@ -523,7 +523,7 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (latMode.getValue() != 0) {
 		showHDG.setBoolValue(1);
-		var hdgnow = getprop("it-autoflight/input/hdg");
-		setprop("modes/fcu/hdg-time", getprop("sim/time/elapsed-sec"));
+		var hdgnow = fmgc.Input.hdg.getValue();
+		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }

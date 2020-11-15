@@ -20,8 +20,6 @@ var apOffTime = 0;
 var athrOffTime = 0;
 var apWarnNode = 0;
 var athrWarnNode = 0;
-var leftMsg = 0;
-var rightMsg = 0;
 var engStrtTimeSw = 0;
 var engStrtTime = 0;
 var page = 0;
@@ -42,7 +40,7 @@ var clrLight = 0;
 var ECAM = {
 	_cachePage: "",
 	init: func() {
-		setprop("systems/gear/landing-gear-warning-light", 0);
+		setprop("/systems/gear/landing-gear-warning-light", 0);
 		page = props.globals.initNode("/ECAM/Lower/page", "door", "STRING");
 		apuLight = props.globals.initNode("/ECAM/Lower/light/apu", 0, "BOOL");
 		bleedLight = props.globals.initNode("/ECAM/Lower/light/bleed", 0, "BOOL");
@@ -61,8 +59,6 @@ var ECAM = {
 		phase = props.globals.initNode("/ECAM/warning-phase", 0, "INT");
 		apOffTime = props.globals.initNode("/ECAM/ap-off-time", 0, "INT");
 		athrOffTime = props.globals.initNode("/ECAM/athr-off-time", 0, "INT");
-		leftMsg = props.globals.initNode("/ECAM/left-msg", "MSG", "STRING");
-		rightMsg = props.globals.initNode("/ECAM/right-msg", "MSG", "STRING");
 		engStrtTimeSw = props.globals.initNode("/ECAM/engine-start-time-switch", 0, "BOOL");
 		engStrtTime = props.globals.initNode("/ECAM/engine-start-time", 0.0, "DOUBLE");
 		apWarnNode = props.globals.initNode("/it-autoflight/output/ap-warning", 0, "INT");
@@ -223,7 +219,7 @@ var SystemDisplay = {
 	},
 	update: func() {
 		phase = pts.ECAM.fwcWarningPhase.getValue();
-		APUMaster = pts.APU.masterSw.getValue();
+		APUMaster = systems.APUNodes.Controls.master.getValue();
 		APURPM = pts.APU.rpm.getValue();
 		engModeSel = pts.Controls.Engines.startSw.getValue();
 		elapsedSec = pts.Sim.Time.elapsedSec.getValue();

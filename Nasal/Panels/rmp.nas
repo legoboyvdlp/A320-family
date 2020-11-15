@@ -395,23 +395,23 @@ var update_chan_sel = func(rmp_no) {
 
 var transfer = func(rmp_no) {
 	rmp_no = rmp_no - 1;
-	var sel_chan = getprop("systems/radio/rmp[" ~ rmp_no ~ "]/sel_chan");
-	var sel_crs = getprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs");
+	var sel_chan = getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/sel_chan");
+	var sel_crs = getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/select-crs");
 
 	if (string.match(sel_chan, "vhf[1-3]")) {
 		var mod1 = int(string.replace(sel_chan, "vhf", ""));
 		var mod = mod1 - 1;
 
 		var mem = getprop("instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz");
-		setprop("instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz", getprop("systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby"));
-		setprop("systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby", mem);
+		setprop("instrumentation/comm[" ~ mod ~ "]/frequencies/selected-mhz", getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby"));
+		setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby", mem);
 	} elsif (string.match(sel_chan, "hf[1-2]")) {
 		var mod1 = int(string.replace(sel_chan, "hf", ""));
 		var mod = mod1 - 1;
 		
 		var mem = systems.HFS[mod].selectedChannelKhz;
-		systems.HFS[mod].selectChannel(getprop("systems/radio/rmp[" ~ rmp_no ~ "]/hf" ~ mod1 ~ "-standby"));
-		setprop("systems/radio/rmp[" ~ rmp_no ~ "]/hf" ~ mod1 ~ "-standby", mem);
+		systems.HFS[mod].selectChannel(getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/hf" ~ mod1 ~ "-standby"));
+		setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/hf" ~ mod1 ~ "-standby", mem);
 	} elsif (sel_chan == "adf") {
 		var mem = getprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/selected-khz");
 		setprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/selected-khz", getprop("instrumentation/adf[" ~ rmp_no ~ "]/frequencies/standby-khz"));
@@ -420,21 +420,21 @@ var transfer = func(rmp_no) {
 	} elsif (sel_chan == "vor") {
 		if (sel_crs) {
 			setprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/standby-mhz", getprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/selected-mhz"));
-			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 0);
+			setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 0);
 			update_displays_nav(rmp_no + 3);
 		} else {
 			setprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/selected-mhz", getprop("instrumentation/nav[" ~ (rmp_no + 2) ~ "]/frequencies/standby-mhz"));
-			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 1);
+			setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 1);
 			update_displays_nav(rmp_no + 3);
 		}
 	} elsif (sel_chan == "ls") {
 		if (sel_crs) {
 			setprop("instrumentation/nav[0]/frequencies/standby-mhz", getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
-			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 0);
+			setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 0);
 			update_displays_nav(1);
 		} else {
 			setprop("instrumentation/nav[0]/frequencies/selected-mhz", getprop("instrumentation/nav[0]/frequencies/standby-mhz"));
-			setprop("systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 1);
+			setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/select-crs", 1);
 			update_displays_nav(1);
 		}
 	}

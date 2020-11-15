@@ -935,6 +935,21 @@
 			<max-dist>100.0</max-dist>
 		</retard>
 		
+		<retard>
+			<name>retard2</name>
+			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>/sim/sound/warnings/retard</property> <!-- must be EMER CANCEL -->
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>8.0</factor>
+			</volume>
+			<reference-dist>20.0</reference-dist>
+			<max-dist>100.0</max-dist>
+		</retard>
+		
 		<apoff>
 			<name>apoff-looped</name>
 			<mode>looped</mode>
@@ -1529,6 +1544,20 @@
 		</switch>
 		
 		<switch>
+            <name>Pushbutton</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/A320-family/Sounds/Cockpit/pushbutton.wav</path>
+            <condition>
+				<property>/sim/sounde/pushbutton</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+				<factor>0.25</factor>
+            </volume>
+        </switch>
+		
+		<switch>
 			<name>Flaps Lever</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/A320_flaplever.wav</path>
@@ -1660,10 +1689,10 @@
 			<name>RelayBatt1</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
-			<property>/systems/electrical/sources/bat-1/contact</property>
+			<property>/sim/sounde/relay-batt-1</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.8</factor>
+				<factor>0.4</factor>
 			</volume>
 		</relay>
 		
@@ -1671,10 +1700,10 @@
 			<name>RelayBatt2</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-battery.wav</path>
-			<property>/systems/electrical/sources/bat-2/contact</property>
+			<property>/sim/sounde/relay-batt-2</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.8</factor>
+				<factor>0.4</factor>
 			</volume>
 		</relay>
 		
@@ -1682,7 +1711,7 @@
 			<name>RelayEXT</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-external.wav</path>
-			<property>/systems/electrical/relay/ext-epc/contact-pos</property>
+			<property>/sim/sounde/relay-ext</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>
@@ -1693,7 +1722,7 @@
 			<name>RelayAPU</name>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/relay-apu.wav</path>
-			<property>/systems/electrical/relay/apu-glc/contact-pos</property>
+			<property>/sim/sounde/relay-apu</property>
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>0.8</factor>

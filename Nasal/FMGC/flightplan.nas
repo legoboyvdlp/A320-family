@@ -167,7 +167,6 @@ var flightPlanController = {
 			me.currentToWptIndex.setValue(0);
 			me.arrivalIndex = [0, 0, 0]; # reset arrival index calculations
 		}
-		
 		me.addDiscontinuity(1, plan);
 		# reset mcdu if it exists
 		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }
@@ -759,9 +758,11 @@ var flightPlanController = {
 		fmgc.windController.updatePlans();
 			
 		# push update to fuel
-		if (getprop("/FMGC/internal/block-confirmed")) {
-			setprop("/FMGC/internal/fuel-calculating", 0);
-			setprop("/FMGC/internal/fuel-calculating", 1);
+		if (fmgc.FMGCInternal.blockConfirmed) {
+			fmgc.FMGCInternal.fuelCalculating = 0;
+			fmgc.fuelCalculating.setValue(0);
+			fmgc.FMGCInternal.fuelCalculating = 1;
+			fmgc.fuelCalculating.setValue(1);
 		}
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
@@ -820,7 +821,7 @@ var flightPlanController = {
 		
 		if (me.flightplans[2].getWP(me.arrivalIndex[2]) == nil or me.flightplans[2].getWP(1) == nil) {
 			me.arrivalDist = 9999;
-			print(me.arrivalIndex[2]);
+			#print(me.arrivalIndex[2]);
 		} else {
 			me.arrivalDist = me.flightplans[2].getWP(me.arrivalIndex[2]).distance_along_route - me.flightplans[2].getWP(1).leg_distance + me._arrivalDist;
 		}

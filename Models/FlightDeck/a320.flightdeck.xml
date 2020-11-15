@@ -6174,9 +6174,8 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>controls/flight/elevator-trim</property>
-				<step>0.01</step>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(1);</script>
 			</binding>
 		</action>
 		<action>
@@ -6184,9 +6183,8 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>controls/flight/elevator-trim</property>
-				<step>-0.01</step>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(-1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -6977,6 +6975,65 @@
 			</binding>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ecam_att_hdg</object-name>
+		<object-name>ecam_att_hdg.mark</object-name>
+		<factor>-30</factor>
+		<property>controls/navigation/switching/att-hdg</property>
+		<axis>
+			<x1-m>-0.432428</x1-m>
+			<y1-m>-0.067552</y1-m>
+			<z1-m>-0.063695</z1-m>
+			<x2-m>-0.432195</x2-m>
+			<y2-m>-0.067552</y2-m>
+			<z2-m>-0.062285</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>ecam_att_hdg</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.SwitchingPanel.Switches.attHdg.getValue() != 1) {
+						systems.SwitchingPanel.doAttHdg(systems.SwitchingPanel.Switches.attHdg.getValue() + 1);
+					} else {
+						systems.SwitchingPanel.doAttHdg(-1);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>2</button>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.SwitchingPanel.Switches.attHdg.getValue() != -1) {
+						systems.SwitchingPanel.doAttHdg(systems.SwitchingPanel.Switches.attHdg.getValue() - 1);
+					} else {
+						systems.SwitchingPanel.doAttHdg(1);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+	</animation>
 
 	<!-- Z Colors/Effects -->
 	<animation>
@@ -7252,7 +7309,129 @@
 		<object-name>iesi_btn_plus</object-name>
 		<object-name>iesi_btn_rst</object-name>
 	</effect>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_btn_rst</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/instrumentation/iesi/att-reset-cmd</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/iesi/att-reset-cmd</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
 
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_btn_rst</object-name>
+		<property>/instrumentation/iesi/att-reset-cmd</property>
+		<factor>0.0025</factor>
+		<axis>
+			<x1-m>-0.53312</x1-m>
+			<y1-m>-0.16166</y1-m>
+			<z1-m>0.16956</z1-m>
+			<x2-m>-0.53977</x2-m>
+			<y2-m>-0.16166</y2-m>
+			<z2-m>0.16765</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_btn_plus</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/instrumentation/iesi/plus</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/iesi</property>
+				<step>0.05</step>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/iesi/plus</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_btn_plus</object-name>
+		<property>/instrumentation/iesi/plus</property>
+		<factor>0.0025</factor>
+		<axis>
+			<x1-m>-0.53312</x1-m>
+			<y1-m>-0.16166</y1-m>
+			<z1-m>0.16956</z1-m>
+			<x2-m>-0.53977</x2-m>
+			<y2-m>-0.16166</y2-m>
+			<z2-m>0.16765</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_btn_minus</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/instrumentation/iesi/minus</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/iesi</property>
+				<step>-0.05</step>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/iesi/minus</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_btn_minus</object-name>
+		<property>/instrumentation/iesi/minus</property>
+		<factor>0.0025</factor>
+		<axis>
+			<x1-m>-0.53312</x1-m>
+			<y1-m>-0.16166</y1-m>
+			<z1-m>0.16956</z1-m>
+			<x2-m>-0.53977</x2-m>
+			<y2-m>-0.16166</y2-m>
+			<z2-m>0.16765</z2-m>
+		</axis>
+	</animation>
+	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
 <!--		<object-name>clock</object-name>-->
@@ -8459,6 +8638,50 @@
 				<value>1</value>
 			</binding>
 		</action>
+	</animation>
+	
+	<!-- WX Radar -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>radar_sys</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/instrumentation/efis[0]/inputs/wxr</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/instrumentation/efis[1]/inputs/wxr</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/instrumentation/wxr/enabled</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>radar_sys</object-name>
+		<factor>-20</factor>
+		<property>/instrumentation/wxr/enabled</property>
+		<center>
+			<x-m>0.020282</x-m>
+			<y-m>-0.210647</y-m>
+			<z-m>-0.140496</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
 	</animation>
 
 </PropertyList>

@@ -213,6 +213,7 @@ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	<system file="a320-adr"/>
 	<system file="a320-apu"/>
 	<system file="a320-fmgc"/>
+	<system file="a320-misc"/>
 	
 	<flight_control name="none"/>
 	<aerodynamics file="Systems/a320-aerodynamics.xml"/>

@@ -71,7 +71,7 @@ var windCLBPage = {
 				me.L5 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			} else {
-				me.L5 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L5 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][4] = 1;
 			}
 		} else {
@@ -84,7 +84,7 @@ var windCLBPage = {
 				me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			} else {
-				me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][3] = 1;
 			}
 		} else {
@@ -97,7 +97,7 @@ var windCLBPage = {
 				me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			} else {
-				me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][2] = 1;
 			}
 		} else {
@@ -110,7 +110,7 @@ var windCLBPage = {
 				me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			} else {
-				me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+				me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 				me.fontMatrix[0][1] = 1;
 			}
 		} else {
@@ -123,7 +123,7 @@ var windCLBPage = {
 				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			} else {
-				me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+				me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 				me.fontMatrix[0][0] = 1;
 			}
 		}
@@ -178,9 +178,11 @@ var windCLBPage = {
 			} else {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 				# push update to fuel
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();
@@ -316,9 +318,11 @@ var windCLBPage = {
 			} else {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 				# push update to fuel
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();

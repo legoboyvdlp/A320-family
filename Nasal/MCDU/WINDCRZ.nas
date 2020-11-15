@@ -98,7 +98,7 @@ var windCRZPage = {
 					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][3] = 1;
 				} else {
-					me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][3] = 1;
 				}
 			} else {
@@ -111,7 +111,7 @@ var windCRZPage = {
 					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][2] = 1;
 				} else {
-					me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][2] = 1;
 				}
 			} else {
@@ -124,7 +124,7 @@ var windCRZPage = {
 					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][1] = 1;
 				} else {
-					me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][1] = 1;
 				}
 			} else {
@@ -137,7 +137,7 @@ var windCRZPage = {
 					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
 				} else {
-					me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+					me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
 				}
 			}
@@ -157,7 +157,7 @@ var windCRZPage = {
 					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][3] = 1;
 				} else {
-					me.L4 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][3] = 1;
 				}
 			} else {
@@ -170,7 +170,7 @@ var windCRZPage = {
 					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][2] = 1;
 				} else {
-					me.L3 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][2] = 1;
 				}
 			} else {
@@ -183,7 +183,7 @@ var windCRZPage = {
 					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 					me.fontMatrix[0][1] = 1;
 				} else {
-					me.L2 = ["[  ]/[  ]/[   ]", nil, "blu"];
+					me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
 					me.fontMatrix[0][1] = 1;
 				}
 			} else {
@@ -196,7 +196,7 @@ var windCRZPage = {
 					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
 				} else {
-					me.L1 = ["[  ]/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+					me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
 					me.fontMatrix[0][0] = 1;
 				}
 			}
@@ -269,9 +269,11 @@ var windCRZPage = {
 			} else {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 				# push update to fuel
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();
@@ -504,9 +506,11 @@ var windCRZPage = {
 			} else {
 				fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 				# push update to fuel
-				if (getprop("/FMGC/internal/block-confirmed")) {
-					setprop("/FMGC/internal/fuel-calculating", 0);
-					setprop("/FMGC/internal/fuel-calculating", 1);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
 				}
 			}
 			me.reload();
@@ -519,27 +523,31 @@ var windCRZPage = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			computer_temp = me.computer;
 		}
-		if (me.cur_location < size(fmgc.windController.nav_indicies[computer_temp]) - 1) {
-			me.cur_location = me.cur_location + 1;
-		} else {
-			me.cur_location = 0;
+		if (size(fmgc.windController.nav_indicies[computer_temp]) > 1) {
+			if (me.cur_location < size(fmgc.windController.nav_indicies[computer_temp]) - 1) {
+				me.cur_location = me.cur_location + 1;
+			} else {
+				me.cur_location = 0;
+			}
+			me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+			me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
+			me.reload();
 		}
-		me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
-		me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
-		me.reload();
 	},
 	pushButtonDown: func() {
 		var computer_temp = 2;
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 			computer_temp = me.computer;
 		}
-		if (me.cur_location > 0) {
-			me.cur_location = me.cur_location - 1;
-		} else {
-			me.cur_location = size(fmgc.windController.nav_indicies[computer_temp]) - 1;
+		if (size(fmgc.windController.nav_indicies[computer_temp]) > 1) {
+			if (me.cur_location > 0) {
+				me.cur_location = me.cur_location - 1;
+			} else {
+				me.cur_location = size(fmgc.windController.nav_indicies[computer_temp]) - 1;
+			}
+			me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+			me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
+			me.reload();
 		}
-		me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
-		me.waypoint = fmgc.flightPlanController.flightplans[computer_temp].getWP(me.match_location);
-		me.reload();
 	}
 };
