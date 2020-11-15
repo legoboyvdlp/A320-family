@@ -35,8 +35,8 @@ var _loop = func() {
 	var y = 0.0;
 	var z = 0.0;
 	# Rollspeed is only adequate if the wheel is touching the ground.
-	if (getprop("gear/gear[0]/wow")) {
-		var V = getprop("gear/gear[0]/rollspeed-ms") * 3.6;
+	if (getprop("/gear/gear[0]/wow")) {
+		var V = getprop("/gear/gear[0]/rollspeed-ms") * 3.6;
 		var deltaV = getprop("/sim/model/autopush/target-speed-km_h") - V;
 		var minus_dV = _V - V;
 		var time = getprop("/sim/time/elapsed-sec");
@@ -59,9 +59,9 @@ var _loop = func() {
 		_V = V;
 		_time = time;
 		if (!_yasim) {
-			force = accel * getprop("fdm/jsbsim/inertia/weight-lbs") * _unitconv;
+			force = accel * getprop("/fdm/jsbsim/inertia/weight-lbs") * _unitconv;
 		} else {
-			force = accel * getprop("fdm/yasim/gross-weight-lbs") * _unitconv;
+			force = accel * getprop("/fdm/yasim/gross-weight-lbs") * _unitconv;
 		}
 		var pitch = getprop("/sim/model/autopush/pitch-deg") * D2R;
 		z = math.sin(pitch);
@@ -85,12 +85,13 @@ var _loop = func() {
 }
 
 var _timer = maketimer(0.0167, func{_loop()});
+_timer.simulatedTime = 1;
 
 var _start = func() {
 	# Else overwritten by dialog.
 	settimer(func() {
 		setprop("/sim/model/autopush/target-speed-km_h", 0.0)
-	}, 0.1);
+	}, 0.1, 1);
 	_K_p = getprop("/sim/model/autopush/K_p");
 	_F_p = getprop("/sim/model/autopush/F_p");
 	_K_i = getprop("/sim/model/autopush/K_i");
