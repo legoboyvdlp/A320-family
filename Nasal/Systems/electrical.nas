@@ -90,6 +90,7 @@ var ELEC = {
 		glc2: props.globals.getNode("/systems/electrical/relay/gen-2-glc/contact-pos"),
 		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
 		tr2Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/contact-pos"),
+		relay7XB: props.globals.getNode("/systems/electrical/sources/si-1/inverter-control/relay-7xb"),
 	},
 	SomeThing: {
 		emerGenSignal: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-gen-operate"),
