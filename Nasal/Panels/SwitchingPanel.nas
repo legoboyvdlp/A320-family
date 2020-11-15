@@ -25,6 +25,16 @@ var SwitchingPanel = {
 			dmc.DMController.DMCs[1].changeActiveADIRS(1);
 		}
 	},
+	doAttHdg: func(newAttHdg) {
+		if (newAttHdg < -1 or newAttHdg > 1) { return; }
+		me.Switches.attHdg.setValue(newAttHdg);
+		foreach (var predicate; keys(canvas_nd.ND_1.NDCpt.predicates)) {
+			call(canvas_nd.ND_1.NDCpt.predicates[predicate]);
+		}
+		foreach (var predicate; keys(canvas_nd.ND_2.NDFo.predicates)) {
+			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
+		}
+	},
 	doEisDMC: func(newDMC) {
 		if (newDMC < -1 or newDMC > 1) { return; }
 		me.Switches.eisDMC.setValue(newDMC);

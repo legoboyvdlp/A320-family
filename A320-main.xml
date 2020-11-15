@@ -5,17 +5,56 @@
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
-	
+
 		<animation>
 			<fire-services type="bool">0</fire-services>
 		</animation>
 		
 		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
+		<authors>
+			<author>
+				<name>Josh Davidson</name>
+				<description>Flight Dynamics, Systems, Displays</description>
+				<nick>Octal450</nick>
+			</author>
+			<author>
+				<name>Jonathan Redpath</name>
+				<description>Systems, Displays, FMGC</description>
+				<nick>legoboyvdlp</nick>
+			</author>
+			<author>
+				<name>merspieler</name>
+				<description>Systems, Displays</description>
+			</author>
+			<author>
+				<name>Matthew Maring</name>
+				<description>Fuel predictions, FMGC</description>
+				<nick>mattmaring</nick>
+			</author>
+			<author>
+				<name>Thorsten Herrmann</name>
+				<description>Cockpit 3D model</description>
+				<nick>TH-555</nick>
+			</author>
+			<author>
+				<name>Semir Gebran</name>
+				<description>3D model</description>
+				<nick>CaptB</nick>
+			</author>
+			<author>
+				<name>vezza</name>
+				<description>Systems, Displays</description>
+			</author>
+		</authors>
+		
 		<checklists include="A32X-Checklists.xml"/>
 		
-		<status>Pre V1.0</status>
-		
+		<description>Airbus A320</description>
+		<long-description>The Airbus A320 is a family of narrow body airliners built by Airbus Industrie. First flown in 1987,
+		the aircraft is the most produced airliner ever, with over 9,500 built to date. It was one of the first airliners
+		to use digital flight controls and fly by wire, and a fully glass cockpit.</long-description>
+  
 		<hud n="0">
 			<enable3d n="0">false</enable3d>
 			<enable3d n="1">false</enable3d>
@@ -130,13 +169,15 @@
 				<path>Splash/wing3.png</path>
 			</preview>
 		</previews>
-	
+		
 		<rating>
 			<FDM type="int">4</FDM>
 			<systems type="int">5</systems>
 			<cockpit type="int">5</cockpit>
 			<model type="int">4</model>
 		</rating>
+		
+		<status>Pre V1.0</status>
 		
 		<tags>
 			<tag>transport</tag>
@@ -152,6 +193,13 @@
 			<tag>jet</tag>
 			<tag>2-engine</tag>
 		</tags>
+		
+		<urls>
+			<home-page>http://wiki.flightgear.org/Airbus_A320_Family</home-page>
+			<support>https://forum.flightgear.org</support>
+			<wikipedia>https://en.wikipedia.org/wiki/Airbus_A320_family</wikipedia>
+			<code-repository>https://github.com/legoboyvdlp/A320-family</code-repository>
+		</urls>
 		
 		<systems n="0">
 			<electrical>
@@ -512,8 +560,33 @@
 		</current-view>
 		
 		 <minimum-fg-version>2019.2.0</minimum-fg-version>
+
+		<navdb>
+			<min-runway-length-ft>3000</min-runway-length-ft>
+		</navdb>
+
 	</sim>
 	
+	<aircraft>
+		<icao>
+			<wake-turbulence-category>M</wake-turbulence-category>
+			<type type="string">A320</type>
+			<equipment type="string">SDE2FGHIRWXY</equipment>
+			<surveillance type="string">S</surveillance>
+		</icao>
+		<performance>
+			<minimum>
+				<takeoff-length-ft type="int">4500</takeoff-length-ft>
+				<landing-length-ft type="int">4500</landing-length-ft>
+			</minimum>
+			<maximum>
+				<altitude-ft type="int">41000</altitude-ft>
+				<mach type="double">0.82</mach>
+				<airspeed-knots type="int">350</airspeed-knots>
+			</maximum>
+		</performance>
+	</aircraft>
+
 	<consumables>
 		<fuel>
 			<tank n="0">
@@ -542,6 +615,39 @@
 			</tank>
 		</fuel>
 	</consumables>
+	
+	<ECAM>
+		<Upper>
+			<FlapX type="double">0</FlapX>
+			<FlapY type="double">0</FlapY>
+			<SlatX type="double">0</SlatX>
+			<SlatY type="double">0</SlatY>
+			<FlapXtrans type="double">0</FlapXtrans>
+			<FlapYtrans type="double">0</FlapYtrans>
+			<SlatXtrans type="double">0</SlatXtrans>
+			<SlatYtrans type="double">0</SlatYtrans>
+		</Upper>
+		<msg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</msg>
+		<rightmsg>
+			<line1 type="string"></line1>
+			<line2 type="string"></line2>
+			<line3 type="string"></line3>
+			<line4 type="string"></line4>
+			<line5 type="string"></line5>
+			<line6 type="string"></line6>
+			<line7 type="string"></line7>
+			<line8 type="string"></line8>
+		</rightmsg>
+	</ECAM>
 	
 	<environment>
 		<aircraft-effects>
@@ -1114,6 +1220,7 @@
 		</comm>
 		<electrical n="0">
 			<bus>
+				<ac-ess type="double">0</ac-ess>
 				<dc-1 type="double">0</dc-1>
 				<dc-2 type="double">0</dc-2>
 			</bus>
@@ -1386,6 +1493,7 @@
 		</pneumatics>
 		
 		<pressurization>
+			<cabinalt-norm type="double">0</cabinalt-norm>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
 		</pressurization>
@@ -4268,6 +4376,9 @@
 	</aircraft>
 	
 	<nasal>
+        <notifications>
+            <file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
+        </notifications>
 		<pts>
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
@@ -4375,6 +4486,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/ND/canvas/ND.nas</file>
 		</canvas_nd>
 		<canvas_ecam>
+			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>

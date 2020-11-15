@@ -25,9 +25,9 @@ var FADEC = {
 		eng1Time: props.globals.initNode("/systems/fadec/eng1-master-time", -300, "DOUBLE"),
 		eng1Off: props.globals.initNode("/systems/fadec/eng1-off-power", 0, "BOOL"),
 		eng1Counting: 0,
-		epr: 0,
+		epr: props.globals.initNode("/systems/fadec/eng1/epr", 0, "BOOL"),
 		egt: 0,
-		n1: 0,
+		n1: props.globals.initNode("/systems/fadec/eng1/n1", 0, "BOOL"),
 		n2: 0,
 		ff: 0,
 	},
@@ -35,9 +35,9 @@ var FADEC = {
 		eng2Time: props.globals.initNode("/systems/fadec/eng2-master-time", -300, "DOUBLE"),
 		eng2Off: props.globals.initNode("/systems/fadec/eng2-off-power", 0, "BOOL"),
 		eng2Counting: 0,
-		epr: 0,
+		epr: props.globals.initNode("/systems/fadec/eng2/epr", 0, "BOOL"),
 		egt: 0,
-		n1: 0,
+		n1: props.globals.initNode("/systems/fadec/eng2/n1", 0, "BOOL"),
 		n2: 0,
 		ff: 0,
 	},
@@ -148,28 +148,28 @@ var FADEC = {
 		
 		if (powered1 or powerup or me.Eng1.eng1Off.getValue()) {
 			if (me.Modes.n1Mode1.getValue() == 0) {
-				me.Eng1.epr = 1;
+				me.Eng1.epr.setValue(1);
 			} else {
-				me.Eng1.epr = 0;
+				me.Eng1.epr.setValue(0);
 			}
 			me.Eng1.egt = 1;
 			me.Eng1.ff = 1;
 		} else {
-			me.Eng1.epr = 0;
+			me.Eng1.epr.setValue(0);
 			me.Eng1.egt = 0;
 			me.Eng1.ff = 0;
 		}
 		
 		if (powered2 or powerup or me.Eng2.eng2Off.getValue()) {
 			if (me.Modes.n1Mode2.getValue() == 0) {
-				me.Eng2.epr = 1;
+				me.Eng2.epr.setValue(1);
 			} else {
-				me.Eng2.epr = 0;
+				me.Eng2.epr.setValue(0);
 			}
 			me.Eng2.egt = 1;
 			me.Eng2.ff = 1;
 		} else {
-			me.Eng2.epr = 0;
+			me.Eng2.epr.setValue(0);
 			me.Eng2.egt = 0;
 			me.Eng2.ff = 0;
 		}
@@ -180,15 +180,15 @@ var FADEC = {
 		N22 = pts.Engines.Engine.n2Actual[1].getValue();
 		
 		if (powered1 and N11 >= 3.5) {
-			me.Eng1.n1 = 1;
+			me.Eng1.n1.setValue(1);
 		} else {
-			me.Eng1.n1 = 0;
+			me.Eng1.n1.setValue(0);
 		}
 		
 		if (powered2 and N12 >= 3.5) {
-			me.Eng2.n1 = 1;
+			me.Eng2.n1.setValue(1);
 		} else {
-			me.Eng2.n1 = 0;
+			me.Eng2.n1.setValue(0);
 		}
 		
 		if (powered1 and N21 >= 3.5) {

@@ -7,6 +7,9 @@
 var ALWAYS = func 1;
 var NOTHING = func nil;
 
+var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
+var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
+
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
 		if( family == "Liberation Sans" and weight == "normal" )
@@ -86,7 +89,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible=nd.get_switch("toggle_weather") and 
 					nd.get_switch("toggle_weather_live") and 
-					nd.get_switch("toggle_display_mode") != "PLAN";
+					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible(visible);
 				if (visible) {
 					layer.update(); 
@@ -105,7 +108,7 @@ canvas.NDStyles["Airbus"] = {
 				#print("Running storms predicate");
 				var visible=nd.get_switch("toggle_weather") and 
 					!nd.get_switch("toggle_weather_live") and 
-					nd.get_switch("toggle_display_mode") != "PLAN";
+					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible(visible);
 				if (visible) {
 					#print("storms update requested! (timer issue when closing the dialog?)");
@@ -122,7 +125,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_waypoints") and 
 					  nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					  (nd.rangeNm() <= 40);
+					  (nd.rangeNm() <= 40)  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible)
 					layer.update();
@@ -151,7 +154,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range",{rate_hz: 2}],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);# and nd.get_switch("toggle_fplan");
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -237,7 +240,7 @@ canvas.NDStyles["Airbus"] = {
 					"toggle_display_mode"],
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_airports") and 
-					  nd.in_mode("toggle_display_mode", ["MAP"]);
+					  nd.in_mode("toggle_display_mode", ["MAP"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -260,7 +263,7 @@ canvas.NDStyles["Airbus"] = {
 				# toggle visibility here
 				var visible = nd.get_switch("toggle_vor") and 
 					  nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					  (nd.rangeNm() <= 40);
+					  (nd.rangeNm() <= 40) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -289,7 +292,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_dme") and 
 					nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					(nd.rangeNm() <= 40);
+					(nd.rangeNm() <= 40) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				# toggle visibility here
 				layer.group.setVisible( visible );
 				if (visible) {
@@ -322,7 +325,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				var visible = nd.get_switch("toggle_ndb") and 
 					  nd.in_mode("toggle_display_mode", ["MAP"]) and 
-					  (nd.rangeNm() <= 40);
+					  (nd.rangeNm() <= 40) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				# print("Running vor layer predicate");
 				# toggle visibility here
 				layer.group.setVisible( visible );
@@ -389,7 +392,6 @@ canvas.NDStyles["Airbus"] = {
 				var visible = nd.get_switch("toggle_traffic");
 				layer.group.setVisible( visible );
 				if (visible) {
-					#print("Updating MapStructure ND layer: TFC");
 					layer.update();
 				}
 			}, # end of layer update predicate
@@ -400,7 +402,7 @@ canvas.NDStyles["Airbus"] = {
 			update_on:["toggle_range","toggle_display_mode"],
 			predicate: func(nd, layer) {
 				var visible = (nd.rangeNm() <= 40) and 
-						nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) ;
+						nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ;
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -420,7 +422,7 @@ canvas.NDStyles["Airbus"] = {
 			always_update: 1,
 			update_on:["toggle_range","toggle_display_mode","toggle_wpt_idx"],
 			predicate: func(nd, layer) {
-				var visible= nd.in_mode("toggle_display_mode", ["MAP","PLAN"]);
+				var visible= nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -452,7 +454,7 @@ canvas.NDStyles["Airbus"] = {
 			update_on:["toggle_range","toggle_display_mode", "toggle_cstr",
 				   "toggle_wpt_idx"],
 			predicate: func(nd, layer) {
-				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]));
+				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -517,7 +519,7 @@ canvas.NDStyles["Airbus"] = {
 				missed_constraint_color: [1,0.57,0.14]
 			},
 			predicate: func(nd, layer) {
-				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]));
+				var visible= (nd.in_mode("toggle_display_mode", ["MAP","PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.toggle_cstr = nd.get_switch("toggle_cstr");
@@ -542,7 +544,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range",{rate_hz: 2}],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -563,7 +565,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range"],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]);
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -593,7 +595,7 @@ canvas.NDStyles["Airbus"] = {
 			always_update: 1,
 			update_on:["toggle_display_mode"], 
 			predicate: func(nd, layer) {
-				 var visible = nd.get_switch("toggle_display_mode") == "PLAN";
+				 var visible = (nd.get_switch("toggle_display_mode") == "PLAN" and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)));
 				 layer.group.setVisible( visible );
 				 if (visible) {
 					layer.update();
@@ -672,6 +674,24 @@ canvas.NDStyles["Airbus"] = {
 			}
 		},
 		{
+			id: "nd_warn_memo",
+			impl: {
+				init: func(nd, symbol),
+				predicate: ALWAYS,
+				is_true: func(nd) nd.symbols.nd_warn_memo.hide(),
+				is_false: func(nd),
+			},
+		},
+		{
+			id: "nd_warn_msgbox",
+			impl: {
+				init: func(nd, symbol),
+				predicate: ALWAYS,
+				is_true: func(nd) nd.symbols.nd_warn_msgbox.hide(),
+				is_false: func(nd),
+			},
+		},
+		{
 			# TODO: taOnly doesn"t need to use getprop polling in update(), use a listener instead!
 			id: "taOnly", # the SVG ID
 			impl: { # implementation hash
@@ -742,7 +762,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
 						getprop("/FMGC/flightplan[2]/active") and 
-						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveId.setText(getprop("/FMGC/flightplan[2]/current-leg"));
 					nd.symbols.wpActiveId.show();
@@ -756,7 +776,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
 						getprop("/FMGC/flightplan[2]/active") and 
-						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
 					var deg = nil;
@@ -779,9 +799,10 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDist",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
+				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
 						getprop("/FMGC/flightplan[2]/active") and 
-						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+						and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					var dst = getprop("/FMGC/flightplan[2]/current-leg-dist");
 					nd.symbols.wpActiveDist.setText(sprintf("%3.01f",dst));
@@ -794,7 +815,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDistLbl",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveDistLbl.show();
 					if(getprop("/FMGC/flightplan[2]/current-leg-dist") > 1000)
@@ -807,7 +829,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "eta",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]),
+				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					var etaSec = getprop("/sim/time/utc/day-seconds")+
 						getprop("/autopilot/route-manager/wp/eta-seconds");
@@ -901,10 +924,69 @@ canvas.NDStyles["Airbus"] = {
 			},
 		},
 		{
+			id:"nd_warn_hdg",
+			impl: {
+				init: func(nd,symbol),
+				common: func(nd),
+				predicate: func(nd) (nd.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != nd.attitude_heading_setting)),
+				is_true: func(nd) {
+					nd.symbols.nd_warn_hdg.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.nd_warn_hdg.hide();
+				},
+			},
+		},
+		{
+			id:"nd_warn_map",
+			impl: {
+				init: func(nd,symbol),
+				common: func(nd),
+				predicate: func(nd) (nd.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != nd.attitude_heading_setting)),
+				is_true: func(nd) {
+					nd.symbols.nd_warn_map.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.nd_warn_map.hide();
+				},
+			},
+		},
+		{
+			id:"unavailARC",
+			impl: {
+				init: func(nd,symbol),
+				common: func(nd),
+				predicate: func(nd) (!nd.get_switch("toggle_centered") and nd.get_switch("toggle_display_mode") != "PLAN"
+					and (nd.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != nd.attitude_heading_setting))),
+				is_true: func(nd) {
+					nd.symbols.unavailARC.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.unavailARC.hide();
+				},
+			},
+		},
+		{
+			id:"unavailNAV",
+			impl: {
+				init: func(nd,symbol),
+				common: func(nd),
+				predicate: func(nd) (nd.get_switch("toggle_centered")
+					and (nd.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != nd.attitude_heading_setting))),
+				is_true: func(nd) {
+					nd.symbols.unavailNAV.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.unavailNAV.hide();
+				},
+			},
+		},
+		{
 			id:"compass",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (!nd.get_switch("toggle_centered") and	nd.get_switch("toggle_display_mode") != "PLAN"),
+				predicate: func(nd) (!nd.get_switch("toggle_centered") and nd.get_switch("toggle_display_mode") != "PLAN"
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.compass.setRotation(-nd.userHdgTrk*D2R);
 					nd.symbols.compass.show()
@@ -916,7 +998,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"compassApp",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.get_switch("toggle_centered") and  nd.get_switch("toggle_display_mode") != "PLAN"),
+				predicate: func(nd) (nd.get_switch("toggle_centered") and  nd.get_switch("toggle_display_mode") != "PLAN"
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.compassApp.setRotation(-nd.userHdgTrk*D2R);
 					nd.symbols.compassApp.show()
@@ -928,7 +1011,7 @@ canvas.NDStyles["Airbus"] = {
 			id:"northUp",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) nd.get_switch("toggle_display_mode") == "PLAN",
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "PLAN" and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) nd.symbols.northUp.show(),
 				is_false: func(nd) nd.symbols.northUp.hide(),
 			}, # of northUp.impl
@@ -937,7 +1020,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"planArcs",
 			impl: {
 			init: func(nd,symbol),
-				predicate: func(nd) ((nd.in_mode("toggle_display_mode", ["APP","VOR","PLAN"])) or ((nd.get_switch("toggle_display_mode") == "MAP") and (nd.get_switch("toggle_centered")))),
+				predicate: func(nd) (((nd.in_mode("toggle_display_mode", ["APP","VOR","PLAN"])) or ((nd.get_switch("toggle_display_mode") == "MAP") and (nd.get_switch("toggle_centered"))))
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) nd.symbols.planArcs.show(),
 				is_false: func(nd) nd.symbols.planArcs.hide(),
 			}, # of planArcs.impl
@@ -946,7 +1030,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"rangeArcs",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP") and (!nd.get_switch("toggle_centered"))),
+				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP") and (!nd.get_switch("toggle_centered"))
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) nd.symbols.rangeArcs.show(),
 				is_false: func(nd) nd.symbols.rangeArcs.hide(),
 			}, # of rangeArcs.impl
@@ -1047,7 +1132,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"aplSymMap",
 			impl: {
 			init: func(nd,symbol),
-				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")),
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.aplSymMap.set("z-index", 10);
 					nd.symbols.aplSymMap.show();
@@ -1060,7 +1146,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"aplSymMapCtr",
 			impl: {
 			init: func(nd,symbol),
-				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP" and nd.get_switch("toggle_centered")) or nd.in_mode("toggle_display_mode", ["APP","VOR"])),
+				predicate: func(nd) (((nd.get_switch("toggle_display_mode") == "MAP" and nd.get_switch("toggle_centered")) or nd.in_mode("toggle_display_mode", ["APP","VOR"]))
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.aplSymMapCtr.set("z-index", 10);
 					nd.symbols.aplSymMapCtr.show();
@@ -1157,8 +1244,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"trkInd2",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["APP","VOR","MAP"]) and 
-						 nd.get_switch("toggle_centered")),
+				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["APP","VOR","MAP"]) and nd.get_switch("toggle_centered")
+					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.trkInd2.show();
 					nd.symbols.trkInd2.setRotation((nd.aircraft_source.get_trk_mag()-nd.aircraft_source.get_hdg_mag())*D2R);
@@ -1172,7 +1259,8 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
 							 nd.get_switch("toggle_centered") and 
-							 getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val),
+							 getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val and
+							 (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.trkline2.show();
 				},
