@@ -89,7 +89,7 @@ var _stop = func(fail = 0) {
 			settimer(func() {
 				_finalize_top_view();
 				gui.popupTip("Done");
-			}, 1.0);
+			}, 1.0, 1);
 		} else {
 			_finalize_top_view();
 		}
@@ -365,12 +365,12 @@ var enter = func() {
 	var wingspan = getprop("/sim/model/autopush/route/wingspan-m");
 	if ((wingspan == nil) or (wingspan == 0.0)) {
 		# JSBSim
-		wingspan = getprop("fdm/jsbsim/metrics/bw-ft");
+		wingspan = getprop("/fdm/jsbsim/metrics/bw-ft");
 		if (wingspan != nil) {
 			wingspan *= FT2M;
 		} else {
 			# YAsim
-			wingspan = getprop("fdm/yasim/model/wings/wing/wing-span");
+			wingspan = getprop("/fdm/yasim/model/wings/wing/wing-span");
 		}
 		setprop("/sim/model/autopush/route/wingspan-m", wingspan);
 	}

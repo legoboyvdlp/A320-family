@@ -54,7 +54,7 @@ var _loop = func() {
 	D *= NM2M;
 	var (psi_leg, D_leg) = courseAndDistance(_route[_to_wp - 1], _route[_to_wp]);
 	var deltapsi = geo.normdeg180(A - psi_leg);
-	var psi = getprop("orientation/heading-deg") + _push * 180.0;
+	var psi = getprop("/orientation/heading-deg") + _push * 180.0;
 	var deltaA = math.min(math.max(_K_psi * geo.normdeg180(A - psi), -_F_psi), _F_psi);
 	var time = getprop("/sim/time/elapsed-sec");
 	var dt = time - _time;
@@ -88,6 +88,7 @@ var _loop = func() {
 }
 
 var _timer = maketimer(0.051, func{_loop()});
+_timer.simulatedTime = 1;
 
 var _done = func() {
 	stop();
@@ -123,7 +124,7 @@ var start = func() {
 	_debug = getprop("/sim/model/autopush/debug") or 0;
 	if (!_to_wp) {
 		var (psi_park, D_park) = courseAndDistance(_route[0], _route[1]);
-		_push = (abs(geo.normdeg180(getprop("orientation/heading-deg") - psi_park)) > 90.0);
+		_push = (abs(geo.normdeg180(getprop("/orientation/heading-deg") - psi_park)) > 90.0);
 		_sign = 1.0 - 2.0 * _push;
 		_advance_wp();
 		_psi = 0.0;
