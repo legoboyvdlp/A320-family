@@ -240,7 +240,9 @@ var IESIRecipient =
 						NewIESIRecipient.MainScreen = canvas_IESI.new("Aircraft/A320-family/Models/Instruments/IESI/res/iesi.svg", "A320 IESI");
 				}
 				
-				NewIESIRecipient.MainScreen.update(notification);
+				if (math.mod(notifications.frameNotification.FrameCount,2) == 0) {
+					NewIESIRecipient.MainScreen.update(notification);
+				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
 			return emesary.Transmitter.ReceiptStatus_NotProcessed;

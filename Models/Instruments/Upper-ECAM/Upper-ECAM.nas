@@ -972,13 +972,13 @@ var UpperECAMRecipient =
 						EWDRecipient.MainScreen = canvas_upperECAM.new("Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg", "A320 E/WD CFM", "CFM");
 					}
 				}
-				
-				
-				if (EWDRecipient.type) {
-					EWDRecipient.MainScreen.updateIAE(notification);
-				} else {
-					EWDRecipient.MainScreen.updateCFM(notification);
-				
+				if (math.mod(notifications.frameNotification.FrameCount,2) == 0) {
+					if (EWDRecipient.type) {
+						EWDRecipient.MainScreen.updateIAE(notification);
+					} else {
+						EWDRecipient.MainScreen.updateCFM(notification);
+					
+					}
 				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
