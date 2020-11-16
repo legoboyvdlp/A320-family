@@ -259,7 +259,6 @@ var systemsLoop = maketimer(0.1, func {
 	systems.ADIRS.loop();
 	systems.APUController.loop();
 	systems.BrakeSys.update();
-	ecam.ECAM.loop();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop();

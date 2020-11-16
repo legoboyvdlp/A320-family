@@ -162,7 +162,7 @@ var canvas_IESI = {
 			return;
 		}
 		
-		if (_IESITime + 90 >= notification.elapsed_seconds) {
+		if (_IESITime + 90 >= notification.elapsedTime) {
 			me["IESI"].hide(); 
 			me["IESI_Init"].show();
 			return;
@@ -191,7 +191,7 @@ var canvas_IESI = {
 		# todo transient max 0.2s
 		# todo 20W power consumption
 		if (notification.attReset == 1) {
-			if (notification.iesiInit and _IESITime + 90 >= notification.elapsed_seconds) {
+			if (notification.iesiInit and _IESITime + 90 >= notification.elapsedTime) {
 				_fast = 1;
 			} else {
 				_fast = 0;
@@ -199,19 +199,19 @@ var canvas_IESI = {
 			iesi_init.setBoolValue(0);
 		}
 		
-		if (notification.dcEss >= 25 or (notification.dcHot1 >= 25 and notification.airspeed >= 50 and notification.elapsed_seconds >= 5)) {
+		if (notification.dcEss >= 25 or (notification.dcHot1 >= 25 and notification.airspeed >= 50 and notification.elapsedTime >= 5)) {
 			_showIESI = 1;
 			if (notification.acconfig != 1 and notification.iesiInit != 1) {
 				iesi_init.setBoolValue(1);
 				if (_fast) {
-					_IESITime = notification.elapsed_seconds - 80;
+					_IESITime = notification.elapsedTime - 80;
 					_fast = 0;
 				} else {
-					_IESITime = notification.elapsed_seconds;
+					_IESITime = notification.elapsedTime;
 				}
 			} else if (notification.acconfig == 1 and notification.iesiInit != 1) {
 				iesi_init.setBoolValue(1);
-				_IESITime = notification.elapsed_seconds - 87;
+				_IESITime = notification.elapsedTime - 87;
 			}
 		} else {
 			_showIESI = 0;
@@ -230,24 +230,24 @@ var IESIRecipient =
 {
 	new: func(_ident)
 	{
-		var IESIRecipient = emesary.Recipient.new(_ident);
-		IESIRecipient.MainScreen = nil;
-		IESIRecipient.Receive = func(notification)
+		var NewIESIRecipient = emesary.Recipient.new(_ident);
+		NewIESIRecipient.MainScreen = nil;
+		NewIESIRecipient.Receive = func(notification)
 		{
 			if (notification.NotificationType == "FrameNotification")
 			{
-				if (IESIRecipient.MainScreen == nil) {
-						IESIRecipient.MainScreen = canvas_IESI.new("Aircraft/A320-family/Models/Instruments/IESI/res/iesi.svg", "A320 IESI");
+				if (NewIESIRecipient.MainScreen == nil) {
+						NewIESIRecipient.MainScreen = canvas_IESI.new("Aircraft/A320-family/Models/Instruments/IESI/res/iesi.svg", "A320 IESI");
 				}
 				
 				#if (!math.mod(notifications.frameNotification.FrameCount,2)){
-					IESIRecipient.MainScreen.update(notification);
+					NewIESIRecipient.MainScreen.update(notification);
 				#}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
 			return emesary.Transmitter.ReceiptStatus_NotProcessed;
 		};
-		return IESIRecipient;
+		return NewIESIRecipient;
 	},
 };
 
