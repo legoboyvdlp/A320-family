@@ -24,7 +24,7 @@ var cur_frame_inc = 0.05;
 var execLoop = func
 {
     notifications.frameNotification.fetchvars();
-    if (notifications.frameNotification.FrameCount >= 1) {
+    if (notifications.frameNotification.FrameCount > 10) {
         notifications.frameNotification.FrameCount = 0;
     }
     emesary.GlobalTransmitter.NotifyAll(notifications.frameNotification);

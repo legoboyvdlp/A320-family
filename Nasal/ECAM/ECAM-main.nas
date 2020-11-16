@@ -352,8 +352,13 @@ var ECAMRecipient =
 		{
 			if (notification.NotificationType == "FrameNotification")
 			{
-				if (!math.mod(notifications.frameNotification.FrameCount,2)){
+				debug.dump(notifications.frameNotification.FrameCount);
+				if (notifications.frameNotification.FrameCount == 5){
 					ECAM.loop(notification);
+				} elsif (notifications.frameNotification.FrameCount == 7){
+					phaseLoop();
+				} elsif (notifications.frameNotification.FrameCount == 10){
+					ECAM_controller.loop(notification);
 				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}

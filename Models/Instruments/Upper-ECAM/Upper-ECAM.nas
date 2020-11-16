@@ -973,14 +973,13 @@ var UpperECAMRecipient =
 					}
 				}
 				
-				#if (!math.mod(notifications.frameNotification.FrameCount,2)){
-					if (EWDRecipient.type) {
-						EWDRecipient.MainScreen.updateIAE(notification);
-					} else {
-						EWDRecipient.MainScreen.updateCFM(notification);
-					
-					}
-				#}
+				
+				if (EWDRecipient.type) {
+					EWDRecipient.MainScreen.updateIAE(notification);
+				} else {
+					EWDRecipient.MainScreen.updateCFM(notification);
+				
+				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
 			return emesary.Transmitter.ReceiptStatus_NotProcessed;

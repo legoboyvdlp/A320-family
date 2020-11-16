@@ -26,6 +26,7 @@ var flash = 0;
 var hasCleared = 0;
 var statusFlag = 0;
 var counter = 0;
+var counterClear = 0;
 var noMainMsg = 0;
 var storeFirstWarning = nil;
 
@@ -260,22 +261,16 @@ var status = {
 var ECAM_controller = {
 	_recallCounter: 0,
 	_noneActive: 0,
-	counter: 0,
+	_ready: 0,
 	init: func() {
-		ECAMloopTimer.start();
-		me.counter = 0;
 		me.reset();
+		me._ready = 1;
 	},
-	loop: func() {
+	loop: func(notification) {
+		if (!me._ready) {
+			return;
+		}
 		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !pts.Acconfig.running.getBoolValue()) {
-			# update FWC phases
-			if (me.counter == 0) {
-				phaseLoop();
-				me.counter = 1;
-				return;
-			}
-			me.counter = 0;
-			
 			# check active messages
 			messages_priority_3();
 			messages_priority_2();
@@ -303,7 +298,7 @@ var ECAM_controller = {
 		}
 		
 		# write to ECAM
-		var counter = 0;
+		counter = 0;
 		
 		if (!pts.Acconfig.running.getBoolValue()) {
 			foreach (var w; warnings.vector) {
@@ -352,6 +347,7 @@ var ECAM_controller = {
 		}
 	},
 	reset: func() {
+		me._ready = 0;
 		foreach (var w; warnings.vector) {
 			if (w.active == 1) {
 				w.active = 0;
@@ -390,15 +386,15 @@ var ECAM_controller = {
 	},
 	clear: func() {
 		hasCleared = 0;
-		counter = 0;
+		counterClear = 0;
 		noMainMsg = 0;
 		storeFirstWarning = nil;
 		
 		# first go through the first eight, see how many mainMsg there are
 		foreach (var w; warnings.vector) {
-			if (counter >= 8) { break; }
+			if (counterClear >= 8) { break; }
 			if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
-				counter += 1;
+				counterClear += 1;
 				if (w.isMainMsg == 1) {
 					if (noMainMsg == 0) {
 						storeFirstWarning = w;
@@ -410,11 +406,11 @@ var ECAM_controller = {
 		
 		# then, if there is an overflow and noMainMsg == 1, we clear the first shown ones
 		if (leftOverflow.getBoolValue() and noMainMsg == 1) {
-			counter = 0;
+			counterClear = 0;
 			foreach (var w; warnings.vector) {
-				if (counter >= 8) { break; }
+				if (counterClear >= 8) { break; }
 				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
-					counter += 1;
+					counterClear += 1;
 					if (w.isMainMsg == 1) { continue; }
 					w.clearFlag = 1;
 					hasCleared = 1;
@@ -481,10 +477,6 @@ setlistener("/systems/electrical/bus/dc-ess", func {
 		ECAM_controller.reset();
 	}
 }, 0, 0);
-
-var ECAMloopTimer = maketimer(0.15, func {
-	ECAM_controller.loop();
-});
 
 # Flash Master Warning Light
 var shutUpYou = func() {
