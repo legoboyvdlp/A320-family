@@ -2,6 +2,7 @@
     <name>tiller</name>
     <inherits-from>Effects/model-interior</inherits-from>
     <parameters>
+		<shadow-mapping-enabled type="bool">true</shadow-mapping-enabled>
         <lightmap-enabled type="int">1</lightmap-enabled>
         <lightmap-factor type="float" n="0"><use>/controls/lighting/panel-light</use></lightmap-factor>
         <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
