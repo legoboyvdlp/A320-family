@@ -23,13 +23,11 @@ var frame_inc = 0;
 var cur_frame_inc = 0.05;
 var execLoop = func
 {
-    #    
     notifications.frameNotification.fetchvars();
-    if (notifications.frameNotification.FrameCount >= 4) {
+    if (notifications.frameNotification.FrameCount > 20) {
         notifications.frameNotification.FrameCount = 0;
     }
     emesary.GlobalTransmitter.NotifyAll(notifications.frameNotification);
-    #    
 
     notifications.frameNotification.FrameCount = notifications.frameNotification.FrameCount + 1;
 	
@@ -57,8 +55,12 @@ var execLoop = func
 
 # setup the properties to monitor for this system
 input = {
-frame_rate                : "/sim/frame-rate",
-elapsed_seconds           : "/sim/time/elapsed-sec",
+	frame_rate: "/sim/frame-rate",
+	elapsedTime: "/sim/time/elapsed-sec",
+	FWCPhase: "/ECAM/warning-phase",
+	gear0Wow: "/gear/gear[0]/wow",
+	engine1State: "/engines/engine[0]/state",
+	engine2State: "/engines/engine[1]/state",
 };
 
 foreach (var name; keys(input)) {

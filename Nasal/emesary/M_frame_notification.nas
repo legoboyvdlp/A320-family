@@ -96,3 +96,8 @@ var FrameNotificationAddProperty =
 #    
 var frameNotification = FrameNotification.new(1);
 
+
+# Frame count
+# 5 = ECAM
+# 7 = FWC phases
+# 10 = ECAM messages

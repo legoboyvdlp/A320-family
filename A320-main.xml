@@ -647,6 +647,7 @@
 			<line7 type="string"></line7>
 			<line8 type="string"></line8>
 		</rightmsg>
+		<warning-phase type="int">0</warning-phase>
 	</ECAM>
 	
 	<environment>
