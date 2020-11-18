@@ -46,7 +46,7 @@ var FWC = {
 		recallOutput: props.globals.initNode("/ECAM/flipflop/recall-output", 0, "BOOL"),
 	},
 	Logic: {
-		gnd: props.globals.getNode("/ECAM/ground-calc-immediate"),
+		gnd: props.globals.getNode("/ECAM/logic/ground-calc-immediate"),
 		IRSinAlign: props.globals.initNode("/ECAM/irs-in-align", 0, "BOOL"),
 		feet1500: props.globals.getNode("/ECAM/phases/phase-calculation/altitude-ge-1500"),
 		feet800: props.globals.getNode("/ECAM/phases/phase-calculation/altitude-ge-800"),
@@ -73,6 +73,7 @@ var FWC = {
 };
 
 var phaseLoop = func() {
+	if ((systems.ELEC.Bus.acEss.getValue() < 110 and systems.ELEC.Bus.ac2.getValue() < 110) or pts.Acconfig.running.getBoolValue()) { return; }
 	if (pts.Sim.Replay.replayActive.getBoolValue()) { return; }
 	
 	myPhase = pts.ECAM.fwcWarningPhase.getValue();
@@ -143,7 +144,7 @@ var phaseLoop = func() {
 	}
 	
 	# Actual Phases
-	if ((!FWC.Logic.gnd.getBoolValue() and FWC.Timer.gnd2Sec.getValue() != 1 and FWC.Timer.eng1and2Off.getValue() and myPhase != 9) and !FWC.Monostable.phase1Output.getBoolValue()) {
+	if ((FWC.Logic.gnd.getBoolValue() and FWC.Timer.eng1and2Off.getValue() and myPhase != 9) and !FWC.Monostable.phase1Output.getBoolValue()) {
 		setPhase(1);
 	}
 	
