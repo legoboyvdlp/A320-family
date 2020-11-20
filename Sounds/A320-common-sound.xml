@@ -1432,7 +1432,7 @@
 		<sb>
 			<mode>once</mode>
 			<name>sb</name>
-			<path>seatbelt.wav</path>
+			<path>cabin-chime.wav</path>
 			<condition>
 				<and>
 					<greater-than>
@@ -1450,7 +1450,7 @@
 		<ns>
 			<mode>once</mode>
 			<name>ns</name>
-			<path>nosmoko.wav</path>
+			<path>cabin-chime.wav</path>
 			<condition>
 				<and>
 					<greater-than>
