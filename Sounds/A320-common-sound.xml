@@ -1952,6 +1952,7 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/cricket.wav</path>
 			<mode>looped</mode>
 			<type>avionics</type>
+			<delay-sec>1.5</delay-sec>
 			<condition>
 				<property>/sim/sound/warnings/cricket</property>
 			</condition>
@@ -1981,7 +1982,7 @@
 		
 		<stall-voice>
 			<name>stall-voice</name>
-			<mode>looped</mode>
+			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/stall_voice.wav</path>
 			<type>avionics</type>
 			<condition>
