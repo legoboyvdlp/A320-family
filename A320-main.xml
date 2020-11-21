@@ -647,6 +647,7 @@
 			<line7 type="string"></line7>
 			<line8 type="string"></line8>
 		</rightmsg>
+		<warning-phase type="int">0</warning-phase>
 	</ECAM>
 	
 	<environment>
@@ -4506,13 +4507,13 @@
 			<file>Aircraft/A320-family/Nasal/Autopush/autopush.nas</file>
 		</autopush>
 		<autopush_driver>
-			<file>Aircraft/A320-family/Nasal/Autopush/autopush_driver.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/driver.nas</file>
 		</autopush_driver>
 		<dynarr>
 			<file>Aircraft/A320-family/Nasal/Autopush/dynarr.nas</file>
 		</dynarr>
 		<autopush_route>
-			<file>Aircraft/A320-family/Nasal/Autopush/autopush_route.nas</file>
+			<file>Aircraft/A320-family/Nasal/Autopush/route.nas</file>
 		</autopush_route>
 		<!-- Panels -->
 		<rmp>

@@ -1314,10 +1314,16 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_lim_1);
 	}
 	
-	if (getprop("instrumentation/tcas/serviceable") == 0 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 7 and systems.ELEC.Bus.ac1.getValue() >= 110 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
+	if (getprop("/instrumentation/tcas/serviceable") == 0 and phaseVar2 != 1 and phaseVar2 != 3 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and phaseVar2 != 10 and systems.ELEC.Bus.ac1.getValue() >= 110 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 1 and tcasFault.clearFlag == 0) {
 		tcasFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(tcasFault);
+	}
+	
+	if (phaseVar2 == 6 and pts.Instrumentation.TCAS.Inputs.mode.getValue() == 1 and !tcasFault.active and (atc.Transponders.vector[0].condition != 0 and atc.Transponders.vector[1].condition != 0) and tcasStby.clearFlag == 0) {
+		tcasStby.active = 1;
+	} else {
+		ECAM_controller.warningReset(tcasStby);
 	}
 	
 	if (gpwsTerrFault.clearFlag == 0 and warningNodes.Timers.navTerrFault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 7 or phaseVar2 == 9)) {
@@ -2550,6 +2556,17 @@ var messages_right_memo = func {
 		ignition.active = 1;
 	} else {
 		ignition.active = 0;
+	}
+	
+	if ((atc.Transponders.vector[0].condition == 0 and atc.Transponders.vector[1].condition == 0) or (!getprop("/systems/navigation/adr/operating-1") and !getprop("/systems/navigation/adr/operating-2") and !getprop("/systems/navigation/adr/operating-3")) or pts.Instrumentation.TCAS.Inputs.mode.getValue() == 1) {
+		if (phaseVarMemo3 == 6) {
+			tcas_stby.colour = "a";
+		} else {
+			tcas_stby.colour = "g";
+		}
+		tcas_stby.active = 1;
+	} else {
+		tcas_stby.active = 0;
 	}
 	
 	if ((phaseVarMemo3 <= 2 or phaseVarMemo3 == 6 or phaseVarMemo3 >= 9) and atsu.CompanyCall.frequency != 999.99 and !atsu.CompanyCall.received) {

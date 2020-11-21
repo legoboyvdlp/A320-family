@@ -58,7 +58,7 @@ var Controls = {
 };
 
 var ECAM = {
-	fwcWarningPhase: props.globals.initNode("/ECAM/warning-phase", 1, "INT"),
+	fwcWarningPhase: props.globals.getNode("/ECAM/warning-phase"),
 };
 
 var Engines = {

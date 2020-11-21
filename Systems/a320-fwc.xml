@@ -1709,7 +1709,7 @@
 			<test logic="AND" value="1">
 				/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 1500
 				/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 1500
-				<!-- /it-fbw/law ne 0 confirm -->
+				/it-fbw/law ne 0
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
 		</switch>
@@ -1735,7 +1735,7 @@
 						</test>
 					</test>
 				</test>
-				<!-- /it-fbw/law ne 0 confirm... -->
+				/it-fbw/law ne 0
 				<test logic="OR">
 					/systems/navigation/adr/operating-1 eq 1
 					/systems/navigation/adr/operating-2 eq 1

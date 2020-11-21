@@ -17,7 +17,7 @@ var Transponder = {
 	code: "2000",
 	selected: 0,
 	electricalSrc: "",
-	activeADIRS: 0,
+	activeADIRS: 1,
 	condition: 0,
 	failed: 0,
 	codeDigitsNodes: [props.globals.getNode("instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[3]", 1)],
@@ -244,6 +244,41 @@ var transponderPanel = {
 				Transponders.vector[1].switchADIRS(2);
 			}
 		}
+		
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 1) {
+			me.updateADR1(systems.ADIRS.Operating.adr[0].getValue());
+		} elsif (Transponders.vector[me.atcSel - 1].activeADIRS == 2) {
+			me.updateADR2(systems.ADIRS.Operating.adr[1].getValue());
+		} elsif (Transponders.vector[me.atcSel - 1].activeADIRS == 3) {
+			me.updateADR3(systems.ADIRS.Operating.adr[2].getValue());
+		}
+	},
+	updateADR1: func(val) {
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 1) {
+			if (val) {
+				setprop("/instrumentation/tcas/serviceable", 1);
+			} else {
+				setprop("/instrumentation/tcas/serviceable", 0);
+			}
+		}
+	},
+	updateADR2: func(val) {
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 2) {
+			if (val) {
+				setprop("/instrumentation/tcas/serviceable", 1);
+			} else {
+				setprop("/instrumentation/tcas/serviceable", 0);
+			}
+		}
+	},
+	updateADR3: func(val) {
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 3) {
+			if (val) {
+				setprop("/instrumentation/tcas/serviceable", 1);
+			} else {
+				setprop("/instrumentation/tcas/serviceable", 0);
+			}
+		}
 	},
 };
 
@@ -265,3 +300,15 @@ var Transponders = std.Vector.new([Transponder.new("/systems/electrical/bus/ac-e
 var transponderTimer = maketimer(0.1, func() {
 	Transponders.vector[transponderPanel.atcSel - 1].update();
 });
+
+setlistener("/systems/navigation/adr/operating-1", func() {
+	transponderPanel.updateADR1(systems.ADIRS.Operating.adr[0].getValue());
+}, 1, 0);
+
+setlistener("/systems/navigation/adr/operating-2", func() {
+	transponderPanel.updateADR2(systems.ADIRS.Operating.adr[1].getValue());
+}, 1, 0);
+
+setlistener("/systems/navigation/adr/operating-3", func() {
+	transponderPanel.updateADR3(systems.ADIRS.Operating.adr[2].getValue());
+}, 1, 0);

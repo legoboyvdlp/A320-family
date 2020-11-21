@@ -275,6 +275,7 @@ var warnings				  = std.Vector.new([
 	
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var tcasStby              = warning.new(msg: "NAV TCAS STBY",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var gpwsFault             = warning.new(msg: "NAV GPWS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var gpwsFaultOff		  = warning.new(msg: "-GPWS...............OFF",   colour: "c"),
 	var gpwsTerrFault         = warning.new(msg: "NAV GPWS TERR DET FAULT",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -542,7 +543,7 @@ var memos                = std.Vector.new([
 	var cabin_ready      = memo.new(msg: "CABIN READY" ), # Not yet implemented
 	var pred_ws_off      = memo.new(msg: "PRED W/S OFF"), # Not yet implemented
 	var terr_stby        = memo.new(msg: "TERR STBY"   ), # Not yet implemented
-	var tcas_stby        = memo.new(msg: "TCAS STBY"   ), # Not yet implemented
+	var tcas_stby        = memo.new(msg: "TCAS STBY"   ),
 	var company_call     = memo.new(msg: "COMPANY CALL"),
 	var satcom_alert     = memo.new(msg: "SATCOM ALERT"), # Not yet implemented
 	var company_msg      = memo.new(msg: "COMPANY MSG" ),
