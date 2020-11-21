@@ -312,7 +312,7 @@ var ECAMControlPanel = {
 		ECAM.lights[pageLightOff].setBoolValue(0);
 	},
 	lightOn: func(pageLightOn) {
-		if (pageLightOff == "crz") { return; }
+		if (pageLightOn == "crz") { return; }
 		ECAM.lights[pageLightOn].setBoolValue(1);
 	},
 };
