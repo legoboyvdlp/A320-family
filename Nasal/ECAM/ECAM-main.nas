@@ -308,9 +308,11 @@ var ECAMControlPanel = {
 		# todo
 	},
 	lightOff: func(pageLightOff) {
+		if (pageLightOff == "crz") { return; }
 		ECAM.lights[pageLightOff].setBoolValue(0);
 	},
 	lightOn: func(pageLightOn) {
+		if (pageLightOff == "crz") { return; }
 		ECAM.lights[pageLightOn].setBoolValue(1);
 	},
 };
