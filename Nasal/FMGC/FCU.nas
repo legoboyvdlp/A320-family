@@ -381,10 +381,10 @@ var FCUController = {
 			} else if (d == -10) {
 				altTemp = altTemp - 1000;
 			}
-			if (altTemp < 0) {
-				altSet.setValue(0);
-			} else if (altTemp > 50000) {
-				altSet.setValue(50000);
+			if (altTemp < 100) {
+				altSet.setValue(100);
+			} else if (altTemp > 49000) {
+				altSet.setValue(49000);
 			} else {
 				altSet.setValue(altTemp);
 			}
