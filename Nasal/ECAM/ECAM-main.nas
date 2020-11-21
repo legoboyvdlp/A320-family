@@ -307,11 +307,11 @@ var ECAMControlPanel = {
 	emerCancBtn: func() {
 		# todo
 	},
-	lightOff: func(page) {
-		ECAM.lights[page].setBoolValue(0);
+	lightOff: func(pageLightOff) {
+		ECAM.lights[pageLightOff].setBoolValue(0);
 	},
-	lightOn: func(page) {
-		ECAM.lights[page].setBoolValue(1);
+	lightOn: func(pageLightOn) {
+		ECAM.lights[pageLightOn].setBoolValue(1);
 	},
 };
 
