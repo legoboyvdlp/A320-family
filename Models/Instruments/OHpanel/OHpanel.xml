@@ -5773,7 +5773,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("controls/apu/master") == 1) {
+				if (systems.APUNodes.Controls.master.getBoolValue()) {
 					systems.APUController.APU.startCommand();
 				}
 				</script>

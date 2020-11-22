@@ -62,8 +62,8 @@ var variousReset = func {
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
 	setprop("modes/fcu/hdg-time", -45);
-	setprop("/controls/switching/ATTHDG", 0);
-	setprop("/controls/switching/AIRDATA", 0);
+	setprop("/controls/navigation/switching/att-hdg", 0);
+	setprop("/controls/navigation/switching/air-data", 0);
 	setprop("/controls/switches/no-smoking-sign", 1);
 	setprop("/controls/switches/seatbelt-sign", 1);
 }

@@ -412,7 +412,8 @@ var departurePage = {
 				me.arrowsMatrix[1][1] = 0;
 				me.arrowsColour[1][1] = "ack";
 			}
-		} elsif (size(me.transitions) >= 2) {
+		} 
+		if (size(me.transitions) >= 2) {
 			me.R3 = [me.transitions[1] ~ " ", nil, "blu"];
 			if (me.transitions[1] != me.selectedTransition) {
 				me.arrowsMatrix[1][2] = 1;
@@ -421,7 +422,8 @@ var departurePage = {
 				me.arrowsMatrix[1][2] = 0;
 				me.arrowsColour[1][2] = "ack";
 			}
-		} elsif (size(me.transitions) >= 3) {
+		} 
+		if (size(me.transitions) >= 3) {
 			me.R4 = [me.transitions[2] ~ " ", nil, "blu"];
 			if (me.transitions[2] != me.selectedTransition) {
 				me.arrowsMatrix[1][3] = 1;
@@ -430,7 +432,8 @@ var departurePage = {
 				me.arrowsMatrix[1][3] = 0;
 				me.arrowsColour[1][3] = "ack";
 			}
-		} elsif (size(me.transitions) >= 4) {
+		} 
+		if (size(me.transitions) >= 4) {
 			me.R5 = [me.transitions[3] ~ " ", nil, "blu"];
 			if (me.transitions[3] != me.selectedTransition) {
 				me.arrowsMatrix[1][4] = 1;

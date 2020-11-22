@@ -109,8 +109,8 @@ var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
 var gear_agl = props.globals.getNode("/position/gear-agl-ft", 1);
 var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast", 1);
 var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
-var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
-var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
+var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
+var air_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 var appr_enabled = props.globals.getNode("/it-autoflight/output/appr-armed/", 1);
 var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
 var vert_gs = props.globals.getNode("/it-autoflight/output/vert/", 1);
@@ -1088,7 +1088,7 @@ var canvas_PFD_1 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
+		if (systems.ADIRS.ADIRunits[0].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and att_switch.getValue() == -1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -1132,7 +1132,7 @@ var canvas_PFD_1 = {
 			me["FPV"].hide();	
 		} else {
 			var aoa = me.getAOAForPFD1();	
-			if (aoa == nil or (systems.ADIRS.ADIRunits[0].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == -1)){
+			if (aoa == nil or (systems.ADIRS.ADIRunits[0].operating != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].operating != 1 and att_switch.getValue() == -1)){
 				me["FPV"].hide();	
 			} else {
 				var roll_deg = roll.getValue() or 0; 
@@ -1870,7 +1870,7 @@ var canvas_PFD_2 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if (systems.ADIRS.ADIRunits[1].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
+		if (systems.ADIRS.ADIRunits[1].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and att_switch.getValue() == 1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -1907,7 +1907,7 @@ var canvas_PFD_2 = {
 			me["FPV"].hide();	
 		} else {
 			var aoa = me.getAOAForPFD2();
-			if (aoa == nil or (systems.ADIRS.ADIRunits[1].aligned != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].aligned != 1 and att_switch.getValue() == 1)) {
+			if (aoa == nil or (systems.ADIRS.ADIRunits[1].operating != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].operating != 1 and att_switch.getValue() == 1)) {
 				me["FPV"].hide();	
 			} else {
 				var roll_deg = roll.getValue() or 0;	
