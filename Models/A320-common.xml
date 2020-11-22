@@ -4,7 +4,6 @@
 
 <PropertyList>
 	<name>A320-200</name>
-	<path>empty.ac</path> <!-- Livery system on MP multimodel -->
 
 	<model>
 		<name>FuselageContainer</name>
