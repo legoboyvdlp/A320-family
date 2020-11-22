@@ -62,8 +62,8 @@ var variousReset = func {
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
 	setprop("modes/fcu/hdg-time", -45);
-	setprop("/controls/switching/ATTHDG", 0);
-	setprop("/controls/switching/AIRDATA", 0);
+	setprop("/controls/navigation/switching/att-hdg", 0);
+	setprop("/controls/navigation/switching/air-data", 0);
 	setprop("/controls/switches/no-smoking-sign", 1);
 	setprop("/controls/switches/seatbelt-sign", 1);
 }
@@ -149,4 +149,10 @@ var toggleSTD = func {
 		pts.Instrumentation.Altimeter.settingInhg.setValue(29.92);
 		pts.Instrumentation.Altimeter.std.setBoolValue(1);
 	}
+}
+
+var pushbuttonSound = props.globals.getNode("/sim/sounde/pushbutton");
+var pushbutton = func {
+	pushbuttonSound.setValue(1);
+  settimer(func {pushbuttonSound.setValue(0);},0.20);
 }

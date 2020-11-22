@@ -381,10 +381,10 @@ var FCUController = {
 			} else if (d == -10) {
 				altTemp = altTemp - 1000;
 			}
-			if (altTemp < 0) {
-				altSet.setValue(0);
-			} else if (altTemp > 50000) {
-				altSet.setValue(50000);
+			if (altTemp < 100) {
+				altSet.setValue(100);
+			} else if (altTemp > 49000) {
+				altSet.setValue(49000);
 			} else {
 				altSet.setValue(altTemp);
 			}
@@ -523,7 +523,7 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (latMode.getValue() != 0) {
 		showHDG.setBoolValue(1);
-		var hdgnow = getprop("/it-autoflight/input/hdg");
-		setprop("/modes/fcu/hdg-time", pts.Sim.Time.elapsedSec.getValue());
+		var hdgnow = fmgc.Input.hdg.getValue();
+		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }

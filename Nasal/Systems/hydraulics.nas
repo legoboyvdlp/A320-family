@@ -34,10 +34,16 @@ var HYD = {
 		active: props.globals.getNode("/systems/hydraulic/sources/ptu/ptu-hydraulic-condition"),
 		diff: props.globals.getNode("/systems/hydraulic/yellow-psi-diff"),
 	},
+	Pump: {
+		yellowElec: props.globals.getNode("/systems/hydraulic/sources/yellow-elec/pump-operate"),
+	},
 	Qty: {
 		blueInput: props.globals.initNode("/systems/hydraulic/blue-qty-input", 0, "INT"),
+		blue: props.globals.getNode("/systems/hydraulic/blue-qty"),
 		greenInput: props.globals.initNode("/systems/hydraulic/green-qty-input", 0, "INT"),
+		green: props.globals.getNode("/systems/hydraulic/green-qty"),
 		yellowInput: props.globals.initNode("/systems/hydraulic/yellow-qty-input", 0, "INT"),
+		yellow: props.globals.getNode("/systems/hydraulic/yellow-qty"),
 	},
 	Rat: {
 		position: props.globals.getNode("/systems/hydraulic/sources/rat/position"),

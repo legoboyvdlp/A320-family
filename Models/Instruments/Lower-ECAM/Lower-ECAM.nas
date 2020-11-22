@@ -94,8 +94,6 @@ var bmc1working = props.globals.getNode("/systems/pneumatics/indicating/bmc1-wor
 var bmc2working = props.globals.getNode("/systems/pneumatics/indicating/bmc2-working", 1);
 var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
 var switch_wing_aice = props.globals.getNode("/controls/ice-protection/wing", 1);
-var eng1_n2_actual = props.globals.getNode("/engines/engine[0]/n2-actual", 1);
-var eng2_n2_actual = props.globals.getNode("/engines/engine[1]/n2-actual", 1);
 var pack1_bypass = props.globals.getNode("/systems/pneumatics/pack-1-bypass", 1);
 var pack2_bypass = props.globals.getNode("/systems/pneumatics/pack-2-bypass", 1);
 var oil_qt1_actual = props.globals.getNode("/engines/engine[0]/oil-qt-actual", 1);
@@ -846,14 +844,14 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# ENG 1 label
-		if (eng1_n2_actual.getValue() >= 59) {
+		if (pts.Engines.Engine.n2Actual[0].getValue() >= 59) {
 			me["BLEED-ENG-1-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["BLEED-ENG-1-label"].setColor(0.7333,0.3803,0);
 		}
 
 		# ENG 2 label
-		if (eng2_n2_actual.getValue() >= 59) {
+		if (pts.Engines.Engine.n2Actual[1].getValue() >= 59) {
 			me["BLEED-ENG-2-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["BLEED-ENG-2-label"].setColor(0.7333,0.3803,0);
@@ -1664,9 +1662,15 @@ var canvas_lowerECAM_elec = {
 		}
 
 		# Bus indicators
-		if (systems.ELEC.Bus.dcBat.getValue() > 25) {
-			me["ELEC-DCBAT-label"].setColor(0.0509,0.7529,0.2941);
+		if (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue()) {
+			me["ELEC-DCBAT-label"].setText("DC BAT");
+			if (systems.ELEC.Bus.dcBat.getValue() > 25) {
+				me["ELEC-DCBAT-label"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
+			}
 		} else {
+			me["ELEC-DCBAT-label"].setText("XX"); # BCL not powered hence no voltage info supplied from BCL
 			me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
 		}
 
@@ -2732,13 +2736,13 @@ var canvas_lowerECAM_hyd = {
 			me["PTU-Auto-or-off"].show();
 		}
 
-		if (eng1_n2.getValue() >= 59) {
+		if (pts.Engines.Engine.n2Actual[0].getValue() >= 59) {
 			me["Pump-Green-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["Pump-Green-label"].setColor(0.7333,0.3803,0);
 		}
 
-		if (eng2_n2.getValue() >= 59) {
+		if (pts.Engines.Engine.n2Actual[1].getValue() >= 59) {
 			me["Pump-Yellow-label"].setColor(0.8078,0.8039,0.8078);
 		} else {
 			me["Pump-Yellow-label"].setColor(0.7333,0.3803,0);

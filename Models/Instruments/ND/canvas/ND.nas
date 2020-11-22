@@ -63,6 +63,7 @@ var myCockpit_switches = {
 	"toggle_chrono": {path: "/inputs/CHRONO", value: 0, type: "INT"},
 	"toggle_xtrk_error": {path: "/nd/xtrk-error", value: 0, type: "BOOL"},
 	"toggle_trk_line": {path: "/nd/trk-line", value: 0, type: "BOOL"},
+	"ADIRS3": {path: "/nd/ir-3", value: 0, type: "BOOL"},
 };
 
 var canvas_nd_base = {
@@ -186,6 +187,8 @@ var canvas_ND_1 = {
 
 		# here we make the ND:
 		me.NDCpt = ND.new("instrumentation/efis", myCockpit_switches, "Airbus");
+		me.NDCpt.attitude_heading_setting = -1;
+		me.NDCpt.adirs_property = props.globals.getNode("/instrumentation/efis[0]/nd/ir-1",1);
 		me.NDCpt.newMFD(canvas_group);
 		me.NDCpt.update();
 
@@ -205,7 +208,10 @@ var canvas_ND_2 = {
 		m.init(canvas_group);
 
 		# here we make the ND:
+		myCockpit_switches["ADIRS"]= {path: "/nd/ir-2", value: 0, type: "BOOL"};
 		me.NDFo = ND.new("instrumentation/efis[1]", myCockpit_switches, "Airbus");
+		me.NDFo.attitude_heading_setting = 1;
+		me.NDFo.adirs_property = props.globals.getNode("/instrumentation/efis[1]/nd/ir-2",1);
 		me.NDFo.newMFD(canvas_group);
 		me.NDFo.update();
 

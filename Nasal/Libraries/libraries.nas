@@ -7,7 +7,6 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
-
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
@@ -50,7 +49,7 @@ setlistener("/sim/sounde/btn1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -59,7 +58,7 @@ setlistener("/sim/sounde/oh-btn", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/oh-btn").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/oh-btn").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -68,7 +67,7 @@ setlistener("/sim/sounde/btn3", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/btn3").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/btn3").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -77,7 +76,7 @@ setlistener("/sim/sounde/knb1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/knb1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/knb1").setBoolValue(0);
 	}, 0.05);
 });
 
@@ -86,21 +85,21 @@ setlistener("/sim/sounde/switch1", func {
 		return;
 	}
 	settimer(func {
-		props.globals.getNode("sim/sounde/switch1").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/switch1").setBoolValue(0);
 	}, 0.05);
 });
 
 setlistener("/controls/lighting/seatbelt-sign", func {
-	props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/seatbelt-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(0);
 	}, 2);
 }, 0, 0);
 
 setlistener("/controls/lighting/no-smoking-sign", func {
-	props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(1);
+	props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(1);
 	settimer(func {
-		props.globals.getNode("sim/sounde/no-smoking-sign").setBoolValue(0);
+		props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(0);
 	}, 1);
 }, 0, 0);
 
@@ -260,7 +259,6 @@ var systemsLoop = maketimer(0.1, func {
 	systems.ADIRS.loop();
 	systems.APUController.loop();
 	systems.BrakeSys.update();
-	ecam.ECAM.loop();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop();
@@ -388,7 +386,7 @@ controls.stepSpoilers = func(step) {
 }
 
 var deploySpeedbrake = func {
-	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
 			pts.Controls.Flight.speedbrake.setValue(1.0);
 		}
@@ -402,7 +400,7 @@ var deploySpeedbrake = func {
 }
 
 var retractSpeedbrake = func {
-	if (pts.Gear.Wow[1].getBoolValue() or pts.Gear.Wow[2].getBoolValue()) {
+	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
 			pts.Controls.Flight.speedbrake.setValue(0.0);
 		}
@@ -462,6 +460,23 @@ setlistener("/controls/flight/elevator-trim", func {
         pts.Controls.Flight.elevatorTrim.setValue(0.296296);
     }
 }, 0, 0);
+
+# For the cockpit rotation and anywhere else you want to use it
+var cmdDegCalc = 0;
+var slewPitchWheel = func(d) {
+	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.ElevatorTrim.cmdDeg.getValue(), 0.1);
+	if (d > 0) { # DN
+		if (cmdDegCalc < 4) {
+			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	} else { # UP
+		if (cmdDegCalc > -13.5) {
+			cmdDegCalc = (cmdDegCalc - 0.1) / 13.5; # Subtract and normalize
+			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
+		}
+	}
+}
 
 ##########
 # Lights #

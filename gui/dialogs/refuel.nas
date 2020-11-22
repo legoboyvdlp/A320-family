@@ -6,7 +6,7 @@
 # Distribute under the terms of GPLv2.
 
 # Conversion factor pounds to kilogram
-LBS2KGS = 0.4535924;
+var LBS2KGS = 0.4535924;
 
 if (pts.Sim.aero.getValue() == "A320-200-CFM") {
 	max_fuel = 42.8;
@@ -483,6 +483,7 @@ var refuelClass = {
 		});
 
 
+		systems.fuelSvc.Nodes.requestFuelLbs.setValue(pts.Consumables.Fuel.totalFuelLbs.getValue());
 		amount.setValue(math.round((systems.fuelSvc.Nodes.requestFuelLbs.getValue() + systems.fuelSvc.Nodes.requestLbs.getValue()) / 1000, 0.1));
 		
 		me._timerf();
@@ -590,25 +591,45 @@ var refuelClass = {
 	_fuelAdjustDn: func() {
 		target = amount.getValue();
 		if (target > 0) {
-			amount.setValue(target - 0.1);
-			if (target - 0.1 >= 10.0) {
-				me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+			if (acconfig_weight_kgs.getValue() == 1) {
+				amount.setValue(target - 0.1 * LBS2KGS);
+				if ((target - 0.1) * LBS2KGS >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", (target - (0.1 * LBS2KGS)) * LBS2KGS));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", (target - (0.1 * LBS2KGS)) * LBS2KGS));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			} else {
-				me._FQI_pre.setText(sprintf("%2.2f", target - 0.1));
+				amount.setValue(target - 0.1);
+				if (target - 0.1 >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", target - 0.1));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", target - 0.1));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			}
-			systems.fuelSvc.Nodes.requestLbs.setValue(((target - 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
 	_fuelAdjustUp: func() {
 		target = amount.getValue();
 		if (target < max_fuel) {
-			amount.setValue(target + 0.1);
-			if (target + 0.1 >= 10.0) {
-				me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+			if (acconfig_weight_kgs.getValue() == 1) {
+				amount.setValue(target + 0.1);
+				if ((target + 0.1) * LBS2KGS >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", (target + (0.1 * LBS2KGS)) * LBS2KGS));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", (target + (0.1 * LBS2KGS)) * LBS2KGS));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			} else {
-				me._FQI_pre.setText(sprintf("%2.2f", target + 0.1));
+				amount.setValue(target + 0.1);
+				if (target + 0.1 >= 10.0) {
+					me._FQI_pre.setText(sprintf("%2.1f", target + 0.1));
+				} else {
+					me._FQI_pre.setText(sprintf("%2.2f", target + 0.1));
+				}
+				systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 			}
-			systems.fuelSvc.Nodes.requestLbs.setValue(((target + 0.1) - math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000, 0.1)) * 1000);
 		}
 	},
 	_onClose: func() {

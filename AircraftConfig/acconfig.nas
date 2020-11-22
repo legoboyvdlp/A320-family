@@ -76,6 +76,8 @@ setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/weight-kgs", 0);
 setprop("/systems/acconfig/options/adirs-skip", 0);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
+setprop("/systems/acconfig/options/atis-server", "faa");
+setprop("/systems/acconfig/options/wxr-server", "noaa");
 setprop("/systems/acconfig/options/welcome-skip", 0);
 setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
@@ -231,6 +233,8 @@ var readSettings = func {
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
 	setprop("/options/system/fo-view", getprop("/systems/acconfig/options/fo-view"));
 	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
+	setprop("/systems/atsu/atis-server", getprop("/systems/acconfig/options/atis-server"));
+	setprop("/systems/atsu/wxr-server", getprop("/systems/acconfig/options/wxr-server"));
 }
 
 var writeSettings = func {
@@ -243,6 +247,8 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
 	setprop("/systems/acconfig/options/fo-view", getprop("/options/system/fo-view"));
 	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
+	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
+	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 
@@ -512,7 +518,7 @@ var takeoff = func {
 		# The same as taxi, except we set some things afterwards.
 		taxi();
 		var eng_one_chk_c = setlistener("/engines/engine[0]/state", func {
-			if (getprop("/engines/engine[0]/state") == 3) {
+			if (pts.Engines.Engine.state[0].getValue() == 3) {
 				removelistener(eng_one_chk_c);
 				setprop("/controls/switches/strobe", 1.0);
 				setprop("/controls/lighting/taxi-light-switch", 1);

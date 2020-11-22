@@ -26,6 +26,7 @@ var Controls = {
 			firePb: [props.globals.getNode("/controls/engines/engine[0]/fire-btn"), props.globals.getNode("/controls/engines/engine[1]/fire-btn")],
 			throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
 			throttleFdm: [props.globals.getNode("/controls/engines/engine[0]/throttle-fdm"), props.globals.getNode("/controls/engines/engine[1]/throttle-fdm")],
+			throttleLever: [props.globals.getNode("/controls/engines/engine[0]/throttle-lever"), props.globals.getNode("/controls/engines/engine[1]/throttle-lever")],
 			throttleOutput: [props.globals.getNode("/controls/engines/engine[0]/throttle-output"), props.globals.getNode("/controls/engines/engine[1]/throttle-output")],
 			throttlePos: [props.globals.getNode("/controls/engines/engine[0]/throttle-pos"), props.globals.getNode("/controls/engines/engine[1]/throttle-pos")],
 			throttleRev: [props.globals.getNode("/controls/engines/engine[0]/throttle-rev"), props.globals.getNode("/controls/engines/engine[1]/throttle-rev")],
@@ -39,6 +40,7 @@ var Controls = {
 		elevatorTrim: props.globals.getNode("/controls/flight/elevator-trim"),
 		flaps: props.globals.getNode("/controls/flight/flaps"),
 		flapsTemp: 0,
+		flapsInput: props.globals.getNode("/controls/flight/flaps-input"),
 		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
 		speedbrake: props.globals.getNode("/controls/flight/speedbrake"),
 		speedbrakeArm: props.globals.getNode("/controls/flight/speedbrake-arm"),
@@ -50,19 +52,25 @@ var Controls = {
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
+	Switches: {
+		annunTest: props.globals.getNode("/controls/switches/annun-test"),
+	},
 };
 
 var ECAM = {
-	fwcWarningPhase: props.globals.initNode("/ECAM/warning-phase", 1, "INT"),
+	fwcWarningPhase: props.globals.getNode("/ECAM/warning-phase"),
 };
 
 var Engines = {
 	Engine: {
+		egtActual: [props.globals.getNode("/engines/engine[0]/egt-actual"), props.globals.getNode("/engines/engine[1]/egt-actual")],
 		eprActual: [props.globals.getNode("/engines/engine[0]/epr-actual"), props.globals.getNode("/engines/engine[1]/epr-actual")],
+		fuelFlow: [props.globals.getNode("/engines/engine[0]/fuel-flow_actual"), props.globals.getNode("/engines/engine[1]/fuel-flow_actual")],
 		n1Actual: [props.globals.getNode("/engines/engine[0]/n1-actual"), props.globals.getNode("/engines/engine[1]/n1-actual")],
 		n2Actual: [props.globals.getNode("/engines/engine[0]/n2-actual"), props.globals.getNode("/engines/engine[1]/n2-actual")],
 		oilPsi: [props.globals.getNode("/engines/engine[0]/oil-psi-actual"), props.globals.getNode("/engines/engine[1]/oil-psi-actual")],
 		thrust: [props.globals.getNode("/engines/engine[0]/thrust-lb"), props.globals.getNode("/engines/engine[1]/thrust-lb")],
+		reverser: [props.globals.getNode("/engines/engine[0]/reverser-pos-norm"), props.globals.getNode("/engines/engine[1]/reverser-pos-norm")],
 		state: [props.globals.getNode("/engines/engine[0]/state"), props.globals.getNode("/engines/engine[1]/state")],
 	},
 };
@@ -70,6 +78,8 @@ var Engines = {
 var Environment = {
 	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
 	tempDegC: props.globals.getNode("/environment/temperature-degc"),
+	windFromHdg: props.globals.getNode("/environment/wind-from-heading-deg"),
+	windSpeedKt: props.globals.getNode("/environment/wind-speed-kt"),
 };
 
 var Fdm = {
@@ -81,10 +91,19 @@ var Fdm = {
 			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
 			slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
+			slatLocked: props.globals.getNode("/fdm/jsbsim/fcs/slat-locked"),
 		},
 		Fbw: {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
 			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
+		},
+		Hydraulics: {
+			ElevatorTrim: {
+				cmdDeg: props.globals.getNode("/fdm/jsbsim/hydraulics/elevator-trim/cmd-deg"),
+			},
+			Rudder: {
+				trimDeg: props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/trim-deg"),
+			},
 		},
 		Inertia: {
 			weightLbs: props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs"),
@@ -126,6 +145,10 @@ var Instrumentation = {
 		settingInhg: props.globals.getNode("/instrumentation/altimeter[0]/setting-inhg"),
 		std: props.globals.getNode("/instrumentation/altimeter[0]/std"),
 	},
+	Clock: {
+		indicatedString: props.globals.getNode("/instrumentation/clock/indicated-string"),
+		indicatedStringShort: props.globals.getNode("/instrumentation/clock/indicated-short-string"),
+	},
 	Efis: {
 		Inputs: {
 			arpt: [props.globals.initNode("/instrumentation/efis[0]/inputs/arpt", 0, "BOOL"), props.globals.initNode("/instrumentation/efis[1]/inputs/arpt", 0, "BOOL")],
@@ -143,6 +166,17 @@ var Instrumentation = {
 		Mfd: {
 			pnlModeNum: [props.globals.initNode("/instrumentation/efis[0]/mfd/pnl_mode-num", 2, "INT"), props.globals.initNode("/instrumentation/efis[1]/mfd/pnl_mode-num", 2, "INT")],
 		},
+	},
+	MKVII: {
+		Inputs: {
+			Discretes: {
+				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override"),
+			},
+		},
+	},
+	Nav: {
+		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
+		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
 	},
 	TCAS: {
 		Inputs: {
@@ -185,7 +219,13 @@ var Sim = {
 	Time: {
 		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
+		UTC: {
+			day: props.globals.getNode("/sim/time/utc/day"),
+			month: props.globals.getNode("/sim/time/utc/month"),
+			year: props.globals.getNode("/sim/time/utc/year"),
+		},
 	},
+	Version: props.globals.getNode("/sim/version/flightgear"),
 };
 
 var Systems = {

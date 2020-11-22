@@ -98,6 +98,7 @@ var PNEU = {
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
 	},
+	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
 		me.resetFail();
 		
@@ -114,8 +115,8 @@ var PNEU = {
 		setprop("/systems/pressurization/outflowpos-man", "0.5");
 		setprop("/systems/pressurization/outflowpos-man-sw", "0");
 		setprop("/systems/pressurization/outflowpos-norm-cmd", "0");
-		setprop("/systems/pressurization/cabinalt", getprop("instrumentation/altimeter/indicated-altitude-ft"));
-		setprop("/systems/pressurization/targetalt", getprop("instrumentation/altimeter/indicated-altitude-ft")); 
+		setprop("/systems/pressurization/cabinalt", pts.Instrumentation.Altimeter.indicatedFt.getValue());
+		setprop("/systems/pressurization/targetalt", pts.Instrumentation.Altimeter.indicatedFt.getValue()); 
 		setprop("/systems/pressurization/diff-to-target", "0");
 		setprop("/systems/pressurization/ditchingpb", 0);
 		setprop("/systems/pressurization/targetvs", "0");
@@ -165,8 +166,8 @@ var PNEU = {
 		targetalt = getprop("/systems/pressurization/targetalt");
 		ambient = getprop("/systems/pressurization/ambientpsi");
 		cabinpsi = getprop("/systems/pressurization/cabinpsi");
-		state1 = getprop("/systems/thrust/state1");
-		state2 = getprop("/systems/thrust/state2");
+		state1 = pts.Systems.Thrust.state[0].getValue();
+		state2 = pts.Systems.Thrust.state[1].getValue();
 		pressmode = getprop("/systems/pressurization/mode");
 		vs = getprop("/systems/pressurization/vs-norm");
 		manvs = getprop("/systems/pressurization/manvs-cmd");
