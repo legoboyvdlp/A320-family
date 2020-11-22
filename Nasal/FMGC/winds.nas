@@ -219,7 +219,7 @@ var windController = {
 			me.nav_indicies[2] = me.nav_indicies[n];
 			me.windSizes[2] = me.windSizes[n];
 		}
-		if (n == 3) { return; }
+		if (n == 4) { return; }
 		me.resetWind(n);
 		me.waypointsChanged();
 		#me.temporaryFlag[n] = 0;

@@ -27,7 +27,7 @@ var wpCoursePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course-fr
 var wpDistancePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance-from-prev", 0, "DOUBLE")]];
 
 var flightPlanController = {
-	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
+	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil, nil],
 	temporaryFlag: [0, 0],
 	
 	# These flags are only for the main flgiht-plan
@@ -100,12 +100,12 @@ var flightPlanController = {
 	},
 	
 	loadFlightPlan: func(path) {
-		call(func {me.flightplans[3] = createFlightplan(path);}, nil, var err = []);	
-		if (size(err) or me.flightplans[3] == nil) {
+		call(func {me.flightplans[4] = createFlightplan(path);}, nil, var err = []);	
+		if (size(err) or me.flightplans[4] == nil) {
 			print(err[0]);
 			print("Load failed.");
 		}
-		me.destroyTemporaryFlightPlan(3, 1);
+		me.destroyTemporaryFlightPlan(4, 1);
 	},
 	
 	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase
@@ -114,7 +114,7 @@ var flightPlanController = {
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			
-			if (n != 3) {
+			if (n != 4) {
 				if (mcdu.isNoSid[n] == 1) {
 					mcdu.isNoSid[2] = 1;
 				} else {
@@ -149,7 +149,7 @@ var flightPlanController = {
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
-		if (n == 3) { return; }
+		if (n == 4) { return; }
 		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
 		if (canvas_mcdu.myDirTo[n] != nil) {
@@ -725,11 +725,13 @@ var flightPlanController = {
 		return -99;
 	},
 	
-	calculateVerticalPoints: func(n) {
+	calculateVerticalPoints: func(n, explicit = 0) {
 		#print("Changed verticle points for - ", n);
 		if (me.getPlanSizeNoDiscont(n) <= 1) {
 			return;			
 		}
+		
+		distance_tolerance = 0;
 		
 		if (fmgc.FMGCInternal.clbSet and fmgc.FMGCInternal.desSet) {
 			#setprop("/autopilot/route-manager/vnav/tc", 1); 
@@ -738,49 +740,15 @@ var flightPlanController = {
 			me.indexTOC = 0;
 			me.indexTOD = 0;
 			
-			# me.tod_distance = 0;
-# 			for (var wpt = me.arrivalIndex[n]; wpt >= 1; wpt -= 1) {
-# 				me.temp_distance += me.flightplans[n].getWP(wpt).leg_distance;
-# 				if (me.temp_distance > fmgc.FMGCInternal.desDist) {
-# 					me.indexTOD = wpt;
-# 					break;
-# 				}
-# 			}
-# 			me.todPoint = me.flightplans[n].pathGeod(me.indexTOD, -me.tod_distance);
-			
-			if (me.getIndexOfTOC(n) != -99) {
-				me.indexTOC_old = me.getIndexOfTOC(n);
- 				me.tocPoint_old = me.flightplans[n].getWP(me.indexTOC_old);
- 				me.tocPoint_new = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
- 				
- 				c1 = geo.Coord.new();
-				c1.set_latlon(me.tocPoint_new.lat, me.tocPoint_new.lon);
-				c2 = geo.Coord.new();
-				c2.set_latlon(me.tocPoint_old.lat, me.tocPoint_old.lon);
- 				
- 				if (c1.distance_to(c2) > 0.1) {
- 					me.flightplans[n].deleteWP(me.indexTOC_old);
+			if (explicit) {
+				if (me.getIndexOfTOC(n) != -99) {
+					me.indexTOC_old = me.getIndexOfTOC(n);
+					me.flightplans[n].deleteWP(me.indexTOC_old);
 					fmgc.windController.deleteWind(n, me.indexTOC_old);
 					me.flightPlanChanged(n, 0);
- 					
- 					me.toc_distance = 0;
-					for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
-						me.toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-						if (me.toc_distance > fmgc.FMGCInternal.clbDist) {
-							me.indexTOC = wpt;
-							#me.toc_distance = fmgc.FMGCInternal.clbDist - me.flightplans[n].getWP(wpt - 1).leg_distance;
-							break;
-						}
-					}
-					me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
- 					
-					if (me.indexTOC != 0) {
-						me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
-						me.flightPlanChanged(n, 0);
-					}
 				}
- 			} else {
- 				me.toc_distance = 0;
+				
+				me.toc_distance = 0;
 				for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
 					me.toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
 					if (me.toc_distance > fmgc.FMGCInternal.clbDist) {
@@ -789,15 +757,108 @@ var flightPlanController = {
 					}
 				}
 				me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
- 				
- 				if (me.indexTOC != 0) {
- 					me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
- 					me.flightPlanChanged(n, 0);
- 				}
- 			}
+		
+				if (me.indexTOC != 0) {
+					me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
+					me.flightPlanChanged(n, 0);
+				}
+			} else {
+				if (me.getIndexOfTOC(n) != -99) {
+					me.indexTOC_old = me.getIndexOfTOC(n);
+					me.tocPoint_old = me.flightplans[n].getWP(me.indexTOC_old);
+					me.flightplans[3] = me.flightplans[n].clone();
+					me.flightplans[3].deleteWP(me.indexTOC_old);
+					me.tocPoint_new = me.flightplans[3].pathGeod(0, fmgc.FMGCInternal.clbDist);
+					me.flightplans[3] = nil;
+					c1 = geo.Coord.new();
+					c1.set_latlon(me.tocPoint_new.lat, me.tocPoint_new.lon);
+					c2 = geo.Coord.new();
+					c2.set_latlon(me.tocPoint_old.lat, me.tocPoint_old.lon);
+				
+					if (c1.distance_to(c2) > distance_tolerance) {
+						me.flightplans[n].deleteWP(me.indexTOC_old);
+						fmgc.windController.deleteWind(n, me.indexTOC_old);
+						me.flightPlanChanged(n, 0);
+					
+						me.toc_distance = 0;
+						for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
+							me.toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
+							if (me.toc_distance > fmgc.FMGCInternal.clbDist) {
+								me.indexTOC = wpt;
+								break;
+							}
+						}
+						me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
 			
-			#me.insertTOD(n, {lat: me.todPoint.lat, lon: me.todPoint.lon}, me.indexTOD);
+						if (me.indexTOC != 0) {
+							me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
+							me.flightPlanChanged(n, 0);
+						}
+					}
+				} else {
+					me.toc_distance = 0;
+					for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
+						me.toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
+						if (me.toc_distance > fmgc.FMGCInternal.clbDist) {
+							me.indexTOC = wpt;
+							break;
+						}
+					}
+					me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
 			
+					if (me.indexTOC != 0) {
+						me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, me.indexTOC);
+						me.flightPlanChanged(n, 0);
+					}
+				}
+			}
+			
+ 			# if (me.getIndexOfTOD(n) != -99) {
+#  				me.indexTOD_old = me.getIndexOfTOD(n);
+#  				me.todPoint_old = me.flightplans[n].getWP(me.indexTOD_old);
+#  				me.todPoint_new = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
+#  				
+#  				c1 = geo.Coord.new();
+# 				c1.set_latlon(me.todPoint_new.lat, me.todPoint_new.lon);
+# 				c2 = geo.Coord.new();
+# 				c2.set_latlon(me.todPoint_old.lat, me.todPoint_old.lon);
+#  				
+#  				if (c1.distance_to(c2) > distance_tolerance) {
+#  					me.flightplans[n].deleteWP(me.indexTOD_old);
+# 					fmgc.windController.deleteWind(n, me.indexTOD_old);
+# 					me.flightPlanChanged(n, 0);
+#  					
+#  					me.tod_distance = 0;
+# 					for (var wpt = me.arrivalIndex[n]; wpt >= 1; wpt -= 1) {
+# 						me.tod_distance += me.flightplans[n].getWP(wpt).leg_distance;
+# 						if (me.tod_distance > fmgc.FMGCInternal.desDist) {
+# 							me.indexTOD = wpt;
+# 							break;
+# 						}
+# 					}
+# 					me.todPoint = me.flightplans[n].pathGeod(me.indexTOD, -fmgc.FMGCInternal.clbDist);
+#  					
+# 					if (me.indexTOD != 0) {
+# 						me.insertTOD(n, {lat: me.todPoint.lat, lon: me.todPoint.lon}, me.indexTOD);
+# 						me.flightPlanChanged(n, 0);
+# 					}
+# 				}
+#  			} else {
+#  				me.tod_distance = 0;
+# 				for (var wpt = me.arrivalIndex[n]; wpt >= 1; wpt -= 1) {
+# 					me.tod_distance += me.flightplans[n].getWP(wpt).leg_distance;
+# 					if (me.tod_distance > fmgc.FMGCInternal.desDist) {
+# 						me.indexTOD = wpt;
+# 						break;
+# 					}
+# 				}
+# 				me.todPoint = me.flightplans[n].pathGeod(me.indexTOD, -fmgc.FMGCInternal.clbDist);
+#  				
+#  				if (me.indexTOD != 0) {
+#  					me.insertTOD(n, {lat: me.todPoint.lat, lon: me.todPoint.lon}, me.indexTOD);
+#  					me.flightPlanChanged(n, 0);
+#  				}
+#  			}
 		} else {
 			me.indexTOC_old = me.getIndexOfTOC(n);
 			if (me.indexTOC_old != -99) {
@@ -806,12 +867,12 @@ var flightPlanController = {
 				me.flightPlanChanged(n, 0);
 			}
 		
-			me.indexTOD_old = me.getIndexOfTOD(n);
-			if (me.indexTOD_old != -99) {
-				me.flightplans[n].deleteWP(me.indexTOD_old);
-				fmgc.windController.deleteWind(n, me.indexTOD_old);
-				me.flightPlanChanged(n, 0);
-			}
+			#me.indexTOD_old = me.getIndexOfTOD(n);
+			#if (me.indexTOD_old != -99) {
+			#	me.flightplans[n].deleteWP(me.indexTOD_old);
+			#	fmgc.windController.deleteWind(n, me.indexTOD_old);
+			#	me.flightPlanChanged(n, 0);
+			#}
 		}
 	},
 	
@@ -875,7 +936,7 @@ var flightPlanController = {
 		}
 	},
 	
-	flightPlanChanged: func(n, fuelContinue = 1) {
+	flightPlanChanged: func(n, callVertical = 1) {
 		sizeWP = size(wpID[n]);
 		for (var counter = sizeWP; counter < me.flightplans[n].getPlanSize(); counter += 1) { # create new properties if they are required
 			append(wpID[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/text", "", "STRING"));
@@ -886,19 +947,21 @@ var flightPlanController = {
 			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
-		me.updatePlans();
+		me.updatePlans(1, callVertical);
 		fmgc.windController.updatePlans();
 			
 		# push update to fuel
-		if (getprop("/FMGC/internal/block-confirmed") and fuelContinue) {
+		if (getprop("/FMGC/internal/block-confirmed") and callVertical) {
 			setprop("/FMGC/internal/fuel-calculating", 0);
 			setprop("/FMGC/internal/fuel-calculating", 1);
 		}
 		
-		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
+		if (callVertical) {
+			canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
+		}
 	},
 	
-	updatePlans: func() {
+	updatePlans: func(runVertical = 0, callVertical = 1) {
 		me.updateCurrentWaypoint();
 		me._arrivalDist = 0;
 		for (var n = 0; n <= 2; n += 1) {
@@ -947,6 +1010,9 @@ var flightPlanController = {
 						}
 					}
 				}
+			}
+			if (runVertical and callVertical) {
+				flightPlanController.calculateVerticalPoints(n, 1);
 			}
 		}
 		
