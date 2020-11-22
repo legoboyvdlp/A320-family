@@ -312,9 +312,9 @@ var ATIS = {
 			return 1;
 		}
 		
-		var serverString = "https://api.flybywiresim.com/atis?source=" ~ me.serverSel.getValue() ~ "&icao=";
+		var serverString = "https://api.flybywiresim.com/atis/" ~ airport ~ "?source=" ~ me.serverSel.getValue();
 		
-		http.load(serverString ~ airport)
+		http.load(serverString)
 			.fail(func(r) return 3)
 			.done(func(r) {
 				var errs = [];
@@ -330,14 +330,14 @@ var ATIS = {
 	},
 	processATIS: func(r, i) {
 		var raw = r.response;
-		if (r.response == "FBW_ERROR: D-ATIS not available at this airport" or find("atis not avail",r.response) != -1) {
+		if (r.response == "FBW_ERROR: D-ATIS not available at this airport" or find("atis not avail",r.response) != -1 or find('"statusCode":404',r.response) != -1) {
 			me.received = 0;
 			me.sent = 0;
 			mcdu.mcdu_message(i,"NO D-ATIS AVAILABLE");
 			return;
 		}
 		if (find("combined", raw) != -1) {
-			raw = split('{"combined":"', raw)[1];
+			raw = split('"combined":"', raw)[1];
 			raw = split('"}', raw)[0];
 		} else {
 			if (me.type == 0) {
