@@ -554,12 +554,12 @@
 		<gui n="0" include="gui/it-gui.xml"/>
 		
 		<current-view>
-			<z-offset-default type="float">80.0</z-offset-default>
+			<z-offset-default type="float">60.0</z-offset-default>
 			<z-offset-min-m type="float">10.0</z-offset-min-m>
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		 <minimum-fg-version>2019.2.0</minimum-fg-version>
+		<minimum-fg-version>2019.2.0</minimum-fg-version>
 
 		<navdb>
 			<min-runway-length-ft>3000</min-runway-length-ft>

@@ -21,7 +21,7 @@
 			<path>Aircraft/A320-family/Sounds/leapx-sound.xml</path>
 		</sound>
 		
-		<chase-distance-m type="double" archive="y">-80.0</chase-distance-m>
+		<chase-distance-m type="double" archive="y">-60.0</chase-distance-m>
 		<view>
 			<name>Pilot View</name>
 			<internal archive="y">true</internal>
