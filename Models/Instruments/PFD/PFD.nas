@@ -512,14 +512,18 @@ var canvas_PFD_base = {
 			me["FMA_rollarm_box"].hide();
 			me["FMA_Middle1"].hide();
 			me["FMA_Middle2"].hide();
-			if (fbw_curlaw == 2) {
-				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
-				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
-				me["FMA_ctr_msg"].show();
-			} else if (fbw_curlaw == 3) {
-				me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
-				me["FMA_ctr_msg"].setColor(1,0,0);
-				me["FMA_ctr_msg"].show();
+			if (wow1.getValue() == 0) {
+				if (fbw_curlaw == 2) {
+					me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
+					me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
+					me["FMA_ctr_msg"].show();
+				} else if (fbw_curlaw == 3) {
+					me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
+					me["FMA_ctr_msg"].setColor(1,0,0);
+					me["FMA_ctr_msg"].show();
+				} else {
+					me["FMA_ctr_msg"].hide();
+				}
 			} else {
 				me["FMA_ctr_msg"].hide();
 			}
@@ -532,18 +536,24 @@ var canvas_PFD_base = {
 		} else {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
-			if (fbw_curlaw == 2) {
-				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
-				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
-				me["FMA_Middle1"].hide();
-				me["FMA_Middle2"].show();
-				me["FMA_ctr_msg"].show();
-			} else if (fbw_curlaw == 3) {
-				me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
-				me["FMA_ctr_msg"].setColor(1,0,0);
-				me["FMA_Middle1"].hide();
-				me["FMA_Middle2"].show();
-				me["FMA_ctr_msg"].show();
+			if (wow1.getValue() == 0) {
+				if (fbw_curlaw == 2) {
+					me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
+					me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
+					me["FMA_Middle1"].hide();
+					me["FMA_Middle2"].show();
+					me["FMA_ctr_msg"].show();
+				} else if (fbw_curlaw == 3) {
+					me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
+					me["FMA_ctr_msg"].setColor(1,0,0);
+					me["FMA_Middle1"].hide();
+					me["FMA_Middle2"].show();
+					me["FMA_ctr_msg"].show();
+				} else {
+					me["FMA_ctr_msg"].hide();
+					me["FMA_Middle1"].show();
+					me["FMA_Middle2"].hide();
+				}
 			} else {
 				me["FMA_ctr_msg"].hide();
 				me["FMA_Middle1"].show();
