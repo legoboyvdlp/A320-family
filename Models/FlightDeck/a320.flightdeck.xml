@@ -5444,17 +5444,63 @@
 		<type>select</type>
 		<object-name>gear_lever_down_arrow</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>systems/gear/landing-gear-warning-light</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<greater-than>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than>
+					<greater-than>
+						<property>systems/electrical/bus/ac-2</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>ECAM/warnings/landing-gear-warning-light</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>gear_lever_down_arrow</object-name>
+		<condition>
+			<and>
+				<or>
+					<greater-than>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than>
+					<greater-than>
+						<property>systems/electrical/bus/ac-2</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>ECAM/warnings/landing-gear-warning-light</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
+		</condition>
+		<emission>
+			<red>1.00</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</emission>
 	</animation>
 
 	<!-- Landing Gear Lights -->

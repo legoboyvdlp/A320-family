@@ -653,8 +653,14 @@ var messages_priority_3 = func {
 	}
 	
 	if (gearNotDown.clearFlag == 0 and (warningNodes.Logic.gearNotDown1.getBoolValue() or warningNodes.Logic.gearNotDown2.getBoolValue()) and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5) {
+		if (!gearNotDown.active) {
+			gearWarnLight.setValue(1);
+		}
 		gearNotDown.active = 1;
 	} else {
+		if (gearNotDown.active) {
+			gearWarnLight.setValue(0);
+		}
 		ECAM_controller.warningReset(gearNotDown);
 	}
 	
