@@ -69,9 +69,6 @@ var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 
 var target_altitude = props.globals.getNode("/autopilot/settings/target-altitude-ft", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 var altitude_pfd = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
-var alt_diff = props.globals.getNode("/instrumentation/pfd/alt-diff", 1);
-var ground_diff = props.globals.getNode("/instrumentation/pfd/ground-diff", 1);
-var landing_diff = props.globals.getNode("/instrumentation/pfd/landing-diff", 1);
 var ap_alt = props.globals.getNode("/it-autoflight/internal/alt", 1);
 var vs_needle = props.globals.getNode("/instrumentation/pfd/vs-needle", 1);
 var vs_digit = props.globals.getNode("/instrumentation/pfd/vs-digit-trans", 1);
@@ -141,8 +138,6 @@ var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-
 
 # Create Nodes:
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
-var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
-var landing_diff = props.globals.initNode("/instrumentation/pfd/landing-diff", 0.0, "DOUBLE");
 var heading = props.globals.initNode("/instrumentation/pfd/heading-deg", 0.0, "DOUBLE");
 var horizon_pitch = props.globals.initNode("/instrumentation/pfd/horizon-pitch", 0.0, "DOUBLE");
 var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground", 0.0, "DOUBLE");
@@ -1691,6 +1686,7 @@ var canvas_PFD_1 = {
 			me["ALT_error"].hide();
 			me["ALT_frame"].setColor(1,1,1);
 			me["ALT_group"].show();
+			me["ALT_tens"].show();
 			me["ALT_box"].show();
 			me["ALT_group2"].show();
 			me["ALT_scale"].show();
@@ -1758,7 +1754,7 @@ var canvas_PFD_1 = {
 				me["ALT_target"].hide();
 			}
 			
-			ground_diff_cur = ground_diff.getValue();
+			ground_diff_cur = -gear_agl.getValue();
 			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 				me["ground_ref"].show();
@@ -1766,10 +1762,9 @@ var canvas_PFD_1 = {
 				me["ground_ref"].hide();
 			}
 			
-			landing_diff_cur = landing_diff.getValue();
-			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				if ((fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
-					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 					me["ground"].show();
 				} else {
 					me["ground"].hide();
@@ -1826,6 +1821,7 @@ var canvas_PFD_1 = {
 			me["ALT_error"].show();
 			me["ALT_frame"].setColor(1,0,0);
 			me["ALT_group"].hide();
+			me["ALT_tens"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
 			me["ALT_box_flash"].hide();
@@ -2464,6 +2460,7 @@ var canvas_PFD_2 = {
 			me["ALT_error"].hide();
 			me["ALT_frame"].setColor(1,1,1);
 			me["ALT_group"].show();
+			me["ALT_tens"].show();
 			me["ALT_box"].show();
 			me["ALT_group2"].show();
 			me["ALT_scale"].show();
@@ -2531,7 +2528,7 @@ var canvas_PFD_2 = {
 				me["ALT_target"].hide();
 			}
 			
-			ground_diff_cur = ground_diff.getValue();
+			ground_diff_cur = -gear_agl.getValue();
 			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 				me["ground_ref"].show();
@@ -2539,10 +2536,9 @@ var canvas_PFD_2 = {
 				me["ground_ref"].hide();
 			}
 			
-			landing_diff_cur = landing_diff.getValue();
-			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				if ((fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
-					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 					me["ground"].show();
 				} else {
 					me["ground"].hide();
@@ -2599,6 +2595,7 @@ var canvas_PFD_2 = {
 			me["ALT_error"].show();
 			me["ALT_frame"].setColor(1,0,0);
 			me["ALT_group"].hide();
+			me["ALT_tens"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
 			me["ALT_box_flash"].hide();
