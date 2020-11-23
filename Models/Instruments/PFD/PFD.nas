@@ -298,8 +298,10 @@ var canvas_PFD_base = {
 					PFD_1_test.page.show();
 				} else {
 					PFD_1.updateFast();
-					PFD_1.update();
-					updateL = 1;
+					if (!updateL) { # Update slow here once so that no flicker if timers don't perfectly align
+						updateL = 1;
+						PFD_1.update();
+					}
 					PFD_1_test.page.hide();
 					PFD_1.page.show();
 				}
@@ -321,8 +323,10 @@ var canvas_PFD_base = {
 					PFD_2_test.page.show();
 				} else {
 					PFD_2.updateFast();
-					PFD_2.update();
-					updateR = 1;
+					if (!updateR) { # Update slow here once so that no flicker if timers don't perfectly align
+						updateR = 1;
+						PFD_2.update();
+					}
 					PFD_2_test.page.hide();
 					PFD_2.page.show();
 				}
