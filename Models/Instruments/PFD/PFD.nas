@@ -2456,7 +2456,7 @@ var canvas_PFD_2 = {
 			me["machError"].show();
 		}
 		
-		if (dmc.DMController.DMCs[0].outputs[1] != nil) {
+		if (dmc.DMController.DMCs[1].outputs[1] != nil) {
 			me["ALT_error"].hide();
 			me["ALT_frame"].setColor(1,1,1);
 			me["ALT_group"].show();
@@ -2465,7 +2465,7 @@ var canvas_PFD_2 = {
 			me["ALT_group2"].show();
 			me["ALT_scale"].show();
 			
-			me.altitude = dmc.DMController.DMCs[0].outputs[1].getValue();
+			me.altitude = dmc.DMController.DMCs[1].outputs[1].getValue();
 			me.altOffset = me.altitude / 500 - int(me.altitude / 500);
 			me.middleAltText = roundaboutAlt(me.altitude / 100);
 			me.middleAltOffset = nil;
@@ -2488,7 +2488,7 @@ var canvas_PFD_2 = {
 				me["ALT_neg"].hide();
 			}
 			
-			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[0].outputs[3].getValue()));
+			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[1].outputs[3].getValue()));
 			altTens = num(right(sprintf("%02d", me.altitude), 2));
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
