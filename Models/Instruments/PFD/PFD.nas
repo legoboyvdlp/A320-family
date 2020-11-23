@@ -14,7 +14,6 @@ var updateL = 0;
 var updateR = 0;
 var elapsedtime = 0;
 var altTens = 0;
-var altPolarity = "";
 var track_diff = 0;
 var AICenter = nil;
 
@@ -220,7 +219,7 @@ var canvas_PFD_base = {
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
-		"ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
+		"ALT_digit_DN","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
 		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
 	},
@@ -1708,13 +1707,13 @@ var canvas_PFD_1 = {
 			me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
 			me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 			
-			if (altitude.getValue() < 0) {
-				altPolarity = "-";
+			if (me.altitude < 0) {
+				me["ALT_neg"].show();
 			} else {
-				altPolarity = "";
+				me["ALT_neg"].hide();
 			}
 			
-			me["ALT_digits"].setText(sprintf("%s%d", altPolarity, dmc.DMController.DMCs[0].outputs[3].getValue()));
+			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[0].outputs[3].getValue()));
 			altTens = num(right(sprintf("%02d", me.altitude), 2));
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
@@ -1822,6 +1821,7 @@ var canvas_PFD_1 = {
 			me["ALT_frame"].setColor(1,0,0);
 			me["ALT_group"].hide();
 			me["ALT_tens"].hide();
+			me["ALT_neg"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
 			me["ALT_box_flash"].hide();
@@ -2482,13 +2482,13 @@ var canvas_PFD_2 = {
 			me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
 			me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 			
-			if (altitude.getValue() < 0) {
-				altPolarity = "-";
+			if (me.altitude < 0) {
+				me["ALT_neg"].show();
 			} else {
-				altPolarity = "";
+				me["ALT_neg"].hide();
 			}
 			
-			me["ALT_digits"].setText(sprintf("%s%d", altPolarity, dmc.DMController.DMCs[0].outputs[3].getValue()));
+			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[0].outputs[3].getValue()));
 			altTens = num(right(sprintf("%02d", me.altitude), 2));
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
@@ -2596,6 +2596,7 @@ var canvas_PFD_2 = {
 			me["ALT_frame"].setColor(1,0,0);
 			me["ALT_group"].hide();
 			me["ALT_tens"].hide();
+			me["ALT_neg"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
 			me["ALT_box_flash"].hide();
