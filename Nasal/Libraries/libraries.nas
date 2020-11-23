@@ -462,7 +462,7 @@ setlistener("/controls/flight/elevator-trim", func {
 # For the cockpit rotation and anywhere else you want to use it
 var cmdDegCalc = 0;
 var slewPitchWheel = func(d) {
-	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.ElevatorTrim.cmdDeg.getValue(), 0.1);
+	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.Stabilizer.cmdDeg.getValue(), 0.1);
 	if (d > 0) { # DN
 		if (cmdDegCalc < 4) {
 			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity

@@ -179,7 +179,7 @@
 		<name>Elevator Trim Deg</name>
 		<type>gain</type>
 		<gain>-1.0</gain>
-		<input>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</input>
+		<input>/fdm/jsbsim/hydraulics/stabilizer/final-deg</input>
 		<output>/ECAM/Lower/elevator-trim-deg</output>
 	</filter>
 	

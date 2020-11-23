@@ -188,7 +188,7 @@ var update_loop = func {
 		}
 		if (systems.ELEC.EmerElec.getBoolValue()) {
 			if (lawyaw == 0 or lawyaw == 1) {
-			} elsif (fac1 and lawyaw == 2) {
+			} else if (fac1 and lawyaw == 2) {
 				FBW.degradeYawLaw.setValue(1);
 			}
 			if (law == 0) {

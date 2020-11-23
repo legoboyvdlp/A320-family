@@ -489,7 +489,7 @@
 				<float n="6" alias="/fdm/jsbsim/hydraulics/aileron-l/final-deg"/>
 				<float n="7" alias="/fdm/jsbsim/hydraulics/aileron-r/final-deg"/>
 				<float n="8" alias="/fdm/jsbsim/hydraulics/rudder/final-deg"/>
-				<float n="9" alias="/fdm/jsbsim/hydraulics/elevator-trim/final-deg"/>
+				<float n="9" alias="/fdm/jsbsim/hydraulics/stabilizer/final-deg"/>
 				<float n="11" alias="/fdm/jsbsim/fcs/slat-pos-norm"/>
 				<float n="12" alias="/fdm/jsbsim/fcs/flap-pos-norm"/>
 				<int n="2" alias="/controls/lighting/landing-lights[0]"/>

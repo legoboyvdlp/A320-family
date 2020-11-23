@@ -306,7 +306,7 @@
 	
 	<channel name="Pitch Trim">
 		
-		<switch name="hydraulics/elevator-trim/rate">
+		<switch name="hydraulics/stabilizer/rate">
 			<default value="0.125"/>
 			<test logic="OR" value="0.25">
 				/systems/hydraulic/yellow-psi ge 1500
@@ -314,7 +314,7 @@
 			</test>
 		</switch>
 		
-		<aerosurface_scale name="hydraulics/elevator-trim/cmd-deg">
+		<aerosurface_scale name="hydraulics/stabilizer/cmd-deg">
 			<input>/controls/flight/elevator-trim</input>
 			<domain>
 				<min>-1.0</min>
@@ -326,11 +326,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/elevator-trim/final-actuator">
-			<input>hydraulics/elevator-trim/cmd-deg</input>
-			<rate_limit>hydraulics/elevator-trim/rate</rate_limit>
+		<actuator name="hydraulics/stabilizer/final-actuator">
+			<input>hydraulics/stabilizer/cmd-deg</input>
+			<rate_limit>hydraulics/stabilizer/rate</rate_limit>
 			<lag>22.5</lag>
-			<output>hydraulics/elevator-trim/final-deg</output>
+			<output>hydraulics/stabilizer/final-deg</output>
 		</actuator>
 	
 	</channel>

@@ -213,7 +213,7 @@
 				<slider>
 					<pref-height>150</pref-height>
 					<vertical>true</vertical>
-					<property>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</property>
+					<property>/fdm/jsbsim/hydraulics/stabilizer/final-deg</property>
 					<min>-12.5</min>
 					<max>4</max>
 					<step>0.00125</step>

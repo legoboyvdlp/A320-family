@@ -4,6 +4,7 @@
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <ground_reactions>
+	
 	<contact type="BOGEY" name="NOSE_LG">
 		<location unit="M">
 			<x>-13.6519</x>
@@ -360,4 +361,5 @@
 		<brake_group>NONE</brake_group>
 		<retractable>0</retractable>
 	</contact>
+
 </ground_reactions>
