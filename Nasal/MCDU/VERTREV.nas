@@ -136,8 +136,10 @@ var vertRev = {
 	},
 	pushButtonLeft: func(index) {
 		if (index == 5) {
-			#print("role: ", me.wp.wp_role, ", type: ", me.wp.wp_type);
-			if (me.wp.wp_role == "sid") {
+			var clb_index = fmgc.flightPlanController.getIndexOfTOC(me.plan);
+			var des_index = fmgc.flightPlanController.getIndexOfTOD(me.plan);
+			
+			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and int(me.index) <= int(clb_index))) {
 				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
 					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
 				} else {
@@ -145,7 +147,7 @@ var vertRev = {
 				}
 				fmgc.windController.accessPage[me.computer] = "VERTREV";
 				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCLB");
-			} else if (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed") {
+			} else if ((!fmgc.FMGCInternal.desSet and (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and int(me.index) >= int(des_index))) {
 				if (canvas_mcdu.myDESWIND[me.computer] == nil) {
 					canvas_mcdu.myDESWIND[me.computer] = windDESPage.new(me.computer);
 				} else {

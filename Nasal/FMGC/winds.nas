@@ -425,17 +425,18 @@ var windController = {
 		for (plan = 0; plan <= 2; plan += 1) {
 			for (i = 0; i < fmgc.flightPlanController.flightplans[plan].getPlanSize(); i += 1) {
 				var waypoint = fmgc.flightPlanController.flightplans[plan].getWP(i);
-				#print(waypoint.wp_role, "| : |", waypoint.wp_type);
-				if (waypoint.wp_role == "sid") {
+				var clb_index = fmgc.flightPlanController.getIndexOfTOC(plan);
+				var des_index = fmgc.flightPlanController.getIndexOfTOD(plan);
+				
+				if ((!fmgc.FMGCInternal.clbSet and waypoint.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and int(i) <= int(clb_index))) {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
 					me.windSizes[plan] += 1;
-				} else if (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed") {
+				} else if ((!fmgc.FMGCInternal.desSet and (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and int(i) >= int(des_index))) {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "arrival", 0));
 					me.windSizes[plan] += 1;
 				} else if (waypoint.wp_role == nil and waypoint.wp_type == "navaid") {
 					var found = 0;
 					for (index = 0; index < windSizes_copy[plan]; index += 1) {
-						#print(waypoint.id, " : ", winds_copy[plan][index].id);
 						if (waypoint.id == winds_copy[plan][index].id) {
 							append(me.winds[plan], winds_copy[plan][index]);
 							append(me.nav_indicies[plan], i);
@@ -451,10 +452,6 @@ var windController = {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "waypoint", 0));
 					me.windSizes[plan] += 1;
 				}
-				#print("insert plan: ", plan, ", index: ", i);
-				#debug.dump(me.winds);
-				#debug.dump(me.nav_indicies);
-				#debug.dump(me.windSizes);
 			}
 		}
 		
