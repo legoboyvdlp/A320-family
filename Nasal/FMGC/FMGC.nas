@@ -534,15 +534,16 @@ var updateFuel = func {
 		FMGCInternal.desFuel = 0; # -6.544e+01 + (crz*2.427e+00) + (crz*crz*-7.732e-03) + (crz*crz*crz*-2.756e-05) + (crz*crz*crz*crz*1.085e-07) + (todw*5.009e-01) + (crz*todw*-1.871e-02) + (crz*crz*todw*2.019e-04) + (crz*crz*crz*todw*-4.272e-07) + (todw*todw*2.059e-09) + (crz*todw*todw*2.167e-13) + (crz*crz*todw*todw*-6.990e-16) + (todw*todw*todw*-1.090e-11) + (crz*todw*todw*todw*1.988e-16) + (todw*todw*todw*todw*2.136e-14);
 		FMGCInternal.desTime = 0;
 		FMGCInternal.desDist = 0;
-		FMGCInternal.desSet = 1;
+		FMGCInternal.desSet = 0;
 		
 		#print("Fuel: ", FMGCInternal.desFuel);
 		#print("Time: ", FMGCInternal.desTime);
 		#print("Dist: ", FMGCInternal.desDist);
 		
-		flightPlanController.calculateVerticalPoints(0);
-		flightPlanController.calculateVerticalPoints(1);
-		flightPlanController.calculateVerticalPoints(2);
+		# manage in-flight later
+		#flightPlanController.calculateVerticalPoints(0);
+		#flightPlanController.calculateVerticalPoints(1);
+		#flightPlanController.calculateVerticalPoints(2);
 	}
 }
 
@@ -1295,6 +1296,9 @@ var timer3blockFuel = maketimer(1, func() {
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
 		#updateFuel();
+		flightPlanController.calculateVerticalPoints(0);
+		flightPlanController.calculateVerticalPoints(1);
+		flightPlanController.calculateVerticalPoints(2);
 		fmgc.FMGCInternal.fuelCalculating = 0;
 		fmgc.fuelCalculating.setValue(0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
