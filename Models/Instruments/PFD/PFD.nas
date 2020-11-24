@@ -1278,7 +1278,6 @@ var canvas_PFD_1 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			
 			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
 				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 				me["ASI_max"].show();

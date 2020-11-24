@@ -753,9 +753,6 @@
 			<overspeed-roll-back type="bool">0</overspeed-roll-back>
 		</protections>
 		<spd-hld type="bool">0</spd-hld>
-		<speeds>
-			<vmo-mmo type="int">350</vmo-mmo>
-		</speeds>
 	</it-fbw>
 	
 	<FMGC n="0">
