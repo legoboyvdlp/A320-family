@@ -94,8 +94,14 @@
 		<switch name="hydraulics/aileron-l/pressure-switch-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 1500
-				/systems/hydraulic/blue-psi ge 1500
+				<test logic="AND">
+					/systems/fctl/elac1 eq 1
+					/systems/hydraulic/blue-psi ge 1500
+				</test>
+				<test logic="AND">
+					/systems/fctl/elac2 eq 1
+					/systems/hydraulic/green-psi ge 1500
+				</test>
 			</test>
 		</switch>
 		
@@ -167,8 +173,14 @@
 		<switch name="hydraulics/aileron-r/pressure-switch-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 1500
-				/systems/hydraulic/blue-psi ge 1500
+				<test logic="AND">
+					/systems/fctl/elac1 eq 1
+					/systems/hydraulic/green-psi ge 1500
+				</test>
+				<test logic="AND">
+					/systems/fctl/elac2 eq 1
+					/systems/hydraulic/blue-psi ge 1500
+				</test>
 			</test>
 		</switch>
 		

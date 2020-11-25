@@ -1981,11 +1981,15 @@ var canvas_lowerECAM_fctl = {
 		me["ailL"].setTranslation(0, aileron_ind_left.getValue() * 100);
 		me["ailR"].setTranslation(0, aileron_ind_right.getValue() * (-100));
 
-		if (blue_psi < 1500 and green_psi < 1500) {
+		if ((blue_psi < 1500 or !fbw.FBW.Computers.elac1.getValue()) and (green_psi < 1500 or !fbw.FBW.Computers.elac2.getValue())) {
 			me["ailL"].setColor(0.7333,0.3803,0);
-			me["ailR"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ailL"].setColor(0.0509,0.7529,0.2941);
+		}
+		
+		if ((green_psi < 1500 or !fbw.FBW.Computers.elac1.getValue()) and (blue_psi < 1500 or !fbw.FBW.Computers.elac2.getValue())) {
+			me["ailR"].setColor(0.7333,0.3803,0);
+		} else {
 			me["ailR"].setColor(0.0509,0.7529,0.2941);
 		}
 
@@ -2279,14 +2283,21 @@ var canvas_lowerECAM_fctl = {
 
 		# Hydraulic Indicators
 		if (blue_psi >= 1500) {
-			me["ailLblue"].setColor(0.0509,0.7529,0.2941);
-			me["ailRblue"].setColor(0.0509,0.7529,0.2941);
+			if (fbw.FBW.Computers.elac1.getValue()) {
+				me["ailLblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailLblue"].setColor(0.7333,0.3803,0);
+			}
+			if (fbw.FBW.Computers.elac2.getValue()) {
+				me["ailRblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailRblue"].setColor(0.7333,0.3803,0);
+			}
 			me["elevLblue"].setColor(0.0509,0.7529,0.2941);
 			me["elevRblue"].setColor(0.0509,0.7529,0.2941);
 			me["rudderblue"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkblue"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["ailLblue"].setColor(0.7333,0.3803,0);
 			me["ailRblue"].setColor(0.7333,0.3803,0);
 			me["elevLblue"].setColor(0.7333,0.3803,0);
 			me["elevRblue"].setColor(0.7333,0.3803,0);
@@ -2295,8 +2306,16 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		if (green_psi >= 1500) {
-			me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
-			me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
+			if (fbw.FBW.Computers.elac2.getValue()) {
+				me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailLgreen"].setColor(0.7333,0.3803,0);
+			}
+			if (fbw.FBW.Computers.elac1.getValue()) {
+				me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailRgreen"].setColor(0.7333,0.3803,0);
+			}
 			me["elevLgreen"].setColor(0.0509,0.7529,0.2941);
 			me["ruddergreen"].setColor(0.0509,0.7529,0.2941);
 			me["PTgreen"].setColor(0.0509,0.7529,0.2941);
