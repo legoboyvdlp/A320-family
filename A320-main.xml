@@ -1284,6 +1284,7 @@
 				<fac2 type="bool">0</fac2>
 				<rtlu-1 type="bool">0</rtlu-1>
 				<rtlu-2 type="bool">0</rtlu-2>
+				<ths-jam type="bool">0</ths-jam>
 				<yaw-damper-1 type="bool">0</yaw-damper-1>
 				<yaw-damper-2 type="bool">0</yaw-damper-2>
 			</fctl>

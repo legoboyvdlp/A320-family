@@ -64,6 +64,7 @@ var FBW = {
 		sec3: props.globals.getNode("/systems/failures/fctl/sec3"),
 		fac1: props.globals.getNode("/systems/failures/fctl/fac1"),
 		fac2: props.globals.getNode("/systems/failures/fctl/fac2"),
+		ths: props.globals.getNode("/systems/failures/fctl/ths-jam"),
 		spoilerl1: props.globals.getNode("/systems/failures/spoilers/spoiler-l1"),
 		spoilerl2: props.globals.getNode("/systems/failures/spoilers/spoiler-l2"),
 		spoilerl3: props.globals.getNode("/systems/failures/spoilers/spoiler-l3"),
@@ -143,6 +144,7 @@ var FBW = {
 		me.Failures.sec3.setBoolValue(0);
 		me.Failures.fac1.setBoolValue(0);
 		me.Failures.fac2.setBoolValue(0);
+		me.Failures.ths.setBoolValue(0);
 		me.Failures.spoilerl1.setBoolValue(0);
 		me.Failures.spoilerl2.setBoolValue(0);
 		me.Failures.spoilerl3.setBoolValue(0);
