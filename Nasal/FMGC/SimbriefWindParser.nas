@@ -50,11 +50,11 @@ var SimbriefWindParser = {
 	},
 	parseOFP: func() {
 		me.OFP = me.node.getChild("OFP");
+		var opfGeneral = me.OFP.getNode("general");
 		var ofpNavlog = me.OFP.getNode("navlog");
 		var ofpFixes = ofpNavlog.getChildren("fix");
 		foreach (var ofpFix; ofpFixes) {
 			var ident = ofpFix.getNode("ident").getValue();
-			var name = ofpFix.getNode("name").getValue();
 			if (ident == "TOC") {
 				# set TOC winds
 				fmgc.windController.clb_winds[2].wind1.heading = ofpFix.getNode("wind_dir").getValue();
@@ -67,8 +67,25 @@ var SimbriefWindParser = {
 				fmgc.windController.des_winds[2].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
 				fmgc.windController.des_winds[2].wind1.altitude = "FL" ~ (ofpFix.getNode("altitude_feet").getValue() / 100);
 				fmgc.windController.des_winds[2].wind1.set = 1;
-			} else {
-				continue;
+			} else if (size(fmgc.windController.nav_indicies[2]) == 0) {
+				fmgc.windController.crz_winds[2].wind1.heading = opfGeneral.getNode("avg_wind_dir").getValue();
+				fmgc.windController.crz_winds[2].wind1.magnitude = opfGeneral.getNode("avg_wind_spd").getValue();
+				fmgc.windController.crz_winds[2].wind1.altitude = "FL" ~ (opfGeneral.getNode("initial_altitude").getValue() / 100);
+				fmgc.windController.crz_winds[2].wind1.set = 1;
+			} else if (ofpFix.getNode("type").getValue() == "wpt") {
+				var wp_index = fmgc.flightPlanController.getIndexOf(2, ident);
+				if (wp_index != -99) {
+					var cur_index = 0;
+					foreach (var ind; fmgc.windController.nav_indicies[2]) {
+						if (ind == wp_index) {
+							fmgc.windController.winds[2][cur_index].wind1.heading = ofpFix.getNode("wind_dir").getValue();
+							fmgc.windController.winds[2][cur_index].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
+							fmgc.windController.winds[2][cur_index].wind1.altitude = "FL" ~ (ofpFix.getNode("altitude_feet").getValue() / 100);
+							fmgc.windController.winds[2][cur_index].wind1.set = 1;
+						}
+						cur_index += 1;
+					}
+				}
 			}
 		}
 		
