@@ -513,7 +513,7 @@ var canvas_PFD_base = {
 			me["FMA_Middle1"].hide();
 			me["FMA_Middle2"].hide();
 			
-			if (fbw_curlaw == 2 and wow1.getValue() == 0) {
+			if (ecam.directLaw.active) {
 				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
 				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
 				me["FMA_ctr_msg"].show();
@@ -534,7 +534,7 @@ var canvas_PFD_base = {
 		} else {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
-			if (fbw_curlaw == 2 and wow1.getValue() == 0) {
+			if (ecam.directLaw.active) {
 				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
 				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
 				me["FMA_Middle1"].hide();

@@ -875,23 +875,6 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigVent);
 		}
 		
-		if (emerconfigAltn.clearFlag == 0) {
-			emerconfigAltn.active = 1;
-		} else {
-			ECAM_controller.warningReset(emerconfigAltn);
-		}
-		
-		if (emerconfigProt.clearFlag == 0) {
-			emerconfigProt.active = 1;
-		} else {
-			ECAM_controller.warningReset(emerconfigProt);
-		}
-		
-		if (emerconfigMaxSpeed.clearFlag == 0) {
-			emerconfigMaxSpeed.active = 1;
-		} else {
-			ECAM_controller.warningReset(emerconfigMaxSpeed);
-		}
 	} else {
 		ECAM_controller.warningReset(emerconfig);
 		ECAM_controller.warningReset(emerconfigMinRat);
@@ -909,9 +892,6 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(emerconfigBusTie2);
 		ECAM_controller.warningReset(emerconfigAPU);
 		ECAM_controller.warningReset(emerconfigVent);
-		ECAM_controller.warningReset(emerconfigAltn);
-		ECAM_controller.warningReset(emerconfigProt);
-		ECAM_controller.warningReset(emerconfigMaxSpeed);
 	}
 	
 	if (hydBYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueYellow.getValue()) {
@@ -1288,6 +1268,109 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(apuGenfaultGen);
 		ECAM_controller.warningReset(apuGenfaultGen2);
 		ECAM_controller.warningReset(apuGenfaultGen3);
+	}
+	
+	if (lElevFault.clearFlag == 0 and warningNodes.Timers.leftElevFail.getValue() and phaseVar2 != 4 and phaseVar2 != 5) {
+		lElevFault.active = 1;
+		if (lElevFaultCare.clearFlag == 0) {
+			lElevFaultCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(lElevFaultCare);
+		}
+		if (lElevFaultPitch.clearFlag == 0) {
+			lElevFaultPitch.active = 1;
+		} else {
+			ECAM_controller.warningReset(lElevFaultPitch);
+		}
+	} else {
+		ECAM_controller.warningReset(lElevFault);
+		ECAM_controller.warningReset(lElevFaultCare);
+		ECAM_controller.warningReset(lElevFaultPitch);
+	}
+	
+	if (rElevFault.clearFlag == 0 and warningNodes.Timers.rightElevFail.getValue() and phaseVar2 != 4 and phaseVar2 != 5) {
+		rElevFault.active = 1;
+		if (rElevFaultCare.clearFlag == 0) {
+			rElevFaultCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(rElevFaultCare);
+		}
+		if (rElevFaultPitch.clearFlag == 0) {
+			rElevFaultPitch.active = 1;
+		} else {
+			ECAM_controller.warningReset(rElevFaultPitch);
+		}
+	} else {
+		ECAM_controller.warningReset(rElevFault);
+		ECAM_controller.warningReset(rElevFaultCare);
+		ECAM_controller.warningReset(rElevFaultPitch);
+	}
+	
+	if (directLaw.clearFlag == 0 and warningNodes.Timers.directLaw.getValue() and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
+		directLaw.active = 1;
+		directLawProt.active = 1;
+		if (directLawMaxSpeed.clearFlag == 0 and !fbw.tripleADRFail and pts.Gear.position[1].getValue() == 1) {
+			directLawMaxSpeed.active = 1;
+		} else {
+			ECAM_controller.warningReset(directLawMaxSpeed);
+		}
+		if (directLawTrim.clearFlag == 0 and (systems.HYD.Psi.green.getValue() >= 1500 or systems.HYD.Psi.yellow.getValue() >= 1500) and !fbw.FBW.Failures.ths.getValue()) {
+			directLawTrim.active = 1;
+		} else {
+			ECAM_controller.warningReset(directLawTrim);
+		}
+		if (directLawCare.clearFlag == 0 and (fbw.tripleADRFail or pts.Gear.position[1].getValue() == 1)) {
+			directLawCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(directLawCare);
+		}
+		if (directLawSpdBrk.clearFlag == 0 and !fbw.tripleADRFail and pts.Gear.position[1].getValue() == 1) {
+			directLawSpdBrk.active = 1;
+		} else {
+			ECAM_controller.warningReset(directLawSpdBrk);
+		}
+		if (directLawSpdBrk2.clearFlag == 0 and fbw.tripleADRFail) {
+			directLawSpdBrk2.active = 1;
+		} else {
+			ECAM_controller.warningReset(directLawSpdBrk2);
+		}
+	} else {
+		ECAM_controller.warningReset(directLaw);
+		ECAM_controller.warningReset(directLawProt);
+		ECAM_controller.warningReset(directLawMaxSpeed);
+		ECAM_controller.warningReset(directLawTrim);
+		ECAM_controller.warningReset(directLawCare);
+		ECAM_controller.warningReset(directLawSpdBrk);
+		ECAM_controller.warningReset(directLawSpdBrk2);
+	}
+	
+	if (altnLaw.clearFlag == 0 and warningNodes.Timers.altnLaw.getValue() and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
+		altnLaw.active = 1;
+		altnLawProt.active = 1;
+		if (altnLawMaxSpeed.clearFlag == 0 and altnLawMaxSpeed2.clearFlag == 0 and !fbw.tripleADRFail) {
+			if (!(getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and (getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr") or getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")))) {
+				altnLawMaxSpeed.active = 1;
+				ECAM_controller.warningReset(altnLawMaxSpeed2);
+			} else {
+				altnLawMaxSpeed2.active = 1;
+				ECAM_controller.warningReset(altnLawMaxSpeed);
+			}
+		} else {
+			ECAM_controller.warningReset(altnLawMaxSpeed);
+			ECAM_controller.warningReset(altnLawMaxSpeed2);
+		}
+		
+		if (altnLawMaxSpdBrk.clearFlag == 0 and (fbw.tripleADRFail or warningNodes.Logic.leftElevFail.getValue() or warningNodes.Logic.rightElevFail.getValue())) {
+			altnLawMaxSpdBrk.active = 1;
+		} else {
+			ECAM_controller.warningReset(altnLawMaxSpdBrk);
+		}
+	} else {
+		ECAM_controller.warningReset(altnLaw);
+		ECAM_controller.warningReset(altnLawProt);
+		ECAM_controller.warningReset(altnLawMaxSpeed);
+		ECAM_controller.warningReset(altnLawMaxSpeed2);
+		ECAM_controller.warningReset(altnLawMaxSpdBrk);
 	}
 	
 	if ((athr_offw.clearFlag == 0) and athrWarn.getValue() == 2 and phaseVar2 != 4 and phaseVar2 != 8 and phaseVar2 != 10) {
