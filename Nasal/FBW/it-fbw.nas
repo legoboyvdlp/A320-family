@@ -193,7 +193,10 @@ var update_loop = func {
 	tripleIRFail = !ir1 and !ir2 and !ir3;
 	doubleIRFail = (!ir1 and !ir2 and ir3) or (ir1 and !ir2 and !ir3) or (!ir1 and ir2 and !ir3);
 	
-	if (tripleADRFail or doubleADRFail or doubleIRFail or tripleIRFail or dualFACFault or !FBW.yawdamper.getValue() or greenYellowFail or blueGreenFail or dualELACFault or (!elac1 and elac2 and ((green < 1500 and yellow >= 1500) or (green >= 1500 and yellow < 1500))) or (!elac2 and elac1 and blue < 1500) or tripleSECFault or systems.ELEC.EmerElec.getBoolValue()) {
+	if (dualELACFault and !sec1 and !sec2) {
+		FBW.degradeLaw.setValue(3);
+		FBW.apOff = 1;
+	} elsif (tripleADRFail or doubleADRFail or doubleIRFail or tripleIRFail or dualFACFault or !FBW.yawdamper.getValue() or greenYellowFail or blueGreenFail or dualELACFault or (!elac1 and elac2 and ((green < 1500 and yellow >= 1500) or (green >= 1500 and yellow < 1500))) or (!elac2 and elac1 and blue < 1500) or tripleSECFault or systems.ELEC.EmerElec.getBoolValue()) {
 		if (dualFACFault or !FBW.yawdamper.getValue() or greenYellowFail or (systems.ELEC.EmerElec.getBoolValue() and !fac1) or tripleIRFail) {
 			if (lawyaw == 0 or lawyaw == 1) {
 				FBW.degradeYawLaw.setValue(2);
@@ -218,12 +221,6 @@ var update_loop = func {
 		FBW.degradeLaw.setValue(0);
 		FBW.apOff = 0;
 	}
-	
-	if (dualELACFault and tripleSECFault and dualFACFault) {
-		FBW.degradeLaw.setValue(3);
-		FBW.apOff = 1;
-	}
-	
 		
 	# degrade loop runs faster; reset this variable
 	law = FBW.activeLaw.getValue();
@@ -240,12 +237,6 @@ var update_loop = func {
 		}
 	}
 	
-	# If they can, laws can go back to standard law
-	if (law == 3) {
-		if (!dualELACFault or !tripleSECFault or !dualFACFault) {
-			FBW.degradeLaw.setValue(2);
-		}
-	}
 	
 	cas = pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue();
 	mmoIAS = (cas / pts.Instrumentation.AirspeedIndicator.indicatedMach.getValue()) * 0.82;
