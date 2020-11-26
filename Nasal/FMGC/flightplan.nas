@@ -100,12 +100,12 @@ var flightPlanController = {
 	},
 	
 	loadFlightPlan: func(path) {
-		call(func {me.flightplans[4] = createFlightplan(path);}, nil, var err = []);	
-		if (size(err) or me.flightplans[4] == nil) {
+		call(func {me.flightplans[3] = createFlightplan(path);}, nil, var err = []);	
+		if (size(err) or me.flightplans[3] == nil) {
 			print(err[0]);
 			print("Load failed.");
 		}
-		me.destroyTemporaryFlightPlan(4, 1);
+		me.destroyTemporaryFlightPlan(3, 1);
 	},
 	
 	destroyTemporaryFlightPlan: func(n, a) { # a = 1 activate, a = 0 erase
@@ -114,7 +114,7 @@ var flightPlanController = {
 			me.resetFlightplan(2);
 			me.flightplans[2] = me.flightplans[n].clone();
 			
-			if (n != 4) {
+			if (n != 3) {
 				if (mcdu.isNoSid[n] == 1) {
 					mcdu.isNoSid[2] = 1;
 				} else {
@@ -149,7 +149,7 @@ var flightPlanController = {
 			me.flightPlanChanged(2);
 			flightPlanTimer.start();
 		}
-		if (n == 4) { return; }
+		if (n == 3) { return; }
 		me.resetFlightplan(n);
 		me.temporaryFlag[n] = 0;
 		if (canvas_mcdu.myDirTo[n] != nil) {
@@ -772,10 +772,10 @@ var flightPlanController = {
 					var indexTOC_old = me.getIndexOfTOC(n);
 					var tocPoint_old = me.flightplans[n].getWP(indexTOC_old);
 					
-					me.flightplans[3] = me.flightplans[n].clone();
-					me.flightplans[3].deleteWP(indexTOC_old);
-					var tocPoint_new = me.flightplans[3].pathGeod(0, fmgc.FMGCInternal.clbDist);
-					me.flightplans[3] = nil;
+					me.flightplans[4] = me.flightplans[n].clone();
+					me.flightplans[4].deleteWP(indexTOC_old);
+					var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist);
+					me.flightplans[4] = nil;
 					
 					var c1 = geo.Coord.new();
 					c1.set_latlon(tocPoint_new.lat, tocPoint_new.lon);

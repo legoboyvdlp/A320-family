@@ -68,8 +68,8 @@ var SimbriefParser = {
 	},
 	buildFlightplan: func() {
 		# Flightplan stuff
-		fmgc.flightPlanController.flightplans[4] = createFlightplan();
-		fmgc.flightPlanController.flightplans[4].cleanPlan();
+		fmgc.flightPlanController.flightplans[3] = createFlightplan();
+		fmgc.flightPlanController.flightplans[3].cleanPlan();
 		
 		# INITA
 		var departureID = me.OFP.getNode("origin/icao_code").getValue();
@@ -78,8 +78,8 @@ var SimbriefParser = {
 		var destinations = findAirportsByICAO(destinationID);
 		
 		if (departures != nil and size(departures) != 0 and destinations != nil and size(destinations) != 0) {
-			fmgc.flightPlanController.flightplans[4].departure = departures[0];
-			fmgc.flightPlanController.flightplans[4].destination = destinations[0];
+			fmgc.flightPlanController.flightplans[3].departure = departures[0];
+			fmgc.flightPlanController.flightplans[3].destination = destinations[0];
 			fmgc.FMGCInternal.depApt = departureID;
 			fmgc.FMGCInternal.arrApt = destinationID;
 			
@@ -98,12 +98,12 @@ var SimbriefParser = {
 		
 		var runwayStore = departures[0].runways[me.OFP.getNode("origin/plan_rwy").getValue()];
 		if (runwayStore != nil) {
-			fmgc.flightPlanController.flightplans[4].departure_runway = runwayStore;
+			fmgc.flightPlanController.flightplans[3].departure_runway = runwayStore;
 		}
 		
 		runwayStore = destinations[0].runways[me.OFP.getNode("destination/plan_rwy").getValue()];
 		if (runwayStore != nil) {
-			fmgc.flightPlanController.flightplans[4].destination_runway = runwayStore;
+			fmgc.flightPlanController.flightplans[3].destination_runway = runwayStore;
 		}
 		
 		var alternateID = me.OFP.getNode("alternate/icao_code").getValue();
@@ -130,7 +130,7 @@ var SimbriefParser = {
 		foreach (var ofpFix; ofpFixes) {
 			if (ofpFix.getNode("is_sid_star").getBoolValue()) {
 				if (!_foundSID) {
-					_sid = fmgc.flightPlanController.flightplans[4].departure.getSid(ofpFix.getNode("via_airway").getValue());
+					_sid = fmgc.flightPlanController.flightplans[3].departure.getSid(ofpFix.getNode("via_airway").getValue());
 					if (_sid != nil) {
 						_foundSID = 1;
 					}
@@ -139,7 +139,7 @@ var SimbriefParser = {
 			
 			if (ofpFix.getNode("is_sid_star").getBoolValue()) {
 				if (!_foundSTAR) {
-					_star = fmgc.flightPlanController.flightplans[4].destination.getStar(ofpFix.getNode("via_airway").getValue());
+					_star = fmgc.flightPlanController.flightplans[3].destination.getStar(ofpFix.getNode("via_airway").getValue());
 					if (_star != nil) {
 						_foundSTAR = 1;
 					}
@@ -179,14 +179,15 @@ var SimbriefParser = {
 			append(wps, wp);
 		}
 		
-		fmgc.flightPlanController.flightplans[4].insertWaypoints(wps, 1);
+		fmgc.flightPlanController.flightplans[3].insertWaypoints(wps, 1);
+		fmgc.windController.insertWinds(3, wps, 1);
 		if (_sid != nil) {
-			fmgc.flightPlanController.flightplans[4].sid = _sid;
+			fmgc.flightPlanController.flightplans[3].sid = _sid;
 		}
 		if (_star != nil) {
-			fmgc.flightPlanController.flightplans[4].star = _star;
+			fmgc.flightPlanController.flightplans[3].star = _star;
 		}
-		fmgc.flightPlanController.destroyTemporaryFlightPlan(4, 1);
+		fmgc.flightPlanController.destroyTemporaryFlightPlan(3, 1);
 		fmgc.windController.updatePlans();
 		fmgc.updateRouteManagerAlt();
 		
@@ -222,7 +223,6 @@ var SimbriefParser = {
 			fmgc.FMGCInternal.tripWind = "HD" ~ abs(windComp);
 		}
 		fmgc.FMGCInternal.tripWindValue = abs(windComp);
-		
 		
 		# INITB
 		me.store1 = me.OFP.getChild("fuel");

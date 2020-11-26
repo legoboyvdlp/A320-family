@@ -155,7 +155,7 @@ var vertRev = {
 				}
 				fmgc.windController.accessPage[me.computer] = "VERTREV";
 				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDDES");
-			} else if (me.wp.wp_role == nil and me.wp.wp_type == "navaid") {
+			} else if (me.wp.wp_role == nil and (me.wp.wp_type == "navaid" or me.wp.wp_type == "basic")) {
 				cur_location = 0;
 				for (i = 0; i < size(fmgc.windController.nav_indicies[me.plan]); i += 1) {
 					if (fmgc.windController.nav_indicies[me.plan][i] == me.index) {

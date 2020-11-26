@@ -90,17 +90,17 @@ var waypoint_winds = {
 };
 
 var windController = {
-	clb_winds: [0, 0, 0],
-	crz_winds: [0, 0, 0],
-	des_winds: [0, 0, 0],
+	clb_winds: [0, 0, 0, 0],
+	crz_winds: [0, 0, 0, 0],
+	des_winds: [0, 0, 0, 0],
 	hist_winds: 0,
 	fl50_wind: [-1, -1, ""],
 	fl150_wind: [-1, -1, ""],
 	fl250_wind: [-1, -1, ""],
 	flcrz_wind: [-1, -1, ""],
-	winds: [[], [], []], #waypoint winds used if route includes navaids
-	nav_indicies: [[], [], []],
-	windSizes: [0, 0, 0],
+	winds: [[], [], [], []], #waypoint winds used if route includes navaids
+	nav_indicies: [[], [], [], []],
+	windSizes: [0, 0, 0, 0],
 	accessPage: ["", ""],
 	#temporaryFlag: [0, 0],
 	
@@ -219,7 +219,7 @@ var windController = {
 			me.nav_indicies[2] = me.nav_indicies[n];
 			me.windSizes[2] = me.windSizes[n];
 		}
-		if (n == 4) { return; }
+		if (n == 3) { return; }
 		me.resetWind(n);
 		me.waypointsChanged();
 		#me.temporaryFlag[n] = 0;
@@ -341,6 +341,12 @@ var windController = {
 		me.waypointsChanged();
 	},
 	
+	insertWinds: func(plan, wps, index) {
+		for (var i = 0; i < size(wps); i += 1) {
+			me.insertWind(plan, index + i, 1, wps[i].id);
+		}
+	},
+	
 	deleteWind: func(plan, index) {
 		if (me.windSizes[plan] == index) {
 			pop(me.winds[plan]);
@@ -417,9 +423,9 @@ var windController = {
 	updatePlans: func() {
 		var winds_copy = me.winds;
 		var windSizes_copy = me.windSizes;
-		me.winds = [[], [], []];
-		me.nav_indicies = [[], [], []];
-		me.windSizes = [0, 0, 0];
+		me.winds = [[], [], [], []];
+		me.nav_indicies = [[], [], [], []];
+		me.windSizes = [0, 0, 0, 0];
 		
 		# loop through waypoints
 		for (plan = 0; plan <= 2; plan += 1) {
@@ -427,14 +433,13 @@ var windController = {
 				var waypoint = fmgc.flightPlanController.flightplans[plan].getWP(i);
 				var clb_index = fmgc.flightPlanController.getIndexOfTOC(plan);
 				var des_index = fmgc.flightPlanController.getIndexOfTOD(plan);
-				
 				if ((!fmgc.FMGCInternal.clbSet and waypoint.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and int(i) <= int(clb_index))) {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
 					me.windSizes[plan] += 1;
 				} else if ((!fmgc.FMGCInternal.desSet and (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and int(i) >= int(des_index))) {
 					append(me.winds[plan], waypoint_winds.new(waypoint.id, "arrival", 0));
 					me.windSizes[plan] += 1;
-				} else if (waypoint.wp_role == nil and waypoint.wp_type == "navaid") {
+				} else if (waypoint.wp_role == nil and (waypoint.wp_type == "navaid" or waypoint.wp_type == "basic")) {
 					var found = 0;
 					for (index = 0; index < windSizes_copy[plan]; index += 1) {
 						if (waypoint.id == winds_copy[plan][index].id) {
@@ -454,6 +459,8 @@ var windController = {
 				}
 			}
 		}
+		
+		me.waypointsChanged();
 		
 		if (canvas_mcdu.myCLBWIND[1] != nil) {
 			canvas_mcdu.myCLBWIND[1].reload();
