@@ -970,6 +970,8 @@ var rskbutton = func(btn, i) {
 			initInputA("R2",i);
 		} else if (page == "INITB") {
 			initInputB("R2",i);
+		} else if (page == "WINDCRZ") {
+			canvas_mcdu.myCRZWIND[i].pushButtonRight(2);
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R2",i);
 		} else if (page == "RADNAV") {
@@ -1014,6 +1016,8 @@ var rskbutton = func(btn, i) {
 			fuelPredInput("R3",i);
 		} else if (page == "WINDCLB") {
 			canvas_mcdu.myCLBWIND[i].pushButtonRight(3);
+		} else if (page == "WINDDES") {
+			canvas_mcdu.myDESWIND[i].pushButtonRight(3);
 		} else if (page == "PERFTO") {
 			perfTOInput("R3",i);
 		} else if (page == "PERFAPPR") {
