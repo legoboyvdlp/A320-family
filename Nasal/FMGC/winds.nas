@@ -93,7 +93,7 @@ var windController = {
 	clb_winds: [0, 0, 0, 0],
 	crz_winds: [0, 0, 0, 0],
 	des_winds: [0, 0, 0, 0],
-	hist_winds: 0,
+	hist_winds: 0, 
 	fl50_wind: [-1, -1, ""],
 	fl150_wind: [-1, -1, ""],
 	fl250_wind: [-1, -1, ""],

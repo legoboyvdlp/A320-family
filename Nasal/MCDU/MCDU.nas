@@ -1012,6 +1012,8 @@ var rskbutton = func(btn, i) {
 			initInputB("R3",i);
 		} else if (page == "FUELPRED") {
 			fuelPredInput("R3",i);
+		} else if (page == "WINDCLB") {
+			canvas_mcdu.myCLBWIND[i].pushButtonRight(3);
 		} else if (page == "PERFTO") {
 			perfTOInput("R3",i);
 		} else if (page == "PERFAPPR") {

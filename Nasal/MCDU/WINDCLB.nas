@@ -326,6 +326,26 @@ var windCLBPage = {
 				}
 			}
 			me.reload();
+		} else if (index == 3 and !fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+				if (!ecam.vhf3_voice.active) {
+					if (atsu.ATSU.working) {
+						if (getprop("/FMGC/simbrief-username") == "") {
+							mcdu.mcdu_message(me.computer, "MISSING USERNAME")
+						} elsif (!Simbrief.SimbriefWindParser.inhibit) {
+							Simbrief.SimbriefWindParser.fetch(getprop("/FMGC/simbrief-username"), me.computer);
+						} else {
+							mcdu_message(me.computer, "NOT ALLOWED");
+						}
+					} else {
+						mcdu_message(me.computer, "NO COMM MSG NOT GEN");
+					}
+				} else {
+					mcdu_message(me.computer, "VHF3 VOICE MSG NOT GEN");
+				}
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		}

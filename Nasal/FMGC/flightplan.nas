@@ -957,10 +957,11 @@ var flightPlanController = {
 		me.updatePlans(1, callVertical);
 		fmgc.windController.updatePlans();
 			
-		# push update to fuel
-		if (getprop("/FMGC/internal/block-confirmed") and callVertical) {
-			setprop("/FMGC/internal/fuel-calculating", 0);
-			setprop("/FMGC/internal/fuel-calculating", 1);
+		if (fmgc.FMGCInternal.blockConfirmed and callVertical) {
+			fmgc.FMGCInternal.fuelCalculating = 0;
+			fmgc.fuelCalculating.setValue(0);
+			fmgc.FMGCInternal.fuelCalculating = 1;
+			fmgc.fuelCalculating.setValue(1);
 		}
 		
 		if (callVertical) {
