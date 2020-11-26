@@ -170,11 +170,14 @@ var SimbriefParser = {
 				ofpFix.getNode("pos_lat").getValue(),
 				ofpFix.getNode("pos_long").getValue());
 				
-			wp = me.tryFindByCoord(coords,ident,"fix");
-			wp = me.tryFindByCoord(coords,ident,"nav");
-			if (wp == nil) {
-				wp = createWP(coords, ident);
-			}
+			# wp = me.tryFindByCoord(coords,ident,"fix");
+# 			wp = me.tryFindByCoord(coords,ident,"nav");
+# 			if (wp == nil) {
+# 				print(ident);
+# 				wp = createWP(coords, ident);
+# 			}
+			
+			wp = createWP(coords, ident);
 			
 			append(wps, wp);
 		}
