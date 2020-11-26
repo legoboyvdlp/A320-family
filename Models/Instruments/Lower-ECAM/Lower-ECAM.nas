@@ -36,6 +36,10 @@ var tr2_v = 0;
 var tr2_a = 0;
 var essTramps = 0;
 var essTrvolts = 0;
+var elac1Node = 0;
+var elac2Node = 0;
+var sec1Node = 0;
+var sec2Node = 0;
 
 # Conversion factor pounds to kilogram
 LBS2KGS = 0.4535924;
@@ -1951,12 +1955,16 @@ var canvas_lowerECAM_fctl = {
 		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","ailL","ailR","elevL","elevR","PTcc","PT","PTupdn","elac1","elac2","sec1","sec2","sec3","ailLblue","ailRblue","elevLblue","elevRblue","rudderblue","ailLgreen","ailRgreen","elevLgreen","ruddergreen","PTgreen",
 		"elevRyellow","rudderyellow","PTyellow","rudder","spdbrkblue","spdbrkgreen","spdbrkyellow","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex",
 		"spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf",
-		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6"];
+		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6","text4343"];
 	},
 	update: func() {
 		blue_psi = systems.HYD.Psi.blue.getValue();
 		green_psi = systems.HYD.Psi.green.getValue();
 		yellow_psi = systems.HYD.Psi.yellow.getValue();
+		elac1Node = fbw.FBW.Computers.elac1.getValue();
+		elac2Node = fbw.FBW.Computers.elac2.getValue();
+		sec1Node = fbw.FBW.Computers.sec1.getValue();
+		sec2Node = fbw.FBW.Computers.sec2.getValue();
 
 		# Pitch Trim
 		me["PT"].setText(sprintf("%2.1f", math.round(elevator_trim_deg.getValue(), 0.1)));
@@ -1976,16 +1984,26 @@ var canvas_lowerECAM_fctl = {
 			me["PTupdn"].setColor(0.0509,0.7529,0.2941);
 			me["PTcc"].setColor(0.0509,0.7529,0.2941);
 		}
+		
+		if (fbw.FBW.Failures.ths.getBoolValue()) {
+			me["text4343"].setColor(0.7333,0.3803,0);
+		} else {
+			me["text4343"].setColor(0.8078,0.8039,0.8078);
+		}
 
 		# Ailerons
 		me["ailL"].setTranslation(0, aileron_ind_left.getValue() * 100);
 		me["ailR"].setTranslation(0, aileron_ind_right.getValue() * (-100));
 
-		if (blue_psi < 1500 and green_psi < 1500) {
+		if ((blue_psi < 1500 or !elac1Node) and (green_psi < 1500 or !elac2Node)) {
 			me["ailL"].setColor(0.7333,0.3803,0);
-			me["ailR"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ailL"].setColor(0.0509,0.7529,0.2941);
+		}
+		
+		if ((green_psi < 1500 or !elac1Node) and (blue_psi < 1500 or !elac2Node)) {
+			me["ailR"].setColor(0.7333,0.3803,0);
+		} else {
 			me["ailR"].setColor(0.0509,0.7529,0.2941);
 		}
 
@@ -1993,13 +2011,13 @@ var canvas_lowerECAM_fctl = {
 		me["elevL"].setTranslation(0, elevator_ind_left.getValue() * 100);
 		me["elevR"].setTranslation(0, elevator_ind_right.getValue() * 100);
 
-		if (blue_psi < 1500 and green_psi < 1500) {
+		if ((blue_psi < 1500 or (!elac1Node and !sec1Node)) and (green_psi < 1500 or (!elac2Node and !sec2Node))) {
 			me["elevL"].setColor(0.7333,0.3803,0);
 		} else {
 			me["elevL"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		if (blue_psi < 1500 and yellow_psi < 1500) {
+		if ((blue_psi < 1500 or (!elac1Node and !sec1Node)) and (yellow_psi < 1500 or (!elac2Node and !sec2Node))) {
 			me["elevR"].setColor(0.7333,0.3803,0);
 		} else {
 			me["elevR"].setColor(0.0509,0.7529,0.2941);
@@ -2237,34 +2255,34 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		# Flight Computers
-		if (fbw.FBW.Computers.elac1.getValue()) {
+		if (elac1Node) {
 			me["elac1"].setColor(0.0509,0.7529,0.2941);
 			me["path4249"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.elac1.getValue() or fbw.FBW.Failures.elac1.getValue()) {
+		} else if (!elac1Node or fbw.FBW.Failures.elac1.getValue()) {
 			me["elac1"].setColor(0.7333,0.3803,0);
 			me["path4249"].setColor(0.7333,0.3803,0);
 		}
 
-		if (fbw.FBW.Computers.elac2.getValue()) {
+		if (elac2Node) {
 			me["elac2"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.elac2.getValue() or fbw.FBW.Failures.elac2.getValue()) {
+		} else if (!elac2Node or fbw.FBW.Failures.elac2.getValue()) {
 			me["elac2"].setColor(0.7333,0.3803,0);
 			me["path4249-3"].setColor(0.7333,0.3803,0);
 		}
 
-		if (fbw.FBW.Computers.sec1.getValue()) {
+		if (sec1Node) {
 			me["sec1"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6-7"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.sec1.getValue() or fbw.FBW.Failures.sec1.getValue()) {
+		} else if (!sec1Node or fbw.FBW.Failures.sec1.getValue()) {
 			me["sec1"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6-7"].setColor(0.7333,0.3803,0);
 		}
 
-		if (fbw.FBW.Computers.sec2.getValue()) {
+		if (sec2Node) {
 			me["sec2"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6-7-5"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.sec2.getValue() or fbw.FBW.Failures.sec2.getValue()) {
+		} else if (!sec2Node or fbw.FBW.Failures.sec2.getValue()) {
 			me["sec2"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6-7-5"].setColor(0.7333,0.3803,0);
 		}
@@ -2279,10 +2297,23 @@ var canvas_lowerECAM_fctl = {
 
 		# Hydraulic Indicators
 		if (blue_psi >= 1500) {
-			me["ailLblue"].setColor(0.0509,0.7529,0.2941);
-			me["ailRblue"].setColor(0.0509,0.7529,0.2941);
-			me["elevLblue"].setColor(0.0509,0.7529,0.2941);
-			me["elevRblue"].setColor(0.0509,0.7529,0.2941);
+			if (elac1Node) {
+				me["ailLblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailLblue"].setColor(0.7333,0.3803,0);
+			}
+			if (elac1Node or sec1Node) {
+				me["elevLblue"].setColor(0.0509,0.7529,0.2941);
+				me["elevRblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["elevLblue"].setColor(0.7333,0.3803,0);
+				me["elevRblue"].setColor(0.7333,0.3803,0);
+			}
+			if (elac2Node) {
+				me["ailRblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailRblue"].setColor(0.7333,0.3803,0);
+			}
 			me["rudderblue"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkblue"].setColor(0.0509,0.7529,0.2941);
 		} else {
@@ -2295,9 +2326,22 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		if (green_psi >= 1500) {
-			me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
-			me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
-			me["elevLgreen"].setColor(0.0509,0.7529,0.2941);
+			if (elac2Node or sec2Node) {
+				me["elevLgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["elevLgreen"].setColor(0.7333,0.3803,0);
+			}
+			
+			if (elac2Node) {
+				me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailLgreen"].setColor(0.7333,0.3803,0);
+			}
+			if (elac1Node) {
+				me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailRgreen"].setColor(0.7333,0.3803,0);
+			}
 			me["ruddergreen"].setColor(0.0509,0.7529,0.2941);
 			me["PTgreen"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkgreen"].setColor(0.0509,0.7529,0.2941);
@@ -2311,7 +2355,11 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		if (yellow_psi >= 1500) {
-			me["elevRyellow"].setColor(0.0509,0.7529,0.2941);
+			if (elac2Node or sec2Node) {
+				me["elevRyellow"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["elevRyellow"].setColor(0.7333,0.3803,0);
+			}
 			me["rudderyellow"].setColor(0.0509,0.7529,0.2941);
 			me["PTyellow"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkyellow"].setColor(0.0509,0.7529,0.2941);

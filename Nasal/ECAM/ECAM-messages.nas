@@ -155,9 +155,6 @@ var warnings				  = std.Vector.new([
 	var emerconfigBusTie2     = warning.new(msg: " -BUS TIE...........AUTO",  colour: "c"),
 	var emerconfigAPU         = warning.new(msg: " -APU (IF AVAIL)...START",  colour: "c"),
 	var emerconfigVent        = warning.new(msg: " -BLOWER + EXTRACT..OVRD",  colour: "c"),
-	var emerconfigAltn        = warning.new(msg: "F/CTL ALTN LAW",            colour: "a"),
-	var emerconfigProt        = warning.new(msg: "     (PROT LOST)",          colour: "a"),
-	var emerconfigMaxSpeed    = warning.new(msg: " MAX SPEED........320 KT",  colour: "c"),
 	
 	# B + Y LO PR
 	var hydBYloPr             = warning.new(msg: "HYD B+Y SYS LO PR",         colour: "r", aural: 0, light: 0, isMainMsg: 1),
@@ -260,10 +257,36 @@ var warnings				  = std.Vector.new([
 	var gen2faultGen3         = warning.new(msg: "-GEN 2..............OFF",   colour: "c"),
 	
 	# APU GEN FAULT
-	var apuGenfault             = warning.new(msg: "ELEC APU GEN FAULT",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var apuGenfaultGen          = warning.new(msg: "-APU GEN....OFF THEN ON", colour: "c"),
-	var apuGenfaultGen2         = warning.new(msg: "   •IF UNSUCCESSFUL :", colour: "w"),
-	var apuGenfaultGen3         = warning.new(msg: "-APU GEN............OFF", colour: "c"),
+	var apuGenfault           = warning.new(msg: "ELEC APU GEN FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var apuGenfaultGen        = warning.new(msg: "-APU GEN....OFF THEN ON",   colour: "c"),
+	var apuGenfaultGen2       = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
+	var apuGenfaultGen3       = warning.new(msg: "-APU GEN............OFF",   colour: "c"),
+	
+	# L ELEV FAULT
+	var lElevFault            = warning.new(msg: "F/CTL L ELEV FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var lElevFaultCare        = warning.new(msg: " MANEUVER WITH CARE",       colour: "c"),
+	var lElevFaultPitch       = warning.new(msg: " FOR GA:MAX PITCH 15 DEG",  colour: "c"),
+	
+	# R ELEV FAULT
+	var rElevFault            = warning.new(msg: "F/CTL R ELEV FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var rElevFaultCare        = warning.new(msg: " MANEUVER WITH CARE",       colour: "c"),
+	var rElevFaultPitch       = warning.new(msg: " FOR GA:MAX PITCH 15 DEG",  colour: "c"),
+	
+	# DIRECT LAW
+	var directLaw             = warning.new(msg: "F/CTL DIRECT LAW",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var directLawProt         = warning.new(msg: "     (PROT LOST)",          colour: "a"),
+	var directLawMaxSpeed     = warning.new(msg: " MAX SPEED........320/.77", colour: "c"),
+	var directLawTrim         = warning.new(msg: " -MAN PITCH TRIM.....USE",  colour: "c"),
+	var directLawCare         = warning.new(msg: " MANEUVER WITH CARE",       colour: "c"),
+	var directLawSpdBrk       = warning.new(msg: " USE SPD BRK WITH CARE",    colour: "c"),
+	var directLawSpdBrk2      = warning.new(msg: " SPD BRK.......DO NOT USE", colour: "c"),
+	
+	# ALTN LAW
+	var altnLaw               = warning.new(msg: "F/CTL ALTN LAW",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var altnLawProt           = warning.new(msg: "     (PROT LOST)",          colour: "a"),
+	var altnLawMaxSpeed       = warning.new(msg: " MAX SPEED........320 KT",  colour: "c"),
+	var altnLawMaxSpeed2      = warning.new(msg: " MAX SPEED........320/.77", colour: "c"),
+	var altnLawMaxSpdBrk      = warning.new(msg: " SPD BRK.......DO NOT USE", colour: "c"),
 	
 	# Autothrust
 	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -275,7 +298,7 @@ var warnings				  = std.Vector.new([
 	
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var tcasStby              = warning.new(msg: "NAV TCAS STBY",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var tcasStby              = warning.new(msg: "NAV TCAS STBY",             colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var gpwsFault             = warning.new(msg: "NAV GPWS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var gpwsFaultOff		  = warning.new(msg: "-GPWS...............OFF",   colour: "c"),
 	var gpwsTerrFault         = warning.new(msg: "NAV GPWS TERR DET FAULT",   colour: "a", aural: 1, light: 1, isMainMsg: 1),

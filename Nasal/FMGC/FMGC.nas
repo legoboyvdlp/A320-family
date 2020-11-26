@@ -667,7 +667,7 @@ var masterFMGC = maketimer(0.2, func {
 	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
 		FMGCInternal.maxspeed = 284;
 	} else {
-		FMGCInternal.maxspeed = getprop("/it-fbw/speeds/vmo-mmo");
+		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
 	}
 	
 	############################

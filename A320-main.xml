@@ -576,12 +576,12 @@
 		<gui n="0" include="gui/it-gui.xml"/>
 		
 		<current-view>
-			<z-offset-default type="float">80.0</z-offset-default>
+			<z-offset-default type="float">60.0</z-offset-default>
 			<z-offset-min-m type="float">10.0</z-offset-min-m>
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		 <minimum-fg-version>2019.2.0</minimum-fg-version>
+		<minimum-fg-version>2019.2.0</minimum-fg-version>
 
 		<navdb>
 			<min-runway-length-ft>3000</min-runway-length-ft>
@@ -778,9 +778,6 @@
 			<overspeed-roll-back type="bool">0</overspeed-roll-back>
 		</protections>
 		<spd-hld type="bool">0</spd-hld>
-		<speeds>
-			<vmo-mmo type="int">350</vmo-mmo>
-		</speeds>
 	</it-fbw>
 	
 	<FMGC n="0">
@@ -1318,6 +1315,7 @@
 				<fac2 type="bool">0</fac2>
 				<rtlu-1 type="bool">0</rtlu-1>
 				<rtlu-2 type="bool">0</rtlu-2>
+				<ths-jam type="bool">0</ths-jam>
 				<yaw-damper-1 type="bool">0</yaw-damper-1>
 				<yaw-damper-2 type="bool">0</yaw-damper-2>
 			</fctl>

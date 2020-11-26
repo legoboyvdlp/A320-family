@@ -94,8 +94,14 @@
 		<switch name="hydraulics/aileron-l/pressure-switch-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 1500
-				/systems/hydraulic/blue-psi ge 1500
+				<test logic="AND">
+					/systems/fctl/elac1 eq 1
+					/systems/hydraulic/blue-psi ge 1500
+				</test>
+				<test logic="AND">
+					/systems/fctl/elac2 eq 1
+					/systems/hydraulic/green-psi ge 1500
+				</test>
 			</test>
 		</switch>
 		
@@ -167,8 +173,14 @@
 		<switch name="hydraulics/aileron-r/pressure-switch-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 1500
-				/systems/hydraulic/blue-psi ge 1500
+				<test logic="AND">
+					/systems/fctl/elac1 eq 1
+					/systems/hydraulic/green-psi ge 1500
+				</test>
+				<test logic="AND">
+					/systems/fctl/elac2 eq 1
+					/systems/hydraulic/blue-psi ge 1500
+				</test>
 			</test>
 		</switch>
 		
@@ -229,16 +241,42 @@
 		<switch name="hydraulics/elevator-l/pressure-switch-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 1500
-				/systems/hydraulic/blue-psi ge 1500
+				<test logic="AND">
+					<test logic="OR">
+						/systems/fctl/elac1 eq 1
+						/systems/fctl/sec1 eq 1
+					</test>
+					/systems/hydraulic/blue-psi ge 1500
+				</test>
+				<test logic="AND">
+					<test logic="OR">
+						/systems/fctl/elac2 eq 1
+						/systems/fctl/sec2 eq 1
+					</test>
+					/systems/hydraulic/green-psi ge 1500
+				</test>
 			</test>
 		</switch>
 		
 		<switch name="hydraulics/elevator-l/switch">
 			<default value="hydraulics/elevator-droop"/>
+			<test logic="AND" value="0">
+				<test logic="OR">
+					/systems/hydraulic/blue-psi ge 1500
+					/systems/hydraulic/green-psi ge 1500
+				</test>
+				/systems/failures/elevator-left eq 0
+				<test logic="AND"> <!-- only pitch trim available -->
+					/systems/fctl/elac1 eq 0
+					/systems/fctl/sec1 eq 0
+					/systems/fctl/elac2 eq 0
+					/systems/fctl/sec2 eq 0
+				</test>
+			</test>
 			<test logic="AND" value="hydraulics/elevator-output-switch">
 				hydraulics/elevator-l/pressure-switch-or eq 1
 				/systems/failures/elevator-left eq 0
+				/it-fbw/law ne 3
 			</test>
 			<clipto>
 				<min>-1.0</min>
@@ -269,16 +307,42 @@
 		<switch name="hydraulics/elevator-r/pressure-switch-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/systems/hydraulic/yellow-psi ge 1500
-				/systems/hydraulic/blue-psi ge 1500
+				<test logic="AND">
+					<test logic="OR">
+						/systems/fctl/elac1 eq 1
+						/systems/fctl/sec1 eq 1
+					</test>
+					/systems/hydraulic/blue-psi ge 1500
+				</test>
+				<test logic="AND">
+					<test logic="OR">
+						/systems/fctl/elac2 eq 1
+						/systems/fctl/sec2 eq 1
+					</test>
+					/systems/hydraulic/yellow-psi ge 1500
+				</test>
 			</test>
 		</switch>
 		
 		<switch name="hydraulics/elevator-r/switch">
 			<default value="hydraulics/elevator-droop"/>
+			<test logic="AND" value="0">
+				<test logic="OR">
+					/systems/hydraulic/blue-psi ge 1500
+					/systems/hydraulic/yellow-psi ge 1500
+				</test>
+				/systems/failures/elevator-right eq 0
+				<test logic="AND">  <!-- only pitch trim available -->
+					/systems/fctl/elac1 eq 0
+					/systems/fctl/sec1 eq 0
+					/systems/fctl/elac2 eq 0
+					/systems/fctl/sec2 eq 0
+				</test>
+			</test>
 			<test logic="AND" value="hydraulics/elevator-output-switch">
 				hydraulics/elevator-r/pressure-switch-or eq 1
 				/systems/failures/elevator-right eq 0
+				/it-fbw/law ne 3
 			</test>
 			<clipto>
 				<min>-1.0</min>
@@ -307,7 +371,10 @@
 	<channel name="Pitch Trim">
 		
 		<switch name="hydraulics/elevator-trim/rate">
-			<default value="0.125"/>
+			<default value="0"/> <!-- only mechanical input to hyd actuator. So it does need hydraulic power -->
+			<test logic="OR" value="0">
+				/systems/failures/fctl/ths-jam eq 1
+			</test>
 			<test logic="OR" value="0.25">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500

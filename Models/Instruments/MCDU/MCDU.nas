@@ -2995,16 +2995,16 @@ var canvas_MCDU_base = {
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
 				me.fontSizeCenter(small, small, normal, small, small, small);
-				me.fontSizeRight(normal, normal, normal, small, small, small);
+				me.fontSizeRight(small, small, normal, small, small, small);
 				me["Simple_C3B"].setFontSize(small);
 				
 				me.colorLeft("grn", "grn", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "blu", "grn", "blu", "wht");
+				me.colorCenter("wht", "wht", "blu", "grn", "blu", "wht");
 				me["Simple_C3B"].setColor(BLUE);
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("grn", "grn", "blu", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "blu", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
@@ -3012,12 +3012,12 @@ var canvas_MCDU_base = {
 			}
 			
 			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
-				me["Simple_L1"].setText("----");
+				me["Simple_L1"].setText("NONE");
 			} else {
 				me["Simple_L1"].setText(fmgc.FMGCInternal.arrApt);
 			}
 			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
-				me["Simple_L2"].setText("----");
+				me["Simple_L2"].setText("NONE");
 			} else {
 				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
@@ -3025,7 +3025,7 @@ var canvas_MCDU_base = {
 			me["Simple_L1S"].setText("AT");
 			me["Simple_L2S"].setText("X");
 			me["Simple_L3S"].setText("RTE RSV/PCT");
-			me["Simple_L4S"].setText("ALTN/TIME");
+			me["Simple_L4S"].setText("ALTN /TIME");
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("MIN DEST FOB");
 			
@@ -3033,11 +3033,11 @@ var canvas_MCDU_base = {
 			me["Simple_C1"].setText("----");
 			me["Simple_C2"].setText("----");
 			
-			me["Simple_R1"].setText("-.-");
-			me["Simple_R2"].setText("-.-");
+			me["Simple_R1"].setText("---.-");
+			me["Simple_R2"].setText("---.-");
 			me["Simple_R1S"].setText("EFOB");
 			me["Simple_R2S"].setText("X");
-			me["Simple_R4S"].setText("FOB     ");
+			me["Simple_R4S"].setText("FOB      ");
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
@@ -3061,7 +3061,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText("---.-");
 				
 				me["Simple_R4"].setText("---.-/FF+FQ");
-				me["Simple_R5"].setText("---.-/---.-");
+				me["Simple_R5"].setText("---.-/ --.-");
 				me["Simple_R6"].setText("---.-/----");
 	
 				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");

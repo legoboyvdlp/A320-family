@@ -30,23 +30,7 @@ var execLoop = func
     emesary.GlobalTransmitter.NotifyAll(notifications.frameNotification);
 
     notifications.frameNotification.FrameCount = notifications.frameNotification.FrameCount + 1;
-	
-	if (notifications.frameNotification.frame_rate < 5) {
-        frame_inc = 0.25;#4 Hz
-    } elsif (notifications.frameNotification.frame_rate < 10) {
-        frame_inc = 0.125;#8 Hz
-    } elsif (notifications.frameNotification.frame_rate < 15) {
-        frame_inc = 0.10;#10 Hz
-    } elsif (notifications.frameNotification.frame_rate < 20) {
-        frame_inc = 0.075;#13.3 Hz
-    } elsif (notifications.frameNotification.frame_rate < 25) {
-        frame_inc = 0.05;#20 Hz
-    } elsif (notifications.frameNotification.frame_rate < 40) {
-        frame_inc = 0.0333;#30 Hz
-    } else {
-        frame_inc = 0.02;#50 Hz
-    }
-	
+	frame_inc = 0.0333; #30 Hz
     if (frame_inc != cur_frame_inc) {
         cur_frame_inc = frame_inc;
     }
