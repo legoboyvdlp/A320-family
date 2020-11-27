@@ -27,9 +27,7 @@
 				acconfig.writeSettings();
 				canvas_pfd.rateApply();
 				canvas_nd.rateApply();
-				canvas_ecam.u_rateApply();
 				canvas_ecam.l_rateApply();
-				canvas_iesi.rateApply();
 				</script>
 			</binding>
 			<binding>
@@ -225,9 +223,7 @@
 				acconfig.writeSettings();
 				canvas_pfd.rateApply();
 				canvas_nd.rateApply();
-				canvas_ecam.u_rateApply();
 				canvas_ecam.l_rateApply();
-				canvas_iesi.rateApply();
 				</script>
 			</binding>
 		</button>
@@ -241,9 +237,7 @@
 				acconfig.writeSettings();
 				canvas_pfd.rateApply();
 				canvas_nd.rateApply();
-				canvas_ecam.u_rateApply();
 				canvas_ecam.l_rateApply();
-				canvas_iesi.rateApply();
 				</script>
 			</binding>
 			<binding>

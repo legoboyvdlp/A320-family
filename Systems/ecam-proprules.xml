@@ -198,7 +198,7 @@
 			<value>2.0</value>
 		</time>
 		<S>
-			<property>/ECAM/ground-calc-immediate</property>
+			<property>/ECAM/logic/ground-calc-immediate</property>
 		</S>
 		<output>ECAM/phases/monostable/gnd-output</output>
 	</flipflop>
@@ -209,7 +209,7 @@
 			<value>2.5</value>
 		</time>
 		<S>
-			<property>/ECAM/ground-calc-immediate</property>
+			<property>/ECAM/logic/ground-calc-immediate</property>
 		</S>
 		<output>ECAM/phases/monostable/gnd-output-2</output>
 	</flipflop>

@@ -740,46 +740,6 @@
 		<output>/controls/flight/auto-coordination</output>
 	</filter>
 	
-	<!-- Braking -->
-	
-	<filter>
-		<name>Left Press</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/controls/gear/brake-left</property>
-					<entry><ind>0.0</ind><dep>   0</dep></entry>
-					<entry><ind>0.3</ind><dep>1000</dep></entry>
-					<entry><ind>0.6</ind><dep>2000</dep></entry>
-					<entry><ind>1.0</ind><dep>3000</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/systems/hydraulic/brakes/pressure-left-psi</output>
-	</filter>
-	
-	<filter>
-		<name>Right Press</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/controls/gear/brake-right</property>
-					<entry><ind>0.0</ind><dep>   0</dep></entry>
-					<entry><ind>0.3</ind><dep>1000</dep></entry>
-					<entry><ind>0.6</ind><dep>2000</dep></entry>
-					<entry><ind>1.0</ind><dep>3000</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/systems/hydraulic/brakes/pressure-right-psi</output>
-	</filter>
-	
 	<filter>
 		<name>Left Door</name>
 		<type>gain</type>

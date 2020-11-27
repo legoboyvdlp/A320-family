@@ -14,16 +14,16 @@ var cvr_tone = props.globals.getNode("/controls/CVR/tone");
 
 # Resets buttons to the default values
 var variousReset = func {
-	setprop("modes/cpt-du-xfr", 0);
-	setprop("modes/fo-du-xfr", 0);
+	setprop("/modes/cpt-du-xfr", 0);
+	setprop("/modes/fo-du-xfr", 0);
 	setprop("/controls/fadec/n1mode1", 0);
 	setprop("/controls/fadec/n1mode2", 0);
-	setprop("instrumentation/mk-viii/serviceable", 1);
-	setprop("instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", 0);
-	setprop("instrumentation/mk-viii/inputs/discretes/gpws-inhibit", 0);
-	setprop("instrumentation/mk-viii/inputs/discretes/glideslope-inhibit", 0);
-	setprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override", 0);
-	setprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 0);
+	setprop("/instrumentation/mk-viii/serviceable", 1);
+	setprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", 0);
+	setprop("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", 0);
+	setprop("/instrumentation/mk-viii/inputs/discretes/glideslope-inhibit", 0);
+	setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override", 0);
+	setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 0);
 	setprop("/controls/switches/cabinCall", 0);
 	setprop("/controls/switches/mechCall", 0);
 	setprop("/controls/switches/emer-lights", 0.5);
@@ -61,7 +61,7 @@ var variousReset = func {
 	setprop("/controls/lighting/DU/du6", 1);
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
-	setprop("modes/fcu/hdg-time", -45);
+	setprop("/modes/fcu/hdg-time", -45);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
 	setprop("/controls/switches/no-smoking-sign", 1);

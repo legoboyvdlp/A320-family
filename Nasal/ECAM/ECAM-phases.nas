@@ -46,7 +46,7 @@ var FWC = {
 		recallOutput: props.globals.initNode("/ECAM/flipflop/recall-output", 0, "BOOL"),
 	},
 	Logic: {
-		gnd: props.globals.getNode("/ECAM/ground-calc-immediate"),
+		gnd: props.globals.getNode("/ECAM/logic/ground-calc-immediate"),
 		IRSinAlign: props.globals.initNode("/ECAM/irs-in-align", 0, "BOOL"),
 		feet1500: props.globals.getNode("/ECAM/phases/phase-calculation/altitude-ge-1500"),
 		feet800: props.globals.getNode("/ECAM/phases/phase-calculation/altitude-ge-800"),
@@ -72,7 +72,11 @@ var FWC = {
 	altChg: props.globals.getNode("/it-autoflight/input/alt-is-changing", 1),
 };
 
+var gnd = nil;
+var gndTimer = nil;
+
 var phaseLoop = func() {
+	if ((systems.ELEC.Bus.acEss.getValue() < 110 and systems.ELEC.Bus.ac2.getValue() < 110) or pts.Acconfig.running.getBoolValue()) { return; }
 	if (pts.Sim.Replay.replayActive.getBoolValue()) { return; }
 	
 	myPhase = pts.ECAM.fwcWarningPhase.getValue();
@@ -83,7 +87,8 @@ var phaseLoop = func() {
 	eng2n1 = pts.Engines.Engine.n1Actual[1].getValue();
 	master1 = pts.Controls.Engines.Engine.cutoffSw[0].getBoolValue();
 	master2 = pts.Controls.Engines.Engine.cutoffSw[1].getBoolValue();
-	
+	gnd = FWC.Logic.gnd.getBoolValue();
+	gndTimer = FWC.Timer.gnd.getValue();
 	FWC.Flipflop.recallReset.setValue(0);
 		
 	# Various things
@@ -101,13 +106,13 @@ var phaseLoop = func() {
 		FWC.Flipflop.phase10Set.setBoolValue(0);
 	}
 	
-	if (FWC.Timer.gnd.getValue() == 1 and pts.Controls.Engines.Engine.firePb[0].getBoolValue()) {
+	if (gndTimer == 1 and pts.Controls.Engines.Engine.firePb[0].getBoolValue()) {
 		FWC.Flipflop.phase10Reset.setBoolValue(1);
 	} else {
 		FWC.Flipflop.phase10Reset.setBoolValue(0);
 	}
 	
-	if ((FWC.Logic.gnd.getBoolValue() and FWC.Timer.eng1and2Off.getValue() and myPhase == 9) and FWC.Flipflop.phase10Output.getBoolValue()) {
+	if ((gnd and FWC.Timer.eng1and2Off.getValue() and myPhase == 9) and FWC.Flipflop.phase10Output.getBoolValue()) {
 		FWC.Monostable.phase1.setBoolValue(1); # true for 300 sec then false
 	}	else {
 		FWC.Monostable.phase1.setBoolValue(0);
@@ -120,7 +125,7 @@ var phaseLoop = func() {
 		FWC.Flipflop.phase2Set.setBoolValue(0);
 	}
 	
-	if (!FWC.Monostable.m80kt.getBoolValue() and myPhase != 9 and ((!FWC.Monostable.phase9Output.getBoolValue() and FWC.Timer.gnd.getValue() == 1) or (!FWC.Monostable.toPowerOutput.getBoolValue() and FWC.Timer.gnd.getValue() == 1))) {
+	if (!FWC.Monostable.m80kt.getBoolValue() and myPhase != 9 and ((!FWC.Monostable.phase9Output.getBoolValue() and gndTimer == 1) or (!FWC.Monostable.toPowerOutput.getBoolValue() and gndTimer == 1))) {
 		FWC.Flipflop.phase2Reset.setBoolValue(1);
 	} else {
 		FWC.Flipflop.phase2Reset.setBoolValue(0);
@@ -129,33 +134,33 @@ var phaseLoop = func() {
 	gear_agl_cur = pts.Position.gearAglFt.getValue();
 	
 	# Phase 5 monostable
-	if (FWC.toPower.getBoolValue() and (!FWC.Logic.feet1500.getBoolValue() and !FWC.Logic.gnd.getBoolValue() and FWC.Timer.gnd2Sec.getValue() != 1)) {
+	if (FWC.toPower.getBoolValue() and (!FWC.Logic.feet1500.getBoolValue() and !gnd and FWC.Timer.gnd2Sec.getValue() != 1)) {
 		FWC.Monostable.phase5.setBoolValue(1);
 	} else {
 		FWC.Monostable.phase5.setBoolValue(0);
 	}
 	
 	# Phase 7 monostable
-	if (!FWC.toPower.getBoolValue() and !FWC.Logic.feet1500.getBoolValue() and !FWC.Logic.feet800.getBoolValue() and !FWC.Logic.gnd.getBoolValue() and FWC.Timer.gnd2Sec.getValue() != 1) {
+	if (!FWC.toPower.getBoolValue() and !FWC.Logic.feet1500.getBoolValue() and !FWC.Logic.feet800.getBoolValue() and !gnd and FWC.Timer.gnd2Sec.getValue() != 1) {
 		FWC.Monostable.phase7.setBoolValue(1);
 	} else {
 		FWC.Monostable.phase7.setBoolValue(0);
 	}
 	
 	# Actual Phases
-	if ((!FWC.Logic.gnd.getBoolValue() and FWC.Timer.gnd2Sec.getValue() != 1 and FWC.Timer.eng1and2Off.getValue() and myPhase != 9) and !FWC.Monostable.phase1Output.getBoolValue()) {
+	if ((gnd and FWC.Timer.eng1and2Off.getValue() and myPhase != 9) and !FWC.Monostable.phase1Output.getBoolValue()) {
 		setPhase(1);
 	}
 	
-	if (FWC.Timer.eng1or2Output.getBoolValue() and (FWC.Logic.gnd.getBoolValue() and !FWC.toPower.getBoolValue() and !FWC.speed80.getBoolValue()) and !FWC.Flipflop.phase2Output.getBoolValue()) {
+	if (FWC.Timer.eng1or2Output.getBoolValue() and (gnd and !FWC.toPower.getBoolValue() and !FWC.speed80.getBoolValue()) and !FWC.Flipflop.phase2Output.getBoolValue()) {
 		setPhase(2);
 	}
 	
-	if (FWC.Timer.eng1or2Output.getBoolValue() and (FWC.Timer.gnd.getValue() == 1 and FWC.toPower.getBoolValue()) and !FWC.speed80.getBoolValue()) {
+	if (FWC.Timer.eng1or2Output.getBoolValue() and (gndTimer == 1 and FWC.toPower.getBoolValue()) and !FWC.speed80.getBoolValue()) {
 		setPhase(3);
 	}
 	
-	if ((FWC.Timer.gnd.getValue() == 1 and FWC.toPower.getBoolValue()) and FWC.speed80.getBoolValue()) {
+	if ((gndTimer == 1 and FWC.toPower.getBoolValue()) and FWC.speed80.getBoolValue()) {
 		setPhase(4);
 	}
 	
@@ -163,7 +168,7 @@ var phaseLoop = func() {
 		setPhase(5);
 	}
 	
-	if (!FWC.Logic.gnd.getValue() and FWC.Timer.gnd2SecHalf.getValue() != 1 and (!FWC.Monostable.phase5.getBoolValue() or !FWC.Monostable.phase5Output.getBoolValue()) and (!FWC.Monostable.phase7.getBoolValue() or !FWC.Monostable.phase7Output.getBoolValue())) {
+	if (!gnd and FWC.Timer.gnd2SecHalf.getValue() != 1 and (!FWC.Monostable.phase5.getBoolValue() or !FWC.Monostable.phase5Output.getBoolValue()) and (!FWC.Monostable.phase7.getBoolValue() or !FWC.Monostable.phase7Output.getBoolValue())) {
 		setPhase(6);
 	}
 	
@@ -171,15 +176,15 @@ var phaseLoop = func() {
 		setPhase(7);
 	}
 	
-	if (!FWC.toPower.getBoolValue() and FWC.speed80.getBoolValue() and (FWC.Logic.gnd.getBoolValue() or FWC.Timer.gnd2Sec.getValue == 1)) {
+	if (!FWC.toPower.getBoolValue() and FWC.speed80.getBoolValue() and (gnd or FWC.Timer.gnd2Sec.getValue == 1)) {
 		setPhase(8);
 	}
 	
-	if (FWC.Flipflop.phase2Output.getBoolValue() and (FWC.Logic.gnd.getBoolValue() and !FWC.toPower.getBoolValue() and !FWC.speed80.getBoolValue()) and FWC.Timer.eng1or2.getBoolValue()) {
+	if (FWC.Flipflop.phase2Output.getBoolValue() and (gnd and !FWC.toPower.getBoolValue() and !FWC.speed80.getBoolValue()) and FWC.Timer.eng1or2.getBoolValue()) {
 		setPhase(9);
 	}
 	
-	if ((FWC.Logic.gnd.getBoolValue() and FWC.Timer.eng1and2Off.getValue() and myPhase == 9) and FWC.Monostable.phase1Output.getBoolValue()) {
+	if ((gnd and FWC.Timer.eng1and2Off.getValue() and myPhase == 9) and FWC.Monostable.phase1Output.getBoolValue()) {
 		setPhase(10);
 	}
 	

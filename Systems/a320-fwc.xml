@@ -1709,7 +1709,7 @@
 			<test logic="AND" value="1">
 				/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 1500
 				/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 1500
-				<!-- /it-fbw/law ne 0 confirm -->
+				/it-fbw/law ne 0
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
 		</switch>
@@ -1735,7 +1735,7 @@
 						</test>
 					</test>
 				</test>
-				<!-- /it-fbw/law ne 0 confirm... -->
+				/it-fbw/law ne 0
 				<test logic="OR">
 					/systems/navigation/adr/operating-1 eq 1
 					/systems/navigation/adr/operating-2 eq 1
@@ -2025,7 +2025,7 @@
 	</channel>
 	
 	<channel name="FCTL" execrate="8">
-		
+	
 		<switch name="/ECAM/warnings/fctl/lrElevFault">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -2047,6 +2047,117 @@
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
 		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/leftElevFault-cond">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fctl/elac1 eq 0
+						/systems/fctl/sec1 eq 0
+					</test>
+					/systems/hydraulic/blue-psi lt 1500
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fctl/elac2 eq 0
+						/systems/fctl/sec2 eq 0
+					</test>
+					/systems/hydraulic/green-psi lt 1500
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/leftElevFault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulic/blue-psi ge 1500
+				/systems/hydraulic/green-psi ge 1500
+				/systems/electrical/bus/dc-2 ge 25
+				/ECAM/warnings/fctl/lrElevFault ne 1
+				<test logic="OR">
+					/controls/fctl/switches/elac1 eq 1
+					/controls/fctl/switches/elac2 eq 1
+					/controls/fctl/switches/sec1 eq 1
+					/controls/fctl/switches/sec2 eq 1
+				</test>
+				/ECAM/warnings/fctl/leftElevFault-cond eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/leftElevFault-output">
+			<input>/ECAM/warnings/fctl/leftElevFault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/rightElevFault-cond">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fctl/elac1 eq 0
+						/systems/fctl/sec1 eq 0
+					</test>
+					/systems/hydraulic/blue-psi lt 1500
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/systems/fctl/elac2 eq 0
+						/systems/fctl/sec2 eq 0
+					</test>
+					/systems/hydraulic/yellow-psi lt 1500
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rightElevFault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulic/blue-psi ge 1500
+				/systems/hydraulic/yellow-psi ge 1500
+				/systems/electrical/bus/dc-2 ge 25
+				/ECAM/warnings/fctl/lrElevFault ne 1
+				<test logic="OR">
+					/controls/fctl/switches/elac1 eq 1
+					/controls/fctl/switches/elac2 eq 1
+					/controls/fctl/switches/sec1 eq 1
+					/controls/fctl/switches/sec2 eq 1
+				</test>
+				/ECAM/warnings/fctl/rightElevFault-cond eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/rightElevFault-output">
+			<input>/ECAM/warnings/fctl/rightElevFault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/altn-law">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 1
+				/ECAM/warning-phase ne 10
+				/it-fbw/law eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/altn-law-output">
+			<input>/ECAM/warnings/fctl/altn-law</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+		</actuator>
+		
+		
+		<switch name="/ECAM/warnings/fctl/direct-law-output">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 1
+				/ECAM/warning-phase ne 10
+				/it-fbw/law eq 2
+			</test>
+		</switch>
 		
 		<switch name="/ECAM/warnings/fctl/gear-not-down-not-cancellable">
 			<default value="0"/>

@@ -13,10 +13,24 @@ var sec2 = 0;
 var sec3 = 0;
 var fac1 = 0;
 var fac2 = 0;
-
+var dualELACFault = 0;
+var tripleSECFault = 0;
+var dualFACFault = 0;
+var adr1 = 0;
+var adr2 = 0;
+var adr3 = 0;
+var tripleADRFail = 0;
+var doubleADRFail = 0;
+var ir1 = 0;
+var ir2 = 0;
+var ir3 = 0;
+var tripleIRFail = 0;
+var doubleIRFail = 0;
 var blue = 0;
 var green = 0;
 var yellow = 0;
+var blueGreenFail = 0;
+var greenYellowFail = 0;
 var ail = 0;
 var roll = 0;
 var rollback = 0;
@@ -50,6 +64,7 @@ var FBW = {
 		sec3: props.globals.getNode("/systems/failures/fctl/sec3"),
 		fac1: props.globals.getNode("/systems/failures/fctl/fac1"),
 		fac2: props.globals.getNode("/systems/failures/fctl/fac2"),
+		ths: props.globals.getNode("/systems/failures/fctl/ths-jam"),
 		spoilerl1: props.globals.getNode("/systems/failures/spoilers/spoiler-l1"),
 		spoilerl2: props.globals.getNode("/systems/failures/spoilers/spoiler-l2"),
 		spoilerl3: props.globals.getNode("/systems/failures/spoilers/spoiler-l3"),
@@ -129,6 +144,7 @@ var FBW = {
 		me.Failures.sec3.setBoolValue(0);
 		me.Failures.fac1.setBoolValue(0);
 		me.Failures.fac2.setBoolValue(0);
+		me.Failures.ths.setBoolValue(0);
 		me.Failures.spoilerl1.setBoolValue(0);
 		me.Failures.spoilerl2.setBoolValue(0);
 		me.Failures.spoilerl3.setBoolValue(0);
@@ -154,85 +170,73 @@ var update_loop = func {
 	fac2 = FBW.Computers.fac2.getBoolValue();
 	law = FBW.activeLaw.getValue();
 	lawyaw = FBW.activeYawLaw.getValue();
+	adr1 = systems.ADIRS.Operating.adr[0].getValue();
+	adr2 = systems.ADIRS.Operating.adr[1].getValue();
+	adr3 = systems.ADIRS.Operating.adr[2].getValue();
+	ir1 = systems.ADIRS.ADIRunits[0].operating;
+	ir2 = systems.ADIRS.ADIRunits[1].operating;
+	ir3 = systems.ADIRS.ADIRunits[2].operating;
 	
 	# Degrade logic, all failures which degrade FBW need to go here. -JD
 	blue = systems.HYD.Psi.blue.getValue();
 	green = systems.HYD.Psi.green.getValue();
 	yellow = systems.HYD.Psi.yellow.getValue();
-	if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
-		if (!elac1 and !elac2) {
-			if (lawyaw == 0) {
-				FBW.degradeYawLaw.setValue(1);
-			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
-				FBW.apOff = 1;
-			}
-		}
-		if ((!elac1 and elac2 and ((green < 1500 and yellow >= 1500) or (green >= 1500 and yellow < 1500))) or (!elac2 and elac1 and blue < 1500)) {
-			if (lawyaw == 0) {
-				FBW.degradeYawLaw.setValue(1);
-			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
-				FBW.apOff = 1;
-			}
-		}
-		if (!sec1 and !sec2 and !sec3) {
-			if (lawyaw == 0) {
-				FBW.degradeYawLaw.setValue(1);
-			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
-			}
-		}
-		if (systems.ELEC.EmerElec.getBoolValue()) {
-			if (lawyaw == 0 or lawyaw == 1) {
-			} elsif (fac1 and lawyaw == 2) {
-				FBW.degradeYawLaw.setValue(1);
-			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
-				FBW.apOff = 1;
-			}
-		}
-		if (blue < 1500 and green < 1500 and yellow >= 1500) {
-			if (lawyaw == 0) {
-				FBW.degradeYawLaw.setValue(1);
-			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
-				FBW.apOff = 1;
-			}
-		}
-		if ((!fac1 and !fac2) or !FBW.yawdamper.getValue() or (blue >= 1500 and green < 1500 and yellow < 1500)) {
+	
+	dualELACFault = !elac1 and !elac2;
+	tripleSECFault = !sec1 and !sec2 and !sec3;
+	dualFACFault = !fac1 and !fac2;
+	
+	blueGreenFail = blue < 1500 and green < 1500 and yellow >= 1500;
+	greenYellowFail = blue >= 1500 and green < 1500 and yellow < 1500;
+	tripleADRFail = !adr1 and !adr2 and !adr3;
+	doubleADRFail = (!adr1 and !adr2 and adr3) or (adr1 and !adr2 and !adr3) or (!adr1 and adr2 and !adr3);
+	tripleIRFail = !ir1 and !ir2 and !ir3;
+	doubleIRFail = (!ir1 and !ir2 and ir3) or (ir1 and !ir2 and !ir3) or (!ir1 and ir2 and !ir3);
+	
+	if (dualELACFault and !sec1 and !sec2) {
+		FBW.degradeLaw.setValue(3);
+		FBW.apOff = 1;
+	} elsif (tripleADRFail or doubleADRFail or doubleIRFail or tripleIRFail or dualFACFault or !FBW.yawdamper.getValue() or greenYellowFail or blueGreenFail or dualELACFault or (!elac1 and elac2 and ((green < 1500 and yellow >= 1500) or (green >= 1500 and yellow < 1500))) or (!elac2 and elac1 and blue < 1500) or tripleSECFault or systems.ELEC.EmerElec.getBoolValue()) {
+		if (dualFACFault or !FBW.yawdamper.getValue() or greenYellowFail or (systems.ELEC.EmerElec.getBoolValue() and !fac1) or tripleIRFail) {
 			if (lawyaw == 0 or lawyaw == 1) {
 				FBW.degradeYawLaw.setValue(2);
 			}
-			if (law == 0) {
-				FBW.degradeLaw.setValue(1);
+		} elsif (fac1 and lawyaw == 2 and systems.ELEC.EmerElec.getBoolValue()) {
+			FBW.degradeYawLaw.setValue(1);
+		} elsif (lawyaw == 0) {
+			FBW.degradeYawLaw.setValue(1);
+		}
+		
+		if (law == 0 and !tripleIRFail) {
+			FBW.degradeLaw.setValue(1);
+			if (!tripleSECFault) {
 				FBW.apOff = 1;
 			}
-		}
-		if (!elac1 and !elac2 and !sec1 and !sec2 and !sec3 and !fac1 and !fac2) {
-			FBW.degradeLaw.setValue(3);
+		} elsif (tripleIRFail and (law == 0 or law == 1)) {
+			FBW.degradeLaw.setValue(2);
 			FBW.apOff = 1;
 		}
+	} else {
+		FBW.degradeYawLaw.setValue(0);
+		FBW.degradeLaw.setValue(0);
+		FBW.apOff = 0;
 	}
-	
-	if (pts.Controls.Gear.gearDown.getBoolValue() and !fmgc.Input.ap1.getBoolValue() and !fmgc.Input.ap2.getBoolValue()) {
-		if (law == 1) {
-			FBW.degradeLaw.setValue(2);
-		}
-	}
-	
+		
 	# degrade loop runs faster; reset this variable
 	law = FBW.activeLaw.getValue();
 	
-	# Mech Backup can always return to direct, if it can.
-	if (law == 3 and (elac1 or elac2 or sec1 or sec2 or sec3 or fac1 or fac2) and systems.ELEC.Bus.acEss.getValue() >= 110 and (green >= 1500 or blue >= 1500 or yellow >= 1500)) {
-		FBW.degradeLaw.setValue(2);
+	if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
+		if (pts.Controls.Gear.gearDown.getBoolValue()) {
+			if (law == 1) {
+				FBW.degradeLaw.setValue(2); # todo 3 sec timer
+			}
+		} else {
+			if (law == 2 and !tripleIRFail) {
+				FBW.degradeLaw.setValue(1); # todo 3 sec timer
+			}
+		}
 	}
+	
 	
 	cas = pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue();
 	mmoIAS = (cas / pts.Instrumentation.AirspeedIndicator.indicatedMach.getValue()) * 0.82;

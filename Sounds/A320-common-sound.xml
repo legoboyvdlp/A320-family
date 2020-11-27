@@ -89,9 +89,9 @@
 		</hyd>
 		
 		<announcement>
-			<name>PurserSnacks</name>
+			<name>cab_call</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/purserSnacks.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/cab_call.wav</path>
 			<condition>
 				<equals>
 					<property>/controls/switches/cabinCall</property>
@@ -1432,7 +1432,7 @@
 		<sb>
 			<mode>once</mode>
 			<name>sb</name>
-			<path>seatbelt.wav</path>
+			<path>cabin-chime.wav</path>
 			<condition>
 				<and>
 					<greater-than>
@@ -1450,7 +1450,7 @@
 		<ns>
 			<mode>once</mode>
 			<name>ns</name>
-			<path>nosmoko.wav</path>
+			<path>cabin-chime.wav</path>
 			<condition>
 				<and>
 					<greater-than>
@@ -1754,12 +1754,12 @@
 		</relay>
 		
 		<announcements>
-			<name>welcomeFA</name>
+			<name>fa_boarding</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/welcome.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/fa_boarding.wav</path>
 			<condition>
 				<equals>
-					<property>/sim/sounde/welcomefa</property>
+					<property>/sim/sounde/fa_boarding</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1770,12 +1770,12 @@
 		</announcements>
 		
 		<announcements>
-			<name>welcomeCA</name>
+			<name>fa_welcome</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/captwelcome.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/fa_welcome.wav</path>
 			<condition>
 				<equals>
-					<property>/sim/sounde/welcomecapt</property>
+					<property>/sim/sounde/fa_welcome</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1786,12 +1786,12 @@
 		</announcements>
 		
 		<announcements>
-			<name>doorsDep</name>
+			<name>cpt_welcome</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/doorsdepart.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/cpt_welcome.wav</path>
 			<condition>
 				<equals>
-					<property>/sim/sounde/doors</property>
+					<property>/sim/sounde/cpt_welcome</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1802,12 +1802,12 @@
 		</announcements>
 		
 		<announcements>
-			<name>PrepTo</name>
+			<name>cpt_doors</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/takeoff.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/cpt_doors.wav</path>
 			<condition>
 				<equals>
-					<property>/sim/sounde/prepareto</property>
+					<property>/sim/sounde/cpt_doors</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1818,12 +1818,12 @@
 		</announcements>
 		
 		<announcements>
-			<name>seatbeltOff</name>
+			<name>fa_safety</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/belt10k.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/fa_safety.wav</path>
 			<condition>
 				<equals>
-					<property>/sim/sounde/seatbelt-10k</property>
+					<property>/sim/sounde/fa_safety</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1834,12 +1834,76 @@
 		</announcements>
 		
 		<announcements>
-			<name>safety</name>
+			<name>cpt_takeoff</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Announce/safety.wav</path>
+			<path>Aircraft/A320-family/Sounds/Announce/cpt_takeoff.wav</path>
 			<condition>
 				<equals>
-					<property>/sim/sounde/safety</property>
+					<property>/sim/sounde/cpt_takeoff</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>0.6</factor>
+			</volume>
+		</announcements>
+		
+		<announcements>
+			<name>fa_seatbelt10k</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/fa_seatbelt10k.wav</path>
+			<condition>
+				<equals>
+					<property>/sim/sounde/fa_seatbelt10k</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>0.6</factor>
+			</volume>
+		</announcements>
+		
+		<announcements>
+			<name>fa_descent</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/fa_descent.wav</path>
+			<condition>
+				<equals>
+					<property>/sim/sounde/fa_descent</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>0.6</factor>
+			</volume>
+		</announcements>
+		
+		<announcements>
+			<name>cpt_landing</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/cpt_landing.wav</path>
+			<condition>
+				<equals>
+					<property>/sim/sounde/cpt_landing</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>0.6</factor>
+			</volume>
+		</announcements>
+		
+		<announcements>
+			<name>fa_landed</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/fa_landed.wav</path>
+			<condition>
+				<equals>
+					<property>/sim/sounde/fa_landed</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1888,6 +1952,7 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/cricket.wav</path>
 			<mode>looped</mode>
 			<type>avionics</type>
+			<delay-sec>1.5</delay-sec>
 			<condition>
 				<property>/sim/sound/warnings/cricket</property>
 			</condition>
@@ -1917,7 +1982,7 @@
 		
 		<stall-voice>
 			<name>stall-voice</name>
-			<mode>looped</mode>
+			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/stall_voice.wav</path>
 			<type>avionics</type>
 			<condition>

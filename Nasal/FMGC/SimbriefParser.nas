@@ -161,7 +161,7 @@ var SimbriefParser = {
 			}
 			
 			if (ident == "TOD") {
-				_foundTOC = 1;
+				_foundTOD = 1;
 				continue;
 			}
 			
