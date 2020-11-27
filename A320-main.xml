@@ -1570,8 +1570,8 @@
 	<instrumentation n="0">
 		<altimeter n="0">
 			<inhg type="bool">0</inhg>
-			<indicated-altitude-ft tyep="double">0</indicated-altitude-ft>
-			<indicated-altitude-ft-pfd tyep="double">0</indicated-altitude-ft-pfd>
+			<indicated-altitude-ft type="double">0</indicated-altitude-ft>
+			<indicated-altitude-ft-pfd type="double">0</indicated-altitude-ft-pfd>
 			<oldqnh type="double">29.92</oldqnh>
 			<serviceable type="bool">true</serviceable>
 			<std type="bool">0</std>
