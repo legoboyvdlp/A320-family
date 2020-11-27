@@ -145,6 +145,16 @@
 			</checkbox>
 			
 			<checkbox>
+				<label>THS</label>
+				<halign>left</halign>
+				<property>/systems/failures/fctl/ths-jam</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
 				<label>Yaw Damper 1</label>
 				<halign>left</halign>
 				<property>/systems/failures/fctl/yaw-damper-1</property>

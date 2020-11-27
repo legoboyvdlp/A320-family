@@ -136,7 +136,7 @@
 			<property>/it-autoflight/internal/alt</property>
 		</input>
 		<reference>
-			<property>/position/gear-agl-ft</property>
+			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
 		</reference>
 		<output>/instrumentation/pfd/alt-diff</output>
 	</filter>

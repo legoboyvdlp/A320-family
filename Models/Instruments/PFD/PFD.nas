@@ -512,21 +512,19 @@ var canvas_PFD_base = {
 			me["FMA_rollarm_box"].hide();
 			me["FMA_Middle1"].hide();
 			me["FMA_Middle2"].hide();
-			if (wow1.getValue() == 0) {
-				if (fbw_curlaw == 2) {
-					me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
-					me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
-					me["FMA_ctr_msg"].show();
-				} else if (fbw_curlaw == 3) {
-					me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
-					me["FMA_ctr_msg"].setColor(1,0,0);
-					me["FMA_ctr_msg"].show();
-				} else {
-					me["FMA_ctr_msg"].hide();
-				}
+			
+			if (ecam.directLaw.active) {
+				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
+				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
+				me["FMA_ctr_msg"].show();
+			} else if (fbw_curlaw == 3) {
+				me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
+				me["FMA_ctr_msg"].setColor(1,0,0);
+				me["FMA_ctr_msg"].show();
 			} else {
 				me["FMA_ctr_msg"].hide();
 			}
+			
 			me["FMA_combined"].show();
 			if (pitch_box.getValue() == 1 and pitch_mode_act != " ") {
 				me["FMA_combined_box"].show();
@@ -536,24 +534,18 @@ var canvas_PFD_base = {
 		} else {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
-			if (wow1.getValue() == 0) {
-				if (fbw_curlaw == 2) {
-					me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
-					me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
-					me["FMA_Middle1"].hide();
-					me["FMA_Middle2"].show();
-					me["FMA_ctr_msg"].show();
-				} else if (fbw_curlaw == 3) {
-					me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
-					me["FMA_ctr_msg"].setColor(1,0,0);
-					me["FMA_Middle1"].hide();
-					me["FMA_Middle2"].show();
-					me["FMA_ctr_msg"].show();
-				} else {
-					me["FMA_ctr_msg"].hide();
-					me["FMA_Middle1"].show();
-					me["FMA_Middle2"].hide();
-				}
+			if (ecam.directLaw.active) {
+				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
+				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
+				me["FMA_Middle1"].hide();
+				me["FMA_Middle2"].show();
+				me["FMA_ctr_msg"].show();
+			} else if (fbw_curlaw == 3) {
+				me["FMA_ctr_msg"].setText("MAN PITCH TRIM ONLY");
+				me["FMA_ctr_msg"].setColor(1,0,0);
+				me["FMA_Middle1"].hide();
+				me["FMA_Middle2"].show();
+				me["FMA_ctr_msg"].show();
 			} else {
 				me["FMA_ctr_msg"].hide();
 				me["FMA_Middle1"].show();
@@ -1278,7 +1270,6 @@ var canvas_PFD_1 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			
 			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
 				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 				me["ASI_max"].show();

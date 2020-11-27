@@ -278,6 +278,18 @@
 
 		<menubar>
 			<default>
+				<menu n="9">
+					<item n="2">
+						<key>?</key>
+						<label>Aircraft Help</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							acconfig.help_dlg.open();
+							</script>
+						</binding>
+					</item>
+				</menu>
 				<menu n="100">
 					<label>|</label>
 					<enabled type="bool">false</enabled>
@@ -753,9 +765,6 @@
 			<overspeed-roll-back type="bool">0</overspeed-roll-back>
 		</protections>
 		<spd-hld type="bool">0</spd-hld>
-		<speeds>
-			<vmo-mmo type="int">350</vmo-mmo>
-		</speeds>
 	</it-fbw>
 	
 	<FMGC n="0">
@@ -1287,6 +1296,7 @@
 				<fac2 type="bool">0</fac2>
 				<rtlu-1 type="bool">0</rtlu-1>
 				<rtlu-2 type="bool">0</rtlu-2>
+				<ths-jam type="bool">0</ths-jam>
 				<yaw-damper-1 type="bool">0</yaw-damper-1>
 				<yaw-damper-2 type="bool">0</yaw-damper-2>
 			</fctl>
@@ -1572,8 +1582,8 @@
 	<instrumentation n="0">
 		<altimeter n="0">
 			<inhg type="bool">0</inhg>
-			<indicated-altitude-ft tyep="double">0</indicated-altitude-ft>
-			<indicated-altitude-ft-pfd tyep="double">0</indicated-altitude-ft-pfd>
+			<indicated-altitude-ft type="double">0</indicated-altitude-ft>
+			<indicated-altitude-ft-pfd type="double">0</indicated-altitude-ft-pfd>
 			<oldqnh type="double">29.92</oldqnh>
 			<serviceable type="bool">true</serviceable>
 			<std type="bool">0</std>

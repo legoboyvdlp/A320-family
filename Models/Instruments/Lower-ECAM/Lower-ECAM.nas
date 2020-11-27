@@ -36,6 +36,15 @@ var tr2_v = 0;
 var tr2_a = 0;
 var essTramps = 0;
 var essTrvolts = 0;
+var elac1Node = 0;
+var elac2Node = 0;
+var sec1Node = 0;
+var sec2Node = 0;
+var eng_valve_state = 0;
+var bleed_valve_cur = 0;
+var hp_valve_state = 0;
+var xbleedcmdstate = 0;
+var ramAirState = 0;
 
 # Conversion factor pounds to kilogram
 LBS2KGS = 0.4535924;
@@ -92,6 +101,8 @@ var precooler1_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-
 var precooler2_ovht = props.globals.getNode("/systems/pneumatics/precooler/ovht-2", 1);
 var bmc1working = props.globals.getNode("/systems/pneumatics/indicating/bmc1-working", 1);
 var bmc2working = props.globals.getNode("/systems/pneumatics/indicating/bmc2-working", 1);
+var bmc1 = 0;
+var bmc2 = 0;
 var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
 var switch_wing_aice = props.globals.getNode("/controls/ice-protection/wing", 1);
 var pack1_bypass = props.globals.getNode("/systems/pneumatics/pack-1-bypass", 1);
@@ -650,14 +661,15 @@ var canvas_lowerECAM_bleed = {
 	update: func() {
 		# X BLEED
 		xbleedstate = xbleed.getValue();
-		if (xbleedcmd.getBoolValue() != xbleedstate) {
+		xbleedcmdstate = xbleedcmd.getBoolValue();
+		if (xbleedcmdstate != xbleedstate) {
 			me["BLEED-XFEED"].setColor(0.7333,0.3803,0);
 		} else {
 			me["BLEED-XFEED"].setColor(0.0509,0.7529,0.2941);
 		}
 		
-		if (xbleedcmd.getBoolValue() == xbleedstate) {
-			if (xbleedcmd.getBoolValue()) {
+		if (xbleedcmdstate == xbleedstate) {
+			if (xbleedcmdstate) {
 				me["BLEED-XFEED"].setRotation(0);
 			} else {
 				me["BLEED-XFEED"].setRotation(90 * D2R);
@@ -675,7 +687,7 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# HP valve 1
-		var hp_valve_state = hp_valve1_state.getValue();
+		hp_valve_state = hp_valve1_state.getValue();
 
 		if (hp_valve_state == 1) {
 			me["BLEED-HP-Valve-1"].setRotation(90 * D2R);
@@ -692,8 +704,8 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# HP valve 2
-		var hp_valve_state = hp_valve2_state.getValue();
-
+		hp_valve_state = hp_valve2_state.getValue();
+		
 		if (hp_valve_state == 1) {
 			me["BLEED-HP-Valve-2"].setRotation(90 * D2R);
 			me["BLEED-HP-2-connection"].show();
@@ -709,15 +721,16 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# ENG BLEED valve 1
-		var eng_valve_state = systems.PNEU.Switch.bleed1.getValue();
+		eng_valve_state = systems.PNEU.Switch.bleed1.getValue();
+		bleed_valve_cur = eng_valve1.getValue();
 
-		if (eng_valve1.getValue() == 0) {
+		if (bleed_valve_cur == 0) {
 			me["BLEED-ENG-1"].setRotation(0);
 		} else {
 			me["BLEED-ENG-1"].setRotation(90 * D2R);
 		}
 		
-		if (eng_valve_state == eng_valve1.getValue()) {
+		if (eng_valve_state == bleed_valve_cur) {
 			me["BLEED-ENG-1"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["BLEED-ENG-1"].setColor(0.7333,0.3803,0);
@@ -758,21 +771,25 @@ var canvas_lowerECAM_bleed = {
 			
 		# ENG BLEED valve 2
 		eng_valve_state = systems.PNEU.Switch.bleed2.getValue();
-
-		if (eng_valve2.getValue() == 0) {
+		bleed_valve_cur = eng_valve2.getValue();
+		
+		if (bleed_valve_cur == 0) {
 			me["BLEED-ENG-2"].setRotation(0);
 		} else {
 			me["BLEED-ENG-2"].setRotation(90 * D2R);
 		}
 		
-		if (eng_valve_state == eng_valve1.getValue()) {
+		if (eng_valve_state == bleed_valve_cur) {
 			me["BLEED-ENG-2"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["BLEED-ENG-2"].setColor(0.7333,0.3803,0);
 		}
 
 		# Precooler inlet 1
-		if (bmc1working.getValue()) {
+		bmc1 = bmc1working.getValue();
+		bmc2 = bmc2working.getValue();
+		
+		if (bmc1) {
 			var precooler_psi = precooler1_psi.getValue();
 			me["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", math.round(precooler_psi)));
 			if (precooler_psi < 4 or precooler_psi > 57) {
@@ -786,7 +803,7 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# Precooler inlet 2
-		if (bmc2working.getValue()) {
+		if (bmc2) {
 			var precooler_psi = precooler2_psi.getValue();
 			me["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", math.round(precooler_psi)));
 			if (precooler_psi < 4 or precooler_psi > 57) {
@@ -800,7 +817,7 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# Precooler outlet 1
-		if (bmc1working.getValue()) {
+		if (bmc1) {
 			var precooler_temp = precooler1_temp.getValue();
 			me["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
 			if (systems.PNEU.Switch.bleed1.getValue() and (precooler_temp < 150 or precooler1_ovht.getValue())) {
@@ -814,7 +831,7 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# Precooler outlet 2
-		if (bmc2working.getValue()) {
+		if (bmc2) {
 			var precooler_temp = precooler2_temp.getValue();
 			me["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(precooler_temp, 5)));
 			if (systems.PNEU.Switch.bleed2.getValue() and (precooler_temp < 150 or precooler2_ovht.getValue())) {
@@ -858,6 +875,7 @@ var canvas_lowerECAM_bleed = {
 		}
 
 		# PACK 1 -----------------------------------------
+		packValveState = systems.PNEU.Valves.pack1.getValue();
 		me["BLEED-Pack-1-Out-Temp"].setText(sprintf("%s", math.round(systems.PNEU.Packs.pack1OutTemp.getValue(), 5)));
 		me["BLEED-Pack-1-Comp-Out-Temp"].setText(sprintf("%s", math.round(systems.PNEU.Packs.pack1OutletTemp.getValue(), 5)));
 
@@ -867,9 +885,8 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-1-Out-Temp"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		var bypass_pos = pack1_bypass.getValue() - 50; # `-50` cause the middel position from where we move the needle is at 50
-		bypass_pos = bypass_pos * D2R;
-		me["BLEED-Pack-1-Bypass-needle"].setRotation(bypass_pos);
+		# `-50` cause the middel position from where we move the needle is at 50
+		me["BLEED-Pack-1-Bypass-needle"].setRotation((pack1_bypass.getValue() - 50) * D2R);
 
 		if (systems.PNEU.Packs.pack1OutletTemp.getValue() > 230) {
 			me["BLEED-Pack-1-Comp-Out-Temp"].setColor(0.7333,0.3803,0);
@@ -877,29 +894,24 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-1-Comp-Out-Temp"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		var flow_pos = systems.PNEU.Packs.packFlow1.getValue() * D2R;
-		me["BLEED-Pack-1-Packflow-needle"].setRotation(flow_pos);
+		me["BLEED-Pack-1-Packflow-needle"].setRotation(systems.PNEU.Packs.packFlow1.getValue() * D2R);
 
-		if (systems.PNEU.Valves.pack1.getValue() == 0) {
+		if (packValveState == 0) {
 			me["BLEED-Pack-1-Packflow-needle"].setColorFill(0.7333,0.3803,0);
+			me["BLEED-Pack-1-Flow-Valve"].setRotation(90 * D2R);
 		} else {
 			me["BLEED-Pack-1-Packflow-needle"].setColorFill(0.0509,0.7529,0.2941);
-		}
-		
-		var pack_state = systems.PNEU.Valves.pack1.getValue();
-		if (pack_state == 1) {
 			me["BLEED-Pack-1-Flow-Valve"].setRotation(0);
-		} else {
-			me["BLEED-Pack-1-Flow-Valve"].setRotation(90 * D2R);
 		}
 
-		if (pack_state == systems.PNEU.Switch.pack1.getValue()) {
+		if (packValveState == systems.PNEU.Switch.pack1.getValue()) {
 			me["BLEED-Pack-1-Flow-Valve"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["BLEED-Pack-1-Flow-Valve"].setColor(0.7333,0.3803,0);
 		}
 
 		# PACK 2 -----------------------------------------
+		packValveState = systems.PNEU.Valves.pack2.getValue();
 		me["BLEED-Pack-2-Out-Temp"].setText(sprintf("%s", math.round(systems.PNEU.Packs.pack2OutTemp.getValue(), 5)));
 		me["BLEED-Pack-2-Comp-Out-Temp"].setText(sprintf("%s", math.round(systems.PNEU.Packs.pack2OutletTemp.getValue(), 5)));
 
@@ -909,9 +921,7 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-2-Out-Temp"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		var bypass_pos = pack2_bypass.getValue() - 50; # `-50` cause the middel position from where we move the needle is at 50
-		bypass_pos = bypass_pos * D2R;
-		me["BLEED-Pack-2-Bypass-needle"].setRotation(bypass_pos);
+		me["BLEED-Pack-2-Bypass-needle"].setRotation((pack2_bypass.getValue() - 50) * D2R);
 
 		if (systems.PNEU.Packs.pack2OutletTemp.getValue() > 230) {
 			me["BLEED-Pack-2-Comp-Out-Temp"].setColor(0.7333,0.3803,0);
@@ -919,35 +929,30 @@ var canvas_lowerECAM_bleed = {
 			me["BLEED-Pack-2-Comp-Out-Temp"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		flow_pos = systems.PNEU.Packs.packFlow2.getValue() * D2R;
-		me["BLEED-Pack-2-Packflow-needle"].setRotation(flow_pos);
+		me["BLEED-Pack-2-Packflow-needle"].setRotation(systems.PNEU.Packs.packFlow2.getValue() * D2R);
 
-		if (systems.PNEU.Valves.pack2.getValue() == 0) {
+		if (packValveState == 0) {
 			me["BLEED-Pack-2-Packflow-needle"].setColorFill(0.7333,0.3803,0);
+			me["BLEED-Pack-2-Flow-Valve"].setRotation(90 * D2R);
 		} else {
 			me["BLEED-Pack-2-Packflow-needle"].setColorFill(0.0509,0.7529,0.2941);
-		}
-
-		var pack_state = systems.PNEU.Valves.pack2.getValue();
-		if (pack_state == 1) {
 			me["BLEED-Pack-2-Flow-Valve"].setRotation(0);
-		} else {
-			me["BLEED-Pack-2-Flow-Valve"].setRotation(90 * D2R);
 		}
 
-		if (pack_state == systems.PNEU.Switch.pack2.getValue()) {
+		if (packValveState == systems.PNEU.Switch.pack2.getValue()) {
 			me["BLEED-Pack-2-Flow-Valve"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["BLEED-Pack-2-Flow-Valve"].setColor(0.7333,0.3803,0);
 		}
 
 		# Ram Air
-		if (systems.PNEU.Valves.ramAir.getValue() == 0) {
+		ramAirState = systems.PNEU.Valves.ramAir.getValue();
+		if (ramAirState == 0) {
 			me["BLEED-Ram-Air"].setRotation(90 * D2R);
 			me["BLEED-Ram-Air"].setColor(0.0509,0.7529,0.2941);
 			me["BLEED-Ram-Air"].setColorFill(0.0509,0.7529,0.2941);
 			me["BLEED-Ram-Air-connection"].hide();
-		} elsif (systems.PNEU.Valves.ramAir.getValue()) {
+		} elsif (ramAirState) {
 			me["BLEED-Ram-Air"].setRotation(0);
 			if (pts.Gear.wow[1].getValue()) {
 				me["BLEED-Ram-Air"].setColor(0.7333,0.3803,0);
@@ -966,7 +971,7 @@ var canvas_lowerECAM_bleed = {
 		
 		# Triangles
 		if (systems.PNEU.Valves.pack1.getValue() == 0 and systems.PNEU.Valves.pack2.getValue() == 0) {
-			if (pts.Gear.wow[1].getValue() or systems.PNEU.Valves.ramAir.getValue() != 1) {
+			if (pts.Gear.wow[1].getValue() or ramAirState != 1) {
 				me["BLEED-cond-1"].setColor(0.7333,0.3803,0);
 				me["BLEED-cond-2"].setColor(0.7333,0.3803,0);
 				me["BLEED-cond-3"].setColor(0.7333,0.3803,0);
@@ -1951,12 +1956,16 @@ var canvas_lowerECAM_fctl = {
 		return["TAT","SAT","GW","UTCh","UTCm","GW-weight-unit","ailL","ailR","elevL","elevR","PTcc","PT","PTupdn","elac1","elac2","sec1","sec2","sec3","ailLblue","ailRblue","elevLblue","elevRblue","rudderblue","ailLgreen","ailRgreen","elevLgreen","ruddergreen","PTgreen",
 		"elevRyellow","rudderyellow","PTyellow","rudder","spdbrkblue","spdbrkgreen","spdbrkyellow","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex",
 		"spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf",
-		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6"];
+		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6","text4343"];
 	},
 	update: func() {
 		blue_psi = systems.HYD.Psi.blue.getValue();
 		green_psi = systems.HYD.Psi.green.getValue();
 		yellow_psi = systems.HYD.Psi.yellow.getValue();
+		elac1Node = fbw.FBW.Computers.elac1.getValue();
+		elac2Node = fbw.FBW.Computers.elac2.getValue();
+		sec1Node = fbw.FBW.Computers.sec1.getValue();
+		sec2Node = fbw.FBW.Computers.sec2.getValue();
 
 		# Pitch Trim
 		me["PT"].setText(sprintf("%2.1f", math.round(elevator_trim_deg.getValue(), 0.1)));
@@ -1976,16 +1985,26 @@ var canvas_lowerECAM_fctl = {
 			me["PTupdn"].setColor(0.0509,0.7529,0.2941);
 			me["PTcc"].setColor(0.0509,0.7529,0.2941);
 		}
+		
+		if (fbw.FBW.Failures.ths.getBoolValue()) {
+			me["text4343"].setColor(0.7333,0.3803,0);
+		} else {
+			me["text4343"].setColor(0.8078,0.8039,0.8078);
+		}
 
 		# Ailerons
 		me["ailL"].setTranslation(0, aileron_ind_left.getValue() * 100);
 		me["ailR"].setTranslation(0, aileron_ind_right.getValue() * (-100));
 
-		if (blue_psi < 1500 and green_psi < 1500) {
+		if ((blue_psi < 1500 or !elac1Node) and (green_psi < 1500 or !elac2Node)) {
 			me["ailL"].setColor(0.7333,0.3803,0);
-			me["ailR"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ailL"].setColor(0.0509,0.7529,0.2941);
+		}
+		
+		if ((green_psi < 1500 or !elac1Node) and (blue_psi < 1500 or !elac2Node)) {
+			me["ailR"].setColor(0.7333,0.3803,0);
+		} else {
 			me["ailR"].setColor(0.0509,0.7529,0.2941);
 		}
 
@@ -1993,13 +2012,13 @@ var canvas_lowerECAM_fctl = {
 		me["elevL"].setTranslation(0, elevator_ind_left.getValue() * 100);
 		me["elevR"].setTranslation(0, elevator_ind_right.getValue() * 100);
 
-		if (blue_psi < 1500 and green_psi < 1500) {
+		if ((blue_psi < 1500 or (!elac1Node and !sec1Node)) and (green_psi < 1500 or (!elac2Node and !sec2Node))) {
 			me["elevL"].setColor(0.7333,0.3803,0);
 		} else {
 			me["elevL"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		if (blue_psi < 1500 and yellow_psi < 1500) {
+		if ((blue_psi < 1500 or (!elac1Node and !sec1Node)) and (yellow_psi < 1500 or (!elac2Node and !sec2Node))) {
 			me["elevR"].setColor(0.7333,0.3803,0);
 		} else {
 			me["elevR"].setColor(0.0509,0.7529,0.2941);
@@ -2237,34 +2256,34 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		# Flight Computers
-		if (fbw.FBW.Computers.elac1.getValue()) {
+		if (elac1Node) {
 			me["elac1"].setColor(0.0509,0.7529,0.2941);
 			me["path4249"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.elac1.getValue() or fbw.FBW.Failures.elac1.getValue()) {
+		} else if (!elac1Node or fbw.FBW.Failures.elac1.getValue()) {
 			me["elac1"].setColor(0.7333,0.3803,0);
 			me["path4249"].setColor(0.7333,0.3803,0);
 		}
 
-		if (fbw.FBW.Computers.elac2.getValue()) {
+		if (elac2Node) {
 			me["elac2"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.elac2.getValue() or fbw.FBW.Failures.elac2.getValue()) {
+		} else if (!elac2Node or fbw.FBW.Failures.elac2.getValue()) {
 			me["elac2"].setColor(0.7333,0.3803,0);
 			me["path4249-3"].setColor(0.7333,0.3803,0);
 		}
 
-		if (fbw.FBW.Computers.sec1.getValue()) {
+		if (sec1Node) {
 			me["sec1"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6-7"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.sec1.getValue() or fbw.FBW.Failures.sec1.getValue()) {
+		} else if (!sec1Node or fbw.FBW.Failures.sec1.getValue()) {
 			me["sec1"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6-7"].setColor(0.7333,0.3803,0);
 		}
 
-		if (fbw.FBW.Computers.sec2.getValue()) {
+		if (sec2Node) {
 			me["sec2"].setColor(0.0509,0.7529,0.2941);
 			me["path4249-3-6-7-5"].setColor(0.0509,0.7529,0.2941);
-		} else if (!fbw.FBW.Computers.sec2.getValue() or fbw.FBW.Failures.sec2.getValue()) {
+		} else if (!sec2Node or fbw.FBW.Failures.sec2.getValue()) {
 			me["sec2"].setColor(0.7333,0.3803,0);
 			me["path4249-3-6-7-5"].setColor(0.7333,0.3803,0);
 		}
@@ -2279,10 +2298,23 @@ var canvas_lowerECAM_fctl = {
 
 		# Hydraulic Indicators
 		if (blue_psi >= 1500) {
-			me["ailLblue"].setColor(0.0509,0.7529,0.2941);
-			me["ailRblue"].setColor(0.0509,0.7529,0.2941);
-			me["elevLblue"].setColor(0.0509,0.7529,0.2941);
-			me["elevRblue"].setColor(0.0509,0.7529,0.2941);
+			if (elac1Node) {
+				me["ailLblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailLblue"].setColor(0.7333,0.3803,0);
+			}
+			if (elac1Node or sec1Node) {
+				me["elevLblue"].setColor(0.0509,0.7529,0.2941);
+				me["elevRblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["elevLblue"].setColor(0.7333,0.3803,0);
+				me["elevRblue"].setColor(0.7333,0.3803,0);
+			}
+			if (elac2Node) {
+				me["ailRblue"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailRblue"].setColor(0.7333,0.3803,0);
+			}
 			me["rudderblue"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkblue"].setColor(0.0509,0.7529,0.2941);
 		} else {
@@ -2295,9 +2327,22 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		if (green_psi >= 1500) {
-			me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
-			me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
-			me["elevLgreen"].setColor(0.0509,0.7529,0.2941);
+			if (elac2Node or sec2Node) {
+				me["elevLgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["elevLgreen"].setColor(0.7333,0.3803,0);
+			}
+			
+			if (elac2Node) {
+				me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailLgreen"].setColor(0.7333,0.3803,0);
+			}
+			if (elac1Node) {
+				me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["ailRgreen"].setColor(0.7333,0.3803,0);
+			}
 			me["ruddergreen"].setColor(0.0509,0.7529,0.2941);
 			me["PTgreen"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkgreen"].setColor(0.0509,0.7529,0.2941);
@@ -2311,7 +2356,11 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		if (yellow_psi >= 1500) {
-			me["elevRyellow"].setColor(0.0509,0.7529,0.2941);
+			if (elac2Node or sec2Node) {
+				me["elevRyellow"].setColor(0.0509,0.7529,0.2941);
+			} else {
+				me["elevRyellow"].setColor(0.7333,0.3803,0);
+			}
 			me["rudderyellow"].setColor(0.0509,0.7529,0.2941);
 			me["PTyellow"].setColor(0.0509,0.7529,0.2941);
 			me["spdbrkyellow"].setColor(0.0509,0.7529,0.2941);

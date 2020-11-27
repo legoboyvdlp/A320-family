@@ -74,6 +74,8 @@ var warningNodes = {
 		blueYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/blue-yellow-fuel-consumpt"),
 		greenYellow: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-failure"),
 		greenYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-fuel-consumpt"),
+		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault"),
+		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -94,6 +96,8 @@ var warningNodes = {
 		eng1AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-1-closed-output"),
 		eng2AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-closed-output"),
 		LRElevFault: props.globals.initNode("/ECAM/warnings/fctl/lrElevFault-output"),
+		altnLaw: props.globals.initNode("/ECAM/warnings/fctl/altn-law-output"),
+		directLaw: props.globals.initNode("/ECAM/warnings/fctl/direct-law-output"),
 		waiLhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-left"),
 		waiRhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-right"),
 		pack1Fault: props.globals.initNode("/ECAM/warnings/timer/pack-1-fault-2"),
@@ -104,6 +108,8 @@ var warningNodes = {
 		yawDamper1Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-1-fault"),
 		yawDamper2Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-2-fault"),
 		navTerrFault: props.globals.initNode("/ECAM/warnings/timer/nav-gpws-terr-fault"),
+		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault-output"),
+		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault-output"),
 	},
 	Flipflops: {
 		apuGenFault: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault"),
