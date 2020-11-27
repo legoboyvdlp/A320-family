@@ -4398,12 +4398,15 @@ var canvas_MCDU_base = {
 			}
 			
 			if (!Simbrief.SimbriefWindParser.inhibit) {
-				if (page == "WINDCLB" or page == "WINDDES") {
+				if (page == "WINDCLB" and fmgc.FMGCInternal.phase < 2) {
 					me["WIND_WindRequest_A"].hide();
 					me["WIND_WindRequest_B"].show();
-				} else if (page == "WINDCRZ") {
+				} else if (page == "WINDCRZ" and fmgc.FMGCInternal.phase < 3) {
 					me["WIND_WindRequest_A"].show();
 					me["WIND_WindRequest_B"].hide();
+				} else if (page == "WINDDES" and fmgc.FMGCInternal.phase < 4) {
+					me["WIND_WindRequest_A"].hide();
+					me["WIND_WindRequest_B"].show();
 				} else {
 					me["WIND_WindRequest_A"].hide();
 					me["WIND_WindRequest_B"].hide();

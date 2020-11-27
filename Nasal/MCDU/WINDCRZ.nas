@@ -62,152 +62,160 @@ var windCRZPage = {
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "wht", "wht", "ack"]];
 		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0]];
 		
-		var computer_temp = 2;
-		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			computer_temp = me.computer;
-		}
-		
-		if (me.singleCRZ == 1) {
-			if (fmgc.windController.crz_winds[computer_temp] == 0 or !fmgc.windController.crz_winds[computer_temp].wind1.set) {
-				me.items = 1;
-			} else if (!fmgc.windController.crz_winds[computer_temp].wind2.set) {
-				me.items = 2;
-			} else if (!fmgc.windController.crz_winds[computer_temp].wind3.set) {
-				me.items = 3;
-			} else {
-				me.items = 4;
-			}
+		if (fmgc.windController.uplinkFlag[me.computer] and Simbrief.SimbriefWindParser.inhibit) {
+			me.L1 = ["---°/---/-----", "TRU WIND/ALT", "yel"];
+			me.L2 = ["---°/---/-----", nil, "yel"];
+			me.L3 = ["---°/---/-----", nil, "yel"];
+			me.L4 = ["---°/---/-----", nil, "yel"];
+			me.L5 = ["---/-----", "SAT / ALT", "yel"];
 		} else {
-			me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
-			if (size(fmgc.windController.winds[computer_temp]) == 0 or !fmgc.windController.winds[computer_temp][me.match_location].wind1.set) {
-				me.items = 1;
-			} else if (!fmgc.windController.winds[computer_temp][me.match_location].wind2.set) {
-				me.items = 2;
-			} else if (!fmgc.windController.winds[computer_temp][me.match_location].wind3.set) {
-				me.items = 3;
-			} else {
-				me.items = 4;
-			}
-		}
-		
-		# load data
-		if (me.singleCRZ == 1) {
-			if (me.items >= 4) {
-				var windStore = fmgc.windController.crz_winds[computer_temp].wind4;
-				if (windStore.set) {
-					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-					me.fontMatrix[0][3] = 1;
-				} else {
-					me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-					me.fontMatrix[0][3] = 1;
-				}
-			} else {
-				me.L4 = [nil, nil, "ack"];
+			var computer_temp = 2;
+			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+				computer_temp = me.computer;
 			}
 		
-			if (me.items >= 3) {
-				var windStore = fmgc.windController.crz_winds[computer_temp].wind3;
-				if (windStore.set) {
-					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-					me.fontMatrix[0][2] = 1;
+			if (me.singleCRZ == 1) {
+				if (fmgc.windController.crz_winds[computer_temp] == 0 or !fmgc.windController.crz_winds[computer_temp].wind1.set) {
+					me.items = 1;
+				} else if (!fmgc.windController.crz_winds[computer_temp].wind2.set) {
+					me.items = 2;
+				} else if (!fmgc.windController.crz_winds[computer_temp].wind3.set) {
+					me.items = 3;
 				} else {
-					me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-					me.fontMatrix[0][2] = 1;
+					me.items = 4;
 				}
 			} else {
-				me.L3 = [nil, nil, "ack"];
-			}
-		
-			if (me.items >= 2) {
-				var windStore = fmgc.windController.crz_winds[computer_temp].wind2;
-				if (windStore.set) {
-					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-					me.fontMatrix[0][1] = 1;
+				me.match_location = fmgc.windController.nav_indicies[computer_temp][me.cur_location];
+				if (size(fmgc.windController.winds[computer_temp]) == 0 or !fmgc.windController.winds[computer_temp][me.match_location].wind1.set) {
+					me.items = 1;
+				} else if (!fmgc.windController.winds[computer_temp][me.match_location].wind2.set) {
+					me.items = 2;
+				} else if (!fmgc.windController.winds[computer_temp][me.match_location].wind3.set) {
+					me.items = 3;
 				} else {
-					me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-					me.fontMatrix[0][1] = 1;
-				}
-			} else {
-				me.L2 = [nil, nil, "ack"];
-			}
-		
-			if (me.items >= 1) {
-				var windStore = fmgc.windController.crz_winds[computer_temp].wind1;
-				if (windStore.set) {
-					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
-					me.fontMatrix[0][0] = 1;
-				} else {
-					me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
-					me.fontMatrix[0][0] = 1;
+					me.items = 4;
 				}
 			}
+		
+			# load data
+			if (me.singleCRZ == 1) {
+				if (me.items >= 4) {
+					var windStore = fmgc.windController.crz_winds[computer_temp].wind4;
+					if (windStore.set) {
+						me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
+						me.fontMatrix[0][3] = 1;
+					} else {
+						me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+						me.fontMatrix[0][3] = 1;
+					}
+				} else {
+					me.L4 = [nil, nil, "ack"];
+				}
+		
+				if (me.items >= 3) {
+					var windStore = fmgc.windController.crz_winds[computer_temp].wind3;
+					if (windStore.set) {
+						me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
+						me.fontMatrix[0][2] = 1;
+					} else {
+						me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+						me.fontMatrix[0][2] = 1;
+					}
+				} else {
+					me.L3 = [nil, nil, "ack"];
+				}
+		
+				if (me.items >= 2) {
+					var windStore = fmgc.windController.crz_winds[computer_temp].wind2;
+					if (windStore.set) {
+						me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
+						me.fontMatrix[0][1] = 1;
+					} else {
+						me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+						me.fontMatrix[0][1] = 1;
+					}
+				} else {
+					me.L2 = [nil, nil, "ack"];
+				}
+		
+				if (me.items >= 1) {
+					var windStore = fmgc.windController.crz_winds[computer_temp].wind1;
+					if (windStore.set) {
+						me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
+						me.fontMatrix[0][0] = 1;
+					} else {
+						me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+						me.fontMatrix[0][0] = 1;
+					}
+				}
 			
-			var windStore = fmgc.windController.crz_winds[computer_temp].sat1;
-			if (windStore.set) {
-				me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
-				me.fontMatrix[0][4] = 1;
-			} else {
-				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
-				me.fontMatrix[0][4] = 1;
-			}
-		} else {
-			if (me.items >= 4) {
-				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind4;
+				var windStore = fmgc.windController.crz_winds[computer_temp].sat1;
 				if (windStore.set) {
-					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-					me.fontMatrix[0][3] = 1;
+					me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
+					me.fontMatrix[0][4] = 1;
 				} else {
-					me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-					me.fontMatrix[0][3] = 1;
+					me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+					me.fontMatrix[0][4] = 1;
 				}
 			} else {
-				me.L4 = [nil, nil, "ack"];
-			}
+				if (me.items >= 4) {
+					var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind4;
+					if (windStore.set) {
+						me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
+						me.fontMatrix[0][3] = 1;
+					} else {
+						me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+						me.fontMatrix[0][3] = 1;
+					}
+				} else {
+					me.L4 = [nil, nil, "ack"];
+				}
 		
-			if (me.items >= 3) {
-				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind3;
-				if (windStore.set) {
-					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-					me.fontMatrix[0][2] = 1;
+				if (me.items >= 3) {
+					var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind3;
+					if (windStore.set) {
+						me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
+						me.fontMatrix[0][2] = 1;
+					} else {
+						me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+						me.fontMatrix[0][2] = 1;
+					}
 				} else {
-					me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-					me.fontMatrix[0][2] = 1;
+					me.L3 = [nil, nil, "ack"];
 				}
-			} else {
-				me.L3 = [nil, nil, "ack"];
-			}
 		
-			if (me.items >= 2) {
-				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind2;
-				if (windStore.set) {
-					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-					me.fontMatrix[0][1] = 1;
+				if (me.items >= 2) {
+					var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind2;
+					if (windStore.set) {
+						me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
+						me.fontMatrix[0][1] = 1;
+					} else {
+						me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+						me.fontMatrix[0][1] = 1;
+					}
 				} else {
-					me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-					me.fontMatrix[0][1] = 1;
+					me.L2 = [nil, nil, "ack"];
 				}
-			} else {
-				me.L2 = [nil, nil, "ack"];
-			}
 		
-			if (me.items >= 1) {
-				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind1;
-				if (windStore.set) {
-					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
-					me.fontMatrix[0][0] = 1;
-				} else {
-					me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
-					me.fontMatrix[0][0] = 1;
+				if (me.items >= 1) {
+					var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind1;
+					if (windStore.set) {
+						me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
+						me.fontMatrix[0][0] = 1;
+					} else {
+						me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+						me.fontMatrix[0][0] = 1;
+					}
 				}
-			}
 			
-			var windStore = fmgc.windController.winds[computer_temp][me.match_location].sat1;
-			if (windStore.set) {
-				me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
-				me.fontMatrix[0][4] = 1;
-			} else {
-				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
-				me.fontMatrix[0][4] = 1;
+				var windStore = fmgc.windController.winds[computer_temp][me.match_location].sat1;
+				if (windStore.set) {
+					me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
+					me.fontMatrix[0][4] = 1;
+				} else {
+					me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+					me.fontMatrix[0][4] = 1;
+				}
 			}
 		}
 		
@@ -532,28 +540,25 @@ var windCRZPage = {
 				}
 			}
 			me.reload();
-		} else if (index == 2 and !fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
-				if (!ecam.vhf3_voice.active) {
-					if (atsu.ATSU.working) {
-						if (getprop("/FMGC/simbrief-username") == "") {
-							mcdu.mcdu_message(me.computer, "MISSING USERNAME")
-						} elsif (!Simbrief.SimbriefWindParser.inhibit) {
-							me.makeTmpy();
-							fmgc.windController.uplinkFlag[me.computer] = 1;
-							me.reload();
-							Simbrief.SimbriefWindParser.fetch(getprop("/FMGC/simbrief-username"), me.computer);
-						} else {
-							mcdu_message(me.computer, "NOT ALLOWED");
-						}
+		} else if (index == 2 and fmgc.FMGCInternal.phase < 3) {
+			if (!ecam.vhf3_voice.active) {
+				if (atsu.ATSU.working) {
+					if (getprop("/FMGC/simbrief-username") == "") {
+						mcdu.mcdu_message(me.computer, "MISSING USERNAME")
+					} elsif (!Simbrief.SimbriefWindParser.inhibit) {
+						me.makeTmpy();
+						fmgc.windController.uplinkFlag[me.computer] = 1;
+						Simbrief.SimbriefWindParser.inhibit = 1;
+						me.reload();
+						Simbrief.SimbriefWindParser.fetch(getprop("/FMGC/simbrief-username"), me.computer);
 					} else {
-						mcdu_message(me.computer, "NO COMM MSG NOT GEN");
+						mcdu_message(me.computer, "NOT ALLOWED");
 					}
 				} else {
-					mcdu_message(me.computer, "VHF3 VOICE MSG NOT GEN");
+					mcdu_message(me.computer, "NO COMM MSG NOT GEN");
 				}
 			} else {
-				mcdu_message(me.computer, "NOT ALLOWED");
+				mcdu_message(me.computer, "VHF3 VOICE MSG NOT GEN");
 			}
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");

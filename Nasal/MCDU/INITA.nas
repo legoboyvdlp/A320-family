@@ -241,7 +241,7 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R2") {
-		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3 and !fmgc.windController.uplinkFlag[i]) {
 			if (!ecam.vhf3_voice.active) {
 				if (atsu.ATSU.working) {
 					if (getprop("/FMGC/simbrief-username") == "") {

@@ -11,7 +11,6 @@ var SimbriefWindParser = {
 	inhibit: 0,
 	computer: 2,
 	fetch: func(username, i) {
-		me.inhibit = 1;
 		me.computer = i;
 		var stamp = systime();
 		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
@@ -57,27 +56,30 @@ var SimbriefWindParser = {
 		var ofpFixes = ofpNavlog.getChildren("fix");
 		foreach (var ofpFix; ofpFixes) {
 			var ident = ofpFix.getNode("ident").getValue();
-			if (ident == "TOC") {
+			if (ident == "TOC" and fmgc.FMGCInternal.phase < 2) {
 				# set TOC winds
 				fmgc.windController.clb_winds[me.computer].wind1.heading = ofpFix.getNode("wind_dir").getValue();
 				fmgc.windController.clb_winds[me.computer].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
 				fmgc.windController.clb_winds[me.computer].wind1.altitude = "FL" ~ (ofpFix.getNode("altitude_feet").getValue() / 100);
 				fmgc.windController.clb_winds[me.computer].wind1.set = 1;
-			} else if (ident == "TOD") {
+			} else if (ident == "TOD" and fmgc.FMGCInternal.phase < 4) {
 				# set TOD winds
 				fmgc.windController.des_winds[me.computer].wind1.heading = ofpFix.getNode("wind_dir").getValue();
 				fmgc.windController.des_winds[me.computer].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
 				fmgc.windController.des_winds[me.computer].wind1.altitude = "FL" ~ (ofpFix.getNode("altitude_feet").getValue() / 100);
 				fmgc.windController.des_winds[me.computer].wind1.set = 1;
-			} else if (size(fmgc.windController.nav_indicies[me.computer]) == 0) {
+			} else if (size(fmgc.windController.nav_indicies[me.computer]) == 0 and fmgc.FMGCInternal.phase < 3) {
 				fmgc.windController.crz_winds[me.computer].wind1.heading = opfGeneral.getNode("avg_wind_dir").getValue();
 				fmgc.windController.crz_winds[me.computer].wind1.magnitude = opfGeneral.getNode("avg_wind_spd").getValue();
 				fmgc.windController.crz_winds[me.computer].wind1.altitude = "FL" ~ (opfGeneral.getNode("initial_altitude").getValue() / 100);
 				fmgc.windController.crz_winds[me.computer].wind1.set = 1;
-			} else if (ofpFix.getNode("type").getValue() == "wpt") {
+			} else if (ofpFix.getNode("type").getValue() == "wpt" and fmgc.FMGCInternal.phase <= 3) {
 				var wp_index = fmgc.flightPlanController.getIndexOf(2, ident);
 				if (wp_index != -99) {
 					var cur_index = 0;
+					# to do
+					# - restirct points modified
+					# - propogate
 					foreach (var ind; fmgc.windController.nav_indicies[me.computer]) {
 						if (ind == wp_index) {
 							fmgc.windController.winds[me.computer][cur_index].wind1.heading = ofpFix.getNode("wind_dir").getValue();
@@ -90,6 +92,8 @@ var SimbriefWindParser = {
 				}
 			}
 		}
+		
+		me.inhibit = 0;
 		
 		fmgc.windController.updatePlans();
 		
