@@ -41,7 +41,7 @@ var SimbriefWindParser = {
 					print("Failure to parse Simbrief OFP");
 					me.failure(i);
 				} else {
-					mcdu.mcdu_message(i, "AOC WIND UPLINK");
+					mcdu.mcdu_message(i, "WIND DATA UPLINK");
 				}
 			}
 		} else {
