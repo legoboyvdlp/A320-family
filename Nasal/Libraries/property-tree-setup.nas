@@ -206,6 +206,21 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	CurrentView: {
+		fieldOfView: props.globals.getNode("/sim/current-view/field-of-view", 1),
+		headingOffsetDeg: props.globals.getNode("/sim/current-view/heading-offset-deg", 1),
+		name: props.globals.getNode("/sim/current-view/name", 1),
+		pitchOffsetDeg: props.globals.getNode("/sim/current-view/pitch-offset-deg", 1),
+		rollOffsetDeg: props.globals.getNode("/sim/current-view/roll-offset-deg", 1),
+		type: props.globals.getNode("/sim/current-view/type", 1),
+		viewNumberRaw: props.globals.getNode("/sim/current-view/view-number-raw", 1),
+		zOffsetDefault: props.globals.getNode("/sim/current-view/z-offset-default", 1),
+		xOffsetM: props.globals.getNode("/sim/current-view/x-offset-m", 1),
+		yOffsetM: props.globals.getNode("/sim/current-view/y-offset-m", 1),
+		zOffsetM: props.globals.getNode("/sim/current-view/z-offset-m", 1),
+		zOffsetMaxM: props.globals.getNode("/sim/current-view/z-offset-max-m", 1),
+		zOffsetMinM: props.globals.getNode("/sim/current-view/z-offset-min-m", 1),
+	},
 	Input: {
 		Selected: {
 			engine: [props.globals.getNode("/sim/input/selected/engine[0]", 1),props.globals.getNode("/sim/input/selected/engine[1]", 1)],
@@ -215,6 +230,11 @@ var Sim = {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},
 	pause: props.globals.getNode("/sim/freeze/master"),
+	Rendering: {
+		Headshake: {
+			enabled: props.globals.getNode("/sim/rendering/headshake/enabled"),
+		},
+	},
 	replayState: props.globals.getNode("/sim/freeze/replay-state"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
