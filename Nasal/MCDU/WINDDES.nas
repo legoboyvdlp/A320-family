@@ -159,18 +159,33 @@ var windDESPage = {
 	},
 	updateTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			me.L1[2] = "yel";
-			me.L2[2] = "yel";
-			me.L3[2] = "yel";
-			me.L4[2] = "yel";
-			me.L5[2] = "yel";
-			me.R1[2] = "yel";
-			me.L6 = [" CANCEL", " WIND", "amb"];
-			me.R6 = ["UPDATE ", "WIND ", "amb"];
-			me.arrowsMatrix[0][5] = 0;
-			me.title = "DRAFT DES WIND";
-			me.titleColour = "yel";
-			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			if (fmgc.windController.uplinkFlag[me.computer]) {
+				me.L1[2] = "yel";
+				me.L2[2] = "yel";
+				me.L3[2] = "yel";
+				me.L4[2] = "yel";
+				me.L5[2] = "yel";
+				me.R1[2] = "yel";
+				me.L6 = [" CANCEL", " WIND", "amb"];
+				me.R6 = ["INSERT ", "WIND ", "amb"];
+				me.arrowsMatrix[0][5] = 0;
+				me.title = "UPLINK DES WIND";
+				me.titleColour = "yel";
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} else {
+				me.L1[2] = "yel";
+				me.L2[2] = "yel";
+				me.L3[2] = "yel";
+				me.L4[2] = "yel";
+				me.L5[2] = "yel";
+				me.R1[2] = "yel";
+				me.L6 = [" CANCEL", " WIND", "amb"];
+				me.R6 = ["UPDATE ", "WIND ", "amb"];
+				me.arrowsMatrix[0][5] = 0;
+				me.title = "DRAFT DES WIND";
+				me.titleColour = "yel";
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			}
 		} else {
 			me.L1[2] = "blu";
 			me.L2[2] = "blu";
@@ -389,6 +404,9 @@ var windDESPage = {
 						if (getprop("/FMGC/simbrief-username") == "") {
 							mcdu.mcdu_message(me.computer, "MISSING USERNAME")
 						} elsif (!Simbrief.SimbriefWindParser.inhibit) {
+							me.makeTmpy();
+							fmgc.windController.uplinkFlag[me.computer] = 1;
+							me.reload();
 							Simbrief.SimbriefWindParser.fetch(getprop("/FMGC/simbrief-username"), me.computer);
 						} else {
 							mcdu_message(me.computer, "NOT ALLOWED");

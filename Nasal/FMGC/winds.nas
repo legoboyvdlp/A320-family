@@ -102,6 +102,7 @@ var windController = {
 	nav_indicies: [[], [], [], []],
 	windSizes: [0, 0, 0, 0],
 	accessPage: ["", ""],
+	uplinkFlag: [0, 0],
 	#temporaryFlag: [0, 0],
 	
 	init: func() {
@@ -114,6 +115,8 @@ var windController = {
 	},
 	
 	reset: func() {
+		me.uplinkFlag[0] = 0;
+		me.uplinkFlag[1] = 0;
 		#me.temporaryFlag[0] = 0;
 		#me.temporaryFlag[1] = 0;
 		me.resetWind(0);
@@ -205,6 +208,7 @@ var windController = {
 		me.nav_indicies[n] = me.nav_indicies[2];
 		me.windSizes[n] = me.windSizes[2];
 		#me.waypointsChanged();
+		#me.uplinkFlag[n] = 1;
 		#me.temporaryFlag[n] = 1;
 	},
 	
@@ -222,6 +226,7 @@ var windController = {
 		if (n == 3) { return; }
 		me.resetWind(n);
 		me.waypointsChanged();
+		me.uplinkFlag[n] = 0;
 		#me.temporaryFlag[n] = 0;
 	},
 	# read - read from hist wind file, create one if it doesn't exist
