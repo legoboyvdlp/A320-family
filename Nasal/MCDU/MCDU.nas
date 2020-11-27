@@ -889,7 +889,7 @@ var rskbutton = func(btn, i) {
 		} else if (page == "INITB") {
 			initInputB("R1",i);
 		} else if (page == "WINDCLB") {
-			if (fmgc.FMGCInternal.phase == 0) {
+			if (fmgc.FMGCInternal.phase == 0 and !fmgc.windController.uplinkFlag[i]) {
 				if (canvas_mcdu.myHISTWIND[i] == nil) {
 					canvas_mcdu.myHISTWIND[i] = windHISTPage.new(i);
 				} else {
