@@ -297,6 +297,18 @@
 
 		<menubar>
 			<default>
+				<menu n="9">
+					<item n="2">
+						<key>?</key>
+						<label>Aircraft Help</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							acconfig.help_dlg.open();
+							</script>
+						</binding>
+					</item>
+				</menu>
 				<menu n="100">
 					<label>|</label>
 					<enabled type="bool">false</enabled>
