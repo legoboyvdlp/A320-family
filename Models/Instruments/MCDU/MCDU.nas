@@ -232,8 +232,8 @@ var canvas_MCDU_base = {
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
 	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
-	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE","ATISSend1","ATISSend2","ATISSend3","ATISSend4",
-	"ATISArrows"];
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","WIND_WindRequest_A","WIND_WindRequest_B","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE","ATISSend1",
+	"ATISSend2","ATISSend3","ATISSend4","ATISArrows"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -4395,6 +4395,22 @@ var canvas_MCDU_base = {
 					me.colorRight(myWind[i].R1[2],myWind[i].R2[2],myWind[i].R3[2],myWind[i].R4[2],myWind[i].R5[2],myWind[i].R6[2]);
 				}
 				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (!Simbrief.SimbriefWindParser.inhibit) {
+				if (page == "WINDCLB" or page == "WINDDES") {
+					me["WIND_WindRequest_A"].hide();
+					me["WIND_WindRequest_B"].show();
+				} else if (page == "WINDCRZ") {
+					me["WIND_WindRequest_A"].show();
+					me["WIND_WindRequest_B"].hide();
+				} else {
+					me["WIND_WindRequest_A"].hide();
+					me["WIND_WindRequest_B"].hide();
+				}
+			} else {
+				me["WIND_WindRequest_A"].hide();
+				me["WIND_WindRequest_B"].hide();
 			}
 		} else if (page == "LATREV") {
 			if (!pageSwitch[i].getBoolValue()) {

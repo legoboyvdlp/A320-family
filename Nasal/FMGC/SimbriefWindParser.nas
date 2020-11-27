@@ -9,8 +9,10 @@ var SimbriefWindParser = {
 	store1: nil,
 	store2: nil,
 	inhibit: 0,
+	computer: 2,
 	fetch: func(username, i) {
 		me.inhibit = 1;
+		me.computer = i;
 		var stamp = systime();
 		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
 			.fail(func me.failure(i))
