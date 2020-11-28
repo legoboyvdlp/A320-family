@@ -487,6 +487,14 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			if (size(me.outputList) >= index) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+						debug.dump(me.outputList[index + 1].wp.wp_name);
+						if (me.outputList[index + 1].wp.wp_name == "(DECEL)") {
+							mcdu_message(me.computer, "NOT ALLOWED");
+							return;
+						}
+					}
+					
 					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");

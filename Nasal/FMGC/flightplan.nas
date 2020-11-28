@@ -761,10 +761,6 @@ var flightPlanController = {
 			return 3;
 		}
 		
-		if (me.flightplans[plan].getWP(index).wp_name == "(DECEL)") {
-			return 1;
-		}
-		
 		if (!me.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
 				var thePlan = 2;
@@ -816,10 +812,13 @@ var flightPlanController = {
 	updatePlans: func(runDecel = 0, callDecel = 1) {
 		if (fmgc.FMGCInternal.toFromSet and me.flightplans[2].departure != nil and me.flightplans[2].destination != nil) { # check if flightplan exists
 			if (!me.active.getBoolValue()) {
-				var errs = [];
-				call(func {
-					me.currentToWptIndex.setValue(1);
-				}, nil, nil, nil,errs);
+				if (me.currentToWptIndex.getValue() < 1) {
+					var errs = [];
+					call(func {
+						me.currentToWptIndex.setValue(1);
+					}, nil, nil, nil,errs);
+					if (errs != nil) { debug.dump(errs); }
+				}
 				me.active.setValue(1);
 			}
 		} elsif (me.active.getBoolValue()) {
