@@ -761,6 +761,10 @@ var flightPlanController = {
 			return 3;
 		}
 		
+		if (me.flightplans[2].getWP(index).wp_name == "(DECEL)") {
+			return 1;
+		}
+		
 		if (!me.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
 				var thePlan = 2;
