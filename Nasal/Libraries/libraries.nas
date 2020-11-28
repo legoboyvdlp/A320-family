@@ -158,7 +158,7 @@ var update_items = [
 		}
 	}),
 	props.UpdateManager.FromHashList(["noSmoking","gearPosNorm"], nil, func(val) {
-		if (val.noSmoking) {
+		if (val.noSmoking == 1) {
 			if (!noSmokingLight.getBoolValue()) {
 				noSmokingLight.setBoolValue(1);
 			}
@@ -171,7 +171,7 @@ var update_items = [
 		}
 	}),
 ];
-	
+
 var systemsLoop = func(notification) {
 	if (!systemsInitialized) { return; }
 	systems.ELEC.loop();

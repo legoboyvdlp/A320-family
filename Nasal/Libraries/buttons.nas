@@ -3,8 +3,6 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
-var wow = nil;
-var wowr = nil;
 var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
 var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
 var EmerCall = props.globals.getNode("/controls/switches/emerCall");
@@ -13,7 +11,7 @@ var MechCall = props.globals.getNode("/controls/switches/mechCall");
 var cvr_tone = props.globals.getNode("/controls/CVR/tone");
 
 # Resets buttons to the default values
-var variousReset = func {
+var variousReset = func() {
 	setprop("/modes/cpt-du-xfr", 0);
 	setprop("/modes/fo-du-xfr", 0);
 	setprop("/controls/fadec/n1mode1", 0);
@@ -69,67 +67,84 @@ var variousReset = func {
 }
 
 var BUTTONS = {
+	storeEmerCall: 0,
 	update: func() {
-		if (EmerCall.getValue()) {
-			EmerCallOnLight();
-			EmerCallLight();
+		me.storeEmerCall = EmerCall.getValue();
+		if (me.storeEmerCall) {
+			EmerCallOnLight(me.storeEmerCall);
+			EmerCallLight(me.storeEmerCall);
 		}
 	},
 };
 
 var _OnLt = nil;
-var _EmerCall = nil;
-
-var EmerCallOnLight = func() {
+var EmerCallOnLight = func(emerCallSts) {
 	_OnLt = OnLt.getValue();
-	_EmerCall = EmerCall.getValue();
-	if ((_OnLt and _EmerCall) or !_EmerCall) { 
+	if ((_OnLt and emerCallSts) or !emerCallSts) { 
 		OnLt.setValue(0);
-	} else if (!_OnLt and _EmerCall) { 
+	} else if (!_OnLt and emerCallSts) { 
 		OnLt.setValue(1);
 	}
 }
 
 var _CallLt = nil;
-var _EmerCall2 = nil;
-
-var EmerCallLight = func() {
+var EmerCallLight = func(emerCallSts) {
 	_CallLt = CallLt.getValue();
-	_EmerCall2 = EmerCall.getValue();
-	if ((_CallLt and _EmerCall2) or !_EmerCall2) { 
+	_EmerCall2 = emerCallSts;
+	if ((_CallLt and emerCallSts) or !emerCallSts) { 
 		CallLt.setValue(0);
-	} else if (!_CallLt and _EmerCall2) { 
+	} else if (!_CallLt and emerCallSts) { 
 		CallLt.setValue(1);
 	}
 }
 
-var EmerCallFunc = func {
-	EmerCall.setValue(1);
-	settimer(func() {
-		EmerCall.setValue(0);
-	}, 10);
-}
-
-var CabinCallFunc = func {
-	CabinCall.setValue(1);
-	settimer(func() {
-		CabinCall.setValue(0);
-	}, 15);
-}
-		
-var MechCallFunc = func {
-	MechCall.setValue(1);
-	settimer(func() {
-		MechCall.setValue(0);
-	}, 15);
-}
-
-var CVR_test = func {
-	if (pts.Controls.Gear.parkingBrake.getValue()) {
-		cvr_tone.setValue(1);
+var _EmerCallRunning = 0;
+var EmerCallFunc = func() {
+	if (!_EmerCallRunning) {
+		_EmerCallRunning = 1;
+		EmerCall.setValue(1);
 		settimer(func() {
-			cvr_tone.setValue(0);
-		}, 15);
+			EmerCall.setValue(0);
+			_EmerCallRunning = 0;
+		}, 7);
+	}
+}
+
+var _CabinCallRunning = 0;
+var CabinCallFunc = func() {
+	if (!_CabinCallRunning) {	
+		_CabinCallRunning = 1;
+		CabinCall.setValue(1);
+		settimer(func() {
+			CabinCall.setValue(0);
+			_CabinCallRunning = 0;
+		}, 2);
+	}
+}
+	
+var _MechCallRunning = 0;	
+var MechCallFunc = func() {
+	if (!_MechCallRunning) {
+		_MechCallRunning = 1;	
+		MechCall.setValue(1);
+		settimer(func() {
+			MechCall.setValue(0);
+			_MechCallRunning = 0;	
+		}, 6);
+	}
+}
+
+var _CVRtestRunning = 0;
+var CVR_test = func() {
+	if (pts.Controls.Gear.parkingBrake.getValue()) {
+		if (!_CVRtestRunning) {
+			_CVRtestRunning = 1;
+			cvr_tone.setValue(1);
+			settimer(func() {
+				_CVRtestRunning = 0;
+				cvr_tone.setValue(0);
+			}, 15);
+		}
 	}
 }
 
@@ -140,7 +155,7 @@ setlistener("/controls/apu/master", func() { # poor mans set-reset latch
 	}
 }, 0, 0);
 
-var toggleSTD = func {
+var toggleSTD = func() {
 	if (pts.Instrumentation.Altimeter.std.getBoolValue()) {
 		pts.Instrumentation.Altimeter.settingInhg.setValue(pts.Instrumentation.Altimeter.oldQnh.getValue());
 		pts.Instrumentation.Altimeter.std.setBoolValue(0);
@@ -149,10 +164,4 @@ var toggleSTD = func {
 		pts.Instrumentation.Altimeter.settingInhg.setValue(29.92);
 		pts.Instrumentation.Altimeter.std.setBoolValue(1);
 	}
-}
-
-var pushbuttonSound = props.globals.getNode("/sim/sounde/pushbutton");
-var pushbutton = func {
-	pushbuttonSound.setValue(1);
-  settimer(func {pushbuttonSound.setValue(0);},0.20);
 }

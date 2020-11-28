@@ -46,9 +46,9 @@
 			<test logic="AND" value="1">
 				/velocities/groundspeed-kt ge 15
 				<test logic="OR">
-					/gear/gear[0]/compression-norm ge 0
-					/gear/gear[1]/compression-norm ge 0
-					/gear/gear[2]/compression-norm ge 0
+					/gear/gear[0]/compression-norm gt 0
+					/gear/gear[1]/compression-norm gt 0
+					/gear/gear[2]/compression-norm gt 0
 				</test>
 			</test>
 		</switch>
