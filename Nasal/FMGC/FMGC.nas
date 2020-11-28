@@ -62,6 +62,7 @@ var altsel = 0;
 var crzFl = 0;
 var windHdg = 0;
 var windSpeed = 0;
+var windsDidChange = 0;
 setprop("position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
@@ -710,7 +711,7 @@ var masterFMGC = maketimer(0.2, func {
 	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
 		FMGCInternal.maxspeed = 284;
 	} else {
-		FMGCInternal.maxspeed = getprop("/it-fbw/speeds/vmo-mmo");
+		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
 	}
 	
 	############################
@@ -724,7 +725,7 @@ var masterFMGC = maketimer(0.2, func {
 	windHdg = pts.Environment.windFromHdg.getValue();
 	windSpeed = pts.Environment.windSpeedKt.getValue();
 	if (FMGCInternal.phase == 3 or FMGCInternal.phase == 4 or FMGCInternal.phase == 6) {
-		var windsDidChange = 0;
+		windsDidChange = 0;
 		if (FMGCInternal.crzFt > 5000 and alt > 4980 and alt < 5020) {
 			if (sprintf("%03d", windHdg) != fmgc.windController.fl50_wind[0] or sprintf("%03d", windSpeed) != fmgc.windController.fl50_wind[1]) {
 				fmgc.windController.fl50_wind[0] = sprintf("%03d", windHdg);
@@ -1061,9 +1062,7 @@ var ManagedSPD = maketimer(0.25, func {
 			
 			if (mach > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
 				FMGCInternal.machSwitchover = 1;
-			}
-			
-			if (ias > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
+			} elsif (ias > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
 				FMGCInternal.machSwitchover = 0;
 			}
 			

@@ -4,147 +4,120 @@
 #########
 # Views #
 #########
+var viewNumberRaw = 0;
+var shakeFlag = 0;
 var resetView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
+	viewNumberRaw = pts.Sim.CurrentView.viewNumberRaw.getValue();
+	if (viewNumberRaw == 0 or (viewNumberRaw >= 100 and viewNumberRaw <= 109) or viewNumberRaw == 112) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
 		} else {
-			var _shakeFlag = 0;
+			shakeFlag = 0;
 		}
 		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 360;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
+		pts.Sim.CurrentView.fieldOfView.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/default-field-of-view-deg").getValue());
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/heading-offset-deg").getValue());
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/pitch-offset-deg").getValue());
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/roll-offset-deg").getValue());
+		pts.Sim.CurrentView.xOffsetM.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/x-offset-m").getValue());
+		pts.Sim.CurrentView.yOffsetM.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/y-offset-m").getValue());
+		pts.Sim.CurrentView.zOffsetM.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/z-offset-m").getValue());
 		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", -14.6, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
 		}
 	} 
 }
 
 var autopilotView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
+	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
 		} else {
-			var _shakeFlag = 0;
+			shakeFlag = 0;
 		}
 		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 341.7;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
+		pts.Sim.CurrentView.fieldOfView.setValue(63);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(341.7);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(-16.4);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
+		pts.Sim.CurrentView.xOffsetM.setValue(-0.45); 
+		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
 		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", -16.4, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
 		}
 	} 
 }
 
 var overheadView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
+	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
 		} else {
-			var _shakeFlag = 0;
+			shakeFlag = 0;
 		}
 		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 348;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
+		pts.Sim.CurrentView.fieldOfView.setValue(105.8);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(348);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(65.25);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0,0.66);
+		pts.Sim.CurrentView.xOffsetM.setValue(-0.12); 
+		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
 		
-		interpolate("sim/current-view/field-of-view", 105.8, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", 65.25, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0,0.66);
-		interpolate("sim/current-view/x-offset-m", -0.12, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
 		}
 	} 
 }
 
 var pedestalView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
+	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
 		} else {
-			var _shakeFlag = 0;
+			shakeFlag = 0;
 		}
 		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 315;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
+		pts.Sim.CurrentView.fieldOfView.setValue(63);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(315);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(-46.3);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
+		pts.Sim.CurrentView.xOffsetM.setValue(-0.45); 
+		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
 		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", -46.3, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
 		}
 	} 
 }
 
 var lightsView = func() {
-	if (getprop("/sim/current-view/view-number") == 0) {
-		if (getprop("/sim/rendering/headshake/enabled")) {
-			var _shakeFlag = 1;
-			setprop("/sim/rendering/headshake/enabled", 0);
+	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
 		} else {
-			var _shakeFlag = 0;
+			shakeFlag = 0;
 		}
 		
-		var hd = getprop("/sim/current-view/heading-offset-deg");
-		var hd_t = 329;
-		if (hd < 180) {
-		  hd_t = hd_t - 360;
-		}
+		pts.Sim.CurrentView.fieldOfView.setValue(63);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(329);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(17.533);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
+		pts.Sim.CurrentView.xOffsetM.setValue(-0.45); 
+		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
 		
-		interpolate("sim/current-view/field-of-view", 63, 0.66);
-		interpolate("sim/current-view/heading-offset-deg", hd_t, 0.66);
-		interpolate("sim/current-view/pitch-offset-deg", 17.533, 0.66);
-		interpolate("sim/current-view/roll-offset-deg", 0, 0.66);
-		interpolate("sim/current-view/x-offset-m", -0.45, 0.66); 
-		interpolate("sim/current-view/y-offset-m", 2.34, 0.66); 
-		interpolate("sim/current-view/z-offset-m", -13.75, 0.66);
-		
-		if (_shakeFlag) {
-			setprop("/sim/rendering/headshake/enabled", 1);
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
 		}
 	} 
 }

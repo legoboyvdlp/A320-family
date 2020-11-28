@@ -30,23 +30,7 @@ var execLoop = func
     emesary.GlobalTransmitter.NotifyAll(notifications.frameNotification);
 
     notifications.frameNotification.FrameCount = notifications.frameNotification.FrameCount + 1;
-	
-	if (notifications.frameNotification.frame_rate < 5) {
-        frame_inc = 0.25;#4 Hz
-    } elsif (notifications.frameNotification.frame_rate < 10) {
-        frame_inc = 0.125;#8 Hz
-    } elsif (notifications.frameNotification.frame_rate < 15) {
-        frame_inc = 0.10;#10 Hz
-    } elsif (notifications.frameNotification.frame_rate < 20) {
-        frame_inc = 0.075;#13.3 Hz
-    } elsif (notifications.frameNotification.frame_rate < 25) {
-        frame_inc = 0.05;#20 Hz
-    } elsif (notifications.frameNotification.frame_rate < 40) {
-        frame_inc = 0.0333;#30 Hz
-    } else {
-        frame_inc = 0.02;#50 Hz
-    }
-	
+	frame_inc = 0.0333; #30 Hz
     if (frame_inc != cur_frame_inc) {
         cur_frame_inc = frame_inc;
     }
@@ -59,6 +43,12 @@ input = {
 	elapsedTime: "/sim/time/elapsed-sec",
 	FWCPhase: "/ECAM/warning-phase",
 	gear0Wow: "/gear/gear[0]/wow",
+	
+	# Just about everything uses these properties at some stage, lets add them here!
+	elecAC1: "/systems/electrical/bus/ac-1",
+	elecAC2: "/systems/electrical/bus/ac-2",
+	elecACEss: "/systems/electrical/bus/ac-ess",
+	elecACEssShed: "/systems/electrical/bus/ac-ess-shed",
 	engine1State: "/engines/engine[0]/state",
 	engine2State: "/engines/engine[1]/state",
 };
