@@ -290,9 +290,15 @@ var updateARPT = func {
 	}
 }
 
+var apt = nil;
+var dms = nil;
+var degrees = nil;
+var minutes = nil;
+var sign = nil;
 var updateArptLatLon = func {
 	#ref lat
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+	apt = airportinfo(FMGCInternal.depApt);
+	dms = apt.lat;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "N" : "S";
@@ -300,7 +306,7 @@ var updateArptLatLon = func {
 	setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
 	setprop("/FMGC/internal/align-ref-lat-sign", sign);
 	#ref long
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+	dms = apt.lon;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "E" : "W";
