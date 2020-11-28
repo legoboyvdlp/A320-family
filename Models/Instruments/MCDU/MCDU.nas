@@ -74,6 +74,7 @@ var MAGENTA = [0.6902,0.3333,0.7541];
 var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
 var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
+var engRdy = props.globals.getNode("/engines/ready");
 
 #ACCONFIG
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
@@ -117,7 +118,6 @@ var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
-var engrdy = props.globals.getNode("/engines/ready", 1);
 
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
@@ -3011,12 +3011,12 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
+			if (!engRdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
 				me["Simple_L1"].setText("NONE");
 			} else {
 				me["Simple_L1"].setText(fmgc.FMGCInternal.arrApt);
 			}
-			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
+			if (!engRdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
 				me["Simple_L2"].setText("NONE");
 			} else {
 				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);

@@ -185,7 +185,8 @@
 				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
-		<view n="110">
+		<!-- Walker is 110 and 111 -->
+		<view n="112">
 			<name>Right Aft View</name>
 			<type>lookfrom</type>
 			<internal archive="y">false</internal>
@@ -200,7 +201,16 @@
 				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
-
+		
+		<systems n="0">	
+			<autopilot n="0">	
+				<path>Aircraft/A320-family/Systems/fadec-cfm.xml</path>	
+			</autopilot>	
+			<autopilot n="10">	
+				<path>Aircraft/A320-family/Systems/cfm56-sound.xml</path>	
+			</autopilot>	
+		</systems>
+		
 	</sim>
 		
 	<limits>

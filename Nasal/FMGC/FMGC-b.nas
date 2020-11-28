@@ -441,7 +441,7 @@ var ITAF = {
 	},
 	ap1Master: func(s) {
 		if (s == 1) {
-			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and Misc.fbwLaw.getValue() == 0 and Position.gearAglFt.getValue() >= 100) {
+			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
 				me.revertBasicMode();
 				Output.ap1.setBoolValue(1);
 				Output.latTemp = Output.lat.getValue();
@@ -462,7 +462,7 @@ var ITAF = {
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
-			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and Misc.fbwLaw.getValue() == 0 and Position.gearAglFt.getValue() >= 100) {
+			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
 				me.revertBasicMode();
 				Output.ap2.setBoolValue(1);
 				Output.latTemp = Output.lat.getValue();
@@ -492,7 +492,7 @@ var ITAF = {
 	},
 	athrMaster: func(s) {
 		if (s == 1) {
-			if (systems.ELEC.Bus.acEss.getValue() >= 110) {
+			if (systems.ELEC.Bus.acEss.getValue() >= 110 and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
 				Output.athr.setBoolValue(1);
 				Custom.ThrLock.setValue(0);
 				Custom.Sound.enableAthrOff = 1;

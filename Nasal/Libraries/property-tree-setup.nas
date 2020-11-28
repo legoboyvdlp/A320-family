@@ -249,6 +249,11 @@ var Sim = {
 		},
 	},
 	Version: props.globals.getNode("/sim/version/flightgear"),
+	View: {
+		Config: {
+			defaultFieldOfViewDeg: props.globals.getNode("/sim/view/config/default-field-of-view-deg", 1),
+		},
+	},
 };
 
 var Systems = {

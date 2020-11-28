@@ -124,16 +124,10 @@
                 <value>0</value>
             </binding>
             <enable>
-                <and>
-                    <or>
-                        <property>/controls/gear/brake-parking</property>
-                        <property>/services/chocks/enable</property>
-                    </or>
-                    <less-than>
-                        <property>/velocities/groundspeed-kt</property>
-                        <value>2</value>
-                    </less-than>
-                </and>
+				<less-than>
+					<property>/velocities/groundspeed-kt</property>
+					<value>2</value>
+				</less-than>
             </enable>
             <binding>
                 <command>dialog-apply</command>
@@ -150,50 +144,10 @@
                 <property>/controls/pneumatics/switches/groundair</property>
             </binding>
             <enable>
-                <and>
-                    <or>
-                        <property>/controls/gear/brake-parking</property>
-                        <property>/services/chocks/enable</property>
-                    </or>
-                    <less-than>
-                        <property>/velocities/groundspeed-kt</property>
-                        <value>2</value>
-                    </less-than>
-                </and>
-            </enable>
-            <binding>
-                <command>dialog-apply</command>
-            </binding>
-            <live>true</live>
-        </checkbox>
-
-        <checkbox>
-            <label>Yellow HYD Hand Pump</label>
-            <halign>left</halign>
-            <property>/controls/hydraulic/hand-pump-yellow</property>
-            <binding>
-                <command>property-toggle</command>
-                <property>/controls/hydraulic/hand-pump-yellow</property>
-            </binding>
-            <enable>
-                <and>
-                    <or>
-                        <property>/controls/gear/brake-parking</property>
-                        <property>/services/chocks/enable</property>
-                    </or>
-                    <less-than>
-                        <property>/velocities/groundspeed-kt</property>
-                        <value>2</value>
-                    </less-than>
-                    <less-than>
-                        <property>/systems/electrical/bus/ac-2</property>
-                        <value>115</value>
-                    </less-than>
-                    <equals>
-                        <property>/controls/electrical/switches/ext-pwr</property>
-                        <value>0</value>
-                    </equals>
-                </and>
+				<less-than>
+					<property>/velocities/groundspeed-kt</property>
+					<value>2</value>
+				</less-than>
             </enable>
             <binding>
                 <command>dialog-apply</command>
