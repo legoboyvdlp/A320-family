@@ -185,7 +185,8 @@
 				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
-		<view n="110">
+		<!-- Walker is 110 and 111 -->
+		<view n="112">
 			<name>Right Aft View</name>
 			<type>lookfrom</type>
 			<internal archive="y">false</internal>
