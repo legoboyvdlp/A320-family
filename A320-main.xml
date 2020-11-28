@@ -4394,11 +4394,12 @@
 		</pts>
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/controls-override.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
