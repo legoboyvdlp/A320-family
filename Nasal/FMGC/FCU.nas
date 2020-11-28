@@ -58,7 +58,7 @@ var FCU = {
 var FCUController = {
 	FCU1: nil,
 	FCU2: nil,
-	activeFMGC: props.globals.getNode("FMGC/active-fmgc-channel"),
+	activeFMGC: props.globals.getNode("/FMGC/active-fmgc-channel"),
 	FCUworking: 0,
 	_init: 0,
 	init: func() {
@@ -81,9 +81,8 @@ var FCUController = {
 			FCUworkingNode.setValue(0);
 		}
 		
-		notification = nil;
 		foreach (var update_item; me.update_items) {
-			update_item.update(notification);
+			update_item.update(nil);
 		}
 	},
 	update_items: [
@@ -99,8 +98,8 @@ var FCUController = {
 		me.FCU2.restore();
 	},
 	AP1: func() {
-		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
-			if (!ap1.getBoolValue()) {
+		if (me.FCUworking) {
+			if (!ap1.getBoolValue() and fbw.FBW.apOff == 0) {
 				ap1Input.setValue(1);
 				ecam.apWarnNode.setValue(0);
 				pts.Controls.Flight.rudderTrim.setValue(0);
@@ -110,9 +109,10 @@ var FCUController = {
 		}
 	},
 	AP2: func() {
-		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
-			if (!ap2.getBoolValue()) {
+		if (me.FCUworking) {
+			if (!ap2.getBoolValue() and fbw.FBW.apOff == 0) {
 				ap2Input.setValue(1);
+				ecam.apWarnNode.setValue(0);
 				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 2);
@@ -120,8 +120,8 @@ var FCUController = {
 		}
 	},
 	ATHR: func() {
-		if (me.FCUworking and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
-			if (!athr.getBoolValue()) {
+		if (me.FCUworking) {
+			if (!athr.getBoolValue() and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
 				athrInput.setValue(1);
 			} else {
 				athrOff("hard");
@@ -381,10 +381,10 @@ var FCUController = {
 			} else if (d == -10) {
 				altTemp = altTemp - 1000;
 			}
-			if (altTemp < 0) {
-				altSet.setValue(0);
-			} else if (altTemp > 50000) {
-				altSet.setValue(50000);
+			if (altTemp < 100) {
+				altSet.setValue(100);
+			} else if (altTemp > 49000) {
+				altSet.setValue(49000);
 			} else {
 				altSet.setValue(altTemp);
 			}

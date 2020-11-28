@@ -1,62 +1,17 @@
-# A3XX Upper ECAM Canvas
-
-# Copyright (c) 2020 Josh Davidson (Octal450)
-
-var upperECAM_cfm_eis2 = nil;
-var upperECAM_iae_eis2 = nil;
-var upperECAM_test = nil;
-var upperECAM_display = nil;
-
-# Conversion factor pounds to kilogram
-LBS2KGS = 0.4535924;
-
-# Create Nodes:
-var EPR_1 = props.globals.initNode("/ECAM/Upper/EPR[0]", 0, "DOUBLE");
-var EPR_2 = props.globals.initNode("/ECAM/Upper/EPR[1]", 0, "DOUBLE");
-var EPR_thr_1 = props.globals.initNode("/ECAM/Upper/EPRthr[0]", 0);
-var EPR_thr_2 = props.globals.initNode("/ECAM/Upper/EPRthr[1]", 0);
-var EPR_lim = props.globals.initNode("/ECAM/Upper/EPRylim", 0, "DOUBLE");
-var EGT_1 = props.globals.initNode("/ECAM/Upper/EGT[0]", 0, "DOUBLE");
-var EGT_2 = props.globals.initNode("/ECAM/Upper/EGT[1]", 0, "DOUBLE");
-var N1_1 = props.globals.initNode("/ECAM/Upper/N1[0]", 0, "DOUBLE");
-var N1_2 = props.globals.initNode("/ECAM/Upper/N1[1]", 0, "DOUBLE");
-var N1_thr_1 = props.globals.initNode("/ECAM/Upper/N1thr[0]", 0, "DOUBLE");
-var N1_thr_2 = props.globals.initNode("/ECAM/Upper/N1thr[1]", 0, "DOUBLE");
-var N1_lim = props.globals.initNode("/ECAM/Upper/N1ylim", 0, "DOUBLE");
+var flapsPos = nil;
+var elapsedtime = nil;
+var LBS2KGS = 0.4535924;
+var slatLockGoing = 0;
+var slatLockFlash = 0;
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
+var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
 var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
 var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
 var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
-var slatLockFlash = props.globals.initNode("/instrumentation/du/slat-lock-flash", 0, "BOOL");
-
-# Fetch nodes:
-var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
-var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
+var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3");
 var eng_option = props.globals.getNode("/options/eng", 1);
-var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3", 1);
-var flaps3_ovr = props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 1);
-var fadecpower_1 = props.globals.getNode("/systems/fadec/powered1", 1);
-var fadecpower_2 = props.globals.getNode("/systems/fadec/powered2", 1);
-var fadecpowerup = props.globals.getNode("/systems/fadec/powerup", 1);
-var thr_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
-var n1_limit = props.globals.getNode("/controls/engines/n1-limit", 1);
-var epr_limit = props.globals.getNode("/controls/engines/epr-limit", 1);
-var flapXOffset = props.globals.getNode("/ECAM/Upper/FlapX", 1);
-var flapYOffset = props.globals.getNode("/ECAM/Upper/FlapY", 1);
-var slatXOffset = props.globals.getNode("/ECAM/Upper/SlatX", 1);
-var slatYOffset = props.globals.getNode("/ECAM/Upper/SlatY", 1);
-var flapXTranslate = props.globals.getNode("/ECAM/Upper/FlapXtrans", 1);
-var flapYTranslate = props.globals.getNode("/ECAM/Upper/FlapYtrans", 1);
-var slatXTranslate = props.globals.getNode("/ECAM/Upper/SlatXtrans", 1);
-var slatYTranslate = props.globals.getNode("/ECAM/Upper/SlatYtrans", 1);
-var ECAM_line1 = props.globals.getNode("/ECAM/msg/line1", 1);
-var ECAM_line2 = props.globals.getNode("/ECAM/msg/line2", 1);
-var ECAM_line3 = props.globals.getNode("/ECAM/msg/line3", 1);
-var ECAM_line4 = props.globals.getNode("/ECAM/msg/line4", 1);
-var ECAM_line5 = props.globals.getNode("/ECAM/msg/line5", 1);
-var ECAM_line6 = props.globals.getNode("/ECAM/msg/line6", 1);
-var ECAM_line7 = props.globals.getNode("/ECAM/msg/line7", 1);
-var ECAM_line8 = props.globals.getNode("/ECAM/msg/line8", 1);
+
 var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
 var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
 var ECAM_line3c = props.globals.getNode("/ECAM/msg/linec3", 1);
@@ -65,14 +20,6 @@ var ECAM_line5c = props.globals.getNode("/ECAM/msg/linec5", 1);
 var ECAM_line6c = props.globals.getNode("/ECAM/msg/linec6", 1);
 var ECAM_line7c = props.globals.getNode("/ECAM/msg/linec7", 1);
 var ECAM_line8c = props.globals.getNode("/ECAM/msg/linec8", 1);
-var ECAM_line1r = props.globals.getNode("/ECAM/rightmsg/line1", 1);
-var ECAM_line2r = props.globals.getNode("/ECAM/rightmsg/line2", 1);
-var ECAM_line3r = props.globals.getNode("/ECAM/rightmsg/line3", 1);
-var ECAM_line4r = props.globals.getNode("/ECAM/rightmsg/line4", 1);
-var ECAM_line5r = props.globals.getNode("/ECAM/rightmsg/line5", 1);
-var ECAM_line6r = props.globals.getNode("/ECAM/rightmsg/line6", 1);
-var ECAM_line7r = props.globals.getNode("/ECAM/rightmsg/line7", 1);
-var ECAM_line8r = props.globals.getNode("/ECAM/rightmsg/line8", 1);
 var ECAM_line1rc = props.globals.getNode("/ECAM/rightmsg/linec1", 1);
 var ECAM_line2rc = props.globals.getNode("/ECAM/rightmsg/linec2", 1);
 var ECAM_line3rc = props.globals.getNode("/ECAM/rightmsg/linec3", 1);
@@ -81,148 +28,459 @@ var ECAM_line5rc = props.globals.getNode("/ECAM/rightmsg/linec5", 1);
 var ECAM_line6rc = props.globals.getNode("/ECAM/rightmsg/linec6", 1);
 var ECAM_line7rc = props.globals.getNode("/ECAM/rightmsg/linec7", 1);
 var ECAM_line8rc = props.globals.getNode("/ECAM/rightmsg/linec8", 1);
-var rate = props.globals.getNode("/systems/acconfig/options/uecam-rate", 1);
 
-# Temporary variables
-var cur_eng_option = 0;
-var elapsedtime = 0;
-var EGT_1_cur = 0;
-var EGT_2_cur = 0;
-var eprLimit = 0;
-var EPR_1_cur = 0;
-var EPR_2_cur = 0;
-var EPR_1_act = 0;
-var EPR_2_act = 0;
-var EPR_lim_cur = 0;
-var EPR_thr_1_act = 0;
-var EPR_thr_2_act = 0;
-var flapsPos = 0;
-var fuel1 = 0;
-var fuel2 = 0;
-var fadecPower1 = 0;
-var fadecPower2 = 0;
-var fadecPowerStart = 0;
-var n1Limit = 0;
-var N1_1_cur = 0;
-var N1_2_cur = 0;
-var N1_1_act = 0;
-var N1_2_act = 0;
-var N1_lim_cur = 0;
-var n2cur_1 = 0;
-var n2cur_2 = 0;
-var rev_1_act = 0;
-var rev_2_act = 0;
-var rev_1_cur = 0;
-var rev_2_cur = 0;
-var thrLimit = 0;
-
-var canvas_upperECAM_base = {
-	init: func(canvas_group, file) {
-		var font_mapper = func(family, weight) {
+var canvas_upperECAM = {
+	new: func(svg, name, type) {
+		var obj = {parents: [canvas_upperECAM] };
+		obj.canvas = canvas.new({
+			"name": "upperECAM",
+			"size": [1024, 1024],
+			"view": [1024, 1024],
+			"mipmapping": 1,
+		});
+		
+		obj.canvas.addPlacement({"node": "uecam.screen"});
+        obj.group = obj.canvas.createGroup();
+        obj.test = obj.canvas.createGroup();
+		
+		obj.typeString = type;
+		
+		obj.font_mapper = func(family, weight) {
 			return "LiberationFonts/LiberationSans-Regular.ttf";
 		};
-
-		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
-
-		var svg_keys = me.getKeys();
-		foreach(var key; svg_keys) {
-			me[key] = canvas_group.getElementById(key);
+		
+		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
+		obj.keysHash = (type == "IAE" ? obj.getKeysIAE() : obj.getKeysCFM());
+ 		foreach(var key; obj.keysHash) {
+			obj[key] = obj.group.getElementById(key);
 			
-			var clip_el = canvas_group.getElementById(key ~ "_clip");
+			var clip_el = obj.group.getElementById(key ~ "_clip");
 			if (clip_el != nil) {
 				clip_el.setVisible(0);
 				var tran_rect = clip_el.getTransformedBounds();
 
 				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
-				tran_rect[1], # 0 ys
-				tran_rect[2], # 1 xe
-				tran_rect[3], # 2 ye
-				tran_rect[0]); #3 xs
-				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
-				me[key].set("clip", clip_rect);
-				me[key].set("clip-frame", canvas.Element.PARENT);
+				tran_rect[1],
+				tran_rect[2],
+				tran_rect[3],
+				tran_rect[0]);
+				obj[key].set("clip", clip_rect);
+				obj[key].set("clip-frame", canvas.Element.PARENT);
 			}
-		}
+		};
 		
-		# set font
-		me["ECAML1"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML2"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML3"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML4"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML5"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML6"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML7"].setFont("LiberationMonoCustom.ttf");
-		me["ECAML8"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR1"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR2"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR3"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR4"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR5"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR6"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR7"].setFont("LiberationMonoCustom.ttf");
-		me["ECAMR8"].setFont("LiberationMonoCustom.ttf");
-	
-
-		me.page = canvas_group;
-
-		return me;
-	},
-	getKeys: func() {
-		return [];
-	},
-	updateDu3: func() {
-		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
+		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
+		foreach(var key; obj.getKeysTest()) {
+			obj[key] = obj.test.getElementById(key);
+		};
 		
-		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			if (du3_offtime.getValue() + 3 < elapsedtime) {
-				if (pts.Gear.wow[0].getValue()) {
-					if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
-						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(elapsedtime);
-					} else if (acconfig.getValue() and du3_test.getValue() != 1) {
-						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(elapsedtime - 30);
+		obj.units = acconfig_weight_kgs.getValue();
+		
+		obj.update_items = [
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
+				if (obj.typeString == "IAE") {
+					if (val) {
+						obj["FOB-weight-unit"].setText("KG");
+						obj["FFlow1-weight-unit"].setText("KG/H");
+						obj["FFlow2-weight-unit"].setText("KG/H");
+					} else {
+						obj["FOB-weight-unit"].setText("LBS");
+						obj["FFlow1-weight-unit"].setText("LBS/H");
+						obj["FFlow2-weight-unit"].setText("LBS/H");
 					}
 				} else {
-					du3_test.setValue(1);
-					du3_test_amount.setValue(0);
-					du3_test_time.setValue(-100);
+					if (val) {
+						obj["FOB-weight-unit"].setText("KG");
+						obj["FFlow-weight-unit"].setText("KG/H");
+					} else {
+						obj["FOB-weight-unit"].setText("LBS");
+						obj["FFlow-weight-unit"].setText("LBS/H");
+					}
 				}
-			}
-		} else {
-			du3_test.setValue(0);
-			du3_offtime.setValue(elapsedtime);
-		}
-	},
-	update: func() {
-		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
-		cur_eng_option = eng_option.getValue();
+				obj.units = val;
+			}),
+			props.UpdateManager.FromHashList(["fuelTotalLbs","acconfigUnits"], 1, func(val) {
+				if (obj.units)
+				{
+					obj["FOB-LBS"].setText(sprintf("%s", math.round(val.fuelTotalLbs * LBS2KGS, 10)));
+				} else {
+					obj["FOB-LBS"].setText(sprintf("%s", math.round(val.fuelTotalLbs, 10)));
+				}
+			}),
+			props.UpdateManager.FromHashList(["flapxOffset", "flapyOffset"], 0.01, func(val) {
+				obj["FlapIndicator"].setTranslation(val.flapxOffset,val.flapyOffset);
+			}),
+			props.UpdateManager.FromHashList(["slatxOffset", "slatyOffset"], 0.01, func(val) {
+				obj["SlatIndicator"].setTranslation(val.slatxOffset,val.slatyOffset);
+			}),
+			props.UpdateManager.FromHashList(["flapxOffsetTrans", "flapyOffsetTrans"], 0.01, func(val) {
+				obj["FlapLine"].setTranslation(val.flapxOffsetTrans,val.flapyOffsetTrans);
+			}),
+			props.UpdateManager.FromHashList(["slatxOffsetTrans", "slatyOffsetTrans"], 0.01, func(val) {
+				obj["SlatLine"].setTranslation(val.slatxOffsetTrans,val.slatyOffsetTrans);
+			}),
+			props.UpdateManager.FromHashValue("alphaFloor", 1, func(val) {
+				if (val) {
+					obj["aFloor"].show();
+				} else {
+					obj["aFloor"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("flapsPos", 1, func(val) {
+				flapsPos = val;
+				if (flapsPos == 1) {
+					obj["FlapTxt"].setText("1");
+				} else if (flapsPos == 2) {
+					obj["FlapTxt"].setText("1+F");
+				} else if (flapsPos == 3) {
+					obj["FlapTxt"].setText("2");
+				} else if (flapsPos == 4) {
+					obj["FlapTxt"].setText("3");
+				} else if (flapsPos == 5) {
+					obj["FlapTxt"].setText("FULL");
+				} else {
+					obj["FlapTxt"].setText(" "); # More efficient then hide/show
+				}
+				
+				if (flapsPos > 0) {
+					obj["FlapDots"].show();
+				} else {
+					obj["FlapDots"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
+				obj["FlxLimTemp"].setText(sprintf("%2.0d",val));
+			}),
+			props.UpdateManager.FromHashValue("slatLocked", nil, func(val) {
+				if (val) {
+					if (slatLockGoing == 0) {
+						slatLockGoing = 1;
+						slatLockTimer.start();
+					}
+				} else {
+					slatLockTimer.stop();
+					slatLockGoing = 0;
+					slatLockFlash = 0;
+				}
+			}),
+		];
 		
-		if (systems.ELEC.Bus.acEss.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
-			if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime) {
-				upperECAM_cfm_eis2.page.hide();
-				upperECAM_iae_eis2.page.hide();
-				upperECAM_test.page.show();
-				upperECAM_test.update();
-			} else {
-				upperECAM_test.page.hide();
-				if (cur_eng_option == "CFM") {
-					upperECAM_cfm_eis2.page.show();
-					upperECAM_iae_eis2.page.hide();
-					upperECAM_cfm_eis2.update();
-				} else if (cur_eng_option == "IAE") {
-					upperECAM_cfm_eis2.page.hide();
-					upperECAM_iae_eis2.page.show();
-					upperECAM_iae_eis2.update();
+		obj.update_items_fadec_powered_n1 = [
+			props.UpdateManager.FromHashValue("N1_1", 0.01, func(val) {
+				obj["N11-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("N1_2", 0.01, func(val) {
+				obj["N12-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("N1_actual_1", 0.025, func(val) {
+				obj["N11"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N11-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+			}),
+			props.UpdateManager.FromHashValue("N1_actual_2", 0.025, func(val) {
+				obj["N12"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+			}),
+			props.UpdateManager.FromHashValue("N1_lim", 0.01, func(val) {
+				obj["N11-ylim"].setRotation((val + 90) * D2R);
+				obj["N12-ylim"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("N1thr_1", 0.01, func(val) {
+				obj["N11-thr"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("N1thr_2", 0.01, func(val) {
+				obj["N12-thr"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashList(["reverser_1","eng1_n1","eng1_epr","N1_mode_1"], nil, func(val) {
+				obj.updateFadecN1Power1(val);
+			}),
+			props.UpdateManager.FromHashList(["reverser_2","eng2_n1","eng2_epr","N1_mode_2"], nil, func(val) {
+				obj.updateFadecN1Power2(val);
+			}),
+		];
+		
+		obj.update_items_fadec_powered_epr = [
+			props.UpdateManager.FromHashValue("EPR_1", 0.01, func(val) {
+				obj["EPR1-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("EPR_2", 0.01, func(val) {
+				obj["EPR2-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("EPR_actual_1", 0.0001, func(val) {
+				obj["EPR1"].setText(sprintf("%1.0f", math.floor(val)));
+				obj["EPR1-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
+			}),
+			props.UpdateManager.FromHashValue("EPR_actual_2", 0.0001, func(val) {
+				obj["EPR2"].setText(sprintf("%1.0f", math.floor(val)));
+				obj["EPR2-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
+			}),
+			props.UpdateManager.FromHashValue("EPR_lim", 0.005, func(val) {
+				obj["EPR1-ylim"].setRotation((val + 90) * D2R);
+				obj["EPR2-ylim"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("EPRthr_1", 0.005, func(val) {
+				obj["EPR1-thr"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("EPRthr_2", 0.005, func(val) {
+				obj["EPR2-thr"].setRotation((val + 90) * D2R);
+			}),
+		];
+		
+		obj.update_items_fadec_powered_n2 = [
+			props.UpdateManager.FromHashValue("N2_actual_1", 0.025, func(val) {
+				obj["N21"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N21-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+			}),
+			props.UpdateManager.FromHashValue("N2_actual_2", 0.025, func(val) {
+				obj["N22"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+			}),
+		];
+		
+		obj.update_items_cfm_only = [
+			props.UpdateManager.FromHashValue("thrustLimit", nil, func(val) {
+				obj["N1Lim-mode"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("n1Limit", 0.01, func(val) {
+				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+			}),
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart","thrustLimit"], nil, func(val) {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
+					obj["N1Lim-mode"].show();
+					obj["N1Lim-XX"].hide();
+					obj["N1Lim-XX2"].hide();
+				} else {
+					obj["N1Lim-mode"].hide();
+					obj["N1Lim-XX"].show();
+					obj["N1Lim-XX2"].show();
 				}
-			}
-		} else {
-			upperECAM_test.page.hide();
-			upperECAM_cfm_eis2.page.hide();
-			upperECAM_iae_eis2.page.hide();
-		}
+				
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+					obj["N1Lim"].show();
+					obj["N1Lim-decpnt"].show();
+					obj["N1Lim-decimal"].show();
+					obj["N1Lim-percent"].show();
+				} else {
+					obj["N1Lim"].hide();
+					obj["N1Lim-decpnt"].hide();
+					obj["N1Lim-decimal"].hide();
+					obj["N1Lim-percent"].hide();
+				}
+				
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX") {
+					obj["FlxLimDegreesC"].show();
+					obj["FlxLimTemp"].show();
+				} else {
+					obj["FlxLimDegreesC"].hide();
+					obj["FlxLimTemp"].hide();
+				}
+			}),
+		];
+		
+		obj.update_items_iae_only = [
+			props.UpdateManager.FromHashValue("thrustLimit", nil, func(val) {
+				obj["EPRLim-mode"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("eprLimit", 0.0005, func(val) {
+				obj["EPRLim"].setText(sprintf("%1.0f", math.floor(val)));
+				obj["EPRLim-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
+			}),
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart","thrustLimit"], nil, func(val) {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
+					obj["EPRLim-mode"].show();
+					obj["EPRLim-XX"].hide();
+					obj["EPRLim-XX2"].hide();
+				} else {
+					obj["EPRLim-mode"].hide();
+					obj["EPRLim-XX"].show();
+					obj["EPRLim-XX2"].show();
+				}
+				
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+					obj["EPRLim"].show();
+					obj["EPRLim-decpnt"].show();
+					obj["EPRLim-decimal"].show();
+				} else {
+					obj["EPRLim"].hide();
+					obj["EPRLim-decpnt"].hide();
+					obj["EPRLim-decimal"].hide();
+				}
+				
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX") {
+					obj["FlxLimDegreesC"].show();
+					obj["FlxLimTemp"].show();
+				} else {
+					obj["FlxLimDegreesC"].hide();
+					obj["FlxLimTemp"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("N1_mode_1", nil, func(val) {
+				if (fadec.FADEC.Eng1.n1.getValue() == 1 and val) {
+					obj["N11-thr"].show();
+					obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
+				} else {
+					obj["N11-thr"].hide();
+					obj["N11-ylim"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("N1_mode_2", nil, func(val) {
+				if (fadec.FADEC.Eng2.n1.getValue() == 1 and val) {
+					obj["N12-thr"].show();
+					obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
+				} else {
+					obj["N12-thr"].hide();
+					obj["N12-ylim"].hide();
+				}
+			}),
+		];
+		
+		obj.update_items_fadec_powered_egt = [
+			props.UpdateManager.FromHashValue("egt_1", 0.5, func(val) {
+				obj["EGT1"].setText(sprintf("%s", math.round(val)));
+			}),
+			props.UpdateManager.FromHashValue("egt_1_needle", 0.01, func(val) {
+				obj["EGT1-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("egt_2", 0.5, func(val) {
+				obj["EGT2"].setText(sprintf("%s", math.round(val)));
+			}),
+			props.UpdateManager.FromHashValue("egt_2_needle", 0.01, func(val) {
+				obj["EGT2-needle"].setRotation((val + 90) * D2R);
+			}),
+		];
+		
+		obj.update_items_fadec_powered_ff = [
+			props.UpdateManager.FromHashList(["fuelflow_1","acconfigUnits"], 1, func(val) {
+				if (obj.units) {
+					obj["FF1"].setText(sprintf("%s", math.round(val.fuelflow_1 * LBS2KGS, 10)));
+				} else {
+					obj["FF1"].setText(sprintf("%s", math.round(val.fuelflow_1, 10)));
+				}
+			}),
+			props.UpdateManager.FromHashList(["fuelflow_2","acconfigUnits"], 1, func(val) {
+				if (obj.units) {
+					obj["FF2"].setText(sprintf("%s", math.round(val.fuelflow_2 * LBS2KGS, 10)));
+				} else {
+					obj["FF2"].setText(sprintf("%s", math.round(val.fuelflow_2, 10)));
+				}
+			}),
+		];
+		
+		obj.ecam_update = [
+			props.UpdateManager.FromHashValue("ecamMsg1", nil, func(val) {
+				obj["ECAML1"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg2", nil, func(val) {
+				obj["ECAML2"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg3", nil, func(val) {
+				obj["ECAML3"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg4", nil, func(val) {
+				obj["ECAML4"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg5", nil, func(val) {
+				obj["ECAML5"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg6", nil, func(val) {
+				obj["ECAML6"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg7", nil, func(val) {
+				obj["ECAML7"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg8", nil, func(val) {
+				obj["ECAML8"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg1R", nil, func(val) {
+				obj["ECAMR1"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg2R", nil, func(val) {
+				obj["ECAMR2"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg3R", nil, func(val) {
+				obj["ECAMR3"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg4R", nil, func(val) {
+				obj["ECAMR4"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg5R", nil, func(val) {
+				obj["ECAMR5"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg6R", nil, func(val) {
+				obj["ECAMR6"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg7R", nil, func(val) {
+				obj["ECAMR7"].setText(sprintf("%s", val));
+			}),
+			props.UpdateManager.FromHashValue("ecamMsg8R", nil, func(val) {
+				obj["ECAMR8"].setText(sprintf("%s", val));
+			}),
+		];
+		
+		obj.createListenerForLine("/ECAM/msg/linec1", ECAM_line1c, "ECAML1");
+		obj.createListenerForLine("/ECAM/msg/linec2", ECAM_line2c, "ECAML2");
+		obj.createListenerForLine("/ECAM/msg/linec3", ECAM_line3c, "ECAML3");
+		obj.createListenerForLine("/ECAM/msg/linec4", ECAM_line4c, "ECAML4");
+		obj.createListenerForLine("/ECAM/msg/linec5", ECAM_line5c, "ECAML5");
+		obj.createListenerForLine("/ECAM/msg/linec6", ECAM_line6c, "ECAML6");
+		obj.createListenerForLine("/ECAM/msg/linec7", ECAM_line7c, "ECAML7");
+		obj.createListenerForLine("/ECAM/msg/linec8", ECAM_line8c, "ECAML8");
+		
+		obj.createListenerForLine("/ECAM/rightmsg/linec1", ECAM_line1rc, "ECAMR1");
+		obj.createListenerForLine("/ECAM/rightmsg/linec2", ECAM_line2rc, "ECAMR2");
+		obj.createListenerForLine("/ECAM/rightmsg/linec3", ECAM_line3rc, "ECAMR3");
+		obj.createListenerForLine("/ECAM/rightmsg/linec4", ECAM_line4rc, "ECAMR4");
+		obj.createListenerForLine("/ECAM/rightmsg/linec5", ECAM_line5rc, "ECAMR5");
+		obj.createListenerForLine("/ECAM/rightmsg/linec6", ECAM_line6rc, "ECAMR6");
+		obj.createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
+		obj.createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
+		
+		obj["ECAML1"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML2"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML3"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML4"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML5"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML6"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML7"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAML8"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR1"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR2"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR3"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR4"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR5"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR6"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR7"].setFont("LiberationMonoCustom.ttf");
+		obj["ECAMR8"].setFont("LiberationMonoCustom.ttf");
+		
+		# cache
+		obj._cachedN1 = [nil, nil];
+		obj._cachedN2 = [nil, nil];
+		obj._cachedEGT = [nil, nil];
+		obj._cachedEPR = [nil, nil];
+		obj._cachedFF = [nil, nil];
+		
+		obj.updateFadecN1Power1({reverser_1: 0, eng1_n1: 0, eng1_epr: 0, N1_mode_1: 0});
+		obj.updateFadecN1Power2({reverser_2: 0, eng2_n1: 0, eng2_epr: 0, N1_mode_2: 0});
+		
+		return obj;
+	},
+	getKeysCFM: func() {
+		return ["N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-box","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N11-XX2","N11-XX-box","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick",
+		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
+		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
+		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
+		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+	},
+	getKeysIAE: func() {
+		return ["EPR1-needle","EPR1-thr","EPR1-ylim","EPR1","EPR1-decpnt","EPR1-decimal","EPR1-box","EPR1-scale","EPR1-scaletick","EPR1-scalenum","EPR1-XX","EPR1-XX2","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick","EGT1-XX",
+		"N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","EPR2-needle","EPR2-thr","EPR2-ylim","EPR2","EPR2-decpnt",
+		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
+		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
+		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
+		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+	},
+	getKeysTest: func() {
+		return ["Test_white","Test_text"];
 	},
 	getColorString: func(color) {
 		if (color == "w") {
@@ -241,184 +499,148 @@ var canvas_upperECAM_base = {
 			return [1,1,1];
 		}
 	},
-	updateBase: func() {
-		# Reversers
-		rev_1_cur = pts.Engines.Engine.reverser[0].getValue();
-		rev_2_cur = pts.Engines.Engine.reverser[1].getValue();
-		cur_eng_option = eng_option.getValue();
-		if (rev_1_cur >= 0.01 and fadec.FADEC.Eng1.n1 == 1 and cur_eng_option == "CFM") {
-			me["REV1"].show();
-			me["REV1-box"].show();
-		} else if (rev_1_cur >= 0.01 and fadec.FADEC.Eng1.epr == 1 and cur_eng_option == "IAE") {
-			me["REV1"].show();
-			me["REV1-box"].show();
-		} else {
-			me["REV1"].hide();
-			me["REV1-box"].hide();
+	createListenerForLine: func(prop, node, key) {
+		setlistener(prop, func() {
+			me[key].setColor(me.getColorString(node.getValue()));
+		}, 0, 0);
+	},
+	updateCommon: func(notification) {
+		me.updatePower();
+		
+		if (me.test.getVisible() == 1) {
+			me.updateTest();
 		}
 		
-		if (rev_1_cur >= 0.95) {
-			me["REV1"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["REV1"].setColor(0.7333,0.3803,0);
+		if (me.group.getVisible() == 0) {
+			return;
 		}
 		
-		if (rev_2_cur >= 0.01 and fadec.FADEC.Eng2.n1 == 1 and cur_eng_option == "CFM") {
-			me["REV2"].show();
-			me["REV2-box"].show();
-		} else if (rev_2_cur >= 0.01 and fadec.FADEC.Eng2.epr == 1 and cur_eng_option == "IAE") {
-			me["REV2"].show();
-			me["REV2-box"].show();
-		} else {
-			me["REV2"].hide();
-			me["REV2-box"].hide();
+		foreach(var update_item; me.update_items)
+        {
+            update_item.update(notification);
+        }
+		
+		if (notification.eng1_n1 != me._cachedN1[0]) {
+			me.updateN11(notification);
+		}
+		if (notification.eng2_n1 != me._cachedN1[1]) {
+			me.updateN12(notification);
 		}
 		
-		if (rev_2_cur >= 0.95) {
-			me["REV2"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["REV2"].setColor(0.7333,0.3803,0);
+		if (fadec.FADEC.Eng1.n2 != me._cachedN2[0]) {
+			me.updateN21();
+		}
+		if (fadec.FADEC.Eng2.n2 != me._cachedN2[1]) {
+			me.updateN22();
 		}
 		
-		# Flap Indicator
-		flapsPos = pts.Controls.Flight.flapsPos.getValue();
-		if (flapsPos == 1) {
-			me["FlapTxt"].setText("1");
-		} else if (flapsPos == 2) {
-			me["FlapTxt"].setText("1+F");
-		} else if (flapsPos == 3) {
-			me["FlapTxt"].setText("2");
-		} else if (flapsPos == 4) {
-			me["FlapTxt"].setText("3");
-		} else if (flapsPos == 5) {
-			me["FlapTxt"].setText("FULL");
-		} else {
-			me["FlapTxt"].setText(" "); # More efficient then hide/show
+		if (fadec.FADEC.Eng1.egt != me._cachedEGT[0]) {
+			me.updateEGT1();
+		}
+		if (fadec.FADEC.Eng2.egt != me._cachedEGT[1]) {
+			me.updateEGT2();
 		}
 		
-		if (flapsPos > 0) {
-			me["FlapDots"].show();
-		} else {
-			me["FlapDots"].hide();
+		if (fadec.FADEC.Eng1.ff != me._cachedFF[0]) {
+			me.updateFF1();
+		}
+		if (fadec.FADEC.Eng2.ff != me._cachedFF[1]) {
+			me.updateFF2();
 		}
 		
-		if (pts.Fdm.JSBsim.Fcs.slatLocked.getValue()) {
-			if (slatLockGoing == 0) {
-				slatLockGoing = 1;
+		if (notification.eng1_n1 or notification.eng2_n1) {
+			foreach(var update_item; me.update_items_fadec_powered_n1)
+			{
+				update_item.update(notification);
 			}
-			if (slatLockGoing == 1) {
-				slatLockTimer.start();
-				if (slatLockFlash.getValue()) {
-					me["SlatAlphaLock"].show();	
-				} else {
-					me["SlatAlphaLock"].hide();	
-				}
+		}
+		
+		if (fadec.FADEC.Eng1.n2 or fadec.FADEC.Eng2.n2) {
+			foreach(var update_item; me.update_items_fadec_powered_n2)
+			{
+				update_item.update(notification);
 			}
+		}
+		
+		if (fadec.FADEC.Eng1.egt or fadec.FADEC.Eng2.egt) {
+			foreach(var update_item; me.update_items_fadec_powered_egt)
+			{
+				update_item.update(notification);
+			}
+		}
+		
+		if (fadec.FADEC.Eng1.ff or fadec.FADEC.Eng2.ff) {
+			foreach(var update_item; me.update_items_fadec_powered_ff)
+			{
+				update_item.update(notification);
+			}
+		}
+		
+		if (slatLockFlash) {
+			me["SlatAlphaLock"].show();	
 		} else {
-			slatLockTimer.stop();
-			slatLockGoing = 0;
 			me["SlatAlphaLock"].hide();	
 		}
 		
-		me["FlapIndicator"].setTranslation(flapXOffset.getValue(),flapYOffset.getValue());
-		me["SlatIndicator"].setTranslation(slatXOffset.getValue(),slatYOffset.getValue());
-		me["FlapLine"].setTranslation(flapXTranslate.getValue(),flapYTranslate.getValue());
-		me["SlatLine"].setTranslation(slatXTranslate.getValue(),slatYTranslate.getValue());
-		
-		# FOB
-		if (acconfig_weight_kgs.getValue())
+		foreach (var update_item; me.ecam_update)
 		{
-			me["FOB-LBS"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() * LBS2KGS, 10)));
-			me["FOB-weight-unit"].setText("KG");
-		} else {
-			me["FOB-LBS"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue(), 10)));
-			me["FOB-weight-unit"].setText("LBS");
+			update_item.update(notification);
+		}
+	},
+	updateCFM: func(notification) {
+		me.updateCommon(notification);
+		if (me.group.getVisible() == 0) {
+			return;
 		}
 		
-		# ECAM Messages
-		
-		me["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
-		me["ECAML2"].setText(sprintf("%s", ECAM_line2.getValue()));
-		me["ECAML3"].setText(sprintf("%s", ECAM_line3.getValue()));
-		me["ECAML4"].setText(sprintf("%s", ECAM_line4.getValue()));
-		me["ECAML5"].setText(sprintf("%s", ECAM_line5.getValue()));
-		me["ECAML6"].setText(sprintf("%s", ECAM_line6.getValue()));
-		me["ECAML7"].setText(sprintf("%s", ECAM_line7.getValue()));
-		me["ECAML8"].setText(sprintf("%s", ECAM_line8.getValue()));
-			
-		me["ECAM_Left"].show();
-		
-		me["ECAMR1"].setText(sprintf("%s", ECAM_line1r.getValue()));
-		me["ECAMR2"].setText(sprintf("%s", ECAM_line2r.getValue()));
-		me["ECAMR3"].setText(sprintf("%s", ECAM_line3r.getValue()));
-		me["ECAMR4"].setText(sprintf("%s", ECAM_line4r.getValue()));
-		me["ECAMR5"].setText(sprintf("%s", ECAM_line5r.getValue()));
-		me["ECAMR6"].setText(sprintf("%s", ECAM_line6r.getValue()));
-		me["ECAMR7"].setText(sprintf("%s", ECAM_line7r.getValue()));
-		me["ECAMR8"].setText(sprintf("%s", ECAM_line8r.getValue()));
-			
-		me["ECAM_Right"].show();
+		foreach (var update_item; me.update_items_cfm_only) {
+			update_item.update(notification);
+		}
 	},
-};
-
-var canvas_upperECAM_cfm_eis2 = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_upperECAM_cfm_eis2, canvas_upperECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
+	updateIAE: func(notification) {
+		me.updateCommon(notification);
+		if (me.group.getVisible() == 0) {
+			return;
+		}
+		
+		foreach (var update_item; me.update_items_iae_only) {
+			update_item.update(notification);
+		}
+		
+		if (notification.eng1_epr != me._cachedEPR[0]) {
+			me.updateEPR1(notification);
+		}
+		if (notification.eng2_epr != me._cachedEPR[1]) {
+			me.updateEPR2(notification);
+		}
+		
+		if (notification.eng1_epr or notification.eng2_epr) {
+			foreach(var update_item; me.update_items_fadec_powered_epr)
+			{
+				update_item.update(notification);
+			}
+		}
 	},
-	getKeys: func() {
-		return ["N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-box","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N11-XX2","N11-XX-box","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick",
-		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
-		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
-		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine"];
-	},
-	update: func() {
-		# N1
-		N1_1_cur = N1_1.getValue();
-		N1_2_cur = N1_2.getValue();
-		N1_1_act = pts.Engines.Engine.n1Actual[0].getValue();
-		N1_2_act = pts.Engines.Engine.n1Actual[1].getValue();
-		N1_lim_cur = N1_lim.getValue();
-		N1_thr_1_act = N1_thr_1.getValue();
-		N1_thr_2_act = N1_thr_2.getValue();
-		rev_1_act = pts.Engines.Engine.reverser[0].getValue();
-		rev_2_act = pts.Engines.Engine.reverser[1].getValue();
-		EGT_1_cur = EGT_1.getValue();
-		EGT_2_cur = EGT_2.getValue();
-		n2cur_1 = pts.Engines.Engine.n2Actual[0].getValue();
-		n2cur_2 = pts.Engines.Engine.n2Actual[1].getValue();
-		
-		me["N11"].setText(sprintf("%s", math.floor(N1_1_act + 0.05)));
-		me["N11-decimal"].setText(sprintf("%s", int(10 * math.mod(N1_1_act + 0.05, 1))));
-		
-		me["N12"].setText(sprintf("%s", math.floor(N1_2_act + 0.05)));
-		me["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(N1_2_act + 0.05, 1))));
-		
-		me["N11-needle"].setRotation((N1_1_cur + 90) * D2R);
-		me["N11-thr"].setRotation((N1_thr_1_act + 90) * D2R);
-		me["N11-ylim"].setRotation((N1_lim_cur + 90) * D2R);
-		
-		me["N12-needle"].setRotation((N1_2_cur + 90) * D2R);
-		me["N12-thr"].setRotation((N1_thr_2_act + 90) * D2R);
-		me["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
-		
-		if (fadec.FADEC.Eng1.n1 == 1) {
+	
+	updateN11: func(notification) {
+		me._cachedN1[0] = notification.eng1_n1;
+		if (me._cachedN1[0] == 1) {
 			me["N11-scale"].setColor(0.8078,0.8039,0.8078);
 			me["N11-scale2"].setColor(1,0,0);
 			me["N11"].show();
 			me["N11-decimal"].show();
 			me["N11-decpnt"].show();
 			me["N11-needle"].show();
-			me["N11-ylim"].show();
 			me["N11-scaletick"].show();
 			me["N11-scalenum"].show();
-			me["N11-box"].show();
 			me["N11-XX"].hide();
-			me["N11-XX2"].hide();
-			me["N11-XX-box"].hide();
+			
+			if (me.typeString == "CFM") {
+				me["N11-ylim"].show();
+				me["N11-box"].show();
+				me["N11-XX2"].hide();
+				me["N11-XX-box"].hide();
+			}
 		} else {
 			me["N11-scale"].setColor(0.7333,0.3803,0);
 			me["N11-scale2"].setColor(0.7333,0.3803,0);
@@ -426,35 +648,37 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["N11-decimal"].hide();
 			me["N11-decpnt"].hide();
 			me["N11-needle"].hide();
-			me["N11-ylim"].hide();
 			me["N11-scaletick"].hide();
 			me["N11-scalenum"].hide();
-			me["N11-box"].hide();
 			me["N11-XX"].show();
-			me["N11-XX2"].show();
-			me["N11-XX-box"].show();
+			
+			if (me.typeString == "CFM") {
+				me["N11-ylim"].hide();
+				me["N11-box"].hide();
+				me["N11-XX2"].show();
+				me["N11-XX-box"].show();
+			}
 		}
-		
-		if (rev_1_act < 0.01 and fadec.FADEC.Eng1.n1 == 1) {
-			me["N11-thr"].show();
-		} else {
-			me["N11-thr"].hide();
-		}
-		
-		if (fadec.FADEC.Eng2.n1 == 1) {
+	},
+	updateN12: func(notification) {
+		me._cachedN1[1] = notification.eng2_n1;
+		if (me._cachedN1[1] == 1) {
 			me["N12-scale"].setColor(0.8078,0.8039,0.8078);
 			me["N12-scale2"].setColor(1,0,0);
 			me["N12"].show();
 			me["N12-decimal"].show();
 			me["N12-decpnt"].show();
 			me["N12-needle"].show();
-			me["N12-ylim"].show();
 			me["N12-scaletick"].show();
 			me["N12-scalenum"].show();
-			me["N12-box"].show();
 			me["N12-XX"].hide();
-			me["N12-XX2"].hide();
-			me["N12-XX-box"].hide();
+			
+			if (me.typeString == "CFM") {
+				me["N12-ylim"].show();
+				me["N12-box"].show();
+				me["N12-XX2"].hide();
+				me["N12-XX-box"].hide();
+			}
 		} else {
 			me["N12-scale"].setColor(0.7333,0.3803,0);
 			me["N12-scale2"].setColor(0.7333,0.3803,0);
@@ -462,28 +686,50 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["N12-decimal"].hide();
 			me["N12-decpnt"].hide();
 			me["N12-needle"].hide();
-			me["N12-ylim"].hide();
 			me["N12-scaletick"].hide();
 			me["N12-scalenum"].hide();
-			me["N12-box"].hide();
 			me["N12-XX"].show();
-			me["N12-XX2"].show();
-			me["N12-XX-box"].show();
+			
+			if (me.typeString == "CFM") {
+				me["N12-ylim"].hide();
+				me["N12-box"].hide();
+				me["N12-XX2"].show();
+				me["N12-XX-box"].show();
+			}
 		}
-		
-		if (rev_2_act < 0.01 and fadec.FADEC.Eng2.n1 == 1) {
-			me["N12-thr"].show();
+	},
+	
+	updateN21: func() {
+		me._cachedN2[0] = fadec.FADEC.Eng1.n2;
+		if (fadec.FADEC.Eng1.n2 == 1) {
+			me["N21"].show();
+			me["N21-decimal"].show();
+			me["N21-decpnt"].show();
+			me["N21-XX"].hide();
 		} else {
-			me["N12-thr"].hide();
+			me["N21"].hide();
+			me["N21-decimal"].hide();
+			me["N21-decpnt"].hide();
+			me["N21-XX"].show();
 		}
-		
-		# EGT
-		me["EGT1"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[0].getValue())));
-		me["EGT2"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[1].getValue())));
-		
-		me["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
-		me["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
-		
+	},
+	updateN22: func() {
+		me._cachedN2[1] = fadec.FADEC.Eng2.n2;
+		if (fadec.FADEC.Eng2.n2 == 1) {
+			me["N22"].show();
+			me["N22-decimal"].show();
+			me["N22-decpnt"].show();
+			me["N22-XX"].hide();
+		} else {
+			me["N22"].hide();
+			me["N22-decimal"].hide();
+			me["N22-decpnt"].hide();
+			me["N22-XX"].show();
+		}
+	},
+	
+	updateEGT1: func() {
+		me._cachedEGT[0] = fadec.FADEC.Eng1.egt;
 		if (fadec.FADEC.Eng1.egt == 1) {
 			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT1-scale2"].setColor(1,0,0);
@@ -501,7 +747,9 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["EGT1-box"].hide();
 			me["EGT1-XX"].show();
 		}
-		
+	},
+	updateEGT2: func() {
+		me._cachedEGT[1] = fadec.FADEC.Eng2.egt;
 		if (fadec.FADEC.Eng2.egt == 1) {
 			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT2-scale2"].setColor(1,0,0);
@@ -519,155 +767,11 @@ var canvas_upperECAM_cfm_eis2 = {
 			me["EGT2-box"].hide();
 			me["EGT2-XX"].show();
 		}
-		
-		# N2
-		
-		me["N21"].setText(sprintf("%s", math.floor(n2cur_1 + 0.05)));
-		me["N21-decimal"].setText(sprintf("%s", int(10 * math.mod(n2cur_1 + 0.05, 1))));
-		me["N22"].setText(sprintf("%s", math.floor(n2cur_2 + 0.05)));
-		me["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(n2cur_2 + 0.05, 1))));
-		
-		if (fadec.FADEC.Eng1.n2 == 1) {
-			me["N21"].show();
-			me["N21-decimal"].show();
-			me["N21-decpnt"].show();
-			me["N21-XX"].hide();
-		} else {
-			me["N21"].hide();
-			me["N21-decimal"].hide();
-			me["N21-decpnt"].hide();
-			me["N21-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.n2 == 1) {
-			me["N22"].show();
-			me["N22-decimal"].show();
-			me["N22-decpnt"].show();
-			me["N22-XX"].hide();
-		} else {
-			me["N22"].hide();
-			me["N22-decimal"].hide();
-			me["N22-decpnt"].hide();
-			me["N22-XX"].show();
-		}
-		
-		# FF
-		fuel1 = pts.Engines.Engine.fuelFlow[0].getValue();
-		fuel2 = pts.Engines.Engine.fuelFlow[1].getValue();
-		
-		if (acconfig_weight_kgs.getValue()) {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1 * LBS2KGS, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2 * LBS2KGS, 10)));
-			me["FFlow-weight-unit"].setText("KG/H");
-		} else {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2, 10)));
-			me["FFlow-weight-unit"].setText("LBS/H");
-		}
-		
-		if (fadec.FADEC.Eng1.ff == 1) {
-			me["FF1"].show();
-			me["FF1-XX"].hide();
-		} else {
-			me["FF1"].hide();
-			me["FF1-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.ff == 1) {
-			me["FF2"].show();
-			me["FF2-XX"].hide();
-		} else {
-			me["FF2"].hide();
-			me["FF2-XX"].show();
-		}
-		
-		# N1 Limit
-		thrLimit = thr_limit.getValue();
-		n1Limit = n1_limit.getValue();
-		
-		me["N1Lim-mode"].setText(sprintf("%s", thrLimit));
-		me["N1Lim"].setText(sprintf("%s", math.floor(n1Limit + 0.05)));
-		me["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(n1Limit + 0.05, 1))));
-		
-		fadecPower1 = fadecpower_1.getValue();
-		fadecPower2 = fadecpower_2.getValue();
-		fadecPowerStart = fadecpowerup.getValue();
-		
-		if (fadecPower1 or fadecPower2 or fadecPowerStart) {
-			me["N1Lim-mode"].show();
-			me["N1Lim-XX"].hide();
-			me["N1Lim-XX2"].hide();
-		} else {
-			me["N1Lim-mode"].hide();
-			me["N1Lim-XX"].show();
-			me["N1Lim-XX2"].show();
-		}
-		
-		if ((fadecPower1 or fadecPower2 or fadecPowerStart) and thrLimit != "MREV") {
-			me["N1Lim"].show();
-			me["N1Lim-decpnt"].show();
-			me["N1Lim-decimal"].show();
-			me["N1Lim-percent"].show();
-		} else {
-			me["N1Lim"].hide();
-			me["N1Lim-decpnt"].hide();
-			me["N1Lim-decimal"].hide();
-			me["N1Lim-percent"].hide();
-		}
-		
-		me.updateBase();
 	},
-};
-
-var canvas_upperECAM_iae_eis2 = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_upperECAM_iae_eis2, canvas_upperECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
-	},
-	getKeys: func() {
-		return ["EPR1-needle","EPR1-thr","EPR1-ylim","EPR1","EPR1-decpnt","EPR1-decimal","EPR1-box","EPR1-scale","EPR1-scaletick","EPR1-scalenum","EPR1-XX","EPR1-XX2","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick","EGT1-XX",
-		"N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","EPR2-needle","EPR2-thr","EPR2-ylim","EPR2","EPR2-decpnt",
-		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
-		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
-		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine"];
-	},
-	update: func() {
-		N1_1_cur = N1_1.getValue();
-		N1_2_cur = N1_2.getValue();
-		N1_1_act = pts.Engines.Engine.n1Actual[0].getValue();
-		N1_2_act = pts.Engines.Engine.n1Actual[1].getValue();
-		N1_lim_cur = N1_lim.getValue();
-		EPR_1_cur = EPR_1.getValue();
-		EPR_2_cur = EPR_2.getValue();
-		EPR_1_act = pts.Engines.Engine.eprActual[0].getValue();
-		EPR_2_act = pts.Engines.Engine.eprActual[1].getValue();
-		EPR_lim_cur = EPR_lim.getValue();
-		EPR_thr_1_act = EPR_thr_1.getValue();
-		EPR_thr_2_act = EPR_thr_2.getValue();
-		rev_1_act = pts.Engines.Engine.reverser[0].getValue();
-		rev_2_act = pts.Engines.Engine.reverser[1].getValue();
-		EGT_1_cur = EGT_1.getValue();
-		EGT_2_cur = EGT_2.getValue();
-		n2cur_1 = pts.Engines.Engine.n2Actual[0].getValue();
-		n2cur_2 = pts.Engines.Engine.n2Actual[1].getValue();
-		
-		# EPR
-		me["EPR1"].setText(sprintf("%1.0f", math.floor(EPR_1_act)));
-		me["EPR1-decimal"].setText(sprintf("%03d", (EPR_1_act - int(EPR_1_act)) * 1000));
-		me["EPR2"].setText(sprintf("%1.0f", math.floor(EPR_2_act)));
-		me["EPR2-decimal"].setText(sprintf("%03d", (EPR_2_act - int(EPR_2_act)) * 1000));
-		
-		me["EPR1-needle"].setRotation((EPR_1_cur + 90) * D2R);
-		me["EPR1-thr"].setRotation((EPR_thr_1_act + 90) * D2R);
-		me["EPR1-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
-		me["EPR2-needle"].setRotation((EPR_2_cur + 90) * D2R);
-		me["EPR2-thr"].setRotation((EPR_thr_2_act + 90) * D2R);
-		me["EPR2-ylim"].setRotation((EPR_lim_cur + 90) * D2R);
-		
-		if (fadec.FADEC.Eng1.epr == 1) {
+	
+	updateEPR1: func(notification) {
+		me._cachedEPR[0] = notification.eng1_epr;
+		if (me._cachedEPR[0] == 1) {
 			me["EPR1-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EPR1"].show();
 			me["EPR1-decpnt"].show();
@@ -692,14 +796,10 @@ var canvas_upperECAM_iae_eis2 = {
 			me["EPR1-XX"].show();
 			me["EPR1-XX2"].show();
 		}
-		
-		if (rev_1_act < 0.01 and fadec.FADEC.Eng1.epr == 1) {
-			me["EPR1-thr"].show();
-		} else {
-			me["EPR1-thr"].hide();
-		}
-		
-		if (fadec.FADEC.Eng2.epr == 1) {
+	},
+	updateEPR2: func(notification) {
+		me._cachedEPR[1] = notification.eng2_epr;
+		if (me._cachedEPR[1] == 1) {
 			me["EPR2-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EPR2"].show();
 			me["EPR2-decpnt"].show();
@@ -724,176 +824,9 @@ var canvas_upperECAM_iae_eis2 = {
 			me["EPR2-XX"].show();
 			me["EPR2-XX2"].show();
 		}
-		
-		if (rev_2_act < 0.01 and fadec.FADEC.Eng2.epr == 1) {
-			me["EPR2-thr"].show();
-		} else {
-			me["EPR2-thr"].hide();
-		}
-		
-		# EGT
-		me["EGT1"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[0].getValue())));
-		me["EGT2"].setText(sprintf("%s", math.round(pts.Engines.Engine.egtActual[1].getValue())));
-		
-		me["EGT1-needle"].setRotation((EGT_1_cur + 90) * D2R);
-		me["EGT2-needle"].setRotation((EGT_2_cur + 90) * D2R);
-		
-		if (fadec.FADEC.Eng1.egt == 1) {
-			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EGT1-scale2"].setColor(1,0,0);
-			me["EGT1"].show();
-			me["EGT1-needle"].show();
-			me["EGT1-scaletick"].show();
-			me["EGT1-box"].show();
-			me["EGT1-XX"].hide();
-		} else {
-			me["EGT1-scale"].setColor(0.7333,0.3803,0);
-			me["EGT1-scale2"].setColor(0.7333,0.3803,0);
-			me["EGT1"].hide();
-			me["EGT1-needle"].hide();
-			me["EGT1-scaletick"].hide();
-			me["EGT1-box"].hide();
-			me["EGT1-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.egt == 1) {
-			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
-			me["EGT2-scale2"].setColor(1,0,0);
-			me["EGT2"].show();
-			me["EGT2-needle"].show();
-			me["EGT2-scaletick"].show();
-			me["EGT2-box"].show();
-			me["EGT2-XX"].hide();
-		} else {
-			me["EGT2-scale"].setColor(0.7333,0.3803,0);
-			me["EGT2-scale2"].setColor(0.7333,0.3803,0);
-			me["EGT2"].hide();
-			me["EGT2-needle"].hide();
-			me["EGT2-scaletick"].hide();
-			me["EGT2-box"].hide();
-			me["EGT2-XX"].show();
-		}
-		
-		# N1
-		me["N11"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n1Actual[0].getValue() + 0.05)));
-		me["N11-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n1Actual[0].getValue() + 0.05, 1))));
-		
-		me["N12"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n1Actual[1].getValue() + 0.05)));
-		me["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n1Actual[1].getValue() + 0.05, 1))));
-		
-		me["N11-needle"].setRotation((N1_1_cur + 90) * D2R);
-		me["N11-thr"].setRotation((N1_thr_1.getValue() + 90) * D2R);
-		me["N11-ylim"].setRotation((N1_lim_cur + 90) * D2R);
-		
-		me["N12-needle"].setRotation((N1_2_cur + 90) * D2R);
-		me["N12-thr"].setRotation((N1_thr_2.getValue() + 90) * D2R);
-		me["N12-ylim"].setRotation((N1_lim_cur + 90) * D2R);
-		
-		if (fadec.FADEC.Eng1.n1 == 1) {
-			me["N11-scale"].setColor(0.8078,0.8039,0.8078);
-			me["N11-scale2"].setColor(1,0,0);
-			me["N11"].show();
-			me["N11-decimal"].show();
-			me["N11-decpnt"].show();
-			me["N11-needle"].show();
-			me["N11-scaletick"].show();
-			me["N11-scalenum"].show();
-			me["N11-XX"].hide();
-		} else {
-			me["N11-scale"].setColor(0.7333,0.3803,0);
-			me["N11-scale2"].setColor(0.7333,0.3803,0);
-			me["N11"].hide();
-			me["N11-decimal"].hide();
-			me["N11-decpnt"].hide();
-			me["N11-needle"].hide();
-			me["N11-scaletick"].hide();
-			me["N11-scalenum"].hide();
-			me["N11-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.n1 == 1) {
-			me["N12-scale"].setColor(0.8078,0.8039,0.8078);
-			me["N12-scale2"].setColor(1,0,0);
-			me["N12"].show();
-			me["N12-decimal"].show();
-			me["N12-decpnt"].show();
-			me["N12-needle"].show();
-			me["N12-scaletick"].show();
-			me["N12-scalenum"].show();
-			me["N12-XX"].hide();
-		} else {
-			me["N12-scale"].setColor(0.7333,0.3803,0);
-			me["N12-scale2"].setColor(0.7333,0.3803,0);
-			me["N12"].hide();
-			me["N12-decimal"].hide();
-			me["N12-decpnt"].hide();
-			me["N12-needle"].hide();
-			me["N12-scaletick"].hide();
-			me["N12-scalenum"].hide();
-			me["N12-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng1.n1 == 1 and fadec.Fadec.n1Mode[0].getValue()) {
-			me["N11-thr"].show();
-			me["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
-		} else {
-			me["N11-thr"].hide();
-			me["N11-ylim"].hide();
-		}
-		
-		if (fadec.FADEC.Eng2.n1 == 1 and fadec.Fadec.n1Mode[1].getValue()) {
-			me["N12-thr"].show();
-			me["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
-		} else {
-			me["N12-thr"].hide();
-			me["N12-ylim"].hide();
-		}
-		
-		# N2
-		me["N21"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n2Actual[0].getValue() + 0.05)));
-		me["N21-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n2Actual[0].getValue() + 0.05, 1))));
-		me["N22"].setText(sprintf("%s", math.floor(pts.Engines.Engine.n2Actual[1].getValue() + 0.05)));
-		me["N22-decimal"].setText(sprintf("%s", int(10 * math.mod(pts.Engines.Engine.n2Actual[1].getValue() + 0.05, 1))));
-		
-		if (fadec.FADEC.Eng1.n2 == 1) {
-			me["N21"].show();
-			me["N21-decimal"].show();
-			me["N21-decpnt"].show();
-			me["N21-XX"].hide();
-		} else {
-			me["N21"].hide();
-			me["N21-decimal"].hide();
-			me["N21-decpnt"].hide();
-			me["N21-XX"].show();
-		}
-		
-		if (fadec.FADEC.Eng2.n2 == 1) {
-			me["N22"].show();
-			me["N22-decimal"].show();
-			me["N22-decpnt"].show();
-			me["N22-XX"].hide();
-		} else {
-			me["N22"].hide();
-			me["N22-decimal"].hide();
-			me["N22-decpnt"].hide();
-			me["N22-XX"].show();
-		}
-		
-		# FF
-		fuel1 = pts.Engines.Engine.fuelFlow[0].getValue();
-		fuel2 = pts.Engines.Engine.fuelFlow[1].getValue();
-		if (acconfig_weight_kgs.getValue()) {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1 * LBS2KGS, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2 * LBS2KGS, 10)));
-			me["FFlow1-weight-unit"].setText("KG/H");
-			me["FFlow2-weight-unit"].setText("KG/H");
-		} else {
-			me["FF1"].setText(sprintf("%s", math.round(fuel1, 10)));
-			me["FF2"].setText(sprintf("%s", math.round(fuel2, 10)));
-			me["FFlow1-weight-unit"].setText("LBS/H");
-			me["FFlow2-weight-unit"].setText("LBS/H");
-		}
-		
+	},
+	updateFF1: func() {
+		me._cachedFF[0] = fadec.FADEC.Eng1.ff;
 		if (fadec.FADEC.Eng1.ff == 1) {
 			me["FF1"].show();
 			me["FF1-XX"].hide();
@@ -901,7 +834,9 @@ var canvas_upperECAM_iae_eis2 = {
 			me["FF1"].hide();
 			me["FF1-XX"].show();
 		}
-		
+	},
+	updateFF2: func() {
+		me._cachedFF[1] = fadec.FADEC.Eng2.ff;
 		if (fadec.FADEC.Eng2.ff == 1) {
 			me["FF2"].show();
 			me["FF2-XX"].hide();
@@ -909,87 +844,69 @@ var canvas_upperECAM_iae_eis2 = {
 			me["FF2"].hide();
 			me["FF2-XX"].show();
 		}
-		
-		# EPR Limit
-		thrLimit = thr_limit.getValue();
-		eprLimit = epr_limit.getValue();
-		
-		me["EPRLim-mode"].setText(sprintf("%s", thrLimit));
-		me["EPRLim"].setText(sprintf("%1.0f", math.floor(eprLimit)));
-		me["EPRLim-decimal"].setText(sprintf("%03d", (eprLimit - int(eprLimit)) * 1000));
-		
-		fadecPower1 = fadecpower_1.getValue();
-		fadecPower2 = fadecpower_2.getValue();
-		fadecPowerStart = fadecpowerup.getValue();
-		
-		if (fadecPower1 or fadecPower2 or fadecPowerStart) {
-			me["EPRLim-mode"].show();
-			me["EPRLim-XX"].hide();
-			me["EPRLim-XX2"].hide();
-		} else {
-			me["EPRLim-mode"].hide();
-			me["EPRLim-XX"].show();
-			me["EPRLim-XX2"].show();
-		}
-		
-		if ((fadecPower1 or fadecPower2 or fadecPowerStart) and thrLimit != "MREV") {
-			me["EPRLim"].show();
-			me["EPRLim-decpnt"].show();
-			me["EPRLim-decimal"].show();
-		} else {
-			me["EPRLim"].hide();
-			me["EPRLim-decpnt"].hide();
-			me["EPRLim-decimal"].hide();
-		}
-		
-		me.updateBase();
 	},
-};
-
-var canvas_upperECAM_test = {
-	init: func(canvas_group, file) {
-		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
-		};
-
-		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
-		
-		var svg_keys = me.getKeys();
-		foreach(var key; svg_keys) {
-			me[key] = canvas_group.getElementById(key);
 			
-			var clip_el = canvas_group.getElementById(key ~ "_clip");
-			if (clip_el != nil) {
-				clip_el.setVisible(0);
-				var tran_rect = clip_el.getTransformedBounds();
-
-				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
-				tran_rect[1], # 0 ys
-				tran_rect[2], # 1 xe
-				tran_rect[3], # 2 ye
-				tran_rect[0]); #3 xs
-				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
-				me[key].set("clip", clip_rect);
-				me[key].set("clip-frame", canvas.Element.PARENT);
+	updateFadecN1Power1: func(val) {
+		if (me.typeString == "IAE") {
+			if (val.reverser_1 < 0.01 and val.eng1_epr == 1 and val.N1_mode_1 != 1) {
+				me["EPR1-thr"].show();
+			} else {
+				me["EPR1-thr"].hide();
+			}
+		} else {
+			if (val.reverser_1 < 0.01 and val.eng1_n1 == 1) {
+				me["N11-thr"].show();
+			} else {
+				me["N11-thr"].hide();
 			}
 		}
-
-		me.page = canvas_group;
-
-		return me;
+		
+		if (val.reverser_1 >= 0.01 and val.eng1_n1 == 1) {
+			me["REV1"].show();
+			me["REV1-box"].show();
+		} else {
+			me["REV1"].hide();
+			me["REV1-box"].hide();
+		}
+		
+		if (val.reverser_1 >= 0.95) {
+			me["REV1"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["REV1"].setColor(0.7333,0.3803,0);
+		}
 	},
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_upperECAM_test]};
-		m.init(canvas_group, file);
-
-		return m;
+	updateFadecN1Power2: func(val) {
+		if (me.typeString == "IAE") {
+			if (val.reverser_2 < 0.01 and val.eng2_epr == 1 and val.N1_mode_2 != 1) {
+				me["EPR2-thr"].show();
+			} else {
+				me["EPR2-thr"].hide();
+			}
+		} else {
+			if (val.reverser_2 < 0.01 and val.eng2_n1 == 1) {
+				me["N12-thr"].show();
+			} else {
+				me["N12-thr"].hide();
+			}
+		}
+		
+		if (val.reverser_2 >= 0.01 and val.eng2_n1 == 1) {
+			me["REV2"].show();
+			me["REV2-box"].show();
+		} else {
+			me["REV2"].hide();
+			me["REV2-box"].hide();
+		}
+		
+		if (val.reverser_2 >= 0.95) {
+			me["REV2"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["REV2"].setColor(0.7333,0.3803,0);
+		}
 	},
-	getKeys: func() {
-		return ["Test_white","Test_text"];
-	},
-	update: func() {
-		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
-		if (du3_test_time.getValue() + 1 >= elapsedtime) {
+	
+	updateTest: func() {
+		if (du3_test_time.getValue() + 1 >= pts.Sim.Time.elapsedSec.getValue()) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else {
@@ -997,82 +914,187 @@ var canvas_upperECAM_test = {
 			me["Test_text"].show();
 		}
 	},
-};
-
-var createListenerForLine = func(prop, node, key) {
-	setlistener(prop, func() {
-		if (eng_option.getValue() == "IAE") {
-			upperECAM_iae_eis2[key].setColor(upperECAM_iae_eis2.getColorString(node.getValue()));
+	powerTransient: func() {
+		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
+			if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
+				if (pts.Gear.wow[0].getValue()) {
+					if (!acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+						du3_test.setValue(1);
+						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
+					} else if (acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+						du3_test.setValue(1);
+						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+					}
+				} else {
+					du3_test.setValue(1);
+					du3_test_amount.setValue(0);
+					du3_test_time.setValue(-100);
+				}
+			}
 		} else {
-			upperECAM_cfm_eis2[key].setColor(upperECAM_cfm_eis2.getColorString(node.getValue()));
+			du3_test.setValue(0);
+			du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		}
-	}, 0, 0);
+	},
+	updatePower: func() {
+		if (du3_lgt.getValue() > 0.01 and systems.ELEC.Bus.acEss.getValue() >= 110) {
+			if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
+				me.group.setVisible(0);
+				me.test.setVisible(1);
+			} else {
+				me.group.setVisible(1);
+				me.test.setVisible(0);
+			}
+		} else {
+			me.group.setVisible(0);
+			me.test.setVisible(0);
+		}
+	},
 };
 
+var UpperECAMRecipient =
+{
+	new: func(_ident)
+	{
+		var EWDRecipient = emesary.Recipient.new(_ident);
+		EWDRecipient.MainScreen = nil;
+		EWDRecipient.type = eng_option.getValue() == "IAE" ? 1 : 0;
+		EWDRecipient.Receive = func(notification)
+		{
+			if (notification.NotificationType == "FrameNotification")
+			{
+				if (EWDRecipient.MainScreen == nil) {
+					if (EWDRecipient.type) {
+						EWDRecipient.MainScreen = canvas_upperECAM.new("Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/iae-eis2.svg", "A320 E/WD IAE", "IAE");
+					} else {
+						EWDRecipient.MainScreen = canvas_upperECAM.new("Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg", "A320 E/WD CFM", "CFM");
+					}
+				}
+				if (math.mod(notifications.frameNotification.FrameCount,2) == 0) {
+					if (EWDRecipient.type) {
+						EWDRecipient.MainScreen.updateIAE(notification);
+					} else {
+						EWDRecipient.MainScreen.updateCFM(notification);
+					
+					}
+				}
+				return emesary.Transmitter.ReceiptStatus_OK;
+			}
+			return emesary.Transmitter.ReceiptStatus_NotProcessed;
+		};
+		return EWDRecipient;
+	},
+};
 
-setlistener("sim/signals/fdm-initialized", func {
-	upperECAM_display = canvas.new({
-		"name": "upperECAM",
-		"size": [1024, 1024],
-		"view": [1024, 1024],
-		"mipmapping": 1
-	});
-	upperECAM_display.addPlacement({"node": "uecam.screen"});
-	var group_cfm_eis2 = upperECAM_display.createGroup();
-	var group_iae_eis2 = upperECAM_display.createGroup();
-	var group_test = upperECAM_display.createGroup();
+var A320EWD = UpperECAMRecipient.new("A320 E/WD");
+emesary.GlobalTransmitter.Register(A320EWD);
 
-	upperECAM_cfm_eis2 = canvas_upperECAM_cfm_eis2.new(group_cfm_eis2, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg");
-	upperECAM_iae_eis2 = canvas_upperECAM_iae_eis2.new(group_iae_eis2, "Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/iae-eis2.svg");
-	upperECAM_test = canvas_upperECAM_test.new(group_test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg");
+input = {
+	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
+	acconfigUnits: "/systems/acconfig/options/weight-kgs",
+	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
 	
-	createListenerForLine("/ECAM/msg/linec1", ECAM_line1c, "ECAML1");
-	createListenerForLine("/ECAM/msg/linec2", ECAM_line2c, "ECAML2");
-	createListenerForLine("/ECAM/msg/linec3", ECAM_line3c, "ECAML3");
-	createListenerForLine("/ECAM/msg/linec4", ECAM_line4c, "ECAML4");
-	createListenerForLine("/ECAM/msg/linec5", ECAM_line5c, "ECAML5");
-	createListenerForLine("/ECAM/msg/linec6", ECAM_line6c, "ECAML6");
-	createListenerForLine("/ECAM/msg/linec7", ECAM_line7c, "ECAML7");
-	createListenerForLine("/ECAM/msg/linec8", ECAM_line8c, "ECAML8");
+	# N1 parameters
+	N1_1: "/ECAM/Upper/N1[0]",
+	N1_2: "/ECAM/Upper/N1[1]",
+	N1_actual_1: "/engines/engine[0]/n1-actual",
+	N1_actual_2: "/engines/engine[1]/n1-actual",
+	N1_lim: "/ECAM/Upper/N1ylim",
+	N1thr_1: "/ECAM/Upper/N1thr[0]",
+	N1thr_2: "/ECAM/Upper/N1thr[1]",
 	
-	createListenerForLine("/ECAM/rightmsg/linec1", ECAM_line1rc, "ECAMR1");
-	createListenerForLine("/ECAM/rightmsg/linec2", ECAM_line2rc, "ECAMR2");
-	createListenerForLine("/ECAM/rightmsg/linec3", ECAM_line3rc, "ECAMR3");
-	createListenerForLine("/ECAM/rightmsg/linec4", ECAM_line4rc, "ECAMR4");
-	createListenerForLine("/ECAM/rightmsg/linec5", ECAM_line5rc, "ECAMR5");
-	createListenerForLine("/ECAM/rightmsg/linec6", ECAM_line6rc, "ECAMR6");
-	createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
-	createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
+	# N2 parameters
+	N2_actual_1: "/engines/engine[0]/n2-actual",
+	N2_actual_2: "/engines/engine[1]/n2-actual",
 	
-	upperECAM_update.start();
-	if (rate.getValue() > 1) {
-		u_rateApply();
-	}
-});
+	# Reverse thrust
+	reverser_1: "/engines/engine[0]/reverser-pos-norm",
+	reverser_2: "/engines/engine[1]/reverser-pos-norm",
+	
+	# EGT
+	egt_1: "/engines/engine[0]/egt-actual",
+	egt_2: "/engines/engine[1]/egt-actual",
+	egt_1_needle: "/ECAM/Upper/EGT[0]",
+	egt_2_needle: "/ECAM/Upper/EGT[1]",
+	
+	# N1 parameters
+	EPR_1: "/ECAM/Upper/EPR[0]",
+	EPR_2: "/ECAM/Upper/EPR[1]",
+	EPR_actual_1: "/engines/engine[0]/epr-actual",
+	EPR_actual_2: "/engines/engine[1]/epr-actual",
+	EPR_lim: "/ECAM/Upper/EPRylim",
+	EPRthr_1: "/ECAM/Upper/EPRthr[0]",
+	EPRthr_2: "/ECAM/Upper/EPRthr[1]",
+	
+	# fuel flow
+	fuelflow_1: "/engines/engine[0]/fuel-flow_actual",
+	fuelflow_2: "/engines/engine[1]/fuel-flow_actual",
+	
+	# flaps
+	flapsPos: "/controls/flight/flaps-pos",
+	flapxOffset: "/ECAM/Upper/FlapX",
+	flapyOffset: "/ECAM/Upper/FlapY",
+	slatxOffset: "/ECAM/Upper/SlatX",
+	slatyOffset: "/ECAM/Upper/SlatY",
+	flapxOffsetTrans: "/ECAM/Upper/FlapXtrans",
+	flapyOffsetTrans: "/ECAM/Upper/FlapYtrans",
+	slatxOffsetTrans: "/ECAM/Upper/SlatXtrans",
+	slatyOffsetTrans: "/ECAM/Upper/SlatYtrans",
+	
+	# fadec
+	alphaFloor: "/systems/thrust/alpha-floor",
+	eprLimit: "/controls/engines/epr-limit",
+	thrustLimit: "/controls/engines/thrust-limit",
+	n1Limit: "/controls/engines/n1-limit",
+	flexTemp: "/FMGC/internal/flex",
+	fadecPower1: "/systems/fadec/powered1",
+	fadecPower2: "/systems/fadec/powered2",
+	fadecPowerStart: "/systems/fadec/powerup",
+	N1_mode_1: "/systems/fadec/n1mode1",
+	N1_mode_2: "/systems/fadec/n1mode2",
+	eng1_epr: "/systems/fadec/eng1/epr",
+	eng2_epr: "/systems/fadec/eng2/epr",
+	eng1_n1: "/systems/fadec/eng1/n1",
+	eng2_n1: "/systems/fadec/eng2/n1",
+	
+	# ecam
+	ecamMsg1: "/ECAM/msg/line1",
+	ecamMsg2: "/ECAM/msg/line2",
+	ecamMsg3: "/ECAM/msg/line3",
+	ecamMsg4: "/ECAM/msg/line4",
+	ecamMsg5: "/ECAM/msg/line5",
+	ecamMsg6: "/ECAM/msg/line6",
+	ecamMsg7: "/ECAM/msg/line7",
+	ecamMsg8: "/ECAM/msg/line8",
+	ecamMsg1R: "/ECAM/rightmsg/line1",
+	ecamMsg2R: "/ECAM/rightmsg/line2",
+	ecamMsg3R: "/ECAM/rightmsg/line3",
+	ecamMsg4R: "/ECAM/rightmsg/line4",
+	ecamMsg5R: "/ECAM/rightmsg/line5",
+	ecamMsg6R: "/ECAM/rightmsg/line6",
+	ecamMsg7R: "/ECAM/rightmsg/line7",
+	ecamMsg8R: "/ECAM/rightmsg/line8",
+};
 
-var u_rateApply = func {
-	upperECAM_update.restart(0.05 * rate.getValue());
+foreach (var name; keys(input)) {
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Upper ECAM", name, input[name]));
 }
-
-var upperECAM_update = maketimer(0.05, func {
-	canvas_upperECAM_base.update();
-});
 
 var showUpperECAM = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
-	dlg.setCanvas(upperECAM_display);
+	dlg.setCanvas(A320EWD.MainScreen.canvas);
 }
 
 setlistener("/systems/electrical/bus/ac-ess", func() {
-	canvas_upperECAM_base.updateDu3();
+	if (A320EWD.MainScreen != nil) { A320EWD.MainScreen.powerTransient() }
 }, 0, 0);
 
-
-var slatLockGoing = 0;
 var slatLockTimer = maketimer(0.50, func {
-	if (!slatLockFlash.getBoolValue()) {
-		slatLockFlash.setBoolValue(1);
+	if (!slatLockFlash) {
+		slatLockFlash = 1;
 	} else {
-		slatLockFlash.setBoolValue(0);
+		slatLockFlash = 0;
 	}
 });

@@ -73,7 +73,7 @@ var receivedMessagesPage = {
 		
 		if (me.size >= (me.curPage * 5) + -4) {
 			message = ReceivedMessagesDatabase.database.vector[-5 + (me.curPage * 5)];
-			me.L1[0] = " " ~ left(message.body, 23);
+			me.L1[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
 			me.L1[2] = "blu";
 			if (!message.viewed) {
 				me.L1[1] = " " ~ message.time ~ "                  NEW"; 
@@ -85,7 +85,7 @@ var receivedMessagesPage = {
 
 		if (me.size >= (me.curPage * 5) + -3) {
 			message = ReceivedMessagesDatabase.database.vector[-4 + (me.curPage * 5)];
-			me.L2[0] = " " ~ left(message.body, 23);
+			me.L2[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
 			me.L2[2] = "blu";
 			if (!message.viewed) {
 				me.L2[1] = " " ~ message.time ~ "                  NEW"; 
@@ -97,7 +97,7 @@ var receivedMessagesPage = {
 		
 		if (me.size >= (me.curPage * 5) + -2) {
 			message = ReceivedMessagesDatabase.database.vector[-3 + (me.curPage * 5)];
-			me.L3[0] = " " ~ left(message.body, 23);
+			me.L3[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
 			me.L3[2] = "blu";
 			if (!message.viewed) {
 				me.L3[1] = " " ~ message.time ~ "                  NEW"; 
@@ -109,7 +109,7 @@ var receivedMessagesPage = {
 		
 		if (me.size >= (me.curPage * 5) + -1) {
 			message = ReceivedMessagesDatabase.database.vector[-2 + (me.curPage * 5)];
-			me.L4[0] = " " ~ left(message.body, 23);
+			me.L4[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
 			me.L4[2] = "blu";
 			if (!message.viewed) {
 				me.L4[1] = " " ~ message.time ~ "                  NEW"; 
@@ -121,7 +121,7 @@ var receivedMessagesPage = {
 		
 		if (me.size >= (me.curPage * 5) + 0) {
 			message = ReceivedMessagesDatabase.database.vector[-1 + (me.curPage * 5)];
-			me.L5[0] = " " ~ left(message.body, 23);
+			me.L5[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
 			me.L5[2] = "blu";
 			if (!message.viewed) {
 				me.L5[1] = " " ~ message.time ~ "                  NEW"; 
@@ -134,8 +134,19 @@ var receivedMessagesPage = {
 	},
 	leftKey: func(index) {
 		if (ReceivedMessagesDatabase.getSize() >= (-5 + index + (me.curPage * 5))) {
-			canvas_mcdu.myReceivedMessage[me.computer] = receivedMessagePage.new(me.computer, (-6 + index + (me.curPage * 5)));
-			setprop("MCDU[" ~ me.computer ~ "]/page", "RECEIVEDMSG");
+			if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+				ReceivedMessagesDatabase.removeAtIndex(-6 + index + (me.curPage * 5));
+				me.update();
+				if (ReceivedMessagesDatabase.getSize() < (me.curPage * 5) and ReceivedMessagesDatabase.getSize() >= 5) {
+					me.scrollLeft();
+				}
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+			} elsif (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 0) {
+				canvas_mcdu.myReceivedMessage[me.computer] = receivedMessagePage.new(me.computer, (-6 + index + (me.curPage * 5)));
+				setprop("MCDU[" ~ me.computer ~ "]/page", "RECEIVEDMSG");
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		}
@@ -288,11 +299,22 @@ var ReceivedMessagesDatabase = {
 			canvas_mcdu.myReceivedMessages[1].update();
 		}
 	},
+	firstUnviewed: func() {
+		for (var i = 0; i < me.getSize(); i = i + 1) {
+			if (!me.database.vector[i].viewed) {
+				return i;
+			}
+		}
+		return -99;
+	},
 	getCountPages: func() {
-		return math.ceil(me.database.size() / 5);
+		return math.ceil(me.getSize() / 5);
 	},
 	getSize: func() {
 		return me.database.size();
+	},
+	removeAtIndex: func(index) {
+		return me.database.pop(index);
 	},
 	clearDatabase: func() {
 		me.database.clear();

@@ -466,7 +466,7 @@
 				/gear/gear[1]/wow eq 1
 				/systems/air-conditioning/landing-switch eq 1
 				/velocities/airspeed-kt lt 70
-				/ECAM/phases/to-power-set ne 1
+				/ECAM/phases/phase-calculation/takeoff-power ne 1
 			</test>
 		</switch>
 		
@@ -474,7 +474,7 @@
 			<default value="/systems/air-conditioning/packs/pack-flow-1-norm"/>
 			<test logic="AND" value="0">
 				/gear/gear[1]/wow eq 1
-				/ECAM/phases/to-power-set eq 1
+				/ECAM/phases/phase-calculation/takeoff-power eq 1
 			</test>
 			<test logic="AND" value="0">
 				/gear/gear[1]/wow eq 1
@@ -507,7 +507,7 @@
 			<default value="/systems/air-conditioning/packs/pack-flow-2-norm"/>
 			<test logic="AND" value="0">
 				/gear/gear[1]/wow eq 1
-				/ECAM/phases/to-power-set eq 1
+				/ECAM/phases/phase-calculation/takeoff-power eq 1
 			</test>
 			<test logic="AND" value="0">
 				/gear/gear[1]/wow eq 1

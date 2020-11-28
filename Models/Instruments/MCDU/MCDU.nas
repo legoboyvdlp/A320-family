@@ -25,6 +25,7 @@ var myCLBWIND = [nil, nil];
 var myCRZWIND = [nil, nil];
 var myDESWIND = [nil, nil];
 var myHISTWIND = [nil, nil];
+var myAtis = [nil, nil];
 var default = "BoeingCDU-Large.ttf";
 #var symbol = "helvetica_medium.txf";
 var symbol = "LiberationMonoCustom.ttf";
@@ -73,6 +74,7 @@ var MAGENTA = [0.6902,0.3333,0.7541];
 var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
 var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
+var engRdy = props.globals.getNode("/engines/ready");
 
 #ACCONFIG
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
@@ -114,7 +116,6 @@ var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
-var engrdy = props.globals.getNode("/engines/ready", 1);
 
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
@@ -231,7 +232,8 @@ var canvas_MCDU_base = {
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
 	"arrow3R","arrow4R","arrow5R","DIRTO_TMPY_group","IRSINIT","IRSINIT_1","IRSINIT_2","IRSINIT_star","NOTIFY","NOTIFY_FLTNBR","NOTIFY_AIRPORT","WEATHERREQSEND",
-	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE"];
+	"WIND","WIND_CANCEL","WIND_INSERT_star","WIND_UPDOWN","MODEVHF3","PRINTPAGE","COMM-ADS","COCALL","COCALLTUNE","ATISSend1","ATISSend2","ATISSend3","ATISSend4",
+	"ATISArrows"];
 	},
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
@@ -361,6 +363,15 @@ var canvas_MCDU_base = {
 			} else {
 				me["PRINTPAGE"].setColor(WHITE);
 			}
+		}
+		if (page != "ATIS") {
+			me["ATISSend1"].hide();
+			me["ATISSend2"].hide();
+			me["ATISSend3"].hide();
+			me["ATISSend4"].hide();
+		}
+		if (page != "ATISDETAIL") {
+			me["ATISArrows"].hide();
 		}
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -545,12 +556,14 @@ var canvas_MCDU_base = {
 				me.showLeftArrow(1, 1, 1, -1, 1, 1);
 				me.showRight(1, 1, 1, 1, 1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
-				me.showRightArrow(1, 1, 1, 1, 1, -1);
+				me.showRightArrow(1, 1, 1, 1, 1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
+				me["Simple_R6"].setColor(BLUE);
+				me["Simple_R6_Arrow"].setColor(BLUE);
 				
 				me["Simple_L1"].setText(" PREFLIGHT");
 				me["Simple_L2"].setText(" ENROUTE");
@@ -564,8 +577,72 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setText("RCVD MSGS ");
 				me["Simple_R4"].setText("REPORTS ");
 				me["Simple_R5"].setText("CONFIG ");
+				me["Simple_R6"].setText("MESSAGE ");
 				pageSwitch[i].setBoolValue(1);
 			}
+			
+			if (mcdu.ReceivedMessagesDatabase.firstUnviewed() != -99) {
+				me["Simple_R6"].show();
+				me["Simple_R6_Arrow"].show();
+			} else {
+				me["Simple_R6"].hide();
+				me["Simple_R6_Arrow"].hide();
+			}
+		} else if (page == "AOCCONFIG") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].setText("AOC CONFIGURATION");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, -1, -1, -1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showCenter(1, 1, 1, 1, 1, -1);
+				me.showCenterS(1, -1, 1, -1, 1, -1);
+				me.showRight(1, -1, -1, -1, -1, 1);
+				me.showRightS(1, -1, -1, -1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me.standardFontColour();
+				
+				me["Simple_L1S"].setText("A/C REG");
+				me["Simple_L1"].setFontSize(small);
+				me["Simple_L1"].setColor(GREEN);
+				me["Simple_C1S"].setColor(GREEN);
+				me["Simple_R1"].setFontSize(small);
+				me["Simple_R1"].setColor(GREEN);
+				me["Simple_R1S"].setText("TYPE");
+				me["Simple_L6S"].setText(" RETURN TO");
+				me["Simple_L6"].setText(" AOC MENU");
+				me["Simple_C2"].setText("ATSU SW AND DB PN");
+				me["Simple_C3S"].setText("998.2459.501");
+				me["Simple_C3S"].setFontSize(small);
+				me["Simple_C3S"].setColor(GREEN);
+				me["Simple_C3"].setText("998.2460.501");
+				me["Simple_C3"].setFontSize(small);
+				me["Simple_C3"].setColor(GREEN);
+				me["Simple_C4"].setText("ATSU AOC ID");
+				me["Simple_C5S"].setText("AS2TOC1015010F1");
+				me["Simple_C5S"].setFontSize(small);
+				me["Simple_C5S"].setColor(GREEN);
+				me["Simple_C5"].setText("AS2TOC1012001F2");
+				me["Simple_C5"].setFontSize(small);
+				me["Simple_C5"].setColor(GREEN);
+				me["Simple_R6"].setText("PRINT ");
+				me["Simple_R6"].setColor(BLUE);
+				me["Simple_C1"].setFontSize(small);
+				me["Simple_C1"].setColor(GREEN);
+				pageSwitch[i].setBoolValue(1);
+			}
+			me["Simple_L1"].setText(getprop("/options/model-options/registration"));
+			me["Simple_C1S"].setText(sprintf("%02.0f", getprop("/sim/time/utc/hour")) ~ sprintf("%02.0f", getprop("/sim/time/utc/minute")));
+			me["Simple_C1"].setText(sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ right(sprintf(getprop("/sim/time/utc/year")), 2));
+			me["Simple_R1S"].setText("TYPE");
+			me["Simple_R1"].setText(getprop("/MCDUC/type"));
 		} else if (page == "WEATHERREQ") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -913,6 +990,217 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("ATIS ");
 				pageSwitch[i].setBoolValue(1);
 			}
+		} else if (page == "ATISDETAIL") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me["Simple_L0S"].hide();
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.fontLeft(default, default, default, default, default, default);
+				me.fontLeftS(default, default, default, default, default, default);
+				me.fontRight(default, default, default, default, default, default);
+				me.fontRightS(default, default, default, default, default, default);
+				
+				me.fontSizeLeft(small, small, small, small, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				
+				me.colorLeftS("grn", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("grn", "wht", "wht", "wht", "wht", "wht");
+				
+				
+				if (myAtis[i] != nil) {
+					me["Simple_Title"].setText(sprintf("%s", myAtis[i].title));
+					
+					me.dynamicPageArrowFunc(myAtis[i]);
+					me.colorLeftArrow(myAtis[i].arrowsColour[0][0],myAtis[i].arrowsColour[0][1],myAtis[i].arrowsColour[0][2],myAtis[i].arrowsColour[0][3],myAtis[i].arrowsColour[0][4],myAtis[i].arrowsColour[0][5]);
+					me.colorRightArrow(myAtis[i].arrowsColour[1][0],myAtis[i].arrowsColour[1][1],myAtis[i].arrowsColour[1][2],myAtis[i].arrowsColour[1][3],myAtis[i].arrowsColour[1][4],myAtis[i].arrowsColour[1][5]);
+					
+					me.dynamicPageFunc(myAtis[i].L1, "Simple_L1");
+					me.dynamicPageFunc(myAtis[i].L2, "Simple_L2");
+					me.dynamicPageFunc(myAtis[i].L3, "Simple_L3");
+					me.dynamicPageFunc(myAtis[i].L4, "Simple_L4");
+					me.dynamicPageFunc(myAtis[i].L5, "Simple_L5");
+					me.dynamicPageFunc(myAtis[i].L6, "Simple_L6");
+					
+					me.colorLeft(myAtis[i].L1[2],myAtis[i].L2[2],myAtis[i].L3[2],myAtis[i].L4[2],myAtis[i].L5[2],myAtis[i].L6[2]);
+					
+					me.dynamicPageFunc(myAtis[i].R1, "Simple_R1");
+					me.dynamicPageFunc(myAtis[i].R2, "Simple_R2");
+					me.dynamicPageFunc(myAtis[i].R3, "Simple_R3");
+					me.dynamicPageFunc(myAtis[i].R4, "Simple_R4");
+					me.dynamicPageFunc(myAtis[i].R5, "Simple_R5");
+					me.dynamicPageFunc(myAtis[i].R6, "Simple_R6");
+					
+					me.colorRight(myAtis[i].R1[2],myAtis[i].R2[2],myAtis[i].R3[2],myAtis[i].R4[2],myAtis[i].R5[2],myAtis[i].R6[2]);
+				}
+				
+				if (myAtis[i].getNumPages() > 1) {
+					me["Simple_PageNum"].show();
+					me["ATISArrows"].show();
+					me["Simple_PageNum"].setText(myAtis[i].page ~ "/" ~ myAtis[i].getNumPages());
+				} else {
+					me["Simple_PageNum"].hide();
+					me["ATISArrows"].hide();
+				}
+				
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "ATIS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].setText("ATS623 ATIS MENU");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+				
+				me.showLeft(1, 1, 1, 1, -1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, -1, 1);
+				me.showLeftArrow(1, 1, 1, -1, -1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, -1, -1, -1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "grn", "wht", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+			
+				me["Simple_L1S"].setText(" ARPT/TYPE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L4"].setText(" [  ]/[  ]");
+				me["Simple_L4"].setFont(symbol);
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_C1"].setFontSize(small);
+				me["Simple_C2"].setFontSize(small);
+				me["Simple_C3"].setFontSize(small);
+				me["Simple_C4"].setFontSize(small);
+				
+				me["Simple_R1S"].setText("REQ ");
+				me["Simple_R1"].setText("SEND ");
+				me["Simple_R2S"].setText("REQ ");
+				me["Simple_R2"].setText("SEND ");
+				me["Simple_R3S"].setText("REQ ");
+				me["Simple_R3"].setText("SEND ");
+				me["Simple_R4S"].setText("REQ ");
+				me["Simple_R4"].setText("SEND ");
+				me["Simple_R5S"].setText("AUTO ");
+				me["Simple_R5"].setText("UPDATE ");
+				me["Simple_R6S"].setText("PRINT MANUAL ");
+				me["Simple_R6"].setText("SET AUTO ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.ATISInstances[0].station != nil) {	
+				me["Simple_L1"].setText(" " ~ atsu.ATISInstances[0].station ~ "/" ~ (atsu.ATISInstances[0].type == 0 ? "ARR" : "DEP"));
+				me["Simple_L1"].setFont(default);
+				me["Simple_L1_Arrow"].show();
+			} else {
+				me["Simple_L1"].setText(" [  ]/[  ]");
+				me["Simple_L1"].setFont(symbol);
+				me["Simple_L1_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[0].received) {
+				me["Simple_C1"].setText(" " ~ atsu.ATISInstances[0].receivedCode ~ " " ~ atsu.ATISInstances[0].receivedTime);
+				me["Simple_C1"].show();
+			} else {
+				me["Simple_C1"].hide();
+			}
+			
+			if (atsu.ATISInstances[1].station != nil) {
+				me["Simple_L2"].setText(" " ~ atsu.ATISInstances[1].station ~ "/" ~ (atsu.ATISInstances[1].type == 0 ? "ARR" : "DEP"));
+				me["Simple_L2"].setFont(default);
+				me["Simple_L2_Arrow"].show();
+			} else {
+				me["Simple_L2"].setText(" [  ]/[  ]");
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L2_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[1].received) {
+				me["Simple_C2"].setText(" " ~ atsu.ATISInstances[1].receivedCode ~ " " ~ atsu.ATISInstances[1].receivedTime);
+				me["Simple_C2"].show();
+			} else {
+				me["Simple_C2"].hide();
+			}
+			
+			if (atsu.ATISInstances[2].station != nil) {
+				me["Simple_L3"].setText(" " ~ atsu.ATISInstances[2].station ~ "/" ~ (atsu.ATISInstances[2].type == 0 ? "ARR" : "DEP"));
+				me["Simple_L3"].setFont(default);
+				me["Simple_L3_Arrow"].show();
+			} else {
+				me["Simple_L3"].setText(" [  ]/[  ]");
+				me["Simple_L3"].setFont(symbol);
+				me["Simple_L3_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[2].received) {
+				me["Simple_C3"].setText(" " ~ atsu.ATISInstances[2].receivedCode ~ " " ~ atsu.ATISInstances[2].receivedTime);
+				me["Simple_C3"].show();
+			} else {
+				me["Simple_C3"].hide();
+			}
+			
+			if (atsu.ATISInstances[3].station != nil) {
+				me["Simple_L4"].setText(" " ~ atsu.ATISInstances[3].station ~ "/" ~ (atsu.ATISInstances[3].type == 0 ? "ARR" : "DEP"));
+				me["Simple_L4"].setFont(default);
+				me["Simple_L4_Arrow"].show();
+			} else {
+				me["Simple_L4"].setText(" [  ]/[  ]");
+				me["Simple_L4"].setFont(symbol);
+				me["Simple_L4_Arrow"].hide();
+			}
+			
+			if (atsu.ATISInstances[3].received) {
+				me["Simple_C4"].setText(" " ~ atsu.ATISInstances[3].receivedCode ~ " " ~ atsu.ATISInstances[3].receivedTime);
+				me["Simple_C4"].show();
+			} else {
+				me["Simple_C4"].hide();
+			}
+			
+			if (atsu.ATISInstances[0].sent) {
+				me["ATISSend1"].hide();
+			} else {
+				me["ATISSend1"].show();
+			}
+			
+			if (atsu.ATISInstances[1].sent) {
+				me["ATISSend2"].hide();
+			} else {
+				me["ATISSend2"].show();
+			}
+			
+			if (atsu.ATISInstances[2].sent) {
+				me["ATISSend3"].hide();
+			} else {
+				me["ATISSend3"].show();
+			}
+			
+			if (atsu.ATISInstances[3].sent) {
+				me["ATISSend4"].hide();
+			} else {
+				me["ATISSend4"].show();
+			}
 		} else if (page == "NOTIFICATION") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -1225,21 +1513,21 @@ var canvas_MCDU_base = {
 				
 				pageSwitch[i].setBoolValue(1);
 			}
-			if (atsu.AOC.server == 1) {
+			if (atsu.AOC.server.getValue() == "vatsim") {
 				me["Simple_R1"].setText("VATSIM ");
 				me["Simple_R2_Arrow"].show();
 				me["Simple_R3_Arrow"].hide();
-			} elsif (atsu.AOC.server == 0) {
+			} elsif (atsu.AOC.server.getValue() == "noaa") {
 				me["Simple_R1"].setText("NOAA ");
 				me["Simple_R2_Arrow"].hide();
 				me["Simple_R3_Arrow"].show();
 			}
 			
-			if (atsu.ATIS.server == 1) {
+			if (atsu.ATIS.serverSel.getValue() == "vatsim") {
 				me["Simple_L1"].setText(" VATSIM");
 				me["Simple_L2_Arrow"].show();
 				me["Simple_L3_Arrow"].hide();
-			} elsif (atsu.ATIS.server == 0) {
+			} elsif (atsu.ATIS.serverSel.getValue() == "faa") {
 				me["Simple_L1"].setText(" FAA");
 				me["Simple_L2_Arrow"].hide();
 				me["Simple_L3_Arrow"].show();
@@ -2705,29 +2993,29 @@ var canvas_MCDU_base = {
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
 				me.fontSizeCenter(small, small, normal, small, small, small);
-				me.fontSizeRight(normal, normal, normal, small, small, small);
+				me.fontSizeRight(small, small, normal, small, small, small);
 				me["Simple_C3B"].setFontSize(small);
 				
 				me.colorLeft("grn", "grn", "wht", "wht", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "blu", "grn", "blu", "wht");
+				me.colorCenter("wht", "wht", "blu", "grn", "blu", "wht");
 				me["Simple_C3B"].setColor(BLUE);
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("grn", "grn", "blu", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "blu", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
-				me["Simple_L1"].setText("----");
+			if (!engRdy.getBoolValue() or !fmgc.FMGCInternal.toFromSet) {
+				me["Simple_L1"].setText("NONE");
 			} else {
 				me["Simple_L1"].setText(fmgc.FMGCInternal.arrApt);
 			}
-			if (!engrdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
-				me["Simple_L2"].setText("----");
+			if (!engRdy.getBoolValue() or !fmgc.FMGCInternal.altAirportSet) {
+				me["Simple_L2"].setText("NONE");
 			} else {
 				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
@@ -2735,7 +3023,7 @@ var canvas_MCDU_base = {
 			me["Simple_L1S"].setText("AT");
 			me["Simple_L2S"].setText("X");
 			me["Simple_L3S"].setText("RTE RSV/PCT");
-			me["Simple_L4S"].setText("ALTN/TIME");
+			me["Simple_L4S"].setText("ALTN /TIME");
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("MIN DEST FOB");
 			
@@ -2743,11 +3031,11 @@ var canvas_MCDU_base = {
 			me["Simple_C1"].setText("----");
 			me["Simple_C2"].setText("----");
 			
-			me["Simple_R1"].setText("-.-");
-			me["Simple_R2"].setText("-.-");
+			me["Simple_R1"].setText("---.-");
+			me["Simple_R2"].setText("---.-");
 			me["Simple_R1S"].setText("EFOB");
 			me["Simple_R2S"].setText("X");
-			me["Simple_R4S"].setText("FOB     ");
+			me["Simple_R4S"].setText("FOB      ");
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
@@ -2771,7 +3059,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText("---.-");
 				
 				me["Simple_R4"].setText("---.-/FF+FQ");
-				me["Simple_R5"].setText("---.-/---.-");
+				me["Simple_R5"].setText("---.-/ --.-");
 				me["Simple_R6"].setText("---.-/----");
 	
 				me.colorLeft("ack", "ack", "wht", "wht", "wht", "wht");

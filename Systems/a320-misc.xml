@@ -2,7 +2,7 @@
 
 <!-- Copyright (c) 2020 Jonathan Redpath -->
 
-<system name="A320: APU">
+<system name="A320: MISC">
 
     <channel name="CVR" execrate="8">
 	
@@ -28,5 +28,53 @@
 		</switch>
 		
 	</channel>
+	
+	<channel name="IESI" execrate="8">
+		
+		<actuator name="/instrumentation/iesi/att-reset">
+			<input>/instrumentation/iesi/att-reset-cmd</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+	</channel>
 
+	<channel name="Shake" execrate="8">
+		
+		<switch name="/systems/shake/effect">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/velocities/groundspeed-kt ge 15
+				<test logic="OR">
+					/gear/gear[0]/compression-norm gt 0
+					/gear/gear[1]/compression-norm gt 0
+					/gear/gear[2]/compression-norm gt 0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/engines/ready">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/state eq 3
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+		<switch name="/controls/pneumatics/switches/groundair">
+			<default value="/controls/pneumatics/switches/groundair"/>
+			<test logic="AND" value="0">
+				/velocities/groundspeed-kt ge 2
+			</test>
+		</switch>
+		
+		<switch name="/controls/electrical/ground-cart">
+			<default value="/controls/electrical/ground-cart"/>
+			<test logic="AND" value="0">
+				/velocities/groundspeed-kt ge 2
+			</test>
+		</switch>
+		
+	</channel>
+	
 </system>

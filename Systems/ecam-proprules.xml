@@ -198,21 +198,20 @@
 			<value>2.0</value>
 		</time>
 		<S>
-			<property>/ECAM/ground-calc-immediate</property>
+			<property>/ECAM/logic/ground-calc-immediate</property>
 		</S>
 		<output>ECAM/phases/monostable/gnd-output</output>
 	</flipflop>
 	
-	
 	<flipflop>
 		<type>monostable</type>
 		<time>
-			<value>300.0</value>
+			<value>2.5</value>
 		</time>
 		<S>
-			<property>ECAM/phases/monostable/phase-1-300</property>
+			<property>/ECAM/logic/ground-calc-immediate</property>
 		</S>
-		<output>ECAM/phases/monostable/phase-1-output</output>
+		<output>ECAM/phases/monostable/gnd-output-2</output>
 	</flipflop>
 	
 	<flipflop>
@@ -251,44 +250,6 @@
 		<output>ECAM/buttons/recall-status-normal-output</output>
 	</flipflop>
 	
-	<flipflop>
-		<type>SR</type>
-		<S>
-			<property>ECAM/altitude-alert-monostable-set</property>
-		</S>
-		<R>
-			<property>ECAM/altitude-alert-monostable-intermediate-output</property>
-		</R>
-		<output>ECAM/altitude-alert-monostable-flipflop-intermediate</output>
-	</flipflop>
-	
-	<flipflop>
-		<type>monostable</type>
-		<inverted type="bool">true</inverted>
-		<time>
-			<value>1.5</value>
-		</time>
-		<S>
-			<not><property>ECAM/altitude-alert-monostable-flipflop-intermediate</property></not>
-		</S>
-		<output>ECAM/altitude-alert-monostable-intermediate-output</output>
-	</flipflop>
-	
-	<filter>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<and>
-					<property>ECAM/altitude-alert-monostable-flipflop-intermediate</property>
-					<not><property>ECAM/altitude-alert-monostable-intermediate-output</property></not>
-				</and>
-			</condition>
-			<value>1</value>
-		</input>
-		<output>ECAM/altitude-alert-monostable-output</output>
-	</filter>	
-	
 	<filter>
 		<type>derivative</type>
 		<input>it-autoflight/input/alt</input>
@@ -304,10 +265,12 @@
 		<S>
 			<property>it-autoflight/input/alt-is-changing</property>
 		</S>
-		<output>ECAM/alt-is-changing</output>
+		<output>ECAM/warnings/altitude-alert/alt-is-changing</output>
 	</flipflop>
 	
 	<filter>
+		<type>gain</type>
+		<gain>1</gain>
 		<input>
 			<condition>
 				<equals>
@@ -326,7 +289,7 @@
 			</condition>
 			<value>0</value>
 		</input>
-		<output>ECAM/gear-downlocked-set</output>
+		<output>ECAM/warnings/altitude-alert/gear-downlocked-set</output>
 	</filter>
 	
 	<flipflop>
@@ -335,67 +298,9 @@
 			<value>1</value>
 		</time>
 		<S>
-			<property>ECAM/gear-downlocked-set</property>
+			<not><property>ECAM/warnings/altitude-alert/gear-downlocked-set</property></not>
 		</S>
-		<output>ECAM/gear-downlocked-output</output>
-	</flipflop>
-	
-	
-	<filter>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<or>
-					<equals><property>ECAM/gear-downlocked-output</property><value>1</value></equals>
-					<equals><property>ECAM/alt-is-changing</property><value>1</value></equals>
-				</or>
-			</condition>
-			<value>1</value>
-		</input>
-		<input>
-			<condition>
-				<and>
-					<equals><property>ECAM/gear-downlocked-output</property><value>0</value></equals>
-					<equals><property>ECAM/alt-is-changing</property><value>0</value></equals>
-				</and>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>ECAM/flipflop/alt-alert-rs-reset</output>
-	</filter>
-	
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>ECAM/flipflop/altitude-alert-rs-set</property>
-		</S>
-		<R>
-			<property>ECAM/flipflop/alt-alert-rs-reset</property>
-		</R>
-		<output>ECAM/flipflop/alt-alert-rs-output</output>
-	</flipflop>
-	
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>ECAM/flipflop/alt-alert-2-rs-set</property>
-		</S>
-		<R>
-			<property>ECAM/flipflop/alt-alert-2-rs-reset</property>
-		</R>
-		<output>ECAM/flipflop/alt-alert-2-rs-output</output>
-	</flipflop>
-	
-	<flipflop>
-		<type>RS</type>
-		<S>
-			<property>ECAM/flipflop/alt-alert-3-rs-set</property>
-		</S>
-		<R>
-			<property>ECAM/flipflop/alt-alert-rs-reset</property>
-		</R>
-		<output>ECAM/flipflop/alt-alert-3-rs-output</output>
+		<output>ECAM/warnings/altitude-alert/gear-downlocked-output</output>
 	</flipflop>
 	
 	<!-- falling edge detector - take inverse of following -->
@@ -478,7 +383,7 @@
 			<value>1.0</value>
 		</time>
 		<S>
-			<property>ECAM/phases/to-power-set</property>
+			<property>ECAM/phases/phase-calculation/takeoff-power</property>
 		</S>
 		<output>ECAM/phases/monostable/to-power-set-output</output>
 	</flipflop>
@@ -1070,4 +975,58 @@
 		<output>/ECAM/warnings/fctl/gear-not-down-locked</output>
 	</flipflop>
 	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>40</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/green-yellow-press-on-monostable-input</property>
+		</S>
+		<output>/ECAM/warnings/logic/green-yellow-press-on-monostable</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/altitude-alert/flipflop-1-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/altitude-alert/flipflop-1-reset</property>
+		</R>
+		<output>/ECAM/warnings/altitude-alert/flipflop-1</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/altitude-alert/flipflop-2-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/altitude-alert/flipflop-2-reset</property>
+		</R>
+		<output>/ECAM/warnings/altitude-alert/flipflop-2</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>1.5</value>
+		</time>
+		<S>
+			<not><property>/ECAM/warnings/altitude-alert/monostable-autopilot</property></not>
+		</S>
+		<output>/ECAM/warnings/altitude-alert/monostable-autopilot-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/phases/phase-calculation/altitude-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/phases/phase-calculation/altitude-flipflop-reset</property>
+		</R>
+		<output>/ECAM/phases/phase-calculation/altitude-ge-800</output>
+	</flipflop>
 </PropertyList>
