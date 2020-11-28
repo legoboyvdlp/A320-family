@@ -233,39 +233,31 @@ var windCRZPage = {
 	},
 	updateTmpy: func() {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
+			me.L1[2] = "yel";
+			me.L2[2] = "yel";
+			me.L3[2] = "yel";
+			me.L4[2] = "yel";
+			me.L5[2] = "yel";
+			me.arrowsMatrix[0][5] = 0;
 			if (fmgc.windController.uplinkFlag[me.computer]) {
-				me.L1[2] = "yel";
-				me.L2[2] = "yel";
-				me.L3[2] = "yel";
-				me.L4[2] = "yel";
-				me.L5[2] = "yel";
 				me.L6 = [" CANCEL", " WIND", "amb"];
 				me.R6 = ["INSERT ", "WIND ", "amb"];
-				me.arrowsMatrix[0][5] = 0;
 				if (me.singleCRZ == 1) {
 					me.title = ["","UPLINK CRZ WIND",""];
 				} else {
 					me.title = ["UPLINK CRZ WIND", " AT ", me.waypoint.wp_name];
 				}
-				me.titleColour = "yel";
-				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 			} else {
-				me.L1[2] = "yel";
-				me.L2[2] = "yel";
-				me.L3[2] = "yel";
-				me.L4[2] = "yel";
-				me.L5[2] = "yel";
 				me.L6 = [" CANCEL", "UPDATE", "amb"];
 				me.R6 = ["INSERT ", "UPDATE ", "amb"];
-				me.arrowsMatrix[0][5] = 0;
 				if (me.singleCRZ == 1) {
 					me.title = ["","DRAFT CRZ WIND",""];
 				} else {
 					me.title = ["DRAFT CRZ WIND", " AT ", me.waypoint.wp_name];
 				}
-				me.titleColour = "yel";
-				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 			}
+			me.titleColour = "yel";
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		} else {
 			me.L1[2] = "blu";
 			me.L2[2] = "blu";
@@ -275,10 +267,18 @@ var windCRZPage = {
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R6 = [nil, nil, "ack"];
 			me.arrowsMatrix[0][5] = 1;
-			if (me.singleCRZ == 1) {
-				me.title = ["","CRZ WIND",""];
+			if (fmgc.windController.uplinkFlag[me.computer]) {
+				if (me.singleCRZ == 1) {
+					me.title = ["","UPLINK CRZ WIND",""];
+				} else {
+					me.title = ["UPLINK CRZ WIND", " AT ", me.waypoint.wp_name];
+				}
 			} else {
-				me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+				if (me.singleCRZ == 1) {
+					me.title = ["","CRZ WIND",""];
+				} else {
+					me.title = ["CRZ WIND", " AT ", me.waypoint.wp_name];
+				}
 			}
 			me.titleColour = "wht";
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
@@ -548,8 +548,8 @@ var windCRZPage = {
 					} elsif (!Simbrief.SimbriefWindParser.inhibit) {
 						if (pts.Engines.Engine.state[0].getValue() == 3 and pts.Engines.Engine.state[1].getValue() == 3) {
 							me.makeTmpy();
-							fmgc.windController.uplinkFlag[me.computer] = 1;
 						}
+						fmgc.windController.uplinkFlag[me.computer] = 1;
 						Simbrief.SimbriefWindParser.inhibit = 1;
 						me.reload();
 						Simbrief.SimbriefWindParser.fetch(getprop("/FMGC/simbrief-username"), me.computer);
