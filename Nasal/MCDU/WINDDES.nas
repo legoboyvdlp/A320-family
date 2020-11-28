@@ -413,8 +413,10 @@ var windDESPage = {
 					if (getprop("/FMGC/simbrief-username") == "") {
 						mcdu.mcdu_message(me.computer, "MISSING USERNAME")
 					} elsif (!Simbrief.SimbriefWindParser.inhibit) {
-						me.makeTmpy();
-						fmgc.windController.uplinkFlag[me.computer] = 1;
+						if (pts.Engines.Engine.state[0].getValue() == 3 and pts.Engines.Engine.state[1].getValue() == 3) {
+							me.makeTmpy();
+							fmgc.windController.uplinkFlag[me.computer] = 1;
+						}
 						Simbrief.SimbriefWindParser.inhibit = 1;
 						me.reload();
 						Simbrief.SimbriefWindParser.fetch(getprop("/FMGC/simbrief-username"), me.computer);
