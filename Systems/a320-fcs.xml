@@ -1172,11 +1172,13 @@
 		</actuator>
 		
 		<switch name="fcs/brake-avail">
-			<default value="1"/>
-			<!--<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 2000
-				/systems/hydraulic/yellow-psi ge 1500
-			</test>-->
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/green-psi ge 2500
+				/systems/hydraulic/yellow-psi ge 1000
+				/systems/hydraulic/yellow-accumulator-psi gt 0
+			</test>
+			<output>fcs/brake-avail</output>
 		</switch>
 		
 		<fcs_function name="fcs/left-brake-input">
