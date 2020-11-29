@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>SAS Scandinavian (OY-KAM)</name>
-				<texture-fuselage>Liveries/A320/IAE/SAS-fuselage.png</texture-fuselage>
-				<texture-engine>Liveries/A320/IAE/SAS-engine.png</texture-engine>
+				<texture-fuselage>SAS-fuselage.png</texture-fuselage>
+				<texture-engine>SAS-engine.png</texture-engine>
 			</livery>
 		</model>
 	</sim>

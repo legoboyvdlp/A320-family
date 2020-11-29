@@ -13,6 +13,8 @@
 			<path>Aircraft/A320-family/Models/A320-200-IAE.xml</path>
 			<livery>
 				<file>SAS</file>
+				<texture-fuselage>SAS-fuselage.png</texture-fuselage>
+				<texture-engine>SAS-engine.png</texture-engine>
 			</livery>
 			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/IAE</livery-dir>
 		</model>
