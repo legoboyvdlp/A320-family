@@ -488,7 +488,6 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (size(me.outputList) >= index) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
-						debug.dump(me.outputList[index + 1].wp.wp_name);
 						if (me.outputList[index + 1].wp.wp_name == "(DECEL)") {
 							mcdu_message(me.computer, "NOT ALLOWED");
 							return;
