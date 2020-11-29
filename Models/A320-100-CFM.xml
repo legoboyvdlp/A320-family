@@ -16,6 +16,22 @@
 		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.cfm.xml</path>
 	</model>
 	
+	<animation>
+		<type>select</type>
+		<object-name>Sharklet</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>WingtipFence</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
+	
 	<!-- Nasal code -->
 	<nasal>
 		<load>
