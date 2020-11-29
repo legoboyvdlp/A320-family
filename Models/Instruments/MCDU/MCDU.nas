@@ -924,9 +924,9 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me.showLeftS(-1, -1, -1, -1, -1, 1);
 				me.showLeftArrow(1, 1, -1, 1, 1, 1);
-				me.showRight(1, 1, 1, -1, 1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, -1);
-				me.showRightArrow(1, 1, 1, -1, 1, 1);
+				me.showRightArrow(1, 1, 1, 1, 1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
@@ -950,11 +950,102 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("VERT REQ ");
 				me["Simple_R2"].setText("OTHER ");
 				me["Simple_R3"].setText("TEXT ");
-				me["Simple_R3"].setText("REPORTS ");
+				me["Simple_R4"].setText("REPORTS ");
 				me["Simple_R5"].setText("STATUS ");
 				me["Simple_R5S"].setText("CONNECTION ");
 				me["Simple_R6"].setText("EMERGENCY ");
 				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "MCDUTEXT") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].setText("TEXT");
+				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_PageNum"].setText("1/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(1, 1, 1, -1, 1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, 1, -1, -1);
+				me.showRightS(1, 1, 1, -1, -1, 1);
+				me.showRight(1, 1, 1, -1, -1, 1);
+				me.showRightS(1, 1, 1, -1, -1, 1);
+				me.showRightArrow(1, 1, 1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				
+				me.standardFontSize();
+				me["Simple_L4"].setFont(symbol);
+				
+				me.colorLeft("wht", "wht", "wht", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("blu", "blu", "blu", "wht", "wht", "blu");
+				
+			
+				me["Simple_L1"].setText(" A/C PERFORM.");
+				me["Simple_L1S"].setText(" DUE TO");
+				me["Simple_L2"].setText(" WEATHER");
+				me["Simple_L2S"].setText(" DUE TO");
+				me["Simple_L3"].setText(" TURBULENCE");
+				me["Simple_L3S"].setText(" DUE TO");
+				me["Simple_R1"].setText("MEDICAL ");
+				me["Simple_R1S"].setText("DUE TO ");
+				me["Simple_R2"].setText("TECHNICAL ");
+				me["Simple_R2S"].setText("DUE TO" );
+				me["Simple_R3"].setText("DISCRETION ");
+				me["Simple_R3S"].setText("AT PILOTS ");
+				me["Simple_C4S"].setText("-------- FREE TEXT --------");
+				me["Simple_L4"].setText("[                      ]");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L5S"].setText(" ALL FIELDS");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("TEXT DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.freeTexts[i].selection == 0) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_L1_Arrow"].hide();
+				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L1S"].setColor(BLUE);
+			} elsif (atsu.freeTexts[i].selection == 1) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_L2_Arrow"].hide();
+				me["Simple_L2"].setColor(BLUE);
+				me["Simple_L2S"].setColor(BLUE);
+			} elsif (atsu.freeTexts[i].selection == 2) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_L3_Arrow"].hide();
+				me["Simple_L3"].setColor(BLUE);
+				me["Simple_L3S"].setColor(BLUE);
+			} elsif (atsu.freeTexts[i].selection == 3) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_R1_Arrow"].hide();
+				me["Simple_R1"].setColor(BLUE);
+				me["Simple_R1S"].setColor(BLUE);
+			} elsif (atsu.freeTexts[i].selection == 4) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_R2_Arrow"].hide();
+				me["Simple_R2"].setColor(BLUE);
+				me["Simple_R2S"].setColor(BLUE);
+			} elsif (atsu.freeTexts[i].selection == 5) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_R3_Arrow"].hide();
+				me["Simple_R3"].setColor(BLUE);
+				me["Simple_R3S"].setColor(BLUE);
+			} elsif (atsu.freeTexts[i].selection == 9) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_L5_Arrow"].hide();
 			}
 		} else if (page == "ATCMENU2") {
 			if (!pageSwitch[i].getBoolValue()) {
