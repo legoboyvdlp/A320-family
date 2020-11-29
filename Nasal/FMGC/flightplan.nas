@@ -263,9 +263,9 @@ var flightPlanController = {
 	},
 	
 	insertDecel: func(n, pos, index) {
-		me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
+		#me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
 		#me.flightplans[n].getWP(index).hidden = 1;
-		fmgc.windController.insertWind(n, index, 0, "(DECEL)");
+		#fmgc.windController.insertWind(n, index, 0, "(DECEL)");
 	},
 	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
