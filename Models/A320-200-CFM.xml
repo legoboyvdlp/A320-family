@@ -33,4 +33,19 @@
 		<name>EnginesCFM</name>
 		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.cfm.xml</path>
 	</model>
+
+	<!-- Nasal code -->
+	<nasal>
+		<load><![CDATA[
+			var livery_update = aircraft.canvas_livery.new("Aircraft/A320-family/Models/Liveries/A320/CFM");
+			var elements = ["Fuselage", "Wings", "Hstabs", "ElevatorL", "ElevatorR", "FlapL1", "FlapL2", "FlapR1", "FlapR2", "SpoilerL1", "SpoilerL2", "SpoilerL3", "SpoilerL4", "SpoilerL5", "SpoilerR1", "SpoilerR2", "SpoilerR3", "SpoilerR4", "SpoilerR5", "DoorL1", "DoorL4", "DoorR1", "DoorR4", "Cargo1", "Cargo2", "Cargo3", "MLGGearDoorR", "MLGGearDoorL", "MLGWingDoorR1", "MLGWingDoorL1", "MLGWingDoorR2", "MLGWingDoorL2", "NLGForewardDoorL", "NLGForewardDoorR", "NLGAftDoorL", "NLGAftDoorR", "GPUServiceDoor", "AvionicsVentDoor", "OutflowValveDoor1", "OutflowValveDoor2", "ApuFlap", "Rudder", "Sharklet", "WingtipFence"];
+			livery_update.createTarget("fuselage", elements, "/sim/model/livery/texture-fuselage", resolution=8192);
+
+			elements = ["EngineCFM56R", "EngineCFM56L", "PylonCFM56R", "PylonCFM56L", "ReverseRDoor1", "ReverseRDoor2", "ReverseRDoor3", "ReverseRDoor4", "ReverseLDoor1", "ReverseLDoor2", "ReverseLDoor3", "ReverseLDoor4"];
+			livery_update.createTarget("engines", elements, "/sim/model/livery/texture-engine");
+		]]></load>
+		<unload>
+			livery_update.stop();
+		</unload>
+	</nasal>
 </PropertyList>
