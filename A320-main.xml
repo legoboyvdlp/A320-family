@@ -4540,6 +4540,7 @@
 		<atsu>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/Dictionary.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/CPDLC.nas</file>
 		</atsu>
 		<dmc>
 			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>
