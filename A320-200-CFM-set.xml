@@ -12,7 +12,9 @@
 		<model>
 			<path>Aircraft/A320-family/Models/A320-200-CFM.xml</path>
 			<livery>
-				<file>Airbus</file>
+				<file>SWR</file>
+				<texture-fuselage>SWR-fuselage.png</texture-fuselage>
+				<texture-engine>SWR-engine.png</texture-engine>
 			</livery>
 			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/CFM</livery-dir>
 		</model>

@@ -471,7 +471,7 @@
 						<binding>
 							<command>nasal</command>
 							<script>
-							aircraft.livery.dialog.toggle();
+							libraries.livery.dialog.toggle();
 							</script>
 						</binding>
 					</item>

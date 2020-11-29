@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>Swiss (HB-JLS)</name>
-				<texture-fuselage>Aircraft/A320-family/Models/Liveries/A320/CFM/SWR-fuselage.png</texture-fuselage>
-				<texture-engine>Aircraft/A320-family/Models/Liveries/A320/CFM/SWR-engine.png</texture-engine>
+				<texture-fuselage>SWR-fuselage.png</texture-fuselage>
+				<texture-engine>SWR-engine.png</texture-engine>
 			</livery>
 		</model>
 	</sim>
