@@ -11,18 +11,18 @@ var CPDLCmessage = {
 	},
 };
 
-makeNewDictionaryItem(CPDLCmessage.new("CONNECT",0), "CONNECT");
+var CPDLCnewMsgFlag = props.globals.getNode("/network/cpdlc/rx/new-message");
 
+setlistener("/network/cpdlc/rx/new-message", func() {
+	if (CPDLCnewMsgflag.getBoolValue()) {
+		# add to DCDU message buffer
+		# make alert on DCDU
+		# add DCDU prompts (wilco, etc)
+		CPDLCnewMsgFlag.setBoolValue(0);
+	}
+}, 0, 0);
 
-makeNewDictionaryItem(CPDLCmessage.new("WILCO",0), "WILCO");
-makeNewDictionaryItem(CPDLCmessage.new("UNABLE",0), "UNABLE");
-makeNewDictionaryItem(CPDLCmessage.new("STANDBY",0), "STANDBY");
-makeNewDictionaryItem(CPDLCmessage.new("ROGER",0), "ROGER");
-makeNewDictionaryItem(CPDLCmessage.new("AFFIRM",0), "AFFIRM");
-makeNewDictionaryItem(CPDLCmessage.new("NEGATIVE",0), "NEGATIVE");
-
-
-makeNewDictionaryItem(CPDLCmessage.new("REQUEST ALTITUDE",0), "REQUEST ALTITUDE");
+# issue fgcommand with cpdlc message to send
 
 var freeText = {
 	new: func(index) {
@@ -32,6 +32,23 @@ var freeText = {
 	},
 	selection: 9,
 	changed: 0,
+	getText: func() {
+		if (me.selection == 0) {
+			return "DUE TO A/C PERFORMANCE";
+		} elsif (me.selection == 1) {
+			return "DUE TO WEATHER";
+		} elsif (me.selection == 2) {
+			return "DUE TO TURBULENCE";
+		} elsif (me.selection == 3) {
+			return "DUE TO MEDICAL";
+		} elsif (me.selection == 4) {
+			return "DUE TO TECHNICAL";
+		} elsif (me.selection == 5) {
+			return "AT PILOTS DISCRETION";
+		} else {
+			return nil;
+		}
+	}
 };
 
 var freeTexts = [freeText.new(0), freeText.new(1)];
