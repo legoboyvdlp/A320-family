@@ -1913,6 +1913,22 @@
 			</volume>
 		</announcements>
 		
+		<atc-msg>
+			<name>ATC MSG</name>
+			<path>Aircraft/A320-family/Sounds/Cockpit/ATC-msg-ring.wav</path>
+			<mode>once</mode>
+			<type>avionics</type>
+			<condition>
+				<property>/network/cpdlc/new-message-ringtone</property>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>1.5</factor>
+			</volume>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+		</atc-msg>
+		
 		<chime>
 			<name>Chime</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/chime.wav</path>
@@ -1946,7 +1962,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</crc>
-	
+		
 		<cricket>
 			<name>Cricket</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/cricket.wav</path>

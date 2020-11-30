@@ -18,26 +18,29 @@ var CPDLCnewMsgLight = props.globals.initNode("/network/cpdlc/new-message-light"
 setlistener("/network/cpdlc/rx/new-message", func() {
 	if (CPDLCnewMsgFlag.getBoolValue()) {
 		# add to DCDU message buffer to display
-		
 		ATCMSGRingCancel = 0;
-		ATCMSGRing();
+		var messageType = 0; # urgent or normal
+		ATCMSGRing(messageType);
 		ATCMsgFlashCancel = 0;
 		ATCMSGFlash();
 		# ATC MSG pushbutton: flashes, ringtone after 15 secs, therafter every 15 secs
 		# add DCDU prompts (wilco, etc) associated to message --> so the CPDLC message object must store the correct response for the actual message
-		CPDLCnewMsgFlag.setBoolValue(0);
 	}
-}, 0, 0);
+}, 0, 1);
 
 var ATCMSGRingCancel = 0;
-var ATCMSGRing = func() {
-	CPDLCnewMsgAlert.setBoolValue(0);
+var ATCMSGRing = func(messageType) {
+	print("Going to ring");
 	settimer(func() {
 		if (!ATCMSGRingCancel) {
-			CPDLCnewMsgAlert.setBoolValue(1);
-			ATCMSGRing();
+			print("Rang, will ring 15 seconds later again");
+			CPDLCnewMsgAlert.setBoolValue(0);
+			settimer(func() {
+				CPDLCnewMsgAlert.setBoolValue(1);
+				ATCMSGRing(messageType);
+			}, 0.1);
 		}
-	}, 15);
+	}, (messageType == 0 ? 15 : 5));
 };
 
 var ATCMsgFlashCancel = 0;

@@ -16,6 +16,8 @@ var dcdu_test_time = props.globals.initNode("/instrumentation/du/dcdu-test-time"
 var dcdu_offtime = props.globals.initNode("/instrumentation/du/dcdu-off-time", 0.0, "DOUBLE");
 var dcdu_test_amount = props.globals.initNode("/instrumentation/du/dcdu-test-amount", 0.0, "DOUBLE");
 
+# todo 16.5 watts
+
 var canvas_DCDU_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
@@ -117,7 +119,7 @@ var canvas_DCDU = {
 		me["MessageTimeStamp"].hide();
 		me["RecallMode"].hide();
 		me["LinkLost"].hide();
-		me["Recall"].hide();
+		me["Recall"].show();
 		me["Close"].hide();
 		
 		if (atsu.ADS.getCount() != me.cache.adsCount) {
