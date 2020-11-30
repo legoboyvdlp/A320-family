@@ -12,43 +12,89 @@ var CPDLCmessage = {
 };
 
 var CPDLCnewMsgFlag = props.globals.getNode("/network/cpdlc/rx/new-message");
+var CPDLCnewMsgAlert = props.globals.initNode("/network/cpdlc/new-message-ringtone", 0, "BOOL");
+var CPDLCnewMsgLight = props.globals.initNode("/network/cpdlc/new-message-light", 0, "BOOL");
 
 setlistener("/network/cpdlc/rx/new-message", func() {
-	if (CPDLCnewMsgflag.getBoolValue()) {
-		# add to DCDU message buffer
-		# make alert on DCDU
-		# add DCDU prompts (wilco, etc)
+	if (CPDLCnewMsgFlag.getBoolValue()) {
+		# add to DCDU message buffer to display
+		
+		ATCMSGRingCancel = 0;
+		ATCMSGRing();
+		ATCMsgFlashCancel = 0;
+		ATCMSGFlash();
+		# ATC MSG pushbutton: flashes, ringtone after 15 secs, therafter every 15 secs
+		# add DCDU prompts (wilco, etc) associated to message --> so the CPDLC message object must store the correct response for the actual message
 		CPDLCnewMsgFlag.setBoolValue(0);
 	}
 }, 0, 0);
 
+var ATCMSGRingCancel = 0;
+var ATCMSGRing = func() {
+	CPDLCnewMsgAlert.setBoolValue(0);
+	settimer(func() {
+		if (!ATCMSGRingCancel) {
+			CPDLCnewMsgAlert.setBoolValue(1);
+			ATCMSGRing();
+		}
+	}, 15);
+};
+
+var ATCMsgFlashCancel = 0;
+var ATCMSGFlash = func() {
+	CPDLCnewMsgLight.setBoolValue(!CPDLCnewMsgLight.getBoolValue());
+	settimer(func() {
+		if (!ATCMsgFlashCancel) {
+			ATCMSGFlash();
+		}
+	}, 0.2);
+};
+
 # issue fgcommand with cpdlc message to send
 
+var prefixes = {
+	acPerf: "DUE TO A/C PERFORMANCE",
+	weather: "DUE TO WEATHER",
+	turbulence: "DUE TO TURBULENCE",
+	medical: "DUE TO MEDICAL",
+	technical: "DUE TO TECHNICAL",
+	discretion: "AT PILOTS DISCRETION",
+};
+
+var responses = {
+	w: "WILCO",
+	u: "UNABLE",
+	a: "AFFIRM",
+	n: "NEGATIVE",
+	r: "ROGER",
+	s: "STBY",
+	#o: "none?",
+	#y: "any?",
+};
+
 var freeText = {
-	new: func(index) {
-		var freeTextObj = {parents: [freeText]};
-		freeTextObj.index = index;
-		return freeTextObj;
+	new: func() {
+		return {parents: [freeText]};
 	},
 	selection: 9,
 	changed: 0,
 	getText: func() {
 		if (me.selection == 0) {
-			return "DUE TO A/C PERFORMANCE";
+			return prefixes["acPerf"];
 		} elsif (me.selection == 1) {
-			return "DUE TO WEATHER";
+			return prefixes["weather"];
 		} elsif (me.selection == 2) {
-			return "DUE TO TURBULENCE";
+			return prefixes["turbulence"];
 		} elsif (me.selection == 3) {
-			return "DUE TO MEDICAL";
+			return prefixes["medical"];
 		} elsif (me.selection == 4) {
-			return "DUE TO TECHNICAL";
+			return prefixes["technical"];
 		} elsif (me.selection == 5) {
-			return "AT PILOTS DISCRETION";
+			return prefixes["discretion"];
 		} else {
-			return nil;
+			return "";
 		}
 	}
 };
 
-var freeTexts = [freeText.new(0), freeText.new(1)];
+var freeTexts = [freeText.new(), freeText.new()];

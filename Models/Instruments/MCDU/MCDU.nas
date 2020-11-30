@@ -1426,7 +1426,6 @@ var canvas_MCDU_base = {
 				me["Simple_L2S"].setText("NEXT ATC");
 				me["Simple_L2"].setText("----");
 				me["Simple_C1"].setText("-------------     ");
-				me["Simple_R1"].setText("NOTIFIED ");
 				me["Simple_R3S"].setText("MAX UPLINK DELAY");
 				me["Simple_R3"].setText("NONE");
 				
@@ -1438,9 +1437,19 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
+			if (canvas_dcdu.CPDLCstatusNode.getValue() == 2) {
+				me["Simple_R1"].setText("DISCONNECT ");
+				me["Simple_C1"].setText("----------        ");
+			} else {
+				me["Simple_R1"].setText("NOTIFIED ");
+				me["Simple_C1"].setText("-------------     ");
+			}
+			
 			if (atsu.notificationSystem.notifyAirport != nil) {
 				if (atsu.notificationSystem.hasNotified) {
 					me["Simple_L1"].setText(atsu.notificationSystem.notifyAirport);
+					me["Simple_C1"].show();
+					me["Simple_R1"].show();
 				} else {
 					me["Simple_L1"].setText("----");
 					me["Simple_C1"].hide();

@@ -97,14 +97,21 @@ var canvas_DCDU_base = {
 	},
 };
 
+var CPDLCstatusNode = props.globals.getNode("/network/cpdlc/link/status");
+var CPDLCauthority = props.globals.getNode("/network/cpdlc/link/data-authority");
+
 var canvas_DCDU = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_DCDU, canvas_DCDU_base]};
 		m.init(canvas_group, file);
+		m.updateActiveATC();
 		return m;
 	},
 	getKeys: func() {
 		return ["ActiveATC","MessageTimeStamp","ADSConnection","RecallMode","LinkLost","Recall","Close"];
+	},
+	cache: {
+		adsCount: 0,
 	},
 	update: func() {
 		me["MessageTimeStamp"].hide();
@@ -113,21 +120,38 @@ var canvas_DCDU = {
 		me["Recall"].hide();
 		me["Close"].hide();
 		
-		if (atsu.ADS.state == 2) {
-			me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
-			me["ADSConnection"].show();
-		} else {
-			me["ADSConnection"].hide();
+		if (atsu.ADS.getCount() != me.cache.adsCount) {
+			me.cache.adsCount = atsu.ADS.getCount();
+			# FANS A+: status of ADS seems to be independent of connection to CPDLC: confirm in GTG document
+			if (atsu.ADS.state == 2) {
+				me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
+				me["ADSConnection"].show();
+			} else {
+				me["ADSConnection"].hide();
+			}
 		}
-		
-		if (atsu.notificationSystem.notifyAirport != nil and atsu.notificationSystem.hasNotified) {
-			me["ActiveATC"].setText("ACTIVE ATC : " ~ atsu.notificationSystem.notifyAirport ~ " CTL");
+	},
+	updateActiveATC: func() {
+		if (CPDLCstatusNode.getValue() == 2) {
+			me["ActiveATC"].setText("ACTIVE ATC : " ~ CPDLCauthority.getValue() ~ " CTL");
 			me["ActiveATC"].show();
 		} else {
 			me["ActiveATC"].hide();
 		}
-	}
+	},
 };
+
+setlistener("/network/cpdlc/link/status", func() {
+	if (DCDU != nil) {
+		DCDU.updateActiveATC();
+	}
+}, 0, 0);
+
+setlistener("/network/cpdlc/link/data-authority", func() {
+	if (DCDU != nil) {
+		DCDU.updateActiveATC();
+	}
+}, 0, 0);
 
 var canvas_DCDU_test = {
 	init: func(canvas_group, file) {
@@ -180,10 +204,10 @@ setlistener("sim/signals/fdm-initialized", func {
 });
 
 var rateApply = func {
-	DCDU_update.restart(0.05 * dcdu_rate.getValue());
+	DCDU_update.restart(0.15 * dcdu_rate.getValue());
 }
 
-var DCDU_update = maketimer(0.05, func {
+var DCDU_update = maketimer(0.15, func {
 	canvas_DCDU_base.update();
 });
 

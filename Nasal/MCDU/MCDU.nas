@@ -966,6 +966,13 @@ var rskbutton = func(btn, i) {
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 3;
 			atsu.freeTexts[i].changed = 1;
+		} else if (page == "CONNECTSTATUS") {
+			if (canvas_dcdu.CPDLCstatusNode.getValue() == 2) {
+				atsu.notificationSystem.hasNotified = 0;
+				fgcommand("cpdlc-disconnect");
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
