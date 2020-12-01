@@ -27,6 +27,7 @@ var initInputA = func(key, i) {
 				if (tfs == 4) {
 					fmgc.FMGCInternal.altAirport = scratchpad;
 					fmgc.FMGCInternal.altAirportSet = 1;
+					atsu.ATISInstances[2].newStation(scratchpad);
 					fmgc.windController.updatePlans();
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
@@ -219,6 +220,8 @@ var initInputA = func(key, i) {
 						}
 						fmgc.FMGCInternal.depApt = fromto[0];
 						fmgc.FMGCInternal.arrApt = fromto[1];
+						atsu.ATISInstances[0].newStation(fromto[0]);
+						atsu.ATISInstances[1].newStation(fromto[1]);
 						fmgc.FMGCInternal.toFromSet = 1;
 						fmgc.FMGCNodes.toFromSet.setValue(1);
 						#scratchpad

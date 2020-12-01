@@ -5,6 +5,7 @@
 
 var pageNode = [props.globals.getNode("/MCDU[0]/page"), props.globals.getNode("/MCDU[1]/page")];
 var page = nil;
+var msg = nil;
 
 var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
@@ -285,6 +286,77 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("WEATHERREQ");
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(1);
+		} else if (page == "ATIS") {
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
+			if (scratchpad == "CLR") {
+				if (atsu.ATISInstances[0].sent != 1) {
+					if (fmgc.FMGCInternal.depApt != "") {
+						atsu.ATISInstances[0].newStation(fmgc.FMGCInternal.depApt);
+					} else {
+						atsu.ATISInstances[0].station = nil;
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[0].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 0);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (find("/", scratchpad) != -1) {
+				var str = split("/", scratchpad);
+				if (size(str[0]) > 0 and size(str[1]) == 0) {
+					var result = atsu.ATISInstances[0].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					} elsif (result == 0) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+				} elsif (size(str[0]) == 0 and size(str[1]) > 0) {
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[0].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[0].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
+					var result = atsu.ATISInstances[0].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[0].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[0].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} else {
+				var result = atsu.ATISInstances[0].newStation(scratchpad);
+				if (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} elsif (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 0) {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
+			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 0;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -355,6 +427,80 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("DATAMODE");
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(2);
+		} else if (page == "DATAMODE") {
+			atsu.ATIS.serverSel.setValue("faa");
+			acconfig.writeSettings();
+		} else if (page == "ATIS") {
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
+			if (scratchpad == "CLR") {
+				if (atsu.ATISInstances[1].sent != 1) {
+					if (fmgc.FMGCInternal.arrApt != "") {
+						atsu.ATISInstances[1].newStation(fmgc.FMGCInternal.arrApt);
+					} else {
+						atsu.ATISInstances[1].station = nil;
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[1].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 1);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			}  elsif (find("/", scratchpad) != -1) {
+				var str = split("/", scratchpad);
+				if (size(str[0]) > 0 and size(str[1]) == 0) {
+					var result = atsu.ATISInstances[1].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					} elsif (result == 0) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+				} elsif (size(str[0]) == 0 and size(str[1]) > 0) {
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[1].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[1].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
+					var result = atsu.ATISInstances[1].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[1].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[1].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} else {
+				var result = atsu.ATISInstances[1].newStation(scratchpad);
+				if (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} elsif (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 0) {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
+			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 1;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -408,6 +554,80 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("VOICEDIRECTORY");
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(3);
+		} else if (page == "DATAMODE") {
+			atsu.ATIS.serverSel.setValue("vatsim");
+			acconfig.writeSettings();
+		} else if (page == "ATIS") {
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
+			if (scratchpad == "CLR") {
+				if (atsu.ATISInstances[2].sent != 1) {
+					if (fmgc.FMGCInternal.altAirportSet) {
+						atsu.ATISInstances[2].newStation(fmgc.FMGCInternal.altAirport);
+					} else {
+						atsu.ATISInstances[2].station = nil;
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[2].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 2);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (find("/", scratchpad) != -1) {
+				var str = split("/", scratchpad);
+				if (size(str[0]) > 0 and size(str[1]) == 0) {
+					var result = atsu.ATISInstances[2].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					} elsif (result == 0) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+				} elsif (size(str[0]) == 0 and size(str[1]) > 0) {
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[2].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[2].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
+					var result = atsu.ATISInstances[2].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[2].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[2].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} else {
+				var result = atsu.ATISInstances[2].newStation(scratchpad);
+				if (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} elsif (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 0) {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
+			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 2;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -456,6 +676,70 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(4);
+		} else if (page == "ATIS") {
+			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
+			if (scratchpad == "CLR") {
+				if (atsu.ATISInstances[3].sent != 1) {
+					atsu.ATISInstances[3].station = nil;
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (size(scratchpad) == 0) {
+				if (atsu.ATISInstances[3].received) {
+					canvas_mcdu.myAtis[i] = atisPage.new(i, 3);
+					pageNode[i].setValue("ATISDETAIL");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} elsif (find("/", scratchpad) != -1) {
+				var str = split("/", scratchpad);
+				if (size(str[0]) > 0 and size(str[1]) == 0) {
+					var result = atsu.ATISInstances[3].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					} elsif (result == 0) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+				} elsif (size(str[0]) == 0 and size(str[1]) > 0) {
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[3].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[3].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} elsif (size(str[0]) > 0 and size(str[1]) > 0) {
+					var result = atsu.ATISInstances[3].newStation(str[0]);
+					if (result == 2) {
+						mcdu_message(i, "NOT IN DATA BASE");
+					} elsif (result == 1) {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					if (str[1] == "DEP") {
+						atsu.ATISInstances[3].type = 1;
+					} elsif (str[1] == "ARR") {
+						atsu.ATISInstances[3].type = 0;
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} else {
+				var result = atsu.ATISInstances[3].newStation(scratchpad);
+				if (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} elsif (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 0) {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -511,6 +795,9 @@ var lskbutton = func(btn, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 9;
+			atsu.freeTexts[i].changed = 1;
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(5);
 		} else {
@@ -570,7 +857,7 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myClosestAirport[i].freeze();
 		} else if (page == "AOCMENU" or page == "ATCMENU" or page == "ATCMENU2") {
 			pageNode[i].setValue("ATSUDLINK");
-		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS") {
+		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS" or page == "MCDUTEXT") {
 			pageNode[i].setValue("ATCMENU");
 		} else if (page == "WEATHERREQ" or page == "RECEIVEDMSGS") {
 			pageNode[i].setValue("AOCMENU");
@@ -581,6 +868,12 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATSUDLINK");
 		} else if (page == "COMMINIT" or page == "VOICEDIRECTORY" or page == "DATAMODE"  or page == "COMMSTATUS" or page == "COMPANYCALL") {
 			pageNode[i].setValue("COMMMENU");
+		} else if (page == "ATIS") {
+			pageNode[i].setValue("ATCMENU2");
+		} else if (page == "ATISDETAIL") {
+			pageNode[i].setValue("ATIS");
+		} else if (page == "AOCCONFIG") {
+			pageNode[i].setValue("AOCMENU");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -662,6 +955,17 @@ var rskbutton = func(btn, i) {
 		} else if (page == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "TERM FCST";
 			pageNode[i].setValue("WEATHERREQ");
+		} else if (page == "ATCMENU2") {
+			pageNode[i].setValue("ATIS");
+		} else if (page == "ATIS") {
+			if (atsu.ATISInstances[0].station != nil and atsu.ATISInstances[0].sent != 1) {
+				atsu.ATISInstances[0].sendReq(i);
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 3;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -693,7 +997,19 @@ var rskbutton = func(btn, i) {
 			pageNode[i].setValue("COMPANYCALL");
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("WEATHERREQ");
-		} else {
+		} else if (page == "DATAMODE") {
+			atsu.AOC.server.setValue("noaa");
+			acconfig.writeSettings();
+		} else if (page == "ATIS") {
+			if (atsu.ATISInstances[1].station != nil and atsu.ATISInstances[1].sent != 1) {
+				atsu.ATISInstances[1].sendReq(i);
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 4;
+			atsu.freeTexts[i].changed = 1;
+		}  else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
@@ -730,6 +1046,20 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myReceivedMessages[i] = nil;
 			canvas_mcdu.myReceivedMessages[i] = receivedMessagesPage.new(i);
 			pageNode[i].setValue("RECEIVEDMSGS");
+		} else if (page == "DATAMODE") {
+			atsu.AOC.server.setValue("vatsim");
+			acconfig.writeSettings();
+		} else if (page == "ATIS") {
+			if (atsu.ATISInstances[2].station != nil and atsu.ATISInstances[2].sent != 1) {
+				atsu.ATISInstances[2].sendReq(i);
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 5;
+			atsu.freeTexts[i].changed = 1;
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("MCDUTEXT");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -790,6 +1120,12 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(4);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(4);
+		} else if (page == "ATIS") {
+			if (atsu.ATISInstances[3].station != nil and atsu.ATISInstances[3].sent != 1) {
+				atsu.ATISInstances[3].sendReq(i);
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -876,7 +1212,7 @@ var rskbutton = func(btn, i) {
 			} elsif (result == 4) {
 				mcdu.mcdu_message(i, "NO COMM MSG NOT GEN");
 			}  else {
-				mcdu_scratchpad.scratchpads[i].empty();
+				pageNode[i].setValue("AOCMENU");
 			}
 		} else if (page == "VOICEDIRECTORY") {
 			for (var i = 0; i < 3; i = i + 1) {
@@ -884,6 +1220,8 @@ var rskbutton = func(btn, i) {
 					rmp.transfer(i + 1);
 				}
 			}
+		} else if (page == "AOCMENU") {
+			pageNode[i].setValue("AOCCONFIG");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -932,10 +1270,20 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "NOTIFICATION") {
 			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "MCDUTEXT") {
+			# todo transfer to DCDU
+			pageNode[i].setValue("ATCMENU");
 		} else if (page == "ATSUDLINK") {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "CONNECTSTATUS") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "AOCMENU") {
+			msg = mcdu.ReceivedMessagesDatabase.firstUnviewed();
+			if (msg != -99) {
+				canvas_mcdu.myReceivedMessages[i] = receivedMessagesPage.new(i);
+				canvas_mcdu.myReceivedMessage[i] = receivedMessagePage.new(i, msg);
+				pageNode[i].setValue("RECEIVEDMSG");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1021,6 +1369,8 @@ var arrowbutton = func(btn, i) {
 			initInputIRS("up",i);
 		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonUp();
+		} else if (page == "ATISDETAIL") {
+			canvas_mcdu.myAtis[i].scrollUp();
 		}
 	} else if (btn == "down") {
 		if (page == "F-PLNA" or page == "F-PLNB") {
@@ -1035,6 +1385,8 @@ var arrowbutton = func(btn, i) {
 			initInputIRS("down",i);
 		} else if (page == "WINDCRZ") {
 			canvas_mcdu.myCRZWIND[i].pushButtonDown();
+		} else if (page == "ATISDETAIL") {
+			canvas_mcdu.myAtis[i].scrollDown();
 		}
 	}
 }
@@ -1080,7 +1432,7 @@ var pagebutton = func(btn, i) {
 			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
 			var page = page;
-			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT") {
+			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "MCDUTEXT" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
 				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);

@@ -1,0 +1,59 @@
+All voices created at http://www.fromtexttospeech.com/
+Captain voice:		US English - John
+Mechanic voice: 	US English - George
+Flight attendant voice:	US English - Daisy
+
+
+BOARDING (F/A) - fa_boarding
+Ladies and gentlemen, the Captain has turned on the Fasten Seat Belt sign. If you haven’t already done so, please stow your carry-on luggage underneath the seat in front of you or in an overhead bin. Please take your seat and fasten your seat belt. And also make sure your seat back and folding trays are in their full upright position.
+If you are seated next to an emergency exit, please read carefully the special instructions card located by your seat. If you do not wish to perform the functions described in the event of an emergency, please ask a flight attendant to reseat you.
+We remind you that this is a non-smoking flight. Smoking is prohibited on the entire aircraft, including the lavatories. Tampering with, disabling or destroying the lavatory smoke detectors is prohibited by law.
+If you have any questions about our flight today, please don’t hesitate to ask one of our flight attendants. Thank you.
+
+
+WELCOME (F/A) - fa_welcome
+Ladies and gentlemen, my name is Daisy and I’m your chief flight attendant. On behalf of the entire crew, welcome aboard this flight.
+At this time, make sure your seat backs and tray tables are in their full upright position and that your seat belt is correctly fastened. Also, your portable electronic devices must be set to ‘airplane’ mode until an announcement is made upon arrival. Thank you.
+
+WELCOME (CPT) - cpt_welcome
+Ladies and gentlemen, this is your captain speaking. Welcome on board. We are all set and ready to go, just waiting for clearance to depart the gate. Please, make yourself comfortable, and I wish you a very pleasant flight.
+
+DOORS CHECK (CPT) - cpt_doors
+Cabin Crew, doors on automatic, arm slides, cross-check and report. Thank you.
+
+
+SAFETY (F/A) - fa_safety
+Now we request your full attention as the flight attendants demonstrate the safety features of this aircraft.
+When the seat belt sign illuminates, you must fasten your seat belt. Insert the metal fittings one into the other, and tighten by pulling on the loose end of the strap. To release your seat belt, lift the upper portion of the buckle. We suggest that you keep your seat belt fastened throughout the flight, as we may experience turbulence.
+There are several emergency exits on this aircraft, two forward, two aft and two over each wing. Please take a few moments now to locate your nearest exit. In some cases, your nearest exit may be behind you. If we need to evacuate the aircraft, floor-level lighting will guide you towards the exit. Doors can be opened by moving the handle in the direction of the arrow. Each door is equipped with an inflatable slide which may also be detached and used as a life raft.
+Oxygen and the air pressure are always being monitored. In the event of a decompression, an oxygen mask will automatically appear in front of you. To start the flow of oxygen, pull the mask towards you. Place it firmly over your nose and mouth, secure the elastic band behind your head, and breathe normally. Although the bag does not inflate, oxygen is flowing to the mask. If you are travelling with a child or someone who requires assistance, secure your mask on first, and then assist the other person. Keep your mask on until a uniformed crew member advises you to remove it.
+In the event of an emergency, please assume the bracing position. Lean forward with your hands on top of your head and your elbows against your thighs. Ensure your feet are flat on the floor.
+A life vest is located in a pouch under your seat or between the armrests. When instructed to do so, open the plastic pouch and remove the vest. Slip it over your head. Pass the straps around your waist and adjust at the front. To inflate the vest, pull firmly on the red cord, only when leaving the aircraft. If you need to refill the vest, blow into the mouthpieces. Use the whistle and light to attract attention. Also, your seat bottom cushion can be used as a flotation device. Pull the cushion from the seat, slip your arms into the straps, and hug the cushion to your chest.
+At this time, your portable electronic devices must be set to ‘airplane’ mode until an announcement is made upon arrival.
+We remind you that this is a non-smoking flight. Tampering with, disabling, or destroying the smoke detectors located in the lavatories is prohibited by law.
+You will find this and all the other safety information in the card located in the seat pocket in front of you. We strongly suggest you read it before take-off. If you have any questions, please don’t hesitate to ask one of our crew members. We wish you all an enjoyable flight.
+
+
+TAKEOFF (CPT) - cpt_takeoff
+Cabin crew, prepare for take-off.
+
+
+SEATBELT OFF (F/A) - fa_seatbelt10k.wav
+Ladies and gentlemen, the Captain has turned off the Fasten Seat Belt sign, and you may now move around the cabin. However we always recommend to keep your seat belt fastened while you’re seated.
+In a few moments, the flight attendants will be passing around the cabin to offer you hot or cold drinks, as well as a snack. Alcoholic drinks are also available at a nominal charge. Now, sit back, relax, and enjoy the flight. Thank you.
+
+
+DESCENT (F/A) - fa_descent
+Ladies and gentlemen, as we start our descent, please make sure your seat backs and tray tables are in their full upright position. Make sure your seat belt is securely fastened and all carry-on luggage is stowed underneath the seat in front of you or in the overhead bins. Thank you.
+
+
+LANDING (CPT) - cpt_landing
+Cabin crew, prepare for landing.
+
+
+LANDED (F/A) - fa_landed
+Ladies and gentlemen, welcome to your destination Airport.
+For your safety and comfort, please remain seated with your seat belt fastened until the Captain turns off the Fasten Seat Belt sign. This will indicate that we have parked at the gate and that it is safe for you to move about. At this time, you may use your cellular phones if you wish.
+Please check around your seat for any personal belongings you may have brought on board with you and please use caution when opening the overhead bins, as heavy articles may have shifted around during the flight.
+If you require deplaning assistance, please remain in your seat until all other passengers have deplaned. One of our crew members will then be pleased to assist you.
+On behalf of the entire crew, I’d like to thank you for joining us on this trip and we are looking forward to seeing you on board again in the near future. Have a nice stay.

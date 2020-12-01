@@ -11,8 +11,6 @@
 	<!-- No button lights without power! -->
 	<animation>
 		<type>select</type>
-		<object-name>ACESSFeedBtn1F</object-name>
-		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>ACPack1Btn1F</object-name>
 		<object-name>ACPack1Btn2O</object-name>
 		<object-name>ACPack2Btn1F</object-name>
@@ -95,6 +93,8 @@
 
 	<animation>
 		<type>select</type>
+		<object-name>ACESSFeedBtn1F</object-name>
+		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>AftCargoIsoBtn1F</object-name>
 		<object-name>AftCargoIsoBtn2O</object-name>
 		<object-name>AftCargoSmkBtn1S</object-name>
@@ -355,7 +355,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -416,7 +416,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -464,7 +464,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -872,7 +872,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -934,7 +934,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -996,7 +996,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1230,7 +1230,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1297,7 +1297,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1364,7 +1364,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1431,7 +1431,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1498,7 +1498,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1565,7 +1565,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1632,7 +1632,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1700,7 +1700,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1767,7 +1767,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1833,7 +1833,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1876,7 +1876,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1919,7 +1919,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1964,7 +1964,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2040,7 +2040,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -2126,7 +2126,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2193,7 +2193,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2260,7 +2260,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2327,7 +2327,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2395,7 +2395,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2454,7 +2454,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2519,7 +2519,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2584,7 +2584,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2648,7 +2648,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2713,7 +2713,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2778,7 +2778,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2843,7 +2843,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2909,7 +2909,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2970,7 +2970,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3037,7 +3037,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3134,9 +3134,13 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<and>
+					<and>	
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>/engines/engine[0]/n2-actual</property>
+							<value>14.0</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
 							<value>25</value>
 						</greater-than-equals>
 						<equals>
@@ -3210,23 +3214,14 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<property>/systems/electrical/sources/idg-1/gcu-1-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/gen-1</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3278,12 +3273,12 @@
 				<condition>
 					<or>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
 						</greater-than-equals>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
+							<property>systems/electrical/bus/ac-2</property>
+							<value>110</value>
 						</greater-than-equals>
 					</or>
 				</condition>
@@ -3292,7 +3287,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3343,17 +3338,14 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-bat</property>
-						<value>25</value>
-					</greater-than-equals> <!-- control is on DC BAT bus 301PP via 11 PB - so if you enter EMER ELEC with it turned off, too bad -->
+					<property>/systems/electrical/sources/apu/gcu-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/apu</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3424,7 +3416,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3468,7 +3460,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3532,23 +3524,14 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-bat</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<property>/systems/electrical/sources/idg-2/gcu-2-powered</property>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/electrical/switches/gen-2</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3635,7 +3618,11 @@
 				<condition>
 					<and>
 						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
+							<property>/engines/engine[1]/n2-actual</property>
+							<value>14.0</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
 							<value>25</value>
 						</greater-than-equals>
 						<equals>
@@ -3725,7 +3712,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -3887,7 +3874,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -4248,7 +4235,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4312,7 +4299,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4385,7 +4372,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4458,7 +4445,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4524,7 +4511,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4597,7 +4584,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4671,7 +4658,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -4862,7 +4849,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -4939,7 +4926,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5448,7 +5435,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5509,7 +5496,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5570,7 +5557,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5635,7 +5622,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5678,7 +5665,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5729,7 +5716,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5786,14 +5773,14 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("controls/apu/master") == 1) {
+				if (systems.APUNodes.Controls.master.getBoolValue()) {
 					systems.APUController.APU.startCommand();
 				}
 				</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -5865,7 +5852,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5970,7 +5957,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -7355,7 +7342,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7401,7 +7388,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7521,7 +7508,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7562,7 +7549,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7614,7 +7601,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-btn", 1);</script>
+				<script>libraries.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>

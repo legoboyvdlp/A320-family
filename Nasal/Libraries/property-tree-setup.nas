@@ -4,6 +4,10 @@
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
 
+var Accelerations = {
+	pilotGDamped: props.globals.getNode("/accelerations/pilot-gdamped"),
+};
+
 var Acconfig = {
 	running: props.globals.getNode("/systems/acconfig/autoconfig-running"),
 };
@@ -22,13 +26,16 @@ var Controls = {
 	Engines: {
 		startSw: props.globals.getNode("/controls/engines/engine-start-switch"),
 		Engine: {
+			cutoff: [props.globals.getNode("/controls/engines/engine[0]/cutoff"), props.globals.getNode("/controls/engines/engine[1]/cutoff")],
 			cutoffSw: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],
 			firePb: [props.globals.getNode("/controls/engines/engine[0]/fire-btn"), props.globals.getNode("/controls/engines/engine[1]/fire-btn")],
 			throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
 			throttleFdm: [props.globals.getNode("/controls/engines/engine[0]/throttle-fdm"), props.globals.getNode("/controls/engines/engine[1]/throttle-fdm")],
+			throttleLever: [props.globals.getNode("/controls/engines/engine[0]/throttle-lever"), props.globals.getNode("/controls/engines/engine[1]/throttle-lever")],
 			throttleOutput: [props.globals.getNode("/controls/engines/engine[0]/throttle-output"), props.globals.getNode("/controls/engines/engine[1]/throttle-output")],
 			throttlePos: [props.globals.getNode("/controls/engines/engine[0]/throttle-pos"), props.globals.getNode("/controls/engines/engine[1]/throttle-pos")],
 			throttleRev: [props.globals.getNode("/controls/engines/engine[0]/throttle-rev"), props.globals.getNode("/controls/engines/engine[1]/throttle-rev")],
+			starter: [props.globals.getNode("/controls/engines/engine[0]/starter"), props.globals.getNode("/controls/engines/engine[1]/starter")],
 			reverser: [props.globals.getNode("/controls/engines/engine[0]/reverser"), props.globals.getNode("/controls/engines/engine[1]/reverser")],
 		},
 	},
@@ -39,6 +46,7 @@ var Controls = {
 		elevatorTrim: props.globals.getNode("/controls/flight/elevator-trim"),
 		flaps: props.globals.getNode("/controls/flight/flaps"),
 		flapsTemp: 0,
+		flapsInput: props.globals.getNode("/controls/flight/flaps-input"),
 		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
 		speedbrake: props.globals.getNode("/controls/flight/speedbrake"),
 		speedbrakeArm: props.globals.getNode("/controls/flight/speedbrake-arm"),
@@ -56,7 +64,7 @@ var Controls = {
 };
 
 var ECAM = {
-	fwcWarningPhase: props.globals.initNode("/ECAM/warning-phase", 1, "INT"),
+	fwcWarningPhase: props.globals.getNode("/ECAM/warning-phase"),
 };
 
 var Engines = {
@@ -202,6 +210,21 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	CurrentView: {
+		fieldOfView: props.globals.getNode("/sim/current-view/field-of-view", 1),
+		headingOffsetDeg: props.globals.getNode("/sim/current-view/heading-offset-deg", 1),
+		name: props.globals.getNode("/sim/current-view/name", 1),
+		pitchOffsetDeg: props.globals.getNode("/sim/current-view/pitch-offset-deg", 1),
+		rollOffsetDeg: props.globals.getNode("/sim/current-view/roll-offset-deg", 1),
+		type: props.globals.getNode("/sim/current-view/type", 1),
+		viewNumberRaw: props.globals.getNode("/sim/current-view/view-number-raw", 1),
+		zOffsetDefault: props.globals.getNode("/sim/current-view/z-offset-default", 1),
+		xOffsetM: props.globals.getNode("/sim/current-view/x-offset-m", 1),
+		yOffsetM: props.globals.getNode("/sim/current-view/y-offset-m", 1),
+		zOffsetM: props.globals.getNode("/sim/current-view/z-offset-m", 1),
+		zOffsetMaxM: props.globals.getNode("/sim/current-view/z-offset-max-m", 1),
+		zOffsetMinM: props.globals.getNode("/sim/current-view/z-offset-min-m", 1),
+	},
 	Input: {
 		Selected: {
 			engine: [props.globals.getNode("/sim/input/selected/engine[0]", 1),props.globals.getNode("/sim/input/selected/engine[1]", 1)],
@@ -211,6 +234,11 @@ var Sim = {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},
 	pause: props.globals.getNode("/sim/freeze/master"),
+	Rendering: {
+		Headshake: {
+			enabled: props.globals.getNode("/sim/rendering/headshake/enabled"),
+		},
+	},
 	replayState: props.globals.getNode("/sim/freeze/replay-state"),
 	Replay: {
 		replayActive: props.globals.getNode("/sim/replay/replay-state"),
@@ -225,6 +253,11 @@ var Sim = {
 		},
 	},
 	Version: props.globals.getNode("/sim/version/flightgear"),
+	View: {
+		Config: {
+			defaultFieldOfViewDeg: props.globals.getNode("/sim/view/config/default-field-of-view-deg", 1),
+		},
+	},
 };
 
 var Systems = {

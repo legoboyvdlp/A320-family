@@ -11,6 +11,7 @@ var _MP_dbg_lvl = canvas._MP_dbg_lvl;
 var assert_m = canvas.assert_m;
 
 var wxr_live_tree = "/instrumentation/wxr";
+var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 canvas.NavDisplay.set_switch = func(s, v) {
 	var switch = me.efis_switches[s];
@@ -160,6 +161,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	var make_event_handler = func(predicate, layer) func predicate(me, layer);
 
 	me.layers={}; # storage container for all ND specific layers
+	me.predicates={};
 	# look up all required layers as specified per the NDStyle hash and do the initial setup for event handling
 	var default_opts = me.options != nil and contains(me.options, "defaults") ? me.options.defaults : nil;
 	foreach(var layer; me.nd_style.layers) {
@@ -214,6 +216,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 		# pass the ND instance and the layer handle to the predicate when it is called
 		# so that it can directly access the ND instance and its own layer (without having to know the layer"s name)
 		var event_handler = make_event_handler(layer.predicate, the_layer);
+		me.predicates[layer.name] = event_handler;
 		foreach(var event; layer.update_on) {
 			# this handles timers
 			if (typeof(event)=="hash" and contains(event, "rate_hz")) {
@@ -335,12 +338,12 @@ canvas.NavDisplay.update_sub = func(){
 canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft specific, cannot easily be reused by other aircraft
 {
 	var _time = systime();
-	# Disables WXR Live if it"s not enabled. The toggle_weather_live should be common to all 
+	# Disables WXR Live if it's not enabled. The toggle_weather_live should be common to all 
 	# ND instances.
-	var wxr_live_enabled = getprop(wxr_live_tree~"/enabled");
-	if(wxr_live_enabled == nil or wxr_live_enabled == "") 
+	var wxr_live_enabled = getprop(wxr_live_tree~'/enabled');
+	if(wxr_live_enabled == nil or wxr_live_enabled == '') 
 		wxr_live_enabled = 0;
-	me.set_switch("toggle_weather_live", wxr_live_enabled);
+	me.set_switch('toggle_weather_live', wxr_live_enabled);
 	call(me.update_sub, nil, nil, caller(0)[0]); # call this in the same namespace to "steal" its variables
 
 	# MapStructure update!
@@ -433,7 +436,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine2.setRotation(hdgBugRot);
 	}
 
-	var staPtrVis = !me.in_mode("toggle_display_mode", ["PLAN"]);
+	var staPtrVis = (!me.in_mode("toggle_display_mode", ["PLAN"]) and  (me.adirs_property.getValue() == 1 or (adirs_3.getValue() == 1 and att_switch.getValue() == me.attitude_heading_setting)));
 	if((me.in_mode("toggle_display_mode", ["MAP"]) and me.get_switch("toggle_display_type") == "CRT")
 	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD"))
 	{
@@ -459,7 +462,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
-		if(me.in_mode("toggle_display_mode", ["PLAN"]))
+		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();

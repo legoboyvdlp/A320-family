@@ -7,33 +7,34 @@ var _NUMADIRU = 3;
 
 var _selfTestTime = nil;
 
+var ADIRSnodesND = [props.globals.getNode("/instrumentation/efis[0]/nd/ir-1", 1),props.globals.getNode("/instrumentation/efis[1]/nd/ir-2", 1),props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1)];
+
 var ADIRU = {
-	# local vars
-	_alignTime: 0,
-	_voltageMain: 0,
-	_voltageBackup: 0,
-	_voltageLimitedTime: 0,
-	_noPowerTime: 0,
-	_timeVar: 0,
-	_roll: 0,
-	_pitch: 0,
-	_gs: 0,
-	
-	num: 0,
-	aligned: 0,
-	inAlign: 0,
-	outputOn: 1, # 0 = disc, 1 = normal
-	mode: 0, # 0 = off, 1 = nav, 2 = att
-	energised: 0, # 0 = off, 1 = on
-	operative: 0, # 0 = off,
-	alignTimer: nil,
-	input: [],
-	output: [],
-	
 	# methods
     new: func(n) {
 		var adiru = { parents:[ADIRU] };
 		adiru.num = n;
+		adiru._alignTime =  0;
+		adiru._pfdTime =  0;
+		adiru._voltageMain =  0;
+		adiru._voltageBackup =  0;
+		adiru._voltageLimitedTime =  0;
+		adiru._noPowerTime =  0;
+		adiru._timeVar =  0;
+		adiru._roll =  0;
+		adiru._pitch =  0;
+		adiru._gs =  0;
+		
+		adiru.aligned =  0;
+		adiru.operating =  0; # ir operating - used for PFD + fbw failure
+		adiru.inAlign =  0;
+		adiru.outputOn =  1; # 0 = disc; 1 = normal
+		adiru.mode =  0; # 0 = off; 1 = nav; 2 = att
+		adiru.energised =  0; # 0 = off; 1 = on
+		adiru.operative =  0; # 0 = off;
+		adiru.alignTimer =  nil;
+		adiru.input =  [];
+		adiru.output =  [];
 		adiru.alignTimer = maketimer(0.1, adiru, me.alignLoop);
 		
 		return adiru;
@@ -91,6 +92,7 @@ var ADIRU = {
 		if (!ADIRS.skip.getValue()) {
 			if (time > 0 and me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + time;
+				me._pfdTime = pts.Sim.Time.elapsedSec.getValue() + 20 + (rand() * 5);
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -99,6 +101,7 @@ var ADIRU = {
 		} else {
 			if (me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + 5;
+				me._pfdTime = pts.Sim.Time.elapsedSec.getValue() + 1;
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -110,17 +113,35 @@ var ADIRU = {
 		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
+		ADIRSnodesND[me.num].setValue(0);
 		ADIRS.Operating.aligned[me.num].setValue(0);
+		me.operating = 0;
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
+		foreach (var predicate; keys(canvas_nd.ND_1.NDCpt.predicates)) {
+			call(canvas_nd.ND_1.NDCpt.predicates[predicate]);
+		}
+		foreach (var predicate; keys(canvas_nd.ND_2.NDFo.predicates)) {
+			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
+		}
+	},
+	irOperating: func() {
+		me.operating = 1;
 	},
 	stopAlignAligned: func() {
 		me.inAlign = 0;
 		me.aligned = 1;
+		ADIRSnodesND[me.num].setValue(1);
 		ADIRS.Operating.aligned[me.num].setValue(1);
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
+		}
+		foreach (var predicate; keys(canvas_nd.ND_1.NDCpt.predicates)) {
+			call(canvas_nd.ND_1.NDCpt.predicates[predicate]);
+		}
+		foreach (var predicate; keys(canvas_nd.ND_2.NDFo.predicates)) {
+			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
 		}
 	},
 	alignLoop: func() {
@@ -139,9 +160,14 @@ var ADIRU = {
 		} elsif (pts.Sim.Time.elapsedSec.getValue() >= me._alignTime) {
 			me.stopAlignAligned();
 		}
+		
+		if (!me.operating and pts.Sim.Time.elapsedSec.getValue() >= me._pfdTime) {
+			me.irOperating();
+		}
 	},
 	instAlign: func() {
 		me.stopAlignAligned();
+		me.irOperating();
 	},
 	# Update loop
 	update: func() {

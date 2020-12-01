@@ -97,6 +97,8 @@ var PNEU = {
 		pack2: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-2"),
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
+		starter1: props.globals.getNode("/systems/pneumatics/valves/starter-valve-1"),
+		starter2: props.globals.getNode("/systems/pneumatics/valves/starter-valve-2"),
 	},
 	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
@@ -115,8 +117,8 @@ var PNEU = {
 		setprop("/systems/pressurization/outflowpos-man", "0.5");
 		setprop("/systems/pressurization/outflowpos-man-sw", "0");
 		setprop("/systems/pressurization/outflowpos-norm-cmd", "0");
-		setprop("/systems/pressurization/cabinalt", getprop("instrumentation/altimeter/indicated-altitude-ft"));
-		setprop("/systems/pressurization/targetalt", getprop("instrumentation/altimeter/indicated-altitude-ft")); 
+		setprop("/systems/pressurization/cabinalt", pts.Instrumentation.Altimeter.indicatedFt.getValue());
+		setprop("/systems/pressurization/targetalt", pts.Instrumentation.Altimeter.indicatedFt.getValue()); 
 		setprop("/systems/pressurization/diff-to-target", "0");
 		setprop("/systems/pressurization/ditchingpb", 0);
 		setprop("/systems/pressurization/targetvs", "0");

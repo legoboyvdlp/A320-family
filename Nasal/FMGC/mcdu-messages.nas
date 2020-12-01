@@ -173,6 +173,7 @@ var MessageController = {
 		TypeIMessage.new("USING COST INDEX N", 1),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),TypeIMessage.new("RWY/LS MISMATCH"),
 		TypeIMessage.new("VHF3 VOICE MSG NOT GEN"),TypeIMessage.new("NO COMM MSG NOT GEN"),TypeIMessage.new("WX UPLINK"),
 		TypeIMessage.new("SIMBRIEF DOWNLOAD FAILED"),TypeIMessage.new("MISSING USERNAME"),TypeIMessage.new("AOC ACT F-PLN UPLINK"),
+		TypeIMessage.new("NO ANSWER TO REQUEST"),TypeIMessage.new("NO D-ATIS AVAILABLE"),TypeIMessage.new("BAD SERVER RESPONSE")
 	]),
 	typeIIMessages: std.Vector.new([
 		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),

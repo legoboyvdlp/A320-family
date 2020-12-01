@@ -12,9 +12,10 @@ var PFD1_display = nil;
 var PFD2_display = nil;
 var updateL = 0;
 var updateR = 0;
-var elapsedtime = 0;
+var et = 0;
 var altTens = 0;
-var altPolarity = "";
+var track_diff = 0;
+var AICenter = nil;
 
 # Fetch nodes:
 var state1 = props.globals.getNode("/systems/thrust/state1", 1);
@@ -34,7 +35,7 @@ var thr2 = props.globals.getNode("/controls/engines/engine[1]/throttle-pos", 1);
 var wow0 = props.globals.getNode("/gear/gear[0]/wow");
 var wow1 = props.globals.getNode("/gear/gear[1]/wow");
 var wow2 = props.globals.getNode("/gear/gear[2]/wow");
-var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
+var pitch = props.globals.getNode("/instrumentation/pfd/pitch-deg-non-linear", 1);
 var roll = props.globals.getNode("/orientation/roll-deg", 1);
 var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var du1_lgt = props.globals.getNode("/controls/lighting/DU/du1", 1);
@@ -67,9 +68,6 @@ var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 
 var target_altitude = props.globals.getNode("/autopilot/settings/target-altitude-ft", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 var altitude_pfd = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd", 1);
-var alt_diff = props.globals.getNode("/instrumentation/pfd/alt-diff", 1);
-var ground_diff = props.globals.getNode("/instrumentation/pfd/ground-diff", 1);
-var landing_diff = props.globals.getNode("/instrumentation/pfd/landing-diff", 1);
 var ap_alt = props.globals.getNode("/it-autoflight/internal/alt", 1);
 var vs_needle = props.globals.getNode("/instrumentation/pfd/vs-needle", 1);
 var vs_digit = props.globals.getNode("/instrumentation/pfd/vs-digit-trans", 1);
@@ -107,8 +105,8 @@ var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
 var gear_agl = props.globals.getNode("/position/gear-agl-ft", 1);
 var aileron_input = props.globals.getNode("/controls/flight/aileron-input-fast", 1);
 var elevator_input = props.globals.getNode("/controls/flight/elevator-input-fast", 1);
-var att_switch = props.globals.getNode("/controls/switching/ATTHDG", 1);
-var air_switch = props.globals.getNode("/controls/switching/AIRDATA", 1);
+var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
+var air_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 var appr_enabled = props.globals.getNode("/it-autoflight/output/appr-armed/", 1);
 var loc_enabled = props.globals.getNode("/it-autoflight/output/loc-armed/", 1);
 var vert_gs = props.globals.getNode("/it-autoflight/output/vert/", 1);
@@ -126,18 +124,26 @@ var inner_marker = props.globals.getNode("/instrumentation/marker-beacon/inner",
 var flap_config = props.globals.getNode("/controls/flight/flaps-input", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
+var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
+var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
+var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
+var adr_1_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-1", 1);
+var adr_2_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-2", 1);
+var adr_3_switch = props.globals.getNode("/controls/navigation/adirscp/switches/adr-3", 1);
+var adr_1_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-1-fault", 1);
+var adr_2_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-2-fault", 1);
+var adr_3_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr-3-fault", 1);
+var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 
 # Create Nodes:
 var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
-var ground_diff = props.globals.initNode("/instrumentation/pfd/ground-diff", 0.0, "DOUBLE");
-var landing_diff = props.globals.initNode("/instrumentation/pfd/landing-diff", 0.0, "DOUBLE");
 var heading = props.globals.initNode("/instrumentation/pfd/heading-deg", 0.0, "DOUBLE");
 var horizon_pitch = props.globals.initNode("/instrumentation/pfd/horizon-pitch", 0.0, "DOUBLE");
 var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground", 0.0, "DOUBLE");
 var hdg_diff = props.globals.initNode("/instrumentation/pfd/hdg-diff", 0.0, "DOUBLE");
 var hdg_scale = props.globals.initNode("/instrumentation/pfd/heading-scale", 0.0, "DOUBLE");
 var track = props.globals.initNode("/instrumentation/pfd/track-deg", 0.0, "DOUBLE");
-var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE");
+#var track_diff = props.globals.initNode("/instrumentation/pfd/track-hdg-diff", 0.0, "DOUBLE"); # returns incorrect value
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -200,6 +206,9 @@ var canvas_PFD_base = {
 		me.AI_horizon_hdg_trans = me["AI_heading"].createTransform();
 		me.AI_horizon_hdg_rot = me["AI_heading"].createTransform();
 
+		me.AI_fpv_trans = me["FPV"].createTransform();
+		me.AI_fpv_rot = me["FPV"].createTransform();
+
 		me.page = canvas_group;
 
 		return me;
@@ -210,9 +219,9 @@ var canvas_PFD_base = {
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
-		"ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
+		"ALT_digit_DN","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","spdLimError"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -283,8 +292,10 @@ var canvas_PFD_base = {
 					PFD_1_test.page.show();
 				} else {
 					PFD_1.updateFast();
-					PFD_1.update();
-					updateL = 1;
+					if (!updateL) { # Update slow here once so that no flicker if timers don't perfectly align
+						updateL = 1;
+						PFD_1.update();
+					}
 					PFD_1_test.page.hide();
 					PFD_1.page.show();
 				}
@@ -306,8 +317,10 @@ var canvas_PFD_base = {
 					PFD_2_test.page.show();
 				} else {
 					PFD_2.updateFast();
-					PFD_2.update();
-					updateR = 1;
+					if (!updateR) { # Update slow here once so that no flicker if timers don't perfectly align
+						updateR = 1;
+						PFD_2.update();
+					}
 					PFD_2_test.page.hide();
 					PFD_2.page.show();
 				}
@@ -499,7 +512,8 @@ var canvas_PFD_base = {
 			me["FMA_rollarm_box"].hide();
 			me["FMA_Middle1"].hide();
 			me["FMA_Middle2"].hide();
-			if (fbw_curlaw == 2) {
+			
+			if (ecam.directLaw.active) {
 				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
 				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
 				me["FMA_ctr_msg"].show();
@@ -510,6 +524,7 @@ var canvas_PFD_base = {
 			} else {
 				me["FMA_ctr_msg"].hide();
 			}
+			
 			me["FMA_combined"].show();
 			if (pitch_box.getValue() == 1 and pitch_mode_act != " ") {
 				me["FMA_combined_box"].show();
@@ -519,7 +534,7 @@ var canvas_PFD_base = {
 		} else {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
-			if (fbw_curlaw == 2) {
+			if (ecam.directLaw.active) {
 				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
 				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
 				me["FMA_Middle1"].hide();
@@ -961,12 +976,15 @@ var canvas_PFD_base = {
 			me["HDG_target"].hide();
 		}
 		
-		me["TRK_pointer"].setTranslation((math.clamp(track_diff.getValue(), -23.62, 23.62) / 10) * 98.5416, 0);
+
+		var heading_deg = heading.getValue();
+		track_diff = geo.normdeg180(track.getValue() - heading_deg);
+		me["TRK_pointer"].setTranslation(me.getTrackDiffPixels(track_diff),0);
 		split_ils = split("/", ils_data1.getValue());
 		
 		if (ap_ils_mode.getValue() == 1 and size(split_ils) == 2) {
 			magnetic_hdg = ils_crs.getValue();
-			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading.getValue());
+			magnetic_hdg_dif = geo.normdeg180(magnetic_hdg - heading_deg);
 			if (magnetic_hdg_dif >= -23.62 and magnetic_hdg_dif <= 23.62) {
 				me["CRS_pointer"].setTranslation((magnetic_hdg_dif / 10) * 98.5416, 0);
 				me["ILS_HDG_R"].hide();
@@ -1010,6 +1028,28 @@ var canvas_PFD_base = {
 		me.AI_horizon_hdg_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
 		me["AI_heading"].update();
 	},
+
+	# Get Angle of Attack from ADR1 or, depending on Switching panel, ADR3
+	getAOAForPFD1: func() {
+		if (air_data_switch.getValue() != -1 and adr_1_switch.getValue() and !adr_1_fault.getValue()) return aoa_1.getValue();
+		if (air_data_switch.getValue() == -1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
+		return nil;
+	},
+	
+	# Get Angle of Attack from ADR2 or, depending on Switching panel, ADR3
+	getAOAForPFD2: func() {
+		if (air_data_switch.getValue() != 1 and adr_2_switch.getValue() and !adr_2_fault.getValue()) return aoa_2.getValue();
+		if (air_data_switch.getValue() == 1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
+		return nil;
+	},
+
+	# Convert difference between magnetic heading and track measured in degrees to pixel for display on PFDs
+	# And set max and minimum values
+	getTrackDiffPixels: func(track_diff_deg) {
+		return ((math.clamp(track_diff_deg, -23.62, 23.62) / 10) * 98.5416);
+	},
+
+
 };
 
 var canvas_PFD_1 = {
@@ -1048,7 +1088,7 @@ var canvas_PFD_1 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if (systems.ADIRS.ADIRunits[0].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == -1)) {
+		if (systems.ADIRS.ADIRunits[0].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and att_switch.getValue() == -1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -1087,6 +1127,26 @@ var canvas_PFD_1 = {
 			me["FD_pitch"].hide();
 		}
 		
+		# If TRK FPA selected, display FPV on PFD1
+		if (ap_trk_sw.getValue() == 0 ) {
+			me["FPV"].hide();	
+		} else {
+			var aoa = me.getAOAForPFD1();	
+			if (aoa == nil or (systems.ADIRS.ADIRunits[0].operating != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].operating != 1 and att_switch.getValue() == -1)){
+				me["FPV"].hide();	
+			} else {
+				var roll_deg = roll.getValue() or 0; 
+				AICenter = me["AI_center"].getCenter();
+				var track_x_translation = me.getTrackDiffPixels(track_diff); 
+
+				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(aoa, -20, 20) * 12.5); 
+				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
+				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
+				me["FPV"].show();
+			}
+
+		}
+
 		# ILS
 		if (ap_ils_mode.getValue() == 1) {
 			me["LOC_scale"].show();
@@ -1210,7 +1270,6 @@ var canvas_PFD_1 = {
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
-			
 			if (fbw.FBW.Computers.fac1.getValue() or fbw.FBW.Computers.fac2.getValue()) {
 				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
 				me["ASI_max"].show();
@@ -1627,6 +1686,7 @@ var canvas_PFD_1 = {
 			me["ALT_error"].hide();
 			me["ALT_frame"].setColor(1,1,1);
 			me["ALT_group"].show();
+			me["ALT_tens"].show();
 			me["ALT_box"].show();
 			me["ALT_group2"].show();
 			me["ALT_scale"].show();
@@ -1648,13 +1708,13 @@ var canvas_PFD_1 = {
 			me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
 			me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 			
-			if (altitude.getValue() < 0) {
-				altPolarity = "-";
+			if (me.altitude < 0) {
+				me["ALT_neg"].show();
 			} else {
-				altPolarity = "";
+				me["ALT_neg"].hide();
 			}
 			
-			me["ALT_digits"].setText(sprintf("%s%d", altPolarity, dmc.DMController.DMCs[0].outputs[3].getValue()));
+			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[0].outputs[3].getValue()));
 			altTens = num(right(sprintf("%02d", me.altitude), 2));
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
@@ -1694,7 +1754,7 @@ var canvas_PFD_1 = {
 				me["ALT_target"].hide();
 			}
 			
-			ground_diff_cur = ground_diff.getValue();
+			ground_diff_cur = -gear_agl.getValue();
 			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 				me["ground_ref"].show();
@@ -1702,10 +1762,9 @@ var canvas_PFD_1 = {
 				me["ground_ref"].hide();
 			}
 			
-			landing_diff_cur = landing_diff.getValue();
-			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				if ((fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
-					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 					me["ground"].show();
 				} else {
 					me["ground"].hide();
@@ -1762,6 +1821,8 @@ var canvas_PFD_1 = {
 			me["ALT_error"].show();
 			me["ALT_frame"].setColor(1,0,0);
 			me["ALT_group"].hide();
+			me["ALT_tens"].hide();
+			me["ALT_neg"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
 			me["ALT_box_flash"].hide();
@@ -1810,7 +1871,7 @@ var canvas_PFD_2 = {
 		wow2_act = wow2.getValue();
 		
 		# Errors
-		if (systems.ADIRS.ADIRunits[1].aligned == 1 or (systems.ADIRS.ADIRunits[2].aligned == 1 and att_switch.getValue() == 1)) {
+		if (systems.ADIRS.ADIRunits[1].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and att_switch.getValue() == 1)) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -1842,6 +1903,25 @@ var canvas_PFD_2 = {
 			me["FD_pitch"].hide();
 		}
 		
+		# If TRK FPA selected, display FPV on PFD2
+		if (ap_trk_sw.getValue() == 0 ) {
+			me["FPV"].hide();	
+		} else {
+			var aoa = me.getAOAForPFD2();
+			if (aoa == nil or (systems.ADIRS.ADIRunits[1].operating != 1 and att_switch.getValue() == 0) or (systems.ADIRS.ADIRunits[2].operating != 1 and att_switch.getValue() == 1)) {
+				me["FPV"].hide();	
+			} else {
+				var roll_deg = roll.getValue() or 0;	
+				AICenter = me["AI_center"].getCenter();
+				var track_x_translation = me.getTrackDiffPixels(track_diff);
+
+				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(aoa, -20, 20) * 12.5);
+				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
+				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
+				me["FPV"].show();
+			}
+		}
+
 		# ILS
 		if (ap_ils_mode2.getValue() == 1) {
 			me["LOC_scale"].show();
@@ -2376,15 +2456,16 @@ var canvas_PFD_2 = {
 			me["machError"].show();
 		}
 		
-		if (dmc.DMController.DMCs[0].outputs[1] != nil) {
+		if (dmc.DMController.DMCs[1].outputs[1] != nil) {
 			me["ALT_error"].hide();
 			me["ALT_frame"].setColor(1,1,1);
 			me["ALT_group"].show();
+			me["ALT_tens"].show();
 			me["ALT_box"].show();
 			me["ALT_group2"].show();
 			me["ALT_scale"].show();
 			
-			me.altitude = dmc.DMController.DMCs[0].outputs[1].getValue();
+			me.altitude = dmc.DMController.DMCs[1].outputs[1].getValue();
 			me.altOffset = me.altitude / 500 - int(me.altitude / 500);
 			me.middleAltText = roundaboutAlt(me.altitude / 100);
 			me.middleAltOffset = nil;
@@ -2401,13 +2482,13 @@ var canvas_PFD_2 = {
 			me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
 			me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 			
-			if (altitude.getValue() < 0) {
-				altPolarity = "-";
+			if (me.altitude < 0) {
+				me["ALT_neg"].show();
 			} else {
-				altPolarity = "";
+				me["ALT_neg"].hide();
 			}
 			
-			me["ALT_digits"].setText(sprintf("%s%d", altPolarity, dmc.DMController.DMCs[0].outputs[3].getValue()));
+			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[1].outputs[3].getValue()));
 			altTens = num(right(sprintf("%02d", me.altitude), 2));
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
@@ -2447,7 +2528,7 @@ var canvas_PFD_2 = {
 				me["ALT_target"].hide();
 			}
 			
-			ground_diff_cur = ground_diff.getValue();
+			ground_diff_cur = -gear_agl.getValue();
 			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				me["ground_ref"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 				me["ground_ref"].show();
@@ -2455,10 +2536,9 @@ var canvas_PFD_2 = {
 				me["ground_ref"].hide();
 			}
 			
-			landing_diff_cur = landing_diff.getValue();
-			if (landing_diff_cur >= -565 and landing_diff_cur <= 565) {
+			if (ground_diff_cur >= -565 and ground_diff_cur <= 565) {
 				if ((fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) and !wow1.getValue() and !wow2.getValue()) { #add std too
-					me["ground"].setTranslation(0, (landing_diff_cur / 100) * -48.66856);
+					me["ground"].setTranslation(0, (ground_diff_cur / 100) * -48.66856);
 					me["ground"].show();
 				} else {
 					me["ground"].hide();
@@ -2515,6 +2595,8 @@ var canvas_PFD_2 = {
 			me["ALT_error"].show();
 			me["ALT_frame"].setColor(1,0,0);
 			me["ALT_group"].hide();
+			me["ALT_tens"].hide();
+			me["ALT_neg"].hide();
 			me["ALT_group2"].hide();
 			me["ALT_scale"].hide();
 			me["ALT_box_flash"].hide();

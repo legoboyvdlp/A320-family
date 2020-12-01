@@ -142,34 +142,6 @@
 	</filter>
 	
 	<filter>
-		<name>Ground bug diff</name>
-		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<gain>1.0</gain>
-		<input>
-			<property>/position/ground-elev-ft</property>
-		</input>
-		<reference>
-			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-		</reference>
-		<output>/instrumentation/pfd/ground-diff</output>
-	</filter>
-	
-	<filter>
-		<name>Destination bug diff</name>
-		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<gain>1.0</gain>
-		<input>
-			<property>/FMGC/internal/ldg-elev</property>
-		</input>
-		<reference>
-			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-		</reference>
-		<output>/instrumentation/pfd/landing-diff</output>
-	</filter>
-	
-	<filter>
 		<name>Localizer course diff</name>
 		<type>gain</type>
 		<update-interval-secs type="double">0.05</update-interval-secs>
@@ -307,6 +279,33 @@
 		<input>/instrumentation/pfd/speed-lookahead-cmd-3</input>
 		<output>/instrumentation/pfd/speed-lookahead-3</output>
 		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Pitch PFD</name>
+		<type>gain</type>
+		<gain>1</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/orientation/pitch-deg</property>
+					<entry><ind>-90.0</ind><dep>-57.50</dep></entry>
+					<entry><ind>-80.0</ind><dep>-47.50</dep></entry>
+					<entry><ind>-50.0</ind><dep>-32.50</dep></entry>
+					<entry><ind>-30.0</ind><dep>-22.50</dep></entry>
+					<entry><ind>-20.0</ind><dep>-17.50</dep></entry>
+					<entry><ind>-15.0</ind><dep>-13.75</dep></entry>
+					<entry><ind>-10.0</ind><dep>-10.00</dep></entry>
+					<entry><ind>  0.0</ind><dep>  0.00</dep></entry>
+					<entry><ind> 27.5</ind><dep> 27.50</dep></entry>
+					<entry><ind> 30.0</ind><dep> 28.75</dep></entry>
+					<entry><ind> 50.0</ind><dep> 38.75</dep></entry>
+					<entry><ind> 80.0</ind><dep> 53.75</dep></entry>
+					<entry><ind> 90.0</ind><dep> 63.75</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/pitch-deg-non-linear</output>
 	</filter>
 	
 	<filter>
@@ -463,6 +462,46 @@
 		<input>/fdm/jsbsim/aero/beta-deg</input>
 		<output>/instrumentation/pfd/slip-skid</output>
 		<filter-time>0.16</filter-time>
+	</filter>
+	
+	<filter>
+		<name>IESI Slip/Skid Indicator</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/accelerations/Ny</property>
+					<entry><ind>-0.20</ind><dep>-105</dep></entry>
+					<entry><ind>-0.01</ind><dep>   0</dep></entry>
+					<entry><ind> 0.00</ind><dep>   0</dep></entry>
+					<entry><ind> 0.01</ind><dep>   0</dep></entry>
+					<entry><ind> 0.20</ind><dep> 105</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/iesi/slip-skid</output>
+	</filter>
+	
+	<filter>
+		<name>IESI Pitch</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/orientation/pitch-deg</property>
+					<entry><ind>-80</ind><dep>-65</dep></entry>
+					<entry><ind>-50</ind><dep>-50</dep></entry>
+					<entry><ind> 0</ind><dep>   0</dep></entry>
+					<entry><ind> 50</ind><dep> 50</dep></entry>
+					<entry><ind> 80</ind><dep> 65</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/iesi/pitch-deg</output>
 	</filter>
 
 </PropertyList>
