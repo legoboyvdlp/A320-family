@@ -372,12 +372,13 @@
 		
 		<switch name="hydraulics/elevator-trim/rate">
 			<default value="0"/> <!-- only mechanical input to hyd actuator. So it does need hydraulic power -->
-			<test logic="OR" value="0">
+			<test value="0">
 				/systems/failures/fctl/ths-jam eq 1
 			</test>
 			<test logic="OR" value="0.25">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500
+				/systems/acconfig/autoconfig-running eq 1
 			</test>
 		</switch>
 		

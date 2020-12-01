@@ -79,10 +79,10 @@ controls.flapsDown = func(step) {
 }
 
 controls.elevatorTrim = func(d) {
-    if (systems.HYD.Psi.green.getValue() >= 1500) {
-        slewProp("/controls/flight/elevator-trim", d * 0.0185); # Rate in JSB normalized (0.125 / 13.5)
+    if (systems.HYD.Psi.green.getValue() >= 1500 or systems.HYD.Psi.yellow.getValue() >= 1500) {
+        slewProp("/controls/flight/elevator-trim", d * 0.0185); # Rate in JSB normalized (0.25 / 13.5)
     } else {
-		slewProp("/controls/flight/elevator-trim", d * 0.0092) # Rate in JSB normalized (0.125 / 13.5)
+		slewProp("/controls/flight/elevator-trim", d * 0.0092) # Handcranking?
 	}
 }
 
