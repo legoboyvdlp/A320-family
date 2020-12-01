@@ -198,7 +198,7 @@
 					<vertical>true</vertical>
 					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
 					<min>-30</min>
-					<max>17</max>
+					<max>15</max>
 					<step>0.003</step>
 					<live>true</live>
 				</slider>
@@ -232,7 +232,7 @@
 					<vertical>true</vertical>
 					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
 					<min>-30</min>
-					<max>17</max>
+					<max>15</max>
 					<step>0.003</step>
 					<live>true</live>
 				</slider>
