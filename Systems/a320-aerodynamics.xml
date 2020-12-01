@@ -7,6 +7,8 @@
 	
 	<property value="0">ice/wingL</property>
 	<property value="0">ice/wingR</property>
+	<property value="0">tuneF</property>
+	<property value="0">tuneS</property>
 	
 	<function name="aero/function/kCLge">
 		<description>Lift factor due to ground effect</description>
@@ -65,19 +67,20 @@
 						-0.0098  0.2386
 						 2.2280  0.4260
 						 4.2779  0.5779
-						 6.4218  0.7540
-						 8.4561  0.9163
-						 9.2699  0.9842
-						10.7094  1.0843
-						11.6170  1.1538
-						12.6496  1.2184
-						13.7292  1.2911
-						14.7930  1.3444
-						15.6981  1.1882
-						16.6352  1.1064
-						17.5725  1.0311
-						18.6045  1.0447
-						19.6052  1.0479
+						 6.4218  0.7470
+						 8.4561  0.8911
+						 9.2699  0.9472
+						10.7094  1.0413
+						11.6170  1.1038
+						12.6496  1.1684
+						13.7292  1.2411
+						14.7930  1.3048
+						15.6981  1.3344
+						16.6352  1.1882
+						17.5725  1.1064
+						18.6045  1.0311
+						19.6052  1.0347
+						20.4658  1.0526
 						30.1264  0.6376
 					</tableData>
 				</table>
@@ -170,6 +173,26 @@
 				<property>metrics/Sw-sqft</property>
 				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
 				<value>0.0118082</value>
+			</product>
+		</function>
+		
+		<function name="aero/coefficient/CLda_l">
+			<description>Lift due to left aileron</description>
+			<product>
+				<property>aero/qbar-psf</property>
+				<property>metrics/Sw-sqft</property>
+				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
+				<value>0.36492</value>
+			</product>
+		</function>
+		
+		<function name="aero/coefficient/CLda_r">
+			<description>Lift due to right aileron</description>
+			<product>
+				<property>aero/qbar-psf</property>
+				<property>metrics/Sw-sqft</property>
+				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
+				<value>0.36492</value>
 			</product>
 		</function>
 		
