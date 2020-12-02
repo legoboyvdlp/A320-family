@@ -17,6 +17,7 @@ var CPDLCnewMsgLight = props.globals.initNode("/network/cpdlc/new-message-light"
 
 setlistener("/network/cpdlc/rx/new-message", func() {
 	if (CPDLCnewMsgFlag.getBoolValue()) {
+		fgcommand("cpdlc-next-message");
 		# add to DCDU message buffer to display
 		ATCMSGRingCancel = 0;
 		var messageType = 0; # urgent or normal
