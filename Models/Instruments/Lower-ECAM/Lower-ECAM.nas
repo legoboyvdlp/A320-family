@@ -510,12 +510,21 @@ var canvas_lowerECAM_base = {
 		me["UTCh"].setText(sprintf("%02d", hour.getValue()));
 		me["UTCm"].setText(sprintf("%02d", minute.getValue()));
 		
-		me.gwStore = pts.Fdm.JSBsim.Inertia.weightLbs.getValue();
+		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and ecam.phaseNode.getValue() != 1) {
+			if (acconfig_weight_kgs.getValue()) {
+				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
+			} else {
+				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
+			}
+			me["GW"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["GW"].setText(sprintf("%s", "-----"));
+			me["GW"].setColor(0.0901,0.6039,0.7176);
+		}
+		
 		if (acconfig_weight_kgs.getValue()) {
-			me["GW"].setText(sprintf("%s", math.round(math.round(me.gwStore * LBS2KGS, 100))));
 			me["GW-weight-unit"].setText("KG");
 		} else {
-			me["GW"].setText(sprintf("%s", math.round(me.gwStore, 100)));
 			me["GW-weight-unit"].setText("LBS");
 		}
 	},
