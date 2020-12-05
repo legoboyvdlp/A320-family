@@ -513,14 +513,6 @@
 						</binding>
 					</item>
 					<item>
-						<label>Skip ADIRS</label>
-						<binding>
-							<command>property-assign</command>
-							<property>/controls/adirs/skip</property>
-							<value>1</value>
-						</binding>
-					</item>
-					<item>
 						<label>Canvas QRH</label>
 						<binding>
 							<command>nasal</command>
