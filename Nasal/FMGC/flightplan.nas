@@ -263,9 +263,9 @@ var flightPlanController = {
 	},
 	
 	insertDecel: func(n, pos, index) {
-		#me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
+		me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
 		#me.flightplans[n].getWP(index).hidden = 1;
-		#fmgc.windController.insertWind(n, index, 0, "(DECEL)");
+		fmgc.windController.insertWind(n, index, 0, "(DECEL)");
 	},
 	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
@@ -442,7 +442,7 @@ var flightPlanController = {
 			}
 			
 			var indexPresent = me.flightplans[plan].indexOfWP(airport[indexToInsert]);
-			if (me.flightplans[plan].indexOfWP(airport[indexToInsert]) == -1) {
+			if (indexPresent == -1 or indexPresent > me.arrivalIndex[plan]) {
 				me.flightplans[plan].insertWP(createWPFrom(airport[indexToInsert]), index);
 				fmgc.windController.insertWind(plan, index, 0, text);
 				me.addDiscontinuity(index + 1, plan);
@@ -476,7 +476,7 @@ var flightPlanController = {
 			}
 			
 			var indexPresent = me.flightplans[plan].indexOfWP(fix[indexToInsert]);
-			if (me.flightplans[plan].indexOfWP(fix[indexToInsert]) == -1) {
+			if (indexPresent == -1 or indexPresent > me.arrivalIndex[plan]) {
 				me.flightplans[plan].insertWP(createWPFrom(fix[indexToInsert]), index);
 				fmgc.windController.insertWind(plan, index, 1, text);
 				me.addDiscontinuity(index + 1, plan);
@@ -510,7 +510,7 @@ var flightPlanController = {
 			}
 			
 			var indexPresent = me.flightplans[plan].indexOfWP(navaid[indexToInsert]);
-			if (me.flightplans[plan].indexOfWP(navaid[indexToInsert]) == -1) {
+			if (indexPresent == -1 or indexPresent > me.arrivalIndex[plan]) {
 				me.flightplans[plan].insertWP(createWPFrom(navaid[indexToInsert]), index);
 				fmgc.windController.insertWind(plan, index, 1, text);
 				me.addDiscontinuity(index + 1, plan);
@@ -530,7 +530,8 @@ var flightPlanController = {
 			return 1;
 		}
 		
-		if (me.flightplans[plan].indexOfWP(wpGhost) == -1) {
+		var indexCurr = me.flightplans[plan].indexOfWP(wpGhost);
+		if (indexCurr == -1 or indexCurr > me.arrivalIndex[plan]) {
 			# use createWP here as createWPFrom doesn't accept waypoints
 			me.flightplans[plan].insertWP(createWP(wpGhost, wpGhost.wp_name), index);
 			fmgc.windController.insertWind(plan, index, 1, wpGhost.wp_name);
@@ -710,9 +711,14 @@ var flightPlanController = {
 			}
 		}
 		
-		me.dist = (me.flightplans[n].getWP(me.arrivalIndex[n]).distance_along_route - me.flightplans[n].getWP(me.indexDecel).distance_along_route) + 7;
+		#me.dist = (me.flightplans[n].getWP(me.arrivalIndex[n]).distance_along_route - me.flightplans[n].getWP(me.indexDecel).distance_along_route) + 7;
 		
-		me.decelPoint = me.flightplans[n].pathGeod(me.arrivalIndex[n], -me.dist);
+		me.dist = me.flightplans[n].getWP(me.indexDecel).leg_distance - 7;
+		if (me.dist < 0) {
+			me.dist = 0.1;
+		}
+		print("Inserting " ~ me.dist ~ " miles after " ~ me.flightplans[n].getWP(me.indexDecel - 1).id);
+		me.decelPoint = me.flightplans[n].pathGeod(me.indexDecel - 1, me.dist);
 		if (n == 2) {
 			setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
 			setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);
