@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -9,33 +7,34 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64"
-   height="64"
-   id="svg2985"
+   sodipodi:docname="airbus_tc.svg"
+   inkscape:version="1.0beta2 (2b71d25, 2019-12-03)"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
-   sodipodi:docname="airbus_tc.svg">
+   id="svg2985"
+   height="64"
+   width="64">
   <defs
      id="defs2987" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="5.27"
-     inkscape:cx="14.464853"
-     inkscape:cy="15.800695"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:grid-bbox="true"
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="0"
+     inkscape:window-y="289"
+     inkscape:window-x="127"
+     inkscape:window-height="703"
+     inkscape:window-width="1508"
      inkscape:document-units="px"
-     inkscape:window-width="1075"
-     inkscape:window-height="665"
-     inkscape:window-x="93"
-     inkscape:window-y="92"
-     inkscape:window-maximized="0" />
+     inkscape:grid-bbox="true"
+     showgrid="true"
+     inkscape:current-layer="tc_symbol"
+     inkscape:cy="15.800695"
+     inkscape:cx="14.464853"
+     inkscape:zoom="5.27"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata2990">
     <rdf:RDF>
@@ -49,25 +48,25 @@
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1"
-     inkscape:label="Layer 1"
+     transform="translate(0,16)"
      inkscape:groupmode="layer"
-     transform="translate(0,16)">
+     inkscape:label="Layer 1"
+     id="layer1">
     <g
-       id="tc_symbol"
-       transform="matrix(1.4141414,0,0,1.4141414,-2.4444435,-18.040404)">
+       transform="matrix(1.4141414,0,0,1.4141414,-2.4444435,-18.040404)"
+       id="tc_symbol">
       <path
-         sodipodi:nodetypes="cccc"
-         inkscape:connector-curvature="0"
-         id="path2993"
+         style="fill:none;stroke:#179ab7;stroke-width:2.4000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          d="m 2.9285709,34.185715 12.3428571,-12.685716 30.514286,0 -4.8,-7.542856"
-         style="fill:none;stroke:#118eff;stroke-width:2.4000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         style="fill:none;stroke:#118eff;stroke-width:2.4000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 45.785714,21.561266 -4.8,7.542856"
-         id="path3094"
+         id="path2993"
          inkscape:connector-curvature="0"
-         sodipodi:nodetypes="cc" />
+         sodipodi:nodetypes="cccc" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path3094"
+         d="m 45.785714,21.561266 -4.8,7.542856"
+         style="fill:none;stroke:#179ab7;stroke-width:2.40000010000000019px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
 </svg>
