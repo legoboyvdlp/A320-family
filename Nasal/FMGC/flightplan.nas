@@ -44,6 +44,9 @@ var flightPlanController = {
 	wptTypeNoAdvanceDelete: 0,
 	
 	distanceToDest: [0, 0, 0],
+	traversedDist: [0, 0, 0],
+	storedDistance: [0, 0, 0],
+	_storedDistance: [0, 0, 0],
 	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[2]/num", 0, "INT")],
 	arrivalIndex: [0, 0, 0],
 	arrivalDist: 0,
@@ -298,11 +301,13 @@ var flightPlanController = {
 	
 	insertTOC: func(n, pos, index) {
 		me.flightplans[n].insertWP(createWP(pos, "(T/C)"), index);
+		me.flightplans[n].getWP(index).hidden = 1;
 		fmgc.windController.insertWind(n, index, 0, "(T/C)");
 	},
 	
 	insertTOD: func(n, pos, index) {
 		me.flightplans[n].insertWP(createWP(pos, "(T/D)"), index);
+		me.flightplans[n].getWP(index).hidden = 1;
 		fmgc.windController.insertWind(n, index, 0, "(T/D)");
 	},
 	
@@ -400,10 +405,29 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		if (me.flightplans[n].getWP(index).id == "(T/C)" or me.flightplans[n].getWP(index).id == "(T/D)") {
+		if (me.flightplans[n].getWP(index).id == "(T/C)") {
+			if (s == 1) {
+				fmgc.FMGCInternal.clbReached = 1;
+			}
 			return 1;
 		}
+		
+		if (me.flightplans[n].getWP(index).id == "(T/D)") {
+			if (s == 1) {
+				fmgc.FMGCInternal.desReached = 1;
+			}
+			return 1;
+		}
+		me._storedDistance[n] = me.flightplans[n].getWP(index + 1).leg_distance;
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
+			if (s == 1) {
+				print(me.storedDistance[n]);
+				print(me._storedDistance[n]);
+				print(me.traversedDist[n]);
+				print("%%%%");
+				me.traversedDist[n] += me._storedDistance[n];
+				me.storedDistance[n] = me._storedDistance[n];
+			}
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
@@ -742,7 +766,7 @@ var flightPlanController = {
 		# distance tolerance to update the waypoints, may need to adjust this as waypoints become more dynamic
 		var distance_tolerance = 0;
 		
-		if (fmgc.FMGCInternal.clbSet) {
+		if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
 			#setprop("/autopilot/route-manager/vnav/tc", 1); 
 			#setprop("/autopilot/route-manager/vnav/td", 1); 
 			
@@ -758,13 +782,13 @@ var flightPlanController = {
 				var toc_distance = 0;
 				for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
 					toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-					if (toc_distance > fmgc.FMGCInternal.clbDist) {
+					if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
 						indexTOC = wpt;
 						break;
 					}
 				}
 				
-				me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
+				me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 				me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
 				me.flightPlanChanged(n, 0);
 			} else {
@@ -774,7 +798,7 @@ var flightPlanController = {
 					
 					me.flightplans[4] = me.flightplans[n].clone();
 					me.flightplans[4].deleteWP(indexTOC_old);
-					var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist);
+					var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 					me.flightplans[4] = nil;
 					
 					var c1 = geo.Coord.new();
@@ -791,13 +815,13 @@ var flightPlanController = {
 						var toc_distance = 0;
 						for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
 							toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-							if (toc_distance > fmgc.FMGCInternal.clbDist) {
+							if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
 								indexTOC = wpt;
 								break;
 							}
 						}
 						
-						me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
+						me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 						me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
 						me.flightPlanChanged(n, 0);
 					}
@@ -806,13 +830,13 @@ var flightPlanController = {
 					var toc_distance = 0;
 					for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
 						toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-						if (toc_distance > fmgc.FMGCInternal.clbDist) {
+						if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
 							indexTOC = wpt;
 							break;
 						}
 					}
 					
-					me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist);
+					me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 					me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
 					me.flightPlanChanged(n, 0);
 				}
