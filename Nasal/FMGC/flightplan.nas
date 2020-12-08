@@ -767,14 +767,14 @@ var flightPlanController = {
 		var distance_tolerance = 0;
 		
 		if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
-			#setprop("/autopilot/route-manager/vnav/tc", 1); 
-			#setprop("/autopilot/route-manager/vnav/td", 1); 
-			
 			if (explicit) {
 				var indexTOC_old = me.getIndexOfTOC(n);
 				if (indexTOC_old != -99) {
 					me.flightplans[n].deleteWP(indexTOC_old);
 					fmgc.windController.deleteWind(n, indexTOC_old);
+					if (n == 2) {
+						setprop("/autopilot/route-manager/vnav/tc/show", 0);
+					}
 					me.flightPlanChanged(n, 0);
 				}
 				
@@ -790,6 +790,11 @@ var flightPlanController = {
 				
 				me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 				me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
+				if (n == 2) {
+					setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
+					setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
+					setprop("/autopilot/route-manager/vnav/tc/show", 1);
+				}
 				me.flightPlanChanged(n, 0);
 			} else {
 				if (me.getIndexOfTOC(n) != -99) {
@@ -809,6 +814,9 @@ var flightPlanController = {
 					if (c1.distance_to(c2) > distance_tolerance) {
 						me.flightplans[n].deleteWP(indexTOC_old);
 						fmgc.windController.deleteWind(n, indexTOC_old);
+						if (n == 2) {
+							setprop("/autopilot/route-manager/vnav/tc/show", 0);
+						}
 						me.flightPlanChanged(n, 0);
 						
 						var indexTOC = 0;
@@ -823,6 +831,11 @@ var flightPlanController = {
 						
 						me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 						me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
+						if (n == 2) {
+							setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
+							setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
+							setprop("/autopilot/route-manager/vnav/tc/show", 1);
+						}
 						me.flightPlanChanged(n, 0);
 					}
 				} else {
@@ -838,6 +851,11 @@ var flightPlanController = {
 					
 					me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 					me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
+					if (n == 2) {
+						setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
+						setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
+						setprop("/autopilot/route-manager/vnav/tc/show", 1);
+					}
 					me.flightPlanChanged(n, 0);
 				}
 			}
@@ -846,6 +864,9 @@ var flightPlanController = {
 			if (indexTOC_old != -99) {
 				me.flightplans[n].deleteWP(indexTOC_old);
 				fmgc.windController.deleteWind(n, indexTOC_old);
+				if (n == 2) {
+					setprop("/autopilot/route-manager/vnav/tc/show", 0);
+				}
 				me.flightPlanChanged(n, 0);
 			}
 		}
