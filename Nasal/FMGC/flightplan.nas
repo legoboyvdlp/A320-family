@@ -393,19 +393,17 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		if (me.flightplans[n].getWP(index).id == "(T/C)") {
-			if (s == 1) {
-				fmgc.FMGCInternal.clbReached = 1;
-			}
-			return 1;
-		}
-		
-		if (me.flightplans[n].getWP(index).id == "(T/D)") {
-			if (s == 1) {
-				fmgc.FMGCInternal.desReached = 1;
-			}
-			return 1;
-		}
+		# if (me.flightplans[n].getWP(index).id == "(T/C)") {
+# 			if (s == 1) {
+# 				fmgc.FMGCInternal.clbReached = 1;
+# 			}
+# 		}
+# 		
+# 		if (me.flightplans[n].getWP(index).id == "(T/D)") {
+# 			if (s == 1) {
+# 				fmgc.FMGCInternal.desReached = 1;
+# 			}
+# 		}
 		me._storedDistance[n] = me.flightplans[n].getWP(index + 1).leg_distance;
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (s == 1) {
@@ -787,7 +785,8 @@ var flightPlanController = {
 		}
 		
 		if (fmgc.FMGCInternal.clbSet) {
-			if (!fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
+			#if (!fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
+			if (fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
 				if (explicit) {
 					me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
 					me.insertTOC(n);
