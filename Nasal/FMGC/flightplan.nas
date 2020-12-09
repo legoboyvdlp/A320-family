@@ -765,7 +765,7 @@ var flightPlanController = {
 		}
 		me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 		me.flightplans[n].insertWP(createWP({lat: me.tocPoint.lat, lon: me.tocPoint.lon}, "(T/C)"), indexTOC);
-		me.flightplans[n].getWP(indexTOC).hidden = 1;
+		#me.flightplans[n].getWP(indexTOC).hidden = 1;
 		fmgc.windController.insertWind(n, indexTOC, 0, "(T/C)");
 		if (n == 2) {
 			setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
@@ -786,26 +786,28 @@ var flightPlanController = {
 			return;			
 		}
 		
-		if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
-			if (explicit) {
-				me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
-				me.insertTOC(n);
-			} else {
-				if (me.getIndexOfTOC(n) != -99) {
-					var indexTOC_old = me.getIndexOfTOC(n);
-					var tocPoint_old = me.flightplans[n].getWP(indexTOC_old);
+		if (fmgc.FMGCInternal.clbSet) {
+			if (!fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
+				if (explicit) {
+					me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
+					me.insertTOC(n);
+				} else {
+					if (me.getIndexOfTOC(n) != -99) {
+						var indexTOC_old = me.getIndexOfTOC(n);
+						var tocPoint_old = me.flightplans[n].getWP(indexTOC_old);
 					
-					me.flightplans[4] = me.flightplans[n].clone();
-					me.flightplans[4].deleteWP(indexTOC_old);
-					var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
-					me.flightplans[4] = nil;
+						me.flightplans[4] = me.flightplans[n].clone();
+						me.flightplans[4].deleteWP(indexTOC_old);
+						var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
+						me.flightplans[4] = nil;
 					
-					if (tocPoint_new.lat != tocPoint_old.lat or tocPoint_new.lon != tocPoint_old.lon) {
-						me.deleteVerticalWaypoint(n, indexTOC_old, "tc");
+						if (tocPoint_new.lat != tocPoint_old.lat or tocPoint_new.lon != tocPoint_old.lon) {
+							me.deleteVerticalWaypoint(n, indexTOC_old, "tc");
+							me.insertTOC(n);
+						}
+					} else {
 						me.insertTOC(n);
 					}
-				} else {
-					me.insertTOC(n);
 				}
 			}
 		} else {
