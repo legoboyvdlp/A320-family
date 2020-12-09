@@ -299,18 +299,6 @@ var flightPlanController = {
 		fmgc.windController.insertWind(n, index, 0, "PPOS");
 	},
 	
-	insertTOC: func(n, pos, index) {
-		me.flightplans[n].insertWP(createWP(pos, "(T/C)"), index);
-		me.flightplans[n].getWP(index).hidden = 1;
-		fmgc.windController.insertWind(n, index, 0, "(T/C)");
-	},
-	
-	insertTOD: func(n, pos, index) {
-		me.flightplans[n].insertWP(createWP(pos, "(T/D)"), index);
-		me.flightplans[n].getWP(index).hidden = 1;
-		fmgc.windController.insertWind(n, index, 0, "(T/D)");
-	},
-	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
 	# args: wpt, bearing, dist, name, typeStr
 	#    wpt: waypoint ghost
@@ -421,10 +409,6 @@ var flightPlanController = {
 		me._storedDistance[n] = me.flightplans[n].getWP(index + 1).leg_distance;
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (s == 1) {
-				print(me.storedDistance[n]);
-				print(me._storedDistance[n]);
-				print(me.traversedDist[n]);
-				print("%%%%");
 				me.traversedDist[n] += me._storedDistance[n];
 				me.storedDistance[n] = me._storedDistance[n];
 			}
@@ -758,44 +742,54 @@ var flightPlanController = {
 		return 99;
 	},
 	
+	deleteVerticalWaypoint: func(n, index, type) {
+		if (index != -99) {
+			me.flightplans[n].deleteWP(index);
+			fmgc.windController.deleteWind(n, index);
+			if (n == 2) {
+				setprop("/autopilot/route-manager/vnav/" ~ type ~ "/show", 0);
+			}
+			me.flightPlanChanged(n, 0);
+		}
+	},
+	
+	insertTOC: func(n) {
+		var indexTOC = 0;
+		var toc_distance = 0;
+		for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
+			toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
+			if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
+				indexTOC = wpt;
+				break;
+			}
+		}
+		me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
+		me.flightplans[n].insertWP(createWP({lat: me.tocPoint.lat, lon: me.tocPoint.lon}, "(T/C)"), indexTOC);
+		me.flightplans[n].getWP(indexTOC).hidden = 1;
+		fmgc.windController.insertWind(n, indexTOC, 0, "(T/C)");
+		if (n == 2) {
+			setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
+			setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
+			setprop("/autopilot/route-manager/vnav/tc/show", 1);
+		}
+		me.flightPlanChanged(n, 0);
+	},
+	
+	insertTOD: func(n, pos, index) {
+		me.flightplans[n].insertWP(createWP(pos, "(T/D)"), index);
+		me.flightplans[n].getWP(index).hidden = 1;
+		fmgc.windController.insertWind(n, index, 0, "(T/D)");
+	},
+	
 	calculateVerticalPoints: func(n, explicit = 0) {
 		if (me.getPlanSizeNoDiscont(n) <= 1) {
 			return;			
 		}
 		
-		# distance tolerance to update the waypoints, may need to adjust this as waypoints become more dynamic
-		var distance_tolerance = 0;
-		
 		if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
 			if (explicit) {
-				var indexTOC_old = me.getIndexOfTOC(n);
-				if (indexTOC_old != -99) {
-					me.flightplans[n].deleteWP(indexTOC_old);
-					fmgc.windController.deleteWind(n, indexTOC_old);
-					if (n == 2) {
-						setprop("/autopilot/route-manager/vnav/tc/show", 0);
-					}
-					me.flightPlanChanged(n, 0);
-				}
-				
-				var indexTOC = 0;
-				var toc_distance = 0;
-				for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
-					toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-					if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
-						indexTOC = wpt;
-						break;
-					}
-				}
-				
-				me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
-				me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
-				if (n == 2) {
-					setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
-					setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
-					setprop("/autopilot/route-manager/vnav/tc/show", 1);
-				}
-				me.flightPlanChanged(n, 0);
+				me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
+				me.insertTOC(n);
 			} else {
 				if (me.getIndexOfTOC(n) != -99) {
 					var indexTOC_old = me.getIndexOfTOC(n);
@@ -806,69 +800,16 @@ var flightPlanController = {
 					var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 					me.flightplans[4] = nil;
 					
-					var c1 = geo.Coord.new();
-					c1.set_latlon(tocPoint_new.lat, tocPoint_new.lon);
-					var c2 = geo.Coord.new();
-					c2.set_latlon(tocPoint_old.lat, tocPoint_old.lon);
-				
-					if (c1.distance_to(c2) > distance_tolerance) {
-						me.flightplans[n].deleteWP(indexTOC_old);
-						fmgc.windController.deleteWind(n, indexTOC_old);
-						if (n == 2) {
-							setprop("/autopilot/route-manager/vnav/tc/show", 0);
-						}
-						me.flightPlanChanged(n, 0);
-						
-						var indexTOC = 0;
-						var toc_distance = 0;
-						for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
-							toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-							if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
-								indexTOC = wpt;
-								break;
-							}
-						}
-						
-						me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
-						me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
-						if (n == 2) {
-							setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
-							setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
-							setprop("/autopilot/route-manager/vnav/tc/show", 1);
-						}
-						me.flightPlanChanged(n, 0);
+					if (tocPoint_new.lat != tocPoint_old.lat or tocPoint_new.lon != tocPoint_old.lon) {
+						me.deleteVerticalWaypoint(n, indexTOC_old, "tc");
+						me.insertTOC(n);
 					}
 				} else {
-					var indexTOC = 0;
-					var toc_distance = 0;
-					for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
-						toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-						if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
-							indexTOC = wpt;
-							break;
-						}
-					}
-					
-					me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
-					me.insertTOC(n, {lat: me.tocPoint.lat, lon: me.tocPoint.lon}, indexTOC);
-					if (n == 2) {
-						setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
-						setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
-						setprop("/autopilot/route-manager/vnav/tc/show", 1);
-					}
-					me.flightPlanChanged(n, 0);
+					me.insertTOC(n);
 				}
 			}
 		} else {
-			var indexTOC_old = me.getIndexOfTOC(n);
-			if (indexTOC_old != -99) {
-				me.flightplans[n].deleteWP(indexTOC_old);
-				fmgc.windController.deleteWind(n, indexTOC_old);
-				if (n == 2) {
-					setprop("/autopilot/route-manager/vnav/tc/show", 0);
-				}
-				me.flightPlanChanged(n, 0);
-			}
+			me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
 		}
 
 #		if (fmgc.FMGCInternal.desSet) {			
