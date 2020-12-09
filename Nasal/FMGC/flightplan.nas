@@ -763,7 +763,7 @@ var flightPlanController = {
 		}
 		me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 		me.flightplans[n].insertWP(createWP({lat: me.tocPoint.lat, lon: me.tocPoint.lon}, "(T/C)"), indexTOC);
-		#me.flightplans[n].getWP(indexTOC).hidden = 1;
+		me.flightplans[n].getWP(indexTOC).hidden = 1;
 		fmgc.windController.insertWind(n, indexTOC, 0, "(T/C)");
 		if (n == 2) {
 			setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
