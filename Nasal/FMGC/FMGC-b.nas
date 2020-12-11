@@ -404,6 +404,11 @@ var ITAF = {
 					FPLN.wpFlyFrom = 0;
 				}
 				FPLN.currentCourse = fmgc.wpCourse[2][FPLN.wpFlyFrom].getValue();
+				# if (fmgc.wpID[2][FPLN.wpFlyTo].getValue() == "(T/C)") {
+# 					FPLN.wpFlyTo = FPLN.currentWpTemp + 2;
+# 				} else {
+# 					FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
+# 				}
 				FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
 				FPLN.nextCourse = fmgc.wpCourse[2][FPLN.wpFlyTo].getValue();
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();

@@ -233,6 +233,7 @@ var flightPlanController = {
 			} else {
 				me.wptType = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type;
 				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "dmeIntercept" or me.wptType == "hdgToAlt";
+				#if (me.wptTypeNoAdvanceDelete or me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_name == "(T/C)") {
 				if (me.wptTypeNoAdvanceDelete) {
 					me.currentToWptIndex.setValue(2);
 				} else {
@@ -763,7 +764,7 @@ var flightPlanController = {
 		}
 		me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
 		me.flightplans[n].insertWP(createWP({lat: me.tocPoint.lat, lon: me.tocPoint.lon}, "(T/C)"), indexTOC);
-		me.flightplans[n].getWP(indexTOC).hidden = 1;
+		#me.flightplans[n].getWP(indexTOC).hidden = 1;
 		fmgc.windController.insertWind(n, indexTOC, 0, "(T/C)");
 		if (n == 2) {
 			setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
