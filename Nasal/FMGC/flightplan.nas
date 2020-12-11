@@ -742,7 +742,7 @@ var flightPlanController = {
 	},
 	
 	deleteVerticalWaypoint: func(n, index, type) {
-		if (index != -99) {
+		if ((type == "tc" and index != -99) or (type == "td" and index != 99)) {
 			me.flightplans[n].deleteWP(index);
 			fmgc.windController.deleteWind(n, index);
 			if (n == 2) {
@@ -841,12 +841,12 @@ var flightPlanController = {
 					if (me.getIndexOfTOD(n) != 99) {
 						var indexTOD_old = me.getIndexOfTOD(n);
 						var todPoint_old = me.flightplans[n].getWP(indexTOD_old);
-					
+						
 						me.flightplans[4] = me.flightplans[n].clone();
 						me.flightplans[4].deleteWP(indexTOD_old);
-						var todPoint_new = me.flightplans[4].pathGeod(me.arrivalIndex[n], -fmgc.FMGCInternal.desDist);
+						var todPoint_new = me.flightplans[4].pathGeod(me.arrivalIndex[n] - 1, -fmgc.FMGCInternal.desDist);
 						me.flightplans[4] = nil;
-					
+						
 						if (todPoint_new.lat != todPoint_old.lat or todPoint_new.lon != todPoint_old.lon) {
 							me.deleteVerticalWaypoint(n, indexTOD_old, "td");
 							me.insertTOD(n);
