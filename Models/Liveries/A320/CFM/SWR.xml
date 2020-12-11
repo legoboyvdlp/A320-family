@@ -7,6 +7,7 @@
 				<name>Swiss (HB-JLS)</name>
 				<texture-fuselage>SWR-fuselage.png</texture-fuselage>
 				<texture-engine>SWR-engine.png</texture-engine>
+				<logo>SWR.png</logo>
 			</livery>
 		</model>
 	</sim>
