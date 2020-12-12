@@ -55,8 +55,11 @@ var flightPlanController = {
 	fromWptAlt: nil,
 	_timeTemp: nil,
 	_altTemp: nil,
+	
 	tocPoint: nil,
 	todPoint: nil,
+	#tocNode: nil,
+	#todNode: nil,
 	
 	init: func() {
 		me.resetFlightplan(2);
@@ -394,17 +397,20 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		# if (me.flightplans[n].getWP(index).id == "(T/C)") {
-# 			if (s == 1) {
-# 				fmgc.FMGCInternal.clbReached = 1;
-# 			}
-# 		}
-# 		
-# 		if (me.flightplans[n].getWP(index).id == "(T/D)") {
-# 			if (s == 1) {
-# 				fmgc.FMGCInternal.desReached = 1;
-# 			}
-# 		}
+		if (me.flightplans[n].getWP(index).id == "(T/C)") {
+			me.deleteVerticalWaypoint(n, index, "tc");
+			#fmgc.FMGCInternal.clbReached = 1;
+			me.flightPlanChanged(n);
+			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
+			return 2;
+		}
+		if (me.flightplans[n].getWP(index).id == "(T/D)") {
+			me.deleteVerticalWaypoint(n, index, "td");
+			#fmgc.FMGCInternal.desReached = 1;
+			me.flightPlanChanged(n);
+			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
+			return 2;
+		}
 		me._storedDistance[n] = me.flightplans[n].getWP(index + 1).leg_distance;
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (s == 1) {
@@ -745,10 +751,20 @@ var flightPlanController = {
 		if ((type == "tc" and index != -99) or (type == "td" and index != 99)) {
 			me.flightplans[n].deleteWP(index);
 			fmgc.windController.deleteWind(n, index);
-			if (n == 2) {
-				setprop("/autopilot/route-manager/vnav/" ~ type ~ "/show", 0);
+			if (n == 2 and type == "tc") { #and me.tocNode != nil) {
+				setprop("/autopilot/route-manager/vnav/tc/latitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
+				setprop("/autopilot/route-manager/vnav/tc/longitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
+				#me.tocNode.remove();
+				#me.tocNode = nil;
+			} else if (n == 2 and type == "td") { #and me.todNode != nil) {
+				setprop("/autopilot/route-manager/vnav/td/latitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
+				setprop("/autopilot/route-manager/vnav/td/longitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
+				#me.todNode.remove();
+				#me.todNode = nil;
 			}
 			me.flightPlanChanged(n, 0);
+		} else {
+			print(type, " couldn't be deleted: ", index, " | plan: ", n);
 		}
 	},
 	
@@ -767,9 +783,9 @@ var flightPlanController = {
 		#me.flightplans[n].getWP(indexTOC).hidden = 1;
 		fmgc.windController.insertWind(n, indexTOC, 0, "(T/C)");
 		if (n == 2) {
+			#me.tocNode = props.globals.initNode("/autopilot/route-manager/vnav/tc");
 			setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
 			setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
-			setprop("/autopilot/route-manager/vnav/tc/show", 1);
 		}
 		me.flightPlanChanged(n, 0);
 	},
@@ -790,9 +806,9 @@ var flightPlanController = {
 		#me.flightplans[n].getWP(indexTOD).hidden = 1;
 		fmgc.windController.insertWind(n, indexTOD, 0, "(T/D)");
 		if (n == 2) {
+			#me.todNode = props.globals.initNode("/autopilot/route-manager/vnav/td");
 			setprop("/autopilot/route-manager/vnav/td/latitude-deg", me.todPoint.lat);
 			setprop("/autopilot/route-manager/vnav/td/longitude-deg", me.todPoint.lon);
-			setprop("/autopilot/route-manager/vnav/td/show", 1);
 		}
 		me.flightPlanChanged(n, 0);
 	},
@@ -826,7 +842,9 @@ var flightPlanController = {
 						me.insertTOC(n);
 					}
 				}
-			}
+			}# else {
+			#	me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
+			#}
 		} else {
 			me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
 		}
@@ -855,7 +873,9 @@ var flightPlanController = {
 						me.insertTOD(n);
 					}
 				}
-			}
+			}# else {
+			#	me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
+			#}
 		} else {
 			me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
 		}
