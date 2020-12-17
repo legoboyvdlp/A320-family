@@ -386,7 +386,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<actuator name="/systems/hydraulic/yellow-psi">
 			<input>/systems/hydraulic/yellow-psi-cmd</input>
 			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
@@ -397,6 +397,34 @@
 			<input>/systems/hydraulic/yellow-psi</input>
 			<gain>0.9</gain>
 		</pure_gain>
+
+		<fcs_function name="/systems/hydraulic/yellow-accumulator-psi-cmd">
+			<function>
+				<ifthen>
+					<and>
+						<ge>
+							<property>/systems/hydraulic/yellow-psi</property>
+							<value>0</value>
+						</ge>
+						<ge>
+							<property>/systems/hydraulic/yellow-psi</property>
+							<property>/systems/hydraulic/yellow-accumulator-psi-cmd</property>
+						</ge>
+					</and>
+					<max>
+						<property>/systems/hydraulic/yellow-psi</property>
+						<property>/systems/hydraulic/yellow-accumulator-psi-cmd</property>
+					</max>
+					<property>/systems/hydraulic/yellow-accumulator-psi-cmd</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/hydraulic/yellow-accumulator-psi">
+			<input>/systems/hydraulic/yellow-accumulator-psi-cmd</input>
+			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
+			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
+		</actuator>
 		
 		<!-- PTU -->
 		<fcs_function name="/systems/hydraulic/yellow-psi-diff">
@@ -510,7 +538,7 @@
 			</test>
 			<test logic="AND" value="2">
 				/controls/gear/brake-parking ne 1
-				/systems/hydraulic/brakes/accumulator-pressure-psi ge 0
+				/systems/hydraulic/yellow-accumulator-psi-cmd ge 0
 			</test>
 		</switch>
 	</channel>
