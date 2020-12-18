@@ -373,7 +373,7 @@ var canvas_MCDU_base = {
 		if (page != "ATISDETAIL") {
 			me["ATISArrows"].hide();
 		}
-		if (page == "F-PLNA" or page == "F-PLNB") {
+		if (page == "F-PLN") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
@@ -412,7 +412,6 @@ var canvas_MCDU_base = {
 			}
 			
 			if (myFpln[i] != nil) {
-				
 				if (fmgc.FMGCInternal.flightNumSet) {
 					me["FPLN_Callsign"].setText(fmgc.FMGCInternal.flightNum);
 					me["FPLN_Callsign"].show();

@@ -1,5 +1,5 @@
 # A3XX FMGC Flightplan Driver
-# Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
 
 var wpDep = nil;
 var wpArr = nil;
@@ -27,7 +27,7 @@ var wpCoursePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/course-fr
 var wpDistancePrev = [[props.globals.initNode("/FMGC/flightplan[0]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[1]/wp[0]/distance-from-prev", 0, "DOUBLE")], [props.globals.initNode("/FMGC/flightplan[2]/wp[0]/distance-from-prev", 0, "DOUBLE")]];
 
 var flightPlanController = {
-	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil, nil],
+	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
 	temporaryFlag: [0, 0],
 	
 	# These flags are only for the main flgiht-plan
@@ -55,11 +55,6 @@ var flightPlanController = {
 	fromWptAlt: nil,
 	_timeTemp: nil,
 	_altTemp: nil,
-	
-	tocPoint: nil,
-	todPoint: nil,
-	#tocNode: nil,
-	#todNode: nil,
 	
 	init: func() {
 		me.resetFlightplan(2);
@@ -177,8 +172,8 @@ var flightPlanController = {
 		}
 		me.addDiscontinuity(1, plan);
 		# reset mcdu if it exists
-		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; }
-		if (canvas_mcdu.myFpln[1] != nil) { canvas_mcdu.myFpln[1].scroll = 0; }
+		if (canvas_mcdu.myFpln[0] != nil) { canvas_mcdu.myFpln[0].scroll = 0; canvas_mcdu.myFpln[0].scroll_index = 0; }
+		if (canvas_mcdu.myFpln[1] != nil) { canvas_mcdu.myFpln[1].scroll = 0; canvas_mcdu.myFpln[1].scroll_index = 0; }
 		if (canvas_mcdu.myArrival[0] != nil) { canvas_mcdu.myArrival[0].reset(); }
 		if (canvas_mcdu.myArrival[1] != nil) { canvas_mcdu.myArrival[1].reset(); }
 		if (canvas_mcdu.myDeparture[0] != nil) { canvas_mcdu.myDeparture[0].reset(); }
@@ -236,7 +231,6 @@ var flightPlanController = {
 			} else {
 				me.wptType = me.flightplans[2].getWP(me.currentToWptIndexTemp).wp_type;
 				me.wptTypeNoAdvanceDelete = me.wptType == "radialIntercept" or me.wptType == "vectors" or me.wptType == "dmeIntercept" or me.wptType == "hdgToAlt";
-				#if (me.wptTypeNoAdvanceDelete or me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_name == "(T/C)") {
 				if (me.wptTypeNoAdvanceDelete) {
 					me.currentToWptIndex.setValue(2);
 				} else {
@@ -397,20 +391,6 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		if (me.flightplans[n].getWP(index).id == "(T/C)") {
-			me.deleteVerticalWaypoint(n, index, "tc");
-			#fmgc.FMGCInternal.clbReached = 1;
-			me.flightPlanChanged(n);
-			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
-			return 2;
-		}
-		if (me.flightplans[n].getWP(index).id == "(T/D)") {
-			me.deleteVerticalWaypoint(n, index, "td");
-			#fmgc.FMGCInternal.desReached = 1;
-			me.flightPlanChanged(n);
-			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
-			return 2;
-		}
 		me._storedDistance[n] = me.flightplans[n].getWP(index + 1).leg_distance;
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
 			if (s == 1) {
@@ -729,158 +709,6 @@ var flightPlanController = {
 		return -99;
 	},
 	
-	getIndexOfTOC: func(plan) {
-		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			if (me.flightplans[plan].getWP(wpt).wp_name == "(T/C)") {
-				return wpt;
-			}
-		}
-		return -99;
-	},
-	
-	getIndexOfTOD: func(plan) {
-		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			if (me.flightplans[plan].getWP(wpt).wp_name == "(T/D)") {
-				return wpt;
-			}
-		}
-		return 99;
-	},
-	
-	deleteVerticalWaypoint: func(n, index, type) {
-		if ((type == "tc" and index != -99) or (type == "td" and index != 99)) {
-			me.flightplans[n].deleteWP(index);
-			fmgc.windController.deleteWind(n, index);
-			if (n == 2 and type == "tc") { #and me.tocNode != nil) {
-				setprop("/autopilot/route-manager/vnav/tc/latitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
-				setprop("/autopilot/route-manager/vnav/tc/longitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
-				#me.tocNode.remove();
-				#me.tocNode = nil;
-			} else if (n == 2 and type == "td") { #and me.todNode != nil) {
-				setprop("/autopilot/route-manager/vnav/td/latitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
-				setprop("/autopilot/route-manager/vnav/td/longitude-deg", 0.0); # temporary fix, for some reason the symbol refuses to go away
-				#me.todNode.remove();
-				#me.todNode = nil;
-			}
-			me.flightPlanChanged(n, 0);
-		} else {
-			print(type, " couldn't be deleted: ", index, " | plan: ", n);
-		}
-	},
-	
-	insertTOC: func(n) {
-		var indexTOC = 0;
-		var toc_distance = 0;
-		for (var wpt = 1; wpt <= me.arrivalIndex[n]; wpt += 1) {
-			toc_distance += me.flightplans[n].getWP(wpt).leg_distance;
-			if (toc_distance > fmgc.FMGCInternal.clbDist - me.traversedDist[n]) {
-				indexTOC = wpt;
-				break;
-			}
-		}
-		me.tocPoint = me.flightplans[n].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
-		me.flightplans[n].insertWP(createWP({lat: me.tocPoint.lat, lon: me.tocPoint.lon}, "(T/C)"), indexTOC);
-		#me.flightplans[n].getWP(indexTOC).hidden = 1;
-		fmgc.windController.insertWind(n, indexTOC, 0, "(T/C)");
-		if (n == 2) {
-			#me.tocNode = props.globals.initNode("/autopilot/route-manager/vnav/tc");
-			setprop("/autopilot/route-manager/vnav/tc/latitude-deg", me.tocPoint.lat);
-			setprop("/autopilot/route-manager/vnav/tc/longitude-deg", me.tocPoint.lon);
-		}
-		me.flightPlanChanged(n, 0);
-	},
-	
-	insertTOD: func(n) {
-		var indexTOD = 0;
-		var tod_distance = 0;
-		for (var wpt = me.arrivalIndex[n]; wpt >= 1; wpt -= 1) {
-			tod_distance += me.flightplans[n].getWP(wpt).leg_distance;
-			if (tod_distance > fmgc.FMGCInternal.desDist) {
-				indexTOD = wpt;
-				break;
-			}
-			# check for tod before toc
-		}
-		me.todPoint = me.flightplans[n].pathGeod(me.arrivalIndex[n], -fmgc.FMGCInternal.desDist);
-		me.flightplans[n].insertWP(createWP({lat: me.todPoint.lat, lon: me.todPoint.lon}, "(T/D)"), indexTOD);
-		#me.flightplans[n].getWP(indexTOD).hidden = 1;
-		fmgc.windController.insertWind(n, indexTOD, 0, "(T/D)");
-		if (n == 2) {
-			#me.todNode = props.globals.initNode("/autopilot/route-manager/vnav/td");
-			setprop("/autopilot/route-manager/vnav/td/latitude-deg", me.todPoint.lat);
-			setprop("/autopilot/route-manager/vnav/td/longitude-deg", me.todPoint.lon);
-		}
-		me.flightPlanChanged(n, 0);
-	},
-	
-	calculateVerticalPoints: func(n, explicit = 0) {
-		if (me.getPlanSizeNoDiscont(n) <= 1) {
-			return;			
-		}
-		
-		if (fmgc.FMGCInternal.clbSet) {
-			#if (!fmgc.FMGCInternal.clbReached and fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
-			if (fmgc.FMGCInternal.clbDist - me.traversedDist[n] > 0) {
-				if (explicit) {
-					me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
-					me.insertTOC(n);
-				} else {
-					if (me.getIndexOfTOC(n) != -99) {
-						var indexTOC_old = me.getIndexOfTOC(n);
-						var tocPoint_old = me.flightplans[n].getWP(indexTOC_old);
-					
-						me.flightplans[4] = me.flightplans[n].clone();
-						me.flightplans[4].deleteWP(indexTOC_old);
-						var tocPoint_new = me.flightplans[4].pathGeod(0, fmgc.FMGCInternal.clbDist - me.traversedDist[n]);
-						me.flightplans[4] = nil;
-					
-						if (tocPoint_new.lat != tocPoint_old.lat or tocPoint_new.lon != tocPoint_old.lon) {
-							me.deleteVerticalWaypoint(n, indexTOC_old, "tc");
-							me.insertTOC(n);
-						}
-					} else {
-						me.insertTOC(n);
-					}
-				}
-			}# else {
-			#	me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
-			#}
-		} else {
-			me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
-		}
-		
-		if (fmgc.FMGCInternal.desSet) {
-			#if (!fmgc.FMGCInternal.desReached and me.arrivalDist - fmgc.FMGCInternal.desDist > 0) {
-			if (me.arrivalDist - fmgc.FMGCInternal.desDist > 0) {
-				if (explicit) {
-					me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
-					me.insertTOD(n);
-				} else {
-					if (me.getIndexOfTOD(n) != 99) {
-						var indexTOD_old = me.getIndexOfTOD(n);
-						var todPoint_old = me.flightplans[n].getWP(indexTOD_old);
-						
-						me.flightplans[4] = me.flightplans[n].clone();
-						me.flightplans[4].deleteWP(indexTOD_old);
-						var todPoint_new = me.flightplans[4].pathGeod(me.arrivalIndex[n] - 1, -fmgc.FMGCInternal.desDist);
-						me.flightplans[4] = nil;
-						
-						if (todPoint_new.lat != todPoint_old.lat or todPoint_new.lon != todPoint_old.lon) {
-							me.deleteVerticalWaypoint(n, indexTOD_old, "td");
-							me.insertTOD(n);
-						}
-					} else {
-						me.insertTOD(n);
-					}
-				}
-			}# else {
-			#	me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
-			#}
-		} else {
-			me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
-		}
-	},
-	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
 	# at some specified bearing, distance from a specified location
 	# args: wp, index, plan
@@ -941,7 +769,7 @@ var flightPlanController = {
 		}
 	},
 	
-	flightPlanChanged: func(n, callVertical = 1) {
+	flightPlanChanged: func(n) {
 		sizeWP = size(wpID[n]);
 		for (var counter = sizeWP; counter < me.flightplans[n].getPlanSize(); counter += 1) { # create new properties if they are required
 			append(wpID[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/text", "", "STRING"));
@@ -952,22 +780,19 @@ var flightPlanController = {
 			append(wpCoursePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/course-from-prev", 0, "DOUBLE"));
 			append(wpDistancePrev[n], props.globals.initNode("/FMGC/flightplan[" ~ n ~ "]/wp[" ~ counter ~ "]/distance-from-prev", 0, "DOUBLE"));
 		}
-		me.updatePlans(1, callVertical);
+		me.updatePlans();
 		fmgc.windController.updatePlans();
 			
-		if (fmgc.FMGCInternal.blockConfirmed and callVertical) {
+		if (fmgc.FMGCInternal.blockConfirmed) {
 			fmgc.FMGCInternal.fuelCalculating = 0;
 			fmgc.fuelCalculating.setValue(0);
 			fmgc.FMGCInternal.fuelCalculating = 1;
 			fmgc.fuelCalculating.setValue(1);
 		}
-		
-		if (callVertical) {
-			canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
-		}
+		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
 	
-	updatePlans: func(runVertical = 0, callVertical = 1) {
+	updatePlans: func() {
 		me.updateCurrentWaypoint();
 		me._arrivalDist = 0;
 		for (var n = 0; n <= 2; n += 1) {
@@ -1016,9 +841,6 @@ var flightPlanController = {
 						}
 					}
 				}
-			}
-			if (runVertical and callVertical) {
-				flightPlanController.calculateVerticalPoints(n, 1);
 			}
 		}
 		

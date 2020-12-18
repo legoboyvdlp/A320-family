@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -9,33 +7,34 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64"
-   height="64"
-   id="svg2985"
+   sodipodi:docname="airbus_td.svg"
+   inkscape:version="1.0beta2 (2b71d25, 2019-12-03)"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
-   sodipodi:docname="airbus_td.svg">
+   id="svg2985"
+   height="64"
+   width="64">
   <defs
      id="defs2987" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="4.3"
-     inkscape:cx="-39.646984"
-     inkscape:cy="24.002241"
-     inkscape:current-layer="Layer 1"
-     showgrid="true"
-     inkscape:grid-bbox="true"
-     inkscape:document-units="px"
-     inkscape:window-width="1075"
-     inkscape:window-height="665"
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="0"
+     inkscape:window-y="25"
      inkscape:window-x="20"
-     inkscape:window-y="20"
-     inkscape:window-maximized="0" />
+     inkscape:window-height="665"
+     inkscape:window-width="1420"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     showgrid="true"
+     inkscape:current-layer="Layer 1"
+     inkscape:cy="24.234799"
+     inkscape:cx="18.492551"
+     inkscape:zoom="4.3"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata2990">
     <rdf:RDF>
@@ -49,15 +48,15 @@
     </rdf:RDF>
   </metadata>
   <g
-     id="Layer 1"
-     inkscape:label="Layer 1"
+     transform="translate(0,16)"
      inkscape:groupmode="layer"
-     transform="translate(0,16)">
+     inkscape:label="Layer 1"
+     id="Layer 1">
     <path
-       style="fill:#none;stroke:#ffffff;stroke-width:2.71867251px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1.3593362,6.558836 c 57.6349168,0 44.8142078,0 44.8142078,0 l 12.887311,17.697308 3.579809,-12.640933 m -16.768967,11.96935 13.848986,1.856603"
-       id="td_symbol"
+       sodipodi:nodetypes="cccccc"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccc" />
+       id="td_symbol"
+       d="m 63.948566,6.558836 c -57.6349165,0 -44.814208,0 -44.814208,0 L 6.2470475,24.256144 2.6672385,11.615211 M 19.436205,23.584561 5.5872195,25.441164"
+       style="stroke:#ffffff;stroke-width:2.71867px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
 </svg>

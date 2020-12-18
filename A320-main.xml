@@ -4449,6 +4449,7 @@
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-b.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC-c.nas</file>
+			<file>Aircraft/A320-family/Nasal/FMGC/fuel.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/winds.nas</file>
 		</fmgc>
 		<mcdu>

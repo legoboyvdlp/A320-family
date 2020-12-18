@@ -137,17 +137,17 @@ var duplicateNamesPage = {
 			if (!me.flagPBD) {
 				if (size(me.vector[0].id) == 5) {
 					fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 				} elsif (size(me.vector[0].id) == 4) {
 					fmgc.flightPlanController.insertAirport(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 				} elsif (size(me.vector[0].id) == 3 or size(me.vector[0].id)== 2) {
 					fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
-					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 				}
 			} else {
 				fmgc.flightPlanController.getWPforPBD(me.vector[0].id ~ "/" ~ me.bearing ~ "/" ~ me.distance, me.index, me.computer, 1, indexSelect - 1);
-				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 			}
 		} else {
 			canvas_mcdu.myDirTo[me.computer].fieldL1(me.vector[0].id, 1, indexSelect - 1);

@@ -765,7 +765,7 @@ var arrivalPage = {
 			me.updatePage();
 		} elsif (index == 6 and me.activePage != 2) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 			} else {
 				setprop("/MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}

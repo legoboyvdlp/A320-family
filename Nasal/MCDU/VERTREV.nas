@@ -43,7 +43,21 @@ var vertRev = {
 		}
 	},
 	_setupPageWithData: func() {
-		if (me.type == 3) { 
+		if (me.type == 5) {
+			me.title = ["VERT REV", " AT ", "T/D"];
+			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
+			me.L6 = [" RETURN", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
+			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		} else if (me.type == 4) {
+			me.title = ["VERT REV", " AT ", "T/C"];
+			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
+			me.L6 = [" RETURN", nil, "wht"];
+			me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
+			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+		} else if (me.type == 3) {
 			me.title = ["VERT REV", " AT ", "PPOS"];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
@@ -53,7 +67,7 @@ var vertRev = {
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R2 = ["RTA ", nil, "wht"];
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
-			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
+			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "ack", "ack"]];
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} elsif (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
@@ -136,10 +150,7 @@ var vertRev = {
 	},
 	pushButtonLeft: func(index) {
 		if (index == 5) {
-			var clb_index = fmgc.flightPlanController.getIndexOfTOC(me.plan);
-			var des_index = fmgc.flightPlanController.getIndexOfTOD(me.plan);
-			
-			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and int(me.index) <= int(clb_index))) {
+			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and me.index < fmgc.FMGCInternal.tocIndex[me.plan])) {
 				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
 					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
 				} else {
@@ -147,7 +158,7 @@ var vertRev = {
 				}
 				fmgc.windController.accessPage[me.computer] = "VERTREV";
 				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCLB");
-			} else if ((!fmgc.FMGCInternal.desSet and (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and int(me.index) >= int(des_index))) {
+			} else if ((!fmgc.FMGCInternal.desSet and (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and me.index > fmgc.FMGCInternal.todIndex[me.plan])) {
 				if (canvas_mcdu.myDESWIND[me.computer] == nil) {
 					canvas_mcdu.myDESWIND[me.computer] = windDESPage.new(me.computer);
 				} else {

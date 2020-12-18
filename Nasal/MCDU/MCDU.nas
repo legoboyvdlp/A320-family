@@ -197,11 +197,18 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.clbTime = 0;
 	fmgc.FMGCInternal.clbDist = 0;
 	fmgc.FMGCInternal.clbSet = 0;
+	fmgc.FMGCInternal.clbReached = 0;
 	
 	fmgc.FMGCInternal.desFuel = 0;
 	fmgc.FMGCInternal.desTime = 0;
 	fmgc.FMGCInternal.desDist = 0;
 	fmgc.FMGCInternal.desSet = 0;
+	fmgc.FMGCInternal.desReached = 0;
+	
+	fmgc.FMGCInternal.tocPoint = nil;
+	fmgc.FMGCInternal.tocIndex[i] = -99;
+	fmgc.FMGCInternal.todPoint = nil;
+	fmgc.FMGCInternal.todIndex[i] = 99;
 }
 
 var setMode = func(will) {
@@ -274,7 +281,7 @@ var lskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(1);
 		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldL1(mcdu_scratchpad.scratchpads[i].scratchpad);
@@ -412,7 +419,7 @@ var lskbutton = func(btn, i) {
 			printInput("L2",i);
 		} else if (page == "PRINTFUNC2") {
 			printInput2("L2",i);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(2);
@@ -534,7 +541,7 @@ var lskbutton = func(btn, i) {
 			printInput("L3",i);
 		} else if (page == "PRINTFUNC2") {
 			printInput2("L3",i);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(3);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(3);
@@ -654,7 +661,7 @@ var lskbutton = func(btn, i) {
 			radnavInput("L4",i);
 		} else if (page == "PRINTFUNC2") {
 			printInput2("L4",i);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(4);
@@ -780,7 +787,7 @@ var lskbutton = func(btn, i) {
 			dataInput("L5",i);
 		} else if (page == "DATA2") {
 			data2Input("L5",i);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonLeft(5);
@@ -838,15 +845,15 @@ var lskbutton = func(btn, i) {
 			perfGAInput("L6",i);
 		} else if (page == "PRINTFUNC2") {
 			printInput2("L6",i);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (page == "LATREV" or page == "VERTREV" or page == "DUPLICATENAMES") {
-			pageNode[i].setValue("F-PLNA");
+			pageNode[i].setValue("F-PLN");
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(6);
 		} else if (page == "DEPARTURE" or page == "HOLD" or page == "AIRWAYS") {
 			if (fmgc.flightPlanController.temporaryFlag[i]) {
-				pageNode[i].setValue("F-PLNA");
+				pageNode[i].setValue("F-PLN");
 			} else {
 				pageNode[i].setValue("LATREV");
 			}
@@ -919,7 +926,7 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonRight(1);
 		} else if (page == "DATA2") {
 			if (fmgc.WaypointDatabase.getCount() > 0) {
@@ -984,7 +991,7 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(2);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonRight(2);
 		} else if (page == "NOTIFICATION") {
 			var result = atsu.notificationSystem.notify();
@@ -1036,7 +1043,7 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonRight(3);
 		} else if (page == "AOCMENU") {
 			if (canvas_mcdu.myReceivedMessages[i] != nil) {
@@ -1112,7 +1119,7 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(4);
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(4);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonRight(4);
 		} else if (page == "ATIS") {
 			if (atsu.ATISInstances[3].station != nil and atsu.ATISInstances[3].sent != 1) {
@@ -1182,7 +1189,7 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(5);
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(5);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonRight(5);
 		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 3) {
@@ -1246,10 +1253,10 @@ var rskbutton = func(btn, i) {
 			mcdu_message(i, "AOC DISABLED");
 		} else if (page == "INITA") {
 			initInputA("R6",i);
-		} else if (page == "F-PLNA" or page == "F-PLNB") {
+		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (page == "VERTREV") {
-			pageNode[i].setValue("F-PLNA");
+			pageNode[i].setValue("F-PLN");
 		} else if (page == "DIRTO") {
 			canvas_mcdu.myDirTo[i].fieldR6();
 		} else if (page == "PILOTWP") {
@@ -1300,6 +1307,8 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("PRINTFUNC2");
 		} else if (page == "PRINTFUNC2") {
 			pageNode[i].setValue("PRINTFUNC");
+		} else if (page == "F-PLN") {
+			canvas_mcdu.myFpln[i].scrollLeft();
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollLeft();
 		} else if (page == "ARRIVAL") {
@@ -1332,6 +1341,8 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("PRINTFUNC2");
 		} else if (page == "PRINTFUNC2") {
 			pageNode[i].setValue("PRINTFUNC");
+		} else if (page == "F-PLN") {
+			canvas_mcdu.myFpln[i].scrollRight();
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollRight();
 		} else if (page == "ARRIVAL") {
@@ -1348,7 +1359,7 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("ATCMENU");
 		}
 	} else if (btn == "up") {
-		if (page == "F-PLNA" or page == "F-PLNB") {
+		if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].scrollUp();
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollUp();
@@ -1364,7 +1375,7 @@ var arrowbutton = func(btn, i) {
 			canvas_mcdu.myAtis[i].scrollUp();
 		}
 	} else if (btn == "down") {
-		if (page == "F-PLNA" or page == "F-PLNB") {
+		if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].scrollDn();
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollDn();
@@ -1447,7 +1458,7 @@ var pagebutton = func(btn, i) {
 			} else {
 				canvas_mcdu.myFpln[i].scroll = 0;
 			}
-			pageNode[i].setValue("F-PLNA");
+			pageNode[i].setValue("F-PLN");
 			
 		} else if (btn == "fuel-pred") {
 			pageNode[i].setValue("FUELPRED");

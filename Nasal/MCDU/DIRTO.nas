@@ -267,7 +267,7 @@ var dirTo = {
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
 			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
-			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
+			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
 		}

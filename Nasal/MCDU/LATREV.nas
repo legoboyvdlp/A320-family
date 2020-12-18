@@ -139,7 +139,7 @@ var latRev = {
 			mcdu_scratchpad.scratchpads[me.computer].empty();
 			fmgc.flightPlanController.flightPlanChanged(me.computer);
 			if (getprop("/MCDU[" ~ me.computer ~ "]/page") != "DUPLICATENAMES") {
-				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLN");
 			}
 		}
 	},

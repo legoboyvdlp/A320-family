@@ -1,6 +1,9 @@
+# Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
+
 var fplnItem = {
 	new: func(wp, index, plan, computer, colour = "grn") {
 		var fI = {parents:[fplnItem]};
+		fI.type = "fpln_item";
 		fI.wp = wp;
 		fI.index = index;
 		fI.plan = plan;
@@ -10,7 +13,7 @@ var fplnItem = {
 		fI._colour = "wht";
 		return fI;
 	},
-	updateLeftText: func() {
+	updateLeftText: func(page) {
 		if (me.wp != nil) {
 			if (me.wp.wp_name == "T-P") {
 				return ["T-P", nil, me.colour];
@@ -35,9 +38,9 @@ var fplnItem = {
 	getSubText: func() {
 		return nil;
 	},
-	updateCenterText: func() {
+	updateCenterText: func(page) {
 		if (me.wp != nil) { 
-			if (me.wp.wp_name != "DISCONTINUITY") {
+			if (me.wp.wp_name != "DISCONTINUITY" and page == "A") {
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue() - 1 and fmgc.flightPlanController.fromWptTime != nil) {
 					me.assembledStr[0] = fmgc.flightPlanController.fromWptTime ~ "   ";
 					me.assembledStr[2] = "grn";
@@ -55,6 +58,19 @@ var fplnItem = {
 				}
 				
 				return me.assembledStr;
+			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
+				me.assembledStr[0] = "--.-";
+				me.assembledStr[2] = "wht";
+				
+				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
+					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
+				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() + 1) or me.index == (fmgc.flightPlanController.arrivalIndex[me.plan] + 1)) {
+					me.assembledStr[1] = "TRK" ~ me.getTrack() ~ "   ";
+				} else {
+					me.assembledStr[1] = nil;
+				}
+				
+				return me.assembledStr;
 			} else {
 				return ["---F-PLN DISCONTINUITY--", nil, "wht"];
 			}
@@ -62,9 +78,9 @@ var fplnItem = {
 			return ["problem", nil, "ack"];
 		}
 	},
-	updateRightText: func() {
+	updateRightText: func(page) {
 		if (me.wp != nil) {
-			if (me.wp.wp_name != "DISCONTINUITY") {
+			if (me.wp.wp_name != "DISCONTINUITY" and page == "A") {
 				me.spd = me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
@@ -73,6 +89,15 @@ var fplnItem = {
 					me._colour = "mag";
 				}
 				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
+			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
+				me.hdg = ["---", "wht"]; #me.getHdg();
+				me.mag = ["---", "wht"]; #me.getMag();
+				me.dist = me.getDist();
+				me._colour = "wht";
+				if (me.hdg[1] != "wht" or me.mag[1] != "wht") {
+					me._colour = "mag";
+				}
+				return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
 				return [nil, nil, "ack"];
 			}
@@ -226,20 +251,133 @@ var fplnItem = {
 	},
 };
 
+var psuedoItem = {
+	new: func(name, plan, computer, colour = "grn") {
+		var pI = {parents:[psuedoItem]};
+		pI.name = name;
+		if (name == "(T/C)") {
+			pI.wp = createWP({lat: fmgc.FMGCInternal.tocPoint.lat, lon: fmgc.FMGCInternal.tocPoint.lon}, "(T/C)");
+			pI.index = fmgc.FMGCInternal.tocIndex[plan];
+		} else if (name == "(T/D)") {
+			pI.wp = createWP({lat: fmgc.FMGCInternal.todPoint.lat, lon: fmgc.FMGCInternal.todPoint.lon}, "(T/D)");
+			pI.index = fmgc.FMGCInternal.todIndex[plan];
+		}
+		pI.type = "psuedo_item";
+		pI.plan = plan;
+		pI.computer = computer;
+		pI.colour = colour;
+		pI.assembledStr = [nil, nil, colour];
+		pI._colour = "wht";
+		return pI;
+	},
+	updateLeftText: func(page) {
+		if (me.name != nil) { 
+			return [me.name, nil, me.colour];
+		} else {
+			return ["problem", nil, "ack"];
+		}
+	},
+	updateCenterText: func(page) {
+		if (me.name != nil) {
+			if (page == "A") {
+				return ["----   ", nil, "wht"];
+			} else if (page == "B") {
+				return ["--.-", nil, "wht"];
+			} else {
+				return [nil, nil, "ack"];
+			}
+		} else {
+			return ["problem", nil, "ack"];
+		}
+	},
+	updateRightText: func(page) {
+		if (me.name != nil) {
+			if (page == "A") {
+				me.spd = ["---", "wht"]; #me.getSpd();
+				me.alt = ["------", "wht"]; #me.getAlt();
+				me.dist = me.getDist();
+				me._colour = "wht";
+				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
+					me._colour = "mag";
+				}
+				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
+			} else if (page == "B") {
+				me.hdg = ["---", "wht"]; #me.getHdg();
+				me.mag = ["---", "wht"]; #me.getMag();
+				me.dist = me.getDist();
+				me._colour = "wht";
+				if (me.hdg[1] != "wht" or me.mag[1] != "wht") {
+					me._colour = "mag";
+				}
+				return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me._colour];
+			} else {
+				return [nil, nil, "ack"];
+			}
+		} else {
+			return ["problem", nil, "ack"];
+		}
+	},
+	getDist: func() {
+		var _distance = 0;
+		for (var i = me.index - 1; i > 0; i -= 1) {
+			_distance += fmgc.flightPlanController.flightplans[me.plan].getWP(i).leg_distance;
+		}
+		if (me.name == "(T/C)") {
+			return math.round(fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist[me.plan] - _distance);
+		} else if (me.name == "(T/D)") {
+			return math.round(fmgc.flightPlanController.arrivalDist - fmgc.FMGCInternal.desDist - _distance);
+		} else {
+			return 0;
+		}
+	},
+	pushButtonLeft: func() {
+		if (me.name == "(T/C)" or me.name == "(T/D)") {
+			if (canvas_mcdu.myLatRev[me.computer] != nil) {
+				canvas_mcdu.myLatRev[me.computer].del();
+			}
+			canvas_mcdu.myLatRev[me.computer] = nil;
+			canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
+			setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
+		}
+	},
+	pushButtonRight: func() {
+		if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) == 0) {
+			if (canvas_mcdu.myVertRev[me.computer] != nil) {
+				canvas_mcdu.myVertRev[me.computer].del();
+			}
+			canvas_mcdu.myVertRev[me.computer] = nil;
+			if (me.name == "(T/C)") {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(4, me.name, me.index, me.computer, me.wp, me.plan);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "VERTREV");
+			} else if (me.name == "(T/D)") {
+				canvas_mcdu.myVertRev[me.computer] = vertRev.new(5, me.name, me.index, me.computer, me.wp, me.plan);
+				setprop("MCDU[" ~ me.computer ~ "]/page", "VERTREV");
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
+			}
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
+		}
+	},
+};
+
 var staticText = {
 	new: func(computer, text) {
 		var sT = {parents:[staticText]};
+		sT.type = "static_item";
 		sT.computer = computer;
 		sT.text = text;
 		return sT;
 	},
-	updateLeftText: func() {
+	updateLeftText: func(page) {
 		return [nil, nil, "ack"];
 	},
-	updateCenterText: func() {
+	updateCenterText: func(page) {
 		return [me.text, nil, "wht"];
 	},
-	updateRightText: func() {
+	updateRightText: func(page) {
 		return [nil, nil, "ack"];
 	},
 	pushButtonLeft: func() {
@@ -274,6 +412,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	planList: [],
 	outputList: [],
 	scroll: 0,
+	scroll_index: 0,
+	page: "A",
 	temporaryFlagFpln: 0,
 	new: func(plan, computer) {
 		var fp = {parents:[fplnPage]};
@@ -319,6 +459,12 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			colour = "grn";
 		}
 		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+			if (!fmgc.FMGCInternal.clbReached and i == fmgc.FMGCInternal.tocIndex[me.planIndex]) {
+				append(me.planList, psuedoItem.new("(T/C)", me.planIndex, me.computer, colour));
+			}
+			if (!fmgc.FMGCInternal.desReached and i == fmgc.FMGCInternal.todIndex[me.planIndex]) {
+				append(me.planList, psuedoItem.new("(T/D)", me.planIndex, me.computer, colour));
+			}
 			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and fmgc.FMGCInternal.phase != 6) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
 			} else {
@@ -335,47 +481,52 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			append(me.outputList, me.planList[i + me.scroll] );
 		}
 		if (size(me.outputList) >= 1) {
-			me.L1 = me.outputList[0].updateLeftText();
-			me.C1 = me.outputList[0].updateCenterText();
-			me.C1[1] = "TIME   ";
-			me.R1 = me.outputList[0].updateRightText();
-			me.R1[1] = "SPD/ALT    ";
+			me.L1 = me.outputList[0].updateLeftText(me.page);
+			me.C1 = me.outputList[0].updateCenterText(me.page);
+			me.R1 = me.outputList[0].updateRightText(me.page);
+			if (me.page == "A") {
+				me.C1[1] = "TIME   "; # to-do add UTC
+				me.R1[1] = "SPD/ALT    ";
+			} else if (me.page == "B") {
+				me.C1[1] = "EFOB";
+				me.R1[1] = "T.WIND ";
+			}
 		} else {
 			me.L1 = [nil, nil, "ack"];
 			me.C1 = [nil, nil, "ack"];
 			me.R1 = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 2) {
-			me.L2 = me.outputList[1].updateLeftText();
-			me.C2 = me.outputList[1].updateCenterText();
-			me.R2 = me.outputList[1].updateRightText();
+			me.L2 = me.outputList[1].updateLeftText(me.page);
+			me.C2 = me.outputList[1].updateCenterText(me.page);
+			me.R2 = me.outputList[1].updateRightText(me.page);
 		} else {
 			me.L2 = [nil, nil, "ack"];
 			me.C2 = [nil, nil, "ack"];
 			me.R2 = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 3) {
-			me.L3 = me.outputList[2].updateLeftText();
-			me.C3 = me.outputList[2].updateCenterText();
-			me.R3 = me.outputList[2].updateRightText();
+			me.L3 = me.outputList[2].updateLeftText(me.page);
+			me.C3 = me.outputList[2].updateCenterText(me.page);
+			me.R3 = me.outputList[2].updateRightText(me.page);
 		} else {
 			me.L3 = [nil, nil, "ack"];
 			me.C3 = [nil, nil, "ack"];
 			me.R3 = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 4) {
-			me.L4 = me.outputList[3].updateLeftText();
-			me.C4 = me.outputList[3].updateCenterText();
-			me.R4 = me.outputList[3].updateRightText();
+			me.L4 = me.outputList[3].updateLeftText(me.page);
+			me.C4 = me.outputList[3].updateCenterText(me.page);
+			me.R4 = me.outputList[3].updateRightText(me.page);
 		} else {
 			me.L4 = [nil, nil, "ack"];
 			me.C4 = [nil, nil, "ack"];
 			me.R4 = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 5) {
-			me.L5 = me.outputList[4].updateLeftText();
-			me.C5 = me.outputList[4].updateCenterText();
-			me.R5 = me.outputList[4].updateRightText();
+			me.L5 = me.outputList[4].updateLeftText(me.page);
+			me.C5 = me.outputList[4].updateCenterText(me.page);
+			me.R5 = me.outputList[4].updateRightText(me.page);
 		} else {
 			me.L5 = [nil, nil, "ack"];
 			me.C5 = [nil, nil, "ack"];
@@ -403,31 +554,55 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	update: func() {
 		#me.basePage();
 	},
+	scrollLeft: func() {
+		if (me.page == "B") {
+			me.page = "A";
+		} else if (me.page == "A") {
+			me.page = "B";
+		}
+	},
+	scrollRight: func() {
+		if (me.page == "B") {
+			me.page = "A";
+		} else if (me.page == "A") {
+			me.page = "B";
+		}
+	},
 	scrollUp: func() {
 		if (size(me.planList) > 1) {
 			me.scroll += 1;
+			if (me.planList[me.scroll].type == "fpln_item") {
+				me.scroll_index += 1;
+			}
 			if (me.scroll > size(me.planList) - 3) {
 				me.scroll = 0;
+				me.scroll_index = 0;
 			}
-			if (me.scroll < me.plan.getPlanSize()) {
-				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll);
+			if (me.scroll_index < me.plan.getPlanSize()) {
+				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll_index);
 			}
 		} else {
 			me.scroll = 0;
+			me.scroll_index = 0;
 			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", -1);
 		}
 	},
 	scrollDn: func() {
 		if (size(me.planList) > 1) {
 			me.scroll -= 1;
+			if (me.planList[me.scroll].type == "fpln_item") {
+				me.scroll_index -= 1;
+			}
 			if (me.scroll < 0) {
 				me.scroll = size(me.planList) - 3;
+				me.scroll_index = size(me.planList) - 3;
 			}
-			if (me.scroll < me.plan.getPlanSize()) {
-				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll);
+			if (me.scroll_index < me.plan.getPlanSize()) {
+				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll_index);
 			}
 		} else {
 			me.scroll = 0;
+			me.scroll_index = 0;
 			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", -1);
 		}
 	},
