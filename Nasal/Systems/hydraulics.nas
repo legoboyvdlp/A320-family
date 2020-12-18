@@ -131,7 +131,7 @@ var HYD = {
 		} else {
 			if ((me.Brakes.mode.getValue() == 2 and me.Psi.green.getValue() < 2500) or me.Brakes.mode.getValue() == 0) {
 				# Alternate Braking (Yellow OK + Antiskid ON + electric OK) - missing condition: BSCU OK-KO
-				if (me.Psi.yellow.getValue() >= 2500 and me.Brakes.askidSw.getValue() and (systems.ELEC.Bus.dc1.getValue() >= 24 or systems.ELEC.Bus.dc2.getValue() >= 24 or systems.ELEC.Bus.dcess.getValue() >= 24)) {
+				if (me.Psi.yellow.getValue() >= 2500 and me.Brakes.askidSw.getValue() and (systems.ELEC.Bus.dc1.getValue() >= 24 or systems.ELEC.Bus.dc2.getValue() >= 24 or systems.ELEC.Bus.dcEss.getValue() >= 24)) {
 					if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
 						me.Brakes.leftPressPsi.setValue(me.Psi.yellow.getValue() * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
 					} else {
@@ -144,7 +144,7 @@ var HYD = {
 					}
 				} else {
 					# Alternate Braking (Yellow OK + Antiskid OFF + electric OK) - missing condition: BSCU OK-KO
-					if (me.Psi.yellow.getValue() >= 2500 and !me.Brakes.askidSw.getValue() and (systems.ELEC.Bus.dc1.getValue() >= 24 or systems.ELEC.Bus.dc2.getValue() >= 24 or systems.ELEC.Bus.dcess.getValue() >= 24)) {
+					if (me.Psi.yellow.getValue() >= 2500 and !me.Brakes.askidSw.getValue() and (systems.ELEC.Bus.dc1.getValue() >= 24 or systems.ELEC.Bus.dc2.getValue() >= 24 or systems.ELEC.Bus.dcEss.getValue() >= 24)) {
 						if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
 							me.Brakes.leftPressPsi.setValue(1000 * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
 						} else {
@@ -157,7 +157,7 @@ var HYD = {
 						}
 					} else {
 						# Alternate Braking (Yellow KO or Antiskid KO or electric KO) - missing condition: BSCU OK-KO
-						if (me.Brakes.accumPressPsi.getValue() < 1000 and (me.Psi.yellow.getValue() < 2500 or !me.Brakes.askidSw.getValue() or (systems.ELEC.Bus.dc1.getValue() < 24 and systems.ELEC.Bus.dc2.getValue() < 24 and systems.ELEC.Bus.dcess.getValue() < 24))) {
+						if (me.Brakes.accumPressPsi.getValue() < 1000 and (me.Psi.yellow.getValue() < 2500 or !me.Brakes.askidSw.getValue() or (systems.ELEC.Bus.dc1.getValue() < 24 and systems.ELEC.Bus.dc2.getValue() < 24 and systems.ELEC.Bus.dcEss.getValue() < 24))) {
 							if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
 								me.Brakes.leftPressPsi.setValue(me.Brakes.accumPressPsi.getValue() * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
 							} else {
