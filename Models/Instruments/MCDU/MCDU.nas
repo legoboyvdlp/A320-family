@@ -445,7 +445,8 @@ var canvas_MCDU_base = {
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenterS("wht", "grn", "grn", "grn", "grn", "wht");
+				me.colorRightS("wht", "grn", "grn", "grn", "grn", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				if (myFpln[i].scroll == 0) {

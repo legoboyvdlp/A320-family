@@ -86,7 +86,7 @@ var fplnItem = {
 				me.dist = me.getDist();
 				me._colour = "wht";
 				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
-					me._colour = "mag";
+					me._colour = "grn";
 				}
 				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
@@ -95,7 +95,7 @@ var fplnItem = {
 				me.dist = me.getDist();
 				me._colour = "wht";
 				if (me.hdg[1] != "wht" or me.mag[1] != "wht") {
-					me._colour = "mag";
+					me._colour = "grn";
 				}
 				return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
@@ -120,9 +120,9 @@ var fplnItem = {
 	},
 	getSpd: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
-			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "mag"];
+			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "grn"];
 		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr != 0) {
-			return [sprintf("%3.0f", me.wp.speed_cstr), "mag"];
+			return [sprintf("%3.0f", me.wp.speed_cstr), "grn"];
 		} else {
 			return ["---", "wht"];
 		}
@@ -131,12 +131,12 @@ var fplnItem = {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
 			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "mag"];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
-			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
+			return [" " ~ fmgc.flightPlanController.fromWptAlt, "grn"];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr != 0) {
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), "mag"];
+				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), "grn"];
 			} else {
-				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), "mag"];
+				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), "grn"];
 			}
 		} else {
 			return ["------", "wht"];
@@ -294,11 +294,11 @@ var psuedoItem = {
 		if (me.name != nil) {
 			if (page == "A") {
 				me.spd = ["---", "wht"]; #me.getSpd();
-				me.alt = ["------", "wht"]; #me.getAlt();
+				me.alt = me.getAlt();
 				me.dist = me.getDist();
 				me._colour = "wht";
 				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
-					me._colour = "mag";
+					me._colour = "grn";
 				}
 				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else if (page == "B") {
@@ -307,7 +307,7 @@ var psuedoItem = {
 				me.dist = me.getDist();
 				me._colour = "wht";
 				if (me.hdg[1] != "wht" or me.mag[1] != "wht") {
-					me._colour = "mag";
+					me._colour = "grn";
 				}
 				return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
@@ -315,6 +315,17 @@ var psuedoItem = {
 			}
 		} else {
 			return ["problem", nil, "ack"];
+		}
+	},
+	getAlt: func() {
+		if (me.name == "(T/C)" or me.name == "(T/D)") {
+			if (fmgc.FMGCInternal.crzFt >= 10000) {
+				return [sprintf(" %s", "FL" ~ fmgc.FMGCInternal.crzFl), "grn"];
+			} else {
+				return ["  " ~ fmgc.FMGCInternal.crzFt, "grn"];
+			}
+		} else {
+			return ["------", "wht"];
 		}
 	},
 	getDist: func() {
