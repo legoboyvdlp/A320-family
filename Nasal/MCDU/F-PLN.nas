@@ -9,8 +9,7 @@ var fplnItem = {
 		fI.plan = plan;
 		fI.computer = computer;
 		fI.colour = colour;
-		fI.assembledStr = [nil, nil, colour];
-		fI._colour = "wht";
+		fI.assembledStr = [nil, nil, colour, colour];
 		return fI;
 	},
 	updateLeftText: func(page) {
@@ -43,10 +42,12 @@ var fplnItem = {
 			if (me.wp.wp_name != "DISCONTINUITY" and page == "A") {
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue() - 1 and fmgc.flightPlanController.fromWptTime != nil) {
 					me.assembledStr[0] = fmgc.flightPlanController.fromWptTime ~ "   ";
-					me.assembledStr[2] = "grn";
+					me.assembledStr[2] = me.colour;
+					me.assembledStr[3] = me.colour;
 				} else {
 					me.assembledStr[0] = "----   ";
 					me.assembledStr[2] = "wht";
+					me.assembledStr[3] = me.colour;
 				}
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
@@ -61,6 +62,7 @@ var fplnItem = {
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
 				me.assembledStr[0] = "--.-";
 				me.assembledStr[2] = "wht";
+				me.assembledStr[3] = me.colour;
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
 					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
@@ -72,10 +74,10 @@ var fplnItem = {
 				
 				return me.assembledStr;
 			} else {
-				return ["---F-PLN DISCONTINUITY--", nil, "wht"];
+				return ["---F-PLN DISCONTINUITY--", nil, "wht", "ack"];
 			}
 		} else {
-			return ["problem", nil, "ack"];
+			return ["problem", nil, "ack", "ack"];
 		}
 	},
 	updateRightText: func(page) {
@@ -84,25 +86,25 @@ var fplnItem = {
 				me.spd = me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				me._colour = "wht";
-				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
-					me._colour = "grn";
+				if (me.spd[1] == "wht" and me.alt[1] == "wht") {
+					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+				} else {
+					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
-				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
 				me.hdg = ["---", "wht"]; #me.getHdg();
 				me.mag = ["---", "wht"]; #me.getMag();
 				me.dist = me.getDist();
-				me._colour = "wht";
-				if (me.hdg[1] != "wht" or me.mag[1] != "wht") {
-					me._colour = "grn";
+				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
+					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+				} else {
+					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
-				return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
-				return [nil, nil, "ack"];
+				return [nil, nil, "ack", "ack"];
 			}
 		} else {
-			return ["problem", nil, "ack"];
+			return ["problem", nil, "ack", "ack"];
 		}
 	},
 	getBrg: func() {
@@ -120,23 +122,23 @@ var fplnItem = {
 	},
 	getSpd: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
-			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "grn"];
+			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), me.colour];
 		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr != 0) {
-			return [sprintf("%3.0f", me.wp.speed_cstr), "grn"];
+			return [sprintf("%3.0f", me.wp.speed_cstr), me.colour];
 		} else {
 			return ["---", "wht"];
 		}
 	},
 	getAlt: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
-			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "mag"];
+			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), me.colour];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
-			return [" " ~ fmgc.flightPlanController.fromWptAlt, "grn"];
+			return [" " ~ fmgc.flightPlanController.fromWptAlt, me.colour];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr != 0) {
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), "grn"];
+				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), me.colour];
 			} else {
-				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), "grn"];
+				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), me.colour];
 			}
 		} else {
 			return ["------", "wht"];
@@ -267,7 +269,6 @@ var psuedoItem = {
 		pI.computer = computer;
 		pI.colour = colour;
 		pI.assembledStr = [nil, nil, colour];
-		pI._colour = "wht";
 		return pI;
 	},
 	updateLeftText: func(page) {
@@ -280,14 +281,14 @@ var psuedoItem = {
 	updateCenterText: func(page) {
 		if (me.name != nil) {
 			if (page == "A") {
-				return ["----   ", nil, "wht"];
+				return ["----   ", nil, "wht", me.colour];
 			} else if (page == "B") {
-				return ["--.-", nil, "wht"];
+				return ["--.-", nil, "wht", me.colour];
 			} else {
-				return [nil, nil, "ack"];
+				return [nil, nil, "ack", "ack"];
 			}
 		} else {
-			return ["problem", nil, "ack"];
+			return ["problem", nil, "ack", "ack"];
 		}
 	},
 	updateRightText: func(page) {
@@ -296,20 +297,20 @@ var psuedoItem = {
 				me.spd = ["---", "wht"]; #me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				me._colour = "wht";
-				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
-					me._colour = "grn";
+				if (me.spd[1] == "wht" and me.alt[1] == "wht") {
+					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+				} else {
+					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
-				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else if (page == "B") {
 				me.hdg = ["---", "wht"]; #me.getHdg();
 				me.mag = ["---", "wht"]; #me.getMag();
 				me.dist = me.getDist();
-				me._colour = "wht";
-				if (me.hdg[1] != "wht" or me.mag[1] != "wht") {
-					me._colour = "grn";
+				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
+					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+				} else {
+					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
-				return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
 				return [nil, nil, "ack"];
 			}
@@ -320,9 +321,9 @@ var psuedoItem = {
 	getAlt: func() {
 		if (me.name == "(T/C)" or me.name == "(T/D)") {
 			if (fmgc.FMGCInternal.crzFt >= 10000) {
-				return [sprintf(" %s", "FL" ~ fmgc.FMGCInternal.crzFl), "grn"];
+				return [sprintf(" %s", "FL" ~ fmgc.FMGCInternal.crzFl), me.colour];
 			} else {
-				return ["  " ~ fmgc.FMGCInternal.crzFt, "grn"];
+				return ["  " ~ fmgc.FMGCInternal.crzFt, me.colour];
 			}
 		} else {
 			return ["------", "wht"];
@@ -334,7 +335,7 @@ var psuedoItem = {
 			_distance += fmgc.flightPlanController.flightplans[me.plan].getWP(i).leg_distance;
 		}
 		if (me.name == "(T/C)") {
-			return math.round(fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist[me.plan] - _distance);
+			return math.round(fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist[2] - _distance);
 		} else if (me.name == "(T/D)") {
 			return math.round(fmgc.flightPlanController.arrivalDist - fmgc.FMGCInternal.desDist - _distance);
 		} else {
@@ -386,10 +387,10 @@ var staticText = {
 		return [nil, nil, "ack"];
 	},
 	updateCenterText: func(page) {
-		return [me.text, nil, "wht"];
+		return [me.text, nil, "wht", "ack"];
 	},
 	updateRightText: func(page) {
-		return [nil, nil, "ack"];
+		return [nil, nil, "ack", "ack"];
 	},
 	pushButtonLeft: func() {
 		mcdu_message(me.computer, "NOT ALLOWED");
@@ -407,18 +408,18 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	L4: [nil, nil, "ack"],
 	L5: [nil, nil, "ack"],
 	L6: [nil, nil, "ack"],
-	C1: [nil, nil, "ack"],
-	C2: [nil, nil, "ack"],
-	C3: [nil, nil, "ack"],
-	C4: [nil, nil, "ack"],
-	C5: [nil, nil, "ack"],
-	C6: [nil, nil, "ack"],
-	R1: [nil, nil, "ack"],
-	R2: [nil, nil, "ack"],
-	R3: [nil, nil, "ack"],
-	R4: [nil, nil, "ack"],
-	R5: [nil, nil, "ack"],
-	R6: [nil, nil, "ack"],
+	C1: [nil, nil, "ack", "ack"],
+	C2: [nil, nil, "ack", "ack"],
+	C3: [nil, nil, "ack", "ack"],
+	C4: [nil, nil, "ack", "ack"],
+	C5: [nil, nil, "ack", "ack"],
+	C6: [nil, nil, "ack", "ack"],
+	R1: [nil, nil, "ack", "ack"],
+	R2: [nil, nil, "ack", "ack"],
+	R3: [nil, nil, "ack", "ack"],
+	R4: [nil, nil, "ack", "ack"],
+	R5: [nil, nil, "ack", "ack"],
+	R6: [nil, nil, "ack", "ack"],
 	
 	planList: [],
 	outputList: [],
@@ -504,8 +505,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		} else {
 			me.L1 = [nil, nil, "ack"];
-			me.C1 = [nil, nil, "ack"];
-			me.R1 = [nil, nil, "ack"];
+			me.C1 = [nil, nil, "ack", "ack"];
+			me.R1 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 2) {
 			me.L2 = me.outputList[1].updateLeftText(me.page);
@@ -513,8 +514,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R2 = me.outputList[1].updateRightText(me.page);
 		} else {
 			me.L2 = [nil, nil, "ack"];
-			me.C2 = [nil, nil, "ack"];
-			me.R2 = [nil, nil, "ack"];
+			me.C2 = [nil, nil, "ack", "ack"];
+			me.R2 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 3) {
 			me.L3 = me.outputList[2].updateLeftText(me.page);
@@ -522,8 +523,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R3 = me.outputList[2].updateRightText(me.page);
 		} else {
 			me.L3 = [nil, nil, "ack"];
-			me.C3 = [nil, nil, "ack"];
-			me.R3 = [nil, nil, "ack"];
+			me.C3 = [nil, nil, "ack", "ack"];
+			me.R3 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 4) {
 			me.L4 = me.outputList[3].updateLeftText(me.page);
@@ -531,8 +532,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R4 = me.outputList[3].updateRightText(me.page);
 		} else {
 			me.L4 = [nil, nil, "ack"];
-			me.C4 = [nil, nil, "ack"];
-			me.R4 = [nil, nil, "ack"];
+			me.C4 = [nil, nil, "ack", "ack"];
+			me.R4 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 5) {
 			me.L5 = me.outputList[4].updateLeftText(me.page);
@@ -540,8 +541,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R5 = me.outputList[4].updateRightText(me.page);
 		} else {
 			me.L5 = [nil, nil, "ack"];
-			me.C5 = [nil, nil, "ack"];
-			me.R5 = [nil, nil, "ack"];
+			me.C5 = [nil, nil, "ack", "ack"];
+			me.R5 = [nil, nil, "ack", "ack"];
 		}
 	},
 	destInfo: func() {
@@ -555,11 +556,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
 		}
-		me.C6 = ["----   ", "TIME   ", "wht"];
+		me.C6 = ["----   ", "TIME   ", "wht", "wht"];
 		if (fmgc.flightPlanController.arrivalDist != nil) {
-			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "  --.-", "DIST    EFOB", "wht"];
+			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "  --.-", "DIST    EFOB", "wht", "wht"];
 		} else {
-			me.R6 = ["----   --.-", "DIST    EFOB", "wht"];
+			me.R6 = ["----   --.-", "DIST    EFOB", "wht", "wht"];
 		}
 	},
 	update: func() {
