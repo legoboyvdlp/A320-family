@@ -376,7 +376,7 @@ var psuedoItem = {
 			_distance += fmgc.flightPlanController.flightplans[me.plan].getWP(i).leg_distance;
 		}
 		if (me.name == "(T/C)") {
-			return math.round(fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist[2] - _distance);
+			return math.round(fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist - _distance);
 		} else if (me.name == "(T/D)") {
 			return math.round(fmgc.flightPlanController.arrivalDist - fmgc.FMGCInternal.desDist - _distance);
 		} else {
@@ -695,13 +695,13 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (size(me.outputList) >= index) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
-						if (me.outputList[index + 1].wp.wp_name == "(T/C)" or me.outputList[index + 1].wp.wp_name == "(T/D)") {
+						if (me.outputList[index - 1].type != "fpln_item") {
 							mcdu_message(me.computer, "NOT ALLOWED");
 							return;
 						}
 					}
-					
-					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
+					_index = me.outputList[index - 1].index;
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, _index, me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {

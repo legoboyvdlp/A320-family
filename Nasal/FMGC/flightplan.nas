@@ -44,9 +44,9 @@ var flightPlanController = {
 	wptTypeNoAdvanceDelete: 0,
 	
 	distanceToDest: [0, 0, 0],
-	traversedDist: [0, 0, 0],
-	storedDistance: [0, 0, 0],
-	_storedDistance: [0, 0, 0],
+	traversedDist: 0,
+	storedDistance: 0,
+	_storedDistance: 0,
 	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[2]/num", 0, "INT")],
 	arrivalIndex: [0, 0, 0],
 	arrivalDist: 0,
@@ -391,11 +391,13 @@ var flightPlanController = {
 	
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
-		me._storedDistance[n] = me.flightplans[n].getWP(index + 1).leg_distance;
+		if (n == 2) {
+			me._storedDistance = me.flightplans[2].getWP(index + 1).leg_distance;
+		}
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
-			if (s == 1) {
-				me.traversedDist[n] += me._storedDistance[n];
-				me.storedDistance[n] = me._storedDistance[n];
+			if (s == 1 and n == 2) {
+				me.traversedDist += me._storedDistance;
+				me.storedDistance = me._storedDistance;
 			}
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);

@@ -245,7 +245,7 @@ var updateFuel = func {
 		
 		# calculate TOC locations
 		if (!fmgc.FMGCInternal.clbReached) {
-			fmgc.FMGCInternal.tocPoint = fmgc.flightPlanController.flightplans[2].pathGeod(0, fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist[2]);
+			fmgc.FMGCInternal.tocPoint = fmgc.flightPlanController.flightplans[2].pathGeod(0, fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist);
 			
 			# determine indecies
 			for (var i = 0; i <= 2; i += 1) {
@@ -255,7 +255,7 @@ var updateFuel = func {
 				var toc_distance = 0;
 				for (var wpt = 1; wpt <= fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
 					toc_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
-					if (toc_distance > fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist[2]) {
+					if (toc_distance > fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist) {
 						fmgc.FMGCInternal.tocIndex[i] = wpt;
 						break;
 					}
