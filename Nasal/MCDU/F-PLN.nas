@@ -45,8 +45,8 @@ var fplnItem = {
 					me.assembledStr[2] = me.colour;
 					me.assembledStr[3] = me.colour;
 				} else {
-					me.assembledStr[0] = "----   ";
-					me.assembledStr[2] = "wht";
+					me.assembledStr[0] = me.getTime()[0];
+					me.assembledStr[2] = me.getTime()[1];
 					me.assembledStr[3] = me.colour;
 				}
 				
@@ -60,8 +60,8 @@ var fplnItem = {
 				
 				return me.assembledStr;
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
-				me.assembledStr[0] = "--.-";
-				me.assembledStr[2] = "wht";
+				me.assembledStr[0] = me.getFuel()[0];
+				me.assembledStr[2] = me.getFuel()[1];
 				me.assembledStr[3] = me.colour;
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
@@ -107,6 +107,20 @@ var fplnItem = {
 			return ["problem", nil, "ack", "ack"];
 		}
 	},
+	getTime: func() {
+		if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
+			_time = fmgc.FMGCInternal.tripTime;
+			if (num(_time) >= 60) {
+				_min = int(math.mod(_time, 60));
+				_hour = int((_time - _min) / 60);
+				return [sprintf("%02d", _hour) ~ sprintf("%02d   ", _min), me.colour];
+			} else {
+				return [sprintf("%04d   ", _time), me.colour];
+			}
+		} else {
+			return ["----   ", "wht"];
+		}
+	},
 	getBrg: func() {
 		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - magvar();
 		if (me.brg < 0) { me.brg += 360; }
@@ -119,6 +133,13 @@ var fplnItem = {
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
+	},
+	getFuel: func() {
+		if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
+			return [sprintf("%.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), me.colour];
+		} else {
+			return ["--.-", "wht"];
+		}
 	},
 	getSpd: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
@@ -281,9 +302,9 @@ var psuedoItem = {
 	updateCenterText: func(page) {
 		if (me.name != nil) {
 			if (page == "A") {
-				return ["----   ", nil, "wht", me.colour];
+				return me.getTime();
 			} else if (page == "B") {
-				return ["--.-", nil, "wht", me.colour];
+				return me.getFuel();
 			} else {
 				return [nil, nil, "ack", "ack"];
 			}
@@ -316,6 +337,26 @@ var psuedoItem = {
 			}
 		} else {
 			return ["problem", nil, "ack"];
+		}
+	},
+	getTime: func() {
+		if (me.name == "(T/C)" and fmgc.FMGCInternal.clbTime > 0) {
+			return [fmgc.FMGCInternal.clbTime ~ "   ", nil, me.colour, me.colour];
+		} else if (me.name == "(T/D)" and fmgc.FMGCInternal.desTime > 0) {
+			return [fmgc.FMGCInternal.desTime ~ "   ", nil, me.colour, me.colour];
+		} else {
+			return ["----   ", nil, "wht", me.colour];
+		}
+	},
+	getFuel: func() {
+		if (me.name == "(T/C)" and fmgc.FMGCInternal.clbFuel > 0) {
+			_clbFuel = fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000;
+			return [sprintf("%.1f", _clbFuel), nil, me.colour, me.colour];
+		} else if (me.name == "(T/D)" and fmgc.FMGCInternal.desFuel > 0) {
+			_desFuel = fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel + fmgc.FMGCInternal.desFuel / 1000;
+			return [sprintf("%.1f", _desFuel), nil, me.colour, me.colour];
+		} else {
+			return ["----   ", nil, "wht", me.colour];
 		}
 	},
 	getAlt: func() {
@@ -553,14 +594,27 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			} else {
 				me.L6 = [destName[0], " DEST", "wht"];
 			}
+			_time = fmgc.FMGCInternal.tripTime;
+			if (num(_time) >= 60) {
+				_min = int(math.mod(_time, 60));
+				_hour = int((_time - _min) / 60);
+				me.C6 = [sprintf("%02d", _hour) ~ sprintf("%02d  ", _min), "TIME   ", "wht", "wht"];
+			} else {
+				me.C6 = [sprintf("%04d  ", _time), "TIME   ", "wht", "wht"];
+			}
+			if (fmgc.flightPlanController.arrivalDist != nil) {
+				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("   %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
+			} else {
+				me.R6 = [sprintf("----   %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
+			}
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
-		}
-		me.C6 = ["----   ", "TIME   ", "wht", "wht"];
-		if (fmgc.flightPlanController.arrivalDist != nil) {
-			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "  --.-", "DIST    EFOB", "wht", "wht"];
-		} else {
-			me.R6 = ["----   --.-", "DIST    EFOB", "wht", "wht"];
+			me.C6 = ["----  ", "TIME   ", "wht", "wht"];
+			if (fmgc.flightPlanController.arrivalDist != nil) {
+				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "   --.-", "DIST   EFOB", "wht", "wht"];
+			} else {
+				me.R6 = ["----   --.-", "DIST   EFOB", "wht", "wht"];
+			}
 		}
 	},
 	update: func() {
