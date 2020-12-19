@@ -598,22 +598,22 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (num(_time) >= 60) {
 				_min = int(math.mod(_time, 60));
 				_hour = int((_time - _min) / 60);
-				me.C6 = [sprintf("%02d", _hour) ~ sprintf("%02d  ", _min), "TIME   ", "wht", "wht"];
+				me.C6 = [sprintf("%02d ", _hour) ~ sprintf("%02d  ", _min), "TIME   ", "wht", "wht"];
 			} else {
-				me.C6 = [sprintf("%04d  ", _time), "TIME   ", "wht", "wht"];
+				me.C6 = [sprintf("%04d   ", _time), "TIME   ", "wht", "wht"];
 			}
 			if (fmgc.flightPlanController.arrivalDist != nil) {
-				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("   %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
+				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
 			} else {
-				me.R6 = [sprintf("----   %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
+				me.R6 = [sprintf("----    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
 			}
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
-			me.C6 = ["----  ", "TIME   ", "wht", "wht"];
+			me.C6 = ["----   ", "TIME   ", "wht", "wht"];
 			if (fmgc.flightPlanController.arrivalDist != nil) {
-				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "   --.-", "DIST   EFOB", "wht", "wht"];
+				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "    --.-", "DIST   EFOB", "wht", "wht"];
 			} else {
-				me.R6 = ["----   --.-", "DIST   EFOB", "wht", "wht"];
+				me.R6 = ["----    --.-", "DIST   EFOB", "wht", "wht"];
 			}
 		}
 	},

@@ -406,8 +406,8 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, small);
+				me.fontSizeRight(normal, normal, normal, normal, normal, small);
 				pageSwitch[i].setBoolValue(1);
 			}
 			
