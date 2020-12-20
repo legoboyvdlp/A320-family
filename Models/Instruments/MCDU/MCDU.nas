@@ -3369,8 +3369,12 @@ var canvas_MCDU_base = {
 			if (fmgc.flightPlanController.flightplans[2].getPlanSize() > 2) {
 				_distance = fmgc.wpDistance[2][fmgc.flightPlanController.currentToWptIndex.getValue()].getValue();
 				_bearing = fmgc.wpCourse[2][fmgc.flightPlanController.currentToWptIndex.getValue()].getValue() - magvar();
-				if (_bearing < 0) { _bearing += 360; }
-				if (_bearing > 360) { _bearing -= 360; }
+				if (_bearing < 0) {
+					_bearing += 360;
+				}
+				if (_bearing > 360) {
+					_bearing -= 360;
+				}
 				me["Simple_L4"].setText(" " ~ sprintf("%03.0f", math.round(_bearing)) ~ "g /" ~ sprintf("%4.1f", _distance));
 				me["Simple_R4"].setText(fmgc.flightPlanController.currentToWptID.getValue());
 				me.colorLeft("ack", "ack", "ack", "grn", "ack", "ack");

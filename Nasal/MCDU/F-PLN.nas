@@ -592,7 +592,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 	},
 	destInfo: func() {
-		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil) {
+		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil and me.plan.getPlanSize() > 2) {
 			var destName = split("-", me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name);
 			if (size(destName) == 2) {
 				me.L6 = [destName[0] ~ destName[1], " DEST", "wht"];
@@ -607,19 +607,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			} else {
 				me.C6 = [sprintf("%04d   ", _time), "TIME   ", "wht", "wht", small];
 			}
-			if (fmgc.flightPlanController.arrivalDist != nil) {
-				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
-			} else {
-				me.R6 = [sprintf("----    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
-			}
+			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
 			me.C6 = ["----   ", "TIME   ", "wht", "wht", small];
-			if (fmgc.flightPlanController.arrivalDist != nil) {
-				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "    --.-", "DIST   EFOB", "wht", "wht"];
-			} else {
-				me.R6 = ["----    --.-", "DIST   EFOB", "wht", "wht"];
-			}
+			me.R6 = ["----   --.-", "DIST   EFOB", "wht", "wht"];
 		}
 	},
 	update: func() {
