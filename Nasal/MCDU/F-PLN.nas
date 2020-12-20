@@ -101,9 +101,9 @@ var fplnItem = {
 				me.mag = ["---", "wht"]; #me.getMag();
 				me.dist = me.getDist();
 				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
-					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
 				} else {
-					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
+					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
 			} else {
 				return [nil, nil, "ack", "ack"];
@@ -333,9 +333,9 @@ var psuedoItem = {
 				me.mag = ["---", "wht"]; #me.getMag();
 				me.dist = me.getDist();
 				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
-					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
 				} else {
-					return [me.hdg[0] ~ "/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
+					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
 			} else {
 				return [nil, nil, "ack"];
