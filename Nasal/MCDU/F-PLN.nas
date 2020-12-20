@@ -1,4 +1,6 @@
 # Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
+var normal = 70;
+var small = 56;
 
 var fplnItem = {
 	new: func(wp, index, plan, computer, colour = "grn") {
@@ -9,7 +11,7 @@ var fplnItem = {
 		fI.plan = plan;
 		fI.computer = computer;
 		fI.colour = colour;
-		fI.assembledStr = [nil, nil, colour, colour];
+		fI.assembledStr = [nil, nil, colour, colour, small];
 		return fI;
 	},
 	updateLeftText: func(page) {
@@ -44,10 +46,12 @@ var fplnItem = {
 					me.assembledStr[0] = fmgc.flightPlanController.fromWptTime ~ "   ";
 					me.assembledStr[2] = me.colour;
 					me.assembledStr[3] = me.colour;
+					me.assembledStr[4] = small;
 				} else {
 					me.assembledStr[0] = me.getTime()[0];
 					me.assembledStr[2] = me.getTime()[1];
 					me.assembledStr[3] = me.colour;
+					me.assembledStr[4] = small;
 				}
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
@@ -63,6 +67,7 @@ var fplnItem = {
 				me.assembledStr[0] = me.getFuel()[0];
 				me.assembledStr[2] = me.getFuel()[1];
 				me.assembledStr[3] = me.colour;
+				me.assembledStr[4] = small;
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
 					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
@@ -74,10 +79,10 @@ var fplnItem = {
 				
 				return me.assembledStr;
 			} else {
-				return ["---F-PLN DISCONTINUITY--", nil, "wht", "ack"];
+				return ["---F-PLN DISCONTINUITY--", nil, "wht", "ack", normal];
 			}
 		} else {
-			return ["problem", nil, "ack", "ack"];
+			return ["problem", nil, "ack", "ack", normal];
 		}
 	},
 	updateRightText: func(page) {
@@ -162,7 +167,7 @@ var fplnItem = {
 				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), me.colour];
 			}
 		} else {
-			return ["------", "wht"];
+			return [" -----", "wht"];
 		}
 	},
 	getDist: func() {
@@ -306,10 +311,10 @@ var psuedoItem = {
 			} else if (page == "B") {
 				return me.getFuel();
 			} else {
-				return [nil, nil, "ack", "ack"];
+				return [nil, nil, "ack", "ack", normal];
 			}
 		} else {
-			return ["problem", nil, "ack", "ack"];
+			return ["problem", nil, "ack", "ack", normal];
 		}
 	},
 	updateRightText: func(page) {
@@ -341,20 +346,20 @@ var psuedoItem = {
 	},
 	getTime: func() {
 		if (me.name == "(T/C)" and fmgc.FMGCInternal.clbTime > 0) {
-			return [fmgc.FMGCInternal.clbTime ~ "   ", nil, me.colour, me.colour];
+			return [fmgc.FMGCInternal.clbTime ~ "   ", nil, me.colour, me.colour, small];
 		} else if (me.name == "(T/D)" and fmgc.FMGCInternal.desTime > 0) {
-			return [fmgc.FMGCInternal.desTime ~ "   ", nil, me.colour, me.colour];
+			return [fmgc.FMGCInternal.desTime ~ "   ", nil, me.colour, me.colour, small];
 		} else {
-			return ["----   ", nil, "wht", me.colour];
+			return ["----   ", nil, "wht", me.colour, small];
 		}
 	},
 	getFuel: func() {
 		if (me.name == "(T/C)" and fmgc.FMGCInternal.clbFuel > 0) {
 			_clbFuel = fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000;
-			return [sprintf("%.1f", _clbFuel), nil, me.colour, me.colour];
+			return [sprintf("%.1f", _clbFuel), nil, me.colour, me.colour, small];
 		} else if (me.name == "(T/D)" and fmgc.FMGCInternal.desFuel > 0) {
 			_desFuel = fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel + fmgc.FMGCInternal.desFuel / 1000;
-			return [sprintf("%.1f", _desFuel), nil, me.colour, me.colour];
+			return [sprintf("%.1f", _desFuel), nil, me.colour, me.colour, small];
 		} else {
 			return ["----   ", nil, "wht", me.colour];
 		}
@@ -428,7 +433,7 @@ var staticText = {
 		return [nil, nil, "ack"];
 	},
 	updateCenterText: func(page) {
-		return [me.text, nil, "wht", "ack"];
+		return [me.text, nil, "wht", "ack", normal];
 	},
 	updateRightText: func(page) {
 		return [nil, nil, "ack", "ack"];
@@ -449,12 +454,12 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	L4: [nil, nil, "ack"],
 	L5: [nil, nil, "ack"],
 	L6: [nil, nil, "ack"],
-	C1: [nil, nil, "ack", "ack"],
-	C2: [nil, nil, "ack", "ack"],
-	C3: [nil, nil, "ack", "ack"],
-	C4: [nil, nil, "ack", "ack"],
-	C5: [nil, nil, "ack", "ack"],
-	C6: [nil, nil, "ack", "ack"],
+	C1: [nil, nil, "ack", "ack", small],
+	C2: [nil, nil, "ack", "ack", small],
+	C3: [nil, nil, "ack", "ack", small],
+	C4: [nil, nil, "ack", "ack", small],
+	C5: [nil, nil, "ack", "ack", small],
+	C6: [nil, nil, "ack", "ack", small],
 	R1: [nil, nil, "ack", "ack"],
 	R2: [nil, nil, "ack", "ack"],
 	R3: [nil, nil, "ack", "ack"],
@@ -546,7 +551,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		} else {
 			me.L1 = [nil, nil, "ack"];
-			me.C1 = [nil, nil, "ack", "ack"];
+			me.C1 = [nil, nil, "ack", "ack", small];
 			me.R1 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 2) {
@@ -555,7 +560,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R2 = me.outputList[1].updateRightText(me.page);
 		} else {
 			me.L2 = [nil, nil, "ack"];
-			me.C2 = [nil, nil, "ack", "ack"];
+			me.C2 = [nil, nil, "ack", "ack", small];
 			me.R2 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 3) {
@@ -564,7 +569,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R3 = me.outputList[2].updateRightText(me.page);
 		} else {
 			me.L3 = [nil, nil, "ack"];
-			me.C3 = [nil, nil, "ack", "ack"];
+			me.C3 = [nil, nil, "ack", "ack", small];
 			me.R3 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 4) {
@@ -573,7 +578,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R4 = me.outputList[3].updateRightText(me.page);
 		} else {
 			me.L4 = [nil, nil, "ack"];
-			me.C4 = [nil, nil, "ack", "ack"];
+			me.C4 = [nil, nil, "ack", "ack", small];
 			me.R4 = [nil, nil, "ack", "ack"];
 		}
 		if (size(me.outputList) >= 5) {
@@ -582,7 +587,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.R5 = me.outputList[4].updateRightText(me.page);
 		} else {
 			me.L5 = [nil, nil, "ack"];
-			me.C5 = [nil, nil, "ack", "ack"];
+			me.C5 = [nil, nil, "ack", "ack", small];
 			me.R5 = [nil, nil, "ack", "ack"];
 		}
 	},
@@ -598,9 +603,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (num(_time) >= 60) {
 				_min = int(math.mod(_time, 60));
 				_hour = int((_time - _min) / 60);
-				me.C6 = [sprintf("%02d ", _hour) ~ sprintf("%02d  ", _min), "TIME   ", "wht", "wht"];
+				me.C6 = [sprintf("%02d ", _hour) ~ sprintf("%02d  ", _min), "TIME   ", "wht", "wht", small];
 			} else {
-				me.C6 = [sprintf("%04d   ", _time), "TIME   ", "wht", "wht"];
+				me.C6 = [sprintf("%04d   ", _time), "TIME   ", "wht", "wht", small];
 			}
 			if (fmgc.flightPlanController.arrivalDist != nil) {
 				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
@@ -609,7 +614,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
-			me.C6 = ["----   ", "TIME   ", "wht", "wht"];
+			me.C6 = ["----   ", "TIME   ", "wht", "wht", small];
 			if (fmgc.flightPlanController.arrivalDist != nil) {
 				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "    --.-", "DIST   EFOB", "wht", "wht"];
 			} else {

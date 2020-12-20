@@ -406,8 +406,7 @@ var canvas_MCDU_base = {
 				me.fontRightS(default, default, default, default, default, default);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeCenter(normal, normal, normal, normal, normal, small);
-				me.fontSizeRight(normal, normal, normal, normal, normal, small);
+				me.fontSizeRight(normal, small, small, small, small, small);
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -442,6 +441,8 @@ var canvas_MCDU_base = {
 				me.dynamicPageFunc(myFpln[i].R5, "Simple_R5");
 				
 				me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
+				
+				me.fontSizeCenter(normal, myFpln[i].C2[4], myFpln[i].C3[4], myFpln[i].C4[4], myFpln[i].C5[4], small);
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3365,7 +3366,20 @@ var canvas_MCDU_base = {
 				me["PROG_UPDATE"].show();
 				me["Simple_L3"].setText("  [    ]");
 			}
-			me["Simple_L4"].setText(" ---g /----.-");
+			if (fmgc.flightPlanController.flightplans[2].getPlanSize() > 2) {
+				_distance = fmgc.wpDistance[2][fmgc.flightPlanController.currentToWptIndex.getValue()].getValue();
+				_bearing = fmgc.wpCourse[2][fmgc.flightPlanController.currentToWptIndex.getValue()].getValue() - magvar();
+				if (_bearing < 0) { _bearing += 360; }
+				if (_bearing > 360) { _bearing -= 360; }
+				me["Simple_L4"].setText(" " ~ sprintf("%03.0f", math.round(_bearing)) ~ "g /" ~ sprintf("%4.1f", _distance));
+				me["Simple_R4"].setText(fmgc.flightPlanController.currentToWptID.getValue());
+				me.colorLeft("ack", "ack", "ack", "grn", "ack", "ack");
+			} else {
+				me["Simple_L4"].setText(" ---g /----.-");
+				me["Simple_R4"].setText("[    ]");
+				me.colorLeft("ack", "ack", "ack", "wht", "ack", "ack");
+			}
+			
 			me["Simple_L5"].setText(" GPS");
 			me["Simple_L6"].setText("----");
 			me["Simple_L1S"].setText(" CRZ");
@@ -3375,7 +3389,6 @@ var canvas_MCDU_base = {
 			me["Simple_L6S"].setText("REQUIRED");
 			me["Simple_R1"].setText("FL398");
 			me["Simple_R2"].setText("VDEV = + 750 FT");
-			me["Simple_R4"].setText("[    ]");
 			me["Simple_R5"].setText("GPS PRIMARY");
 			me["Simple_R6"].setText("----");
 			me["Simple_R1S"].setText("REC MAX ");
