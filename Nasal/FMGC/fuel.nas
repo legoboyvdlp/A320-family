@@ -287,6 +287,18 @@ var updateFuel = func {
 		}
 	}
 	
+	# calculate efob values
+	for (var i = 0; i <= 2; i += 1) {
+		if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
+			continue;			
+		}
+		for (var wpt = 0; wpt < fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
+			if (wpt >= fmgc.FMGCInternal.tocIndex[i] and wpt < fmgc.FMGCInternal.todIndex[i]) {
+				fmgc.flightPlanController.flightplans[i].getWP(wpt).setAltitude(fmgc.FMGCInternal.crzFt, "computed")
+			}
+		}
+	}
+	
 	# Push changes to ND
 	if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached) {
 		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", fmgc.FMGCInternal.tocPoint.lat);

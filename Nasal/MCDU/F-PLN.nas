@@ -53,7 +53,6 @@ var fplnItem = {
 					me.assembledStr[3] = me.colour;
 					me.assembledStr[4] = small;
 				}
-				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
 					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
 				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() + 1) or me.index == (fmgc.flightPlanController.arrivalIndex[me.plan] + 1)) {
@@ -61,14 +60,12 @@ var fplnItem = {
 				} else {
 					me.assembledStr[1] = nil;
 				}
-				
 				return me.assembledStr;
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
 				me.assembledStr[0] = me.getFuel()[0];
 				me.assembledStr[2] = me.getFuel()[1];
 				me.assembledStr[3] = me.colour;
 				me.assembledStr[4] = small;
-				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
 					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
 				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() + 1) or me.index == (fmgc.flightPlanController.arrivalIndex[me.plan] + 1)) {
@@ -76,7 +73,6 @@ var fplnItem = {
 				} else {
 					me.assembledStr[1] = nil;
 				}
-				
 				return me.assembledStr;
 			} else {
 				return ["---F-PLN DISCONTINUITY--", nil, "wht", "ack", normal];
@@ -161,7 +157,7 @@ var fplnItem = {
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, me.colour];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr != 0) {
-			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
+			if (me.wp.alt_cstr >= 10000) {
 				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), me.colour];
 			} else {
 				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), me.colour];
@@ -592,7 +588,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		}
 	},
 	destInfo: func() {
-		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil and me.plan.getPlanSize() > 2) {
+		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil and fmgc.flightPlanController.getPlanSizeNoDiscont(me.planIndex) > 1) {
 			var destName = split("-", me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name);
 			if (size(destName) == 2) {
 				me.L6 = [destName[0] ~ destName[1], " DEST", "wht"];
