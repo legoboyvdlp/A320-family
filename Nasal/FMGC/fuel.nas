@@ -292,9 +292,17 @@ var updateFuel = func {
 		if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
 			continue;			
 		}
+		var _distance = 0;
 		for (var wpt = 0; wpt < fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
-			if (wpt >= fmgc.FMGCInternal.tocIndex[i] and wpt < fmgc.FMGCInternal.todIndex[i]) {
-				fmgc.flightPlanController.flightplans[i].getWP(wpt).setAltitude(fmgc.FMGCInternal.crzFt, "computed")
+			_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+			if (wpt < fmgc.FMGCInternal.tocIndex[i]) {
+				var _altitude = fmgc.FMGCInternal.crzFt * (_distance / fmgc.FMGCInternal.clbDist);
+				fmgc.flightPlanController.flightplans[i].getWP(wpt).setAltitude(_altitude, "computed");
+			} else if (wpt >= fmgc.FMGCInternal.todIndex[i]) {
+				var _altitude = fmgc.FMGCInternal.crzFt * ((fmgc.flightPlanController.arrivalDist - _distance) / fmgc.FMGCInternal.desDist);
+				fmgc.flightPlanController.flightplans[i].getWP(wpt).setAltitude(_altitude, "computed");
+			} else {
+				fmgc.flightPlanController.flightplans[i].getWP(wpt).setAltitude(fmgc.FMGCInternal.crzFt, "computed");
 			}
 		}
 	}
