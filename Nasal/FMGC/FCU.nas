@@ -323,12 +323,12 @@ var FCUController = {
 				if (latMode.getValue() == 2) {
 					latModeInput.setValue(0);
 				} else {
-					fmgc.ITAF.disarmLOC();
+					fmgc.ITAF.disarmLoc();
 				}
 				if (vertTemp == 2 or vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.ITAF.disarmGS();
+					fmgc.ITAF.disarmAppr();
 				}
 			} else {
 				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
@@ -336,7 +336,7 @@ var FCUController = {
 					if (vertTemp == 2 or vertTemp == 6) {
 						me.VSPull();
 					} else {
-						fmgc.ITAF.disarmGS();
+						fmgc.ITAF.disarmAppr();
 					}
 				}
 			}
@@ -461,12 +461,12 @@ var FCUController = {
 				if (latMode.getValue() == 2) {
 					latModeInput.setValue(0);
 				} else {
-					fmgc.ITAF.disarmLOC();
+					fmgc.ITAF.disarmLoc();
 				}
 				if (vertTemp == 2 or vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.ITAF.disarmGS();
+					fmgc.ITAF.disarmAppr();
 				}
 			} else {
 				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {

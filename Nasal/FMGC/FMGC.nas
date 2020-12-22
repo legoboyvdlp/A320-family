@@ -613,7 +613,7 @@ var masterFMGC = maketimer(0.2, func {
 	gear0 = pts.Gear.wow[0].getBoolValue();
 	altSel = Input.alt.getValue();
 	
-	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
+	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == "" and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
 		FMGCInternal.phase = 0;
 		systems.PNEU.pressMode.setValue("GN");
 	}
@@ -1025,7 +1025,7 @@ var ManagedSPD = maketimer(0.25, func {
 				FMGCInternal.machSwitchover = 0;
 			}
 			
-			if ((mode == " " or mode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
+			if ((mode == "" or mode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
 				if (FMGCInternal.mngKtsMach) {
 					FMGCInternal.mngKtsMach = 0;
 				}

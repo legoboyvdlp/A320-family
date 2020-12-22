@@ -564,7 +564,7 @@ var canvas_PFD_base = {
 			} else {
 				me["FMA_pitch_box"].hide();
 			}
-			if (pitch_mode_armed_act == " " and pitch_mode2_armed_act == " ") {
+			if (pitch_mode_armed_act == "" and pitch_mode2_armed_act == "") {
 				me["FMA_pitcharm_box"].hide();
 			} else {
 				if ((pitch_mode_armed_box.getValue() == 1 or pitch_mode2_armed_box.getValue() == 1) and (ap1.getValue() == 1 or ap2.getValue() == 1 or fd1.getValue() == 1 or fd2.getValue() == 1)) {
