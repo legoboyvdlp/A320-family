@@ -59,9 +59,9 @@ var SimbriefParser = {
 		}
 		
 		if (size(result) == 0) { return nil; }
-		foreach (var test; result) {
-			if (math.abs(test.lat - coords.lat()) < 0.01666666666 and math.abs(test.lon - coords.lon()) < 0.01666666666) {
-				return test;
+		forindex (var test; result) {
+			if (math.abs(result[test].lat - coords.lat()) < 0.01666666666 and math.abs(result[test].lon - coords.lon()) < 0.01666666666) {
+				return result[test];
 			}
 		}
 		return nil;
@@ -161,7 +161,7 @@ var SimbriefParser = {
 			}
 			
 			if (ident == "TOD") {
-				_foundTOC = 1;
+				_foundTOD = 1;
 				continue;
 			}
 			
@@ -170,11 +170,13 @@ var SimbriefParser = {
 				ofpFix.getNode("pos_lat").getValue(),
 				ofpFix.getNode("pos_long").getValue());
 				
-			wp = me.tryFindByCoord(coords,ident,"fix");
-			wp = me.tryFindByCoord(coords,ident,"nav");
-			if (wp == nil) {
+			#wp = me.tryFindByCoord(coords,ident,"fix");
+			#if (wp == nil) {
+			#	wp = me.tryFindByCoord(coords,ident,"nav");
+			#}
+			#if (wp == nil) {
 				wp = createWP(coords, ident);
-			}
+			#}
 			
 			append(wps, wp);
 		}

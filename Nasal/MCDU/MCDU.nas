@@ -354,6 +354,9 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 0;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -495,6 +498,9 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 1;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -619,6 +625,9 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 2;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -786,6 +795,9 @@ var lskbutton = func(btn, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 9;
+			atsu.freeTexts[i].changed = 1;
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(5);
 		} else {
@@ -845,7 +857,7 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myClosestAirport[i].freeze();
 		} else if (page == "AOCMENU" or page == "ATCMENU" or page == "ATCMENU2") {
 			pageNode[i].setValue("ATSUDLINK");
-		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS") {
+		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS" or page == "MCDUTEXT") {
 			pageNode[i].setValue("ATCMENU");
 		} else if (page == "WEATHERREQ" or page == "RECEIVEDMSGS") {
 			pageNode[i].setValue("AOCMENU");
@@ -951,6 +963,9 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 3;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -991,7 +1006,10 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else {
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 4;
+			atsu.freeTexts[i].changed = 1;
+		}  else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
@@ -1037,6 +1055,11 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 5;
+			atsu.freeTexts[i].changed = 1;
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("MCDUTEXT");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1247,6 +1270,9 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "NOTIFICATION") {
 			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "MCDUTEXT") {
+			# todo transfer to DCDU
+			pageNode[i].setValue("ATCMENU");
 		} else if (page == "ATSUDLINK") {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "CONNECTSTATUS") {
@@ -1406,7 +1432,7 @@ var pagebutton = func(btn, i) {
 			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
 			var page = page;
-			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
+			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "MCDUTEXT" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
 				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);

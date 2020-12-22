@@ -19,10 +19,11 @@ var engStrtTimeSw = 0;
 var engStrtTime = 0;
 var page = 0;
 
+var gearWarnLight = props.globals.initNode("/ECAM/warnings/landing-gear-warning-light", 0, "BOOL");
+
 var ECAM = {
 	_cachePage: "",
 	init: func() {
-		setprop("/systems/gear/landing-gear-warning-light", 0);
 		page = props.globals.initNode("/ECAM/Lower/page", "door", "STRING");
 		
 		apOffTime = props.globals.initNode("/ECAM/warnings/ap-off-time", 0, "INT");

@@ -1,7 +1,7 @@
 # A320-family
 A very advanced simulation of the Airbus A320 Family for FlightGear.
 
-- Flight Dyanmics: Josh Davidson (Octal450)</label>
+- Flight Dynamics: Josh Davidson (Octal450)</label>
 - Systems: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
 - Displays: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
 - 3D/Textures: Thorsten Herrmann (TH-555), Semir Gebran (CaptB)</label>

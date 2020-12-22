@@ -118,9 +118,9 @@ var HFS = [highFrequencyRadio.new(systems.ELEC.Bus.acEssShed, 0), highFrequencyR
 # Can't use setlistener on the voltage as it always gets written to by JSB (and changes according to engine rpm)
 
 var update_items_HF_radio = [
-	props.UpdateManager.FromProperty("/systems/electrical/bus/ac-ess-shed", 0.1, func(notification)
+	props.UpdateManager.FromHashValue("elecACEssShed", 0.1, func(val)
 		{
-			if (systems.ELEC.Bus.acEssShed.getValue() < 110) {
+			if (val < 110) {
 				HFS[0].transmit = 0;
 				HFS[0].receptionProp.setValue(0);
 				toneTimer1.stop();
@@ -133,9 +133,9 @@ var update_items_HF_radio = [
 			}
 		}
 	),
-	props.UpdateManager.FromProperty("/systems/electrical/bus/ac-2", 0.1, func(notification)
+	props.UpdateManager.FromHashValue("elecAC2", 0.1, func(val)
 		{
-			if (systems.ELEC.Bus.ac2.getValue() < 110) {
+			if (val) {
 				HFS[1].transmit = 0;
 				HFS[1].receptionProp.setValue(0);
 				toneTimer2.stop();
@@ -150,9 +150,9 @@ var update_items_HF_radio = [
 	),
 ];
 
-var HFLoop = func() {
+var HFLoop = func(notification) {
 	foreach (var update_item_HF; update_items_HF_radio) {
-		update_item_HF.update(nil);
+		update_item_HF.update(notification);
 	}
 }
 

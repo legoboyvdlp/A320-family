@@ -406,7 +406,7 @@ var Autobrake = {
 		me._mode = me.mode.getValue();
 		me._active = me.active.getBoolValue();
 		if (me._gnd_speed > 72) {
-			if (me._mode != 0 and pts.Controls.Engines.Engine.throttle[0].getValue() < 0.15 and pts.Controls.Engines.Engine.throttle[1].getValue() < 0.15 and me._wow0) {
+			if (me._mode != 0 and pts.Controls.Engines.Engine.throttle[0].getValue() < 0.15 and pts.Controls.Engines.Engine.throttle[1].getValue() < 0.15 and me._wow0 and systems.HYD.Brakes.askidSw.getValue() and systems.HYD.Psi.green.getValue() >= 2500 ) {
 				me.active.setBoolValue(1);
 			} elsif (me._active) {
 				me.active.setBoolValue(0);

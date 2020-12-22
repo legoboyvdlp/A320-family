@@ -97,6 +97,8 @@ var PNEU = {
 		pack2: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-2"),
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
+		starter1: props.globals.getNode("/systems/pneumatics/valves/starter-valve-1"),
+		starter2: props.globals.getNode("/systems/pneumatics/valves/starter-valve-2"),
 	},
 	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {

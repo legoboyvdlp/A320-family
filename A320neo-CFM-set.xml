@@ -21,20 +21,22 @@
 			<path>Aircraft/A320-family/Sounds/leapx-sound.xml</path>
 		</sound>
 		
-		<chase-distance-m type="double" archive="y">-80.0</chase-distance-m>
-		<view>
-			<name>Pilot View</name>
+		<chase-distance-m type="double" archive="y">-60.0</chase-distance-m>
+		<view n="0">
+			<name>Captain View</name>
 			<internal archive="y">true</internal>
 			<config>
 				<x-offset-m archive="y">-0.45</x-offset-m>
 				<y-offset-m archive="y">2.34</y-offset-m>
 				<z-offset-m archive="y">-13.75</z-offset-m>
-				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
+				<heading-offset-deg archive="y">0</heading-offset-deg>
+				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="100">
-			<name>Copilot View</name>
+			<name>First Officer View</name>
 			<type>lookfrom</type>
 			<internal archive="y">true</internal>
 			<config>
@@ -42,8 +44,10 @@
 				<x-offset-m archive="y">0.45</x-offset-m>
 				<y-offset-m archive="y">2.34</y-offset-m>
 				<z-offset-m archive="y">-13.75</z-offset-m>
-				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
+				<heading-offset-deg archive="y">0</heading-offset-deg>
+				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="101">
@@ -55,8 +59,10 @@
 				<x-offset-m archive="y">0</x-offset-m>
 				<y-offset-m archive="y">2.34</y-offset-m>
 				<z-offset-m archive="y">-13.72</z-offset-m>
-				<pitch-offset-deg archive="y">65.5</pitch-offset-deg>
 				<default-field-of-view-deg type="double">115</default-field-of-view-deg>
+				<heading-offset-deg archive="y">0</heading-offset-deg>
+				<pitch-offset-deg archive="y">65.5</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="102">
@@ -68,8 +74,10 @@
 				<x-offset-m archive="y">0.0</x-offset-m>
 				<y-offset-m archive="y">2.34</y-offset-m>
 				<z-offset-m archive="y">-14.15</z-offset-m>
-				<pitch-offset-deg archive="y">-76</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
+				<heading-offset-deg archive="y">0</heading-offset-deg>
+				<pitch-offset-deg archive="y">-76</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="103">
@@ -81,8 +89,10 @@
 				<x-offset-m archive="y">0.0</x-offset-m>
 				<y-offset-m archive="y">2.34</y-offset-m>
 				<z-offset-m archive="y">-13.8</z-offset-m>
-				<pitch-offset-deg archive="y">-82</pitch-offset-deg>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
+				<heading-offset-deg archive="y">0</heading-offset-deg>
+				<pitch-offset-deg archive="y">-82</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="104">
@@ -94,8 +104,10 @@
 				<x-offset-m archive="y">0.0</x-offset-m>
 				<y-offset-m archive="y">2.34</y-offset-m>
 				<z-offset-m archive="y">-13.75</z-offset-m>
-				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">52</default-field-of-view-deg>
+				<heading-offset-deg archive="y">0</heading-offset-deg>
+				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="105">
@@ -107,11 +119,43 @@
 				<x-offset-m archive="y">-2.81</x-offset-m>
 				<y-offset-m archive="y">2.44</y-offset-m>
 				<z-offset-m archive="y">-6.49</z-offset-m>
-				<heading-offset-deg>129</heading-offset-deg>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
+				<heading-offset-deg archive="y">129</heading-offset-deg>
+				<pitch-offset-deg archive="y">0</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		<view n="106">
+			<name>Right Front View</name>
+			<type>lookfrom</type>
+			<internal archive="y">false</internal>
+			<config>
+				<from-model type="bool">true</from-model>
+				<x-offset-m archive="y">2.81</x-offset-m>
+				<y-offset-m archive="y">2.44</y-offset-m>
+				<z-offset-m archive="y">-6.49</z-offset-m>
+				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
+				<heading-offset-deg archive="y">231</heading-offset-deg>
+				<pitch-offset-deg archive="y">0</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
+			</config>
+		</view>
+		<view n="107">
+			<name>Left Mid View</name>
+			<type>lookfrom</type>
+			<internal archive="y">false</internal>
+			<config>
+				<from-model type="bool">true</from-model>
+				<x-offset-m archive="y">-2.81</x-offset-m>
+				<y-offset-m archive="y">2.44</y-offset-m>
+				<z-offset-m archive="y">0</z-offset-m>
+				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
+				<heading-offset-deg archive="y">103</heading-offset-deg>
+				<pitch-offset-deg archive="y">0</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
+			</config>
+		</view>
+		<view n="108">
 			<name>Right Mid View</name>
 			<type>lookfrom</type>
 			<internal archive="y">false</internal>
@@ -120,11 +164,13 @@
 				<x-offset-m archive="y">2.81</x-offset-m>
 				<y-offset-m archive="y">2.44</y-offset-m>
 				<z-offset-m archive="y">0</z-offset-m>
-				<heading-offset-deg>257</heading-offset-deg>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
+				<heading-offset-deg archive="y">257</heading-offset-deg>
+				<pitch-offset-deg archive="y">0</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
-		<view n="107">
+		<view n="109">
 			<name>Left Aft View</name>
 			<type>lookfrom</type>
 			<internal archive="y">false</internal>
@@ -133,8 +179,26 @@
 				<x-offset-m archive="y">-2.81</x-offset-m>
 				<y-offset-m archive="y">2.44</y-offset-m>
 				<z-offset-m archive="y">6.8</z-offset-m>
-				<heading-offset-deg>63</heading-offset-deg>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
+				<heading-offset-deg archive="y">63</heading-offset-deg>
+				<pitch-offset-deg archive="y">0</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
+			</config>
+		</view>
+		<!-- Walker is 110 and 111 -->
+		<view n="112">
+			<name>Right Aft View</name>
+			<type>lookfrom</type>
+			<internal archive="y">false</internal>
+			<config>
+				<from-model type="bool">true</from-model>
+				<x-offset-m archive="y">2.81</x-offset-m>
+				<y-offset-m archive="y">2.44</y-offset-m>
+				<z-offset-m archive="y">6.8</z-offset-m>
+				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
+				<heading-offset-deg archive="y">297</heading-offset-deg>
+				<pitch-offset-deg archive="y">0</pitch-offset-deg>
+				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
 		
