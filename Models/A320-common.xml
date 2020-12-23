@@ -518,85 +518,85 @@
 	</light>
 	
 	<light>
-	  <name>Landing Light Left Compositor</name>
-	  <type>spot</type>
-	  <position>
-		<x-m>-2.080</x-m>
-		<y-m>-2.22016</y-m>
-		<z-m>-1.69034</z-m>
-	  </position>
-	  <direction>
-		<x>-1.0</x>
-		<y>0</y>
-		<z>-0.055</z>
-	  </direction>
-	  <ambient>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </ambient>
-	  <diffuse>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </diffuse>
-	  <specular>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </specular>
-	  <attenuation>
-		<c>1.0</c>
-		<l>0.9</l>
-		<q>3.0</q>
-	  </attenuation>
-	  <spot-exponent>5</spot-exponent>
-	  <spot-cutoff>10</spot-cutoff>
-	  <range-m>5</range-m>
+		<name>Landing Light Left Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-2.080</x-m>
+			<y-m>-2.22016</y-m>
+			<z-m>-1.69034</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>-0.055</z>
+		</direction>
+		<ambient>
+			<r>0.03</r>
+			<g>0.03</g>
+			<b>0.03</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>0.95</r>
+			<g>0.9</g>
+			<b>0.9</b>
+			<a>1</a>
+		</diffuse>
+		<specular>
+			<r>0.95</r>
+			<g>0.9</g>
+			<b>0.9</b>
+			<a>1</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.09</l>
+			<q>0.032</q>
+		</attenuation>
+		<spot-exponent>5</spot-exponent>
+		<spot-cutoff>40</spot-cutoff>
+		<range-m>50</range-m>
 	</light>
 	
 	<light>
-	  <name>Landing Light Right Compositor</name>
-	  <type>spot</type>
-	  <center>
-		<x-m>-2.080</x-m>
-		<y-m> 2.22016</y-m>
-		<z-m>-1.69034</z-m>
-	  </center>
-	  <direction>
-		<x>-1.0</x>
-		<y>0</y>
-		<z>-0.055</z>
-	  </direction>
-	  <ambient>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </ambient>
-	  <diffuse>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </diffuse>
-	  <specular>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </specular>
-	  <attenuation>
-		<c>1.0</c>
-		<l>0.9</l>
-		<q>3.0</q>
-	  </attenuation>
-	  <spot-exponent>5</spot-exponent>
-	  <spot-cutoff>10</spot-cutoff>
-	  <range-m>5</range-m>
+		<name>Landing Light Right Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-2.080</x-m>
+			<y-m> 2.22016</y-m>
+			<z-m>-1.69034</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>-0.055</z>
+		</direction>
+		<ambient>
+			<r>0.03</r>
+			<g>0.03</g>
+			<b>0.03</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>0.95</r>
+			<g>0.9</g>
+			<b>0.9</b>
+			<a>1</a>
+		</diffuse>
+		<specular>
+			<r>0.95</r>
+			<g>0.9</g>
+			<b>0.9</b>
+			<a>1</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.09</l>
+			<q>0.032</q>
+		</attenuation>
+		<spot-exponent>5</spot-exponent>
+		<spot-cutoff>40</spot-cutoff>
+		<range-m>50</range-m>
 	</light>
 	
 	<animation>
