@@ -223,11 +223,11 @@ var canvas_MCDU_base = {
 	getKeys: func() {
 		return ["Simple","Simple_Center","Scratchpad","Simple_Title","Simple_PageNum","ArrowLeft","ArrowRight","Simple_L1","Simple_L2","Simple_L3","Simple_L4",
 	"Simple_L5","Simple_L6","Simple_L0S","Simple_L1S","Simple_L2S","Simple_L3S","Simple_L4S","Simple_L5S","Simple_L6S","Simple_L1_Arrow",
-	"Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5",
-	"Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow","Simple_R2_Arrow","Simple_R3_Arrow",
-	"Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C4B","Simple_C5","Simple_C6","Simple_C1S",
-	"Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex","INITA_CruiseFLTemp",
-	"INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFWCG_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
+	"Simple_L2_Arrow","Simple_L3_Arrow","Simple_L4_Arrow","Simple_L5_Arrow","Simple_L6_Arrow","Simple_R1","Simple_R2","Simple_R3","Simple_R4","Simple_R5","Simple_R1B",
+	"Simple_R2B","Simple_R3B","Simple_R4B","Simple_R5B","Simple_R6","Simple_R1S","Simple_R2S","Simple_R3S","Simple_R4S","Simple_R5S","Simple_R6S","Simple_R1_Arrow",
+	"Simple_R2_Arrow","Simple_R3_Arrow","Simple_R4_Arrow","Simple_R5_Arrow","Simple_R6_Arrow","Simple_C1","Simple_C2","Simple_C3","Simple_C3B","Simple_C4","Simple_C5",
+	"Simple_C6","Simple_C4B","Simple_C1S","Simple_C2S","Simple_C3S","Simple_C4S","Simple_C5S","Simple_C6S","INITA","INITA_CoRoute","INITA_FltNbr","INITA_CostIndex",
+	"INITA_CruiseFLTemp","INITA_FromTo","INITA_InitRequest","INITA_AlignIRS","INITB","INITB_ZFWCG","INITB_ZFW","INITB_ZFWCG_S","INITB_Block","FUELPRED","FUELPRED_ZFW",
 	"FUELPRED_ZFWCG","FUELPRED_ZFWCG_S","PROG","PROG_UPDATE","PERFTO","PERFTO_V1","PERFTO_VR","PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE","PERFAPPR",
 	"PERFAPPR_FE","PERFAPPR_SE","PERFAPPR_OE","PERFAPPR_LDG_3","PERFAPPR_LDG_F","PERFGA","PERFGA_FE","PERFGA_SE","PERFGA_OE","FPLN","FPLN_From",
 	"FPLN_TMPY_group","FPLN_FROM","FPLN_Callsign","departureTMPY", "arrowsDepArr","arrow1L","arrow2L","arrow3L","arrow4L","arrow5L","arrow1R","arrow2R",
@@ -397,6 +397,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].show();
+				me["Simple_R2B"].show();
+				me["Simple_R3B"].show();
+				me["Simple_R4B"].show();
+				me["Simple_R5B"].show();
 				
 				me.hideAllArrows();
 				
@@ -441,6 +446,49 @@ var canvas_MCDU_base = {
 				me.dynamicPageFunc(myFpln[i].R5, "Simple_R5");
 				
 				me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
+				
+				if (myFpln[i].R1B[0] != nil) {
+					me["Simple_R1B"].setText(myFpln[i].R1B[0]);
+					me["Simple_R1B"].show();
+				} else {
+					me["Simple_R1B"].hide();
+				}
+				
+				if (myFpln[i].R2B[0] != nil) {
+					me["Simple_R2B"].setText(myFpln[i].R2B[0]);
+					me["Simple_R2B"].show();
+				} else {
+					me["Simple_R2B"].hide();
+				}
+				
+				if (myFpln[i].R3B[0] != nil) {
+					me["Simple_R3B"].setText(myFpln[i].R3B[0]);
+					me["Simple_R3B"].show();
+				} else {
+					me["Simple_R3B"].hide();
+				}
+				
+				if (myFpln[i].R4B[0] != nil) {
+					me["Simple_R4B"].setText(myFpln[i].R4B[0]);
+					me["Simple_R4B"].show();
+				} else {
+					me["Simple_R4B"].hide();
+				}
+				
+				if (myFpln[i].R5B[0] != nil) {
+					me["Simple_R5B"].setText(myFpln[i].R5B[0]);
+					me["Simple_R5B"].show();
+				} else {
+					me["Simple_R5B"].hide();
+				}
+				
+				me.colorRightB(myFpln[i].R1B[2],myFpln[i].R2B[2],myFpln[i].R3B[2],myFpln[i].R4B[2],myFpln[i].R5B[2]);
+				
+				me["Simple_R1B"].setFontSize(normal);
+				me["Simple_R2B"].setFontSize(small);
+				me["Simple_R3B"].setFontSize(small);
+				me["Simple_R4B"].setFontSize(small);
+				me["Simple_R5B"].setFontSize(small);
 				
 				me.fontSizeCenter(normal, myFpln[i].C2[4], myFpln[i].C3[4], myFpln[i].C4[4], myFpln[i].C5[4], small);
 				
@@ -493,6 +541,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -537,6 +590,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, -1, -1, -1, -1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -560,6 +618,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, 1, 1, 1, 1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -606,6 +669,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -659,6 +727,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -722,6 +795,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -745,6 +823,11 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -811,6 +894,11 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -928,6 +1016,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, 1, 1, -1, 1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -976,6 +1069,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1001,6 +1099,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1072,6 +1175,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -1223,6 +1331,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1312,6 +1425,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1385,6 +1503,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, 1, -1, 1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1431,6 +1554,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -1489,6 +1617,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -1548,6 +1681,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1593,6 +1731,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1648,6 +1791,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1744,6 +1892,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1832,6 +1985,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, 1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -1872,6 +2030,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, 1, 1, 1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -1904,6 +2067,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -1959,6 +2127,11 @@ var canvas_MCDU_base = {
 				me.showCenter(-1, -1, -1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(-1, -1, -1, -1, 1, -1);
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
@@ -2007,6 +2180,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, 0, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -2153,6 +2331,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, 1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -2315,6 +2498,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, -1, 1, 1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, 1, 1, 1, 1, -1);
 				
 				me.fontLeft(default, default, 0, 0, 0, default);
@@ -2479,6 +2667,11 @@ var canvas_MCDU_base = {
 				me.showCenter(-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, 0, 0, 0, 0, default);
@@ -2532,6 +2725,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, -1, 1, 1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(-1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
@@ -2982,6 +3180,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].show();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				me.showRight(1, 1, -1, 1, 1, 1);
 				me.showRightS(1, -1, 1, 1, 1, 1);
@@ -3313,6 +3516,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, -1, -1, 1, -1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, symbol, default, default, default);
@@ -3437,6 +3645,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -3601,6 +3814,11 @@ var canvas_MCDU_base = {
 				me.showCenter(-1, 1, 1, 1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(-1, -1, 1, -1, 1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -3755,6 +3973,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, -1, -1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -3892,6 +4115,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, 1, -1, 1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, -1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -4050,6 +4278,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, 1, 1, -1, 1, -1);
 				
 				me.fontLeft(symbol, default, default, default, symbol, default);
@@ -4233,6 +4466,11 @@ var canvas_MCDU_base = {
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -4306,6 +4544,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4445,6 +4688,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -4516,6 +4764,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -4586,6 +4839,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -4643,6 +4901,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -4706,6 +4969,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -4770,6 +5038,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4836,6 +5109,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4913,6 +5191,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -4992,6 +5275,11 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["Simple_R1B"].hide();
+				me["Simple_R2B"].hide();
+				me["Simple_R3B"].hide();
+				me["Simple_R4B"].hide();
+				me["Simple_R5B"].hide();
 				
 				me.standardFontSize();
 				
@@ -5154,6 +5442,23 @@ var canvas_MCDU_base = {
 		}
 		if (f != "ack") {
 			me["Simple_R6S"].setColor(getprop("/MCDUC/colors/" ~ f ~ "/r"), getprop("/MCDUC/colors/" ~ f ~ "/g"), getprop("/MCDUC/colors/" ~ f ~ "/b"));
+		}
+	},
+	colorRightB: func(a, b, c, d, e) {
+		if (a != "ack") {
+			me["Simple_R1B"].setColor(getprop("/MCDUC/colors/" ~ a ~ "/r"), getprop("/MCDUC/colors/" ~ a ~ "/g"), getprop("/MCDUC/colors/" ~ a ~ "/b"));
+		}
+		if (b != "ack") {
+			me["Simple_R2B"].setColor(getprop("/MCDUC/colors/" ~ b ~ "/r"), getprop("/MCDUC/colors/" ~ b ~ "/g"), getprop("/MCDUC/colors/" ~ b ~ "/b"));
+		}
+		if (c != "ack") {
+			me["Simple_R3B"].setColor(getprop("/MCDUC/colors/" ~ c ~ "/r"), getprop("/MCDUC/colors/" ~ c ~ "/g"), getprop("/MCDUC/colors/" ~ c ~ "/b"));
+		}
+		if (d != "ack") {
+			me["Simple_R4B"].setColor(getprop("/MCDUC/colors/" ~ d ~ "/r"), getprop("/MCDUC/colors/" ~ d ~ "/g"), getprop("/MCDUC/colors/" ~ d ~ "/b"));
+		}
+		if (e != "ack") {
+			me["Simple_R5B"].setColor(getprop("/MCDUC/colors/" ~ e ~ "/r"), getprop("/MCDUC/colors/" ~ e ~ "/g"), getprop("/MCDUC/colors/" ~ e ~ "/b"));
 		}
 	},
 	colorRightArrow: func(a, b, c, d, e, f) {

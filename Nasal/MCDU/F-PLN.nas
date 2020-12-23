@@ -84,14 +84,9 @@ var fplnItem = {
 	updateRightText: func(page) {
 		if (me.wp != nil) {
 			if (me.wp.wp_name != "DISCONTINUITY" and page == "A") {
-				me.spd = me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				if (me.spd[1] == "wht" and me.alt[1] == "wht") {
-					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
-				} else {
-					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
-				}
+				return ["   /" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.alt[1], me.colour];
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
 				me.hdg = ["---", "wht"]; #me.getHdg();
 				me.mag = ["---", "wht"]; #me.getMag();
@@ -108,15 +103,40 @@ var fplnItem = {
 			return ["problem", nil, "ack", "ack"];
 		}
 	},
-	getTime: func() {
-		if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
-			_time = fmgc.FMGCInternal.tripTime;
-			if (num(_time) >= 60) {
-				_min = int(math.mod(_time, 60));
-				_hour = int((_time - _min) / 60);
-				return [sprintf("%02d", _hour) ~ sprintf("%02d   ", _min), me.colour];
+	updateRightBText: func(page) {
+		if (me.wp != nil) {
+			if (me.wp.wp_name != "DISCONTINUITY" and page == "A") {
+				me.spd = me.getSpd();
+				return [me.spd[0] ~ "       ", nil, me.spd[1]];
 			} else {
-				return [sprintf("%04d   ", _time), me.colour];
+				return [nil, nil, "ack"];
+			}
+		} else {
+			return ["problem", nil, "ack"];
+		}
+	},
+	getTime: func() {
+		if (fmgc.FMGCInternal.blockSet and fmgc.FMGCInternal.tripFuel > 0) {
+			if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
+				_time = fmgc.FMGCInternal.tripTime;
+				if (num(_time) >= 60) {
+					_min = int(math.mod(_time, 60));
+					_hour = int((_time - _min) / 60);
+					return [sprintf("%02d", _hour) ~ sprintf("%02d   ", _min), me.colour];
+				} else {
+					return [sprintf("%04d   ", _time), me.colour];
+				}
+			} else if (me.index < fmgc.FMGCInternal.tocIndex[me.plan] and fmgc.time_values[me.plan][me.index] != nil) {
+				_time = fmgc.time_values[me.plan][me.index];
+				if (num(_time) >= 60) {
+					_min = int(math.mod(_time, 60));
+					_hour = int((_time - _min) / 60);
+					return [sprintf("%02d", _hour) ~ sprintf("%02d   ", _min), me.colour];
+				} else {
+					return [sprintf("%04d   ", _time), me.colour];
+				}
+			} else {
+				return ["----   ", "wht"];
 			}
 		} else {
 			return ["----   ", "wht"];
@@ -136,8 +156,14 @@ var fplnItem = {
 		return sprintf("%03.0f", math.round(me.trk));
 	},
 	getFuel: func() {
-		if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
-			return [sprintf("%.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), me.colour];
+		if (me.plan == 2 and fmgc.FMGCInternal.blockSet and fmgc.FMGCInternal.tripFuel > 0) {
+			if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
+				return [sprintf("%.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), me.colour];
+			} else if (me.index < fmgc.flightPlanController.arrivalIndex[me.plan] and fmgc.efob_values[me.plan][me.index] != nil) {
+				return [sprintf("%.1f", fmgc.efob_values[me.plan][me.index]), me.colour];
+			} else {
+				return ["--.-", "wht"];
+			}
 		} else {
 			return ["--.-", "wht"];
 		}
@@ -153,14 +179,21 @@ var fplnItem = {
 	},
 	getAlt: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
-			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), me.colour];
+			return [" " ~ sprintf("%5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), me.colour];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, me.colour];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr != 0) {
+			var _colour = me.colour;
+			var _blank = " ";
+			if (me.wp.alt_cstr_type == "above") {
+				_colour = "mag";
+				_blank = "+";
+			}
+			# to-do: add others?
 			if (me.wp.alt_cstr >= 10000) {
-				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), me.colour];
+				return [_blank ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), _colour];
 			} else {
-				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), me.colour];
+				return [_blank ~ sprintf("%5.0f", me.wp.alt_cstr), _colour];
 			}
 		} else {
 			return [" -----", "wht"];
@@ -237,8 +270,8 @@ var fplnItem = {
 			var scratchpadStore = mcdu_scratchpad.scratchpads[me.computer].scratchpad;
 			
 			if (scratchpadStore == "CLR") {
-				me.wp.setSpeed("delete");
-				me.wp.setAltitude("delete");
+				me.wp.setSpeed(nil, "computed");
+				me.wp.setAltitude(nil, "computed");
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 			} elsif (find("/",  scratchpadStore) != -1) {
 				var scratchpadSplit = split("/", scratchpadStore);
@@ -316,14 +349,9 @@ var psuedoItem = {
 	updateRightText: func(page) {
 		if (me.name != nil) {
 			if (page == "A") {
-				me.spd = ["---", "wht"]; #me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				if (me.spd[1] == "wht" and me.alt[1] == "wht") {
-					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
-				} else {
-					return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
-				}
+				return ["   /" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.alt[1], me.colour]; # to do: separate NM symbol 
 			} else if (page == "B") {
 				me.hdg = ["---", "wht"]; #me.getHdg();
 				me.mag = ["---", "wht"]; #me.getMag();
@@ -333,6 +361,18 @@ var psuedoItem = {
 				} else {
 					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
 				}
+			} else {
+				return [nil, nil, "ack"];
+			}
+		} else {
+			return ["problem", nil, "ack"];
+		}
+	},
+	updateRightBText: func(page) {
+		if (me.name != nil) {
+			if (page == "A") {
+				me.spd = ["---", "wht"]; #me.getSpd();
+				return [me.spd[0] ~ "       ", nil, me.spd[1]];
 			} else {
 				return [nil, nil, "ack"];
 			}
@@ -434,6 +474,9 @@ var staticText = {
 	updateRightText: func(page) {
 		return [nil, nil, "ack", "ack"];
 	},
+	updateRightBText: func(page) {
+		return [nil, nil, "ack"];
+	},
 	pushButtonLeft: func() {
 		mcdu_message(me.computer, "NOT ALLOWED");
 	},
@@ -462,6 +505,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	R4: [nil, nil, "ack", "ack"],
 	R5: [nil, nil, "ack", "ack"],
 	R6: [nil, nil, "ack", "ack"],
+	R1B: [nil, nil, "ack"],
+	R2B: [nil, nil, "ack"],
+	R3B: [nil, nil, "ack"],
+	R4B: [nil, nil, "ack"],
+	R5B: [nil, nil, "ack"],
 	
 	planList: [],
 	outputList: [],
@@ -538,9 +586,10 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.L1 = me.outputList[0].updateLeftText(me.page);
 			me.C1 = me.outputList[0].updateCenterText(me.page);
 			me.R1 = me.outputList[0].updateRightText(me.page);
+			me.R1B = me.outputList[0].updateRightBText(me.page);
 			if (me.page == "A") {
 				me.C1[1] = "TIME   "; # to-do add UTC
-				me.R1[1] = "SPD/ALT    ";
+				me.R1[1] = "SPD/ALT   ";
 			} else if (me.page == "B") {
 				me.C1[1] = "EFOB";
 				me.R1[1] = "T.WIND ";
@@ -549,42 +598,51 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.L1 = [nil, nil, "ack"];
 			me.C1 = [nil, nil, "ack", "ack", small];
 			me.R1 = [nil, nil, "ack", "ack"];
+			me.R1B = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 2) {
 			me.L2 = me.outputList[1].updateLeftText(me.page);
 			me.C2 = me.outputList[1].updateCenterText(me.page);
 			me.R2 = me.outputList[1].updateRightText(me.page);
+			me.R2B = me.outputList[1].updateRightBText(me.page);
 		} else {
 			me.L2 = [nil, nil, "ack"];
 			me.C2 = [nil, nil, "ack", "ack", small];
 			me.R2 = [nil, nil, "ack", "ack"];
+			me.R2B = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 3) {
 			me.L3 = me.outputList[2].updateLeftText(me.page);
 			me.C3 = me.outputList[2].updateCenterText(me.page);
 			me.R3 = me.outputList[2].updateRightText(me.page);
+			me.R3B = me.outputList[2].updateRightBText(me.page);
 		} else {
 			me.L3 = [nil, nil, "ack"];
 			me.C3 = [nil, nil, "ack", "ack", small];
 			me.R3 = [nil, nil, "ack", "ack"];
+			me.R3B = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 4) {
 			me.L4 = me.outputList[3].updateLeftText(me.page);
 			me.C4 = me.outputList[3].updateCenterText(me.page);
 			me.R4 = me.outputList[3].updateRightText(me.page);
+			me.R4B = me.outputList[3].updateRightBText(me.page);
 		} else {
 			me.L4 = [nil, nil, "ack"];
 			me.C4 = [nil, nil, "ack", "ack", small];
 			me.R4 = [nil, nil, "ack", "ack"];
+			me.R4B = [nil, nil, "ack"];
 		}
 		if (size(me.outputList) >= 5) {
 			me.L5 = me.outputList[4].updateLeftText(me.page);
 			me.C5 = me.outputList[4].updateCenterText(me.page);
 			me.R5 = me.outputList[4].updateRightText(me.page);
+			me.R5B = me.outputList[4].updateRightBText(me.page);
 		} else {
 			me.L5 = [nil, nil, "ack"];
 			me.C5 = [nil, nil, "ack", "ack", small];
 			me.R5 = [nil, nil, "ack", "ack"];
+			me.R5B = [nil, nil, "ack"];
 		}
 	},
 	destInfo: func() {
