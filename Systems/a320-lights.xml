@@ -92,21 +92,12 @@
 			</test>
 		</switch>
 		
-		<switch name="controls/lighting/leftturnoff">
+		<switch name="/controls/lighting/leftturnoff">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/lighting/turnoff-light-switch eq 1
 				/gear/gear[0]/position-norm gt 0.8
 				/systems/electrical/bus/ac-1 ge 110
-			</test>
-		</switch>
-		
-		<switch name="/controls/lighting/rightturnoff">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/lighting/turnoff-light-switch eq 1
-				/gear/gear[0]/position-norm gt 0.8
-				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
 		

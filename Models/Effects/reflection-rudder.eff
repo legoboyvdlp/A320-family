@@ -21,7 +21,7 @@
 		<lightmap-factor type="float" n="0"><use>sim/model/lights/logo-lights</use></lightmap-factor>
         <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
         <texture n="3">
-            <image>Aircraft/A320-family/Models/Effects/res/fin-lightmap.png</image>
+            <image>Aircraft/A320-family/Models/Effects/res/rudder-lightmap.png</image>
             <filter>linear-mipmap-linear</filter>
             <wrap-s>clamp</wrap-s>
             <wrap-t>clamp</wrap-t>
