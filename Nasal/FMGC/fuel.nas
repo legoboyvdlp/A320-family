@@ -312,7 +312,7 @@ var updateFuel = func {
 				if (_wp.alt_cstr == nil or _wp.alt_cstr == 0 or _wp.alt_cstr_type == "computed") {
 					_wp.setAltitude(_altitude, "computed");
 				}
-				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed") {
+				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
 					if (_altitude >= getprop("/FMGC/internal/accel-agl-ft") and _altitude < 10000) {
 						_wp.setSpeed(250, "computed");
 					}
@@ -332,6 +332,9 @@ var updateFuel = func {
 				if (_wp.alt_cstr == nil or _wp.alt_cstr == 0 or _wp.alt_cstr_type == "computed") {
 					_wp.setAltitude(fmgc.FMGCInternal.crzFt, "computed");
 				}
+				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
+					
+				}
 			} else if (wpt >= fmgc.FMGCInternal.todIndex[i] and wpt < fmgc.flightPlanController.arrivalIndex[i]) {
 				var _multiplier = (fmgc.flightPlanController.arrivalDist - _distance) / fmgc.FMGCInternal.desDist;
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel + fmgc.FMGCInternal.desFuel / 1000 - _multiplier * fmgc.FMGCInternal.desFuel / 1000);
@@ -347,11 +350,16 @@ var updateFuel = func {
 				if (_wp.alt_cstr == nil or _wp.alt_cstr == 0 or _wp.alt_cstr_type == "computed") {
 					_wp.setAltitude(_altitude, "computed");
 				}
-				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed") {
+				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
 					if (_altitude >= getprop("/systems/thrust/clbreduc-ft") and _altitude < 10000) { # to-do: check decel
 						_wp.setSpeed(250, "computed");
 					}
 					# to-do: add other conditions
+				}
+			} else if (wpt == fmgc.flightPlanController.arrivalIndex[i]) {
+				#_wp.setAltitude(nil, "computed");
+				if (FMGCInternal.vapp_appr > 0) {
+					_wp.setSpeed(FMGCInternal.vapp_appr, "computed");
 				}
 			} else {
 				append(efob_values[i], nil);

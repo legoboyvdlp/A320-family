@@ -88,7 +88,7 @@ var fplnItem = {
 				me.dist = me.getDist();
 				return ["   /" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.alt[1], me.colour];
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
-				me.hdg = ["---", "wht"]; #me.getHdg();
+				me.hdg = me.getHdg();
 				me.mag = ["---", "wht"]; #me.getMag();
 				me.dist = me.getDist();
 				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
@@ -116,7 +116,7 @@ var fplnItem = {
 		}
 	},
 	getTime: func() {
-		if (fmgc.FMGCInternal.blockSet and fmgc.FMGCInternal.tripFuel > 0) {
+		if (me.plan == 2 and fmgc.FMGCInternal.blockSet and fmgc.FMGCInternal.tripFuel > 0) {
 			if (me.index == fmgc.flightPlanController.arrivalIndex[me.plan]) {
 				return [fmgc.FMGCInternal.tripTime ~ "   ", me.colour];
 			} else if (me.index < fmgc.flightPlanController.arrivalIndex[me.plan] and fmgc.time_values[me.plan][me.index] != nil) {
@@ -158,7 +158,15 @@ var fplnItem = {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
 			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), me.colour];
 		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr != 0) {
-			return [sprintf("%3.0f", me.wp.speed_cstr), me.colour];
+			var _colour = me.colour;
+			if (me.wp.alt_cstr_type == "above") {
+				_colour = "mag";
+			} else if (me.wp.alt_cstr_type == "below") {
+				_colour = "mag";
+			} else if (me.wp.alt_cstr_type == "at") {
+				_colour = "mag";
+			}
+			return [sprintf("%3.0f", me.wp.speed_cstr), _colour];
 		} else {
 			return ["---", "wht"];
 		}
@@ -195,6 +203,13 @@ var fplnItem = {
 			return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
 		} else {
 			return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+		}
+	},
+	getHdg: func() {
+		if (me.index < fmgc.flightPlanController.arrivalIndex[me.plan]) {
+			return ["---", "wht"];
+		} else {
+			return ["---", "wht"];
 		}
 	},
 	pushButtonLeft: func() {
@@ -372,9 +387,9 @@ var psuedoItem = {
 		}
 	},
 	getTime: func() {
-		if (me.name == "(T/C)" and fmgc.FMGCInternal.clbTime_num > 0) {
+		if (me.plan == 2 and me.name == "(T/C)" and fmgc.FMGCInternal.clbTime_num > 0) {
 			return [fmgc.FMGCInternal.clbTime ~ "   ", nil, me.colour, me.colour, small];
-		} else if (me.name == "(T/D)" and fmgc.FMGCInternal.desTime_num > 0) {
+		} else if (me.plan == 2 and me.name == "(T/D)" and fmgc.FMGCInternal.desTime_num > 0) {
 			_desTime = fmgc.FMGCInternal.tripTime_num - fmgc.FMGCInternal.desTime_num;
 			if (num(_desTime) >= 60) {
 				des_min = int(math.mod(v, 60));
@@ -388,10 +403,10 @@ var psuedoItem = {
 		}
 	},
 	getFuel: func() {
-		if (me.name == "(T/C)" and fmgc.FMGCInternal.clbFuel > 0) {
+		if (me.plan == 2 and me.name == "(T/C)" and fmgc.FMGCInternal.clbFuel > 0) {
 			_clbFuel = fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000;
 			return [sprintf("%.1f", _clbFuel), nil, me.colour, me.colour, small];
-		} else if (me.name == "(T/D)" and fmgc.FMGCInternal.desFuel > 0) {
+		} else if (me.plan == 2 and me.name == "(T/D)" and fmgc.FMGCInternal.desFuel > 0) {
 			_desFuel = fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel + fmgc.FMGCInternal.desFuel / 1000;
 			return [sprintf("%.1f", _desFuel), nil, me.colour, me.colour, small];
 		} else {
