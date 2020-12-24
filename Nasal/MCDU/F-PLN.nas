@@ -188,8 +188,13 @@ var fplnItem = {
 			if (me.wp.alt_cstr_type == "above") {
 				_colour = "mag";
 				_blank = "+";
+			} else if (me.wp.alt_cstr_type == "below") {
+				_colour = "mag";
+				_blank = "-";
+			} else if (me.wp.alt_cstr_type == "at") {
+				_colour = "mag";
+				_blank = " ";
 			}
-			# to-do: add others?
 			if (me.wp.alt_cstr >= 10000) {
 				return [_blank ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), _colour];
 			} else {
