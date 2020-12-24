@@ -200,6 +200,7 @@ var FMGCInternal = {
 	taxiFuelSet: 0,
 	tripFuel: 0,
 	tripTime: "0000",
+	tripTime_num: 0,
 	rteRsv: 0,
 	rteRsvSet: 0,
 	rtePercent: 5.0,
@@ -238,13 +239,15 @@ var FMGCInternal = {
 	
 	# Fuel
 	clbFuel: 0,
-	clbTime: 0,
+	clbTime: "0000",
+	clbTime_num: 0,
 	clbDist: 0,
 	clbSet: 0,
 	clbReached: 0,
 	
 	desFuel: 0,
-	desTime: 0,
+	desTime: "0000",
+	desTime_num: 0,
 	desDist: 0,
 	desSet: 0,
 	desReached: 0,

@@ -106,6 +106,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.taxiFuelSet = 0;
 	fmgc.FMGCInternal.tripFuel = 0;
 	fmgc.FMGCInternal.tripTime = "0000";
+	fmgc.FMGCInternal.tripTime_num = 0;
 	fmgc.FMGCInternal.rteRsv = 0;
 	fmgc.FMGCInternal.rteRsvSet = 0;
 	fmgc.FMGCInternal.rtePercent = 5.0;
@@ -194,13 +195,15 @@ var MCDU_reset = func(i) {
 	
 	# NAV
 	fmgc.FMGCInternal.clbFuel = 0;
-	fmgc.FMGCInternal.clbTime = 0;
+	fmgc.FMGCInternal.clbTime = "0000";
+	fmgc.FMGCInternal.clbTime_num = 0;
 	fmgc.FMGCInternal.clbDist = 0;
 	fmgc.FMGCInternal.clbSet = 0;
 	fmgc.FMGCInternal.clbReached = 0;
 	
 	fmgc.FMGCInternal.desFuel = 0;
-	fmgc.FMGCInternal.desTime = 0;
+	fmgc.FMGCInternal.desTime = "0000";
+	fmgc.FMGCInternal.desTime_num = 0;
 	fmgc.FMGCInternal.desDist = 0;
 	fmgc.FMGCInternal.desSet = 0;
 	fmgc.FMGCInternal.desReached = 0;
