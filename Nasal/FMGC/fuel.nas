@@ -352,7 +352,7 @@ var updateFuel = func {
 				} else {
 					append(time_values[i], sprintf("%04d", _desTime));
 				}
-				var _altitude = _multiplier * fmgc.FMGCInternal.crzFt;
+				var _altitude = (1 - _multiplier) * fmgc.FMGCInternal.crzFt;
 				if (_wp.alt_cstr == nil or _wp.alt_cstr == 0 or _wp.alt_cstr_type == "computed") {
 					_wp.setAltitude(_altitude, "computed");
 				}
