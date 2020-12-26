@@ -392,7 +392,7 @@ var psuedoItem = {
 		} else if (me.plan == 2 and me.name == "(T/D)" and fmgc.FMGCInternal.desTime_num > 0) {
 			_desTime = fmgc.FMGCInternal.tripTime_num - fmgc.FMGCInternal.desTime_num;
 			if (num(_desTime) >= 60) {
-				des_min = int(math.mod(v, 60));
+				des_min = int(math.mod(_desTime, 60));
 				des_hour = int((_desTime - des_min) / 60);
 				return [sprintf("%02d", des_hour) ~ sprintf("%02d", des_min) ~ "   ", nil, me.colour, me.colour, small];
 			} else {
