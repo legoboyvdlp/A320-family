@@ -295,11 +295,15 @@ var updateFuel = func {
 		efob_values[i] = [];
 		time_values[i] = [];
 		var _distance = 0;
+		var _clb_distance = 0;
+		var _crz_distance = 0;
+		var _des_distance = 0;
 		for (var wpt = 0; wpt < fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
 			_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 			var _wp = fmgc.flightPlanController.flightplans[i].getWP(wpt);
 			if (wpt < fmgc.FMGCInternal.tocIndex[i]) {
-				var _multiplier = _distance / fmgc.FMGCInternal.clbDist;
+				_clb_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+				var _multiplier = _clb_distance / fmgc.FMGCInternal.clbDist;
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - _multiplier * fmgc.FMGCInternal.clbFuel / 1000);
 				if (num(_multiplier * fmgc.FMGCInternal.clbTime_num) >= 60) {
 					clb_min = int(math.mod(_multiplier * fmgc.FMGCInternal.clbTime_num, 60));
@@ -319,7 +323,8 @@ var updateFuel = func {
 					# to-do: add other conditions
 				}
 			} else if (wpt >= fmgc.FMGCInternal.tocIndex[i] and wpt < fmgc.FMGCInternal.todIndex[i]) {
-				var _multiplier = (_distance - fmgc.FMGCInternal.clbDist) / (fmgc.flightPlanController.arrivalDist - fmgc.FMGCInternal.clbDist - fmgc.FMGCInternal.desDist);
+				_crz_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+				var _multiplier = _crz_distance / (fmgc.flightPlanController.arrivalDist - fmgc.FMGCInternal.clbDist - fmgc.FMGCInternal.desDist);
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000 - _multiplier * (fmgc.FMGCInternal.tripFuel - fmgc.FMGCInternal.clbFuel / 1000 - fmgc.FMGCInternal.desFuel / 1000));
 				_desTime = _multiplier * (fmgc.FMGCInternal.tripTime_num - fmgc.FMGCInternal.desTime_num - fmgc.FMGCInternal.clbTime_num) + fmgc.FMGCInternal.clbTime_num;
 				if (num(_desTime) >= 60) {
@@ -336,7 +341,8 @@ var updateFuel = func {
 					
 				}
 			} else if (wpt >= fmgc.FMGCInternal.todIndex[i] and wpt < fmgc.flightPlanController.arrivalIndex[i]) {
-				var _multiplier = (fmgc.flightPlanController.arrivalDist - _distance) / fmgc.FMGCInternal.desDist;
+				_des_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+				var _multiplier = _des_distance / fmgc.FMGCInternal.desDist;
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel + fmgc.FMGCInternal.desFuel / 1000 - _multiplier * fmgc.FMGCInternal.desFuel / 1000);
 				_desTime = _multiplier * fmgc.FMGCInternal.desTime_num + fmgc.FMGCInternal.tripTime_num - fmgc.FMGCInternal.desTime_num;
 				if (num(_desTime) >= 60) {
