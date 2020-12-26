@@ -59,9 +59,9 @@ var SimbriefParser = {
 		}
 		
 		if (size(result) == 0) { return nil; }
-		foreach (var test; result) {
-			if (math.abs(test.lat - coords.lat()) < 0.01666666666 and math.abs(test.lon - coords.lon()) < 0.01666666666) {
-				return test;
+		forindex (var test; result) {
+			if (math.abs(result[test].lat - coords.lat()) < 0.01666666666 and math.abs(result[test].lon - coords.lon()) < 0.01666666666) {
+				return result[test];
 			}
 		}
 		return nil;

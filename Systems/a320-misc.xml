@@ -38,6 +38,27 @@
 		</actuator>
 		
 	</channel>
+	
+	<channel name="System Display" execrate="8">
+		
+		<switch name="/ECAM/Lower/g-force-display-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/accelerations/pilot-gdamped lt 0.7
+					/accelerations/pilot-gdamped gt 1.4
+				</test>
+				/ECAM/warning-phase ge 4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/Lower/g-force-display">
+			<input>/ECAM/Lower/g-force-display-cmd</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">0.2</rate_limit>
+		</actuator>
+		
+	</channel>
 
 	<channel name="Shake" execrate="8">
 		

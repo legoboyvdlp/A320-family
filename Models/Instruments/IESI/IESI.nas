@@ -282,8 +282,6 @@ var showIESI = func {
 	dlg.setCanvas(A320IESI.MainScreen.canvas);
 }
 
-setlistener("", func() { if (A320IESI.MainScreen != nil) { A320IESI.MainScreen.updateQNH(notification); } }, 0, 0);
-
 var roundabout = func(x) {
 	var y = x - int(x);
 	return y < 0.5 ? int(x) : 1 + int(x);

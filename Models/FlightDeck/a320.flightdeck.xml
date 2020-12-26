@@ -428,7 +428,7 @@
     <animation>
     	<type>rotate</type>
     	<object-name>brakes_accum_psi</object-name>
-    	<property>systems/hydraulic/brakes/accumulator-pressure-psi</property>
+    	<property>systems/hydraulic/yellow-accumulator-psi</property>
     	<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
 			<entry><ind>700</ind><dep>-20</dep></entry>
