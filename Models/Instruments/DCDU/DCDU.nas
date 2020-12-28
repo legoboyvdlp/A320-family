@@ -108,6 +108,8 @@ var canvas_DCDU = {
 		var m = {parents: [canvas_DCDU, canvas_DCDU_base]};
 		m.init(canvas_group, file);
 		m.updateActiveATC();
+		m["MessageTimeStamp"].hide();
+		m["Close"].hide();
 		return m;
 	},
 	getKeys: func() {
@@ -116,32 +118,43 @@ var canvas_DCDU = {
 	cache: {
 		adsCount: 0,
 	},
+	currentMessage: nil,
 	update: func() {
 		me["RecallMode"].hide();
 		me["LinkLost"].hide();
-		me["Recall"].show();
-		me["Close"].hide();
+		me["Recall"].hide();
 		
-		if (atsu.ADS.getCount() != me.cache.adsCount) {
-			me.cache.adsCount = atsu.ADS.getCount();
-			# FANS A+: status of ADS seems to be independent of connection to CPDLC: confirm in GTG document
-			if (atsu.ADS.state == 2) {
-				me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
-				me["ADSConnection"].show();
-			} else {
-				me["ADSConnection"].hide();
+		if (!me.showingMessage) {
+			if (atsu.ADS.getCount() != me.cache.adsCount) {
+				me.cache.adsCount = atsu.ADS.getCount();
+				# FANS A+: status of ADS seems to be independent of connection to CPDLC: confirm in GTG document
+				if (atsu.ADS.state == 2) {
+					me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
+					me["ADSConnection"].show();
+				} else {
+					me["ADSConnection"].hide();
+				}
 			}
+		} else {
+			me["ADSConnection"].hide();
 		}
 	},
-	currentMessage: nil,
 	showNextMessage: func() {
+		me.showingMessage = 1;
 		me.currentMessage = atsu.DCDUBuffer.popMessage();
 		me["MessageTimeStamp"].show();
-		me["MessageTimeStamp"].setText(me.currentMessage.receivedTime);
+		me["MessageTimeStamp"].setText(me.currentMessage.receivedTime ~ " FROM " ~ CPDLCauthority.getValue() ~ " CTL");
+		me["ActiveATC"].hide();
+		me["Close"].show();
 	},
 	clearMessage: func() {
-		me.currentMessage = nil;
-		me["MessageTimeStamp"].hide();
+		if (me.showingMessage) {
+			me.currentMessage = nil;
+			me["MessageTimeStamp"].hide();
+			me["Close"].hide();
+			me.updateActiveATC();
+			me.showingMessage = 0;
+		}
 	},
 	updateActiveATC: func() {
 		if (CPDLCstatusNode.getValue() == 2) {
@@ -149,6 +162,20 @@ var canvas_DCDU = {
 			me["ActiveATC"].show();
 		} else {
 			me["ActiveATC"].hide();
+		}
+	},
+	btnL1: func() {
+	
+	},
+	btnL2: func() {
+	
+	},
+	btnR1: func() {
+	
+	},
+	btnR2: func() {
+		if (me.showingMessage) {
+			me.clearMessage();
 		}
 	},
 };

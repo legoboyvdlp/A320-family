@@ -9070,6 +9070,34 @@
 		</action>
 	</animation>
 	
+	<animation>
+		<type>pick</type>
+		<object-name>dcduBtnL.R2</object-name>
+		<object-name>dcduBtnR.R2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-1</property>
+							<value>110</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>nasal</command>
+				<script>
+					canvas_dcdu.DCDU.btnR2();
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
 	<!-- WX Radar -->
 	
 	<animation>
