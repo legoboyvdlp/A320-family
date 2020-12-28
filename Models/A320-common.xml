@@ -477,10 +477,10 @@
 	  </specular>
 	  <attenuation>
 		<c>1.0</c>
-		<l>2.25</l>
-		<q>12.0</q>
+		<l>0.7</l>
+		<q>1.80</q>
 	  </attenuation>
-	  <range-m>2.5</range-m>
+	  <range-m>7</range-m>
 	</light>
 	
 	<light>
@@ -511,92 +511,256 @@
 	  </specular>
 	  <attenuation>
 		<c>1.0</c>
-		<l>2.25</l>
-		<q>12.0</q>
+		<l>0.90</l>
+		<q>3.00</q>
 	  </attenuation>
-	  <range-m>2.5</range-m>
-	</light>
-	
-	<light>
-	  <name>Landing Light Left Compositor</name>
-	  <type>spot</type>
-	  <position>
-		<x-m>-2.080</x-m>
-		<y-m>-2.22016</y-m>
-		<z-m>-1.69034</z-m>
-	  </position>
-	  <direction>
-		<x>-1.0</x>
-		<y>0</y>
-		<z>-0.055</z>
-	  </direction>
-	  <ambient>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </ambient>
-	  <diffuse>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </diffuse>
-	  <specular>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </specular>
-	  <attenuation>
-		<c>1.0</c>
-		<l>0.9</l>
-		<q>3.0</q>
-	  </attenuation>
-	  <spot-exponent>5</spot-exponent>
-	  <spot-cutoff>10</spot-cutoff>
 	  <range-m>5</range-m>
 	</light>
 	
 	<light>
-	  <name>Landing Light Right Compositor</name>
-	  <type>spot</type>
-	  <center>
-		<x-m>-2.080</x-m>
-		<y-m> 2.22016</y-m>
-		<z-m>-1.69034</z-m>
-	  </center>
-	  <direction>
-		<x>-1.0</x>
-		<y>0</y>
-		<z>-0.055</z>
-	  </direction>
-	  <ambient>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </ambient>
-	  <diffuse>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </diffuse>
-	  <specular>
-		<r>1.00</r>
-		<g>0.9765</g>
-		<b>0.9922</b>
-		<a>1</a>
-	  </specular>
-	  <attenuation>
-		<c>1.0</c>
-		<l>0.9</l>
-		<q>3.0</q>
-	  </attenuation>
-	  <spot-exponent>5</spot-exponent>
-	  <spot-cutoff>10</spot-cutoff>
-	  <range-m>5</range-m>
+		<name>Landing Light Left Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-2.080</x-m>
+			<y-m>-2.22016</y-m>
+			<z-m>-1.69034</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>-0.055</z>
+		</direction>
+		<ambient>
+			<r>0.05</r>
+			<g>0.05</g>
+			<b>0.05</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0009</l>
+			<q>0.000003</q>
+		</attenuation>
+		<spot-exponent>200.0</spot-exponent>
+		<spot-cutoff>12.0</spot-cutoff>
+		<range-m>5000.0</range-m>
+	</light>
+	
+	<light>
+		<name>Landing Light Right Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-2.080</x-m>
+			<y-m> 2.22016</y-m>
+			<z-m>-1.69034</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>-0.055</z>
+		</direction>
+		<ambient>
+			<r>0.05</r>
+			<g>0.05</g>
+			<b>0.05</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0009</l>
+			<q>0.000003</q>
+		</attenuation>
+		<spot-exponent>200.0</spot-exponent>
+		<spot-cutoff>12.0</spot-cutoff>
+		<range-m>5000.0</range-m>
+	</light>
+	
+	<light>
+		<name>Taxi Light Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-13.461</x-m>
+			<y-m>0.20414</y-m>
+			<z-m>-2.28819</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>0</z>
+		</direction>
+		<ambient>
+			<r>0.05</r>
+			<g>0.05</g>
+			<b>0.05</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0015</l>
+			<q>0.00000833333</q>
+		</attenuation>
+		<spot-exponent>200.0</spot-exponent>
+		<spot-cutoff>12.0</spot-cutoff>
+		<range-m>3000.0</range-m>
+	</light>
+	
+	<light>
+		<name>Left Turnoff Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-13.5034</x-m>
+			<y-m>-0.20993</y-m>
+			<z-m>-2.83921</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>-0.571953125</y>
+			<z>0</z>
+		</direction>
+		<ambient>
+			<r>0.05</r>
+			<g>0.05</g>
+			<b>0.05</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0015</l>
+			<q>0.00000833333</q>
+		</attenuation>
+		<spot-exponent>200.0</spot-exponent>
+		<spot-cutoff>12.0</spot-cutoff>
+		<range-m>3000.0</range-m>
+	</light>
+	
+	<light>
+		<name>Right Turnoff Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-13.5034</x-m>
+			<y-m> 0.20914</y-m>
+			<z-m>-2.83921</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0.571953125</y>
+			<z>0</z>
+		</direction>
+		<ambient>
+			<r>0.05</r>
+			<g>0.05</g>
+			<b>0.05</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0015</l>
+			<q>0.00000833333</q>
+		</attenuation>
+		<spot-exponent>200.0</spot-exponent>
+		<spot-cutoff>12.0</spot-cutoff>
+		<range-m>3000.0</range-m>
+	</light>
+	
+	<light>
+		<name>Nose Landing Light Compositor</name>
+		<type>spot</type>
+		<position>
+			<x-m>-13.5119</x-m>
+			<y-m>-0.185175</y-m>
+			<z-m>-2.30747</z-m>
+		</position>
+		<direction>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>0</z>
+		</direction>
+		<ambient>
+			<r>0.05</r>
+			<g>0.05</g>
+			<b>0.05</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.0009</l>
+			<q>0.000003</q>
+		</attenuation>
+		<spot-exponent>200.0</spot-exponent>
+		<spot-cutoff>12.0</spot-cutoff>
+		<range-m>5000.0</range-m>
 	</light>
 	
 	<animation>
@@ -621,6 +785,64 @@
 		<object-name>Landing Light Right Compositor</object-name>
 		<condition>
 			<property>controls/lighting/landing-lights[2]</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Left Turnoff Compositor</object-name>
+		<condition>
+			<property>controls/lighting/leftturnoff</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Right Turnoff Compositor</object-name>
+		<condition>
+			<property>controls/lighting/rightturnoff</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Taxi Light Compositor</object-name>
+		<condition>
+			<and>
+				<not>
+					<equals>
+						<property>sim/model/lights/nose-lights</property>
+						<value>1.0</value>
+					</equals>
+				</not>
+				<not>
+					<equals>
+						<property>sim/model/lights/nose-lights</property>
+						<value>0.0</value>
+					</equals>
+				</not>
+				<greater-than>
+					<property>gear/gear/position-norm</property>
+					<value>0.1</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Nose Landing Light Compositor</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>sim/model/lights/nose-lights</property>
+					<value>1.0</value>
+				</equals>
+				<greater-than>
+					<property>gear/gear/position-norm</property>
+					<value>0.1</value>
+				</greater-than>
+			</and>
 		</condition>
 	</animation>
 	

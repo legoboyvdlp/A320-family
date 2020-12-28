@@ -606,7 +606,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(spd_brk_config_1);
 	}
 	
-	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 2.6 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -2.6) and takeoffConfig) {
+	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") > 2.6 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") < -2.6) and takeoffConfig) {
 		pitch_trim_config.active = 1;
 		pitch_trim_config_1.active = 1;
 	} else {
@@ -2270,7 +2270,7 @@ var messages_priority_0 = func {
 
 var messages_config_memo = func {
 	phaseVarMemo = phaseNode.getValue();
-	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("/ECAM/to-config-normal", 0);
 	} else {
 		setprop("/ECAM/to-config-normal", 1);

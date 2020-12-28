@@ -9,7 +9,7 @@
 		<reflection-correction type="float"><use>/sim/model/reflection/reflection-correction</use></reflection-correction>
 		<reflection-type type="int">2</reflection-type>
 		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction</use></ambient-correction>
-		<lightmap-enabled type="int">0</lightmap-enabled>
+		<lightmap-enabled type="int">1</lightmap-enabled>
 		<lightmap-multi type="int">0</lightmap-multi>
 		<normalmap-enabled type="int">1</normalmap-enabled>
 		<texture n="2">
@@ -18,6 +18,15 @@
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
 		</texture>
+		<lightmap-factor type="float" n="0"><use>sim/model/lights/logo-lights</use></lightmap-factor>
+        <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
+        <texture n="3">
+            <image>Aircraft/A320-family/Models/Effects/res/fin-lightmap.png</image>
+            <filter>linear-mipmap-linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+        </texture>
 		<texture n="5">
 			<type>cubemap</type>
 			<images>
