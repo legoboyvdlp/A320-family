@@ -3,11 +3,22 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 var CPDLCmessage = {
-	new: func(text, response = 0) {
+	new: func(text) {
 		var cpdlcMessage = {parents: [CPDLCmessage] };
 		cpdlcMessage.text = text;
-		cpdlcMessage.response = response;
+		cpdlcMessage._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
+		cpdlcMessage.receivedTime = split(":", cpdlcMessage._receivedTime)[0] ~ "." ~ split(":", cpdlcMessage._receivedTime)[1] ~ "Z";
 		return cpdlcMessage;
+	},
+};
+
+var DCDUBuffer = {
+	buffer: std.Vector.new(),
+	insertMessage: func(message) {
+		me.buffer.append(message);
+	},
+	popMessage: func() {
+		return me.buffer.pop(0);
 	},
 };
 
@@ -19,6 +30,12 @@ setlistener("/network/cpdlc/rx/new-message", func() {
 	if (CPDLCnewMsgFlag.getBoolValue()) {
 		fgcommand("cpdlc-next-message");
 		# add to DCDU message buffer to display
+		var message = CPDLCmessage.new(getprop("/network/cpdlc/rx/message"));
+		DCDUBuffer.insertMessage(message);
+		if (!canvas_dcdu.DCDU.showingMessage) {
+			canvas_dcdu.DCDU.showNextMessage();
+		}
+		
 		ATCMSGRingCancel = 0;
 		var messageType = 0; # urgent or normal
 		ATCMSGRing(messageType);
@@ -31,10 +48,8 @@ setlistener("/network/cpdlc/rx/new-message", func() {
 
 var ATCMSGRingCancel = 0;
 var ATCMSGRing = func(messageType) {
-	print("Going to ring");
 	settimer(func() {
 		if (!ATCMSGRingCancel) {
-			print("Rang, will ring 15 seconds later again");
 			CPDLCnewMsgAlert.setBoolValue(0);
 			settimer(func() {
 				CPDLCnewMsgAlert.setBoolValue(1);

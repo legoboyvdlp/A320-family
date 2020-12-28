@@ -103,6 +103,7 @@ var CPDLCstatusNode = props.globals.getNode("/network/cpdlc/link/status");
 var CPDLCauthority = props.globals.getNode("/network/cpdlc/link/data-authority");
 
 var canvas_DCDU = {
+	showingMessage: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_DCDU, canvas_DCDU_base]};
 		m.init(canvas_group, file);
@@ -116,7 +117,6 @@ var canvas_DCDU = {
 		adsCount: 0,
 	},
 	update: func() {
-		me["MessageTimeStamp"].hide();
 		me["RecallMode"].hide();
 		me["LinkLost"].hide();
 		me["Recall"].show();
@@ -132,6 +132,16 @@ var canvas_DCDU = {
 				me["ADSConnection"].hide();
 			}
 		}
+	},
+	currentMessage: nil,
+	showNextMessage: func() {
+		me.currentMessage = atsu.DCDUBuffer.popMessage();
+		me["MessageTimeStamp"].show();
+		me["MessageTimeStamp"].setText(me.currentMessage.receivedTime);
+	},
+	clearMessage: func() {
+		me.currentMessage = nil;
+		me["MessageTimeStamp"].hide();
 	},
 	updateActiveATC: func() {
 		if (CPDLCstatusNode.getValue() == 2) {
