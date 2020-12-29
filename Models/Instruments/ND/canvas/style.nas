@@ -49,12 +49,12 @@ canvas.NDStyles["Airbus"] = {
 			#			that the lateral flight mode is managed.
 			# You can easily override these options before creating the ND, example:
 			#	canvas.NDStyles["Airbus"].options.defaults.fplan_active = "my/autpilot/f-plan/active"
-			fplan_active: "/FMGC/flightplan[2]/active",
+			fplan_active: "/autopilot/route-manager/active",
 			lat_ctrl: "/it-autoflight/output/lat",
 			managed_val: 1,
 			ver_ctrl: "/it-autoflight/output/vert",
-			spd_ctrl: "/flight-management/control/spd-ctrl",
-			current_wp: "/FMGC/flightplan[2]/current-wp",
+			spd_ctrl: "it-autoflight/input/spd-managed",
+			current_wp: "/autopilot/route-manager/current-wp",
 			ap1: "/it-autoflight/output/ap1",
 			ap2: "/it-autoflight/output/ap2",
 			nav1_frq: "/instrumentation/nav[0]/frequencies/selected-mhz",
@@ -65,7 +65,7 @@ canvas.NDStyles["Airbus"] = {
 			adf2_frq: "/instrumentation/adf[1]/frequencies/selected-khz",
 			dep_rwy: "/autopilot/route-manager/departure/runway",
 			dest_rwy: "/autopilot/route-manager/destination/runway",
-			wp_count: "/FMGC/flightplan[2]/num",
+			wp_count: "/autopilot/route-manager/route/num",
 			level_off_alt: "/autopilot/route-manager/vnav/level-off-alt",
 			athr: "/it-autoflight/output/athr",
 			app_mode: "/instrumentation/nd/app-mode",
@@ -499,7 +499,7 @@ canvas.NDStyles["Airbus"] = {
 					var lat_ctrl = getprop(me.options.lat_ctrl);
 					var is_managed = (lat_ctrl == me.options.managed_val);
 					var is_active = getprop(me.options.fplan_active);
-					(is_managed and is_active ? [] : [32, 16]);
+					(is_managed and is_active ? [] : [12, 12]);
 				},
 				line_dash_alternate_active: [32,16],
 				line_dash_temporary: [32,16],
@@ -531,6 +531,7 @@ canvas.NDStyles["Airbus"] = {
 					"fplan_active",
 					"lat_ctrl",
 					"ver_ctrl",
+					"spd_ctrl",
 					"current_wp",
 					"wp_count",
 					"dep_rwy",
@@ -565,7 +566,7 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range"],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) and getprop("/instrumentation/nd/symbols/decel/show");
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
@@ -575,11 +576,12 @@ canvas.NDStyles["Airbus"] = {
 				# Overridable options:
 				# decel_node: node containing latitude-deg and longitude-deg used to mark the deceleration point
 				# managed_speed_node: boolean property indicating that the aircraft is flying in managed speed mode
+				decel_node: "/instrumentation/nd/symbols/decel",
 				listen: [
 					"fplan_active",
+					"current_wp",
+					"wp_count",
 					"spd_ctrl",
-					"ver_ctrl",
-					"athr"
 				]
 			},
 			style: {
@@ -693,33 +695,27 @@ canvas.NDStyles["Airbus"] = {
 		},
 		{
 			# TODO: taOnly doesn"t need to use getprop polling in update(), use a listener instead!
-			id: "taOnly", # the SVG ID
-			impl: { # implementation hash
-				init: func(nd, symbol), # for updateCenter stuff, called during initialization in the ctor
-				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2, # the condition
-				is_true:   func(nd) nd.symbols.taOnly.show(),			# if true, run this
-				is_false:  func(nd) nd.symbols.taOnly.hide(),			# if false, run this
-			}, # end of taOnly	behavior/callbacks
-		}, # end of taOnly
+			id: "taOnly",
+			impl: {
+				init: func(nd, symbol),
+				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2, 
+				is_true:   func(nd) nd.symbols.taOnly.show(),
+				is_false:  func(nd) nd.symbols.taOnly.hide(),
+			},
+		},
 		{
 			id: "tas",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) nd.aircraft_source.get_spd() > 100,
+				predicate: func(nd) getprop("/instrumentation/airspeed-indicator/true-speed-kt") >= 60,
 				is_true: func(nd) {
-					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/velocities/TAS") ));
+					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/instrumentation/airspeed-indicator/true-speed-kt")));
 					nd.symbols.tas.show();
 				},
-				is_false: func(nd) nd.symbols.tas.hide(),
-			},
-		},
-		{
-			id: "tasLbl",
-			impl: {
-				init: func(nd,symbol),
-				predicate: func(nd) nd.aircraft_source.get_spd() > 100,
-				is_true: func(nd) nd.symbols.tasLbl.show(),
-				is_false: func(nd) nd.symbols.tasLbl.hide(),
+				is_false: func(nd){
+					nd.symbols.tas.setText("---");
+					nd.symbols.tas.show();
+				},
 			},
 		},
 		{
@@ -760,11 +756,11 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveId",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
-						getprop("/FMGC/flightplan[2]/active") and 
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/id") != nil and 
+						getprop("/autopilot/route-manager/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
-					nd.symbols.wpActiveId.setText(getprop("/FMGC/flightplan[2]/current-leg"));
+					nd.symbols.wpActiveId.setText(getprop("/autopilot/route-manager/wp[0]/id"));
 					nd.symbols.wpActiveId.show();
 				},
 				is_false: func(nd) nd.symbols.wpActiveId.hide(),
@@ -774,16 +770,16 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveCrs",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
-						getprop("/FMGC/flightplan[2]/active") and 
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/id") != nil and 
+						getprop("/autopilot/route-manager/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
 					var deg = nil;
 					if (nd.get_switch("toggle_true_north")) {
-						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course")) or 0;
+						var deg = math.round(getprop("/autopilot/route-manager/wp[0]/true-bearing-deg")) or 0;
 					} else {
-						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course-mag")) or 0;
+						var deg = math.round(getprop("/autopilot/route-manager/wp[0]/bearing-deg")) or 0;
 					}
 					if (deg != nil) {
 						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f", deg) ~ "°");
@@ -799,12 +795,12 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDist",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
-						getprop("/FMGC/flightplan[2]/active") and 
+				predicate: func(nd) (getprop("/autopilot/route-manager/wp[0]/dist") != nil and 
+						getprop("/autopilot/route-manager/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 						and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
-					var dst = getprop("/FMGC/flightplan[2]/current-leg-dist");
+					var dst = getprop("/autopilot/route-manager/wp[0]/dist");
 					nd.symbols.wpActiveDist.setText(sprintf("%3.01f",dst));
 					nd.symbols.wpActiveDist.show();
 				},
@@ -815,11 +811,11 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDistLbl",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+				predicate: func(nd) getprop("/autopilot/route-manager/wp[0]/dist") != nil and getprop("/autopilot/route-manager/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveDistLbl.show();
-					if(getprop("/FMGC/flightplan[2]/current-leg-dist") > 1000)
+					if(getprop("/autopilot/route-manager/wp[0]/dist") > 1000)
 						nd.symbols.wpActiveDistLbl.setText("   NM");
 				},
 				is_false: func(nd) nd.symbols.wpActiveDistLbl.hide(),
@@ -829,7 +825,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "eta",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/autopilot/route-manager/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					var etaSec = getprop("/sim/time/utc/day-seconds")+
@@ -915,12 +911,6 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				common: func(nd) nd.symbols.gs.setText(sprintf("%3.0f",nd.aircraft_source.get_gnd_spd() )),
-				predicate: func(nd) nd.aircraft_source.get_gnd_spd() >= 30,
-				is_true: func(nd) {
-					#nd.symbols.gs.show();
-					nd.symbols.gs.setFontSize(36);
-				},
-				is_false: func(nd) {},#nd.symbols.gs.hide(),
 			},
 		},
 		{
@@ -1226,14 +1216,9 @@ canvas.NDStyles["Airbus"] = {
 			id:"trkline",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd){ 
-					nd.get_switch("toggle_display_mode") == "MAP" and 
-					!nd.get_switch("toggle_centered") and 
-					(
-						getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val or 
-						nd.get_switch("toggle_trk_line")
-					)
-				},
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
+							 !nd.get_switch("toggle_centered") and 
+							 getprop(nd.options.defaults.lat_ctrl) == 0),
 				is_true: func(nd) {
 					nd.symbols.trkline.show();
 				},
@@ -1258,8 +1243,7 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
-							 nd.get_switch("toggle_centered") and 
-							 getprop(nd.options.defaults.lat_ctrl) != nd.options.defaults.managed_val and
+							 nd.get_switch("toggle_centered") and getprop(nd.options.defaults.lat_ctrl) == 0 and
 							 (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
 					nd.symbols.trkline2.show();
@@ -1432,7 +1416,7 @@ canvas.NDStyles["Airbus"] = {
 			id:"windArrow",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (!(nd.in_mode("toggle_display_mode", ["PLAN"]) and (nd.get_switch("toggle_display_type") == "LCD"))),
+				predicate: func(nd) (!(nd.in_mode("toggle_display_mode", ["PLAN"]) and (nd.get_switch("toggle_display_type") == "LCD")) and getprop("environment/wind-speed-kt") >= 2),
 				is_true: func(nd) {
 					nd.symbols.windArrow.show();
 					var windArrowRot = getprop("environment/wind-from-heading-deg");
@@ -1784,7 +1768,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")),
 				is_true: func(nd){
-					var active = getprop("/FMGC/flightplan[2]/active");
+					var active = getprop("/autopilot/route-manager/active");
 					var lat_ctrl = getprop(nd.options.defaults.lat_ctrl);
 					var managed_v = nd.options.defaults.managed_val;
 					var is_managed = (lat_ctrl == managed_v);
@@ -1813,7 +1797,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")),
 				is_true: func(nd){
-					var active = getprop("/FMGC/flightplan[2]/active");
+					var active = getprop("/autopilot/route-manager/active");
 					var lat_ctrl = getprop(nd.options.defaults.lat_ctrl);
 					var managed_v = nd.options.defaults.managed_val;
 					var is_managed = (lat_ctrl == managed_v);
@@ -1842,7 +1826,7 @@ canvas.NDStyles["Airbus"] = {
 			init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and nd.get_switch("toggle_centered")),
 				is_true: func(nd){
-					var active = getprop("/FMGC/flightplan[2]/active");
+					var active = getprop("/autopilot/route-manager/active");
 					var lat_ctrl = getprop(nd.options.defaults.lat_ctrl);
 					var managed_v = nd.options.defaults.managed_val;
 					var is_managed = (lat_ctrl == managed_v);
@@ -1871,7 +1855,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and nd.get_switch("toggle_centered")),
 				is_true: func(nd){
-					var active = getprop("/FMGC/flightplan[2]/active");
+					var active = getprop("/autopilot/route-manager/active");
 					var lat_ctrl = getprop(nd.options.defaults.lat_ctrl);
 					var managed_v = nd.options.defaults.managed_val;
 					var is_managed = (lat_ctrl == managed_v);
@@ -1900,7 +1884,7 @@ canvas.NDStyles["Airbus"] = {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])),
 				is_true: func(nd){
-					var active = getprop("/FMGC/flightplan[2]/active");
+					var active = getprop("/autopilot/route-manager/active");
 					var lat_ctrl = getprop(nd.options.defaults.lat_ctrl);
 					var managed_v = nd.options.defaults.managed_val;
 					var is_managed = (lat_ctrl == managed_v);

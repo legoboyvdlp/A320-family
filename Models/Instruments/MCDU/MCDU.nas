@@ -2634,7 +2634,7 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
-				dms_lat = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+				dms_lat = getprop("/autopilot/route-manager/route/wp[0]/latitude-deg");
 				degrees_lat = int(dms_lat);
 				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
@@ -2644,7 +2644,7 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-long-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-long-minutes");
 				sign = getprop("/FMGC/internal/align-ref-long-sign");
-				dms_long = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+				dms_long = getprop("/autopilot/route-manager/route/wp[0]/longitude-deg");
 				degrees_long = int(dms_long);
 				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
 				sign_long = degrees_long >= 0 ? "E" : "W";
@@ -2652,7 +2652,7 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
 				
 				if (lat_same and long_same) {
-					me["Simple_C1"].setText(getprop("/FMGC/flightplan[2]/wp[0]/id"));
+					me["Simple_C1"].setText(getprop("/autopilot/route-manager/route/wp[0]/id"));
 					me["Simple_C1"].setColor(GREEN);
 				} else {
 					me["Simple_C1"].setText("----");

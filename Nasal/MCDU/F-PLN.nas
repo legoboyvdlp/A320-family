@@ -129,14 +129,16 @@ var fplnItem = {
 		}
 	},
 	getBrg: func() {
-		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - magvar();
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		var courseDistanceFrom = courseAndDistance(wp);
+		me.brg = courseDistanceFrom[0] - magvar();
 		if (me.brg < 0) { me.brg += 360; }
 		if (me.brg > 360) { me.brg -= 360; }
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
 		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
-		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(wp.lat, wp.lon);
+		me.trk = me.wp.leg_bearing - magvar(wp.lat, wp.lon);
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
@@ -199,10 +201,12 @@ var fplnItem = {
 		}
 	},
 	getDist: func() {
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
 		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-			return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
+			var courseDistanceFrom = courseAndDistance(wp);
+			return math.round(courseDistanceFrom[1]);
 		} else {
-			return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+			return math.round(wp.leg_distance);
 		}
 	},
 	getHdg: func() {
@@ -498,6 +502,31 @@ var staticText = {
 	},
 };
 
+var pseudoItem = {
+	new: func(computer, text) {
+		var pI = {parents:[pseudoItem]};
+		pI.computer = computer;
+		pI.text = text;
+		pI.colour = colour;
+		return pI;
+	},
+	updateLeftText: func() {
+		return [me.text, nil, me.colour];
+	},
+	updateCenterText: func() {
+		return ["----", nil, "wht"];
+	},
+	updateRightText: func() {
+		return ["---/------", " --NM    ", "wht"];
+	},
+	pushButtonLeft: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+	pushButtonRight: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+};
+
 var fplnPage = { # this one is only created once, and then updated - remember this
 	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -562,6 +591,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			return "----END OF ALTN F-PLN---";
 		} else if (type == "noAltnFpln") {
 			return "------NO ALTN F-PLN-----";
+		} else if (type == "decel") { 
+			return "(DECEL)";
 		} else if (type == "empty") {
 			return "";
 		}
@@ -573,7 +604,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			colour = "grn";
 		}
-		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+		
+		var startingIndex = fmgc.flightPlanController.currentToWptIndex.getValue() == -1 ? 0 : fmgc.flightPlanController.currentToWptIndex.getValue() - 1;
+		for (var i = startingIndex; i < me.plan.getPlanSize(); i += 1) {
 			if (!fmgc.FMGCInternal.clbReached and i == fmgc.FMGCInternal.tocIndex[me.planIndex]) {
 				append(me.planList, psuedoItem.new("(T/C)", me.planIndex, me.computer, colour));
 			}
@@ -586,6 +619,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));
 			}
 		}
+		
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
 		append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
 		me.basePage();
@@ -764,13 +798,13 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (size(me.outputList) >= index) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
-						if (me.outputList[index - 1].type != "fpln_item") {
+						if (me.outputList[index + 1].wp.wp_name == "(DECEL)" or me.outputList[index + 1].wp.wp_name == "(T/C)" or me.outputList[index + 1].wp.wp_name == "(T/D)") {
 							mcdu_message(me.computer, "NOT ALLOWED");
 							return;
 						}
 					}
-					_index = me.outputList[index - 1].index;
-					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, _index, me.computer);
+
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {

@@ -229,6 +229,7 @@ var initInputA = func(key, i) {
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
 						fmgc.updateArptLatLon();
+						fmgc.updateARPT();
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 					} else {
 						mcdu_message(i, "NOT ALLOWED");

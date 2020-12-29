@@ -55,11 +55,15 @@ var ktsmach = 0;
 var kts_sel = 0;
 var mach_sel = 0;
 var srsSPD = 0;
+var mach_switchover = 0;
+var mng_alt_spd_cmd = 0;
 var decel = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach = 0;
 var altsel = 0;
 var crzFl = 0;
+var xtrkError = 0;
+var courseDistanceDecel = 0;
 var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
@@ -103,6 +107,7 @@ var FMGCinit = func {
 var FMGCInternal = {
 	# phase logic
 	phase: 0,
+	decel: 0,
 	minspeed: 0,
 	maxspeed: 0,
 	takeoffState: 0,
@@ -305,9 +310,15 @@ var updateARPT = func {
 	}
 }
 
+var apt = nil;
+var dms = nil;
+var degrees = nil;
+var minutes = nil;
+var sign = nil;
 var updateArptLatLon = func {
 	#ref lat
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+	apt = airportinfo(FMGCInternal.depApt);
+	dms = apt.lat;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "N" : "S";
@@ -315,7 +326,7 @@ var updateArptLatLon = func {
 	setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
 	setprop("/FMGC/internal/align-ref-lat-sign", sign);
 	#ref long
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+	dms = apt.lon;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "E" : "W";
@@ -437,12 +448,12 @@ var masterFMGC = maketimer(0.2, func {
 	gear0 = pts.Gear.wow[0].getBoolValue();
 	altSel = Input.alt.getValue();
 	
-	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
+	if (FMGCInternal.phase == 1 and (n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0) { # rejected takeoff
 		FMGCInternal.phase = 0;
 		systems.PNEU.pressMode.setValue("GN");
 	}
 	
-	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
+	if (FMGCInternal.phase == 0 and gear0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
 		FMGCInternal.phase = 1;
 		systems.PNEU.pressMode.setValue("TO");
 	}
@@ -458,25 +469,31 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if (FMGCInternal.crzFl >= 200) {
-		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist.getValue() <= 200 or altSel < 20000)) {
 			FMGCInternal.phase = 4;
 			systems.PNEU.pressMode.setValue("DE");
 		}
 	} else {
-		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist.getValue() <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 			FMGCInternal.phase = 4;
 			systems.PNEU.pressMode.setValue("DE");
 		}
 	}
 	
-	if (FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
+	if (flightPlanController.decelPoint != nil) {
+		courseDistanceDecel = courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon);
+		if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseDistanceDecel[1] <= 5 and (math.abs(courseDistanceDecel[0] - pts.Orientation.heading.getValue()) >= 90 and xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) {
+			FMGCInternal.decel = 1;
+		} elsif (FMGCInternal.decel and (FMGCInternal.phase == 4 == 0 or FMGCInternal.phase == 4 == 6)) {
+			FMGCInternal.decel = 0;
+		}
+	} else {
+		FMGCInternal.decel = 0;
+	}	
+	
+	
+	if (FMGCInternal.phase == 4 and FMGCInternal.decel) {
 		FMGCInternal.phase = 5;
-	}
-
-	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
-		setprop("/FMGC/internal/decel", 1);
-	} else if (getprop("/FMGC/internal/decel") == 1 and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
-		setprop("/FMGC/internal/decel", 0);
 	}
 	
 	if ((FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
@@ -838,7 +855,6 @@ var ManagedSPD = maketimer(0.25, func {
 			srsSPD = getprop("/it-autoflight/settings/togaspd");
 			phase = FMGCInternal.phase; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 			flap = pts.Controls.Flight.flapsPos.getValue();
-			decel = getprop("/FMGC/internal/decel");
 			
 			mng_alt_spd = math.round(FMGCNodes.mngSpdAlt.getValue(), 1);
 			mng_alt_mach = math.round(FMGCNodes.mngMachAlt.getValue(), 0.001);
@@ -860,9 +876,9 @@ var ManagedSPD = maketimer(0.25, func {
 				if (FMGCInternal.mngKtsMach) {
 					FMGCInternal.mngKtsMach = 0;
 				}
-				if (FMGCInternal.mngSpdCmd != 250 and !decel) {
+				if (FMGCInternal.mngSpdCmd != 250 and !FMGCInternal.decel) {
 					FMGCInternal.mngSpdCmd = 250;
-				} else if (FMGCInternal.mngSpdCmd != FMGCInternal.minspeed and decel) {
+				} else if (FMGCInternal.mngSpdCmd != FMGCInternal.minspeed and FMGCInternal.decel) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				}
 			} else if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > 10070 and !FMGCInternal.machSwitchover) {
@@ -897,18 +913,18 @@ var ManagedSPD = maketimer(0.25, func {
 				if (FMGCInternal.mngKtsMach) {
 					FMGCInternal.mngKtsMach = 0;
 				}
-				if (FMGCInternal.mngSpdCmd != mng_alt_spd and !decel) {
+				if (FMGCInternal.mngSpdCmd != mng_alt_spd and !FMGCInternal.decel) {
 					FMGCInternal.mngSpdCmd = mng_alt_spd;
-				} else if (FMGCInternal.mngSpdCmd != FMGCInternal.minspeed and decel) {
+				} else if (FMGCInternal.mngSpdCmd != FMGCInternal.minspeed and FMGCInternal.decel) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				}
 			} else if ((FMGCInternal.phase == 4 or FMGCInternal.phase == 5 or FMGCInternal.phase == 6) and altitude <= 10980) {
 				if (FMGCInternal.mngKtsMach) {
 					FMGCInternal.mngKtsMach = 0;
 				}
-				if (FMGCInternal.mngSpdCmd != 250 and !decel) {
+				if (FMGCInternal.mngSpdCmd != 250 and !FMGCInternal.decel) {
 					FMGCInternal.mngSpdCmd = 250;
-				} else if (FMGCInternal.mngSpdCmd != FMGCInternal.minspeed and decel) {
+				} else if (FMGCInternal.mngSpdCmd != FMGCInternal.minspeed and FMGCInternal.decel) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				}
 			}

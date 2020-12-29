@@ -11,24 +11,13 @@ var Controls = {
 };
 
 var FPLN = {
-	active: props.globals.getNode("/FMGC/flightplan[2]/active", 1),
+	active: props.globals.getNode("/autopilot/route-manager/active", 1),
 	activeTemp: 0,
 	currentCourse: 0,
-	currentWp: props.globals.getNode("/FMGC/flightplan[2]/current-wp", 1),
-	currentWpTemp: 0,
-	deltaAngle: 0,
-	deltaAngleRad: 0,
-	distCoeff: 0,
-	maxBank: 0,
-	maxBankLimit: 0,
-	nextCourse: 0,
-	R: 0,
-	radius: 0,
-	turnDist: 0,
-	wp0Dist: props.globals.getNode("/FMGC/flightplan[2]/current-leg-dist", 1),
-	wpFlyFrom: 0,
-	wpFlyTo: 0,
+	currentWP: props.globals.getNode("/autopilot/route-manager/current-wp", 1),
+	currentWPTemp: 0,
 };
+
 
 var Gear = {
 	wow0: props.globals.getNode("/gear/gear[0]/wow", 1),
@@ -359,9 +348,9 @@ var ITAF = {
 		# Preselect Heading
 		if (Output.latTemp != 0 and Output.latTemp != 9) { # Modes that always show HDG
 			if (Custom.hdgTime.getValue() + 45 >= Misc.elapsedSec.getValue()) {
-				setprop("it-autoflight/custom/show-hdg", 1);
+				setprop("/it-autoflight/custom/show-hdg", 1);
 			} else {
-				setprop("it-autoflight/custom/show-hdg", 0);
+				setprop("/it-autoflight/custom/show-hdg", 0);
 			}
 		}
 		
@@ -375,7 +364,7 @@ var ITAF = {
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
-		FPLN.currentWpTemp = FPLN.currentWp.getValue();
+		FPLN.currentWPTemp = FPLN.currentWP.getValue();
 		
 		# Bank Limit
 		if (Velocities.trueAirspeedKtTemp >= 420) {
@@ -392,55 +381,6 @@ var ITAF = {
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
 			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getBoolValue()) {
 				me.setLatMode(3);
-			}
-		}
-		
-		# Waypoint Advance Logic
-		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
-			if ((FPLN.currentWpTemp + 1) < flightPlanController.num[2].getValue()) {
-				Velocities.groundspeedMps = Velocities.groundspeedKt.getValue() * 0.5144444444444;
-				FPLN.wpFlyFrom = FPLN.currentWpTemp;
-				if (FPLN.wpFlyFrom < 0) {
-					FPLN.wpFlyFrom = 0;
-				}
-				FPLN.currentCourse = fmgc.wpCourse[2][FPLN.wpFlyFrom].getValue();
-				# if (fmgc.wpID[2][FPLN.wpFlyTo].getValue() == "(T/C)") {
-# 					FPLN.wpFlyTo = FPLN.currentWpTemp + 2;
-# 				} else {
-# 					FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
-# 				}
-				FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
-				FPLN.nextCourse = fmgc.wpCourse[2][FPLN.wpFlyTo].getValue();
-				FPLN.maxBankLimit = Internal.bankLimit.getValue();
-
-				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
-				FPLN.maxBank = FPLN.deltaAngle * 1.5;
-				if (FPLN.maxBank > FPLN.maxBankLimit) {
-					FPLN.maxBank = FPLN.maxBankLimit;
-				}
-				FPLN.radius = (Velocities.groundspeedMps * Velocities.groundspeedMps) / (9.81 * math.tan(FPLN.maxBank / 57.2957795131));
-				FPLN.deltaAngleRad = (180 - FPLN.deltaAngle) / 114.5915590262;
-				FPLN.R = FPLN.radius / math.sin(FPLN.deltaAngleRad);
-				FPLN.distCoeff = FPLN.deltaAngle * -0.011111 + 2;
-				if (FPLN.distCoeff < 1) {
-					FPLN.distCoeff = 1;
-				}
-				FPLN.turnDist = math.cos(FPLN.deltaAngleRad) * FPLN.R * FPLN.distCoeff / 1852;
-				if (Gear.wow0.getBoolValue() and FPLN.turnDist < 1) {
-					FPLN.turnDist = 1;
-				}
-				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
-				
-				# Advance logic done by flightplan controller
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue()) {
-					flightPlanController.autoSequencing();
-				}
-				
-				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
-				#	flightPlanController.autoSequencing();
-				#} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
-				#	flightPlanController.autoSequencing();
-				#}
 			}
 		}
 	},

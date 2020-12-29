@@ -763,7 +763,7 @@ var canvas_PFD_base = {
 		
 		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
-		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
+		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist.getValue() >= 250) {
 			me["FMA_dh_box"].hide();
 			me["FMA_dh"].hide();
 			me["FMA_dhn"].hide();
@@ -1339,7 +1339,7 @@ var canvas_PFD_1 = {
 			tgt_kts = at_input_spd_kts.getValue();
 			
 			if (managed_spd.getValue() == 1) {
-				if (getprop("/FMGC/internal/decel") == 1) {
+				if (fmgc.FMGCInternal.decel) {
 					if (fmgc.FMGCInternal.vappSpeedSet) {
 						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
@@ -2115,7 +2115,7 @@ var canvas_PFD_2 = {
 			tgt_kts = at_input_spd_kts.getValue();
 				
 			if (managed_spd.getValue() == 1) {
-				if (getprop("/FMGC/internal/decel") == 1) {
+				if (fmgc.FMGCInternal.decel) {
 					if (fmgc.FMGCInternal.vappSpeedSet) {
 						vapp = fmgc.FMGCInternal.vapp_appr;
 					} else {
