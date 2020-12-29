@@ -436,7 +436,7 @@ var psuedoItem = {
 		if (me.name == "(T/C)") {
 			return math.round(fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist - _distance);
 		} else if (me.name == "(T/D)") {
-			return math.round(fmgc.flightPlanController.arrivalDist - fmgc.FMGCInternal.desDist - _distance);
+			return math.round(fmgc.flightPlanController.arrivalDist.getValue() - fmgc.FMGCInternal.desDist - _distance);
 		} else {
 			return 0;
 		}
@@ -709,10 +709,10 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				} else {
 					me.C6 = [sprintf("%04d   ", _time), "TIME   ", "wht", "wht", small];
 				}
-				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ sprintf("    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
+				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist.getValue())) ~ sprintf("    %2.1f", fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel), "DIST   EFOB", "wht", "wht"];
 			} else {
 				me.C6 = ["----   ", "TIME   ", "wht", "wht", small];
-				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "   --.-", "DIST   EFOB", "wht", "wht"];
+				me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist.getValue())) ~ "   --.-", "DIST   EFOB", "wht", "wht"];
 			}
 		} else {
 			me.L6 = ["----", " DEST", "wht"];
