@@ -78,7 +78,11 @@ var WPTModel = {
 
 		m.id = wp.id;
 		m.name = wp.wp_name;
-		m.alt = wp.alt_cstr;
+		if (wp.alt_cstr_type != "computed"){
+			m.alt = wp.alt_cstr;
+		} else {
+			m.alt = 0;
+		}
 		m.spd = wp.speed_cstr;
 		m.type = wp.wp_type;
 
