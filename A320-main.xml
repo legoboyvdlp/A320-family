@@ -4753,6 +4753,10 @@
 		<autopush_route>
 			<file>Aircraft/A320-family/Nasal/Autopush/route.nas</file>
 		</autopush_route>
+		<!-- cpdlc library by henning -->
+		<cpdlc>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/cpdlc-library.nas</file>
+		</cpdlc>
 		<!-- Panels -->
 		<rmp>
 			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>

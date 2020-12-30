@@ -2,10 +2,13 @@
 # Jonathan Redpath
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
+var A320CPDLCMessageHandler = cpdlc.CPDLCMessageHandler.new();
+
 var CPDLCmessage = {
-	new: func(text) {
+	new: func(text,responses) {
 		var cpdlcMessage = {parents: [CPDLCmessage] };
 		cpdlcMessage.text = text;
+		cpdlcMessage.responses = responses;
 		cpdlcMessage._receivedTime = left(getprop("/sim/time/gmt-string"), 5);
 		cpdlcMessage.receivedTime = split(":", cpdlcMessage._receivedTime)[0] ~ "." ~ split(":", cpdlcMessage._receivedTime)[1] ~ "Z";
 		return cpdlcMessage;
@@ -26,27 +29,32 @@ var CPDLCnewMsgFlag = props.globals.getNode("/network/cpdlc/rx/new-message");
 var CPDLCnewMsgAlert = props.globals.initNode("/network/cpdlc/new-message-ringtone", 0, "BOOL");
 var CPDLCnewMsgLight = props.globals.initNode("/network/cpdlc/new-message-light", 0, "BOOL");
 
+var ATCMSGRingCancel = 0;
+var ATCMsgFlashCancel = 0;
+
 setlistener("/network/cpdlc/rx/new-message", func() {
 	if (CPDLCnewMsgFlag.getBoolValue()) {
 		fgcommand("cpdlc-next-message");
 		# add to DCDU message buffer to display
-		var message = CPDLCmessage.new(getprop("/network/cpdlc/rx/message"));
+		var message = CPDLCmessage.new(A320CPDLCMessageHandler.getMessage(),A320CPDLCMessageHandler.getReplyOptions());
 		DCDUBuffer.insertMessage(message);
 		if (!canvas_dcdu.DCDU.showingMessage) {
 			canvas_dcdu.DCDU.showNextMessage();
 		}
 		
-		ATCMSGRingCancel = 0;
+		ATCMSGRingCancel = 1;
 		var messageType = 0; # urgent or normal
 		ATCMSGRing(messageType);
-		ATCMsgFlashCancel = 0;
+		ATCMSGRingCancel = 0;
+		ATCMsgFlashCancel = 1;
 		ATCMSGFlash();
+		ATCMsgFlashCancel = 0;
+		
 		# ATC MSG pushbutton: flashes, ringtone after 15 secs, therafter every 15 secs
 		# add DCDU prompts (wilco, etc) associated to message --> so the CPDLC message object must store the correct response for the actual message
 	}
 }, 0, 1);
 
-var ATCMSGRingCancel = 0;
 var ATCMSGRing = func(messageType) {
 	settimer(func() {
 		if (!ATCMSGRingCancel) {
@@ -59,7 +67,6 @@ var ATCMSGRing = func(messageType) {
 	}, (messageType == 0 ? 15 : 5));
 };
 
-var ATCMsgFlashCancel = 0;
 var ATCMSGFlash = func() {
 	CPDLCnewMsgLight.setBoolValue(!CPDLCnewMsgLight.getBoolValue());
 	settimer(func() {

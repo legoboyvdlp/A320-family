@@ -113,7 +113,8 @@ var canvas_DCDU = {
 		return m;
 	},
 	getKeys: func() {
-		return ["ActiveATC","MessageTimeStamp","ADSConnection","RecallMode","LinkLost","Recall","Close"];
+		return ["Line1","Line2","Line3","Line4","MessageTimeStamp","ADSConnection","RecallMode","LinkLost","Recall","Close","STBY","WILCO",
+		"UNABLE","OTHER"];
 	},
 	cache: {
 		adsCount: 0,
@@ -139,13 +140,45 @@ var canvas_DCDU = {
 			me["ADSConnection"].hide();
 		}
 	},
+	replyOpts: 0,
 	showNextMessage: func() {
 		me.showingMessage = 1;
 		me.currentMessage = atsu.DCDUBuffer.popMessage();
 		me["MessageTimeStamp"].show();
 		me["MessageTimeStamp"].setText(me.currentMessage.receivedTime ~ " FROM " ~ CPDLCauthority.getValue() ~ " CTL");
-		me["ActiveATC"].hide();
-		me["Close"].show();
+		if (size(me.currentMessage.text) > 28) {
+			var tempStore = left(me.currentMessage.text,28);
+			me["Line1"].setText(tempStore);
+			me["Line1"].show();
+			me["Line2"].show();
+		} else {
+			me["Line1"].setText(me.currentMessage.text);
+			me["Line1"].show();
+			me["Line2"].hide();
+			me["Line3"].hide();
+			me["Line4"].hide();
+		}
+		
+		me.replyOpts = std.Vector.new(me.currentMessage.responses);
+		if (me.replyOpts.contains("w")) {
+			me["WILCO"].show();
+			me["Close"].hide();
+		} else {
+			me["WILCO"].hide();
+			me["Close"].show();
+		}
+		
+		if (me.replyOpts.contains("s")) {
+			me["STBY"].show();
+		} else {
+			me["STBY"].hide();
+		}
+		
+		if (me.replyOpts.contains("u")) {
+			me["UNABLE"].show();
+		} else {
+			me["UNABLE"].hide();
+		}
 	},
 	clearMessage: func() {
 		if (me.showingMessage) {
@@ -158,10 +191,15 @@ var canvas_DCDU = {
 	},
 	updateActiveATC: func() {
 		if (CPDLCstatusNode.getValue() == 2) {
-			me["ActiveATC"].setText("ACTIVE ATC : " ~ CPDLCauthority.getValue() ~ " CTL");
-			me["ActiveATC"].show();
+			me["Line1"].setText("ACTIVE ATC : " ~ CPDLCauthority.getValue() ~ " CTL");
+			me["Line2"].hide();
+			me["Line3"].hide();
+			me["Line4"].hide();
 		} else {
-			me["ActiveATC"].hide();
+			me["Line1"].hide();
+			me["Line2"].hide();
+			me["Line3"].hide();
+			me["Line4"].hide();
 		}
 	},
 	btnL1: func() {
