@@ -244,47 +244,47 @@ var updateFuel = func {
 		}
 		
 		# calculate TOC locations
-		if (!fmgc.FMGCInternal.clbReached) {
-			fmgc.FMGCInternal.tocPoint = fmgc.flightPlanController.flightplans[2].pathGeod(0, fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist);
-			
-			# determine indecies
-			for (var i = 0; i <= 2; i += 1) {
-				if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
-					continue;			
-				}
-				var toc_distance = 0;
-				for (var wpt = 1; wpt <= fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
-					toc_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
-					if (toc_distance > fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist) {
-						fmgc.FMGCInternal.tocIndex[i] = wpt;
-						break;
-					}
-				}
-			}
-			#print("TOC: ", fmgc.FMGCInternal.tocIndex[0], fmgc.FMGCInternal.tocIndex[1], fmgc.FMGCInternal.tocIndex[2]);
-		}
-		
-		# calculate TOD locations
-		if (!fmgc.FMGCInternal.desReached) {
-			fmgc.FMGCInternal.todPoint = fmgc.flightPlanController.flightplans[2].pathGeod(fmgc.flightPlanController.arrivalIndex[2], -fmgc.FMGCInternal.desDist);
-			
-			# determine indecies
-			for (var i = 0; i <= 2; i += 1) {
-				if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
-					continue;			
-				}
-				var tod_distance = 0;
-				for (var wpt = fmgc.flightPlanController.arrivalIndex[i]; wpt >= 1; wpt -= 1) {
-					tod_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
-					if (tod_distance > fmgc.FMGCInternal.desDist) {
-						fmgc.FMGCInternal.todIndex[i] = wpt;
-						break;
-					}
-					# check for tod before toc
-				}
-			}
-			#print("TOD: ", fmgc.FMGCInternal.tocIndex[0], fmgc.FMGCInternal.tocIndex[1], fmgc.FMGCInternal.tocIndex[2]);
-		}
+		# if (!fmgc.FMGCInternal.clbReached) {
+# 			fmgc.FMGCInternal.tocPoint = fmgc.flightPlanController.flightplans[2].pathGeod(0, fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist);
+# 			
+# 			# determine indecies
+# 			for (var i = 0; i <= 2; i += 1) {
+# 				if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
+# 					continue;			
+# 				}
+# 				var toc_distance = 0;
+# 				for (var wpt = 1; wpt <= fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
+# 					toc_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+# 					if (toc_distance > fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist) {
+# 						fmgc.FMGCInternal.tocIndex[i] = wpt;
+# 						break;
+# 					}
+# 				}
+# 			}
+# 			#print("TOC: ", fmgc.FMGCInternal.tocIndex[0], fmgc.FMGCInternal.tocIndex[1], fmgc.FMGCInternal.tocIndex[2]);
+# 		}
+# 		
+# 		# calculate TOD locations
+# 		if (!fmgc.FMGCInternal.desReached) {
+# 			fmgc.FMGCInternal.todPoint = fmgc.flightPlanController.flightplans[2].pathGeod(fmgc.flightPlanController.arrivalIndex[2], -fmgc.FMGCInternal.desDist);
+# 			
+# 			# determine indecies
+# 			for (var i = 0; i <= 2; i += 1) {
+# 				if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
+# 					continue;			
+# 				}
+# 				var tod_distance = 0;
+# 				for (var wpt = fmgc.flightPlanController.arrivalIndex[i]; wpt >= 1; wpt -= 1) {
+# 					tod_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+# 					if (tod_distance > fmgc.FMGCInternal.desDist) {
+# 						fmgc.FMGCInternal.todIndex[i] = wpt;
+# 						break;
+# 					}
+# 					# check for tod before toc
+# 				}
+# 			}
+# 			#print("TOD: ", fmgc.FMGCInternal.tocIndex[0], fmgc.FMGCInternal.tocIndex[1], fmgc.FMGCInternal.tocIndex[2]);
+# 		}
 	}
 	
 	# calculate efob values
@@ -375,19 +375,19 @@ var updateFuel = func {
 	}
 	
 	# Push changes to ND
-	if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached) {
-		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", fmgc.FMGCInternal.tocPoint.lat);
-		setprop("/autopilot/route-manager/vnav/tc/longitude-deg", fmgc.FMGCInternal.tocPoint.lon);
-	} else {
-		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", 0.0);
-		setprop("/autopilot/route-manager/vnav/tc/longitude-deg", 0.0);
-	}
-	
-	if (fmgc.FMGCInternal.desSet and !fmgc.FMGCInternal.desReached) {
-		setprop("/autopilot/route-manager/vnav/td/latitude-deg", fmgc.FMGCInternal.todPoint.lat);
-		setprop("/autopilot/route-manager/vnav/td/longitude-deg", fmgc.FMGCInternal.todPoint.lon);
-	} else {
-		setprop("/autopilot/route-manager/vnav/td/latitude-deg", 0.0);
-		setprop("/autopilot/route-manager/vnav/td/longitude-deg", 0.0);
-	}
+	# if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached) {
+# 		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", fmgc.FMGCInternal.tocPoint.lat);
+# 		setprop("/autopilot/route-manager/vnav/tc/longitude-deg", fmgc.FMGCInternal.tocPoint.lon);
+# 	} else {
+# 		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", 0.0);
+# 		setprop("/autopilot/route-manager/vnav/tc/longitude-deg", 0.0);
+# 	}
+# 	
+# 	if (fmgc.FMGCInternal.desSet and !fmgc.FMGCInternal.desReached) {
+# 		setprop("/autopilot/route-manager/vnav/td/latitude-deg", fmgc.FMGCInternal.todPoint.lat);
+# 		setprop("/autopilot/route-manager/vnav/td/longitude-deg", fmgc.FMGCInternal.todPoint.lon);
+# 	} else {
+# 		setprop("/autopilot/route-manager/vnav/td/latitude-deg", 0.0);
+# 		setprop("/autopilot/route-manager/vnav/td/longitude-deg", 0.0);
+# 	}
 }
