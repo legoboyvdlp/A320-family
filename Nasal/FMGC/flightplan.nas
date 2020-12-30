@@ -18,7 +18,7 @@ var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
 var trueHDG = props.globals.getNode("/orientation/heading-deg", 1);
 
 var flightPlanController = {
-	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil],
+	flightplans: [createFlightplan(), createFlightplan(), createFlightplan(), nil, nil],
 	temporaryFlag: [0, 0],
 	
 	# These flags are only for the main flgiht-plan
