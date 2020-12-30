@@ -736,6 +736,24 @@ var flightPlanController = {
 		return -99;
 	},
 	
+	getIndexOfTOC: func(plan) {
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			if (me.flightplans[plan].getWP(wpt).wp_name == "(T/C)") {
+				return wpt;
+			}
+		}
+		return -99;
+	},
+	
+	getIndexOfTOD: func(plan) {
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			if (me.flightplans[plan].getWP(wpt).wp_name == "(T/D)") {
+				return wpt;
+			}
+		}
+		return 99;
+	},
+	
 	calculateDecelPoint: func(n) {
 		if (me.getPlanSizeNoDiscont(n) <= 1 or fmgc.FMGCInternal.decel) { 
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
@@ -828,11 +846,11 @@ var flightPlanController = {
 		
 		if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached) {
 			if (explicit) {
-				me.deleteVerticalWaypoint(n, me.tocIndex[n], "tc");
+				me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
 				me.insertTOC(n);
 			} else {
 				if (me.tocIndex[n] != -99) {
-					var indexTOC_old = me.tocIndex[n];
+					var indexTOC_old = me.getIndexOfTOC(n);
 					var tocPoint_old = me.flightplans[n].getWP(indexTOC_old);
 				
 					me.flightplans[4] = me.flightplans[n].clone();
@@ -849,16 +867,16 @@ var flightPlanController = {
 				}
 			}
 		} else {
-			me.deleteVerticalWaypoint(n, me.tocIndex[n], "tc");
+			me.deleteVerticalWaypoint(n, me.getIndexOfTOC(n), "tc");
 		}
 		
 		if (fmgc.FMGCInternal.desSet and !fmgc.FMGCInternal.desReached) {
 			if (explicit) {
-				me.deleteVerticalWaypoint(n, me.todIndex[n], "td");
+				me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
 				me.insertTOD(n);
 			} else {
 				if (me.todIndex[n] != 99) {
-					var indexTOD_old = me.todIndex[n];
+					var indexTOD_old = me.getIndexOfTOD(n);
 					var todPoint_old = me.flightplans[n].getWP(indexTOD_old);
 					
 					me.flightplans[4] = me.flightplans[n].clone();
@@ -875,7 +893,7 @@ var flightPlanController = {
 				}
 			}
 		} else {
-			me.deleteVerticalWaypoint(n, me.todIndex[n], "td");
+			me.deleteVerticalWaypoint(n, me.getIndexOfTOD(n), "td");
 		}
 	},
 	
