@@ -233,58 +233,15 @@ var updateFuel = func {
 		fmgc.FMGCInternal.desSet = 1;
 		
 		# update reached states
-		if (fmgc.FMGCInternal.tocPoint != nil and !fmgc.FMGCInternal.clbReached) {
-			fmgc.FMGCInternal.clbReached = courseAndDistance(geo.aircraft_position(), fmgc.FMGCInternal.tocPoint)[1] < 0.1;
+		if (fmgc.flightPlanController.tocPoint != nil and !fmgc.FMGCInternal.clbReached) {
+			fmgc.FMGCInternal.clbReached = courseAndDistance(geo.aircraft_position(), fmgc.flightPlanController.tocPoint)[1] < 0.1;
 			# todo: check altitude/distance as well
 		}
 		
-		if (fmgc.FMGCInternal.todPoint != nil and !fmgc.FMGCInternal.desReached) {
-			fmgc.FMGCInternal.desReached = courseAndDistance(geo.aircraft_position(), fmgc.FMGCInternal.todPoint)[1] < 0.1;
+		if (fmgc.flightPlanController.todPoint != nil and !fmgc.FMGCInternal.desReached) {
+			fmgc.FMGCInternal.desReached = courseAndDistance(geo.aircraft_position(), fmgc.flightPlanController.todPoint)[1] < 0.1;
 			# todo: check altitude/distance as well
 		}
-		
-		# calculate TOC locations
-		# if (!fmgc.FMGCInternal.clbReached) {
-# 			fmgc.FMGCInternal.tocPoint = fmgc.flightPlanController.flightplans[2].pathGeod(0, fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist);
-# 			
-# 			# determine indecies
-# 			for (var i = 0; i <= 2; i += 1) {
-# 				if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
-# 					continue;			
-# 				}
-# 				var toc_distance = 0;
-# 				for (var wpt = 1; wpt <= fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
-# 					toc_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
-# 					if (toc_distance > fmgc.FMGCInternal.clbDist - fmgc.flightPlanController.traversedDist) {
-# 						fmgc.FMGCInternal.tocIndex[i] = wpt;
-# 						break;
-# 					}
-# 				}
-# 			}
-# 			#print("TOC: ", fmgc.FMGCInternal.tocIndex[0], fmgc.FMGCInternal.tocIndex[1], fmgc.FMGCInternal.tocIndex[2]);
-# 		}
-# 		
-# 		# calculate TOD locations
-# 		if (!fmgc.FMGCInternal.desReached) {
-# 			fmgc.FMGCInternal.todPoint = fmgc.flightPlanController.flightplans[2].pathGeod(fmgc.flightPlanController.arrivalIndex[2], -fmgc.FMGCInternal.desDist);
-# 			
-# 			# determine indecies
-# 			for (var i = 0; i <= 2; i += 1) {
-# 				if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
-# 					continue;			
-# 				}
-# 				var tod_distance = 0;
-# 				for (var wpt = fmgc.flightPlanController.arrivalIndex[i]; wpt >= 1; wpt -= 1) {
-# 					tod_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
-# 					if (tod_distance > fmgc.FMGCInternal.desDist) {
-# 						fmgc.FMGCInternal.todIndex[i] = wpt;
-# 						break;
-# 					}
-# 					# check for tod before toc
-# 				}
-# 			}
-# 			#print("TOD: ", fmgc.FMGCInternal.tocIndex[0], fmgc.FMGCInternal.tocIndex[1], fmgc.FMGCInternal.tocIndex[2]);
-# 		}
 	}
 	
 	# calculate efob values
@@ -301,7 +258,7 @@ var updateFuel = func {
 		for (var wpt = 0; wpt < fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
 			_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 			var _wp = fmgc.flightPlanController.flightplans[i].getWP(wpt);
-			if (wpt < fmgc.FMGCInternal.tocIndex[i]) {
+			if (wpt < fmgc.flightPlanController.tocIndex[i]) {
 				_clb_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 				var _multiplier = _clb_distance / fmgc.FMGCInternal.clbDist;
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - _multiplier * fmgc.FMGCInternal.clbFuel / 1000);
@@ -322,7 +279,7 @@ var updateFuel = func {
 					}
 					# to-do: add other conditions
 				}
-			} else if (wpt >= fmgc.FMGCInternal.tocIndex[i] and wpt < fmgc.FMGCInternal.todIndex[i]) {
+			} else if (wpt > fmgc.flightPlanController.tocIndex[i] and wpt < fmgc.flightPlanController.todIndex[i]) {
 				_crz_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 				var _multiplier = _crz_distance / (fmgc.flightPlanController.arrivalDist.getValue() - fmgc.FMGCInternal.clbDist - fmgc.FMGCInternal.desDist);
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000 - _multiplier * (fmgc.FMGCInternal.tripFuel - fmgc.FMGCInternal.clbFuel / 1000 - fmgc.FMGCInternal.desFuel / 1000));
@@ -340,7 +297,7 @@ var updateFuel = func {
 				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
 					
 				}
-			} else if (wpt >= fmgc.FMGCInternal.todIndex[i] and wpt < fmgc.flightPlanController.arrivalIndex[i]) {
+			} else if (wpt > fmgc.flightPlanController.todIndex[i] and wpt < fmgc.flightPlanController.arrivalIndex[i]) {
 				_des_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 				var _multiplier = _des_distance / fmgc.FMGCInternal.desDist;
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.tripFuel + fmgc.FMGCInternal.desFuel / 1000 - _multiplier * fmgc.FMGCInternal.desFuel / 1000);
@@ -362,6 +319,7 @@ var updateFuel = func {
 					}
 					# to-do: add other conditions
 				}
+			# to do: equal to toc and tod
 			} else if (wpt == fmgc.flightPlanController.arrivalIndex[i]) {
 				#_wp.setAltitude(nil, "computed");
 				if (FMGCInternal.vapp_appr > 0) {
@@ -373,21 +331,4 @@ var updateFuel = func {
 			}
 		}
 	}
-	
-	# Push changes to ND
-	# if (fmgc.FMGCInternal.clbSet and !fmgc.FMGCInternal.clbReached) {
-# 		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", fmgc.FMGCInternal.tocPoint.lat);
-# 		setprop("/autopilot/route-manager/vnav/tc/longitude-deg", fmgc.FMGCInternal.tocPoint.lon);
-# 	} else {
-# 		setprop("/autopilot/route-manager/vnav/tc/latitude-deg", 0.0);
-# 		setprop("/autopilot/route-manager/vnav/tc/longitude-deg", 0.0);
-# 	}
-# 	
-# 	if (fmgc.FMGCInternal.desSet and !fmgc.FMGCInternal.desReached) {
-# 		setprop("/autopilot/route-manager/vnav/td/latitude-deg", fmgc.FMGCInternal.todPoint.lat);
-# 		setprop("/autopilot/route-manager/vnav/td/longitude-deg", fmgc.FMGCInternal.todPoint.lon);
-# 	} else {
-# 		setprop("/autopilot/route-manager/vnav/td/latitude-deg", 0.0);
-# 		setprop("/autopilot/route-manager/vnav/td/longitude-deg", 0.0);
-# 	}
 }

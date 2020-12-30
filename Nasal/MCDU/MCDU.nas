@@ -207,11 +207,6 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.desDist = 0;
 	fmgc.FMGCInternal.desSet = 0;
 	fmgc.FMGCInternal.desReached = 0;
-	
-	fmgc.FMGCInternal.tocPoint = nil;
-	fmgc.FMGCInternal.tocIndex[i] = -99;
-	fmgc.FMGCInternal.todPoint = nil;
-	fmgc.FMGCInternal.todIndex[i] = 99;
 }
 
 var setMode = func(will) {

@@ -256,11 +256,6 @@ var FMGCInternal = {
 	desDist: 0,
 	desSet: 0,
 	desReached: 0,
-	
-	tocPoint: nil,
-	tocIndex: [-99, -99, -99],
-	todPoint: nil,
-	todIndex: [99, 99, 99],
 };
 
 var postInit = func() {
