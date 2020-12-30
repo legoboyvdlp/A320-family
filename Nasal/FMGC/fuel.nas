@@ -314,8 +314,14 @@ var updateFuel = func {
 					_wp.setAltitude(_altitude, "computed");
 				}
 				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
-					if (_altitude >= getprop("/systems/thrust/clbreduc-ft") and _altitude < 10000) { # to-do: check decel
-						_wp.setSpeed(250, "computed");
+					if (_altitude >= getprop("/systems/thrust/clbreduc-ft") and _altitude < 10000) {
+						if (wpt == fmgc.flightPlanController.getIndexOfFirstDecel(i)) {
+							if (fmgc.FMGCInternal.clean > 0) {
+								_wp.setSpeed(fmgc.FMGCInternal.clean, "computed");
+							}
+						} else if (wpt < fmgc.flightPlanController.getIndexOfFirstDecel(i)) {
+							_wp.setSpeed(250, "computed");
+						}
 					}
 					# to-do: add other conditions
 				}
