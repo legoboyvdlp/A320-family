@@ -169,6 +169,8 @@ var FMGCInternal = {
 	altAirportSet: 0,
 	altSelected: 0,
 	arrApt: "",
+	coRoute: "",
+	coRouteSet: 0,
 	costIndex: 0,
 	costIndexSet: 0,
 	crzFt: 10000,
@@ -309,6 +311,7 @@ var updateArptLatLon = func {
 
 updateRouteManagerAlt = func() {
 	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	# TODO - update FMGCInternal.phase when DES to re-enter in CLIMB/CRUIZE
 };
 
 ########
@@ -625,7 +628,7 @@ var masterFMGC = maketimer(0.2, func {
 	
 	if (FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
 		FMGCInternal.phase = 2;
-		systems.PNEU.pressMode.setValue("TO");
+		systems.PNEU.pressMode.setValue("TO"); # TODO - why not set to CL (climb) ??
 	}
 	
 	if (FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {

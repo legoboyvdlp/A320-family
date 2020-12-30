@@ -288,6 +288,7 @@ var ITAF = {
 			if (Gear.wow1Temp and Gear.wow2Temp) {
 				Text.lat.setValue("RLOU");
 				Text.vert.setValue("ROLLOUT");
+				fcu.apOff("soft", 0); # soft disangage AP if plane touch the ground (eg. on ILS autoland)
 			}
 		}
 		

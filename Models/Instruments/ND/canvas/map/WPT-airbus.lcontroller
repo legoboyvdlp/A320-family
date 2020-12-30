@@ -75,17 +75,26 @@ var WPTModel = {
 	new: func(fp, idx) {
 		var m = { parents:[WPTModel] };
 		var wp = fp.getWP(idx);
+		var wpprev = (idx>0) ? fp.getWP(idx-1) : nil;
 
 		m.id = wp.id;
 		m.name = wp.wp_name;
-		m.alt = wp.alt_cstr;
-		m.spd = wp.speed_cstr;
+		if (wpprev != nil) {
+			m.alt = (wp.alt_cstr > 0 and wpprev.alt_cstr != wp.alt_cstr) ? wp.alt_cstr : 0 ; # display on change
+			m.spd = (wp.speed_cstr > 0 and wpprev.speed_cstr != wp.speed_cstr) ? wp.speed_cstr : 0; # display on change
+		} else {
+			m.alt = (wp.alt_cstr > 0) ? wp.alt_cstr : 0 ; # display if valid
+			m.spd = (wp.speed_cstr > 0) ? wp.speed_cstr : 0; # display if valid
+		}
+
 		m.type = wp.wp_type;
 
 		(m.lat,m.lon) = (wp.wp_lat,wp.wp_lon);
 		var is_rwy = (m.type == 'runway');
 		var id_len = size(m.id);
-		if(!is_rwy and id_len < 5){
+		if (left(m.name,1) == "(") {  # check for pseudo waypoints (T/D) (T/C) (DECEL) (LIM) ...
+			m.navtype = 'vnav';
+		} else if(!is_rwy and id_len < 5){
 			if(id_len == 4 and airportinfo(m.id) != nil)
 				m.navtype = 'airport';
 			else {

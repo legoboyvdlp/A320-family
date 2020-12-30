@@ -389,11 +389,22 @@ var flightPlanController = {
 	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
 		var wp = wpID[n][index].getValue();
 		if (((s == 0 and left(wp, 4) != FMGCInternal.depApt and left(wp, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
-			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
+			var _wpid = me.flightplans[n].getWP(index).id;
+			if (left(_wpid,1)=="(") { # pseudo waypoint
+			    var _vnav = "";
+				if (_wpid == "(T/C)") _vnav = "tc";
+				else if (_wpid == "(T/D)") _vnav = "td";
+				if (_vnav) {
+					setprop("/autopilot/route-manager/vnav/" ~ _vnav ~ "/latitude-deg",0);  # hide pseudo wp symbol on ND
+					setprop("/autopilot/route-manager/vnav/" ~ _vnav ~ "/longitude-deg",0);						
+				}
+				me.flightplans[n].deleteWP(index);
+				fmgc.windController.deleteWind(n, index);
+			} else if (_wpid != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
 				if (me.flightplans[n].getWP(index) != nil and s == 0) {
-					if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
+					if (_wpid != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 						me.addDiscontinuity(index, n);
 					}
 				}
