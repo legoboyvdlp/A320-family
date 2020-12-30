@@ -944,7 +944,7 @@ var flightPlanController = {
 		fmgc.windController.updatePlans();
 		
 		# push update to fuel
-		if (fmgc.FMGCInternal.blockConfirmed) {
+		if (fmgc.FMGCInternal.blockConfirmed and callCalculate) {
 			fmgc.FMGCInternal.fuelCalculating = 0;
 			fmgc.fuelCalculating.setValue(0);
 			fmgc.FMGCInternal.fuelCalculating = 1;
