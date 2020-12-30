@@ -1094,6 +1094,9 @@ var timer3blockFuel = maketimer(1, func() {
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
 		#updateFuel();
+		flightPlanController.calculateVerticalPoints(0);
+		flightPlanController.calculateVerticalPoints(1);
+		flightPlanController.calculateVerticalPoints(2);
 		fmgc.FMGCInternal.fuelCalculating = 0;
 		fmgc.fuelCalculating.setValue(0);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
