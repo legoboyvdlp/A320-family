@@ -232,8 +232,8 @@ var SimbriefParser = {
 		if (me.buildFlightplan() == nil) {
 			return nil;
 		}
-		fmgc.FMGCInternal.coRoute = "SB" ~ me.OFP.getNode("origin/iata_code").getValue() ~ me.OFP.getNode("destination/iata_code").getValue() ~ "00";
-		fmgc.FMGCInternal.coRouteSet = 1;
+		#fmgc.FMGCInternal.coRoute = "SB" ~ me.OFP.getNode("origin/iata_code").getValue() ~ me.OFP.getNode("destination/iata_code").getValue() ~ "00";
+		#fmgc.FMGCInternal.coRouteSet = 1;
 		fmgc.FMGCInternal.flightNum = (me.OFP.getNode("general/icao_airline").getValue() or "") ~ (me.OFP.getNode("general/flight_number").getValue() or "");
 		fmgc.FMGCInternal.flightNumSet = 1;
 		fmgc.FMGCInternal.costIndex = me.OFP.getNode("general/costindex").getValue();
