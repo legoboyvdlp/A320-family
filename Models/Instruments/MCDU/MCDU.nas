@@ -155,6 +155,8 @@ var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
 var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
 
+var reqFMGC = [0,0]; # flag = 1 when REQ is show
+
 # Conversion factor pounds to kilogram
 var LBS2KGS = 0.4535924;
 
@@ -198,23 +200,23 @@ var canvas_MCDU_base = {
 		me["PERFTO_FE"].setFont(symbol);
 		me["PERFTO_SE"].setFont(symbol);
 		me["PERFTO_OE"].setFont(symbol);
-		me["PERFTO_FE"].setColor(0.8078,0.8039,0.8078);
-		me["PERFTO_SE"].setColor(0.8078,0.8039,0.8078);
-		me["PERFTO_OE"].setColor(0.8078,0.8039,0.8078);
+		me["PERFTO_FE"].setColor(BLUE);
+		me["PERFTO_SE"].setColor(BLUE);
+		me["PERFTO_OE"].setColor(BLUE);
 		
 		me["PERFAPPR_FE"].setFont(symbol);
 		me["PERFAPPR_SE"].setFont(symbol);
 		me["PERFAPPR_OE"].setFont(symbol);
-		me["PERFAPPR_FE"].setColor(0.8078,0.8039,0.8078);
-		me["PERFAPPR_SE"].setColor(0.8078,0.8039,0.8078);
-		me["PERFAPPR_OE"].setColor(0.8078,0.8039,0.8078);
+		me["PERFAPPR_FE"].setColor(BLUE);
+		me["PERFAPPR_SE"].setColor(BLUE);
+		me["PERFAPPR_OE"].setColor(BLUE);
 		
 		me["PERFGA_FE"].setFont(symbol);
 		me["PERFGA_SE"].setFont(symbol);
 		me["PERFGA_OE"].setFont(symbol);
-		me["PERFGA_FE"].setColor(0.8078,0.8039,0.8078);
-		me["PERFGA_SE"].setColor(0.8078,0.8039,0.8078);
-		me["PERFGA_OE"].setColor(0.8078,0.8039,0.8078);
+		me["PERFGA_FE"].setColor(BLUE);
+		me["PERFGA_SE"].setColor(BLUE);
+		me["PERFGA_OE"].setColor(BLUE);
 		
 		me.page = canvas_group;
 		
@@ -280,7 +282,7 @@ var canvas_MCDU_base = {
 		me["PERFTO"].hide();
 	},
 	defaultPageNumbers: func() {
-		me["Simple_Title"].setColor(1, 1, 1);
+		me["Simple_Title"].setColor(WHITE);
 		me["Simple_PageNum"].setText("X/X");
 		me["Simple_PageNum"].hide();
 		me["ArrowLeft"].hide();
@@ -497,29 +499,42 @@ var canvas_MCDU_base = {
 				me.standardFontColour();
 				me["Simple_L3"].setText(" AIDS");
 				me["Simple_L4"].setText(" CFDS");
+
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (active[i].getValue() == 0) {
+			if (active[i].getValue() == 0 and reqFMGC[i] == 0) {
 				me["Simple_L1"].setText(" FMGC");
-				me["Simple_L1"].setColor(1,1,1);
+				me["Simple_L1"].setColor(GREEN);  
+				me["Simple_L1_Arrow"].setColor(GREEN);
+				reqFMGC[i] = 1;					
+				settimer(func {
+					if (active[i].getValue() == 0) {
+						me["Simple_L1"].setText(" FMGC (REQ)");
+					}
+				},1.4); #delay estimated
 			} else if (active[i].getValue() == 1) {
-				me["Simple_L1"].setText(" FMGC(SEL)");
-				me["Simple_L1"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L1"].setText(" FMGC (SEL)");
+				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L1_Arrow"].setColor(BLUE);
 			} else if (active[i].getValue() == 2) {
 				me["Simple_L1"].setText(" FMGC");
-				me["Simple_L1"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_L1"].setColor(GREEN);
+				me["Simple_L1_Arrow"].setColor(GREEN);
 			}
 			
 			if (activeAtsu[i].getValue() == 0) {
 				me["Simple_L2"].setText(" ATSU");
-				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setColor(WHITE);
+				me["Simple_L2_Arrow"].setColor(WHITE);
 			} else if (activeAtsu[i].getValue() == 1) {
-				me["Simple_L2"].setText(" ATSU(SEL)");
-				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setText(" ATSU (SEL)");
+				me["Simple_L2"].setColor(BLUE);
+				me["Simple_L2_Arrow"].setColor(BLUE);
 			} else if (activeAtsu[i].getValue() == 2) {
 				me["Simple_L2"].setText(" ATSU");
-				me["Simple_L2"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_L2"].setColor(GREEN);
+				me["Simple_L2_Arrow"].setColor(GREEN);
 			}
 		} else if (page == "ATSUDLINK") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -912,7 +927,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
 				me["Simple_Title"].setText("ATC MENU");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("1/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -958,7 +973,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
 				me["Simple_Title"].setText("TEXT");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("1/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -1049,7 +1064,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
 				me["Simple_Title"].setText("ATC MENU");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("2/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -1146,7 +1161,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
 				me["Simple_Title"].setText("ATS623 ATIS MENU");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
@@ -1907,7 +1922,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
 				me["Simple_Title"].setText("DATA INDEX");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("1/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -1947,7 +1962,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
 				me["Simple_Title"].setText("DATA INDEX");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("2/2");
 				me["Simple_PageNum"].show();
 				me["ArrowLeft"].show();
@@ -2228,7 +2243,7 @@ var canvas_MCDU_base = {
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("INIT");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
@@ -2272,12 +2287,12 @@ var canvas_MCDU_base = {
 			
 			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.costIndexSet) {
 				me["INITA_CostIndex"].hide();
-				me["Simple_L5"].setColor(1,1,1);
+				me["Simple_L5"].setColor(WHITE);
 				me["Simple_L5"].show();
 				me["Simple_L5"].setText("---");
 			} else if (fmgc.FMGCInternal.costIndexSet) {
 				me["INITA_CostIndex"].hide();
-				me["Simple_L5"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L5"].setColor(BLUE);
 				me["Simple_L5"].show();
 				me["Simple_L5"].setText(sprintf("%s", fmgc.FMGCInternal.costIndex));
 			} else {
@@ -2286,28 +2301,40 @@ var canvas_MCDU_base = {
 			}
 			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
-				me["Simple_L6"].setColor(1,1,1);
+				me["Simple_L6"].setColor(WHITE);
 				me["Simple_L6"].setText("-----/---g");
 			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
-				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L6"].setColor(BLUE);
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
 			} else if (fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
-				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L6"].setColor(BLUE);
 				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
 				fmgc.FMGCInternal.crzTempSet = 1;
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
-				me["Simple_L6"].setColor(0.7333,0.3803,0);
+				me["Simple_L6"].setColor(AMBER);
 				me["Simple_L6"].setText("         g");
 			}
+
+			if (fmgc.FMGCInternal.coRouteSet) { # show coRoute when valid
+				me["INITA_CoRoute"].hide();
+				me["Simple_L1"].setText(fmgc.FMGCInternal.coRoute);
+				me["Simple_L1"].setColor(BLUE);
+				me["Simple_L1"].show();
+			} else {
+				me["Simple_L1"].hide();
+				me["INITA_CoRoute"].show();				
+				me["Simple_L1"].setText("NONE");
+			}
+
 			if (fmgc.FMGCInternal.toFromSet) {
 				me["INITA_CoRoute"].hide();
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
-				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setColor(BLUE);
 				if (fmgc.FMGCInternal.altAirportSet) {
 					me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 				} else {
@@ -2320,7 +2347,7 @@ var canvas_MCDU_base = {
 				me["INITA_CoRoute"].show();
 				me["INITA_FromTo"].show();
 				me["Simple_L1"].hide();
-				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setColor(WHITE);
 				me["Simple_L2"].setText("----/----------");
 				me.showRight(-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
@@ -2364,7 +2391,7 @@ var canvas_MCDU_base = {
 			me["Simple_L3S"].setText("FLT NBR");
 			me["Simple_L5S"].setText("COST INDEX");
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
-			me["Simple_L1"].setText("NONE");
+			#me["Simple_L1"].setText("NONE");  # manage before (coRoute)
 			me["Simple_L3"].setText(sprintf("%s", fmgc.FMGCInternal.flightNum));
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
@@ -2666,7 +2693,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(fmgc.FMGCInternal.tripWind);
 			me["Simple_R6S"].setText("EXTRA/TIME");
 			
-			me["Simple_Title"].setColor(1, 1, 1);
+			me["Simple_Title"].setColor(WHITE);
 			
 			if (!fmgc.FMGCInternal.fuelRequest) {
 				me["Simple_L2"].setText("---.-/----");
@@ -2706,7 +2733,7 @@ var canvas_MCDU_base = {
 				me["Simple_R6"].setText("---.-/----");
 				
 				me["Simple_Title"].setText("INIT");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				
 				me.colorLeft("ack", "wht", "wht", "wht", "wht", "wht");
 				me.colorRight("ack", "blu", "amb", "wht", "ack", "wht");
@@ -3059,7 +3086,7 @@ var canvas_MCDU_base = {
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
 				me["Simple_Title"].setText("FUEL PRED");
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].show();
@@ -3387,7 +3414,7 @@ var canvas_MCDU_base = {
 				}
 				
 				me["Simple_Title"].show();
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -3570,9 +3597,9 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.phase == 1) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 			}
 			
 			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
@@ -3701,7 +3728,7 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.phase == 2) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showLeftS(0, 0, 0, 0, 1, 0);
 				me.showLeftArrow(0, 0, 0, 0, 1, 1);
@@ -3742,7 +3769,7 @@ var canvas_MCDU_base = {
 					setprop("/FMGC/internal/activate-twice", 0);
 				}
 			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me.showLeft(0, 0, 0, 0, -1, 0);
 				me.showLeftS(0, 0, 0, 0, -1, 0);
 				me.showLeftArrow(0, 0, 0, 0, -1, 0);
@@ -3776,10 +3803,10 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L2S"].setText(" CI");
 			if (fmgc.FMGCInternal.costIndexSet) {
-				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setColor(BLUE);
 				me["Simple_L2"].setText(sprintf(" %s", fmgc.FMGCInternal.costIndex));
 			} else {
-				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setColor(WHITE);
 				me["Simple_L2"].setText(" ---");
 			}
 			
@@ -3854,7 +3881,7 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.phase == 3) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 
 				if (managedSpeed.getValue() == 1) {
 					me.showLeft(0, 0, 0, -1, 0, 0);
@@ -3889,7 +3916,7 @@ var canvas_MCDU_base = {
 					setprop("/FMGC/internal/activate-twice", 0);
 				}
 			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				
 				me.colorLeft("ack", "ack", "ack", "ack", "ack", "wht");
 				me.colorLeftS("ack", "ack", "ack", "ack", "ack", "wht");
@@ -3916,10 +3943,10 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.costIndexSet) {
-				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setColor(BLUE);
 				me["Simple_L2"].setText(sprintf(" %s", fmgc.FMGCInternal.costIndex));
 			} else {
-				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setColor(WHITE);
 				me["Simple_L2"].setText(" ---");
 			}
 			
@@ -3992,7 +4019,7 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.phase == 4) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showRight(0, 1, 0, 1, 0, 0);
 				me.showRightS(0, 0, 1, 0, 0, 0);
@@ -4032,7 +4059,7 @@ var canvas_MCDU_base = {
 					setprop("/FMGC/internal/activate-twice", 0);
 				}
 			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 				me.showLeft(0, 0, 0, 0, -1, 0);
 				me.showRight(0, -1, 0, -1, 0, 0);
 				me.showRightS(0, 0, -1, 0, 0, 0);
@@ -4064,10 +4091,10 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.costIndexSet) {
-				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
+				me["Simple_L2"].setColor(BLUE);
 				me["Simple_L2"].setText(sprintf(" %2.0f", fmgc.FMGCInternal.costIndex));
 			} else {
-				me["Simple_L2"].setColor(1,1,1);
+				me["Simple_L2"].setColor(WHITE);
 				me["Simple_L2"].setText(" ---");
 			}
 			
@@ -4148,9 +4175,9 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.phase == 5) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 			}
 			
 			me["Simple_L0S"].setText("DEST");
@@ -4331,9 +4358,9 @@ var canvas_MCDU_base = {
 			}
 			
 			if (fmgc.FMGCInternal.phase == 6) {
-				me["Simple_Title"].setColor(0.0509,0.7529,0.2941);
+				me["Simple_Title"].setColor(GREEN);
 			} else {
-				me["Simple_Title"].setColor(1, 1, 1);
+				me["Simple_Title"].setColor(WHITE);
 			}
 			
 			if (thrAccSet.getValue() == 1) {
@@ -5967,6 +5994,8 @@ setlistener("sim/signals/fdm-initialized", func {
 	
 	mcdu.mcdu_message(0, "SELECT DESIRED SYSTEM");
 	mcdu.mcdu_message(1, "SELECT DESIRED SYSTEM");
+
+	reqFMGC = [0,0]; # reset FMGC REQ status - on MCDU restart
 	
 	MCDU_update.start();
 });

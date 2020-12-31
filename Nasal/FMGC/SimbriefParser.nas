@@ -1,5 +1,6 @@
 # A3XX Simbrief Parser
 # Copyright (c) 2020 Jonathan Redpath (legoboyvdlp)
+# enhanceded 12/2020 - parse TOD & TOC psedo waypoints, set computer speeds on fix wps, fake coRoute name
 
 var LBS2KGS = 0.4535924;
 
@@ -157,12 +158,16 @@ var SimbriefParser = {
 			
 			if (ident == "TOC") {
 				_foundTOC = 1;
-				continue;
+				#setprop("/autopilot/route-manager/vnav/tc/latitude-deg",ofpFix.getNode("pos_lat").getValue());
+				#setprop("/autopilot/route-manager/vnav/tc/longitude-deg",ofpFix.getNode("pos_long").getValue());				
+				#ident = "(T/C)";
 			}
 			
 			if (ident == "TOD") {
 				_foundTOD = 1;
-				continue;
+				#setprop("/autopilot/route-manager/vnav/td/latitude-deg",ofpFix.getNode("pos_lat").getValue());
+				#setprop("/autopilot/route-manager/vnav/td/longitude-deg",ofpFix.getNode("pos_long").getValue());
+				#ident = "(T/D)";
 			}
 			
 			coords = geo.Coord.new();
@@ -189,6 +194,34 @@ var SimbriefParser = {
 			fmgc.flightPlanController.flightplans[3].star = _star;
 		}
 		fmgc.flightPlanController.destroyTemporaryFlightPlan(3, 1);
+
+        #var idx = 1;
+		#var plan = fmgc.flightPlanController.flightplans[2];
+		#var altitude = "";
+		#var speed = "";
+		#var wpname = "";
+
+		#foreach (var ofpFix; ofpFixes) {
+		#	ident = ofpFix.getNode("ident").getValue();			
+
+		#	if (ident == "TOC") wpname = "(T/C)";
+		#	else if (ident == "TOD") wpname = "(T/D)";
+		#	else wpname = ident;
+
+		#	wp = plan.getWP(idx); # get leg	
+		#	if (wp != nil) {
+		#		if (wp.wp_name == wpname) {
+		#			altitude = ofpFix.getNode("altitude_feet").getValue();
+		#			speed = ofpFix.getNode("ind_airspeed").getValue();
+
+		#			if (speed>0) wp.setSpeed(speed, "computed");
+		#			if (altitude>0) wp.setAltitude(math.round(altitude, 10), "computed");
+#
+#					idx = idx + 1;			
+#				}
+#			}
+#		}
+
 		fmgc.windController.updatePlans();
 		fmgc.updateRouteManagerAlt();
 		
@@ -199,6 +232,8 @@ var SimbriefParser = {
 		if (me.buildFlightplan() == nil) {
 			return nil;
 		}
+		fmgc.FMGCInternal.coRoute = "SB" ~ me.OFP.getNode("origin/iata_code").getValue() ~ me.OFP.getNode("destination/iata_code").getValue() ~ "00";
+		fmgc.FMGCInternal.coRouteSet = 1;
 		fmgc.FMGCInternal.flightNum = (me.OFP.getNode("general/icao_airline").getValue() or "") ~ (me.OFP.getNode("general/flight_number").getValue() or "");
 		fmgc.FMGCInternal.flightNumSet = 1;
 		fmgc.FMGCInternal.costIndex = me.OFP.getNode("general/costindex").getValue();
