@@ -75,6 +75,8 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.gndTempSet = 0;
 	fmgc.FMGCInternal.toFromSet = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);
+	fmgc.FMGCInternal.coRoute = "";
+	fmgc.FMGCInternal.coRouteSet = 0;
 	fmgc.FMGCInternal.tropo = 36090;
 	fmgc.FMGCInternal.tropoSet = 0;
 	
@@ -1484,7 +1486,9 @@ var pagebutton = func(btn, i) {
 	}
 }
 
-var button = func(btn, i) {
+var buttonCLRDown = [0,0]; # counter for down event
+
+var button = func(btn, i, event = "") {
 	page = pageNode[i].getValue();
 	if (page != "MCDU") {
 		var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
@@ -1493,11 +1497,24 @@ var button = func(btn, i) {
 		} else if (btn == "SP") {
 			mcdu_scratchpad.scratchpads[i].addChar(" ");
 		} else if (btn == "CLR") {
-			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
-			if (size(scratchpad) == 0) {
-				mcdu_scratchpad.scratchpads[i].addChar("CLR");
-			} else {
-				mcdu_scratchpad.scratchpads[i].clear();
+			if (event == "down") {
+				if (size(scratchpad) > 0) {
+					if (buttonCLRDown[i] > 4) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+					buttonCLRDown[i] = buttonCLRDown[i] + 1;
+				}
+			}
+			else if (event == "" or buttonCLRDown[i]<=4) {
+				buttonCLRDown[i] = 0;
+				#var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;  <- useless??
+				if (size(scratchpad) == 0) {
+					mcdu_scratchpad.scratchpads[i].addChar("CLR");
+				} else {
+					mcdu_scratchpad.scratchpads[i].clear();
+				}
+			} else {  # up with buttonCLRDown[i]>4
+				buttonCLRDown[i] = 0;
 			}
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
@@ -1511,6 +1528,12 @@ var button = func(btn, i) {
 
 var mcdu_message = func(i, string, overrideStr = "") {
 	mcdu_scratchpad.scratchpads[i].showTypeI(mcdu_scratchpad.MessageController.getTypeIMsgByText(string));
+	mcdu_scratchpad.scratchpads[i].override(overrideStr);
+}
+
+# Messagge Type II - TODO 5 messages queue  - remove only on resolve
+var mcdu_messageTypeII = func(i, string, overrideStr = "") {
+	mcdu_scratchpad.scratchpads[i].showTypeII(mcdu_scratchpad.MessageController.getTypeIIMsgByText(string));
 	mcdu_scratchpad.scratchpads[i].override(overrideStr);
 }
 

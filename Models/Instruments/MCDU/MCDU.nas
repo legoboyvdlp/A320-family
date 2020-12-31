@@ -155,8 +155,6 @@ var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
 var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
 
-var reqFMGC = [0,0]; # flag = 1 when REQ is show
-
 # Conversion factor pounds to kilogram
 var LBS2KGS = 0.4535924;
 
@@ -503,16 +501,10 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (active[i].getValue() == 0 and reqFMGC[i] == 0) {
+			if (active[i].getValue() == 0) {
 				me["Simple_L1"].setText(" FMGC");
-				me["Simple_L1"].setColor(GREEN);  
-				me["Simple_L1_Arrow"].setColor(GREEN);
-				reqFMGC[i] = 1;					
-				settimer(func {
-					if (active[i].getValue() == 0) {
-						me["Simple_L1"].setText(" FMGC (REQ)");
-					}
-				},1.4); #delay estimated
+				me["Simple_L1"].setColor(WHITE);  
+				me["Simple_L1_Arrow"].setColor(WHITE);	
 			} else if (active[i].getValue() == 1) {
 				me["Simple_L1"].setText(" FMGC (SEL)");
 				me["Simple_L1"].setColor(BLUE);
@@ -5994,8 +5986,6 @@ setlistener("sim/signals/fdm-initialized", func {
 	
 	mcdu.mcdu_message(0, "SELECT DESIRED SYSTEM");
 	mcdu.mcdu_message(1, "SELECT DESIRED SYSTEM");
-
-	reqFMGC = [0,0]; # reset FMGC REQ status - on MCDU restart
 	
 	MCDU_update.start();
 });
