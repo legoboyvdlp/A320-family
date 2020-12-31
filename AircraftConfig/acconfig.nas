@@ -310,7 +310,6 @@ var colddark = func {
 	}
 }
 var colddark_b = func {
-	if (getprop("/systems/acconfig/autoconfig-running") == 0) return 0; # auto-config aborted
 	# Continues the Cold and Dark script, after engines fully shutdown.
 	setprop("/controls/apu/master", 0);
 	settimer(func {
@@ -361,7 +360,10 @@ var beforestart = func {
 	}
 }
 var beforestart_b = func {
-	if (getprop("/systems/acconfig/autoconfig-running") == 0) return 0; # auto-config aborted
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# Continue with engine start prep.
 	systems.FUEL.Switches.pumpLeft1.setValue(1);
 	systems.FUEL.Switches.pumpLeft2.setValue(1);
@@ -449,7 +451,10 @@ var taxi = func {
 	}
 }
 var taxi_b = func {
-	if (getprop("/systems/acconfig/autoconfig-running") == 0) return 0; # auto-config aborted
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# Continue with engine start prep, and start engines.
 	systems.FUEL.Switches.pumpLeft1.setValue(1);
 	systems.FUEL.Switches.pumpLeft2.setValue(1);
@@ -503,7 +508,10 @@ var taxi_b = func {
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
-	if (getprop("/systems/acconfig/autoconfig-running") == 0) return 0; # auto-config aborted
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	setprop("/controls/engines/engine-start-switch", 2);
 	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
 	setprop("/controls/engines/engine[1]/cutoff-switch", 0);
@@ -512,7 +520,10 @@ var taxi_c = func {
 	}, 10);
 }
 var taxi_d = func {
-	if (getprop("/systems/acconfig/autoconfig-running") == 0) return 0; # auto-config aborted
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# After Start items.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);

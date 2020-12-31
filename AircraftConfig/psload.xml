@@ -15,6 +15,16 @@
             <halign>left</halign>
             <label>Please wait...</label>
         </text>
+		<button>
+			<halign>right</halign>
+			<legend>Abort</legend>
+			<pref-width>60</pref-width>
+			<key>Esc</key>
+			<binding>
+				<command>nasal</command>
+				<script>acconfig.abortPanelStates();</script>
+			</binding>
+		</button>	
     </group>
 	
     <hrule/>
@@ -36,17 +46,7 @@
 				<valign>center</valign>
 				<property>/systems/acconfig/spin</property>
 				<live>1</live>
-			</text>
-			<button>
-				<halign>center</halign>
-				<legend>Abort</legend>
-				<pref-width>160</pref-width>
-				<key>Esc</key>
-				<binding>
-					<command>nasal</command>
-					<script>acconfig.abortPanelStates();</script>
-				</binding>
-			</button>			
+			</text>		
 			
 		</group>
 	
