@@ -69,6 +69,7 @@ var scratchpadController = {
 		sp.scratchpadColour = "wht";
 		sp.showTypeIMsg = 0;
 		sp.showTypeIIMsg = 0;
+		sp.clrmode = 0; # 1 = CLR mode
 		sp.mcdu = mcdu;
 		return sp;
 	},
@@ -88,6 +89,11 @@ var scratchpadController = {
 			me.clearTypeI();
 		}
 		
+		if (me.clrmode == 1) { # prevent add chars in CLR mode
+			me.clear();			
+		}
+	    else if (character == "CLR") me.clrmode = 1;
+
 		me.scratchpad = me.scratchpad ~ character;
 		me.scratchpadColour = "wht";
 		me.update();
@@ -140,6 +146,7 @@ var scratchpadController = {
 	},
 	empty: func() {
 		me.scratchpad = "";
+		me.clrmode = 0;
 		me.update();
 	},
 	clear: func() {
