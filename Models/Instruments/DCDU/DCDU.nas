@@ -109,7 +109,7 @@ var canvas_DCDU = {
 		m.init(canvas_group, file);
 		m.updateActiveATC();
 		m["MessageTimeStamp"].hide();
-		m["Close"].hide();
+		m.hideResponses();
 		return m;
 	},
 	getKeys: func() {
@@ -180,11 +180,18 @@ var canvas_DCDU = {
 			me["UNABLE"].hide();
 		}
 	},
+	hideResponses: func() {
+		me["Close"].hide();
+		me["WILCO"].hide();
+		me["STBY"].hide();
+		me["UNABLE"].hide();
+		me["OTHER"].hide();
+	},
 	clearMessage: func() {
 		if (me.showingMessage) {
 			me.currentMessage = nil;
+			me.hideResponses();
 			me["MessageTimeStamp"].hide();
-			me["Close"].hide();
 			me.updateActiveATC();
 			me.showingMessage = 0;
 		}
@@ -192,6 +199,7 @@ var canvas_DCDU = {
 	updateActiveATC: func() {
 		if (CPDLCstatusNode.getValue() == 2) {
 			me["Line1"].setText("ACTIVE ATC : " ~ CPDLCauthority.getValue() ~ " CTL");
+			me["Line1"].show();
 			me["Line2"].hide();
 			me["Line3"].hide();
 			me["Line4"].hide();
@@ -233,7 +241,7 @@ setlistener("/network/cpdlc/link/data-authority", func() {
 var canvas_DCDU_test = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "LiberationMonoCustom.ttf";
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
