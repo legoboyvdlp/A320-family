@@ -304,9 +304,9 @@ var updateFuel = func {
 				if (_wp.alt_cstr == nil or _wp.alt_cstr == 0 or _wp.alt_cstr_type == "computed") {
 					_wp.setAltitude(fmgc.FMGCInternal.crzFt, "computed");
 				}
-				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
-				
-				}
+				# if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
+# 					
+# 				}
 			} else if (wpt > fmgc.flightPlanController.todIndex[i] and wpt < fmgc.flightPlanController.arrivalIndex[i]) {
 				_des_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 				var _multiplier = _des_distance / fmgc.FMGCInternal.desDist;
