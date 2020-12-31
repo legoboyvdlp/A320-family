@@ -85,15 +85,15 @@ var fplnItem = {
 			if (me.wp.wp_name != "DISCONTINUITY" and page == "A") {
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				return ["   /" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me.alt[1], me.colour];
+				return ["   /" ~ me.alt[0], " " ~ me.dist ~ "      ", me.alt[1], me.colour];
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
 				me.hdg = me.getHdg();
 				me.mag = ["---", "wht"]; #me.getMag();
 				me.dist = me.getDist();
 				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
-					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", "wht", me.colour];
+					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "      ", "wht", me.colour];
 				} else {
-					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "NM    ", me.colour, me.colour];
+					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "      ", me.colour, me.colour];
 				}
 			} else {
 				return [nil, nil, "ack", "ack"];

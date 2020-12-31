@@ -726,6 +726,15 @@ var flightPlanController = {
 		}
 		return count;
 	},
+	
+	getIndexOf: func(plan, ident) {
+		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
+			if (me.flightplans[plan].getWP(wpt).wp_name == ident) {
+				return wpt;
+			}
+		}
+		return -99;
+	},
 
 	getIndexOfFirstDecel: func(plan) {
 		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
