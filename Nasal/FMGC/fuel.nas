@@ -242,12 +242,15 @@ var updateFuel = func {
 			fmgc.FMGCInternal.desReached = courseAndDistance(geo.aircraft_position(), fmgc.flightPlanController.todPoint)[1] < 0.1;
 			# todo: check altitude/distance as well
 		}
+	} else {
+		fmgc.FMGCInternal.clbSet = 0;
+		fmgc.FMGCInternal.desSet = 0;
 	}
 	
 	# calculate efob values
 	for (var i = 0; i <= 2; i += 1) {
 		if (fmgc.flightPlanController.getPlanSizeNoDiscont(i) <= 1) {
-			continue;			
+			continue;
 		}
 		efob_values[i] = [];
 		time_values[i] = [];
@@ -256,6 +259,11 @@ var updateFuel = func {
 		var _crz_distance = 0;
 		var _des_distance = 0;
 		for (var wpt = 0; wpt < fmgc.flightPlanController.arrivalIndex[i]; wpt += 1) {
+			if (fmgc.FMGCInternal.fuelCalculating) {
+				append(efob_values[i], nil);
+				append(time_values[i], nil);
+				continue;
+			}
 			_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 			var _wp = fmgc.flightPlanController.flightplans[i].getWP(wpt);
 			if (wpt < fmgc.flightPlanController.tocIndex[i]) {
@@ -279,8 +287,10 @@ var updateFuel = func {
 					}
 					# to-do: add other conditions
 				}
-			} else if (wpt > fmgc.flightPlanController.tocIndex[i] and wpt < fmgc.flightPlanController.todIndex[i]) {
-				_crz_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+			} else if (wpt >= fmgc.flightPlanController.tocIndex[i] and wpt <= fmgc.flightPlanController.todIndex[i]) {
+				if (wpt != fmgc.flightPlanController.tocIndex[i]) {
+					_crz_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
+				}
 				var _multiplier = _crz_distance / (fmgc.flightPlanController.arrivalDist.getValue() - fmgc.FMGCInternal.clbDist - fmgc.FMGCInternal.desDist);
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000 - _multiplier * (fmgc.FMGCInternal.tripFuel - fmgc.FMGCInternal.clbFuel / 1000 - fmgc.FMGCInternal.desFuel / 1000));
 				_desTime = _multiplier * (fmgc.FMGCInternal.tripTime_num - fmgc.FMGCInternal.desTime_num - fmgc.FMGCInternal.clbTime_num) + fmgc.FMGCInternal.clbTime_num;
@@ -295,7 +305,7 @@ var updateFuel = func {
 					_wp.setAltitude(fmgc.FMGCInternal.crzFt, "computed");
 				}
 				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
-					
+				
 				}
 			} else if (wpt > fmgc.flightPlanController.todIndex[i] and wpt < fmgc.flightPlanController.arrivalIndex[i]) {
 				_des_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
@@ -315,12 +325,12 @@ var updateFuel = func {
 				}
 				if (_wp.speed_cstr == nil or _wp.speed_cstr == 0 or _wp.speed_cstr_type == "computed" or _wp.speed_cstr_type == "computed-mach") {
 					if (_altitude >= getprop("/systems/thrust/clbreduc-ft") and _altitude < 10000) {
-						if (wpt == fmgc.flightPlanController.getIndexOfFirstDecel(i)) {
+						if (wpt <= fmgc.flightPlanController.getIndexOfFirstDecel(i)) {
 							if (fmgc.FMGCInternal.clean > 0) {
-								_wp.setSpeed(fmgc.FMGCInternal.clean, "computed");
+								_wp.setSpeed(250, "computed");
 							}
-						} else if (wpt < fmgc.flightPlanController.getIndexOfFirstDecel(i)) {
-							_wp.setSpeed(250, "computed");
+						} else {
+							_wp.setSpeed(fmgc.FMGCInternal.clean, "computed"); # to-do: expand this caluclation
 						}
 					}
 					# to-do: add other conditions
