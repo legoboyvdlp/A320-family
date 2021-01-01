@@ -54,74 +54,55 @@ var SimbriefWindParser = {
 		var opfGeneral = me.OFP.getNode("general");
 		var ofpNavlog = me.OFP.getNode("navlog");
 		var ofpFixes = ofpNavlog.getChildren("fix");
+		var _plan = me.computer;
+		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+			_plan = 2
+		}
 		foreach (var ofpFix; ofpFixes) {
 			var ident = ofpFix.getNode("ident").getValue();
-			print("^&* | ", ident);
 			var alt = ofpFix.getNode("altitude_feet").getValue();
+			
+			# add wind data for each waypoint
+			var wp_index = fmgc.flightPlanController.getIndexOf(me.computer, ident);
+			if (wp_index != -99) {
+				fmgc.windController.winds[_plan][wp_index].wind1.heading = ofpFix.getNode("wind_dir").getValue();
+				fmgc.windController.winds[_plan][wp_index].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
+				fmgc.windController.winds[_plan][wp_index].wind1.altitude = "FL" ~ (ofpFix.getNode("altitude_feet").getValue() / 100);
+				fmgc.windController.winds[_plan][wp_index].wind1.set = 1;
+			}
+			
+			# to-do: calculate actual wind for each segment
 			if (ident == "TOC" and fmgc.FMGCInternal.phase < 2) {
-				# set TOC winds
-				if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
-					fmgc.windController.clb_winds[2].wind1.heading = ofpFix.getNode("wind_dir").getValue();
-					fmgc.windController.clb_winds[2].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
-					fmgc.windController.clb_winds[2].wind1.altitude = "FL" ~ (alt / 100);
-					fmgc.windController.clb_winds[2].wind1.set = 1;
-				} else {
-					fmgc.windController.clb_winds[me.computer].wind1.heading = ofpFix.getNode("wind_dir").getValue();
-					fmgc.windController.clb_winds[me.computer].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
-					fmgc.windController.clb_winds[me.computer].wind1.altitude = "FL" ~ (alt / 100);
-					fmgc.windController.clb_winds[me.computer].wind1.set = 1;
-				}
+				fmgc.windController.clb_winds[_plan].wind1.heading = ofpFix.getNode("wind_dir").getValue();
+				fmgc.windController.clb_winds[_plan].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
+				fmgc.windController.clb_winds[_plan].wind1.altitude = "FL" ~ (alt / 100);
+				fmgc.windController.clb_winds[_plan].wind1.set = 1;
 			} else if (ident == "TOD" and fmgc.FMGCInternal.phase < 4) {
-				# set TOD winds
-				if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
-					fmgc.windController.des_winds[2].wind1.heading = ofpFix.getNode("wind_dir").getValue();
-					fmgc.windController.des_winds[2].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
-					fmgc.windController.des_winds[2].wind1.altitude = "FL" ~ (alt / 100);
-					fmgc.windController.des_winds[2].wind1.set = 1;
-				} else {
-					fmgc.windController.des_winds[me.computer].wind1.heading = ofpFix.getNode("wind_dir").getValue();
-					fmgc.windController.des_winds[me.computer].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
-					fmgc.windController.des_winds[me.computer].wind1.altitude = "FL" ~ (alt / 100);
-					fmgc.windController.des_winds[me.computer].wind1.set = 1;
-				}
-			} else if (size(fmgc.windController.nav_indicies[2]) == 0 and size(fmgc.windController.nav_indicies[me.computer]) == 0 and fmgc.FMGCInternal.phase < 3) {
-				if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
-					fmgc.windController.crz_winds[2].wind1.heading = opfGeneral.getNode("avg_wind_dir").getValue();
-					fmgc.windController.crz_winds[2].wind1.magnitude = opfGeneral.getNode("avg_wind_spd").getValue();
-					fmgc.windController.crz_winds[2].wind1.altitude = "FL" ~ (opfGeneral.getNode("initial_altitude").getValue() / 100);
-					fmgc.windController.crz_winds[2].wind1.set = 1;
-				} else {
-					fmgc.windController.crz_winds[me.computer].wind1.heading = opfGeneral.getNode("avg_wind_dir").getValue();
-					fmgc.windController.crz_winds[me.computer].wind1.magnitude = opfGeneral.getNode("avg_wind_spd").getValue();
-					fmgc.windController.crz_winds[me.computer].wind1.altitude = "FL" ~ (opfGeneral.getNode("initial_altitude").getValue() / 100);
-					fmgc.windController.crz_winds[me.computer].wind1.set = 1;
-				}
-			} else if ((ofpFix.getNode("type").getValue() == "wpt" or ofpFix.getNode("type").getValue() == "vor") and fmgc.FMGCInternal.phase <= 3) {
-				if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
-					var wp_index = fmgc.flightPlanController.getIndexOf(2, ident);
-					if (wp_index != -99) {
-						fmgc.windController.winds[2][wp_index].wind1.heading = ofpFix.getNode("wind_dir").getValue();
-						fmgc.windController.winds[2][wp_index].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
-						fmgc.windController.winds[2][wp_index].wind1.altitude = "FL" ~ (alt / 100);
-						fmgc.windController.winds[2][wp_index].wind1.set = 1;
-					}
-				} else {
-					# to do
-					# - restirct points modified
-					# - propogate
-					var wp_index = fmgc.flightPlanController.getIndexOf(me.computer, ident);
-					if (wp_index != -99) {
-						fmgc.windController.winds[me.computer][wp_index].wind1.heading = ofpFix.getNode("wind_dir").getValue();
-						fmgc.windController.winds[me.computer][wp_index].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
-						fmgc.windController.winds[me.computer][wp_index].wind1.altitude = "FL" ~ (ofpFix.getNode("altitude_feet").getValue() / 100);
-						fmgc.windController.winds[me.computer][wp_index].wind1.set = 1;
-					}
-				}
+				fmgc.windController.des_winds[_plan].wind1.heading = ofpFix.getNode("wind_dir").getValue();
+				fmgc.windController.des_winds[_plan].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
+				fmgc.windController.des_winds[_plan].wind1.altitude = "FL" ~ (alt / 100);
+				fmgc.windController.des_winds[_plan].wind1.set = 1;
+			} else if (size(fmgc.windController.nav_indicies[_plan]) == 0 and fmgc.FMGCInternal.phase < 3) {
+				fmgc.windController.crz_winds[_plan].wind1.heading = opfGeneral.getNode("avg_wind_dir").getValue();
+				fmgc.windController.crz_winds[_plan].wind1.magnitude = opfGeneral.getNode("avg_wind_spd").getValue();
+				fmgc.windController.crz_winds[_plan].wind1.altitude = "FL" ~ (opfGeneral.getNode("initial_altitude").getValue() / 100);
+				fmgc.windController.crz_winds[_plan].wind1.set = 1;
 			}
 		}
 		
-		me.inhibit = 0;
+		# to do: propogate winds
+		var _wind = nil;
+		foreach (var wind; fmgc.windController.winds[_plan]) {
+			if (_wind != nil) {
+				wind.wind1.heading = _wind.wind1.heading;
+				wind.wind1.magnitude = _wind.wind1.magnitude;
+				wind.wind1.altitude = _wind.wind1.altitude;
+				wind.wind1.set = _wind.wind1.set;
+			}
+			_wind = wind;
+		}
 		
+		me.inhibit = 0;
 		fmgc.windController.updatePlans();
 		
 		# push update to fuel
