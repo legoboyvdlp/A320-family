@@ -62,8 +62,16 @@ var SimbriefWindParser = {
 			var ident = ofpFix.getNode("ident").getValue();
 			var alt = ofpFix.getNode("altitude_feet").getValue();
 			
+			# standardization of names
+			if (ident == "TOC") {
+				ident = "(T/C)";
+			} else if (ident == "TOD") {
+				ident = "(T/D)";
+			}
+			ident = string.trim(ident, 0, func(c) c == `-`);
+			
 			# add wind data for each waypoint
-			var wp_index = fmgc.flightPlanController.getIndexOf(me.computer, ident);
+			var wp_index = fmgc.flightPlanController.getIndexOf(_plan, ident);
 			if (wp_index != -99) {
 				fmgc.windController.winds[_plan][wp_index].wind1.heading = ofpFix.getNode("wind_dir").getValue();
 				fmgc.windController.winds[_plan][wp_index].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
@@ -72,12 +80,12 @@ var SimbriefWindParser = {
 			}
 			
 			# to-do: calculate actual wind for each segment
-			if (ident == "TOC" and fmgc.FMGCInternal.phase < 2) {
+			if (ident == "(T/C)" and fmgc.FMGCInternal.phase < 2) {
 				fmgc.windController.clb_winds[_plan].wind1.heading = ofpFix.getNode("wind_dir").getValue();
 				fmgc.windController.clb_winds[_plan].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
 				fmgc.windController.clb_winds[_plan].wind1.altitude = "FL" ~ (alt / 100);
 				fmgc.windController.clb_winds[_plan].wind1.set = 1;
-			} else if (ident == "TOD" and fmgc.FMGCInternal.phase < 4) {
+			} else if (ident == "(T/D)" and fmgc.FMGCInternal.phase < 4) {
 				fmgc.windController.des_winds[_plan].wind1.heading = ofpFix.getNode("wind_dir").getValue();
 				fmgc.windController.des_winds[_plan].wind1.magnitude = ofpFix.getNode("wind_spd").getValue();
 				fmgc.windController.des_winds[_plan].wind1.altitude = "FL" ~ (alt / 100);
@@ -91,16 +99,16 @@ var SimbriefWindParser = {
 		}
 		
 		# to do: propogate winds
-		var _wind = nil;
-		foreach (var wind; fmgc.windController.winds[_plan]) {
-			if (_wind != nil) {
-				wind.wind1.heading = _wind.wind1.heading;
-				wind.wind1.magnitude = _wind.wind1.magnitude;
-				wind.wind1.altitude = _wind.wind1.altitude;
-				wind.wind1.set = _wind.wind1.set;
-			}
-			_wind = wind;
-		}
+		# var _wind = nil;
+# 		foreach (var wind; fmgc.windController.winds[_plan]) {
+# 			if (_wind != nil and wind == nil) {
+# 				wind.wind1.heading = _wind.wind1.heading;
+# 				wind.wind1.magnitude = _wind.wind1.magnitude;
+# 				wind.wind1.altitude = _wind.wind1.altitude;
+# 				wind.wind1.set = _wind.wind1.set;
+# 			}
+# 			_wind = wind;
+# 		}
 		
 		me.inhibit = 0;
 		fmgc.windController.updatePlans();

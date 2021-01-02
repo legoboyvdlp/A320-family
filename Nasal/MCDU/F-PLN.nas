@@ -88,7 +88,7 @@ var fplnItem = {
 				return ["   /" ~ me.alt[0], " " ~ me.dist ~ "      ", me.alt[1], me.colour];
 			} else if (me.wp.wp_name != "DISCONTINUITY" and page == "B") {
 				me.hdg = me.getHdg();
-				me.mag = ["---", "wht"]; #me.getMag();
+				me.mag = me.getMag();
 				me.dist = me.getDist();
 				if (me.hdg[1] == "wht" and me.mag[1] == "wht") {
 					return [me.hdg[0] ~ "g/" ~ me.mag[0], " " ~ me.dist ~ "      ", "wht", me.colour];
@@ -210,7 +210,24 @@ var fplnItem = {
 	},
 	getHdg: func() {
 		if (me.index < fmgc.flightPlanController.arrivalIndex[me.plan]) {
+			print(me.wp.wp_name, " | ", me.plan, " | ", me.index, " | ", fmgc.windController.winds[me.plan][me.index].wind1.set);
+			if (fmgc.windController.winds[me.plan][me.index].wind1.set) {
+				return [sprintf("%03.0f", fmgc.windController.winds[me.plan][me.index].wind1.heading), "grn"];
+			} else {
+				return ["---", "wht"];
+			}
+		} else {
 			return ["---", "wht"];
+		}
+	},
+	getMag: func() {
+		if (me.index < fmgc.flightPlanController.arrivalIndex[me.plan]) {
+			print(me.wp.wp_name, " | ", me.plan, " | ", me.index, " | ", fmgc.windController.winds[me.plan][me.index].wind1.set);
+			if (fmgc.windController.winds[me.plan][me.index].wind1.set) {
+				return [sprintf("%03.0f", fmgc.windController.winds[me.plan][me.index].wind1.magnitude), "grn"];
+			} else {
+				return ["---", "wht"];
+			}
 		} else {
 			return ["---", "wht"];
 		}

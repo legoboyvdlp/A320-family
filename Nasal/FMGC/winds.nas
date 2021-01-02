@@ -436,30 +436,53 @@ var windController = {
 		for (plan = 0; plan <= 2; plan += 1) {
 			for (i = 0; i < fmgc.flightPlanController.flightplans[plan].getPlanSize(); i += 1) {
 				var waypoint = fmgc.flightPlanController.flightplans[plan].getWP(i);
-				if ((!fmgc.FMGCInternal.clbSet and waypoint.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and i <= fmgc.flightPlanController.tocIndex[plan])) {
-					append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
-					me.windSizes[plan] += 1;
-				} else if ((!fmgc.FMGCInternal.desSet and (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and i >= fmgc.flightPlanController.todIndex[plan])) {
-					append(me.winds[plan], waypoint_winds.new(waypoint.id, "arrival", 0));
-					me.windSizes[plan] += 1;
-				} else if (waypoint.wp_role == nil and (waypoint.wp_type == "navaid" or waypoint.wp_type == "basic")) {
-					var found = 0;
-					for (index = 0; index < windSizes_copy[plan]; index += 1) {
-						if (waypoint.id == winds_copy[plan][index].id) {
-							append(me.winds[plan], winds_copy[plan][index]);
-							append(me.nav_indicies[plan], i);
-							me.windSizes[plan] += 1;
-							found = 1;
-						}
+				var wp_index = fmgc.flightPlanController.getIndexOf(plan, waypoint.id);
+				
+				var found = 0;
+				var _index = 0;
+				for (; _index < windSizes_copy[plan]; _index += 1) {
+					if (waypoint.id == winds_copy[plan][_index].id) {
+						found = 1;
+						break;
 					}
-					if (found != 1) {
+				}
+				
+				if ((!fmgc.FMGCInternal.clbSet and waypoint.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and i <= fmgc.flightPlanController.tocIndex[plan])) {
+					if (found == 0) {
+						append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
+					} else {
+						append(me.winds[plan], winds_copy[plan][_index]);
+						me.winds[plan][i].type = "departure";
+						me.includeWind = 0;
+					}
+				} else if ((!fmgc.FMGCInternal.desSet and (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and i >= fmgc.flightPlanController.todIndex[plan])) {
+					if (found == 0) {
+						append(me.winds[plan], waypoint_winds.new(waypoint.id, "arrival", 0));
+					} else {
+						append(me.winds[plan], winds_copy[plan][_index]);
+						me.winds[plan][i].type = "arrival";
+						me.includeWind = 0;
+					}
+				} else if (waypoint.wp_role == nil and (waypoint.wp_type == "navaid" or waypoint.wp_type == "basic")) {
+					if (found == 0) {
 						append(me.winds[plan], waypoint_winds.new(waypoint.id, "waypoint", 0));
-						me.windSizes[plan] += 1;
+					} else {
+						append(me.winds[plan], winds_copy[plan][_index]);
+						append(me.nav_indicies[plan], i);
+						me.winds[plan][i].type = "waypoint";
+						me.includeWind = 1;
 					}
 				} else {
-					append(me.winds[plan], waypoint_winds.new(waypoint.id, "waypoint", 0));
-					me.windSizes[plan] += 1;
+					if (found == 0) {
+						append(me.winds[plan], waypoint_winds.new(waypoint.id, "waypoint", 0));
+					} else {
+						append(me.winds[plan], winds_copy[plan][_index]);
+						me.winds[plan][i].type = "waypoint";
+						me.includeWind = 0;
+					}
 				}
+				
+				me.windSizes[plan] += 1;
 			}
 		}
 		

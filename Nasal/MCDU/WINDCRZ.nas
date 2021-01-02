@@ -327,8 +327,7 @@ var windCRZPage = {
 						fmgc.windController.winds[computer_temp][me.match_location].sat1.set = 1;
 					}
 					mcdu_scratchpad.scratchpads[me.computer].empty();
-					me._setupPageWithData();
-					me.updateTmpy();
+					me.reload();
 				} else {
 					mcdu_message(me.computer, "NOT ALLOWED");
 				}
@@ -341,8 +340,7 @@ var windCRZPage = {
 				fmgc.windController.crz_winds[computer_temp].sat1.altitude = "";
 				fmgc.windController.crz_winds[computer_temp].sat1.set = 0;
 				mcdu_scratchpad.scratchpads[me.computer].empty();
-				me._setupPageWithData();
-				me.updateTmpy();
+				me.reload();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
@@ -410,8 +408,7 @@ var windCRZPage = {
 					if (me.items == index and index != 4) {
 						me.items += 1;
 					}
-					me._setupPageWithData();
-					me.updateTmpy();
+					me.reload();
 				} else {
 					mcdu_message(me.computer, "NOT ALLOWED");
 				}

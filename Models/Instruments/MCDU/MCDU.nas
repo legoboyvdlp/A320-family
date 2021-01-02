@@ -479,13 +479,13 @@ var canvas_MCDU_base = {
 				if (myFpln[i].R5B[0] != nil) {
 					me["Simple_R5B"].setText(myFpln[i].R5B[0]);
 					me["Simple_R5B"].show();
-					if (num(string.trim(myFpln[i].R5[1])) != nil) {
-						me["Simple_R5SB"].show();
-					} else {
-						me["Simple_R5SB"].hide();
-					}
 				} else {
 					me["Simple_R5B"].hide();
+				}
+				
+				if (myFpln[i].R5[0] != nil and num(string.trim(myFpln[i].R5[1])) != nil) {
+					me["Simple_R5SB"].show();
+				} else {
 					me["Simple_R5SB"].hide();
 				}
 				
