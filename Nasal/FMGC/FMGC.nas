@@ -167,6 +167,8 @@ var FMGCInternal = {
 	altAirportSet: 0,
 	altSelected: 0,
 	arrApt: "",
+	coRoute: "",
+	coRouteSet: 0,
 	costIndex: 0,
 	costIndexSet: 0,
 	crzFt: 10000,
@@ -307,6 +309,7 @@ var updateArptLatLon = func {
 
 updateRouteManagerAlt = func() {
 	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	# TODO - update FMGCInternal.phase when DES to re-enter in CLIMB/CRUIZE
 };
 
 ########
