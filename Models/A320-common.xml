@@ -309,6 +309,33 @@
 		</offsets>
 	</model>
 
+	<animation>
+		<type>select</type>
+		<object-name>Left nav light</object-name>
+		<object-name>Left nav light ALS</object-name>
+		<condition>
+			<not><property>sim/multiplay/generic/int[12]</property></not>
+		</condition>
+	</animation>
+
+	<model>
+		<name>Left nav light ALS sharklet</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/rednav.xml</path>
+		<offsets>
+			<x-m>1.54364</x-m>
+			<y-m>-16.38</y-m>
+			<z-m>0.317012</z-m>
+		</offsets>
+	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Left nav light ALS sharklet</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
+
 	<model>
 		<name>Right nav light</name>
 		<path>Aircraft/A320-family/Models/Lights/greennav.xml</path>
@@ -328,6 +355,33 @@
 			<z-m>0.317018</z-m>
 		</offsets>
 	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Right nav light</object-name>
+		<object-name>Right nav light ALS</object-name>
+		<condition>
+			<not><property>sim/multiplay/generic/int[12]</property></not>
+		</condition>
+	</animation>
+
+	<model>
+		<name>Right nav light ALS sharklet</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/greennav.xml</path>
+		<offsets>
+			<x-m>1.54364</x-m>
+			<y-m>16.38</y-m>
+			<z-m>0.317012</z-m>
+		</offsets>
+	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Right nav light ALS sharklet</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
 	
 	<model>
 		<name>Tail nav light</name>
