@@ -423,6 +423,33 @@
 		</offsets>
 	</model>
 
+	<animation>
+		<type>select</type>
+		<object-name>Left strobe light</object-name>
+		<object-name>Left strobe light ALS</object-name>
+		<condition>
+			<not><property>sim/multiplay/generic/int[12]</property></not>
+		</condition>
+	</animation>
+
+	<model>
+		<name>Left strobe light ALS sharklet</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/right-strobe.xml</path>
+		<offsets>
+			<x-m>2.31</x-m>
+			<y-m>-17.1</y-m>
+			<z-m>0.66</z-m>
+		</offsets>
+	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Left strobe light ALS sharklet</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
+
 	<model>
 		<name>Right strobe light</name>
 		<path>Aircraft/A320-family/Models/Lights/strobe.xml</path>
@@ -442,6 +469,33 @@
 			<z-m>0.319218</z-m>
 		</offsets>
 	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Right strobe light</object-name>
+		<object-name>Right strobe light ALS</object-name>
+		<condition>
+			<not><property>sim/multiplay/generic/int[12]</property></not>
+		</condition>
+	</animation>
+
+	<model>
+		<name>Right strobe light ALS sharklet</name>
+		<path>Aircraft/A320-family/Models/Lights/ALS/right-strobe.xml</path>
+		<offsets>
+			<x-m>2.31</x-m>
+			<y-m>17.1</y-m>
+			<z-m>0.66</z-m>
+		</offsets>
+	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>Right strobe light ALS sharklet</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[12]</property>
+		</condition>
+	</animation>
 	
 	<model>
 		<name>Tail strobe light</name>
