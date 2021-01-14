@@ -152,10 +152,20 @@ var baro = props.globals.getNode("/FMGC/internal/baro", 1);
 
 # GA PERF
 
+# AOC - SENSORS
+var parking_brake = props.globals.getNode("/controls/gear/brake-parking", 1);
+var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
+var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/position-norm", 1); #FWD door
+var doorR1_pos = props.globals.getNode("/sim/model/door-positions/doorr1/position-norm", 1); #FWD door
+var doorL4_pos = props.globals.getNode("/sim/model/door-positions/doorl4/position-norm", 1); #AFT door
+var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/position-norm", 1); #AFT door
+
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
 var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
+props.globals.initNode("/MCDU[0]/active-system", "", "STRING");
+props.globals.initNode("/MCDU[1]/active-system", "", "STRING");
 
 # Conversion factor pounds to kilogram
 var LBS2KGS = 0.4535924;
@@ -287,6 +297,19 @@ var canvas_MCDU_base = {
 		me["Simple_PageNum"].hide();
 		me["ArrowLeft"].hide();
 		me["ArrowRight"].hide();
+	},
+	showPageNumbers: func(pagno=0,pagcnt=0) {
+		if (pagno == 0) return me.defaultPageNumbers();		
+		me["Simple_PageNum"].show();		
+		me["Simple_PageNum"].setText((pagcnt>0) ? pagno ~ "/" ~ pagcnt : pagno);
+		me["ArrowLeft"].show();
+		me["ArrowRight"].show();		
+	},
+	showPageNumbersOnly: func(pagno,pagcnt) {
+		me["Simple_PageNum"].show();		
+		me["Simple_PageNum"].setText(sprintf("%9s",pagno  ~ "/"  ~ pagcnt));
+		me["ArrowLeft"].hide();
+		me["ArrowRight"].hide();		
 	},
 	hideAllArrows: func() {
 		me["Simple_L1_Arrow"].hide();
@@ -421,7 +444,7 @@ var canvas_MCDU_base = {
 				} else {
 					me["FPLN_Callsign"].hide();
 				}
-				
+
 				me.dynamicPageFunc(myFpln[i].L1, "Simple_L1");
 				me.dynamicPageFunc(myFpln[i].L2, "Simple_L2");
 				me.dynamicPageFunc(myFpln[i].L3, "Simple_L3");
@@ -597,6 +620,178 @@ var canvas_MCDU_base = {
 				me["Simple_R6"].hide();
 				me["Simple_R6_Arrow"].hide();
 			}
+		} else if (page == "FLTLOG") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();				
+
+				me["Simple_L0S"].hide();
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();				
+
+				me.showLeft(1, 1, 1, 1, 1, -1);								
+				me.showLeftS(1, -1, 1, 1, 1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(-1, 1, 1, 1, 1, -1);
+				me.showCenterS(-1, 1, 1, 1, 1, -1);
+				me.showRight(1, 1, 1, 1, 1, -1);
+				me.showRightS(1, 1, 1, 1, 1, -1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();				
+				
+				me.standardFontSize();
+				me.standardFontColour();
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "wht", "wht");
+
+				#me["PRINTPAGE"] - TODO missing asterisk at 5L - only useful when printing available
+
+				me["Simple_L1S"].setText(" FLT NUM-DATE");				
+				me["Simple_R1S"].setText("ORIG-DEST ");
+				me["Simple_L1"].setFontSize(small);				
+				me["Simple_R1"].setFontSize(small);
+				me["Simple_L2"].setFontSize(small);
+				me["Simple_C2"].setFontSize(small);
+				me["Simple_R2"].setFontSize(small);
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_C3"].setFontSize(small);
+				me["Simple_R3"].setFontSize(small);
+
+				me["Simple_L5"].setText(" PRINT");
+				me["Simple_L5"].setColor(BLUE);
+
+				me["Simple_R5"].setText("SENSORS ");
+				me["Simple_R5"].setColor(WHITE);
+
+				me["Simple_L4"].setFontSize(small);
+				me["Simple_L4"].setText(" FLIGHT");
+				me["Simple_C4"].setFontSize(small);
+				me["Simple_C4"].setText("--TIMES--");
+				me["Simple_R4"].setFontSize(small);
+				me["Simple_R4"].setText("BLOCK ");
+
+				me["Simple_C2S"].setText("TIME");
+				me["Simple_R2S"].setText("FOB ");
+
+				me["Simple_L2"].setText( "   OUT   -");
+				me["Simple_L3S"].setText("   OFF   -");
+				me["Simple_L3"].setText( "    ON   -");
+				me["Simple_L4S"].setText("    IN   -");
+				
+				me["Simple_C5"].setFontSize(small);
+
+				pageSwitch[i].setBoolValue(1);
+			}
+
+			var logid = 1; #mcdu.FlightLogDatabase.getPageSize(); - one page only - TODO:  multi pages
+			if (logid == 0) logid = 1;
+
+			me.showPageNumbersOnly(1,1);
+			me["Simple_Title"].setText(sprintf("FLT LOG.%04d",logid));
+
+			me["Simple_C2"].setText( "--.--"); #TODO - missing ":" char on fontset
+			me["Simple_C3S"].setText("--.--");
+			me["Simple_C3"].setText( "--.--");
+			me["Simple_C4S"].setText("--.--");
+			me["Simple_R2"].setText( "---.- ");
+			me["Simple_R3S"].setText("---.- ");
+			me["Simple_R3"].setText( "---.- ");
+			me["Simple_R4S"].setText("---.- ");
+			me.colorCenter("wht", "grn", "grn", "wht", "wht", "wht");
+			me.colorRight("wht", "grn", "grn", "wht", "wht", "wht");
+			me.colorLeftS("wht", "wht", "wht", "wht", "grn", "wht");
+			me.colorCenterS("wht", "wht", "grn", "grn", "grn", "wht");
+			me.colorRightS("wht", "wht", "grn", "grn", "grn", "wht");
+
+			var rowsC = ["Simple_C2","Simple_C3S","Simple_C3","Simple_C4S"];
+			var rowsR = ["Simple_R2","Simple_R3S","Simple_R3","Simple_R4S"];
+			var logs = mcdu.FlightLogDatabase.getLogByPage(logid);
+			var len = size(logs);
+			var flgtime = 0;
+			var blktime = 0;
+			for ( var i = 0; i < len; i = i + 1 ) {
+				if (logs[i] != nil) { # only valid reports
+					var p = logs[i].state;
+					if (p == 4) p = 3; # RETURN-IN
+					me[rowsC[p]].setText(logs[i].time);
+					me[rowsR[p]].setText(sprintf("%3.1f ",logs[i].fob));
+				}
+			}
+
+			var logpage = mcdu.FlightLogDatabase.getPage(logid);
+
+			me["Simple_L1"].setText(sprintf("%8s - ",logpage.fltnum) ~ logpage.date);
+			me["Simple_R1"].setText(logpage.tofrom ~ " ");
+
+			me["Simple_L5S"].setText( " " ~ logpage.flttime );
+			me["Simple_C5S"].setText(sprintf("%02.0f", getprop("/sim/time/utc/hour")) ~ "." ~ sprintf("%02.0f", getprop("/sim/time/utc/minute")) ~ "." ~ sprintf("%02.0f", getprop("/sim/time/utc/second")));
+			me["Simple_R5S"].setText( logpage.blktime ~ " " );
+
+			var fltstate = logpage.fltstate;
+			if (fltstate == "") {
+			  fltstate = (fmgc.FMGCInternal.toFromSet) ? "BEGIN" : "RESET";  #CHECKME - my best guess, only ready when plan inserted
+			  #TODO Pushback detection -> WPUSH state???
+			}   
+			me["Simple_C5"].setText(fltstate); 
+
+		} else if (page == "SENSORS") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("SENSORS       ");
+				me.defaultPageNumbers();
+				me["Simple_L0S"].hide();
+
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me.showLeftS(1, 1, 1, 1, -1, -1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.showRight(1, 1, 1, 1, -1, -1);
+				me.showRightS(1, 1, 1, 1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+				
+				#me["PRINTPAGE"] - TODO missing asterisk at 5L - only useful when printing available
+
+				me.standardFontSize();
+				me.standardFontColour();
+
+				me["Simple_L1"].setFontSize(small);				
+				me["Simple_R1"].setFontSize(small);
+				me["Simple_L2"].setFontSize(small);
+				me["Simple_R2"].setFontSize(small);
+				me["Simple_L3"].setFontSize(small);
+				me["Simple_R3"].setFontSize(small);
+				me["Simple_L4"].setFontSize(small);
+				me["Simple_R4"].setFontSize(small);
+				
+				me.colorRight("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorRightS("grn", "grn", "grn", "grn", "grn", "grn");
+
+				me["Simple_L1S"].setText("  PARK BRAKE");
+				me["Simple_L1"].setText( "  NOSE STRUT");
+				me["Simple_L2S"].setText( "  L FWD DOOR");
+				me["Simple_L2"].setText( "  R FWD DOOR");
+				me["Simple_L3S"].setText( "  L AFT DOOR");
+				me["Simple_L3"].setText( "  R AFT DOOR");
+				me["Simple_L4S"].setText( "  GND SPEED");
+				me["Simple_L4"].setText( "  FOB");
+
+				me["Simple_L5"].setText(" PRINT");
+				me["Simple_L5"].setColor(BLUE);
+
+				me["Simple_L6"].setText(" RETURN");
+
+				pageSwitch[i].setBoolValue(1);
+			}
+
+			me["Simple_R1S"].setText(sprintf("%-10s",(parking_brake.getValue() == 1) ? "SET" : "RELEASED"));
+			me["Simple_R1"].setText(sprintf("%-10s",(gear0_wow.getValue() == 1) ? "GROUND" : "FLIGHT"));
+			me["Simple_R2S"].setText(sprintf("%-10s",(doorL1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
+			me["Simple_R2"].setText(sprintf("%-10s",(doorR1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
+			me["Simple_R3S"].setText(sprintf("%-10s",(doorL4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
+			me["Simple_R3"].setText(sprintf("%-10s",(doorR4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
+			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%03.3f",pts.Velocities.groundspeed.getValue())));
+			me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob)));
+
 		} else if (page == "AOCCONFIG") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -1834,9 +2029,9 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
 				me.defaultPageNumbers();
 				
-				me.showLeft(1, 1, 1, -1, 1, 1);
+				me.showLeft(1, 1, 1, -1, -1, 1);
 				me["Simple_L0S"].hide();
-				me.showLeftS(1, 1, 1, -1, 1, 1);
+				me.showLeftS(1, 1, 1, -1, -1, 1);
 				me.showLeftArrow(-1, -1, 1, -1, -1, -1);
 				me.showRight(-1, 1, -1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, 1, 1, 1);
@@ -1859,13 +2054,19 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "grn", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				
-				me["Simple_L5"].setText("[   ]");
+				if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {  # only on preflight and done phases
+					me["Simple_L5S"].setText("CHG CODE");
+					me["Simple_L5S"].show();
+					me["Simple_L5"].setText("[   ]");
+					me["Simple_L5"].show();
+				} else {
+					me["Simple_L5"].hide();
+				}
+
 				me["Simple_L6"].setText(sprintf("%s/%s",idleFactor.getValue(),perfFactor.getValue()));
 				me["Simple_L1S"].setText(" ENG");
 				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
-				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
-				me["Simple_L5S"].setText("CHG CODE");
+				me["Simple_L3S"].setText(" SECOND NAV DATA BASE");				
 				me["Simple_L6S"].setText("IDLE/PERF");
 				me["Simple_R6"].setText("STATUS/XLOAD ");
 				me["Simple_R6S"].setText("SOFTWARE ");
