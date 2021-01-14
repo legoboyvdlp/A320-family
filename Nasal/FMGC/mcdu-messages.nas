@@ -181,7 +181,6 @@ var MessageController = {
 		TypeIMessage.new("VHF3 VOICE MSG NOT GEN"),TypeIMessage.new("NO COMM MSG NOT GEN"),TypeIMessage.new("WX UPLINK"),
 		TypeIMessage.new("SIMBRIEF DOWNLOAD FAILED"),TypeIMessage.new("MISSING USERNAME"),TypeIMessage.new("AOC ACT F-PLN UPLINK"),
 		TypeIMessage.new("NO ANSWER TO REQUEST"),TypeIMessage.new("NO D-ATIS AVAILABLE"),TypeIMessage.new("BAD SERVER RESPONSE"),
-	#ADDED new Messages
 		TypeIMessage.new("WIND DATA UPLINK"),TypeIMessage.new("CHECK ALT WIND"),TypeIMessage.new("INVALID WIND UPLINK"),TypeIMessage.new("WIND UPLINK EXISTS"), #p.533
 		TypeIMessage.new("FM DATALINK UNAVAIL"),TypeIMessage.new("NOT XMITTED TO ACARS"), #p.559
 		TypeIMessage.new("PRINTER NOT AVAILABLE"),
@@ -190,7 +189,6 @@ var MessageController = {
 		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),
 		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),TypeIIMessage.new("V1/VR/V2 DISAGREE", "amb", 0),
 		TypeIIMessage.new("TO SPEED TOO LOW", "amb", 0),
-	#ADDED new Messages		
 		TypeIIMessage.new("CHECK DEST DATA", "amb", 0), #p.533
 	]),
 	

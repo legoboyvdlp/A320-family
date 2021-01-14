@@ -157,6 +157,5 @@ var engine_one_chk_OOOI = setlistener("/engines/engine[0]/state", func {
 	if (getprop("/engines/engine[0]/state") == 3) {
 		removelistener(engine_one_chk_OOOI);
 		waitingOOOIChange.start();
-		print("OOOI phase processor started");
 	}
-},1,0);
+},0,0);
