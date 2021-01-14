@@ -9,9 +9,9 @@ var OOOIReport = {
 		report.time = (time != "") ? time : sprintf("%02d.%02d", getprop("/sim/time/utc/hour"), getprop("/sim/time/utc/minute"));		
 		report.elapsed = int(getprop("/sim/time/elapsed-sec"));
 		report.gmt = getprop("/sim/time/gmt-string");
-		report.date = left(getprop("/sim/time/gmt"),10);
-		report.fltnum = (fmgc.FMGCInternal.flightNumSet == 1) ? fmgc.FMGCInternal.flightNum : "";
-		report.tofrom = (fmgc.FMGCInternal.toFromSet) ? fmgc.FMGCInternal.depApt ~ "-" ~ fmgc.FMGCInternal.arrApt : "";
+		report.date = getprop("/sim/time/utc/day");
+		report.fltnum = (fmgc.FMGCInternal.flightNumSet == 1) ? fmgc.FMGCInternal.flightNum : "----";
+		report.tofrom = (fmgc.FMGCInternal.toFromSet) ? fmgc.FMGCInternal.depApt ~ "-" ~ fmgc.FMGCInternal.arrApt : "----/----";
 		return report;
 	},
 };
@@ -24,7 +24,7 @@ var OOOIReportPage = {
 		page.index = index;
 		page.fltstate = ""; #UNDEF state RESET/BEGIN/WPUSH
 		page.fltnum = (fmgc.FMGCInternal.flightNumSet == 1) ? fmgc.FMGCInternal.flightNum : "";
-		page.date = left(getprop("/sim/time/gmt"),10);
+		page.date = getprop("/sim/time/utc/day");
 		page.tofrom = (fmgc.FMGCInternal.toFromSet) ? fmgc.FMGCInternal.depApt ~ "-" ~ fmgc.FMGCInternal.arrApt : "";
 		page.fltstart = 0;
 		page.blkstart = 0;

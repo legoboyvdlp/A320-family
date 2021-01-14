@@ -157,7 +157,6 @@ var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/positio
 var doorR1_pos = props.globals.getNode("/sim/model/door-positions/doorr1/position-norm", 1); #FWD door
 var doorL4_pos = props.globals.getNode("/sim/model/door-positions/doorl4/position-norm", 1); #AFT door
 var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/position-norm", 1); #AFT door
-var gndSpeed = props.globals.getNode("/velocities/groundspeed-kt", 0);
 
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
@@ -672,10 +671,10 @@ var canvas_MCDU_base = {
 				me["Simple_C2S"].setText("TIME");
 				me["Simple_R2S"].setText("FOB ");
 
-				me["Simple_L2"].setText( "   OUT -");
-				me["Simple_L3S"].setText("   OFF -");
-				me["Simple_L3"].setText( "    ON -");
-				me["Simple_L4S"].setText("    IN -");
+				me["Simple_L2"].setText( "   OUT   -");
+				me["Simple_L3S"].setText("   OFF   -");
+				me["Simple_L3"].setText( "    ON   -");
+				me["Simple_L4S"].setText("    IN   -");
 				
 				me["Simple_C5"].setFontSize(small);
 
@@ -696,6 +695,11 @@ var canvas_MCDU_base = {
 			me["Simple_R3S"].setText("---.- ");
 			me["Simple_R3"].setText( "---.- ");
 			me["Simple_R4S"].setText("---.- ");
+			me.colorCenter("wht", "grn", "grn", "wht", "wht", "wht");
+			me.colorRight("wht", "grn", "grn", "wht", "wht", "wht");
+			me.colorLeftS("wht", "wht", "wht", "wht", "grn", "wht");
+			me.colorCenterS("wht", "wht", "grn", "grn", "grn", "wht");
+			me.colorRightS("wht", "wht", "grn", "grn", "grn", "wht");
 
 			var rowsC = ["Simple_C2","Simple_C3S","Simple_C3","Simple_C4S"];
 			var rowsR = ["Simple_R2","Simple_R3S","Simple_R3","Simple_R4S"];
@@ -714,7 +718,7 @@ var canvas_MCDU_base = {
 
 			var logpage = mcdu.FlightLogDatabase.getPage(logid);
 
-			me["Simple_L1"].setText(sprintf("%8s-",logpage.fltnum) ~ logpage.date);
+			me["Simple_L1"].setText(sprintf("%8s - ",logpage.fltnum) ~ logpage.date);
 			me["Simple_R1"].setText(logpage.tofrom ~ " ");
 
 			me["Simple_L5S"].setText( " " ~ logpage.flttime );
@@ -731,7 +735,7 @@ var canvas_MCDU_base = {
 		} else if (page == "SENSORS") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
-				me["Simple_Title"].setText("SENSORS");
+				me["Simple_Title"].setText("SENSORS       ");
 				me.defaultPageNumbers();
 				me["Simple_L0S"].hide();
 
@@ -756,6 +760,9 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setFontSize(small);
 				me["Simple_L4"].setFontSize(small);
 				me["Simple_R4"].setFontSize(small);
+				
+				me.colorRight("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorRightS("grn", "grn", "grn", "grn", "grn", "grn");
 
 				me["Simple_L1S"].setText("  PARK BRAKE");
 				me["Simple_L1"].setText( "  NOSE STRUT");
@@ -780,8 +787,8 @@ var canvas_MCDU_base = {
 			me["Simple_R2"].setText(sprintf("%-10s",(doorR1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R3S"].setText(sprintf("%-10s",(doorL4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R3"].setText(sprintf("%-10s",(doorR4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
-			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%3.3f",gndSpeed.getValue())));
-			me["Simple_R4"].setText(sprintf("%-10s",sprintf("%3.1f",fmgc.FMGCInternal.fob)));
+			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%03.3f",pts.Velocities.groundspeed.getValue())));
+			me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob)));
 
 		} else if (page == "AOCCONFIG") {
 			if (!pageSwitch[i].getBoolValue()) {
