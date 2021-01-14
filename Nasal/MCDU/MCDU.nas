@@ -18,6 +18,7 @@ var MCDU_reset = func(i) {
 	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
+	setprop("/MCDU[" ~ i ~ "]/active-system","");
 	pageNode[i].setValue("MCDU");
 	
 	setprop("/FMGC/keyboard-left", 0);
@@ -218,9 +219,11 @@ var lskbutton = func(btn, i) {
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 						mcdu_scratchpad.scratchpads[i].empty();
 						setprop("/MCDU[" ~ i ~ "]/active", 2);
+						setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 					}, 2);
-				} else {
+				} else {					
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
+					setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
@@ -374,9 +377,11 @@ var lskbutton = func(btn, i) {
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
 						mcdu_scratchpad.scratchpads[i].empty();
 						setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
+						setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 					}, 2);
 				} else {
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
+					setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
@@ -797,6 +802,8 @@ var lskbutton = func(btn, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "FLTLOG") {
+			mcdu_message(i, "NOT ALLOWED");
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 9;
 			atsu.freeTexts[i].changed = 1;
@@ -859,6 +866,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myClosestAirport[i].freeze();
 		} else if (page == "AOCMENU" or page == "ATCMENU" or page == "ATCMENU2") {
 			pageNode[i].setValue("ATSUDLINK");
+		} else if (page == "SENSORS") {
+			pageNode[i].setValue("FLTLOG");
 		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS" or page == "MCDUTEXT") {
 			pageNode[i].setValue("ATCMENU");
 		} else if (page == "WEATHERREQ" or page == "RECEIVEDMSGS") {
@@ -945,6 +954,8 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "ATSUDLINK") {
 			pageNode[i].setValue("AOCMENU");
+		} else if (page == "AOCMENU") {
+			pageNode[i].setValue("FLTLOG");
 		} else if (page == "WEATHERREQ") {
 			var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
 			if (result == 1) {
@@ -1205,6 +1216,8 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "FLTLOG") {
+			pageNode[i].setValue("SENSORS");
 		} else if (page == "WEATHERREQ") {
 			var result = atsu.AOC.sendReq(i);
 			if (result == 1) {
@@ -1397,8 +1410,15 @@ var pagebutton = func(btn, i) {
 	page = pageNode[i].getValue();
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	if (page != "MCDU") {
+
+		# A more flexible system/page tracking for future system expansion
+		if (getprop("/MCDU[" ~ i ~ "]/active-system") == "fmgc") setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
+		else setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
+		if (btn == "atc") setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
+		else setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
+
 		if (btn == "radnav") {
-			pageNode[i].setValue("RADNAV");
+			pageNode[i].setValue("RADNAV");			
 		} else if (btn == "prog") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				pageNode[i].setValue("PROGTO");
@@ -1433,12 +1453,13 @@ var pagebutton = func(btn, i) {
 		} else if (btn == "data") {
 			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
-			var page = page;
-			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "MCDUTEXT" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
-				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
-			} else {
-				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
-			}
+			#var page = page;
+			#if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "MCDUTEXT" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
+			#if (getprop("/MCDU[0]/active-system") == "fmgc") {
+			#	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
+			#} else {
+			#	#setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
+			#}
 			mcdu_message(i, "SELECT DESIRED SYSTEM");
 			pageNode[i].setValue("MCDU");
 		} else if (btn == "f-pln" or btn == "airport") {
@@ -1477,10 +1498,10 @@ var pagebutton = func(btn, i) {
 				settimer(func(){
 					pageNode[i].setValue("ATCMENU");
 					mcdu_scratchpad.scratchpads[i].empty();
-					setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
+					setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);					
 				}, 2);
 			} else {
-				pageNode[i].setValue("ATCMENU");
+				pageNode[i].setValue("ATCMENU");				
 			}
 		}
 	}

@@ -4660,7 +4660,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> 
-			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> 
@@ -4668,7 +4668,8 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> 
-			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>  <!-- Last Dynamic Page -->
+			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/FLIGHTLOG.nas</file>   <!-- Last Dynamic Page -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
