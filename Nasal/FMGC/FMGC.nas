@@ -973,7 +973,7 @@ var reset_FMGC = func {
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
-	mcdu.FlightLogDatabase.clearDatabase();
+	mcdu.FlightLogDatabase.reset(); # track reset events without loosing recorded data
 	
 	Input.fd1.setValue(fd1);
 	Input.fd2.setValue(fd2);

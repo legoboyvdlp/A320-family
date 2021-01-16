@@ -42,8 +42,9 @@ var formatSecToHHMM = func(sec) {
 var FlightLogDatabase = {
 	database: std.Vector.new(),
 	pages: std.Vector.new(),
+	currpageindex: 0,
 	addReport: func(report) {
-		if (report.state == 0) me.pages.append( OOOIReportPage.new(me.getSize()) );
+		if (report.state == 0 or me.getPageSize()==0) me.addPage();
         me.database.append(report);
 		var pg = me.pages.vector[me.pages.size()-1];
 		pg.fltnum = report.fltnum;
@@ -65,6 +66,9 @@ var FlightLogDatabase = {
 			if (pg.blkstart > 0) pg.blktime = formatSecToHHMM(report.elapsed - pg.blkstart);
 		}
     },
+	reset: func() {
+		if (me.getPageSize()>0 and me.currpageindex < me.getSize()) me.addPage();
+	},
 	getSize: func() {
 		return me.database.size();
 	},    
@@ -81,6 +85,10 @@ var FlightLogDatabase = {
 			append(lst,log);
 		}
 		return lst;
+	},
+	addPage: func() {
+		me.currpageindex = me.getSize();
+		me.pages.append( OOOIReportPage.new(me.getSize()) );
 	},
 	getPage: func(pg) {
 		return (pg<=me.getPageSize()) ? me.pages.vector[pg-1] : OOOIReportPage.new(0);
