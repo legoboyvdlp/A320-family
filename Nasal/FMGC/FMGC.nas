@@ -169,6 +169,8 @@ var FMGCInternal = {
 	altAirportSet: 0,
 	altSelected: 0,
 	arrApt: "",
+	coRoute: "",
+	coRouteSet: 0,
 	costIndex: 0,
 	costIndexSet: 0,
 	crzFt: 10000,
@@ -309,6 +311,7 @@ var updateArptLatLon = func {
 
 updateRouteManagerAlt = func() {
 	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	# TODO - update FMGCInternal.phase when DES to re-enter in CLIMB/CRUIZE
 };
 
 ########
@@ -970,6 +973,7 @@ var reset_FMGC = func {
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
+	mcdu.FlightLogDatabase.clearDatabase();
 	
 	Input.fd1.setValue(fd1);
 	Input.fd2.setValue(fd2);
