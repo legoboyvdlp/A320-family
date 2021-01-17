@@ -979,8 +979,13 @@
 			</table>
 		</scheduled_gain>
 		
-		<lag_filter name="fbw/tiller-handle">
+		<actuator name="fbw/tiller-handle-cmd">
 			<input>fbw/tiller-handle-scheduled</input>
+			<rate_limit>0.16</rate_limit> <!-- 12/75 -->
+		</actuator>
+		
+		<lag_filter name="fbw/tiller-handle">
+			<input>fbw/tiller-handle-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
