@@ -1175,6 +1175,7 @@
 		<switch name="fcs/brake-avail">
 			<default value="0"/>
 			<test logic="OR" value="1">
+				/services/chocks/enable eq 1
 				/systems/hydraulic/green-psi ge 2500
 				/systems/hydraulic/yellow-psi ge 1000
 				/systems/hydraulic/yellow-accumulator-psi gt 0

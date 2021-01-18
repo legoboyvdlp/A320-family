@@ -197,10 +197,10 @@ var renderingSettings = {
 	check: func() {
 		var rembrandt = getprop("/sim/rendering/rembrandt/enabled");
 		var ALS = getprop("/sim/rendering/shaders/skydome");
-		var customSettings = getprop("/sim/rendering/shaders/custom-settings") == 1;
+
 		var landmass = getprop("/sim/rendering/shaders/landmass") >= 4;
 		var model = getprop("/sim/rendering/shaders/model") >= 2;
-		if (!rembrandt and (!ALS or !customSettings or !landmass or !model)) {
+		if (!rembrandt and (!ALS or !landmass or !model)) {
 			rendering_dlg.open();
 		}
 	},
@@ -255,6 +255,15 @@ var writeSettings = func {
 ################
 # Panel States #
 ################
+
+# Abort auto-config and close dialog
+var abortPanelStates = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 1) {
+		setprop("/systems/acconfig/autoconfig-running", 0);
+	}
+	ps_load_dlg.close();
+	spinning.stop();
+}
 
 # Cold and Dark
 var colddark = func {
@@ -352,6 +361,10 @@ var beforestart = func {
 	}
 }
 var beforestart_b = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# Continue with engine start prep.
 	systems.FUEL.Switches.pumpLeft1.setValue(1);
 	systems.FUEL.Switches.pumpLeft2.setValue(1);
@@ -439,6 +452,10 @@ var taxi = func {
 	}
 }
 var taxi_b = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# Continue with engine start prep, and start engines.
 	systems.FUEL.Switches.pumpLeft1.setValue(1);
 	systems.FUEL.Switches.pumpLeft2.setValue(1);
@@ -492,6 +509,10 @@ var taxi_b = func {
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	setprop("/controls/engines/engine-start-switch", 2);
 	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
 	setprop("/controls/engines/engine[1]/cutoff-switch", 0);
@@ -500,6 +521,10 @@ var taxi_c = func {
 	}, 10);
 }
 var taxi_d = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# After Start items.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);
