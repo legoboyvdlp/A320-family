@@ -34,7 +34,7 @@
 		<object-name>OutflowValveDoor2</object-name>
 		<object-name>GPUServiceDoor</object-name>
 	</effect>
-	<effect>
+	<!--<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-rudder</inherits-from>
 		<object-name>Rudder</object-name>
 	</effect>
@@ -112,7 +112,7 @@
 		<object-name>SpoilerActuatorRodR3</object-name>
 		<object-name>SpoilerActuatorRodR2</object-name>
 		<object-name>SpoilerActuatorRodR1</object-name>
-	</effect>
+	</effect>-->
 	
 	
 	<!-- Animations -->
