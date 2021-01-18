@@ -1918,20 +1918,37 @@
 			<key n="8">
 				<name>Del</name>
 				<desc>CLR</desc>
+				<repeatable type="bool">true</repeatable>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
-					<script>mcdu.button("CLR", 0);</script>
+					<script>mcdu.button("CLR", 0, "down");</script>
 				</binding>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
-					<script>mcdu.button("CLR", 1);</script>
+					<script>mcdu.button("CLR", 1, "down");</script>
 				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<property>/FMGC/keyboard-left</property>
+						</condition>
+						<command>nasal</command>
+						<script>mcdu.button("CLR", 0, "up");</script>
+					</binding>
+					<binding>
+						<condition>
+							<property>/FMGC/keyboard-right</property>
+						</condition>
+						<command>nasal</command>
+						<script>mcdu.button("CLR", 1, "up");</script>
+					</binding>
+				</mod-up>
 			</key>
 			<key n="11">
 				<name>Disable MCDU keyboard mode</name>
@@ -4644,7 +4661,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> 
-			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> 
@@ -4652,7 +4669,8 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> 
-			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>  <!-- Last Dynamic Page -->
+			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/FLIGHTLOG.nas</file>   <!-- Last Dynamic Page -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
