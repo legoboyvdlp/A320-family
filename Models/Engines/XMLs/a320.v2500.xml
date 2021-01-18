@@ -406,7 +406,7 @@
 	
 
 	
-	<!-- Effect 
+	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-IAE</inherits-from>
 		<object-name>EngineIAEV2500L</object-name>
@@ -425,5 +425,5 @@
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-IAE</inherits-from>
 		<object-name>IntakeIAEV2500L</object-name>
 		<object-name>IntakeIAEV2500R</object-name>
-	</effect>-->
+	</effect>
 </PropertyList>
