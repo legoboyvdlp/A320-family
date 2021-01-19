@@ -134,7 +134,6 @@ var adr_3_fault = props.globals.getNode("/controls/navigation/adirscp/lights/adr
 var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-data", 1);
 
 # Create Nodes:
-var alt_diff = props.globals.initNode("/instrumentation/pfd/alt-diff", 0.0, "DOUBLE");
 var heading = props.globals.initNode("/instrumentation/pfd/heading-deg", 0.0, "DOUBLE");
 var horizon_pitch = props.globals.initNode("/instrumentation/pfd/horizon-pitch", 0.0, "DOUBLE");
 var horizon_ground = props.globals.initNode("/instrumentation/pfd/horizon-ground", 0.0, "DOUBLE");
@@ -1690,7 +1689,7 @@ var canvas_PFD_1 = {
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
 			ap_alt_cur = ap_alt.getValue();
-			alt_diff_cur = alt_diff.getValue();
+			alt_diff_cur = dmc.DMController.DMCs[0].outputs[7].getValue();
 			if (alt_diff_cur >= -565 and alt_diff_cur <= 565) {
 				me["ALT_target"].setTranslation(0, (alt_diff_cur / 100) * -48.66856);
 				me["ALT_target_digit"].setText(sprintf("%03d", math.round(ap_alt_cur / 100)));
@@ -2461,7 +2460,7 @@ var canvas_PFD_2 = {
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
 			ap_alt_cur = ap_alt.getValue();
-			alt_diff_cur = alt_diff.getValue();
+			alt_diff_cur = dmc.DMController.DMCs[1].outputs[7].getValue();
 			if (alt_diff_cur >= -565 and alt_diff_cur <= 565) {
 				me["ALT_target"].setTranslation(0, (alt_diff_cur / 100) * -48.66856);
 				me["ALT_target_digit"].setText(sprintf("%03d", math.round(ap_alt_cur / 100)));
