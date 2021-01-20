@@ -3753,7 +3753,7 @@ var canvas_MCDU_base = {
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
 				me.showRight(-1, 1, 1, 1, 1, 1);
-				me.showRightS(-1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
 				me["Simple_C3B"].hide();
@@ -3772,11 +3772,13 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "blu", "blu", "blu", "blu", "wht");
+				me.colorRight("grn", "blu", "blu", "blu", "blu", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+
+				me["Simple_Title"].setText("TAKE OFF");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
@@ -3816,17 +3818,24 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 			}
 			
-			if (fmgc.FMGCInternal.phase == 1) {
+			if (fmgc.FMGCInternal.phase > 0) {  # not modifiable from TO phase
 				me["Simple_Title"].setColor(GREEN);
+				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
+				me.colorRight("grn", "blu", "grn", "grn", "grn", "wht");
 			} else {
 				me["Simple_Title"].setColor(WHITE);
+				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
+				me.colorRight("grn", "blu", "blu", "blu", "blu", "wht");
 			}
 			
 			if (fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
-				me["Simple_Title"].setText(sprintf("TAKE OFF RWY %s", fmgc.flightPlanController.flightplans[2].departure_runway.id));
+				me["Simple_R1"].setText(fmgc.flightPlanController.flightplans[2].departure_runway.id ~ " ");
+				me["Simple_R1"].show();
 			} else {
-				me["Simple_Title"].setText("TAKE OFF");
+				me["Simple_R1"].hide();
 			}
+
+			
 			
 			if (fmgc.FMGCInternal.v1set) {
 				me["PERFTO_V1"].hide();
