@@ -2137,14 +2137,38 @@
             <condition>
 				<and>
 					<or>
-						<greater-than>
-							<property>/fdm/jsbsim/fcs/left-brake-cmd-norm</property>
-							<value>0.95</value>
-						</greater-than>
-						<greater-than>
-							<property>/fdm/jsbsim/fcs/right-brake-cmd-norm</property>
-							<value>0.95</value>
-						</greater-than>
+					    <and>
+							<greater-than>
+								<property>/fdm/jsbsim/fcs/left-brake-cmd-norm</property>
+								<value>0.95</value>
+							</greater-than>
+							<or>
+								<equals>
+									<property>/gear/gear[0]/wow</property>
+									<value>1</value>
+								</equals>
+								<equals>
+									<property>/gear/gear[1]/wow</property>
+									<value>1</value>
+								</equals>
+							</or>					
+						</and>
+						<and>
+							<greater-than>
+								<property>/fdm/jsbsim/fcs/right-brake-cmd-norm</property>
+								<value>0.95</value>
+							</greater-than>
+							<or>
+								<equals>
+									<property>/gear/gear[0]/wow</property>
+									<value>1</value>
+								</equals>
+								<equals>
+									<property>/gear/gear[2]/wow</property>
+									<value>1</value>
+								</equals>
+							</or>					
+						</and>
 					</or>
 					<greater-than>
 						<property>/velocities/groundspeed-kt</property>

@@ -237,6 +237,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(1);
 		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(1);
+		} else if (page == "PROGPREF") {
+			progTOInput("L1",i); # same fn as TO
 		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
 		} else if (page == "PROGCLB") {
@@ -1413,14 +1415,16 @@ var pagebutton = func(btn, i) {
 
 		# A more flexible system/page tracking for future system expansion
 		if (getprop("/MCDU[" ~ i ~ "]/active-system") == "fmgc") setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
-		else setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
+		else if (getprop("/MCDU[" ~ i ~ "]/active-system") == "atsu") setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
 		if (btn == "atc") setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 		else setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 
 		if (btn == "radnav") {
 			pageNode[i].setValue("RADNAV");			
 		} else if (btn == "prog") {
-			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
+			if (fmgc.FMGCInternal.phase == 0) {
+				pageNode[i].setValue("PROGPREF");
+			} else if (fmgc.FMGCInternal.phase == 1) {
 				pageNode[i].setValue("PROGTO");
 			} else if (fmgc.FMGCInternal.phase == 2) {
 				pageNode[i].setValue("PROGCLB");

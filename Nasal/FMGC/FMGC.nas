@@ -646,9 +646,15 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	if (FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
-		FMGCInternal.phase = 5;
-	}
+	if (FMGCInternal.phase == 4) {
+		if (getprop("/FMGC/internal/decel")) {
+			FMGCInternal.phase = 5;
+		}
+		else if (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
+			FMGCInternal.phase = 3;
+			systems.PNEU.pressMode.setValue("CR");
+		}
+	} 
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
 		setprop("/FMGC/internal/decel", 1);

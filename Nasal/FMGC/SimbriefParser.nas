@@ -1,6 +1,6 @@
 # A3XX Simbrief Parser
 # Copyright (c) 2020 Jonathan Redpath (legoboyvdlp)
-# enhanceded 12/2020 - parse TOD & TOC psedo waypoints, set computer speeds on fix wps, fake coRoute name
+# enhanced 12/2020 - parse TOD & TOC psedo waypoints, set computer speeds on fix wps, fake coRoute name
 
 var LBS2KGS = 0.4535924;
 
@@ -14,7 +14,7 @@ var SimbriefParser = {
 		me.inhibit = 1;
 		var stamp = systime();
 		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
-			.fail(func me.failure(i))
+			.fail(func { me.failure(i) })
 			.done(func {
 				var errs = [];
 				call(me.read, [(getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml"),i], SimbriefParser, {}, errs);
@@ -48,6 +48,33 @@ var SimbriefParser = {
 			print("Error reading " ~ xml);
 			me.failure(i);
 		}
+	},
+	checkValid: func(xml) {
+		var data = io.readxml(xml);
+		if (data != nil) {
+			return (data.getChild("OFP") != nil);
+		} 
+		return false;
+	},
+	readLegs: func(xml) { # lite OFP parser only for legs = wapoinst + airways
+	    var legs = [];
+		var data = io.readxml(xml);
+		if (data != nil) {
+			var ofp = data.getChild("OFP");
+			if (ofp != nil) {
+				var ofpNavlog = ofp.getNode("navlog");
+				var ofpFixes = ofpNavlog.getChildren("fix");				
+				var ident = "";
+				foreach (var ofpFix; ofpFixes) {
+					if (ofpFix.getNode("is_sid_star").getBoolValue()) continue;
+					ident = ofpFix.getNode("ident").getValue();
+					if (ident == "TOC" or ident == "TOD") continue;
+					append(legs, [ ofpFix.getNode("ident").getValue() , ofpFix.getNode("via_airway").getValue() ] );
+				}
+				return legs;
+			}
+		}
+		return nil;
 	},
 	tryFindByCoord: func(coords, id, type) {
 		var result = nil;
