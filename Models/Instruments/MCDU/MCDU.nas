@@ -2793,60 +2793,49 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, 1, 1, 1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				#me.showCenter(-1, -1, 1, -1, -1, -1);
-				#me.showCenterS(-1, -1, 1, -1, -1, -1);
-				#me["Simple_C3B"].hide();
-				#me["Simple_C4B"].hide();
-				
-				#me.fontLeft(default, default, default, default, default, default);
-				#me.fontLeftS(default, default, default, default, default, default);
-				#me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeLeftS(normal, normal, normal, normal, normal, normal);
-				#me.fontRight(default, default, default, default, default, default);
-				#me.fontRightS(default, default, default, default, default, default);
 				me.fontSizeRight(0, small, small, small, small, normal);
 				me.fontSizeRightS(0, small, small, small, small, normal);
 				
 				me.colorLeft("grn", "grn", "grn", "grn", "grn", "wht");
 				me.colorLeftS("grn", "grn", "grn", "grn", "grn", "wht");
-				#me.colorCenter("grn", "ack", "amb", "ack", "ack", "wht");				
 				me.colorRight("ack", "wht", "wht", "wht", "wht", "amb");
 				me.colorRightS("ack", "wht", "wht", "wht", "wht", "wht");
 
-				pageSwitch[i].setBoolValue(1);
+				me["Simple_L1"].setText("NONE");
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_R6"].setText("INSERT ");
+				me["PRINTPAGE"].show();
+				me["PRINTPAGE"].setColor(AMBER);
+
+				var rows = ["2S","2","3S","3","4S","4","5S","5"];
+
+				me["Simple_L1"].setText("DUBLHR1");
+
+				var r = 0;
+				#for ( ; r < 8; r +=  1) {   # Example how formats rows with 4 cols
+				#	me["Simple_L" ~ rows[r]].setText(sprintf("%11s %11s","SELKA","NUGRA"));
+				#	me["Simple_R" ~ rows[r]].setText(sprintf("%-13s  %-13s","UL975","UL975"));
+				#}
+				while (r<8) {
+					me["Simple_L" ~ rows[r]].setText("");
+					me["Simple_R" ~ rows[r]].setText("");
+					r+=1;
+				}
+
+				if (fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.altSelected) {
+					me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
+				} else if (!fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+					me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.altAirport));
+				} else if (fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
+					me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.arrApt ~ "/" ~ fmgc.FMGCInternal.altAirport));
+				} else {
+					me["Simple_Title"].setText("ROUTE SELECTION");
+				}
+
+				pageSwitch[i].setBoolValue(1);	# update on request only (left/right arrows)
 			}
 			
-			me["Simple_L1"].setText("NONE");
-			me["Simple_L6"].setText(" RETURN");
-			me["Simple_R6"].setText("INSERT ");
-			me["PRINTPAGE"].show();
-			me["PRINTPAGE"].setColor(AMBER);
-
-			var rows = ["2S","2","3S","3","4S","4","5S","5"];
-
-			me["Simple_L1"].setText("DUBLHR1");
-
-			var r = 0;
-			for ( ; r < 8; r +=  1) {
-				me["Simple_L" ~ rows[r]].setText(sprintf("%11s %11s","SELKA","NUGRA"));
-				me["Simple_R" ~ rows[r]].setText(sprintf("%-13s  %-13s","UL975","UL975"));
-			}
-			while (r<8) {
-				me["Simple_L" ~ rows[r]].setText("");
-				me["Simple_R" ~ rows[r]].setText("");
-				r+=1;
-			}
-
-			if (fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.altSelected) {
-				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
-			} else if (!fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
-				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.altAirport));
-			} else if (fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
-				me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.arrApt ~ "/" ~ fmgc.FMGCInternal.altAirport));
-			} else {
-				me["Simple_Title"].setText("ROUTE SELECTION");
-			}
-
 		} else if (page == "INITB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();

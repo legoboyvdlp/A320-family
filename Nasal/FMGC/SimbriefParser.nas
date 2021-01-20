@@ -49,7 +49,7 @@ var SimbriefParser = {
 			me.failure(i);
 		}
 	},
-	checkValid: func(xml) {
+	validateFile: func(xml) {
 		var data = io.readxml(xml);
 		if (data != nil) {
 			return (data.getChild("OFP") != nil);
@@ -188,6 +188,7 @@ var SimbriefParser = {
 				#setprop("/autopilot/route-manager/vnav/tc/latitude-deg",ofpFix.getNode("pos_lat").getValue());
 				#setprop("/autopilot/route-manager/vnav/tc/longitude-deg",ofpFix.getNode("pos_long").getValue());				
 				#ident = "(T/C)";
+				continue; # restore skip TOC/TOD
 			}
 			
 			if (ident == "TOD") {
@@ -195,6 +196,7 @@ var SimbriefParser = {
 				#setprop("/autopilot/route-manager/vnav/td/latitude-deg",ofpFix.getNode("pos_lat").getValue());
 				#setprop("/autopilot/route-manager/vnav/td/longitude-deg",ofpFix.getNode("pos_long").getValue());
 				#ident = "(T/D)";
+				continue; # restore skip TOC/TOD
 			}
 			
 			coords = geo.Coord.new();
