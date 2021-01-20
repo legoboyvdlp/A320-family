@@ -176,13 +176,13 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 				expectedOOOIState = 0;
 			}
 		}
-		else if (!gear0) {  # OFF without IN -> To without stop and opening doors
+		else if (!gear0) {  # OFF without IN -> TO without stop and opening doors
 			if (lastgear0) FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState,lastgear0)); # IN (estimated)
 			FlightLogDatabase.addPage();
 			if (lastgsrestart) FlightLogDatabase.addReport(OOOIReport.new(0,lastgsrestart)); # OUT (estimated)
-			expectedOOOIState = 1; # watch for OFF state
+			expectedOOOIState = 1; # go on to OFF state
 		}
-		else if (gs > 9 and lastgsrestart == 0) { # try to decect OFF without IN
+		else if (gs > 9 and lastgsrestart == 0) { # try to detect OFF without IN
 			lastgsrestart = int(getprop("/sim/time/elapsed-sec"));
 		}
 	}
