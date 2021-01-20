@@ -180,7 +180,7 @@ var MessageController = {
 		TypeIMessage.new("USING COST INDEX N", 1),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),TypeIMessage.new("RWY/LS MISMATCH"),
 		TypeIMessage.new("VHF3 VOICE MSG NOT GEN"),TypeIMessage.new("NO COMM MSG NOT GEN"),TypeIMessage.new("WX UPLINK"),
 		TypeIMessage.new("SIMBRIEF DOWNLOAD FAILED"),TypeIMessage.new("MISSING USERNAME"),TypeIMessage.new("AOC ACT F-PLN UPLINK"),
-		TypeIMessage.new("NO ANSWER TO REQUEST"),TypeIMessage.new("NO D-ATIS AVAILABLE"),TypeIMessage.new("BAD SERVER RESPONSE"),
+		TypeIMessage.new("NO ANSWER TO REQUEST"),TypeIMessage.new("NO D-ATIS AVAILABLE"),TypeIMessage.new("NO METAR AVAILABLE"),TypeIMessage.new("BAD SERVER RESPONSE"),
 		TypeIMessage.new("WIND DATA UPLINK"),TypeIMessage.new("CHECK ALT WIND"),TypeIMessage.new("INVALID WIND UPLINK"),TypeIMessage.new("WIND UPLINK EXISTS"), #p.533
 		TypeIMessage.new("FM DATALINK UNAVAIL"),TypeIMessage.new("NOT XMITTED TO ACARS"), #p.559
 		TypeIMessage.new("PRINTER NOT AVAILABLE"),
