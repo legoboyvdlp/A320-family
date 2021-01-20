@@ -383,4 +383,25 @@ foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Libraries", name, input[name]));
 }
 
+# TODO split EFIS altimeters
+var newinhg = nil;
+setlistener("/instrumentation/altimeter/setting-inhg", func() {
+	newinhg = getprop("/instrumentation/altimeter/setting-inhg");
+	setprop("/instrumentation/altimeter[1]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[2]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[3]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[4]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[5]/setting-inhg", newinhg);
+}, 0, 0);
+
+var newhpa = nil;
+setlistener("/instrumentation/altimeter/setting-hpa", func() {
+	newhpa = getprop("/instrumentation/altimeter/setting-hpa");
+	setprop("/instrumentation/altimeter[1]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[2]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[3]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[4]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[5]/setting-hpa", newhpa);
+}, 0, 0);
+
 setprop("/systems/acconfig/libraries-loaded", 1);

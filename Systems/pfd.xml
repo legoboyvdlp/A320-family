@@ -136,9 +136,79 @@
 			<property>/it-autoflight/internal/alt</property>
 		</input>
 		<reference>
-			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+			<property>/instrumentation/altimeter[0]/indicated-altitude-ft</property>
 		</reference>
-		<output>/instrumentation/pfd/alt-diff</output>
+		<output>/instrumentation/pfd/alt-diff[0]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[1]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[1]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[2]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[2]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[3]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[3]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[4]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[4]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[5]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[5]</output>
 	</filter>
 	
 	<filter>
