@@ -981,7 +981,10 @@
 		<object-name>dcduScreenL</object-name>
 		<object-name>dcduScreenR</object-name>
 		<condition>
-			<property>sim/current-view/internal</property>
+			<or>
+				<not><property>options/hide-canvas-outside</property></not>
+				<property>sim/current-view/internal</property>
+			</or>
 		</condition>
 	</animation>
 	

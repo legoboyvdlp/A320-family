@@ -378,9 +378,10 @@ foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Libraries", name, input[name]));
 }
 
+var hideCanvas = props.globals.getNode("/options/hide-canvas-outside");
 var internal = props.globals.getNode("/sim/current-view/internal");
 var toggleScreen = func() {
-	if (!internal.getValue()) {
+	if (!internal.getValue() and hideCanvas.getValue()) {
 		canvas_pfd.PFD_update.stop();
 		canvas_ecam.lowerECAM_update.stop();
 		canvas_nd.nd_update.stop();
@@ -394,6 +395,10 @@ var toggleScreen = func() {
 		canvas_mcdu.MCDU_update.start();
 	}
 };
+
+setlistener("/options/hide-canvas-outside", func() {
+	toggleScreen();
+}, 0, 0);
 
 setlistener("/sim/current-view/internal", func() {
 	toggleScreen();

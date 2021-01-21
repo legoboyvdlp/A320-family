@@ -80,6 +80,7 @@ setprop("/systems/acconfig/options/wxr-server", "noaa");
 setprop("/systems/acconfig/options/welcome-skip", 0);
 setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
+setprop("/systems/acconfig/options/hide-canvas-outside", 0);
 setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
 setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
@@ -235,6 +236,7 @@ var readSettings = func {
 	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
 	setprop("/systems/atsu/atis-server", getprop("/systems/acconfig/options/atis-server"));
 	setprop("/systems/atsu/wxr-server", getprop("/systems/acconfig/options/wxr-server"));
+	setprop("/options/hide-canvas-outside", getprop("/systems/acconfig/options/hide-canvas-outside"));
 }
 
 var writeSettings = func {
@@ -249,6 +251,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
 	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
 	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));
+	setprop("/systems/acconfig/options/hide-canvas-outside", getprop("/options/hide-canvas-outside"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 
