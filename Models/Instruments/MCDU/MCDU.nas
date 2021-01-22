@@ -3663,14 +3663,14 @@ var canvas_MCDU_base = {
 				
 				me.fontLeft(default, default, symbol, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, symbol, symbol, default, default);
+				me.fontRight(default, small, symbol, symbol, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 
 				me.fontSizeLeft(normal, normal, small, small, normal, small);
 				me.fontSizeLeftS(small, small, small, small, small, small);
 				me.fontSizeRight(normal, small, small, small, normal, small);
 				me.fontSizeRightS(small, small, small, small, small, small);
-				me.fontSizeCenter(small, small, small, small, small, normal);
+				me.fontSizeCenter(small, normal, small, small, small, normal);
 				me.fontSizeCenterS(normal, small, small, small, small, small);				
 				
 				me["Simple_C1S"].setFontSize(small);
@@ -3678,10 +3678,10 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "wht", "blu", "wht", "wht", "blu");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("mag", "grn", "blu", "blu", "grn", "grn");
+				me.colorRight("mag", "wht", "blu", "blu", "grn", "grn");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "wht", "wht", "wht", "wht", "grn");
+				me.colorCenter("grn", "grn", "wht", "wht", "wht", "grn");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 
 				if (page == "PROGCRZ") {
@@ -3693,7 +3693,7 @@ var canvas_MCDU_base = {
 					me.showCenter(0, 1, 0, 0, 0, 0);
 					me.showRight(0, 1, 0, 0, 0, 0);		
 					#me["Simple_C2"].setFontSize(normal);			
-					me["Simple_R2"].setFontSize(normal);			
+					#me["Simple_R2"].setFontSize(normal);			
 				} 
 				#else if (page == "PROGAPPR") {  # A/C without GPS
 				#	me["Simple_L5S"].setFontSize(small);
@@ -3752,8 +3752,8 @@ var canvas_MCDU_base = {
 			if (page == "PROGDES" or page == "PROGAPPR") {			
 				var vdev = 750; #CHECKME i dunno the meaning, but I found this value in the source
 				var vdev_sign = (vdev>=0) ? "+" : "-";			
-				me["Simple_R2"].setText(sprintf("%s%4d   ",vdev_sign,abs(vdev)));
-				me["Simple_C2"].setText(sprintf("%30s","VDEV=        FT "));
+				me["Simple_C2"].setText(sprintf("%17s%4d   ",vdev_sign,abs(vdev)));
+				me["Simple_R2"].setText(sprintf("%30s","VDEV=       FT "));
 			}
 
 			me["Simple_R4"].setText("[    ]");
