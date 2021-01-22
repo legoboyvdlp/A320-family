@@ -3741,7 +3741,8 @@ var canvas_MCDU_base = {
 			if (page != "PROGDONE") {			
 				me["Simple_R1"].setText("FL398 ");
 			} else {
-				me["Simple_R1"].setText("----- ");
+				me["Simple_L1"].setText("-----");
+				me["Simple_R1"].setText("----- ");				
 				me["Simple_L1"].setColor(AMBER);
 				me["Simple_C1"].setColor(WHITE);
 				me["Simple_R1"].setColor(WHITE);
