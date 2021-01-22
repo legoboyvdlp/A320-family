@@ -3635,7 +3635,7 @@ var canvas_MCDU_base = {
 					colortext[0] = "DONE";
 				}
 
-				colortext[1] = (fmgc.FMGCInternal.flightNumSet and page != "PROGDONE") ? fmgc.FMGCInternal.flightNum : "";
+				colortext[1] = (fmgc.FMGCInternal.flightNumSet and page != "PROGDONE") ? fmgc.FMGCInternal.flightNum : "";  #CHECKME - codition useful?
 
 				me["Simple_Title"].setText(sprintf("   %-21s",colortext[0]));
 				me["Simple_Title2"].setText(sprintf("%12s %-11s","",colortext[1]));
@@ -3751,7 +3751,7 @@ var canvas_MCDU_base = {
 			if (page == "PROGDES" or page == "PROGAPPR") {			
 				var vdev = 750; #CHECKME i dunno the meaning, but I found this value in the source
 				var vdev_sign = (vdev>=0) ? "+" : "-";			
-				me["Simple_R2"].setText(sprintf("%s%04d   ",vdev_sign,abs(vdev)));
+				me["Simple_R2"].setText(sprintf("%s%4d   ",vdev_sign,abs(vdev)));
 				me["Simple_C2"].setText(sprintf("%30s","VDEV=        FT "));
 			}
 
@@ -3866,12 +3866,12 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].hide();
 				me["Simple_L6S"].hide();
 			}
-			
-			if (fmgc.FMGCInternal.phase > 0) {  # not modifiable from TO phase
+
+			if (fmgc.FMGCInternal.phase > 0) {  # GREEN title and not modifiable on TO phase
 				me["Simple_Title"].setColor(GREEN);
 				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
 				me.colorRight("grn", "blu", "grn", "grn", "grn", "wht");
-			} else {
+			} else {				
 				me["Simple_Title"].setColor(WHITE);
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorRight("grn", "blu", "blu", "blu", "blu", "wht");
@@ -3960,6 +3960,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
+
 		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4114,6 +4115,7 @@ var canvas_MCDU_base = {
 
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
+
 		} else if (page == "PERFCRZ") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4409,6 +4411,7 @@ var canvas_MCDU_base = {
 
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
+
 		} else if (page == "PERFAPPR") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4592,6 +4595,7 @@ var canvas_MCDU_base = {
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
 			me["Simple_C5S"].setText("VLS   ");
+
 		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();

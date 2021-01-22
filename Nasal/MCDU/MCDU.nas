@@ -1430,8 +1430,12 @@ var pagebutton = func(btn, i) {
 				pageNode[i].setValue("PROGCLB");
 			} else if (fmgc.FMGCInternal.phase == 3) {
 				pageNode[i].setValue("PROGCRZ");
-			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				pageNode[i].setValue("PROGDES");
+			} else if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+				pageNode[i].setValue("PROGAPPR");
+			} else if (fmgc.FMGCInternal.phase == 7) {
+				pageNode[i].setValue("PROGDONE");
 			}
 		} else if (btn == "perf") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
