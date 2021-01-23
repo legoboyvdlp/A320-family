@@ -887,6 +887,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATIS");
 		} else if (page == "AOCCONFIG") {
 			pageNode[i].setValue("AOCMENU");
+		} else if (page == "POSMON") {
+			canvas_mcdu.togglePageFreeze(i);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}

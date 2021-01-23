@@ -165,12 +165,24 @@ var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.global
 props.globals.initNode("/MCDU[0]/active-system", "", "STRING");
 props.globals.initNode("/MCDU[1]/active-system", "", "STRING");
 
+
 # Conversion factor pounds to kilogram
 var LBS2KGS = 0.4535924;
 
 
 # Create Nodes:
 var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
+
+# Page freeze on POSMON
+var pageFreezed = [nil,nil];
+var togglePageFreeze = func(i) {
+	if (pageFreezed[i] == nil) {
+		pageFreezed[i] = sprintf("%02d%02d", getprop("/sim/time/utc/hour"), getprop("/sim/time/utc/minute"));
+	} else {
+		pageFreezed[i] = nil;
+	}
+}
+
 
 var canvas_MCDU_base = {
 	init: func(canvas_group, file) {
@@ -356,6 +368,17 @@ var canvas_MCDU_base = {
 		me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
 		me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 		me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+	},
+	getLatLogFormatted: func(rootpropname) {
+		var dms = getprop(rootpropname ~ "latitude-deg");
+		var degrees = int(dms);
+		var	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+		var	sign = degrees >= 0 ? "N" : "S";
+		var dms2 = getprop(rootpropname ~ "longitude-deg");
+		var	degrees2 = int(dms2);
+		var	minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
+		var	sign2 = degrees2 >= 0 ? "E" : "W";
+		return sprintf("%d%.1f%s/%07s%s",abs(degrees),minutes,sign,abs(degrees2)  ~ minutes2,sign2);
 	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
@@ -2253,12 +2276,12 @@ var canvas_MCDU_base = {
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
-				me["Simple_Title"].setText("POSITION MONITOR");
+				me["Simple_Title2"].setColor(GREEN);
 				me.defaultPageNumbers();
 				
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
-				me.showLeftS(-1, -1, -1, -1, 1, -1);
+				me.showLeftS(-1, 1, 1, -1, 1, -1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, -1, -1, -1, 1, -1);
 				me["Simple_C3B"].hide();
@@ -2276,26 +2299,69 @@ var canvas_MCDU_base = {
 				me.colorRight("grn", "grn", "grn", "grn", "grn", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me["Simple_C5"].setColor(GREEN);
+				me["Simple_L5"].setFontSize(small);
+				me["Simple_R5"].setFontSize(small);
+
+				pageFreezed[i] = nil;
 				
 				pageSwitch[i].setBoolValue(1);
 			}
+
+			if (pageFreezed[i] == nil) {
+
+				me["Simple_Title"].setText("POSITION MONITOR");
+				me["Simple_Title2"].hide();
+				me["Simple_L6"].setText(" FREEZE");
 			
-			me["Simple_L1"].setText("FMGC1");
-			me["Simple_L2"].setText("FMGC2");
-			me["Simple_L3"].setText("GPIRS");
-			me["Simple_L4"].setText("MIX IRS");
-			me["Simple_L5"].setText("NAV -.-");
-			me["Simple_L6"].setText(" FREEZE");
-			me["Simple_L5S"].setText("   IRS1");
-			me["Simple_R1"].setText("----.-X/-----.-X");
-			me["Simple_R2"].setText("----.-X/-----.-X");
-			me["Simple_R3"].setText("----.-X/-----.-X");
-			me["Simple_R4"].setText("----.-X/-----.-X");
-			me["Simple_R5"].setText("NAV -.-");
-			me["Simple_R5S"].setText("IRS3	 ");
-			me["Simple_R6S"].setText("SEL ");
-			me["Simple_C5"].setText("NAV -.-");
-			me["Simple_C5S"].setText("IRS2");
+				me["Simple_L1"].setText("FMGC1");
+				me["Simple_L2"].setText("FMGC2");
+				me["Simple_L3"].setText("GPIRS");
+				me["Simple_L4"].setText("MIX IRS");							
+				me["Simple_L5S"].setText("  IRS1");
+
+				if (systems.ADIRS.Operating.aligned[0].getValue()) { # TODO real FMGC1 GPS data
+					me["Simple_R1"].setText(me.getLatLogFormatted("/position/"));
+					me["Simple_L2S"].setText(sprintf("%16s","3IRS/GPS"));
+					me["Simple_L5"].setText("NAV 0.0");
+				} else {
+					me["Simple_R1"].setText("----.-X/-----.-X");
+					me["Simple_L2S"].setText("");	
+					me["Simple_L5"].setText("NAV -.-");			
+				}
+
+				if (systems.ADIRS.Operating.aligned[1].getValue()) { # TODO real FMGC2 GPS data
+					me["Simple_R2"].setText(me.getLatLogFormatted("/position/"));
+					me["Simple_L3S"].setText(sprintf("%16s","3IRS/GPS"));
+					me["Simple_C5"].setText("NAV 0.0");
+				} else {
+					me["Simple_R2"].setText("----.-X/-----.-X");
+					me["Simple_L3S"].setText("");
+					me["Simple_C5"].setText("NAV -.-");
+				}
+
+				me["Simple_R3"].setText("----.-X/-----.-X"); # GPIRS not available
+				me["Simple_R5"].setText("NAV -.- ");
+
+				if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) {
+					me["Simple_R4"].setText(me.getLatLogFormatted("/position/"));
+				} else {
+					me["Simple_R4"].setText("----.-X/-----.-X");
+				}
+				
+				me["Simple_R5S"].setText("IRS3	 ");
+				me["Simple_R6S"].setText("SEL ");			
+				me["Simple_C5S"].setText("IRS2");
+
+			} else {
+
+				me["Simple_Title"].setText("POSITION FROZEN AT      ");
+				me["Simple_Title2"].setText(sprintf("%23s ",pageFreezed[i]));
+				me["Simple_Title2"].show();
+				me["Simple_L6"].setText(" UNFREEZE");
+
+			}
+
 		} else if (page == "RADNAV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -3663,7 +3729,7 @@ var canvas_MCDU_base = {
 				
 				me.fontLeft(default, default, symbol, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, small, symbol, symbol, default, default);
+				me.fontRight(default, symbol, symbol, symbol, default, default);
 				me.fontRightS(default, default, default, default, default, default);
 
 				me.fontSizeLeft(normal, normal, small, small, normal, small);
