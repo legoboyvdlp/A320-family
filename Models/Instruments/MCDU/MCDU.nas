@@ -2312,6 +2312,7 @@ var canvas_MCDU_base = {
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me["Simple_C5"].setColor(GREEN);
 				me["Simple_L5"].setFontSize(small);
+				me["Simple_C5"].setFontSize(small);
 				me["Simple_R5"].setFontSize(small);
 
 				pageFreezed[i] = nil;
@@ -2336,9 +2337,10 @@ var canvas_MCDU_base = {
 					me["Simple_L2S"].setText(sprintf("%16s","3IRS/GPS"));
 					me["Simple_L5"].setText(sprintf("%s 0.0",me.getIRSStatus(0)));
 				} else {
-					me["Simple_R1"].setText("----.-X/-----.-X");
+					me["Simple_R1"].setText("----.--/-----.--");
+					me["Simple_R1"].setColor(WHITE);
 					me["Simple_L2S"].setText("");	
-					me["Simple_L5"].setText(sprintf("%s -.-",me.getIRSStatus(0)));
+					me["Simple_L5"].setText(sprintf("%-8s",me.getIRSStatus(0)));
 				}
 
 				if (systems.ADIRS.Operating.aligned[1].getValue()) { # TODO real FMGC2 GPS data
@@ -2346,22 +2348,31 @@ var canvas_MCDU_base = {
 					me["Simple_L3S"].setText(sprintf("%16s","3IRS/GPS"));
 					me["Simple_C5"].setText(sprintf("%s 0.0",me.getIRSStatus(1)));
 				} else {
-					me["Simple_R2"].setText("----.-X/-----.-X");
+					me["Simple_R2"].setText("----.--/-----.--");
+					me["Simple_R2"].setColor(WHITE);
 					me["Simple_L3S"].setText("");
-					me["Simple_C5"].setText(sprintf("%s -.-",me.getIRSStatus(1)));
+					me["Simple_C5"].setText(sprintf("%-8s",me.getIRSStatus(1)));
 				}
 
-				me["Simple_R3"].setText("----.-X/-----.-X"); # GPIRS not available
-				me["Simple_R5"].setText(sprintf("%s -.-",me.getIRSStatus(2)));
+				me["Simple_R3"].setText("----.--/-----.--"); # GPIRS not available
+				me["Simple_R3"].setColor(WHITE);
+
+				if (systems.ADIRS.Operating.aligned[2].getValue()) {
+					me["Simple_R5"].setText(sprintf("%s 0.0",me.getIRSStatus(2)));
+				} else {
+					me["Simple_R5"].setText(sprintf("%-8s",me.getIRSStatus(2)));
+				}
 
 				if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) {
 					me["Simple_R4"].setText(me.getLatLogFormatted("/position/"));
+					me["Simple_R4"].setColor(GREEN);
 				} else {
-					me["Simple_R4"].setText("----.-X/-----.-X");
+					me["Simple_R4"].setText("----.--/-----.--");
+					me["Simple_R4"].setColor(WHITE);
 				}
 				
-				me["Simple_R5S"].setText("IRS3	 ");
-				me["Simple_R6S"].setText("SEL ");			
+				me["Simple_R5S"].setText("IRS3  ");
+				me["Simple_R6S"].setText("SEL ");
 				me["Simple_C5S"].setText("IRS2");
 
 			} else {
