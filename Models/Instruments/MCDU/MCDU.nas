@@ -2411,7 +2411,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			var rows = ["Simple_L2S","Simple_L3S","Simple_L4S"]
+			var rows = ["Simple_L2S","Simple_L3S","Simple_L4S"];
 			for (var a = 0; a<3; a+=1) {
 				me[rows[a]].setText("  " ~ me.getIRSStatus(a));
 			}				
