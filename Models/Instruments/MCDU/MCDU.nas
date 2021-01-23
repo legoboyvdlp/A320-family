@@ -380,6 +380,17 @@ var canvas_MCDU_base = {
 		var	sign2 = degrees2 >= 0 ? "E" : "W";
 		return sprintf("%d%.1f%s/%07s%s",abs(degrees),minutes,sign,abs(degrees2)  ~ minutes2,sign2);
 	},
+	getIRSStatus: func(a) {
+		var irsstatus = "INVAL";
+		if (systems.ADIRS.ADIRunits[a].operative) {
+			if (systems.ADIRS.Operating.aligned[a].getValue()) {
+				irsstatus = (systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV";
+			} else {
+				irsstatus = "ALIGN";
+			}
+		}
+		return irsstatus;
+	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
 		if (page != "NOTIFICATION") {
@@ -2323,25 +2334,25 @@ var canvas_MCDU_base = {
 				if (systems.ADIRS.Operating.aligned[0].getValue()) { # TODO real FMGC1 GPS data
 					me["Simple_R1"].setText(me.getLatLogFormatted("/position/"));
 					me["Simple_L2S"].setText(sprintf("%16s","3IRS/GPS"));
-					me["Simple_L5"].setText("NAV 0.0");
+					me["Simple_L5"].setText(sprintf("%s 0.0",me.getIRSStatus(0)));
 				} else {
 					me["Simple_R1"].setText("----.-X/-----.-X");
 					me["Simple_L2S"].setText("");	
-					me["Simple_L5"].setText("NAV -.-");			
+					me["Simple_L5"].setText(sprintf("%s -.-",me.getIRSStatus(0)));
 				}
 
 				if (systems.ADIRS.Operating.aligned[1].getValue()) { # TODO real FMGC2 GPS data
 					me["Simple_R2"].setText(me.getLatLogFormatted("/position/"));
 					me["Simple_L3S"].setText(sprintf("%16s","3IRS/GPS"));
-					me["Simple_C5"].setText("NAV 0.0");
+					me["Simple_C5"].setText(sprintf("%s 0.0",me.getIRSStatus(1)));
 				} else {
 					me["Simple_R2"].setText("----.-X/-----.-X");
 					me["Simple_L3S"].setText("");
-					me["Simple_C5"].setText("NAV -.-");
+					me["Simple_C5"].setText(sprintf("%s -.-",me.getIRSStatus(1)));
 				}
 
 				me["Simple_R3"].setText("----.-X/-----.-X"); # GPIRS not available
-				me["Simple_R5"].setText("NAV -.- ");
+				me["Simple_R5"].setText(sprintf("%s -.-",me.getIRSStatus(2)));
 
 				if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) {
 					me["Simple_R4"].setText(me.getLatLogFormatted("/position/"));
@@ -2361,6 +2372,64 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText(" UNFREEZE");
 
 			}
+
+		} else if (page == "IRSMON") {
+			if (!pageSwitch[i].getBoolValue()) {
+				
+				me.defaultHide();
+				me.standardFontSize();
+
+				me.defaultPageNumbers();
+
+				me.showLeft(1, 1, 1, -1, -1, -1);
+				me.showLeftS(-1, 1, 1, 1, -1, -1);
+				me.showLeftArrow(1, 1, 1, -1, -1, -1);
+				me.showRight(-1, -1, -1, -1, -1, -1);
+				me.showRightS(1, 1, 1, 1, -1, -1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();				
+				me["Simple_L0S"].hide();
+				me["Simple_Title"].show();
+				
+				me.colorLeft("wht", "wht", "wht", "ack", "ack", "ack");
+				me.colorLeftS("ack", "grn", "grn", "grn", "ack", "ack");
+				me.colorRightS("amb", "grn", "grn", "grn", "ack", "ack");
+				me.colorLeftArrow("wht", "wht", "wht", "ack", "ack", "ack");
+				
+				me["Simple_Title"].setText("IRS MONITOR");
+
+				me["Simple_L1"].setText(" IRS1");
+				me["Simple_L2"].setText(" IRS2");
+				me["Simple_L3"].setText(" IRS3");
+				me["Simple_R1S"].setText("");
+
+				#TODO - Missing SET HDG on degraded operations
+
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			var rows = ["Simple_L2S","Simple_L3S","Simple_L4S"]
+			for (var a = 0; a<3; a+=1) {
+				me[rows[a]].setText("  " ~ me.getIRSStatus(a));
+			}				
+			
+			if (fmgc.FMGCInternal.phase == 7) { # DONE phase
+				if (fmgc.FMGCInternal.arrApt != nil and fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
+					me["Simple_R1S"].setText(sprintf("DRIFT AT %7s     ",fmgc.FMGCInternal.arrApt ~ fmgc.flightPlanController.flightplans[2].departure_runway.id));
+				}
+				me["Simple_R2S"].setText(sprintf("DRIFT %2.1fNM/H       ",0));
+				me["Simple_R3S"].setText(sprintf("DRIFT %2.1fNM/H       ",0));
+				me["Simple_R4S"].setText(sprintf("DRIFT %2.1fNM/H       ",0));
+			} else {
+				me["Simple_R1S"].setText("");
+				me["Simple_R2S"].setText("");
+				me["Simple_R3S"].setText("");
+				me["Simple_R4S"].setText("");
+			}
+
 
 		} else if (page == "RADNAV") {
 			if (!pageSwitch[i].getBoolValue()) {
