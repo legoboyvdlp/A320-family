@@ -3781,7 +3781,7 @@ var canvas_MCDU_base = {
 					colortext[0] = "DONE";
 				}
 
-				colortext[1] = (fmgc.FMGCInternal.flightNumSet and page != "PROGDONE") ? fmgc.FMGCInternal.flightNum : "";  #CHECKME - codition useful?
+				colortext[1] = (fmgc.FMGCInternal.flightNumSet and page != "PROGDONE") ? fmgc.FMGCInternal.flightNum : "";  #CHECKME - condition useful?
 
 				me["Simple_Title"].setText(sprintf("   %-21s",colortext[0]));
 				me["Simple_Title2"].setText(sprintf("%12s %-11s","",colortext[1]));

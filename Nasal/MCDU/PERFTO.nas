@@ -20,7 +20,7 @@ var perfTOCheckVSpeeds = func(i) {
 }
 
 var perfTOInput = func(key, i) {	
-	var modifiable = (fmgc.FMGCInternal.phase == 0) ? true : false;
+	var modifiable = (fmgc.FMGCInternal.phase == 0) ? 1 : 0;
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 
 	if (key == "L1" and modifiable) {		

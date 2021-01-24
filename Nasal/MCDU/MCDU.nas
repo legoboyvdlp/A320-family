@@ -241,7 +241,7 @@ var lskbutton = func(btn, i) {
 			progTOInput("L1",i); # same fn as TO
 		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
-		} else if (page == "PROGCLB") {
+		} else if (page == "PROGCLB" or page == "PROGAPPR") {  # APPR restore to CLB
 			progCLBInput("L1",i);
 		} else if (page == "PROGCRZ") {
 			progCRZInput("L1",i);
