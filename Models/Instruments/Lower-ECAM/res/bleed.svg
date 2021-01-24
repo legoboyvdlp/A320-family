@@ -1353,6 +1353,18 @@
        x="560.88452"
        y="976.25214"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#0dc04b">00</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="512.93152"
+     y="940.98541"
+     id="GLoad"
+     inkscape:label="#text5149"><tspan
+       sodipodi:role="line"
+       id="tspan861"
+       x="512.93152"
+       y="940.98541"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.99999905px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#bb6100;fill-opacity:1">G.LOAD 0.6</tspan></text>
   <rect
      transform="rotate(90)"
      y="-580.51971"

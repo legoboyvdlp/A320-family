@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
@@ -138,86 +138,68 @@
 	
 	<!-- Knobs -->
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<property>instrumentation/ddrmi/vor-adf-1</property>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<min>-1</min>
+				<max>1</max>
 			</binding>
 		</action>
 	</animation>
+
 	<animation>
-		<name>Knob 1 rotate</name>
-		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<name>DDRMI vor-adf knob 1</name>
 		<type>rotate</type>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
 		<property>instrumentation/ddrmi/vor-adf-1</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>90</dep></entry>
-			<entry><ind> 0</ind><dep>45</dep></entry>
-			<entry><ind> 1</ind><dep> 0</dep></entry>
+			<entry><ind>-1</ind><dep>90</dep></entry> <!-- ADF -->
+			<entry><ind> 0</ind><dep>45</dep></entry> <!-- OFF -->
+			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
 			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<property>instrumentation/ddrmi/vor-adf-2</property>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-2</property>
-				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/ddrmi/vor-adf-2</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<min>-1</min>
+				<max>1</max>
 			</binding>
 		</action>
 	</animation>
+
 	<animation>
-		<name>Knob 2 rotate</name>
-		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<name>DDRMI vor-adf knob 2</name>
 		<type>rotate</type>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<property>instrumentation/ddrmi/vor-adf-2</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>-90</dep></entry>
-			<entry><ind> 0</ind><dep>-45</dep></entry>
-			<entry><ind> 1</ind><dep>  0</dep></entry>
+			<entry><ind>-1</ind><dep>-90</dep></entry> <!-- ADF -->
+			<entry><ind> 0</ind><dep>-45</dep></entry> <!-- OFF -->
+			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
 			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
 		</axis>
-	</animation>
+	</animation>	
 	
 	<!-- Flags -->
 	
@@ -227,7 +209,7 @@
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-1</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>45</dep></entry>
+			<entry><ind>0</ind><dep>-45</dep></entry>
 			<entry><ind>1</ind><dep> 0</dep></entry>
 		</interpolation>
 		<axis>
@@ -241,7 +223,7 @@
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-2</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>-45</dep></entry>
+			<entry><ind>0</ind><dep>45</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
 		</interpolation>
 		<axis>
@@ -428,7 +410,7 @@
     <animation>
     	<type>rotate</type>
     	<object-name>brakes_accum_psi</object-name>
-    	<property>systems/hydraulic/brakes/accumulator-pressure-psi</property>
+    	<property>systems/hydraulic/yellow-accumulator-psi</property>
     	<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
 			<entry><ind>700</ind><dep>-20</dep></entry>
@@ -8339,30 +8321,21 @@
 		</action>
 	</animation>
 
+
 	<animation>
-		<name>UTC selector rotate</name>
-		<type>pick</type>
+		<name>UTC selector animation</name>
+		<type>knob</type>
 		<object-name>clock_knob</object-name>
+		<property>instrumentation/clock/utc-selector</property>
+		<axis>
+			<object-name>clock_knob.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>instrumentation/clock/utc-selector</property>
-				<value>0</value><!-- GPS -->
-				<value>1</value><!-- INT -->
-				<value>2</value><!-- SET -->
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/clock/utc-selector</property>
-				<value>2</value><!-- SET -->
-				<value>1</value><!-- INT -->
-				<value>0</value><!-- GPS -->
+				<min>0</min>
+				<max>2</max>
 			</binding>
 		</action>
 	</animation>
@@ -8373,9 +8346,9 @@
 		<object-name>clock_knob</object-name>
 		<property>instrumentation/clock/utc-selector</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>45</dep></entry>
-			<entry><ind>2</ind><dep>90</dep></entry>
+			<entry><ind>2</ind><dep>90</dep></entry> <!-- SET -->
+			<entry><ind>1</ind><dep>45</dep></entry> <!-- INT -->
+			<entry><ind>0</ind><dep> 0</dep></entry> <!-- GPS -->
 		</interpolation>
 		<axis>
 			<object-name>clock_knob.axis</object-name>

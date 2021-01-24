@@ -1,5 +1,4 @@
 var flapsPos = nil;
-var elapsedtime = nil;
 var LBS2KGS = 0.4535924;
 var slatLockGoing = 0;
 var slatLockFlash = 0;
@@ -508,7 +507,7 @@ var canvas_upperECAM = {
 		me.updatePower();
 		
 		if (me.test.getVisible() == 1) {
-			me.updateTest();
+			me.updateTest(notification);
 		}
 		
 		if (me.group.getVisible() == 0) {
@@ -905,8 +904,8 @@ var canvas_upperECAM = {
 		}
 	},
 	
-	updateTest: func() {
-		if (du3_test_time.getValue() + 1 >= pts.Sim.Time.elapsedSec.getValue()) {
+	updateTest: func(notification) {
+		if (du3_test_time.getValue() + 1 >= notification.elapsedTime) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else {

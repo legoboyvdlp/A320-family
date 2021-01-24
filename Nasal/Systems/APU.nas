@@ -101,7 +101,7 @@ var APU = {
 		me.inletFlap.open();
 		me.listenSignals = 1;
 		settimer(func() { 
-			if (APUNodes.Controls.master.getValue() and !getprop("/systems/acconfig/autoconfig-running")) { 
+			if (APUNodes.Controls.master.getValue() and !pts.Acconfig.running.getValue()) { 
 				me.setState(2);
 			}
 		}, 3);
@@ -131,7 +131,7 @@ var APU = {
 		apuStartTimer.start();
 	},
 	waitStart: func() {
-		if (pts.APU.rpm.getValue() >= 4.9) {
+		if (pts.APU.rpm.getValue() >= 4.9 or me.fastStart) {
 			me.GenericControls.cutoff.setValue(0);
 			if (me.fastStart) {
 				setprop("/fdm/jsbsim/propulsion/set-running", 2);

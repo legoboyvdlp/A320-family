@@ -43,6 +43,12 @@ input = {
 	elapsedTime: "/sim/time/elapsed-sec",
 	FWCPhase: "/ECAM/warning-phase",
 	gear0Wow: "/gear/gear[0]/wow",
+	
+	# Just about everything uses these properties at some stage, lets add them here!
+	elecAC1: "/systems/electrical/bus/ac-1",
+	elecAC2: "/systems/electrical/bus/ac-2",
+	elecACEss: "/systems/electrical/bus/ac-ess",
+	elecACEssShed: "/systems/electrical/bus/ac-ess-shed",
 	engine1State: "/engines/engine[0]/state",
 	engine2State: "/engines/engine[1]/state",
 };

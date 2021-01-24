@@ -513,14 +513,6 @@
 						</binding>
 					</item>
 					<item>
-						<label>Skip ADIRS</label>
-						<binding>
-							<command>property-assign</command>
-							<property>/controls/adirs/skip</property>
-							<value>1</value>
-						</binding>
-					</item>
-					<item>
 						<label>Canvas QRH</label>
 						<binding>
 							<command>nasal</command>
@@ -1927,20 +1919,37 @@
 			<key n="8">
 				<name>Del</name>
 				<desc>CLR</desc>
+				<repeatable type="bool">true</repeatable>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
 					</condition>
 					<command>nasal</command>
-					<script>mcdu.button("CLR", 0);</script>
+					<script>mcdu.button("CLR", 0, "down");</script>
 				</binding>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-right</property>
 					</condition>
 					<command>nasal</command>
-					<script>mcdu.button("CLR", 1);</script>
+					<script>mcdu.button("CLR", 1, "down");</script>
 				</binding>
+				<mod-up>
+					<binding>
+						<condition>
+							<property>/FMGC/keyboard-left</property>
+						</condition>
+						<command>nasal</command>
+						<script>mcdu.button("CLR", 0, "up");</script>
+					</binding>
+					<binding>
+						<condition>
+							<property>/FMGC/keyboard-right</property>
+						</condition>
+						<command>nasal</command>
+						<script>mcdu.button("CLR", 1, "up");</script>
+					</binding>
+				</mod-up>
 			</key>
 			<key n="11">
 				<name>Disable MCDU keyboard mode</name>
@@ -2514,18 +2523,18 @@
 				<binding n="0">
 					<condition>
 						<and>
-						<not><property>/FMGC/keyboard-left</property></not>
-						<not><property>/FMGC/keyboard-right</property></not>
-						<or>
-						<equals>
-							<property>sim/current-view/name</property>
-							<value>Walk View</value>
-						</equals>
-						<equals>
-							<property>sim/current-view/name</property>
-							<value>Walker Orbit View</value>
-						</equals>
-						</or>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+							<or>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walk View</value>
+								</equals>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walker Orbit View</value>
+								</equals>
+							</or>
 						</and>
 					</condition>
 					<command>property-assign</command>
@@ -2660,6 +2669,65 @@
 			<key n="68">
 				<name>SHIFT-d</name>
 				<desc>Autopilot Disconnect</desc>
+				<binding n="0">
+					<command>property-assign</command>
+					<condition>
+						<and>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+							<or>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walk View</value>
+								</equals>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walker Orbit View</value>
+								</equals>
+							</or>
+						</and>
+					</condition>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>1</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<command>property-multiply</command>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<property>sim/walker/key-triggers/speed</property>
+					<factor>2.5</factor>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<command>property-assign</command>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<property>sim/walker/key-triggers/slide</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<command>property-assign</command>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
@@ -2676,8 +2744,22 @@
 				</binding>
 				<binding>
 					<condition>
-						<not><property>/FMGC/keyboard-left</property></not>
-						<not><property>/FMGC/keyboard-right</property></not>
+						<and>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+							<not>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walk View</value>
+								</equals>
+							</not>
+							<not>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walker Orbit View</value>
+								</equals>
+							</not>
+						</and>
 					</condition>
 					<command>nasal</command>
 					<script>
@@ -2992,6 +3074,65 @@
 			<key n="83">
 				<name>SHIFT-s</name>
 				<desc>MCDU</desc>
+				<binding n="0">
+					<command>property-assign</command>
+					<condition>
+						<and>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+							<or>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walk View</value>
+								</equals>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walker Orbit View</value>
+								</equals>
+							</or>
+						</and>
+					</condition>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>-1</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<command>property-multiply</command>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<property>sim/walker/key-triggers/speed</property>
+					<factor>2.5</factor>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<command>property-assign</command>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<property>sim/walker/key-triggers/forward</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<command>property-assign</command>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
@@ -3072,6 +3213,65 @@
 			<key n="87">
 				<name>SHIFT-w</name>
 				<desc>MCDU</desc>
+				<binding n="0">
+					<command>property-assign</command>
+					<condition>
+						<and>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+							<or>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walk View</value>
+								</equals>
+								<equals>
+									<property>sim/current-view/name</property>
+									<value>Walker Orbit View</value>
+								</equals>
+							</or>
+						</and>
+					</condition>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>1</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+				<binding n="2">
+					<command>property-multiply</command>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<property>sim/walker/key-triggers/speed</property>
+					<factor>5.0</factor>
+				</binding>
+				<mod-up>
+					<binding n="0">
+						<command>property-assign</command>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<property>sim/walker/key-triggers/forward</property>
+						<value>0</value>
+					</binding>
+					<binding n="1">
+						<command>property-assign</command>
+						<condition>
+							<not><property>/FMGC/keyboard-left</property></not>
+							<not><property>/FMGC/keyboard-right</property></not>
+						</condition>
+						<property>sim/walker/key-triggers/speed</property>
+						<property>sim/walker/speed-mps</property>
+					</binding>
+				</mod-up>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
@@ -4396,9 +4596,11 @@
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/controls-override.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -4459,7 +4661,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ARRIVAL.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/AIRWAYS.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/CLOSESTAIRPORT.nas</file> 
-			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file> 
+			<file>Aircraft/A320-family/Nasal/MCDU/RECEIVEDMESSAGES.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PILOTWAYPOINT.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/HOLD.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/F-PLN.nas</file> 
@@ -4467,7 +4669,8 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDCRZ.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDDES.nas</file> 
 			<file>Aircraft/A320-family/Nasal/MCDU/WINDHIST.nas</file> 
-			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>  <!-- Last Dynamic Page -->
+			<file>Aircraft/A320-family/Nasal/MCDU/ATIS.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/FLIGHTLOG.nas</file>   <!-- Last Dynamic Page -->
 			<file>Aircraft/A320-family/Nasal/MCDU/MCDU.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/IRSINIT.nas</file>
@@ -4539,6 +4742,7 @@
 		<atsu>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/Dictionary.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/Notification.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/CPDLC.nas</file>
 		</atsu>
 		<dmc>
 			<file>Aircraft/A320-family/Nasal/Displays/DMC.nas</file>

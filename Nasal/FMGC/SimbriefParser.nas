@@ -1,5 +1,6 @@
 # A3XX Simbrief Parser
 # Copyright (c) 2020 Jonathan Redpath (legoboyvdlp)
+# enhanced 12/2020 - parse TOD & TOC psedo waypoints, set computer speeds on fix wps, fake coRoute name
 
 var LBS2KGS = 0.4535924;
 
@@ -13,7 +14,7 @@ var SimbriefParser = {
 		me.inhibit = 1;
 		var stamp = systime();
 		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
-			.fail(func me.failure(i))
+			.fail(func { me.failure(i) })
 			.done(func {
 				var errs = [];
 				call(me.read, [(getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml"),i], SimbriefParser, {}, errs);
@@ -48,6 +49,33 @@ var SimbriefParser = {
 			me.failure(i);
 		}
 	},
+	validateFile: func(xml) {
+		var data = io.readxml(xml);
+		if (data != nil) {
+			return (data.getChild("OFP") != nil);
+		} 
+		return false;
+	},
+	readLegs: func(xml) { # lite OFP parser only for legs = wapoinst + airways
+	    var legs = [];
+		var data = io.readxml(xml);
+		if (data != nil) {
+			var ofp = data.getChild("OFP");
+			if (ofp != nil) {
+				var ofpNavlog = ofp.getNode("navlog");
+				var ofpFixes = ofpNavlog.getChildren("fix");				
+				var ident = "";
+				foreach (var ofpFix; ofpFixes) {
+					if (ofpFix.getNode("is_sid_star").getBoolValue()) continue;
+					ident = ofpFix.getNode("ident").getValue();
+					if (ident == "TOC" or ident == "TOD") continue;
+					append(legs, [ ofpFix.getNode("ident").getValue() , ofpFix.getNode("via_airway").getValue() ] );
+				}
+				return legs;
+			}
+		}
+		return nil;
+	},
 	tryFindByCoord: func(coords, id, type) {
 		var result = nil;
 		if (type == "nav") {
@@ -59,9 +87,9 @@ var SimbriefParser = {
 		}
 		
 		if (size(result) == 0) { return nil; }
-		foreach (var test; result) {
-			if (math.abs(test.lat - coords.lat()) < 0.01666666666 and math.abs(test.lon - coords.lon()) < 0.01666666666) {
-				return test;
+		forindex (var test; result) {
+			if (math.abs(result[test].lat - coords.lat()) < 0.01666666666 and math.abs(result[test].lon - coords.lon()) < 0.01666666666) {
+				return result[test];
 			}
 		}
 		return nil;
@@ -157,12 +185,18 @@ var SimbriefParser = {
 			
 			if (ident == "TOC") {
 				_foundTOC = 1;
-				continue;
+				#setprop("/autopilot/route-manager/vnav/tc/latitude-deg",ofpFix.getNode("pos_lat").getValue());
+				#setprop("/autopilot/route-manager/vnav/tc/longitude-deg",ofpFix.getNode("pos_long").getValue());				
+				#ident = "(T/C)";
+				continue; # restore skip TOC/TOD
 			}
 			
 			if (ident == "TOD") {
 				_foundTOD = 1;
-				continue;
+				#setprop("/autopilot/route-manager/vnav/td/latitude-deg",ofpFix.getNode("pos_lat").getValue());
+				#setprop("/autopilot/route-manager/vnav/td/longitude-deg",ofpFix.getNode("pos_long").getValue());
+				#ident = "(T/D)";
+				continue; # restore skip TOC/TOD
 			}
 			
 			coords = geo.Coord.new();
@@ -170,11 +204,13 @@ var SimbriefParser = {
 				ofpFix.getNode("pos_lat").getValue(),
 				ofpFix.getNode("pos_long").getValue());
 				
-			wp = me.tryFindByCoord(coords,ident,"fix");
-			wp = me.tryFindByCoord(coords,ident,"nav");
-			if (wp == nil) {
+			#wp = me.tryFindByCoord(coords,ident,"fix");
+			#if (wp == nil) {
+			#	wp = me.tryFindByCoord(coords,ident,"nav");
+			#}
+			#if (wp == nil) {
 				wp = createWP(coords, ident);
-			}
+			#}
 			
 			append(wps, wp);
 		}
@@ -187,6 +223,34 @@ var SimbriefParser = {
 			fmgc.flightPlanController.flightplans[3].star = _star;
 		}
 		fmgc.flightPlanController.destroyTemporaryFlightPlan(3, 1);
+
+        #var idx = 1;
+		#var plan = fmgc.flightPlanController.flightplans[2];
+		#var altitude = "";
+		#var speed = "";
+		#var wpname = "";
+
+		#foreach (var ofpFix; ofpFixes) {
+		#	ident = ofpFix.getNode("ident").getValue();			
+
+		#	if (ident == "TOC") wpname = "(T/C)";
+		#	else if (ident == "TOD") wpname = "(T/D)";
+		#	else wpname = ident;
+
+		#	wp = plan.getWP(idx); # get leg	
+		#	if (wp != nil) {
+		#		if (wp.wp_name == wpname) {
+		#			altitude = ofpFix.getNode("altitude_feet").getValue();
+		#			speed = ofpFix.getNode("ind_airspeed").getValue();
+
+		#			if (speed>0) wp.setSpeed(speed, "computed");
+		#			if (altitude>0) wp.setAltitude(math.round(altitude, 10), "computed");
+#
+#					idx = idx + 1;			
+#				}
+#			}
+#		}
+
 		fmgc.windController.updatePlans();
 		fmgc.updateRouteManagerAlt();
 		
@@ -197,6 +261,8 @@ var SimbriefParser = {
 		if (me.buildFlightplan() == nil) {
 			return nil;
 		}
+		#fmgc.FMGCInternal.coRoute = "SB" ~ me.OFP.getNode("origin/iata_code").getValue() ~ me.OFP.getNode("destination/iata_code").getValue() ~ "00";
+		#fmgc.FMGCInternal.coRouteSet = 1;
 		fmgc.FMGCInternal.flightNum = (me.OFP.getNode("general/icao_airline").getValue() or "") ~ (me.OFP.getNode("general/flight_number").getValue() or "");
 		fmgc.FMGCInternal.flightNumSet = 1;
 		fmgc.FMGCInternal.costIndex = me.OFP.getNode("general/costindex").getValue();

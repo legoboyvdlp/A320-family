@@ -1705,7 +1705,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.button("CLR", 1);</script>
+				<script>mcdu.button("CLR", 1, "down");</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -1719,6 +1719,24 @@
 					</and>
 				</condition>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>nasal</command>
+					<script>mcdu.button("CLR", 1, "up");</script>
+					<condition>
+						<and>
+							<greater-than-equals>
+								<property>systems/electrical/bus/ac-2</property>
+								<value>110</value>
+							</greater-than-equals>
+							<greater-than>
+								<property>controls/lighting/DU/mcdu2</property>
+								<value>0.01</value>
+							</greater-than>
+						</and>
+					</condition>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 	<animation>

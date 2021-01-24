@@ -68,9 +68,21 @@ var fplnItem = {
 				me.spd = me.getSpd();
 				me.alt = me.getAlt();
 				me.dist = me.getDist();
-				me._colour = "wht";
-				if (me.spd[1] != "wht" or me.alt[1] != "wht") {
-					me._colour = "mag";
+				if (me.colour != "yel") {	# not temporary flightplan
+					me._colour = "wht";
+					#if (me.spd[1] != "wht" or me.alt[1] != "wht") {
+					if (me.spd[1] == me.alt[1]) {
+						me._colour = me.spd[1];
+					}
+					else if (me.spd[1] == "mag" or me.alt[1] == "mag") {
+						me._colour = "mag";
+					}
+					else if (me.spd[1] == "grn" or me.alt[1] == "grn") {
+						me._colour = "grn";
+					}
+					
+				} else {	# temporary flightplan
+					me._colour = "yel";
 				}
 				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
 			} else {
@@ -95,23 +107,25 @@ var fplnItem = {
 	},
 	getSpd: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
-			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "mag"];
-		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr != 0) {
-			return [sprintf("%3.0f", me.wp.speed_cstr), "mag"];
+			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "grn"]; # why "mag"? I think "grn"
+		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr > 0) {
+			var tcol = (me.wp.speed_cstr_type == "computed" or me.wp.speed_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			return [sprintf("%3.0f", me.wp.speed_cstr), tcol];
 		} else {
 			return ["---", "wht"];
 		}
 	},
 	getAlt: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
-			return [" " ~ sprintf("%-5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "mag"];
+			return [" " ~ sprintf("%5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "grn"]; #fixed - aligned to right
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
-		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr != 0) {
+		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
+			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [" " ~ sprintf("%-5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), "mag"];
+				return [" " ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), tcol]; #fixed - aligned to right
 			} else {
-				return [" " ~ sprintf("%-5.0f", me.wp.alt_cstr), "mag"];
+				return [" " ~ sprintf("%5.0f", me.wp.alt_cstr), tcol]; #fixed - aligned to right
 			}
 		} else {
 			return ["------", "wht"];
@@ -337,7 +351,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		if (size(me.outputList) >= 1) {
 			me.L1 = me.outputList[0].updateLeftText();
 			me.C1 = me.outputList[0].updateCenterText();
-			me.C1[1] = "TIME   ";
+			me.C1[1] = (fmgc.flightPlanController.fromWptTime != nil) ? "UTC   " : "TIME   ";  # since TO change to UTC time (1 space left to center)
 			me.R1 = me.outputList[0].updateRightText();
 			me.R1[1] = "SPD/ALT    ";
 		} else {

@@ -62,6 +62,7 @@ var altsel = 0;
 var crzFl = 0;
 var windHdg = 0;
 var windSpeed = 0;
+var windsDidChange = 0;
 setprop("position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
@@ -168,6 +169,8 @@ var FMGCInternal = {
 	altAirportSet: 0,
 	altSelected: 0,
 	arrApt: "",
+	coRoute: "",
+	coRouteSet: 0,
 	costIndex: 0,
 	costIndexSet: 0,
 	crzFt: 10000,
@@ -308,6 +311,7 @@ var updateArptLatLon = func {
 
 updateRouteManagerAlt = func() {
 	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	# TODO - update FMGCInternal.phase when DES to re-enter in CLIMB/CRUIZE
 };
 
 ########
@@ -644,9 +648,15 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	if (FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
-		FMGCInternal.phase = 5;
-	}
+	if (FMGCInternal.phase == 4) {
+		if (getprop("/FMGC/internal/decel")) {
+			FMGCInternal.phase = 5;
+		}
+		else if (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
+			FMGCInternal.phase = 3;
+			systems.PNEU.pressMode.setValue("CR");
+		}
+	} 
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
 		setprop("/FMGC/internal/decel", 1);
@@ -683,7 +693,7 @@ var masterFMGC = maketimer(0.2, func {
 	windHdg = pts.Environment.windFromHdg.getValue();
 	windSpeed = pts.Environment.windSpeedKt.getValue();
 	if (FMGCInternal.phase == 3 or FMGCInternal.phase == 4 or FMGCInternal.phase == 6) {
-		var windsDidChange = 0;
+		windsDidChange = 0;
 		if (FMGCInternal.crzFt > 5000 and alt > 4980 and alt < 5020) {
 			if (sprintf("%03d", windHdg) != fmgc.windController.fl50_wind[0] or sprintf("%03d", windSpeed) != fmgc.windController.fl50_wind[1]) {
 				fmgc.windController.fl50_wind[0] = sprintf("%03d", windHdg);
@@ -969,6 +979,7 @@ var reset_FMGC = func {
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
+	mcdu.FlightLogDatabase.reset(); # track reset events without loosing recorded data
 	
 	Input.fd1.setValue(fd1);
 	Input.fd2.setValue(fd2);
@@ -1020,9 +1031,7 @@ var ManagedSPD = maketimer(0.25, func {
 			
 			if (mach > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
 				FMGCInternal.machSwitchover = 1;
-			}
-			
-			if (ias > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
+			} elsif (ias > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
 				FMGCInternal.machSwitchover = 0;
 			}
 			

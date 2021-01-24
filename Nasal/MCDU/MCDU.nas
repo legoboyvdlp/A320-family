@@ -18,6 +18,7 @@ var MCDU_reset = func(i) {
 	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
+	setprop("/MCDU[" ~ i ~ "]/active-system","");
 	pageNode[i].setValue("MCDU");
 	
 	setprop("/FMGC/keyboard-left", 0);
@@ -75,6 +76,8 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.gndTempSet = 0;
 	fmgc.FMGCInternal.toFromSet = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);
+	fmgc.FMGCInternal.coRoute = "";
+	fmgc.FMGCInternal.coRouteSet = 0;
 	fmgc.FMGCInternal.tropo = 36090;
 	fmgc.FMGCInternal.tropoSet = 0;
 	
@@ -216,9 +219,11 @@ var lskbutton = func(btn, i) {
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 						mcdu_scratchpad.scratchpads[i].empty();
 						setprop("/MCDU[" ~ i ~ "]/active", 2);
+						setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 					}, 2);
-				} else {
+				} else {					
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
+					setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
@@ -232,6 +237,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(1);
 		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(1);
+		} else if (page == "PROGPREF") {
+			progTOInput("L1",i); # same fn as TO
 		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
 		} else if (page == "PROGCLB") {
@@ -354,6 +361,9 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 0;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -369,9 +379,11 @@ var lskbutton = func(btn, i) {
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
 						mcdu_scratchpad.scratchpads[i].empty();
 						setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
+						setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 					}, 2);
 				} else {
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
+					setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
@@ -495,6 +507,9 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 1;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -619,6 +634,9 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 2;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -786,6 +804,11 @@ var lskbutton = func(btn, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "FLTLOG") {
+			mcdu_message(i, "NOT ALLOWED");
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 9;
+			atsu.freeTexts[i].changed = 1;
 		} else if (page == "RECEIVEDMSGS") {
 			canvas_mcdu.myReceivedMessages[i].leftKey(5);
 		} else {
@@ -845,7 +868,9 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myClosestAirport[i].freeze();
 		} else if (page == "AOCMENU" or page == "ATCMENU" or page == "ATCMENU2") {
 			pageNode[i].setValue("ATSUDLINK");
-		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS") {
+		} else if (page == "SENSORS") {
+			pageNode[i].setValue("FLTLOG");
+		} else if (page == "NOTIFICATION" or page == "CONNECTSTATUS" or page == "MCDUTEXT") {
 			pageNode[i].setValue("ATCMENU");
 		} else if (page == "WEATHERREQ" or page == "RECEIVEDMSGS") {
 			pageNode[i].setValue("AOCMENU");
@@ -931,6 +956,8 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "ATSUDLINK") {
 			pageNode[i].setValue("AOCMENU");
+		} else if (page == "AOCMENU") {
+			pageNode[i].setValue("FLTLOG");
 		} else if (page == "WEATHERREQ") {
 			var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
 			if (result == 1) {
@@ -951,6 +978,9 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 3;
+			atsu.freeTexts[i].changed = 1;
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -991,7 +1021,10 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
-		} else {
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 4;
+			atsu.freeTexts[i].changed = 1;
+		}  else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
@@ -1037,6 +1070,11 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "MCDUTEXT") {
+			atsu.freeTexts[i].selection = 5;
+			atsu.freeTexts[i].changed = 1;
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("MCDUTEXT");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1180,6 +1218,8 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "FLTLOG") {
+			pageNode[i].setValue("SENSORS");
 		} else if (page == "WEATHERREQ") {
 			var result = atsu.AOC.sendReq(i);
 			if (result == 1) {
@@ -1247,6 +1287,9 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "NOTIFICATION") {
 			pageNode[i].setValue("CONNECTSTATUS");
+		} else if (page == "MCDUTEXT") {
+			# todo transfer to DCDU
+			pageNode[i].setValue("ATCMENU");
 		} else if (page == "ATSUDLINK") {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "CONNECTSTATUS") {
@@ -1369,10 +1412,19 @@ var pagebutton = func(btn, i) {
 	page = pageNode[i].getValue();
 	setprop("/MCDU[" ~ i ~ "]/scratchpad-color", "wht");
 	if (page != "MCDU") {
+
+		# A more flexible system/page tracking for future system expansion
+		if (getprop("/MCDU[" ~ i ~ "]/active-system") == "fmgc") setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
+		else if (getprop("/MCDU[" ~ i ~ "]/active-system") == "atsu") setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
+		if (btn == "atc") setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
+		else setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
+
 		if (btn == "radnav") {
-			pageNode[i].setValue("RADNAV");
+			pageNode[i].setValue("RADNAV");			
 		} else if (btn == "prog") {
-			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
+			if (fmgc.FMGCInternal.phase == 0) {
+				pageNode[i].setValue("PROGPREF");
+			} else if (fmgc.FMGCInternal.phase == 1) {
 				pageNode[i].setValue("PROGTO");
 			} else if (fmgc.FMGCInternal.phase == 2) {
 				pageNode[i].setValue("PROGCLB");
@@ -1405,12 +1457,13 @@ var pagebutton = func(btn, i) {
 		} else if (btn == "data") {
 			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
-			var page = page;
-			if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
-				setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
-			} else {
-				setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
-			}
+			#var page = page;
+			#if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "MCDUTEXT" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
+			#if (getprop("/MCDU[0]/active-system") == "fmgc") {
+			#	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
+			#} else {
+			#	#setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
+			#}
 			mcdu_message(i, "SELECT DESIRED SYSTEM");
 			pageNode[i].setValue("MCDU");
 		} else if (btn == "f-pln" or btn == "airport") {
@@ -1449,16 +1502,18 @@ var pagebutton = func(btn, i) {
 				settimer(func(){
 					pageNode[i].setValue("ATCMENU");
 					mcdu_scratchpad.scratchpads[i].empty();
-					setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
+					setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);					
 				}, 2);
 			} else {
-				pageNode[i].setValue("ATCMENU");
+				pageNode[i].setValue("ATCMENU");				
 			}
 		}
 	}
 }
 
-var button = func(btn, i) {
+var buttonCLRDown = [0,0]; # counter for down event
+
+var button = func(btn, i, event = "") {
 	page = pageNode[i].getValue();
 	if (page != "MCDU") {
 		var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
@@ -1467,11 +1522,24 @@ var button = func(btn, i) {
 		} else if (btn == "SP") {
 			mcdu_scratchpad.scratchpads[i].addChar(" ");
 		} else if (btn == "CLR") {
-			var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
-			if (size(scratchpad) == 0) {
-				mcdu_scratchpad.scratchpads[i].addChar("CLR");
-			} else {
-				mcdu_scratchpad.scratchpads[i].clear();
+			if (event == "down") {
+				if (size(scratchpad) > 0) {
+					if (buttonCLRDown[i] > 4) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+					buttonCLRDown[i] = buttonCLRDown[i] + 1;
+				}
+			}
+			else if (event == "" or buttonCLRDown[i]<=4) {
+				buttonCLRDown[i] = 0;
+				#var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;  <- useless??
+				if (size(scratchpad) == 0) {
+					mcdu_scratchpad.scratchpads[i].addChar("CLR");
+				} else {
+					mcdu_scratchpad.scratchpads[i].clear();
+				}
+			} else {  # up with buttonCLRDown[i]>4
+				buttonCLRDown[i] = 0;
 			}
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
@@ -1485,6 +1553,12 @@ var button = func(btn, i) {
 
 var mcdu_message = func(i, string, overrideStr = "") {
 	mcdu_scratchpad.scratchpads[i].showTypeI(mcdu_scratchpad.MessageController.getTypeIMsgByText(string));
+	mcdu_scratchpad.scratchpads[i].override(overrideStr);
+}
+
+# Messagge Type II - TODO 5 messages queue  - remove only on resolve
+var mcdu_messageTypeII = func(i, string, overrideStr = "") {
+	mcdu_scratchpad.scratchpads[i].showTypeII(mcdu_scratchpad.MessageController.getTypeIIMsgByText(string));
 	mcdu_scratchpad.scratchpads[i].override(overrideStr);
 }
 

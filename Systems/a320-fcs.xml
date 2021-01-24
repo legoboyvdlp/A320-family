@@ -372,12 +372,13 @@
 		
 		<switch name="hydraulics/elevator-trim/rate">
 			<default value="0"/> <!-- only mechanical input to hyd actuator. So it does need hydraulic power -->
-			<test logic="OR" value="0">
+			<test value="0">
 				/systems/failures/fctl/ths-jam eq 1
 			</test>
 			<test logic="OR" value="0.25">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500
+				/systems/acconfig/autoconfig-running eq 1
 			</test>
 		</switch>
 		
@@ -978,8 +979,13 @@
 			</table>
 		</scheduled_gain>
 		
-		<lag_filter name="fbw/tiller-handle">
+		<actuator name="fbw/tiller-handle-cmd">
 			<input>fbw/tiller-handle-scheduled</input>
+			<rate_limit>0.16</rate_limit> <!-- 12/75 -->
+		</actuator>
+		
+		<lag_filter name="fbw/tiller-handle">
+			<input>fbw/tiller-handle-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
@@ -1172,11 +1178,14 @@
 		</actuator>
 		
 		<switch name="fcs/brake-avail">
-			<default value="1"/>
-			<!--<test logic="OR" value="1">
-				/systems/hydraulic/green-psi ge 2000
-				/systems/hydraulic/yellow-psi ge 1500
-			</test>-->
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/services/chocks/enable eq 1
+				/systems/hydraulic/green-psi ge 2500
+				/systems/hydraulic/yellow-psi ge 1000
+				/systems/hydraulic/yellow-accumulator-psi gt 0
+			</test>
+			<output>fcs/brake-avail</output>
 		</switch>
 		
 		<fcs_function name="fcs/left-brake-input">

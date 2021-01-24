@@ -8,7 +8,7 @@ var viewNumberRaw = 0;
 var shakeFlag = 0;
 var resetView = func() {
 	viewNumberRaw = pts.Sim.CurrentView.viewNumberRaw.getValue();
-	if (viewNumberRaw == 0 or (viewNumberRaw >= 100 and viewNumberRaw <= 110)) {
+	if (viewNumberRaw == 0 or (viewNumberRaw >= 100 and viewNumberRaw <= 109) or viewNumberRaw == 112) {
 		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
 			shakeFlag = 1;
 			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
