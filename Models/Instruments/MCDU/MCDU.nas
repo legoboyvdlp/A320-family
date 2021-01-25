@@ -239,6 +239,8 @@ var canvas_MCDU_base = {
 		me["PERFGA_OE"].setColor(BLUE);
 		
 		me.page = canvas_group;
+
+		me.updateretard = 0; # skip a few page update to save CPU
 		
 		return me;
 	},
@@ -2316,73 +2318,86 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 
 				pageFreezed[i] = nil;
+
+				me.updateretard = 0;
 				
 				pageSwitch[i].setBoolValue(1);
 			}
 
-			if (pageFreezed[i] == nil) {
+            if (me.updateretard <= 0) {
+				if (pageFreezed[i] == nil) {
 
-				me["Simple_Title"].setText("POSITION MONITOR");
-				me["Simple_Title2"].hide();
-				me["Simple_L6"].setText(" FREEZE");
-			
-				me["Simple_L1"].setText("FMGC1");
-				me["Simple_L2"].setText("FMGC2");
-				me["Simple_L3"].setText("GPIRS");
-				me["Simple_L4"].setText("MIX IRS");							
-				me["Simple_L5S"].setText("  IRS1");
-
-				if (systems.ADIRS.Operating.aligned[0].getValue()) { # TODO real FMGC1 GPS data
-					me["Simple_R1"].setText(me.getLatLogFormatted("/position/"));
-					me["Simple_L2S"].setText(sprintf("%16s","3IRS/GPS"));
-					me["Simple_L5"].setText(sprintf("%s 0.0",me.getIRSStatus(0)));
-				} else {
-					me["Simple_R1"].setText("----.--/-----.--");
-					me["Simple_R1"].setColor(WHITE);
-					me["Simple_L2S"].setText("");	
-					me["Simple_L5"].setText(sprintf("%-8s",me.getIRSStatus(0)));
-				}
-
-				if (systems.ADIRS.Operating.aligned[1].getValue()) { # TODO real FMGC2 GPS data
-					me["Simple_R2"].setText(me.getLatLogFormatted("/position/"));
-					me["Simple_L3S"].setText(sprintf("%16s","3IRS/GPS"));
-					me["Simple_C5"].setText(sprintf("%s 0.0",me.getIRSStatus(1)));
-				} else {
-					me["Simple_R2"].setText("----.--/-----.--");
-					me["Simple_R2"].setColor(WHITE);
-					me["Simple_L3S"].setText("");
-					me["Simple_C5"].setText(sprintf("%-8s",me.getIRSStatus(1)));
-				}
-
-				me["Simple_R3"].setText("----.--/-----.--"); # GPIRS not available
-				me["Simple_R3"].setColor(WHITE);
-
-				if (systems.ADIRS.Operating.aligned[2].getValue()) {
-					me["Simple_R5"].setText(sprintf("%s 0.0",me.getIRSStatus(2)));
-				} else {
-					me["Simple_R5"].setText(sprintf("%-8s",me.getIRSStatus(2)));
-				}
-
-				if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) {
-					me["Simple_R4"].setText(me.getLatLogFormatted("/position/"));
-					me["Simple_R4"].setColor(GREEN);
-				} else {
-					me["Simple_R4"].setText("----.--/-----.--");
-					me["Simple_R4"].setColor(WHITE);
-				}
+					me["Simple_Title"].setText("POSITION MONITOR");
+					me["Simple_Title2"].hide();
+					me["Simple_L6"].setText(" FREEZE");
 				
-				me["Simple_R5S"].setText("IRS3  ");
-				me["Simple_R6S"].setText("SEL ");
-				me["Simple_C5S"].setText("IRS2");
+					me["Simple_L1"].setText("FMGC1");
+					me["Simple_L2"].setText("FMGC2");
+					me["Simple_L3"].setText("GPIRS");
+					me["Simple_L4"].setText("MIX IRS");							
+					me["Simple_L5S"].setText("  IRS1");
+					me["Simple_R5S"].setText("IRS3  ");
+					me["Simple_R6S"].setText("SEL ");
+					me["Simple_C5S"].setText("IRS2");
 
-			} else {
+					var latlog = me.getLatLogFormatted("/position/"); # current sim lat/log (formatted) cached for fast excecution
+					#TODO - IRS emulation
 
-				me["Simple_Title"].setText("POSITION FROZEN AT      ");
-				me["Simple_Title2"].setText(sprintf("%23s ",pageFreezed[i]));
-				me["Simple_Title2"].show();
-				me["Simple_L6"].setText(" UNFREEZE");
+					if (systems.ADIRS.Operating.aligned[0].getValue()) { # TODO real FMGC1 GPS data
+						me["Simple_R1"].setText(latlog);
+						me["Simple_R1"].setColor(GREEN);
+						me["Simple_L2S"].setText(sprintf("%16s","3IRS/GPS"));
+					} else {
+						me["Simple_R1"].setText("----.--/-----.--");
+						me["Simple_R1"].setColor(WHITE);
+						me["Simple_L2S"].setText("");	
+					}
+
+					if (systems.ADIRS.Operating.aligned[1].getValue()) { # TODO real FMGC2 GPS data
+						me["Simple_R2"].setText(latlog);
+						me["Simple_R2"].setColor(GREEN);
+						me["Simple_L3S"].setText(sprintf("%16s","3IRS/GPS"));
+					} else {
+						me["Simple_R2"].setText("----.--/-----.--");
+						me["Simple_R2"].setColor(WHITE);
+						me["Simple_L3S"].setText("");
+					}
+
+					if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue() or systems.ADIRS.Operating.aligned[2].getValue()) {
+						me["Simple_R3"].setText(latlog); # GPIRS
+						me["Simple_R3"].setColor(GREEN);
+						me["Simple_R4"].setText(latlog); # MIXIRS
+						me["Simple_R4"].setColor(GREEN);
+					} else {
+						me["Simple_R3"].setText("----.--/-----.--"); # GPIRS not available
+						me["Simple_R3"].setColor(WHITE);
+						me["Simple_R4"].setText("----.--/-----.--"); # MIXIRS not available
+						me["Simple_R4"].setColor(WHITE);
+					}
+
+					var Simple_row5 = ["Simple_L5","Simple_C5","Simple_R5"];
+
+					for ( var a=0; a<3; a+=1 ) {
+						if (systems.ADIRS.Operating.aligned[a].getValue()) {
+							me[Simple_row5[a]].setText(sprintf("%-8s",(systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV 0.0"));
+						} else {
+							me[Simple_row5[a]].setText(sprintf("%-8s",me.getIRSStatus(a)));
+						}
+					}			
+
+				} else {
+
+					me["Simple_Title"].setText("POSITION FROZEN AT      ");
+					me["Simple_Title2"].setText(sprintf("%23s ",pageFreezed[i]));
+					me["Simple_Title2"].show();
+					me["Simple_L6"].setText(" UNFREEZE");
+
+				}
 
 			}
+
+			if (me.updateretard < 0) me.updateretard = 2;
+			else me.updateretard -= 1;
 
 		} else if (page == "IRSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -3887,7 +3902,7 @@ var canvas_MCDU_base = {
 			if (page != "PROGDONE") {			
 				me["Simple_R1"].setText("FL398 ");
 			} else {
-				me["Simple_L1"].setText("-----");
+				me["Simple_L1"].setText("_____");
 				me["Simple_R1"].setText("----- ");				
 				me["Simple_L1"].setColor(AMBER);
 				me["Simple_C1"].setColor(WHITE);
