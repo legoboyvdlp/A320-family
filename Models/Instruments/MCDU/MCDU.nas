@@ -3927,7 +3927,8 @@ var canvas_MCDU_base = {
 			me["Simple_C3S"].setText("CONFIRM UPDATE AT");
 			me["Simple_C4"].setText("   TO");
 			me["Simple_C6S"].setText("ACCUR");
-			me["Simple_C6"].setText("HIGH");
+			if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) me["Simple_C6"].setText("HIGH");
+			else  me["Simple_C6"].setText("LOW");
 
 			#if (page == "PROGAPPR") {  # A/C without GPS
 			#	me["Simple_L5"].setText(sprintf(" DIR  DIST  TO  DEST=%6d",0));
