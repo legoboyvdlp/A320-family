@@ -128,6 +128,7 @@ var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/positio
 
 # Detect OFF without IN
 var lastgs0 = 0;	
+var lastgear0 = 0;
 var lastgsrestart = 0;
 
 # Check for A/C state change - advice me for a better method, please :/

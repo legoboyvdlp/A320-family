@@ -241,7 +241,7 @@ var lskbutton = func(btn, i) {
 			progTOInput("L1",i); # same fn as TO
 		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
-		} else if (page == "PROGCLB") {
+		} else if (page == "PROGCLB" or page == "PROGAPPR") {  # APPR restore to CLB
 			progCLBInput("L1",i);
 		} else if (page == "PROGCRZ") {
 			progCRZInput("L1",i);
@@ -887,6 +887,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATIS");
 		} else if (page == "AOCCONFIG") {
 			pageNode[i].setValue("AOCMENU");
+		} else if (page == "POSMON") {
+			canvas_mcdu.togglePageFreeze(i);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1430,8 +1432,12 @@ var pagebutton = func(btn, i) {
 				pageNode[i].setValue("PROGCLB");
 			} else if (fmgc.FMGCInternal.phase == 3) {
 				pageNode[i].setValue("PROGCRZ");
-			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				pageNode[i].setValue("PROGDES");
+			} else if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+				pageNode[i].setValue("PROGAPPR");
+			} else if (fmgc.FMGCInternal.phase == 7) {
+				pageNode[i].setValue("PROGDONE");
 			}
 		} else if (btn == "perf") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
