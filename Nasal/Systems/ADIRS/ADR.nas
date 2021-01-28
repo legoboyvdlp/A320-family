@@ -144,6 +144,7 @@ var ADIRU = {
 			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
 		}
 	},
+	_excessMotion: 0,
 	alignLoop: func() {
 		me._roll = pts.Orientation.roll.getValue();
 		me._pitch = pts.Orientation.pitch.getValue();
@@ -152,13 +153,18 @@ var ADIRU = {
 		# todo use IR values
 		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {
 			me.stopAlignNoAlign();
+			me._excessMotion = 1;
 			print("Excessive motion, restarting");
 			me.update(); # update operative
 			me.align(calcAlignTime(pts.Position.latitude.getValue()));
 		} elsif (me.operative == 0) {
 			me.stopAlignNoAlign();
+			me._excessMotion = 0;
 		} elsif (pts.Sim.Time.elapsedSec.getValue() >= me._alignTime) {
 			me.stopAlignAligned();
+			me._excessMotion = 0;
+		} else {
+			me._excessMotion = 0;
 		}
 		
 		if (!me.operating and pts.Sim.Time.elapsedSec.getValue() >= me._pfdTime) {

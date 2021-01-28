@@ -388,7 +388,7 @@ var canvas_MCDU_base = {
 			if (systems.ADIRS.Operating.aligned[a].getValue()) {
 				irsstatus = (systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV";
 			} else {
-				irsstatus = "ALIGN";
+				irsstatus = "ALIGN TTN" ~ sprintf("% 2.0d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
 			}
 		}
 		return irsstatus;
@@ -2338,6 +2338,7 @@ var canvas_MCDU_base = {
 					me["Simple_L5S"].setText("  IRS1");
 					me["Simple_R5S"].setText("IRS3  ");
 					me["Simple_R6S"].setText("SEL ");
+					me["Simple_R6"].setText("NAVAIDS ");
 					me["Simple_C5S"].setText("IRS2");
 
 					var latlog = me.getLatLogFormatted("/position/"); # current sim lat/log (formatted) cached for fast excecution
@@ -2402,7 +2403,7 @@ var canvas_MCDU_base = {
 		} else if (page == "IRSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
 				
-				me.defaultHide();
+				me.defaultHideWithCenter();
 				me.standardFontSize();
 
 				me.defaultPageNumbers();
@@ -2410,6 +2411,8 @@ var canvas_MCDU_base = {
 				me.showLeft(1, 1, 1, -1, -1, -1);
 				me.showLeftS(-1, 1, 1, 1, -1, -1);
 				me.showLeftArrow(1, 1, 1, -1, -1, -1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(-1, -1, -1, -1, -1, -1);
 				me.showRightS(1, 1, 1, 1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
@@ -2422,6 +2425,7 @@ var canvas_MCDU_base = {
 				
 				me.colorLeft("wht", "wht", "wht", "ack", "ack", "ack");
 				me.colorLeftS("ack", "grn", "grn", "grn", "ack", "ack");
+				me.colorCenter("wht", "grn", "grn", "grn", "ack", "ack");
 				me.colorRightS("amb", "grn", "grn", "grn", "ack", "ack");
 				me.colorLeftArrow("wht", "wht", "wht", "ack", "ack", "ack");
 				
@@ -2430,6 +2434,12 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].setText(" IRS1");
 				me["Simple_L2"].setText(" IRS2");
 				me["Simple_L3"].setText(" IRS3");
+				me["Simple_C1"].setText("EXCESS MOTION");
+				me["Simple_C2"].setText("EXCESS MOTION");
+				me["Simple_C3"].setText("EXCESS MOTION");
+				me["Simple_C1"].setFontSize(small);
+				me["Simple_C2"].setFontSize(small);
+				me["Simple_C3"].setFontSize(small);
 				me["Simple_R1S"].setText("");
 
 				#TODO - Missing SET HDG on degraded operations
@@ -2438,8 +2448,14 @@ var canvas_MCDU_base = {
 			}
 			
 			var rows = ["Simple_L2S","Simple_L3S","Simple_L4S"];
+			var center = ["Simple_C1","Simple_C2","Simple_C3"];
 			for (var a = 0; a<3; a+=1) {
 				me[rows[a]].setText("  " ~ me.getIRSStatus(a));
+				if (systems.ADIRS.ADIRunits[a]._excessMotion) {
+					me[center[a]].show();
+				} else {
+					me[center[a]].hide();
+				}
 			}				
 			
 			if (fmgc.FMGCInternal.phase == 7) { # DONE phase
@@ -4030,7 +4046,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 			}
 
-			if (fmgc.FMGCInternal.phase > 0) {  # GREEN title and not modifiable on TO phase
+			if (fmgc.FMGCInternal.phase == 1) {  # GREEN title and not modifiable on TO phase
 				me["Simple_Title"].setColor(GREEN);
 				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
 				me.colorRight("grn", "blu", "grn", "grn", "grn", "wht");
