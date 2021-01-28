@@ -382,6 +382,17 @@ var canvas_MCDU_base = {
 		var	sign2 = degrees2 >= 0 ? "E" : "W";
 		return sprintf("%d%.1f%s/%07s%s",abs(degrees),minutes,sign,abs(degrees2)  ~ minutes2,sign2);
 	},
+	getLatLogFormatted2: func(rootpropname) {
+		var dms = getprop(rootpropname ~ "latitude-deg");
+		var degrees = int(dms);
+		var	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+		var	sign = degrees >= 0 ? "N" : "S";
+		var dms2 = getprop(rootpropname ~ "longitude-deg");
+		var	degrees2 = int(dms2);
+		var	minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
+		var	sign2 = degrees2 >= 0 ? "E" : "W";
+		return sprintf("%d %.1f%s/%03s %.1f%s",abs(degrees),minutes,sign,abs(degrees2),minutes2,sign2);
+	},
 	getIRSStatus: func(a) {
 		var irsstatus = "INVAL";
 		if (systems.ADIRS.ADIRunits[a].operative) {
@@ -2471,8 +2482,68 @@ var canvas_MCDU_base = {
 				me["Simple_R3S"].setText("");
 				me["Simple_R4S"].setText("");
 			}
+		} else if (page == "GPSMON") {
+			if (!pageSwitch[i].getBoolValue()) {
+				
+				me.defaultHideWithCenter();
+				me.standardFontSize();
 
+				me.defaultPageNumbers();
 
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(-1, 1, 1, -1, 1, 1);
+				me.showCenterS(-1, 1, 1, -1, 1, 1);
+				me.showRight(-1, 1, 1, -1, 1, 1);
+				me.showRightS(-1, 1, 1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();				
+				me["Simple_L0S"].hide();
+				me["Simple_Title"].show();
+				
+				me.colorLeft("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_Title"].setText("GPS MONITOR");
+
+				me["Simple_L1S"].setText("GPS1 POSITION");
+				me["Simple_L2S"].setText("TTRK");
+				me["Simple_L3S"].setText("MERIT");
+				me["Simple_L3"].setText(sprintf("%3.0d",((rand() * 50) - 25) + 50) ~ "M");
+				me["Simple_L4S"].setText("GPS2 POSITION");
+				me["Simple_L5S"].setText("TTRK");
+				me["Simple_L6S"].setText("MERIT");
+				me["Simple_L6"].setText(sprintf("%3.0d",((rand() * 50) - 25) + 50) ~ "M");
+				me["Simple_C2S"].setText("UTC");
+				me["Simple_C3S"].setText("GPS ALT");
+				me["Simple_C5S"].setText("UTC");
+				me["Simple_C6S"].setText("GPS ALT");
+				me["Simple_R2S"].setText("GS");
+				me["Simple_R3S"].setText("MODE/SAT");
+				me["Simple_R3"].setText("NAV/" ~ sprintf("%s",int((rand() * 2) - 1) + 6) ~ "  ");
+				me["Simple_R5S"].setText("GS");
+				me["Simple_R6S"].setText("MODE/SAT");
+				me["Simple_R6"].setText("NAV/" ~ sprintf("%s",int((rand() * 2) - 1) + 6) ~ "  ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			me["Simple_L1"].setText(me.getLatLogFormatted2("/position/"));
+			me["Simple_L2"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
+			me["Simple_L4"].setText(me.getLatLogFormatted2("/position/"));
+			me["Simple_L5"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
+			me["Simple_C2"].setText(pts.Sim.Time.gmtString.getValue());
+			me["Simple_C5"].setText(pts.Sim.Time.gmtString.getValue());
+			me["Simple_C3"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
+			me["Simple_C6"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
+			me["Simple_R2"].setText(sprintf("%3.0f",pts.Instrumentation.GPS.gs.getValue()));
+			me["Simple_R5"].setText(sprintf("%3.0f",pts.Instrumentation.GPS.gs.getValue()));
 		} else if (page == "RADNAV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();

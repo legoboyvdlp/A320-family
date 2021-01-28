@@ -534,6 +534,8 @@ var lskbutton = func(btn, i) {
 			statusInput("L3",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
+		} else if (page == "DATA") {
+			dataInput("L3",i);
 		} else if (page == "PRINTFUNC") {
 			printInput("L3",i);
 		} else if (page == "PRINTFUNC2") {
