@@ -4,7 +4,7 @@
 
 <system name="A320: FWC">
 
-	<channel name="FWC" execrate="8">
+	<channel name="FWC" execrate="16">
 		
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
 			<description>Timer for the ECAM system</description>
@@ -364,7 +364,7 @@
 		</actuator>
 	</channel>
 	
-	<channel name="ECAM" execrate="8">
+	<channel name="ECAM" execrate="16">
 		
 		<switch name="/ECAM/warnings/logic/apu-bleed-fault">
 			<default value="0"/>
@@ -1485,7 +1485,7 @@
 		</switch>
 	</channel>
 	
-	<channel name="Electrical Warnings" execrate="8">
+	<channel name="Electrical Warnings" execrate="16">
 	
 		<switch name="/ECAM/warnings/logic/gen-1-inop">
 			<default value="0"/>
@@ -1659,7 +1659,7 @@
 		
 	</channel>
 
-	<channel name="STALL" execrate="8">
+	<channel name="STALL" execrate="16">
 		
 		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-set">
 			<default value="0"/>
@@ -1759,7 +1759,7 @@
 		
 	</channel>
 	
-	<channel name="ENG" execrate="8">
+	<channel name="ENG" execrate="16">
 		
 		<switch name="/ECAM/warnings/logic/eng/ground-spoilers">
 			<default value="0"/>
@@ -2004,7 +2004,7 @@
 		
 	</channel>
 	
-	<channel name="Config" execrate="8">
+	<channel name="Config" execrate="16">
 		
 		<switch name="/ECAM/warnings/config/park-brk/park-brk-set">
 			<default value="0"/>
@@ -2024,7 +2024,7 @@
 		
 	</channel>
 	
-	<channel name="FCTL" execrate="8">
+	<channel name="FCTL" execrate="16">
 	
 		<switch name="/ECAM/warnings/fctl/lrElevFault">
 			<default value="0"/>
@@ -2277,7 +2277,7 @@
 		</switch>
 	</channel>
 	
-	<channel name="Hydraulic" execrate="8">
+	<channel name="Hydraulic" execrate="16">
 	
 		<switch name="/ECAM/warnings/hyd/engines-2-online">
 			<default value="0"/>
@@ -2482,7 +2482,7 @@
 		
 	</channel>
 	
-	<channel name="Altitude Alerter" execrate="8">
+	<channel name="Altitude Alerter" execrate="16">
 		
 		<switch name="/ECAM/warnings/altitude-alert/altInhibit">
 			<default value="0"/>
