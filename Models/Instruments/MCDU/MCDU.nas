@@ -362,6 +362,10 @@ var canvas_MCDU_base = {
 		me.fontSizeLeftS(small, small, small, small, small, small);
 		me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 		me.fontSizeRightS(small, small, small, small, small, small);
+		me.fontCenter(default, default, default, default, default, default);
+		me.fontCenterS(default, default, default, default, default, default);
+		me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+		me.fontSizeCenterS(small, small, small, small, small, small);
 	},
 	standardFontColour: func() {
 		me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3977,7 +3981,6 @@ var canvas_MCDU_base = {
 				me["PROG_UPDATE"].show();
 				me["Simple_L3"].setText("  [    ]");
 			}
-			me["Simple_L4"].setText(" ---g /----.-");
 			me["Simple_L5"].setText(" GPS");
 			me["Simple_L6"].setText("----");
 			me["Simple_L1S"].setText(" CRZ");
@@ -4003,8 +4006,25 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setText(sprintf("%17s%4d   ",vdev_sign,abs(vdev)));
 				me["Simple_R2"].setText(sprintf("%30s","VDEV=       FT "));
 			}
-
-			me["Simple_R4"].setText("[    ]");
+			
+			if (mcdu.bearingDistances[i].displayID != nil) {
+				me["Simple_R4"].setFont(default);
+				me["Simple_R4"].setFontSize(normal);
+				me["Simple_R4"].setText(mcdu.bearingDistances[i].displayID);
+			} else {
+				me["Simple_R4"].setFont(symbol);
+				me["Simple_R4"].setFontSize(small);
+				me["Simple_R4"].setText("[    ]");
+			}
+			
+			if (mcdu.bearingDistances[i].selectedPoint != nil) {
+				me["Simple_L4"].setColor(GREEN);
+				me["Simple_L4"].setText(sprintf("%3.0fg /%4.1f",mcdu.bearingDistances[i].bearing,mcdu.bearingDistances[i].distance));
+			} else {
+				me["Simple_L4"].setColor(WHITE);
+				me["Simple_L4"].setText(" ---g /----.-");
+			}
+			
 			me["Simple_R5"].setText("GPS PRIMARY");
 			me["Simple_R6"].setText("----");
 			me["Simple_R1S"].setText("REC MAX ");
@@ -4012,7 +4032,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1"].setText("-----");
 			me["Simple_C1S"].setText("OPT");
 			me["Simple_C3S"].setText("CONFIRM UPDATE AT");
-			me["Simple_C4"].setText("   TO");
+			me["Simple_C4"].setText("      TO");
 			me["Simple_C6S"].setText("ACCUR");
 			if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) me["Simple_C6"].setText("HIGH");
 			else  me["Simple_C6"].setText("LOW");
@@ -6222,6 +6242,46 @@ var canvas_MCDU_base = {
 		}
 		if (f != 0) {
 			me["Simple_L6S"].setFont(f); 
+		}
+	},
+	fontCenter: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_C1"].setFont(a); 
+		}
+		if (b != 0) {
+			me["Simple_C2"].setFont(b); 
+		}
+		if (c != 0) {
+			me["Simple_C3"].setFont(c); 
+		}
+		if (d != 0) {
+			me["Simple_C4"].setFont(d); 
+		}
+		if (e != 0) {
+			me["Simple_C5"].setFont(e); 
+		}
+		if (f != 0) {
+			me["Simple_C6"].setFont(f); 
+		}
+	},
+	fontCenterS: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_C1S"].setFont(a); 
+		}
+		if (b != 0) {
+			me["Simple_C2S"].setFont(b); 
+		}
+		if (c != 0) {
+			me["Simple_C3S"].setFont(c); 
+		}
+		if (d != 0) {
+			me["Simple_C4S"].setFont(d); 
+		}
+		if (e != 0) {
+			me["Simple_C5S"].setFont(e); 
+		}
+		if (f != 0) {
+			me["Simple_C6S"].setFont(f); 
 		}
 	},
 	fontRight: func (a, b, c, d, e, f) {
