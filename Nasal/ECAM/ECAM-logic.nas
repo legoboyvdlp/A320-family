@@ -1657,32 +1657,29 @@ var messages_priority_2 = func {
 	# Crossbleed
 	if (xBleedFault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.crossbleedFault.getValue()) {
 		xBleedFault.active = 1;
-	} else {
-		ECAM_controller.warningReset(xBleedFault);
-	}
-	
-	if (xBleedFault.active) {
-		if (systems.PNEU.Switch.xbleed.getValue() == 1) {
+		
+		if (xBleedFaultMan.clearFlag == 0 and systems.PNEU.Switch.xbleed.getValue() == 1) {
 			xBleedFaultMan.active = 1;
 		} else {
 			ECAM_controller.warningReset(xBleedFaultMan);
 		}
 		
-		if (warningNodes.Logic.crossbleedWai.getValue()) {
-			if (getprop("/controls/ice-protection/wing")) {
-				xBleedOff.active = 1;
-			} else {	
-				ECAM_controller.warningReset(xBleedOff);
-			}
-			xBleedIcing.active = 1;
+		if (xBleedFaultWAI.clearFlag == 0 and wing_pb.getValue() and warningNodes.Logic.crossbleedWai.getValue()) {
+			xBleedFaultWAI.active = 1;
 		} else {
-			ECAM_controller.warningReset(xBleedOff);
-			ECAM_controller.warningReset(xBleedIcing);
+			ECAM_controller.warningReset(xBleedFaultWAI);
+		}
+		
+		if (xBleedFaultICE.clearFlag == 0 and warningNodes.Logic.crossbleedWai.getValue()) {
+			xBleedFaultICE.active = 1;
+		} else {
+			ECAM_controller.warningReset(xBleedFaultICE);
 		}
 	} else {
+		ECAM_controller.warningReset(xBleedFault);
 		ECAM_controller.warningReset(xBleedFaultMan);
-		ECAM_controller.warningReset(xBleedOff);
-		ECAM_controller.warningReset(xBleedIcing);
+		ECAM_controller.warningReset(xBleedFaultWAI);
+		ECAM_controller.warningReset(xBleedFaultICE);
 	}
 	
 	if (bleed1Off.clearFlag == 0 and (warningNodes.Timers.bleed1Off60Output.getValue() == 1 or warningNodes.Timers.bleed1Off5Output.getValue() == 1) and FWC.Timer.eng1idleOutput.getBoolValue() and (phaseVar2 == 2 or phaseVar2 == 6)) {

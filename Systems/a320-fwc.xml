@@ -62,6 +62,19 @@
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
+		<actuator name="/ECAM/warnings/timer/xbleed-fault-output-10"> <!-- 10 second delay on fall -->
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/crossbleed-fault-timer-was-one</input>
+			<rate_limit sense="decr">0.1</rate_limit> <!-- 10 seconds -->
+			<rate_limit sense="incr">120</rate_limit> <!-- Instant -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/xbleed-fault-eng-fire">
+			<description>Timer for the ECAM system</description>
+			<input>/controls/engines/engine[0]/fire-btn</input>
+			<rate_limit>0.06666666666</rate_limit>
+		</actuator>
+		
 		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-apu-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-1-not-shut-apu</input>
@@ -474,13 +487,27 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/crossbleed-fault-timer-was-one">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/xbleed-fault-output eq 1
+			</test>
+		</switch>
+		
+		
 		<switch name="/ECAM/warnings/logic/crossbleed-fault">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/ECAM/warnings/timer/xbleed-fault-output eq 1
 				<test logic="AND">
-					/ECAM/warnings/timer/xbleed-fault-output-10 eq 1
-					/ECAM/warnings/timer/xbleed-fault-output-15 eq 0
+					<test logic="AND">
+						/ECAM/warnings/timer/xbleed-fault-output eq 0
+						/ECAM/warnings/timer/xbleed-fault-output-10 ne 0
+					</test>
+					<test logic="OR">
+						/ECAM/warnings/timer/xbleed-fault-eng-fire eq 0
+						/ECAM/warnings/timer/xbleed-fault-eng-fire eq 1
+					</test>
 				</test>
 			</test>
 		</switch>
