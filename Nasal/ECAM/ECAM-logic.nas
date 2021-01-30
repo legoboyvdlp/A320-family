@@ -578,29 +578,23 @@ var messages_priority_3 = func {
 		takeoffConfig = 0;
 	}
 	
-	if ((pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4) and takeoffConfig) {
-		if (slats_config.clearFlag == 0) {
-			slats_config.active = 1;
-			slats_config_1.active = 1;
-		} else {
-			ECAM_controller.warningReset(slats_config);
-			ECAM_controller.warningReset(slats_config_1);
-		}
-		if (flaps_config.clearFlag == 0) {
-			flaps_config.active = 1;
-			flaps_config_1.active = 1;
-		} else {
-			ECAM_controller.warningReset(flaps_config);
-			ECAM_controller.warningReset(flaps_config_1);
-		}
+	if (slats_config.clearFlag == 0 and (warningNodes.Logic.slatsConfig.getBoolValue() or (takeoffConfig and warningNodes.Logic.slatsConfig2.getBoolValue()))) {
+		slats_config.active = 1;
+		slats_config_1.active = 1;
 	} else {
 		ECAM_controller.warningReset(slats_config);
 		ECAM_controller.warningReset(slats_config_1);
+	}
+	
+	if (flaps_config.clearFlag == 0 and (warningNodes.Logic.flapsConfig.getBoolValue() or (takeoffConfig and warningNodes.Logic.flapsConfig2.getBoolValue()))) {
+		flaps_config.active = 1;
+		flaps_config_1.active = 1;
+	} else {
 		ECAM_controller.warningReset(flaps_config);
 		ECAM_controller.warningReset(flaps_config_1);
 	}
 	
-	if ((spd_brk_config.clearFlag == 0) and pts.Controls.Flight.speedbrake.getValue() != 0 and takeoffConfig) {
+	if (spd_brk_config.clearFlag == 0 and (warningNodes.Logic.spdBrkConfig.getBoolValue() or (takeoffConfig and warningNodes.Logic.spdBrkConfig2.getBoolValue()))) {
 		spd_brk_config.active = 1;
 		spd_brk_config_1.active = 1;
 	} else {
@@ -608,7 +602,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(spd_brk_config_1);
 	}
 	
-	if ((pitch_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") > 2.6 or getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") < -2.6) and takeoffConfig) {
+	if (pitch_trim_config.clearFlag == 0 and (warningNodes.Logic.pitchTrimConfig.getBoolValue() or (takeoffConfig and warningNodes.Logic.pitchTrimConfig2.getBoolValue()))) {
 		pitch_trim_config.active = 1;
 		pitch_trim_config_1.active = 1;
 	} else {
@@ -616,7 +610,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(pitch_trim_config_1);
 	}
 	
-	if ((rud_trim_config.clearFlag == 0) and (getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.6 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.6) and takeoffConfig) {
+	if (rud_trim_config.clearFlag == 0 and (warningNodes.Logic.rudTrimConfig.getBoolValue() or (takeoffConfig and warningNodes.Logic.rudTrimConfig2.getBoolValue()))) {
 		rud_trim_config.active = 1;
 		rud_trim_config_1.active = 1;
 	} else {
@@ -624,7 +618,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(rud_trim_config_1);
 	}
 	
-	if ((park_brk_config.clearFlag == 0) and warningNodes.Flipflops.parkBrk.getValue() and phaseVar3 >= 2 and phaseVar3 <= 3) {
+	if (park_brk_config.clearFlag == 0 and warningNodes.Logic.parkBrkConfig.getValue() and phaseVar3 >= 2 and phaseVar3 <= 3) {
 		park_brk_config.active = 1;
 	} else {
 		ECAM_controller.warningReset(park_brk_config);

@@ -2337,6 +2337,156 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/fctl/flaps-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fcs/flap-pos-deg lt 2
+				fcs/flap-pos-deg ge 24
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/flaps-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/flaps-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/slats-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fcs/slat-pos-deg lt 17
+				fcs/slat-pos-deg ge 25
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/slats-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/slats-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/slats-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/slats-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/spd-brk-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/spd-brk-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/pitch-trim-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				hydraulics/elevator-trim/final-deg gt 2.9
+				hydraulics/elevator-trim/final-deg lt -2.9
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/pitch-trim-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/pitch-trim-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/pitch-trim-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/pitch-trim-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rudder-trim-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				hydraulics/rudder/trim-deg gt 3.6
+				hydraulics/rudder/trim-deg lt -3.6
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rudder-trim-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/rudder-trim-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rudder-trim-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/rudder-trim-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/park-brk-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 3
+				/controls/gear/brake-parking eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/park-brk-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/controls/gear/brake-parking eq 0
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Hydraulic" execrate="16">
@@ -2727,5 +2877,22 @@
 		</switch>
 		
 	</channel>
+	
+	<!--<channel name="NAV" execrate="8">
+	
+		<switch name="/ECAM/warnings/navigation/ADR123-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/ac-ess ge 110
+				/ECAM/warning-phase ne 1
+				/ECAM/warning-phase ne 4
+				/ECAM/warning-phase ne 8
+				/ECAM/warning-phase ne 10
+			</test>
+		</switch>
+		
+	</channel>-->
 	
 </system>

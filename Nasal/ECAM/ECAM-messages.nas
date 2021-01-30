@@ -85,6 +85,20 @@ var warnings				  = std.Vector.new([
 	var eng2FireGnAgent2      = warning.new(msg: " -AGENT 2..........DISCH",  colour: "c"),
 	var eng2FireGnEvac        = warning.new(msg: " -EMER EVAC PROC...APPLY",  colour: "c"),
 	
+	# ADR 1 + 2 + 3 FAULT
+	var ADR123Fault           = warning.new(msg: "NAV ADR1+2+3 FAULT      ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var ADR123FaultAP         = warning.new(msg: " -AP+FD..............OFF",  colour: "c"),
+	var ADR123FaultATHR       = warning.new(msg: " -ATHR...............OFF",  colour: "c"),
+	var ADR123FaultPRBW       = warning.new(msg: " -PROBE/WINDOW HEAT...ON",  colour: "c"),
+	var ADR123FaultBUSSC      = warning.new(msg: " -CAPT BKUP SPD/ALT...ON",  colour: "c"),
+	var ADR123FaultBUSSF      = warning.new(msg: " -FO BKUP SPD/ALT.....ON",  colour: "c"),
+	var ADR123FaultADRPB      = warning.new(msg: " -ADR 1+2+3 P/B......OFF",  colour: "c"),
+	var ADR123FaultSPD        = warning.new(msg: " -SPD......FLY THE GREEN",  colour: "c"),
+	var ADR123FaultAOADISAG   = warning.new(msg: "  •IF AOA DISAGREE:     ",  colour: "w", isMainMsg: 1),
+	var ADR123FaultBUSSINOP   = warning.new(msg: " BKUP SPD/ALT.DO NOT USE",  colour: "c"),
+	var ADR123FaultSTBY       = warning.new(msg: " -STBY INST.MAY BE UNREL",  colour: "c"),
+	var ADR123FaultPROC       = warning.new(msg: " -ALL ADR OFF PROC.APPLY",  colour: "c"),
+	
 	# APU FIRE
 	var apuFire               = warning.new(msg: "APU FIRE                ",  colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "apu"),
 	var apuFirePB             = warning.new(msg: " -APU FIRE P/B......PUSH",  colour: "c"),

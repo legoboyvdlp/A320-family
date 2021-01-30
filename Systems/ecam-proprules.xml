@@ -1005,4 +1005,70 @@
 		</R>
 		<output>/ECAM/phases/phase-calculation/altitude-ge-800</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/flaps-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/flaps-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/flaps-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/slats-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/slats-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/slats-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/spd-brk-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/spd-brk-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/spd-brk-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/pitch-trim-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/pitch-trim-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/pitch-trim-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/rudder-trim-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/rudder-trim-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/rudder-trim-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/park-brk-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/park-brk-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/park-brk-config-output</output>
+	</flipflop>
 </PropertyList>
