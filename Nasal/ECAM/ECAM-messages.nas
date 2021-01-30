@@ -161,8 +161,8 @@ var warnings				  = std.Vector.new([
 	
 	var gearNotDownLocked     = warning.new(msg: "L/G GEAR NOT DOWNLOCKED",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var gearNotDownLockedRec  = warning.new(msg: " -L/G LEVER......RECYCLE",  colour: "c"),
-	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "c", isMainMsg: 1),
-	var gearNotDownLocked120  = warning.new(msg: "    AFTER 120S:",           colour: "c"),
+	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "w", isMainMsg: 1),
+	var gearNotDownLocked120  = warning.new(msg: "    AFTER 120S:",           colour: "w"),
 	var gearNotDownLockedGrav = warning.new(msg: " -L/G.........GRVTY EXTN",  colour: "c"),
 	
 	# Autopilot off involuntary

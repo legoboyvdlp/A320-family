@@ -663,7 +663,7 @@ var messages_priority_3 = func {
 	if (gearNotDownLocked.clearFlag == 0 and warningNodes.Logic.gearNotDownLocked.getBoolValue() and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5 and phaseVar3 != 8) {
 		gearNotDownLocked.active = 1;
 		
-		if (gearNotDownLockedRec.clearFlag == 0 and warningNodes.Logic.gearNotDownLockedFlipflop.getBoolValue()) {
+		if (gearNotDownLockedRec.clearFlag == 0 and !warningNodes.Logic.gearNotDownLockedFlipflop.getBoolValue()) {
 			gearNotDownLockedRec.active = 1;
 			gearNotDownLockedWork.active = 1;
 		} else {
