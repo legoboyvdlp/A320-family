@@ -1348,11 +1348,14 @@
 				<spoiler-r4 type="bool">0</spoiler-r4>
 				<spoiler-r5 type="bool">0</spoiler-r5>
 			</spoilers>
-			<engine-left-fire type="bool">0</engine-left-fire>
-			<engine-right-fire type="bool">0</engine-right-fire>
-			<apu-fire type="bool">0</apu-fire>
-			<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
-			<cargo-aft-fire type="bool">0</cargo-aft-fire>
+			<fire>
+				<engine-left-fire type="bool">0</engine-left-fire>
+				<engine-right-fire type="bool">0</engine-right-fire>
+				<apu-fire type="bool">0</apu-fire>
+				<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
+				<cargo-aft-fire type="bool">0</cargo-aft-fire>
+				<lavatory-fire type="bool">0</lavatory-fire>
+			</fire>
 		</failures>
 		
 		<fctl n="0">
@@ -1385,6 +1388,9 @@
 					<temperature type="double">0</temperature>
 				</fwd>
 			</cargo>
+			<lavatory>
+				<temperature type="double">0</temperature>
+			</lavatory>
 		</fire>
 		<fuel n="0">
 			<only-use-ctr-tank type="bool">0</only-use-ctr-tank>

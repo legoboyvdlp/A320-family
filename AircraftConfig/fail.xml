@@ -560,7 +560,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 				<text>
-					<label>Cargo Fire</label>
+					<label>Fire</label>
 				</text>
 				<hrule>
 					<stretch type="bool">true</stretch>
@@ -568,9 +568,9 @@
 			</group>
 			
 			<checkbox>
-				<label>AFT</label>
+				<label>AFT CRG</label>
 				<halign>left</halign>
-				<property>/systems/failures/cargo-aft-fire</property>
+				<property>/systems/failures/fire/cargo-aft-fire</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -578,15 +578,26 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>FWD</label>
+				<label>FWD CRG</label>
 				<halign>left</halign>
-				<property>/systems/failures/cargo-fwd-fire</property>
+				<property>/systems/failures/fire/cargo-fwd-fire</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
 				<live>true</live>
 			</checkbox>
-				<group>
+			
+			<checkbox>
+				<label>LAV</label>
+				<halign>left</halign>
+				<property>/systems/failures/fire/lavatory-fire</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<group>
 				<layout>hbox</layout>
 
 				<hrule>
@@ -603,7 +614,7 @@
 			<checkbox>
 				<label>Left Engine</label>
 				<halign>left</halign>
-				<property>/systems/failures/engine-left-fire</property>
+				<property>/systems/failures/fire/engine-left-fire</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -613,7 +624,7 @@
 			<checkbox>
 				<label>APU</label>
 				<halign>left</halign>
-				<property>/systems/failures/apu-fire</property>
+				<property>/systems/failures/fire/apu-fire</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
@@ -623,7 +634,7 @@
 			<checkbox>
 				<label>Right Engine</label>
 				<halign>left</halign>
-				<property>/systems/failures/engine-right-fire</property>
+				<property>/systems/failures/fire/engine-right-fire</property>
 				<binding>
 					<command>dialog-apply</command>
 				</binding>
