@@ -397,13 +397,17 @@ var canvas_MCDU_base = {
 		var	sign2 = degrees2 >= 0 ? "E" : "W";
 		return sprintf("%d %.1f%s/%03s %.1f%s",abs(degrees),minutes,sign,abs(degrees2),minutes2,sign2);
 	},
-	getIRSStatus: func(a) {
+	getIRSStatus: func(a,b = 0) {
 		var irsstatus = "INVAL";
 		if (systems.ADIRS.ADIRunits[a].operative) {
 			if (systems.ADIRS.Operating.aligned[a].getValue()) {
 				irsstatus = (systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV";
 			} else {
-				irsstatus = "ALIGN TTN" ~ sprintf("% 2.0d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
+				if (b) {
+					irsstatus = "ALIGN TTN" ~ sprintf("% 2.0d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
+				} else {
+					irsstatus = "ALIGN";
+				}
 			}
 		}
 		return irsstatus;
@@ -2465,7 +2469,7 @@ var canvas_MCDU_base = {
 			var rows = ["Simple_L2S","Simple_L3S","Simple_L4S"];
 			var center = ["Simple_C1","Simple_C2","Simple_C3"];
 			for (var a = 0; a<3; a+=1) {
-				me[rows[a]].setText("  " ~ me.getIRSStatus(a));
+				me[rows[a]].setText("  " ~ me.getIRSStatus(a,1));
 				if (systems.ADIRS.ADIRunits[a]._excessMotion) {
 					me[center[a]].show();
 				} else {

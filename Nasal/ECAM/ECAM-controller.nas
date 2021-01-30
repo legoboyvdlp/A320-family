@@ -12,7 +12,6 @@ var leftOverflow  = props.globals.initNode("/ECAM/warnings/overflow-left", 0, "B
 var rightOverflow = props.globals.initNode("/ECAM/warnings/overflow-right", 0, "BOOL");
 var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
-var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
 var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL")];
@@ -76,6 +75,18 @@ var warningNodes = {
 		greenYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-fuel-consumpt"),
 		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault"),
 		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault"),
+		flapNotZero: props.globals.initNode("/ECAM/warnings/fctl/flaps-not-zero"),
+		slatsConfig: props.globals.initNode("/ECAM/warnings/fctl/slats-config-output"),
+		flapsConfig: props.globals.initNode("/ECAM/warnings/fctl/flaps-config-output"),
+		spdBrkConfig: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-config-output"),
+		pitchTrimConfig: props.globals.initNode("/ECAM/warnings/fctl/pitch-trim-config-output"),
+		rudTrimConfig: props.globals.initNode("/ECAM/warnings/fctl/rudder-trim-config-output"),
+		parkBrkConfig: props.globals.initNode("/ECAM/warnings/fctl/park-brk-config-output"),
+		slatsConfig2: props.globals.initNode("/ECAM/warnings/fctl/slats-config-range"),
+		flapsConfig2: props.globals.initNode("/ECAM/warnings/fctl/flaps-config-range"),
+		spdBrkConfig2: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-config-range"),
+		pitchTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/pitch-trim-config-range"),
+		rudTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/rudder-trim-config-range"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -389,6 +400,7 @@ var ECAM_controller = {
 				m.active = 0;
 			}
 		}
+		me._ready = 1;
 	},
 	clear: func() {
 		hasCleared = 0;
@@ -479,7 +491,7 @@ var ECAM_controller = {
 };
 
 setlistener("/systems/electrical/bus/dc-ess", func {
-	if (dc_ess.getValue() < 25) {
+	if (systems.ELEC.Bus.dcEss.getValue() < 25) {
 		ECAM_controller.reset();
 	}
 }, 0, 0);

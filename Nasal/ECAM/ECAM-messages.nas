@@ -85,6 +85,20 @@ var warnings				  = std.Vector.new([
 	var eng2FireGnAgent2      = warning.new(msg: " -AGENT 2..........DISCH",  colour: "c"),
 	var eng2FireGnEvac        = warning.new(msg: " -EMER EVAC PROC...APPLY",  colour: "c"),
 	
+	# ADR 1 + 2 + 3 FAULT
+	var ADR123Fault           = warning.new(msg: "NAV ADR1+2+3 FAULT      ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var ADR123FaultAP         = warning.new(msg: " -AP+FD..............OFF",  colour: "c"),
+	var ADR123FaultATHR       = warning.new(msg: " -ATHR...............OFF",  colour: "c"),
+	var ADR123FaultPRBW       = warning.new(msg: " -PROBE/WINDOW HEAT...ON",  colour: "c"),
+	var ADR123FaultBUSSC      = warning.new(msg: " -CAPT BKUP SPD/ALT...ON",  colour: "c"),
+	var ADR123FaultBUSSF      = warning.new(msg: " -FO BKUP SPD/ALT.....ON",  colour: "c"),
+	var ADR123FaultADRPB      = warning.new(msg: " -ADR 1+2+3 P/B......OFF",  colour: "c"),
+	var ADR123FaultSPD        = warning.new(msg: " -SPD......FLY THE GREEN",  colour: "c"),
+	var ADR123FaultAOADISAG   = warning.new(msg: "  •IF AOA DISAGREE:     ",  colour: "w", isMainMsg: 1),
+	var ADR123FaultBUSSINOP   = warning.new(msg: " BKUP SPD/ALT.DO NOT USE",  colour: "c"),
+	var ADR123FaultSTBY       = warning.new(msg: " -STBY INST.MAY BE UNREL",  colour: "c"),
+	var ADR123FaultPROC       = warning.new(msg: " -ALL ADR OFF PROC.APPLY",  colour: "c"),
+	
 	# APU FIRE
 	var apuFire               = warning.new(msg: "APU FIRE                ",  colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "apu"),
 	var apuFirePB             = warning.new(msg: " -APU FIRE P/B......PUSH",  colour: "c"),
@@ -104,6 +118,37 @@ var warnings				  = std.Vector.new([
 	var rud_trim_config       = warning.new(msg: "CONFIG RUD TRIM",           colour: "r", aural: 0, light: 0),
 	var rud_trim_config_1     = warning.new(msg: "   NOT IN T.O. RANGE",      colour: "r", aural: 0, light: 0),
 	var park_brk_config       = warning.new(msg: "CONFIG PARK BRK ON",        colour: "r", aural: 0, light: 0),
+	
+	# EXCESS CAB ALT
+	var excessCabAlt          = warning.new(msg: "CAB PR EXCESS CAB ALT",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var excessCabAltMask      = warning.new(msg: " -CREW OXY MASKS.....USE",  colour: "c"),
+	var excessCabAltSigns     = warning.new(msg: " -SIGNS...............ON",  colour: "c"),
+	var excessCabAltEmerD     = warning.new(msg: "      •EMER DESCENT:",      colour: "w", isMainMsg: 1),
+	var excessCabAltDES       = warning.new(msg: " -DESCENT.......INITIATE",  colour: "c"),
+	var excessCabAltTHRLVR    = warning.new(msg: " -THR LEVERS........IDLE",  colour: "c"),
+	var excessCabAltSPDBRK    = warning.new(msg: " -SPD BRK...........FULL",  colour: "c"),
+	var excessCabAltSPD       = warning.new(msg: " SPD.....MAX/APPROPRIATE",  colour: "c"),
+	var excessCabAltENG       = warning.new(msg: " -ENG MODE...........IGN",  colour: "c"),
+	var excessCabAltCAB       = warning.new(msg: " -CABIN CREW......ADVISE",  colour: "c"),
+	var excessCabAltPA        = warning.new(msg: " -EMER DES (PA).ANNOUNCE",  colour: "c"),
+	var excessCabAltXPDR      = warning.new(msg: " -XPDR 7700.....CONSIDER",  colour: "c"),
+	var excessCabAltMEA       = warning.new(msg: " MAX FL.....100/MEA-MORA",  colour: "c"),
+	var excessCabAltCabAlt    = warning.new(msg: "   •IF CAB ALT>14000 FT:",  colour: "w", isMainMsg: 1),
+	var excessCabAltMasks     = warning.new(msg: " -PAX OXY MASKS...MAN ON",  colour: "c"),
+	
+	# ENG 1 OIL LO PR
+	var eng1OilLoPr           = warning.new(msg: "ENG 1 OIL LO PR         ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var eng1OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w", isMainMsg: 1),
+	var eng1OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w", isMainMsg: 1),
+	var eng1OilLoPrThrot      = warning.new(msg: " -THR LEVER 1.......IDLE",  colour: "c"),
+	var eng1OilLoPrMaster     = warning.new(msg: " -ENG MASTER 1.......OFF",  colour: "c"),
+	
+	# ENG 2 OIL LO PR
+	var eng2OilLoPr           = warning.new(msg: "ENG 2 OIL LO PR         ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var eng2OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w", isMainMsg: 1),
+	var eng2OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w", isMainMsg: 1),
+	var eng2OilLoPrThrot      = warning.new(msg: " -THR LEVER 2.......IDLE",  colour: "c"),
+	var eng2OilLoPrMaster     = warning.new(msg: " -ENG MASTER 2.......OFF",  colour: "c"),
 	
 	# FCTL L+R ELEV FAULT
 	var lrElevFault           = warning.new(msg: "F/CTL L+R ELEV FAULT",      colour: "r", aural: 0, light: 0, isMainMsg: 1),
@@ -362,8 +407,8 @@ var warnings				  = std.Vector.new([
 	var hpValve2Fault         = warning.new(msg: "AIR ENG 2 HP VALVE FAULT",  colour: "a"),
 	var xBleedFault           = warning.new(msg: "AIR X BLEED FAULT",         colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var xBleedFaultMan        = warning.new(msg: " -X BLEED........MAN CTL",  colour: "c"),
-	var xBleedOff             = warning.new(msg: " -WING ANTI ICE......OFF",  colour: "c"),
-	var xBleedIcing           = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
+	var xBleedFaultWAI        = warning.new(msg: " -WING ANTI ICE......OFF",  colour: "c"),
+	var xBleedFaultICE        = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
 	var bleed1Off             = warning.new(msg: "AIR BLEED 1 OFF",           colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var bleed2Off             = warning.new(msg: "AIR BLEED 2 OFF",           colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var engBleedLowTemp       = warning.new(msg: "AIR ENG 1+2 BLEED LO TEMP", colour: "a", aural: 1, light: 1, isMainMsg: 1),

@@ -33,6 +33,8 @@ var eng1Agent2TimerTime = props.globals.initNode("/systems/fire/engine1/agent2-t
 var eng2Agent2TimerTime = props.globals.initNode("/systems/fire/engine2/agent2-timer-time", 0, "INT");
 var apuAgentTimerTime = props.globals.initNode("/systems/fire/apu/agent-timer-time", 0, "INT");
 
+var fireButtons = [props.globals.getNode("/controls/engines/engine[0]/fire-btn"),props.globals.getNode("/controls/engines/engine[1]/fire-btn"),props.globals.getNode("/controls/apu/fire-btn")];
+
 var fire_init = func {
 	setprop("/controls/OH/protectors/fwddisch", 0);
 	setprop("/controls/OH/protectors/aftdisch", 0);
@@ -544,7 +546,7 @@ var createCargoFireBottleListener = func(prop, index) {
 
 # Listeners 
 setlistener("/controls/engines/engine[0]/fire-btn", func() { 
-	if (getprop("/controls/engines/engine[0]/fire-btn") == 1) { 
+	if (systems.fireButtons[0].getValue() == 1) { 
 		ecam.shutUpYou();
 		eng1AgentTimerMakeTimer.stop();
 		eng1AgentTimer.setValue(10);
@@ -587,7 +589,7 @@ eng1Agent2TimerMakeTimerFunc = func() {
 }
 
 setlistener("/controls/engines/engine[1]/fire-btn", func() { 
-	if (getprop("/controls/engines/engine[1]/fire-btn") == 1) { 
+	if (systems.fireButtons[1].getValue() == 1) { 
 		ecam.shutUpYou(); 
 		eng2AgentTimerMakeTimer.stop();
 		eng2AgentTimer.setValue(10);
