@@ -32,8 +32,7 @@ canvas.NavDisplay.get_nav_path = func (type, idx) {
 	return sprintf(path, name, idx);
 };
 
-canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update_time=0.05)
-{
+canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update_time=0.05) {
 	if (me.inited) die("MFD already was added to scene");
 	me.range_dependant_layers = [];
 	me.always_update_layers = {};
@@ -86,6 +85,8 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	.set("clip", "rect(124, 1024, 1024, 0)")
 	.set("screen-range", 700)
 	.set("z-index",-1);
+
+	me.lastCompassRot = 0; # last compass rotation deg
 
 	me.update_sub(); # init some map properties based on switches
 
@@ -277,19 +278,35 @@ canvas.NavDisplay.update_sub = func(){
 		me.userTrk=userHdg;
 	}
 
+	var reqHdg = 0;
+
 	if((me.in_mode("toggle_display_mode", ["MAP"]) and me.get_switch("toggle_display_type") == "CRT")
-	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD"))
-	{
+	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD")) {
 		userHdgTrk = userTrk;
 		me.userHdgTrk = userTrk;
+		me.lastCompassRot = userTrk;
 		userHdgTrkTru = userTrkTru;
 		me.symbols.hdgTrk.setText("TRK");
 	} else {
-		userHdgTrk = userHdg;
-		me.userHdgTrk = userHdg;
+		var dist = int(userHdg - me.lastCompassRot);
+		if (dist>180) dist = dist - 360;
+		elsif (dist<-180) dist = 360 + dist;
+		if (dist>0) {
+			dist = dist * 0.3;
+			if (dist>20) dist = 20;
+			me.lastCompassRot = (dist<1) ? userHdg : me.lastCompassRot+dist;
+		} 
+		elsif (dist<0) {
+			dist = dist * 0.3;
+			if (dist<-20) dist = -20;
+			me.lastCompassRot = (dist>-1) ? userHdg : me.lastCompassRot+dist;
+		}						
+		userHdgTrk = me.lastCompassRot;
+		me.userHdgTrk = me.lastCompassRot;
 		userHdgTrkTru = userHdgTru;
 		me.symbols.hdgTrk.setText("HDG");
 	}
+
 
 	# First, update the display position of the map
 	var oldRange = me.map.getRange();
