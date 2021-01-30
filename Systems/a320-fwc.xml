@@ -1692,11 +1692,17 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
-					/ECAM/warnings/logic/stall/phase-8-output eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/stall/phase-8-output eq 0
+						/ECAM/phases/monostable/phase-8 eq 0
+					</test>
 					/ECAM/warning-phase eq 7
 				</test>
 				<test logic="AND">
-					/ECAM/warnings/logic/stall/phase-4-output eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/stall/phase-4-output eq 0
+						/ECAM/warnings/logic/stall/phase-4 eq 0
+					</test>
 					/ECAM/warning-phase eq 5
 				</test>
 			</test>
@@ -1715,18 +1721,14 @@
 				/ECAM/warning-phase eq 5
 			</test>
 		</switch>
-				
-		<switch name="/ECAM/warnings/logic/stall/phase-8">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/ECAM/warning-phase eq 8
-			</test>
-		</switch>
 		
 		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/ECAM/warnings/logic/stall/phase-5-output eq 0
+				<test logic="AND">
+					/ECAM/warnings/logic/stall/phase-5-output eq 0
+					/ECAM/warnings/logic/stall/phase-5 eq 0
+				</test>
 				/ECAM/warning-phase eq 6
 			</test>
 		</switch>
@@ -1805,11 +1807,18 @@
 		<switch name="/ECAM/warnings/logic/eng/ground-retard">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/ECAM/warning-phase eq 6
-				/ECAM/warning-phase eq 7
+				/ECAM/timer/ground-calc eq 1
 				/ECAM/warnings/logic/eng/ground-spoilers-output eq 1
-				/ECAM/phases/monostable/phase-8-output eq 1
+				<test logic="AND">
+					<test logic="OR">
+						/ECAM/warning-phase eq 6
+						/ECAM/warning-phase eq 7
+					</test>
+					<test logic="AND">
+						/ECAM/phases/monostable/phase-8 eq 0
+						/ECAM/phases/monostable/phase-8-output eq 0
+					</test>
+				</test>
 			</test>
 		</switch>
 		
@@ -1924,12 +1933,15 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output eq 1
 				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-2-reverse-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-2-reverse eq 1
-						/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output eq 0
+				<test logic="AND">
+					/engines/engine[1]/state eq 3
+					<test logic="OR">
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-2-reverse eq 1
+							/ECAM/warnings/logic/eng/eng-1-retard-case-2 eq 0
+							/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output eq 0
+						</test>
+						/ECAM/warnings/logic/eng/eng-2-reverse-output eq 1
 					</test>
 				</test>
 			</test>
@@ -1940,12 +1952,15 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2-output eq 1
 				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-2-reverse-fall eq 0
-						/ECAM/warnings/logic/eng/eng-2-tla-idle eq 1
+				<test logic="AND">
+					/engines/engine[1]/state eq 3
+					<test logic="OR">
+						/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-2-reverse-fall eq 0
+							/ECAM/warnings/logic/eng/eng-2-reverse eq 0
+							/ECAM/warnings/logic/eng/eng-2-tla-idle eq 1
+						</test>
 					</test>
 				</test>
 			</test>
@@ -1954,14 +1969,17 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-retard-case-1">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
 				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-1-reverse-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-1-reverse eq 1
-						/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output eq 0
+				<test logic="AND">
+					/engines/engine[0]/state eq 3
+					<test logic="OR">
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-1-reverse eq 1
+							/ECAM/warnings/logic/eng/eng-2-retard-case-2 eq 0
+							/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output eq 0
+						</test>
+						/ECAM/warnings/logic/eng/eng-1-reverse-output eq 1
 					</test>
 				</test>
 			</test>
@@ -1970,14 +1988,17 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-retard-case-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output eq 1
 				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-1-reverse-fall eq 0
-						/ECAM/warnings/logic/eng/eng-1-tla-idle eq 1
+				<test logic="AND">
+					/engines/engine[0]/state eq 3
+					<test logic="OR">
+						/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-1-reverse-fall eq 0
+							/ECAM/warnings/logic/eng/eng-1-reverse eq 0
+							/ECAM/warnings/logic/eng/eng-1-tla-idle eq 1
+						</test>
 					</test>
 				</test>
 			</test>
@@ -2302,6 +2323,20 @@
 				/gear/gear[2]/position-norm eq 1
 			</test>
 		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-not-zero">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+				/controls/flight/flaps-input ne 0
+				<test logic="OR">
+					/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 22000
+					/systems/navigation/adr/computation/baro-alt-corrected-2-capt ge 22000
+					/systems/navigation/adr/computation/baro-alt-corrected-3-capt ge 22000
+				</test>
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Hydraulic" execrate="16">

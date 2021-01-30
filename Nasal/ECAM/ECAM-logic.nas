@@ -55,7 +55,7 @@ var messages_priority_3 = func {
 	}
 	
 	# FCTL FLAPS NOT ZERO
-	if (flap_not_zero.clearFlag == 0 and phaseVar3 == 6 and pts.Controls.Flight.flapsInput.getValue() != 0 and pts.Instrumentation.Altimeter.indicatedFt.getValue() > 22000) {
+	if (flap_not_zero.clearFlag == 0 and warningNodes.Logic.flapNotZero.getBoolValue()) {
 		flap_not_zero.active = 1;
 	} else {
 		ECAM_controller.warningReset(flap_not_zero);
@@ -95,7 +95,7 @@ var messages_priority_3 = func {
 	if (allEngFail.clearFlag == 0 and dualFailNode.getBoolValue()) {
 		allEngFail.active = 1;
 		
-		if (allEngFailElec.clearFlag == 0 and getprop("/systems/electrical/relay/emer-glc/contact-pos") == 0) {
+		if (allEngFailElec.clearFlag == 0 and systems.ELEC.Source.EmerGen.relayPos.getValue() == 0) {
 			allEngFailElec.active = 1;
 		} else {
 			ECAM_controller.warningReset(allEngFailElec);
@@ -136,7 +136,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(allEngFailAPU);
 		}
 		
-		if (allEngFailLevers.clearFlag == 0 and (pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 or pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01)) {
+		if (allEngFailLevers.clearFlag == 0 and (pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 or pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01)) {
 			allEngFailLevers.active = 1;
 		} else {
 			ECAM_controller.warningReset(allEngFailLevers);
@@ -181,7 +181,7 @@ var messages_priority_3 = func {
 	}
 	
 	# ENG ABV IDLE
-	if (eng1ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 1 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng1ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
+	if (eng1ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 2 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng1ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
 		eng1ThrLvrAbvIdle.active = 1;
 		if (eng1ThrLvrAbvIdle2.clearFlag == 0) {
 			eng1ThrLvrAbvIdle2.active = 1;
@@ -193,7 +193,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(eng1ThrLvrAbvIdle2);
 	}
 	
-	if (eng2ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 1 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng2ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
+	if (eng2ThrLvrAbvIdle.clearFlag == 0 and ((phaseVar3 >= 2 and phaseVar3 <= 4) or (phaseVar3 >= 6 and phaseVar3 <= 9)) and warningNodes.Flipflops.eng2ThrLvrAbvIdle.getValue()) { # AND NOT RUNWAY TOO SHORT
 		eng2ThrLvrAbvIdle.active = 1;
 		if (eng2ThrLvrAbvIdle2.clearFlag == 0) {
 			eng2ThrLvrAbvIdle2.active = 1;
@@ -815,7 +815,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigGen3);
 		}
 		
-		if (getprop("/systems/electrical/relay/emer-glc/contact-pos") == 0 and emerconfigManOn.clearFlag == 0) {
+		if (systems.ELEC.Source.EmerGen.relayPos.getValue() == 0 and emerconfigManOn.clearFlag == 0) {
 			emerconfigManOn.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigManOn);
@@ -1182,7 +1182,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBusBatFault);
 	}
 	
-	if (!(systems.ELEC.EmerElec.getValue() and !getprop("/systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBusEssShed.clearFlag == 0) {
+	if (!(systems.ELEC.EmerElec.getValue() and !systems.ELEC.Source.EmerGen.relayPos.getValue()) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBusEssShed.clearFlag == 0) {
 		dcBusEssShed.active = 1;
 		dcBusEssShedExtract.active = 1;
 		dcBusEssShedIcing.active = 1;
@@ -1192,7 +1192,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(dcBusEssShedIcing);
 	}
 	
-	if (!(systems.ELEC.EmerElec.getValue() and !getprop("/systems/electrical/relay/emer-glc/contact-pos")) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar2 != 4 and phaseVar2 != 8 and acBusEssShed.clearFlag == 0) {
+	if (!(systems.ELEC.EmerElec.getValue() and !systems.ELEC.Source.EmerGen.relayPos.getValue()) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar2 != 4 and phaseVar2 != 8 and acBusEssShed.clearFlag == 0) {
 		acBusEssShed.active = 1;
 		if (!systems.ELEC.EmerElec.getValue()) {
 			acBusEssShedAtc.active = 1;
@@ -2614,7 +2614,7 @@ var messages_right_memo = func {
 		rat.colour = "g";
 	}
 	
-	if (getprop("/systems/electrical/relay/emer-glc/contact-pos") == 1 and getprop("/systems/hydraulic/sources/rat/position") != 0 and !pts.Gear.wow[1].getValue()) {
+	if (systems.ELEC.Source.EmerGen.relayPos.getValue() == 1 and getprop("/systems/hydraulic/sources/rat/position") != 0 and !pts.Gear.wow[1].getValue()) {
 		emer_gen.active = 1;
 	} else {
 		emer_gen.active = 0;

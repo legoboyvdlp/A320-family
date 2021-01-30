@@ -303,7 +303,7 @@
 		<output>ECAM/warnings/altitude-alert/gear-downlocked-output</output>
 	</flipflop>
 	
-	<!-- falling edge detector - take inverse of following -->
+	<!-- falling edge detector - switch and output both false -->
 	<flipflop>
 		<type>monostable</type>
 		<inverted type="bool">true</inverted>
@@ -311,9 +311,9 @@
 			<value>4.5</value>
 		</time>
 		<S>
-			<property>ECAM/phases/monostable/phase-8</property>
+			<property>/ECAM/phases/monostable/phase-8</property>
 		</S>
-		<output>ECAM/phases/monostable/phase-8-output</output>
+		<output>/ECAM/phases/monostable/phase-8-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -902,7 +902,7 @@
 			<value>1.0</value>
 		</time>
 		<S>
-			<property>/ECAM/warnings/logic/stall/phase-8</property>
+			<property>/ECAM/phases/monostable/phase-8</property>
 		</S>
 		<output>/ECAM/warnings/logic/stall/phase-8-output</output>
 	</flipflop>
