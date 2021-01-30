@@ -1687,6 +1687,13 @@
 	</channel>
 
 	<channel name="STALL" execrate="16">
+			
+		<switch name="/ECAM/warnings/logic/stall/phase-4">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 4
+			</test>
+		</switch>
 		
 		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-set">
 			<default value="0"/>
@@ -1705,13 +1712,6 @@
 					</test>
 					/ECAM/warning-phase eq 5
 				</test>
-			</test>
-		</switch>
-				
-		<switch name="/ECAM/warnings/logic/stall/phase-4">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/ECAM/warning-phase eq 4
 			</test>
 		</switch>
 		
@@ -1738,37 +1738,90 @@
 			<test logic="AND" value="1">
 				/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 1500
 				/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 1500
-				/it-fbw/law ne 0
+				/it-fbw/law eq 0
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
 		</switch>
+		
+		<actuator name="/ECAM/phases/timer/eng1idle-output">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/phases/timer/eng1idle</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
+		</actuator>
 		
 		<switch name="/ECAM/warnings/logic/stall/stall-warn">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR">
 					<test logic="AND">
+						/it-fbw/law eq 0
 						/fdm/jsbsim/fcs/slat-pos-deg lt 15
 						<test logic="OR">
-							/systems/navigation/adr/output/aoa-1 ge 15
-							/systems/navigation/adr/output/aoa-2 ge 15
-							/systems/navigation/adr/output/aoa-3 ge 15 
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 13.5
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 13.5
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 13.5
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
 						</test>
 					</test>
 					<test logic="AND">
+						/it-fbw/law eq 0
 						/fdm/jsbsim/fcs/slat-pos-deg ge 15
-						<test logic="OR">
-							/systems/navigation/adr/output/aoa-1 ge 23
-							/systems/navigation/adr/output/aoa-2 ge 23
-							/systems/navigation/adr/output/aoa-3 ge 23 
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-1 ge 22
+							/systems/navigation/adr/operating-1 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-2 ge 22
+							/systems/navigation/adr/operating-2 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-3 ge 22
+							/systems/navigation/adr/operating-3 eq 1
 						</test>
 					</test>
-				</test>
-				/it-fbw/law ne 0
-				<test logic="OR">
-					/systems/navigation/adr/operating-1 eq 1
-					/systems/navigation/adr/operating-2 eq 1
-					/systems/navigation/adr/operating-3 eq 1
+					<test logic="AND">
+						/it-fbw/law ne 0
+						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						<test logic="OR">
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 8
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 8
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 8
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
+						</test>
+					</test>
+					<test logic="AND">
+						/it-fbw/law ne 0
+						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-1 ge 14
+							/systems/navigation/adr/operating-1 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-2 ge 14
+							/systems/navigation/adr/operating-2 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-3 ge 14
+							/systems/navigation/adr/operating-3 eq 1
+						</test>
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -2878,7 +2931,7 @@
 		
 	</channel>
 	
-	<!--<channel name="NAV" execrate="8">
+	<!--<channel name="NAV" execrate="16">
 	
 		<switch name="/ECAM/warnings/navigation/ADR123-fault">
 			<default value="0"/>

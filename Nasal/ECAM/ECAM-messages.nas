@@ -119,6 +119,37 @@ var warnings				  = std.Vector.new([
 	var rud_trim_config_1     = warning.new(msg: "   NOT IN T.O. RANGE",      colour: "r", aural: 0, light: 0),
 	var park_brk_config       = warning.new(msg: "CONFIG PARK BRK ON",        colour: "r", aural: 0, light: 0),
 	
+	# EXCESS CAB ALT
+	var excessCabAlt          = warning.new(msg: "CAB PR EXCESS CAB ALT",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var excessCabAltMask      = warning.new(msg: " -CREW OXY MASKS.....USE",  colour: "c"),
+	var excessCabAltSigns     = warning.new(msg: " -SIGNS...............ON",  colour: "c"),
+	var excessCabAltEmerD     = warning.new(msg: "      •EMER DESCENT:",      colour: "w", isMainMsg: 1),
+	var excessCabAltDES       = warning.new(msg: " -DESCENT.......INITIATE",  colour: "c"),
+	var excessCabAltTHRLVR    = warning.new(msg: " -THR LEVERS........IDLE",  colour: "c"),
+	var excessCabAltSPDBRK    = warning.new(msg: " -SPD BRK...........FULL",  colour: "c"),
+	var excessCabAltSPD       = warning.new(msg: " SPD.....MAX/APPROPRIATE",  colour: "c"),
+	var excessCabAltENG       = warning.new(msg: " -ENG MODE...........IGN",  colour: "c"),
+	var excessCabAltCAB       = warning.new(msg: " -CABIN CREW......ADVISE",  colour: "c"),
+	var excessCabAltPA        = warning.new(msg: " -EMER DES (PA).ANNOUNCE",  colour: "c"),
+	var excessCabAltXPDR      = warning.new(msg: " -XPDR 7700.....CONSIDER",  colour: "c"),
+	var excessCabAltMEA       = warning.new(msg: " MAX FL.....100/MEA-MORA",  colour: "c"),
+	var excessCabAltCabAlt    = warning.new(msg: "   •IF CAB ALT>14000 FT:",  colour: "w", isMainMsg: 1),
+	var excessCabAltMasks     = warning.new(msg: " -PAX OXY MASKS...MAN ON",  colour: "c"),
+	
+	# ENG 1 OIL LO PR
+	var eng1OilLoPr           = warning.new(msg: "ENG 1 OIL LO PR         ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var eng1OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w", isMainMsg: 1),
+	var eng1OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w", isMainMsg: 1),
+	var eng1OilLoPrThrot      = warning.new(msg: " -THR LEVER 1.......IDLE",  colour: "c"),
+	var eng1OilLoPrMaster     = warning.new(msg: " -ENG MASTER 1.......OFF",  colour: "c"),
+	
+	# ENG 2 OIL LO PR
+	var eng2OilLoPr           = warning.new(msg: "ENG 2 OIL LO PR         ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var eng2OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w", isMainMsg: 1),
+	var eng2OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w", isMainMsg: 1),
+	var eng2OilLoPrThrot      = warning.new(msg: " -THR LEVER 2.......IDLE",  colour: "c"),
+	var eng2OilLoPrMaster     = warning.new(msg: " -ENG MASTER 2.......OFF",  colour: "c"),
+	
 	# FCTL L+R ELEV FAULT
 	var lrElevFault           = warning.new(msg: "F/CTL L+R ELEV FAULT",      colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var lrElevFaultSpeed      = warning.new(msg: " MAX SPEED.......320/.77",  colour: "c"),
