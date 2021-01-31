@@ -2328,11 +2328,7 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/fctl/gear-lever-down-pulse eq 1
 				/ECAM/warnings/fctl/gear-lever-down eq 1
-				<test logic="OR">
-					/gear/gear[0]/position-norm ne 1
-					/gear/gear[1]/position-norm ne 1
-					/gear/gear[2]/position-norm ne 1
-				</test>
+				/ECAM/warnings/fctl/gear-not-down-locked eq 1
 			</test>
 		</switch>
 		
