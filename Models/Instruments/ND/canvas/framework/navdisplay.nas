@@ -295,12 +295,12 @@ canvas.NavDisplay.update_sub = func(){
 			if (dist>0) {
 				dist = dist * 0.3;
 				if (dist>10) dist = 10;
-				me.lastCompassRot = (dist<0.2) ? userHdg : math.mod(me.lastCompassRot+dist,360);
+				me.lastCompassRot = (dist<0.1) ? userHdg : math.mod(me.lastCompassRot+dist,360);
 			} 
 			elsif (dist<0) {
 				dist = dist * 0.3;
 				if (dist<-10) dist = -10;
-				me.lastCompassRot = (dist>-0.2) ? userHdg : math.mod(me.lastCompassRot+dist,360);
+				me.lastCompassRot = (dist>-0.1) ? userHdg : math.mod(me.lastCompassRot+dist,360);
 			}						
 		}
 		userHdgTrk = me.lastCompassRot;
