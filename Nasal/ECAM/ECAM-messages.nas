@@ -188,14 +188,16 @@ var warnings				  = std.Vector.new([
 	var lavatorySmoke         = warning.new(msg: "SMOKE LAVATORY SMOKE     ", colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var lavatorySmokeComm     = warning.new(msg: "-CKPT/CAB COM.ESTABLISH  ", colour: "c"),
 	
+	# EXCES RESID PR
+	var excessResidPress      = warning.new(msg: "CAB PR EXCES RESIDUAL PR ", colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var excessResidPressPack1 = warning.new(msg: "-PACK 1.............OFF",   colour: "c"),
+	var excessResidPressPack2 = warning.new(msg: "-PACK 2.............OFF",   colour: "c"),
+	var excessResidPressCabCr = warning.new(msg: "-CABIN CREW.......ALERT",   colour: "c"),
+	
 	# ESS Bus on Bat
+	# NEW EMER CONFIG
 	var essBusOnBat           = warning.new(msg: "ELEC ESS BUSES ON BAT",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var essBusOnBatLGUplock   = warning.new(msg: "   •WHEN L/G UPLOCKED :",   colour: "w", isMainMsg: 1),
-	var essBusOnBatManOn      = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
-	var essBusOnBatRetract    = warning.new(msg: "  •IF L/G RETRACT FAULT:",  colour: "w", isMainMsg: 1),
-	var essBusOnBatMinSpeed   = warning.new(msg: " MIN RAT SPD......180 KT",  colour: "c"),
-	var essBusOnBatLGCB       = warning.new(msg: " -LGCIU1 C/B (C09)..PULL",  colour: "c"),
-	var essBusOnBatManOn2     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
+	var essBusOnBatMinSpeed   = warning.new(msg: " MIN RAT SPD......140 KT",  colour: "c"),
 	
 	# Emer Config
 	var emerconfig            = warning.new(msg: "ELEC EMER CONFIG",          colour: "r", aural: 0, light: 0, isMainMsg: 1),
@@ -207,13 +209,14 @@ var warnings				  = std.Vector.new([
 	var emerconfigManOn       = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
 	var emerconfigEngMode     = warning.new(msg: " -ENG MODE SEL.......IGN",  colour: "c"),
 	var emerconfigRadio       = warning.new(msg: " -VHF1/ATC1..........USE",  colour: "c"),
-	var emerconfigIcing       = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
 	var emerconfigFuelG       = warning.new(msg: " FUEL GRVTY FEED",          colour: "c"),
 	var emerconfigFuelG2      = warning.new(msg: " PROC:GRVTY FUEL FEEDING",  colour: "c"),
 	var emerconfigFAC         = warning.new(msg: " -FAC 1......OFF THEN ON",  colour: "c"),
 	var emerconfigBusTie2     = warning.new(msg: " -BUS TIE...........AUTO",  colour: "c"),
 	var emerconfigAPU         = warning.new(msg: " -APU (IF AVAIL)...START",  colour: "c"),
 	var emerconfigVent        = warning.new(msg: " -BLOWER + EXTRACT..OVRD",  colour: "c"),
+	var emerconfigFuelIN      = warning.new(msg: " FUEL CONSUMPT INCRSD",     colour: "c"),
+	var emerconfigFMSPRD      = warning.new(msg: " FMS PRED UNRELIABLE",      colour: "c"),
 	
 	# B + Y LO PR
 	var hydBYloPr             = warning.new(msg: "HYD B+Y SYS LO PR",         colour: "r", aural: 0, light: 0, isMainMsg: 1),

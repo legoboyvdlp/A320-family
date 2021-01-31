@@ -6,24 +6,22 @@
 
 	<flipflop>
 		<type>monostable</type>
-		<inverted type="bool">true</inverted>
 		<time>
-			<value>0.1</value>
+			<value>1.0</value>
 		</time>
 		<S>
-			<property>/controls/electrical/switches/gen-1</property>
+			<not><property>/controls/electrical/switches/gen-1</property></not>
 		</S>
 		<output>/systems/electrical/some-electric-thingie/generator-1-pb</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>monostable</type>
-		<inverted type="bool">true</inverted>
 		<time>
-			<value>0.1</value>
+			<value>1.0</value>
 		</time>
 		<S>
-			<property>/controls/electrical/switches/gen-2</property>
+			<not><property>/controls/electrical/switches/gen-2</property></not>
 		</S>
 		<output>/systems/electrical/some-electric-thingie/generator-2-pb</output>
 	</flipflop>
@@ -79,6 +77,18 @@
 		</R>
 		<output>/systems/electrical/some-electric-thingie/generator-2-reset</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>20.0</value>
+		</time>
+		<S>
+			<not><property>/systems/electrical/some-electric-thingie/emer-elec-config</property></not>
+		</S>
+		<output>/systems/electrical/some-electric-thingie/emer-elec-config-20-sec</output>
+	</flipflop>
+	
 	
 	<flipflop>
 		<type>RS</type>
