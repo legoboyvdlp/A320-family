@@ -87,6 +87,8 @@ var warningNodes = {
 		spdBrkConfig2: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-config-range"),
 		pitchTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/pitch-trim-config-range"),
 		rudTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/rudder-trim-config-range"),
+		dc2FuelConsumptionIncreased: props.globals.initNode("/ECAM/warnings/logic/dc-2-fuel-consumption-increased"),
+		dc2FMSPredictions: props.globals.initNode("/ECAM/warnings/logic/dc-2-fms-predictions-unreliable"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -121,6 +123,7 @@ var warningNodes = {
 		navTerrFault: props.globals.initNode("/ECAM/warnings/timer/nav-gpws-terr-fault"),
 		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault-output"),
 		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault-output"),
+		staticInverter: props.globals.initNode("/systems/electrical/some-electric-thingie/static-inverter-timer"),
 	},
 	Flipflops: {
 		apuGenFault: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault"),

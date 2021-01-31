@@ -63,7 +63,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(flap_not_zero);
 	}
 	
-	if ((phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
+	if (overspeed.clearFlag == 0 and (phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
 		overspeed.active = 1;
 		if (getprop("/systems/navigation/adr/computation/overspeed-vmo") or getprop("/systems/navigation/adr/computation/overspeed-mmo")) {
 			overspeedVMO.active = 1;
@@ -828,41 +828,38 @@ var messages_priority_3 = func {
 	}
 	
 	# ESS on BAT
-	if ((!gear.getValue() or !pts.Controls.Gear.gearDown.getValue()) and getprop("/systems/electrical/some-electric-thingie/static-inverter-timer") == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) {
+	# NEW EMER ELEC CONFIG
+	if (essBusOnBat.clearFlag == 0 and warningNodes.Timers.staticInverter.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) {
 		essBusOnBat.active = 1;
-		essBusOnBatLGUplock.active = 1;
-		essBusOnBatManOn.active = 1;
-		essBusOnBatRetract.active = 1;
-		essBusOnBatMinSpeed.active = 1;
-		essBusOnBatLGCB.active = 1;
+		if (essBusOnBatMinSpeed.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
+			essBusOnBatMinSpeed.active = 1;
+		} else {
+			ECAM_controller.warningReset(essBusOnBatMinSpeed);
+		}
 	} else {
 		ECAM_controller.warningReset(essBusOnBat);
-		ECAM_controller.warningReset(essBusOnBatLGUplock);
-		ECAM_controller.warningReset(essBusOnBatManOn);
-		ECAM_controller.warningReset(essBusOnBatRetract);
 		ECAM_controller.warningReset(essBusOnBatMinSpeed);
-		ECAM_controller.warningReset(essBusOnBatLGCB);
 	}
 	
 	# EMER CONFIG
-	if (systems.ELEC.EmerElec.getValue() and !dualFailNode.getBoolValue() and phaseVar3 != 4 and phaseVar3 != 8 and emerconfig.clearFlag == 0 and !getprop("/systems/acconfig/autoconfig-running")) {
+	if (systems.ELEC.EmerElec.getValue() and !dualFailNode.getBoolValue() and phaseVar3 != 4 and phaseVar3 != 8 and emerconfig.clearFlag == 0 and !pts.Acconfig.running.getBoolValue()) {
 		emerconfig.active = 1;
 		
-		if (getprop("/systems/hydraulic/sources/rat/position") != 0 and emerconfigMinRat.clearFlag == 0) {
+		if (systems.HYD.Rat.position.getValue() != 0 and emerconfigMinRat.clearFlag == 0 and FWC.Timer.gnd.getValue() == 0) {
 			emerconfigMinRat.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigMinRat);
 		}
 		
-		if (!(getprop("/systems/electrical/some-electric-thingie/generator-1-reset") and getprop("/systems/electrical/some-electric-thingie/generator-2-reset")) and emerconfigGen.clearFlag == 0) {
+		if ((!getprop("/systems/electrical/some-electric-thingie/generator-1-reset") or !getprop("/systems/electrical/some-electric-thingie/generator-2-reset")) and emerconfigGen.clearFlag == 0) {
 			emerconfigGen.active = 1; # EGEN12R TRUE
 		} else {
 			ECAM_controller.warningReset(emerconfigGen);
 		}
 		
-		if (!(getprop("/systems/electrical/some-electric-thingie/generator-1-reset-bustie") and getprop("/systems/electrical/some-electric-thingie/generator-2-reset-bustie")) and emerconfigGen2.clearFlag == 0) {
+		if ((!getprop("/systems/electrical/some-electric-thingie/generator-1-reset-bustie") or !getprop("/systems/electrical/some-electric-thingie/generator-2-reset-bustie")) and emerconfigGen2.clearFlag == 0) {
 			emerconfigGen2.active = 1;
-			if (getprop("/controls/electrical/switches/bus-tie")) {
+			if (systems.ELEC.Switch.busTie.getBoolValue()) {
 				emerconfigBusTie.active = 1;
 			} else {
 				ECAM_controller.warningReset(emerconfigBusTie);
@@ -880,7 +877,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigManOn);
 		}
 		
-		if (getprop("/controls/engines/engine-start-switch") != 2 and emerconfigEngMode.clearFlag == 0) {
+		if (pts.Controls.Engines.startSw.getValue() != 2 and emerconfigEngMode.clearFlag == 0) {
 			emerconfigEngMode.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigEngMode);
@@ -892,48 +889,64 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigRadio);
 		}
 		
-		if (emerconfigIcing.clearFlag == 0) {
-			emerconfigIcing.active = 1;
-		} else {
-			ECAM_controller.warningReset(emerconfigIcing);
-		}
-		
-		if (emerconfigFuelG.clearFlag == 0) {
-			emerconfigFuelG.active = 1;
+		if (FWC.Timer.gnd.getValue() == 0) {
+			if (emerconfigFuelG.clearFlag == 0) {
+				emerconfigFuelG.active = 1;
+			} else {
+				ECAM_controller.warningReset(emerconfigFuelG);
+			}
+			
+			if (emerconfigFuelG2.clearFlag == 0) {
+				emerconfigFuelG2.active = 1;
+			} else {
+				ECAM_controller.warningReset(emerconfigFuelG2);
+			}
+			
+			if (fbw.FBW.Computers.fac1.getBoolValue() == 0 and emerconfigFAC.clearFlag == 0) {
+				emerconfigFAC.active = 1;
+			} else {
+				ECAM_controller.warningReset(emerconfigFAC);
+			}
 		} else {
 			ECAM_controller.warningReset(emerconfigFuelG);
-		}
-		
-		if (emerconfigFuelG2.clearFlag == 0) {
-			emerconfigFuelG2.active = 1;
-		} else {
 			ECAM_controller.warningReset(emerconfigFuelG2);
-		}
-		
-		if (fbw.FBW.Computers.fac1.getBoolValue() == 0 and emerconfigFAC.clearFlag == 0) {
-			emerconfigFAC.active = 1;
-		} else {
 			ECAM_controller.warningReset(emerconfigFAC);
 		}
 		
-		if (!getprop("/controls/electrical/switches/bus-tie") and emerconfigBusTie2.clearFlag == 0) {
+		if (!systems.ELEC.Switch.busTie.getBoolValue() and emerconfigBusTie2.clearFlag == 0) {
 			emerconfigBusTie2.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigBusTie2);
 		}
 		
-		if (emerconfigAPU.clearFlag == 0) {
-			emerconfigAPU.active = 1;
+		if (FWC.Timer.gnd.getValue() == 0) {
+			if (emerconfigAPU.clearFlag == 0) {
+				emerconfigAPU.active = 1;
+			} else {
+				ECAM_controller.warningReset(emerconfigAPU);
+			}
+			
+			if (emerconfigVent.clearFlag == 0) {
+				emerconfigVent.active = 1;
+			} else {
+				ECAM_controller.warningReset(emerconfigVent);
+			}
 		} else {
 			ECAM_controller.warningReset(emerconfigAPU);
-		}
-		
-		if (emerconfigVent.clearFlag == 0) {
-			emerconfigVent.active = 1;
-		} else {
 			ECAM_controller.warningReset(emerconfigVent);
 		}
 		
+		if (emerconfigFuelIN.clearFlag == 0 and warningNodes.Logic.dc2FuelConsumptionIncreased.getValue()) {
+			emerconfigFuelIN.active = 1;
+		} else {
+			ECAM_controller.warningReset(emerconfigFuelIN);
+		}
+		
+		if (emerconfigFMSPRD.clearFlag == 0 and warningNodes.Logic.dc2FMSPredictions.getValue()) {
+			emerconfigFMSPRD.active = 1;
+		} else {
+			ECAM_controller.warningReset(emerconfigFMSPRD);
+		}
 	} else {
 		ECAM_controller.warningReset(emerconfig);
 		ECAM_controller.warningReset(emerconfigMinRat);
@@ -944,16 +957,17 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(emerconfigManOn);
 		ECAM_controller.warningReset(emerconfigEngMode);
 		ECAM_controller.warningReset(emerconfigRadio);
-		ECAM_controller.warningReset(emerconfigIcing);
 		ECAM_controller.warningReset(emerconfigFuelG);
 		ECAM_controller.warningReset(emerconfigFuelG2);
 		ECAM_controller.warningReset(emerconfigFAC);
 		ECAM_controller.warningReset(emerconfigBusTie2);
 		ECAM_controller.warningReset(emerconfigAPU);
 		ECAM_controller.warningReset(emerconfigVent);
+		ECAM_controller.warningReset(emerconfigFuelIN);
+		ECAM_controller.warningReset(emerconfigFMSPRD);
 	}
 	
-	if (hydBYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueYellow.getValue()) {
+	if (hydBYloPr.clearFlag == 0 and warningNodes.Logic.blueYellow.getValue()) {
 		hydBYloPr.active = 1;
 		if (hydBYloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
 			hydBYloPrRat.active = 1;
@@ -1028,7 +1042,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(hydBYloPrFmsPredict);
 	}
 	
-	if (hydGBloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueGreen.getValue()) {
+	if (hydGBloPr.clearFlag == 0 and warningNodes.Logic.blueGreen.getValue()) {
 		hydGBloPr.active = 1;
 		if (hydGBloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
 			hydGBloPrRat.active = 1;
@@ -2661,7 +2675,7 @@ var messages_right_memo = func {
 		ptu.active = 0;
 	}
 	
-	if (getprop("/systems/hydraulic/sources/rat/position") != 0) {
+	if (systems.HYD.Rat.position.getValue() != 0) {
 		rat.active = 1;
 	} else {
 		rat.active = 0;
@@ -2673,7 +2687,7 @@ var messages_right_memo = func {
 		rat.colour = "g";
 	}
 	
-	if (systems.ELEC.Source.EmerGen.relayPos.getValue() == 1 and getprop("/systems/hydraulic/sources/rat/position") != 0 and !pts.Gear.wow[1].getValue()) {
+	if (systems.ELEC.Source.EmerGen.relayPos.getValue() == 1 and systems.HYD.Rat.position.getValue() != 0 and !pts.Gear.wow[1].getValue()) {
 		emer_gen.active = 1;
 	} else {
 		emer_gen.active = 0;
