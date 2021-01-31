@@ -86,7 +86,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	.set("screen-range", 700)
 	.set("z-index",-1);
 
-	me.lastCompassRot = 0; # last compass rotation deg
+	me.compassHdgTrk = 0; # last compass rotation deg
 
 	me.update_sub(); # init some map properties based on switches
 
@@ -284,27 +284,27 @@ canvas.NavDisplay.update_sub = func(){
 	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD")) {
 		userHdgTrk = userTrk;
 		me.userHdgTrk = userTrk;
-		me.lastCompassRot = userTrk;
+		me.compassHdgTrk = userTrk;
 		userHdgTrkTru = userTrkTru;
 		me.symbols.hdgTrk.setText("TRK");
 	} else {
-		var dist = userHdg - me.lastCompassRot;
-		if (dist != 0) {
+		if (userHdg != me.compassHdgTrk) {
+			var dist = userHdg - me.compassHdgTrk;
 			if (dist>180) dist = dist - 360;
 			elsif (dist<-180) dist = 360 + dist;
 			if (dist>0) {
 				dist = dist * 0.3;
 				if (dist>10) dist = 10;
-				me.lastCompassRot = (dist<0.1) ? userHdg : math.mod(me.lastCompassRot+dist,360);
+				me.compassHdgTrk = (dist<0.1) ? userHdg : math.mod(me.compassHdgTrk+dist,360);
 			} 
 			elsif (dist<0) {
 				dist = dist * 0.3;
 				if (dist<-10) dist = -10;
-				me.lastCompassRot = (dist>-0.1) ? userHdg : math.mod(me.lastCompassRot+dist,360);
+				me.compassHdgTrk = (dist>-0.1) ? userHdg : math.mod(me.compassHdgTrk+dist,360);
 			}						
 		}
-		userHdgTrk = me.lastCompassRot;
-		me.userHdgTrk = me.lastCompassRot;
+		userHdgTrk = me.compassHdgTrk;
+		me.userHdgTrk = me.compassHdgTrk;
 		userHdgTrkTru = userHdgTru;
 		me.symbols.hdgTrk.setText("HDG");
 	}
