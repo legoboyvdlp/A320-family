@@ -2759,6 +2759,21 @@
 		<switch name="/ECAM/warnings/hyd/blue-green-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND"> <!-- inhibit unless engine running -->
+						<test logic="OR">
+							/ECAM/warning-phase le 2
+							/ECAM/warning-phase ge 9
+						</test>
+						/engines/engine[0]/state eq 3
+					</test>
+					<test logic="AND">
+						/ECAM/warning-phase gt 2
+						/ECAM/warning-phase lt 9
+						/ECAM/warning-phase ne 4
+						/ECAM/warning-phase ne 5
+					</test>
+				</test>
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
 			</test>
@@ -2767,6 +2782,21 @@
 		<switch name="/ECAM/warnings/hyd/blue-yellow-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND"> <!-- inhibit unless engine running -->
+						<test logic="OR">
+							/ECAM/warning-phase le 2
+							/ECAM/warning-phase ge 9
+						</test>
+						/engines/engine[1]/state eq 3
+					</test>
+					<test logic="AND">
+						/ECAM/warning-phase gt 2
+						/ECAM/warning-phase lt 9
+						/ECAM/warning-phase ne 4
+						/ECAM/warning-phase ne 5
+					</test>
+				</test>
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
 			</test>
@@ -2798,16 +2828,21 @@
 				/engines/engine[0]/state eq 3
 				/engines/engine[1]/state eq 3
 				<test logic="OR">
-					fcs/flap-pos-deg ne 0
-					hydraulics/spoiler-l1/final-deg gt 0
-					hydraulics/spoiler-r1/final-deg gt 0
-					hydraulics/spoiler-l2/final-deg gt 0
-					hydraulics/spoiler-r2/final-deg gt 0
-					hydraulics/spoiler-l4/final-deg gt 0
-					hydraulics/spoiler-r4/final-deg gt 0
-					hydraulics/spoiler-l5/final-deg gt 0
-					hydraulics/spoiler-r5/final-deg gt 0
-					<!-- aileron servo -->
+					<test logic="AND">
+						/ECAM/warnings/logic/SFLAPEXT eq 1
+						/systems/electrical/bus/dc-ess lt 25
+					</test>
+					hydraulics/spoiler-l2/final-deg gt 0.01
+					hydraulics/spoiler-r2/final-deg gt 0.01
+					hydraulics/spoiler-l3/final-deg gt 0.01
+					hydraulics/spoiler-r3/final-deg gt 0.01
+					hydraulics/spoiler-l4/final-deg gt 0.01
+					hydraulics/spoiler-r4/final-deg gt 0.01
+					<test logic="OR">
+						/systems/fctl/elac1 eq 0
+						/systems/fctl/elac2 eq 0
+						/systems/hydraulic/green-psi lt 1500
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -2818,6 +2853,28 @@
 				/ECAM/timer/ground-calc eq 0
 				/engines/engine[0]/state eq 3
 				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					<test logic="AND">
+						/ECAM/warnings/logic/SFLAPEXT eq 1
+						/systems/electrical/bus/dc-ess lt 25
+					</test>
+					hydraulics/spoiler-l1/final-deg gt 0.01
+					hydraulics/spoiler-r1/final-deg gt 0.01
+					hydraulics/spoiler-l2/final-deg gt 0.01
+					hydraulics/spoiler-r2/final-deg gt 0.01
+					hydraulics/spoiler-l4/final-deg gt 0.01
+					hydraulics/spoiler-r4/final-deg gt 0.01
+					hydraulics/spoiler-l5/final-deg gt 0.01
+					hydraulics/spoiler-r5/final-deg gt 0.01
+					<test logic="AND">
+						<test logic="OR">
+							/systems/fctl/elac1 eq 0
+							/systems/fctl/elac2 eq 0
+							/systems/hydraulic/blue-psi lt 1500
+						</test>
+						/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
+					</test>
+				</test>
 			</test>
 		</switch>
 		

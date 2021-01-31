@@ -252,6 +252,10 @@ var warnings				  = std.Vector.new([
 	var hydGYloPrFuelCnsmpt   = warning.new(msg: " FUEL CONSUMPT INCRSD",     colour: "c"),
 	var hydGYloPrFmsPredict   = warning.new(msg: " FMS PRED UNRELIABLE",      colour: "c"),
 	
+	# AIR BLEED LEAK
+	var airBleedLeak          = warning.new(msg: "AIR BLEED LEAK         ",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var airBleedLeakShut      = warning.new(msg: " -X BLEED..........SHUT",   colour: "c"),
+	
 	# DC EMER CONFIG
 	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),

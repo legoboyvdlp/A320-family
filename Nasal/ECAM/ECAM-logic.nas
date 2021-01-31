@@ -63,7 +63,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(flap_not_zero);
 	}
 	
-	if ((phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
+	if (overspeed.clearFlag == 0 and (phaseVar3 == 1 or (phaseVar3 >= 5 and phaseVar3 <= 7)) and getprop("/systems/navigation/adr/output/overspeed")) {
 		overspeed.active = 1;
 		if (getprop("/systems/navigation/adr/computation/overspeed-vmo") or getprop("/systems/navigation/adr/computation/overspeed-mmo")) {
 			overspeedVMO.active = 1;
@@ -967,7 +967,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(emerconfigFMSPRD);
 	}
 	
-	if (hydBYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueYellow.getValue()) {
+	if (hydBYloPr.clearFlag == 0 and warningNodes.Logic.blueYellow.getValue()) {
 		hydBYloPr.active = 1;
 		if (hydBYloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
 			hydBYloPrRat.active = 1;
@@ -1042,7 +1042,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(hydBYloPrFmsPredict);
 	}
 	
-	if (hydGBloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.blueGreen.getValue()) {
+	if (hydGBloPr.clearFlag == 0 and warningNodes.Logic.blueGreen.getValue()) {
 		hydGBloPr.active = 1;
 		if (hydGBloPrRat.clearFlag == 0 and systems.HYD.Rat.position.getValue() != 0) {
 			hydGBloPrRat.active = 1;
