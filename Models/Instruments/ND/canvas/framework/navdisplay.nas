@@ -288,19 +288,21 @@ canvas.NavDisplay.update_sub = func(){
 		userHdgTrkTru = userTrkTru;
 		me.symbols.hdgTrk.setText("TRK");
 	} else {
-		var dist = int(userHdg - me.lastCompassRot);
-		if (dist>180) dist = dist - 360;
-		elsif (dist<-180) dist = 360 + dist;
-		if (dist>0) {
-			dist = dist * 0.3;
-			if (dist>20) dist = 20;
-			me.lastCompassRot = (dist<1) ? userHdg : me.lastCompassRot+dist;
-		} 
-		elsif (dist<0) {
-			dist = dist * 0.3;
-			if (dist<-20) dist = -20;
-			me.lastCompassRot = (dist>-1) ? userHdg : me.lastCompassRot+dist;
-		}						
+		var dist = userHdg - me.lastCompassRot;
+		if (dist != 0) {
+			if (dist>180) dist = dist - 360;
+			elsif (dist<-180) dist = 360 + dist;
+			if (dist>0) {
+				dist = dist * 0.3;
+				if (dist>10) dist = 10;
+				me.lastCompassRot = (dist<0.2) ? userHdg : math.mod(me.lastCompassRot+dist,360);
+			} 
+			elsif (dist<0) {
+				dist = dist * 0.3;
+				if (dist<-10) dist = -10;
+				me.lastCompassRot = (dist>-0.2) ? userHdg : math.mod(me.lastCompassRot+dist,360);
+			}						
+		}
 		userHdgTrk = me.lastCompassRot;
 		me.userHdgTrk = me.lastCompassRot;
 		userHdgTrkTru = userHdgTru;
