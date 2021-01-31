@@ -2546,8 +2546,9 @@ var canvas_MCDU_base = {
 			me["Simple_L2"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
 			me["Simple_L4"].setText(me.getLatLogFormatted2("/position/"));
 			me["Simple_L5"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
-			me["Simple_C2"].setText(pts.Sim.Time.gmtString.getValue());
-			me["Simple_C5"].setText(pts.Sim.Time.gmtString.getValue());
+			var gmt = string.replace(pts.Sim.Time.gmtString.getValue(),":",".");
+			me["Simple_C2"].setText(gmt);
+			me["Simple_C5"].setText(gmt);
 			me["Simple_C3"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
 			me["Simple_C6"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
 			me["Simple_R2"].setText(sprintf("%3.0f",pts.Instrumentation.GPS.gs.getValue()));
