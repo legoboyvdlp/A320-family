@@ -56,10 +56,12 @@ var failResetOld = func {
 	setprop("/systems/failures/pump-green", 0);
 	setprop("/systems/failures/pump-yellow-eng", 0);
 	setprop("/systems/failures/pump-yellow-elec", 0);
-	setprop("/systems/failures/cargo-aft-fire", 0);
-	setprop("/systems/failures/cargo-fwd-fire", 0);
-	setprop("/systems/failures/engine-left-fire", 0);
-	setprop("/systems/failures/engine-right-fire", 0);
+	setprop("/systems/failures/fire/cargo-aft-fire", 0);
+	setprop("/systems/failures/fire/cargo-fwd-fire", 0);
+	setprop("/systems/failures/fire/engine-left-fire", 0);
+	setprop("/systems/failures/fire/apu-fire", 0);
+	setprop("/systems/failures/fire/engine-right-fire", 0);
+	setprop("/systems/failures/fire/lavatory-fire", 0);
 }
 
 failResetOld();

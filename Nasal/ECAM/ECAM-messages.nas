@@ -161,8 +161,8 @@ var warnings				  = std.Vector.new([
 	
 	var gearNotDownLocked     = warning.new(msg: "L/G GEAR NOT DOWNLOCKED",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var gearNotDownLockedRec  = warning.new(msg: " -L/G LEVER......RECYCLE",  colour: "c"),
-	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "c"),
-	var gearNotDownLocked120  = warning.new(msg: "    AFTER 120S:",           colour: "c"),
+	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "w", isMainMsg: 1),
+	var gearNotDownLocked120  = warning.new(msg: "    AFTER 120S:",           colour: "w"),
 	var gearNotDownLockedGrav = warning.new(msg: " -L/G.........GRVTY EXTN",  colour: "c"),
 	
 	# Autopilot off involuntary
@@ -170,15 +170,29 @@ var warnings				  = std.Vector.new([
 	
 	# Cargo smoke
 	var cargoSmokeFwd         = warning.new(msg: "SMOKE FWD CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var cargoSmokeFwdFans     = warning.new(msg: " -CAB FANS...........OFF",  colour: "c"),
+	var cargoSmokeFwdGrdClsd  = warning.new(msg: " •IF FWD CRG CLSD:",        colour: "w", isMainMsg: 1),
 	var cargoSmokeFwdAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
+	var cargoSmokeFwdGrd      = warning.new(msg: " •WHEN ON GROUND",          colour: "w", isMainMsg: 1),
+	var cargoSmokeFwdDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w", isMainMsg: 1),
+	var cargoSmokeFwdDisemb   = warning.new(msg: "-PAX..........DISEMBARK",   colour: "c"),
 	var cargoSmokeAft         = warning.new(msg: "SMOKE AFT CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var cargoSmokeAftFans     = warning.new(msg: " -CAB FANS...........OFF",  colour: "c"),
+	var cargoSmokeAftGrdClsd  = warning.new(msg: " •IF AFT CRG CLSD:",        colour: "w", isMainMsg: 1),
 	var cargoSmokeAftAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
+	var cargoSmokeAftGrd      = warning.new(msg: " •WHEN ON GROUND",          colour: "w", isMainMsg: 1),
+	var cargoSmokeAftDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w", isMainMsg: 1),
+	var cargoSmokeAftDisemb   = warning.new(msg: "-PAX..........DISEMBARK",   colour: "c"),
+	
+	# Lavatory SMOKE
+	var lavatorySmoke         = warning.new(msg: "SMOKE LAVATORY SMOKE     ", colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var lavatorySmokeComm     = warning.new(msg: "-CKPT/CAB COM.ESTABLISH  ", colour: "c"),
 	
 	# ESS Bus on Bat
 	var essBusOnBat           = warning.new(msg: "ELEC ESS BUSES ON BAT",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var essBusOnBatLGUplock   = warning.new(msg: "   •WHEN L/G UPLOCKED :",   colour: "w"),
+	var essBusOnBatLGUplock   = warning.new(msg: "   •WHEN L/G UPLOCKED :",   colour: "w", isMainMsg: 1),
 	var essBusOnBatManOn      = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
-	var essBusOnBatRetract    = warning.new(msg: "  •IF L/G RETRACT FAULT:",  colour: "w"),
+	var essBusOnBatRetract    = warning.new(msg: "  •IF L/G RETRACT FAULT:",  colour: "w", isMainMsg: 1),
 	var essBusOnBatMinSpeed   = warning.new(msg: " MIN RAT SPD......180 KT",  colour: "c"),
 	var essBusOnBatLGCB       = warning.new(msg: " -LGCIU1 C/B (C09)..PULL",  colour: "c"),
 	var essBusOnBatManOn2     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),

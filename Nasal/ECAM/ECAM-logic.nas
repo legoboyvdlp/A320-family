@@ -663,7 +663,7 @@ var messages_priority_3 = func {
 	if (gearNotDownLocked.clearFlag == 0 and warningNodes.Logic.gearNotDownLocked.getBoolValue() and phaseVar3 != 3 and phaseVar3 != 4 and phaseVar3 != 5 and phaseVar3 != 8) {
 		gearNotDownLocked.active = 1;
 		
-		if (gearNotDownLockedRec.clearFlag == 0 and warningNodes.Logic.gearNotDownLockedFlipflop.getBoolValue()) {
+		if (gearNotDownLockedRec.clearFlag == 0 and !warningNodes.Logic.gearNotDownLockedFlipflop.getBoolValue()) {
 			gearNotDownLockedRec.active = 1;
 			gearNotDownLockedWork.active = 1;
 		} else {
@@ -721,47 +721,110 @@ var messages_priority_3 = func {
 		altAlertFlash = 0;
 	}
 	
-	if (!systems.cargoTestBtn.getBoolValue()) {
-		if (cargoSmokeFwd.clearFlag == 0 and systems.fwdCargoFireWarn.getBoolValue() and (phaseVar3 <= 3 or phaseVar3 >= 9 or phaseVar3 == 6)) {
-			cargoSmokeFwd.active = 1;
-		} elsif (cargoSmokeFwd.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
-			ECAM_controller.warningReset(cargoSmokeFwd);
-			cargoSmokeFwd.isMainMsg = 1;
+	if (cargoSmokeFwd.clearFlag == 0 and systems.fwdCargoFireWarn.getBoolValue() and (phaseVar3 <= 3 or phaseVar3 >= 9 or phaseVar3 == 6)) {
+		cargoSmokeFwd.active = 1;
+		
+		if (cargoSmokeFwdFans.clearFlag == 0 and systems.PNEU.Switch.cabinFans.getValue()) {
+			cargoSmokeFwdFans.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeFwdFans);
 		}
 		
-		if (cargoSmokeFwdAgent.clearFlag == 0 and cargoSmokeFwd.active == 1 and !getprop("/systems/fire/cargo/disch")) {
+		if (cargoSmokeFwdGrdClsd.clearFlag == 0 and (phaseVar3 == 1 or phaseVar3 == 10)) {
+			cargoSmokeFwdGrdClsd.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeFwdGrdClsd);
+		}
+		
+		if (cargoSmokeFwdAgent.clearFlag == 0 and !systems.cargoExtinguisherBottles.vector[0].lightProp.getValue()) {
 			cargoSmokeFwdAgent.active = 1;
 		} else {
 			ECAM_controller.warningReset(cargoSmokeFwdAgent);
-			cargoSmokeFwd.isMainMsg = 0;
-		}
-
-		if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar3 <= 3 or phaseVar3 >= 9 or phaseVar3 == 6)) {
-			cargoSmokeAft.active = 1;
-		} elsif (cargoSmokeAft.clearFlag == 1 or systems.cargoTestBtnOff.getBoolValue()) {
-			ECAM_controller.warningReset(cargoSmokeAft);
-			cargoSmokeAft.isMainMsg = 1;
-			systems.cargoTestBtnOff.setBoolValue(0);
 		}
 		
-		if (cargoSmokeAftAgent.clearFlag == 0 and cargoSmokeAft.active == 1 and !getprop("/systems/fire/cargo/disch")) {
-			cargoSmokeAftAgent.active = 1;
+		if (FWC.Timer.gnd.getValue() == 0) {
+			cargoSmokeFwdGrd.active = 1;
 		} else {
-			ECAM_controller.warningReset(cargoSmokeAftAgent);
-			cargoSmokeAft.isMainMsg = 0;
+			ECAM_controller.warningReset(cargoSmokeFwdGrd);
+		}
+		
+		if (cargoSmokeFwdDoors.clearFlag == 0) {
+			cargoSmokeFwdDoors.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeFwdDoors);
+		}
+		
+		if (cargoSmokeFwdDisemb.clearFlag == 0) {
+			cargoSmokeFwdDisemb.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeFwdDisemb);
 		}
 	} else {
-		if (systems.aftCargoFireWarn.getBoolValue()) {
-			cargoSmokeFwd.active = 1;
-			cargoSmokeFwdAgent.active = 1;
-			cargoSmokeAft.active = 1;
+		ECAM_controller.warningReset(cargoSmokeFwd);
+		ECAM_controller.warningReset(cargoSmokeFwdFans);
+		ECAM_controller.warningReset(cargoSmokeFwdGrdClsd);
+		ECAM_controller.warningReset(cargoSmokeFwdAgent);
+		ECAM_controller.warningReset(cargoSmokeFwdGrd);
+		ECAM_controller.warningReset(cargoSmokeFwdDoors);
+		ECAM_controller.warningReset(cargoSmokeFwdDisemb);
+		systems.cargoTestBtnOff.setBoolValue(0);
+	}
+	
+	if (cargoSmokeAft.clearFlag == 0 and systems.aftCargoFireWarn.getBoolValue() and (phaseVar3 <= 3 or phaseVar3 >= 9 or phaseVar3 == 6)) {
+		cargoSmokeAft.active = 1;
+		
+		if (cargoSmokeAftFans.clearFlag == 0 and systems.PNEU.Switch.cabinFans.getValue()) {
+			cargoSmokeAftFans.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeAftFans);
+		}
+		
+		if (cargoSmokeAftGrdClsd.clearFlag == 0 and (phaseVar3 == 1 or phaseVar3 == 10)) {
+			cargoSmokeAftGrdClsd.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeAftGrdClsd);
+		}
+		
+		if (cargoSmokeAftAgent.clearFlag == 0 and !systems.cargoExtinguisherBottles.vector[1].lightProp.getValue()) {
 			cargoSmokeAftAgent.active = 1;
 		} else {
-			ECAM_controller.warningReset(cargoSmokeFwd);
-			ECAM_controller.warningReset(cargoSmokeFwdAgent);
-			ECAM_controller.warningReset(cargoSmokeAft);
 			ECAM_controller.warningReset(cargoSmokeAftAgent);
 		}
+		
+		if (FWC.Timer.gnd.getValue() == 0) {
+			cargoSmokeAftGrd.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeAftGrd);
+		}
+		
+		if (cargoSmokeAftDoors.clearFlag == 0) {
+			cargoSmokeAftDoors.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeAftDoors);
+		}
+		
+		if (cargoSmokeAftDisemb.clearFlag == 0) {
+			cargoSmokeAftDisemb.active = 1;
+		} else {
+			ECAM_controller.warningReset(cargoSmokeAftDisemb);
+		}
+	} else {
+		ECAM_controller.warningReset(cargoSmokeAft);
+		ECAM_controller.warningReset(cargoSmokeAftFans);
+		ECAM_controller.warningReset(cargoSmokeAftGrdClsd);
+		ECAM_controller.warningReset(cargoSmokeAftAgent);
+		ECAM_controller.warningReset(cargoSmokeAftGrd);
+		ECAM_controller.warningReset(cargoSmokeAftDoors);
+		ECAM_controller.warningReset(cargoSmokeAftDisemb);
+		systems.cargoTestBtnOff.setBoolValue(0);
+	}
+	
+	if (lavatorySmoke.clearFlag == 0 and systems.lavatoryFireWarn.getValue() and phaseVar3 != 4 and phaseVar3 != 5 and phaseVar3 != 7 and phaseVar3 != 8) {
+		lavatorySmoke.active = 1;
+		lavatorySmokeComm.active = 1;
+	} else {
+		ECAM_controller.warningReset(lavatorySmoke);
+		ECAM_controller.warningReset(lavatorySmokeComm);
 	}
 	
 	# ESS on BAT
@@ -2537,7 +2600,7 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if ((!pts.Gear.wow[1].getValue()) and (systems.ELEC.EmerElec.getValue() or getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/cargo-aft-fire") == 1 or getprop("/systems/failures/cargo-fwd-fire") == 1) or (((systems.HYD.Psi.green.getValue() < 1500 and pts.Engines.Engine.state[0].getValue() == 3) and (systems.HYD.Psi.yellow.getValue() < 1500 and pts.Engines.Engine.state[1].getValue() == 3)) or ((systems.HYD.Psi.green.getValue() < 1500 or systems.HYD.Psi.yellow.getValue() < 1500) and pts.Engines.Engine.state[0].getValue() == 3 and pts.Engines.Engine.state[1].getValue() == 3) and phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8)) {
+	if ((!pts.Gear.wow[1].getValue()) and (systems.ELEC.EmerElec.getValue() or getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/fire/cargo-aft-fire") == 1 or getprop("/systems/failures/fire/cargo-fwd-fire") == 1) or (((systems.HYD.Psi.green.getValue() < 1500 and pts.Engines.Engine.state[0].getValue() == 3) and (systems.HYD.Psi.yellow.getValue() < 1500 and pts.Engines.Engine.state[1].getValue() == 3)) or ((systems.HYD.Psi.green.getValue() < 1500 or systems.HYD.Psi.yellow.getValue() < 1500) and pts.Engines.Engine.state[0].getValue() == 3 and pts.Engines.Engine.state[1].getValue() == 3) and phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8)) {
 		# todo: emer elec
 		land_asap_r.active = 1;
 	} else {
