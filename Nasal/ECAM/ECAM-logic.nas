@@ -1160,6 +1160,240 @@ var messages_priority_3 = func {
 
 var messages_priority_2 = func {
 	phaseVar2 = phaseNode.getValue();
+	
+	if ((phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 9) and warningNodes.Logic.thrLeversNotSet.getValue() and engThrustLvrNotSet.clearFlag == 0) {
+		engThrustLvrNotSet.active = 1;
+		
+		if (fadec.Thrust.limFlex.getValue()) {
+			engThrustLvrNotSetMCT.active = 1;
+			ECAM_controller.warningReset(engThrustLvrNotSetMCT);
+		} else {
+			engThrustLvrNotSetTO.active = 1;
+			ECAM_controller.warningReset(engThrustLvrNotSetTO);
+		}
+	} else {
+		ECAM_controller.warningReset(engThrustLvrNotSet);
+		ECAM_controller.warningReset(engThrustLvrNotSetMCT);
+		ECAM_controller.warningReset(engThrustLvrNotSetTO);
+	}
+	
+	if ((phaseVar2 >= 5 and phaseVar2 <= 7) and warningNodes.Logic.revSet.getValue() and engRevSet.clearFlag == 0) {
+		engRevSet.active = 1;
+		
+		if (engRevSetLevers.clearFlag == 0) {
+			engRevSetLevers.active = 1;
+		} else {
+			ECAM_controller.warningReset(engRevSetLevers);
+		}
+	} else {
+		ECAM_controller.warningReset(engRevSet);
+		ECAM_controller.warningReset(engRevSetLevers);
+	}
+	
+	if (warningNodes.Logic.eng1Fail.getValue() and eng1Fail.clearFlag == 0) {
+		eng1Fail.active = 1;
+		
+		if (0 == 1 and thrustMalfunction1.clearFlag == 0) { # OVER THR PROTECT
+			thrustMalfunction1.active = 1;
+		} else {
+			ECAM_controller.warningReset(thrustMalfunction1);
+		}
+		
+		if (0 == 1 and shaftFailure1.clearFlag == 0) { # PW ONLY
+			shaftFailure1.active = 1;
+		} else {
+			ECAM_controller.warningReset(shaftFailure1);
+		}
+		
+		if (phaseVar2 != 2 and phaseVar2 != 9 and pts.Controls.Engines.startSw.getValue() != 2 and eng1FailModeSel.clearFlag == 0) { # and not stall and not EGT protect
+			eng1FailModeSel.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1FailModeSel);
+		}
+		
+		if (phaseVar2 != 4 and warningNodes.Logic.phase5Trans.getValue() == 1) {
+			if (eng1FailThrLvrIdle.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
+				eng1FailThrLvrIdle.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailThrLvrIdle);
+			}
+			
+			if (eng1FailNoRelight.clearFlag == 0 and phaseVar2 != 2 and phaseVar2 != 9 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
+				eng1FailNoRelight.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailNoRelight);
+			}
+			
+			if (eng1FailMasterOff.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
+				eng1FailMasterOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailMasterOff);
+			}
+			
+			if (eng1FailDamage.clearFlag == 0 and systems.fireButtons[0].getValue() == 0) {
+				eng1FailDamage.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailDamage);
+			}
+			
+			if (eng1FailFirePB.clearFlag == 0 and systems.fireButtons[0].getValue() == 0) {
+				eng1FailFirePB.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailFirePB);
+			}
+			
+			if (eng1FailAgent1DischT.clearFlag == 0 and !systems.extinguisherBottles.vector[0].lightProp.getValue()) {
+				eng1FailAgent1DischT.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailAgent1DischT);
+			}
+			
+			if (eng1FailAgent1Disch.clearFlag == 0 and !systems.extinguisherBottles.vector[0].lightProp.getValue()) {
+				eng1FailAgent1Disch.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailAgent1Disch);
+			}
+			
+			if (eng1FailNoDamage.clearFlag == 0) {
+				eng1FailNoDamage.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailNoDamage);
+			}
+			
+			if (eng1FailRelight.clearFlag == 0) {
+				eng1FailRelight.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1FailRelight);
+			}
+		} else {
+			ECAM_controller.warningReset(eng1FailThrLvrIdle);
+			ECAM_controller.warningReset(eng1FailNoRelight);
+			ECAM_controller.warningReset(eng1FailMasterOff);
+			ECAM_controller.warningReset(eng1FailDamage);
+			ECAM_controller.warningReset(eng1FailFirePB);
+			ECAM_controller.warningReset(eng1FailAgent1DischT);
+			ECAM_controller.warningReset(eng1FailAgent1Disch);
+			ECAM_controller.warningReset(eng1FailNoDamage);
+			ECAM_controller.warningReset(eng1FailRelight);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1Fail);
+		ECAM_controller.warningReset(thrustMalfunction1);
+		ECAM_controller.warningReset(shaftFailure1);
+		ECAM_controller.warningReset(eng1FailModeSel);
+		ECAM_controller.warningReset(eng1FailThrLvrIdle);
+		ECAM_controller.warningReset(eng1FailNoRelight);
+		ECAM_controller.warningReset(eng1FailMasterOff);
+		ECAM_controller.warningReset(eng1FailDamage);
+		ECAM_controller.warningReset(eng1FailFirePB);
+		ECAM_controller.warningReset(eng1FailAgent1DischT);
+		ECAM_controller.warningReset(eng1FailAgent1Disch);
+		ECAM_controller.warningReset(eng1FailNoDamage);
+		ECAM_controller.warningReset(eng1FailRelight);
+	}
+	
+	if (warningNodes.Logic.eng2Fail.getValue() and eng2Fail.clearFlag == 0) {
+		eng2Fail.active = 1;
+		
+		if (0 == 1 and thrustMalfunction2.clearFlag == 0) { # OVER THR PROTECT
+			thrustMalfunction2.active = 1;
+		} else {
+			ECAM_controller.warningReset(thrustMalfunction2);
+		}
+		
+		if (0 == 1 and shaftFailure2.clearFlag == 0) { # PW ONLY
+			shaftFailure2.active = 1;
+		} else {
+			ECAM_controller.warningReset(shaftFailure2);
+		}
+		
+		if (phaseVar2 != 2 and phaseVar2 != 9 and pts.Controls.Engines.startSw.getValue() != 2 and eng2FailModeSel.clearFlag == 0) { # and not stall and not EGT protect
+			eng2FailModeSel.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2FailModeSel);
+		}
+		
+		if (phaseVar2 != 4 and warningNodes.Logic.phase5Trans.getValue() == 1) {
+			if (eng2FailThrLvrIdle.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+				eng2FailThrLvrIdle.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailThrLvrIdle);
+			}
+			
+			if (eng2FailNoRelight.clearFlag == 0 and phaseVar2 != 2 and phaseVar2 != 9 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
+				eng2FailNoRelight.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailNoRelight);
+			}
+			
+			if (eng2FailMasterOff.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
+				eng2FailMasterOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailMasterOff);
+			}
+			
+			if (eng2FailDamage.clearFlag == 0 and systems.fireButtons[1].getValue() == 0) {
+				eng2FailDamage.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailDamage);
+			}
+			
+			if (eng2FailFirePB.clearFlag == 0 and systems.fireButtons[1].getValue() == 0) {
+				eng2FailFirePB.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailFirePB);
+			}
+			
+			if (eng2FailAgent1DischT.clearFlag == 0 and !systems.extinguisherBottles.vector[2].lightProp.getValue()) {
+				eng2FailAgent1DischT.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailAgent1DischT);
+			}
+			
+			if (eng2FailAgent1Disch.clearFlag == 0 and !systems.extinguisherBottles.vector[2].lightProp.getValue()) {
+				eng2FailAgent1Disch.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailAgent1Disch);
+			}
+			
+			if (eng2FailNoDamage.clearFlag == 0) {
+				eng2FailNoDamage.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailNoDamage);
+			}
+			
+			if (eng2FailRelight.clearFlag == 0) {
+				eng2FailRelight.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2FailRelight);
+			}
+		} else {
+			ECAM_controller.warningReset(eng2FailThrLvrIdle);
+			ECAM_controller.warningReset(eng2FailNoRelight);
+			ECAM_controller.warningReset(eng2FailMasterOff);
+			ECAM_controller.warningReset(eng2FailDamage);
+			ECAM_controller.warningReset(eng2FailFirePB);
+			ECAM_controller.warningReset(eng2FailAgent1DischT);
+			ECAM_controller.warningReset(eng2FailAgent1Disch);
+			ECAM_controller.warningReset(eng2FailNoDamage);
+			ECAM_controller.warningReset(eng2FailRelight);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2Fail);
+		ECAM_controller.warningReset(thrustMalfunction2);
+		ECAM_controller.warningReset(shaftFailure2);
+		ECAM_controller.warningReset(eng2FailModeSel);
+		ECAM_controller.warningReset(eng2FailThrLvrIdle);
+		ECAM_controller.warningReset(eng2FailNoRelight);
+		ECAM_controller.warningReset(eng2FailMasterOff);
+		ECAM_controller.warningReset(eng2FailDamage);
+		ECAM_controller.warningReset(eng2FailFirePB);
+		ECAM_controller.warningReset(eng2FailAgent1DischT);
+		ECAM_controller.warningReset(eng2FailAgent1Disch);
+		ECAM_controller.warningReset(eng2FailNoDamage);
+		ECAM_controller.warningReset(eng2FailRelight);
+	}
+	
 	# DC EMER CONFIG
 	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcEmerconfig.clearFlag == 0) {
 		dcEmerconfig.active = 1;

@@ -1081,4 +1081,73 @@
 		</R>
 		<output>/ECAM/warnings/fctl/park-brk-config-output</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-cond-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-cond-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-1-fail-cond</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-cond-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-cond-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-2-fail-cond</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-1-fail-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-2-fail-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>30.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/phase-5</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/phase-5-output</output>
+	</flipflop>
+	
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/phase-5-output</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/phase-5-output-2</output>
+	</flipflop>
 </PropertyList>

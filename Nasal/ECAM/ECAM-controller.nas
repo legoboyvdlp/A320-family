@@ -89,6 +89,11 @@ var warningNodes = {
 		rudTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/rudder-trim-config-range"),
 		dc2FuelConsumptionIncreased: props.globals.initNode("/ECAM/warnings/logic/dc-2-fuel-consumption-increased"),
 		dc2FMSPredictions: props.globals.initNode("/ECAM/warnings/logic/dc-2-fms-predictions-unreliable"),
+		thrLeversNotSet: props.globals.initNode("/ECAM/warnings/logic/eng/thr-lever-not-set"),
+		revSet: props.globals.initNode("/ECAM/warnings/logic/eng/reverse-set"),
+		eng1Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-fail"),
+		eng2Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-fail"),
+		phase5Trans: props.globals.initNode("/ECAM/warnings/logic/eng/phase-5-output"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),

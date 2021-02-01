@@ -2183,6 +2183,245 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/eng/new-retard-logic">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle eq 1
+				/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+				/controls/engines/engine[0]/throttle-pos ge 0.60
+				/controls/engines/engine[0]/throttle-pos lt 0.78
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-1-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+				/controls/engines/engine[0]/throttle-pos ge 0.60
+				/controls/engines/engine[0]/throttle-pos lt 0.83
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-1-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-1-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+				/controls/engines/engine[1]/throttle-pos ge 0.60
+				/controls/engines/engine[1]/throttle-pos lt 0.78
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-2-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+				/controls/engines/engine[1]/throttle-pos ge 0.60
+				/controls/engines/engine[1]/throttle-pos lt 0.83
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-2-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-2-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-not-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/new-retard-logic ne 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 0
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/thr-lever-2-mct-output eq 1
+							/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
+						</test>
+					</test>
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 1
+						/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
+					</test>
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 0
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/thr-lever-1-mct-output eq 1
+							/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
+						</test>
+					</test>
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 1
+						/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/reverse-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				<test logic="OR">
+					/gear/gear[1]/rollspeed-ms lt 36
+					/ECAM/warning-phase ne 7
+				</test>
+				<test logic="OR">
+					/controls/engines/engine[0]/throttle-rev gt 0.0
+					/controls/engines/engine[1]/throttle-rev gt 0.0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-cond-set-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-fail-cond-set">
+			<input>/ECAM/warnings/logic/eng/eng-1-fail-cond-set-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.3333</rate_limit> <!-- 3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-cond-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[0]/cutoff-switch eq 1
+				/controls/engines/engine[0]/fire-btn eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-cond-set-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-fail-cond-set">
+			<input>/ECAM/warnings/logic/eng/eng-2-fail-cond-set-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.3333</rate_limit> <!-- 3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-cond-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[1]/cutoff-switch eq 1
+				/controls/engines/engine[1]/fire-btn eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/cutoff-switch eq 0
+				/controls/engines/engine[0]/fire-btn eq 0
+				/engines/engine[0]/n2-actual lt 59.4
+				/ECAM/warnings/logic/eng/eng-1-fail-cond eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[1]/cutoff-switch eq 0
+				/controls/engines/engine[1]/fire-btn eq 0
+				/engines/engine[1]/n2-actual lt 59.4
+				/ECAM/warnings/logic/eng/eng-2-fail-cond eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+				/ECAM/dual-failure-enabled eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+				/ECAM/dual-failure-enabled eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-master-60-sec">
+			<input>/controls/engines/engine[0]/cutoff-switch</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-master-60-sec">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/phase-5">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+					/ECAM/warnings/logic/stall/phase-4-output eq 0
+					/ECAM/warnings/logic/stall/phase-4 eq 0
+					/ECAM/warning-phase eq 5
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/phase-5-output eq 1
+					/ECAM/warnings/logic/eng/phase-5-output-2 eq 1
+					/ECAM/warnings/logic/eng/eng-1-master-60-sec eq 0 <!-- because the sense of cutoff is inverted -->
+				</test>
+				/ECAM/warnings/logic/eng/eng-1-fail-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/phase-5-output eq 1
+					/ECAM/warnings/logic/eng/phase-5-output-2 eq 1
+					/ECAM/warnings/logic/eng/eng-2-master-60-sec eq 0 <!-- because the sense of cutoff is inverted -->
+				</test>
+				/ECAM/warnings/logic/eng/eng-2-fail-output eq 1
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Config" execrate="16">

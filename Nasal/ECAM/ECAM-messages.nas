@@ -10,6 +10,7 @@
 # Left E/WD
 
 var warnings				  = std.Vector.new([
+	# LEVEL 3 WARN
 	var stall                 = warning.new(msg: "", aural: 2),
 	var flap_not_zero         = warning.new(msg: "F/CTL FLAP LVR NOT ZERO",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	
@@ -47,12 +48,12 @@ var warnings				  = std.Vector.new([
 	var eng1FireFlAgent1Timer = warning.new(msg: " -AGENT 1 AFT 10 S.DISCH",  colour: "w"),
 	var eng1FireFlAgent1      = warning.new(msg: " -AGENT 1..........DISCH",  colour: "c"),
 	var eng1FireFlATC         = warning.new(msg: " -ATC.............NOTIFY",  colour: "c"),
-	var eng1FireFl30Sec       = warning.new(msg: "  •IF FIRE AFTER 30 S:",    colour: "w", isMainMsg: 1),
+	var eng1FireFl30Sec       = warning.new(msg: "  •IF FIRE AFTER 30 S:",    colour: "w"),
 	var eng1FireFlAgent2      = warning.new(msg: " -AGENT 2..........DISCH",  colour: "c"),
 	
 	# ENG 1 FIRE (ground)
 	var eng1FireGnlever       = warning.new(msg: " -THR LEVERS........IDLE",  colour: "c"),
-	var eng1FireGnstopped     = warning.new(msg: "  •WHEN A/C IS STOPPED:",   colour: "w", isMainMsg: 1),
+	var eng1FireGnstopped     = warning.new(msg: "  •WHEN A/C IS STOPPED:",   colour: "w"),
 	var eng1FireGnparkbrk     = warning.new(msg: " -PARKING BRK.........ON",  colour: "c"),
 	var eng1FireGnATC         = warning.new(msg: " -ATC.............NOTIFY",  colour: "c"),
 	var eng1FireGncrew        = warning.new(msg: " -CABIN CREW.......ALERT",  colour: "c"),
@@ -70,12 +71,12 @@ var warnings				  = std.Vector.new([
 	var eng2FireFlAgent1Timer = warning.new(msg: " -AGENT 1 AFT 10 S.DISCH",  colour: "w"),
 	var eng2FireFlAgent1      = warning.new(msg: " -AGENT 1..........DISCH",  colour: "c"),
 	var eng2FireFlATC         = warning.new(msg: " -ATC.............NOTIFY",  colour: "c"),
-	var eng2FireFl30Sec       = warning.new(msg: "  •IF FIRE AFTER 30 S:",    colour: "w", isMainMsg: 1),
+	var eng2FireFl30Sec       = warning.new(msg: "  •IF FIRE AFTER 30 S:",    colour: "w"),
 	var eng2FireFlAgent2      = warning.new(msg: " -AGENT 2..........DISCH",  colour: "c"),
 	
 	# ENG 2 FIRE (ground)
 	var eng2FireGnlever       = warning.new(msg: " -THR LEVERS........IDLE",  colour: "c"),
-	var eng2FireGnstopped     = warning.new(msg: "  •WHEN A/C IS STOPPED:",   colour: "w", isMainMsg: 1),
+	var eng2FireGnstopped     = warning.new(msg: "  •WHEN A/C IS STOPPED:",   colour: "w"),
 	var eng2FireGnparkbrk     = warning.new(msg: " -PARKING BRK.........ON",  colour: "c"),
 	var eng2FireGnATC         = warning.new(msg: " -ATC.............NOTIFY",  colour: "c"),
 	var eng2FireGncrew        = warning.new(msg: " -CABIN CREW.......ALERT",  colour: "c"),
@@ -94,7 +95,7 @@ var warnings				  = std.Vector.new([
 	var ADR123FaultBUSSF      = warning.new(msg: " -FO BKUP SPD/ALT.....ON",  colour: "c"),
 	var ADR123FaultADRPB      = warning.new(msg: " -ADR 1+2+3 P/B......OFF",  colour: "c"),
 	var ADR123FaultSPD        = warning.new(msg: " -SPD......FLY THE GREEN",  colour: "c"),
-	var ADR123FaultAOADISAG   = warning.new(msg: "  •IF AOA DISAGREE:     ",  colour: "w", isMainMsg: 1),
+	var ADR123FaultAOADISAG   = warning.new(msg: "  •IF AOA DISAGREE:     ",  colour: "w"),
 	var ADR123FaultBUSSINOP   = warning.new(msg: " BKUP SPD/ALT.DO NOT USE",  colour: "c"),
 	var ADR123FaultSTBY       = warning.new(msg: " -STBY INST.MAY BE UNREL",  colour: "c"),
 	var ADR123FaultPROC       = warning.new(msg: " -ALL ADR OFF PROC.APPLY",  colour: "c"),
@@ -123,7 +124,7 @@ var warnings				  = std.Vector.new([
 	var excessCabAlt          = warning.new(msg: "CAB PR EXCESS CAB ALT",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var excessCabAltMask      = warning.new(msg: " -CREW OXY MASKS.....USE",  colour: "c"),
 	var excessCabAltSigns     = warning.new(msg: " -SIGNS...............ON",  colour: "c"),
-	var excessCabAltEmerD     = warning.new(msg: "      •EMER DESCENT:",      colour: "w", isMainMsg: 1),
+	var excessCabAltEmerD     = warning.new(msg: "      •EMER DESCENT:",      colour: "w"),
 	var excessCabAltDES       = warning.new(msg: " -DESCENT.......INITIATE",  colour: "c"),
 	var excessCabAltTHRLVR    = warning.new(msg: " -THR LEVERS........IDLE",  colour: "c"),
 	var excessCabAltSPDBRK    = warning.new(msg: " -SPD BRK...........FULL",  colour: "c"),
@@ -133,20 +134,20 @@ var warnings				  = std.Vector.new([
 	var excessCabAltPA        = warning.new(msg: " -EMER DES (PA).ANNOUNCE",  colour: "c"),
 	var excessCabAltXPDR      = warning.new(msg: " -XPDR 7700.....CONSIDER",  colour: "c"),
 	var excessCabAltMEA       = warning.new(msg: " MAX FL.....100/MEA-MORA",  colour: "c"),
-	var excessCabAltCabAlt    = warning.new(msg: "   •IF CAB ALT>14000 FT:",  colour: "w", isMainMsg: 1),
+	var excessCabAltCabAlt    = warning.new(msg: "   •IF CAB ALT>14000 FT:",  colour: "w"),
 	var excessCabAltMasks     = warning.new(msg: " -PAX OXY MASKS...MAN ON",  colour: "c"),
 	
 	# ENG 1 OIL LO PR
 	var eng1OilLoPr           = warning.new(msg: "ENG 1 OIL LO PR         ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var eng1OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w", isMainMsg: 1),
-	var eng1OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w", isMainMsg: 1),
+	var eng1OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w"),
+	var eng1OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w"),
 	var eng1OilLoPrThrot      = warning.new(msg: " -THR LEVER 1.......IDLE",  colour: "c"),
 	var eng1OilLoPrMaster     = warning.new(msg: " -ENG MASTER 1.......OFF",  colour: "c"),
 	
 	# ENG 2 OIL LO PR
 	var eng2OilLoPr           = warning.new(msg: "ENG 2 OIL LO PR         ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var eng2OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w", isMainMsg: 1),
-	var eng2OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w", isMainMsg: 1),
+	var eng2OilLoPrIf         = warning.new(msg: "   •IF OIL PR < 13 PSI :",  colour: "w"),
+	var eng2OilLoPrIf2        = warning.new(msg: "   •IF OIL PR < 60 PSI :",  colour: "w"),
 	var eng2OilLoPrThrot      = warning.new(msg: " -THR LEVER 2.......IDLE",  colour: "c"),
 	var eng2OilLoPrMaster     = warning.new(msg: " -ENG MASTER 2.......OFF",  colour: "c"),
 	
@@ -161,7 +162,7 @@ var warnings				  = std.Vector.new([
 	
 	var gearNotDownLocked     = warning.new(msg: "L/G GEAR NOT DOWNLOCKED",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var gearNotDownLockedRec  = warning.new(msg: " -L/G LEVER......RECYCLE",  colour: "c"),
-	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "w", isMainMsg: 1),
+	var gearNotDownLockedWork = warning.new(msg: "  •IF UNSUCCESSFUL:",       colour: "w"),
 	var gearNotDownLocked120  = warning.new(msg: "    AFTER 120S:",           colour: "w"),
 	var gearNotDownLockedGrav = warning.new(msg: " -L/G.........GRVTY EXTN",  colour: "c"),
 	
@@ -171,17 +172,17 @@ var warnings				  = std.Vector.new([
 	# Cargo smoke
 	var cargoSmokeFwd         = warning.new(msg: "SMOKE FWD CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var cargoSmokeFwdFans     = warning.new(msg: " -CAB FANS...........OFF",  colour: "c"),
-	var cargoSmokeFwdGrdClsd  = warning.new(msg: " •IF FWD CRG CLSD:",        colour: "w", isMainMsg: 1),
+	var cargoSmokeFwdGrdClsd  = warning.new(msg: " •IF FWD CRG CLSD:",        colour: "w"),
 	var cargoSmokeFwdAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
-	var cargoSmokeFwdGrd      = warning.new(msg: " •WHEN ON GROUND",          colour: "w", isMainMsg: 1),
-	var cargoSmokeFwdDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w", isMainMsg: 1),
+	var cargoSmokeFwdGrd      = warning.new(msg: " •WHEN ON GROUND",          colour: "w"),
+	var cargoSmokeFwdDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w"),
 	var cargoSmokeFwdDisemb   = warning.new(msg: "-PAX..........DISEMBARK",   colour: "c"),
 	var cargoSmokeAft         = warning.new(msg: "SMOKE AFT CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var cargoSmokeAftFans     = warning.new(msg: " -CAB FANS...........OFF",  colour: "c"),
-	var cargoSmokeAftGrdClsd  = warning.new(msg: " •IF AFT CRG CLSD:",        colour: "w", isMainMsg: 1),
+	var cargoSmokeAftGrdClsd  = warning.new(msg: " •IF AFT CRG CLSD:",        colour: "w"),
 	var cargoSmokeAftAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
-	var cargoSmokeAftGrd      = warning.new(msg: " •WHEN ON GROUND",          colour: "w", isMainMsg: 1),
-	var cargoSmokeAftDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w", isMainMsg: 1),
+	var cargoSmokeAftGrd      = warning.new(msg: " •WHEN ON GROUND",          colour: "w"),
+	var cargoSmokeAftDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w"),
 	var cargoSmokeAftDisemb   = warning.new(msg: "-PAX..........DISEMBARK",   colour: "c"),
 	
 	# Lavatory SMOKE
@@ -255,6 +256,46 @@ var warnings				  = std.Vector.new([
 	# AIR BLEED LEAK
 	var airBleedLeak          = warning.new(msg: "AIR BLEED LEAK         ",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var airBleedLeakShut      = warning.new(msg: " -X BLEED..........SHUT",   colour: "c"),
+	
+	# LEVEL 2 WARN
+	# THR LEVERS NOT SET 
+	var engThrustLvrNotSet    = warning.new(msg: "ENG THR LEVERS NOT SET  ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var engThrustLvrNotSetMCT = warning.new(msg: " -THR LEVERS ....MCT/FLX",  colour: "c"),
+	var engThrustLvrNotSetTO  = warning.new(msg: " -THR LEVERS.......TO/GA",  colour: "c"),
+	
+	# REV SET
+	var engRevSet             = warning.new(msg: "ENG REV SET  ",             colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var engRevSetLevers       = warning.new(msg: " -THR LEVER......FWD THR",  colour: "c"),
+	
+	# ENG 1 FAIL
+	var eng1Fail              = warning.new(msg: "ENG 1 FAIL               ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var thrustMalfunction1    = warning.new(msg: " THRUST MALFUNCTION      ", colour: "a"),
+	var shaftFailure1         = warning.new(msg: " SHAFT FAILURE           ", colour: "a"),
+	var eng1FailModeSel       = warning.new(msg: " -ENG MODE SEL.......IGN",  colour: "c"),
+	var eng1FailThrLvrIdle    = warning.new(msg: " -THR LEVER 1.......IDLE",  colour: "c"),
+	var eng1FailNoRelight     = warning.new(msg: "•IF NO RELIGHT AFTER 30S",  colour: "w"),
+	var eng1FailMasterOff     = warning.new(msg: " -ENG MASTER 1.......OFF",  colour: "c"),
+	var eng1FailDamage        = warning.new(msg: "      IF DAMAGE :       ",  colour: "w"),
+	var eng1FailFirePB        = warning.new(msg: " -ENG 1 FIRE P/B....PUSH",  colour: "c"),
+	var eng1FailAgent1DischT  = warning.new(msg: " -AGENT1 AFTER 10S.DISCH",  colour: "c"),
+	var eng1FailAgent1Disch   = warning.new(msg: " -AGENT 1..........DISCH",  colour: "c"),
+	var eng1FailNoDamage      = warning.new(msg: "      IF NO DAMAGE :    ",  colour: "w"),
+	var eng1FailRelight       = warning.new(msg: " -ENG 1 RELIGHT.CONSIDER",  colour: "c"),
+	
+	# ENG 2 FAIL
+	var eng2Fail              = warning.new(msg: "ENG 2 FAIL               ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var thrustMalfunction2    = warning.new(msg: " THRUST MALFUNCTION      ", colour: "a"),
+	var shaftFailure2         = warning.new(msg: " SHAFT FAILURE           ", colour: "a"),
+	var eng2FailModeSel       = warning.new(msg: " -ENG MODE SEL.......IGN",  colour: "c"),
+	var eng2FailThrLvrIdle    = warning.new(msg: " -THR LEVER 2.......IDLE",  colour: "c"),
+	var eng2FailNoRelight     = warning.new(msg: "•IF NO RELIGHT AFTER 30S",  colour: "w"),
+	var eng2FailMasterOff     = warning.new(msg: " -ENG MASTER 2.......OFF",  colour: "c"),
+	var eng2FailDamage        = warning.new(msg: "      IF DAMAGE :       ",  colour: "w"),
+	var eng2FailFirePB        = warning.new(msg: " -ENG 2 FIRE P/B....PUSH",  colour: "c"),
+	var eng2FailAgent1DischT  = warning.new(msg: " -AGENT2 AFTER 10S.DISCH",  colour: "c"),
+	var eng2FailAgent1Disch   = warning.new(msg: " -AGENT 2..........DISCH",  colour: "c"),
+	var eng2FailNoDamage      = warning.new(msg: "      IF NO DAMAGE :    ",  colour: "w"),
+	var eng2FailRelight       = warning.new(msg: " -ENG 2 RELIGHT.CONSIDER",  colour: "c"),
 	
 	# DC EMER CONFIG
 	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
