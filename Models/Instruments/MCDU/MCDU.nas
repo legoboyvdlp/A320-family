@@ -404,7 +404,7 @@ var canvas_MCDU_base = {
 				irsstatus = (systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV";
 			} else {
 				if (b) {
-					irsstatus = "ALIGN TTN" ~ sprintf("% 2.0d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
+					irsstatus = "ALIGN TTN" ~ sprintf("%2d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
 				} else {
 					irsstatus = "ALIGN";
 				}
@@ -2525,11 +2525,11 @@ var canvas_MCDU_base = {
 				me["Simple_L1S"].setText("GPS1 POSITION");
 				me["Simple_L2S"].setText("TTRK");
 				me["Simple_L3S"].setText("MERIT");
-				me["Simple_L3"].setText(sprintf("%3.0d",((rand() * 50) - 25) + 50) ~ "M");
+				me["Simple_L3"].setText(sprintf("%3d",((rand() * 50) - 25) + 50) ~ "M");
 				me["Simple_L4S"].setText("GPS2 POSITION");
 				me["Simple_L5S"].setText("TTRK");
 				me["Simple_L6S"].setText("MERIT");
-				me["Simple_L6"].setText(sprintf("%3.0d",((rand() * 50) - 25) + 50) ~ "M");
+				me["Simple_L6"].setText(sprintf("%3d",((rand() * 50) - 25) + 50) ~ "M");
 				me["Simple_C2S"].setText("UTC");
 				me["Simple_C3S"].setText("GPS ALT");
 				me["Simple_C5S"].setText("UTC");
@@ -2546,8 +2546,9 @@ var canvas_MCDU_base = {
 			me["Simple_L2"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
 			me["Simple_L4"].setText(me.getLatLogFormatted2("/position/"));
 			me["Simple_L5"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
-			me["Simple_C2"].setText(pts.Sim.Time.gmtString.getValue());
-			me["Simple_C5"].setText(pts.Sim.Time.gmtString.getValue());
+			var gmt = string.replace(pts.Sim.Time.gmtString.getValue(),":",".");
+			me["Simple_C2"].setText(gmt);
+			me["Simple_C5"].setText(gmt);
 			me["Simple_C3"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
 			me["Simple_C6"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
 			me["Simple_R2"].setText(sprintf("%3.0f",pts.Instrumentation.GPS.gs.getValue()));

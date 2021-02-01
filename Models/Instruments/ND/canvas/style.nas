@@ -10,6 +10,9 @@ var NOTHING = func nil;
 var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
 var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
+var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass position deg
+
+
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
 		if( family == "Liberation Sans" and weight == "normal" )
@@ -882,6 +885,42 @@ canvas.NDStyles["Airbus"] = {
 					nd.symbols.hdg.setText(sprintf("%03.0f", hdgText+0.5));
 				},
 				is_false: NOTHING,
+			},
+		},
+		{
+			id:"hdgBug2ValR", #"hdgBug2ValL"",
+			impl: {
+				init: func(nd,symbol),
+				predicate: func(nd) nd.in_mode("toggle_display_mode", ["MAP"]) and !nd.get_switch("toggle_centered"),
+				is_true: func(nd) {
+					var bugRot = vhdg_bug.getValue();
+					var diffRot = (bugRot>=nd.userHdgTrk) ? (bugRot-nd.userHdgTrk) : (360+bugRot-nd.userHdgTrk);
+					if (diffRot<180 and diffRot>48) {						
+						nd.symbols.hdgBug2ValR.setText(sprintf("%03d", bugRot+0.5));  #CHECKME - not sure about adding +.5 as "hdg" process
+						nd.symbols.hdgBug2ValR.show();
+					} else {
+						nd.symbols.hdgBug2ValR.hide();
+					}					
+				},
+				is_false: func(nd) nd.symbols.hdgBug2ValR.hide(),
+			},
+		},
+		{
+			id:"hdgBug2ValL",
+			impl: {
+				init: func(nd,symbol),
+				predicate: func(nd) nd.in_mode("toggle_display_mode", ["MAP"]) and !nd.get_switch("toggle_centered"),
+				is_true: func(nd) {
+					var bugRot = vhdg_bug.getValue();
+					var diffRot = (bugRot>nd.userHdgTrk) ? (360+nd.userHdgTrk-bugRot) : (nd.userHdgTrk-bugRot);
+					if (diffRot<180 and diffRot>48) {						
+						nd.symbols.hdgBug2ValL.setText(sprintf("%03d", bugRot-0.5));  #CHECKME - not sure about adding +.5 as "hdg" process
+						nd.symbols.hdgBug2ValL.show();
+					} else {
+						nd.symbols.hdgBug2ValL.hide();
+					}					
+				},
+				is_false: func(nd) nd.symbols.hdgBug2ValL.hide(),
 			},
 		},
 		{
