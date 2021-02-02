@@ -282,8 +282,14 @@ var warnings				  = std.Vector.new([
 	var eng1FailNoDamage      = warning.new(msg: "      IF NO DAMAGE :    ",  colour: "w"),
 	var eng1FailRelight       = warning.new(msg: " -ENG 1 RELIGHT.CONSIDER",  colour: "c"),
 	
+	# ENG 1 OIL HI TEMP
+	var eng1OilHiTemp         = warning.new(msg: "ENG 1 OIL HI TEMP       ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var eng1OilHiTempIdle     = warning.new(msg: " -THR LEVER 1.......IDLE",  colour: "c"),
+	var eng1OilHiTempSuccess  = warning.new(msg: "   •IF UNSUCCESSFUL:    ",  colour: "w"),
+	var eng1OilHiTempMaster   = warning.new(msg: " -ENG MASTER 1.......OFF",  colour: "c"),
+	
 	# ENG 1 SHUT DOWN
-	var eng1ShutDown          = warning.new(msg: "ENG 1 SHUT DOWN          ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var eng1ShutDown          = warning.new(msg: "ENG 1 SHUT DOWN         ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var eng1ShutDownPack      = warning.new(msg: " -PACK 1.............OFF",  colour: "c"),
 	var eng1ShutDownXBleed    = warning.new(msg: " -X BLEED...........OPEN",  colour: "c"),
 	var eng1ShutDownModeSel   = warning.new(msg: " -ENG MODE SEL.......IGN",  colour: "c"),
@@ -311,6 +317,12 @@ var warnings				  = std.Vector.new([
 	var eng2FailNoDamage      = warning.new(msg: "      IF NO DAMAGE :    ",  colour: "w"),
 	var eng2FailRelight       = warning.new(msg: " -ENG 2 RELIGHT.CONSIDER",  colour: "c"),
 	
+	# ENG 2 OIL HI TEMP
+	var eng2OilHiTemp         = warning.new(msg: "ENG 2 OIL HI TEMP       ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var eng2OilHiTempIdle     = warning.new(msg: " -THR LEVER 2.......IDLE",  colour: "c"),
+	var eng2OilHiTempSuccess  = warning.new(msg: "   •IF UNSUCCESSFUL:    ",  colour: "w"),
+	var eng2OilHiTempMaster   = warning.new(msg: " -ENG MASTER 2.......OFF",  colour: "c"),
+	
 	# ENG 2 SHUT DOWN
 	var eng2ShutDown          = warning.new(msg: "ENG 2 SHUT DOWN          ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var eng2ShutDownPack1     = warning.new(msg: " -PACK 1.............OFF",  colour: "c"),
@@ -325,6 +337,10 @@ var warnings				  = std.Vector.new([
 	var eng2ShutDownXBleedS   = warning.new(msg: " -X BLEED...........SHUT",  colour: "c"),
 	var eng2ShutDownWingAI    = warning.new(msg: " -WING ANTI ICE......OFF",  colour: "c"),
 	var eng2ShutDownIcing     = warning.new(msg: "  AVOID ICING CONDITIONS",  colour: "c"),
+	
+	# SAT ABOVE FLEX TEMP
+	var satAbvFlexTemp        = warning.new(msg: "ENG SAT ABOVE FLEX TEMP",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var satAbvFlexTempCheck   = warning.new(msg: " -T.O DATA.........CHECK",  colour: "c"),
 	
 	# DC EMER CONFIG
 	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 1, isMainMsg: 1),

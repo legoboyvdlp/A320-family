@@ -40,6 +40,8 @@ var bigThree = nil;
 
 var altAlertSteady = 0;
 var altAlertFlash = 0;
+var _SATval = nil;
+
 
 var ecamConfigTest = props.globals.initNode("/ECAM/to-config-test", 0, "BOOL");
 
@@ -1608,6 +1610,21 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2ShutDownXBleedS);
 		ECAM_controller.warningReset(eng2ShutDownWingAI);
 		ECAM_controller.warningReset(eng2ShutDownIcing);
+	}
+	
+	# SAT ABOVE FLEX TEMP
+	_SATval = dmc.DMController.DMCs[1].outputs[4].getValue();
+	if (satAbvFlexTemp.clearFlag == 0 and phaseVar2 == 2 and fadec.Thrust.limFlex.getValue() and _SATval != nil and _SATval > fmgc.FMGCNodes.flexTemp.getValue() and !warningNodes.Logic.thrLeversNotSet.getValue()) {
+		satAbvFlexTemp.active = 1;
+		
+		if (satAbvFlexTempCheck.clearFlag == 0) {
+			satAbvFlexTempCheck.active = 1;
+		} else {
+			ECAM_controller.warningReset(satAbvFlexTempCheck);
+		}
+	} else {
+		ECAM_controller.warningReset(satAbvFlexTemp);
+		ECAM_controller.warningReset(satAbvFlexTempCheck);
 	}
 	
 	# DC EMER CONFIG
