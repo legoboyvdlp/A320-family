@@ -2422,6 +2422,56 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/eng/eng-shutdown-phase">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 1
+				/ECAM/warning-phase eq 2
+				/ECAM/warning-phase eq 9
+				/ECAM/warning-phase eq 10
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-shutdown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/dual-failure-enabled eq 0
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/eng-shutdown-phase eq 1
+							/ECAM/timer/ground-calc eq 0
+						</test>
+						/controls/engines/engine[0]/fire-btn eq 1
+					</test>
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-shutdown-phase eq 0
+						/controls/engines/engine[0]/cutoff-switch eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-shutdown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/dual-failure-enabled eq 0
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/eng-shutdown-phase eq 1
+							/ECAM/timer/ground-calc eq 0
+						</test>
+						/controls/engines/engine[1]/fire-btn eq 1
+					</test>
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-shutdown-phase eq 0
+						/controls/engines/engine[1]/cutoff-switch eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Config" execrate="16">

@@ -20,13 +20,13 @@ var Transponder = {
 	activeADIRS: 1,
 	condition: 0,
 	failed: 0,
-	codeDigitsNodes: [props.globals.getNode("instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[3]", 1)],
-	serviceableNode: props.globals.getNode("instrumentation/transponder/serviceable", 1),
-	knobNode: props.globals.getNode("instrumentation/transponder/inputs/knob-mode", 1),
-	identNode: props.globals.getNode("instrumentation/transponder/inputs/ident-btn", 1),
+	codeDigitsNodes: [props.globals.getNode("/instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[3]", 1)],
+	serviceableNode: props.globals.getNode("/instrumentation/transponder/serviceable", 1),
+	knobNode: props.globals.getNode("/instrumentation/transponder/inputs/knob-mode", 1),
+	identNode: props.globals.getNode("/instrumentation/transponder/inputs/ident-btn", 1),
 	ac1Node: props.globals.getNode("/systems/electrical/bus/ac-1", 1),
-	tcasNode: props.globals.getNode("instrumentation/tcas/inputs/mode"),
-	aglNode: props.globals.getNode("position/gear-agl-ft", 1),
+	tcasNode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
+	aglNode: props.globals.getNode("/position/gear-agl-ft", 1),
 	electricNode: props.globals.getNode("/systems/electrical/outputs/transponder", 1), # communicate to generic systems
 	new: func(elecSrc, ADIRS) {
 		var t = {parents:[Transponder]};

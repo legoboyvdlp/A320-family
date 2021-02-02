@@ -1292,6 +1292,111 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1FailRelight);
 	}
 	
+	if (warningNodes.Logic.eng1Shutdown.getValue() and eng1ShutDown.clearFlag == 0) {
+		eng1ShutDown.active = 1;
+		
+		if (phaseVar2 != 4 and phaseVar2 != 5 and systems.fireButtons[0].getValue() == 0 and (systems.PNEU.Valves.wingLeft.getValue() or systems.PNEU.Valves.wingRight.getValue())) {
+			if (eng1ShutDownPack.clearFlag == 0 and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue()) {
+				eng1ShutDownPack.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownPack);
+			}
+			
+			if (eng1ShutDownXBleed.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() == 0) {
+				eng1ShutDownXBleed.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownXBleed);
+			}
+		} else {
+			ECAM_controller.warningReset(eng1ShutDownPack);
+			ECAM_controller.warningReset(eng1ShutDownXBleed);
+		}
+		
+		if (FWC.Timer.gnd.getValue() == 0 or systems.fireButtons[0].getValue() == 0) {
+			if (eng1ShutDownModeSel.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 2) {
+				eng1ShutDownModeSel.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownModeSel);
+			}
+			
+			if (systems.FUEL.Switches.crossfeed.getValue() == 0) {
+				if (eng1ShutDownFuelLeak.clearFlag == 0) {
+					eng1ShutDownFuelLeak.active = 1;
+				} else {
+					ECAM_controller.warningReset(eng1ShutDownFuelLeak);
+				}
+				
+				if (eng1ShutDownImbalance.clearFlag == 0) {
+					eng1ShutDownImbalance.active = 1;
+				} else {
+					ECAM_controller.warningReset(eng1ShutDownImbalance);
+				}
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownFuelLeak);
+				ECAM_controller.warningReset(eng1ShutDownImbalance);
+			}
+		} else {
+			ECAM_controller.warningReset(eng1ShutDownModeSel);
+			ECAM_controller.warningReset(eng1ShutDownFuelLeak);
+			ECAM_controller.warningReset(eng1ShutDownImbalance);
+		}
+		
+		if (eng1ShutDownTCAS.clearFlag == 0 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 2) {
+			eng1ShutDownTCAS.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1ShutDownTCAS);
+		}
+		
+		if (0 == 1 and eng1ShutDownBuffet.clearFlag == 0) { # reverser unlocked
+			eng1ShutDownBuffet.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1ShutDownBuffet);
+		}
+		
+		if (0 == 1 and eng1ShutDownSpeed.clearFlag == 0) {
+			eng1ShutDownSpeed.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1ShutDownSpeed);
+		}
+		
+		if (systems.fireButtons[0].getValue() == 1) {
+			if (eng1ShutDownXBleedS.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() != 0) {
+				eng1ShutDownXBleedS.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownXBleedS);
+			}
+			
+			if (eng1ShutDownWingAI.clearFlag == 0 and (systems.PNEU.Valves.wingLeft.getValue() or systems.PNEU.Valves.wingRight.getValue())) {
+				eng1ShutDownWingAI.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownWingAI);
+			}
+			
+			if (eng1ShutDownIcing.clearFlag == 0) {
+				eng1ShutDownIcing.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng1ShutDownIcing);
+			}
+		} else {
+			ECAM_controller.warningReset(eng1ShutDownXBleedS);
+			ECAM_controller.warningReset(eng1ShutDownWingAI);
+			ECAM_controller.warningReset(eng1ShutDownIcing);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1ShutDown);
+		ECAM_controller.warningReset(eng1ShutDownPack);
+		ECAM_controller.warningReset(eng1ShutDownXBleed);
+		ECAM_controller.warningReset(eng1ShutDownModeSel);
+		ECAM_controller.warningReset(eng1ShutDownImbalance);
+		ECAM_controller.warningReset(eng1ShutDownTCAS);
+		ECAM_controller.warningReset(eng1ShutDownFuelLeak);
+		ECAM_controller.warningReset(eng1ShutDownBuffet);
+		ECAM_controller.warningReset(eng1ShutDownSpeed);
+		ECAM_controller.warningReset(eng1ShutDownXBleedS);
+		ECAM_controller.warningReset(eng1ShutDownWingAI);
+		ECAM_controller.warningReset(eng1ShutDownIcing);
+	}
+	
 	if (warningNodes.Logic.eng2Fail.getValue() and eng2Fail.clearFlag == 0) {
 		eng2Fail.active = 1;
 		
@@ -1392,6 +1497,117 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2FailAgent1Disch);
 		ECAM_controller.warningReset(eng2FailNoDamage);
 		ECAM_controller.warningReset(eng2FailRelight);
+	}
+	
+	if (warningNodes.Logic.eng2Shutdown.getValue() and eng2ShutDown.clearFlag == 0) {
+		eng2ShutDown.active = 1;
+		
+		if (phaseVar2 != 4 and phaseVar2 != 5 and systems.fireButtons[1].getValue() == 0 and (systems.PNEU.Valves.wingLeft.getValue() or systems.PNEU.Valves.wingRight.getValue())) {
+			if (eng2ShutDownPack1.clearFlag == 0 and systems.ELEC.EmerElec.getValue() and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue()) {
+				eng2ShutDownPack1.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownPack1);
+			}
+			
+			if (eng2ShutDownPack.clearFlag == 0 and !systems.ELEC.EmerElec.getValue() and systems.PNEU.Switch.pack1.getValue() and systems.PNEU.Switch.pack2.getValue()) {
+				eng2ShutDownPack.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownPack);
+			}
+			
+			if (eng2ShutDownXBleed.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() == 0) {
+				eng2ShutDownXBleed.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownXBleed);
+			}
+		} else {
+			ECAM_controller.warningReset(eng2ShutDownPack);
+			ECAM_controller.warningReset(eng2ShutDownXBleed);
+		}
+		
+		if (FWC.Timer.gnd.getValue() == 0 or systems.fireButtons[1].getValue() == 0) {
+			if (eng2ShutDownModeSel.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 2) {
+				eng2ShutDownModeSel.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownModeSel);
+			}
+			
+			if (systems.FUEL.Switches.crossfeed.getValue() == 0) {
+				if (eng2ShutDownFuelLeak.clearFlag == 0) {
+					eng2ShutDownFuelLeak.active = 1;
+				} else {
+					ECAM_controller.warningReset(eng2ShutDownFuelLeak);
+				}
+				
+				if (eng2ShutDownImbalance.clearFlag == 0) {
+					eng2ShutDownImbalance.active = 1;
+				} else {
+					ECAM_controller.warningReset(eng2ShutDownImbalance);
+				}
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownFuelLeak);
+				ECAM_controller.warningReset(eng2ShutDownImbalance);
+			}
+		} else {
+			ECAM_controller.warningReset(eng2ShutDownModeSel);
+			ECAM_controller.warningReset(eng2ShutDownFuelLeak);
+			ECAM_controller.warningReset(eng2ShutDownImbalance);
+		}
+		
+		if (eng2ShutDownTCAS.clearFlag == 0 and pts.Instrumentation.TCAS.Inputs.mode.getValue() != 2) {
+			eng2ShutDownTCAS.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2ShutDownTCAS);
+		}
+		
+		if (0 == 1 and eng2ShutDownBuffet.clearFlag == 0) { # reverser unlocked
+			eng2ShutDownBuffet.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2ShutDownBuffet);
+		}
+		
+		if (0 == 1 and eng2ShutDownSpeed.clearFlag == 0) {
+			eng2ShutDownSpeed.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2ShutDownSpeed);
+		}
+		
+		if (systems.fireButtons[1].getValue() == 1) {
+			if (eng2ShutDownXBleedS.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() != 0) {
+				eng2ShutDownXBleedS.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownXBleedS);
+			}
+			
+			if (eng2ShutDownWingAI.clearFlag == 0 and (systems.PNEU.Valves.wingLeft.getValue() or systems.PNEU.Valves.wingRight.getValue())) {
+				eng2ShutDownWingAI.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownWingAI);
+			}
+			
+			if (eng2ShutDownIcing.clearFlag == 0) {
+				eng2ShutDownIcing.active = 1;
+			} else {
+				ECAM_controller.warningReset(eng2ShutDownIcing);
+			}
+		} else {
+			ECAM_controller.warningReset(eng2ShutDownXBleedS);
+			ECAM_controller.warningReset(eng2ShutDownWingAI);
+			ECAM_controller.warningReset(eng2ShutDownIcing);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2ShutDown);
+		ECAM_controller.warningReset(eng2ShutDownPack);
+		ECAM_controller.warningReset(eng2ShutDownXBleed);
+		ECAM_controller.warningReset(eng2ShutDownModeSel);
+		ECAM_controller.warningReset(eng2ShutDownImbalance);
+		ECAM_controller.warningReset(eng2ShutDownTCAS);
+		ECAM_controller.warningReset(eng2ShutDownFuelLeak);
+		ECAM_controller.warningReset(eng2ShutDownBuffet);
+		ECAM_controller.warningReset(eng2ShutDownSpeed);
+		ECAM_controller.warningReset(eng2ShutDownXBleedS);
+		ECAM_controller.warningReset(eng2ShutDownWingAI);
+		ECAM_controller.warningReset(eng2ShutDownIcing);
 	}
 	
 	# DC EMER CONFIG
@@ -1875,7 +2091,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed1Fault.setValue(0);
 	}
 	
-	if (bleed1Fault.clearFlag == 0 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
+	if (bleed1Fault.clearFlag == 0 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 9) and warningNodes.Timers.bleed1FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and wing_pb.getValue()))) { # inverse pulse
 		bleed1Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed1Fault);
@@ -1912,7 +2128,7 @@ var messages_priority_2 = func {
 		warningNodes.Timers.bleed2Fault.setValue(0);
 	}
 	
-	if (bleed2Fault.clearFlag == 0 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and getprop("/controls/ice-protection/wing")))) { # inverse pulse
+	if (bleed2Fault.clearFlag == 0 and (phaseVar2 == 2 or phaseVar2 == 6 or phaseVar2 == 9) and warningNodes.Timers.bleed2FaultOutput.getValue() == 1 and (!systems.PNEU.Switch.pack1.getBoolValue() or !systems.PNEU.Switch.pack2.getBoolValue() or !(getprop("/ECAM/phases/wing-anti-ice-pulse") and wing_pb.getValue()))) { # inverse pulse
 		bleed2Fault.active = 1;
 	} else {
 		ECAM_controller.warningReset(bleed2Fault);
@@ -2430,7 +2646,7 @@ var messages_priority_2 = func {
 		} else {
 			ECAM_controller.warningReset(wingIceSysFaultXbld);
 		}
-		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and getprop("/controls/ice-protection/wing")) {
+		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and wing_pb.getValue()) {
 			wingIceSysFaultOff.active = 1;
 		} else {
 			ECAM_controller.warningReset(wingIceSysFaultOff);
@@ -2451,7 +2667,7 @@ var messages_priority_2 = func {
 	if (wingIceOpenGnd.clearFlag == 0 and warningNodes.Logic.waiGndFlight.getValue() and (phaseVar2 <= 2  or phaseVar2 >= 9)) {
 		wingIceOpenGnd.active = 1;
 		
-		if (pts.Gear.wow[1].getValue() and getprop("/controls/ice-protection/wing")) {
+		if (pts.Gear.wow[1].getValue() and wing_pb.getValue()) {
 			wingIceOpenGndShut.active = 1;
 		} else {
 			ECAM_controller.warningReset(wingIceOpenGndShut);
@@ -2998,7 +3214,7 @@ var messages_right_memo = func {
 		eng_aice.active = 0;
 	}
 	
-	if (getprop("/controls/ice-protection/wing") == 1) {
+	if (wing_pb.getValue() == 1) {
 		wing_aice.active = 1;
 	} else {
 		wing_aice.active = 0;
