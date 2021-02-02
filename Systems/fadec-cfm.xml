@@ -10,7 +10,7 @@
 		<name>OAT Thrust Scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -28,7 +28,7 @@
 		<name>FLX Thrust Scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -46,7 +46,7 @@
 		<name>IDLE Limit</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -80,12 +80,45 @@
 		<input>0</input>
 		<output>/controls/engines/idle-limit</output>
 	</filter>
-
+	
+	<filter>
+		<name>Engines At Idle Stage 1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<table>
+						<max>
+							<property>/engines/engine[0]/n1-actual</property>
+							<property>/engines/engine[1]/n1-actual</property>
+						</max>
+						<entry><ind> 18.9</ind><dep>0</dep></entry>
+						<entry><ind>103.8</ind><dep>1</dep></entry>
+					</table>
+					<value>0.005</value>
+				</difference>
+			</expression>
+		</input>
+		<output>/engines/highest-n1-buffer</output>
+	</filter>
+	
+	<logic>
+		<name>Engines At Idle Stage 2</name>
+		<input>
+			<less-than-equals>
+				<property>/engines/highest-n1-buffer</property>
+				<property>/controls/engines/idle-limit</property>
+			</less-than-equals>
+		</input>
+		<output>/engines/both-at-idle</output>
+	</logic>
+	
 	<filter>
 		<name>MAN One</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -107,7 +140,7 @@
 		<name>MAN Two</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -129,7 +162,7 @@
 		<name>MAN CMD One</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<product>
@@ -154,7 +187,7 @@
 		<name>MAN CMD Two</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<product>
@@ -179,7 +212,7 @@
 		<name>N1 CMD 1</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -220,7 +253,7 @@
 		<name>N1 CMD 2</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -1057,7 +1090,7 @@
 		<name>N1 Limit TOGA</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1077,7 +1110,7 @@
 		<name>N1 Limit MCT</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1097,7 +1130,7 @@
 		<name>N1 Limit FLX</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1117,7 +1150,7 @@
 		<name>N1 Limit CLB</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
