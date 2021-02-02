@@ -348,27 +348,6 @@
 			<rate_limit sense="incr">1.0</rate_limit> <!-- 1 second -->
 		</actuator>
 		
-		<actuator name="/ECAM/warnings/timer/gen-1-fault-set">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/gen-1-fault-set</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
-		</actuator>
-		
-		<actuator name="/ECAM/warnings/timer/gen-2-fault-set">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/gen-2-fault-set</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
-		</actuator>
-		
-		<actuator name="/ECAM/warnings/timer/apu-gen-fault-set">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/apu-gen-fault-set</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
-		</actuator>
-		
 		<actuator name="/ECAM/warnings/timer/apu-gen-fault-reset">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-gen-fault-reset</input>
@@ -1531,6 +1510,13 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/timer/gen-1-fault-set">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/gen-1-fault-set</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
+		</actuator>
+		
 		<switch name="/ECAM/warnings/logic/gen-1-fault-set-output">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1592,6 +1578,13 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/timer/gen-2-fault-set">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/gen-2-fault-set</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
+		</actuator>
+		
 		<switch name="/ECAM/warnings/logic/gen-2-fault-set-output">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1652,6 +1645,13 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/timer/apu-gen-fault-set">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/apu-gen-fault-set</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
 		<switch name="/ECAM/warnings/logic/apu-gen-fault-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -1693,6 +1693,93 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/logic/elec/gen-1-pb">
+			<input>/controls/electrical/switches/gen-1</input>
+			<rate_limit sense="decr">0.2</rate_limit> <!-- 5 seconds -->
+			<rate_limit sense="incr">120</rate_limit>
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-2-pb">
+			<input>/controls/electrical/switches/gen-2</input>
+			<rate_limit sense="decr">0.2</rate_limit> <!-- 5 seconds -->
+			<rate_limit sense="incr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-off-60-sec">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-off-60-sec-output">
+			<input>/ECAM/warnings/logic/elec/gen-off-60-sec</input>
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-1-off-60-sec-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 6
+				/engines/engine[0]/state eq 3
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-1-off-60-sec-2-output">
+			<input>/ECAM/warnings/logic/elec/gen-1-off-60-sec-2</input>
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-2-off-60-sec-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 6
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-2-off-60-sec-2-output">
+			<input>/ECAM/warnings/logic/elec/gen-2-off-60-sec-2</input>
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/elec/gen-1-pb eq 0
+				/ECAM/warnings/flipflop/gen-1-fault eq 0
+				/controls/electrical/switches/idg-1-disc eq 1
+				<test logic="OR">
+					/ECAM/warnings/logic/elec/gen-off-60-sec-output eq 1
+					/ECAM/warnings/logic/elec/gen-1-off-60-sec-2-output eq 1
+					<test logic="AND">
+						/ECAM/warning-phase eq 6
+						/ECAM/warnings/logic/gen-1-2-no-oper eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/elec/gen-2-pb eq 0
+				/ECAM/warnings/flipflop/gen-2-fault eq 0
+				/controls/electrical/switches/idg-2-disc eq 1
+				<test logic="OR">
+					/ECAM/warnings/logic/elec/gen-off-60-sec-output eq 1
+					/ECAM/warnings/logic/elec/gen-2-off-60-sec-2-output eq 1
+					<test logic="AND">
+						/ECAM/warning-phase eq 6
+						/ECAM/warnings/logic/gen-1-2-no-oper eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/SSLATEXT">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1707,6 +1794,22 @@
 			<test logic="AND" value="1">
 				fcs/flap-pos-rate eq 0
 				fcs/flap-pos-deg ge 2
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/gen-1-2-no-oper">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warnings/flipflop/gen-1-fault eq 1
+					/controls/electrical/switches/idg-1-disc eq 0
+					/ECAM/warnings/logic/elec/gen-1-off eq 1
+				</test>
+				<test logic="OR">
+					/ECAM/warnings/flipflop/gen-2-fault eq 1
+					/controls/electrical/switches/idg-2-disc eq 0
+					/ECAM/warnings/logic/elec/gen-2-off eq 1
+				</test>
 			</test>
 		</switch>
 		
@@ -2108,13 +2211,6 @@
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
 		</switch>
-		
-		<actuator name="/ECAM/phases/timer/eng1idle-output">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/phases/timer/eng1idle</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
-		</actuator>
 		
 		<switch name="/ECAM/warnings/logic/stall/stall-warn">
 			<default value="0"/>
@@ -3714,6 +3810,42 @@
 				/ECAM/warnings/altitude-alert/flipflop-or eq 1
 			</test>
 		</switch>
+		
+	</channel>
+	
+	<channel name="FUEL" execrate="16">
+	
+		<switch name="/ECAM/warnings/fuel/center-pumps-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fuel/switches/pump-center-1 eq 0
+				/controls/fuel/switches/pump-center-2 eq 0
+				/controls/fuel/switches/center-mode eq 1
+				/systems/fuel/quantity/center-low eq 0
+				/ECAM/warning-phase eq 6
+				<!-- TODO NOT DUAL CENTER PUMP FAULT -->
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fuel/center-pumps-off-output">
+			<input>/ECAM/warnings/fuel/center-pumps-off</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fuel/lo-level-l-r">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/quantity/left-wing-inner-low eq 1
+				/systems/fuel/quantity/right-wing-inner-low eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fuel/lo-level-l-r-output">
+			<input>/ECAM/warnings/fuel/lo-level-l-r</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 30 seconds -->
+		</actuator>
 		
 	</channel>
 	

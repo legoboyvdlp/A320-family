@@ -449,21 +449,28 @@ var warnings				  = std.Vector.new([
 	
 	# GEN 1 FAULT
 	var gen1fault             = warning.new(msg: "ELEC GEN 1 FAULT",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var gen1faultGen          = warning.new(msg: "-GEN 1......OFF THEN ON",   colour: "c"),
+	var gen1faultGen          = warning.new(msg: " -GEN 1......OFF THEN ON",  colour: "c"),
 	var gen1faultGen2         = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
-	var gen1faultGen3         = warning.new(msg: "-GEN 1..............OFF",   colour: "c"),
+	var gen1faultGen3         = warning.new(msg: " -GEN 1..............OFF",  colour: "c"),
+	
+	# ESS TR FAULT
+	var essTRFault            = warning.new(msg: "ELEC ESS TR FAULT      ",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
 	# GEN 2 FAULT
 	var gen2fault             = warning.new(msg: "ELEC GEN 2 FAULT",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var gen2faultGen          = warning.new(msg: "-GEN 2......OFF THEN ON",   colour: "c"),
+	var gen2faultGen          = warning.new(msg: " -GEN 2......OFF THEN ON",  colour: "c"),
 	var gen2faultGen2         = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
-	var gen2faultGen3         = warning.new(msg: "-GEN 2..............OFF",   colour: "c"),
+	var gen2faultGen3         = warning.new(msg: " -GEN 2..............OFF",  colour: "c"),
 	
 	# APU GEN FAULT
 	var apuGenfault           = warning.new(msg: "ELEC APU GEN FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var apuGenfaultGen        = warning.new(msg: "-APU GEN....OFF THEN ON",   colour: "c"),
+	var apuGenfaultGen        = warning.new(msg: " -APU GEN....OFF THEN ON",  colour: "c"),
 	var apuGenfaultGen2       = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
-	var apuGenfaultGen3       = warning.new(msg: "-APU GEN............OFF",   colour: "c"),
+	var apuGenfaultGen3       = warning.new(msg: " -APU GEN............OFF",  colour: "c"),
+	
+	# GEN OFF
+	var gen1Off               = warning.new(msg: "ELEC GEN 1 OFF    ",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var gen2Off               = warning.new(msg: "ELEC GEN 2 OFF    ",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
 	# APU GEN FAULT
 	var acEssBusAltn          = warning.new(msg: "ELEC AC ESS BUS ALTN",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -551,6 +558,24 @@ var warnings				  = std.Vector.new([
 	var fcuFault2             = warning.new(msg: "AUTO FLT FCU 2 FAULT",      colour: "a", isMainMsg: 1),
 	var fcuFault2Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
 	
+	# FUEL
+	var wingLoLvl             = warning.new(msg: "FUEL L+R WING TK LO LVL",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var wingLoLvlManMode      = warning.new(msg: " -FUEL MODE SEL......MAN",  colour: "c"),
+	var wingLoLvlPumpL1       = warning.new(msg: " -L TK PUMP 1.........ON",  colour: "c"),
+	var wingLoLvlPumpL2       = warning.new(msg: " -L TK PUMP 2.........ON",  colour: "c"),
+	var wingLoLvlPumpC1       = warning.new(msg: " -CTR TK PUMP 1.......ON",  colour: "c"),
+	var wingLoLvlPumpR1       = warning.new(msg: " -R TK PUMP 1.........ON",  colour: "c"),
+	var wingLoLvlPumpR2       = warning.new(msg: " -R TK PUMP 2.........ON",  colour: "c"),
+	var wingLoLvlPumpC2       = warning.new(msg: " -CTR TK PUMP 2.......ON",  colour: "c"),
+	var wingLoLvlLeak         = warning.new(msg: "   •IF NO FUEL LEAK:    ",  colour: "w"),
+	var wingLoLvlXFeed        = warning.new(msg: " -FUEL X FEED.........ON",  colour: "c"),
+	var wingLoLvlGrav         = warning.new(msg: "   •IF GRVTY FEED:      ",  colour: "w"),
+	var wingLoLvlXFeedOff     = warning.new(msg: " -FUEL X FEED........OFF",  colour: "c"),
+	
+	var ctrPumpsOff           = warning.new(msg: "FUEL CTR TK PUMPS OFF   ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var ctrPumpsOffPump1      = warning.new(msg: " -CTR TK PUMP 1.......ON",  colour: "c"),
+	var ctrPumpsOffPump2      = warning.new(msg: " -CTR TK PUMP 2.......ON",  colour: "c"),
+
 	# APU shutdown
 	var apuEmerShutdown       = warning.new(msg: "APU EMER SHUT DOWN",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var apuEmerShutdownMast   = warning.new(msg: " -MASTER SW..........OFF",  colour: "c"),
@@ -734,9 +759,11 @@ var leftmemos                 = std.Vector.new([
 	var strobe_lt_off         = warning.new(msg: "STROBE LT OFF"        ),
 	var outr_tk_fuel_xfrd     = warning.new(msg: "OUTR TK FUEL XFRD"    ),
 	var fob_3T                = warning.new(msg: "FOB BELOW 3T"         ),
+	var fob_66L               = warning.new(msg: "FOB BELOW 6600LBS"    ),
 	var gpws_flap_mode_off    = warning.new(msg: "GPWS FLAP MODE OFF"   ),
 	var atc_datalink_stby     = warning.new(msg: "ATC DATALINK STBY"    ), # Not yet implemented
 	var company_datalink_stby = warning.new(msg: "COMPANY DATALINK STBY"),  # Not yet implemented
+	var acars_stby            = warning.new(msg: "ACARS STBY"           ),  # Not yet implemented
 ]);
 
 # Right E/WD

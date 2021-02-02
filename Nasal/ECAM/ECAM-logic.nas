@@ -10,6 +10,7 @@ var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
 
+var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
@@ -1938,6 +1939,14 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(gen1faultGen3);
 	}
 	
+	# ESS TR FAULT
+	if (essTRFault.clearFlag == 0 and systems.ELEC.Fail.essTrFault.getValue() and (phaseVar2 == 6 or phaseVar2 >= 9 or phaseVar2 <= 2)) {
+		essTRFault.active = 1;
+	} else {
+		ECAM_controller.warningReset(essTRFault);
+	}
+	
+	# GEN 2 FAULT
 	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
 		gen2fault.active = 1;
 		if (!warningNodes.Flipflops.gen2FaultOnOff.getValue()) {
@@ -1980,6 +1989,19 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(apuGenfaultGen);
 		ECAM_controller.warningReset(apuGenfaultGen2);
 		ECAM_controller.warningReset(apuGenfaultGen3);
+	}
+	
+	# GEN OFF
+	if (gen1Off.clearFlag == 0 and warningNodes.Logic.gen1Off.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+		gen1Off.active = 1;
+	} else {
+		ECAM_controller.warningReset(gen1Off);
+	}
+	
+	if (gen2Off.clearFlag == 0 and warningNodes.Logic.gen2Off.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+		gen2Off.active = 1;
+	} else {
+		ECAM_controller.warningReset(gen2Off);
 	}
 	
 	# ELEC AC ESS BUS ALTN
@@ -2258,6 +2280,119 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(fcuFault2);
 		ECAM_controller.warningReset(fcuFault2Baro);
+	}
+	
+	# FUEL
+	if (wingLoLvl.clearFlag == 0 and warningNodes.Timers.lowLevelBoth.getValue() == 1 and (phaseVar2 <= 2 or phaseVar2 == 6 or phaseVar2 >= 9)) {
+		wingLoLvl.active = 1;
+		
+		if (wingLoLvlManMode.clearFlag == 0 and systems.FUEL.Switches.centerTkMode.getValue() == 0 and systems.FUEL.Quantity.center.getValue() >= 550) {
+			wingLoLvlManMode.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlManMode);
+		}
+		
+		if (wingLoLvlPumpL1.clearFlag == 0 and !systems.FUEL.Switches.pumpLeft1.getValue()) {
+			wingLoLvlPumpL1.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlPumpL1);
+		}
+		
+		if (wingLoLvlPumpL2.clearFlag == 0 and !systems.FUEL.Switches.pumpLeft2.getValue()) {
+			wingLoLvlPumpL2.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlPumpL2);
+		}
+		
+		if (wingLoLvlPumpC1.clearFlag == 0 and !systems.FUEL.Switches.pumpCenter1.getValue()) {
+			wingLoLvlPumpC1.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlPumpC1);
+		}
+		
+		if (wingLoLvlPumpR1.clearFlag == 0 and !systems.FUEL.Switches.pumpRight1.getValue()) {
+			wingLoLvlPumpR1.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlPumpR1);
+		}
+		
+		if (wingLoLvlPumpR2.clearFlag == 0 and !systems.FUEL.Switches.pumpRight2.getValue()) {
+			wingLoLvlPumpR2.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlPumpR2);
+		}
+		
+		if (wingLoLvlPumpC2.clearFlag == 0 and !systems.FUEL.Switches.pumpCenter2.getValue()) {
+			wingLoLvlPumpC2.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingLoLvlPumpC2);
+		}
+		
+		if (systems.FUEL.Switches.crossfeed.getValue() == 0) {
+			if (wingLoLvlLeak.clearFlag == 0) {
+				wingLoLvlLeak.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingLoLvlLeak);
+			}
+			
+			if (wingLoLvlXFeed.clearFlag == 0) {
+				wingLoLvlXFeed.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingLoLvlXFeed);
+			}
+		} else {
+			ECAM_controller.warningReset(wingLoLvlLeak);
+			ECAM_controller.warningReset(wingLoLvlXFeed);
+		}
+		
+		if (systems.FUEL.Switches.crossfeed.getValue() == 1) {
+			if (wingLoLvlGrav.clearFlag == 0) {
+				wingLoLvlGrav.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingLoLvlGrav);
+			}
+			
+			if (wingLoLvlXFeedOff.clearFlag == 0) {
+				wingLoLvlXFeedOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingLoLvlXFeedOff);
+			}
+		} else {
+			ECAM_controller.warningReset(wingLoLvlGrav);
+			ECAM_controller.warningReset(wingLoLvlXFeedOff);
+		}
+	} else {
+		ECAM_controller.warningReset(wingLoLvl);
+		ECAM_controller.warningReset(wingLoLvlManMode);
+		ECAM_controller.warningReset(wingLoLvlPumpL1);
+		ECAM_controller.warningReset(wingLoLvlPumpL2);
+		ECAM_controller.warningReset(wingLoLvlPumpC1);
+		ECAM_controller.warningReset(wingLoLvlPumpR1);
+		ECAM_controller.warningReset(wingLoLvlPumpR2);
+		ECAM_controller.warningReset(wingLoLvlPumpC2);
+		ECAM_controller.warningReset(wingLoLvlLeak);
+		ECAM_controller.warningReset(wingLoLvlXFeed);
+		ECAM_controller.warningReset(wingLoLvlGrav);
+		ECAM_controller.warningReset(wingLoLvlXFeedOff);
+	}
+	
+	if (ctrPumpsOff.clearFlag == 0 and warningNodes.Timers.centerPumpsOff.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 6)) {
+		ctrPumpsOff.active = 1;
+		
+		if (ctrPumpsOffPump1.clearFlag == 0 and !systems.FUEL.Switches.pumpCenter1.getValue()) {
+			ctrPumpsOffPump1.active = 1;
+		} else {
+			ECAM_controller.warningReset(ctrPumpsOffPump1);
+		}
+		if (ctrPumpsOffPump2.clearFlag == 0 and !systems.FUEL.Switches.pumpCenter2.getValue()) {
+			ctrPumpsOffPump2.active = 1;
+		} else {
+			ECAM_controller.warningReset(ctrPumpsOffPump2);
+		}
+	} else {
+		ECAM_controller.warningReset(ctrPumpsOff);
+		ECAM_controller.warningReset(ctrPumpsOffPump1);
+		ECAM_controller.warningReset(ctrPumpsOffPump2);
 	}
 	
 	# APU EMER SHUT DOWN
@@ -3234,10 +3369,17 @@ var messages_memo = func {
 		outr_tk_fuel_xfrd.active = 0;
 	}
 
-	if (pts.Consumables.Fuel.totalFuelLbs.getValue() < 6000 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # assuming US short ton 2000lb
-		fob_3T.active = 1;
+	if (pts.Consumables.Fuel.totalFuelLbs.getValue() < 6613 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # assuming US short ton 2000lb
+		if (acconfig_weight_kgs.getValue()) {
+			fob_3T.active = 1;
+			fob_66L.active = 0;
+		} else {
+			fob_3T.active = 0;
+			fob_66L.active = 1;
+		}
 	} else {
 		fob_3T.active = 0;
+		fob_66L.active = 0;
 	}
 	
 	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {

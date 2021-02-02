@@ -99,6 +99,8 @@ var warningNodes = {
 		eng1Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-shutdown"),
 		eng2Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-shutdown"),
 		acEssBusAltn: props.globals.initNode("/ECAM/warnings/logic/ac-ess-bus-altn-feed"),
+		gen1Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-1-off"),
+		gen2Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-2-off"),
 		spdBrkOut: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-still-out"),
 	},
 	Timers: {
@@ -146,6 +148,8 @@ var warningNodes = {
 		acEssFault: props.globals.initNode("/ECAM/warnings/logic/ac-ess-output"),
 		dcEssShed: props.globals.initNode("/ECAM/warnings/logic/dc-ess-shed-output"),
 		acEssShed: props.globals.initNode("/ECAM/warnings/logic/ac-ess-shed-output"),
+		centerPumpsOff: props.globals.initNode("/ECAM/warnings/fuel/center-pumps-off-output"),
+		lowLevelBoth: props.globals.initNode("/ECAM/warnings/fuel/lo-level-l-r-output"),
 	},
 	Flipflops: {
 		apuGenFault: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault"),
