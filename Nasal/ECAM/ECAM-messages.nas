@@ -345,12 +345,15 @@ var warnings				  = std.Vector.new([
 	# DC EMER CONFIG
 	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
+	var dcEmerconfigFuel      = warning.new(msg: " FUEL CONSUMPT INCRSD",     colour: "c"),
 	
 	# DC BUS 1 OR 2 FAULT
 	var dcBus12Fault          = warning.new(msg: "ELEC DC BUS 1+2 FAULT",     colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var dcBus12FaultBlower    = warning.new(msg: " -BLOWER............OVRD",  colour: "c"),
 	var dcBus12FaultExtract   = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
 	var dcBus12FaultBaroRef   = warning.new(msg: " -BARO REF.........CHECK",  colour: "c"),
+	var dcBus12FaultFuel      = warning.new(msg: " FUEL CONSUMPT INCRSD",     colour: "c"),
+	var dcBus12FaultPredict   = warning.new(msg: " FMS PRED UNRELIABLE",      colour: "c"),
 	var dcBus12FaultIcing     = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
 	var dcBus12FaultBrking    = warning.new(msg: " MAX BRK........1000 PSI",  colour: "c"),
 	
@@ -368,21 +371,30 @@ var warnings				  = std.Vector.new([
 	var DcEssBusFaultRadio    = warning.new(msg: " -VHF 2 OR 3.........USE",  colour: "c"),
 	var DcEssBusFaultRadio2   = warning.new(msg: " -AUDIO SWTG......SELECT",  colour: "c"),
 	var DcEssBusFaultBaro     = warning.new(msg: " -BARO REF.........CHECK",  colour: "c"),
-	var DcEssBusFaultGPWS     = warning.new(msg: " -GPWS...............OFF",  colour: "c"),
+	var DcEssBusFaultGear     = warning.new(msg: " -L/G.........GRVTY EXTN",  colour: "c"),
+	var DcEssBusFaultGPWS     = warning.new(msg: " -GPWS SYS...........OFF",  colour: "c"),
+	var DcEssBusFaultFuel     = warning.new(msg: " FUEL CONSUMPT INCRSD",     colour: "c"),
+	var DcEssBusFaultPredict  = warning.new(msg: " FMS PRED UNRELIABLE",      colour: "c"),
+	var DcEssBusFaultIcing    = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
 	
 	# AC BUS 2 FAULT
 	var AcBus2Fault           = warning.new(msg: "ELEC AC BUS 2 FAULT",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var AcBus2FaultExtract    = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
+	var AcBus2FaultAtc        = warning.new(msg: " -ATC..............SYS 1",  colour: "c"),
 	
 	# DC BUS 1 FAULT
 	var dcBus1Fault           = warning.new(msg: "ELEC DC BUS 1 FAULT",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var dcBus1FaultBlower     = warning.new(msg: " -BLOWER............OVRD",  colour: "c"),
 	var dcBus1FaultExtract    = warning.new(msg: " -EXTRACT...........OVRD",  colour: "c"),
+	var dcBus1FaultIcing      = warning.new(msg: " AVOID ICING CONDITIONS",   colour: "c"),
 	
 	# DC BUS 2 FAULT
 	var dcBus2Fault           = warning.new(msg: "ELEC DC BUS 2 FAULT",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var dcBus2FaultAirData    = warning.new(msg: " -AIR DATA SWTG......F/O",  colour: "c"),
 	var dcBus2FaultBaro       = warning.new(msg: " -BARO REF.........CHECK",  colour: "c"),
+	var dcBus2FaultGear       = warning.new(msg: " -L/G.........GRVTY EXTN",  colour: "c"),
+	var dcBus2FaultFuel       = warning.new(msg: " FUEL CONSUMPT INCRSD",     colour: "c"),
+	var dcBus2FaultPredict    = warning.new(msg: " FMS PRED UNRELIABLE",      colour: "c"),
 	
 	# DC BAT BUS FAULT
 	var dcBusBatFault         = warning.new(msg: "ELEC DC BAT BUS FAULT",     colour: "a", aural: 1, light: 1, isMainMsg: 1),

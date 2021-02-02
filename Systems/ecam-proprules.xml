@@ -81,6 +81,17 @@
 	<flipflop>
 		<type>monostable</type>
 		<time>
+			<value>10.0</value>
+		</time>
+		<S>
+			<not><property>/systems/electrical/some-electric-thingie/emer-elec-config</property></not>
+		</S>
+		<output>/systems/electrical/some-electric-thingie/emer-elec-config-10-sec</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
 			<value>20.0</value>
 		</time>
 		<S>

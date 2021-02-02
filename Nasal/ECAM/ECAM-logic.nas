@@ -1628,113 +1628,284 @@ var messages_priority_2 = func {
 	}
 	
 	# DC EMER CONFIG
-	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.dcEss.getValue() < 25 and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcEmerconfig.clearFlag == 0) {
+	if (warningNodes.Timers.dcEmerConfig.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and dcEmerconfig.clearFlag == 0) {
 		dcEmerconfig.active = 1;
-		dcEmerconfigManOn.active = 1;
+		if (systems.ELEC.Source.EmerGen.relayPos.getValue() == 0 and dcEmerconfigManOn.clearFlag == 0) {
+			dcEmerconfigManOn.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcEmerconfigManOn);
+		}
+		
+		if ((warningNodes.Logic.dcEssFuelConsumptionIncreased.getValue() or warningNodes.Logic.dc2FuelConsumptionIncreased.getValue()) and dcEmerconfigFuel.clearFlag == 0) {
+			dcEmerconfigFuel.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcEmerconfigFuel);
+		}
 	} else {
 		ECAM_controller.warningReset(dcEmerconfig);
 		ECAM_controller.warningReset(dcEmerconfigManOn);
+		ECAM_controller.warningReset(dcEmerconfigFuel);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and !dcEmerconfig.active and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus12Fault.clearFlag == 0) {
+	if (warningNodes.Timers.dc12Fault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus12Fault.clearFlag == 0) {
 		dcBus12Fault.active = 1;
-		dcBus12FaultBlower.active = 1;
-		dcBus12FaultExtract.active = 1;
-		dcBus12FaultBaroRef.active = 1;
-		dcBus12FaultIcing.active = 1;
-		dcBus12FaultBrking.active = 1;
+		
+		if (dcBus12FaultBlower.clearFlag == 0) {
+			dcBus12FaultBlower.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultBlower);
+		}
+		
+		if (dcBus12FaultExtract.clearFlag == 0) {
+			dcBus12FaultExtract.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultExtract);
+		}
+		
+		if (dcBus12FaultBaroRef.clearFlag == 0) {
+			dcBus12FaultBaroRef.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultBaroRef);
+		}
+		
+		if (dcBus12FaultFuel.clearFlag == 0 and warningNodes.Logic.dc2FuelConsumptionIncreased.getValue()) {
+			dcBus12FaultFuel.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultFuel);
+		}
+		
+		if (dcBus12FaultPredict.clearFlag == 0 and warningNodes.Logic.dc2FMSPredictions.getValue()) {
+			dcBus12FaultPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultPredict);
+		}
+		
+		if (dcBus12FaultIcing.clearFlag == 0) {
+			dcBus12FaultIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultIcing);
+		}
+		
+		if (dcBus12FaultBrking.clearFlag == 0) {
+			dcBus12FaultBrking.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus12FaultBrking);
+		}
 	} else {
 		ECAM_controller.warningReset(dcBus12Fault);
 		ECAM_controller.warningReset(dcBus12FaultBlower);
 		ECAM_controller.warningReset(dcBus12FaultExtract);
 		ECAM_controller.warningReset(dcBus12FaultBaroRef);
+		ECAM_controller.warningReset(dcBus12FaultFuel);
+		ECAM_controller.warningReset(dcBus12FaultPredict);
 		ECAM_controller.warningReset(dcBus12FaultIcing);
 		ECAM_controller.warningReset(dcBus12FaultBrking);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.acEss.getValue() < 110 and phaseVar2 != 4 and phaseVar2 != 8 and AcBusEssFault.clearFlag == 0) {
+	if (warningNodes.Timers.acEssFault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and AcBusEssFault.clearFlag == 0) {
 		AcBusEssFault.active = 1;
-		if (!systems.ELEC.Switch.acEssFeed.getBoolValue()) {
+		if (!systems.ELEC.Switch.acEssFeed.getBoolValue() and AcBusEssFaultFeed.clearFlag == 0) {
 			AcBusEssFaultFeed.active = 1;
 		} else {
 			ECAM_controller.warningReset(AcBusEssFaultFeed);
 		}
-		AcBusEssFaultAtc.active = 1;
+		
+		if (atc.transponderPanel.atcSel != 2 and AcBusEssFaultAtc.clearFlag == 0) {
+			AcBusEssFaultAtc.active = 1;
+		} else {
+			ECAM_controller.warningReset(AcBusEssFaultAtc);
+		}
 	} else {
 		ECAM_controller.warningReset(AcBusEssFault);
 		ECAM_controller.warningReset(AcBusEssFaultFeed);
 		ECAM_controller.warningReset(AcBusEssFaultAtc);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.ac1.getValue() < 110 and phaseVar2 != 4 and phaseVar2 != 8 and AcBus1Fault.clearFlag == 0) {
+	if (warningNodes.Timers.ac1Fault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and AcBus1Fault.clearFlag == 0) {
 		AcBus1Fault.active = 1;
-		AcBus1FaultBlower.active = 1;
+		
+		if (AcBus1FaultBlower.clearFlag == 0) {
+			AcBus1FaultBlower.active = 1;
+		} else {
+			ECAM_controller.warningReset(AcBus1FaultBlower);
+		}
 	} else {
 		ECAM_controller.warningReset(AcBus1Fault);
 		ECAM_controller.warningReset(AcBus1FaultBlower);
 	}
 	
-	if (!dcEmerconfig.active and systems.ELEC.Bus.dcEss.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 8 and DcEssBusFault.clearFlag == 0) {
+	if (warningNodes.Timers.dcEssFault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and DcEssBusFault.clearFlag == 0) {
 		DcEssBusFault.active = 1;
-		DcEssBusFaultRadio.active = 1;
-		DcEssBusFaultRadio2.active = 1;
-		DcEssBusFaultBaro.active = 1;
-		DcEssBusFaultGPWS.active = 1;
+		if (DcEssBusFaultRadio.clearFlag == 0) {
+			DcEssBusFaultRadio.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultRadio);
+		}
+		if (DcEssBusFaultRadio2.clearFlag == 0) {
+			DcEssBusFaultRadio2.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultRadio2);
+		}
+		
+		if (DcEssBusFaultBaro.clearFlag == 0) {
+			DcEssBusFaultBaro.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultBaro);
+		}
+		
+		if (0 == 1 and systems.ELEC.Bus.dc2.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() < 25 and DcEssBusFaultGear.clearFlag == 0) { # LGCIU12 FAULT
+			DcEssBusFaultGear.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultGear);
+		}
+		
+		if (DcEssBusFaultGPWS.clearFlag == 0) {
+			DcEssBusFaultGPWS.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultGPWS);
+		}
+		
+		if (DcEssBusFaultFuel.clearFlag == 0 and warningNodes.Logic.dcEssFuelConsumptionIncreased.getValue()) {
+			DcEssBusFaultFuel.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultFuel);
+		}
+		
+		if (DcEssBusFaultPredict.clearFlag == 0 and warningNodes.Logic.dcEssFMSPredictions.getValue()) {
+			DcEssBusFaultPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultPredict);
+		}
+		
+		if (DcEssBusFaultIcing.clearFlag == 0) {
+			DcEssBusFaultIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(DcEssBusFaultIcing);
+		}
 	} else {
 		ECAM_controller.warningReset(DcEssBusFault);
 		ECAM_controller.warningReset(DcEssBusFaultRadio);
 		ECAM_controller.warningReset(DcEssBusFaultRadio2);
 		ECAM_controller.warningReset(DcEssBusFaultBaro);
+		ECAM_controller.warningReset(DcEssBusFaultGear);
 		ECAM_controller.warningReset(DcEssBusFaultGPWS);
+		ECAM_controller.warningReset(DcEssBusFaultFuel);
+		ECAM_controller.warningReset(DcEssBusFaultPredict);
+		ECAM_controller.warningReset(DcEssBusFaultIcing);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.ac2.getValue() < 110 and phaseVar2 != 4 and phaseVar2 != 8 and AcBus2Fault.clearFlag == 0) {
+	if (warningNodes.Timers.ac2Fault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and AcBus2Fault.clearFlag == 0) {
 		AcBus2Fault.active = 1;
-		AcBus2FaultExtract.active = 1;
+		if (AcBus2FaultExtract.clearFlag == 0) {
+			AcBus2FaultExtract.active = 1;
+		} else {
+			ECAM_controller.warningReset(AcBus2FaultExtract);
+		}
+		
+		if (atc.transponderPanel.atcSel != 1 and AcBus2FaultAtc.clearFlag == 0) {
+			AcBus2FaultAtc.active = 1;
+		} else {
+			ECAM_controller.warningReset(AcBus2FaultAtc);
+		}
 	} else {
 		ECAM_controller.warningReset(AcBus2Fault);
 		ECAM_controller.warningReset(AcBus2FaultExtract);
+		ECAM_controller.warningReset(AcBus2FaultAtc);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.dc1.getValue() < 25 and systems.ELEC.Bus.dc2.getValue() >= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus1Fault.clearFlag == 0) {
+	if (warningNodes.Timers.dc1Fault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus1Fault.clearFlag == 0) {
 		dcBus1Fault.active = 1;
-		dcBus1FaultBlower.active = 1;
-		dcBus1FaultExtract.active = 1;
+		
+		if (dcBus1FaultBlower.clearFlag == 0) {
+			dcBus1FaultBlower.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus1FaultBlower);
+		}
+		if (dcBus1FaultExtract.clearFlag == 0) {
+			dcBus1FaultExtract.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus1FaultExtract);
+		}
+		if (dcBus1FaultIcing.clearFlag == 0) {
+			dcBus1FaultIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus1FaultIcing);
+		}
 	} else {
 		ECAM_controller.warningReset(dcBus1Fault);
 		ECAM_controller.warningReset(dcBus1FaultBlower);
 		ECAM_controller.warningReset(dcBus1FaultExtract);
+		ECAM_controller.warningReset(dcBus1FaultIcing);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and systems.ELEC.Bus.dc1.getValue() >= 25 and systems.ELEC.Bus.dc2.getValue() <= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus2Fault.clearFlag == 0) {
+	if (warningNodes.Timers.dc2Fault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and dcBus2Fault.clearFlag == 0) {
 		dcBus2Fault.active = 1;
-		dcBus2FaultAirData.active = 1;
-		dcBus2FaultBaro.active = 1;
+		
+		if (dcBus2FaultAirData.clearFlag == 0 and systems.SwitchingPanel.Switches.airData.getValue() != 1) {
+			dcBus2FaultAirData.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus2FaultAirData);
+		}
+		
+		if (dcBus2FaultBaro.clearFlag == 0) {
+			dcBus2FaultBaro.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus2FaultBaro);
+		}
+		
+		if (0 == 1 and systems.ELEC.Bus.dc2.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() < 25 and dcBus2FaultGear.clearFlag == 0) { # LGCIU12 FAULT
+			dcBus2FaultGear.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus2FaultGear);
+		}
+		
+		if (dcBus2FaultFuel.clearFlag == 0 and warningNodes.Logic.dc2FuelConsumptionIncreased.getValue()) {
+			dcBus2FaultFuel.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus2FaultFuel);
+		}
+		
+		if (dcBus2FaultPredict.clearFlag == 0 and warningNodes.Logic.dc2FMSPredictions.getValue()) {
+			dcBus2FaultPredict.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBus2FaultPredict);
+		}
 	} else {
 		ECAM_controller.warningReset(dcBus2Fault);
 		ECAM_controller.warningReset(dcBus2FaultAirData);
 		ECAM_controller.warningReset(dcBus2FaultBaro);
+		ECAM_controller.warningReset(dcBus2FaultGear);
+		ECAM_controller.warningReset(dcBus2FaultFuel);
+		ECAM_controller.warningReset(dcBus2FaultPredict);
 	}
 	
-	if (!systems.ELEC.EmerElec.getValue() and !dcEmerconfig.active and systems.ELEC.Bus.dcBat.getValue() < 25 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and dcBusBatFault.clearFlag == 0) {
+	if (warningNodes.Timers.dcBatFault.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8 and dcBusBatFault.clearFlag == 0) {
 		dcBusBatFault.active = 1;
 	} else {
 		ECAM_controller.warningReset(dcBusBatFault);
 	}
 	
-	if (!(systems.ELEC.EmerElec.getValue() and !systems.ELEC.Source.EmerGen.relayPos.getValue()) and systems.ELEC.Bus.dcEssShed.getValue() < 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and phaseVar2 != 4 and phaseVar2 != 8 and dcBusEssShed.clearFlag == 0) {
+	if (warningNodes.Timers.dcEssShed.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and dcBusEssShed.clearFlag == 0) {
 		dcBusEssShed.active = 1;
-		dcBusEssShedExtract.active = 1;
-		dcBusEssShedIcing.active = 1;
+		if (dcBusEssShedExtract.clearFlag == 0) {
+			dcBusEssShedExtract.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBusEssShedExtract);
+		}
+		if (dcBusEssShedIcing.clearFlag == 0) {
+			dcBusEssShedIcing.active = 1;
+		} else {
+			ECAM_controller.warningReset(dcBusEssShedIcing);
+		}
 	} else {
 		ECAM_controller.warningReset(dcBusEssShed);
 		ECAM_controller.warningReset(dcBusEssShedExtract);
 		ECAM_controller.warningReset(dcBusEssShedIcing);
 	}
 	
-	if (!(systems.ELEC.EmerElec.getValue() and !systems.ELEC.Source.EmerGen.relayPos.getValue()) and systems.ELEC.Bus.acEssShed.getValue() < 110 and systems.ELEC.Bus.acEss.getValue() >= 110 and phaseVar2 != 4 and phaseVar2 != 8 and acBusEssShed.clearFlag == 0) {
+	if (warningNodes.Timers.acEssShed.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 8 and acBusEssShed.clearFlag == 0) {
 		acBusEssShed.active = 1;
-		if (!systems.ELEC.EmerElec.getValue()) {
+		if (!systems.ELEC.EmerElec.getValue() and atc.transponderPanel.atcSel != 2 and acBusEssShedAtc.clearFlag == 0) {
 			acBusEssShedAtc.active = 1;
 		} else {
 			ECAM_controller.warningReset(acBusEssShed);
