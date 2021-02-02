@@ -342,6 +342,39 @@ var warnings				  = std.Vector.new([
 	var satAbvFlexTemp        = warning.new(msg: "ENG SAT ABOVE FLEX TEMP",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var satAbvFlexTempCheck   = warning.new(msg: " -T.O DATA.........CHECK",  colour: "c"),
 	
+	# B RSVR LO LVL
+	var hydBSysLoLvl           = warning.new(msg: "HYD B RSVR LO LVL        ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hydBSysLoLvlPump       = warning.new(msg: " -BLUE ELEC PUMP.....OFF ", colour: "c"),
+	
+	# G RSVR LO LVL
+	var hydGSysLoLvl           = warning.new(msg: "HYD G RSVR LO LVL        ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hydGSysLoLvlPtu        = warning.new(msg: " -PTU................OFF ", colour: "c"),
+	var hydGSysLoLvlPump       = warning.new(msg: " -GREEN ENG 1 PUMP...OFF ", colour: "c"),
+	
+	# Y RSVR LO LVL
+	var hydYSysLoLvl           = warning.new(msg: "HYD Y RSVR LO LVL        ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hydYSysLoLvlPtu        = warning.new(msg: " -PTU................OFF ", colour: "c"),
+	var hydYSysLoLvlPump       = warning.new(msg: " -YELLOW ENG 2 PUMP..OFF ", colour: "c"),
+	var hydYSysLoLvlElec       = warning.new(msg: " -YELLOW ELEC PUMP...OFF ", colour: "c"),
+	
+	# B SYS LO PR
+	var hydBSysLoPr           = warning.new(msg: "HYD B SYS LO PR          ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hydBSysLoPrFuel       = warning.new(msg: " FUEL CONSUMPT INCRSD    ", colour: "c"),
+	var hydBSysLoPrFmsPred    = warning.new(msg: " FMS PRED UNRELIABLE     ", colour: "c"),
+	
+	# G SYS LO PR
+	var hydGSysLoPr           = warning.new(msg: "HYD G SYS LO PR          ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hydGSysLoPrFuel       = warning.new(msg: " FUEL CONSUMPT INCRSD    ", colour: "c"),
+	var hydGSysLoPrFmsPred    = warning.new(msg: " FMS PRED UNRELIABLE     ", colour: "c"),
+	var hydGSysLoPrEngPump    = warning.new(msg: "   G ENG 1 PUMP LO PR    ", colour: "a"),
+	
+	# Y SYS LO PR
+	var hydYSysLoPr           = warning.new(msg: "HYD Y SYS LO PR          ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var hydYSysLoPrAccu       = warning.new(msg: " BRK Y ACCU PR MONITOR   ", colour: "c"),
+	var hydYSysLoPrFuel       = warning.new(msg: " FUEL CONSUMPT INCRSD    ", colour: "c"),
+	var hydYSysLoPrFmsPred    = warning.new(msg: " FMS PRED UNRELIABLE     ", colour: "c"),
+	var hydYSysLoPrEngPump    = warning.new(msg: "   Y ENG 2 PUMP LO PR    ", colour: "a"),
+	
 	# DC EMER CONFIG
 	var dcEmerconfig          = warning.new(msg: "ELEC DC EMER CONFIG",       colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var dcEmerconfigManOn     = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
@@ -408,6 +441,12 @@ var warnings				  = std.Vector.new([
 	var acBusEssShed          = warning.new(msg: "ELEC AC ESS BUS SHED",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var acBusEssShedAtc       = warning.new(msg: " -ATC..............SYS 2",  colour: "c"),
 	
+	# IDG 1 DISCONNECTED
+	var idg1Disc              = warning.new(msg: "ELEC IDG 1 DISCONNECTED",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	
+	# IDG 2 DISCONNECTED
+	var idg2Disc              = warning.new(msg: "ELEC IDG 2 DISCONNECTED",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	
 	# GEN 1 FAULT
 	var gen1fault             = warning.new(msg: "ELEC GEN 1 FAULT",          colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var gen1faultGen          = warning.new(msg: "-GEN 1......OFF THEN ON",   colour: "c"),
@@ -426,6 +465,9 @@ var warnings				  = std.Vector.new([
 	var apuGenfaultGen2       = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
 	var apuGenfaultGen3       = warning.new(msg: "-APU GEN............OFF",   colour: "c"),
 	
+	# APU GEN FAULT
+	var acEssBusAltn          = warning.new(msg: "ELEC AC ESS BUS ALTN",      colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	
 	# L ELEV FAULT
 	var lElevFault            = warning.new(msg: "F/CTL L ELEV FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var lElevFaultCare        = warning.new(msg: " MANEUVER WITH CARE",       colour: "c"),
@@ -435,6 +477,9 @@ var warnings				  = std.Vector.new([
 	var rElevFault            = warning.new(msg: "F/CTL R ELEV FAULT",        colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var rElevFaultCare        = warning.new(msg: " MANEUVER WITH CARE",       colour: "c"),
 	var rElevFaultPitch       = warning.new(msg: " FOR GA:MAX PITCH 15 DEG",  colour: "c"),
+	
+	# F/CTL SPD BRK STILL OUT
+	var fctlSpdBrkStillOut    = warning.new(msg: "F/CTL SPD BRK STILL OUT ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
 	# DIRECT LAW
 	var directLaw             = warning.new(msg: "F/CTL DIRECT LAW",          colour: "a", aural: 1, light: 1, isMainMsg: 1),

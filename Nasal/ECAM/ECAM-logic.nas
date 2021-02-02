@@ -1915,6 +1915,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(acBusEssShedAtc);
 	}
 	
+	# GEN 1 FAULT
 	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
 		gen1fault.active = 1;
 		if (!warningNodes.Flipflops.gen1FaultOnOff.getValue()) {
@@ -1981,6 +1982,14 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(apuGenfaultGen3);
 	}
 	
+	# ELEC AC ESS BUS ALTN
+	if (acEssBusAltn.clearFlag == 0 and warningNodes.Logic.acEssBusAltn.getValue() and (phaseVar2 >= 9 or phaseVar2 <= 2)) {
+		acEssBusAltn.active = 1;
+	} else {
+		ECAM_controller.warningReset(acEssBusAltn);
+	}
+	
+	# L ELEV FAULT
 	if (lElevFault.clearFlag == 0 and warningNodes.Timers.leftElevFail.getValue() and phaseVar2 != 4 and phaseVar2 != 5) {
 		lElevFault.active = 1;
 		if (lElevFaultCare.clearFlag == 0) {
@@ -2015,6 +2024,12 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(rElevFault);
 		ECAM_controller.warningReset(rElevFaultCare);
 		ECAM_controller.warningReset(rElevFaultPitch);
+	}
+	
+	if (fctlSpdBrkStillOut.clearFlag == 0 and warningNodes.Logic.spdBrkOut.getValue() and (phaseVar2 == 6 or phaseVar2 == 7)) {
+		fctlSpdBrkStillOut.active = 1;
+	} else {
+		ECAM_controller.warningReset(fctlSpdBrkStillOut);
 	}
 	
 	if (directLaw.clearFlag == 0 and warningNodes.Timers.directLaw.getValue() and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {

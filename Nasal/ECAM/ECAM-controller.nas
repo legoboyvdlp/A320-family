@@ -98,6 +98,8 @@ var warningNodes = {
 		phase5Trans: props.globals.initNode("/ECAM/warnings/logic/eng/phase-5-output"),
 		eng1Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-shutdown"),
 		eng2Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-shutdown"),
+		acEssBusAltn: props.globals.initNode("/ECAM/warnings/logic/ac-ess-bus-altn-feed"),
+		spdBrkOut: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-still-out"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),

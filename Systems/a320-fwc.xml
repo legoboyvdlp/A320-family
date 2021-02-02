@@ -2025,6 +2025,31 @@
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
 		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-ess-bus-altn-feed-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/controls/electrical/switches/ac-ess-feed eq 0
+				/systems/electrical/relay/ac-ess-feed-2/output ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/ac-ess-bus-altn-feed-output">
+			<input>/ECAM/warnings/logic/ac-ess-bus-altn-feed-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">2</rate_limit> <!-- 0.5 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-ess-bus-altn-feed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+				/systems/electrical/bus/ac-ess ge 25
+				/ECAM/warnings/logic/ac-ess-bus-altn-feed-output eq 1
+			</test>
+		</switch>
+		
 	</channel>
 
 	<channel name="STALL" execrate="16">
@@ -3163,6 +3188,84 @@
 			<test logic="OR" value="1">
 				/ECAM/warning-phase eq 5
 				/controls/gear/brake-parking eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-50-seconds-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-50-seconds">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-50-seconds-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.02</rate_limit> <!-- 50 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-10-seconds-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
+				/engines/both-at-idle eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-10-seconds">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-10-seconds-input</input>
+			<rate_limit sense="incr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-1-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
+				/ECAM/warnings/fctl/spd-brk-still-out-10-seconds eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-1">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-1-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 30 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-2-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 7
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-2">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-2-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		<!-- TCAS ON AP
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-3-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>-->
+		
+		<!--<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-3">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-3-input</input>
+			<rate_limit sense="decr">120</rate_limit>--> <!-- Instant -->
+			<!--<rate_limit sense="incr">0.2</rate_limit>--> <!-- 5 seconds -->
+		<!--</actuator>-->
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/fctl/spd-brk-still-out-1 eq 1
+				/ECAM/warnings/fctl/spd-brk-still-out-2 eq 1
+				<!--/ECAM/warnings/fctl/spd-brk-still-out-3 eq 1-->
 			</test>
 		</switch>
 		
