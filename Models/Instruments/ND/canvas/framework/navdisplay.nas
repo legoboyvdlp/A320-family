@@ -234,6 +234,17 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 		event_handler();
 	} # foreach layer
 
+	me.mapCamera = traffic.Camera.new({
+		range: 20,
+		screenRange: 436.8545,
+		screenCX: 512,
+		screenCY: 512,
+	});
+	me.trafficGroup = me.nd.createChild("group");
+	me.trafficLayer = traffic.TrafficLayer.new(me.mapCamera, me.trafficGroup);
+	me.trafficLayer.start();
+	me.trafficGroup.set("z-index", -1);
+	
 	#print("navdisplay.mfd:ND layer setup completed");
 
 	# TODO: move this to RTE.lcontroller ?
@@ -390,6 +401,13 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.map.setTranslation(512,565);
 		else
 			me.map.setTranslation(512,824);
+	}
+	me.mapCamera.repositon(geo.aircraft_position(), me.aircraft_source.get_hdg_tru());
+	me.pos = props.globals.getNode("position");
+	me.trafficLayer.setRefAlt(me.pos.getValue("altitude-ft"));
+	if (me.trafficGroup.getVisible()) {
+		me.trafficLayer.update();
+		me.trafficLayer.redraw();
 	}
 	var vor1_path = "/instrumentation/nav[2]";
 	var vor2_path = "/instrumentation/nav[3]";
