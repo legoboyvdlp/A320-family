@@ -1614,7 +1614,11 @@ var messages_priority_2 = func {
 	}
 	
 	# SAT ABOVE FLEX TEMP
-	_SATval = dmc.DMController.DMCs[1].outputs[4].getValue();
+	if (dmc.DMController.DMCs[1] != nil and dmc.DMController.DMCs[1].outputs[4] != nil) {
+		_SATval = dmc.DMController.DMCs[1].outputs[4].getValue() or nil;
+	} else {
+		_SATval = nil;
+	}
 	if (satAbvFlexTemp.clearFlag == 0 and phaseVar2 == 2 and fadec.Thrust.limFlex.getValue() and _SATval != nil and _SATval > fmgc.FMGCNodes.flexTemp.getValue() and !warningNodes.Logic.thrLeversNotSet.getValue()) {
 		satAbvFlexTemp.active = 1;
 		
