@@ -167,11 +167,11 @@ var TrafficLayer = {
 
     update: func() {
 
-        #var _tm = systime();
-        #if (me.lastupdatetime != 0) {
-        #    if (_tm<me.nxtupdatetime) return;            
-        #}
-        #me.nxtupdatetime = _tm + 0.25;
+        var _tm = systime();
+        if (me.nxtupdatetime != 0) {
+            if (_tm<me.nxtupdatetime) return;            
+        }
+        me.nxtupdatetime = _tm + 0.5; # testing refresh rate
 
         if (size(me.updateKeys) == 0) {
             me.updateKeys = keys(me.items);
@@ -233,15 +233,14 @@ var TrafficLayer = {
         }
         if (oldThreatLevel != item.data['threatLevel']) {
             item.data['threatLevelDirty'] = 1;
-        }
+        }        
 
         var _lat = item.data['lat'];
         var _lon = item.data['lon'];
         var alt = item.data['alt'];
         var vspeed = item.data['vspeed'];
         var tas = item.data['tas'];
-        var threatLevelDirty = item.data['threatLevelDirty'];
-
+        
         me.values[path] = nil;
 
         if (_lat != nil and _lon != nil and vspeed != nil) {
@@ -258,19 +257,19 @@ var TrafficLayer = {
                 return;
             }
 
-            var _val = {visible:1, lat:_lat, lon:_lon};
+            var _val = {visible:1, lat:_lat, lon:_lon, dirty:item.data['threatLevelDirty']};
 
             var spd = vspeed * 60;
             _val.arrowup = (spd > 500);
             _val.arrowdown = (spd < -500);
 
             if (math.abs(altDiff100) > 0.5) {
-                _val.text = sprintf("%+03d ", altDiff100);
+                _val.text = sprintf("%+03.0f ", altDiff100); # float to display -00
             } else {
                 _val.text = "";
             }
 
-            _val.textpy = (altDiff100 <= 0) ? 40 : -30;
+            _val.textpy = (altDiff100 < 0) ? 34 : -30;
 
             me.values[path] = _val;
             
@@ -280,13 +279,6 @@ var TrafficLayer = {
 
     redrawItem: func (item,val) {
         #debug.dump("REDRAW ", item.data);
-
-        #var lat = item.data['lat'];
-        #var lon = item.data['lon'];
-        #var alt = item.data['alt'];
-        #var vspeed = item.data['vspeed'];
-        #var tas = item.data['tas'];
-        #var threatLevelDirty = item.data['threatLevelDirty'];
 
         if (val != nil and val.visible == 1) {
 
@@ -298,7 +290,7 @@ var TrafficLayer = {
             var (x, y) = me.camera.project(coords);
             item.elems.master.setTranslation(x, y);
             #printf("%f %f", x, y);
-            if (item.data['threatLevelDirty']) {
+            if (val.dirty) {
                 #printf('%s THREAT LVL: %i', item.data['callsign'] or '???', item.data['threatLevel']);
                 var threatLevel = item.data['threatLevel'];
                 #debug.dump(item.data, threatLevel);
@@ -313,12 +305,12 @@ var TrafficLayer = {
                 item.elems.arrowDown.setColor(r, g, b);
                 item.elems.master.set('z-index', threatLevel + 2);
                 item.data['threatLevelDirty'] = 0;
+                val.dirty = 0;
             }
 
             item.elems.arrowUp.setVisible(val.arrowup);
             item.elems.arrowDown.setVisible(val.arrowdown);
-
-            #item.elems.text.setVisible(math.abs(altDiff100) > 0.5);
+            
             item.elems.text.setText(val.text);
             item.elems.text.setTranslation(0, val.textpy);
             item.elems.master.show();
