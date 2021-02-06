@@ -85,7 +85,7 @@ var TrafficLayer = {
             .setText(sprintf("0"))
             .setFont("LiberationFonts/LiberationSans-Regular.ttf")
             .setColor(1,1,1)
-            .setFontSize(20)
+            .setFontSize(32)
             .setAlignment("center-center");
         elems['master'].hide();
         elems['arrowUp'] = elems.master.createChild("text")
@@ -93,16 +93,16 @@ var TrafficLayer = {
             .setText(sprintf("↑"))
             .setFont("LiberationFonts/LiberationSans-Regular.ttf")
             .setColor(1,1,1)
-            .setFontSize(40)
-            .setTranslation(16, 0)
+            .setFontSize(50)
+            .setTranslation(16, 2)
             .setAlignment("left-center");
         elems['arrowDown'] = elems.master.createChild("text")
             .setDrawMode(canvas.Text.TEXT)
             .setText(sprintf("↓"))
             .setFont("LiberationFonts/LiberationSans-Regular.ttf")
             .setColor(1,1,1)
-            .setFontSize(40)
-            .setTranslation(16, 0)
+            .setFontSize(50)
+            .setTranslation(16, 2)
             .setAlignment("left-center");
             return elems;
     },
@@ -205,6 +205,7 @@ var TrafficLayer = {
         }
         if (item.prop['vspeed'] == nil) {
             item.prop['vspeed'] = item.prop.master.getNode('velocities/vertical-speed-fps');
+            item.prop['tas'] = item.prop.master.getNode('velocities/true-airspeed-kt');
         }
 
         # this item has a prop associated with it
@@ -212,7 +213,7 @@ var TrafficLayer = {
             item.elems = me.makeElems();
         }
         var oldThreatLevel = item.data['threatLevel'];
-        foreach (var k; ['lat', 'lon', 'alt', 'threatLevel', 'callsign', 'vspeed']) {
+        foreach (var k; ['lat', 'lon', 'alt', 'threatLevel', 'callsign', 'vspeed', 'tas']) {
             if (item.prop[k] != nil) {
                 item.data[k] = item.prop[k].getValue();
             }
@@ -228,8 +229,23 @@ var TrafficLayer = {
         var lon = item.data['lon'];
         var alt = item.data['alt'];
         var vspeed = item.data['vspeed'];
+        var tas = item.data['tas'];
         var threatLevelDirty = item.data['threatLevelDirty'];
+
         if (lat != nil and lon != nil and vspeed != nil) {
+
+            if (tas<80) { # flying airplane only
+                item.elems.master.hide();
+                return; 
+            }
+
+            var altDiff100 = ((item.data['alt'] or me.refAlt) - me.refAlt) / 100;
+
+            if (altDiff100 > 99 or altDiff100 < -99) { # check TCAS vertical range
+                item.elems.master.hide();
+                return;
+            }
+
             var coords = geo.Coord.new();
             coords.set_latlon(lat, lon);
             var (x, y) = me.camera.project(coords);
@@ -252,26 +268,25 @@ var TrafficLayer = {
                 item.data['threatLevelDirty'] = 0;
             }
 
-            item.elems.arrowUp.setVisible(vspeed * 60 > 500);
-            item.elems.arrowDown.setVisible(vspeed * 60 < -500);
+            var spd = vspeed * 60;
+            item.elems.arrowUp.setVisible(spd > 500);
+            item.elems.arrowDown.setVisible(spd < -500);
 
-            var altDiff100 = ((item.data['alt'] or me.refAlt) - me.refAlt) / 100;
             item.elems.text.setVisible(math.abs(altDiff100) > 0.5);
-            item.elems.text.setText(sprintf("%+02.0f", altDiff100));
-            if (altDiff100 < 0) {
-                item.elems.text.setTranslation(0, 30);
-                item.elems.arrowUp.setTranslation(16, 30);
-                item.elems.arrowDown.setTranslation(16, 30);
+            item.elems.text.setText(sprintf("%+02.0f ", altDiff100));
+            if (altDiff100 <= 0) {
+                item.elems.text.setTranslation(0, 40);
+                #item.elems.arrowUp.setTranslation(16, 30);
+                #item.elems.arrowDown.setTranslation(16, 30);
             }
             else {
                 item.elems.text.setTranslation(0, -30);
-                item.elems.arrowUp.setTranslation(16, -30);
-                item.elems.arrowDown.setTranslation(16, -30);
+                #item.elems.arrowUp.setTranslation(16, -30);
+                #item.elems.arrowDown.setTranslation(16, -30);
             }
-
             item.elems.master.show();
-        }
-        else {
+
+        } else {
             item.elems.master.hide();
         }
     },
