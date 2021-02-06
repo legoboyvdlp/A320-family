@@ -776,6 +776,8 @@
 		<atc>
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
+			<abv-blw type="int">0</abv-blw>
+			<thrt-all type="int">0</thrt-all>
 		</atc>
 		<apu>
 			<agent-btn type="bool">0</agent-btn>

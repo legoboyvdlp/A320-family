@@ -1,5 +1,7 @@
 # Traffic layer
-#
+
+var ATCSwitchAbvBlw = props.globals.getNode("/controls/atc/abv-blw");
+var ATCSwitchThrtAll = props.globals.getNode("/controls/atc/thrt-all");
 
 var colorByLevel = {
      # 0: other
@@ -218,13 +220,20 @@ var TrafficLayer = {
                 item.data[k] = item.prop[k].getValue();
             }
         }
-        if (oldThreatLevel != item.data['threatLevel']) {
+		var newThrtAll = ATCSwitchThrtAll.getValue();
+        if (oldThreatLevel != item.data['threatLevel'] or newThrtAll != item.data['thrtAllStore']) {
             item.data['threatLevelDirty'] = 1;
+			item.data['thrtAllStore'] = newThrtAll;
         }
     },
 
     redrawItem: func (item) {
         #debug.dump("REDRAW ", item.data);
+		if (item.data['thrtAllStore'] == 1) {
+                item.elems.master.hide();
+                return;
+		}
+		
         var lat = item.data['lat'];
         var lon = item.data['lon'];
         var alt = item.data['alt'];
@@ -240,8 +249,15 @@ var TrafficLayer = {
             }
 
             var altDiff100 = ((item.data['alt'] or me.refAlt) - me.refAlt) / 100;
-
-            if (altDiff100 > 99 or altDiff100 < -99) { # check TCAS vertical range
+			var top = 27;
+			var bottom = -27;
+			if (ATCSwitchAbvBlw.getValue() == -1) {
+				top = 99;
+			}
+			if (ATCSwitchAbvBlw.getValue() == 1) {
+				bottom = -99;
+			} 
+            if (altDiff100 > top or altDiff100 < bottom) { # check TCAS vertical range
                 item.elems.master.hide();
                 return;
             }
