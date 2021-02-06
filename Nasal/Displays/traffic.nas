@@ -67,6 +67,8 @@ var TrafficLayer = {
             refAlt: 0,
             group: group,
             items: {},
+            sorted: {},
+            values: {},
             updateKeys: [],
             addListener: nil,
             delListener: nil,
@@ -114,6 +116,7 @@ var TrafficLayer = {
             var path = changed.getValue();
             if (path == nil) return;
             #printf("ADD: %s", path);
+            me.values[path] = nil;
             var masterProp = props.globals.getNode(path);
             var prop = {
                 'master': masterProp,
@@ -128,12 +131,13 @@ var TrafficLayer = {
             else {
                 me.items[path].prop = prop;
                 me.items[path].data = {'threatLevel': -2};
-            }
+            }            
         }, 1, 1);
         me.delListener = setlistener('/ai/models/model-removed', func(changed, listen, mode, is_child) {
             var path = changed.getValue();
             if (path == nil) return;
             #printf("DEL: %s", path);
+            me.values[path] = nil;
             if (me.items[path] == nil) return;
             if (me.items[path] != nil) {
                 me.items[path].prop = nil;
@@ -158,7 +162,17 @@ var TrafficLayer = {
         }
     },
 
+
+    nxtupdatetime: 0,
+
     update: func() {
+
+        #var _tm = systime();
+        #if (me.lastupdatetime != 0) {
+        #    if (_tm<me.nxtupdatetime) return;            
+        #}
+        #me.nxtupdatetime = _tm + 0.25;
+
         if (size(me.updateKeys) == 0) {
             me.updateKeys = keys(me.items);
         }
@@ -170,7 +184,7 @@ var TrafficLayer = {
 
     redraw: func() {
         foreach (var path; keys(me.items)) {
-            me.redrawItem(me.items[path]);
+            me.redrawItem(me.items[path],me.values[path]);
         }
     },
 
@@ -178,7 +192,10 @@ var TrafficLayer = {
         me.refAlt = alt;
     },
 
+    proplist: ['lat', 'lon', 'alt', 'threatLevel', 'callsign', 'vspeed', 'tas'],
+
     updateItem: func(path) {
+
         var item = me.items[path];
         if (item == nil) return;
         if (item.prop == nil) {
@@ -190,11 +207,7 @@ var TrafficLayer = {
 
         if (item.prop['lat'] == nil) {
             item.prop['lat'] = item.prop.master.getNode('position/latitude-deg');
-        }
-        if (item.prop['lon'] == nil) {
             item.prop['lon'] = item.prop.master.getNode('position/longitude-deg');
-        }
-        if (item.prop['alt'] == nil) {
             item.prop['alt'] = item.prop.master.getNode('position/altitude-ft');
         }
         if (item.prop['threatLevel'] == nil) {
@@ -213,7 +226,7 @@ var TrafficLayer = {
             item.elems = me.makeElems();
         }
         var oldThreatLevel = item.data['threatLevel'];
-        foreach (var k; ['lat', 'lon', 'alt', 'threatLevel', 'callsign', 'vspeed', 'tas']) {
+        foreach (var k; me.proplist) {
             if (item.prop[k] != nil) {
                 item.data[k] = item.prop[k].getValue();
             }
@@ -221,37 +234,71 @@ var TrafficLayer = {
         if (oldThreatLevel != item.data['threatLevel']) {
             item.data['threatLevelDirty'] = 1;
         }
-    },
 
-    redrawItem: func (item) {
-        #debug.dump("REDRAW ", item.data);
-        var lat = item.data['lat'];
-        var lon = item.data['lon'];
+        var _lat = item.data['lat'];
+        var _lon = item.data['lon'];
         var alt = item.data['alt'];
         var vspeed = item.data['vspeed'];
         var tas = item.data['tas'];
         var threatLevelDirty = item.data['threatLevelDirty'];
 
-        if (lat != nil and lon != nil and vspeed != nil) {
+        me.values[path] = nil;
 
+        if (_lat != nil and _lon != nil and vspeed != nil) {
+            
             if (tas<80) { # flying airplane only
-                item.elems.master.hide();
+                me.values[path] = {visible: 0};
                 return; 
             }
 
-            var altDiff100 = ((item.data['alt'] or me.refAlt) - me.refAlt) / 100;
+            var altDiff100 = ((alt or me.refAlt) - me.refAlt) / 100;
 
             if (altDiff100 > 99 or altDiff100 < -99) { # check TCAS vertical range
-                item.elems.master.hide();
+                me.values[path] = {visible: 0};
                 return;
             }
+
+            var _val = {visible:1, lat:_lat, lon:_lon};
+
+            var spd = vspeed * 60;
+            _val.arrowup = (spd > 500);
+            _val.arrowdown = (spd < -500);
+
+            if (math.abs(altDiff100) > 0.5) {
+                _val.text = sprintf("%+03d ", altDiff100);
+            } else {
+                _val.text = "";
+            }
+
+            _val.textpy = (altDiff100 <= 0) ? 40 : -30;
+
+            me.values[path] = _val;
+            
+        }
+
+    },
+
+    redrawItem: func (item,val) {
+        #debug.dump("REDRAW ", item.data);
+
+        #var lat = item.data['lat'];
+        #var lon = item.data['lon'];
+        #var alt = item.data['alt'];
+        #var vspeed = item.data['vspeed'];
+        #var tas = item.data['tas'];
+        #var threatLevelDirty = item.data['threatLevelDirty'];
+
+        if (val != nil and val.visible == 1) {
+
+            var lat = val.lat;
+            var lon = val.lon;
 
             var coords = geo.Coord.new();
             coords.set_latlon(lat, lon);
             var (x, y) = me.camera.project(coords);
             item.elems.master.setTranslation(x, y);
             #printf("%f %f", x, y);
-            if (threatLevelDirty) {
+            if (item.data['threatLevelDirty']) {
                 #printf('%s THREAT LVL: %i', item.data['callsign'] or '???', item.data['threatLevel']);
                 var threatLevel = item.data['threatLevel'];
                 #debug.dump(item.data, threatLevel);
@@ -268,26 +315,18 @@ var TrafficLayer = {
                 item.data['threatLevelDirty'] = 0;
             }
 
-            var spd = vspeed * 60;
-            item.elems.arrowUp.setVisible(spd > 500);
-            item.elems.arrowDown.setVisible(spd < -500);
+            item.elems.arrowUp.setVisible(val.arrowup);
+            item.elems.arrowDown.setVisible(val.arrowdown);
 
-            item.elems.text.setVisible(math.abs(altDiff100) > 0.5);
-            item.elems.text.setText(sprintf("%+02.0f ", altDiff100));
-            if (altDiff100 <= 0) {
-                item.elems.text.setTranslation(0, 40);
-                #item.elems.arrowUp.setTranslation(16, 30);
-                #item.elems.arrowDown.setTranslation(16, 30);
-            }
-            else {
-                item.elems.text.setTranslation(0, -30);
-                #item.elems.arrowUp.setTranslation(16, -30);
-                #item.elems.arrowDown.setTranslation(16, -30);
-            }
+            #item.elems.text.setVisible(math.abs(altDiff100) > 0.5);
+            item.elems.text.setText(val.text);
+            item.elems.text.setTranslation(0, val.textpy);
             item.elems.master.show();
 
         } else {
+
             item.elems.master.hide();
+
         }
     },
 
