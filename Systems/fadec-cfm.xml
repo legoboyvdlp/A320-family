@@ -10,7 +10,7 @@
 		<name>OAT Thrust Scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -28,7 +28,7 @@
 		<name>FLX Thrust Scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -46,7 +46,7 @@
 		<name>IDLE Limit</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -85,7 +85,7 @@
 		<name>MAN One</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -107,7 +107,7 @@
 		<name>MAN Two</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -129,7 +129,7 @@
 		<name>MAN CMD One</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<product>
@@ -154,7 +154,7 @@
 		<name>MAN CMD Two</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<product>
@@ -179,7 +179,7 @@
 		<name>N1 CMD 1</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -220,7 +220,7 @@
 		<name>N1 CMD 2</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -1057,7 +1057,7 @@
 		<name>N1 Limit TOGA</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1077,7 +1077,7 @@
 		<name>N1 Limit MCT</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1097,7 +1097,7 @@
 		<name>N1 Limit FLX</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1117,7 +1117,7 @@
 		<name>N1 Limit CLB</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>

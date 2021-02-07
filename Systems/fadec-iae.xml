@@ -10,7 +10,7 @@
 		<name>OAT Thrust Scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -28,7 +28,7 @@
 		<name>FLX Thrust Scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -46,7 +46,7 @@
 		<name>IDLE Limit</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<condition>
 				<and>
@@ -85,7 +85,7 @@
 		<name>MAN One</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -107,7 +107,7 @@
 		<name>MAN Two</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -129,7 +129,7 @@
 		<name>MAN CMD One</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<product>
@@ -154,7 +154,7 @@
 		<name>MAN CMD Two</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<product>
@@ -1328,7 +1328,7 @@
 		<name>EPR Limit TOGA</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1356,7 +1356,7 @@
 		<name>EPR CMD TOGA</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1372,7 +1372,7 @@
 		<name>EPR Limit MCT</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1400,7 +1400,7 @@
 		<name>EPR CMD MCT</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1416,7 +1416,7 @@
 		<name>EPR Limit FLX</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1444,7 +1444,7 @@
 		<name>EPR CMD FLX</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1460,7 +1460,7 @@
 		<name>EPR Limit CLB</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1488,7 +1488,7 @@
 		<name>EPR CMD CLB</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<sum>

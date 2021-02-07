@@ -222,7 +222,7 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "R4" and modifiable) {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/flex", 0);
+			setprop("/FMGC/internal/flex", 45);
 			setprop("/FMGC/internal/flex-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
@@ -231,8 +231,6 @@ var perfTOInput = func(key, i) {
 				if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 99) {
 					setprop("/FMGC/internal/flex", scratchpad);
 					setprop("/FMGC/internal/flex-set", 1);
-					var flex_calc = getprop("/FMGC/internal/flex") - getprop("environment/temperature-degc");
-					setprop("/FMGC/internal/flex-cmd", flex_calc);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");

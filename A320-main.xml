@@ -786,8 +786,9 @@
 	
 	<FMGC n="0">
 		<active-fmgc-channel type="int">0</active-fmgc-channel>
-		<internal>
+		<internal n="0">
 			<cost-index type="int">0</cost-index>
+			<flex type="int">45</flex>
 			<to-state type="bool">0</to-state>
 		</internal>
 		<simbrief-username type="string"></simbrief-username>
