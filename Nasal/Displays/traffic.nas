@@ -205,6 +205,14 @@ var TrafficLayer = {
             return;
         }
 
+        var newThrtAll = ATCSwitchThrtAll.getValue();
+        if (newThrtAll == 1) {  # AUTO - display only proximate and higher advisories
+            if (item.data['threatLevel']==0) {
+                me.values[path] = {visible: 0};
+                return;                 
+            }
+        }        
+
         if (item.prop['lat'] == nil) {
             item.prop['lat'] = item.prop.master.getNode('position/latitude-deg');
             item.prop['lon'] = item.prop.master.getNode('position/longitude-deg');
@@ -236,14 +244,6 @@ var TrafficLayer = {
         if (oldThreatLevel != item.data['threatLevel']) { # or newThrtAll != item.data['thrtAllStore']
             item.data['threatLevelDirty'] = 1;
 			#item.data['thrtAllStore'] = newThrtAll;
-        }
-
-        var newThrtAll = ATCSwitchThrtAll.getValue();
-        if (newThrtAll != 1) {  # AUTO - display only proximate and higher advisories
-            if (item.data['threatLevel']==0) {
-                me.values[path] = {visible: 0};
-                return;                 
-            }
         }
 
         var _lat = item.data['lat'];
