@@ -205,12 +205,6 @@ var TrafficLayer = {
             return;
         }
 
-        var newThrtAll = ATCSwitchThrtAll.getValue();
-        if (newThrtAll == 1) {   #  TCAS advisory inhibits
-            me.values[path] = {visible: 0};
-            return; 
-        }
-
         if (item.prop['lat'] == nil) {
             item.prop['lat'] = item.prop.master.getNode('position/latitude-deg');
             item.prop['lon'] = item.prop.master.getNode('position/longitude-deg');
@@ -239,9 +233,17 @@ var TrafficLayer = {
                 item.data[k] = item.prop[k].getValue();
             }
         }		
-        if (oldThreatLevel != item.data['threatLevel'] or newThrtAll != item.data['thrtAllStore']) {
+        if (oldThreatLevel != item.data['threatLevel']) { # or newThrtAll != item.data['thrtAllStore']
             item.data['threatLevelDirty'] = 1;
-			item.data['thrtAllStore'] = newThrtAll;
+			#item.data['thrtAllStore'] = newThrtAll;
+        }
+
+        var newThrtAll = ATCSwitchThrtAll.getValue();
+        if (newThrtAll != 1) {  # AUTO - display only proximate and higher advisories
+            if (item.data['threatLevel']==0) {
+                me.values[path] = {visible: 0};
+                return;                 
+            }
         }
 
         var _lat = item.data['lat'];
@@ -262,10 +264,10 @@ var TrafficLayer = {
 			var top = 27;
 			var bottom = -27;
 			if (ATCSwitchAbvBlw.getValue() == -1) {
-				top = 99;
+				top = 70;
 			}
 			if (ATCSwitchAbvBlw.getValue() == 1) {
-				bottom = -99;
+				bottom = -70;
 			} 
 
             var altDiff100 = ((alt or me.refAlt) - me.refAlt) / 100;
@@ -282,7 +284,7 @@ var TrafficLayer = {
             _val.arrowdown = (spd < -500);
 
             if (math.abs(altDiff100) > 0.5) {
-                _val.text = sprintf("%+03.0f ", altDiff100); # float to display -00
+                _val.text = sprintf("%+03.0f ", altDiff100); # float to display -00 - CHECKME it's seems not work to diplay +00 / -00 - not a big deal
             } else {
                 _val.text = "";
             }
