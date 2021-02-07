@@ -652,6 +652,14 @@
 			<line8 type="string"></line8>
 		</rightmsg>
 		<warning-phase type="int">0</warning-phase>
+		<phases>
+			<timer>
+				<ldg-inhibit type="int">0</ldg-inhibit>
+				<ldg-inhibit-output type="double">0</ldg-inhibit-output>
+				<to-inhibit type="int">0</to-inhibit>
+				<to-inhibit-output type="double">0</to-inhibit-output>
+			</timer>
+		</phases>
 	</ECAM>
 	
 	<environment>
@@ -776,6 +784,8 @@
 		<atc>
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
+			<abv-blw type="int">0</abv-blw>
+			<thrt-all type="int">0</thrt-all>
 		</atc>
 		<apu>
 			<agent-btn type="bool">0</agent-btn>
