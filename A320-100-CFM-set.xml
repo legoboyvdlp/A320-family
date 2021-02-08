@@ -206,9 +206,9 @@
 			<autopilot n="0">
 				<path>Aircraft/A320-family/Systems/fadec-cfm.xml</path>
 			</autopilot>
-			<autopilot n="10">
+			<property-rule n="100">
 				<path>Aircraft/A320-family/Systems/cfm56-sound.xml</path>
-			</autopilot>
+			</property-rule>
 		</systems>
 
 	</sim>

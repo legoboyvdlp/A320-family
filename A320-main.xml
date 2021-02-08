@@ -234,9 +234,9 @@
 				<path>Aircraft/A320-family/Systems/pfd.xml</path>
 			</autopilot>
 			<!-- 10 is sound -->
-			<autopilot n="11">
+			<property-rule n="101">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
-			</autopilot>
+			</property-rule>
 			<property-rule n="110">
 				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
 			</property-rule>
