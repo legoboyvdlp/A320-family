@@ -239,9 +239,8 @@ var TrafficLayer = {
             return;                 
         }
 
-        if (oldThreatLevel != item.data['threatLevel']) { # or newThrtAll != item.data['thrtAllStore']
+        if (oldThreatLevel != item.data['threatLevel']) {
             item.data['threatLevelDirty'] = 1;
-			#item.data['thrtAllStore'] = newThrtAll;
         }
 
         var newThrtAll = ATCSwitchThrtAll.getValue();
@@ -290,7 +289,7 @@ var TrafficLayer = {
             _val.arrowdown = (spd < -500);
 
             if (math.abs(altDiff100) > 0.5) {
-                _val.text = sprintf("%+03.0f ", altDiff100); # float to display -00 - CHECKME it's seems not work to diplay +00 / -00 - not a big deal
+                _val.text = sprintf("%+03.0f ", altDiff100);
             } else {
                 _val.text = "";
             }
