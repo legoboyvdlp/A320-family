@@ -237,12 +237,12 @@
 			<autopilot n="11">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
 			</autopilot>
-			<autopilot n="12">
+			<property-rule n="110">
 				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
-			</autopilot>
-			<autopilot n="13">
+			</property-rule>
+			<property-rule n="111">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
-			</autopilot>
+			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
