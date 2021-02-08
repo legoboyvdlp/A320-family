@@ -6,6 +6,7 @@
 <system name="A320: CFM56 Engine">
 	
 	<property value="45">fadec/limit/rated-temp</property>
+	<property value="30">fadec/limit/flex-rated-temp</property>
 	<property value="27000">fadec/limit/rated-thrust</property>
 	
 	<channel name="Thrust Limits">
@@ -162,7 +163,7 @@
 		</fcs_function>
 		
 		<summer name="fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
-			<input>fadec/limit/rated-temp</input>
+			<input>fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
 			<input>-/FMGC/internal/flex</input>
 			<input>propulsion/tat-c</input>
 		</summer>
@@ -173,7 +174,7 @@
 					<property>fadec/limit/toga-ref</property>
 					<table> <!-- TODO: Figure out how to integrate FCOM table with this one -->
 						<independentVar lookup="row">/position/altitude-ft</independentVar>
-						<independentVar lookup="column">propulsion/tat-c</independentVar>
+						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
 						<tableData>
 							      -45   -15    15    45     75
 							    0  79.5  84.6  89.2   93.8  89.1
@@ -182,6 +183,23 @@
 						</tableData>
 					</table>
 				</min>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/flex">
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>fadec/limit/flex-ref</property>
+								<value>10</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>10</value>
+				</quotient>
 			</function>
 		</fcs_function>
 		

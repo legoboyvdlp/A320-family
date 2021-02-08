@@ -14,10 +14,9 @@
 		<input>
 			<expression>
 				<table>
-					<property>/environment/temperature-degc</property>
-					<entry><ind> 70</ind><dep>0.788</dep></entry>
-					<entry><ind> 40</ind><dep>0.813</dep></entry>
-					<entry><ind>-60</ind><dep>1.000</dep></entry>
+					<property>/fdm/jsbsim/fadec/limit/toga</property>
+					<entry><ind> 18.9</ind><dep>0</dep></entry>
+					<entry><ind>104.0</ind><dep>1</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -32,7 +31,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/FMGC/internal/flex</property>
+					<property>/fdm/jsbsim/fadec/limit/flex</property>
 					<entry><ind> 70</ind><dep>0.788</dep></entry>
 					<entry><ind> 40</ind><dep>0.813</dep></entry>
 					<entry><ind>-60</ind><dep>1.000</dep></entry>
@@ -1058,18 +1057,7 @@
 		<type>gain</type>
 		<gain>1.0</gain>
 		<update-interval-secs>0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<product>
-						<value>0.99</value>
-						<property>/controls/engines/throttle-scale</property>
-					</product>
-					<entry><ind>0.00</ind><dep> 18.9</dep></entry>
-					<entry><ind>1.00</ind><dep>103.8</dep></entry>
-				</table>
-			</expression>
-		</input>
+		<input>/fdm/jsbsim/fadec/limit/toga</input>
 		<output>/systems/thrust/n1/toga-lim</output>
 	</filter>
 	
@@ -1098,18 +1086,7 @@
 		<type>gain</type>
 		<gain>1.0</gain>
 		<update-interval-secs>0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<product>
-						<value>0.99</value>
-						<property>/engines/flx-throttle</property>
-					</product>
-					<entry><ind>0.00</ind><dep> 18.9</dep></entry>
-					<entry><ind>1.00</ind><dep>103.8</dep></entry>
-				</table>
-			</expression>
-		</input>
+		<input>/fdm/jsbsim/fadec/limit/flex</input>
 		<output>/systems/thrust/n1/flx-lim</output>
 	</filter>
 	
