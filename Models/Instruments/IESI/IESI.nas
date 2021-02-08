@@ -261,8 +261,6 @@ var input = {
 	"altitude_ind": "/instrumentation/altimeter/indicated-altitude-ft-pfd",
 	"altimeter_mode": "/instrumentation/altimeter[0]/std",
 	"attReset": "/instrumentation/iesi/att-reset",
-	"dcEss": "/systems/electrical/bus/dc-ess",
-	"dcHot1": "/systems/electrical/bus/dc-hot-1",
 	"iesiBrt": "/controls/lighting/DU/iesi",
 	"iesiInit": "/instrumentation/iesi/iesi-init",
 	"mach": "/instrumentation/airspeed-indicator/indicated-mach",

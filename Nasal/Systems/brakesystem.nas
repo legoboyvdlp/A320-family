@@ -111,7 +111,7 @@ var BrakeSystem =
 	},
 	
 	# update brake energy
-	update : func()
+	update : func(notification)
 	{
 		if (me.counter == 0) {
 			me.counter = 1;
@@ -122,10 +122,10 @@ var BrakeSystem =
 		
 		LThermalEnergy = me.thermalEnergy[0];
 		RThermalEnergy = me.thermalEnergy[1];
-		me.CurrentTime = pts.Sim.Time.elapsedSec.getValue();
+		me.CurrentTime = notification.elapsedTime;
 		dt = me.CurrentTime - me.LastSimTime;
-		LBrakeLevel = pts.Fdm.JSBsim.Fcs.brake[0].getValue();
-		RBrakeLevel = pts.Fdm.JSBsim.Fcs.brake[1].getValue();
+		LBrakeLevel = notification.leftBrakeFCS;
+		RBrakeLevel = notification.rightBrakeFCS;
 		tatdegc = pts.Fdm.JSBsim.Propulsion.tatC.getValue() or 0;
 
 		if (pts.Sim.replayState.getValue() == 0 and dt < 1.0) {
@@ -137,7 +137,7 @@ var BrakeSystem =
 				LCoolingRatio = LCoolingRatio * 3;
 				RCoolingRatio = RCoolingRatio * 3;
 			};
-			airspeed = pts.Velocities.airspeed.getValue();
+			airspeed = notification.airspeedV;
 			if (pts.Gear.position[1].getValue()) {
 				#increase CoolingRatio if gear down according to airspeed
 				LCoolingRatio = LCoolingRatio * airspeed;				
@@ -168,7 +168,7 @@ var BrakeSystem =
 			L_Thrust = 0;
 			R_Thrust = 0;
 
-			if (pts.Gear.wow[1].getValue()) {
+			if (notification.gear1Wow) {
 				var V1 = pts.Velocities.groundspeed.getValue();
 				var Mass = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() * me.ScalingDivisor;
 
@@ -179,7 +179,7 @@ var BrakeSystem =
 
 				LThermalEnergy += (Mass * pts.Gear.compression[1].getValue() * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
 				if (pts.Controls.Gear.chocks.getValue()) {
-					if (!pts.Controls.Gear.parkingBrake.getValue()) {
+					if (!notification.parkingBrake) {
 						# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
 						LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);					
 					} else {
@@ -188,7 +188,7 @@ var BrakeSystem =
 						LThermalEnergy = (LThermalEnergy * math.exp(LnCoolFactor * dt)) + (L_Thrust * dt);
 					};
 				} else {
-					if (!pts.Controls.Gear.parkingBrake.getValue()) {
+					if (!notification.parkingBrake) {
 						if (LBrakeLevel>0) {
 							if (V2_L>0)	{
 								#LThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2) + L_thrust;
@@ -212,7 +212,7 @@ var BrakeSystem =
 
 				RThermalEnergy += (Mass * pts.Gear.compression[2].getValue() * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
 				if (pts.Controls.Gear.chocks.getValue()) {
-					if (!pts.Controls.Gear.parkingBrake.getValue()) {
+					if (!notification.parkingBrake) {
 						# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
 						RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
 					} else {
@@ -221,7 +221,7 @@ var BrakeSystem =
 						RThermalEnergy = (RThermalEnergy * math.exp(RnCoolFactor * dt)) + (R_Thrust * dt);
 					};
 				} else {
-					if (!pts.Controls.Gear.parkingBrake.getValue()) {
+					if (!notification.parkingBrake) {
 						if (RBrakeLevel>0) {
 							if (V2_R>0)	{
 								#RThermalEnergy += (Mass * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2) + R_thrust;
@@ -271,7 +271,7 @@ var BrakeSystem =
 			if (LThermalEnergy>1 and !me.LSmokeActive) {
 				# start smoke processing 
 				me.LSmokeActive = 1;
-				settimer(func { BrakeSys.Lsmoke(); },0);
+				settimer(func { BrakeSys.Lsmoke(); },0); # is settimer needed?
 			};
 			if (RThermalEnergy>1 and !me.RSmokeActive) {
 				# start smoke processing 
@@ -406,7 +406,7 @@ var Autobrake = {
 		me._mode = me.mode.getValue();
 		me._active = me.active.getBoolValue();
 		if (me._gnd_speed > 72) {
-			if (me._mode != 0 and pts.Controls.Engines.Engine.throttle[0].getValue() < 0.15 and pts.Controls.Engines.Engine.throttle[1].getValue() < 0.15 and me._wow0 and systems.HYD.Brakes.askidSw.getValue() and systems.HYD.Psi.green.getValue() >= 2500 ) {
+			if (me._mode != 0 and pts.Controls.Engines.Engine.throttle[0].getValue() < 0.15 and pts.Controls.Engines.Engine.throttle[1].getValue() < 0.15 and me._wow0 and systems.HYD.Switch.nwsSwitch.getBoolValue() and systems.HYD.Psi.green.getValue() >= 2500 ) {
 				me.active.setBoolValue(1);
 			} elsif (me._active) {
 				me.active.setBoolValue(0);
