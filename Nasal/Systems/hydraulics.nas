@@ -10,7 +10,6 @@ var HYD = {
 		accumPressPsi: props.globals.initNode("/systems/hydraulic/yellow-accumulator-psi-cmd", 0, "INT"),
 		leftPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-left-psi", 0, "INT"),
 		rightPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-right-psi", 0, "INT"),
-		askidSw: props.globals.initNode("/systems/hydraulic/brakes/askidnwssw", 1, "BOOL"),
 		mode: props.globals.initNode("/systems/hydraulic/brakes/mode", 0, "INT"),
 		leftbrake: props.globals.getNode("/controls/gear/brake-left"),
 		rightbrake: props.globals.getNode("/controls/gear/brake-right"),
@@ -57,6 +56,7 @@ var HYD = {
 		rat: props.globals.getNode("/controls/hydraulic/switches/rat-man"),
 		yellowEDP: props.globals.getNode("/controls/hydraulic/switches/yellow-edp"),
 		yellowElec: props.globals.getNode("/controls/hydraulic/switches/yellow-elec"),
+		nwsSwitch: props.globals.getNode("/controls/gear/nws-switch"),
 	},
 	Valve: {
 		yellowFire: props.globals.getNode("/systems/hydraulic/sources/yellow-edp/fire-valve"),
@@ -85,97 +85,91 @@ var HYD = {
 		me.Fail.yellowElec.setBoolValue(0);
 		me.Fail.yellowLeak.setBoolValue(0);
 	},
-	loop: func() {
-		if (props.globals.getValue("/controls/gear/nws-switch") == 1) {
-			me.Brakes.askidSw.setBoolValue(1); #true
-		} else {
-			me.Brakes.askidSw.setBoolValue(0); #false
-		}
-
+	loop: func(notification) {
 		# Decrease accumPressPsi when green and yellow hydraulic's aren't pressurized
-		if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
+		if (me.Brakes.leftbrake.getValue() > 0 or notification.brakesMode == 0) {
 			lcont = lcont + 1;
 		} else {
 			lcont = 0;
 		}
-		if (me.Brakes.rightbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
+		if (me.Brakes.rightbrake.getValue() > 0 or notification.brakesMode == 0) {
 			rcont = rcont + 1;
 		} else {
 			rcont = 0;
 		}
-		if (me.Psi.yellow.getValue() < me.Brakes.accumPressPsi.getValue() and me.Brakes.accumPressPsi.getValue() > 0) {
+		if (notification.yellow < notification.accumPressPsi and notification.accumPressPsi > 0) {
 			if  (lcont == 1) {
-					me.Brakes.accumPressPsi.setValue(me.Brakes.accumPressPsi.getValue() - 200);
+					me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
 			}
 			if  (rcont == 1) {
-					me.Brakes.accumPressPsi.setValue(me.Brakes.accumPressPsi.getValue() - 200);
+					me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
 			}
-			if (me.Brakes.accumPressPsi.getValue() < 0) {
+			if (notification.accumPressPsi < 0) {
 				me.Brakes.accumPressPsi.setValue(0);
 			}
 		}
 
 		# Braking Pressure
-		if (me.Brakes.mode.getValue() == 1 or (me.Brakes.mode.getValue() == 2 and me.Psi.green.getValue() >= 2500)) {
+		if (notification.brakesMode == 1 or (notification.brakesMode == 2 and notification.green >= 2500)) {
 			# Normal braking - Green OK
-			if (me.Brakes.leftbrake.getValue() > 0) {
-				me.Brakes.leftPressPsi.setValue(me.Psi.green.getValue() * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
+			if (notification.leftBrake > 0) {
+				me.Brakes.leftPressPsi.setValue(notification.green * notification.leftBrakeFCS);
 			} else {
 				me.Brakes.leftPressPsi.setValue(0);
 			}
-			if (me.Brakes.rightbrake.getValue() > 0) {
-				me.Brakes.rightPressPsi.setValue(me.Psi.green.getValue() * pts.Fdm.JSBsim.Fcs.brake[1].getValue());
+			if (notification.rightBrake > 0) {
+				me.Brakes.rightPressPsi.setValue(notification.green * notification.rightBrakeFCS);
 			} else {
 				me.Brakes.rightPressPsi.setValue(0);
 			}
 		} else {
-			if ((me.Brakes.mode.getValue() == 2 and me.Psi.green.getValue() < 2500) or me.Brakes.mode.getValue() == 0) {
+			if ((notification.brakesMode == 2 and notification.green < 2500) or notification.brakesMode == 0) {
 				# Alternate Braking (Yellow OK + Antiskid ON + electric OK) - missing condition: BSCU OK-KO
-				if (me.Psi.yellow.getValue() >= 2500 and me.Brakes.askidSw.getValue() and (systems.ELEC.Bus.dc1.getValue() >= 24 or systems.ELEC.Bus.dc2.getValue() >= 24 or systems.ELEC.Bus.dcEss.getValue() >= 24)) {
-					if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-						me.Brakes.leftPressPsi.setValue(me.Psi.yellow.getValue() * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
+				if (notification.yellow >= 2500 and notification.NWSSwitch and (notification.dc1 >= 24 or notification.dc2 >= 24 or notification.dcEss >= 24)) {
+					if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+						me.Brakes.leftPressPsi.setValue(notification.yellow * notification.leftBrakeFCS);
 					} else {
 						me.Brakes.leftPressPsi.setValue(0);
 					}
-					if (me.Brakes.rightbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-						me.Brakes.rightPressPsi.setValue(me.Psi.yellow.getValue() * pts.Fdm.JSBsim.Fcs.brake[1].getValue());
+					if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+						me.Brakes.rightPressPsi.setValue(notification.yellow * notification.rightBrakeFCS);
 					} else {
 						me.Brakes.rightPressPsi.setValue(0);
 					}
 				} else {
 					# Alternate Braking (Yellow OK + Antiskid OFF + electric OK) - missing condition: BSCU OK-KO
-					if (me.Psi.yellow.getValue() >= 2500 and !me.Brakes.askidSw.getValue() and (systems.ELEC.Bus.dc1.getValue() >= 24 or systems.ELEC.Bus.dc2.getValue() >= 24 or systems.ELEC.Bus.dcEss.getValue() >= 24)) {
-						if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-							me.Brakes.leftPressPsi.setValue(1000 * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
+					if (notification.yellow >= 2500 and !notification.NWSSwitch and (notification.dc1 >= 24 or notification.dc2 >= 24 or notification.dcEss >= 24)) {
+						if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+							me.Brakes.leftPressPsi.setValue(1000 * notification.leftBrakeFCS);
 						} else {
 							me.Brakes.leftPressPsi.setValue(0);
 						}
-						if (me.Brakes.rightbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-							me.Brakes.rightPressPsi.setValue(1000 * pts.Fdm.JSBsim.Fcs.brake[1].getValue());
+						if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+							me.Brakes.rightPressPsi.setValue(1000 * notification.rightBrakeFCS);
 						}  else {
 							me.Brakes.rightPressPsi.setValue(0);
 						}
 					} else {
 						# Alternate Braking (Yellow KO or Antiskid KO or electric KO) - missing condition: BSCU OK-KO
-						if (me.Brakes.accumPressPsi.getValue() < 1000 and (me.Psi.yellow.getValue() < 2500 or !me.Brakes.askidSw.getValue() or (systems.ELEC.Bus.dc1.getValue() < 24 and systems.ELEC.Bus.dc2.getValue() < 24 and systems.ELEC.Bus.dcEss.getValue() < 24))) {
-							if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-								me.Brakes.leftPressPsi.setValue(me.Brakes.accumPressPsi.getValue() * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
+						if (notification.accumPressPsi < 1000 and (notification.yellow < 2500 or !notification.NWSSwitch or (notification.dc1 < 24 and notification.dc2 < 24 and notification.dcEss < 24))) {
+							if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.leftPressPsi.setValue(notification.accumPressPsi * notification.leftBrakeFCS);
 							} else {
 								me.Brakes.leftPressPsi.setValue(0);
 							}
-							if (me.Brakes.rightbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-								me.Brakes.rightPressPsi.setValue(me.Brakes.accumPressPsi.getValue() * pts.Fdm.JSBsim.Fcs.brake[1].getValue());
+							if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.rightPressPsi.setValue(notification.accumPressPsi * notification.rightBrakeFCS);
 							}  else {
 								me.Brakes.rightPressPsi.setValue(0);
 							}
 						} else {
-							if (me.Brakes.leftbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-								me.Brakes.leftPressPsi.setValue(1000 * pts.Fdm.JSBsim.Fcs.brake[0].getValue());
+							if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.leftPressPsi.setValue(1000 * notification.leftBrakeFCS);
 							} else {
 								me.Brakes.leftPressPsi.setValue(0);
 							}
-							if (me.Brakes.rightbrake.getValue() > 0 or me.Brakes.mode.getValue() == 0) {
-								me.Brakes.rightPressPsi.setValue(1000 * pts.Fdm.JSBsim.Fcs.brake[1].getValue());
+							if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.rightPressPsi.setValue(1000 * notification.rightBrakeFCS);
 							}  else {
 								me.Brakes.rightPressPsi.setValue(0);
 							}
@@ -192,3 +186,25 @@ setlistener("/controls/gear/gear-down", func {
 		pts.Controls.Gear.gearDown.setValue(1);
 	}
 });
+
+# Emesary
+var A320Hydraulic = notifications.SystemRecipient.new("A320 Hydraulic",HYD.loop,HYD);
+emesary.GlobalTransmitter.Register(A320Hydraulic);
+
+var input = {
+	"blue": "/systems/hydraulic/blue-psi",
+	"green": "/systems/hydraulic/green-psi",
+	"yellow": "/systems/hydraulic/yellow-psi",
+	
+	"brakesMode": "/systems/hydraulic/brakes/mode",
+	"accumPressPsi": "/systems/hydraulic/yellow-accumulator-psi-cmd",
+	"leftBrake": "/controls/gear/brake-left",
+	"rightBrake": "/controls/gear/brake-right",
+	"leftBrakeFCS": "/fdm/jsbsim/fcs/left-brake-cmd-norm",
+	"rightBrakeFCS": "/fdm/jsbsim/fcs/right-brake-cmd-norm",
+	"NWSSwitch": "/controls/gear/nws-switch",
+};
+
+foreach (var name; keys(input)) {
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Hydraulic", name, input[name]));
+}
