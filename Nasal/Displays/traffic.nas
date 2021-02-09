@@ -273,10 +273,10 @@ var TrafficLayer = {
 			var top = 27;
 			var bottom = -27;
 			if (ATCSwitchAbvBlw.getValue() == -1) {
-				top = 70;
+				top = 99;
 			}
 			if (ATCSwitchAbvBlw.getValue() == 1) {
-				bottom = -70;
+				bottom = -99;
 			} 
 
             var altDiff100 = ((alt or me.refAlt) - me.refAlt) / 100;
