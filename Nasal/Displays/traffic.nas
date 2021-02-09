@@ -27,6 +27,7 @@ var drawBlip = func(elem, threatLvl) {
     if (threatLvl == 3) {
         # resolution advisory
         elem.reset()
+            .setStrokeLineWidth(0)
             .moveTo(-17,-17)
             .horiz(34)
             .vert(34)
@@ -37,12 +38,14 @@ var drawBlip = func(elem, threatLvl) {
         # traffic advisory
         elem.reset()
             .moveTo(-17,0)
+            .setStrokeLineWidth(0)
             .arcSmallCW(17,17,0,34,0)
             .arcSmallCW(17,17,0,-34,0);
     }
     elsif (threatLvl == 1) {
         # proximate traffic
         elem.reset()
+            .setStrokeLineWidth(0)
             .moveTo(-14,0)
             .lineTo(0,-17)
             .lineTo(14,0)
@@ -52,10 +55,11 @@ var drawBlip = func(elem, threatLvl) {
     else {
         # other traffic
         elem.reset()
-            .moveTo(-14,0)
-            .lineTo(0,-17)
-            .lineTo(14,0)
-            .lineTo(0,17)
+            .setStrokeLineWidth(4)
+            .moveTo(-10,0)
+            .lineTo(0,-14)
+            .lineTo(10,0)
+            .lineTo(0,14)
             .close();
     }
 };
@@ -324,7 +328,12 @@ var TrafficLayer = {
                 if (rgb == nil) rgb = colorDefault;
                 var color = canvas._getColor(rgb);
                 var (r, g, b) = rgb;
-                item.elems.blip.setColorFill(r, g, b);
+                if (threatLevel > 0) {
+                    item.elems.blip.setColorFill(r, g, b);
+                } else {
+                    item.elems.blip.setColorFill(0,0,0);
+                    item.elems.blip.setColor(r, g, b);
+                }
                 item.elems.text.setColor(r, g, b);
                 item.elems.arrowUp.setColor(r, g, b);
                 item.elems.arrowDown.setColor(r, g, b);
