@@ -161,9 +161,9 @@ var PNEU = {
 		me.Fail.trimValveFwd.setBoolValue(0);
 		me.Fail.xbleed.setBoolValue(0);
 	},
-	loop: func() {
-		wowl = getprop("gear/gear[1]/wow");
-		wowr = getprop("gear/gear[2]/wow");
+	loop: func(notification) {
+		wowl = notification.gear1Wow;
+		wowr = notification.gear2Wow;
 		
 		# Legacy pressurization
 		cabinalt = getprop("/systems/pressurization/cabinalt");
