@@ -3221,8 +3221,8 @@
 		<switch name="/ECAM/warnings/fctl/pitch-trim-config-range">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				hydraulics/elevator-trim/final-deg gt 2.9
-				hydraulics/elevator-trim/final-deg lt -2.9
+				hydraulics/stabilizer/final-deg gt 2.9
+				hydraulics/stabilizer/final-deg lt -2.9
 			</test>
 		</switch>
 		
