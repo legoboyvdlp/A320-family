@@ -85,6 +85,24 @@ canvas.NDStyles["Airbus"] = {
 	},
 	layers: [
 		{ 
+			name:"TERRAIN", 
+			isMapStructure:1, 
+			always_update: 1,
+			update_on:[ "toggle_range","toggle_display_mode","toggle_terrain"],
+			predicate: func(nd, layer) {
+				var visible=nd.get_switch("toggle_terrain") and 
+					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
+				layer.group.setVisible(visible);
+				if (visible) {
+					layer.update(); 
+				}
+			}, # end of layer update predicate
+			options: {
+				viewport_radius: 706
+			},
+			"z-index": -100,
+		},
+		{ 
 			name:"WXR_live", 
 			isMapStructure:1, 
 			always_update: 1,

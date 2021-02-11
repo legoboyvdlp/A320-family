@@ -1,0 +1,106 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'TERRAIN';
+var parents = [DotSym];
+var __self__ = caller(0)[0];
+DotSym.makeinstance( name, __self__ );
+
+var element_type = "group";
+
+var tile_list = ["tile_00.png","tile_04.png","tile_06.png"];
+
+var updateTerrain = func(size){
+	if(me.fetching) return;
+	var pos = geo.aircraft_position();
+	var lat = pos.lat();
+	var lon = pos.lon();
+	me.fetching = 1;
+
+	for (var a=0; a < me.tileradius; a+=1) {
+
+		var len = size(me.terrlayer["L" ~ a]);
+
+		for (var r=0; r < len; r+=1) {
+
+			var imgx = math.mod(r*a,3);
+			
+			me.terrlayer["L" ~ a].setFile(me.imgpath ~ me.tile_list[imgx]).show();
+			me.terrlayer["R" ~ a].setFile(me.imgpath ~ me.tile_list[2-imgx]).show();
+
+		}
+
+	}
+
+	me.last_request = getprop("sim/time/elapsed-sec");
+	me.fetching = 0;
+};
+
+var init = func {
+	print('TERRAIN init');
+	me.tile = 20;
+	me.fetching = 0;
+	me.timeStamp = nil;
+	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
+	me.range = me.model.rangeNm; # Range of Navigation Display
+	me.viewport_radius = me.getOption('viewport_radius', 670);
+	me.imgpath = get_local_path('res/');
+
+	var tile = me.tile;
+
+	var gx = int(me.viewport_radius / tile);
+
+	me.tileradius = gx;
+
+	me.terrlayer = {}; #me.element.createChild("image").set("z-index", -100).hide();
+
+	var centx = me.viewport_radius;
+
+	for (var c=0; c<gx; c+=1) {
+		var hh = c * tile;
+		var mx = (c == 0) ? gx : int(math.sqrt(gx*gx-c*c));
+		var py = (gx-1) * tile;
+		var pxr = centx+(c*tile);
+		var pxl = centx-(c*tile)-tile;
+		var grplx = [];
+		var grprx = [];
+		for (var r=0; r<mx; r+=1) {
+			append(grplx , me.element.createChild("image").set("z-index", -100).setSize(tile,tile).setTranslation(pxl,py));
+			append(grprx , me.element.createChild("image").set("z-index", -100).setSize(tile,tile).setTranslation(pxr,py));
+			py-=tile;
+		}
+		me.terrlayer["L" ~ c] = grplx;
+		me.terrlayer["R" ~ c] = grprx;
+	}
+	
+	me.last_request = -600;
+	me.update_interval = 600;
+	
+	#var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
+	#me.fetchWXRMap(r_scaled);
+	
+	#me.timeStamp = nil;
+	#http.load("https://api.rainviewer.com/public/maps.json").done(func(r) me.timeStamp = processRequest(r));
+};
+
+var draw = func {
+	var range = me.layer.map.getRange(); # Range of Navigation Display
+	var update_size = (range != me.range);
+	me.range = range;
+	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
+	var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
+	var hdg = me.layer.map.getHdg();
+	var rot = 0 - hdg;
+	if(rot < 0) rot = 360 + rot + -getprop("/environment/magnetic-variation-deg"); 
+	me.element.setRotation(rot*D2R);
+	if(update_size){
+		#me.terrlayer.hide();
+		#me.terrlayer.setSize(2*r_scaled, 2*r_scaled)
+		#		  .setTranslation(-r_scaled, -r_scaled);
+		#me.terrlayer.show();
+	}
+
+	if(getprop("sim/time/elapsed-sec") - me.last_request > me.update_interval) {
+		me.updateTerrain(r_scaled);
+	}
+};
+

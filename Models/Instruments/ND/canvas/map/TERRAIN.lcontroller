@@ -1,0 +1,57 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+var name = 'TERRAIN';
+var parents = [canvas.SymbolLayer.Controller];
+var __self__ = caller(0)[0];
+
+canvas.SymbolLayer.Controller.add(name, __self__);
+canvas.SymbolLayer.add(name, {
+	parents: [MultiSymbolLayer],
+	type: name, # Symbol type
+	df_controller: __self__, # controller to use by default -- this one
+	df_options: { # default configuration options
+		viewport_radius: 670
+	}
+});
+
+var terrain_tree = "/instrumentation/efis[0]/nd/terrain-on-nd";
+
+var new = func(layer) {
+	var m = {
+		parents: [__self__],
+		layer: layer,
+		map: layer.map,
+		listeners: [],
+	};
+	layer.searcher._equals = func(l,r) l.equals(r);
+	m.addVisibilityListener();
+	return m;
+};
+
+var del = func() {
+	#print(name~".lcontroller.del()");
+	foreach (var l; me.listeners)
+		removelistener(l);
+};
+
+var searchCmd  = func {
+	if(me.map.getRange() == nil) return [];
+	#var lat = getprop(terrain_tree~"/center/latitude-deg");
+	#var lon = getprop(terrain_tree~"/center/longitude-deg");
+	
+	#if(lat == nil or lon == nil) {
+		var pos = geo.aircraft_position();
+		lat = pos.lat();
+		lon = pos.lon();
+	#}
+	
+	var result = geo.Coord.new();
+	result.set_latlon(lat, lon);
+	result.rangeNm = me.map.getRange();
+	result.fetchRad = 184; # is this number accurate?
+	result.equals = func(r){
+		me.fetchRad == r.fetchRad and me.lat == r.lat and me.lon == r.lon
+	};
+	
+	return [result];
+};
