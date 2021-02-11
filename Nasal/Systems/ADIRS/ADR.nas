@@ -324,7 +324,7 @@ var ADIRS = {
 			}
 		),
 	],
-	loop: func() {
+	loop: func(notification) {
 		if (me._init) {
 			for (i = 0; i < _NUMADIRU; i = i + 1) {
 				# update ADR units power
@@ -348,7 +348,6 @@ var ADIRS = {
 			}
 			
 			# Update VFE
-			notification = nil;
 			foreach (var update_item; me.update_items) {
 				update_item.update(notification);
 			}

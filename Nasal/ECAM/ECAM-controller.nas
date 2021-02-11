@@ -12,7 +12,6 @@ var leftOverflow  = props.globals.initNode("/ECAM/warnings/overflow-left", 0, "B
 var rightOverflow = props.globals.initNode("/ECAM/warnings/overflow-right", 0, "BOOL");
 var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
-var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
 var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL")];
@@ -76,6 +75,33 @@ var warningNodes = {
 		greenYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-fuel-consumpt"),
 		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault"),
 		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault"),
+		flapNotZero: props.globals.initNode("/ECAM/warnings/fctl/flaps-not-zero"),
+		slatsConfig: props.globals.initNode("/ECAM/warnings/fctl/slats-config-output"),
+		flapsConfig: props.globals.initNode("/ECAM/warnings/fctl/flaps-config-output"),
+		spdBrkConfig: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-config-output"),
+		pitchTrimConfig: props.globals.initNode("/ECAM/warnings/fctl/pitch-trim-config-output"),
+		rudTrimConfig: props.globals.initNode("/ECAM/warnings/fctl/rudder-trim-config-output"),
+		parkBrkConfig: props.globals.initNode("/ECAM/warnings/fctl/park-brk-config-output"),
+		slatsConfig2: props.globals.initNode("/ECAM/warnings/fctl/slats-config-range"),
+		flapsConfig2: props.globals.initNode("/ECAM/warnings/fctl/flaps-config-range"),
+		spdBrkConfig2: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-config-range"),
+		pitchTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/pitch-trim-config-range"),
+		rudTrimConfig2: props.globals.initNode("/ECAM/warnings/fctl/rudder-trim-config-range"),
+		dcEssFuelConsumptionIncreased: props.globals.initNode("/ECAM/warnings/logic/dc-ess-fuel-consumption-increased"),
+		dcEssFMSPredictions: props.globals.initNode("/ECAM/warnings/logic/dc-ess-fms-predictions-unreliable"),
+		dc2FuelConsumptionIncreased: props.globals.initNode("/ECAM/warnings/logic/dc-2-fuel-consumption-increased"),
+		dc2FMSPredictions: props.globals.initNode("/ECAM/warnings/logic/dc-2-fms-predictions-unreliable"),
+		thrLeversNotSet: props.globals.initNode("/ECAM/warnings/logic/eng/thr-lever-not-set"),
+		revSet: props.globals.initNode("/ECAM/warnings/logic/eng/reverse-set"),
+		eng1Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-fail"),
+		eng2Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-fail"),
+		phase5Trans: props.globals.initNode("/ECAM/warnings/logic/eng/phase-5-output"),
+		eng1Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-shutdown"),
+		eng2Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-shutdown"),
+		acEssBusAltn: props.globals.initNode("/ECAM/warnings/logic/ac-ess-bus-altn-feed"),
+		gen1Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-1-off"),
+		gen2Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-2-off"),
+		spdBrkOut: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-still-out"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -110,6 +136,20 @@ var warningNodes = {
 		navTerrFault: props.globals.initNode("/ECAM/warnings/timer/nav-gpws-terr-fault"),
 		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault-output"),
 		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault-output"),
+		staticInverter: props.globals.initNode("/systems/electrical/some-electric-thingie/static-inverter-timer"),
+		dcEmerConfig: props.globals.initNode("/ECAM/warnings/logic/dc-emer-config-output"),
+		dc12Fault: props.globals.initNode("/ECAM/warnings/logic/dc-1-2-output"),
+		dcEssFault: props.globals.initNode("/ECAM/warnings/logic/dc-ess-output"),
+		dc1Fault: props.globals.initNode("/ECAM/warnings/logic/dc-1-output"),
+		dc2Fault: props.globals.initNode("/ECAM/warnings/logic/dc-2-output"),
+		dcBatFault: props.globals.initNode("/ECAM/warnings/logic/dc-bat-output"),
+		ac1Fault: props.globals.initNode("/ECAM/warnings/logic/ac-1-output"),
+		ac2Fault: props.globals.initNode("/ECAM/warnings/logic/ac-2-output"),
+		acEssFault: props.globals.initNode("/ECAM/warnings/logic/ac-ess-output"),
+		dcEssShed: props.globals.initNode("/ECAM/warnings/logic/dc-ess-shed-output"),
+		acEssShed: props.globals.initNode("/ECAM/warnings/logic/ac-ess-shed-output"),
+		centerPumpsOff: props.globals.initNode("/ECAM/warnings/fuel/center-pumps-off-output"),
+		lowLevelBoth: props.globals.initNode("/ECAM/warnings/fuel/lo-level-l-r-output"),
 	},
 	Flipflops: {
 		apuGenFault: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault"),
@@ -389,6 +429,7 @@ var ECAM_controller = {
 				m.active = 0;
 			}
 		}
+		me._ready = 1;
 	},
 	clear: func() {
 		hasCleared = 0;
@@ -479,7 +520,7 @@ var ECAM_controller = {
 };
 
 setlistener("/systems/electrical/bus/dc-ess", func {
-	if (dc_ess.getValue() < 25) {
+	if (systems.ELEC.Bus.dcEss.getValue() < 25) {
 		ECAM_controller.reset();
 	}
 }, 0, 0);

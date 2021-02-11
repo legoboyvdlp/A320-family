@@ -533,7 +533,6 @@
 		<object-name>MLGLockstayActuatorR2</object-name>
 		<object-name>FlapMechanismL</object-name>
 		<object-name>FlapMechanismR</object-name>
-		<condition>
 			<property>/fdm/jsbsim/zero</property>
 		</condition>
 	</animation>

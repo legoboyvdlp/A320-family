@@ -428,13 +428,14 @@ var flightPlanController = {
 	#    flag: is it a navaids DUPLICATENAMES page or not?
 	#    plan: plan
 	#    flagPBD: do we return back to PBD handler or to default waypoint handler?
+	#    flagPROG: do we return back to PROG handler or to default waypoint handler (only if flagPBD false)
 	
-	createDuplicateNames: func(ghostContainer, index, flag, plan, flagPBD = 0, bearing = -999, distance = -99) {
+	createDuplicateNames: func(ghostContainer, index, flag, plan, flagPBD = 0, bearing = -999, distance = -99, flagPROG = 0) {
 		if (canvas_mcdu.myDuplicate[plan] != nil) {
 			canvas_mcdu.myDuplicate[plan].del();
 		}
 		canvas_mcdu.myDuplicate[plan] = nil;
-		canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(ghostContainer, index, flag, plan, flagPBD, bearing, distance);
+		canvas_mcdu.myDuplicate[plan] = mcdu.duplicateNamesPage.new(ghostContainer, index, flag, plan, flagPBD, bearing, distance, flagPROG);
 		setprop("MCDU[" ~ plan ~ "]/page", "DUPLICATENAMES");
 	},
 	
@@ -639,9 +640,9 @@ var flightPlanController = {
 			}
 		} else {
 			if (type == "navaid") {
-				me.createDuplicateNames(wpGhostContainer, index, 1, plan, 1, num(textSplit[1]), num(textSplit[2]));
+				me.createDuplicateNames(wpGhostContainer, index, 1, plan, 1, num(textSplit[1]), num(textSplit[2]), 0);
 			} else {
-				me.createDuplicateNames(wpGhostContainer, index, 0, plan, 1, num(textSplit[1]), num(textSplit[2]));
+				me.createDuplicateNames(wpGhostContainer, index, 0, plan, 1, num(textSplit[1]), num(textSplit[2]), 0);
 			}
 			return 2;
 		}

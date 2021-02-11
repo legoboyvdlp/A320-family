@@ -364,6 +364,10 @@ var canvas_MCDU_base = {
 		me.fontSizeLeftS(small, small, small, small, small, small);
 		me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 		me.fontSizeRightS(small, small, small, small, small, small);
+		me.fontCenter(default, default, default, default, default, default);
+		me.fontCenterS(default, default, default, default, default, default);
+		me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+		me.fontSizeCenterS(small, small, small, small, small, small);
 	},
 	standardFontColour: func() {
 		me.colorLeft("wht", "wht", "wht", "wht", "wht", "wht");
@@ -384,13 +388,28 @@ var canvas_MCDU_base = {
 		var	sign2 = degrees2 >= 0 ? "E" : "W";
 		return sprintf("%d%.1f%s/%07s%s",abs(degrees),minutes,sign,abs(degrees2)  ~ minutes2,sign2);
 	},
-	getIRSStatus: func(a) {
+	getLatLogFormatted2: func(rootpropname) {
+		var dms = getprop(rootpropname ~ "latitude-deg");
+		var degrees = int(dms);
+		var	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
+		var	sign = degrees >= 0 ? "N" : "S";
+		var dms2 = getprop(rootpropname ~ "longitude-deg");
+		var	degrees2 = int(dms2);
+		var	minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
+		var	sign2 = degrees2 >= 0 ? "E" : "W";
+		return sprintf("%d %.1f%s/%03s %.1f%s",abs(degrees),minutes,sign,abs(degrees2),minutes2,sign2);
+	},
+	getIRSStatus: func(a,b = 0) {
 		var irsstatus = "INVAL";
 		if (systems.ADIRS.ADIRunits[a].operative) {
 			if (systems.ADIRS.Operating.aligned[a].getValue()) {
 				irsstatus = (systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV";
 			} else {
-				irsstatus = "ALIGN TTN" ~ sprintf("% 2.0d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
+				if (b) {
+					irsstatus = "ALIGN TTN" ~ sprintf("%2d",math.round(systems.ADIRS.ADIRunits[a]._alignTime) / 60);
+				} else {
+					irsstatus = "ALIGN";
+				}
 			}
 		}
 		return irsstatus;
@@ -2454,7 +2473,7 @@ var canvas_MCDU_base = {
 			var rows = ["Simple_L2S","Simple_L3S","Simple_L4S"];
 			var center = ["Simple_C1","Simple_C2","Simple_C3"];
 			for (var a = 0; a<3; a+=1) {
-				me[rows[a]].setText("  " ~ me.getIRSStatus(a));
+				me[rows[a]].setText("  " ~ me.getIRSStatus(a,1));
 				if (systems.ADIRS.ADIRunits[a]._excessMotion) {
 					me[center[a]].show();
 				} else {
@@ -2475,8 +2494,69 @@ var canvas_MCDU_base = {
 				me["Simple_R3S"].setText("");
 				me["Simple_R4S"].setText("");
 			}
+		} else if (page == "GPSMON") {
+			if (!pageSwitch[i].getBoolValue()) {
+				
+				me.defaultHideWithCenter();
+				me.standardFontSize();
 
+				me.defaultPageNumbers();
 
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me.showLeftS(1, 1, 1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
+				me.showCenter(-1, 1, 1, -1, 1, 1);
+				me.showCenterS(-1, 1, 1, -1, 1, 1);
+				me.showRight(-1, 1, 1, -1, 1, 1);
+				me.showRightS(-1, 1, 1, -1, 1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, -1);
+
+				me["arrowsDepArr"].hide();
+				me["PERFAPPR"].hide();
+				me["PERFGA"].hide();				
+				me["Simple_L0S"].hide();
+				me["Simple_Title"].show();
+				
+				me.colorLeft("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("grn", "grn", "grn", "grn", "grn", "grn");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_Title"].setText("GPS MONITOR");
+
+				me["Simple_L1S"].setText("GPS1 POSITION");
+				me["Simple_L2S"].setText("TTRK");
+				me["Simple_L3S"].setText("MERIT");
+				me["Simple_L3"].setText(sprintf("%3d",((rand() * 50) - 25) + 50) ~ "M");
+				me["Simple_L4S"].setText("GPS2 POSITION");
+				me["Simple_L5S"].setText("TTRK");
+				me["Simple_L6S"].setText("MERIT");
+				me["Simple_L6"].setText(sprintf("%3d",((rand() * 50) - 25) + 50) ~ "M");
+				me["Simple_C2S"].setText("UTC");
+				me["Simple_C3S"].setText("GPS ALT");
+				me["Simple_C5S"].setText("UTC");
+				me["Simple_C6S"].setText("GPS ALT");
+				me["Simple_R2S"].setText("GS");
+				me["Simple_R3S"].setText("MODE/SAT");
+				me["Simple_R3"].setText("NAV/" ~ sprintf("%s",int((rand() * 2) - 1) + 6) ~ "  ");
+				me["Simple_R5S"].setText("GS");
+				me["Simple_R6S"].setText("MODE/SAT");
+				me["Simple_R6"].setText("NAV/" ~ sprintf("%s",int((rand() * 2) - 1) + 6) ~ "  ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			me["Simple_L1"].setText(me.getLatLogFormatted2("/position/"));
+			me["Simple_L2"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
+			me["Simple_L4"].setText(me.getLatLogFormatted2("/position/"));
+			me["Simple_L5"].setText(sprintf("%-5.1f",pts.Instrumentation.GPS.trackMag.getValue() + magvar()));
+			var gmt = string.replace(pts.Sim.Time.gmtString.getValue(),":",".");
+			me["Simple_C2"].setText(gmt);
+			me["Simple_C5"].setText(gmt);
+			me["Simple_C3"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
+			me["Simple_C6"].setText(sprintf("%5.0f",pts.Instrumentation.GPS.altitude.getValue()));
+			me["Simple_R2"].setText(sprintf("%3.0f",pts.Instrumentation.GPS.gs.getValue()));
+			me["Simple_R5"].setText(sprintf("%3.0f",pts.Instrumentation.GPS.gs.getValue()));
 		} else if (page == "RADNAV") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -3910,7 +3990,6 @@ var canvas_MCDU_base = {
 				me["PROG_UPDATE"].show();
 				me["Simple_L3"].setText("  [    ]");
 			}
-			me["Simple_L4"].setText(" ---g /----.-");
 			me["Simple_L5"].setText(" GPS");
 			me["Simple_L6"].setText("----");
 			me["Simple_L1S"].setText(" CRZ");
@@ -3936,8 +4015,25 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setText(sprintf("%17s%4d   ",vdev_sign,abs(vdev)));
 				me["Simple_R2"].setText(sprintf("%30s","VDEV=       FT "));
 			}
-
-			me["Simple_R4"].setText("[    ]");
+			
+			if (mcdu.bearingDistances[i].displayID != nil) {
+				me["Simple_R4"].setFont(default);
+				me["Simple_R4"].setFontSize(normal);
+				me["Simple_R4"].setText(mcdu.bearingDistances[i].displayID);
+			} else {
+				me["Simple_R4"].setFont(symbol);
+				me["Simple_R4"].setFontSize(small);
+				me["Simple_R4"].setText("[    ]");
+			}
+			
+			if (mcdu.bearingDistances[i].selectedPoint != nil) {
+				me["Simple_L4"].setColor(GREEN);
+				me["Simple_L4"].setText(sprintf("%3.0fg /%4.1f",mcdu.bearingDistances[i].bearing,mcdu.bearingDistances[i].distance));
+			} else {
+				me["Simple_L4"].setColor(WHITE);
+				me["Simple_L4"].setText(" ---g /----.-");
+			}
+			
 			me["Simple_R5"].setText("GPS PRIMARY");
 			me["Simple_R6"].setText("----");
 			me["Simple_R1S"].setText("REC MAX ");
@@ -3945,7 +4041,7 @@ var canvas_MCDU_base = {
 			me["Simple_C1"].setText("-----");
 			me["Simple_C1S"].setText("OPT");
 			me["Simple_C3S"].setText("CONFIRM UPDATE AT");
-			me["Simple_C4"].setText("   TO");
+			me["Simple_C4"].setText("      TO");
 			me["Simple_C6S"].setText("ACCUR");
 			if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) me["Simple_C6"].setText("HIGH");
 			else  me["Simple_C6"].setText("LOW");
@@ -6155,6 +6251,46 @@ var canvas_MCDU_base = {
 		}
 		if (f != 0) {
 			me["Simple_L6S"].setFont(f); 
+		}
+	},
+	fontCenter: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_C1"].setFont(a); 
+		}
+		if (b != 0) {
+			me["Simple_C2"].setFont(b); 
+		}
+		if (c != 0) {
+			me["Simple_C3"].setFont(c); 
+		}
+		if (d != 0) {
+			me["Simple_C4"].setFont(d); 
+		}
+		if (e != 0) {
+			me["Simple_C5"].setFont(e); 
+		}
+		if (f != 0) {
+			me["Simple_C6"].setFont(f); 
+		}
+	},
+	fontCenterS: func (a, b, c, d, e, f) {
+		if (a != 0) {
+			me["Simple_C1S"].setFont(a); 
+		}
+		if (b != 0) {
+			me["Simple_C2S"].setFont(b); 
+		}
+		if (c != 0) {
+			me["Simple_C3S"].setFont(c); 
+		}
+		if (d != 0) {
+			me["Simple_C4S"].setFont(d); 
+		}
+		if (e != 0) {
+			me["Simple_C5S"].setFont(e); 
+		}
+		if (f != 0) {
+			me["Simple_C6S"].setFont(f); 
 		}
 	},
 	fontRight: func (a, b, c, d, e, f) {

@@ -877,7 +877,81 @@
 			</and>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>atc_abv</object-name>
+		<factor>35</factor>
+		<offset-deg>0</offset-deg>
+		<axis>
+			<object-name>atc_abv.axis</object-name>
+		</axis>
+		<property>controls/atc/abv-blw</property>
+	</animation>
 
+	<animation>
+		<type>pick</type>
+		<object-name>atc_abv</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/abv-blw</property>
+				<value>-1</value>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+        </action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/abv-blw</property>
+				<value>1</value>
+                <value>0</value>
+				<value>-1</value>
+            </binding>
+        </action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>atc_thrt</object-name>
+		<factor>-30</factor>
+		<offset-deg>0</offset-deg>
+		<axis>
+			<object-name>atc_thrt.axis</object-name>
+		</axis>
+		<property>controls/atc/thrt-all</property>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_thrt</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/thrt-all</property>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+        </action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/thrt-all</property>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+        </action>
+	</animation>
+	
 	<!-- Primary Flight Displays -->
 	<model>
 		<name>PFD1</name>
