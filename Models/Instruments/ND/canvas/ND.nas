@@ -48,7 +48,7 @@ var myCockpit_switches = {
 	"toggle_waypoints": {path: "/inputs/wpt", value:0, type:"BOOL"},
 	"toggle_position": {path: "/inputs/pos", value:0, type:"BOOL"},
 	"toggle_data": {path: "/inputs/data",value:0, type:"BOOL"},
-	"toggle_terrain": {path: "/inputs/terr",value:0, type:"BOOL"},
+	#"toggle_terrain": {path: "/inputs/terr",value:0, type:"BOOL"},
 	"toggle_traffic": {path: "/inputs/tfc",value:0, type:"BOOL"},
 	"toggle_centered": {path: "/inputs/nd-centered",value:0, type:"BOOL"},
 	"toggle_lh_vor_adf": {path: "/input/lh-vor-adf",value:0, type:"INT"},

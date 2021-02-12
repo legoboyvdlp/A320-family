@@ -41,8 +41,8 @@ var searchCmd  = func {
 	
 	#if(lat == nil or lon == nil) {
 		var pos = geo.aircraft_position();
-		lat = pos.lat();
-		lon = pos.lon();
+		var lat = pos.lat();
+		var lon = pos.lon();
 	#}
 	
 	var result = geo.Coord.new();

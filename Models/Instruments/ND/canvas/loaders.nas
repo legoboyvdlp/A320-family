@@ -16,7 +16,7 @@ setlistener("/nasal/canvas/loaded", func() {
 	 var aircraft_root = getprop("/sim/aircraft-dir");
 
 	var load = func(file, name) {
-		print("Loading ..." ~ file);
+		#print("Loading ..." ~ file);
 		if (name == nil)
 			var name = split("/", file)[-1];
 		if (substr(name, size(name)-4) == ".draw")

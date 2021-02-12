@@ -88,17 +88,33 @@ canvas.NDStyles["Airbus"] = {
 			name:"TERRAIN", 
 			isMapStructure:1, 
 			always_update: 1,
-			update_on:[ "toggle_range","toggle_display_mode","toggle_terrain"],
+			update_on:[ {rate_hz: 0.4}, "toggle_range","toggle_display_mode","toggle_terrain"],
 			predicate: func(nd, layer) {
-				var visible=nd.get_switch("toggle_terrain") and 
-					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
+				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
+				var visible = nd.get_switch("toggle_terrain") and 
+					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible(visible);
 				if (visible) {
 					layer.update(); 
 				}
 			}, # end of layer update predicate
 			options: {
-				viewport_radius: 706
+				viewport_radius: 706,
+				model: {
+					parents: [geo.Coord],
+					id: 999999,
+					pos: props.globals.getNode("position"),
+					type: "position",
+					latlon: func(){ 
+						me.pos = props.globals.getNode("position");
+						return [
+							me.pos.getValue("latitude-deg"),
+							me.pos.getValue("longitude-deg"),
+							me.pos.getValue("altitude-ft")
+						];
+					},
+					equals: func(o){me.id == o.id}
+				},				
 			},
 			"z-index": -100,
 		},
@@ -106,11 +122,11 @@ canvas.NDStyles["Airbus"] = {
 			name:"WXR_live", 
 			isMapStructure:1, 
 			always_update: 1,
-			update_on:[ "toggle_range","toggle_weather","toggle_display_mode","toggle_weather_live"],
+			update_on:[ "toggle_range","toggle_weather","toggle_display_mode","toggle_weather_live","toggle_terrain"],
 			predicate: func(nd, layer) {
 				var visible=nd.get_switch("toggle_weather") and 
 					nd.get_switch("toggle_weather_live") and 
-					nd.get_switch("toggle_display_mode") != "PLAN"  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
+					nd.get_switch("toggle_display_mode") != "PLAN" and !nd.get_switch("toggle_terrain") and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible(visible);
 				if (visible) {
 					layer.update(); 
