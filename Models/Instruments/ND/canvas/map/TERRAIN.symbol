@@ -43,7 +43,7 @@ var updateTerrain = func(r_scaled){
 	var a = int(me.radar_beacon/2);
     var col = a;
 
-	if (side == "L") {
+	if (side == "R") {
 		col = -1 + (-1 * a);
 	}
 
