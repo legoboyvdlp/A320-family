@@ -14,14 +14,13 @@ canvas.SymbolLayer.add(name, {
 	}
 });
 
-var terrain_tree = "/instrumentation/efis[0]/nd/terrain-on-nd";
+var terrain_tree = "/instrumentation/terrain";
 
 var new = func(layer) {
 	var m = {
 		parents: [__self__],
 		layer: layer,
 		map: layer.map,
-		startpos: layer.map.getPosCoord(),
 		listeners: [],
 	};
 	layer.searcher._equals = func(l,r) l.equals(r);
@@ -42,8 +41,8 @@ var searchCmd  = func {
 	
 	#if(lat == nil or lon == nil) {
 		var pos = geo.aircraft_position();
-		var lat = pos.lat();
-		var lon = pos.lon();
+		lat = pos.lat();
+		lon = pos.lon();
 	#}
 	
 	var result = geo.Coord.new();

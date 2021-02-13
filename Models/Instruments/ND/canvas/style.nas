@@ -100,9 +100,9 @@ canvas.NDStyles["Airbus"] = {
 			}, # end of layer update predicate
 			options: {
 				viewport_radius: 670, #512, #706,
-				position_callback: func(nd, pos){
-					pos = me.startpos;
-				}
+				#position_callback: func(nd, pos){
+				#	pos = me.startpos;
+				#}
 			},
 			"z-index": -100,
 		},

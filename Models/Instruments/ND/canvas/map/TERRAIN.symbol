@@ -23,7 +23,6 @@ var get_elevation = func (lat, lon) {
 
 }
 
-
 var updateTerrain = func(r_scaled){
 
 	if(me.fetching) return;
@@ -39,7 +38,13 @@ var updateTerrain = func(r_scaled){
 	var pos_lon = pos.lon();
 	
 	var heading = getprop("orientation/heading-magnetic-deg");
-	var altitudeagl = getprop("/position/altitude-agl-ft");
+	var altitudeft = pos.alt() * 3.2808399;
+
+	if (me.basealtitudeft == nil) {
+		var basealtft = me.get_elevation(pos_lat,pos_lon);
+		if (basealtft == nil) basealtft = 0;
+		me.basealtitudeft = basealtft + 400;
+	}
 
 	var side = (math.mod(me.radar_beacon,2)==0) ? "L" : "R";
 	var a = int(me.radar_beacon/2);
@@ -62,28 +67,31 @@ var updateTerrain = func(r_scaled){
 
 		var tiles = me.tile_list;
 
-		var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 60);
-		var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 60);
+		var proj_lon = pos_lon + ((col * (range/15) * math.sin(DEG2RAD * (heading - 90))) / 30);
+		var proj_lat = pos_lat + ((col * (range/15) * math.cos(DEG2RAD * (heading - 90))) / 30);
 
 		var elevft = [];
 
 		for (var row = 0; row <= len; row += 1) {
 
-			var point_lon = proj_lon + ((row * (range/30) / 60) * math.sin(DEG2RAD * heading));
-			var point_lat = proj_lat + ((row * (range/30) / 60) * math.cos(DEG2RAD * heading));
+			var point_lon = proj_lon + ((row * (range/15) / 30) * math.sin(DEG2RAD * heading));
+			var point_lat = proj_lat + ((row * (range/15) / 30) * math.cos(DEG2RAD * heading));
 
 			var elev = me.get_elevation(point_lat, point_lon);
 			var grad = 0; #black
 			if (elev != nil) {
-				var diff = elev - altitudeagl;
-				if (diff>=0) {
-					grad = int(diff/1000) + 3;
-					if (grad>5) grad = 5;
-				} else {
-					if (diff>-500) grad = 3; # lite yellow
-					else {
-						grad = 2 + int(diff/1000);
-						if (grad<0) grad = 0;
+				if (elev < me.basealtitudeft) grad = 0; # < 400 (at airport) use blank - trivial
+				else {
+					var diff = elev - altitudeft;
+					if (diff>=0) {
+						grad = int(diff/1000) + 3;
+						if (grad>5) grad = 5;
+					} else {
+						if (diff>-500) grad = 3; # lite yellow
+						else {
+							grad = 2 + int(diff/1000);
+							if (grad<0) grad = 0;
+						}
 					}
 				}
 				append(elevft,grad); # 0-5
@@ -116,7 +124,7 @@ var updateTerrain = func(r_scaled){
 
 var init = func {
 	#print('TERRAIN init');
-	me.tile = 33; # better 34
+	me.tile = 33; # preferred 34
 	me.fetching = 0;
 	me.timeStamp = nil;
 	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
@@ -124,6 +132,8 @@ var init = func {
 	me.viewport_radius = me.getOption('viewport_radius', 670);
 	me.imgpath = get_local_path('res/terrain/');
 	me.rader_cleared = 1;
+	me.basealtitudeft = nil;
+	me.visible = 0;
 
 	var tile = me.tile;
 
@@ -136,6 +146,8 @@ var init = func {
 	var centx = 0; #me.viewport_radius * -0.5;
 	var centy = -me.viewport_radius;
 
+	var group = me.group.createChild("group").set("z-index", -100); #me.element
+
 	for (var c=0; c<gx; c+=1) {
 		var hh = c * tile;
 		var mx = (c == 0) ? gx : int(math.sqrt(gx*gx-c*c) + 0.5);
@@ -145,8 +157,8 @@ var init = func {
 		var grplx = [];
 		var grprx = [];
 		for (var r=0; r<mx; r+=1) {
-			append(grplx , me.element.createChild("image").set("z-index", -100).setSize(tile,tile).setTranslation(pxl,py).hide());
-			append(grprx , me.element.createChild("image").set("z-index", -100).setSize(tile,tile).setTranslation(pxr,py).hide());
+			append(grplx , group.createChild("image").setSize(tile,tile).setTranslation(pxl,py).hide()); #.set("z-index", -100)
+			append(grprx , group.createChild("image").setSize(tile,tile).setTranslation(pxr,py).hide()); #.set("z-index", -100)
 			py-=tile;
 		}
 		me.terrlayer["L" ~ c] = grplx;
@@ -181,30 +193,25 @@ var clear = func {
 }
 
 var draw = func {
+	
 	var range = me.layer.map.getRange(); # Range of Navigation Display
 	var update_size = (range != me.range);
 	me.range = range;
 	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
 	var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
-	#var hdg = me.layer.map.getHdg();
-	#var rot = 0 - hdg;
-	#if(rot < 0) rot = 360 + rot + -getprop("/environment/magnetic-variation-deg"); 
-	#me.element.setRotation(rot*D2R);
-	if(update_size){
+
+	var update_visible = (me.group.getVisible() != me.visible);
+
+	if(update_size or update_visible){
 		me.clear();
-		#me.terrlayer.hide();
-		#me.terrlayer.setSize(2*r_scaled, 2*r_scaled)
-		#		  .setTranslation(-r_scaled, -r_scaled);
-		#me.terrlayer.show();
+		me.visible = me.group.getVisible();
 	}
 
-	var rot = getprop("orientation/heading-deg");
-	rot -= me.layer.map.getHdg();
-	me.element.setRotation(rot*D2R);
+	#var rot = getprop("orientation/heading-deg");
+	#rot -= me.layer.map.getHdg();
+	#me.element.setRotation(rot*D2R);
 
+	me.updateTerrain(r_scaled);
 
-	#if(getprop("sim/time/elapsed-sec") - me.last_request >= me.update_interval) {
-		me.updateTerrain(r_scaled);
-	#}
 };
 
