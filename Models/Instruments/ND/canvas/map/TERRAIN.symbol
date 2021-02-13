@@ -67,15 +67,15 @@ var updateTerrain = func(r_scaled){
 
 		var tiles = me.tile_list;
 
-		var proj_lon = pos_lon + ((col * (range/15) * math.sin(DEG2RAD * (heading - 90))) / 30);
-		var proj_lat = pos_lat + ((col * (range/15) * math.cos(DEG2RAD * (heading - 90))) / 30);
+		var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 30);
+		var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 30);
 
 		var elevft = [];
 
 		for (var row = 0; row <= len; row += 1) {
 
-			var point_lon = proj_lon + ((row * (range/15) / 30) * math.sin(DEG2RAD * heading));
-			var point_lat = proj_lat + ((row * (range/15) / 30) * math.cos(DEG2RAD * heading));
+			var point_lon = proj_lon + ((row * (range/30) / 30) * math.sin(DEG2RAD * heading));
+			var point_lat = proj_lat + ((row * (range/30) / 30) * math.cos(DEG2RAD * heading));
 
 			var elev = me.get_elevation(point_lat, point_lon);
 			var grad = 0; #black
