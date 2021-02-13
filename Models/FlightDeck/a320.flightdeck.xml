@@ -8742,6 +8742,40 @@
 		</condition>
 	</animation>
 	
+	<!-- ND_L chrono -->
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_cpt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis/inputs/CHRONO</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+		</action>
+	</animation>
+	
+		<!-- ND_R chrono -->
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_fo</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis[1]/inputs/CHRONO</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+		</action>
+	</animation>
+	
 	<!-- torch -->
 	
 	<animation>
