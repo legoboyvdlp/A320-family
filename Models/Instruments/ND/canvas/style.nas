@@ -99,22 +99,12 @@ canvas.NDStyles["Airbus"] = {
 				}
 			}, # end of layer update predicate
 			options: {
-				viewport_radius: 706,
-				model: {
-					parents: [geo.Coord],
-					id: 999999,
-					pos: props.globals.getNode("position"),
-					type: "position",
-					latlon: func(){ 
-						me.pos = props.globals.getNode("position");
-						return [
-							me.pos.getValue("latitude-deg"),
-							me.pos.getValue("longitude-deg"),
-							me.pos.getValue("altitude-ft")
-						];
-					},
-					equals: func(o){me.id == o.id}
-				},				
+				viewport_radius: 670, #512, #706,
+				position_callback: func(nd, pos){
+					var curr= geo.aircraft_position();
+					pos.lat = curr.lat();
+					pos.lon = curr.lon();					
+				}
 			},
 			"z-index": -100,
 		},

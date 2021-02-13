@@ -7,10 +7,11 @@ DotSym.makeinstance( name, __self__ );
 
 var element_type = "group";
 
-var tile_list = ["tile_01.png","tile_01.png","tile_02.png","tile_03.png","tile_03.png","tile_03.png","tile_04.png","tile_04.png","tile_06.png","tile_09.png",];
+var tile_list = ["*black*","tile_01.png","tile_02.png","tile_03.png","tile_04.png","tile_06.png","tile_09.png"];
 
 var radar_beacon = 0;
 var radar_cycle = 0;
+var rader_cleared = 0;
 
 var get_elevation = func (lat, lon) {
 
@@ -28,6 +29,7 @@ var updateTerrain = func(r_scaled){
 	if(me.fetching) return;
 
 	me.fetching = 1;
+	me.rader_cleared = 0;
 
 	var RAD2DEG = 57.2957795;
 	var DEG2RAD = 0.016774532925;
@@ -47,7 +49,7 @@ var updateTerrain = func(r_scaled){
 		col = -1 + (-1 * a);
 	}
 
-	var col = me.radar_beacon - me.tileradius;
+	#var col = me.radar_beacon - me.tileradius;
 
 	#for (var a=0; a < me.tileradius; a+=1) {
 
@@ -57,6 +59,8 @@ var updateTerrain = func(r_scaled){
 
 		var len = size(trn);
 		var range = me.range;
+
+		var tiles = me.tile_list;
 
 		var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 60);
 		var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 60);
@@ -69,14 +73,22 @@ var updateTerrain = func(r_scaled){
 			var point_lat = proj_lat + ((row * (range/30) / 60) * math.cos(DEG2RAD * heading));
 
 			var elev = me.get_elevation(point_lat, point_lon);
+			var grad = 0; #black
 			if (elev != nil) {
-				var grad = int((elev - altitudeagl + 500)/500);
-				if (grad>6) grad = 6;
-				else if (grad<-3) grad = -3;
-
-				append(elevft,grad+2); # (-1)-8
+				var diff = elev - altitudeagl;
+				if (diff>=0) {
+					grad = int(diff/1000) + 3;
+					if (grad>5) grad = 5;
+				} else {
+					if (diff<500) grad = 3; # lite yellowe
+					else {
+						grad = 2 + int(diff/1000);
+						if (grad<0) grad = 0;
+					}
+				}
+				append(elevft,grad); # 0-5
 			} else {
-				append(elevft,8);  # magenta
+				append(elevft,6);  # magenta
 			}
 			
 		}
@@ -84,7 +96,7 @@ var updateTerrain = func(r_scaled){
 		for (var r=0; r < len; r+=1) {
 
 			var imgx = elevft[r];
-			if (imgx < 0) trn[r].hide();
+			if (imgx < 1) trn[r].hide();
 			else trn[r].setFile(me.imgpath ~ me.tile_list[imgx]).show();
 			#trnR[r].setFile(me.imgpath ~ me.tile_list[2-imgx]).show();
 
@@ -111,6 +123,7 @@ var init = func {
 	me.range = me.model.rangeNm; # Range of Navigation Display
 	me.viewport_radius = me.getOption('viewport_radius', 670);
 	me.imgpath = get_local_path('res/terrain/');
+	me.rader_cleared = 1;
 
 	var tile = me.tile;
 
@@ -150,6 +163,23 @@ var init = func {
 	#http.load("https://api.rainviewer.com/public/maps.json").done(func(r) me.timeStamp = processRequest(r));
 };
 
+var clear = func {
+
+	if (me.rader_cleared == 0) {
+		for (var c=0; c<me.tileradius; c+=1 ) {
+			var rowL = me.terrlayer["L" ~ c];
+			var rowR = me.terrlayer["R" ~ c];
+			var len = size(rowL);
+			for (var r=0; r<len; r+=1) {
+				rowL[r].hide();
+				rowR[r].hide();
+			}		
+		}	
+		me.rader_cleared = 1;
+	}
+
+}
+
 var draw = func {
 	var range = me.layer.map.getRange(); # Range of Navigation Display
 	var update_size = (range != me.range);
@@ -160,12 +190,13 @@ var draw = func {
 	#var rot = 0 - hdg;
 	#if(rot < 0) rot = 360 + rot + -getprop("/environment/magnetic-variation-deg"); 
 	#me.element.setRotation(rot*D2R);
-	#if(update_size){
+	if(update_size){
+		me.clear();
 		#me.terrlayer.hide();
 		#me.terrlayer.setSize(2*r_scaled, 2*r_scaled)
 		#		  .setTranslation(-r_scaled, -r_scaled);
 		#me.terrlayer.show();
-	#}
+	}
 
 	var rot = getprop("orientation/heading-deg");
 	rot -= me.layer.map.getHdg();
