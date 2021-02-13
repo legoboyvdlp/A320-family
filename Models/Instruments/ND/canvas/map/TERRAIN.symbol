@@ -67,15 +67,20 @@ var updateTerrain = func(r_scaled){
 
 		var tiles = me.tile_list;
 
-		var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 30);
-		var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 30);
+		var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 40);
+		var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
 
 		var elevft = [];
 
-		for (var row = 0; row <= len; row += 1) {
+		for (var row = 0; row < len; row += 1) {
 
-			var point_lon = proj_lon + ((row * (range/30) / 30) * math.sin(DEG2RAD * heading));
-			var point_lat = proj_lat + ((row * (range/30) / 30) * math.cos(DEG2RAD * heading));
+			if (trn[row] == nil) {
+				append(elevft,-1);
+				continue;
+			}
+
+			var point_lon = proj_lon + ((row * (range/30) / 40) * math.sin(DEG2RAD * heading));
+			var point_lat = proj_lat + ((row * (range/30) / 40) * math.cos(DEG2RAD * heading));
 
 			var elev = me.get_elevation(point_lat, point_lon);
 			var grad = 0; #black
@@ -104,6 +109,7 @@ var updateTerrain = func(r_scaled){
 		for (var r=0; r < len; r+=1) {
 
 			var imgx = elevft[r];
+			if (imgx == -1) continue;			
 			if (imgx < 1) trn[r].hide();
 			else trn[r].setFile(me.imgpath ~ me.tile_list[imgx]).show();
 			#trnR[r].setFile(me.imgpath ~ me.tile_list[2-imgx]).show();
@@ -151,14 +157,20 @@ var init = func {
 	for (var c=0; c<gx; c+=1) {
 		var hh = c * tile;
 		var mx = (c == 0) ? gx : int(math.sqrt(gx*gx-c*c) + 0.5);
+		var my = int(c*4/gx);
 		var py = centy + (gx-1) * tile;
 		var pxr = centx+(c*tile);
 		var pxl = centx-(c*tile)-tile;
 		var grplx = [];
 		var grprx = [];
 		for (var r=0; r<mx; r+=1) {
-			append(grplx , group.createChild("image").setSize(tile,tile).setTranslation(pxl,py).hide()); #.set("z-index", -100)
-			append(grprx , group.createChild("image").setSize(tile,tile).setTranslation(pxr,py).hide()); #.set("z-index", -100)
+			if (r<my) {
+				append(grplx , nil); #skip
+				append(grprx , nil);
+			} else {
+				append(grplx , group.createChild("image").setSize(tile,tile).setTranslation(pxl,py).hide());
+				append(grprx , group.createChild("image").setSize(tile,tile).setTranslation(pxr,py).hide());
+			}
 			py-=tile;
 		}
 		me.terrlayer["L" ~ c] = grplx;
@@ -183,8 +195,10 @@ var clear = func {
 			var rowR = me.terrlayer["R" ~ c];
 			var len = size(rowL);
 			for (var r=0; r<len; r+=1) {
-				rowL[r].hide();
-				rowR[r].hide();
+				if (rowL[r] != nil) {
+					rowL[r].hide();
+					rowR[r].hide();
+				}
 			}		
 		}	
 		me.rader_cleared = 1;
