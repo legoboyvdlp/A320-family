@@ -101,9 +101,7 @@ canvas.NDStyles["Airbus"] = {
 			options: {
 				viewport_radius: 670, #512, #706,
 				position_callback: func(nd, pos){
-					var curr= geo.aircraft_position();
-					pos.lat = curr.lat();
-					pos.lon = curr.lon();					
+					pos = me.startpos;
 				}
 			},
 			"z-index": -100,

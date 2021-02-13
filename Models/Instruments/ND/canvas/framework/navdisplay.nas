@@ -627,7 +627,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		# conditional stuff
 		if(!contains(feature.impl, "predicate")) continue; # no conditional stuff
 		if ( var result=feature.impl.predicate(me) )
-		feature.impl.is_true(me, result); # pass the result to the predicate
+			feature.impl.is_true(me, result); # pass the result to the predicate
 		else
 			feature.impl.is_false( me, result ); # pass the result to the predicate
 	}

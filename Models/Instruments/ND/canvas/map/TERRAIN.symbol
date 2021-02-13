@@ -80,7 +80,7 @@ var updateTerrain = func(r_scaled){
 					grad = int(diff/1000) + 3;
 					if (grad>5) grad = 5;
 				} else {
-					if (diff<500) grad = 3; # lite yellowe
+					if (diff>-500) grad = 3; # lite yellow
 					else {
 						grad = 2 + int(diff/1000);
 						if (grad<0) grad = 0;

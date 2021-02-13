@@ -21,6 +21,7 @@ var new = func(layer) {
 		parents: [__self__],
 		layer: layer,
 		map: layer.map,
+		startpos: layer.map.getPosCoord(),
 		listeners: [],
 	};
 	layer.searcher._equals = func(l,r) l.equals(r);
