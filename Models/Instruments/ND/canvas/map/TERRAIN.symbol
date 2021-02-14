@@ -7,20 +7,19 @@ DotSym.makeinstance( name, __self__ );
 
 var element_type = "group";
 
+var terrain_visible = props.globals.initNode("/custom/terrain/visible", 0,"INT");
+var terrain_minalt = props.globals.initNode("/custom/terrain/min-altitude", 0,"INT");
+var terrain_maxalt = props.globals.initNode("/custom/terrain/max-altitude", -9999,"INT");
+
 var tile_list = ["*black*","tile_01.png","tile_02.png","tile_03.png","tile_04.png","tile_06.png","tile_09.png"];
 
-var radar_beacon = 0;
-var radar_cycle = 0;
-var rader_cleared = 0;
 
 var get_elevation = func (lat, lon) {
-
 	var info = geodinfo(lat, lon);
 	var elevation = 0;
 	if (info != nil) { elevation = int(info[0] * 3.2808399); }
 	else { elevation = nil; }
 	return elevation;
-
 }
 
 var updateTerrain = func(r_scaled){
@@ -28,7 +27,11 @@ var updateTerrain = func(r_scaled){
 	if(me.fetching) return;
 
 	me.fetching = 1;
-	me.rader_cleared = 0;
+
+	if (me.request_clear == 1) {
+		me.request_clear = 0;
+		me.clear();
+	}
 
 	var RAD2DEG = 57.2957795;
 	var DEG2RAD = 0.016774532925;
@@ -54,78 +57,83 @@ var updateTerrain = func(r_scaled){
 		col = -1 + (-1 * a);
 	}
 
-	#var col = me.radar_beacon - me.tileradius;
+	var trn = me.terrlayer[side ~ a];
 
-	#for (var a=0; a < me.tileradius; a+=1) {
+	var len = size(trn);
+	var range = me.range;
 
-		#var trnL = me.terrlayer["L" ~ a];
-		#var trnR = me.terrlayer["R" ~ a];
-		var trn = me.terrlayer[side ~ a];
+	var tiles = me.tile_list;
 
-		var len = size(trn);
-		var range = me.range;
+	var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 40);
+	var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
 
-		var tiles = me.tile_list;
+	var elevft = [];
 
-		var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 40);
-		var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
+	for (var row = 0; row < len; row += 1) {
 
-		var elevft = [];
+		if (trn[row] == nil) {
+			append(elevft,-1);
+			continue;
+		}
 
-		for (var row = 0; row < len; row += 1) {
+		var point_lon = proj_lon + ((row * (range/30) / 40) * math.sin(DEG2RAD * heading));
+		var point_lat = proj_lat + ((row * (range/30) / 40) * math.cos(DEG2RAD * heading));
 
-			if (trn[row] == nil) {
-				append(elevft,-1);
-				continue;
-			}
-
-			var point_lon = proj_lon + ((row * (range/30) / 40) * math.sin(DEG2RAD * heading));
-			var point_lat = proj_lat + ((row * (range/30) / 40) * math.cos(DEG2RAD * heading));
-
-			var elev = me.get_elevation(point_lat, point_lon);
-			var grad = 0; #black
-			if (elev != nil) {
-				if (elev < me.basealtitudeft) grad = 0; # < 400 (at airport) use blank - trivial
-				else {
-					var diff = elev - altitudeft;
-					if (diff>=0) {
-						grad = int(diff/1000) + 3;
-						if (grad>5) grad = 5;
-					} else {
-						if (diff>-500) grad = 3; # lite yellow
-						else {
-							grad = 2 + int(diff/1000);
-							if (grad<0) grad = 0;
-						}
+		var elev = me.get_elevation(point_lat, point_lon);
+		var grad = 0; #black
+		if (elev != nil) {
+			if (elev<me.min_altitude) me.min_altitude = elev;
+			else if (elev>me.max_altitude) me.max_altitude = elev;
+			if (elev < me.basealtitudeft) grad = 0; # < 400 (at airport) use blank - trivial
+			else {
+				var diff = elev - altitudeft;
+				if (diff>=0) {
+					grad = int(diff/1000) + 3;
+					if (grad>5) grad = 5;
+				} else {
+					if (diff>-500) grad = 3; # lite yellow
+					else {
+						grad = 2 + int(diff/1000);
+						if (grad<0) grad = 0;
 					}
 				}
-				append(elevft,grad); # 0-5
-			} else {
-				append(elevft,6);  # magenta
 			}
-			
+			append(elevft,grad); # 0-5
+		} else {
+			append(elevft,6);  # magenta
 		}
+		
+	}
 
-		for (var r=0; r < len; r+=1) {
+	me.radar_cleared = 0;
 
-			var imgx = elevft[r];
-			if (imgx == -1) continue;			
-			if (imgx < 1) trn[r].hide();
-			else trn[r].setFile(me.imgpath ~ me.tile_list[imgx]).show();
-			#trnR[r].setFile(me.imgpath ~ me.tile_list[2-imgx]).show();
-
-		}
-
-	#}
+	for (var r=0; r < len; r+=1) {
+		var imgx = elevft[r];
+		if (imgx == -1) continue;			
+		if (imgx < 1) trn[r].hide();
+		else trn[r].setFile(me.imgpath ~ me.tile_list[imgx]).show();		
+	}
 
 	me.radar_beacon += 1;
-	if (me.radar_beacon >= (me.tileradius*2)) {
-		me.radar_beacon = 0;
-		me.radar_cycle += 1;
+	if (me.radar_beacon >= (me.tileradiusw*2)) {
+		me.update_altitudes();
+		me.restart_beacon();
 	}
 
 	#me.last_request = getprop("sim/time/elapsed-sec");
 	me.fetching = 0;
+};
+
+var update_altitudes = func {
+	me.terrain_minalt.setValue(me.min_altitude);
+	me.terrain_maxalt.setValue(me.max_altitude);
+}
+
+var restart_beacon = func {
+	me.radar_beacon = 0;
+	me.radar_cycle += 1;
+	me.min_altitude = 9999;
+	me.max_altitude = -9999;
 };
 
 var init = func {
@@ -137,24 +145,31 @@ var init = func {
 	me.range = me.model.rangeNm; # Range of Navigation Display
 	me.viewport_radius = me.getOption('viewport_radius', 670);
 	me.imgpath = get_local_path('res/terrain/');
-	me.rader_cleared = 1;
+	me.radar_beacon = 0;
+	me.radar_cycle = 0;
+	me.radar_cleared = 1;
+	me.request_clear = 0;
 	me.basealtitudeft = nil;
 	me.visible = 0;
+	me.min_altitude = 9999;
+	me.max_altitude = -9999;
 
 	var tile = me.tile;
 
 	var gx = int(me.viewport_radius / tile);
-
 	me.tileradius = gx;
 
-	me.terrlayer = {}; #me.element.createChild("image").set("z-index", -100).hide();
+	var limx = int((512/tile)+0.5);  # horiz space is smaller
+	me.tileradiusw = limx;
 
-	var centx = 0; #me.viewport_radius * -0.5;
+	me.terrlayer = {};
+
+	var centx = 0;
 	var centy = -me.viewport_radius;
 
 	var group = me.group.createChild("group").set("z-index", -100); #me.element
 
-	for (var c=0; c<gx; c+=1) {
+	for (var c=0; c<limx; c+=1) {
 		var hh = c * tile;
 		var mx = (c == 0) ? gx : int(math.sqrt(gx*gx-c*c) + 0.5);
 		var my = int(c*4/gx);
@@ -177,9 +192,9 @@ var init = func {
 		me.terrlayer["R" ~ c] = grprx;
 	}
 		
-	me.update_interval = 300;
-	me.last_request = 0;
-	
+	#me.update_interval = 300;
+	#me.last_request = 0;
+
 	#var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
 	#me.fetchWXRMap(r_scaled);
 	
@@ -189,9 +204,10 @@ var init = func {
 
 var clear = func {
 
-	if (me.rader_cleared == 0) {
-		for (var c=0; c<me.tileradius; c+=1 ) {
-			var rowL = me.terrlayer["L" ~ c];
+	if (me.radar_cleared == 0) {
+		me.radar_cleared = 1;
+		for (var c=0; c<me.tileradiusw; c+=1 ) {
+			var rowL = me.terrlayer["L" ~ c];			
 			var rowR = me.terrlayer["R" ~ c];
 			var len = size(rowL);
 			for (var r=0; r<len; r+=1) {
@@ -199,9 +215,8 @@ var clear = func {
 					rowL[r].hide();
 					rowR[r].hide();
 				}
-			}		
-		}	
-		me.rader_cleared = 1;
+			}
+		}		
 	}
 
 }
@@ -214,18 +229,15 @@ var draw = func {
 	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
 	var r_scaled = (me.fetchRad*me.viewport_radius)/me.range;
 
-	var update_visible = (me.group.getVisible() != me.visible);
-
-	if(update_size or update_visible){
-		me.clear();
-		me.visible = me.group.getVisible();
+	if(update_size){
+		me.request_clear = 1;
 	}
 
-	#var rot = getprop("orientation/heading-deg");
-	#rot -= me.layer.map.getHdg();
-	#me.element.setRotation(rot*D2R);
+	if(me.terrain_visible.getValue() == 0){
+		me.request_clear = 1;
+		me.terrain_visible.setValue(1);
+	}
 
 	me.updateTerrain(r_scaled);
 
 };
-

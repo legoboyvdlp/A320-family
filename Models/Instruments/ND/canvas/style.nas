@@ -12,6 +12,9 @@ var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass position deg
 
+var terrain_visible = props.globals.getNode("/custom/terrain/visible", 0);
+var terrain_minalt = props.globals.getNode("/custom/terrain/min-altitude", 0);
+var terrain_maxalt = props.globals.getNode("/custom/terrain/max-altitude", -9999);
 
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
@@ -86,23 +89,22 @@ canvas.NDStyles["Airbus"] = {
 	layers: [
 		{ 
 			name:"TERRAIN", 
-			isMapStructure:1, 
-			always_update: 1,
-			update_on:[ {rate_hz: 0.4}, "toggle_range","toggle_display_mode","toggle_terrain"],
+			isMapStructure: 1,
+			update_on:[ {rate_hz: 18}, "toggle_range","toggle_display_mode","toggle_terrain"],
 			predicate: func(nd, layer) {
 				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
 				var visible = nd.get_switch("toggle_terrain") and 
-					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
-				layer.group.setVisible(visible);
+					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and 
+					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
+				layer.group.setVisible(visible);				
 				if (visible) {
 					layer.update(); 
+				} else {
+					#terrain_visible.setValue(0);
 				}
 			}, # end of layer update predicate
 			options: {
 				viewport_radius: 670, #512, #706,
-				#position_callback: func(nd, pos){
-				#	pos = me.startpos;
-				#}
 			},
 			"z-index": -100,
 		},
@@ -1978,6 +1980,26 @@ canvas.NDStyles["Airbus"] = {
 				},
 				is_false: func(nd){
 					nd.symbols.offsetLbl.hide();
+				}
+			}
+		},
+		{
+			id: "terrGroup",
+			impl: {
+				init: func(nd,symbol),
+				predicate: func(nd) ( nd.get_switch("toggle_terrain") and 
+					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and 
+					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ),
+				is_true: func(nd){
+					if (terrain_maxalt.getValue() != -9999) {
+						nd.symbols.terrLO.setText(sprintf("%03d",int(terrain_minalt.getValue()/100)));
+						nd.symbols.terrHI.setText(sprintf("%03d",int(terrain_maxalt.getValue()/100)));
+						nd.symbols.terrGroup.show();
+						terrain_maxalt.setValue(-9999); #update visual once at radar cycle
+					}											
+				},
+				is_false: func(nd){
+					nd.symbols.terrGroup.hide();
 				}
 			}
 		}

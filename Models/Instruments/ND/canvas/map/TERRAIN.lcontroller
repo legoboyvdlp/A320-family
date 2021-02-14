@@ -14,8 +14,6 @@ canvas.SymbolLayer.add(name, {
 	}
 });
 
-var terrain_tree = "/instrumentation/terrain";
-
 var new = func(layer) {
 	var m = {
 		parents: [__self__],
@@ -36,14 +34,10 @@ var del = func() {
 
 var searchCmd  = func {
 	if(me.map.getRange() == nil) return [];
-	#var lat = getprop(terrain_tree~"/center/latitude-deg");
-	#var lon = getprop(terrain_tree~"/center/longitude-deg");
 	
-	#if(lat == nil or lon == nil) {
-		var pos = geo.aircraft_position();
-		lat = pos.lat();
-		lon = pos.lon();
-	#}
+	var pos = geo.aircraft_position();
+	lat = pos.lat();
+	lon = pos.lon();
 	
 	var result = geo.Coord.new();
 	result.set_latlon(lat, lon);
