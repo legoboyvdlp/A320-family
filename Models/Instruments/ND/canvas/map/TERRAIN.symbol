@@ -222,6 +222,8 @@ var clear = func {
 }
 
 var draw = func {
+
+	if(me.fetching) return;
 	
 	var range = me.layer.map.getRange(); # Range of Navigation Display
 	var update_size = (range != me.range);
@@ -238,6 +240,7 @@ var draw = func {
 		me.terrain_visible.setValue(1);
 	}
 
-	me.updateTerrain(r_scaled);
+	me.updateTerrain(r_scaled); # left
+	if (math.mod(me.radar_beacon,2)==1) me.updateTerrain(r_scaled); # right
 
 };

@@ -90,7 +90,7 @@ canvas.NDStyles["Airbus"] = {
 		{ 
 			name:"TERRAIN", 
 			isMapStructure: 1,
-			update_on:[ {rate_hz: 18}, "toggle_range","toggle_display_mode","toggle_terrain"],
+			update_on:[ {rate_hz: 10}, "toggle_range","toggle_display_mode","toggle_terrain"],
 			predicate: func(nd, layer) {
 				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
 				var visible = nd.get_switch("toggle_terrain") and 
