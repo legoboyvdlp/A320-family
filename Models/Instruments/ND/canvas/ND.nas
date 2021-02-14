@@ -48,7 +48,7 @@ var myCockpit_switches = {
 	"toggle_waypoints": {path: "/inputs/wpt", value:0, type:"BOOL"},
 	"toggle_position": {path: "/inputs/pos", value:0, type:"BOOL"},
 	"toggle_data": {path: "/inputs/data",value:0, type:"BOOL"},
-	#"toggle_terrain": {path: "/inputs/terr",value:0, type:"BOOL"},
+	"toggle_terrain": {path: "/inputs/terr",value:0, type:"BOOL"},
 	"toggle_traffic": {path: "/inputs/tfc",value:0, type:"BOOL"},
 	"toggle_centered": {path: "/inputs/nd-centered",value:0, type:"BOOL"},
 	"toggle_lh_vor_adf": {path: "/input/lh-vor-adf",value:0, type:"INT"},
@@ -64,7 +64,7 @@ var myCockpit_switches = {
 	"toggle_xtrk_error": {path: "/nd/xtrk-error", value: 0, type: "BOOL"},
 	"toggle_trk_line": {path: "/nd/trk-line", value: 0, type: "BOOL"},
 	"ADIRS3": {path: "/nd/ir-3", value: 0, type: "BOOL"},
-	"toggle_terrain": {path: "/controls/switches/terr_on_nd_l", value: 0, type: "BOOL"},
+	#"toggle_terrain": {path: "/nd/terrain-on-nd", value: 0, type: "BOOL"},
 };
 
 var canvas_nd_base = {
@@ -418,14 +418,14 @@ for (i = 0; i < 2; i = i + 1 ) {
 	});
 }
 
-setlistener("/instrumentation/efis[0]/nd/terrain-on-nd", func{
-	var terr_on_hd = getprop("instrumentation/efis[0]/nd/terrain-on-nd");
-	var alpha = 1;
-	if (terr_on_hd) {
-		alpha = 0.5;
-	}
-	nd_display.main.setColorBackground(0,0,0,alpha);
-});
+#setlistener("/instrumentation/efis[0]/nd/terrain-on-nd", func{
+#	var terr_on_hd = getprop("instrumentation/efis[0]/nd/terrain-on-nd");
+#	var alpha = 1;
+#	if (terr_on_hd) {
+#		alpha = 0.5;
+#	}
+#	nd_display.main.setColorBackground(0,0,0,alpha);
+#});
 
 setlistener("/flight-management/control/capture-leg", func(n) {
 	var capture_leg = n.getValue();
