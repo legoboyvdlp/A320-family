@@ -134,12 +134,14 @@ var SimbriefParser = {
 			fmgc.flightPlanController.flightplans[3].destination_runway = runwayStore;
 		}
 		
-		var alternateID = me.OFP.getNode("alternate/icao_code").getValue();
-		var alternates = findAirportsByICAO(alternateID);
-		if (alternates != nil and size(alternates) != 0) {
-			fmgc.FMGCInternal.altAirport = alternateID;
-			atsu.ATISInstances[2].newStation(alternateID);
-			fmgc.FMGCInternal.altAirportSet = 1;
+		var alternateID = me.OFP.getNode("alternate/icao_code") == nil ? nil : me.OFP.getNode("alternate/icao_code").getValue();
+		if (alternateID != nil) {
+			var alternates = findAirportsByICAO(alternateID);
+			if (size(alternates) != 0) {
+				fmgc.FMGCInternal.altAirport = alternateID;
+				atsu.ATISInstances[2].newStation(alternateID);
+				fmgc.FMGCInternal.altAirportSet = 1;
+			}
 		}
 		
 		var wps = [];
