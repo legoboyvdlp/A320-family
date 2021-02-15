@@ -128,6 +128,7 @@ var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/positio
 
 # Detect OFF without IN
 var lastgs0 = 0;	
+#var lastgear0 = 0;
 var lastgsrestart = 0;
 
 # Check for A/C state change - advice me for a better method, please :/
@@ -144,7 +145,6 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 			if (gs > 9) {  # imho - it's useful few speed tollerance, 10kts min speed on taxiways - CHECKME - better with pushback detection?
 				FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState));
 				expectedOOOIState = 1;
-				lastgear0 = 0;
 			}
 		}
 	} else if (expectedOOOIState == 1) { # OFF
@@ -162,7 +162,7 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 		if (gear0 and (phase == 7 or phase == 0)) {  #done or preflight
 			FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState));
 			expectedOOOIState = 3;
-			lastgear0 = 0;
+			lastgs0 = 0;
 			lastgsrestart = 0;
 		}
 	} else if (expectedOOOIState == 3) { # IN
@@ -177,9 +177,9 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 			}
 		}
 		else if (!gear0) {  # OFF without IN -> TO without stop and opening doors
-			if (lastgear0) FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState,lastgear0)); # IN (estimated)
+			if (lastgs0>0) FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState,lastgs0)); # IN (estimated)
 			FlightLogDatabase.addPage();
-			if (lastgsrestart) FlightLogDatabase.addReport(OOOIReport.new(0,lastgsrestart)); # OUT (estimated)
+			if (lastgsrestart>0) FlightLogDatabase.addReport(OOOIReport.new(0,lastgsrestart)); # OUT (estimated)
 			expectedOOOIState = 1; # go on to OFF state
 		}
 		else if (gs > 9 and lastgsrestart == 0) { # try to detect OFF without IN

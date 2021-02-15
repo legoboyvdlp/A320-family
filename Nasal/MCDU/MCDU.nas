@@ -241,7 +241,7 @@ var lskbutton = func(btn, i) {
 			progTOInput("L1",i); # same fn as TO
 		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
-		} else if (page == "PROGCLB") {
+		} else if (page == "PROGCLB" or page == "PROGAPPR") {  # APPR restore to CLB
 			progCLBInput("L1",i);
 		} else if (page == "PROGCRZ") {
 			progCRZInput("L1",i);
@@ -534,6 +534,8 @@ var lskbutton = func(btn, i) {
 			statusInput("L3",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
+		} else if (page == "DATA") {
+			dataInput("L3",i);
 		} else if (page == "PRINTFUNC") {
 			printInput("L3",i);
 		} else if (page == "PRINTFUNC2") {
@@ -853,7 +855,13 @@ var lskbutton = func(btn, i) {
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (page == "LATREV" or page == "VERTREV" or page == "DUPLICATENAMES") {
-			pageNode[i].setValue("F-PLNA");
+			if (page != "DUPLICATENAMES") {
+				pageNode[i].setValue("F-PLNA");
+			} else {
+				 if (canvas_mcdu.myDuplicate[i] != nil and canvas_mcdu.myDuplicate[i].flagPROG) {
+					pagebutton("prog",i);
+				 }
+			}
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(6);
 		} else if (page == "DEPARTURE" or page == "HOLD" or page == "AIRWAYS") {
@@ -887,6 +895,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATIS");
 		} else if (page == "AOCCONFIG") {
 			pageNode[i].setValue("AOCMENU");
+		} else if (page == "POSMON") {
+			canvas_mcdu.togglePageFreeze(i);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1121,6 +1131,8 @@ var rskbutton = func(btn, i) {
 				}
 			}
 			pageNode[i].setValue("WINDCRZ");
+		} else if (find("PROG",page) != -1) {
+			progGENInput("R4",i);
 		} else if (page == "PERFTO") {
 			perfTOInput("R4",i);
 		} else if (page == "PERFAPPR") {
@@ -1430,8 +1442,12 @@ var pagebutton = func(btn, i) {
 				pageNode[i].setValue("PROGCLB");
 			} else if (fmgc.FMGCInternal.phase == 3) {
 				pageNode[i].setValue("PROGCRZ");
-			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				pageNode[i].setValue("PROGDES");
+			} else if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+				pageNode[i].setValue("PROGAPPR");
+			} else if (fmgc.FMGCInternal.phase == 7) {
+				pageNode[i].setValue("PROGDONE");
 			}
 		} else if (btn == "perf") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
