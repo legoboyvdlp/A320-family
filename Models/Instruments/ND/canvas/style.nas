@@ -74,7 +74,7 @@ canvas.NDStyles["Airbus"] = {
 			level_off_alt: "/autopilot/route-manager/vnav/level-off-alt",
 			athr: "/it-autoflight/output/athr",
 			app_mode: "/instrumentation/nd/app-mode",
-			chrono_node: "/instrumentation/chrono",
+			chrono_node: "/instrumentation/ndchrono",
 			fpln_offset: "/autopilot/route-manager/offset",
 			active_route_color: [0.0509,0.7529,0.2941],
 			inactive_route_color: [0.95,0.95,0.21]
