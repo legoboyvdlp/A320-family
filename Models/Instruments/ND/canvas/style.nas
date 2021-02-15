@@ -12,7 +12,6 @@ var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass position deg
 
-var terrain_visible = props.globals.getNode("/custom/terrain/visible", 0);
 var terrain_minalt = props.globals.getNode("/custom/terrain/min-altitude", 0);
 var terrain_maxalt = props.globals.getNode("/custom/terrain/max-altitude", -9999);
 
@@ -95,13 +94,11 @@ canvas.NDStyles["Airbus"] = {
 				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
 				var visible = nd.get_switch("toggle_terrain") and 
 					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and 
-					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
-				layer.group.setVisible(visible);				
+					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));				
 				if (visible) {
 					layer.update(); 
-				} else {
-					#terrain_visible.setValue(0);
 				}
+				layer.group.setVisible(visible);
 			}, # end of layer update predicate
 			options: {
 				viewport_radius: 670, #512, #706,

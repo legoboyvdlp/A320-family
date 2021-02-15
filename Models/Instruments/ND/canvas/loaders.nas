@@ -28,7 +28,7 @@ setlistener("/nasal/canvas/loaded", func() {
 		#var code = call(compile, [code], var err=[]);
 		var code = call(func compile(code, file), [code], var err=[]);
 		if (size(err)) {
-			print("handling error");
+			#print("handling error");
 			if (substr(err[0], 0, 12) == "Parse error:") { # hack around Nasal feature
 				var e = split(" at line ", err[0]);
 				if (size(e) == 2)

@@ -64,7 +64,6 @@ var myCockpit_switches = {
 	"toggle_xtrk_error": {path: "/nd/xtrk-error", value: 0, type: "BOOL"},
 	"toggle_trk_line": {path: "/nd/trk-line", value: 0, type: "BOOL"},
 	"ADIRS3": {path: "/nd/ir-3", value: 0, type: "BOOL"},
-	#"toggle_terrain": {path: "/nd/terrain-on-nd", value: 0, type: "BOOL"},
 };
 
 var canvas_nd_base = {

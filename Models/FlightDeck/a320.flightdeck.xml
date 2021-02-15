@@ -1457,7 +1457,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>instrumentation/efis[0]/inputs/terr</property>
+				<property>instrumentation/efis/inputs/terr</property>
 			</binding>
 		</action>
 	</animation>

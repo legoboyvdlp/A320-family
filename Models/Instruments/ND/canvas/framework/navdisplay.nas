@@ -375,9 +375,9 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		wxr_live_enabled = 0;
 	me.set_switch('toggle_weather_live', wxr_live_enabled);
 
-	var terr_enabled = getprop("/controls/switches/terr_on_nd_l");
-	if (terr_enabled == nil) terr_enabled = 0;
-	if (me.get_switch('toggle_terrain') != terr_enabled) me.set_switch('toggle_terrain', terr_enabled);
+	#var terr_enabled = getprop("/controls/switches/terr_on_nd_l");
+	#if (terr_enabled == nil) terr_enabled = 0;
+	#if (me.get_switch('toggle_terrain') != terr_enabled) me.set_switch('toggle_terrain', terr_enabled);
 
 	call(me.update_sub, nil, nil, caller(0)[0]); # call this in the same namespace to "steal" its variables
 
