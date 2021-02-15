@@ -5188,6 +5188,8 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageArrowFunc(myVertRev[i]);
 					me.colorLeftArrow(myVertRev[i].arrowsColour[0][0],myVertRev[i].arrowsColour[0][1],myVertRev[i].arrowsColour[0][2],myVertRev[i].arrowsColour[0][3],myVertRev[i].arrowsColour[0][4],myVertRev[i].arrowsColour[0][5]);
+					me.colorRightArrow(myVertRev[i].arrowsColour[1][0],myVertRev[i].arrowsColour[1][1],myVertRev[i].arrowsColour[1][2],myVertRev[i].arrowsColour[1][3],myVertRev[i].arrowsColour[1][4],myVertRev[i].arrowsColour[1][5]);
+					
 					
 					me.dynamicPageFontFunc(myVertRev[i]);
 					
