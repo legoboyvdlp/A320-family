@@ -157,6 +157,7 @@ var init = func {
 	me.max_altitude = -9999;
 	me.basealtitudeft = nil;
 	me.reference = nil;
+	me.onfailure = 0;
 
 	var tile = me.tile;
 
@@ -200,6 +201,10 @@ var init = func {
 		me.request_clear = 1;
 	});
 
+	setlistener("/ECAM/warnings/timer/nav-gpws-terr-fault", func{
+		me.onfailure = getprop("/ECAM/warnings/timer/nav-gpws-terr-fault");
+	});
+
 };
 
 var clear = func {
@@ -225,6 +230,12 @@ var draw = func {
 
 	if(me.fetching) return;
 
+    if (me.onfailure == 1) {
+		me.clear();
+		me.restart_beacon();
+		return;
+	}
+
 	if (me.radar_beacon == 0) {  # update aircraft reference
 
 		var ref = geo.aircraft_position();
@@ -234,20 +245,22 @@ var draw = func {
 			me.reference.altitudeft = ref.alt() * 3.2808399;
 
 			if (me.basealtitudeft == nil) {
-				var basealtft = me.get_elevation(ref.lat,ref.lon);
+				#var basealtft = me.get_elevation(ref.lat,ref.lon);
+				var basealtft = ref.alt() * 3.2808399;
 				if (basealtft == nil) basealtft = 0;
 				me.basealtitudeft = basealtft + 400;
 			}
 
-			if ((fmgc.FMGCInternal.phase <= 1 or fmgc.FMGCInternal.phase >= 5) and (me.basealtitudeft == 0)) {
-				var basealtft = me.get_elevation(ref.lat,ref.lon);
-				if (basealtft == nil) basealtft = 0;
-				me.basealtitudeft = basealtft + 400;
-				#	me.reference.basealtitudeft = ft + 400  # <- TODO get departure/arrival runway altitude
-			} 
-			else if ((fmgc.FMGCInternal.phase > 1 and fmgc.FMGCInternal.phase < 5) and (me.basealtitudeft != 0)) {
-				me.basealtitudeft = 0;
-			}
+			#if (fmgc.FMGCInternal.phase >= 5 and me.basealtitudeft == 0) {
+			#	var basealtft = me.get_elevation(ref.lat,ref.lon);
+			#	if (basealtft == nil) basealtft = 0;
+			#	me.basealtitudeft = basealtft + 400;
+			#	#	me.reference.basealtitudeft = ft + 400  # <- TODO get departure/arrival runway altitude
+			#} 
+			#else if ((fmgc.FMGCInternal.phase > 1 and fmgc.FMGCInternal.phase < 5) and (me.basealtitudeft != 0)) {
+			#	me.basealtitudeft = 0;
+			#}
+
 		}
 	}
 
