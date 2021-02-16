@@ -370,7 +370,7 @@ var flightPlanController = {
 				hdg = hdg - 360;
 			}
 			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, hdg, 5), "CF", "star"), me.arrivalIndex[n]);
-			me.flightplan[n].getWP(me.arrivalIndex[n]).fly_type = "flyOver";
+			me.flightplans[n].getWP(me.arrivalIndex[n]).fly_type = "flyOver";
 			fmgc.windController.insertWind(n, me.arrivalIndex[n], 0, "CF");
 		}
 		me.flightPlanChanged(n);

@@ -412,6 +412,50 @@ var canvas_MCDU_base = {
 		}
 		return irsstatus;
 	},
+	standardFont: func() {
+		me.fontLeft(default, default, default, default, default, default);
+		me.fontLeftS(default, default, default, default, default, default);
+		me.fontRight(default, default, default, default, default, default);
+		me.fontRightS(default, default, default, default, default, default);
+	},
+	doIRSFunc: func(i,degrees,minutes,sign,degrees2,minutes2,sign2) {
+		if (systems.ADIRS.ADIRunits[i].operative and getprop("/FMGC/internal/align" ~ (i + 1) ~ "-done")) {
+			me["Simple_C" ~ (3 + i)].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
+		} else {
+			me["Simple_C" ~ (3 + i)].setText("-----.--/-----.--");
+		}
+		
+		if (align_set.getValue() == 1) {
+			me["Simple_R6"].setText("CONFIRM ALIGN ");
+			me.colorRight("ack", "ack", "ack", "ack", "ack", "amb");
+			me["IRSINIT_star"].show();
+			me.showRightArrow(0, 0, 0, 0, 0, -1);
+		} else {
+			me["Simple_R6"].setText("ALIGN ON REF ");
+			me["IRSINIT_star"].hide();
+			me.showRightArrow(0, 0, 0, 0, 0, 1);
+		}
+		
+		if (systems.ADIRS.Operating.aligned[i].getValue()) {
+			if (systems.ADIRS.ADIRunits[i].mode == 2) {
+				me["Simple_C" ~ (3 + i) ~ "S"].setText("IRS" ~ (i + 1) ~ " IN ATT");
+			} else {
+				me["Simple_C" ~ (3 + i) ~ "S"].setText("IRS" ~ (i + 1) ~ " ALIGNED ON GPS");
+			}
+		} else {
+			me["Simple_C" ~ (3 + i) ~ "S"].setText("IRS" ~ (i + 1) ~ " ALIGNING ON GPS");
+		}
+	},
+	standardHideExcess: func() {
+		me["Simple_C3B"].hide();
+		me["Simple_C4B"].hide();
+		me["Simple_R1B"].hide();
+		me["Simple_R2B"].hide();
+		me["Simple_R3B"].hide();
+		me["Simple_R4B"].hide();
+		me["Simple_R5B"].hide();
+		me["Simple_R5SB"].hide();
+	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
 		if (page != "NOTIFICATION") {
@@ -491,10 +535,7 @@ var canvas_MCDU_base = {
 				
 				me.hideAllArrows();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, small, small, small, small, small);
@@ -509,27 +550,21 @@ var canvas_MCDU_base = {
 					me["FPLN_Callsign"].hide();
 				}
 
-				me.dynamicPageFunc(myFpln[i].L1, "Simple_L1");
-				me.dynamicPageFunc(myFpln[i].L2, "Simple_L2");
-				me.dynamicPageFunc(myFpln[i].L3, "Simple_L3");
-				me.dynamicPageFunc(myFpln[i].L4, "Simple_L4");
-				me.dynamicPageFunc(myFpln[i].L5, "Simple_L5");
+				for (var x = 1; x < 7; x = x + 1) {
+					me.dynamicPageFunc(myFpln[i]["L" ~ x], "Simple_L" ~ x);
+				}
 				
 				me.colorLeft(myFpln[i].L1[2],myFpln[i].L2[2],myFpln[i].L3[2],myFpln[i].L4[2],myFpln[i].L5[2],myFpln[i].L6[2]);
 				
-				me.dynamicPageFunc(myFpln[i].C1, "Simple_C1");
-				me.dynamicPageFunc(myFpln[i].C2, "Simple_C2");
-				me.dynamicPageFunc(myFpln[i].C3, "Simple_C3");
-				me.dynamicPageFunc(myFpln[i].C4, "Simple_C4");
-				me.dynamicPageFunc(myFpln[i].C5, "Simple_C5");
+				for (var x = 1; x < 7; x = x + 1) {
+					me.dynamicPageFunc(myFpln[i]["C" ~ x], "Simple_C" ~ x);
+				}
 				
 				me.colorCenter(myFpln[i].C1[2],myFpln[i].C2[2],myFpln[i].C3[2],myFpln[i].C4[2],myFpln[i].C5[2],myFpln[i].C6[2]);
 					
-				me.dynamicPageFunc(myFpln[i].R1, "Simple_R1");
-				me.dynamicPageFunc(myFpln[i].R2, "Simple_R2");
-				me.dynamicPageFunc(myFpln[i].R3, "Simple_R3");
-				me.dynamicPageFunc(myFpln[i].R4, "Simple_R4");
-				me.dynamicPageFunc(myFpln[i].R5, "Simple_R5");
+				for (var x = 1; x < 7; x = x + 1) {
+					me.dynamicPageFunc(myFpln[i]["R" ~ x], "Simple_R" ~ x);
+				}
 				
 				me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
 				
@@ -631,14 +666,7 @@ var canvas_MCDU_base = {
 				me.showRight(-1, -1, -1, -1, -1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -688,14 +716,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, -1, -1, -1, 1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(1, -1, -1, -1, -1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -717,14 +738,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, 1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(1, 1, 1, 1, 1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -888,15 +902,8 @@ var canvas_MCDU_base = {
 
 				me.standardFontSize();
 				me.standardFontColour();
-
-				me["Simple_L1"].setFontSize(small);				
-				me["Simple_R1"].setFontSize(small);
-				me["Simple_L2"].setFontSize(small);
-				me["Simple_R2"].setFontSize(small);
-				me["Simple_L3"].setFontSize(small);
-				me["Simple_R3"].setFontSize(small);
-				me["Simple_L4"].setFontSize(small);
-				me["Simple_R4"].setFontSize(small);
+				me.fontSizeLeft(small,small,small,small,normal,normal);		
+				me.fontSizeRight(small,small,small,small,normal,normal);	
 				
 				me.colorRight("grn", "grn", "grn", "grn", "grn", "grn");
 				me.colorRightS("grn", "grn", "grn", "grn", "grn", "grn");
@@ -942,14 +949,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, -1, -1, -1, 1);
 				me.showRightS(1, -1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -1001,14 +1001,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, -1, 1, -1);
 				me.showRightS(1, 1, 1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.fontLeft(default, default, default, default, default, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -1070,14 +1063,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, -1, -1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(1, 1, 1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -1099,19 +1085,9 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_L6S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1143,11 +1119,9 @@ var canvas_MCDU_base = {
 					me.dynamicPageFontFunc(myReceivedMessages[i]);
 					me.dynamicPageArrowFunc(myReceivedMessages[i]);
 					
-					me.dynamicPageFunc(myReceivedMessages[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myReceivedMessages[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myReceivedMessages[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myReceivedMessages[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myReceivedMessages[i].L5, "Simple_L5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myReceivedMessages[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					me.colorLeft(myReceivedMessages[i].L1[2],myReceivedMessages[i].L2[2],myReceivedMessages[i].L3[2],myReceivedMessages[i].L4[2],myReceivedMessages[i].L5[2],myReceivedMessages[i].L6[2]);
 					me["Simple_L6"].setColor(WHITE);
 				}
@@ -1171,19 +1145,9 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L0S"].hide();
 				me["Simple_L6S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, small, small, small, small, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1294,14 +1258,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, -1);
 				me.showRightArrow(1, 1, 1, 1, 1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -1439,14 +1396,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, -1, -1, -1, -1);
 				me.showRightS(-1, -1, -1, -1, -1, -1);
 				me.showRightArrow(1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1470,19 +1420,9 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, small, small, small, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1499,21 +1439,15 @@ var canvas_MCDU_base = {
 					me.colorLeftArrow(myAtis[i].arrowsColour[0][0],myAtis[i].arrowsColour[0][1],myAtis[i].arrowsColour[0][2],myAtis[i].arrowsColour[0][3],myAtis[i].arrowsColour[0][4],myAtis[i].arrowsColour[0][5]);
 					me.colorRightArrow(myAtis[i].arrowsColour[1][0],myAtis[i].arrowsColour[1][1],myAtis[i].arrowsColour[1][2],myAtis[i].arrowsColour[1][3],myAtis[i].arrowsColour[1][4],myAtis[i].arrowsColour[1][5]);
 					
-					me.dynamicPageFunc(myAtis[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myAtis[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myAtis[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myAtis[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myAtis[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myAtis[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAtis[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myAtis[i].L1[2],myAtis[i].L2[2],myAtis[i].L3[2],myAtis[i].L4[2],myAtis[i].L5[2],myAtis[i].L6[2]);
 					
-					me.dynamicPageFunc(myAtis[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myAtis[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myAtis[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myAtis[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myAtis[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myAtis[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAtis[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myAtis[i].R1[2],myAtis[i].R2[2],myAtis[i].R3[2],myAtis[i].R4[2],myAtis[i].R5[2],myAtis[i].R6[2]);
 				}
@@ -1547,14 +1481,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -1704,19 +1631,9 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, -1, -1, -1, 1);
 				me.showRightS(-1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, small, normal);
@@ -1799,19 +1716,9 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, 1, -1, 1, 1);
 				me.showRightS(-1, -1, 1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(small, normal, small, normal, normal, normal);
@@ -1878,19 +1785,9 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, -1, 1, -1, -1);
 				me.showRightS(1, 1, -1, -1, -1, -1);
 				me.showRightArrow(1, 1, -1, 1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, small, normal);
@@ -1930,14 +1827,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, -1, -1, 1, 1);
 				me.showRightS(1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -1994,14 +1884,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, -1, -1, 1);
 				me.showRightS(1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, 1, 1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -2059,19 +1942,9 @@ var canvas_MCDU_base = {
 				me.showRight(-1, -1, 1, -1, -1, 1);
 				me.showRightS(-1, -1, 1, -1, -1, 1);
 				me.showRightArrow(-1, -1, 1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, small, normal);
@@ -2110,19 +1983,9 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, -1, 1, 1, 1);
 				me.showRightS(-1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, small, normal, normal, small, normal);
 				me.fontSizeRight(normal, small, normal, small, small, normal);
@@ -2171,19 +2034,9 @@ var canvas_MCDU_base = {
 				me.showRight(1, -1, -1, -1, -1, 1);
 				me.showRightS(1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, small, normal, normal, small, normal);
 				me.fontSizeRight(normal, small, normal, small, small, normal);
@@ -2273,14 +2126,7 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, -1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.fontLeft(default, default, default, default, symbol, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -2371,14 +2217,7 @@ var canvas_MCDU_base = {
 				me.showRight(-1, -1, -1, -1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, 1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -2417,14 +2256,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, -1, -1);
 				me.showRightS(1, 1, 1, 1, -1, -1);
 				me.showRightArrow(1, 1, 1, 1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				me.standardFontColour();
@@ -2455,14 +2287,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -2481,21 +2306,15 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myPilotWP[i]);
 					
-					me.dynamicPageFunc(myPilotWP[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myPilotWP[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myPilotWP[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myPilotWP[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myPilotWP[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myPilotWP[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myPilotWP[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myPilotWP[i].L1[2],myPilotWP[i].L2[2],myPilotWP[i].L3[2],myPilotWP[i].L4[2],myPilotWP[i].L5[2],myPilotWP[i].L6[2]);
 					
-					me.dynamicPageFunc(myPilotWP[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myPilotWP[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myPilotWP[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myPilotWP[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myPilotWP[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myPilotWP[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myPilotWP[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myPilotWP[i].R1[2],myPilotWP[i].R2[2],myPilotWP[i].R3[2],myPilotWP[i].R4[2],myPilotWP[i].R5[2],myPilotWP[i].R6[2]);
 				}
@@ -2516,14 +2335,7 @@ var canvas_MCDU_base = {
 				me.showLeftS(-1, 1, 1, -1, 1, -1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, -1, -1, -1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(-1, -1, -1, -1, 1, -1);
 				me.showRight(1, 1, 1, 1, 1, 1);
 				me.showRightS(-1, -1, -1, -1, 1, 1);
@@ -2772,14 +2584,7 @@ var canvas_MCDU_base = {
 				me.showRight(1, 1, 1, 1, 1, -1);
 				me.showRightS(1, 1, 1, 1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.fontLeft(default, default, default, default, 0, default);
 				me.fontLeftS(default, default, default, default, default, default);
@@ -2924,19 +2729,9 @@ var canvas_MCDU_base = {
 				me.showRight(0, 0, 1, 1, 1, 1);
 				me.showRightS(1, 0, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, 1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, normal, 0);
@@ -3104,14 +2899,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, -1, -1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, -1, 1, 1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, 1, 1, 1, 1, -1);
 				
 				me.fontLeft(default, default, 0, 0, 0, default);
@@ -3193,21 +2981,9 @@ var canvas_MCDU_base = {
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
 			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			if (systems.ADIRS.ADIRunits[0].operative and getprop("/FMGC/internal/align1-done")) {
-				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C3"].setText("-----.--/-----.--");
-			}
-			if (systems.ADIRS.ADIRunits[1].operative and getprop("/FMGC/internal/align2-done")) {
-				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C4"].setText("-----.--/-----.--");
-			}
-			if (systems.ADIRS.ADIRunits[2].operative and getprop("/FMGC/internal/align3-done")) {
-				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C5"].setText("-----.--/-----.--");
-			}
+			me.doIRSFunc(0,degrees,minutes,sign,degrees2,minutes2,sign2);
+			me.doIRSFunc(1,degrees,minutes,sign,degrees2,minutes2,sign2);
+			me.doIRSFunc(2,degrees,minutes,sign,degrees2,minutes2,sign2);
 			
 			if (align_set.getValue() == 1) {
 				me["Simple_R6"].setText("CONFIRM ALIGN ");
@@ -3218,36 +2994,6 @@ var canvas_MCDU_base = {
 				me["Simple_R6"].setText("ALIGN ON REF ");
 				me["IRSINIT_star"].hide();
 				me.showRightArrow(0, 0, 0, 0, 0, 1);
-			}
-			
-			if (systems.ADIRS.Operating.aligned[0].getValue()) {
-				if (systems.ADIRS.ADIRunits[0].mode == 2) {
-					me["Simple_C3S"].setText("IRS1 IN ATT");
-				} else {
-					me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
-			}
-			
-			if (systems.ADIRS.Operating.aligned[1].getValue()) {
-				if (systems.ADIRS.ADIRunits[1].mode == 2) {
-					me["Simple_C4S"].setText("IRS2 IN ATT");
-				} else {
-					me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
-			}
-			
-			if (systems.ADIRS.Operating.aligned[2].getValue()) {
-				if (systems.ADIRS.ADIRunits[2].mode == 2) {
-					me["Simple_C5S"].setText("IRS3 IN ATT");
-				} else {
-					me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
 			}
 			
 			me["Simple_L2S"].setText("LAT");
@@ -3275,14 +3021,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, 1, 1, 1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(-1, -1, -1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.fontSizeLeftS(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(0, small, small, small, small, normal);
@@ -3354,23 +3093,13 @@ var canvas_MCDU_base = {
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, -1, 1, 1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(-1, -1, -1, -1, -1, -1);
 				me.showRight(-1, 1, 1, 1, 1, 1);
 				me.showRightS(1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, 1, -1, -1, -1);
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, small, small, small, small, small);
 				me.fontSizeCenter(normal, small, small, small, small, small);
@@ -3823,10 +3552,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
 				me.fontSizeCenter(small, small, normal, small, small, small);
@@ -4160,14 +3886,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, -1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, -1, -1, 1, -1, 1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, -1, -1, -1, -1, 1);
 				
 				me.fontLeft(default, default, symbol, default, default, default);
@@ -4333,14 +4052,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -4513,14 +4225,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, 1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(-1, 1, 1, 1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(-1, -1, 1, -1, 1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -4674,14 +4379,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, -1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, -1, -1, -1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, -1, -1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -4817,14 +4515,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, 1, -1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, -1, 1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, -1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, symbol, default, default);
@@ -4982,14 +4673,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, 1, 1, -1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, 1);
 				me.showCenter(1, 1, 1, -1, 1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, 1, 1, -1, 1, -1);
 				
 				me.fontLeft(symbol, default, default, default, symbol, default);
@@ -5172,14 +4856,7 @@ var canvas_MCDU_base = {
 				me.showRightS(-1, -1, -1, -1, 1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				me.showCenter(1, 1, 1, -1, -1, -1);
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				me.showCenterS(1, 1, 1, -1, -1, -1);
 				
 				me.fontLeft(default, default, default, default, default, default);
@@ -5251,19 +4928,9 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				
@@ -5337,30 +5004,20 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myWind[i]);
 					
-					me.dynamicPageFunc(myWind[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myWind[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myWind[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myWind[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myWind[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myWind[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myWind[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myWind[i].L1[2],myWind[i].L2[2],myWind[i].L3[2],myWind[i].L4[2],myWind[i].L5[2],myWind[i].L6[2]);
 					
-					me.dynamicPageFunc(myWind[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myWind[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myWind[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myWind[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myWind[i].C5, "Simple_C5");
-					me.dynamicPageFunc(myWind[i].C6, "Simple_C6");
-					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myWind[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					me.colorCenter(myWind[i].C1[2],myWind[i].C2[2],myWind[i].C3[2],myWind[i].C4[2],myWind[i].C5[2],myWind[i].C6[2]);
 					
-					me.dynamicPageFunc(myWind[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myWind[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myWind[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myWind[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myWind[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myWind[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myWind[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myWind[i].R1[2],myWind[i].R2[2],myWind[i].R3[2],myWind[i].R4[2],myWind[i].R5[2],myWind[i].R6[2]);
 				}
@@ -5396,14 +5053,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5442,21 +5092,15 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myLatRev[i]);
 					
-					me.dynamicPageFunc(myLatRev[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myLatRev[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myLatRev[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myLatRev[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myLatRev[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myLatRev[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myLatRev[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myLatRev[i].L1[2],myLatRev[i].L2[2],myLatRev[i].L3[2],myLatRev[i].L4[2],myLatRev[i].L5[2],myLatRev[i].L6[2]);
-						
-					me.dynamicPageFunc(myLatRev[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myLatRev[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myLatRev[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myLatRev[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myLatRev[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myLatRev[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myLatRev[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myLatRev[i].R1[2],myLatRev[i].R2[2],myLatRev[i].R3[2],myLatRev[i].R4[2],myLatRev[i].R5[2],myLatRev[i].R6[2]);
 				}
@@ -5473,14 +5117,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5519,21 +5156,15 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myVertRev[i]);
 					
-					me.dynamicPageFunc(myVertRev[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myVertRev[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myVertRev[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myVertRev[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myVertRev[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myVertRev[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myVertRev[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myVertRev[i].L1[2],myVertRev[i].L2[2],myVertRev[i].L3[2],myVertRev[i].L4[2],myVertRev[i].L5[2],myVertRev[i].L6[2]);
-						
-					me.dynamicPageFunc(myVertRev[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myVertRev[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myVertRev[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myVertRev[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myVertRev[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myVertRev[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myVertRev[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myVertRev[i].R1[2],myVertRev[i].R2[2],myVertRev[i].R3[2],myVertRev[i].R4[2],myVertRev[i].R5[2],myVertRev[i].R6[2]);
 				}
@@ -5551,14 +5182,7 @@ var canvas_MCDU_base = {
 				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5572,32 +5196,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myDeparture[i]);
 					me.dynamicPageFontFunc(myDeparture[i]);
 					
-					me.dynamicPageFunc(myDeparture[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myDeparture[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myDeparture[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myDeparture[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myDeparture[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myDeparture[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDeparture[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myDeparture[i].L1[2],myDeparture[i].L2[2],myDeparture[i].L3[2],myDeparture[i].L4[2],myDeparture[i].L5[2],myDeparture[i].L6[2]);
 					
-					me.dynamicPageFunc(myDeparture[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myDeparture[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myDeparture[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myDeparture[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myDeparture[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDeparture[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myDeparture[i].C1[2],myDeparture[i].C2[2],myDeparture[i].C3[2],myDeparture[i].C4[2],myDeparture[i].C5[2],myDeparture[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myDeparture[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myDeparture[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myDeparture[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myDeparture[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myDeparture[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myDeparture[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDeparture[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myDeparture[i].R1[2],myDeparture[i].R2[2],myDeparture[i].R3[2],myDeparture[i].R4[2],myDeparture[i].R5[2],myDeparture[i].R6[2]);
 				}
@@ -5614,14 +5230,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5639,32 +5248,24 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myDuplicate[i]);
 					
-					me.dynamicPageFunc(myDuplicate[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myDuplicate[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myDuplicate[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myDuplicate[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myDuplicate[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myDuplicate[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDuplicate[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myDuplicate[i].L1[2],myDuplicate[i].L2[2],myDuplicate[i].L3[2],myDuplicate[i].L4[2],myDuplicate[i].L5[2],myDuplicate[i].L6[2]);
 					
-					me.dynamicPageFunc(myDuplicate[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myDuplicate[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myDuplicate[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myDuplicate[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myDuplicate[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDuplicate[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myDuplicate[i].C1[2],myDuplicate[i].C2[2],myDuplicate[i].C3[2],myDuplicate[i].C4[2],myDuplicate[i].C5[2],myDuplicate[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myDuplicate[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myDuplicate[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myDuplicate[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myDuplicate[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myDuplicate[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myDuplicate[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDuplicate[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myDuplicate[i].R1[2],myDuplicate[i].R2[2],myDuplicate[i].R3[2],myDuplicate[i].R4[2],myDuplicate[i].R5[2],myDuplicate[i].R6[2]);
 				}
@@ -5683,14 +5284,7 @@ var canvas_MCDU_base = {
 				me["arrow2L"].hide();
 				me["arrow2R"].hide();
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5710,32 +5304,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myArrival[i]);
 					me.dynamicPageFontFunc(myArrival[i]);
 					
-					me.dynamicPageFunc(myArrival[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myArrival[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myArrival[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myArrival[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myArrival[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myArrival[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myArrival[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myArrival[i].L1[2],myArrival[i].L2[2],myArrival[i].L3[2],myArrival[i].L4[2],myArrival[i].L5[2],myArrival[i].L6[2]);
 					
-					me.dynamicPageFunc(myArrival[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myArrival[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myArrival[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myArrival[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myArrival[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myArrival[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myArrival[i].C1[2],myArrival[i].C2[2],myArrival[i].C3[2],myArrival[i].C4[2],myArrival[i].C5[2],myArrival[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myArrival[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myArrival[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myArrival[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myArrival[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myArrival[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myArrival[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myArrival[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myArrival[i].R1[2],myArrival[i].R2[2],myArrival[i].R3[2],myArrival[i].R4[2],myArrival[i].R5[2],myArrival[i].R6[2]);
 				}
@@ -5753,19 +5339,9 @@ var canvas_MCDU_base = {
 				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, small, normal, normal); # if updating watch out - this is needed
@@ -5782,32 +5358,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myHold[i]);
 					me.dynamicPageFontFunc(myHold[i]);
 					
-					me.dynamicPageFunc(myHold[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myHold[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myHold[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myHold[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myHold[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myHold[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myHold[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myHold[i].L1[2],myHold[i].L2[2],myHold[i].L3[2],myHold[i].L4[2],myHold[i].L5[2],myHold[i].L6[2]);
 					
-					me.dynamicPageFunc(myHold[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myHold[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myHold[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myHold[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myHold[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myHold[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myHold[i].C1[2],myHold[i].C2[2],myHold[i].C3[2],myHold[i].C4[2],myHold[i].C5[2],myHold[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
-						
-					me.dynamicPageFunc(myHold[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myHold[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myHold[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myHold[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myHold[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myHold[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myHold[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myHold[i].R1[2],myHold[i].R2[2],myHold[i].R3[2],myHold[i].R4[2],myHold[i].R5[2],myHold[i].R6[2]);
 				}
@@ -5825,19 +5393,9 @@ var canvas_MCDU_base = {
 				me.hideAllArrowsButL6();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, small, normal, normal); # if updating watch out - this is needed
@@ -5854,32 +5412,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myAirways[i]);
 					me.dynamicPageFontFunc(myAirways[i]);
 					
-					me.dynamicPageFunc(myAirways[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myAirways[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myAirways[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myAirways[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myAirways[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myAirways[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAirways[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myAirways[i].L1[2],myAirways[i].L2[2],myAirways[i].L3[2],myAirways[i].L4[2],myAirways[i].L5[2],myAirways[i].L6[2]);
 					
-					me.dynamicPageFunc(myAirways[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myAirways[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myAirways[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myAirways[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myAirways[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAirways[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myAirways[i].C1[2],myAirways[i].C2[2],myAirways[i].C3[2],myAirways[i].C4[2],myAirways[i].C5[2],myAirways[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
-						
-					me.dynamicPageFunc(myAirways[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myAirways[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myAirways[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myAirways[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myAirways[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myAirways[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAirways[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myAirways[i].R1[2],myAirways[i].R2[2],myAirways[i].R3[2],myAirways[i].R4[2],myAirways[i].R5[2],myAirways[i].R6[2]);
 				}
@@ -5908,19 +5458,9 @@ var canvas_MCDU_base = {
 				me["Simple_R6_Arrow"].show();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -5938,32 +5478,24 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myClosestAirport[i]);
 					
-					me.dynamicPageFunc(myClosestAirport[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myClosestAirport[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myClosestAirport[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myClosestAirport[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myClosestAirport[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myClosestAirport[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myClosestAirport[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myClosestAirport[i].L1[2],myClosestAirport[i].L2[2],myClosestAirport[i].L3[2],myClosestAirport[i].L4[2],myClosestAirport[i].L5[2],myClosestAirport[i].L6[2]);
 					
-					me.dynamicPageFunc(myClosestAirport[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myClosestAirport[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myClosestAirport[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myClosestAirport[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myClosestAirport[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myClosestAirport[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myClosestAirport[i].C1[2],myClosestAirport[i].C2[2],myClosestAirport[i].C3[2],myClosestAirport[i].C4[2],myClosestAirport[i].C5[2],myClosestAirport[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myClosestAirport[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myClosestAirport[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myClosestAirport[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myClosestAirport[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myClosestAirport[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myClosestAirport[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myClosestAirport[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myClosestAirport[i].R1[2],myClosestAirport[i].R2[2],myClosestAirport[i].R3[2],myClosestAirport[i].R4[2],myClosestAirport[i].R5[2],myClosestAirport[i].R6[2]);
 				}
@@ -5993,14 +5525,7 @@ var canvas_MCDU_base = {
 				me.hideAllArrows();
 				
 				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
-				me["Simple_R1B"].hide();
-				me["Simple_R2B"].hide();
-				me["Simple_R3B"].hide();
-				me["Simple_R4B"].hide();
-				me["Simple_R5B"].hide();
-				me["Simple_R5SB"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -6022,21 +5547,15 @@ var canvas_MCDU_base = {
 						me["DIRTO_TMPY_group"].hide();
 					}
 					
-					me.dynamicPageFunc(myDirTo[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myDirTo[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myDirTo[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myDirTo[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myDirTo[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myDirTo[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDirTo[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myDirTo[i].L1[2],myDirTo[i].L2[2],myDirTo[i].L3[2],myDirTo[i].L4[2],myDirTo[i].L5[2],myDirTo[i].L6[2]);
 					
-					me.dynamicPageFunc(myDirTo[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myDirTo[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myDirTo[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myDirTo[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myDirTo[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myDirTo[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDirTo[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myDirTo[i].R1[2],myDirTo[i].R2[2],myDirTo[i].R3[2],myDirTo[i].R4[2],myDirTo[i].R5[2],myDirTo[i].R6[2]);
 				}
@@ -6837,6 +6356,11 @@ var canvas_MCDU_base = {
 		}
 	},
 	dynamicPageFunc: func (dynamic, string) {
+		if (dynamic == nil) {
+			me[string].hide();
+			me[string ~ "S"].hide();
+			return;
+		}
 		if (dynamic[0] == nil) {
 			me[string].hide();
 			me[string ~ "S"].hide();
