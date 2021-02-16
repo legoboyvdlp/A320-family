@@ -58,6 +58,8 @@ var flightPlanController = {
 		me.resetFlightplan(0);
 		me.resetFlightplan(1);
 		me.resetFlightplan(2);
+		me.decelPoint = nil;
+		setprop("/instrumentation/nd/symbols/decel/show", 0);
 		me.flightplans[2].activate();
 	},
 	
@@ -242,8 +244,7 @@ var flightPlanController = {
 				me.flightplans[plan].insertWP(createDiscontinuity(), index);
 			}
 		} else { # both are nil??
-			print("Possible error in discontinuities!");
-			me.flightplans[plan].insertWP(createDiscontinuity(), index);
+			debug.dump("Error in discontinuities; won't try to add one");
 		}
 	},
 	
