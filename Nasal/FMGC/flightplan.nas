@@ -387,7 +387,9 @@ var flightPlanController = {
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
 			}
-			me.flightPlanChanged(n);
+			
+			# if n = 2, then we are clearing a discontinuity. Don't recalculate decel.
+			me.flightPlanChanged(n, n == 2 ? 0 : 1);
 			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
 			return 2;
 		} else {
