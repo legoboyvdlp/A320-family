@@ -177,19 +177,18 @@ var update_items = [
 
 var systemsLoop = func(notification) {
 	if (!systemsInitialized) { return; }
-	systems.ELEC.loop();
-	systems.PNEU.loop();
-	systems.HYD.loop();
-	systems.ADIRS.loop();
+	systems.PNEU.loop(notification);
+	systems.ADIRS.loop(notification);
+	systems.BrakeSys.update(notification);
+	systems.HFLoop(notification);
 	systems.APUController.loop();
-	systems.BrakeSys.update();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
-	fcu.FCUController.loop();
+	fcu.FCUController.loop(notification);
+	atc.Transponders.vector[atc.transponderPanel.atcSel - 1].update(notification);
 	dmc.DMController.loop();
 	atsu.ATSU.loop();
 	libraries.BUTTONS.update();
-	systems.HFLoop(notification);
 	
 	if ((notification.engine1State == 2 or notification.engine1State == 3) and collectorTankL.getValue() < 1) {
 		systems.cutoff_one();
@@ -385,5 +384,26 @@ var input = {
 foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Libraries", name, input[name]));
 }
+
+# TODO split EFIS altimeters
+var newinhg = nil;
+setlistener("/instrumentation/altimeter/setting-inhg", func() {
+	newinhg = getprop("/instrumentation/altimeter/setting-inhg");
+	setprop("/instrumentation/altimeter[1]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[2]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[3]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[4]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[5]/setting-inhg", newinhg);
+}, 0, 0);
+
+var newhpa = nil;
+setlistener("/instrumentation/altimeter/setting-hpa", func() {
+	newhpa = getprop("/instrumentation/altimeter/setting-hpa");
+	setprop("/instrumentation/altimeter[1]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[2]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[3]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[4]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[5]/setting-hpa", newhpa);
+}, 0, 0);
 
 setprop("/systems/acconfig/libraries-loaded", 1);

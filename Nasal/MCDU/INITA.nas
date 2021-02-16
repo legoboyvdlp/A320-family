@@ -242,7 +242,7 @@ var initInputA = func(key, i) {
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
-		} else {
+		} else {			
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
 				var tfs = size(scratchpad);
 				if (tfs == 9 and find("/", scratchpad) != -1) {

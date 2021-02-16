@@ -6,24 +6,22 @@
 
 	<flipflop>
 		<type>monostable</type>
-		<inverted type="bool">true</inverted>
 		<time>
-			<value>0.1</value>
+			<value>1.0</value>
 		</time>
 		<S>
-			<property>/controls/electrical/switches/gen-1</property>
+			<not><property>/controls/electrical/switches/gen-1</property></not>
 		</S>
 		<output>/systems/electrical/some-electric-thingie/generator-1-pb</output>
 	</flipflop>
 	
 	<flipflop>
 		<type>monostable</type>
-		<inverted type="bool">true</inverted>
 		<time>
-			<value>0.1</value>
+			<value>1.0</value>
 		</time>
 		<S>
-			<property>/controls/electrical/switches/gen-2</property>
+			<not><property>/controls/electrical/switches/gen-2</property></not>
 		</S>
 		<output>/systems/electrical/some-electric-thingie/generator-2-pb</output>
 	</flipflop>
@@ -79,6 +77,29 @@
 		</R>
 		<output>/systems/electrical/some-electric-thingie/generator-2-reset</output>
 	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>10.0</value>
+		</time>
+		<S>
+			<not><property>/systems/electrical/some-electric-thingie/emer-elec-config</property></not>
+		</S>
+		<output>/systems/electrical/some-electric-thingie/emer-elec-config-10-sec</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<time>
+			<value>20.0</value>
+		</time>
+		<S>
+			<not><property>/systems/electrical/some-electric-thingie/emer-elec-config</property></not>
+		</S>
+		<output>/systems/electrical/some-electric-thingie/emer-elec-config-20-sec</output>
+	</flipflop>
+	
 	
 	<flipflop>
 		<type>RS</type>
@@ -303,7 +324,7 @@
 		<output>ECAM/warnings/altitude-alert/gear-downlocked-output</output>
 	</flipflop>
 	
-	<!-- falling edge detector - take inverse of following -->
+	<!-- falling edge detector - switch and output both false -->
 	<flipflop>
 		<type>monostable</type>
 		<inverted type="bool">true</inverted>
@@ -311,9 +332,9 @@
 			<value>4.5</value>
 		</time>
 		<S>
-			<property>ECAM/phases/monostable/phase-8</property>
+			<property>/ECAM/phases/monostable/phase-8</property>
 		</S>
-		<output>ECAM/phases/monostable/phase-8-output</output>
+		<output>/ECAM/phases/monostable/phase-8-output</output>
 	</flipflop>
 	
 	<flipflop>
@@ -412,30 +433,6 @@
     </flipflop>
 	
 	<!-- falling edge detectors -->
-	<flipflop>
-		<type>monostable</type>
-		<inverted type="bool">true</inverted>
-		<time>
-			<value>10.0</value>
-		</time>
-		<S>
-			<property>/ECAM/warnings/timer/xbleed-fault-output</property>
-		</S>
-		<output>/ECAM/warnings/timer/xbleed-fault-output-10</output>
-	</flipflop>
-	
-	<flipflop>
-		<type>monostable</type>
-		<inverted type="bool">true</inverted>
-		<time>
-			<value>15.0</value>
-		</time>
-		<S>
-			<property>/controls/engines/engine[0]/fire-btn</property>
-		</S>
-		<output>/ECAM/warnings/timer/xbleed-fault-output-15</output>
-	</flipflop>
-	
 	<flipflop>
 		<type>SR</type>
 		<S>
@@ -926,7 +923,7 @@
 			<value>1.0</value>
 		</time>
 		<S>
-			<property>/ECAM/warnings/logic/stall/phase-8</property>
+			<property>/ECAM/phases/monostable/phase-8</property>
 		</S>
 		<output>/ECAM/warnings/logic/stall/phase-8-output</output>
 	</flipflop>
@@ -1028,5 +1025,140 @@
 			<property>/ECAM/phases/phase-calculation/altitude-flipflop-reset</property>
 		</R>
 		<output>/ECAM/phases/phase-calculation/altitude-ge-800</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/flaps-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/flaps-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/flaps-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/slats-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/slats-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/slats-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/spd-brk-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/spd-brk-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/spd-brk-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/pitch-trim-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/pitch-trim-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/pitch-trim-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/rudder-trim-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/rudder-trim-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/rudder-trim-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/fctl/park-brk-config-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/fctl/park-brk-config-reset</property>
+		</R>
+		<output>/ECAM/warnings/fctl/park-brk-config-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-cond-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-cond-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-1-fail-cond</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-cond-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-cond-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-2-fail-cond</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-1-fail-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-1-fail-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/eng/eng-2-fail-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/eng/eng-2-fail-output</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>30.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/phase-5</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/phase-5-output</output>
+	</flipflop>
+	
+	
+	<flipflop>
+		<type>monostable</type>
+		<inverted type="bool">true</inverted>
+		<time>
+			<value>1.0</value>
+		</time>
+		<S>
+			<property>/ECAM/warnings/logic/eng/phase-5-output</property>
+		</S>
+		<output>/ECAM/warnings/logic/eng/phase-5-output-2</output>
 	</flipflop>
 </PropertyList>

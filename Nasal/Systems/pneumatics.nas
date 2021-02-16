@@ -99,6 +99,8 @@ var PNEU = {
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
 		starter1: props.globals.getNode("/systems/pneumatics/valves/starter-valve-1"),
 		starter2: props.globals.getNode("/systems/pneumatics/valves/starter-valve-2"),
+		wingLeft: props.globals.getNode("/systems/pneumatics/valves/wing-ice-1"),
+		wingRight: props.globals.getNode("/systems/pneumatics/valves/wing-ice-2"),
 	},
 	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
@@ -159,9 +161,9 @@ var PNEU = {
 		me.Fail.trimValveFwd.setBoolValue(0);
 		me.Fail.xbleed.setBoolValue(0);
 	},
-	loop: func() {
-		wowl = getprop("gear/gear[1]/wow");
-		wowr = getprop("gear/gear[2]/wow");
+	loop: func(notification) {
+		wowl = notification.gear1Wow;
+		wowr = notification.gear2Wow;
 		
 		# Legacy pressurization
 		cabinalt = getprop("/systems/pressurization/cabinalt");

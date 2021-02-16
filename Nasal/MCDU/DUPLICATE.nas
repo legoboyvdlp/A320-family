@@ -28,7 +28,7 @@ var duplicateNamesPage = {
 	enableScroll: 0,
 	scroll: 0,
 	distances: nil,
-	new: func(vector, index, type, computer, flagPBD = 0, pbdBrg = -999, pbdDist = -99) {
+	new: func(vector, index, type, computer, flagPBD = 0, pbdBrg = -999, pbdDist = -99, flagProg = 0) {
 		var dn = {parents:[duplicateNamesPage]};
 		dn.vector = vector;
 		dn.index = index;
@@ -37,6 +37,7 @@ var duplicateNamesPage = {
 		dn.bearing = pbdBrg;
 		dn.distance = pbdDist;
 		dn.computer = computer;
+		dn.flagPROG = flagProg;
 		dn._setupPageWithData();
 		dn.distances = [];
 		return dn;
@@ -134,7 +135,7 @@ var duplicateNamesPage = {
 	},
 	pushButtonLeft: func(indexSelect) {
 		if (!dirToFlag) {
-			if (!me.flagPBD) {
+			if (!me.flagPBD and !me.flagPROG) {
 				if (size(me.vector[0].id) == 5) {
 					fmgc.flightPlanController.insertFix(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
 					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
@@ -145,9 +146,16 @@ var duplicateNamesPage = {
 					fmgc.flightPlanController.insertNavaid(me.vector[0].id, me.index, me.computer, 1, indexSelect - 1);
 					setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
 				}
-			} else {
+			} elsif (me.flagPBD) {
 				fmgc.flightPlanController.getWPforPBD(me.vector[0].id ~ "/" ~ me.bearing ~ "/" ~ me.distance, me.index, me.computer, 1, indexSelect - 1);
 				setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
+			} else {
+				if (me.type == 0) {
+					mcdu.bearingDistances[me.computer].newPointResult(me.vector, 1, indexSelect - 1);
+				} else {
+					mcdu.bearingDistances[me.computer].newPointNavaid(me.vector, 1, indexSelect - 1);
+				}
+				pagebutton("prog",me.computer);
 			}
 		} else {
 			canvas_mcdu.myDirTo[me.computer].fieldL1(me.vector[0].id, 1, indexSelect - 1);

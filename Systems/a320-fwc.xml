@@ -4,7 +4,7 @@
 
 <system name="A320: FWC">
 
-	<channel name="FWC" execrate="8">
+	<channel name="FWC" execrate="16">
 		
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
 			<description>Timer for the ECAM system</description>
@@ -60,6 +60,19 @@
 			<input>/systems/pneumatics/warnings/crossbleed-disag</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/xbleed-fault-output-10"> <!-- 10 second delay on fall -->
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/crossbleed-fault-timer-was-one</input>
+			<rate_limit sense="decr">0.1</rate_limit> <!-- 10 seconds -->
+			<rate_limit sense="incr">120</rate_limit> <!-- Instant -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/timer/xbleed-fault-eng-fire">
+			<description>Timer for the ECAM system</description>
+			<input>/controls/engines/engine[0]/fire-btn</input>
+			<rate_limit>0.06666666666</rate_limit>
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-apu-output">
@@ -335,27 +348,6 @@
 			<rate_limit sense="incr">1.0</rate_limit> <!-- 1 second -->
 		</actuator>
 		
-		<actuator name="/ECAM/warnings/timer/gen-1-fault-set">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/gen-1-fault-set</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
-		</actuator>
-		
-		<actuator name="/ECAM/warnings/timer/gen-2-fault-set">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/gen-2-fault-set</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
-		</actuator>
-		
-		<actuator name="/ECAM/warnings/timer/apu-gen-fault-set">
-			<description>Timer for the ECAM system</description>
-			<input>/ECAM/warnings/logic/apu-gen-fault-set</input>
-			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
-		</actuator>
-		
 		<actuator name="/ECAM/warnings/timer/apu-gen-fault-reset">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-gen-fault-reset</input>
@@ -364,7 +356,7 @@
 		</actuator>
 	</channel>
 	
-	<channel name="ECAM" execrate="8">
+	<channel name="ECAM" execrate="16">
 		
 		<switch name="/ECAM/warnings/logic/apu-bleed-fault">
 			<default value="0"/>
@@ -474,13 +466,27 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/crossbleed-fault-timer-was-one">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/timer/xbleed-fault-output eq 1
+			</test>
+		</switch>
+		
+		
 		<switch name="/ECAM/warnings/logic/crossbleed-fault">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/ECAM/warnings/timer/xbleed-fault-output eq 1
 				<test logic="AND">
-					/ECAM/warnings/timer/xbleed-fault-output-10 eq 1
-					/ECAM/warnings/timer/xbleed-fault-output-15 eq 0
+					<test logic="AND">
+						/ECAM/warnings/timer/xbleed-fault-output eq 0
+						/ECAM/warnings/timer/xbleed-fault-output-10 ne 0
+					</test>
+					<test logic="OR">
+						/ECAM/warnings/timer/xbleed-fault-eng-fire eq 0
+						/ECAM/warnings/timer/xbleed-fault-eng-fire eq 1
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -1447,8 +1453,8 @@
 		<switch name="/ECAM/warnings/logic/green-yellow-press-on-monostable-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/hydraulics/warnings/green-lo-pr eq 0
-				/systems/hydraulics/warnings/yellow-lo-pr eq 0
+				/systems/hydraulic/warnings/green-lo-pr eq 0
+				/systems/hydraulic/warnings/yellow-lo-pr eq 0
 			</test>
 		</switch>
 		
@@ -1485,7 +1491,7 @@
 		</switch>
 	</channel>
 	
-	<channel name="Electrical Warnings" execrate="8">
+	<channel name="Electrical Warnings" execrate="16">
 	
 		<switch name="/ECAM/warnings/logic/gen-1-inop">
 			<default value="0"/>
@@ -1503,6 +1509,13 @@
 				/ECAM/warnings/logic/gen-1-inop eq 1
 			</test>
 		</switch>
+		
+		<actuator name="/ECAM/warnings/timer/gen-1-fault-set">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/gen-1-fault-set</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
+		</actuator>
 		
 		<switch name="/ECAM/warnings/logic/gen-1-fault-set-output">
 			<default value="0"/>
@@ -1565,6 +1578,13 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/timer/gen-2-fault-set">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/gen-2-fault-set</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
+		</actuator>
+		
 		<switch name="/ECAM/warnings/logic/gen-2-fault-set-output">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1625,6 +1645,13 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/timer/apu-gen-fault-set">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/apu-gen-fault-set</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		
 		<switch name="/ECAM/warnings/logic/apu-gen-fault-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -1657,28 +1684,503 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/BLUE-EMER-ELEC">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
+				/systems/electrical/some-electric-thingie/emer-elec-config-20-sec eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-1-pb">
+			<input>/controls/electrical/switches/gen-1</input>
+			<rate_limit sense="decr">0.2</rate_limit> <!-- 5 seconds -->
+			<rate_limit sense="incr">120</rate_limit>
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-2-pb">
+			<input>/controls/electrical/switches/gen-2</input>
+			<rate_limit sense="decr">0.2</rate_limit> <!-- 5 seconds -->
+			<rate_limit sense="incr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-off-60-sec">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-off-60-sec-output">
+			<input>/ECAM/warnings/logic/elec/gen-off-60-sec</input>
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-1-off-60-sec-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 6
+				/engines/engine[0]/state eq 3
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-1-off-60-sec-2-output">
+			<input>/ECAM/warnings/logic/elec/gen-1-off-60-sec-2</input>
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-2-off-60-sec-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase ne 6
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/elec/gen-2-off-60-sec-2-output">
+			<input>/ECAM/warnings/logic/elec/gen-2-off-60-sec-2</input>
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+			<rate_limit sense="decr">120</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/elec/gen-1-pb eq 0
+				/ECAM/warnings/flipflop/gen-1-fault eq 0
+				/controls/electrical/switches/idg-1-disc eq 1
+				<test logic="OR">
+					/ECAM/warnings/logic/elec/gen-off-60-sec-output eq 1
+					/ECAM/warnings/logic/elec/gen-1-off-60-sec-2-output eq 1
+					<test logic="AND">
+						/ECAM/warning-phase eq 6
+						/ECAM/warnings/logic/gen-1-2-no-oper eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/elec/gen-2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/elec/gen-2-pb eq 0
+				/ECAM/warnings/flipflop/gen-2-fault eq 0
+				/controls/electrical/switches/idg-2-disc eq 1
+				<test logic="OR">
+					/ECAM/warnings/logic/elec/gen-off-60-sec-output eq 1
+					/ECAM/warnings/logic/elec/gen-2-off-60-sec-2-output eq 1
+					<test logic="AND">
+						/ECAM/warning-phase eq 6
+						/ECAM/warnings/logic/gen-1-2-no-oper eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/SSLATEXT">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/BLUE-EMER-ELEC NE 1
+				fcs/slat-pos-rate eq 0
+				fcs/slat-pos-deg ge 2
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/SFLAPEXT">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				fcs/flap-pos-rate eq 0
+				fcs/flap-pos-deg ge 2
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/gen-1-2-no-oper">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warnings/flipflop/gen-1-fault eq 1
+					/controls/electrical/switches/idg-1-disc eq 0
+					/ECAM/warnings/logic/elec/gen-1-off eq 1
+				</test>
+				<test logic="OR">
+					/ECAM/warnings/flipflop/gen-2-fault eq 1
+					/controls/electrical/switches/idg-2-disc eq 0
+					/ECAM/warnings/logic/elec/gen-2-off eq 1
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/dc-2-fuel-consumption-increased">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				/ECAM/dual-failure-enabled eq 0
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+							/systems/electrical/bus/dc-ess lt 25
+						</test>
+						/ECAM/warnings/logic/SFLAPEXT eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+							/systems/electrical/bus/dc-ess lt 25
+						</test>
+						/ECAM/warnings/logic/SSLATEXT eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							<test logic="AND">
+								hydraulics/aileron-l/pressure-switch-or eq 1
+								<test logic="OR">
+									/systems/fctl/elac1 eq 0
+									/systems/hydraulic/blue-psi lt 1500
+								</test>
+								/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
+							</test>
+							<test logic="AND">
+								hydraulics/aileron-r/pressure-switch-or eq 1
+								<test logic="OR">
+									/systems/fctl/elac1 eq 0
+									/systems/hydraulic/green-psi lt 1500
+								</test>
+							</test>
+						</test>
+						<test logic="OR">
+							/gear/gear[0]/position-norm eq 0
+							/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 0
+						</test>
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/dc-ess-fuel-consumption-increased">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				/ECAM/dual-failure-enabled eq 0
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
+							/systems/electrical/bus/dc-2 lt 25
+						</test>
+						/ECAM/warnings/logic/SFLAPEXT eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							<test logic="AND">
+								/ECAM/warnings/hyd/blue-abnorm-lo-pr ne 1
+								/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
+							</test>
+							/systems/electrical/bus/dc-2 lt 25
+						</test>
+						/ECAM/warnings/logic/SSLATEXT eq 1
+						<test logic="OR">
+							/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 0
+							/systems/electrical/bus/ac-1 ge 110
+						</test>
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							<test logic="AND">
+								hydraulics/aileron-l/pressure-switch-or eq 1
+								<test logic="OR">
+									/systems/fctl/elac2 eq 0
+									/systems/hydraulic/green-psi lt 1500
+								</test>
+								/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
+							</test>
+							<test logic="AND">
+								hydraulics/aileron-r/pressure-switch-or eq 1
+								<test logic="OR">
+									/systems/fctl/elac2 eq 0
+									/systems/hydraulic/blue-psi lt 1500
+								</test>
+							</test>
+						</test>
+					</test>
+					<test logic="AND">
+						/systems/electrical/bus/ac-1 ge 110
+						/ECAM/warnings/hyd/green-abnorm-lo-pr eq 0
+						<test logic="OR">
+							<test logic="AND">
+								/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+								<test logic="OR">
+									hydraulics/spoiler-l3/final-deg gt 0.01
+									hydraulics/spoiler-r3/final-deg gt 0.01
+								</test>
+							</test>
+							<test logic="AND">
+								/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
+								<test logic="OR">
+									<test logic="AND">
+										hydraulics/aileron-l/pressure-switch-or eq 1
+										<test logic="OR">
+											/systems/fctl/elac2 eq 0
+											/systems/hydraulic/green-psi lt 1500
+										</test>
+										/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
+									</test>
+									<test logic="AND">
+										hydraulics/aileron-r/pressure-switch-or eq 1
+										<test logic="OR">
+											/systems/fctl/elac1 eq 0
+											/systems/hydraulic/green-psi lt 1500
+										</test>
+									</test>
+								</test>
+							</test>
+						</test>
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		
+		<switch name="/ECAM/warnings/logic/dc-2-fms-predictions-unreliable">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/dc-2-fuel-consumption-increased eq 1
+				/systems/electrical/relay/dc-ess-shed-switch/contact-pos eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/dc-ess-fms-predictions-unreliable">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/dc-ess-fuel-consumption-increased eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/dc-emer-config">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+				/systems/electrical/bus/dc-1 lt 25
+				/systems/electrical/bus/dc-2 lt 25
+				/systems/electrical/bus/dc-ess lt 25
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-emer-config-output">
+			<input>/ECAM/warnings/logic/dc-emer-config</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">5</rate_limit> <!-- 0.2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/dc-1-2">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+				/systems/electrical/bus/dc-1 lt 25
+				/systems/electrical/bus/dc-2 lt 25
+				/ECAM/warnings/logic/dc-emer-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-1-2-output">
+			<input>/ECAM/warnings/logic/dc-1-2</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/dc-ess-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess lt 25
+				/ECAM/warnings/logic/dc-emer-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-ess-output">
+			<input>/ECAM/warnings/logic/dc-ess-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/dc-bat-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-bat lt 25
+				/ECAM/warnings/logic/dc-emer-config ne 1
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-bat-output">
+			<input>/ECAM/warnings/logic/dc-bat-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">5</rate_limit> <!-- 0.2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/dc-1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 lt 25
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-1-output">
+			<input>/ECAM/warnings/logic/dc-1-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/dc-2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 lt 25
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-2-output">
+			<input>/ECAM/warnings/logic/dc-2-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 lt 110
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/ac-1-output">
+			<input>/ECAM/warnings/logic/ac-1-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">5</rate_limit> <!-- 0.2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 lt 110
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/ac-2-output">
+			<input>/ECAM/warnings/logic/ac-2-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">5</rate_limit> <!-- 0.2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-ess-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess lt 110
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/ac-ess-output">
+			<input>/ECAM/warnings/logic/ac-ess-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">5</rate_limit> <!-- 0.2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/dc-ess-shed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed lt 25
+				/systems/electrical/bus/dc-ess ge 25
+				<test logic="OR">
+					/systems/electrical/some-electric-thingie/emer-elec-config-10-sec ne 1
+					/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/dc-ess-shed-output">
+			<input>/ECAM/warnings/logic/dc-ess-shed-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-ess-shed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess-shed lt 110
+				/systems/electrical/bus/ac-ess ge 110
+				<test logic="OR">
+					/systems/electrical/some-electric-thingie/emer-elec-config-10-sec ne 1
+					/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/ac-ess-shed-output">
+			<input>/ECAM/warnings/logic/ac-ess-shed-fault</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-ess-bus-altn-feed-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/controls/electrical/switches/ac-ess-feed eq 0
+				/systems/electrical/relay/ac-ess-feed-2/output ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/ac-ess-bus-altn-feed-output">
+			<input>/ECAM/warnings/logic/ac-ess-bus-altn-feed-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">2</rate_limit> <!-- 0.5 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/ac-ess-bus-altn-feed">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/some-electric-thingie/emer-elec-config ne 1
+				/systems/electrical/bus/ac-ess ge 25
+				/ECAM/warnings/logic/ac-ess-bus-altn-feed-output eq 1
+			</test>
+		</switch>
+		
 	</channel>
 
-	<channel name="STALL" execrate="8">
+	<channel name="STALL" execrate="16">
+			
+		<switch name="/ECAM/warnings/logic/stall/phase-4">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 4
+			</test>
+		</switch>
 		
 		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-set">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
-					/ECAM/warnings/logic/stall/phase-8-output eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/stall/phase-8-output eq 0
+						/ECAM/phases/monostable/phase-8 eq 0
+					</test>
 					/ECAM/warning-phase eq 7
 				</test>
 				<test logic="AND">
-					/ECAM/warnings/logic/stall/phase-4-output eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/stall/phase-4-output eq 0
+						/ECAM/warnings/logic/stall/phase-4 eq 0
+					</test>
 					/ECAM/warning-phase eq 5
 				</test>
-			</test>
-		</switch>
-				
-		<switch name="/ECAM/warnings/logic/stall/phase-4">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/ECAM/warning-phase eq 4
 			</test>
 		</switch>
 		
@@ -1688,18 +2190,14 @@
 				/ECAM/warning-phase eq 5
 			</test>
 		</switch>
-				
-		<switch name="/ECAM/warnings/logic/stall/phase-8">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/ECAM/warning-phase eq 8
-			</test>
-		</switch>
 		
 		<switch name="/ECAM/warnings/logic/stall/phase-flipflop-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/ECAM/warnings/logic/stall/phase-5-output eq 0
+				<test logic="AND">
+					/ECAM/warnings/logic/stall/phase-5-output eq 0
+					/ECAM/warnings/logic/stall/phase-5 eq 0
+				</test>
 				/ECAM/warning-phase eq 6
 			</test>
 		</switch>
@@ -1709,7 +2207,7 @@
 			<test logic="AND" value="1">
 				/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 1500
 				/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 1500
-				/it-fbw/law ne 0
+				/it-fbw/law eq 0
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
 		</switch>
@@ -1719,27 +2217,73 @@
 			<test logic="AND" value="1">
 				<test logic="OR">
 					<test logic="AND">
+						/it-fbw/law eq 0
 						/fdm/jsbsim/fcs/slat-pos-deg lt 15
 						<test logic="OR">
-							/systems/navigation/adr/output/aoa-1 ge 15
-							/systems/navigation/adr/output/aoa-2 ge 15
-							/systems/navigation/adr/output/aoa-3 ge 15 
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 13.5
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 13.5
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 13.5
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
 						</test>
 					</test>
 					<test logic="AND">
+						/it-fbw/law eq 0
 						/fdm/jsbsim/fcs/slat-pos-deg ge 15
-						<test logic="OR">
-							/systems/navigation/adr/output/aoa-1 ge 23
-							/systems/navigation/adr/output/aoa-2 ge 23
-							/systems/navigation/adr/output/aoa-3 ge 23 
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-1 ge 22
+							/systems/navigation/adr/operating-1 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-2 ge 22
+							/systems/navigation/adr/operating-2 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-3 ge 22
+							/systems/navigation/adr/operating-3 eq 1
 						</test>
 					</test>
-				</test>
-				/it-fbw/law ne 0
-				<test logic="OR">
-					/systems/navigation/adr/operating-1 eq 1
-					/systems/navigation/adr/operating-2 eq 1
-					/systems/navigation/adr/operating-3 eq 1
+					<test logic="AND">
+						/it-fbw/law ne 0
+						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						<test logic="OR">
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 8
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 8
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 8
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
+						</test>
+					</test>
+					<test logic="AND">
+						/it-fbw/law ne 0
+						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-1 ge 14
+							/systems/navigation/adr/operating-1 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-2 ge 14
+							/systems/navigation/adr/operating-2 eq 1
+						</test>
+						<test logic="AND">
+							/systems/navigation/adr/output/aoa-3 ge 14
+							/systems/navigation/adr/operating-3 eq 1
+						</test>
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -1759,7 +2303,7 @@
 		
 	</channel>
 	
-	<channel name="ENG" execrate="8">
+	<channel name="ENG" execrate="16">
 		
 		<switch name="/ECAM/warnings/logic/eng/ground-spoilers">
 			<default value="0"/>
@@ -1778,11 +2322,18 @@
 		<switch name="/ECAM/warnings/logic/eng/ground-retard">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/ECAM/warning-phase eq 6
-				/ECAM/warning-phase eq 7
+				/ECAM/timer/ground-calc eq 1
 				/ECAM/warnings/logic/eng/ground-spoilers-output eq 1
-				/ECAM/phases/monostable/phase-8-output eq 1
+				<test logic="AND">
+					<test logic="OR">
+						/ECAM/warning-phase eq 6
+						/ECAM/warning-phase eq 7
+					</test>
+					<test logic="AND">
+						/ECAM/phases/monostable/phase-8 eq 0
+						/ECAM/phases/monostable/phase-8-output eq 0
+					</test>
+				</test>
 			</test>
 		</switch>
 		
@@ -1897,12 +2448,15 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output eq 1
 				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-2-reverse-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-2-reverse eq 1
-						/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output eq 0
+				<test logic="AND">
+					/engines/engine[1]/state eq 3
+					<test logic="OR">
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-2-reverse eq 1
+							/ECAM/warnings/logic/eng/eng-1-retard-case-2 eq 0
+							/ECAM/warnings/logic/eng/eng-1-retard-case-2-fall-output eq 0
+						</test>
+						/ECAM/warnings/logic/eng/eng-2-reverse-output eq 1
 					</test>
 				</test>
 			</test>
@@ -1913,12 +2467,15 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2-output eq 1
 				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-2-reverse-fall eq 0
-						/ECAM/warnings/logic/eng/eng-2-tla-idle eq 1
+				<test logic="AND">
+					/engines/engine[1]/state eq 3
+					<test logic="OR">
+						/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-2-reverse-fall eq 0
+							/ECAM/warnings/logic/eng/eng-2-reverse eq 0
+							/ECAM/warnings/logic/eng/eng-2-tla-idle eq 1
+						</test>
 					</test>
 				</test>
 			</test>
@@ -1927,14 +2484,17 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-retard-case-1">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
 				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-1-reverse-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-1-reverse eq 1
-						/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output eq 0
+				<test logic="AND">
+					/engines/engine[0]/state eq 3
+					<test logic="OR">
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-1-reverse eq 1
+							/ECAM/warnings/logic/eng/eng-2-retard-case-2 eq 0
+							/ECAM/warnings/logic/eng/eng-2-retard-case-2-fall-output eq 0
+						</test>
+						/ECAM/warnings/logic/eng/eng-1-reverse-output eq 1
 					</test>
 				</test>
 			</test>
@@ -1943,14 +2503,17 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-retard-case-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output eq 1
 				/engines/engine[1]/state eq 3
-				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
-					<test logic="AND">
-						/ECAM/warnings/logic/eng/eng-1-reverse-fall eq 0
-						/ECAM/warnings/logic/eng/eng-1-tla-idle eq 1
+				<test logic="AND">
+					/engines/engine[0]/state eq 3
+					<test logic="OR">
+						/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
+						<test logic="AND">
+							/ECAM/warnings/logic/eng/eng-1-reverse-fall eq 0
+							/ECAM/warnings/logic/eng/eng-1-reverse eq 0
+							/ECAM/warnings/logic/eng/eng-1-tla-idle eq 1
+						</test>
 					</test>
 				</test>
 			</test>
@@ -2002,9 +2565,298 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/eng/new-retard-logic">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle eq 1
+				/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+				/controls/engines/engine[0]/throttle-pos ge 0.60
+				/controls/engines/engine[0]/throttle-pos lt 0.78
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-1-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+				/controls/engines/engine[0]/throttle-pos ge 0.60
+				/controls/engines/engine[0]/throttle-pos lt 0.83
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-1-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-1-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+				/controls/engines/engine[1]/throttle-pos ge 0.60
+				/controls/engines/engine[1]/throttle-pos lt 0.78
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-2-mct">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+				/controls/engines/engine[1]/throttle-pos ge 0.60
+				/controls/engines/engine[1]/throttle-pos lt 0.83
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/thr-lever-2-mct-output">
+			<input>/ECAM/warnings/logic/eng/thr-lever-2-mct</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.25</rate_limit> <!-- 4 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/thr-lever-not-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/new-retard-logic ne 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 0
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/thr-lever-2-mct-output eq 1
+							/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
+						</test>
+					</test>
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 1
+						/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
+					</test>
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 0
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/thr-lever-1-mct-output eq 1
+							/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
+						</test>
+					</test>
+					<test logic="AND">
+						/systems/thrust/lim-flex eq 1
+						/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/reverse-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				<test logic="OR">
+					/gear/gear[1]/rollspeed-ms lt 36
+					/ECAM/warning-phase ne 7
+				</test>
+				<test logic="OR">
+					/controls/engines/engine[0]/throttle-rev gt 0.0
+					/controls/engines/engine[1]/throttle-rev gt 0.0
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-cond-set-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-fail-cond-set">
+			<input>/ECAM/warnings/logic/eng/eng-1-fail-cond-set-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.3333</rate_limit> <!-- 3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-cond-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[0]/cutoff-switch eq 1
+				/controls/engines/engine[0]/fire-btn eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-cond-set-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-fail-cond-set">
+			<input>/ECAM/warnings/logic/eng/eng-2-fail-cond-set-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.3333</rate_limit> <!-- 3 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-cond-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[1]/cutoff-switch eq 1
+				/controls/engines/engine[1]/fire-btn eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/cutoff-switch eq 0
+				/controls/engines/engine[0]/fire-btn eq 0
+				/engines/engine[0]/n2-actual lt 59.4
+				/ECAM/warnings/logic/eng/eng-1-fail-cond eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[1]/cutoff-switch eq 0
+				/controls/engines/engine[1]/fire-btn eq 0
+				/engines/engine[1]/n2-actual lt 59.4
+				/ECAM/warnings/logic/eng/eng-2-fail-cond eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+				/ECAM/dual-failure-enabled eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[1]/n2-actual ge 59.4
+				/ECAM/dual-failure-enabled eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-master-60-sec">
+			<input>/controls/engines/engine[0]/cutoff-switch</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-master-60-sec">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.01666666666</rate_limit> <!-- 60 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/phase-5">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+					/ECAM/warnings/logic/stall/phase-4-output eq 0
+					/ECAM/warnings/logic/stall/phase-4 eq 0
+					/ECAM/warning-phase eq 5
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-fail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/phase-5-output eq 1
+					/ECAM/warnings/logic/eng/phase-5-output-2 eq 1
+					/ECAM/warnings/logic/eng/eng-1-master-60-sec eq 0 <!-- because the sense of cutoff is inverted -->
+				</test>
+				/ECAM/warnings/logic/eng/eng-1-fail-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-fail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/phase-5-output eq 1
+					/ECAM/warnings/logic/eng/phase-5-output-2 eq 1
+					/ECAM/warnings/logic/eng/eng-2-master-60-sec eq 0 <!-- because the sense of cutoff is inverted -->
+				</test>
+				/ECAM/warnings/logic/eng/eng-2-fail-output eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-shutdown-phase">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 1
+				/ECAM/warning-phase eq 2
+				/ECAM/warning-phase eq 9
+				/ECAM/warning-phase eq 10
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-shutdown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/dual-failure-enabled eq 0
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/eng-shutdown-phase eq 1
+							/ECAM/timer/ground-calc eq 0
+						</test>
+						/controls/engines/engine[0]/fire-btn eq 1
+					</test>
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-shutdown-phase eq 0
+						/controls/engines/engine[0]/cutoff-switch eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-shutdown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/dual-failure-enabled eq 0
+				<test logic="OR">
+					<test logic="AND">
+						<test logic="OR">
+							/ECAM/warnings/logic/eng/eng-shutdown-phase eq 1
+							/ECAM/timer/ground-calc eq 0
+						</test>
+						/controls/engines/engine[1]/fire-btn eq 1
+					</test>
+					<test logic="AND">
+						/ECAM/warnings/logic/eng/eng-shutdown-phase eq 0
+						/controls/engines/engine[1]/cutoff-switch eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
 	</channel>
 	
-	<channel name="Config" execrate="8">
+	<channel name="Config" execrate="16">
 		
 		<switch name="/ECAM/warnings/config/park-brk/park-brk-set">
 			<default value="0"/>
@@ -2024,7 +2876,7 @@
 		
 	</channel>
 	
-	<channel name="FCTL" execrate="8">
+	<channel name="FCTL" execrate="16">
 	
 		<switch name="/ECAM/warnings/fctl/lrElevFault">
 			<default value="0"/>
@@ -2227,11 +3079,7 @@
 			<test logic="AND" value="1">
 				/ECAM/warnings/fctl/gear-lever-down-pulse eq 1
 				/ECAM/warnings/fctl/gear-lever-down eq 1
-				<test logic="OR">
-					/gear/gear[0]/position-norm ne 1
-					/gear/gear[1]/position-norm ne 1
-					/gear/gear[2]/position-norm ne 1
-				</test>
+				/ECAM/warnings/fctl/gear-not-down-locked eq 1
 			</test>
 		</switch>
 		
@@ -2275,9 +3123,251 @@
 				/gear/gear[2]/position-norm eq 1
 			</test>
 		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-not-zero">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+				/controls/flight/flaps-input ne 0
+				<test logic="OR">
+					/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 22000
+					/systems/navigation/adr/computation/baro-alt-corrected-2-capt ge 22000
+					/systems/navigation/adr/computation/baro-alt-corrected-3-capt ge 22000
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fcs/flap-pos-deg lt 2
+				fcs/flap-pos-deg ge 24
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/flaps-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/flaps-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/flaps-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/slats-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fcs/slat-pos-deg lt 17
+				fcs/slat-pos-deg ge 25
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/slats-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/slats-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/slats-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/slats-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/spd-brk-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/spd-brk-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/pitch-trim-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				hydraulics/elevator-trim/final-deg gt 2.9
+				hydraulics/elevator-trim/final-deg lt -2.9
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/pitch-trim-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/pitch-trim-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/pitch-trim-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/pitch-trim-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rudder-trim-config-range">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				hydraulics/rudder/trim-deg gt 3.6
+				hydraulics/rudder/trim-deg lt -3.6
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rudder-trim-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/ECAM/warning-phase eq 3
+					/ECAM/warning-phase eq 4
+				</test>
+				/ECAM/warnings/fctl/rudder-trim-config-range eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/rudder-trim-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/ECAM/warnings/fctl/rudder-trim-config-range ne 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/park-brk-config-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 3
+				/controls/gear/brake-parking eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/park-brk-config-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 5
+				/controls/gear/brake-parking eq 0
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-50-seconds-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-50-seconds">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-50-seconds-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.02</rate_limit> <!-- 50 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-10-seconds-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
+				/engines/both-at-idle eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-10-seconds">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-10-seconds-input</input>
+			<rate_limit sense="incr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="decr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-1-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
+				/ECAM/warnings/fctl/spd-brk-still-out-10-seconds eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-1">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-1-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 30 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-2-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 7
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-2">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-2-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
+		</actuator>
+		<!-- TCAS ON AP
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out-3-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/flight/speedbrake gt 0.0
+			</test>
+		</switch>-->
+		
+		<!--<actuator name="/ECAM/warnings/fctl/spd-brk-still-out-3">
+			<input>/ECAM/warnings/fctl/spd-brk-still-out-3-input</input>
+			<rate_limit sense="decr">120</rate_limit>--> <!-- Instant -->
+			<!--<rate_limit sense="incr">0.2</rate_limit>--> <!-- 5 seconds -->
+		<!--</actuator>-->
+		
+		<switch name="/ECAM/warnings/fctl/spd-brk-still-out">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warnings/fctl/spd-brk-still-out-1 eq 1
+				/ECAM/warnings/fctl/spd-brk-still-out-2 eq 1
+				<!--/ECAM/warnings/fctl/spd-brk-still-out-3 eq 1-->
+			</test>
+		</switch>
+		
 	</channel>
 	
-	<channel name="Hydraulic" execrate="8">
+	<channel name="Hydraulic" execrate="16">
 	
 		<switch name="/ECAM/warnings/hyd/engines-2-online">
 			<default value="0"/>
@@ -2349,7 +3439,7 @@
 		<switch name="/ECAM/warnings/hyd/blue-abnorm-lo-pr">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/hydraulics/warnings/blue-lo-pr eq 1
+				/systems/hydraulic/warnings/blue-lo-pr eq 1
 				<test logic="OR">
 					/ECAM/warnings/hyd/engines-2-online eq 1
 					/ECAM/warnings/hyd/engines-2-off-in-air-output eq 1
@@ -2360,7 +3450,7 @@
 		<switch name="/ECAM/warnings/hyd/green-abnorm-lo-pr">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/hydraulics/warnings/green-lo-pr eq 1
+				/systems/hydraulic/warnings/green-lo-pr eq 1
 				/ECAM/warnings/hyd/engine-1-start-output eq 1
 			</test>
 		</switch>
@@ -2368,7 +3458,7 @@
 		<switch name="/ECAM/warnings/hyd/yellow-abnorm-lo-pr">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/hydraulics/warnings/yellow-lo-pr eq 1
+				/systems/hydraulic/warnings/yellow-lo-pr eq 1
 				/ECAM/warnings/hyd/engine-2-start-output eq 1
 			</test>
 		</switch>
@@ -2418,6 +3508,21 @@
 		<switch name="/ECAM/warnings/hyd/blue-green-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND"> <!-- inhibit unless engine running -->
+						<test logic="OR">
+							/ECAM/warning-phase le 2
+							/ECAM/warning-phase ge 9
+						</test>
+						/engines/engine[0]/state eq 3
+					</test>
+					<test logic="AND">
+						/ECAM/warning-phase gt 2
+						/ECAM/warning-phase lt 9
+						/ECAM/warning-phase ne 4
+						/ECAM/warning-phase ne 5
+					</test>
+				</test>
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
 			</test>
@@ -2426,6 +3531,21 @@
 		<switch name="/ECAM/warnings/hyd/blue-yellow-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="AND"> <!-- inhibit unless engine running -->
+						<test logic="OR">
+							/ECAM/warning-phase le 2
+							/ECAM/warning-phase ge 9
+						</test>
+						/engines/engine[1]/state eq 3
+					</test>
+					<test logic="AND">
+						/ECAM/warning-phase gt 2
+						/ECAM/warning-phase lt 9
+						/ECAM/warning-phase ne 4
+						/ECAM/warning-phase ne 5
+					</test>
+				</test>
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
 			</test>
@@ -2457,16 +3577,21 @@
 				/engines/engine[0]/state eq 3
 				/engines/engine[1]/state eq 3
 				<test logic="OR">
-					fcs/flap-pos-deg ne 0
-					hydraulics/spoiler-l1/final-deg gt 0
-					hydraulics/spoiler-r1/final-deg gt 0
-					hydraulics/spoiler-l2/final-deg gt 0
-					hydraulics/spoiler-r2/final-deg gt 0
-					hydraulics/spoiler-l4/final-deg gt 0
-					hydraulics/spoiler-r4/final-deg gt 0
-					hydraulics/spoiler-l5/final-deg gt 0
-					hydraulics/spoiler-r5/final-deg gt 0
-					<!-- aileron servo -->
+					<test logic="AND">
+						/ECAM/warnings/logic/SFLAPEXT eq 1
+						/systems/electrical/bus/dc-ess lt 25
+					</test>
+					hydraulics/spoiler-l2/final-deg gt 0.01
+					hydraulics/spoiler-r2/final-deg gt 0.01
+					hydraulics/spoiler-l3/final-deg gt 0.01
+					hydraulics/spoiler-r3/final-deg gt 0.01
+					hydraulics/spoiler-l4/final-deg gt 0.01
+					hydraulics/spoiler-r4/final-deg gt 0.01
+					<test logic="OR">
+						/systems/fctl/elac1 eq 0
+						/systems/fctl/elac2 eq 0
+						/systems/hydraulic/green-psi lt 1500
+					</test>
 				</test>
 			</test>
 		</switch>
@@ -2477,12 +3602,34 @@
 				/ECAM/timer/ground-calc eq 0
 				/engines/engine[0]/state eq 3
 				/engines/engine[1]/state eq 3
+				<test logic="OR">
+					<test logic="AND">
+						/ECAM/warnings/logic/SFLAPEXT eq 1
+						/systems/electrical/bus/dc-ess lt 25
+					</test>
+					hydraulics/spoiler-l1/final-deg gt 0.01
+					hydraulics/spoiler-r1/final-deg gt 0.01
+					hydraulics/spoiler-l2/final-deg gt 0.01
+					hydraulics/spoiler-r2/final-deg gt 0.01
+					hydraulics/spoiler-l4/final-deg gt 0.01
+					hydraulics/spoiler-r4/final-deg gt 0.01
+					hydraulics/spoiler-l5/final-deg gt 0.01
+					hydraulics/spoiler-r5/final-deg gt 0.01
+					<test logic="AND">
+						<test logic="OR">
+							/systems/fctl/elac1 eq 0
+							/systems/fctl/elac2 eq 0
+							/systems/hydraulic/blue-psi lt 1500
+						</test>
+						/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
+					</test>
+				</test>
 			</test>
 		</switch>
 		
 	</channel>
 	
-	<channel name="Altitude Alerter" execrate="8">
+	<channel name="Altitude Alerter" execrate="16">
 		
 		<switch name="/ECAM/warnings/altitude-alert/altInhibit">
 			<default value="0"/>
@@ -2665,5 +3812,58 @@
 		</switch>
 		
 	</channel>
+	
+	<channel name="FUEL" execrate="16">
+	
+		<switch name="/ECAM/warnings/fuel/center-pumps-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/fuel/switches/pump-center-1 eq 0
+				/controls/fuel/switches/pump-center-2 eq 0
+				/controls/fuel/switches/center-mode eq 1
+				/systems/fuel/quantity/center-low eq 0
+				/ECAM/warning-phase eq 6
+				<!-- TODO NOT DUAL CENTER PUMP FAULT -->
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fuel/center-pumps-off-output">
+			<input>/ECAM/warnings/fuel/center-pumps-off</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
+		</actuator>
+		
+		<switch name="/ECAM/warnings/fuel/lo-level-l-r">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/quantity/left-wing-inner-low eq 1
+				/systems/fuel/quantity/right-wing-inner-low eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/fuel/lo-level-l-r-output">
+			<input>/ECAM/warnings/fuel/lo-level-l-r</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 30 seconds -->
+		</actuator>
+		
+	</channel>
+	
+	<!--<channel name="NAV" execrate="16">
+	
+		<switch name="/ECAM/warnings/navigation/ADR123-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-1 ge 110
+				/systems/electrical/bus/ac-2 ge 110
+				/systems/electrical/bus/ac-ess ge 110
+				/ECAM/warning-phase ne 1
+				/ECAM/warning-phase ne 4
+				/ECAM/warning-phase ne 8
+				/ECAM/warning-phase ne 10
+			</test>
+		</switch>
+		
+	</channel>-->
 	
 </system>

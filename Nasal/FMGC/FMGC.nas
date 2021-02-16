@@ -670,9 +670,11 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.decel = 0;
 	}	
 	
-	
 	if (FMGCInternal.phase == 4 and FMGCInternal.decel) {
 		FMGCInternal.phase = 5;
+	} elsif (FMGCInternal.phase == 4 and altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
+		FMGCInternal.phase = 3;
+		systems.PNEU.pressMode.setValue("CR");
 	}
 	
 	if ((FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
@@ -990,7 +992,7 @@ var reset_FMGC = func {
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
-	mcdu.FlightLogDatabase.clearDatabase();
+	mcdu.FlightLogDatabase.reset(); # track reset events without loosing recorded data
 	
 	Input.fd1.setValue(fd1);
 	Input.fd2.setValue(fd2);

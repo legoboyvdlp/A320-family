@@ -119,15 +119,15 @@ var fplnItem = {
 	},
 	getAlt: func() {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.flightPlanController.flightplans[me.plan].departure != nil) {
-			return [" " ~ sprintf("%5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "grn"]; #fixed - aligned to right
+			return [" " ~ sprintf("%5.0f", math.round(fmgc.flightPlanController.flightplans[me.plan].departure.elevation * M2FT)), "grn"];
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
 			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [" " ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), tcol]; #fixed - aligned to right
+				return [" " ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), tcol];
 			} else {
-				return [" " ~ sprintf("%5.0f", me.wp.alt_cstr), tcol]; #fixed - aligned to right
+				return [" " ~ sprintf("%5.0f", me.wp.alt_cstr), tcol];
 			}
 		} else {
 			return ["------", "wht"];

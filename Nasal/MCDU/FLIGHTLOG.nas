@@ -2,12 +2,17 @@
 # Basic OOOI system implementation
 
 var OOOIReport = {
-	new: func(state,fob="",time="") {
+	new: func(state,time=0,fob="") {
 		var report = {parents:[OOOIReport]};
 		report.state = state;
 		report.fob = (fob != "") ? fob : fmgc.FMGCInternal.fob;
-		report.time = (time != "") ? time : sprintf("%02d.%02d", getprop("/sim/time/utc/hour"), getprop("/sim/time/utc/minute"));		
-		report.elapsed = int(getprop("/sim/time/elapsed-sec"));
+		if (time != 0) {
+			report.time = formatSecToHHMM(time);
+			report.elapsed = time;
+		} else {
+			report.time = sprintf("%02d.%02d", getprop("/sim/time/utc/hour"), getprop("/sim/time/utc/minute"));
+			report.elapsed = int(getprop("/sim/time/elapsed-sec"));
+		}
 		report.gmt = getprop("/sim/time/gmt-string");
 		report.date = getprop("/sim/time/utc/day");
 		report.fltnum = (fmgc.FMGCInternal.flightNumSet == 1) ? fmgc.FMGCInternal.flightNum : "----";
@@ -42,12 +47,15 @@ var formatSecToHHMM = func(sec) {
 var FlightLogDatabase = {
 	database: std.Vector.new(),
 	pages: std.Vector.new(),
+	currpageindex: 0,
 	addReport: func(report) {
-		if (report.state == 0) me.pages.append( OOOIReportPage.new(me.getSize()) );
+		if (report.state == 0 or me.getPageSize()==0) me.addPage();
         me.database.append(report);
 		var pg = me.pages.vector[me.pages.size()-1];
-		pg.fltnum = report.fltnum;
-		pg.tofrom = report.tofrom;
+		if (report.state < 3) {  # IN states (3/4) don't update page data
+			if (report.fltnum != "") pg.fltnum = report.fltnum;
+			if (report.tofrom != "") pg.tofrom = report.tofrom;
+		}
 		if (report.state == 0) {
 			pg.fltstate = "OUT";
 			pg.blkstart = report.elapsed;			
@@ -65,6 +73,10 @@ var FlightLogDatabase = {
 			if (pg.blkstart > 0) pg.blktime = formatSecToHHMM(report.elapsed - pg.blkstart);
 		}
     },
+	reset: func() {
+		#Actually reset occurs before IN state - I have no solution for this
+		#if (me.getPageSize()>0 and me.currpageindex < me.getSize()) me.addPage();
+	},
 	getSize: func() {
 		return me.database.size();
 	},    
@@ -81,6 +93,10 @@ var FlightLogDatabase = {
 			append(lst,log);
 		}
 		return lst;
+	},
+	addPage: func() {
+		me.currpageindex = me.getSize();
+		me.pages.append( OOOIReportPage.new(me.getSize()) );
 	},
 	getPage: func(pg) {
 		return (pg<=me.getPageSize()) ? me.pages.vector[pg-1] : OOOIReportPage.new(0);
@@ -110,7 +126,12 @@ var doorR1_pos = props.globals.getNode("/sim/model/door-positions/doorr1/positio
 var doorL4_pos = props.globals.getNode("/sim/model/door-positions/doorl4/position-norm", 1);
 var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/position-norm", 1);
 
-#check for A/C state change - advice me for a better method, please :/
+# Detect OFF without IN
+var lastgs0 = 0;	
+#var lastgear0 = 0;
+var lastgsrestart = 0;
+
+# Check for A/C state change - advice me for a better method, please :/
 var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 
     var phase = fmgc.FMGCInternal.phase;
@@ -121,7 +142,7 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 
 	if (expectedOOOIState == 0) { # OUT
 		if (gear0 and phase == 0) {
-			if (gs>9) {  # imho - it's useful few speed tollerance, 10kts min speed on taxiways - CHECKME - better with pushback detection?
+			if (gs > 9) {  # imho - it's useful few speed tollerance, 10kts min speed on taxiways - CHECKME - better with pushback detection?
 				FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState));
 				expectedOOOIState = 1;
 			}
@@ -141,13 +162,28 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 		if (gear0 and (phase == 7 or phase == 0)) {  #done or preflight
 			FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState));
 			expectedOOOIState = 3;
+			lastgs0 = 0;
+			lastgsrestart = 0;
 		}
 	} else if (expectedOOOIState == 3) { # IN
 		if (gear0 and gs < 1) {
+			if (lastgs0 == 0) {
+				lastgs0 = int(getprop("/sim/time/elapsed-sec"));
+				lastgsrestart = 0;
+			}
 			if (doorL1_pos.getValue()>0 or doorR1_pos.getValue()>0 or doorL4_pos.getValue()>0 or doorR4_pos.getValue()>0) {
 				FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState));
 				expectedOOOIState = 0;
 			}
+		}
+		else if (!gear0) {  # OFF without IN -> TO without stop and opening doors
+			if (lastgs0>0) FlightLogDatabase.addReport(OOOIReport.new(expectedOOOIState,lastgs0)); # IN (estimated)
+			FlightLogDatabase.addPage();
+			if (lastgsrestart>0) FlightLogDatabase.addReport(OOOIReport.new(0,lastgsrestart)); # OUT (estimated)
+			expectedOOOIState = 1; # go on to OFF state
+		}
+		else if (gs > 9 and lastgsrestart == 0) { # try to detect OFF without IN
+			lastgsrestart = int(getprop("/sim/time/elapsed-sec"));
 		}
 	}
 
