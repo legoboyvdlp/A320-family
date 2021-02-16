@@ -824,7 +824,7 @@ var flightPlanController = {
 					call(func {
 						me.currentToWptIndex.setValue(1);
 					}, nil, nil, nil,errs);
-					if (errs != nil) { debug.dump(errs); }
+					if (size(errs) != 0) { debug.printerror(errs); }
 				}
 				me.active.setValue(1);
 			}
