@@ -615,7 +615,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (size(me.outputList) >= index) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
-						if (me.outputList[index + 1].wp.wp_name == "(DECEL)" or me.outputList[index + 1].wp.wp_name == "(T/C)" or me.outputList[index + 1].wp.wp_name == "(T/D)") {
+						if (me.outputList[index - 1 + me.scroll].wp.wp_name == "(DECEL)" or me.outputList[index - 1 + me.scroll].wp.wp_name == "(T/C)" or me.outputList[index - 1 + me.scroll].wp.wp_name == "(T/D)") {
 							mcdu_message(me.computer, "NOT ALLOWED");
 							return;
 						}
