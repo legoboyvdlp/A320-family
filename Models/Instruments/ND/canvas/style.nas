@@ -97,6 +97,8 @@ canvas.NDStyles["Airbus"] = {
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));				
 				if (visible) {
 					layer.update(); 
+				} else {
+					layer.display_changed = 1;
 				}
 				layer.group.setVisible(visible);
 			}, # end of layer update predicate
