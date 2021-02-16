@@ -3,13 +3,13 @@
 <system name="A320: Engine Fire">
 
 	<channel name="Engine Fire" execrate="8">
-		<fcs_function name="enginefire1">
+		<fcs_function name="rubbish/enginefire1">
               <function>
 				<sum>
 					<property>/systems/fire/engine1/temperature</property>
 					<product>
 					   <table>
-							<independentVar lookup="row">/systems/failures/engine-left-fire</independentVar>
+							<independentVar lookup="row">/systems/failures/fire/engine-left-fire</independentVar>
 							<tableData>
 								0    -5
 							    1	 30
@@ -26,13 +26,13 @@
             <output>/systems/fire/engine1/temperature</output>
         </fcs_function>
 		
-		<fcs_function name="enginefire2">
+		<fcs_function name="rubbish/enginefire2">
               <function>
 				<sum>
 					<property>/systems/fire/engine2/temperature</property>
 					<product>
 					   <table>
-							<independentVar lookup="row">/systems/failures/engine-right-fire</independentVar>
+							<independentVar lookup="row">/systems/failures/fire/engine-right-fire</independentVar>
 							<tableData>
 								0    -5
 							    1	 30
@@ -49,13 +49,13 @@
             <output>/systems/fire/engine2/temperature</output>
         </fcs_function>
 		
-		<fcs_function name="apufire">
+		<fcs_function name="rubbish/apufire">
               <function>
 				<sum>
 					<property>/systems/fire/apu/temperature</property>
 					<product>
 					   <table>
-							<independentVar lookup="row">/systems/failures/apu-fire</independentVar>
+							<independentVar lookup="row">/systems/failures/fire/apu-fire</independentVar>
 							<tableData>
 								0    -5
 							    1	 45
@@ -74,13 +74,13 @@
 	</channel>
 	
 	<channel name="Cargo Fire" execrate="8">
-		<fcs_function name="fwdfire">
+		<fcs_function name="rubbish/fwdfire">
               <function>
 				<sum>
 					<property>/systems/fire/cargo/fwd/temperature</property>
 					<product>
 					   <table>
-							<independentVar lookup="row">/systems/failures/cargo-fwd-fire</independentVar>
+							<independentVar lookup="row">/systems/failures/fire/cargo-fwd-fire</independentVar>
 							<tableData>
 								0    -5
 							    1	 30
@@ -97,13 +97,13 @@
             <output>/systems/fire/cargo/fwd/temperature</output>
         </fcs_function>
 		
-		<fcs_function name="aftfire">
+		<fcs_function name="rubbish/aftfire">
               <function>
 				<sum>
 					<property>/systems/fire/cargo/aft/temperature</property>
 					<product>
 					   <table>
-							<independentVar lookup="row">/systems/failures/cargo-aft-fire</independentVar>
+							<independentVar lookup="row">/systems/failures/fire/cargo-aft-fire</independentVar>
 							<tableData>
 								0    -5
 							    1	 45
@@ -119,5 +119,35 @@
 			</clipto>
             <output>/systems/fire/cargo/aft/temperature</output>
         </fcs_function>
+		
+		<fcs_function name="rubbish/lavatory">
+              <function>
+				<sum>
+					<property>/systems/fire/lavatory/temperature</property>
+					<product>
+					   <table>
+							<independentVar lookup="row">/systems/failures/fire/lavatory-fire</independentVar>
+							<tableData>
+								0    -5
+							    1	 45
+							</tableData>
+						</table>
+						<property>simulation/channel-dt</property>
+					</product>
+				</sum>
+            </function>
+			<clipto>
+				<min>0</min>
+				<max>300</max>
+			</clipto>
+            <output>/systems/fire/lavatory/temperature</output>
+        </fcs_function>
+		
+		<switch name="/systems/fire/lavatory/warning">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fire/lavatory/temperature ge 295
+			</test>
+		</switch>
 	</channel>
 </system>

@@ -253,9 +253,11 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myCRZWIND[i].pushButtonLeft(1);
 		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(1);
+		} else if (page == "PROGPREF") {
+			progTOInput("L1",i); # same fn as TO
 		} else if (page == "PROGTO") {
 			progTOInput("L1",i);
-		} else if (page == "PROGCLB") {
+		} else if (page == "PROGCLB" or page == "PROGAPPR") {  # APPR restore to CLB
 			progCLBInput("L1",i);
 		} else if (page == "PROGCRZ") {
 			progCRZInput("L1",i);
@@ -548,6 +550,8 @@ var lskbutton = func(btn, i) {
 			statusInput("L3",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
+		} else if (page == "DATA") {
+			dataInput("L3",i);
 		} else if (page == "PRINTFUNC") {
 			printInput("L3",i);
 		} else if (page == "PRINTFUNC2") {
@@ -648,6 +652,8 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonLeft(3);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 2;
 			atsu.freeTexts[i].changed = 1;
@@ -867,7 +873,13 @@ var lskbutton = func(btn, i) {
 		} else if (page == "F-PLN") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (page == "LATREV" or page == "VERTREV" or page == "DUPLICATENAMES") {
-			pageNode[i].setValue("F-PLN");
+			if (page != "DUPLICATENAMES") {
+				pageNode[i].setValue("F-PLN");
+			} else {
+				 if (canvas_mcdu.myDuplicate[i] != nil and canvas_mcdu.myDuplicate[i].flagPROG) {
+					pagebutton("prog",i);
+				 }
+			}
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonLeft(6);
 		} else if (page == "DEPARTURE" or page == "HOLD" or page == "AIRWAYS") {
@@ -901,6 +913,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("ATIS");
 		} else if (page == "AOCCONFIG") {
 			pageNode[i].setValue("AOCMENU");
+		} else if (page == "POSMON") {
+			canvas_mcdu.togglePageFreeze(i);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1095,6 +1109,8 @@ var rskbutton = func(btn, i) {
 			atsu.freeTexts[i].changed = 1;
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("MCDUTEXT");
+		} else if (page == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonRight(3);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1141,6 +1157,8 @@ var rskbutton = func(btn, i) {
 				}
 			}
 			pageNode[i].setValue("WINDCRZ");
+		} else if (find("PROG",page) != -1) {
+			progGENInput("R4",i);
 		} else if (page == "PERFTO") {
 			perfTOInput("R4",i);
 		} else if (page == "PERFAPPR") {
@@ -1439,21 +1457,27 @@ var pagebutton = func(btn, i) {
 
 		# A more flexible system/page tracking for future system expansion
 		if (getprop("/MCDU[" ~ i ~ "]/active-system") == "fmgc") setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
-		else setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
+		else if (getprop("/MCDU[" ~ i ~ "]/active-system") == "atsu") setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
 		if (btn == "atc") setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 		else setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 
 		if (btn == "radnav") {
 			pageNode[i].setValue("RADNAV");			
 		} else if (btn == "prog") {
-			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
+			if (fmgc.FMGCInternal.phase == 0) {
+				pageNode[i].setValue("PROGPREF");
+			} else if (fmgc.FMGCInternal.phase == 1) {
 				pageNode[i].setValue("PROGTO");
 			} else if (fmgc.FMGCInternal.phase == 2) {
 				pageNode[i].setValue("PROGCLB");
 			} else if (fmgc.FMGCInternal.phase == 3) {
 				pageNode[i].setValue("PROGCRZ");
-			} else if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				pageNode[i].setValue("PROGDES");
+			} else if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
+				pageNode[i].setValue("PROGAPPR");
+			} else if (fmgc.FMGCInternal.phase == 7) {
+				pageNode[i].setValue("PROGDONE");
 			}
 		} else if (btn == "perf") {
 			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
