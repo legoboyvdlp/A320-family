@@ -1441,20 +1441,32 @@
 			<button>0</button>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>					
+							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+							<value>0</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/switches/terr_on_nd_l</property>
 			</binding>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>					
+							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+							<value>0</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>instrumentation/efis/inputs/terr</property>
@@ -1492,20 +1504,32 @@
 			<button>0</button>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>					
+							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+							<value>0</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/switches/terr_on_nd_r</property>
 			</binding>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>					
+							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+							<value>0</value>
+						</equals>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>instrumentation/efis[1]/inputs/terr</property>
