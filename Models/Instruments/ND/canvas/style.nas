@@ -93,7 +93,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
 				var visible = nd.get_switch("toggle_terrain") and 
-					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and 
+					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and 
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));				
 				if (visible) {
 					layer.update(); 
