@@ -12,7 +12,7 @@ var terrain_maxalt = props.globals.initNode("/custom/terrain/max-altitude", -999
 
 var tile_list = [
 				nil,"tile_gl.png","tile_gh.png","tile_yl.png","tile_yh.png","tile_rh.png", # 0-5  low alt
-				"tile_gl.png","tile_gh.png","tile_gs.png",nil, # 6-9 hi alt
+				"tile_gl.png","tile_gh.png","tile_gs.png",nil, # 6-8 hi alt
 				"tile_ml.png","tile_cl.png"  # 10 magenta - 11 cyan (water)
 				];
 
@@ -102,15 +102,14 @@ var updateTerrain = func {
 						if (me.hialtmode == 0) {
 							if (diff>=lowaltft) grad = 3; # lite yellow
 							else {
-								grad = 2 + int(diff/1000);
+								grad = int(diff/1000) + 2;
 								if (grad<0) grad = 0;
 							}						
 						} else {
 							if (diff>=lowaltft) grad = 3; # lite yellow
 							else {
 							    if (me.bands_range > 0 and elev > me.bands_minalt) {
-									elev -= me.bands_minalt;
-									grad = int(elev / (me.bands_range / 3)) + 6;
+									grad = int((elev-me.bands_minalt) / me.bands_range) + 6;
 									if (grad>8) grad = 8; # solid green
 								}
 							}
@@ -147,8 +146,11 @@ var update_altitudes = func {
 	me.terrain_minalt.setValue(me.min_altitude);
 	me.terrain_maxalt.setValue(me.max_altitude);
 
-	if (me.max_altitude < me.refaltitudeft) {
-		me.hialtmode = 1;
+	if (me.onground == 0 and (me.max_altitude + 1000) < me.refaltitudeft) {   # 1000 ft tollerance
+		me.hialtmode = 1;		
+		me.bands_range = (me.max_altitude - me.min_altitude) / 4;
+		me.bands_minalt = int(me.min_altitude + me.bands_range);
+		me.bands_maxalt = me.max_altitude;
 	} else {
 		me.hialtmode = 0;
 	}
@@ -158,9 +160,6 @@ var update_altitudes = func {
 var restart_beacon = func {
 	me.radar_beacon = 0;
 	me.radar_cycle += 1;
-	me.bands_minalt = me.min_altitude;
-	me.bands_maxalt = math.max(1000,me.max_altitude); # band min limit to 1000 ft - trivial
-	me.bands_range = me.bands_maxalt - me.bands_minalt;
  	me.min_altitude = 9999;
 	me.max_altitude = -9999;
 	me.reference = nil;
@@ -174,7 +173,7 @@ var init = func {
 	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
 	me.range = me.model.rangeNm; # Range of Navigation Display
 	me.viewport_radius = me.getOption('viewport_radius', 670);
-	me.imgpath = get_local_path('res/terrain/');
+	me.imgpath = get_local_path('res/terrainv2/');
 	me.radar_beacon = 0;
 	me.radar_cycle = 0;
 	me.radar_cleared = 1;
@@ -189,6 +188,8 @@ var init = func {
 	me.reference = nil;
 	me.onfailure = 0;
 	me.hialtmode = 0; # high aircraft relative altitude mode
+	me.checkarrival = 0;
+	me.onground = 1;
 
 	var tile = me.tile;
 
@@ -228,9 +229,9 @@ var init = func {
 		me.terrlayer["R" ~ c] = grprx;
 	}
 
-	#setlistener("/ECAM/warnings/timer/nav-gpws-terr-fault", func{   # TODO need further investigations
-	#	me.onfailure = getprop("/ECAM/warnings/timer/nav-gpws-terr-fault");
-	#});
+	setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   # detect GPWS switch status
+		me.onfailure = getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit");
+	},0,0);
 
 };
 
@@ -271,42 +272,60 @@ var draw = func {
 			me.refheading = getprop("orientation/heading-magnetic-deg");
 
 			var refalt = ref.alt() * 3.2808399;
-			me.refaltitudeft = refalt;
+			me.refaltitudeft = refalt;			
 			me.reflowaltft = (pts.Gear.position[1].getValue()) ? -250 : -500;
+			me.onground = getprop("/gear/gear[0]/wow");
 			
-			if (fmgc.FMGCInternal.phase<2) {			
+			if (me.basealtitudeft == nil and fmgc.FMGCInternal.phase<2) {			
 				#var basealtft = me.get_elevation(ref.lat,ref.lon);
+				me.basealtitudeft = refalt + 400;
+				me.checkarrival = 1;
+			}
+
+			if (fmgc.FMGCInternal.phase == 2 and me.basealtitudeft > 0 and refalt > me.basealtitudeft) {
+				me.basealtitudeft = 0;
+			}
+
+			if (fmgc.FMGCInternal.phase == 5 and me.checkarrival == 1) {
+				me.checkarrival = 0;				
+				me.basealtitudeft = nil;
+				if (fmgc.FMGCInternal.arrApt != nil) {
+					var airport = airportinfo(fmgc.FMGCInternal.arrApt);
+					if (airport != nil) me.basealtitudeft = 400 + (airport.elevation * M2FT);
+				}
+				if (me.basealtft == nil) {
+					var elev = get_elevation(ref.lat,ref.lon);
+					if (elev != nil) me.basealtitudeft = 400 + elev;
+					else me.basealtitudeft = 400; # no hope
+				}
+			}
+
+			if (fmgc.FMGCInternal.phase == 6 and me.checkarrival == 0) {
+				me.checkarrival == 1;
+				me.basealtft = 0;
+			}
+
+			if (fmgc.FMGCInternal.phase == 7 and me.basealtft == 0) {
+				me.checkarrival == 1;				
 				me.basealtitudeft = refalt + 400;
 			}
 
-			#if (fmgc.FMGCInternal.phase >= 5 and me.basealtitudeft == 0) {
-			#	var basealtft = me.get_elevation(ref.lat,ref.lon);
-			#	if (basealtft == nil) basealtft = 0;
-			#	me.basealtitudeft = basealtft + 400;
-			#	#	me.reference.basealtitudeft = ft + 400  # <- TODO get departure/arrival runway altitude
-			#} 
-			#else if ((fmgc.FMGCInternal.phase > 1 and fmgc.FMGCInternal.phase < 5) and (me.basealtitudeft != 0)) {
-			#	me.basealtitudeft = 0;
-			#}
 		}
 
 	} else {
-
-		if (me.layer.display_changed == 1) {
-			me.layer.display_changed = 0;
-			me.request_clear = 1;
-		}
 
 		var range = me.layer.map.getRange(); # Range of Navigation Display
 		var update_size = (range != me.range);
 		me.range = range;
 
-		if(update_size){
+		if (me.layer.display_changed == 1 or update_size) {
+			me.layer.display_changed = 0;
 			me.request_clear = 1;
 		}
 
 		me.updateTerrain(); # left
-		if (math.mod(me.radar_beacon,2)==1) me.updateTerrain(); # right
+		#if (math.mod(me.radar_beacon,2)==1) 
+		me.updateTerrain(); # right
 
 	}
 
