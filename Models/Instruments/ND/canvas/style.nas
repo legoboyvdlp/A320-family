@@ -12,8 +12,8 @@ var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass position deg
 
-var terrain_minalt = props.globals.getNode("/custom/terrain/min-altitude", 0);
-var terrain_maxalt = props.globals.getNode("/custom/terrain/max-altitude", -9999);
+var terrain_minalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0);
+var terrain_maxalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999);
 
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
