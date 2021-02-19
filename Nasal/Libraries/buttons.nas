@@ -62,8 +62,9 @@ var variousReset = func() {
 	setprop("/modes/fcu/hdg-time", -45);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
-	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/no-smoking-sign", 0.0);
 	setprop("/controls/switches/seatbelt-sign", 0);
+	setprop("/controls/switches/emer-lights", 0);
 }
 
 var BUTTONS = {
