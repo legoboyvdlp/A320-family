@@ -298,6 +298,7 @@ var colddark = func {
 		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		if (getprop("/engines/engine[1]/n2-actual") < 2) {
 			colddark_b();
@@ -343,6 +344,7 @@ var beforestart = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -434,6 +436,7 @@ var taxi = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!

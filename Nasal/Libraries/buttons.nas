@@ -32,7 +32,7 @@ var variousReset = func() {
 	setprop("/controls/CVR/gndctl", 0);
 	setprop("/controls/CVR/erase", 0);
 	setprop("/controls/switches/pneumatics/cabin-fans", 1);
-	setprop("/controls/oxygen/crewOxyPB", 1); # 0 = OFF 1 = AUTO
+	setprop("/controls/oxygen/crewOxyPB", 0); # 0 = OFF 1 = AUTO
 	setprop("/controls/switches/emerCallLtO", 0); # ON light, flashes white for 10s
 	setprop("/controls/switches/emerCallLtC", 0); # CALL light, flashes amber for 10s
 	setprop("/controls/switches/emerCall", 0);
@@ -63,7 +63,7 @@ var variousReset = func() {
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
 	setprop("/controls/switches/no-smoking-sign", 0.5);
-	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/seatbelt-sign", 0);
 }
 
 var BUTTONS = {
