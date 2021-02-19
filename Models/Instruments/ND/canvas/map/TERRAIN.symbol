@@ -340,9 +340,13 @@ var draw = func {
 };
 
 setlistener("/instrumentation/mk-viii/outputs/discretes/gpws-warning", func { #warning - TERRAIN red - solid red
-  	me.terrain_alert.setValue( (getprop("/instrumentation/mk-viii/outputs/discretes/gpws-warning") ) ? 2 : 0 );
+  	me.terrain_alert.setValue( (getprop("/instrumentation/mk-viii/outputs/discretes/gpws-warning") == 1 ) ? 2 : 0 );
+	  print("Terrain alert:"  ~  getprop("/instrumentation/mk-viii/outputs/discretes/gpws-warning"));
+	  print(me.terrain_alert.getValue());
 });
 
 setlistener("/instrumentation/mk-viii/outputs/discretes/gpws-alert", func {	#caution - TERRAIN amber - solid yellow
-	me.terrain_alert.setValue( (getprop("/instrumentation/mk-viii/outputs/discretes/gpws-alert") ) ? 1 : 0 );
+	me.terrain_alert.setValue( (getprop("/instrumentation/mk-viii/outputs/discretes/gpws-alert") == 1 ) ? 1 : 0 );
+	  print("Terrain alert:"  ~  getprop("/instrumentation/mk-viii/outputs/discretes/gpws-warning"));
+	  print(me.terrain_alert.getValue());
 });

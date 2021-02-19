@@ -15,6 +15,7 @@ var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass
 var terrain_minalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0);
 var terrain_maxalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999);
 
+
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
 		if( family == "Liberation Sans" and weight == "normal" )
