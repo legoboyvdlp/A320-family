@@ -191,6 +191,10 @@ var Instrumentation = {
 		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
 	},
+	PFD: {
+		windDirection: props.globals.getNode("/instrumentation/pfd/wind-direction"),
+		windSpeed: props.globals.getNode("/instrumentation/pfd/wind-speed"),
+	},
 	TCAS: {
 		Inputs: {
 			mode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
