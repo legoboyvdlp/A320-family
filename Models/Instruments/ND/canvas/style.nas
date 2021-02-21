@@ -94,7 +94,7 @@ canvas.NDStyles["Airbus"] = {
 			predicate: func(nd, layer) {
 				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
 				var visible = nd.get_switch("toggle_terrain") and 
-					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and 
+					nd.get_switch("toggle_display_mode") == "MAP" and  (nd.rangeNm() <= 40) and 
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));				
 				if (visible) {
 					layer.update(); 
@@ -1988,14 +1988,14 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) ( nd.get_switch("toggle_terrain") and 
-					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and !nd.get_switch("toggle_centered") and 
+					nd.get_switch("toggle_display_mode") == "MAP" and  (nd.rangeNm() <= 40) and 
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ),
 				is_true: func(nd){
 					if (terrain_maxalt.getValue() != -9999) {
-						nd.symbols.terrLO.setText(sprintf("%03d",int(terrain_minalt.getValue()/100)));
-						nd.symbols.terrHI.setText(sprintf("%03d",int(terrain_maxalt.getValue()/100)));
+						nd.symbols.terrLO.setText(sprintf("%03d",math.round(terrain_minalt.getValue()/100)));
+						nd.symbols.terrHI.setText(sprintf("%03d",math.round(terrain_maxalt.getValue()/100)));
 						nd.symbols.terrGroup.show();
-						terrain_maxalt.setValue(-9999); #update visual once at radar cycle
+						terrain_maxalt.setValue(-9999); #update visual at radar cycle
 					}											
 				},
 				is_false: func(nd){
