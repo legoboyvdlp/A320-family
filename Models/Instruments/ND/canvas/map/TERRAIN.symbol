@@ -1,5 +1,8 @@
 # See: http://wiki.flightgear.org/MapStructure
 # Class things:
+
+## inspired from work on 787-family - thanks a lots
+
 var name = 'TERRAIN';
 var parents = [DotSym];
 var __self__ = caller(0)[0];
@@ -13,7 +16,7 @@ var terrain_maxalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain
 var terrain_alert = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/alert", 0,"INT");
 
 var tile_list = [
-				nil,"tile_gl.png","tile_gh.png","tile_al.png","tile_ah.png","tile_rh.png", # 0-5  low alt - imho real ND displas likely amber than yellow
+				nil,"tile_gl.png","tile_gh.png","tile_al.png","tile_ah.png","tile_rh.png", # 0-5  low alt - imho real ND displays likely in amber color than yellow one
 				"tile_gl.png","tile_gh.png","tile_gh.png","tile_gs.png", # 6-9 hi alt
 				"tile_ml.png","tile_cl.png",  # 10 magenta - 11 cyan (water)
 				"tile_as.png","tile_rs.png"   # 12-13 alert
@@ -73,8 +76,16 @@ var updateTerrain = func {
 
 	var tiles = me.tile_list;
 
-	var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 40);
-	var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
+	#var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 40);
+	#var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
+
+	# if me.tileradiusw == 20
+	var range_20f = range / 18.75;
+	var heading_sin = math.sin(DEG2RAD * heading);
+	var heading_cos = math.cos(DEG2RAD * heading);
+
+	var proj_lon = pos_lon + ((col * range_20f * math.sin(DEG2RAD * (heading - 90))) / 60);
+	var proj_lat = pos_lat + ((col * range_20f * math.cos(DEG2RAD * (heading - 90))) / 60);
 
 	var elevft = [];
 
@@ -87,8 +98,8 @@ var updateTerrain = func {
 			continue;
 		}
 
-		var point_lon = proj_lon + ((row * (range/30) / 40) * math.sin(DEG2RAD * heading));
-		var point_lat = proj_lat + ((row * (range/30) / 40) * math.cos(DEG2RAD * heading));
+		var point_lon = proj_lon + ((row * range_20f / 60) * heading_sin);
+		var point_lat = proj_lat + ((row * range_20f / 60) * heading_cos);
 
 		var elev = me.get_elevation(point_lat, point_lon);
 		var grad = 0; #black
@@ -195,9 +206,8 @@ var restart_beacon = func {
 
 var init = func {
 	#print('TERRAIN init');
-	me.tile = 33; # preferred 34
+	me.tile = 33;
 	me.fetching = 0;
-	me.timeStamp = nil;
 	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
 	me.range = me.model.rangeNm; # Range of Navigation Display
 	me.viewport_radius = me.getOption('viewport_radius', 670);
@@ -205,8 +215,7 @@ var init = func {
 	me.radar_beacon = 0;
 	me.radar_cycle = 0;
 	me.radar_cleared = 1;
-	me.request_clear = 0;
-	me.visible = 0;
+	me.request_clear = 0;	
 	me.min_altitude = 9999;
 	me.max_altitude = -9999;
 	me.avg_minalt = 9999;
@@ -226,7 +235,7 @@ var init = func {
 	var gx = int(me.viewport_radius / tile);
 	me.tileradius = gx;
 
-	var limx = int((512/tile)+0.5);  # horiz space is smaller
+	var limx = int((512/tile)+0.5);  # display width is smaller than height
 	me.tileradiusw = limx;
 
 	me.terrlayer = {};
@@ -338,20 +347,16 @@ var draw = func {
 				}
 			} else if (fmgc.FMGCInternal.phase == 6) {
 				if (me.checkarrival == 0) {
-					me.checkarrival == 1;
+					me.checkarrival = 1;
 					#me.basealtitudeft = 0;
 				}
 			} else if (fmgc.FMGCInternal.phase == 7) {
 				if (me.checkarrival == 0) {
-					me.checkarrival == 1;
+					me.checkarrival = 1;
 					me.basealtitudeft = refalt + 400;
 					print("set REFALT [done]: "~me.basealtitudeft);
 				}
-			} else {
-				#if (fmgc.FMGCInternal.phase != 2 or refalt > me.basealtitudeft) {
-				#	me.basealtitudeft = math.avg(me.basealtitudeft,me.basealtitudeft,400 + me.terrain_minalt.getValue());
-				#}
-				
+			} else {			
 				if (me.basealtitudeft > me.avg_maxalt) {
 					if (me.avg_maxalt < 1000) me.basealtitudeft = 0; # 1000ft min elev number
 					else me.basealtitudeft = int(400 + me.avg_minalt);
@@ -361,7 +366,6 @@ var draw = func {
 					me.basealtitudeft = int(400 + me.avg_minalt);
 					print("set REFALT [abvmin]: "~me.basealtitudeft);
 				}
-
 			}
 
 		}
@@ -383,14 +387,15 @@ var draw = func {
 
 };
 
-setlistener("instrumentation/mk-viii/outputs/discretes/gpws-warning", func { #warning - TERRAIN red - solid red
-  	me.terrain_alert.setValue( (getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning") ) ? 2 : 0 );
-	  print("Terrain warning:"  ~  getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning"));
-	  print( me.terrain_alert.getValue() );
-});
+## TODO - it doesnt work. listeners seem not to have trigged
+#setlistener("instrumentation/mk-viii/outputs/discretes/gpws-warning", func { #warning - TERRAIN red - solid red
+#  	me.terrain_alert.setValue( (getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning") ) ? 2 : 0 );
+#	  print("Terrain warning:"  ~  getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning"));
+#	  print( me.terrain_alert.getValue() );
+#});
 
-setlistener("instrumentation/mk-viii/outputs/discretes/gpws-alert", func {	#caution - TERRAIN amber - solid yellow
-	me.terrain_alert.setValue( (getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert") ) ? 1 : 0 );
-	  print("Terrain alert:"  ~  getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert"));
-	  print( me.terrain_alert.getValue() );
-});
+#setlistener("instrumentation/mk-viii/outputs/discretes/gpws-alert", func {	#caution - TERRAIN amber - solid yellow
+#	me.terrain_alert.setValue( (getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert") ) ? 1 : 0 );
+#	  print("Terrain alert:"  ~  getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert"));
+#	  print( me.terrain_alert.getValue() );
+#});
