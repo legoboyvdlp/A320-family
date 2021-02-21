@@ -86,65 +86,72 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 			var m = {parents: [easeArrow]};
 			m.req_rot_rad = 0;
 			m.req_rot_deg = 0;
-			m.last_rot_deg = 0;
+			m.last_rot_deg = nil;
+			m.last_rot_rad = 0;
 			m.element = elem;
-			#m.timer = maketimer(0.1,m,easeArrow.update);
-			m.time = 999;
+			m.time = 0;
 			m.duration = 0;
 			m.startval = 0;
 			m.diffval = 0;
 			return m;
 		},
 		setVisible: func(v) {
-			#if (v == 0) me.timer.stop();
+			if (v == 1 and me.last_rot_deg == nil) me.reset();
 			me.element.setVisible(v);
 		},
 		hide: func {
-			#me.timer.stop();
 			me.element.hide();
-			me.req_rot_rad = 0;
-			me.last_rot_deg = 0;
+		},
+		reset: func {			
+			me.last_rot_deg = 360 - getprop("orientation/heading-deg");
+			me.last_rot_rad = me.last_rot_deg * D2R;
+			me.duration = 0;
+			print("VOR reset");
 		},
 		setRotation: func(rad)  {			
-			#me.timer.stop();
 			var deg = 0;
-			var gap = math.abs(rad - me.req_rot_rad);
+			var gap = 0;
+			#if (me.last_rot_deg == nil) {
+			#	me.reset();				
+			#	gap = 0.3;
+			#} else {
+				gap = math.abs(rad - me.req_rot_rad);
+			#}
 			if (gap>0.001) {
+				#else if (gap>0.1 and me.duration == 0) me.reset(); # detect VOR freq changed				
+				if (me.duration>0) gap = math.abs(rad - me.last_rot_rad);
+				if (gap>=180*D2R) gap = 360*D2R - gap;
+				deg = rad * 57.29578;
 				me.req_rot_rad = rad;				
-				deg = math.round(rad * 57.29578 * 100)/100;				
-				me.req_rot_deg = deg;				
-				me.startval = me.last_rot_deg;
-				#if (deg < me.last_rot_deg) deg += 360;				
-				me.diffval = deg - me.last_rot_deg;
-				me.time = 0;
-				me.duration = math.round(gap * 36 / 3);
+				me.req_rot_deg = deg;
+				me.duration = 0;
+				if (gap>0.2) {
+					me.startval = me.last_rot_deg;
+					me.diffval = deg - me.last_rot_deg;
+					if (me.diffval<0) me.diffval += 360;
+					me.time = 0;
+					me.duration = math.round(me.diffval * 0.21);  # rad 36/3
+				}
 				if (me.duration < 2) {
-					me.element.setRotation(deg * D2R);
+					me.last_rot_rad = rad;
+					me.last_rot_deg = deg;
+					me.element.setRotation(rad);
 					me.duration = 0;
 				}
 			}
-
 			if (me.duration > 0) {
 				var tx = me.time / me.duration;
 				#thanks to https://easings.net/#easeOutCubic
 				deg = (1 - math.pow(1 - tx, 3)) * me.diffval + me.startval;
-				deg = math.mod(deg,360);
-				me.time += 1;
+				deg = math.mod(deg,360);				
 				#print("DEG: " ~ deg);
 				me.last_rot_deg = deg;
-				me.element.setRotation(deg * D2R);
+				me.last_rot_rad = deg * D2R;
+				me.element.setRotation(me.last_rot_rad);
+				me.time += 1;
 				if (tx>=1) me.duration = 0;
 			}
 
-		},
-		update: func() {
-			var deg = me.last_rot_deg;			
-			if (me.last_rot_deg > deg) deg += 360;
-			deg = math.mod( math.round( ((me.last_rot_deg*100) + ( deg - me.last_rot_deg )) ) / 100 , 360 );
-			print("update:" ~ deg);
-			me.last_rot_deg = deg;
-			me.element.setRotation(deg * D2R);
-			if (deg == me.req_rot_deg) me.timer.stop();
 		}
 	};
 
