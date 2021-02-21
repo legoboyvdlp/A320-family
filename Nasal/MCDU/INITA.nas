@@ -143,6 +143,7 @@ var initInputA = func(key, i) {
 	} else if (key == "L6") {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.crzFt = 10000;
+			fmgc.FMGCNodes.crzFt.setValue(fmgc.FMGCInternal.crzFt);
 			fmgc.FMGCInternal.crzFl = 100;
 			fmgc.altvert();
 			fmgc.updateRouteManagerAlt();
@@ -185,6 +186,7 @@ var initInputA = func(key, i) {
 			} else if (crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
 				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
 					fmgc.FMGCInternal.crzFt = crz * 100;
+					fmgc.FMGCNodes.crzFt.setValue(fmgc.FMGCInternal.crzFt);
 					fmgc.FMGCInternal.crzFl = crz;
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();
@@ -217,6 +219,7 @@ var initInputA = func(key, i) {
 			if (crzs >= 1 and crzs <= 3 and crz != nil) {
 				if (crz > 0 and crz <= 390) {
 					fmgc.FMGCInternal.crzFt = crz * 100;
+					fmgc.FMGCNodes.crzFt.setValue(fmgc.FMGCInternal.crzFt);
 					fmgc.FMGCInternal.crzFl = crz;
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();

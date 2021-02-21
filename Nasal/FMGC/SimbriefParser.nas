@@ -189,16 +189,16 @@ var SimbriefParser = {
 				_foundTOC = 1;
 				#setprop("/autopilot/route-manager/vnav/tc/latitude-deg",ofpFix.getNode("pos_lat").getValue());
 				#setprop("/autopilot/route-manager/vnav/tc/longitude-deg",ofpFix.getNode("pos_long").getValue());				
-				#ident = "(T/C)";
-				continue; # restore skip TOC/TOD
+				ident = "(T/C)";
+				continue;
 			}
 			
 			if (ident == "TOD") {
 				_foundTOD = 1;
 				#setprop("/autopilot/route-manager/vnav/td/latitude-deg",ofpFix.getNode("pos_lat").getValue());
 				#setprop("/autopilot/route-manager/vnav/td/longitude-deg",ofpFix.getNode("pos_long").getValue());
-				#ident = "(T/D)";
-				continue; # restore skip TOC/TOD
+				ident = "(T/D)";
+				continue;
 			}
 			
 			coords = geo.Coord.new();
@@ -277,6 +277,7 @@ var SimbriefParser = {
 		
 		# Set cruise altitude
 		fmgc.FMGCInternal.crzFt = me.OFP.getNode("general/initial_altitude").getValue();
+		fmgc.FMGCNodes.crzFt.setValue(fmgc.FMGCInternal.crzFt);
 		fmgc.FMGCInternal.crzFl = fmgc.FMGCInternal.crzFt / 100;
 		fmgc.FMGCInternal.crzTemp = (((fmgc.FMGCInternal.crzFt / 1000) * -2) + 15) + me.OFP.getNode("general/avg_temp_dev").getValue();
 		fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFt / 100;
@@ -314,8 +315,10 @@ var SimbriefParser = {
 			fmgc.FMGCInternal.block = me.store1.getChild("plan_ramp").getValue() / 1000;
 			fmgc.FMGCInternal.blockSet = 1;
 			fmgc.FMGCInternal.zfw = me.store2.getChild("est_zfw").getValue() / 1000;
+			fmgc.FMGCNodes.zfw.setValue(fmgc.FMGCInternal.zfw);
 			fmgc.FMGCInternal.zfwSet = 1;
 			fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
+			fmgc.FMGCNodes.tow.setValue(fmgc.FMGCInternal.tow);
 		} else {
 			fmgc.FMGCInternal.taxiFuel = (me.store1.getChild("taxi").getValue() / LBS2KGS) / 1000;
 			fmgc.FMGCInternal.taxiFuelSet = 1;
@@ -334,8 +337,10 @@ var SimbriefParser = {
 			fmgc.FMGCInternal.block = (me.store1.getChild("plan_ramp").getValue() / LBS2KGS) / 1000;
 			fmgc.FMGCInternal.blockSet = 1;
 			fmgc.FMGCInternal.zfw = (me.store2.getChild("est_zfw").getValue() / LBS2KGS) / 1000;
+			fmgc.FMGCNodes.zfw.setValue(fmgc.FMGCInternal.zfw);
 			fmgc.FMGCInternal.zfwSet = 1;
 			fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
+			fmgc.FMGCNodes.tow.setValue(fmgc.FMGCInternal.tow);
 		}
 		fmgc.FMGCInternal.fuelRequest = 1;
 		fmgc.FMGCInternal.fuelCalculating = 1;

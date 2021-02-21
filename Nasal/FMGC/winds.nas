@@ -447,7 +447,7 @@ var windController = {
 					}
 				}
 				
-				if ((!fmgc.FMGCInternal.clbSet and waypoint.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and i <= fmgc.flightPlanController.tocIndex[plan])) {
+				if ((!fmgc.FMGCInternal.clbSet and waypoint.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and i <= fmgc.flightPlanController.getIndexOfTOC(plan))) {
 					if (found == 0) {
 						append(me.winds[plan], waypoint_winds.new(waypoint.id, "departure", 0));
 					} else {
@@ -455,7 +455,7 @@ var windController = {
 						me.winds[plan][i].type = "departure";
 						me.includeWind = 0;
 					}
-				} else if ((!fmgc.FMGCInternal.desSet and (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and i >= fmgc.flightPlanController.todIndex[plan])) {
+				} else if ((!fmgc.FMGCInternal.desSet and (waypoint.wp_role == "star" or waypoint.wp_role == "approach" or waypoint.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and i >= fmgc.flightPlanController.getIndexOfTOD(plan))) {
 					if (found == 0) {
 						append(me.winds[plan], waypoint_winds.new(waypoint.id, "arrival", 0));
 					} else {

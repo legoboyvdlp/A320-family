@@ -153,11 +153,13 @@ var fuelPredInput = func(key, i) {
 			if (size(scratchpad) == 0) {
 				var zfw = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue();
 				fmgc.FMGCInternal.zfw = sprintf("%3.1f", math.round(zfw / 1000, 0.1));
+				fmgc.FMGCNodes.zfw.setValue(fmgc.FMGCInternal.zfw);
 				fmgc.FMGCInternal.zfwSet = 1;
 				if (fmgc.FMGCInternal.blockSet != 1) {
 					fmgc.FMGCInternal.block = pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000;
 					fmgc.FMGCInternal.blockSet = 1;
 					fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
+					fmgc.FMGCNodes.tow.setValue(fmgc.FMGCInternal.tow);
 					fmgc.FMGCInternal.fuelRequest = 1;
 					fmgc.FMGCInternal.fuelCalculating = 1;
 					fmgc.fuelCalculating.setValue(1);
@@ -181,6 +183,7 @@ var fuelPredInput = func(key, i) {
 				if (zfw != nil and zfws > 0 and zfws <= 5 and (find(".", zfwi[0]) == -1 or size(split(".", zfwi[0])[1]) <= 1) and zfwcg != nil and zfwcgs > 0 and zfwcgs <= 4 and (find(".", zfwi[1]) == -1 or size(split(".", zfwi[1])[1]) <= 1)) {
 					if (zfw >= zfw_min and zfw <= zfw_max and zfwcg >= 8.0 and zfwcg <= 45.0) {
 						fmgc.FMGCInternal.zfw = zfw;
+						fmgc.FMGCNodes.zfw.setValue(fmgc.FMGCInternal.zfw);
 						fmgc.FMGCInternal.zfwSet = 1;
 						fmgc.FMGCInternal.zfwcg = zfwcg;
 						fmgc.FMGCInternal.zfwcgSet = 1;
@@ -188,6 +191,7 @@ var fuelPredInput = func(key, i) {
 							fmgc.FMGCInternal.block = pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000;
 							fmgc.FMGCInternal.blockSet = 1;
 							fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
+							fmgc.FMGCNodes.tow.setValue(fmgc.FMGCInternal.tow);
 							fmgc.FMGCInternal.fuelRequest = 1;
 							fmgc.FMGCInternal.fuelCalculating = 1;
 							fmgc.fuelCalculating.setValue(1);
@@ -219,11 +223,13 @@ var fuelPredInput = func(key, i) {
 				}
 				if (scratchpad >= zfw_min and scratchpad <= zfw_max) {
 					fmgc.FMGCInternal.zfw = scratchpad;
+					fmgc.FMGCNodes.zfw.setValue(fmgc.FMGCInternal.zfw);
 					fmgc.FMGCInternal.zfwSet = 1;
 					if (fmgc.FMGCInternal.blockSet != 1) {
 						fmgc.FMGCInternal.block = pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000;
 						fmgc.FMGCInternal.blockSet = 1;
 						fmgc.FMGCInternal.tow = fmgc.FMGCInternal.zfw + fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel;
+						fmgc.FMGCNodes.tow.setValue(fmgc.FMGCInternal.tow);
 						fmgc.FMGCInternal.fuelRequest = 1;
 						fmgc.FMGCInternal.fuelCalculating = 1;
 						fmgc.fuelCalculating.setValue(1);

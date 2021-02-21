@@ -269,6 +269,9 @@ var postInit = func() {
 
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
+	crzFt: props.globals.initNode("/FMGC/internal/crz-ft", 0, "DOUBLE"),
+	zfw: props.globals.initNode("/FMGC/internal/zfw", 0, "DOUBLE"),
+	tow: props.globals.initNode("/FMGC/internal/tow", 0, "DOUBLE"),
 	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
 	flexTemp: props.globals.initNode("/FMGC/internal/flex", 0, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
@@ -1097,11 +1100,14 @@ var timer3blockFuel = maketimer(1, func() {
 var timer5fuelPred = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
 		#updateFuel();
-		flightPlanController.calculateVerticalPoints(0);
-		flightPlanController.calculateVerticalPoints(1);
-		flightPlanController.calculateVerticalPoints(2);
 		fmgc.FMGCInternal.fuelCalculating = 0;
 		fmgc.fuelCalculating.setValue(0);
+		flightPlanController.calculateTOCPoint(0);
+		flightPlanController.calculateTOCPoint(1);
+		flightPlanController.calculateTOCPoint(2);
+		flightPlanController.calculateTODPoint(0);
+		flightPlanController.calculateTODPoint(1);
+		flightPlanController.calculateTODPoint(2);
 		setprop("/FMGC/internal/fuel-pred-time", -99); 
 		timer5fuelPred.stop();
 	}

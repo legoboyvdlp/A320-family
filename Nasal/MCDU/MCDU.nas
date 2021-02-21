@@ -62,6 +62,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.costIndex = 0;
 	fmgc.FMGCInternal.costIndexSet = 0;
 	fmgc.FMGCInternal.crzFt = 10000;
+	fmgc.FMGCNodes.crzFt.setValue(fmgc.FMGCInternal.crzFt);
 	fmgc.altvert();
 	fmgc.updateRouteManagerAlt();
 	fmgc.FMGCInternal.crzFl = 100;
@@ -100,6 +101,7 @@ var MCDU_reset = func(i) {
 
 	# INT-B
 	fmgc.FMGCInternal.zfw = 0;
+	fmgc.FMGCNodes.zfw.setValue(fmgc.FMGCInternal.zfw);
 	fmgc.FMGCInternal.zfwSet = 0;
 	fmgc.FMGCInternal.zfwcg = 25.0;
 	fmgc.FMGCInternal.zfwcgSet = 0;
@@ -124,6 +126,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.minDestFob = 0;
 	fmgc.FMGCInternal.minDestFobSet = 0;
 	fmgc.FMGCInternal.tow = 0;
+	fmgc.FMGCNodes.tow.setValue(fmgc.FMGCInternal.tow);
 	fmgc.FMGCInternal.lw = 0;
 	fmgc.FMGCInternal.tripWind = "HD000";
 	fmgc.FMGCInternal.tripWindValue = 0;

@@ -203,7 +203,7 @@ var vertRev = {
 				mcdu_message(me.computer, "FORMAT ERROR");
 			}
 		} elsif (index == 5) {
-			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and me.index <= fmgc.flightPlanController.tocIndex[me.plan])) {
+			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and me.index <= fmgc.flightPlanController.getIndexOfTOC[me.plan])) {
 				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
 					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
 				} else {
@@ -211,7 +211,7 @@ var vertRev = {
 				}
 				fmgc.windController.accessPage[me.computer] = "VERTREV";
 				setprop("MCDU[" ~ me.computer ~ "]/page", "WINDCLB");
-			} else if ((!fmgc.FMGCInternal.desSet and (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and me.index >= fmgc.flightPlanController.todIndex[me.plan])) {
+			} else if ((!fmgc.FMGCInternal.desSet and (me.wp.wp_role == "star" or me.wp.wp_role == "approach" or me.wp.wp_role == "missed")) or (fmgc.FMGCInternal.desSet and me.index >= fmgc.flightPlanController.getIndexOfTOD(me.plan))) {
 				if (canvas_mcdu.myDESWIND[me.computer] == nil) {
 					canvas_mcdu.myDESWIND[me.computer] = windDESPage.new(me.computer);
 				} else {
