@@ -1446,10 +1446,6 @@
 							<property>systems/electrical/bus/dc-ess</property>
 							<value>25</value>
 						</greater-than-equals>
-						<equals>					
-							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
-							<value>0</value>
-						</equals>
 					</and>
 				</condition>
 				<command>property-toggle</command>
@@ -1462,7 +1458,7 @@
 							<property>systems/electrical/bus/dc-ess</property>
 							<value>25</value>
 						</greater-than-equals>
-						<equals>					
+						<equals>
 							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 							<value>0</value>
 						</equals>
@@ -1509,10 +1505,6 @@
 							<property>systems/electrical/bus/dc-ess</property>
 							<value>25</value>
 						</greater-than-equals>
-						<equals>					
-							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
-							<value>0</value>
-						</equals>
 					</and>
 				</condition>
 				<command>property-toggle</command>
