@@ -183,8 +183,8 @@ var update_altitudes = func {
 		var range = math.min(2000,(me.avg_maxalt - me.avg_minalt));
 		if (range < 400) {
 			me.bands_range = 0;	
-		} else {
-			me.bands_range = 500;
+		} else {			
+			me.bands_range = math.max(200,math.round(range / 4));
 			me.bands_maxalt = me.avg_maxalt;
 			me.bands_minalt = math.max( me.avg_maxalt - range , me.avg_minalt + 400 );
 		}
@@ -323,6 +323,8 @@ var draw = func {
 			me.refaltitudeft = refalt;			
 			me.reflowaltft = (pts.Gear.position[1].getValue()) ? -250 : -500;
 			me.onground = getprop("/gear/gear[0]/wow");
+			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
+			if (vspeed30s<-500) me.refaltitudeft += vspeed30s;
 
 			if (me.min_altitude != 9999) me.update_altitudes();
 			
