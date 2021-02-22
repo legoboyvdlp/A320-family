@@ -111,14 +111,8 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 		setRotation: func(rad)  {			
 			var deg = 0;
 			var gap = 0;
-			#if (me.last_rot_deg == nil) {
-			#	me.reset();				
-			#	gap = 0.3;
-			#} else {
-				gap = math.abs(rad - me.req_rot_rad);
-			#}
-			if (gap>0.001) {
-				#else if (gap>0.1 and me.duration == 0) me.reset(); # detect VOR freq changed				
+			gap = math.abs(rad - me.req_rot_rad);
+			if (gap>0.001) {		
 				if (me.duration>0) gap = math.abs(rad - me.last_rot_rad);
 				if (gap>=180*D2R) gap = 360*D2R - gap;
 				deg = rad * 57.29578;
@@ -126,6 +120,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 				me.req_rot_deg = deg;
 				me.duration = 0;
 				if (gap>0.2) {
+					if (me.last_rot_deg == nil) me.reset();
 					me.startval = me.last_rot_deg;
 					me.diffval = deg - me.last_rot_deg;
 					if (me.diffval<0) me.diffval += 360;
