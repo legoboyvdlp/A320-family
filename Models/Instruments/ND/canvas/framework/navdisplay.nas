@@ -13,6 +13,75 @@ var assert_m = canvas.assert_m;
 var wxr_live_tree = "/instrumentation/wxr";
 var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
+var easeArrow = {
+	new: func(elem) {
+		var m = {parents: [easeArrow]};
+		m.req_rot_rad = 0;
+		m.req_rot_deg = 0;
+		m.last_rot_deg = nil;
+		m.last_rot_rad = 0;
+		m.element = elem;
+		m.time = 0;
+		m.duration = 0;
+		m.startval = 0;
+		m.diffval = 0;
+		return m;
+	},
+	setVisible: func(v) {
+		if (v == 1 and me.last_rot_deg == nil) me.reset();
+		me.element.setVisible(v);
+	},
+	hide: func {
+		me.element.hide();
+	},
+	reset: func {			
+		me.last_rot_deg = 360 - getprop("orientation/heading-deg");
+		me.last_rot_rad = me.last_rot_deg * D2R;
+		me.duration = 0;
+		print("VOR reset");
+	},
+	setRotation: func(rad)  {			
+		var deg = 0;
+		var gap = 0;
+		gap = math.abs(rad - me.req_rot_rad);
+		if (gap>0.001) {		
+			if (me.duration>0) gap = math.abs(rad - me.last_rot_rad);
+			if (gap>=180*D2R) gap = 360*D2R - gap;
+			deg = rad * 57.29578;
+			me.req_rot_rad = rad;				
+			me.req_rot_deg = deg;
+			me.duration = 0;
+			if (gap>0.2) {
+				if (me.last_rot_deg == nil) me.reset();
+				me.startval = me.last_rot_deg;
+				me.diffval = deg - me.last_rot_deg;
+				if (me.diffval<0) me.diffval += 360;
+				me.time = 0;
+				me.duration = math.round(me.diffval * 0.21);  # rad 36/3
+			}
+			if (me.duration < 2) {
+				me.last_rot_rad = rad;
+				me.last_rot_deg = deg;
+				me.element.setRotation(rad);
+				me.duration = 0;
+			}
+		}
+		if (me.duration > 0) {
+			var tx = me.time / me.duration;
+			#thanks to https://easings.net/#easeOutCubic
+			deg = (1 - math.pow(1 - tx, 3)) * me.diffval + me.startval;
+			deg = math.mod(deg,360);				
+			#print("DEG: " ~ deg);
+			me.last_rot_deg = deg;
+			me.last_rot_rad = deg * D2R;
+			me.element.setRotation(me.last_rot_rad);
+			me.time += 1;
+			if (tx>=1) me.duration = 0;
+		}
+
+	}
+};
+
 canvas.NavDisplay.set_switch = func(s, v) {
 	var switch = me.efis_switches[s];
 	if(switch == nil) return nil;
@@ -80,75 +149,6 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 			"HdgBugCRT2","TrkBugLCD2","HdgBugLCD2","hdgBug2","selHdgLine","selHdgLine2","curHdgPtr2",
 			"staToL","staFromL","staToR","staFromR"] )
 	me.symbols[element] = me.nd.getElementById(element).updateCenter();
-
-	var easeArrow = {
-		new: func(elem) {
-			var m = {parents: [easeArrow]};
-			m.req_rot_rad = 0;
-			m.req_rot_deg = 0;
-			m.last_rot_deg = nil;
-			m.last_rot_rad = 0;
-			m.element = elem;
-			m.time = 0;
-			m.duration = 0;
-			m.startval = 0;
-			m.diffval = 0;
-			return m;
-		},
-		setVisible: func(v) {
-			if (v == 1 and me.last_rot_deg == nil) me.reset();
-			me.element.setVisible(v);
-		},
-		hide: func {
-			me.element.hide();
-		},
-		reset: func {			
-			me.last_rot_deg = 360 - getprop("orientation/heading-deg");
-			me.last_rot_rad = me.last_rot_deg * D2R;
-			me.duration = 0;
-			print("VOR reset");
-		},
-		setRotation: func(rad)  {			
-			var deg = 0;
-			var gap = 0;
-			gap = math.abs(rad - me.req_rot_rad);
-			if (gap>0.001) {		
-				if (me.duration>0) gap = math.abs(rad - me.last_rot_rad);
-				if (gap>=180*D2R) gap = 360*D2R - gap;
-				deg = rad * 57.29578;
-				me.req_rot_rad = rad;				
-				me.req_rot_deg = deg;
-				me.duration = 0;
-				if (gap>0.2) {
-					if (me.last_rot_deg == nil) me.reset();
-					me.startval = me.last_rot_deg;
-					me.diffval = deg - me.last_rot_deg;
-					if (me.diffval<0) me.diffval += 360;
-					me.time = 0;
-					me.duration = math.round(me.diffval * 0.21);  # rad 36/3
-				}
-				if (me.duration < 2) {
-					me.last_rot_rad = rad;
-					me.last_rot_deg = deg;
-					me.element.setRotation(rad);
-					me.duration = 0;
-				}
-			}
-			if (me.duration > 0) {
-				var tx = me.time / me.duration;
-				#thanks to https://easings.net/#easeOutCubic
-				deg = (1 - math.pow(1 - tx, 3)) * me.diffval + me.startval;
-				deg = math.mod(deg,360);				
-				#print("DEG: " ~ deg);
-				me.last_rot_deg = deg;
-				me.last_rot_rad = deg * D2R;
-				me.element.setRotation(me.last_rot_rad);
-				me.time += 1;
-				if (tx>=1) me.duration = 0;
-			}
-
-		}
-	};
 
 	foreach(var element; ["staArrowL2","staArrowR2","staArrowL","staArrowR"] )
 	me.symbols[element] = easeArrow.new( me.nd.getElementById(element).updateCenter() );
@@ -698,7 +698,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		if (contains(feature.impl, "common")) feature.impl.common(me);
 		# conditional stuff
 		if(!contains(feature.impl, "predicate")) continue; # no conditional stuff
-		if ( var result=feature.impl.predicate(me) )
+		if ( var result = feature.impl.predicate(me) )
 			feature.impl.is_true(me, result); # pass the result to the predicate
 		else
 			feature.impl.is_false( me, result ); # pass the result to the predicate
