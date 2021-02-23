@@ -152,7 +152,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
-				<value>0.0936445</value>
+				<value>0.0233096</value>
 			</product>
 		</function>
 		
@@ -162,7 +162,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
-				<value>0.0936445</value>
+				<value>0.0233096</value>
 			</product>
 		</function>
 		
