@@ -203,7 +203,7 @@ var vertRev = {
 				mcdu_message(me.computer, "FORMAT ERROR");
 			}
 		} elsif (index == 5) {
-			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and me.index <= fmgc.flightPlanController.getIndexOfTOC[me.plan])) {
+			if ((!fmgc.FMGCInternal.clbSet and me.wp.wp_role == "sid") or (fmgc.FMGCInternal.clbSet and me.index <= fmgc.flightPlanController.getIndexOfTOC(me.plan))) {
 				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
 					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
 				} else {
