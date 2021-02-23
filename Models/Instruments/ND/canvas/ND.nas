@@ -190,6 +190,7 @@ var canvas_ND_1 = {
 		me.NDCpt.attitude_heading_setting = -1;
 		me.NDCpt.adirs_property = props.globals.getNode("/instrumentation/efis[0]/nd/ir-1",1);
 		me.NDCpt.newMFD(canvas_group);
+		me.NDCpt.change_phase = 0;
 		me.NDCpt.update();
 
 		return m;
@@ -213,6 +214,7 @@ var canvas_ND_2 = {
 		me.NDFo.attitude_heading_setting = 1;
 		me.NDFo.adirs_property = props.globals.getNode("/instrumentation/efis[1]/nd/ir-2",1);
 		me.NDFo.newMFD(canvas_group);
+		me.NDCpt.change_phase = 0;
 		me.NDFo.update();
 
 		return m;
@@ -357,7 +359,7 @@ setlistener("sim/signals/fdm-initialized", func {
 	}, 1, 0);
 	
 	setlistener("/instrumentation/tcas/inputs/mode", func() {
-		if (getprop("/instrumentation/efis[1]/nd/canvas-display-mode") != "PLAN") {
+		if (getprop("/instrumentation/efis[0]/nd/canvas-display-mode") != "PLAN") {
 			canvas_nd.ND_1.NDCpt.trafficGroup.setVisible(pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2 ? 1 : 0);
 		}
 		if (getprop("/instrumentation/efis[1]/nd/canvas-display-mode") != "PLAN") {
