@@ -180,6 +180,16 @@ var canvas_nd_base = {
 	},
 };
 
+var ND_change_timer_fn = func {
+	me.change_phase += 1;	
+	if (me.change_phase>2) {  # phase 3
+		me.change_timer.stop();
+		me.change_phase = 0;
+	} else {
+		me.map.setVisible(1);  # phase 2
+	}
+};
+
 var canvas_ND_1 = {
 	new: func(canvas_group) {
 		var m = {parents: [canvas_ND_1, canvas_nd_base]};
@@ -191,6 +201,7 @@ var canvas_ND_1 = {
 		me.NDCpt.adirs_property = props.globals.getNode("/instrumentation/efis[0]/nd/ir-1",1);
 		me.NDCpt.newMFD(canvas_group);
 		me.NDCpt.change_phase = 0;
+		me.NDCpt.change_timer = maketimer(0.4,me.NDCpt,ND_change_timer_fn);
 		me.NDCpt.update();
 
 		return m;
@@ -214,7 +225,8 @@ var canvas_ND_2 = {
 		me.NDFo.attitude_heading_setting = 1;
 		me.NDFo.adirs_property = props.globals.getNode("/instrumentation/efis[1]/nd/ir-2",1);
 		me.NDFo.newMFD(canvas_group);
-		me.NDCpt.change_phase = 0;
+		me.NDFo.change_phase = 0;
+		me.NDFo.change_timer = maketimer(0.4,me.NDFo,ND_change_timer_fn);
 		me.NDFo.update();
 
 		return m;
@@ -418,6 +430,29 @@ for (i = 0; i < 2; i = i + 1 ) {
 		setprop(nd_centered, centered);
 	});
 }
+
+var startChangePhase = func(nd,txt) {
+	nd.change_timer.stop();
+	nd.map.setVisible(0);
+	nd.symbols.nd_msg_change.setText(txt);
+	nd.change_phase = 1;
+	nd.change_timer.start();
+}
+
+setlistener("/instrumentation/efis[0]/nd/display-mode", func {
+	startChangePhase(canvas_nd.ND_1.NDCpt,"MODE CHANGE");	
+},0,0);
+
+setlistener("/instrumentation/efis[0]/inputs/range-nm", func {
+	startChangePhase(canvas_nd.ND_1.NDCpt,"RANGE CHANGE");	
+},0,0);
+setlistener("/instrumentation/efis[1]/nd/display-mode", func {
+	startChangePhase(canvas_nd.ND_2.NDFo,"MODE CHANGE");	
+},0,0);
+
+setlistener("/instrumentation/efis[1]/inputs/range-nm", func {
+	startChangePhase(canvas_nd.ND_2.NDFo,"RANGE CHANGE");	
+},0,0);
 
 #setlistener("/instrumentation/efis[0]/nd/terrain-on-nd", func{
 #	var terr_on_hd = getprop("instrumentation/efis[0]/nd/terrain-on-nd");

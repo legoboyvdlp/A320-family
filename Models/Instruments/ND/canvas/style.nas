@@ -2002,7 +2002,18 @@ canvas.NDStyles["Airbus"] = {
 					nd.symbols.terrGroup.hide();
 				}
 			}
-		}
+		},
+		{
+			id: "nd_msg_change",
+			impl: {
+				init: func(nd, symbol),
+				common: func(nd) {
+					var chk = (nd.change_phase != 0);
+					if (chk) nd.symbols.nd_msg_change.show();
+					else nd.symbols.nd_msg_change.hide();
+				}
+			}
+		}		
 	], # end of vector with features
 
 };
