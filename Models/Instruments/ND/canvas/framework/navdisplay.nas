@@ -138,7 +138,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	# because things are much better configurable that way
 	# now look up all required SVG elements and initialize member fields using the same name  to have a convenient handle
 	foreach(var element; ["dmeLDist","dmeRDist","dmeL","dmeR","vorL","vorR","vorLId","vorRId",
-			"status.wxr","status.wpt","status.sta","status.arpt","terrHI","terrLO"])
+			"status.wxr","status.wpt","status.sta","status.arpt","terrHI","terrLO","TerrLabel","terrAhead"])
 	me.symbols[element] = me.nd.getElementById(element);
 
 	# load elements from vector image, and create instance variables using identical names, and call updateCenter() on each

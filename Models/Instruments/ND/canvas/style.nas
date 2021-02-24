@@ -14,7 +14,10 @@ var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass
 
 var terrain_minalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0);
 var terrain_maxalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999);
+var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode",0);
 
+var AMBER = [0.7333,0.3803,0.0000];
+var RED = [1.0000,0.0000,0.0000];
 
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
@@ -1992,6 +1995,16 @@ canvas.NDStyles["Airbus"] = {
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ),
 				is_true: func(nd){
 					if (terrain_maxalt.getValue() != -9999) {
+						var alert = terrain_alert.getValue();
+						if (alert == 0) {
+							nd.symbols.TerrLabel.setVisible(1);
+							nd.symbols.terrAhead.setVisible(0);
+						} else {
+							nd.symbols.TerrLabel.setVisible(0);
+							nd.symbols.terrAhead.setVisible(1);
+							if (alert == 1) nd.symbols.terrAhead.setColor(AMBER[0],AMBER[1],AMBER[2]);
+							else nd.symbols.terrAhead.setColor(RED[0],RED[1],RED[2]);
+						}
 						nd.symbols.terrLO.setText(sprintf("%03d",math.round(terrain_minalt.getValue()/100)));
 						nd.symbols.terrHI.setText(sprintf("%03d",math.round(terrain_maxalt.getValue()/100)));
 						nd.symbols.terrGroup.show();
