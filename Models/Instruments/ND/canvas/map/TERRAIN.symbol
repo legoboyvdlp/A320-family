@@ -1,7 +1,13 @@
 # See: http://wiki.flightgear.org/MapStructure
 # Class things:
 
+## Airbus Terrain on ND by InuYaksa*2021
+## EGPWS device - Applicable to: MSN 0112
+## Ident.: DSC-31-45-00009586.0012001 / 22 MAY 12
+## Ident.: DSC-31-45-00009586.0009001 / 08 AUG 13
+
 ## inspired from work on 787-family - thanks a lots
+## and a great help from legoboyvdlp
 
 var name = 'TERRAIN';
 var parents = [DotSym];
@@ -13,13 +19,13 @@ var element_type = "group";
 var terrain_minalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0,"INT");
 var terrain_maxalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999,"INT");
 
-var terrain_alert = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/alert", 0,"INT");
+var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode");
 
 var tile_list = [
-				nil,"tile_gl.png","tile_gh.png","tile_al.png","tile_ah.png","tile_rh.png", # 0-5  low alt - imho real ND displays likely in amber color than yellow one
+				nil,"tile_gl.png","tile_gh.png","tile_al.png","tile_ah.png","tile_rh.png", # 0-5  low alt - imho real ND displays as amber-ish color than yellow one
 				"tile_gl.png","tile_gh.png","tile_gh.png","tile_gs.png", # 6-9 hi alt
-				"tile_ml.png","tile_cl.png",  # 10 magenta - 11 cyan (water)
-				"tile_as.png","tile_rs.png"   # 12-13 alert
+				"tile_ml.png","tile_cl.png",  # 10 magenta - 11 cyan-ish/blue (water)
+				"tile_as.png","tile_rs.png"   # 12-13 alert - solid colors
 				];
 
 var is_terrain = 0;
@@ -270,7 +276,7 @@ var init = func {
 
 	setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   # detect GPWS switch status
 		me.onfailure = getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit");
-	},0,0);
+	},1,0);
 
 };
 
@@ -388,16 +394,3 @@ var draw = func {
 	}
 
 };
-
-## TODO - it doesnt work. listeners seem not to have trigged
-#setlistener("instrumentation/mk-viii/outputs/discretes/gpws-warning", func { #warning - TERRAIN red - solid red
-#  	me.terrain_alert.setValue( (getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning") ) ? 2 : 0 );
-#	  print("Terrain warning:"  ~  getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning"));
-#	  print( me.terrain_alert.getValue() );
-#});
-
-#setlistener("instrumentation/mk-viii/outputs/discretes/gpws-alert", func {	#caution - TERRAIN amber - solid yellow
-#	me.terrain_alert.setValue( (getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert") ) ? 1 : 0 );
-#	  print("Terrain alert:"  ~  getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert"));
-#	  print( me.terrain_alert.getValue() );
-#});
