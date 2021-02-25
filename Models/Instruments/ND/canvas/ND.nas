@@ -387,6 +387,21 @@ setlistener("sim/signals/fdm-initialized", func {
 		canvas_nd.ND_2.NDFo.trafficGroup.setVisible(getprop("/instrumentation/efis[1]/nd/canvas-display-mode") == "PLAN" ? 0 : 1);
 	}, 1, 0);
 	
+	setlistener("/instrumentation/efis[0]/nd/display-mode", func {
+		startChangePhase(canvas_nd.ND_1.NDCpt,"MODE CHANGE");	
+	},0,0);
+
+	setlistener("/instrumentation/efis[0]/inputs/range-nm", func {
+		startChangePhase(canvas_nd.ND_1.NDCpt,"RANGE CHANGE");	
+	},0,0);
+	setlistener("/instrumentation/efis[1]/nd/display-mode", func {
+		startChangePhase(canvas_nd.ND_2.NDFo,"MODE CHANGE");	
+	},0,0);
+
+	setlistener("/instrumentation/efis[1]/inputs/range-nm", func {
+		startChangePhase(canvas_nd.ND_2.NDFo,"RANGE CHANGE");	
+	},0,0);
+
 	nd_update.start();
 	if (getprop("systems/acconfig/options/nd-rate") > 1) {
 		rateApply();
@@ -438,21 +453,6 @@ var startChangePhase = func(nd,txt) {
 	nd.change_phase = 1;
 	nd.change_timer.start();
 }
-
-setlistener("/instrumentation/efis[0]/nd/display-mode", func {
-	startChangePhase(canvas_nd.ND_1.NDCpt,"MODE CHANGE");	
-},0,0);
-
-setlistener("/instrumentation/efis[0]/inputs/range-nm", func {
-	startChangePhase(canvas_nd.ND_1.NDCpt,"RANGE CHANGE");	
-},0,0);
-setlistener("/instrumentation/efis[1]/nd/display-mode", func {
-	startChangePhase(canvas_nd.ND_2.NDFo,"MODE CHANGE");	
-},0,0);
-
-setlistener("/instrumentation/efis[1]/inputs/range-nm", func {
-	startChangePhase(canvas_nd.ND_2.NDFo,"RANGE CHANGE");	
-},0,0);
 
 #setlistener("/instrumentation/efis[0]/nd/terrain-on-nd", func{
 #	var terr_on_hd = getprop("instrumentation/efis[0]/nd/terrain-on-nd");
