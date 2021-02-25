@@ -576,7 +576,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
-		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
+		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 and (me.change_phase != 1) and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();
