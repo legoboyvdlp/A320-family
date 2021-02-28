@@ -82,6 +82,41 @@ var easeArrow = {
 	}
 };
 
+var symbolFloat = {
+	new: func(name, nd) {
+		var m = {parents: [symbolFloat] };
+		m.group = nd.getElementById(name);
+		m.expn = nd.getElementById(name ~ "1");
+		m.mant = nd.getElementById(name ~ "2");
+		return m;
+	},
+	hide: func {
+		me.group.hide();
+	},
+	show: func {
+		me.group.show();
+	},
+	setText: func(txt) {
+		var parts = ( txt != "" ) ? split( "." , txt ) : nil;
+		if ( parts != nil and size(parts) == 2 ) {
+			me.expn.setText(parts[0]);
+			me.mant.setText("." ~ parts[1]);
+		} else {
+			me.expn.setText(txt);
+			me.mant.setText("");
+		}
+	},
+	setColor: func(r,g,b) {
+		me.expn.setColor(r,g,b);
+		me.mant.setColor(r,g,b);
+	},
+	setFloat: func(val) {
+		var parts = split( "." , sprintf("%03.1f",val) );
+		me.expn.setText(parts[0]);
+		me.mant.setText("." ~ parts[1]);
+	}
+};
+
 canvas.NavDisplay.set_switch = func(s, v) {
 	var switch = me.efis_switches[s];
 	if(switch == nil) return nil;
@@ -137,9 +172,12 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	### this is the "old" method that"s less flexible, we want to use the style hash instead (see above)
 	# because things are much better configurable that way
 	# now look up all required SVG elements and initialize member fields using the same name  to have a convenient handle
-	foreach(var element; ["dmeLDist","dmeRDist","dmeL","dmeR","vorL","vorR","vorLId","vorRId",
+	foreach(var element; ["dmeL","dmeR","vorL","vorR","vorLId","vorRId",
 			"status.wxr","status.wpt","status.sta","status.arpt","terrHI","terrLO","TerrLabel","terrAhead"])
 	me.symbols[element] = me.nd.getElementById(element);
+
+	foreach(var element; ["dmeLDist","dmeRDist"])
+	me.symbols[element] = symbolFloat.new( element, me.nd );
 
 	# load elements from vector image, and create instance variables using identical names, and call updateCenter() on each
 	# anything that needs updatecenter called, should be added to the vector here
@@ -576,7 +614,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
-		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 and (me.change_phase != 1) and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
+		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 or (me.change_phase == 1) and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();
