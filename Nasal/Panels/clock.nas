@@ -1,5 +1,5 @@
 #
-# Chrono - Clock - ET
+# ﻿Chrono - Clock - ET
 #
 var chr = aircraft.timer.new("instrumentation/chrono[0]/elapsetime-sec",1);
 var clk = aircraft.timer.new("instrumentation/clock/elapsetime-sec",1);
@@ -52,7 +52,6 @@ var chrono = {
 
 #Cpt chrono
 var cpt_chrono = {
-	#elapsetime_cpt: props.globals.initNode("/instrumentation/ndchrono[0]/chrono/elapsetime-sec", 0, "INT"),
 	etHh_cpt: props.globals.initNode("/instrumentation/ndchrono[0]/etHh_cpt", 0, "INT"),
 	etMin_cpt: props.globals.initNode("/instrumentation/ndchrono[0]/etMin_cpt", 0, "INT"),
 	etSec_cpt:  props.globals.initNode("/instrumentation/ndchrono[0]/etSec_cpt", 0, "INT"),
@@ -61,7 +60,6 @@ var cpt_chrono = {
 
 #Fo chrono
 var fo_chrono = {
-	#elapsetime_fo: props.globals.initNode("/instrumentation/ndchrono[1]/elapsetime-sec", 0, "INT"),
 	etHh_fo: props.globals.initNode("/instrumentation/ndchrono[1]/etHh_fo", 0, "INT"),
 	etMin_fo: props.globals.initNode("/instrumentation/ndchrono[1]/etMin_fo", 0, "INT"),
 	etSec_fo:  props.globals.initNode("/instrumentation/ndchrono[1]/etSec_fo", 0, "INT"),
@@ -139,6 +137,31 @@ setlistener("/instrumentation/chrono[0]/chrono-reset", func(et){
 			};
 		};
 	};
+}, 0, 0);
+
+#Chrono
+setlistener("instrumentation/efis[0]/inputs/CHRONO", func(et){
+		chrono0 = et.getValue();
+		if (chrono0 == 1){
+			chrono_cpt.start();
+		} elsif (chrono0 == 2) {
+			chrono_cpt.stop();
+		} elsif (chrono0 == 0) {
+			chrono_cpt.reset();
+			setprop("instrumentation/ndchrono[0]/elapsetime-sec", 0);
+		}
+}, 0, 0);
+
+setlistener("instrumentation/efis[1]/inputs/CHRONO", func(et){
+		chrono1 = et.getValue();
+		if (chrono1 == 1){
+			chrono_fo.start();
+		} elsif (chrono1 == 2) {
+			chrono_fo.stop();
+		} elsif (chrono1 == 0) {
+			chrono_fo.reset();
+			setprop("instrumentation/ndchrono[1]/elapsetime-sec", 0);
+		}
 }, 0, 0);
 
 setlistener("instrumentation/clock/et-selector", func(et){
@@ -271,6 +294,7 @@ var start_loop = maketimer(0.1, func {
 			item.update(nil);
 		}
 	}
+	
 	#Cpt Chrono
 	chr0_tmp = getprop("instrumentation/ndchrono[0]/elapsetime-sec");
 	if (chr0_tmp >= 360000) {
