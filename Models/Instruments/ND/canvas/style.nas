@@ -1623,7 +1623,7 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_lh_vor_adf") != 0),
-				changed_only: 1,
+				#changed_only: 1,
 				is_true: func(nd) {
 					nd.symbols.dmeL.show();
 					if(nd.get_switch("toggle_lh_vor_adf") < 0){
@@ -1639,7 +1639,7 @@ canvas.NDStyles["Airbus"] = {
 						nd.symbols.vorLId.setColor(1,1,1);
 						#nd.symbols.dmeLDist.setColor(1,1,1);
 						nd.symbols.dmeL.setText("NM");
-						#nd.symbols.dmeL.setColor(0,0.59,0.8);
+						nd.symbols.dmeL.setColor(0,0.59,0.8);
 					}
 				},
 				is_false: func(nd){
@@ -1652,7 +1652,7 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_rh_vor_adf") != 0),
-				changed_only: 1,
+				#changed_only: 1,
 				is_true: func(nd) {					
 					if(nd.get_switch("toggle_rh_vor_adf") < 0){
 						nd.symbols.vorR.setText("ADF 2");
@@ -1666,7 +1666,7 @@ canvas.NDStyles["Airbus"] = {
 						nd.symbols.vorRId.setColor(1,1,1);
 						#nd.symbols.dmeRDist.setColor(1,1,1);
 						nd.symbols.dmeR.setText("NM");
-						#nd.symbols.dmeR.setColor(0,0.59,0.8);
+						nd.symbols.dmeR.setColor(0,0.59,0.8);
 					}
 				},
 				is_false: func(nd){
