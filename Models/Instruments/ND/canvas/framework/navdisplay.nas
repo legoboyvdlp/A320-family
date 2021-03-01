@@ -167,6 +167,9 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	foreach(var feature; me.nd_style.features ) {
 		me.symbols[feature.id] = me.nd.getElementById(feature.id).updateCenter();
 		if(contains(feature.impl,"init")) feature.impl.init(me.nd, feature); # call The element"s init code (i.e. updateCenter)
+		if(contains(feature.impl,"changed_only")) {
+			if (feature.impl.changed_only == 1) feature.last_predicate = nil;
+		}
 	}
 
 	### this is the "old" method that"s less flexible, we want to use the style hash instead (see above)
@@ -190,7 +193,7 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 
 	foreach(var element; ["staArrowL2","staArrowR2","staArrowL","staArrowR"] )
 	me.symbols[element] = easeArrow.new( me.nd.getElementById(element).updateCenter() );
-
+	
 	me.map = me.nd.createChild("map","map")
 	.set("clip", "rect(124, 1024, 1024, 0)")
 	.set("screen-range", 700)
@@ -736,7 +739,12 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		if (contains(feature.impl, "common")) feature.impl.common(me);
 		# conditional stuff
 		if(!contains(feature.impl, "predicate")) continue; # no conditional stuff
-		if ( var result = feature.impl.predicate(me) )
+		var result = feature.impl.predicate(me);
+		if (contains(feature, "last_predicate")) {
+			if (feature.last_predicate != nil and feature.last_predicate == result) continue;
+			feature.last_predicate = result;
+		} 
+		if ( result )
 			feature.impl.is_true(me, result); # pass the result to the predicate
 		else
 			feature.impl.is_false( me, result ); # pass the result to the predicate
