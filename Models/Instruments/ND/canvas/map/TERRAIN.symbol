@@ -194,6 +194,8 @@ var update_altitudes = func {
 		me.avg_maxalt = math.round((me.avg_maxalt * 2 + me.max_altitude) / 3);
 	}
 
+	me.avg_peakalt = me.avg_maxalt - me.avg_minalt;
+
 	if (me.onground == 0 and (me.max_altitude + 250) < me.refaltitudeft) {   # 250 ft tollerance
 		me.hialtmode = 1;		
 		var range = math.min(2400,(me.avg_maxalt - me.avg_minalt)) - 400;
@@ -236,6 +238,7 @@ var init = func {
 	me.max_altitude = -9999;
 	me.avg_minalt = 9999;
 	me.avg_maxalt = -9999;
+	me.avg_peakalt = 0;
 	me.maxalt_col = 0;  # 0 = grn, 1 = yel, 2 = red
 	me.bands_minalt = 0;
 	me.bands_maxalt = 0;
@@ -344,10 +347,11 @@ var draw = func {
 			me.groundaltft = int(getprop("/position/ground-elev-ft"));
 			me.reflowaltft = (pts.Gear.position[1].getValue()) ? -250 : -500;
 			me.onground = pts.Gear.wow[0].getValue();
-			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
-			if (vspeed30s<-500) me.refaltitudeft += vspeed30s;
 
 			if (me.min_altitude != 9999) me.update_altitudes();
+
+			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
+			if (vspeed30s<-500) me.refaltitudeft = math.max(me.avg_minalt , me.refaltitudeft + vspeed30s);
 
 			if (me.basealtitudeft == nil) {  # first basealt set
 				me.basealtitudeft = me.groundaltft + 400;
@@ -380,13 +384,15 @@ var draw = func {
 					print("set REFALT [done]: "~me.basealtitudeft);
 				}
 			} else if (fmgc.FMGCInternal.phase == 2) {
-				var expdaltft = me.groundaltft + 400;
+				var expdaltft = me.groundaltft;
+				expdaltft += (me.avg_peakalt>400) ? 400 : 160;
 				if (me.basealtitudeft > expdaltft) {
 					me.basealtitudeft = expdaltft;
 					print("set REFALT [blwbase]: "~me.basealtitudeft);
 				}				
-			} else if (fmgc.FMGCInternal.phase >= 2) {				
-				me.basealtitudeft = math.avg(me.basealtitudeft,400 + me.groundaltft,int(400 + me.avg_minalt));
+			} else if (fmgc.FMGCInternal.phase >= 2) {		
+				var flatalt = (me.avg_peakalt>400) ? 400 : 160;
+				me.basealtitudeft = math.avg(me.basealtitudeft,flatalt + me.groundaltft,int(flatalt + me.avg_minalt));
 				#if (me.basealtitudeft > me.avg_maxalt) {
 				#	if (me.avg_maxalt < 1000) me.basealtitudeft = 0; # 1000ft min elev number
 				#	else me.basealtitudeft = int(400 + me.avg_minalt);
