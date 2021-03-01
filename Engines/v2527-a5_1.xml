@@ -2,7 +2,7 @@
 
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
-<turbine_engine name="V2527_A5">
+<turbine_engine name="V2527-A5">
 	
 	<!-- data measured from https://www.youtube.com/watch?v=gPRQcYNRV_U -->
 	<milthrust>     24800 </milthrust>
@@ -23,7 +23,7 @@
 	
 	<function name="N1SpoolUp">
 		<table>
-			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="row">/engines/engine[0]/n1</independentVar>
 			<tableData>
 				 24   1.1
 				 28   2.9
@@ -38,7 +38,7 @@
 	
 	<function name="N1SpoolDown">
 		<table>
-			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="row">/engines/engine[0]/n1</independentVar>
 			<tableData>
 				 24   1.1
 				 28   2.9
@@ -53,7 +53,7 @@
 	
 	<function name="N2SpoolUp">
 		<table>
-			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="row">/engines/engine[0]/n1</independentVar>
 			<tableData>
 				 24   1.1
 				 28   2.9
@@ -68,7 +68,7 @@
 	
 	<function name="N2SpoolDown">
 		<table>
-			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="row">/engines/engine[0]/n1</independentVar>
 			<tableData>
 				 24   1.1
 				 28   2.9

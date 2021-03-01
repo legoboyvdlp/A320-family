@@ -94,7 +94,7 @@
 	<ground_reactions file="Systems/a320-ground-reactions"/>
 	
 	<propulsion>
-		<engine file="cfm56_5b4_1">
+		<engine file="cfm56-5b4_1">
 			<location unit="M">
 				<x>-5.34904</x>
 				<y>-5.755</y>
@@ -120,7 +120,7 @@
 			</thruster>
 		</engine>
 		
-		<engine file="cfm56_5b4_2">
+		<engine file="cfm56-5b4_2">
 			<location unit="M">
 				<x>-5.34904</x>
 				<y>5.755</y>
@@ -276,6 +276,7 @@
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
+	<system file="a320-cfm56-5b4-engine-fadec"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
 	<system file="a320-fwc-phases"/>

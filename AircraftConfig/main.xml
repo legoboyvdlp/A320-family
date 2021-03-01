@@ -344,6 +344,26 @@
 			</checkbox>
 
 			<checkbox>
+				<label>Disable Canvas in External Views</label>
+				<halign>left</halign>
+				<property>/systems/acconfig/options/hide-canvas-outside</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>options/hide-canvas-outside</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
 				<!-- TODO there might be a better way to formulate this. -->
 				<label>Save States Between Sessions</label>
 				<halign>left</halign>

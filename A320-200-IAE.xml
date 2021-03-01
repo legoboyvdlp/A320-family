@@ -94,7 +94,7 @@
 	<ground_reactions file="Systems/a320-ground-reactions"/>
 	
 	<propulsion>
-		<engine file="v2527_a5_1">
+		<engine file="v2527-a5_1">
 			<location unit="M">
 				<x>-5.34904</x>
 				<y>-5.755</y>
@@ -120,7 +120,7 @@
 			</thruster>
 		</engine>
 		
-		<engine file="v2527_a5_2">
+		<engine file="v2527-a5_2">
 			<location unit="M">
 				<x>-5.34904</x>
 				<y>5.755</y>

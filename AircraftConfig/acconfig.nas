@@ -56,10 +56,12 @@ var failResetOld = func {
 	setprop("/systems/failures/pump-green", 0);
 	setprop("/systems/failures/pump-yellow-eng", 0);
 	setprop("/systems/failures/pump-yellow-elec", 0);
-	setprop("/systems/failures/cargo-aft-fire", 0);
-	setprop("/systems/failures/cargo-fwd-fire", 0);
-	setprop("/systems/failures/engine-left-fire", 0);
-	setprop("/systems/failures/engine-right-fire", 0);
+	setprop("/systems/failures/fire/cargo-aft-fire", 0);
+	setprop("/systems/failures/fire/cargo-fwd-fire", 0);
+	setprop("/systems/failures/fire/engine-left-fire", 0);
+	setprop("/systems/failures/fire/apu-fire", 0);
+	setprop("/systems/failures/fire/engine-right-fire", 0);
+	setprop("/systems/failures/fire/lavatory-fire", 0);
 }
 
 failResetOld();
@@ -80,6 +82,7 @@ setprop("/systems/acconfig/options/wxr-server", "noaa");
 setprop("/systems/acconfig/options/welcome-skip", 0);
 setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
+setprop("/systems/acconfig/options/hide-canvas-outside", 0);
 setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
 setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
@@ -235,6 +238,7 @@ var readSettings = func {
 	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
 	setprop("/systems/atsu/atis-server", getprop("/systems/acconfig/options/atis-server"));
 	setprop("/systems/atsu/wxr-server", getprop("/systems/acconfig/options/wxr-server"));
+	setprop("/options/hide-canvas-outside", getprop("/systems/acconfig/options/hide-canvas-outside"));
 }
 
 var writeSettings = func {
@@ -249,6 +253,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
 	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
 	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));
+	setprop("/systems/acconfig/options/hide-canvas-outside", getprop("/options/hide-canvas-outside"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 
@@ -297,6 +302,7 @@ var colddark = func {
 		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		if (getprop("/engines/engine[1]/n2-actual") < 2) {
 			colddark_b();
@@ -342,6 +348,7 @@ var beforestart = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -399,6 +406,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/emer-lights", 0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -433,6 +443,7 @@ var taxi = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -491,6 +502,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/emer-lights", 0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);

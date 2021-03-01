@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320 CFM56-5B4 Engine -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+
+<system name="A320: CFM56 Engine">
+	
+	<property value="45">fadec/limit/rated-temp</property>
+	<property value="30">fadec/limit/flex-rated-temp</property>
+	<property value="27000">fadec/limit/rated-thrust</property>
+	
+	<channel name="Thrust Limits">
+		
+		<fcs_function name="fadec/limit/rated-thrust-n1"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
+			<function>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">propulsion/tat-c</independentVar>
+					<tableData>
+						      -45   -15    15    45     75
+						    0  79.5  84.6  89.2   93.8   98.3
+						10000  90.1  94.8  99.1  100.6   99.3
+						43000  88.7  89.1  94.2   99.3  104.3
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/milthrust-unmodified"> <!-- Copy of MilThrust table in engines file -->
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<independentVar lookup="column">atmosphere/density-altitude</independentVar>
+					<tableData>
+						     -10000   0       10000   20000   30000   40000   50000
+						0.0   1.2600  1.0000  0.7400  0.5640  0.3920  0.2710  0.0000
+						0.2   1.1710  0.9740  0.6970  0.5360  0.3850  0.2610  0.0000
+						0.4   1.1500  0.9570  0.6920  0.5460  0.3870  0.2530  0.0000
+						0.6   1.1810  0.9410  0.7210  0.5660  0.3580  0.2180  0.0000
+						0.8   1.2290  1.0200  0.7820  0.5570  0.3040  0.1930  0.0000
+						0.9   1.2580  1.0200  0.7820  0.5220  0.2710  0.1140  0.0000
+						1.0   1.1810  0.9510  0.7210  0.4410  0.1740  0.0450  0.0000
+						1.2   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
+						1.4   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<!-- Following functions fix a FGTurbine inaccuracy... rated thrust N1% should be rated thrust lbs -->
+		<!-- These calculations change it so that the rated power at sea level is at the correct N1% value. It still changes with altitude and mach as it should -->
+		<fcs_function name="fadec/limit/fgturbine-thrust-lbs">
+			<function>
+				<sum>
+					<product>
+						<property>propulsion/engine/IdleThrust</property>
+						<property>fadec/limit/rated-thrust</property>
+					</product>
+					<product>
+						<difference>
+							<property>fadec/limit/rated-thrust</property>
+							<product>
+								<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+								<property>fadec/limit/rated-thrust</property>
+							</product>
+						</difference>
+						<property>fadec/limit/milthrust-unmodified</property>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/rated-thrust-lbs">
+			<function>
+				<sum>
+					<product>
+						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+						<property>fadec/limit/rated-thrust</property>
+					</product>
+					<product>
+						<product>
+							<difference>
+								<property>fadec/limit/rated-thrust</property>
+								<product>
+									<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+									<property>fadec/limit/rated-thrust</property>
+								</product>
+							</difference>
+							<property>fadec/limit/milthrust-unmodified</property>
+						</product>
+						<quotient>
+							<difference>
+								<property>fadec/limit/rated-thrust-n1</property>
+								<value>18.9</value>
+							</difference>
+							<value>85.1</value>
+						</quotient>
+						<quotient>
+							<difference>
+								<property>fadec/limit/rated-thrust-n1</property>
+								<value>18.9</value>
+							</difference>
+							<value>85.1</value>
+						</quotient>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/rated-thrust-factor"> <!-- Normalize -->
+			<function>
+				<ifthen>
+					<eq>
+						<property>/systems/acconfig/autoconfig-running</property>
+						<value>1</value>
+					</eq>
+					<value>0</value>
+					<ifthen>
+						<nq> <!-- Prevent divide by 0 -->
+							<property>fadec/limit/rated-thrust-lbs</property>
+							<value>0</value>
+						</nq>
+						<quotient>
+							<property>fadec/limit/fgturbine-thrust-lbs</property>
+							<property>fadec/limit/rated-thrust-lbs</property>
+						</quotient>
+						<value>1</value>
+					</ifthen>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/toga-ref"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
+			<function>
+				<table> <!-- TODO: Figure out how to integrate FCOM table with this one -->
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">propulsion/tat-c</independentVar>
+					<tableData>
+						      -45   -15    15    45     75
+						    0  79.5  84.6  89.2   93.8  89.1
+						10000  90.1  94.8  99.1  100.6  96.2
+						43000  88.7  89.1  94.2   99.3  97.2
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/toga">
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>fadec/limit/toga-ref</property>
+								<value>10</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>10</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<summer name="fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
+			<input>fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
+			<input>-/FMGC/internal/flex</input>
+			<input>propulsion/tat-c</input>
+		</summer>
+		
+		<fcs_function name="fadec/limit/flex-ref">
+			<function>
+				<min> <!-- FLEX can not increase thrust past TOGA -->
+					<property>fadec/limit/toga-ref</property>
+					<table> <!-- TODO: Figure out how to integrate FCOM table with this one -->
+						<independentVar lookup="row">/position/altitude-ft</independentVar>
+						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
+						<tableData>
+							      -45   -15    15    45     75
+							    0  79.5  84.6  89.2   93.8  89.1
+							10000  90.1  94.8  99.1  100.6  96.2
+							43000  88.7  89.1  94.2   99.3  97.2
+						</tableData>
+					</table>
+				</min>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/flex">
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>fadec/limit/flex-ref</property>
+								<value>10</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>10</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<!--
+		TODO: need to figure out how to make MCT work, 24370lbs
+		<switch name="fadec/limit/mct-final-ref">
+			<default value="fadec/limit/mct-ref"/>
+			<test value="fadec/limit/flex-ref">
+				fadec/limit/flex-active eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="fadec/limit/mct-ref">
+			<function>
+			</function>
+		</fcs_function>
+		-->
+	
+	</channel>
+
+</system>

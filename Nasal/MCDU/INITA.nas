@@ -238,11 +238,12 @@ var initInputA = func(key, i) {
 			fmgc.flightPlanController.reset(2);
 			fmgc.flightPlanController.init();
 			Simbrief.SimbriefParser.inhibit = 0;
+			fmgc.updateARPT();
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
-		} else {
+		} else {			
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
 				var tfs = size(scratchpad);
 				if (tfs == 9 and find("/", scratchpad) != -1) {
@@ -264,6 +265,7 @@ var initInputA = func(key, i) {
 						mcdu_scratchpad.scratchpads[i].empty();
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
+						fmgc.updateARPT();
 						fmgc.updateArptLatLon();
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 					} else {

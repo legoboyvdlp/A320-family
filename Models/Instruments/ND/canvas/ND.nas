@@ -338,6 +338,41 @@ setlistener("sim/signals/fdm-initialized", func {
 	ND_2 = canvas_ND_2.new(group_nd2);
 	ND_2_test = canvas_ND_2_test.new(group_nd2_test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg");
 
+	setlistener("/instrumentation/efis[0]/inputs/range-nm", func() {
+		canvas_nd.ND_1.NDCpt.trafficLayer.camera.range = getprop("/instrumentation/efis[0]/inputs/range-nm");
+	}, 1, 0);
+
+	setlistener("/instrumentation/efis[1]/inputs/range-nm", func() {
+		canvas_nd.ND_2.NDFo.trafficLayer.camera.range = getprop("/instrumentation/efis[1]/inputs/range-nm");
+	}, 1, 0);
+	
+	setlistener("/instrumentation/efis[0]/inputs/nd-centered", func() {
+		canvas_nd.ND_1.NDCpt.trafficLayer.camera.screenRange = getprop("/instrumentation/efis[0]/inputs/nd-centered") ? 436.8545 : 710;
+		canvas_nd.ND_1.NDCpt.trafficLayer.camera.screenCY = getprop("/instrumentation/efis[0]/inputs/nd-centered") ? 512 : 850;
+	}, 1, 0);
+
+	setlistener("/instrumentation/efis[1]/inputs/nd-centered", func() {
+		canvas_nd.ND_2.NDFo.trafficLayer.camera.screenRange = getprop("/instrumentation/efis[1]/inputs/nd-centered") ? 436.8545 : 710;
+		canvas_nd.ND_2.NDFo.trafficLayer.camera.screenCY = getprop("/instrumentation/efis[1]/inputs/nd-centered") ? 512 : 850;
+	}, 1, 0);
+	
+	setlistener("/instrumentation/tcas/inputs/mode", func() {
+		if (getprop("/instrumentation/efis[1]/nd/canvas-display-mode") != "PLAN") {
+			canvas_nd.ND_1.NDCpt.trafficGroup.setVisible(pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2 ? 1 : 0);
+		}
+		if (getprop("/instrumentation/efis[1]/nd/canvas-display-mode") != "PLAN") {
+			canvas_nd.ND_2.NDFo.trafficGroup.setVisible(pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2 ? 1 : 0);
+		}
+	}, 1, 0);
+
+	setlistener("/instrumentation/efis[0]/nd/canvas-display-mode", func() {
+		canvas_nd.ND_1.NDCpt.trafficGroup.setVisible(getprop("/instrumentation/efis[0]/nd/canvas-display-mode") == "PLAN" ? 0 : 1);
+	}, 1, 0);
+
+	setlistener("/instrumentation/efis[1]/nd/canvas-display-mode", func() {
+		canvas_nd.ND_2.NDFo.trafficGroup.setVisible(getprop("/instrumentation/efis[1]/nd/canvas-display-mode") == "PLAN" ? 0 : 1);
+	}, 1, 0);
+	
 	nd_update.start();
 	if (getprop("systems/acconfig/options/nd-rate") > 1) {
 		rateApply();

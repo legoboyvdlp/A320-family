@@ -248,7 +248,7 @@ var postInit = func() {
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
 	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
-	flexTemp: props.globals.initNode("/FMGC/internal/flex", 0, "INT"),
+	flexTemp: props.globals.initNode("/FMGC/internal/flex", 45, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
@@ -646,9 +646,15 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	if (FMGCInternal.phase == 4 and getprop("/FMGC/internal/decel")) {
-		FMGCInternal.phase = 5;
-	}
+	if (FMGCInternal.phase == 4) {
+		if (getprop("/FMGC/internal/decel")) {
+			FMGCInternal.phase = 5;
+		}
+		else if (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
+			FMGCInternal.phase = 3;
+			systems.PNEU.pressMode.setValue("CR");
+		}
+	} 
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
 		setprop("/FMGC/internal/decel", 1);
@@ -971,7 +977,7 @@ var reset_FMGC = func {
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
-	mcdu.FlightLogDatabase.clearDatabase();
+	mcdu.FlightLogDatabase.reset(); # track reset events without loosing recorded data
 	
 	Input.fd1.setValue(fd1);
 	Input.fd2.setValue(fd2);

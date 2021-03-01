@@ -18,8 +18,8 @@
 			<factor>1</factor>
 		</volume>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -39,8 +39,8 @@
 			<factor>1</factor>
 		</volume>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -60,8 +60,8 @@
 			<factor>1</factor>
 		</volume>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -81,8 +81,8 @@
 			<factor>1</factor>
 		</volume>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -102,8 +102,8 @@
 			<factor>1</factor>
 		</volume>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -123,8 +123,8 @@
 			<factor>1</factor>
 		</volume>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -145,8 +145,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -167,8 +167,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -189,8 +189,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -211,8 +211,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -233,8 +233,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -255,8 +255,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -277,8 +277,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -299,8 +299,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -321,8 +321,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -343,8 +343,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -374,8 +374,8 @@
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -404,8 +404,8 @@
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -434,8 +434,8 @@
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -464,8 +464,8 @@
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -486,8 +486,8 @@
 		</volume>
 		<reference-dist>30</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -508,8 +508,8 @@
 		</volume>
 		<reference-dist>30</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -538,8 +538,8 @@
 		</orientation>
 		<reference-dist>60</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -568,8 +568,8 @@
 		</orientation>
 		<reference-dist>60</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -602,8 +602,8 @@
 		</orientation>
 		<reference-dist>90</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -636,8 +636,8 @@
 		</orientation>
 		<reference-dist>90</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -670,8 +670,8 @@
 		</orientation>
 		<reference-dist>60</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -704,8 +704,8 @@
 		</orientation>
 		<reference-dist>60</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -738,8 +738,8 @@
 		</orientation>
 		<reference-dist>90</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -772,8 +772,8 @@
 		</orientation>
 		<reference-dist>90</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -806,8 +806,8 @@
 		</orientation>
 		<reference-dist>120</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -840,8 +840,8 @@
 		</orientation>
 		<reference-dist>120</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -874,8 +874,8 @@
 		</orientation>
 		<reference-dist>150</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -908,8 +908,8 @@
 		</orientation>
 		<reference-dist>150</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -942,8 +942,8 @@
 		</orientation>
 		<reference-dist>150</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -976,8 +976,8 @@
 		</orientation>
 		<reference-dist>150</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1007,8 +1007,8 @@
 		</orientation>
 		<reference-dist>1500</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1038,8 +1038,8 @@
 		</orientation>
 		<reference-dist>1500</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1072,8 +1072,8 @@
 		</orientation>
 		<reference-dist>200</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1106,8 +1106,8 @@
 		</orientation>
 		<reference-dist>200</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1140,8 +1140,8 @@
 		</orientation>
 		<reference-dist>120</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1174,8 +1174,8 @@
 		</orientation>
 		<reference-dist>120</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1199,7 +1199,7 @@
 			<offset>0</offset>
 		</pitch>
 		<orientation>
-			<x>0</x>
+			<x>-5</x>
 			<y>1</y>
 			<z>0</z>
 			<inner-angle>95</inner-angle>
@@ -1208,8 +1208,8 @@
 		</orientation>
 		<reference-dist>110</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1233,7 +1233,7 @@
 			<offset>0</offset>
 		</pitch>
 		<orientation>
-			<x>0</x>
+			<x>-5</x>
 			<y>-1</y>
 			<z>0</z>
 			<inner-angle>275</inner-angle>
@@ -1242,8 +1242,8 @@
 		</orientation>
 		<reference-dist>110</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1276,8 +1276,8 @@
 		</orientation>
 		<reference-dist>500</reference-dist>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1310,8 +1310,8 @@
 		</orientation>
 		<reference-dist>500</reference-dist>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1338,8 +1338,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1363,8 +1363,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1388,8 +1388,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1413,8 +1413,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1438,8 +1438,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1463,8 +1463,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1488,8 +1488,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1513,8 +1513,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1538,8 +1538,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1563,8 +1563,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1588,8 +1588,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1613,8 +1613,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1649,8 +1649,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1674,8 +1674,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1699,8 +1699,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1724,8 +1724,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1749,8 +1749,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1774,8 +1774,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1799,8 +1799,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1824,8 +1824,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1849,8 +1849,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1874,8 +1874,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1899,8 +1899,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>20</y>
+			<x>-5</x>
+			<y>5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
@@ -1924,8 +1924,8 @@
 			<offset>0</offset>
 		</pitch>
 		<position>
-			<x>0</x>
-			<y>-20</y>
+			<x>-5</x>
+			<y>-5.5</y>
 			<z>0</z>
 		</position>
 	</engine>
