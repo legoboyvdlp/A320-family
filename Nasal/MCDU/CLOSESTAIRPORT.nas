@@ -120,7 +120,8 @@ var closestAirportPage = {
 	manAirportCall: func(id) {
 		if (id == "CLR") {
 			me.manAirport = nil;
-			me.L5 = [nil, nil, "grn"];
+			me.L5 = ["[    ]", nil, "blu"];
+			me.fontMatrix[0][4] = 1;
 			me.C5 = [nil, nil, "grn"];
 			me.R5 = [nil, nil, "grn"];
 			return;
@@ -131,6 +132,7 @@ var closestAirportPage = {
 			mcdu_message(me.computer, "NOT IN DATA BASE");
 		} else {
 			me.manAirport = airportinfo(id);
+			me.fontMatrix[0][4] = 0;
 			me.L5 = [id, nil, "grn"];
 			me.R5 = ["----", nil, "grn"];
 		}
