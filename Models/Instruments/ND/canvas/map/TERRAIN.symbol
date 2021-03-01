@@ -238,7 +238,7 @@ var init = func {
 	me.max_altitude = -9999;
 	me.avg_minalt = 9999;
 	me.avg_maxalt = -9999;
-	me.avg_peakalt = 0;
+	me.avg_peakalt = nil;
 	me.maxalt_col = 0;  # 0 = grn, 1 = yel, 2 = red
 	me.bands_minalt = 0;
 	me.bands_maxalt = 0;
@@ -350,26 +350,33 @@ var draw = func {
 
 			if (me.min_altitude != 9999) me.update_altitudes();
 
+			var flatalt = (me.avg_peakalt != nil and me.avg_peakalt<500) ? 140 : 400;
+
 			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
 			if (vspeed30s<-500) me.refaltitudeft = math.max(me.avg_minalt , me.refaltitudeft + vspeed30s);
 
 			if (me.basealtitudeft == nil) {  # first basealt set
-				me.basealtitudeft = me.groundaltft + 400;
+				me.basealtitudeft = me.groundaltft + flatalt;
+				me.flatalt = flatalt;
 				me.checkarrival = 1;
 				print("set REFALT [init]: "~me.basealtitudeft);
-			#} else if (fmgc.FMGCInternal.phase < 2) { # starting at phase < 2
-			  # nothing to do
+			} else if (fmgc.FMGCInternal.phase < 2) { # starting at phase < 2
+			  if (me.flatalt != flatalt) {
+				  me.basealtitudeft = me.groundaltft + flatalt;
+				  me.flatalt = flatalt;
+				  print("set REFALT [flat]: "~me.basealtitudeft);
+			  }			  
 			} else if (fmgc.FMGCInternal.phase == 5) {
 				if (me.checkarrival == 1) {
 					me.checkarrival = 0;				
 					me.basealtitudeft = nil;
 					if (fmgc.FMGCInternal.arrApt != nil) {
 						var airport = airportinfo(fmgc.FMGCInternal.arrApt);
-						if (airport != nil) me.basealtitudeft = 400 + int(airport.elevation * M2FT);
+						if (airport != nil) me.basealtitudeft = flatalt + int(airport.elevation * M2FT);
 						print("set REFALT [arrApt]: "~me.basealtitudeft);
 					}
 					if (me.basealtitudeft == nil) {
-						me.basealtitudeft = 400 + me.avg_minalt; # that's fun
+						me.basealtitudeft = flatalt + me.avg_minalt; # that's fun
 					}
 				}
 			} else if (fmgc.FMGCInternal.phase == 6) {
@@ -380,18 +387,16 @@ var draw = func {
 			} else if (fmgc.FMGCInternal.phase == 7) {
 				if (me.checkarrival == 0) {
 					me.checkarrival = 1;
-					me.basealtitudeft = me.groundaltft + 400;
+					me.basealtitudeft = me.groundaltft + flatalt;
 					print("set REFALT [done]: "~me.basealtitudeft);
 				}
 			} else if (fmgc.FMGCInternal.phase == 2) {
-				var expdaltft = me.groundaltft;
-				expdaltft += (me.avg_peakalt>400) ? 400 : 160;
+				var expdaltft = me.groundaltft + flatalt;
 				if (me.basealtitudeft > expdaltft) {
 					me.basealtitudeft = expdaltft;
 					print("set REFALT [blwbase]: "~me.basealtitudeft);
 				}				
 			} else if (fmgc.FMGCInternal.phase >= 2) {		
-				var flatalt = (me.avg_peakalt>400) ? 400 : 160;
 				me.basealtitudeft = math.avg(me.basealtitudeft,flatalt + me.groundaltft,int(flatalt + me.avg_minalt));
 				#if (me.basealtitudeft > me.avg_maxalt) {
 				#	if (me.avg_maxalt < 1000) me.basealtitudeft = 0; # 1000ft min elev number
