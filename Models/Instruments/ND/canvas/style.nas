@@ -792,7 +792,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveId",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != "" and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveId.setText(getprop("/FMGC/flightplan[2]/current-leg"));
@@ -805,7 +805,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveCrs",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != "" and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
@@ -829,7 +829,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDist",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
+				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg") != "" and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 						and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
@@ -844,7 +844,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDistLbl",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != "" and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveDistLbl.show();
@@ -917,7 +917,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"hdgBug2ValR", #"hdgBug2ValL"",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) nd.in_mode("toggle_display_mode", ["MAP"]) and !nd.get_switch("toggle_centered"),
+				predicate: func(nd) nd.in_mode("toggle_display_mode", ["MAP"]) and !nd.get_switch("toggle_centered") and
+					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					var bugRot = vhdg_bug.getValue();
 					var diffRot = (bugRot>=nd.userHdgTrk) ? (bugRot-nd.userHdgTrk) : (360+bugRot-nd.userHdgTrk);
@@ -935,7 +936,8 @@ canvas.NDStyles["Airbus"] = {
 			id:"hdgBug2ValL",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) nd.in_mode("toggle_display_mode", ["MAP"]) and !nd.get_switch("toggle_centered"),
+				predicate: func(nd) nd.in_mode("toggle_display_mode", ["MAP"]) and !nd.get_switch("toggle_centered") and
+					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					var bugRot = vhdg_bug.getValue();
 					var diffRot = (bugRot>nd.userHdgTrk) ? (360+nd.userHdgTrk-bugRot) : (nd.userHdgTrk-bugRot);
@@ -2034,10 +2036,13 @@ canvas.NDStyles["Airbus"] = {
 			id: "nd_msg_change",
 			impl: {
 				init: func(nd, symbol),
-				common: func(nd) {
-					var chk = (nd.change_phase != 0);
-					if (chk) nd.symbols.nd_msg_change.show();
-					else nd.symbols.nd_msg_change.hide();
+				predicate: func(nd) ( (nd.change_phase != 0) and 
+					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ),
+				is_true: func(nd) {
+					nd.symbols.nd_msg_change.show();
+				},
+				is_false: func(nd) {
+					nd.symbols.nd_msg_change.hide();
 				}
 			}
 		}		
