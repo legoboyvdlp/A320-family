@@ -181,13 +181,14 @@ var canvas_nd_base = {
 };
 
 var ND_change_timer_fn = func {
-	me.change_phase += 1;	
-	if (me.change_phase>2) {  # phase 3
+	#me.change_phase += 1;	
+	#if (me.change_phase>2) {  # phase 3 - only for older ND?
+	#if (me.change_phase>1) {  # phase 2 hide
 		me.change_timer.stop();
 		me.change_phase = 0;
-	} else {
+	#} else {
 		me.map.setVisible(1);  # phase 2
-	}
+	#}
 };
 
 var canvas_ND_1 = {
@@ -201,7 +202,7 @@ var canvas_ND_1 = {
 		me.NDCpt.adirs_property = props.globals.getNode("/instrumentation/efis[0]/nd/ir-1",1);
 		me.NDCpt.newMFD(canvas_group);
 		me.NDCpt.change_phase = 0;
-		me.NDCpt.change_timer = maketimer(0.4,me.NDCpt,ND_change_timer_fn);
+		me.NDCpt.change_timer = maketimer(0.6,me.NDCpt,ND_change_timer_fn);
 		me.NDCpt.update();
 
 		return m;
