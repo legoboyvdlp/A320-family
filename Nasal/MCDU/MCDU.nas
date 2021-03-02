@@ -1327,6 +1327,8 @@ var rskbutton = func(btn, i) {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "CONNECTSTATUS") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("EMERGREQ1");
 		} else if (page == "AOCMENU") {
 			msg = mcdu.ReceivedMessagesDatabase.firstUnviewed();
 			if (msg != -99) {
@@ -1381,7 +1383,11 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("MCDUTEXT2");
 		} else if (page == "MCDUTEXT2") {
 			pageNode[i].setValue("MCDUTEXT");
-		}
+		} else if (page == "EMERGREQ1") {
+			pageNode[i].setValue("EMERGREQ2");
+		} else if (page == "EMERGREQ2") {
+			pageNode[i].setValue("EMERGREQ1");
+		} 
 	} else if (btn == "right") {
 		if (page == "DATA") {
 			pageNode[i].setValue("DATA2");
@@ -1421,7 +1427,11 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("MCDUTEXT2");
 		} else if (page == "MCDUTEXT2") {
 			pageNode[i].setValue("MCDUTEXT");
-		}
+		} else if (page == "EMERGREQ1") {
+			pageNode[i].setValue("EMERGREQ2");
+		} else if (page == "EMERGREQ2") {
+			pageNode[i].setValue("EMERGREQ1");
+		} 
 	} else if (btn == "up") {
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollUp();
