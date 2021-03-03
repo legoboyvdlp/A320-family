@@ -792,7 +792,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveId",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != "" and 
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
+						getprop("/FMGC/flightplan[2]/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveId.setText(getprop("/FMGC/flightplan[2]/current-leg"));
@@ -805,7 +806,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveCrs",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != "" and 
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != nil and 
+						getprop("/FMGC/flightplan[2]/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"]) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					#var cur_wp = getprop("/autopilot/route-manager/current-wp");
@@ -829,7 +831,8 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDist",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg") != "" and 
+				predicate: func(nd) (getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and 
+						getprop("/FMGC/flightplan[2]/active") and 
 						nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 						and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
@@ -844,7 +847,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "wpActiveDistLbl",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg") != "" and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
+				predicate: func(nd) getprop("/FMGC/flightplan[2]/current-leg-dist") != nil and getprop("/FMGC/flightplan[2]/active")  and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					nd.symbols.wpActiveDistLbl.show();
@@ -858,7 +861,7 @@ canvas.NDStyles["Airbus"] = {
 			id: "eta",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])					
+				predicate: func(nd) getprop("/autopilot/route-manager/wp/eta") != nil and getprop("/FMGC/flightplan[2]/active")	and nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])
 					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)),
 				is_true: func(nd) {
 					var etaSec = getprop("/sim/time/utc/day-seconds")+
@@ -1625,7 +1628,6 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_lh_vor_adf") != 0),
-				#changed_only: 1,
 				is_true: func(nd) {
 					nd.symbols.dmeL.show();
 					if(nd.get_switch("toggle_lh_vor_adf") < 0){
@@ -1634,15 +1636,14 @@ canvas.NDStyles["Airbus"] = {
 						nd.symbols.vorLId.setColor(0.195,0.96,0.097);
 						#nd.symbols.dmeLDist.setColor(0.195,0.96,0.097);
 						nd.symbols.dmeL.setText("");
-					}
-					else{
+					} else {
 						nd.symbols.vorL.setText("VOR 1");
 						nd.symbols.vorL.setColor(1,1,1);
 						nd.symbols.vorLId.setColor(1,1,1);
 						#nd.symbols.dmeLDist.setColor(1,1,1);
 						nd.symbols.dmeL.setText("NM");
-						nd.symbols.dmeL.setColor(0,0.59,0.8);
 					}
+					nd.symbols.dmeL.setColor(0,0.59,0.8);
 				},
 				is_false: func(nd){
 					nd.symbols.dmeL.hide();
@@ -1654,13 +1655,12 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_rh_vor_adf") != 0),
-				#changed_only: 1,
-				is_true: func(nd) {					
+				is_true: func(nd) {
+					nd.symbols.dmeR.show();
 					if(nd.get_switch("toggle_rh_vor_adf") < 0){
 						nd.symbols.vorR.setText("ADF 2");
 						nd.symbols.vorR.setColor(0.195,0.96,0.097);
 						nd.symbols.vorRId.setColor(0.195,0.96,0.097);
-						#nd.symbols.dmeRDist.setColor(0.195,0.96,0.097);
 						nd.symbols.dmeR.setText("");
 					} else {
 						nd.symbols.vorR.setText("VOR 2");
@@ -1668,8 +1668,8 @@ canvas.NDStyles["Airbus"] = {
 						nd.symbols.vorRId.setColor(1,1,1);
 						#nd.symbols.dmeRDist.setColor(1,1,1);
 						nd.symbols.dmeR.setText("NM");
-						nd.symbols.dmeR.setColor(0,0.59,0.8);
 					}
+					nd.symbols.dmeR.setColor(0,0.59,0.8);
 				},
 				is_false: func(nd){
 					nd.symbols.dmeR.hide();
@@ -1705,12 +1705,10 @@ canvas.NDStyles["Airbus"] = {
 							nd.symbols.vorLId.setText(navID);
 						else
 							nd.symbols.vorLId.setText(frq);
-						if(getprop(dme~ "in-range")){
-							nd.symbols.dmeLDist.setText(sprintf("%3.1f",dst));
-						}
-						else {
-							nd.symbols.dmeLDist.setText(" ---");
-						}
+						if(getprop(dme~ "in-range"))
+							nd.symbols.dmeLDist.setText(sprintf("%3.1f",
+											dst));
+						else nd.symbols.dmeLDist.setText(" ---");
 					}
 				},
 				is_false: func(nd){
@@ -1724,11 +1722,11 @@ canvas.NDStyles["Airbus"] = {
 			id:"vorLSym",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.get_switch("toggle_lh_vor_adf") != 0),				
+				predicate: func(nd) (nd.get_switch("toggle_lh_vor_adf") != 0),
 				is_true: func(nd) {
 					if (nd.get_switch("toggle_lh_vor_adf") < 0) nd.symbols.vorLSym.setColor(0.195,0.96,0.097);
 					else nd.symbols.vorLSym.setColor(1,1,1);
-					nd.symbols.vorLSym.show();					
+					nd.symbols.vorLSym.show();
 				},
 				is_false: func(nd){
 					nd.symbols.vorLSym.hide();
@@ -1764,12 +1762,10 @@ canvas.NDStyles["Airbus"] = {
 							nd.symbols.vorRId.setText(navID);
 						else
 							nd.symbols.vorRId.setText(frq);
-						if(getprop(dme~ "in-range")){
-							nd.symbols.dmeRDist.setText(sprintf("%3.1f",dst));
-						}
-						else {
-							nd.symbols.dmeRDist.setText(" ---");
-						}
+						if(getprop(dme~ "in-range"))
+							nd.symbols.dmeRDist.setText(sprintf("%3.1f",
+											dst));
+						else nd.symbols.dmeRDist.setText(" ---");
 					}
 				},
 				is_false: func(nd){
@@ -1783,7 +1779,7 @@ canvas.NDStyles["Airbus"] = {
 			id:"vorRSym",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.get_switch("toggle_rh_vor_adf") != 0),				
+				predicate: func(nd) (nd.get_switch("toggle_rh_vor_adf") != 0),
 				is_true: func(nd) {
 					if (nd.get_switch("toggle_rh_vor_adf") < 0) nd.symbols.vorRSym.setColor(0.195,0.96,0.097);
 					else nd.symbols.vorRSym.setColor(1,1,1);					
@@ -2045,7 +2041,7 @@ canvas.NDStyles["Airbus"] = {
 					nd.symbols.nd_msg_change.hide();
 				}
 			}
-		}		
+		}
 	], # end of vector with features
 
 };
