@@ -184,7 +184,7 @@ var update_altitudes = func {
 		else me.terrain_maxcol.setValue(1);
 	}
 
-	if (me.avg_minalt == 9999) {
+	if (me.min_altitude == 9999) {
 		me.avg_minalt = me.min_altitude;
 		me.avg_maxalt = me.max_altitude;
 	} else {
@@ -199,7 +199,7 @@ var update_altitudes = func {
 	if (me.onground == 0 and (me.max_altitude + 250) < me.refaltitudeft) {   # 250 ft tollerance
 		me.hialtmode = 1;		
 		var range = math.min(2400,(me.avg_maxalt - me.avg_minalt)) - 400;
-		if (range < 1900) {  # min elev number
+		if (range < 400) {  # min elev number
 			me.bands_range = 0;	
 		} else {			
 			me.bands_range = int(range / 4);
@@ -350,7 +350,7 @@ var draw = func {
 
 			if (me.min_altitude != 9999) me.update_altitudes();
 
-			var flatalt = (me.avg_peakalt != nil and me.avg_peakalt<500) ? 140 : 400;
+			var flatalt = (me.avg_peakalt != nil and me.avg_peakalt>499) ? 400 : 140;
 
 			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
 			if (vspeed30s<-500) me.refaltitudeft = math.max(me.avg_minalt , me.refaltitudeft + vspeed30s);

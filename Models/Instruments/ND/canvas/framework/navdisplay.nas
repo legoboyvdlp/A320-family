@@ -82,9 +82,9 @@ var easeArrow = {
 	}
 };
 
-var symbolFloat = {
+var symbolDistNM = {
 	new: func(name, nd) {
-		var m = {parents: [symbolFloat] };
+		var m = {parents: [symbolDistNM] };
 		m.group = nd.getElementById(name);
 		m.expn = nd.getElementById(name ~ "1");
 		m.mant = nd.getElementById(name ~ "2");
@@ -167,9 +167,6 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	foreach(var feature; me.nd_style.features ) {
 		me.symbols[feature.id] = me.nd.getElementById(feature.id).updateCenter();
 		if(contains(feature.impl,"init")) feature.impl.init(me.nd, feature); # call The element"s init code (i.e. updateCenter)
-		if(contains(feature.impl,"changed_only")) {
-			if (feature.impl.changed_only == 1) feature.last_predicate = nil;
-		}
 	}
 
 	### this is the "old" method that"s less flexible, we want to use the style hash instead (see above)
@@ -180,7 +177,10 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	me.symbols[element] = me.nd.getElementById(element);
 
 	foreach(var element; ["dmeLDist","dmeRDist"])
-	me.symbols[element] = symbolFloat.new( element, me.nd );
+	me.symbols[element] = symbolDistNM.new( element, me.nd );
+
+	me.symbols.dmeLDist.setColor(0.195,0.96,0.097);
+	me.symbols.dmeRDist.setColor(0.195,0.96,0.097);
 
 	# load elements from vector image, and create instance variables using identical names, and call updateCenter() on each
 	# anything that needs updatecenter called, should be added to the vector here
@@ -487,11 +487,6 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	if(wxr_live_enabled == nil or wxr_live_enabled == '') 
 		wxr_live_enabled = 0;
 	me.set_switch('toggle_weather_live', wxr_live_enabled);
-
-	#var terr_enabled = getprop("/controls/switches/terr_on_nd_l");
-	#if (terr_enabled == nil) terr_enabled = 0;
-	#if (me.get_switch('toggle_terrain') != terr_enabled) me.set_switch('toggle_terrain', terr_enabled);
-
 	call(me.update_sub, nil, nil, caller(0)[0]); # call this in the same namespace to "steal" its variables
 
 	# MapStructure update!
@@ -550,7 +545,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.vorR.setText("ADF R");
 		me.symbols.vorR.setColor(0,0.6,0.85);
 		me.symbols.dmeR.setText("");
-		#me.symbols.dmeR.setColor(0,0.6,0.85);
+		me.symbols.dmeR.setColor(0,0.6,0.85);
 		if((var navident=getprop("/instrumentation/adf[1]/ident")) != "")
 			me.symbols.vorRId.setText(navident);
 		else me.symbols.vorRId.setText(sprintf("%3d",getprop("/instrumentation/adf[1]/frequencies/selected-khz")));
@@ -739,13 +734,8 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		if (contains(feature.impl, "common")) feature.impl.common(me);
 		# conditional stuff
 		if(!contains(feature.impl, "predicate")) continue; # no conditional stuff
-		var result = feature.impl.predicate(me);
-		if (contains(feature, "last_predicate")) {
-			if (feature.last_predicate != nil and feature.last_predicate == result) continue;
-			feature.last_predicate = result;
-		} 
-		if ( result )
-			feature.impl.is_true(me, result); # pass the result to the predicate
+		if ( var result=feature.impl.predicate(me) )
+		feature.impl.is_true(me, result); # pass the result to the predicate
 		else
 			feature.impl.is_false( me, result ); # pass the result to the predicate
 	}
