@@ -96,6 +96,9 @@ var am_mode_rmp3 = props.globals.initNode("/systems/radio/rmp[2]/am-active", 0, 
 var sel_crs_rmp1 = props.globals.initNode("/systems/radio/rmp[0]/select-crs", 1, "BOOL");
 var sel_crs_rmp2 = props.globals.initNode("/systems/radio/rmp[1]/select-crs", 1, "BOOL");
 
+var vhf3_data_mode = props.globals.initNode("/systems/radio/vhf3-data-mode", 1, "BOOL");
+var data_mode_stby_rmp = props.globals.initNode("/systems/radio/data-mode-stby-rmp", 0, "INT");
+
 var init = func() {
 	chan_rmp1.setValue("vhf1");
 	chan_rmp2.setValue("vhf2");
@@ -153,57 +156,52 @@ var update_active_vhf = func(vhf) {
 	var sel3 = chan_rmp3.getValue();
 
 	if (vhf == 1) {
-		if (sel1 == "vhf1" or sel2 == "vhf1") {
-			var act = sprintf("%3.3f", act_vhf1.getValue());
+		var act = sprintf("%3.3f", act_vhf1.getValue());
 
-			if (sel1 == "vhf1") {
-				act_display_rmp1.setValue(act);
-			}
-			if (sel2 == "vhf1") {
-				act_display_rmp2.setValue(act);
-			}
-			if (sel3 == "vhf1") {
-				act_display_rmp3.setValue(act);
-			}
+		if (sel1 == "vhf1") {
+			act_display_rmp1.setValue(act);
+		}
+		if (sel2 == "vhf1") {
+			act_display_rmp2.setValue(act);
+		}
+		if (sel3 == "vhf1") {
+			act_display_rmp3.setValue(act);
 		}
 	} else if (vhf == 2) {
-		if (sel1 == "vhf2" or sel2 == "vhf2") {
-			var act = sprintf("%3.3f", act_vhf2.getValue());
+		var act = sprintf("%3.3f", act_vhf2.getValue());
 
-			if (sel1 == "vhf2") {
-				act_display_rmp1.setValue(act);
-			}
-			if (sel2 == "vhf2") {
-				act_display_rmp2.setValue(act);
-			}
-			if (sel3 == "vhf2") {
-				act_display_rmp3.setValue(act);
-			}
+		if (sel1 == "vhf2") {
+			act_display_rmp1.setValue(act);
+		}
+		if (sel2 == "vhf2") {
+			act_display_rmp2.setValue(act);
+		}
+		if (sel3 == "vhf2") {
+			act_display_rmp3.setValue(act);
 		}
 	} else if (vhf == 3) {
-		if (sel1 == "vhf3" or sel2 == "vhf3") {
-			var act = sprintf("%3.3f", act_vhf3.getValue());
+		var act = sprintf("%3.3f", act_vhf3.getValue());
+		var data_mode = vhf3_data_mode.getValue();
 
-			if (sel1 == "vhf3") {
-				if (act == 0) {
-					act_display_rmp1.setValue("data");
-				} else {
-					act_display_rmp1.setValue(act);
-				}
+		if (sel1 == "vhf3") {
+			if (data_mode == 1) {
+				act_display_rmp1.setValue("data");
+			} else {
+				act_display_rmp1.setValue(act);
 			}
-			if (sel2 == "vhf3") {
-				if (act == 0) {
-					act_display_rmp2.setValue("data");
-				} else {
-					act_display_rmp2.setValue(act);
-				}
+		}
+		if (sel2 == "vhf3") {
+			if (data_mode == 1) {
+				act_display_rmp2.setValue("data");
+			} else {
+				act_display_rmp2.setValue(act);
 			}
-			if (sel3 == "vhf3") {
-				if (act == 0) {
-					act_display_rmp3.setValue("data");
-				} else {
-					act_display_rmp3.setValue(act);
-				}
+		}
+		if (sel3 == "vhf3") {
+			if (data_mode == 1) {
+				act_display_rmp3.setValue("data");
+			} else {
+				act_display_rmp3.setValue(act);
 			}
 		}
 	} else if (vhf == 4) {
@@ -283,6 +281,7 @@ var update_displays_nav = func(nav) {
 }
 
 var update_stby_freq = func(rmp_no, freq) {
+	var data_mode = vhf3_data_mode.getValue();
 	if (rmp_no == 0) {
 		if (freq == 1) {
 			var stby = sprintf("%3.3f", stby_rmp1_vhf1.getValue());
@@ -296,7 +295,7 @@ var update_stby_freq = func(rmp_no, freq) {
 			var stby = sprintf("%5.0f", stby_rmp1_hf2.getValue());
 		}
 
-		if (stby == 0) {
+		if (data_mode == 0 and data_mode_stby_rmp.getValue() == 0) {
 			stby_display_rmp1.setValue("data");
 		} else {
 			stby_display_rmp1.setValue(stby);
@@ -314,7 +313,7 @@ var update_stby_freq = func(rmp_no, freq) {
 			var stby = sprintf("%5.0f", stby_rmp2_hf2.getValue());
 		}
 
-		if (stby == 0) {
+		if (data_mode == 0 and data_mode_stby_rmp.getValue() == 1) {
 			stby_display_rmp2.setValue("data");
 		} else {
 			stby_display_rmp2.setValue(stby);
@@ -332,7 +331,7 @@ var update_stby_freq = func(rmp_no, freq) {
 			var stby = sprintf("%5.0f", stby_rmp3_hf2.getValue());
 		}
 
-		if (stby == 0) {
+		if (data_mode == 0 and data_mode_stby_rmp.getValue() == 2) {
 			stby_display_rmp3.setValue("data");
 		} else {
 			stby_display_rmp3.setValue(stby);
@@ -399,6 +398,18 @@ var transfer = func(rmp_no) {
 	var sel_crs = getprop("/systems/radio/rmp[" ~ rmp_no ~ "]/select-crs");
 
 	if (string.match(sel_chan, "vhf[1-3]")) {
+		var data_mode = vhf3_data_mode.getValue();
+		if (string.match(sel_chan, "vhf3") and ((data_mode_stby_rmp.getValue() == rmp_no and data_mode == 0) or data_mode == 1)) {
+			if (data_mode == 0)
+			{
+				vhf3_data_mode.setValue(1);
+			}
+			else
+			{
+				vhf3_data_mode.setValue(0);
+				data_mode_stby_rmp.setValue(rmp_no);
+			}
+		}
 		var mod1 = int(string.replace(sel_chan, "vhf", ""));
 		var mod = mod1 - 1;
 
