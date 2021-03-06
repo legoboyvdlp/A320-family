@@ -60,7 +60,7 @@ var drawBlip = func(elem, threatLvl) {
             .lineTo(0,-14)
             .lineTo(10,0)
             .lineTo(0,14)
-            .close();
+            .lineTo(-10,0);            
     }
 };
 
@@ -329,9 +329,8 @@ var TrafficLayer = {
                 var color = canvas._getColor(rgb);
                 var (r, g, b) = rgb;
                 if (threatLevel > 0) {
-                    item.elems.blip.setColorFill(r, g, b);
-                } else {
-                    item.elems.blip.setColorFill(0,0,0);
+                    item.elems.blip.setColorFill(r, g, b);                    
+                } else {                    
                     item.elems.blip.setColor(r, g, b);
                 }
                 item.elems.text.setColor(r, g, b);

@@ -2205,8 +2205,8 @@
 		<switch name="/ECAM/warnings/logic/stall/stall-warn-inhibit">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 1500
-				/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 1500
+				/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected lt 1500
+				/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected lt 1500
 				/it-fbw/law eq 0
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
@@ -3015,8 +3015,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR">
-					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
-					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
+					/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected lt 750
+					/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected lt 750
 				</test>
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				<test logic="OR">
@@ -3051,8 +3051,8 @@
 					</test>
 				</test>
 				<test logic="OR">
-					/instrumentation/radar-altimeter[0]/radar-altitude-ft lt 750
-					/instrumentation/radar-altimeter[1]/radar-altitude-ft lt 750
+					/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected lt 750
+					/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected lt 750
 				</test>
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				<test logic="OR">

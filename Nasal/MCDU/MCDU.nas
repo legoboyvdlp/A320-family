@@ -636,6 +636,8 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonLeft(3);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 2;
 			atsu.freeTexts[i].changed = 1;
@@ -1085,6 +1087,8 @@ var rskbutton = func(btn, i) {
 			atsu.freeTexts[i].changed = 1;
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("MCDUTEXT");
+		} else if (page == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonRight(3);
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}

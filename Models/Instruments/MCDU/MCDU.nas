@@ -151,7 +151,6 @@ var baro = props.globals.getNode("/FMGC/internal/baro", 1);
 # GA PERF
 
 # AOC - SENSORS
-var parking_brake = props.globals.getNode("/controls/gear/brake-parking", 1);
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/position-norm", 1); #FWD door
 var doorR1_pos = props.globals.getNode("/sim/model/door-positions/doorr1/position-norm", 1); #FWD door
@@ -844,8 +843,8 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 
-			me["Simple_R1S"].setText(sprintf("%-10s",(parking_brake.getValue() == 1) ? "SET" : "RELEASED"));
-			me["Simple_R1"].setText(sprintf("%-10s",(gear0_wow.getValue() == 1) ? "GROUND" : "FLIGHT"));
+			me["Simple_R1S"].setText(sprintf("%-10s",(pts.Controls.Gear.parkingBrake.getValue() == 1) ? "SET" : "RELEASED"));
+			me["Simple_R1"].setText(sprintf("%-10s",(pts.Gear.wow[0].getValue() == 1) ? "GROUND" : "FLIGHT"));
 			me["Simple_R2S"].setText(sprintf("%-10s",(doorL1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R2"].setText(sprintf("%-10s",(doorR1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R3S"].setText(sprintf("%-10s",(doorL4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
@@ -5188,6 +5187,8 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageArrowFunc(myVertRev[i]);
 					me.colorLeftArrow(myVertRev[i].arrowsColour[0][0],myVertRev[i].arrowsColour[0][1],myVertRev[i].arrowsColour[0][2],myVertRev[i].arrowsColour[0][3],myVertRev[i].arrowsColour[0][4],myVertRev[i].arrowsColour[0][5]);
+					me.colorRightArrow(myVertRev[i].arrowsColour[1][0],myVertRev[i].arrowsColour[1][1],myVertRev[i].arrowsColour[1][2],myVertRev[i].arrowsColour[1][3],myVertRev[i].arrowsColour[1][4],myVertRev[i].arrowsColour[1][5]);
+					
 					
 					me.dynamicPageFontFunc(myVertRev[i]);
 					

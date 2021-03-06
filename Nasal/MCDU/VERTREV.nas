@@ -1,3 +1,5 @@
+var scratchpadStore = nil;
+
 var vertRev = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
@@ -42,6 +44,28 @@ var vertRev = {
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	},
+	getSpd: func() {
+		if (me.wp.speed_cstr != nil and me.wp.speed_cstr > 0) {
+			var tcol = (me.wp.speed_cstr_type == "computed" or me.wp.speed_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			return [" " ~ sprintf("%3.0f", me.wp.speed_cstr), tcol];
+		} else {
+			return [nil,nil];
+		}
+	},
+	getAlt: func() {
+		if (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
+			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
+				return [sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)) ~ " ", tcol];
+			} else {
+				return [sprintf("%5.0f", me.wp.alt_cstr) ~ " ", tcol];
+			}
+		} else {
+			return [nil,nil];
+		}
+	},
+	alt: nil,
+	speed: nil,
 	_setupPageWithData: func() {
 		if (me.type == 3) { 
 			me.title = ["VERT REV", " AT ", "PPOS"];
@@ -57,15 +81,30 @@ var vertRev = {
 			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} elsif (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
+			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
 			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
-			me.L3 = [" [    ]", " SPD CSTR", "blu"];
+			me.speed = me.getSpd();
+			if (me.speed[0] == nil) {
+				me.L3 = [" [    ]", " SPD CSTR", "blu"];
+				me.fontMatrix[0][2] = 1;
+			} else {
+				me.L3 = [me.speed[0], " SPD CSTR", me.speed[1]];
+				me.fontMatrix[0][2] = 0;
+			}
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" CLB", nil, "amb"];
 			me.R2 = ["RTA ", nil, "wht"];
-			me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
+			me.alt = me.getAlt();
+			if (me.alt[0] == nil) {
+				me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
+				me.fontMatrix[1][2] = 1;
+			} else {
+				me.R3 = [me.alt[0], "ALT CSTR  ", me.alt[1]];
+				me.fontMatrix[1][2] = 0;
+			}
 			me.R6 = ["DES ", nil, "amb"];
 			# When the system does vertical planning, L6 should be RETURN and R6 not used if the MCDU knows the waypoint is during climb or descent.
 			# The CLB or DES prompts should only be shown for a vertical revision in the cruise phase.
@@ -74,7 +113,6 @@ var vertRev = {
 			# The 'arrows' for CLB/DES should actually be asterisks.
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 1]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "amb"], ["ack", "wht", "ack", "ack", "wht", "amb"]];
-			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 		} else {
 			me.title = ["VERT REV", " AT ", me.id];
 			
@@ -135,8 +173,22 @@ var vertRev = {
 		}
 	},
 	pushButtonLeft: func(index) {
-		if (index == 5) {
-			#print("role: ", me.wp.wp_role, ", type: ", me.wp.wp_type);
+		scratchpadStore = mcdu_scratchpad.scratchpads[me.computer].scratchpad;
+		if (index == 3 and me.type == 2) {
+			if (scratchpadStore == "CLR") {
+				me.wp.setSpeed("delete");
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} elsif (num(scratchpadStore) != nil and size(scratchpadStore) == 3 and scratchpadStore >= 100 and scratchpadStore <= 350) {
+				me.wp.setSpeed(scratchpadStore, "at");
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} else {
+				mcdu_message(me.computer, "FORMAT ERROR");
+			}
+		} elsif (index == 5) {
 			if (me.wp.wp_role == "sid") {
 				if (canvas_mcdu.myCLBWIND[me.computer] == nil) {
 					canvas_mcdu.myCLBWIND[me.computer] = windCLBPage.new(me.computer);
@@ -180,6 +232,24 @@ var vertRev = {
 			}
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
+		}
+	},
+	pushButtonRight: func(index) {
+		scratchpadStore = mcdu_scratchpad.scratchpads[me.computer].scratchpad;
+		if (index == 3 and me.type == 2) {
+			if (scratchpadStore == "CLR") {
+				me.wp.setAltitude("delete");
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			}  elsif (num(scratchpadStore) != nil and (size(scratchpadStore) == 4 or size(scratchpadStore) == 5) and scratchpadStore >= 0 and scratchpadStore <= 39000) {
+				me.wp.setAltitude(math.round(scratchpadStore, 10), "at");
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} else {
+				mcdu_message(me.computer, "FORMAT ERROR");
+			}
 		}
 	},
 };
