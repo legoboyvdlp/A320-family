@@ -202,10 +202,12 @@ var systemsLoop = func(notification) {
 # GPWS
 var GPWS = {
 	inhibitNode: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit"),
+	tatcfInhibit: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit"),
 	volume: props.globals.getNode("/instrumentation/mk-viii/speaker/volume"),
 	flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
 	flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
 	flapOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override"),
+	alertMode: props.globals.initNode("/instrumentation/mk-viii/outputs/alert-mode",0,"INT"),
 };
 
 setlistener("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", func() {
@@ -231,6 +233,20 @@ setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-overri
 setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", func() {
 	updateGPWSFlap();
 }, 0, 0);
+
+# GPWS alert pooling for get mode change - a little esoteric way but it works
+var gpws_alert_watch = maketimer(0.8,func {	
+	var alert = 0;
+	if (getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning")) alert = 2; # MODE2 - warning - RED
+	else if (getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert")) alert = 1; # MODE1 - caution - YELLOW
+	if (GPWS.alertMode.getValue()!=alert) GPWS.alertMode.setValue(alert);
+});
+
+setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   # detect GPWS switch status
+	var failure = GPWS.tatcfInhibit.getBoolValue();
+	if (!failure) gpws_alert_watch.start();
+	else gpws_alert_watch.stop();
+},1,0);
 
 # Replay
 var replayState = props.globals.getNode("/sim/replay/replay-state");
