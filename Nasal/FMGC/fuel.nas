@@ -275,7 +275,7 @@ var updateFuel = func {
 				if (wpt != fmgc.flightPlanController.getIndexOfTOC(i)) {
 					_crz_distance += fmgc.flightPlanController.flightplans[i].getWP(wpt).leg_distance;
 				}
-				var _multiplier = _crz_distance / (fmgc.flightPlanController.arrivalDist.getValue() - fmgc.FMGCInternal.clbDist - fmgc.FMGCInternal.desDist);
+				var _multiplier = _crz_distance / (fmgc.flightPlanController.totalDist.getValue() - fmgc.FMGCInternal.clbDist - fmgc.FMGCInternal.desDist);
 				append(efob_values[i], fmgc.FMGCInternal.block - fmgc.FMGCInternal.taxiFuel - fmgc.FMGCInternal.clbFuel / 1000 - _multiplier * (fmgc.FMGCInternal.tripFuel - fmgc.FMGCInternal.clbFuel / 1000 - fmgc.FMGCInternal.desFuel / 1000));
 				_desTime = _multiplier * (fmgc.FMGCInternal.tripTime_num - fmgc.FMGCInternal.desTime_num - fmgc.FMGCInternal.clbTime_num) + fmgc.FMGCInternal.clbTime_num;
 				if (num(_desTime) >= 60) {
