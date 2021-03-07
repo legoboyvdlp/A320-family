@@ -270,8 +270,10 @@ var postInit = func() {
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
 	crzFt: props.globals.initNode("/FMGC/internal/crz-ft", 0, "DOUBLE"),
+	crzTemp: props.globals.initNode("/FMGC/internal/crz-temp", 0, "DOUBLE"),
 	zfw: props.globals.initNode("/FMGC/internal/zfw", 0, "DOUBLE"),
 	tow: props.globals.initNode("/FMGC/internal/tow", 0, "DOUBLE"),
+	lw: props.globals.initNode("/FMGC/internal/lw", 0, "DOUBLE"),
 	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
 	flexTemp: props.globals.initNode("/FMGC/internal/flex", 0, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
