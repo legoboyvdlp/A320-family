@@ -580,7 +580,7 @@
 					<independentVar lookup="row">/FMGC/internal/crz-ft</independentVar>
 					<independentVar lookup="column">/FMGC/internal/lw</independentVar>
 					<tableData>
-								99.20801799	110.2311311	121.2542442	132.2773573	143.3004704
+								99.20801799 110.2311311 121.2542442 132.2773573 143.3004704
 						1500	0			0			0			0			0
 						5000	1.7			1.8			1.9			2			2.1
 						10000	4.9			5.175		5.45		5.725		6
@@ -610,7 +610,7 @@
 					<independentVar lookup="row">/FMGC/internal/crz-ft</independentVar>
 					<independentVar lookup="column">/FMGC/internal/lw</independentVar>
 					<tableData>
-								99.20801799	110.2311311	121.2542442	132.2773573	143.3004704
+								99.20801799 110.2311311 121.2542442 132.2773573 143.3004704
 						1500	0			0			0			0			0
 						5000	33.0693		34.722765	36.37623	38.029695	39.68316
 						10000	105.82176	111.33331	116.84486	122.35641	127.86796
@@ -640,7 +640,7 @@
 					<independentVar lookup="row">/FMGC/internal/crz-ft</independentVar>
 					<independentVar lookup="column">/FMGC/internal/lw</independentVar>
 					<tableData>
-								99.20801799	110.2311311	121.2542442	132.2773573	143.3004704
+								99.20801799 110.2311311 121.2542442 132.2773573 143.3004704
 						1500	0			0			0			0			0
 						5000	7			7.5			8			8.5			9
 						10000	23			24.25		25.5		26.75		28
