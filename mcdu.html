@@ -6,8 +6,16 @@
 	<script>
 		let screen;
 		let screen_src;
+		let loading = 0;
+		let scheduled_load = 0;
 		function refresh_screen() {
-			screen.src = screen_src + '&random=' + (new Date).getTime()
+			if (loading) {
+				scheduled_load = 1;
+			}
+			else {
+				loading = 1;
+				screen.src = screen_src + '&random=' + (new Date).getTime()
+			}
 		}
 		function press_button(type, text) {
 			let request = new XMLHttpRequest;
@@ -57,6 +65,13 @@
 				}, true);
 			}
 			screen = document.querySelector('img');
+			screen.addEventListener('load', function() {
+				loading = 0;
+				if (scheduled_load) {
+					scheduled_load = 0;
+					refresh_screen();
+				}
+			});
 			screen_src = screen.src;
 			window.setInterval(refresh_screen, 1000);
 		}, true);
