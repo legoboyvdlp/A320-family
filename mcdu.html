@@ -50,7 +50,8 @@
 			tds = document.querySelectorAll('.enter td');
 			for (const td of tds) {
 				td.addEventListener('click', function () {
-					press_button(td.nextSibling ? "lskbutton" : "rskbutton", td.textContent);
+					press_button(td.nextSibling ? "lskbutton" : "rskbutton", td.getAttribute("button-id"));
+					console.log(td.getAttribute("button-id"));
 				}, true);
 			}
 			tds = document.querySelectorAll('.menu td');
@@ -156,32 +157,32 @@
 			<td><br></td>
 		</tr>
 		<tr>
-			<td>—</td>
-			<td>—</td>
+			<td button-id="1">—</td>
+			<td button-id="1">—</td>
 		</tr>
 		<tr>
-			<td>—</td>
-			<td>—</td>
+			<td button-id="2">—</td>
+			<td button-id="2">—</td>
 		</tr>
 		<tr>
-			<td>—</td>
-			<td>—</td>
+			<td button-id="3">—</td>
+			<td button-id="3">—</td>
 		</tr>
 		<tr>
-			<td>—</td>
-			<td>—</td>
+			<td button-id="4">—</td>
+			<td button-id="4">—</td>
 		</tr>
 		<tr>
-			<td>—</td>
-			<td>—</td>
+			<td button-id="5">—</td>
+			<td button-id="5">—</td>
 		</tr>
 		<tr>
-			<td>—</td>
-			<td>—</td>
+			<td button-id="6">—</td>
+			<td button-id="6">—</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td></td>
+			<td><br></td>
+			<td><br></td>
 		</tr>
 	</table>
 	<table class="menu" style="width: 92%">
@@ -196,11 +197,11 @@
 		</tr>
 		<tr>
 			<td class="f-pln">F-PLN</td>
-			<td class="radnav">RAD<br />NAV</td>
-			<td class="fuel-pred">FUEL<br />PRED</td>
-			<td>SEC<br />F-PLN</td>
-			<td class="atc">ATC<br />COMM</td>
-			<td class="mcdu">MCDU<br />MENU</td>
+			<td class="radnav">RAD<br>NAV</td>
+			<td class="fuel-pred">FUEL<br>PRED</td>
+			<td>SEC<br>F-PLN</td>
+			<td class="atc">ATC<br>COMM</td>
+			<td class="mcdu">MCDU<br>MENU</td>
 			<td>DIM</td>
 		</tr>
 	</table>
@@ -281,7 +282,9 @@
 		<tr>
 			<td>.</td>
 			<td>0</td>
-			<td style="width: 33.333333333333333333333333333333333333333333333333333333333333333333333%; /* :) */">+/-
+			<td
+				style="font-size: 3vw; width: 33.333333333333333333333333333333333333333333333333333333333333333333333%; /* :) */">
+				+/-
 			</td>
 		</tr>
 	</table>
