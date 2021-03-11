@@ -1699,6 +1699,41 @@
 				<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 			</binding>
 			<binding>
+				<condition>
+					<equals>					
+						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>instrumentation/efis/inputs/terr</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<condition>
+					<equals>					
+						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>instrumentation/efis[1]/inputs/terr</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<condition>
+					<equals>					
+						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+						<value>0</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>
+					setprop("instrumentation/efis/inputs/terr",getprop("controls/switches/terr_on_nd_l"));
+					setprop("instrumentation/efis[1]/inputs/terr",getprop("controls/switches/terr_on_nd_r"));
+				</script>
+			</binding>
+			<binding>
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
