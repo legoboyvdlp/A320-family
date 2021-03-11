@@ -50,8 +50,7 @@
 			tds = document.querySelectorAll('.enter td');
 			for (const td of tds) {
 				td.addEventListener('click', function () {
-					press_button(td.nextSibling ? "lskbutton" : "rskbutton", td.getAttribute("button-id"));
-					console.log(td.getAttribute("button-id"));
+					press_button(td.getAttribute("button-side") == "l" ? "lskbutton" : "rskbutton", td.getAttribute("button-id"));
 				}, true);
 			}
 			tds = document.querySelectorAll('.menu td');
@@ -157,28 +156,28 @@
 			<td><br></td>
 		</tr>
 		<tr>
-			<td button-id="1">—</td>
-			<td button-id="1">—</td>
+			<td button-id="1" button-side="l">—</td>
+			<td button-id="1" button-side="r">—</td>
 		</tr>
 		<tr>
-			<td button-id="2">—</td>
-			<td button-id="2">—</td>
+			<td button-id="2" button-side="l">—</td>
+			<td button-id="2" button-side="r">—</td>
 		</tr>
 		<tr>
-			<td button-id="3">—</td>
-			<td button-id="3">—</td>
+			<td button-id="3" button-side="l">—</td>
+			<td button-id="3" button-side="r">—</td>
 		</tr>
 		<tr>
-			<td button-id="4">—</td>
-			<td button-id="4">—</td>
+			<td button-id="4" button-side="l">—</td>
+			<td button-id="4" button-side="r">—</td>
 		</tr>
 		<tr>
-			<td button-id="5">—</td>
-			<td button-id="5">—</td>
+			<td button-id="5" button-side="l">—</td>
+			<td button-id="5" button-side="r">—</td>
 		</tr>
 		<tr>
-			<td button-id="6">—</td>
-			<td button-id="6">—</td>
+			<td button-id="6" button-side="l">—</td>
+			<td button-id="6" button-side="r">—</td>
 		</tr>
 		<tr>
 			<td><br></td>
