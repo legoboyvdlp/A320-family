@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>MCDU</title>
-	<meta charset="utf-8"/>
+	<meta charset="utf-8">
 	<script>
 		let screen;
 		let screen_src;
@@ -35,37 +36,37 @@
 				]
 			});
 			request.send(body);
-			request.addEventListener('load', function() {
+			request.addEventListener('load', function () {
 				refresh_screen();
 			}, true);
 		}
-		window.addEventListener('load', function() {
+		window.addEventListener('load', function () {
 			let tds = document.querySelectorAll('.input td');
 			for (const td of tds) {
-				td.addEventListener('click', function() {
+				td.addEventListener('click', function () {
 					press_button("button", td.textContent);
 				}, true);
 			}
 			tds = document.querySelectorAll('.enter td');
 			for (const td of tds) {
-				td.addEventListener('click', function() {
+				td.addEventListener('click', function () {
 					press_button(td.nextSibling ? "lskbutton" : "rskbutton", td.textContent);
 				}, true);
 			}
 			tds = document.querySelectorAll('.menu td');
 			for (const td of tds) {
-				td.addEventListener('click', function() {
+				td.addEventListener('click', function () {
 					press_button("pagebutton", td.className);
 				}, true);
 			}
 			tds = document.querySelectorAll('.arrows td');
 			for (const td of tds) {
-				td.addEventListener('click', function() {
+				td.addEventListener('click', function () {
 					press_button(td.className == 'airport' ? "pagebutton" : "arrowbutton", td.className);
 				}, true);
 			}
 			screen = document.querySelector('img');
-			screen.addEventListener('load', function() {
+			screen.addEventListener('load', function () {
 				loading = 0;
 				if (scheduled_load) {
 					scheduled_load = 0;
@@ -77,35 +78,111 @@
 		}, true);
 	</script>
 	<style>
-		body { font-size: 5rem; margin: 0; padding: 0; background-color: black; color: white; }
-		table { margin: 0; padding: 0 }
-		tr { margin: 0; padding: 0 }
-		td { margin: 0; padding: 0; text-align: center; outline: 1px solid gray; }
-		td:active { background-color: white; color: black }
-		.enter { font-size: 60% }
-		.enter tr:first-child { font-size: 70% }
-		.enter tr:last-child { font-size: 50% }
-		.enter td:first-child, .enter td:last-child { padding: 0 0.55em; }
-		.menu, .arrows .airport { font-size: 40%; line-height: 1em; }
-		.menu td { height: 2.5em; }
-		.arrows td { width: 50%; padding: 0; font-size: 60%; }
-		img { display: block; }
+		body {
+			font-size: 5rem;
+			margin: 0;
+			padding: 0;
+			background-color: black;
+			color: white;
+		}
+
+		table {
+			margin: 0;
+			padding: 0
+		}
+
+		tr {
+			margin: 0;
+			padding: 0
+		}
+
+		td {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			outline: 1px solid gray;
+		}
+
+		td:active {
+			background-color: white;
+			color: black
+		}
+
+		.enter {
+			font-size: 60%
+		}
+
+		.enter tr:first-child {
+			font-size: 70%
+		}
+
+		.enter tr:last-child {
+			font-size: 50%
+		}
+
+		.enter td:first-child,
+		.enter td:last-child {
+			padding: 0 0.55em;
+		}
+
+		.menu,
+		.arrows .airport {
+			font-size: 40%;
+			line-height: 1em;
+		}
+
+		.menu td {
+			height: 2.5em;
+		}
+
+		.arrows td {
+			width: 50%;
+			padding: 0;
+			font-size: 60%;
+		}
+
+		img {
+			display: block;
+		}
 	</style>
 </head>
+
 <body style="width: 100%">
 	<table class="enter" style="width: 92%">
 		<tr>
 			<td>&nbsp;</td>
-			<td rowspan="8" style="vertical-align: top"><img src="/screenshot?canvasindex=10&type=png" style="width: 100%"/></td>
+			<td rowspan="8" style="vertical-align: top"><img src="/screenshot?canvasindex=10&type=png"
+					style="width: 100%" /></td>
 			<td>&nbsp;</td>
 		</tr>
-		<tr><td>1</td><td>1</td></tr>
-		<tr><td>2</td><td>2</td></tr>
-		<tr><td>3</td><td>3</td></tr>
-		<tr><td>4</td><td>4</td></tr>
-		<tr><td>5</td><td>5</td></tr>
-		<tr><td>6</td><td>6</td></tr>
-		<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+		<tr>
+			<td>—</td>
+			<td>—</td>
+		</tr>
+		<tr>
+			<td>—</td>
+			<td>—</td>
+		</tr>
+		<tr>
+			<td>—</td>
+			<td>—</td>
+		</tr>
+		<tr>
+			<td>—</td>
+			<td>—</td>
+		</tr>
+		<tr>
+			<td>—</td>
+			<td>—</td>
+		</tr>
+		<tr>
+			<td>—</td>
+			<td>—</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
 	</table>
 	<table class="menu" style="width: 92%">
 		<tr>
@@ -119,11 +196,11 @@
 		</tr>
 		<tr>
 			<td class="f-pln">F-PLN</td>
-			<td class="radnav">RAD<br/>NAV</td>
-			<td class="fuel-pred">FUEL<br/>PRED</td>
-			<td>SEC<br/>F-PLN</td>
-			<td class="atc">ATC<br/>COMM</td>
-			<td class="mcdu">MCDU<br/>MENU</td>
+			<td class="radnav">RAD<br />NAV</td>
+			<td class="fuel-pred">FUEL<br />PRED</td>
+			<td>SEC<br />F-PLN</td>
+			<td class="atc">ATC<br />COMM</td>
+			<td class="mcdu">MCDU<br />MENU</td>
 			<td>DIM</td>
 		</tr>
 	</table>
@@ -167,13 +244,13 @@
 			<td>Z</td>
 			<td>/</td>
 			<td style="font-size: 50%">SP</td>
-			<td style="font-size: 25%">OVFY</td>
+			<td style="font-size: 33%">OVFY<br>△</td>
 			<td style="font-size: 33%">CLR</td>
 		</tr>
 	</table>
 	<table class="arrows" style="width: 25%">
 		<tr>
-			<td class="airport">AIR<br/>PORT</td>
+			<td class="airport">AIR<br>PORT</td>
 			<td></td>
 		</tr>
 		<tr>
@@ -204,8 +281,9 @@
 		<tr>
 			<td>.</td>
 			<td>0</td>
-			<td>-</td>
+			<td>+/-</td>
 		</tr>
 	</table>
 </body>
+
 </html>
