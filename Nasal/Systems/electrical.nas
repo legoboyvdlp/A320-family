@@ -13,8 +13,6 @@ var dc2 = 0;
 
 # Main class
 var ELEC = {
-	_timer1On: 0,
-	_timer2On: 0,
 	EmerElec: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config"),
 	Bus: {
 		acEss: props.globals.getNode("/systems/electrical/bus/ac-ess"),
@@ -122,6 +120,7 @@ var ELEC = {
 			volts: props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt"),
 			hertz: props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz"),
 			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
+			relayPos: props.globals.getNode("/systems/electrical/relay/emer-glc/contact-pos"),
 		},
 		Ext: {
 			volts: props.globals.getNode("/systems/electrical/sources/ext/output-volt"),
@@ -207,36 +206,65 @@ var ELEC = {
 		me.Fail.tr1Fault.setBoolValue(0);
 		me.Fail.tr2Fault.setBoolValue(0);
 	},
-	loop: func() {
+	_FMGC1: 0,
+	_FMGC2: 0,
+	_activeFMGC: nil,
+	_timer1On: 0,
+	_timer2On: 0,
+	loop: func(notification) {
 		# Autopilot Disconnection routines
-		if (me.Bus.dcEssShed.getValue() < 25) {
-			if (fmgc.Output.ap1.getValue() and !me._timer1On) {
+		me._activeFMGC = fcu.FCUController.activeFMGC.getValue();
+		me._FMGC1 = fmgc.Output.ap1.getValue();
+		me._FMGC2 = fmgc.Output.ap2.getValue();
+		
+		if (notification.dcEssShed < 25) {
+			if (me._FMGC1 and !me._timer1On) { # delay 1 cycle to avoid spurious
 				me._timer1On = 1;
-				settimer(func() {
-					if (me.Bus.dcEssShed.getValue() < 25) {
-						fcu.apOff("hard", 1);
-						if (fcu.FCUController.activeFMGC.getValue() == 1) {
-							fcu.athrOff("hard");
-						}
+			} elsif (me._FMGC1) {
+				if (notification.dcEssShed < 25) {
+					fcu.apOff("hard", 1);
+					if (me._activeFMGC == 1) {
+						fcu.athrOff("hard");
 					}
-					me._timer1On = 0;
-				}, 0.1);
+				}
+				me._timer1On = 0;
 			}
 		}
 		
-		if (me.Bus.dc2.getValue() < 25) {
-			if (fmgc.Output.ap2.getValue() and !me._timer2On) {
+		if (notification.dc2 < 25) {
+			if (me._FMGC2 and !me._timer2On) {  # delay 1 cycle to avoid spurious
 				me._timer2On = 1;
-				settimer(func() {
-					if (me.Bus.dc2.getValue() < 25) {
-						fcu.apOff("hard", 2);
-						if (fcu.FCUController.activeFMGC.getValue() == 2) {
-							fcu.athrOff("hard");
-						}
+			} elsif (me._FMGC2) {
+				if (notification.dc2 < 25) {
+					fcu.apOff("hard", 2);
+					if (me._activeFMGC == 2) {
+						fcu.athrOff("hard");
 					}
-					me._timer2On = 0;
-				}, 0.1);
+				}
+				me._timer2On = 0;
 			}
 		}
 	},
+};
+
+# Emesary
+var A320Electrical = notifications.SystemRecipient.new("A320 Electrical",ELEC.loop,ELEC);
+emesary.GlobalTransmitter.Register(A320Electrical);
+
+var input = {
+	"elecAC1": "/systems/electrical/bus/ac-1",
+	"elecAC2": "/systems/electrical/bus/ac-2",
+	"elecACEss": "/systems/electrical/bus/ac-ess",
+	"elecACEssShed": "/systems/electrical/bus/ac-ess-shed",
+	"dc1": "/systems/electrical/bus/dc-1",
+	"dc2": "/systems/electrical/bus/dc-2",
+	"dcBat": "/systems/electrical/bus/dc-bat",
+	"dcEss": "/systems/electrical/bus/dc-ess",
+	"dcEssShed": "/systems/electrical/bus/dc-ess-shed",
+	"dcHot1": "/systems/electrical/bus/dc-hot-1",
+	"dcHot2": "/systems/electrical/bus/dc-hot-2",
+};
+
+foreach (var name; keys(input)) {
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Electrical", name, input[name]));
 }

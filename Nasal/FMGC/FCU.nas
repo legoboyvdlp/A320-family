@@ -66,7 +66,7 @@ var FCUController = {
 		me.FCU2 = FCU.new(systems.ELEC.Bus.dc2);
 		me._init = 1;
 	},
-	loop: func() {
+	loop: func(notification) {
 		if (me._init == 0) { return; }
 		
 		# Update FCU Power
@@ -82,11 +82,11 @@ var FCUController = {
 		}
 		
 		foreach (var update_item; me.update_items) {
-			update_item.update(nil);
+			update_item.update(notification);
 		}
 	},
 	update_items: [
-		props.UpdateManager.FromPropertyHashList(["/it-autoflight/output/fd1","/it-autoflight/output/fd2", "/it-autoflight/output/ap1", "/it-autoflight/output/ap2"], 1, func(notification)
+		props.UpdateManager.FromPropertyHashList(["/it-autoflight/output/fd1","/it-autoflight/output/fd2", "/it-autoflight/output/ap1", "/it-autoflight/output/ap2"], nil, func(notification)
 			{
 				updateActiveFMGC();
 			}

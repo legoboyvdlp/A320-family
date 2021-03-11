@@ -101,3 +101,27 @@ var frameNotification = FrameNotification.new(1);
 # 5 = ECAM
 # 7 = FWC phases
 # 10 = ECAM messages
+
+
+var SystemRecipient =
+{
+	new: func(_ident,loopFunc, instance)
+	{
+		var NewSystemRecipient = emesary.Recipient.new(_ident);
+		NewSystemRecipient.Receive = func(notification)
+		{
+			if (notification.NotificationType == "FrameNotification")
+			{
+				if (math.mod(notifications.frameNotification.FrameCount,5) == 0) {
+					call(loopFunc,[notification],instance, nil, var errors = []);
+					if (size(errors) > 0) {
+						debug.printerror(errors);
+					}
+				}
+				return emesary.Transmitter.ReceiptStatus_OK;
+			}
+			return emesary.Transmitter.ReceiptStatus_NotProcessed;
+		};
+		return NewSystemRecipient;
+	},
+};

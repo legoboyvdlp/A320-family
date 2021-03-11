@@ -3010,7 +3010,7 @@ var canvas_lowerECAM_wheel = {
 		rightdoor = gear_door_R.getValue();
 		nosedoor = gear_door_N.getValue();
 		gearlvr = gear_down.getValue();
-		askidsw = systems.HYD.Brakes.askidSw.getBoolValue();
+		askidsw = systems.HYD.Switch.nwsSwitch.getBoolValue();
 		brakemode = systems.HYD.Brakes.mode.getBoolValue();
 		accum = systems.HYD.Brakes.accumPressPsi.getBoolValue();
 

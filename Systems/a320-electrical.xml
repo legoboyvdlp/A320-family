@@ -1977,6 +1977,7 @@
 			<test logic="AND" value="1">
 				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				/systems/electrical/some-electric-thingie/generator-1-pb eq 1
+				/controls/electrical/switches/gen-1 eq 1
 				/controls/electrical/switches/bus-tie eq 0
 			</test>
 		</switch>
@@ -1986,6 +1987,7 @@
 			<test logic="AND" value="1">
 				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				/systems/electrical/some-electric-thingie/generator-2-pb eq 1
+				/controls/electrical/switches/gen-2 eq 1
 				/controls/electrical/switches/bus-tie eq 0
 			</test>
 		</switch>
@@ -1995,6 +1997,7 @@
 			<test logic="AND" value="1">
 				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				/systems/electrical/some-electric-thingie/generator-1-pb eq 1
+				/controls/electrical/switches/gen-1 eq 1
 			</test>
 		</switch>
 		
@@ -2003,6 +2006,7 @@
 			<test logic="AND" value="1">
 				/systems/electrical/some-electric-thingie/emer-elec-config eq 1
 				/systems/electrical/some-electric-thingie/generator-2-pb eq 1
+				/controls/electrical/switches/gen-2 eq 1
 			</test>
 		</switch>
 		

@@ -229,6 +229,14 @@
 				</test>
 			</test>
 		</switch>
+		
+		<switch name="/ECAM/phases/monostable/phase-8">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 8
+			</test>
+		</switch>
+		
 	</channel>
 
 </system>

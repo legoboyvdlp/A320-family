@@ -234,15 +234,15 @@
 				<path>Aircraft/A320-family/Systems/pfd.xml</path>
 			</autopilot>
 			<!-- 10 is sound -->
-			<autopilot n="11">
+			<property-rule n="101">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
-			</autopilot>
-			<autopilot n="12">
+			</property-rule>
+			<property-rule n="110">
 				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
-			</autopilot>
-			<autopilot n="13">
+			</property-rule>
+			<property-rule n="111">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
-			</autopilot>
+			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		
@@ -652,6 +652,14 @@
 			<line8 type="string"></line8>
 		</rightmsg>
 		<warning-phase type="int">0</warning-phase>
+		<phases>
+			<timer>
+				<ldg-inhibit type="int">0</ldg-inhibit>
+				<ldg-inhibit-output type="double">0</ldg-inhibit-output>
+				<to-inhibit type="int">0</to-inhibit>
+				<to-inhibit-output type="double">0</to-inhibit-output>
+			</timer>
+		</phases>
 	</ECAM>
 	
 	<environment>
@@ -776,6 +784,8 @@
 		<atc>
 			<system-knob type="int">0</system-knob>
 			<mode-knob type="int">0</mode-knob>
+			<abv-blw type="int">0</abv-blw>
+			<thrt-all type="int">0</thrt-all>
 		</atc>
 		<apu>
 			<agent-btn type="bool">0</agent-btn>
@@ -920,7 +930,7 @@
 		</fuel>
 		<gear>
 			<brake-fans type="bool">0</brake-fans>
-			<brake-parking type="bool">0</brake-parking>
+			<brake-parking type="bool">1</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
 			<nws-switch type="double">1</nws-switch>
@@ -1348,11 +1358,14 @@
 				<spoiler-r4 type="bool">0</spoiler-r4>
 				<spoiler-r5 type="bool">0</spoiler-r5>
 			</spoilers>
-			<engine-left-fire type="bool">0</engine-left-fire>
-			<engine-right-fire type="bool">0</engine-right-fire>
-			<apu-fire type="bool">0</apu-fire>
-			<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
-			<cargo-aft-fire type="bool">0</cargo-aft-fire>
+			<fire>
+				<engine-left-fire type="bool">0</engine-left-fire>
+				<engine-right-fire type="bool">0</engine-right-fire>
+				<apu-fire type="bool">0</apu-fire>
+				<cargo-fwd-fire type="bool">0</cargo-fwd-fire>
+				<cargo-aft-fire type="bool">0</cargo-aft-fire>
+				<lavatory-fire type="bool">0</lavatory-fire>
+			</fire>
 		</failures>
 		
 		<fctl n="0">
@@ -1385,6 +1398,9 @@
 					<temperature type="double">0</temperature>
 				</fwd>
 			</cargo>
+			<lavatory>
+				<temperature type="double">0</temperature>
+			</lavatory>
 		</fire>
 		<fuel n="0">
 			<only-use-ctr-tank type="bool">0</only-use-ctr-tank>
@@ -1637,7 +1653,7 @@
 		
 		<comm n="2">
 			<frequencies>
-				<selected-mhz type="double">0</selected-mhz>
+				<selected-mhz type="double">121.5</selected-mhz>
 				<standby-mhz type="double">123.2</standby-mhz>
 			</frequencies>
 			<serviceable type="bool">true</serviceable>
@@ -1825,8 +1841,9 @@
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
 			<elev-limit type="int">30</elev-limit>
-			<max-range-m type="int">1219</max-range-m>
+			<max-range-m type="int">1525</max-range-m>
 			<serviceable type="bool">true</serviceable>
+			<radar-altitude-ft type="double">0</radar-altitude-ft>
 		</radar-altimeter>
 		
 		<radar-altimeter n="1">
@@ -1839,8 +1856,9 @@
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
 			<elev-limit type="int">30</elev-limit>
-			<max-range-m type="int">1219</max-range-m>
+			<max-range-m type="int">1525</max-range-m>
 			<serviceable type="bool">true</serviceable>
+			<radar-altitude-ft type="double">0</radar-altitude-ft>
 		</radar-altimeter>
 		
 		<wxr>
@@ -4677,10 +4695,7 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/ROUTESELECTION.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/INITB.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/FUELPRED.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/PROGTO.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/PROGCLB.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/PROGCRZ.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/PROGDES.nas</file>
+			<file>Aircraft/A320-family/Nasal/MCDU/PROG.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFAPPR.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCLB.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFCRZ.nas</file>
@@ -4692,6 +4707,11 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA2.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
+		<!-- Traffic layer from E-jet -->
+		<traffic>
+			<file>Aircraft/A320-family/Nasal/Displays/projection.nas</file>
+			<file>Aircraft/A320-family/Nasal/Displays/traffic.nas</file>
+		</traffic>
 		<!-- Canvas -->
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>
