@@ -53,7 +53,7 @@
 			<function>
 				<sum>
 					<product>
-						<property>propulsion/engine/IdleThrust</property>
+						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
 						<property>fadec/limit/rated-thrust</property>
 					</product>
 					<product>
@@ -205,17 +205,17 @@
 		
 		<!--
 		TODO: need to figure out how to make MCT work, 24370lbs
+		<fcs_function name="fadec/limit/mct-ref">
+			<function>
+			</function>
+		</fcs_function>
+		
 		<switch name="fadec/limit/mct-final-ref">
 			<default value="fadec/limit/mct-ref"/>
 			<test value="fadec/limit/flex-ref">
 				fadec/limit/flex-active eq 1
 			</test>
 		</switch>
-		
-		<fcs_function name="fadec/limit/mct-ref">
-			<function>
-			</function>
-		</fcs_function>
 		-->
 	
 	</channel>
