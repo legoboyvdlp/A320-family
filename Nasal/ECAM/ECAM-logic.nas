@@ -3569,7 +3569,7 @@ var messages_right_memo = func {
 		wing_aice.active = 0;
 	}
 	
-	if (getprop("instrumentation/comm[2]/frequencies/selected-mhz") != 0 and (phaseVarMemo3 == 1 or phaseVarMemo3 == 2 or phaseVarMemo3 == 6 or phaseVarMemo3 == 9 or phaseVarMemo3 == 10)) {
+	if (!getprop("/systems/radio/vhf3-data-mode") and (phaseVarMemo3 == 1 or phaseVarMemo3 == 2 or phaseVarMemo3 == 6 or phaseVarMemo3 == 9 or phaseVarMemo3 == 10)) {
 		vhf3_voice.active = 1;
 	} else {
 		vhf3_voice.active = 0;
