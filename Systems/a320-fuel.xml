@@ -632,9 +632,9 @@
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-2 eq 0
 				</test>
-				/systems/fuel/feed-left-inner eq 0
 				/systems/fuel/feed-right-inner eq 1
 				/systems/fuel/valves/crossfeed-valve eq 1
+				/consumables/fuel/tank[1]/level-gal_us le /consumables/fuel/tank[3]/unusable-gal_us 
 				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
 				propulsion/tank[5]/contents-lbs lt 9
 			</test>
@@ -648,9 +648,9 @@
 					/systems/fuel/feed-center-1 eq 0
 				</test>
 				/systems/fuel/feed-left-inner eq 1
-				/systems/fuel/feed-right-inner eq 0
 				/systems/fuel/valves/crossfeed-valve eq 1
 				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
+				/consumables/fuel/tank[3]/level-gal_us le /consumables/fuel/tank[3]/unusable-gal_us 
 				propulsion/tank[6]/contents-lbs lt 9
 			</test>
 		</switch>

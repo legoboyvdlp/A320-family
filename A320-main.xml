@@ -930,7 +930,7 @@
 		</fuel>
 		<gear>
 			<brake-fans type="bool">0</brake-fans>
-			<brake-parking type="bool">0</brake-parking>
+			<brake-parking type="bool">1</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
 			<nws-switch type="double">1</nws-switch>
@@ -1653,7 +1653,7 @@
 		
 		<comm n="2">
 			<frequencies>
-				<selected-mhz type="double">0</selected-mhz>
+				<selected-mhz type="double">121.5</selected-mhz>
 				<standby-mhz type="double">123.2</standby-mhz>
 			</frequencies>
 			<serviceable type="bool">true</serviceable>
@@ -1841,8 +1841,9 @@
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
 			<elev-limit type="int">30</elev-limit>
-			<max-range-m type="int">1219</max-range-m>
+			<max-range-m type="int">1525</max-range-m>
 			<serviceable type="bool">true</serviceable>
+			<radar-altitude-ft type="double">0</radar-altitude-ft>
 		</radar-altimeter>
 		
 		<radar-altimeter n="1">
@@ -1855,8 +1856,9 @@
 			<az-limit-deg type="int">30</az-limit-deg>
 			<elev-step-deg type="int">10</elev-step-deg>
 			<elev-limit type="int">30</elev-limit>
-			<max-range-m type="int">1219</max-range-m>
+			<max-range-m type="int">1525</max-range-m>
 			<serviceable type="bool">true</serviceable>
+			<radar-altitude-ft type="double">0</radar-altitude-ft>
 		</radar-altimeter>
 		
 		<wxr>

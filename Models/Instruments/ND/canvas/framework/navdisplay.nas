@@ -13,6 +13,110 @@ var assert_m = canvas.assert_m;
 var wxr_live_tree = "/instrumentation/wxr";
 var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
+var easeArrow = {
+	new: func(elem) {
+		var m = {parents: [easeArrow]};
+		m.req_rot_rad = 0;
+		m.req_rot_deg = 0;
+		m.last_rot_deg = nil;
+		m.last_rot_rad = 0;
+		m.element = elem;
+		m.time = 0;
+		m.duration = 0;
+		m.startval = 0;
+		m.diffval = 0;
+		return m;
+	},
+	setVisible: func(v) {
+		if (v == 1 and me.last_rot_deg == nil) me.reset();
+		me.element.setVisible(v);
+	},
+	hide: func {
+		me.element.hide();
+	},
+	reset: func {			
+		me.last_rot_deg = 360 - getprop("orientation/heading-deg");
+		me.last_rot_rad = me.last_rot_deg * D2R;
+		me.duration = 0;
+		print("VOR reset");
+	},
+	setRotation: func(rad)  {			
+		var deg = 0;
+		var gap = 0;
+		gap = math.abs(rad - me.req_rot_rad);
+		if (gap>0.001) {		
+			if (me.duration>0) gap = math.abs(rad - me.last_rot_rad);
+			if (gap>=180*D2R) gap = 360*D2R - gap;
+			deg = rad * 57.29578;
+			me.req_rot_rad = rad;				
+			me.req_rot_deg = deg;
+			me.duration = 0;
+			if (gap>0.2) {
+				if (me.last_rot_deg == nil) me.reset();
+				me.startval = me.last_rot_deg;
+				me.diffval = deg - me.last_rot_deg;
+				if (me.diffval<0) me.diffval += 360;
+				me.time = 0;
+				me.duration = math.round(me.diffval * 0.21);  # rad 36/3
+			}
+			if (me.duration < 2) {
+				me.last_rot_rad = rad;
+				me.last_rot_deg = deg;
+				me.element.setRotation(rad);
+				me.duration = 0;
+			}
+		}
+		if (me.duration > 0) {
+			var tx = me.time / me.duration;
+			#thanks to https://easings.net/#easeOutCubic
+			deg = (1 - math.pow(1 - tx, 3)) * me.diffval + me.startval;
+			deg = math.mod(deg,360);				
+			#print("DEG: " ~ deg);
+			me.last_rot_deg = deg;
+			me.last_rot_rad = deg * D2R;
+			me.element.setRotation(me.last_rot_rad);
+			me.time += 1;
+			if (tx>=1) me.duration = 0;
+		}
+
+	}
+};
+
+var symbolDistNM = {
+	new: func(name, nd) {
+		var m = {parents: [symbolDistNM] };
+		m.group = nd.getElementById(name);
+		m.expn = nd.getElementById(name ~ "1");
+		m.mant = nd.getElementById(name ~ "2");
+		return m;
+	},
+	hide: func {
+		me.group.hide();
+	},
+	show: func {
+		me.group.show();
+	},
+	setText: func(txt) {
+		var parts = ( txt != "" ) ? split( "." , txt ) : nil;
+		if ( parts != nil and size(parts) == 2 ) {
+			me.expn.setText(parts[0]);
+			me.mant.setText("." ~ parts[1]);
+		} else {
+			me.expn.setText(txt);
+			me.mant.setText("");
+		}
+	},
+	setColor: func(r,g,b) {
+		me.expn.setColor(r,g,b);
+		me.mant.setColor(r,g,b);
+	},
+	setFloat: func(val) {
+		var parts = split( "." , sprintf("%03.1f",val) );
+		me.expn.setText(parts[0]);
+		me.mant.setText("." ~ parts[1]);
+	}
+};
+
 canvas.NavDisplay.set_switch = func(s, v) {
 	var switch = me.efis_switches[s];
 	if(switch == nil) return nil;
@@ -68,19 +172,28 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	### this is the "old" method that"s less flexible, we want to use the style hash instead (see above)
 	# because things are much better configurable that way
 	# now look up all required SVG elements and initialize member fields using the same name  to have a convenient handle
-	foreach(var element; ["dmeLDist","dmeRDist","dmeL","dmeR","vorL","vorR","vorLId","vorRId",
-			"status.wxr","status.wpt","status.sta","status.arpt"])
+	foreach(var element; ["dmeL","dmeR","vorL","vorR","vorLId","vorRId",
+			"status.wxr","status.wpt","status.sta","status.arpt","terrHI","terrLO","TerrLabel","terrAhead"])
 	me.symbols[element] = me.nd.getElementById(element);
+
+	foreach(var element; ["dmeLDist","dmeRDist"])
+	me.symbols[element] = symbolDistNM.new( element, me.nd );
+
+	me.symbols.dmeLDist.setColor(0.195,0.96,0.097);
+	me.symbols.dmeRDist.setColor(0.195,0.96,0.097);
 
 	# load elements from vector image, and create instance variables using identical names, and call updateCenter() on each
 	# anything that needs updatecenter called, should be added to the vector here
 	#
-	foreach(var element; ["staArrowL2","staArrowR2","staFromL2","staToL2","staFromR2","staToR2",
+	foreach(var element; ["staFromL2","staToL2","staFromR2","staToR2",
 			"hdgTrk","trkInd","hdgBug","HdgBugCRT","TrkBugLCD","HdgBugLCD","curHdgPtr",
 			"HdgBugCRT2","TrkBugLCD2","HdgBugLCD2","hdgBug2","selHdgLine","selHdgLine2","curHdgPtr2",
-			"staArrowL","staArrowR","staToL","staFromL","staToR","staFromR"] )
+			"staToL","staFromL","staToR","staFromR"] )
 	me.symbols[element] = me.nd.getElementById(element).updateCenter();
 
+	foreach(var element; ["staArrowL2","staArrowR2","staArrowL","staArrowR"] )
+	me.symbols[element] = easeArrow.new( me.nd.getElementById(element).updateCenter() );
+	
 	me.map = me.nd.createChild("map","map")
 	.set("clip", "rect(124, 1024, 1024, 0)")
 	.set("screen-range", 700)
@@ -499,7 +612,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var adf1hdg = getprop("/instrumentation/adf[1]/indicated-bearing-deg");
 	if(!me.get_switch("toggle_centered"))
 	{
-		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
+		if(me.in_mode("toggle_display_mode", ["PLAN"]) or (me.adirs_property.getValue() != 1 or (me.change_phase == 1) and (adirs_3.getValue() != 1 or att_switch.getValue() != me.attitude_heading_setting)))
 			me.symbols.trkInd.hide();
 		else
 			me.symbols.trkInd.show();

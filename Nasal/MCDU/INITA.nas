@@ -22,6 +22,7 @@ var resetFlightplan = func(i) {
 	fmgc.flightPlanController.reset(2);
 	fmgc.flightPlanController.init();
 	Simbrief.SimbriefParser.inhibit = 0;
+	fmgc.updateARPT();
 	mcdu_scratchpad.scratchpads[i].empty();
 }
 
@@ -268,6 +269,7 @@ var initInputA = func(key, i) {
 						
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
+						fmgc.updateARPT();
 						fmgc.updateArptLatLon();
 						fmgc.updateARPT();
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");

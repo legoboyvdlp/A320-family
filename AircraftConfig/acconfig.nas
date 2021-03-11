@@ -298,6 +298,7 @@ var colddark = func {
 		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		if (getprop("/engines/engine[1]/n2-actual") < 2) {
 			colddark_b();
@@ -343,6 +344,7 @@ var beforestart = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -400,6 +402,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/emer-lights", 0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -434,6 +439,7 @@ var taxi = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -492,6 +498,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/emer-lights", 0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);

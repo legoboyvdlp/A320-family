@@ -914,7 +914,7 @@
 			</clipto>
 		</pure_gain>
 		
-		<pure_gain name="/instrumentation/radar-altimeter[1]/radar-altitude-ft">
+		<pure_gain name="/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected">
 			<input>/instrumentation/radar-altimeter[1]/radar-altitude-ft</input>
 			<gain>1</gain>
 			<clipto>
