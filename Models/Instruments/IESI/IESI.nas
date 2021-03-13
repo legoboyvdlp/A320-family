@@ -261,8 +261,6 @@ var input = {
 	"altitude_ind": "/instrumentation/altimeter/indicated-altitude-ft-pfd",
 	"altimeter_mode": "/instrumentation/altimeter[0]/std",
 	"attReset": "/instrumentation/iesi/att-reset",
-	"dcEss": "/systems/electrical/bus/dc-ess",
-	"dcHot1": "/systems/electrical/bus/dc-hot-1",
 	"iesiBrt": "/controls/lighting/DU/iesi",
 	"iesiInit": "/instrumentation/iesi/iesi-init",
 	"mach": "/instrumentation/airspeed-indicator/indicated-mach",
@@ -281,8 +279,6 @@ var showIESI = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(A320IESI.MainScreen.canvas);
 }
-
-setlistener("", func() { if (A320IESI.MainScreen != nil) { A320IESI.MainScreen.updateQNH(notification); } }, 0, 0);
 
 var roundabout = func(x) {
 	var y = x - int(x);

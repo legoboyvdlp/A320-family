@@ -246,7 +246,7 @@
 			<z-m>-2.22295</z-m>
 		</offsets>
 		<condition>
-			<property>systems/failures/engine-left-fire</property>
+			<property>systems/failures/fire/engine-left-fire</property>
 		</condition>
 	</model>
 	
@@ -259,7 +259,7 @@
 			<z-m>-2.22295</z-m>
 		</offsets>
 		<condition>
-			<property>systems/failures/engine-right-fire</property>
+			<property>systems/failures/fire/engine-right-fire</property>
 		</condition>
 	</model>
 	

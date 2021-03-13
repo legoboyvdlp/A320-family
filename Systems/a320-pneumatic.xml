@@ -1183,28 +1183,47 @@
 			<rate_limit sense="decr">120</rate_limit>
 		</actuator>
 		
-		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open">
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open-man">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatics/valves/crossbleed-valve-cmd eq 1
 				/systems/pneumatics/valves/crossbleed-valve ne 1
 				/controls/pneumatics/switches/x-bleed eq 2
 			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open-auto">
+			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatics/valves/crossbleed-valve-cmd eq 1
 				/systems/pneumatics/valves/crossbleed-valve ne 1
 				/controls/pneumatics/switches/x-bleed eq 1
-				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
-	
-		<switch name="/systems/pneumatics/warnings/crossbleed-disag">
+		
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag-open">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/warnings/crossbleed-disag-open-man eq 1
+				<test logic="AND">
+					/systems/pneumatics/warnings/crossbleed-disag-open-auto eq 1
+					/systems/electrical/bus/dc-2 ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag-closed">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatics/valves/crossbleed-valve-cmd eq 0
 				/systems/pneumatics/valves/crossbleed-valve ne 0
 			</test>
-			<test logic="AND" value="1">
+		</switch>
+	
+		<switch name="/systems/pneumatics/warnings/crossbleed-disag">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/warnings/crossbleed-disag-closed eq 1
 				/systems/pneumatics/warnings/crossbleed-disag-open eq 1
 			</test>
 		</switch>

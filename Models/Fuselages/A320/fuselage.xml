@@ -11,7 +11,6 @@
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
 		<object-name>Fuselage</object-name>
 		<object-name>NLGFittingPanel</object-name>
-		<object-name>Rudder</object-name>
 		<object-name>DoorL1</object-name>
 		<object-name>DoorL4</object-name>
 		<object-name>DoorR1</object-name>
@@ -35,7 +34,10 @@
 		<object-name>OutflowValveDoor2</object-name>
 		<object-name>GPUServiceDoor</object-name>
 	</effect>
-	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-rudder</inherits-from>
+		<object-name>Rudder</object-name>
+	</effect>
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
 		<object-name>Wings</object-name>

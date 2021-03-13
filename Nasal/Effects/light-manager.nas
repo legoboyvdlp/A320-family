@@ -148,7 +148,7 @@ var light_manager = {
 		
 		setprop("/sim/rendering/als-secondary-lights/flash-radius", 13);
 
-		me.start();
+		#me.start();
 	},
 
 	start: func {

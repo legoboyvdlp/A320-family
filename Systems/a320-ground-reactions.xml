@@ -4,6 +4,7 @@
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
 <ground_reactions>
+	
 	<contact type="BOGEY" name="NOSE_LG">
 		<location unit="M">
 			<x>-13.6519</x>
@@ -71,7 +72,6 @@
 		<rolling_friction>0.02</rolling_friction>
 		<spring_coeff unit="LBS/FT">59785</spring_coeff>
 		<damping_coeff unit="LBS/FT/SEC">23957</damping_coeff>
-		<damping_coeff_rebound unit="LBS/FT/SEC">25</damping_coeff_rebound>
 		<max_steer unit="DEG">0</max_steer>
 		<table name="CORNERING_COEFF" type="internal">
 			<tableData> <!-- jsbsim-pacejka.py 3.0 0.06 2.8 0.4 1.03 0.4 -->
@@ -128,7 +128,6 @@
 		<rolling_friction>0.02</rolling_friction>
 		<spring_coeff unit="LBS/FT">59785</spring_coeff>
 		<damping_coeff unit="LBS/FT/SEC">23957</damping_coeff>
-		<damping_coeff_rebound unit="LBS/FT/SEC">25</damping_coeff_rebound>
 		<max_steer unit="DEG">0</max_steer>
 		<table name="CORNERING_COEFF" type="internal">
 			<tableData> <!-- jsbsim-pacejka.py 3.0 0.06 2.8 0.4 1.03 0.4 -->
@@ -360,4 +359,5 @@
 		<brake_group>NONE</brake_group>
 		<retractable>0</retractable>
 	</contact>
+
 </ground_reactions>

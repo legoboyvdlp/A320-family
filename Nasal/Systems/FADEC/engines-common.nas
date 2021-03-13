@@ -3,6 +3,11 @@
 
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
+var manStart = [props.globals.initNode("/controls/engines/engine[0]/man-start", 0, "BOOL"),props.globals.initNode("/controls/engines/engine[1]/man-start", 0, "BOOL")];
+var lastIgniter = [props.globals.getNode("/controls/engines/engine[0]/last-igniter"),props.globals.initNode("/controls/engines/engine[1]/last-igniter")];
+var igniterA = [props.globals.initNode("/controls/engines/engine[0]/igniter-a", 0, "BOOL"),props.globals.initNode("/controls/engines/engine[1]/igniter-a", 0, "BOOL")];
+var igniterB = [props.globals.initNode("/controls/engines/engine[0]/igniter-b", 0, "BOOL"),props.globals.initNode("/controls/engines/engine[1]/igniter-b", 0, "BOOL")];
+
 if (pts.Options.eng.getValue() == "IAE") {
 	io.include("engines-iae.nas");
 } else {
@@ -10,7 +15,8 @@ if (pts.Options.eng.getValue() == "IAE") {
 }
 
 var eng_common_init = func {
-	# nada
+	manStart[0].setValue(0);
+	manStart[1].setValue(0);
 }
 
 # Engine thrust commands

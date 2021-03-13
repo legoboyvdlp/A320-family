@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
@@ -138,86 +138,68 @@
 	
 	<!-- Knobs -->
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<property>instrumentation/ddrmi/vor-adf-1</property>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<min>-1</min>
+				<max>1</max>
 			</binding>
 		</action>
 	</animation>
+
 	<animation>
-		<name>Knob 1 rotate</name>
-		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<name>DDRMI vor-adf knob 1</name>
 		<type>rotate</type>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
 		<property>instrumentation/ddrmi/vor-adf-1</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>90</dep></entry>
-			<entry><ind> 0</ind><dep>45</dep></entry>
-			<entry><ind> 1</ind><dep> 0</dep></entry>
+			<entry><ind>-1</ind><dep>90</dep></entry> <!-- ADF -->
+			<entry><ind> 0</ind><dep>45</dep></entry> <!-- OFF -->
+			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
 			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
 		</axis>
 	</animation>
-	
+
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<property>instrumentation/ddrmi/vor-adf-2</property>
+		<axis>
+			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-2</property>
-				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/ddrmi/vor-adf-2</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<min>-1</min>
+				<max>1</max>
 			</binding>
 		</action>
 	</animation>
+
 	<animation>
-		<name>Knob 2 rotate</name>
-		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<name>DDRMI vor-adf knob 2</name>
 		<type>rotate</type>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<property>instrumentation/ddrmi/vor-adf-2</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>-90</dep></entry>
-			<entry><ind> 0</ind><dep>-45</dep></entry>
-			<entry><ind> 1</ind><dep>  0</dep></entry>
+			<entry><ind>-1</ind><dep>-90</dep></entry> <!-- ADF -->
+			<entry><ind> 0</ind><dep>-45</dep></entry> <!-- OFF -->
+			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
 			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
 		</axis>
-	</animation>
+	</animation>	
 	
 	<!-- Flags -->
 	
@@ -227,7 +209,7 @@
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-1</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>45</dep></entry>
+			<entry><ind>0</ind><dep>-45</dep></entry>
 			<entry><ind>1</ind><dep> 0</dep></entry>
 		</interpolation>
 		<axis>
@@ -241,7 +223,7 @@
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-2</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>-45</dep></entry>
+			<entry><ind>0</ind><dep>45</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
 		</interpolation>
 		<axis>
@@ -365,12 +347,28 @@
     	<type>rotate</type>
     	<object-name>brakes_lb_psi</object-name>
     	<property>systems/hydraulic/brakes/pressure-left-psi</property>
-    	<factor>0.03</factor>
+    	<factor>-0.03</factor>
 		<condition>
-			<equals>
-				<property>systems/hydraulic/brakes/mode</property>
-				<value>2</value>
-			</equals>
+			<or>
+				<equals>
+					<property>systems/hydraulic/brakes/mode</property>
+					<value>0</value>
+				</equals>
+				<and>
+					<equals>
+						<property>systems/hydraulic/brakes/mode</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>systems/hydraulic/brakes/pressure-left-psi</property>
+						<value>0</value>
+					</equals>
+				</and>
+				<equals>
+					<property>systems/hydraulic/brakes/mode</property>
+					<value>2</value>
+				</equals>
+			</or>
 		</condition>
     	<axis>
 			<object-name>brakes_lb_psi.axis</object-name>
@@ -381,12 +379,28 @@
     	<type>rotate</type>
     	<object-name>brakes_rb_psi</object-name>
     	<property>systems/hydraulic/brakes/pressure-right-psi</property>
-    	<factor>-0.03</factor>
+    	<factor>0.03</factor>
 		<condition>
-			<equals>
-				<property>systems/hydraulic/brakes/mode</property>
-				<value>2</value>
-			</equals>
+			<or>
+				<equals>
+					<property>systems/hydraulic/brakes/mode</property>
+					<value>0</value>
+				</equals>
+				<and>
+					<equals>
+						<property>systems/hydraulic/brakes/mode</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>systems/hydraulic/brakes/pressure-right-psi</property>
+						<value>0</value>
+					</equals>
+				</and>
+				<equals>
+					<property>systems/hydraulic/brakes/mode</property>
+					<value>2</value>
+				</equals>
+			</or>
 		</condition>
     	<axis>
 			<object-name>brakes_rb_psi.axis</object-name>
@@ -396,12 +410,12 @@
     <animation>
     	<type>rotate</type>
     	<object-name>brakes_accum_psi</object-name>
-    	<property>systems/hydraulic/brakes/accumulator-pressure-psi</property>
+    	<property>systems/hydraulic/yellow-accumulator-psi</property>
     	<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>700</ind><dep>66</dep></entry>
-			<entry><ind>2000</ind><dep>78</dep></entry>
-			<entry><ind>3000</ind><dep>90</dep></entry>
+			<entry><ind>700</ind><dep>-20</dep></entry>
+			<entry><ind>2000</ind><dep>-44</dep></entry>
+			<entry><ind>3000</ind><dep>-66</dep></entry>
 		</interpolation>
     	<axis>
 			<object-name>brakes_accum_psi.axis</object-name>
@@ -427,10 +441,12 @@
 
 	<!-- Multi-purpose Control and Display Units -->
 	<model>
+		<name>MCDU1</name>
 		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU1.xml</path>
 	</model>
 
 	<model>
+		<name>MCDU2</name>
 		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU2.xml</path>
 	</model>
 
@@ -861,7 +877,81 @@
 			</and>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>atc_abv</object-name>
+		<factor>35</factor>
+		<offset-deg>0</offset-deg>
+		<axis>
+			<object-name>atc_abv.axis</object-name>
+		</axis>
+		<property>controls/atc/abv-blw</property>
+	</animation>
 
+	<animation>
+		<type>pick</type>
+		<object-name>atc_abv</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/abv-blw</property>
+				<value>-1</value>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+        </action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/abv-blw</property>
+				<value>1</value>
+                <value>0</value>
+				<value>-1</value>
+            </binding>
+        </action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>atc_thrt</object-name>
+		<factor>-30</factor>
+		<offset-deg>0</offset-deg>
+		<axis>
+			<object-name>atc_thrt.axis</object-name>
+		</axis>
+		<property>controls/atc/thrt-all</property>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>atc_thrt</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/thrt-all</property>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+        </action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/atc/thrt-all</property>
+                <value>0</value>
+				<value>1</value>
+            </binding>
+        </action>
+	</animation>
+	
 	<!-- Primary Flight Displays -->
 	<model>
 		<name>PFD1</name>
@@ -950,7 +1040,28 @@
 		<name>IESI</name>
 		<path>Aircraft/A320-family/Models/Instruments/IESI/IESI.xml</path>
 	</model>
-
+	
+	<animation>
+		<type>select</type>
+		<object-name>PFD1</object-name>
+		<object-name>PFD2</object-name>
+		<object-name>ND1</object-name>
+		<object-name>ND2</object-name>
+		<object-name>UECAM</object-name>
+		<object-name>LECAM</object-name>
+		<object-name>IESI</object-name>
+		<object-name>MCDU1</object-name>
+		<object-name>MCDU2</object-name>
+		<object-name>dcduScreenL</object-name>
+		<object-name>dcduScreenR</object-name>
+		<condition>
+			<or>
+				<not><property>options/hide-canvas-outside</property></not>
+				<property>sim/current-view/internal</property>
+			</or>
+		</condition>
+	</animation>
+	
 	<!-- No button lights without power! -->
 	<animation>
 		<type>select</type>
@@ -1336,13 +1447,31 @@
 			<button>0</button>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/switches/terr_on_nd_l</property>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>
+							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>instrumentation/efis/inputs/terr</property>
 			</binding>
 		</action>
 	</animation>
@@ -1377,13 +1506,31 @@
 			<button>0</button>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/switches/terr_on_nd_r</property>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<equals>					
+							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>instrumentation/efis[1]/inputs/terr</property>
 			</binding>
 		</action>
 	</animation>
@@ -5421,17 +5568,63 @@
 		<type>select</type>
 		<object-name>gear_lever_down_arrow</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>systems/gear/landing-gear-warning-light</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<greater-than>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than>
+					<greater-than>
+						<property>systems/electrical/bus/ac-2</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>ECAM/warnings/landing-gear-warning-light</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>gear_lever_down_arrow</object-name>
+		<condition>
+			<and>
+				<or>
+					<greater-than>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than>
+					<greater-than>
+						<property>systems/electrical/bus/ac-2</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+				<or>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>ECAM/warnings/landing-gear-warning-light</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
+		</condition>
+		<emission>
+			<red>1.00</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</emission>
 	</animation>
 
 	<!-- Landing Gear Lights -->
@@ -6177,7 +6370,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>trim_2_lts</object-name>
-		<property>fdm/jsbsim/hydraulics/elevator-trim/cmd-deg</property>
+		<property>fdm/jsbsim/hydraulics/stabilizer/cmd-deg</property>
 		<factor>15.55</factor>
 		<offset-deg>1.4</offset-deg>
 		<axis>
@@ -8269,30 +8462,21 @@
 		</action>
 	</animation>
 
+
 	<animation>
-		<name>UTC selector rotate</name>
-		<type>pick</type>
+		<name>UTC selector animation</name>
+		<type>knob</type>
 		<object-name>clock_knob</object-name>
+		<property>instrumentation/clock/utc-selector</property>
+		<axis>
+			<object-name>clock_knob.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>instrumentation/clock/utc-selector</property>
-				<value>0</value><!-- GPS -->
-				<value>1</value><!-- INT -->
-				<value>2</value><!-- SET -->
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/clock/utc-selector</property>
-				<value>2</value><!-- SET -->
-				<value>1</value><!-- INT -->
-				<value>0</value><!-- GPS -->
+				<min>0</min>
+				<max>2</max>
 			</binding>
 		</action>
 	</animation>
@@ -8303,9 +8487,9 @@
 		<object-name>clock_knob</object-name>
 		<property>instrumentation/clock/utc-selector</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>45</dep></entry>
-			<entry><ind>2</ind><dep>90</dep></entry>
+			<entry><ind>2</ind><dep>90</dep></entry> <!-- SET -->
+			<entry><ind>1</ind><dep>45</dep></entry> <!-- INT -->
+			<entry><ind>0</ind><dep> 0</dep></entry> <!-- GPS -->
 		</interpolation>
 		<axis>
 			<object-name>clock_knob.axis</object-name>
@@ -8623,6 +8807,74 @@
 				</equals>
 			</and>
 		</condition>
+	</animation>
+
+	<!-- ND_L chrono -->
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_cpt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis/inputs/CHRONO</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+		</action>
+	</animation>
+	
+		<!-- ND_R chrono -->
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_fo</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis[1]/inputs/CHRONO</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<!-- ND_L chrono -->
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_cpt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis/inputs/CHRONO</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+		</action>
+	</animation>
+	
+		<!-- ND_R chrono -->
+	<animation>
+		<type>pick</type>
+		<object-name>chrono_fo</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis[1]/inputs/CHRONO</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+		</action>
 	</animation>
 	
 	<!-- torch -->
@@ -9037,3 +9289,4 @@
 	</animation>
 
 </PropertyList>
+

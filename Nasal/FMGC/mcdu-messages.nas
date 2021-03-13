@@ -69,6 +69,7 @@ var scratchpadController = {
 		sp.scratchpadColour = "wht";
 		sp.showTypeIMsg = 0;
 		sp.showTypeIIMsg = 0;
+		sp.clrmode = 0; # 1 = CLR mode
 		sp.mcdu = mcdu;
 		return sp;
 	},
@@ -88,6 +89,11 @@ var scratchpadController = {
 			me.clearTypeI();
 		}
 		
+		if (me.clrmode == 1) { # prevent add chars in CLR mode
+			me.clear();			
+		}
+	    else if (character == "CLR") me.clrmode = 1;
+
 		me.scratchpad = me.scratchpad ~ character;
 		me.scratchpadColour = "wht";
 		me.update();
@@ -140,6 +146,7 @@ var scratchpadController = {
 	},
 	empty: func() {
 		me.scratchpad = "";
+		me.clrmode = 0;
 		me.update();
 	},
 	clear: func() {
@@ -173,12 +180,16 @@ var MessageController = {
 		TypeIMessage.new("USING COST INDEX N", 1),TypeIMessage.new("WAIT FOR SYSTEM RESPONSE"),TypeIMessage.new("RWY/LS MISMATCH"),
 		TypeIMessage.new("VHF3 VOICE MSG NOT GEN"),TypeIMessage.new("NO COMM MSG NOT GEN"),TypeIMessage.new("WX UPLINK"),
 		TypeIMessage.new("SIMBRIEF DOWNLOAD FAILED"),TypeIMessage.new("MISSING USERNAME"),TypeIMessage.new("AOC ACT F-PLN UPLINK"),
-		TypeIMessage.new("NO ANSWER TO REQUEST"),TypeIMessage.new("NO D-ATIS AVAILABLE"),TypeIMessage.new("BAD SERVER RESPONSE")
+		TypeIMessage.new("NO ANSWER TO REQUEST"),TypeIMessage.new("NO D-ATIS AVAILABLE"),TypeIMessage.new("NO METAR AVAILABLE"),TypeIMessage.new("BAD SERVER RESPONSE"),
+		TypeIMessage.new("WIND DATA UPLINK"),TypeIMessage.new("CHECK ALT WIND"),TypeIMessage.new("INVALID WIND UPLINK"),TypeIMessage.new("WIND UPLINK EXISTS"), #p.533
+		TypeIMessage.new("FM DATALINK UNAVAIL"),TypeIMessage.new("NOT XMITTED TO ACARS"), #p.559
+		TypeIMessage.new("PRINTER NOT AVAILABLE"),
 	]),
 	typeIIMessages: std.Vector.new([
 		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),
 		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),TypeIIMessage.new("V1/VR/V2 DISAGREE", "amb", 0),
 		TypeIIMessage.new("TO SPEED TOO LOW", "amb", 0),
+		TypeIIMessage.new("CHECK DEST DATA", "amb", 0), #p.533
 	]),
 	
 	# to speed to low - new on a320, margin against vmcg / vs1g

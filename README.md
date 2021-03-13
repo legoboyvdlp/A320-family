@@ -1,7 +1,7 @@
 # A320-family
 A very advanced simulation of the Airbus A320 Family for FlightGear.
 
-- Flight Dyanmics: Josh Davidson (Octal450)</label>
+- Flight Dynamics: Josh Davidson (Octal450)</label>
 - Systems: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
 - Displays: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
 - 3D/Textures: Thorsten Herrmann (TH-555), Semir Gebran (CaptB)</label>
@@ -20,6 +20,9 @@ You can find a Checklist to download and print [here](https://raw.githubusercont
 It is highly reccomended to purchase a NAVIGRAPH subscription and download their level d FMSDATA / waypoint / navaid data! If you do not wish to do that, there is older data linked below. But it won't have most of the newer procedures, and is only for a limited number of airports, as naturally it is not possible to distribute commercial data. If runway numbering changed, it is quite possible that it will not work due to FlightGear limitations in the routing code.
 
 To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. 
+
+## Remote MCDU
+If you want to run the MCDU on a phone or tablet for better realism and easier input, put mcdu.html into the FGDATA/Phi folder, run FlightGear with enabled HTTP server (i.e. command line --httpd=8080) and open http://your-flightgear-computer:8080/mcdu.html in the browser on your phone or tablet.
 
 ## Installation
 If you have issues installing, please check INSTALL.MD!

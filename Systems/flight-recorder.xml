@@ -88,7 +88,7 @@
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/elevator-trim/final-deg</property>
+				<property>/fdm/jsbsim/hydraulics/stabilizer/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>

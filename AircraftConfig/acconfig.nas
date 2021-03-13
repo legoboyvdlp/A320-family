@@ -56,10 +56,12 @@ var failResetOld = func {
 	setprop("/systems/failures/pump-green", 0);
 	setprop("/systems/failures/pump-yellow-eng", 0);
 	setprop("/systems/failures/pump-yellow-elec", 0);
-	setprop("/systems/failures/cargo-aft-fire", 0);
-	setprop("/systems/failures/cargo-fwd-fire", 0);
-	setprop("/systems/failures/engine-left-fire", 0);
-	setprop("/systems/failures/engine-right-fire", 0);
+	setprop("/systems/failures/fire/cargo-aft-fire", 0);
+	setprop("/systems/failures/fire/cargo-fwd-fire", 0);
+	setprop("/systems/failures/fire/engine-left-fire", 0);
+	setprop("/systems/failures/fire/apu-fire", 0);
+	setprop("/systems/failures/fire/engine-right-fire", 0);
+	setprop("/systems/failures/fire/lavatory-fire", 0);
 }
 
 failResetOld();
@@ -80,6 +82,7 @@ setprop("/systems/acconfig/options/wxr-server", "noaa");
 setprop("/systems/acconfig/options/welcome-skip", 0);
 setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
+setprop("/systems/acconfig/options/hide-canvas-outside", 0);
 setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
 setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
@@ -197,10 +200,10 @@ var renderingSettings = {
 	check: func() {
 		var rembrandt = getprop("/sim/rendering/rembrandt/enabled");
 		var ALS = getprop("/sim/rendering/shaders/skydome");
-		var customSettings = getprop("/sim/rendering/shaders/custom-settings") == 1;
+
 		var landmass = getprop("/sim/rendering/shaders/landmass") >= 4;
 		var model = getprop("/sim/rendering/shaders/model") >= 2;
-		if (!rembrandt and (!ALS or !customSettings or !landmass or !model)) {
+		if (!rembrandt and (!ALS or !landmass or !model)) {
 			rendering_dlg.open();
 		}
 	},
@@ -235,6 +238,7 @@ var readSettings = func {
 	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
 	setprop("/systems/atsu/atis-server", getprop("/systems/acconfig/options/atis-server"));
 	setprop("/systems/atsu/wxr-server", getprop("/systems/acconfig/options/wxr-server"));
+	setprop("/options/hide-canvas-outside", getprop("/systems/acconfig/options/hide-canvas-outside"));
 }
 
 var writeSettings = func {
@@ -249,12 +253,22 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
 	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
 	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));
+	setprop("/systems/acconfig/options/hide-canvas-outside", getprop("/options/hide-canvas-outside"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 
 ################
 # Panel States #
 ################
+
+# Abort auto-config and close dialog
+var abortPanelStates = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 1) {
+		setprop("/systems/acconfig/autoconfig-running", 0);
+	}
+	ps_load_dlg.close();
+	spinning.stop();
+}
 
 # Cold and Dark
 var colddark = func {
@@ -288,6 +302,7 @@ var colddark = func {
 		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		if (getprop("/engines/engine[1]/n2-actual") < 2) {
 			colddark_b();
@@ -333,6 +348,7 @@ var beforestart = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -352,6 +368,10 @@ var beforestart = func {
 	}
 }
 var beforestart_b = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# Continue with engine start prep.
 	systems.FUEL.Switches.pumpLeft1.setValue(1);
 	systems.FUEL.Switches.pumpLeft2.setValue(1);
@@ -386,6 +406,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/emer-lights", 0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -420,6 +443,7 @@ var taxi = func {
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
+		libraries.variousReset();
 		failResetOld();
 		
 		# Now the Startup!
@@ -439,6 +463,10 @@ var taxi = func {
 	}
 }
 var taxi_b = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# Continue with engine start prep, and start engines.
 	systems.FUEL.Switches.pumpLeft1.setValue(1);
 	systems.FUEL.Switches.pumpLeft2.setValue(1);
@@ -474,6 +502,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/switches/no-smoking-sign", 0.5);
+	setprop("/controls/switches/seatbelt-sign", 1);
+	setprop("/controls/switches/emer-lights", 0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -492,6 +523,10 @@ var taxi_b = func {
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	setprop("/controls/engines/engine-start-switch", 2);
 	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
 	setprop("/controls/engines/engine[1]/cutoff-switch", 0);
@@ -500,6 +535,10 @@ var taxi_c = func {
 	}, 10);
 }
 var taxi_d = func {
+	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
+		colddark();
+		return 0; # auto-config aborted
+	}
 	# After Start items.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);

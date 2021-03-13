@@ -74,29 +74,44 @@ var closestAirportPage = {
 				me._range += 250;
 			}
 		}
-		
-		me.L1 = [me.airports[0].id, nil, "grn"];
-		me.R1 = ["----", "UTC  ", "grn"];
-		me.L2 = [me.airports[1].id, nil, "grn"];
-		me.R2 = ["----", nil, "grn"];
-		me.L3 = [me.airports[2].id, nil, "grn"];
-		me.R3 = ["----", nil, "grn"];
-		me.L4 = [me.airports[3].id, nil, "grn"];
-		me.R4 = ["----", nil, "grn"];
+		if (size(me.airports) >= 1) {
+			me.L1 = [me.airports[0].id, nil, "grn"];
+			me.R1 = ["----", "UTC  ", "grn"];
+		}
+		if (size(me.airports) >= 2) {
+			me.L2 = [me.airports[1].id, nil, "grn"];
+			me.R2 = ["----", nil, "grn"];
+		}
+		if (size(me.airports) >= 3) {
+			me.L3 = [me.airports[2].id, nil, "grn"];
+			me.R3 = ["----", nil, "grn"];
+		}
+		if (size(me.airports) >= 4) {
+			me.L4 = [me.airports[3].id, nil, "grn"];
+			me.R4 = ["----", nil, "grn"];
+		}
 		me.listPopulated = 1;
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateBrgDist: func() {
 		if (!me.listPopulated) { return; }
-		me.cdVector[0] = courseAndDistance(me.airports[0]);
-		me.cdVector[1] = courseAndDistance(me.airports[1]);
-		me.cdVector[2] = courseAndDistance(me.airports[2]);
-		me.cdVector[3] = courseAndDistance(me.airports[3]);
 		var magvarLocal = magvar();
-		me.C1 = [math.round(me.cdVector[0][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[0][1]), " BRG   DIST", "grn"];
-		me.C2 = [math.round(me.cdVector[1][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[1][1]) , nil, "grn"];
-		me.C3 = [math.round(me.cdVector[2][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[2][1]), nil, "grn"];
-		me.C4 = [math.round(me.cdVector[3][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[3][1]), nil, "grn"];
+		if (size(me.airports) >= 1) {
+			me.cdVector[0] = courseAndDistance(me.airports[0]);
+			me.C1 = [math.round(me.cdVector[0][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[0][1]), " BRG   DIST", "grn"];
+		}
+		if (size(me.airports) >= 2) {
+			me.cdVector[1] = courseAndDistance(me.airports[1]);
+			me.C2 = [math.round(me.cdVector[1][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[1][1]) , nil, "grn"];
+		}
+		if (size(me.airports) >= 3) {
+			me.cdVector[2] = courseAndDistance(me.airports[2]);
+			me.C3 = [math.round(me.cdVector[2][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[2][1]), nil, "grn"];
+		}
+		if (size(me.airports) >= 4) {
+			me.cdVector[3] = courseAndDistance(me.airports[3]);
+			me.C4 = [math.round(me.cdVector[3][0] - magvarLocal) ~ "   " ~ math.round(me.cdVector[3][1]), nil, "grn"];
+		}
 		if (me.manAirport != nil) {
 			me.C5 = [math.round(courseAndDistance(me.manAirport)[0] - magvarLocal) ~ "   " ~ math.round(courseAndDistance(me.manAirport)[1]), nil, "grn"];
 		}

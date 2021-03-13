@@ -447,7 +447,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<actuator name="/systems/hydraulic/yellow-psi">
 			<input>/systems/hydraulic/yellow-psi-cmd</input>
 			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
@@ -458,6 +458,34 @@
 			<input>/systems/hydraulic/yellow-psi</input>
 			<gain>0.9</gain>
 		</pure_gain>
+
+		<fcs_function name="/systems/hydraulic/yellow-accumulator-psi-cmd">
+			<function>
+				<ifthen>
+					<and>
+						<ge>
+							<property>/systems/hydraulic/yellow-psi</property>
+							<value>0</value>
+						</ge>
+						<ge>
+							<property>/systems/hydraulic/yellow-psi</property>
+							<property>/systems/hydraulic/yellow-accumulator-psi-cmd</property>
+						</ge>
+					</and>
+					<max>
+						<property>/systems/hydraulic/yellow-psi</property>
+						<property>/systems/hydraulic/yellow-accumulator-psi-cmd</property>
+					</max>
+					<property>/systems/hydraulic/yellow-accumulator-psi-cmd</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<actuator name="/systems/hydraulic/yellow-accumulator-psi">
+			<input>/systems/hydraulic/yellow-accumulator-psi-cmd</input>
+			<rate_limit sense="incr">/systems/hydraulic/sys-incr-rate</rate_limit>
+			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
+		</actuator>
 		
 		<!-- PTU -->
 		<fcs_function name="/systems/hydraulic/yellow-psi-diff">
@@ -561,17 +589,17 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/gear/brake-parking ne 1
-				/systems/hydraulic/brakes/askidnwssw eq 1
+				/controls/gear/nws-switch eq 1
 				/systems/hydraulic/green-psi ge 2500
 			</test>
 			<test logic="AND" value="2">
 				/controls/gear/brake-parking ne 1
-				/systems/hydraulic/brakes/askidnwssw eq 1
+				/controls/gear/nws-switch eq 1
 				/systems/hydraulic/yellow-psi ge 2500
 			</test>
 			<test logic="AND" value="2">
 				/controls/gear/brake-parking ne 1
-				/systems/hydraulic/brakes/accumulator-pressure-psi ge 0
+				/systems/hydraulic/yellow-accumulator-psi-cmd ge 0
 			</test>
 		</switch>
 	</channel>
@@ -643,34 +671,34 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/hydraulics/warnings/blue-lo-pr">
+		<switch name="/systems/hydraulic/warnings/blue-lo-pr">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
 					/systems/hydraulic/blue-psi lt 1750
-					/systems/hydraulics/warnings/blue-lo-pr eq 1
+					/systems/hydraulic/warnings/blue-lo-pr eq 1
 				</test>
 				/systems/hydraulic/blue-psi lt 1450
 			</test>
 		</switch>
 		
-		<switch name="/systems/hydraulics/warnings/green-lo-pr">
+		<switch name="/systems/hydraulic/warnings/green-lo-pr">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
 					/systems/hydraulic/green-psi lt 1750
-					/systems/hydraulics/warnings/green-lo-pr eq 1
+					/systems/hydraulic/warnings/green-lo-pr eq 1
 				</test>
 				/systems/hydraulic/green-psi lt 1450
 			</test>
 		</switch>
 		
-		<switch name="/systems/hydraulics/warnings/yellow-lo-pr">
+		<switch name="/systems/hydraulic/warnings/yellow-lo-pr">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
 					/systems/hydraulic/yellow-psi lt 1750
-					/systems/hydraulics/warnings/yellow-lo-pr eq 1
+					/systems/hydraulic/warnings/yellow-lo-pr eq 1
 				</test>
 				/systems/hydraulic/yellow-psi lt 1450
 			</test>
