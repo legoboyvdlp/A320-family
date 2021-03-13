@@ -438,8 +438,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			colour = "grn";
 		}
 		
-		var startingIndex = fmgc.flightPlanController.currentToWptIndex.getValue() == -1 ? 0 : fmgc.flightPlanController.currentToWptIndex.getValue() - 1;
-		for (var i = startingIndex; i < me.plan.getPlanSize(); i += 1) {
+		#var startingIndex = fmgc.flightPlanController.currentToWptIndex.getValue() == -1 ? 0 : fmgc.flightPlanController.currentToWptIndex.getValue() - 1;
+		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
 			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and fmgc.FMGCInternal.phase != 6) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
 			} else {
@@ -612,10 +612,10 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
-			if (size(me.outputList) >= index) {
+			if (size(me.planList) >= index - 1 + me.scroll) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
-						if (me.outputList[index - 1 + me.scroll].wp.wp_name == "(DECEL)" or me.outputList[index - 1 + me.scroll].wp.wp_name == "(T/C)" or me.outputList[index - 1 + me.scroll].wp.wp_name == "(T/D)") {
+						if (me.planList[index - 1 + me.scroll].wp.wp_name == "(DECEL)" or me.planList[index - 1 + me.scroll].wp.wp_name == "(T/C)" or me.planList[index - 1 + me.scroll].wp.wp_name == "(T/D)") {
 							mcdu_message(me.computer, "NOT ALLOWED");
 							return;
 						}
