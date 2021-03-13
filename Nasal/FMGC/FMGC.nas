@@ -101,6 +101,7 @@ var FMGCinit = func {
 	setprop("/FMGC/internal/block-fuel-time", -99);
 	setprop("/FMGC/internal/fuel-pred-time", -99); 
 	masterFMGC.start();
+	slowFMGC.start();
 	radios.start();
 }
 
@@ -436,6 +437,18 @@ var radios = maketimer(1, func() {
 	adf1();
 });
 
+var slowFMGC = maketimer(3, func {
+	fmgc.updateFuel();
+	if (fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet and fmgc.FMGCInternal.zfwSet) {
+		flightPlanController.calculateTOCPoint(0);
+		flightPlanController.calculateTOCPoint(1);
+		flightPlanController.calculateTOCPoint(2);
+		flightPlanController.calculateTODPoint(0);
+		flightPlanController.calculateTODPoint(1);
+		flightPlanController.calculateTODPoint(2);
+	}
+});
+
 var masterFMGC = maketimer(0.2, func {
 	n1_left = pts.Engines.Engine.n1Actual[0].getValue();
 	n1_right = pts.Engines.Engine.n1Actual[1].getValue();
@@ -520,11 +533,6 @@ var masterFMGC = maketimer(0.2, func {
 	} else {
 		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
 	}
-	
-	############################
-	# fuel
-	############################
-	fmgc.updateFuel();
 	
 	############################
 	# wind

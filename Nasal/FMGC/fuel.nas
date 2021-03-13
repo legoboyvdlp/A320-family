@@ -212,9 +212,13 @@ var updateFuel = func {
 		fmgc.FMGCInternal.desSet = 1;
 		
 		# update reached states
+		alt = pts.Instrumentation.Altimeter.indicatedFt.getValue();
+		currentDistance = fmgc.flightPlanController.totalDist.getValue() - fmgc.flightPlanController.arrivalDist.getValue();
+		crz = fmgc.FMGCInternal.crzFt;
+		
 		if (fmgc.flightPlanController.tocPoint != nil and !fmgc.FMGCInternal.clbReached) {
 			fmgc.FMGCInternal.clbReached = courseAndDistance(geo.aircraft_position(), fmgc.flightPlanController.tocPoint)[1] < 0.1;
-			# todo: check altitude/distance as well
+			fmgc.FMGCInternal.clbDist -= (alt / crz - currentDistance / fmgc.FMGCInternal.clbDist) * fmgc.FMGCInternal.clbDist; # move to xml
 		}
 		
 		if (fmgc.flightPlanController.todPoint != nil and !fmgc.FMGCInternal.desReached) {
