@@ -105,6 +105,8 @@ var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-de
 
 # INT-A
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
+var crzFt = props.globals.getNode("/FMGC/internal/crz-ft", 1);
+var crzTemp = props.globals.getNode("/FMGC/internal/crz-temp", 1);
 
 # IRSINIT variables
 var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
@@ -116,6 +118,9 @@ var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
+var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
+var tow = props.globals.getNode("/FMGC/internal/tow", 1);
+var lw = props.globals.getNode("/FMGC/internal/lw", 1);
 
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
