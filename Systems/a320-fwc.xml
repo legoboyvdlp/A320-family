@@ -363,7 +363,7 @@
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/electrical/bus/dc-2 ge 25
-					/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 1
+					/systems/electrical/relay/dc-bat-tie-dc-ess/contact-pos eq 1
 				</test>
 				<test logic="OR">
 					<test logic="AND">

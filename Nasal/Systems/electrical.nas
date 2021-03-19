@@ -14,6 +14,7 @@ var dc2 = 0;
 # Main class
 var ELEC = {
 	EmerElec: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config"),
+	EmerElec45: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config-45"),
 	Bus: {
 		acEss: props.globals.getNode("/systems/electrical/bus/ac-ess"),
 		acEssShed: props.globals.getNode("/systems/electrical/bus/ac-ess-shed"),
@@ -79,11 +80,11 @@ var ELEC = {
 		acTie1: props.globals.getNode("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos"),
 		acTie2: props.globals.getNode("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"),
 		apuGlc: props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos"),
-		dcEssFeedBat: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-bat/contact-pos"),
-		essTrContactor: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/contact-pos"),
+		dcEssFeedBat: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-ess/contact-pos"),
+		essTrContactor: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/contact-pos"),
 		extEpc: props.globals.getNode("/systems/electrical/relay/ext-epc/contact-pos"),
-		dcTie1: props.globals.getNode("/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos"),
-		dcTie2: props.globals.getNode("/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos"),
+		dcTie1: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-1/contact-pos"),
+		dcTie2: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-2/contact-pos"),
 		glc1: props.globals.getNode("/systems/electrical/relay/gen-1-glc/contact-pos"),
 		glc2: props.globals.getNode("/systems/electrical/relay/gen-2-glc/contact-pos"),
 		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
@@ -103,7 +104,7 @@ var ELEC = {
 		Bat1: {
 			volt: props.globals.getNode("/systems/electrical/sources/bat-1/volt"),
 			amps: props.globals.getNode("/systems/electrical/sources/bat-1/amps"),
-			contact: props.globals.getNode("/systems/electrical/sources/bat-1/contact"),
+			contact: props.globals.getNode("/systems/electrical/sources/bat-1/bcl-supply"),
 			percent: props.globals.getNode("/systems/electrical/sources/bat-1/percent"),
 			direction: props.globals.getNode("/systems/electrical/sources/bat-1/direction"),
 			time: props.globals.getNode("/systems/electrical/sources/bat-1/time"),
@@ -111,7 +112,7 @@ var ELEC = {
 		Bat2: {
 			volt: props.globals.getNode("/systems/electrical/sources/bat-2/volt"),
 			amps: props.globals.getNode("/systems/electrical/sources/bat-2/amps"),
-			contact: props.globals.getNode("/systems/electrical/sources/bat-2/contact"),
+			contact: props.globals.getNode("/systems/electrical/sources/bat-2/bcl-supply"),
 			percent: props.globals.getNode("/systems/electrical/sources/bat-2/percent"),
 			direction: props.globals.getNode("/systems/electrical/sources/bat-2/direction"),
 			time: props.globals.getNode("/systems/electrical/sources/bat-2/time"),
@@ -135,10 +136,10 @@ var ELEC = {
 			outputAmp: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output-amp"),
 		},
 		trEss: {
-			outputVolt: props.globals.getNode("/systems/electrical/sources/tr-ess/output-volt"),
-			outputAmp: props.globals.getNode("/systems/electrical/sources/tr-ess/output-amp"),
-			outputVoltRelay: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output"),
-			outputAmpRelay: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output-amp"),
+			outputVolt: props.globals.getNode("/systems/electrical/sources/ess-tr/output-volt"),
+			outputAmp: props.globals.getNode("/systems/electrical/sources/ess-tr/output-amp"),
+			outputVoltRelay: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/output"),
+			outputAmpRelay: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/output-amp"),
 		},
 		IDG1: {
 			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-1/gcr-relay"),
