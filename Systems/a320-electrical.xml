@@ -115,6 +115,11 @@
 		<switch name="/systems/electrical/sources/bat-1/bcl-logic/charge-end">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/electrical/sources/bat-1/bcl-logic/charge-end eq 1
+				/systems/electrical/sources/bat-1/direction ne 1
+			</test>
+			<test logic="AND" value="1">
+				/controls/electrical/switches/bat-1 ne 0
 				/systems/electrical/sources/bat-1/amps lt 4
 				/systems/electrical/sources/bat-1/direction eq -1
 			</test>
@@ -132,6 +137,13 @@
             <rate_limit sense="incr">0.00055555555</rate_limit> <!-- 30 minutes -->
         </actuator>
 		
+		<switch name="/controls/electrical/switches/bat-1-latch">
+			<default value="/controls/electrical/switches/bat-1-latch"/>
+			<test logic="OR" value="1">
+				/controls/electrical/switches/bat-1 eq 1
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/bat-1/charge">
 			<default value="/systems/electrical/sources/bat-1/charge"/>
 			<!-- End charging cycle -->
@@ -144,6 +156,16 @@
 					/systems/electrical/sources/bat-1/bcl-logic/charge-end-air-output eq 1
 				</test>
 				/systems/electrical/sources/bat-1/charge eq 1
+			</test>
+			<test logic="AND" value="1">
+				/controls/electrical/switches/bat-1-latch eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/electrical/sources/bat-1/bcl-logic/charge-end-output ne 1
+						/velocities/airspeed-kt lt 100
+					</test>	
+					/systems/electrical/sources/bat-1/bcl-logic/charge-end-air-output ne 1
+				</test>
 			</test>
 			<!-- Start charging cycle -->
 			<test logic="AND" value="1">
@@ -338,6 +360,7 @@
 		<switch name="/systems/electrical/sources/bat-2/bcl-logic/charge-end">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/controls/electrical/switches/bat-2 ne 0
 				/systems/electrical/sources/bat-2/amps lt 4
 				/systems/electrical/sources/bat-2/direction eq -1
 			</test>
@@ -355,6 +378,13 @@
             <rate_limit sense="incr">0.00055555555</rate_limit> <!-- 30 minutes -->
         </actuator>
 		
+		<switch name="/controls/electrical/switches/bat-2-latch">
+			<default value="/controls/electrical/switches/bat-2-latch"/>
+			<test logic="OR" value="1">
+				/controls/electrical/switches/bat-2 eq 1
+			</test>
+		</switch>
+		
 		<switch name="/systems/electrical/sources/bat-2/charge">
 			<default value="/systems/electrical/sources/bat-2/charge"/>
 			<!-- End charging cycle -->
@@ -367,6 +397,16 @@
 					/systems/electrical/sources/bat-2/bcl-logic/charge-end-air-output eq 1
 				</test>
 				/systems/electrical/sources/bat-2/charge eq 1
+			</test>
+			<test logic="AND" value="1">
+				/controls/electrical/switches/bat-2-latch eq 1
+				<test logic="OR">
+					<test logic="AND">
+						/systems/electrical/sources/bat-2/bcl-logic/charge-end-output ne 1
+						/velocities/airspeed-kt lt 100
+					</test>	
+					/systems/electrical/sources/bat-2/bcl-logic/charge-end-air-output ne 1
+				</test>
 			</test>
 			<!-- Start charging cycle -->
 			<test logic="AND" value="1">
@@ -1637,13 +1677,13 @@
 		
 		<switch name="/systems/electrical/relay/ess-tr-contactor/fault">
 			<default value="0"/>
-			<test logic="AND" value="1">
+			<!--<test logic="AND" value="1">
 				/systems/electrical/relay/ess-tr-contactor/fault eq 1
 				<test logic="OR">
 					/systems/electrical/bus/ac-ess ge 110
 					/systems/electrical/relay/emer-glc/output ge 110
 				</test>
-			</test>
+			</test>-->
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/electrical/sources/ess-tr/output-volt lt 25
