@@ -87,7 +87,7 @@ var updateTerrain = func {
 	#var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
 
 	# if me.tileradiusw == 20
-	var range_20f = range / 18.75;
+	var range_20f = range / 19.70; #18.75;
 	var heading_sin = math.sin(DEG2RAD * heading);
 	var heading_cos = math.cos(DEG2RAD * heading);
 
@@ -184,7 +184,7 @@ var update_altitudes = func {
 		else me.terrain_maxcol.setValue(1);
 	}
 
-	if (me.min_altitude == 9999) {
+	if (me.avg_maxalt == -9999) {
 		me.avg_minalt = me.min_altitude;
 		me.avg_maxalt = me.max_altitude;
 	} else {
@@ -197,9 +197,10 @@ var update_altitudes = func {
 	me.avg_peakalt = me.avg_maxalt - me.avg_minalt;
 
 	if (me.onground == 0 and (me.max_altitude + 250) < me.refaltitudeft) {   # 250 ft tollerance
-		me.hialtmode = 1;		
-		var range = math.min(2400,(me.avg_maxalt - me.avg_minalt)) - 400;
-		if (range < 400) {  # min elev number
+		me.hialtmode = 1;
+		var mxrange = math.max(2400,int(me.avg_peakalt*0.25));
+		var range = math.min(mxrange,(me.avg_maxalt - me.avg_minalt)) - 250;
+		if (range < 360) {  # min elev number
 			me.bands_range = 0;	
 		} else {			
 			me.bands_range = int(range / 4);
@@ -350,7 +351,7 @@ var draw = func {
 
 			if (me.min_altitude != 9999) me.update_altitudes();
 
-			var flatalt = (me.avg_peakalt != nil and me.avg_peakalt>499) ? 400 : 140;
+			var flatalt = (me.avg_peakalt == nil or me.avg_peakalt>499) ? 400 : 140;
 
 			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
 			if (vspeed30s<-500) me.refaltitudeft = math.max(me.avg_minalt , me.refaltitudeft + vspeed30s);
