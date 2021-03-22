@@ -405,7 +405,9 @@ var flightPlanController = {
 			
 			# if n = 2, then we are clearing a discontinuity. Don't recalculate decel.
 			me.flightPlanChanged(n, n == 2 ? 0 : 1);
-			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
+			if (n == 0 or n == 1) {
+				canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
+			}
 			return 2;
 		} else {
 			return 1;
