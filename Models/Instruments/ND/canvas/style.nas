@@ -14,7 +14,7 @@ var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass
 
 var terrain_minalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0);
 var terrain_maxalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999);
-var terrain_maxcol = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-color", 0);
+var terrain_maxcol = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-color", -1);
 var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode",0);
 
 var GREEN = [0.0509,0.7529,0.2941];
@@ -2003,25 +2003,31 @@ canvas.NDStyles["Airbus"] = {
 					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and 
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ),
 				is_true: func(nd){
-					if (terrain_maxalt.getValue() != -9999) {
-						var alert = terrain_alert.getValue();
-						if (alert == 0) {
-							nd.symbols.TerrLabel.setVisible(1);
-							nd.symbols.terrAhead.setVisible(0);
-						} else {
-							nd.symbols.TerrLabel.setVisible(0);
-							nd.symbols.terrAhead.setVisible(1);
-							if (alert == 1) nd.symbols.terrAhead.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
-							else nd.symbols.terrAhead.setColor(RED[0],RED[1],RED[2]);
+					var alert = terrain_alert.getValue();
+					if (alert == 0) {
+						nd.symbols.TerrLabel.setVisible(1);
+						nd.symbols.terrAhead.setVisible(0);
+					} else {
+						nd.symbols.TerrLabel.setVisible(0);
+						nd.symbols.terrAhead.setVisible(1);
+						if (alert == 1) nd.symbols.terrAhead.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
+						else nd.symbols.terrAhead.setColor(RED[0],RED[1],RED[2]);
+					}
+					if (nd.change_phase != 1) {
+						if (terrain_maxalt.getValue() != -9999) {
+							nd.symbols.terrLO.setText(sprintf("%03d",math.round(terrain_minalt.getValue()/100)));
+							nd.symbols.terrHI.setText(sprintf("%03d",math.round(terrain_maxalt.getValue()/100)));
+							if (terrain_maxcol.getValue() == 0) nd.symbols.terrHI.setColor(GREEN[0],GREEN[1],GREEN[2]);
+							else if (terrain_maxcol.getValue() == 1) nd.symbols.terrHI.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
+							else nd.symbols.terrHI.setColor(RED[0],RED[1],RED[2]);							
+							terrain_maxalt.setValue(-9999); #update visual at radar cycle
 						}
-						nd.symbols.terrLO.setText(sprintf("%03d",math.round(terrain_minalt.getValue()/100)));
-						nd.symbols.terrHI.setText(sprintf("%03d",math.round(terrain_maxalt.getValue()/100)));
-						if (terrain_maxcol.getValue() == 0) nd.symbols.terrHI.setColor(GREEN[0],GREEN[1],GREEN[2]);
-						else if (terrain_maxcol.getValue() == 1) nd.symbols.terrHI.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
-						else nd.symbols.terrHI.setColor(RED[0],RED[1],RED[2]);
-						nd.symbols.terrGroup.show();
-						terrain_maxalt.setValue(-9999); #update visual at radar cycle
-					}											
+						if (terrain_maxcol != -1) nd.symbols.terrAltGroup.show();
+						else nd.symbols.terrAltGroup.hide();
+					} else{
+						nd.symbols.terrAltGroup.hide();
+					}					
+					nd.symbols.terrGroup.show();
 				},
 				is_false: func(nd){
 					nd.symbols.terrGroup.hide();

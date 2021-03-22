@@ -18,7 +18,7 @@ var element_type = "group";
 
 var terrain_minalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0,"INT");
 var terrain_maxalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999,"INT");
-var terrain_maxcol = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-color", 0,"INT"); # 0= grn, 1= yel, 2= red
+var terrain_maxcol = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-color", -1,"INT"); # 0= grn, 1= yel, 2= red
 
 var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode");
 
