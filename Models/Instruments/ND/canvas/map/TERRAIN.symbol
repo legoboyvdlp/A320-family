@@ -16,10 +16,6 @@ DotSym.makeinstance( name, __self__ );
 
 var element_type = "group";
 
-var terrain_minalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0,"INT");
-var terrain_maxalt = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999,"INT");
-var terrain_maxcol = props.globals.initNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-color", -1,"INT"); # 0= grn, 1= yel, 2= red
-
 var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode");
 
 var tile_list = [
@@ -91,8 +87,10 @@ var updateTerrain = func {
 	var heading_sin = math.sin(DEG2RAD * heading);
 	var heading_cos = math.cos(DEG2RAD * heading);
 
-	var proj_lon = pos_lon + ((col * range_20f * math.sin(DEG2RAD * (heading - 90))) / 60);
-	var proj_lat = pos_lat + ((col * range_20f * math.cos(DEG2RAD * (heading - 90))) / 60);
+	var col_x_range20f = col * range_20f;
+
+	var proj_lon = pos_lon + ((col_x_range20f * math.sin(DEG2RAD * (heading - 90))) / 60);
+	var proj_lat = pos_lat + ((col_x_range20f * math.cos(DEG2RAD * (heading - 90))) / 60);
 
 	var elevft = [];
 
@@ -105,8 +103,10 @@ var updateTerrain = func {
 			continue;
 		}
 
-		var point_lon = proj_lon + ((row * range_20f / 60) * heading_sin);
-		var point_lat = proj_lat + ((row * range_20f / 60) * heading_cos);
+		var row_x_r20f_60th = (row * range_20f / 60);
+
+		var point_lon = proj_lon + (row_x_r20f_60th * heading_sin);
+		var point_lat = proj_lat + (row_x_r20f_60th * heading_cos);
 
 		var elev = me.get_elevation(point_lat, point_lon);
 		var grad = 0; #black
@@ -224,7 +224,9 @@ var restart_beacon = func {
 };
 
 var init = func {
-	#print('TERRAIN init');
+	print('TERRAIN init');
+	#print(me.layer.efis_path);
+
 	me.tile = 33;
 	me.fetching = 0;
 	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
@@ -250,6 +252,10 @@ var init = func {
 	me.hialtmode = 0; # high aircraft relative altitude mode
 	me.checkarrival = 0;
 	me.onground = 1;
+
+	me.terrain_minalt = props.globals.initNode(me.layer.efis_path ~ "/nd/terrain-on-nd/min-altitude", 0,"INT");
+	me.terrain_maxalt = props.globals.initNode(me.layer.efis_path ~ "/nd/terrain-on-nd/max-altitude", -9999,"INT");
+	me.terrain_maxcol = props.globals.initNode(me.layer.efis_path ~ "/nd/terrain-on-nd/max-color", -1,"INT"); # 0= grn, 1= yel, 2= red	
 
 	var tile = me.tile;
 
@@ -326,12 +332,12 @@ var draw = func {
 		return;
 	}
 
-	if (me.layer.display_changed == 1) {
-		me.layer.display_changed = 0;
+	if (me.layer.display_hidden == 1) {
+		me.layer.display_hidden = 0;
 		me.clear();
 		me.min_altitude = 9999;
 		me.max_altitude = -9999;
-		terrain_maxalt.setValue(-9999);
+		me.terrain_maxalt.setValue(-9999);
 		me.reference = nil;
 	}
 
