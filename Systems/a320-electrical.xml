@@ -1299,7 +1299,6 @@
 			</test>
 			<test logic="AND" value="1"> <!-- fetch power from other side -->
 				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
-				/systems/electrical/bus/ac-bus-tie ge 110
 				/controls/electrical/switches/bus-tie eq 1
 			</test>
 		</switch>
@@ -1325,7 +1324,6 @@
 			</test>
 			<test logic="AND" value="1">  <!-- fetch power from other side -->
 				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
-				/systems/electrical/bus/ac-bus-tie ge 110
 				/controls/electrical/switches/bus-tie eq 1
 			</test>
 		</switch>
