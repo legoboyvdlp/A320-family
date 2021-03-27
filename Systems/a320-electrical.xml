@@ -157,7 +157,7 @@
 				</test>
 				/systems/electrical/sources/bat-1/charge eq 1
 			</test>
-			<test logic="AND" value="1">
+			<!--<test logic="AND" value="1">
 				/controls/electrical/switches/bat-1-latch eq 1
 				<test logic="OR">
 					<test logic="AND">
@@ -166,7 +166,7 @@
 					</test>	
 					/systems/electrical/sources/bat-1/bcl-logic/charge-end-air-output ne 1
 				</test>
-			</test>
+			</test>-->
 			<!-- Start charging cycle -->
 			<test logic="AND" value="1">
 				/controls/electrical/switches/bat-1 eq 1
@@ -398,7 +398,7 @@
 				</test>
 				/systems/electrical/sources/bat-2/charge eq 1
 			</test>
-			<test logic="AND" value="1">
+			<!--<test logic="AND" value="1">
 				/controls/electrical/switches/bat-2-latch eq 1
 				<test logic="OR">
 					<test logic="AND">
@@ -407,7 +407,7 @@
 					</test>	
 					/systems/electrical/sources/bat-2/bcl-logic/charge-end-air-output ne 1
 				</test>
-			</test>
+			</test>-->
 			<!-- Start charging cycle -->
 			<test logic="AND" value="1">
 				/controls/electrical/switches/bat-2 eq 1
@@ -1435,11 +1435,19 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/electrical/relay/relay-15XE1/output-emer">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/relay/emer-glc/output">
+				/systems/electrical/relay/relay-15XE1/contact-pos eq 1
+			</test>
+		</switch>
+		
 		<!-- STAT INV / AC ESS TIE -->
 		<switch name="/systems/electrical/relay/relay-15XE2/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/relay/relay-15XE1/output lt 110
+				/systems/electrical/relay/relay-15XE1/output-emer lt 110
 				/systems/electrical/sources/si-1/inverter-control/relay-7xb eq 1
 				/systems/electrical/sources/si-1/output-volt ge 110
 				/systems/electrical/relay/ac-ess-feed-1/output lt 110
@@ -1457,7 +1465,10 @@
 		<switch name="/systems/electrical/relay/ac-ess-feed-emer-gen/contact-pos">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/electrical/relay/relay-15XE2/output ge 110
+				<test logic="OR">
+					/systems/electrical/relay/relay-15XE1/output ge 110
+					/systems/electrical/relay/relay-15XE1/output-emer ge 110
+				</test>
 				/systems/electrical/relay/emer-glc/output ge 110
 			</test>
 		</switch>
@@ -1575,7 +1586,10 @@
 		<switch name="/systems/electrical/sources/ess-tr/feed">
 			<default value="0"/>
 			<test logic="AND" value="/systems/electrical/bus/ac-ess">
-				/systems/electrical/relay/relay-15XE1/output ge 110
+				<test logic="OR">
+					/systems/electrical/relay/relay-15XE1/output ge 110
+					/systems/electrical/relay/relay-15XE1/output-emer ge 110
+				</test>
 			</test>
 			<test logic="AND" value="/systems/electrical/relay/emer-glc/output">
 				/systems/electrical/relay/emer-glc/output ge 110
@@ -1602,16 +1616,9 @@
 		<!-- Transformer Rectifier Contactors (Relays) -->
 		<switch name="/systems/electrical/relay/tr-contactor-1/fault">
 			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/relay/tr-contactor-1/fault eq 1
-				/systems/electrical/bus/ac-1 ge 110
-			</test>
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/systems/electrical/sources/tr-1/output-volt lt 25
-					/systems/electrical/sources/tr-1/output-amp eq 0
-				</test>
-				/systems/electrical/bus/ac-1 ge 110
+			<test logic="OR" value="1">
+				/systems/electrical/sources/tr-1/output-volt lt 25
+				/systems/electrical/sources/tr-1/output-amp eq 0
 			</test>
 		</switch>
 		
@@ -1639,16 +1646,9 @@
 		
 		<switch name="/systems/electrical/relay/tr-contactor-2/fault">
 			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/relay/tr-contactor-2/fault eq 1
-				/systems/electrical/bus/ac-2 ge 110
-			</test>
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/systems/electrical/sources/tr-2/output-volt lt 25
-					/systems/electrical/sources/tr-2/output-amp eq 0
-				</test>
-				/systems/electrical/bus/ac-2 ge 110
+			<test logic="OR" value="1">
+				/systems/electrical/sources/tr-2/output-volt lt 25
+				/systems/electrical/sources/tr-2/output-amp eq 0
 			</test>
 		</switch>
 		
@@ -1684,15 +1684,9 @@
 					/systems/electrical/relay/emer-glc/output ge 110
 				</test>
 			</test>-->
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/systems/electrical/sources/ess-tr/output-volt lt 25
-					/systems/electrical/sources/ess-tr/output-amp eq 0
-				</test>
-				<test logic="OR">
-					/systems/electrical/bus/ac-ess ge 110
-					/systems/electrical/relay/emer-glc/output ge 110
-				</test>
+			<test logic="OR" value="1">
+				/systems/electrical/sources/ess-tr/output-volt lt 25
+				/systems/electrical/sources/ess-tr/output-amp eq 0
 			</test>
 		</switch>
 		
