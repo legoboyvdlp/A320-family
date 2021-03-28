@@ -1767,7 +1767,7 @@
 				/systems/electrical/relay/dc-bat-tie-dc-1/contact-pos eq 1
 				/systems/electrical/relay/dc-bat-tie-dc-2/contact-pos eq 0
 				/systems/electrical/relay/tr-contactor-1/output ge 25
-				<!--/systems/electrical/relay/ess-tr-contactor/output lt 25-->
+				/systems/electrical/relay/ess-tr-contactor/output lt 25
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
 		</switch>
@@ -2043,7 +2043,7 @@
 				/systems/electrical/relay/tr-contactor-1/output ge 25
 			</test>
 			<test value="2"> <!-- DC BAT -->
-				/systems/electrical/relay/dc-bat-tie-dc-1/output-bat ge 25
+				/systems/electrical/relay/dc-bat-tie-dc-1/contact-pos eq 1
 			</test>
 		</switch>
 		
@@ -2071,7 +2071,7 @@
 				/systems/electrical/relay/tr-contactor-2/output ge 25
 			</test>
 			<test value="2"> <!-- DC BAT -->
-				/systems/electrical/relay/dc-bat-tie-dc-2/output-bat ge 25
+				/systems/electrical/relay/dc-bat-tie-dc-2/contact-pos eq 1
 			</test>
 		</switch>
 		
