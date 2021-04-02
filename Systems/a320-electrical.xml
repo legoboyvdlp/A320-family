@@ -1411,7 +1411,7 @@
 				<test logic="OR">
 					/systems/electrical/relay/tr-contactor-1/output lt 25
 					/systems/electrical/relay/tr-contactor-2/output lt 25
-					/systems/electrical/relay/dc-bat-tie-dc-ess/contact-pos eq 0
+					<!--/systems/electrical/relay/dc-bat-tie-dc-ess/contact-pos eq 0-->
 				</test>
 				<test logic="OR">
 					/systems/electrical/relay/ac-ess-feed-1/output ge 110
