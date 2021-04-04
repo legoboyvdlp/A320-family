@@ -89,6 +89,7 @@ var ELEC = {
 		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
 		tr2Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/contact-pos"),
 		relay7XB: props.globals.getNode("/systems/electrical/sources/si-1/inverter-control/relay-7xb"),
+		relay15XE2: props.globals.getNode("/systems/electrical/relay/relay-15XE2/contact-pos"),
 	},
 	SomeThing: {
 		emerGenSignal: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-gen-operate"),
@@ -149,6 +150,10 @@ var ELEC = {
 			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-2/gcr-relay"),
 			hertz: props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz"),
 			volts: props.globals.getNode("/systems/electrical/sources/idg-2/output-volt"),
+		},
+		Inverter: {
+			hertz: props.globals.getNode("/systems/electrical/sources/si-1/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/si-1/output-volt"),
 		},
 	},
 	Switch: {

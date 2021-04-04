@@ -1248,7 +1248,7 @@ var canvas_lowerECAM_elec = {
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","BAT1-label","Bat1Volt","Bat1Ampere","BAT2-label","Bat2Volt","Bat2Ampere","BAT1-charge","BAT1-discharge","BAT2-charge","BAT2-discharge","ELEC-Line-DC1-DCBAT","ELEC-Line-DC1-DCESS","ELEC-Line-DC2-DCBAT",
 		"ELEC-Line-DC1-DCESS_DCBAT","ELEC-Line-DC2-DCESS_DCBAT","ELEC-Line-TR1-DC1","ELEC-Line-TR2-DC2","Shed-label","ELEC-Line-ESSTR-DCESS","TR1-label","TR1Volt","TR1Ampere","TR2-label","TR2Volt","TR2Ampere","EMERGEN-group","EmergenVolt","EmergenHz",
 		"ELEC-Line-Emergen-ESSTR","EMERGEN-Label-off","Emergen-Label","EMERGEN-out","ELEC-Line-ACESS-TRESS","ELEC-Line-AC1-TR1","ELEC-Line-AC2-TR2","ELEC-Line-AC1-ACESS","ELEC-Line-AC2-ACESS","ACESS-SHED","ACESS","AC1-in","AC2-in","ELEC-Line-GEN1-AC1","ELEC-Line-GEN2-AC2",
-		"ELEC-Line-APU-AC1","ELEC-Line-APU-EXT","ELEC-Line-EXT-AC2","APU-out","EXT-out","EXTPWR-group","ExtVolt","ExtHz","APU-content","APU-border","APUGentext","APUGenLoad","APUGenVolt","APUGenHz","APUGEN-off","GEN1-label","Gen1Load","Gen1Volt","Gen1Hz",
+		"ELEC-Line-APU-AC1","ELEC-Line-APU-EXT","ELEC-Line-EXT-AC2","APU-out","STATINV-group","StatVolt","StatHz","EXT-out","EXTPWR-group","ExtVolt","ExtHz","APU-content","APU-border","APUGentext","APUGenLoad","APUGenVolt","APUGenHz","APUGEN-off","GEN1-label","Gen1Load","Gen1Volt","Gen1Hz",
 		"GEN2-label","Gen2Load","GEN2-off","Gen2Volt","Gen2Hz","ELEC-IDG-1-label","ELEC-IDG-1-num-label","ELEC-IDG-1-Temp","IDG1-LOPR","IDG1-DISC","IDG1-RISE-Value","IDG1-RISE-label","GalleyShed","ELEC-IDG-2-Temp","ELEC-IDG-2-label","ELEC-IDG-2-num-label","IDG2-RISE-label","IDG2-RISE-Value","IDG2-LOPR",
 		"IDG2-DISC","ESSTR-group","ESSTR","ESSTR-Volt","ESSTR-Ampere","BAT1-content","BAT2-content","BAT1-OFF","BAT2-OFF","GEN1-content","GEN2-content","GEN-1-num-label","GEN-2-num-label","GEN1-off","GEN2-off","GEN1-num-label","GEN2-num-label","EXTPWR-label",
 		"ELEC-ACESS-SHED-label","ELEC-DCBAT-label","ELEC-DCESS-label","ELEC-DC2-label","ELEC-DC1-label","ELEC-AC1-label","ELEC-AC2-label","ELEC-ACESS-label","ELEC-Line-ESSTR-DCESS-off","ELEC-Line-Emergen-ESSTR-off"];
@@ -1351,19 +1351,19 @@ var canvas_lowerECAM_elec = {
 		me["TR1Volt"].setText(sprintf("%s", math.round(tr1_v)));
 		me["TR1Ampere"].setText(sprintf("%s", math.round(tr1_a)));
 
-		if (tr1_v < 25 or tr1_v > 31 or tr1_a < 5) {
+		if (tr1_v <= 25 or tr1_v >= 31 or tr1_a <= 5) {
 			me["TR1-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["TR1-label"].setColor(0.8078,0.8039,0.8078);
 		}
 
-		if (tr1_v < 25 or tr1_v > 31) {
+		if (tr1_v <= 25 or tr1_v >= 31) {
 			me["TR1Volt"].setColor(0.7333,0.3803,0);
 		} else {
 			me["TR1Volt"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		if (tr1_a < 5) {
+		if (tr1_a <= 5) {
 			me["TR1Ampere"].setColor(0.7333,0.3803,0);
 		} else {
 			me["TR1Ampere"].setColor(0.0509,0.7529,0.2941);
@@ -1377,19 +1377,19 @@ var canvas_lowerECAM_elec = {
 		me["TR2Volt"].setText(sprintf("%s", math.round(tr2_v)));
 		me["TR2Ampere"].setText(sprintf("%s", math.round(tr2_a)));
 
-		if (tr2_v < 25 or tr2_v > 31 or tr2_a < 5) {
+		if (tr2_v <= 25 or tr2_v >= 31 or tr2_a <= 5) {
 			me["TR2-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["TR2-label"].setColor(0.8078,0.8039,0.8078);
 		}
 
-		if (tr2_v < 25 or tr2_v > 31) {
+		if (tr2_v <= 25 or tr2_v >= 31) {
 			me["TR2Volt"].setColor(0.7333,0.3803,0);
 		} else {
 			me["TR2Volt"].setColor(0.0509,0.7529,0.2941);
 		}
 
-		if (tr2_a < 5) {
+		if (tr2_a <= 5) {
 			me["TR2Ampere"].setColor(0.7333,0.3803,0);
 		} else {
 			me["TR2Ampere"].setColor(0.0509,0.7529,0.2941);
@@ -1403,19 +1403,19 @@ var canvas_lowerECAM_elec = {
 			me["ESSTR-Volt"].setText(sprintf("%s", math.round(essTrvolts)));
 			me["ESSTR-Ampere"].setText(sprintf("%s", math.round(essTramps)));
 			
-			if (essTrvolts < 25 or essTrvolts > 31 or essTramps < 5) {
+			if (essTrvolts <= 25 or essTrvolts >= 31 or essTramps <= 5) {
 				me["ESSTR"].setColor(0.7333,0.3803,0);
 			} else {
 				me["ESSTR"].setColor(0.8078,0.8039,0.8078);
 			}
 			
-			if (essTrvolts < 25 or essTrvolts > 31) {
+			if (essTrvolts <= 25 or essTrvolts >= 31) {
 				me["ESSTR-Volt"].setColor(0.7333,0.3803,0);
 			} else {
 				me["ESSTR-Volt"].setColor(0.0509,0.7529,0.2941);
 			}
 			
-			if (essTramps < 5) {
+			if (essTramps <= 5) {
 				me["ESSTR-Ampere"].setColor(0.7333,0.3803,0);
 			} else {
 				me["ESSTR-Ampere"].setColor(0.0509,0.7529,0.2941);
@@ -1439,19 +1439,19 @@ var canvas_lowerECAM_elec = {
 			me["EmergenVolt"].setText(sprintf("%s", math.round(systems.ELEC.Source.EmerGen.voltsRelay.getValue())));
 			me["EmergenHz"].setText(sprintf("%s", math.round(systems.ELEC.Source.EmerGen.hertz.getValue())));
 			
-			if (systems.ELEC.Source.EmerGen.voltsRelay.getValue() > 120 or systems.ELEC.Source.EmerGen.voltsRelay.getValue() < 110 or systems.ELEC.Source.EmerGen.hertz.getValue() > 410 or systems.ELEC.Source.EmerGen.hertz.getValue() < 390) {
+			if (systems.ELEC.Source.EmerGen.voltsRelay.getValue() >= 120 or systems.ELEC.Source.EmerGen.voltsRelay.getValue() <= 110 or systems.ELEC.Source.EmerGen.hertz.getValue() >= 410 or systems.ELEC.Source.EmerGen.hertz.getValue() <= 390) {
 				me["Emergen-Label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Emergen-Label"].setColor(0.8078,0.8039,0.8078);
 			}
 
-			if (systems.ELEC.Source.EmerGen.voltsRelay.getValue() > 120 or systems.ELEC.Source.EmerGen.voltsRelay.getValue() < 110) {
+			if (systems.ELEC.Source.EmerGen.voltsRelay.getValue() >= 120 or systems.ELEC.Source.EmerGen.voltsRelay.getValue() <= 110) {
 				me["EmergenVolt"].setColor(0.7333,0.3803,0);
 			} else {
 				me["EmergenVolt"].setColor(0.0509,0.7529,0.2941);
 			}
 
-			if (systems.ELEC.Source.EmerGen.hertz.getValue() > 410 or systems.ELEC.Source.EmerGen.hertz.getValue() < 390) {
+			if (systems.ELEC.Source.EmerGen.hertz.getValue() >= 410 or systems.ELEC.Source.EmerGen.hertz.getValue() <= 390) {
 				me["EmergenHz"].setColor(0.7333,0.3803,0);
 			} else {
 				me["EmergenHz"].setColor(0.0509,0.7529,0.2941);
@@ -1469,14 +1469,18 @@ var canvas_lowerECAM_elec = {
 
 		if (eng1_running.getValue() == 0) {
 			me["ELEC-IDG-1-num-label"].setColor(0.7333,0.3803,0);
+			me["GEN1-num-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ELEC-IDG-1-num-label"].setColor(0.8078,0.8039,0.8078);
+			me["GEN1-num-label"].setColor(0.8078,0.8039,0.8078);
 		}
 		
 		if (eng2_running.getValue() == 0) {
 			me["ELEC-IDG-2-num-label"].setColor(0.7333,0.3803,0);
+			me["GEN2-num-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["ELEC-IDG-2-num-label"].setColor(0.8078,0.8039,0.8078);
+			me["GEN2-num-label"].setColor(0.8078,0.8039,0.8078);
 		}
 			
 		# IDG 2
@@ -1492,36 +1496,16 @@ var canvas_lowerECAM_elec = {
 		if (systems.ELEC.Switch.gen1.getValue() == 0) {
 			me["GEN1-content"].hide();
 			me["GEN1-off"].show();
-			if (systems.ELEC.Source.IDG1.gcrRelay.getValue()) {
-				me["GEN1-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["GEN1-label"].setColor(0.8078,0.8039,0.8078);
-			}
-
-			if (eng1_running.getValue() == 0) {
-				me["GEN1-num-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["GEN1-num-label"].setColor(0.8078,0.8039,0.8078);
-			}
+			me["GEN1-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["GEN1-content"].show();
 			me["GEN1-off"].hide();
-			# me["Gen1Load"].setText(sprintf("%s", math.round(gen1_load.getValue())));
+			
+			me["Gen1Load"].setText(sprintf("%s", math.round(gen1_load.getValue())));
 			me["Gen1Volt"].setText(sprintf("%s", math.round(systems.ELEC.Source.IDG1.volts.getValue())));
-
-			if (systems.ELEC.Source.IDG1.hertz.getValue() == 0) {
-				me["Gen1Hz"].setText(sprintf("XX"));
-			} else {
-				me["Gen1Hz"].setText(sprintf("%s", math.round(systems.ELEC.Source.IDG1.hertz.getValue())));
-			}
-
-			if (eng1_running.getValue() == 0) {
-				me["GEN1-num-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["GEN1-num-label"].setColor(0.8078,0.8039,0.8078);
-			}
-
-			if (systems.ELEC.Source.IDG1.volts.getValue() > 120 or systems.ELEC.Source.IDG1.volts.getValue() < 110 or systems.ELEC.Source.IDG1.hertz.getValue() > 410 or systems.ELEC.Source.IDG1.hertz.getValue() < 390 or gen1_load.getValue() >= 110) {
+			me["Gen1Hz"].setText(sprintf("%s", math.round(systems.ELEC.Source.IDG1.hertz.getValue())));
+			
+			if (systems.ELEC.Source.IDG1.volts.getValue() >= 120 or systems.ELEC.Source.IDG1.volts.getValue() <= 110 or systems.ELEC.Source.IDG1.hertz.getValue() >= 410 or systems.ELEC.Source.IDG1.hertz.getValue() < 390 or gen1_load.getValue() >= 110) {
 				me["GEN1-label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["GEN1-label"].setColor(0.8078,0.8039,0.8078);
@@ -1533,13 +1517,13 @@ var canvas_lowerECAM_elec = {
 				me["Gen1Load"].setColor(0.0509,0.7529,0.2941);
 			}
 
-			if (systems.ELEC.Source.IDG1.volts.getValue() > 120 or systems.ELEC.Source.IDG1.volts.getValue() < 110) {
+			if (systems.ELEC.Source.IDG1.volts.getValue() >= 120 or systems.ELEC.Source.IDG1.volts.getValue() <= 110) {
 				me["Gen1Volt"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen1Volt"].setColor(0.0509,0.7529,0.2941);
 			}
 
-			if (systems.ELEC.Source.IDG1.hertz.getValue() > 410 or systems.ELEC.Source.IDG1.hertz.getValue() < 390) {
+			if (systems.ELEC.Source.IDG1.hertz.getValue() >= 410 or systems.ELEC.Source.IDG1.hertz.getValue() <= 390) {
 				me["Gen1Hz"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen1Hz"].setColor(0.0509,0.7529,0.2941);
@@ -1550,35 +1534,16 @@ var canvas_lowerECAM_elec = {
 		if (systems.ELEC.Switch.gen2.getValue() == 0) {
 			me["GEN2-content"].hide();
 			me["GEN2-off"].show();
-			if (systems.ELEC.Source.IDG2.gcrRelay.getValue()) {
-				me["GEN2-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["GEN2-label"].setColor(0.8078,0.8039,0.8078);
-			}
-
-			if (eng2_running.getValue() == 0) {
-				me["GEN2-num-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["GEN2-num-label"].setColor(0.8078,0.8039,0.8078);
-			}
+			me["GEN2-label"].setColor(0.7333,0.3803,0);
 		} else {
 			me["GEN2-content"].show();
 			me["GEN2-off"].hide();
-			# me["Gen2Load"].setText(sprintf("%s", math.round(gen2_load.getValue())));
+			
+			me["Gen2Load"].setText(sprintf("%s", math.round(gen2_load.getValue())));
 			me["Gen2Volt"].setText(sprintf("%s", math.round(systems.ELEC.Source.IDG2.volts.getValue())));
-			if (systems.ELEC.Source.IDG2.hertz.getValue() == 0) {
-				me["Gen2Hz"].setText(sprintf("XX"));
-			} else {
-				me["Gen2Hz"].setText(sprintf("%s", math.round(systems.ELEC.Source.IDG2.hertz.getValue())));
-			}
-
-			if (eng2_running.getValue() == 0) {
-				me["GEN2-num-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["GEN2-num-label"].setColor(0.8078,0.8039,0.8078);
-			}
-
-			if (systems.ELEC.Source.IDG2.volts.getValue() > 120 or systems.ELEC.Source.IDG2.volts.getValue() < 110 or systems.ELEC.Source.IDG2.hertz.getValue() > 410 or systems.ELEC.Source.IDG2.hertz.getValue() < 390 or gen2_load.getValue() >= 110) {
+			me["Gen2Hz"].setText(sprintf("%s", math.round(systems.ELEC.Source.IDG2.hertz.getValue())));
+			
+			if (systems.ELEC.Source.IDG2.volts.getValue() >= 120 or systems.ELEC.Source.IDG2.volts.getValue() <= 110 or systems.ELEC.Source.IDG2.hertz.getValue() >= 410 or systems.ELEC.Source.IDG2.hertz.getValue() < 390 or gen2_load.getValue() >= 110) {
 				me["GEN2-label"].setColor(0.7333,0.3803,0);
 			} else {
 				me["GEN2-label"].setColor(0.8078,0.8039,0.8078);
@@ -1590,14 +1555,13 @@ var canvas_lowerECAM_elec = {
 				me["Gen2Load"].setColor(0.0509,0.7529,0.2941);
 			}
 
-
-			if (systems.ELEC.Source.IDG2.volts.getValue() > 120 or systems.ELEC.Source.IDG2.volts.getValue() < 110) {
+			if (systems.ELEC.Source.IDG2.volts.getValue() >= 120 or systems.ELEC.Source.IDG2.volts.getValue() <= 110) {
 				me["Gen2Volt"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen2Volt"].setColor(0.0509,0.7529,0.2941);
 			}
 
-			if (systems.ELEC.Source.IDG2.hertz.getValue() > 410 or systems.ELEC.Source.IDG2.hertz.getValue() < 390) {
+			if (systems.ELEC.Source.IDG2.hertz.getValue() >= 410 or systems.ELEC.Source.IDG2.hertz.getValue() <= 390) {
 				me["Gen2Hz"].setColor(0.7333,0.3803,0);
 			} else {
 				me["Gen2Hz"].setColor(0.0509,0.7529,0.2941);
@@ -1682,6 +1646,16 @@ var canvas_lowerECAM_elec = {
 			}
 		}
 
+		# STAT INV
+		if (systems.ELEC.Relay.relay15XE2.getValue()) {
+			me["STATINV-group"].show();
+			me["StatVolt"].setText(sprintf("%s",systems.ELEC.Source.Inverter.volts.getValue()));
+			me["StatHertz"].setText(sprintf("%s",systems.ELEC.Source.Inverter.hertz.getValue()));
+		} else {
+			me["STATINV-group"].hide();
+		}
+		
+		# GALLEY
 		if (systems.ELEC.SomeThing.galley.getValue()) {
 			me["GalleyShed"].show();
 		} else {
