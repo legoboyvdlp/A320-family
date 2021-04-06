@@ -49,7 +49,7 @@ if (aero == "A320-200-CFM") {
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/CFM-Dirt-test-s.png");
 }
 
-var elements = ["Fuselage", "Wings", "Hstabs", "ElevatorL", "ElevatorR", "FlapL1", "FlapL2", "FlapR1", "FlapR2", "SpoilerL1", "SpoilerL2", "SpoilerL3", "SpoilerL4", "SpoilerL5", "SpoilerR1", "SpoilerR2", "SpoilerR3", "SpoilerR4", "SpoilerR5", "DoorL1", "DoorL4", "DoorR1", "DoorR4", "Cargo1", "Cargo2", "Cargo3", "MLGGearDoorR", "MLGGearDoorL", "MLGWingDoorR1", "MLGWingDoorL1", "MLGWingDoorR2", "MLGWingDoorL2", "NLGForewardDoorL", "NLGForewardDoorR", "NLGAftDoorL", "NLGAftDoorR", "GPUServiceDoor", "AvionicsVentDoor", "OutflowValveDoor1", "OutflowValveDoor2", "ApuFlap", "Rudder", "Sharklet", "WingtipFence"];
+var elements = ["Fuselage", "Wings", "Hstabs", "ElevatorL", "ElevatorR", "FlapL1", "FlapL2", "FlapR1", "FlapR2", "SpoilerL1", "SpoilerL2", "SpoilerL3", "SpoilerL4", "SpoilerL5", "SpoilerR1", "SpoilerR2", "SpoilerR3", "SpoilerR4", "SpoilerR5", "DoorL1", "DoorL4", "DoorR1", "DoorR4", "Cargo1", "Cargo2", "Cargo3", "MLGGearDoorR", "MLGGearDoorL", "MLGWingDoorR1", "MLGWingDoorL1", "MLGWingDoorR2", "MLGWingDoorL2", "NLGForewardDoorL", "NLGForewardDoorR", "NLGAftDoorL", "NLGAftDoorR", "GPUServiceDoor", "AvionicsVentDoor", "OutflowValveDoor1", "OutflowValveDoor2", "ApuFlap", "Rudder", "Sharklet", "WingtipFence", "RatDoorL", "RatDoorR"];
 livery.createTarget("fuselage", elements, "/sim/model/livery/texture-fuselage", resolution=16384);
 livery.addLayer("fuselage", "dirt", "Aircraft/A320-family/Models/seam-dirt.png");
 
