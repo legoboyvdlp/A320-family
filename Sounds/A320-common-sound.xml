@@ -1195,7 +1195,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state1</property>
+					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 					<value>IDLE</value>
 				</equals>
 			</condition>
@@ -1210,7 +1210,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state2</property>
+					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 					<value>IDLE</value>
 				</equals>
 			</condition>
@@ -1225,7 +1225,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state1</property>
+					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 					<value>MAN</value>
 				</equals>
 			</condition>
@@ -1240,7 +1240,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state2</property>
+					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 					<value>MAN</value>
 				</equals>
 			</condition>
@@ -1255,7 +1255,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state1</property>
+					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 					<value>CL</value>
 				</equals>
 			</condition>
@@ -1270,7 +1270,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state2</property>
+					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 					<value>CL</value>
 				</equals>
 			</condition>
@@ -1285,7 +1285,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state1</property>
+					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 					<value>MAN THR</value>
 				</equals>
 			</condition>
@@ -1300,7 +1300,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state2</property>
+					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 					<value>MAN THR</value>
 				</equals>
 			</condition>
@@ -1315,7 +1315,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state1</property>
+					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 					<value>MCT</value>
 				</equals>
 			</condition>
@@ -1330,7 +1330,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state2</property>
+					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 					<value>MCT</value>
 				</equals>
 			</condition>
@@ -1345,7 +1345,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state1</property>
+					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 					<value>TOGA</value>
 				</equals>
 			</condition>
@@ -1360,7 +1360,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/systems/thrust/state2</property>
+					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 					<value>TOGA</value>
 				</equals>
 			</condition>
@@ -1375,7 +1375,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
+					<property>/controls/engines/engine[0]/reverse-cmd</property>
 					<value>0</value>
 				</equals>
 			</condition>
@@ -1390,7 +1390,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
+					<property>/controls/engines/engine[1]/reverse-cmd</property>
 					<value>0</value>
 				</equals>
 			</condition>
@@ -1405,7 +1405,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
+					<property>/controls/engines/engine[0]/reverse-cmd</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1420,7 +1420,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
+					<property>/controls/engines/engine[1]/reverse-cmd</property>
 					<value>1</value>
 				</equals>
 			</condition>

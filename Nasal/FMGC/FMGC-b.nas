@@ -179,7 +179,7 @@ var Custom = {
 		athrOff: props.globals.initNode("/it-autoflight/sound/athrsound", 0, "BOOL"),
 		enableAthrOff: 0,
 	},
-	ThrLock: props.globals.getNode("/systems/thrust/thr-locked", 1)
+	ThrLock: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked", 1)
 };
 
 var ITAF = {

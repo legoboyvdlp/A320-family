@@ -53,7 +53,7 @@
 						<value>0</value>
 					</equals>
 					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</not-equals>
 				</and>
@@ -111,7 +111,7 @@
 						<value>0</value>
 					</equals>
 					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</not-equals>
 				</and>
@@ -151,7 +151,7 @@
 						<value>0</value>
 					</equals>
 					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</not-equals>
 					<or>
@@ -181,27 +181,27 @@
 					<or>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/systems/thrust/lim-flex</property>
+								<property>/fdm/jsbsim/fadec/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
 								<equals>
-									<property>/systems/thrust/state1</property>
+									<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 									<value>MCT</value>
 								</equals>
 								<equals>
-									<property>/systems/thrust/state2</property>
+									<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 									<value>MCT</value>
 								</equals>
 							</or>
 						</and>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<or>
@@ -211,7 +211,7 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state1</property>
+										<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
@@ -221,26 +221,26 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state2</property>
+										<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
 							</or>
 						</and>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>CL</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>CL</value>
 						</equals>
 					</or>
@@ -274,7 +274,7 @@
 						<value>1</value>
 					</equals>
 					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</not-equals>
 					<or>
@@ -304,27 +304,27 @@
 					<or>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/systems/thrust/lim-flex</property>
+								<property>/fdm/jsbsim/fadec/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
 								<equals>
-									<property>/systems/thrust/state1</property>
+									<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 									<value>MCT</value>
 								</equals>
 								<equals>
-									<property>/systems/thrust/state2</property>
+									<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 									<value>MCT</value>
 								</equals>
 							</or>
 						</and>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<or>
@@ -334,7 +334,7 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state1</property>
+										<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
@@ -344,26 +344,26 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state2</property>
+										<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
 							</or>
 						</and>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>CL</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>CL</value>
 						</equals>
 					</or>
@@ -401,7 +401,7 @@
 						<value>1</value>
 					</equals>
 					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</not-equals>
 					<or>
@@ -429,27 +429,27 @@
 					<or>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/systems/thrust/lim-flex</property>
+								<property>/fdm/jsbsim/fadec/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
 								<equals>
-									<property>/systems/thrust/state1</property>
+									<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 									<value>MCT</value>
 								</equals>
 								<equals>
-									<property>/systems/thrust/state2</property>
+									<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 									<value>MCT</value>
 								</equals>
 							</or>
 						</and>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<or>
@@ -459,7 +459,7 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state1</property>
+										<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
@@ -469,26 +469,26 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state2</property>
+										<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
 							</or>
 						</and>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>CL</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>CL</value>
 						</equals>
 					</or>
@@ -512,7 +512,7 @@
 						<value>1</value>
 					</equals>
 					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</not-equals>
 					<or>
@@ -540,27 +540,27 @@
 					<or>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/systems/thrust/lim-flex</property>
+								<property>/fdm/jsbsim/fadec/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
 								<equals>
-									<property>/systems/thrust/state1</property>
+									<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 									<value>MCT</value>
 								</equals>
 								<equals>
-									<property>/systems/thrust/state2</property>
+									<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 									<value>MCT</value>
 								</equals>
 							</or>
 						</and>
 						<and>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<or>
@@ -570,7 +570,7 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state1</property>
+										<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
@@ -580,26 +580,26 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state2</property>
+										<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
 							</or>
 						</and>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>CL</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>MAN</value>
 						</equals>
 						<equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>CL</value>
 						</equals>
 					</or>
@@ -623,33 +623,33 @@
 						<value>0</value>
 					</equals>
 					<equals>
-						<property>/systems/thrust/thr-locked</property>
+						<property>/fdm/jsbsim/fadec/thr-locked</property>
 						<value>1</value>
 					</equals>
 					<and>
 						<not>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/systems/thrust/lim-flex</property>
+								<property>/fdm/jsbsim/fadec/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
 								<equals>
-									<property>/systems/thrust/state1</property>
+									<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 									<value>MCT</value>
 								</equals>
 								<equals>
-									<property>/systems/thrust/state2</property>
+									<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 									<value>MCT</value>
 								</equals>
 							</or>
 						</not>
 						<not>
 							<equals>
-								<property>/systems/thrust/eng-out</property>
+								<property>/fdm/jsbsim/fadec/eng-out</property>
 								<value>1</value>
 							</equals>
 							<or>
@@ -659,7 +659,7 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state1</property>
+										<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
@@ -669,26 +669,26 @@
 										<value>0.83</value>
 									</less-than>
 									<equals>
-										<property>/systems/thrust/state2</property>
+										<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 										<value>MAN THR</value>
 									</equals>
 								</and>
 							</or>
 						</not>
 						<not-equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>MAN</value>
 						</not-equals>
 						<not-equals>
-							<property>/systems/thrust/state1</property>
+							<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 							<value>CL</value>
 						</not-equals>
 						<not-equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>MAN</value>
 						</not-equals>
 						<not-equals>
-							<property>/systems/thrust/state2</property>
+							<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 							<value>CL</value>
 						</not-equals>
 					</and>
@@ -698,15 +698,15 @@
 		<input>
 			<condition>
 				<equals>
-					<property>/systems/thrust/thr-locked</property>
+					<property>/fdm/jsbsim/fadec/thr-locked</property>
 					<value>1</value>
 				</equals>
 			</condition>
 			<expression>
 				<div>
 					<max>
-						<property>/systems/thrust/thr-lock-cmd[0]</property>
-						<property>/systems/thrust/thr-lock-cmd[1]</property>
+						<property>/fdm/jsbsim/fadec/thr-lock-cmd[0]</property>
+						<property>/fdm/jsbsim/fadec/thr-lock-cmd[1]</property>
 					</max>
 					<table>
 						<property>/environment/temperature-degc</property>
@@ -721,11 +721,11 @@
 			<condition>
 				<and>
 					<not-equals>
-						<property>/systems/thrust/state1</property>
+						<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
 						<value>IDLE</value>
 					</not-equals>
 					<not-equals>
-						<property>/systems/thrust/state2</property>
+						<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
 						<value>IDLE</value>
 					</not-equals>
 				</and>

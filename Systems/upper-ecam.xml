@@ -125,7 +125,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/systems/thrust/epr/toga-lim</property>
+					<property>/fdm/jsbsim/fadec/epr/toga-lim</property>
 					<entry><ind>0.970</ind><dep>-139</dep></entry>
 					<entry><ind>1.000</ind><dep>-125</dep></entry>
 					<entry><ind>1.200</ind><dep> -55</dep></entry>
@@ -388,7 +388,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/systems/thrust/n1/toga-lim</property>
+					<property>/fdm/jsbsim/fadec/n1/toga-lim</property>
 					<entry><ind> 20.0</ind><dep>-131</dep></entry>
 					<entry><ind> 50.0</ind><dep> -64</dep></entry>
 					<entry><ind>100.0</ind><dep>  48</dep></entry>

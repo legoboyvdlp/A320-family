@@ -247,8 +247,6 @@ var postInit = func() {
 
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
-	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
-	flexTemp: props.globals.initNode("/FMGC/internal/flex", 45, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
@@ -608,8 +606,8 @@ var masterFMGC = maketimer(0.2, func {
 	alt = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 	# cruiseft = FMGCInternal.crzFt;
 	# cruiseft_b = FMGCInternal.crzFt - 200;
-	state1 = pts.Systems.Thrust.state[0].getValue();
-	state2 = pts.Systems.Thrust.state[1].getValue();
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
 	accel_agl_ft = Setting.reducAglFt.getValue();
 	gear0 = pts.Gear.wow[0].getBoolValue();
 	altSel = Input.alt.getValue();

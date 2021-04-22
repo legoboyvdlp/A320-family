@@ -163,8 +163,8 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/to-flap", 0);
 	setprop("/FMGC/internal/to-ths", "0.0");
 	setprop("/FMGC/internal/flap-ths-set", 0);
-	setprop("/FMGC/internal/flex", 0);
-	setprop("/FMGC/internal/flex-set", 0);
+	setprop("/fdm/jsbsim/fadec/limit/flex-temp", 0);
+	setprop("/fdm/jsbsim/fadec/limit/flex-active-cmd", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
 	fmgc.FMGCInternal.transAlt = 18000;

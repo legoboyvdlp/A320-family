@@ -112,18 +112,18 @@ var init = func() {
 
 # Master Thrust
 var loopFMA = maketimer(0.05, func {
-	state1 = pts.Systems.Thrust.state[0].getValue();
-	state2 = pts.Systems.Thrust.state[1].getValue();
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
 	thr1 = pts.Controls.Engines.Engine.throttlePos[0].getValue();
 	thr2 = pts.Controls.Engines.Engine.throttlePos[1].getValue();
 	newthr = Modes.PFD.FMA.throttle.getValue();
-	engout = pts.Systems.Thrust.engOut.getValue();
+	engout = systems.FADEC.engOut.getValue();
 	
 	if (state1 == "TOGA" or state2 == "TOGA") {
 		if (newthr != "   ") {
 			Modes.PFD.FMA.throttle.setValue("   ");
 		}
-	} else if ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)) {
+	} else if ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
 		if (newthr != "   ") {
 			Modes.PFD.FMA.throttle.setValue("   ");
 		}
@@ -131,7 +131,7 @@ var loopFMA = maketimer(0.05, func {
 		if (newthr != "  ") {
 			Modes.PFD.FMA.throttle.setValue("  ");
 		}
-	} else if (((state1 == "MAN THR" and thr1 < 0.83) or (state2 == "MAN THR" and thr2 < 0.83)) and !engout) {
+	} else if (((state1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1])) and !engout) {
 		if (newthr != " ") {
 			Modes.PFD.FMA.throttle.setValue(" ");
 		}
@@ -176,7 +176,7 @@ var loopFMA = maketimer(0.05, func {
 		if (!Modes.PFD.FMA.athr.getValue()) {
 			Modes.PFD.FMA.athr.setValue(1);
 		}
-	} else if (athr and ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83) or (fadec.Thrust.thrustLimit.getValue() == "FLX" and (state1 == "MCT" or state2 == "MCT")) 
+	} else if (athr and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1]) or (systems.FADEC.Limit.activeMode.getValue() == "FLX" and (state1 == "MCT" or state2 == "MCT")) 
 	or state1 == "TOGA" or state2 == "TOGA") and engout) {
 		if (!Modes.PFD.FMA.athr.getValue()) {
 			Modes.PFD.FMA.athr.setValue(1);
@@ -188,11 +188,11 @@ var loopFMA = maketimer(0.05, func {
 	}
 	
 	# SRS RWY Engagement
-	flx = fadec.Thrust.limFlex.getValue();
+	flx = systems.FADEC.Limit.flexActive.getBoolValue();
 	newlat = Modes.PFD.FMA.rollMode.getValue();
 	engstate1 = pts.Engines.Engine.state[0].getValue();
 	engstate2 = pts.Engines.Engine.state[1].getValue();
-	if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and thr1 >= 0.83) or (state2 == "MAN THR" and thr2 >= 0.83)))) and (engstate1 == 3 or engstate2 == 3)) {
+	if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])))) and (engstate1 == 3 or engstate2 == 3)) {
 		# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
 		gear1 = pts.Gear.wow[0].getValue();
 		if (gear1 and FMGCInternal.v2set and Output.vert.getValue() != 7) {
@@ -627,14 +627,14 @@ setlistener("/modes/pfd/fma/athr-armed", func {
 });
 
 setlistener("/modes/pfd/fma/throttle-mode", func {
-	state1 = pts.Systems.Thrust.state[0].getValue();
-	state2 = pts.Systems.Thrust.state[1].getValue();
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
 	athr = Output.athr.getValue();
 	if (athr == 1 and state1 != "MCT" and state2 != "MCT" and state1 != "MAN THR" and state2 != "MAN THR" and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and 
-	!pts.Systems.Thrust.engOut.getValue()) {
+	!systems.FADEC.engOut.getValue()) {
 		Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
-	} else 	if (athr == 1 and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and pts.Systems.Thrust.engOut.getValue()) {
-		if (pts.Controls.Engines.Engine.throttlePos[0].getValue() < 0.83 and pts.Controls.Engines.Engine.throttlePos[1].getValue() < 0.83) {
+	} else if (athr == 1 and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and systems.FADEC.engOut.getValue()) {
+		if (systems.FADEC.detentOut[0].getValue() <= 4 and systems.FADEC.detentOut[1].getValue() <= 4) {
 			Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		}
 	}

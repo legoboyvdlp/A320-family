@@ -652,22 +652,22 @@
 		</lag_filter>
 		
 		<lag_filter name="fcs/reverse-lever[0]">
-			<input>/controls/engines/engine[0]/reverser</input>
+			<input>/controls/engines/engine[0]/reverse-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="fcs/reverse-lever[1]">
-			<input>/controls/engines/engine[1]/reverser</input>
+			<input>/controls/engines/engine[1]/reverse-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="fcs/reverse-thr-lever[0]">
-			<input>/controls/engines/engine[0]/throttle-rev</input>
+			<input>/controls/engines/engine[0]/reverse-lever</input>
 			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="fcs/reverse-thr-lever[1]">
-			<input>/controls/engines/engine[1]/throttle-rev</input>
+			<input>/controls/engines/engine[1]/reverse-lever</input>
 			<c1>20</c1>
 		</lag_filter>
 		

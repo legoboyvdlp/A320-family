@@ -91,13 +91,13 @@ var systemsInit = func() {
 	systems.FUEL.init();
 	systems.ADIRS.init();
 	systems.eng_init();
+	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();
 	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
 	fmgc.windController.reset();
-	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
 	mcdu.MCDU_init(0);
@@ -175,7 +175,7 @@ var systemsLoop = func(notification) {
 	systems.BrakeSys.update(notification);
 	systems.HFLoop(notification);
 	systems.APUController.loop();
-	fadec.FADEC.loop();
+	systems.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop(notification);
 	atc.Transponders.vector[atc.transponderPanel.atcSel - 1].update(notification);

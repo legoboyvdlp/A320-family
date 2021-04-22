@@ -2219,7 +2219,7 @@
 				<test logic="OR">
 					<test logic="AND">
 						/it-fbw/law eq 0
-						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						fcs/slat-pos-deg lt 15
 						<test logic="OR">
 							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 13.5
@@ -2237,7 +2237,7 @@
 					</test>
 					<test logic="AND">
 						/it-fbw/law eq 0
-						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						fcs/slat-pos-deg ge 15
 						<test logic="AND">
 							/systems/navigation/adr/output/aoa-1 ge 22
 							/systems/navigation/adr/operating-1 eq 1
@@ -2253,7 +2253,7 @@
 					</test>
 					<test logic="AND">
 						/it-fbw/law ne 0
-						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						fcs/slat-pos-deg lt 15
 						<test logic="OR">
 							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 8
@@ -2271,7 +2271,7 @@
 					</test>
 					<test logic="AND">
 						/it-fbw/law ne 0
-						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						fcs/slat-pos-deg ge 15
 						<test logic="AND">
 							/systems/navigation/adr/output/aoa-1 ge 14
 							/systems/navigation/adr/operating-1 eq 1
@@ -2309,8 +2309,8 @@
 		<switch name="/ECAM/warnings/logic/eng/ground-spoilers">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/fdm/jsbsim/spoilers/max-spoiler eq 1
-				/fdm/jsbsim/spoilers/main-cmd gt 0
+				spoilers/max-spoiler eq 1
+				spoilers/main-cmd gt 0
 			</test>
 		</switch>
 		
@@ -2640,25 +2640,25 @@
 				/ECAM/warnings/logic/eng/new-retard-logic ne 1
 				<test logic="OR">
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 0
+						fadec/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-2-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 1
+						fadec/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 					</test>
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 0
+						fadec/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-1-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 1
+						fadec/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 					</test>
 				</test>
@@ -2674,8 +2674,8 @@
 					/ECAM/warning-phase ne 7
 				</test>
 				<test logic="OR">
-					/controls/engines/engine[0]/throttle-rev gt 0.0
-					/controls/engines/engine[1]/throttle-rev gt 0.0
+					/controls/engines/engine[0]/reverse-lever gt 0.0
+					/controls/engines/engine[1]/reverse-lever gt 0.0
 				</test>
 			</test>
 		</switch>
@@ -3305,7 +3305,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
-				/engines/both-at-idle eq 1
+				fadec/both-at-idle eq 1
 			</test>
 		</switch>
 		
@@ -3643,7 +3643,7 @@
 					</test>
 					<test logic="AND">
 						/controls/gear/gear-down eq 1
-						/fdm/jsbsim/fcs/slat-pos-deg ge 4
+						fcs/slat-pos-deg ge 4
 					</test>
 				</test>
 				/it-autoflight/output/lat eq 4

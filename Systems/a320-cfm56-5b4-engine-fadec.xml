@@ -6,7 +6,6 @@
 <system name="A320: CFM56 Engine">
 	
 	<property value="45">fadec/limit/rated-temp</property>
-	<property value="0">fadec/limit/flex-active</property>
 	<property value="30">fadec/limit/flex-rated-temp</property>
 	<property value="27000">fadec/limit/rated-thrust</property>
 	<property value="18.9">fadec/limit/min-n1</property>
@@ -17,7 +16,7 @@
 	<property value="0">/controls/engines/engine[0]/throttle-pos</property>
 	<property value="0">/controls/engines/engine[1]/throttle-lever</property>
 	<property value="0">/controls/engines/engine[1]/throttle-pos</property>
-	<property value="0">/fdm/jsbsim/fadec/control-2/lever-n1</property>
+	<property value="20">fadec/limit/idle</property>
 	
 	<channel name="Thrust Limits">
 		
@@ -186,7 +185,7 @@
 		
 		<summer name="fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
 			<input>fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
-			<input>-/FMGC/internal/flex</input>
+			<input>-fadec/limit/flex-temp</input>
 			<input>propulsion/tat-c</input>
 		</summer>
 		
@@ -440,6 +439,200 @@
 			<c1>0.75</c1>
 			<output>fcs/throttle-pos-norm[0]</output>
 		</lag_filter>
+		
+		<switch name="fadec/control-1/detent">
+			<default value="0"/>
+			<test value="6"> <!-- TOGA -->
+				fadec/control-1/throttle-pos ge /systems/acconfig/options/fadec/toga-b
+			</test>
+			<test value="5"> <!-- MAN THR -->
+				fadec/control-1/throttle-pos gt /systems/acconfig/options/fadec/mct-t
+			</test>
+			<test value="4"> <!-- MCT/FLX -->
+				fadec/control-1/throttle-pos ge /systems/acconfig/options/fadec/mct-b
+			</test>
+			<test value="3"> <!-- MAN THR -->
+				fadec/control-1/throttle-pos gt /systems/acconfig/options/fadec/climb-t
+			</test>
+			<test value="2"> <!-- CL -->
+				fadec/control-1/throttle-pos ge /systems/acconfig/options/fadec/climb-b
+			</test>
+			<test value="1"> <!-- MAN -->
+				fadec/control-1/throttle-pos gt /systems/acconfig/options/fadec/idle-t
+			</test>
+			<output>fadec/control-1/detent-out</output>
+		</switch>
+		
+		<!-- Engine 2 -->
+		<switch name="fadec/control-2/throttle-pos">
+			<default value="/controls/engines/engine[1]/throttle"/>
+			<!--test value="0">
+				fadec/reverse-2/position-norm ne 0
+			</test-->
+			<!--test logic="AND" value="fadec/athr-cmd-2">
+			</test-->
+		</switch>
+		
+		<fcs_function name="fadec/control-2/idle-climb-n1">
+			<function>
+				<sum>
+					<property>fadec/limit/min-n1</property>
+					<product>
+						<difference>
+							<property>fadec/control-2/throttle-pos</property>
+							<property>/systems/acconfig/options/fadec/idle-t</property>
+						</difference>
+						<quotient>
+							<difference>
+								<property>fadec/limit/climb</property>
+								<property>fadec/limit/min-n1</property>
+							</difference>
+							<difference>
+								<property>/systems/acconfig/options/fadec/climb-b</property>
+								<property>/systems/acconfig/options/fadec/idle-t</property>
+							</difference>
+						</quotient>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>fadec/limit/min-n1</min>
+				<max>fadec/limit/climb</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="fadec/control-2/climb-mct-n1">
+			<function>
+				<sum>
+					<property>fadec/limit/climb</property>
+					<product>
+						<difference>
+							<property>fadec/control-2/throttle-pos</property>
+							<property>/systems/acconfig/options/fadec/climb-t</property>
+						</difference>
+						<quotient>
+							<difference>
+								<property>fadec/limit/mct</property>
+								<property>fadec/limit/climb</property>
+							</difference>
+							<difference>
+								<property>/systems/acconfig/options/fadec/mct-b</property>
+								<property>/systems/acconfig/options/fadec/climb-t</property>
+							</difference>
+						</quotient>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>fadec/limit/climb</min>
+				<max>fadec/limit/mct</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="fadec/control-2/mct-toga-n1">
+			<function>
+				<sum>
+					<property>fadec/limit/mct</property>
+					<product>
+						<difference>
+							<property>fadec/control-2/throttle-pos</property>
+							<property>/systems/acconfig/options/fadec/mct-t</property>
+						</difference>
+						<quotient>
+							<difference>
+								<property>fadec/limit/toga</property>
+								<property>fadec/limit/mct</property>
+							</difference>
+							<difference>
+								<property>/systems/acconfig/options/fadec/toga-b</property>
+								<property>/systems/acconfig/options/fadec/mct-t</property>
+							</difference>
+						</quotient>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>fadec/limit/mct</min>
+				<max>fadec/limit/toga</max>
+			</clipto>
+		</fcs_function>
+		
+		<switch name="fadec/control-2/lever-n1">
+			<default value="fadec/control-2/idle-climb-n1"/>
+			<test value="fadec/control-2/mct-toga-n1">
+				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/mct-t
+			</test>
+			<test value="fadec/control-2/climb-mct-n1">
+				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/climb-t
+			</test>
+		</switch>
+		
+		<fcs_function name="fadec/control-2/lever-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="fadec/control-2/throttle-output">
+			<default value="fadec/control-2/lever-norm"/> <!-- CHANGE THE -->
+			<!--test value="fadec/reverse-2/throttle-rev-cmd">
+				/controls/engines/engine[1]/reverse-lever gt 0
+			</test-->
+		</switch>
+		
+		<lag_filter name="fadec/control-2/throttle-fdm">
+			<input>fadec/control-2/throttle-output</input>
+			<c1>0.75</c1>
+			<output>fcs/throttle-pos-norm[1]</output>
+		</lag_filter>
+		
+		<switch name="fadec/control-2/detent">
+			<default value="0"/>
+			<test value="6"> <!-- TOGA -->
+				fadec/control-2/throttle-pos ge /systems/acconfig/options/fadec/toga-b
+			</test>
+			<test value="5"> <!-- MAN THR -->
+				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/mct-t
+			</test>
+			<test value="4"> <!-- MCT/FLX -->
+				fadec/control-2/throttle-pos ge /systems/acconfig/options/fadec/mct-b
+			</test>
+			<test value="3"> <!-- MAN THR -->
+				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/climb-t
+			</test>
+			<test value="2"> <!-- CL -->
+				fadec/control-2/throttle-pos ge /systems/acconfig/options/fadec/climb-b
+			</test>
+			<test value="1"> <!-- MAN -->
+				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/idle-t
+			</test>
+			<output>fadec/control-2/detent-out</output>
+		</switch>
+		
+		<fcs_function name="fadec/both-at-idle">
+			<function>
+				<ifthen>
+					<le>
+						<difference>
+							<max>
+								<property>/engines/engine[0]/n1-actual</property>
+								<property>/engines/engine[1]/n1-actual</property>
+							</max>
+							<value>0.005</value>
+						</difference>
+						<property>fadec/limit/idle</property>
+					</le>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
 	
 	</channel>
 	

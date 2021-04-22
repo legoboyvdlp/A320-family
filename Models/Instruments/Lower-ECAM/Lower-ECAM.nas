@@ -2447,7 +2447,7 @@ var canvas_lowerECAM_fuel = {
 			me["FFlow-weight-unit"].setText("LBS/MIN");
 		}
 
-		if (fadec.FADEC.Power.powered1.getValue() and fadec.FADEC.Power.powered2.getValue() or fadec.FADEC.Power.powerup.getValue()) {
+		if (systems.FADEC_S.Power.powered1.getValue() and systems.FADEC_S.Power.powered2.getValue() or systems.FADEC_S.Power.powerup.getValue()) {
 			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
 			if (_weight_kgs == 1) {
 				me["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((fuel_flow1.getValue() + fuel_flow2.getValue()) * LBS2KGS) / 60, 10)));

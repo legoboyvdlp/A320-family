@@ -28,14 +28,14 @@
 		<switch name="spoilers/throttle[0]">
 			<default value="/controls/engines/engine[0]/throttle"/>
 			<test logic="OR" value="0">
-				/controls/engines/engine[0]/reverser eq 1
+				/controls/engines/engine[0]/reverse-cmd eq 1
 			</test>
 		</switch>
 		
 		<switch name="spoilers/throttle[1]">
 			<default value="/controls/engines/engine[1]/throttle"/>
 			<test logic="OR" value="0">
-				/controls/engines/engine[1]/reverser eq 1
+				/controls/engines/engine[1]/reverse-cmd eq 1
 			</test>
 		</switch>
 		
