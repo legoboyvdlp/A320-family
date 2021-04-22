@@ -1,5 +1,5 @@
 # A3XX FADEC/Throttle Control System
-
+# NOTE: Needs to be redone totally - so I will be breaking this file during the development of the new one
 # Copyright (c) 2020 Josh Davidson (Octal450)
 
 if (getprop("options/eng") == "IAE") {
@@ -92,9 +92,7 @@ setlistener("/controls/engines/engine[0]/throttle-pos", func {
 					if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
 						fmgc.Input.athr.setValue(1);
 					}
-					pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
 				} else {
-					pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.95);
 				}
 			}
 			pts.Systems.Thrust.state[0].setValue("MCT");
@@ -105,7 +103,6 @@ setlistener("/controls/engines/engine[0]/throttle-pos", func {
 			if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
 				fmgc.Input.athr.setValue(1);
 			}
-			pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
 			pts.Systems.Thrust.state[0].setValue("TOGA");
 			unflex();
 		}
@@ -125,7 +122,6 @@ setlistener("/controls/engines/engine[0]/throttle-pos", func {
 		} else if (thr1 >= 0.95) {
 			pts.Systems.Thrust.state[0].setValue("TOGA");
 		}
-		pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
 	}
 }, 0, 0);
 
@@ -153,9 +149,7 @@ setlistener("/controls/engines/engine[1]/throttle-pos", func {
 					if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
 						fmgc.Input.athr.setValue(1);
 					}
-					pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 				} else {
-					pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.95);
 				}
 			}
 			pts.Systems.Thrust.state[1].setValue("MCT");
@@ -166,7 +160,6 @@ setlistener("/controls/engines/engine[1]/throttle-pos", func {
 			if (pts.Gear.wow[0].getValue() and (engstate1 == 3 or engstate2 == 3)) {
 				fmgc.Input.athr.setValue(1);
 			}
-			pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 			pts.Systems.Thrust.state[1].setValue("TOGA");
 			unflex();
 		}
@@ -186,7 +179,6 @@ setlistener("/controls/engines/engine[1]/throttle-pos", func {
 		} else if (thr2 >= 0.95) {
 			pts.Systems.Thrust.state[1].setValue("TOGA");
 		}
-		pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 	}
 }, 0, 0);
 
@@ -290,14 +282,10 @@ var thrust_loop = maketimer(0.04, func {
 			Thrust.alphaFloor.setValue(1);
 			Thrust.togaLk.setValue(0);
 			fmgc.Input.athr.setValue(1);
-			pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
-			pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 		} else if (Thrust.alphaFloor.getValue() and alpha < togaLock) {
 			fmgc.Input.athr.setValue(1);
 			Thrust.alphaFloor.setValue(0);
 			Thrust.togaLk.setValue(1);
-			pts.Controls.Engines.Engine.throttleFdm[0].setValue(0.99);
-			pts.Controls.Engines.Engine.throttleFdm[1].setValue(0.99);
 		}
 	} else {
 		Thrust.alphaFloor.setValue(0);

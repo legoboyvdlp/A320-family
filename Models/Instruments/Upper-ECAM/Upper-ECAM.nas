@@ -1028,8 +1028,8 @@ input = {
 	EPRthr_2: "/ECAM/Upper/EPRthr[1]",
 	
 	# fuel flow
-	fuelflow_1: "/engines/engine[0]/fuel-flow_actual",
-	fuelflow_2: "/engines/engine[1]/fuel-flow_actual",
+	fuelflow_1: "/engines/engine[0]/ff-actual",
+	fuelflow_2: "/engines/engine[1]/ff-actual",
 	
 	# flaps
 	flapsPos: "/controls/flight/flaps-pos",

@@ -690,20 +690,20 @@
 		</aircraft-effects>
 	</environment>	
 	
-	<fdm>
-		<jsbsim>
-			<aero>
+	<fdm n="0">
+		<jsbsim n="0">
+			<aero n="0">
 				<alpha-deg-norm type="double">0</alpha-deg-norm>
 			</aero>
-			<external_reactions>
+			<external_reactions n="0">
 				<tractor>
 					<magnitude alias="/sim/model/autopush/force-lbf"/>
 					<x alias="/sim/model/autopush/force-x"/>
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
-			<fbw>
-				<yaw>
+			<fbw n="0">
+				<yaw n="0">
 					<max-deg-switch type="double">25</max-deg-switch>
 				</yaw>
 			</fbw>
@@ -1127,6 +1127,8 @@
 		<engine n="0">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
+			<ff-actual type="double">0</ff-actual>
+			<fuel-flow_pph type="double">0</fuel-flow_pph>
 			<n1-actual type="double">0</n1-actual>
 			<n2-actual type="double">0</n2-actual>
 			<on-fire type="bool">0</on-fire>
@@ -1137,6 +1139,8 @@
 		<engine n="1">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
+			<ff-actual type="double">0</ff-actual>
+			<fuel-flow_pph type="double">0</fuel-flow_pph>
 			<n1-actual type="double">0</n1-actual>
 			<n2-actual type="double">0</n2-actual>
 			<on-fire type="bool">0</on-fire>
@@ -1197,6 +1201,14 @@
 		<acconfig n="0">
 			<autoconfig-running type="bool">0</autoconfig-running>
 			<options n="0">
+				<fadec n="0"> <!-- Configurable Detents -->
+					<climb-b type="double">0.6</climb-b>
+					<climb-t type="double">0.65</climb-t>
+					<idle-t type="double">0.01</idle-t>
+					<mct-b type="double">0.78</mct-b>
+					<mct-t type="double">0.83</mct-t>
+					<toga-b type="double">0.95</toga-b>
+				</fadec>
 				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
 			</options>
 		</acconfig>

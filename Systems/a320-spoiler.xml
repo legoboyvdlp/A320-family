@@ -107,6 +107,18 @@
 			<input>/controls/flight/speedbrake-arm</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<fcs_function name="hydraulics/spoiler-droop-rate">
+			<function>
+				<table>
+					<independentVar lookup="row">aero/qbar-psf</independentVar>
+					<tableData>
+						 9  1
+						33  6
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 	
 	</channel>
 	
@@ -130,9 +142,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-l1/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-l1/final-actuator">
 			<input>hydraulics/spoiler-l1/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-l1/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-l1/final-deg</output>
 		</actuator>
@@ -238,9 +260,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-l2/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/yellow-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-l2/final-actuator">
 			<input>hydraulics/spoiler-l2/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-l2/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-l2/final-deg</output>
 		</actuator>
@@ -297,13 +329,13 @@
 		<switch name="hydraulics/spoiler-l3/switch">
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-l3/air-extended">
-				/systems/hydraulic/yellow-psi ge 1500
+				/systems/hydraulic/blue-psi ge 1500
 				spoilers/main-gear-and eq 0
 				/systems/failures/spoilers/spoiler-l3 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-l3/ground-extended">
-				/systems/hydraulic/yellow-psi ge 1500
+				/systems/hydraulic/blue-psi ge 1500
 				spoilers/main-gear-and eq 1
 				/systems/failures/spoilers/spoiler-l3 eq 0
 				spoilers/main-cmd gt 0
@@ -324,9 +356,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-l3/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/blue-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-l3/final-actuator">
 			<input>hydraulics/spoiler-l3/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-l3/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-l3/final-deg</output>
 		</actuator>
@@ -395,7 +437,7 @@
 				spoilers/main-cmd gt 0
 			</test>			
 			<test logic="AND" value="hydraulics/spoiler-l4/retracted">
-				/systems/hydraulic/blue-psi ge 1500
+				/systems/hydraulic/yellow-psi ge 1500
 				/systems/failures/spoilers/spoiler-l4 eq 0
 				spoilers/main-cmd eq 0
 			</test>
@@ -410,9 +452,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-l4/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/yellow-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-l4/final-actuator">
 			<input>hydraulics/spoiler-l4/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-l4/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-l4/final-deg</output>
 		</actuator>
@@ -472,9 +524,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-l5/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-l5/final-actuator">
 			<input>hydraulics/spoiler-l5/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-l5/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-l5/final-deg</output>
 		</actuator>
@@ -501,9 +563,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-r1/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-r1/final-actuator">
 			<input>hydraulics/spoiler-r1/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-r1/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-r1/final-deg</output>
 		</actuator>
@@ -609,9 +681,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-r2/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/yellow-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-r2/final-actuator">
 			<input>hydraulics/spoiler-r2/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-r2/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-r2/final-deg</output>
 		</actuator>
@@ -668,13 +750,13 @@
 		<switch name="hydraulics/spoiler-r3/switch">
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-r3/air-extended">
-				/systems/hydraulic/yellow-psi ge 1500
+				/systems/hydraulic/blue-psi ge 1500
 				spoilers/main-gear-and eq 0
 				/systems/failures/spoilers/spoiler-r3 eq 0
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r3/ground-extended">
-				/systems/hydraulic/yellow-psi ge 1500
+				/systems/hydraulic/blue-psi ge 1500
 				spoilers/main-gear-and eq 1
 				/systems/failures/spoilers/spoiler-r3 eq 0
 				spoilers/main-cmd gt 0
@@ -695,9 +777,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-r3/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/blue-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-r3/final-actuator">
 			<input>hydraulics/spoiler-r3/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-r3/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-r3/final-deg</output>
 		</actuator>
@@ -766,7 +858,7 @@
 				spoilers/main-cmd gt 0
 			</test>
 			<test logic="AND" value="hydraulics/spoiler-r4/retracted">
-				/systems/hydraulic/blue-psi ge 1500
+				/systems/hydraulic/yellow-psi ge 1500
 				/systems/failures/spoilers/spoiler-r4 eq 0
 				spoilers/main-cmd eq 0
 			</test>
@@ -781,9 +873,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-r4/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/yellow-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-r4/final-actuator">
 			<input>hydraulics/spoiler-r4/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-r4/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-r4/final-deg</output>
 		</actuator>
@@ -843,9 +945,19 @@
 			<gain>50.0</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/spoiler-r5/rate">
+			<default value="hydraulics/spoiler-droop-rate"/>
+			<test value="100">
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+			<test value="35">
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/spoiler-r5/final-actuator">
 			<input>hydraulics/spoiler-r5/cmd-deg</input>
-			<rate_limit>35</rate_limit>
+			<rate_limit>hydraulics/spoiler-r5/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/spoiler-r5/final-deg</output>
 		</actuator>
