@@ -1,7 +1,5 @@
 # A3XX FMGC/Autoflight
-# Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
-
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var at = nil;
 var athr = nil;
@@ -284,38 +282,137 @@ var loopFMA_b = func {
 	}
 }
 
-# Master Lateral
-setlistener("/it-autoflight/mode/lat", func {
-	latText = Text.lat.getValue();
-	newlat = Modes.PFD.FMA.rollMode.getValue();
-	if (latText == "LNAV") {
-		if (newlat != "NAV") {
-			Modes.PFD.FMA.rollMode.setValue("NAV");
+# Master FMA
+var updateFma = {
+	lat: func() {
+		latText = Text.lat.getValue();
+		newlat = Modes.PFD.FMA.rollMode.getValue();
+		if (latText == "LNAV") {
+			if (newlat != "NAV") {
+				Modes.PFD.FMA.rollMode.setValue("NAV");
+			}
+		} else if (latText == "LOC") {
+			if (newlat != "LOC*" and newlat != "LOC") {
+				Modes.PFD.FMA.rollMode.setValue("LOC*");
+				locupdate.start();
+			}
+		} else if (latText == "ALGN") {
+			if (newlat != " ") {
+				Modes.PFD.FMA.rollMode.setValue(" ");
+			}
+		} else if (latText == "RLOU") {
+			if (newlat != " ") {
+				Modes.PFD.FMA.rollMode.setValue(" ");
+			}
+		} else if (latText == "T/O") {
+			if (newlat != "RWY") {
+				Modes.PFD.FMA.rollMode.setValue("RWY");
+			}
+		} else if (latText == "") {
+			if (newlat != " ") {
+				Modes.PFD.FMA.rollMode.setValue(" ");
+			}
 		}
-	} else if (latText == "LOC") {
-		if (newlat != "LOC*" and newlat != "LOC") {
-			Modes.PFD.FMA.rollMode.setValue("LOC*");
-			locupdate.start();
+	},
+	vert: func() {
+		vertText = Text.vert.getValue();
+		newvert = Modes.PFD.FMA.pitchMode.getValue();
+		newvertarm = Modes.PFD.FMA.pitchMode2Armed.getValue();
+		if (vertText == "ALT HLD") {
+			altvert();
+			if (newvertarm != " ") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
+			}
+		} else if (vertText == "ALT CAP") {
+			altvert();
+			if (newvertarm != " ") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
+			}
+		} else if (vertText == "V/S") {
+			if (newvert != "V/S") {
+				Modes.PFD.FMA.pitchMode.setValue("V/S");
+			}
+			if (newvertarm != "ALT") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
+			}
+		} else if (vertText == "G/S") {
+			if (newvert != "G/S*" and newvert != "G/S") {
+				Modes.PFD.FMA.pitchMode.setValue("G/S*");
+				gsupdate.start();
+			}
+			if (newvertarm != " ") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
+			}
+		} else if (vertText == "SPD CLB") {
+			if (newvert != "OP CLB") {
+				Modes.PFD.FMA.pitchMode.setValue("OP CLB");
+			}
+			if (newvertarm != "ALT") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
+			}
+		} else if (vertText == "SPD DES") {
+			if (newvert != "OP DES") {
+				Modes.PFD.FMA.pitchMode.setValue("OP DES");
+			}
+			if (newvertarm != "ALT") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
+			}
+		} else if (vertText == "FPA") {
+			if (newvert != "FPA") {
+				Modes.PFD.FMA.pitchMode.setValue("FPA");
+			}
+			if (newvertarm != "ALT") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
+			}
+		} else if (vertText == "LAND") {
+			if (newvert != "LAND") {
+				Modes.PFD.FMA.pitchMode.setValue("LAND");
+			}
+		} else if (vertText == "FLARE") {
+			if (newvert != "FLARE") {
+				Modes.PFD.FMA.pitchMode.setValue("FLARE");
+			}
+		} else if (vertText == "ROLLOUT") {
+			if (newvert != "ROLL OUT") {
+				Modes.PFD.FMA.pitchMode.setValue("ROLL OUT");
+			}
+		} else if (vertText == "T/O CLB") {
+			if (newvert != "SRS") {
+				Modes.PFD.FMA.pitchMode.setValue("SRS");
+			}
+			updatePitchArm2();
+		} else if (vertText == "G/A CLB") {
+			if (newvert != "SRS") {
+				Modes.PFD.FMA.pitchMode.setValue("SRS");
+			}
+			if (newvertarm != "ALT") {
+				Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
+			}
+		} else if (vertText == "") {
+			if (newvert != " ") {
+				Modes.PFD.FMA.pitchMode.setValue(" ");
+			}
+			updatePitchArm2();
 		}
-	} else if (latText == "ALGN") {
-		if (newlat != " ") {
-			Modes.PFD.FMA.rollMode.setValue(" ");
+		altvert();
+	},
+	arm: func() {
+		if (Output.locArm.getBoolValue()) {
+			Modes.PFD.FMA.rollModeArmed.setValue("LOC");
+		} else if (Output.lnavArm.getBoolValue()) {
+			Modes.PFD.FMA.rollModeArmed.setValue("NAV");
+		} else {
+			Modes.PFD.FMA.rollModeArmed.setValue(" ");
 		}
-	} else if (latText == "RLOU") {
-		if (newlat != " ") {
-			Modes.PFD.FMA.rollMode.setValue(" ");
+		if (Output.apprArm.getBoolValue()) {
+			Modes.PFD.FMA.pitchModeArmed.setValue("G/S");
+		} else {
+			Modes.PFD.FMA.pitchModeArmed.setValue(" ");
 		}
-	} else if (latText == "T/O") {
-		if (newlat != "RWY") {
-			Modes.PFD.FMA.rollMode.setValue("RWY");
-		}
-	} else if (latText == " ") {
-		if (newlat != " ") {
-			Modes.PFD.FMA.rollMode.setValue(" ");
-		}
-	}
-});
+	},
+};
 
+# Lateral Special
 var locupdate = maketimer(0.5, func {
 	latText = Text.lat.getValue();
 	newlat = Modes.PFD.FMA.rollMode.getValue();
@@ -330,90 +427,7 @@ var locupdate = maketimer(0.5, func {
 	}
 });
 
-# Master Vertical
-setlistener("/it-autoflight/mode/vert", func {
-	vertText = Text.vert.getValue();
-	newvert = Modes.PFD.FMA.pitchMode.getValue();
-	newvertarm = Modes.PFD.FMA.pitchMode2Armed.getValue();
-	if (vertText == "ALT HLD") {
-		altvert();
-		if (newvertarm != " ") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
-		}
-	} else if (vertText == "ALT CAP") {
-		altvert();
-		if (newvertarm != " ") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
-		}
-	} else if (vertText == "V/S") {
-		if (newvert != "V/S") {
-			Modes.PFD.FMA.pitchMode.setValue("V/S");
-		}
-		if (newvertarm != "ALT") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
-		}
-	} else if (vertText == "G/S") {
-		if (newvert != "G/S*" and newvert != "G/S") {
-			Modes.PFD.FMA.pitchMode.setValue("G/S*");
-			gsupdate.start();
-		}
-		if (newvertarm != " ") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue(" ");
-		}
-	} else if (vertText == "SPD CLB") {
-		if (newvert != "OP CLB") {
-			Modes.PFD.FMA.pitchMode.setValue("OP CLB");
-		}
-		if (newvertarm != "ALT") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
-		}
-	} else if (vertText == "SPD DES") {
-		if (newvert != "OP DES") {
-			Modes.PFD.FMA.pitchMode.setValue("OP DES");
-		}
-		if (newvertarm != "ALT") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
-		}
-	} else if (vertText == "FPA") {
-		if (newvert != "FPA") {
-			Modes.PFD.FMA.pitchMode.setValue("FPA");
-		}
-		if (newvertarm != "ALT") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
-		}
-	} else if (vertText == "LAND") {
-		if (newvert != "LAND") {
-			Modes.PFD.FMA.pitchMode.setValue("LAND");
-		}
-	} else if (vertText == "FLARE") {
-		if (newvert != "FLARE") {
-			Modes.PFD.FMA.pitchMode.setValue("FLARE");
-		}
-	} else if (vertText == "ROLLOUT") {
-		if (newvert != "ROLL OUT") {
-			Modes.PFD.FMA.pitchMode.setValue("ROLL OUT");
-		}
-	} else if (vertText == "T/O CLB") {
-		if (newvert != "SRS") {
-			Modes.PFD.FMA.pitchMode.setValue("SRS");
-		}
-		updatePitchArm2();
-	} else if (vertText == "G/A CLB") {
-		if (newvert != "SRS") {
-			Modes.PFD.FMA.pitchMode.setValue("SRS");
-		}
-		if (newvertarm != "ALT") {
-			Modes.PFD.FMA.pitchMode2Armed.setValue("ALT");
-		}
-	} else if (vertText == " ") {
-		if (newvert != " ") {
-			Modes.PFD.FMA.pitchMode.setValue(" ");
-		}
-		updatePitchArm2();
-	}
-	altvert();
-});
-
+# Vertical Special
 var updatePitchArm2 = func {
 	newvertarm = Modes.PFD.FMA.pitchMode2Armed.getValue();
 	if (newvertarm != "CLB" and FMGCInternal.v2set) {
@@ -464,53 +478,6 @@ var altvert = func {
 		}
 	}
 }
-
-# Arm HDG or NAV
-setlistener("/it-autoflight/mode/arm", func {
-	arm = Text.arm.getValue();
-	newarm = Modes.PFD.FMA.rollModeArmed.getValue();
-	if (arm == "HDG") {
-		if (newarm != "HDG") {
-			Modes.PFD.FMA.rollModeArmed.setValue(" ");
-		}
-	} else if (arm == "LNV") {
-		if (newarm != "NAV") {
-			Modes.PFD.FMA.rollModeArmed.setValue("NAV");
-		}
-	} else if (arm == " ") {
-		if (newarm != " ") {
-			Modes.PFD.FMA.rollModeArmed.setValue(" ");
-		}
-	}
-});
-
-# Arm LOC
-setlistener("/it-autoflight/output/loc-armed", func {
-	newarm = Modes.PFD.FMA.rollModeArmed.getValue();
-	if (Output.locArm.getValue()) {
-		if (newarm != "LOC") {
-			Modes.PFD.FMA.rollModeArmed.setValue("LOC");
-		}
-	} else {
-		if (newarm != " ") {
-			Modes.PFD.FMA.rollModeArmed.setValue(" ");
-		}
-	}
-});
-
-# Arm G/S
-setlistener("/it-autoflight/output/appr-armed", func {
-	newvert2arm = Modes.PFD.FMA.pitchModeArmed.getValue();
-	if (Output.apprArm.getValue()) {
-		if (newvert2arm != "G/S") {
-			Modes.PFD.FMA.pitchModeArmed.setValue("G/S");
-		}
-	} else {
-		if (newvert2arm != " ") {
-			Modes.PFD.FMA.pitchModeArmed.setValue(" ");
-		}
-	}
-});
 
 # AP
 var ap = func {

@@ -608,7 +608,7 @@ var masterFMGC = maketimer(0.2, func {
 	# cruiseft_b = FMGCInternal.crzFt - 200;
 	state1 = systems.FADEC.detentText[0].getValue();
 	state2 = systems.FADEC.detentText[1].getValue();
-	accel_agl_ft = Setting.reducAglFt.getValue();
+	accel_agl_ft = Settings.reducAglFt.getValue();
 	gear0 = pts.Gear.wow[0].getBoolValue();
 	altSel = Input.alt.getValue();
 	
