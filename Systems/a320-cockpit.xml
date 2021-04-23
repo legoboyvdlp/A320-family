@@ -7,7 +7,23 @@
 	
 	<channel name="Animations">
 		
+		<fcs_function name="fadec/throttle-lever[0]">
+			<function>
+				<quotient>
+					<property>fadec/control-1/lever/angle</property>
+					<value>45</value>
+				</quotient>
+			</function>
+		</fcs_function>
 		
+		<fcs_function name="fadec/throttle-lever[1]">
+			<function>
+				<quotient>
+					<property>fadec/control-2/lever/angle</property>
+					<value>45</value>
+				</quotient>
+			</function>
+		</fcs_function>
 	
 	</channel>
 

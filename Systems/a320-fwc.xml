@@ -2341,14 +2341,14 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
+				fadec/throttle-lever[0] ge 0.13333333333
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
+				fadec/throttle-lever[0] ge 0.13333333333
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
@@ -2368,7 +2368,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-idle">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[0]/throttle-lever lt 0.055
+				fadec/throttle-lever[0] lt 0.055
 			</test>
 		</switch>
 		
@@ -2394,14 +2394,14 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
+				fadec/throttle-lever[1] ge 0.13333333333
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
+				fadec/throttle-lever[1] ge 0.13333333333
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
@@ -2421,7 +2421,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-idle">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[1]/throttle-lever lt 0.055
+				fadec/throttle-lever[1] lt 0.055
 			</test>
 		</switch>
 		

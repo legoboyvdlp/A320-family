@@ -141,7 +141,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(allEngFailAPU);
 		}
 		
-		if (allEngFailLevers.clearFlag == 0 and (pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 or pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01)) {
+		if (allEngFailLevers.clearFlag == 0 and (systems.FADEC.detent[0].getValue() != 0 or systems.FADEC.detent[1].getValue() != 0)) {
 			allEngFailLevers.active = 1;
 		} else {
 			ECAM_controller.warningReset(allEngFailLevers);
@@ -231,7 +231,7 @@ var messages_priority_3 = func {
 	
 	if (eng1Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng1FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
+			if (eng1FireFllever.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0) {
 				eng1FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireFllever);
@@ -297,7 +297,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng1FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng1FireGnlever.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng1FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnlever);
@@ -386,7 +386,7 @@ var messages_priority_3 = func {
 	
 	if (eng2Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng2FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng2FireFllever.clearFlag == 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng2FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireFllever);
@@ -452,7 +452,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng2FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng2FireGnlever.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng2FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnlever);
@@ -1215,7 +1215,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (phaseVar2 != 4 and warningNodes.Logic.phase5Trans.getValue() == 1) {
-			if (eng1FailThrLvrIdle.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
+			if (eng1FailThrLvrIdle.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0) {
 				eng1FailThrLvrIdle.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FailThrLvrIdle);
@@ -1422,7 +1422,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (phaseVar2 != 4 and warningNodes.Logic.phase5Trans.getValue() == 1) {
-			if (eng2FailThrLvrIdle.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng2FailThrLvrIdle.clearFlag == 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng2FailThrLvrIdle.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FailThrLvrIdle);

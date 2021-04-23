@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
-<!-- Copyright (c) 2020 Matthew Maring (mattmaring) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
@@ -883,11 +882,8 @@
 				<emer-elec-man-on type="bool">0</emer-elec-man-on>
 			</switches>
 		</electrical>
-		<engines>
+		<engines n="0">
 			<engine-start-switch type="int">1</engine-start-switch>
-			<epr-limit type="double">0.0</epr-limit>
-			<n1-limit type="double">0.0</n1-limit>
-			<thrust-limit type="string">TOGA</thrust-limit>
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
 				<cutoff-switch type="bool">true</cutoff-switch>
@@ -897,9 +893,7 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<!-- Remove these throttles... -->
-				<throttle-lever type="double">0</throttle-lever>
 				<throttle-pos type="double">0</throttle-pos>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
@@ -919,10 +913,7 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<max-athr-thrust type="double">0.94</max-athr-thrust>
-				<max-athr-thrust type="double">0.94</max-athr-thrust>
 				<!-- Remove these throttles... -->
-				<throttle-lever type="double">0</throttle-lever>
 				<throttle-pos type="double">0</throttle-pos>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
