@@ -1,7 +1,7 @@
 # Airbus A3XX FBW/Flight Control Computer System
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var mmoIAS = 0;
 var cas = 0;

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 <!-- Copyright (c) 2020 Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
@@ -704,9 +704,16 @@
 			<fadec n="0">
 				<alpha-floor type="bool">0</alpha-floor>
 				<clbreduc-ft type="double">1500</clbreduc-ft>
+				<control-1 n="0">
+					<detent-text type="string">IDLE</detent-text>
+				</control-1>
+				<control-2 n="0">
+					<detent-text type="string">IDLE</detent-text>
+				</control-2>
 				<eng-out type="bool">0</eng-out>
 				<limit n="0">
 					<active-mode type="string">T/O</active-mode>
+					<active-mode-int type="int">0</active-mode-int>
 					<flex-active type="bool">0</flex-active>
 					<flex-active-cmd type="bool">0</flex-active-cmd>
 					<flex-temp type="int">30</flex-temp>

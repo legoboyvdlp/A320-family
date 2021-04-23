@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -388,7 +388,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/fadec/n1/toga-lim</property>
+					<property>/fdm/jsbsim/fadec/limit/toga</property>
 					<entry><ind> 20.0</ind><dep>-131</dep></entry>
 					<entry><ind> 50.0</ind><dep> -64</dep></entry>
 					<entry><ind>100.0</ind><dep>  48</dep></entry>

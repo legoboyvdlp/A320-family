@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <!-- A3XX CFM56/CFM Leap/PW PurePower FADEC -->
 
@@ -216,7 +216,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/controls/engines/thrust-limit</property>
+						<property>/fdm/jsbsim/fadec/limit/active-mode</property>
 						<value>FLX</value>
 					</equals>
 					<equals>
@@ -257,7 +257,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/controls/engines/thrust-limit</property>
+						<property>/fdm/jsbsim/fadec/limit/active-mode</property>
 						<value>FLX</value>
 					</equals>
 					<equals>
@@ -333,7 +333,7 @@
 									<value>1</value>
 								</equals>
 								<equals>
-									<property>/fdm/jsbsim/fadec/flex-active</property>
+									<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 									<value>0</value>
 								</equals>
 								<equals>
@@ -383,7 +383,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -442,7 +442,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -551,7 +551,7 @@
 									<value>1</value>
 								</equals>
 								<equals>
-									<property>/fdm/jsbsim/fadec/flex-active</property>
+									<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 									<value>0</value>
 								</equals>
 								<equals>
@@ -601,7 +601,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -660,7 +660,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -748,7 +748,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -815,7 +815,7 @@
 									<value>1</value>
 								</equals>
 								<equals>
-									<property>/fdm/jsbsim/fadec/flex-active</property>
+									<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 									<value>0</value>
 								</equals>
 								<equals>
@@ -865,7 +865,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -928,7 +928,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -995,7 +995,7 @@
 									<value>1</value>
 								</equals>
 								<equals>
-									<property>/fdm/jsbsim/fadec/flex-active</property>
+									<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 									<value>0</value>
 								</equals>
 								<equals>
@@ -1045,7 +1045,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<equals>
@@ -1169,7 +1169,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/controls/engines/thrust-limit</property>
+						<property>/fdm/jsbsim/fadec/limit/active-mode</property>
 						<value>FLX</value>
 					</equals>
 					<equals>
@@ -1226,7 +1226,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/controls/engines/thrust-limit</property>
+						<property>/fdm/jsbsim/fadec/limit/active-mode</property>
 						<value>FLX</value>
 					</equals>
 					<equals>

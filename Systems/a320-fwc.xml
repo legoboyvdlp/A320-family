@@ -2640,25 +2640,25 @@
 				/ECAM/warnings/logic/eng/new-retard-logic ne 1
 				<test logic="OR">
 					<test logic="AND">
-						fadec/flex-active eq 0
+						fadec/limit/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-2-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						fadec/flex-active eq 1
+						fadec/limit/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 					</test>
 					<test logic="AND">
-						fadec/flex-active eq 0
+						fadec/limit/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-1-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						fadec/flex-active eq 1
+						fadec/limit/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 					</test>
 				</test>

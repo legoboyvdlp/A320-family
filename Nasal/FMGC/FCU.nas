@@ -1,5 +1,5 @@
 # A3XX FCU
-# Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2021 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
 var fd1 = props.globals.getNode("/it-autoflight/output/fd1", 1);

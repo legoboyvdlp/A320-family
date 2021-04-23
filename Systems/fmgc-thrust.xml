@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -185,7 +185,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
@@ -308,7 +308,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
@@ -433,7 +433,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
@@ -544,7 +544,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>
@@ -633,7 +633,7 @@
 								<value>1</value>
 							</equals>
 							<equals>
-								<property>/fdm/jsbsim/fadec/flex-active</property>
+								<property>/fdm/jsbsim/fadec/limit/flex-active</property>
 								<value>0</value>
 							</equals>
 							<or>

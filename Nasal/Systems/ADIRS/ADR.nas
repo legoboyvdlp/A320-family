@@ -148,7 +148,7 @@ var ADIRU = {
 	alignLoop: func() {
 		me._roll = pts.Orientation.roll.getValue();
 		me._pitch = pts.Orientation.pitch.getValue();
-		me._gs = pts.Velocities.groundspeed.getValue();
+		me._gs = pts.Velocities.groundspeedKt.getValue();
 		
 		# todo use IR values
 		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {

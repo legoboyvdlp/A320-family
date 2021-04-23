@@ -191,21 +191,21 @@
 				<test logic="OR">
 					<test logic="AND">
 						/controls/engines/engine[0]/throttle ge 0.779
-						fadec/flex-active eq 1
+						fadec/limit/flex-active eq 1
 					</test>
 					<test logic="AND">
 						/controls/engines/engine[0]/throttle ge 0.99
-						fadec/flex-active eq 0
+						fadec/limit/flex-active eq 0
 					</test>
 				</test>
 				<test logic="OR">
 					<test logic="AND">
 						/controls/engines/engine[1]/throttle ge 0.779
-						fadec/flex-active eq 1
+						fadec/limit/flex-active eq 1
 					</test>
 					<test logic="AND">
 						/controls/engines/engine[1]/throttle ge 0.99
-						fadec/flex-active eq 0
+						fadec/limit/flex-active eq 0
 					</test>
 				</test>
 			</test>

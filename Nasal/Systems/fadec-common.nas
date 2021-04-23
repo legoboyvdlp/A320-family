@@ -10,14 +10,16 @@ if (pts.Options.eng.getValue() == "IAE") {
 var FADEC = {
 	alphaFloor: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor"),
 	clbReduc: props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft"),
-	detentOut: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent-out", 1), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent-out", 1)],
-	detentOutTemp: [0, 0],
+	detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent", 1), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent", 1)],
+	detentTemp: [0, 0],
 	detentText: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent-text"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent-text")],
 	detentTextTemp: [0, 0],
 	engOut: props.globals.getNode("/fdm/jsbsim/fadec/eng-out"),
 	Limit: {
 		activeEpr: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-epr"),
 		activeMode: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode"),
+		activeModeInt: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode-int"), # 0 TOGA, 1 MCT, 2 CL, 3 FLX, 4 MREV
+		activeModeIntTemp: 0,
 		activeN1: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-n1"),
 		flexActive: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active"),
 		flexActiveCmd: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd"),
@@ -26,7 +28,6 @@ var FADEC = {
 	lvrClb: props.globals.getNode("/fdm/jsbsim/fadec/lvrclb"),
 	lvrClbStatus: 0,
 	togaLk: props.globals.getNode("/fdm/jsbsim/fadec/toga-lk"),
-	thrustLimit: props.globals.getNode("/controls/engines/thrust-limit"),
 	Lock: {
 		thrLockAlert: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-alert"),
 		thrLockCmd: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked"),
@@ -39,6 +40,7 @@ var FADEC = {
 	init: func() {
 		me.engOut.setBoolValue(0);
 		me.Limit.activeMode.setBoolValue("TOGA");
+		me.Limit.activeModeInt.setValue(0);
 		me.Limit.flexActive.setBoolValue(0);
 		me.Limit.flexActiveCmd.setBoolValue(0);
 		systems.FADEC_S.init();
@@ -52,12 +54,12 @@ var FADEC = {
 		}
 	},
 	cancelFlex: func() {
-		if (me.detentOut[0].getValue() != 4 and me.detentOut[1].getValue() != 4 and !pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue()) {
+		if (me.detent[0].getValue() != 4 and me.detent[1].getValue() != 4 and !pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue()) {
 			me.Limit.flexActive.setBoolValue(0);
 		}
 	},
 	idleAthrOff: func() {
-		if (me.detentOut[0].getValue() == 0 and me.detentOut[1].getValue() == 0) { # And not in TOGA LK and not in ALPHA FLOOR
+		if (me.detent[0].getValue() == 0 and me.detent[1].getValue() == 0) { # And not in TOGA LK and not in ALPHA FLOOR
 			if (fmgc.Input.athr.getValue() and pts.Position.gearAglFt.getValue() > 50) {
 				fcu.athrOff("soft");
 			} else {
@@ -66,17 +68,17 @@ var FADEC = {
 		}
 	},
 	updateDetent: func(n) {
-		me.detentOutTemp[n] = me.detentOut[n].getValue();
-		if (me.detentOutTemp[n] == 6) {
+		me.detentTemp[n] = me.detent[n].getValue();
+		if (me.detentTemp[n] == 6) {
 			me.manThrAboveMct[n] = 1;
 			me.detentText[n].setValue("TOGA");
 			if (!fmgc.Output.athr.getBoolValue() and me.canEngageAthr()) {
 				fmgc.Input.athr.setValue(1);
 			}
-		} else if (me.detentOutTemp[n] == 5) {
+		} else if (me.detentTemp[n] == 5) {
 			me.manThrAboveMct[n] = 1;
 			me.detentText[n].setValue("MAN THR");
-		} else if (me.detentOutTemp[n] == 4) {
+		} else if (me.detentTemp[n] == 4) {
 			me.manThrAboveMct[n] = 0;
 			me.detentText[n].setValue("MCT");
 			if (me.engOut.getValue() != 1 and me.Limit.flexActive.getBoolValue()) {
@@ -84,29 +86,43 @@ var FADEC = {
 					fmgc.Input.athr.setValue(1);
 				}
 			}
-		} else if (me.detentOutTemp[n] == 3) {
+		} else if (me.detentTemp[n] == 3) {
 			me.manThrAboveMct[n] = 0;
 			me.detentText[n].setValue("MAN THR");
-		} else if (me.detentOutTemp[n] == 2) {
+		} else if (me.detentTemp[n] == 2) {
 			me.manThrAboveMct[n] = 0;
 			me.detentText[n].setValue("CL");
-		} else if (me.detentOutTemp[n] == 1) {
+		} else if (me.detentTemp[n] == 1) {
 			me.manThrAboveMct[n] = 0;
 			me.detentText[n].setValue("MAN");
-		} else if (me.detentOutTemp[n] == 0) {
+		} else if (me.detentTemp[n] == 0) {
 			me.manThrAboveMct[n] = 0;
 			me.detentText[n].setValue("IDLE");
 			me.idleAthrOff();
 		}
 		
-		if (me.detentOutTemp[n] != 4) {
+		if (me.detentTemp[n] != 4) {
 			if (me.Limit.flexActiveCmd.getBoolValue()) {
 				me.cancelFlex();
 			}
 		}
 	},
 	loop: func() {
-		FADEC_S.loop();
+		FADEC_S.loop(); # Update engine specific elements
+		pts.Engines.Engine.stateTemp[0] = pts.Engines.Engine.state[0].getValue();
+		pts.Engines.Engine.stateTemp[1] = pts.Engines.Engine.state[1].getValue();
+		pts.Gear.wowTemp[1] = pts.Gear.wow[1].getValue();
+		pts.Gear.wowTemp[2] = pts.Gear.wow[2].getValue();
+		
+		if (me.Limit.flexActiveCmd.getBoolValue() and !me.n1Mode[0].getValue() and !me.n1Mode[1].getValue() and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and pts.Velocities.groundspeedKt.getValue() < 40 and (pts.Engines.Engine.stateTemp[0] == 3 or pts.Engines.Engine.stateTemp[1] == 3)) {
+			if (!me.Limit.flexActive.getBoolValue()) {
+				me.Limit.flexActive.setBoolValue(1);
+			}
+		} else if (!me.Limit.flexActiveCmd.getBoolValue() or pts.Engines.Engine.stateTemp[0] != 3 or pts.Engines.Engine.stateTemp[1] != 3) {
+			if (me.Limit.flexActive.getBoolValue()) {
+				me.Limit.flexActive.setBoolValue(0);
+			}
+		}
 	},
 	thrustFlash: func() {
 		me.detentTextTemp[0] = systems.FADEC.detentText[0].getValue();
@@ -143,13 +159,30 @@ var FADEC = {
 			}
 		}
 	},
+	updateTxt: func() {
+		me.Limit.activeModeIntTemp = me.Limit.activeModeInt.getValue();
+		if (me.Limit.activeModeIntTemp == 0) {
+			me.Limit.activeMode.setValue("TOGA");
+		} else if (me.Limit.activeModeIntTemp == 1) {
+			me.Limit.activeMode.setValue("MCT");
+		} else if (me.Limit.activeModeIntTemp == 2) {
+			me.Limit.activeMode.setValue("CLB");
+		} else if (me.Limit.activeModeIntTemp == 3) {
+			me.Limit.activeMode.setValue("FLX");
+		} else if (me.Limit.activeModeIntTemp == 4) {
+			me.Limit.activeMode.setValue("MREV");
+		}
+	},
 };
 
 var thrustFlashT = maketimer(0.5, FADEC, FADEC.thrustFlash);
 
-setlistener("/fdm/jsbsim/fadec/control-1/detent-out", func {
+setlistener("/fdm/jsbsim/fadec/control-1/detent", func() {
 	FADEC.updateDetent(0);
 }, 0, 0);
-setlistener("/fdm/jsbsim/fadec/control-2/detent-out", func {
+setlistener("/fdm/jsbsim/fadec/control-2/detent", func() {
 	FADEC.updateDetent(1);
+}, 0, 0);
+setlistener("/fdm/jsbsim/fadec/limit/active-mode-int", func() {
+	FADEC.updateTxt();
 }, 0, 0);

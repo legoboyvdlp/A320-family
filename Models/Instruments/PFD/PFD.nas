@@ -1,5 +1,5 @@
 # A3XX PFD
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var PFD_1 = nil;
 var PFD_2 = nil;
@@ -46,7 +46,7 @@ var eng0_state = props.globals.getNode("/engines/engine[0]/state", 1);
 var eng1_state = props.globals.getNode("/engines/engine[1]/state", 1);
 var alpha_floor = props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor", 1);
 var toga_lk = props.globals.getNode("/fdm/jsbsim/fadec/toga-lk", 1);
-var thrust_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
+var thrust_limit = props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode", 1);
 var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
 var lvr_clb = props.globals.getNode("/fdm/jsbsim/fadec/lvrclb", 1);
 var throt_box = props.globals.getNode("/modes/pfd/fma/throttle-mode-box", 1);

@@ -10,6 +10,7 @@
 	<property value="27000">fadec/limit/rated-thrust</property>
 	<property value="18.9">fadec/limit/min-n1</property>
 	<property value="104">fadec/limit/max-n1</property>
+	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
 	
 	<!-- Remap/remove this sh*t -->
 	<property value="0">/controls/engines/engine[0]/throttle-lever</property>
@@ -171,18 +172,6 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/toga-norm">
-			<function>
-				<table>
-					<independentVar lookup="row">fadec/limit/toga</independentVar>
-					<tableData>
-						 18.9  0
-						104.0  1
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
 		<summer name="fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
 			<input>fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
 			<input>-fadec/limit/flex-temp</input>
@@ -257,23 +246,11 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mct-norm">
-			<function>
-				<table>
-					<independentVar lookup="row">fadec/limit/mct</independentVar>
-					<tableData>
-						 18.9  0
-						104.0  1
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
 		<fcs_function name="fadec/limit/climb-ref">
 			<function>
 				<product> <!-- TEMPORARY REPLACE WITH TABLE LATER -->
 					<property>fadec/limit/toga-ref</property>
-					<value>0.9</value>
+					<value>0.91</value>
 				</product>
 			</function>
 		</fcs_function>
@@ -294,30 +271,21 @@
 				</quotient>
 			</function>
 		</fcs_function>
-		
-		<fcs_function name="fadec/limit/climb-norm">
-			<function>
-				<table>
-					<independentVar lookup="row">fadec/limit/climb</independentVar>
-					<tableData>
-						 18.9  0
-						104.0  1
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
 	
 	</channel>
 	
 	<channel name="Engine Control"> <!-- Very complicated, please don't touch if you don't understand it -->
 		
 		<!-- Engine 1 -->
+		<lag_filter name="fadec/control-1/throttle-lag">
+			<input>/controls/engines/engine[0]/throttle</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<switch name="fadec/control-1/throttle-pos">
-			<default value="/controls/engines/engine[0]/throttle"/>
+			<default value="fadec/control-1/throttle-lag"/>
 			<!--test value="0">
 				fadec/reverse-1/position-norm ne 0
-			</test-->
-			<!--test logic="AND" value="fadec/athr-cmd-1">
 			</test-->
 		</switch>
 		
@@ -460,16 +428,18 @@
 			<test value="1"> <!-- MAN -->
 				fadec/control-1/throttle-pos gt /systems/acconfig/options/fadec/idle-t
 			</test>
-			<output>fadec/control-1/detent-out</output>
 		</switch>
 		
 		<!-- Engine 2 -->
+		<lag_filter name="fadec/control-2/throttle-lag">
+			<input>/controls/engines/engine[1]/throttle</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<switch name="fadec/control-2/throttle-pos">
-			<default value="/controls/engines/engine[1]/throttle"/>
+			<default value="fadec/control-2/throttle-lag"/>
 			<!--test value="0">
 				fadec/reverse-2/position-norm ne 0
-			</test-->
-			<!--test logic="AND" value="fadec/athr-cmd-2">
 			</test-->
 		</switch>
 		
@@ -612,9 +582,9 @@
 			<test value="1"> <!-- MAN -->
 				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/idle-t
 			</test>
-			<output>fadec/control-2/detent-out</output>
 		</switch>
 		
+		<!-- Common Control Logic -->
 		<fcs_function name="fadec/both-at-idle">
 			<function>
 				<ifthen>
@@ -633,6 +603,70 @@
 				</ifthen>
 			</function>
 		</fcs_function>
+		
+		<fcs_function name="fadec/max-detent">
+			<function>
+				<max>
+					<property>fadec/control-1/detent</property>
+					<property>fadec/control-2/detent</property>
+				</max>
+			</function>
+		</fcs_function>
+		
+		<switch name="fadec/limit/eng-off-wow-switch">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/engines/engine[0]/state ne 3
+				/engines/engine[1]/state ne 3
+			</test>
+			<test value="0">
+				position/wow eq 0
+			</test>
+		</switch>
+		
+		<switch name="fadec/limit/active-mode-int">
+			<default value="0"/> <!-- TOGA -->
+			<test logic="OR" value="4"> <!-- MREV -->
+				/controls/engines/engine[0]/reverse-cmd eq 1
+				/controls/engines/engine[1]/reverse-cmd eq 1
+			</test>
+			<!--test logic="OR" value="0"> TOGA
+				alpha floor or toga lk
+			</test-->
+			<test logic="AND" value="2"> <!-- CLB -->
+				fadec/max-detent le 2
+				fadec/limit/eng-off-wow-switch eq 0
+			</test>
+			<test logic="AND" value="3"> <!-- FLX -->
+				fadec/max-detent eq 4
+				fadec/limit/flex-active eq 1
+				fadec/limit/eng-off-wow-switch eq 0
+			</test>
+			<test logic="AND" value="3"> <!-- FLX -->
+				fadec/max-detent le 4
+				fadec/limit/flex-active eq 1
+				fadec/limit/eng-off-wow-switch eq 1
+			</test>
+			<test logic="AND" value="1"> <!-- MCT -->
+				fadec/max-detent le 4
+				fadec/limit/flex-active ne 1
+				fadec/limit/eng-off-wow-switch eq 0
+			</test>
+		</switch>
+		
+		<switch name="fadec/limit/active-n1">
+			<default value="0"/>
+			<test value="fadec/limit/toga">
+				fadec/limit/active-mode-int eq 0
+			</test>
+			<test logic="OR" value="fadec/limit/mct">
+				fadec/limit/active-mode-int eq 1
+				fadec/limit/active-mode-int eq 3
+			</test>
+			<test value="fadec/limit/climb">
+				fadec/limit/active-mode-int eq 2
+			</test>
+		</switch>
 	
 	</channel>
 	

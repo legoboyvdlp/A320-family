@@ -76,7 +76,7 @@ var arrivalPage = {
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
 				
-				version = pts.Sim.Version.getValue();
+				version = pts.Sim.version.getValue();
 				if (version == "2020.2.0" or version == "2020.2.1" or version == "2020.3.0") {
 					if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
 						me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
@@ -101,7 +101,7 @@ var arrivalPage = {
 		} else {
 			if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[me.computer].approach;
-				version = pts.Sim.Version.getValue();
+				version = pts.Sim.version.getValue();
 				if (version == "2020.2.0" or version == "2020.2.1" or version == "2020.3.0") {
 					if (fmgc.flightPlanController.flightplans[me.computer].approach_trans != nil) {
 						me.selectedVIA = fmgc.flightPlanController.flightplans[me.computer].approach_trans;
@@ -111,7 +111,7 @@ var arrivalPage = {
 				}
 			} elsif (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
-				version = pts.Sim.Version.getValue();
+				version = pts.Sim.version.getValue();
 				if (version == "2020.2.0" or version == "2020.2.1" or version == "2020.3.0") {
 					if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
 						me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
@@ -237,7 +237,7 @@ var arrivalPage = {
 	},
 	
 	updateActiveVIAs: func() {
-		version = pts.Sim.Version.getValue();
+		version = pts.Sim.version.getValue();
 		if (version != "2020.2.0" and version != "2020.2.1" and version != "2020.3.0") { return; }
 				
 		if (me.selectedVIA == "NO VIA") {
@@ -509,7 +509,7 @@ var arrivalPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateVIAs: func() {
-		version = pts.Sim.Version.getValue();
+		version = pts.Sim.version.getValue();
 		if (version != "2020.2.0" and version != "2020.2.1" and version != "2020.3.0") { return; }
 		if (me.selectedApproach == nil or me.activePage != 2) {
 			me.clearVias();
@@ -753,7 +753,7 @@ var arrivalPage = {
 	},
 	arrPushbuttonLeft: func(index) {
 		if (index == 2 and me.activePage == 1 and me.selectedApproach != nil) {
-			version = pts.Sim.Version.getValue();
+			version = pts.Sim.version.getValue();
 			if (version != "2020.2.0" and version != "2020.2.1" and version != "2020.3.0") { return; }
 			me.oldPage = me.activePage;
 			me.activePage = 2;

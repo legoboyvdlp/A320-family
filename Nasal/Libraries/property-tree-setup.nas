@@ -1,5 +1,5 @@
 # A320 Property Tree Setup
-# Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
 # Nodes organized like property tree, except when lots of identical (example: Gear wow), where vectors are used to make it easier
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
@@ -78,6 +78,7 @@ var Engines = {
 		thrust: [props.globals.getNode("/engines/engine[0]/thrust-lb"), props.globals.getNode("/engines/engine[1]/thrust-lb")],
 		reverser: [props.globals.getNode("/engines/engine[0]/reverser-pos-norm"), props.globals.getNode("/engines/engine[1]/reverser-pos-norm")],
 		state: [props.globals.getNode("/engines/engine[0]/state"), props.globals.getNode("/engines/engine[1]/state")],
+		stateTemp: [0, 0],
 	},
 };
 
@@ -139,6 +140,7 @@ var Gear = {
 	position: [props.globals.getNode("/gear/gear[0]/position-norm"), props.globals.getNode("/gear/gear[1]/position-norm"), props.globals.getNode("/gear/gear[2]/position-norm")],
 	rollspeed: [props.globals.getNode("/gear/gear[0]/rollspeed-ms"), props.globals.getNode("/gear/gear[1]/rollspeed-ms"), props.globals.getNode("/gear/gear[2]/rollspeed-ms")],
 	wow: [props.globals.getNode("/gear/gear[0]/wow"), props.globals.getNode("/gear/gear[1]/wow"), props.globals.getNode("/gear/gear[2]/wow")],
+	wowTemp: [0, 0, 0],
 };
 
 var Instrumentation = {
@@ -254,13 +256,13 @@ var Sim = {
 		deltaRealtimeSec: props.globals.getNode("/sim/time/delta-realtime-sec"),
 		elapsedSec: props.globals.getNode("/sim/time/elapsed-sec"),
 		gmtString: props.globals.getNode("/sim/time/gmt-string"),
-		UTC: {
+		Utc: {
 			day: props.globals.getNode("/sim/time/utc/day"),
 			month: props.globals.getNode("/sim/time/utc/month"),
 			year: props.globals.getNode("/sim/time/utc/year"),
 		},
 	},
-	Version: props.globals.getNode("/sim/version/flightgear"),
+	version: props.globals.getNode("/sim/version/flightgear"),
 	View: {
 		Config: {
 			defaultFieldOfViewDeg: props.globals.getNode("/sim/view/config/default-field-of-view-deg", 1),
@@ -269,8 +271,8 @@ var Sim = {
 };
 
 var Velocities = {
-	airspeed: props.globals.getNode("/velocities/airspeed-kt"),
-	groundspeed: props.globals.getNode("/velocities/groundspeed-kt"),
+	airspeedKt: props.globals.getNode("/velocities/airspeed-kt"),
+	groundspeedKt: props.globals.getNode("/velocities/groundspeed-kt"),
 	mach: props.globals.getNode("/velocities/mach"),
 };
 

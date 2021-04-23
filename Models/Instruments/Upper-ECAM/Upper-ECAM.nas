@@ -1045,7 +1045,7 @@ input = {
 	# fadec
 	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
 	eprLimit: "/fdm/jsbsim/fadec/limit/active-epr",
-	thrustLimit: "/controls/engines/thrust-limit",
+	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
 	n1Limit: "/fdm/jsbsim/fadec/limit/active-n1",
 	flexTemp: "/fdm/jsbsim/fadec/limit/flex-temp",
 	fadecPower1: "/systems/fadec/powered1",
