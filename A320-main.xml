@@ -898,6 +898,9 @@
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
+				<!-- Remove these throttles... -->
+				<throttle-lever type="double">0</throttle-lever>
+				<throttle-pos type="double">0</throttle-pos>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
 				<throttle-rev type="double">0</throttle-rev>
@@ -917,6 +920,10 @@
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
 				<max-athr-thrust type="double">0.94</max-athr-thrust>
+				<max-athr-thrust type="double">0.94</max-athr-thrust>
+				<!-- Remove these throttles... -->
+				<throttle-lever type="double">0</throttle-lever>
+				<throttle-pos type="double">0</throttle-pos>
 				<throttle-output type="double">0</throttle-output>
 				<throttle-fdm type="double">0</throttle-fdm>
 				<throttle-rev type="double">0</throttle-rev>

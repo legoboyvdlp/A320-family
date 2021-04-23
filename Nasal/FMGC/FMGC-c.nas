@@ -192,13 +192,13 @@ var loopFMA = maketimer(0.05, func {
 	engstate2 = pts.Engines.Engine.state[1].getValue();
 	if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])))) and (engstate1 == 3 or engstate2 == 3)) {
 		# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
-		gear1 = pts.Gear.wow[0].getValue();
+		gear1 = pts.Gear.wow[1].getValue();
 		if (gear1 and FMGCInternal.v2set and Output.vert.getValue() != 7) {
 			ITAF.setVertMode(7);
-			Text.vert.setValue("T/O CLB");
+			ITAF.updateVertText("T/O CLB");
 		}
 	} else {
-		gear1 = pts.Gear.wow[0].getValue();
+		gear1 = pts.Gear.wow[1].getValue();
 		gear2 = pts.Gear.wow[2].getValue();
 		if (Input.lat.getValue() == 5 and (gear1 or gear2)) {
 			ITAF.setLatMode(9);

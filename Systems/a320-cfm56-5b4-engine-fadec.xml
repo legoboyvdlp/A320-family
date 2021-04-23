@@ -12,11 +12,7 @@
 	<property value="104">fadec/limit/max-n1</property>
 	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
 	
-	<!-- Remap/remove this sh*t -->
-	<property value="0">/controls/engines/engine[0]/throttle-lever</property>
-	<property value="0">/controls/engines/engine[0]/throttle-pos</property>
-	<property value="0">/controls/engines/engine[1]/throttle-lever</property>
-	<property value="0">/controls/engines/engine[1]/throttle-pos</property>
+	<!-- TODO -->
 	<property value="20">fadec/limit/idle</property>
 	
 	<channel name="Thrust Limits">

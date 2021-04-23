@@ -361,10 +361,10 @@ var canvas_PFD_base = {
 		fd_roll_cur = fd_roll.getValue();
 		fd_pitch_cur = fd_pitch.getValue();
 		if (fd_roll_cur != nil) {
-			me["FD_roll"].setTranslation((fd_roll_cur) * 2.2, 0);
+			me["FD_roll"].setTranslation(fd_roll_cur * 2.2, 0);
 		}
 		if (fd_pitch_cur != nil) {
-			me["FD_pitch"].setTranslation(0, -(fd_pitch_cur) * 3.8);
+			me["FD_pitch"].setTranslation(0, fd_pitch_cur * -11.825);
 		}
 		
 		gear_agl_cur = gear_agl.getValue();

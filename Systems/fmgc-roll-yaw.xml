@@ -13,7 +13,7 @@
 		<gain>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep>1.8</dep></entry>
 					<entry><ind>360</ind><dep>2.8</dep></entry>
 				</table>
@@ -70,7 +70,7 @@
 		<gain>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep>1.8</dep></entry>
 					<entry><ind>360</ind><dep>2.8</dep></entry>
 				</table>
