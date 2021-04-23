@@ -123,132 +123,6 @@
 	</filter>
 	
 	<filter>
-		<name>Knots Input Filter</name>
-		<debug>false</debug>
-		<type>noise-spike</type>
-		<feedback-if-disabled>true</feedback-if-disabled>
-		<initialize-to>output</initialize-to>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/mode/vert</property>
-					<value>T/O CLB</value>
-				</equals>
-			</condition>
-			<expression>
-				<sum>
-					<property>/it-autoflight/settings/togaspd</property>
-					<value>10</value>
-				</sum>
-			</expression>
-		</input>
-		<input>/it-autoflight/input/kts</input>
-		<output>/it-autoflight/internal/flch-kts</output>
-		<min>
-			<expression>
-				<difference>
-					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
-					<value>25</value>
-				</difference>
-			</expression>
-		</min>
-		<max>
-			<expression>
-				<sum>
-					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
-					<value>25</value>
-				</sum>
-			</expression>
-		</max>
-		<max-rate-of-change>
-			<condition>
-				<and>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>4</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>7</value>
-						</equals>
-					</or>
-					<equals>
-						<property>/it-autoflight/input/kts-mach</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>/gear/gear[1]/wow</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>/gear/gear[2]/wow</property>
-						<value>0</value>
-					</equals>
-				</and>
-			</condition>
-			<value>5</value>
-		</max-rate-of-change>
-		<max-rate-of-change>100</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<name>Mach Input Filter</name>
-		<debug>false</debug>
-		<type>noise-spike</type>
-		<feedback-if-disabled>true</feedback-if-disabled>
-		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/input/mach</input>
-		<output>/it-autoflight/internal/flch-mach</output>
-		<min>
-			<expression>
-				<difference>
-					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
-					<value>0.045</value>
-				</difference>
-			</expression>
-		</min>
-		<max>
-			<expression>
-				<sum>
-					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
-					<value>0.045</value>
-				</sum>
-			</expression>
-		</max>
-		<max-rate-of-change>
-			<condition>
-				<and>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>4</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>7</value>
-						</equals>
-					</or>
-					<equals>
-						<property>/it-autoflight/input/kts-mach</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/gear/gear[1]/wow</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>/gear/gear[2]/wow</property>
-						<value>0</value>
-					</equals>
-				</and>
-			</condition>
-			<value>0.04</value>
-		</max-rate-of-change>
-		<max-rate-of-change>1</max-rate-of-change>
-	</filter>
-	
-	<filter>
 		<name>Knots Sync</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -320,7 +194,7 @@
 			<condition>
 				<less-than>
 					<property>/velocities/airspeed-kt</property>
-					<value>80</value>
+					<value>1</value>
 				</less-than>
 			</condition>
 			<value>0</value>
