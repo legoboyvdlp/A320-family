@@ -10,10 +10,11 @@
 	<property value="27000">fadec/limit/rated-thrust</property>
 	<property value="18.9">fadec/limit/min-n1</property>
 	<property value="104">fadec/limit/max-n1</property>
+	<property value="0">fadec/athr/cmd</property>
 	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
 	
 	<!-- TODO -->
-	<property value="20">fadec/limit/idle</property>
+	<property value="35">fadec/limit/idle</property>
 	
 	<channel name="Thrust Limits">
 		
@@ -168,6 +169,18 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="fadec/limit/toga-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/limit/toga</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<summer name="fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
 			<input>fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
 			<input>-fadec/limit/flex-temp</input>
@@ -242,6 +255,18 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="fadec/limit/mct-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/limit/mct</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="fadec/limit/climb-ref">
 			<function>
 				<product> <!-- TEMPORARY REPLACE WITH TABLE LATER -->
@@ -265,6 +290,30 @@
 					</integer>
 					<value>10</value>
 				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/climb-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/limit/climb</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/idle-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/limit/idle</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 	
@@ -390,19 +439,6 @@
 				</table>
 			</function>
 		</fcs_function>
-		
-		<switch name="fadec/control-1/throttle-output">
-			<default value="fadec/control-1/lever-norm"/> <!-- CHANGE THE -->
-			<!--test value="fadec/reverse-1/throttle-rev-cmd">
-				/controls/engines/engine[0]/reverse-lever gt 0
-			</test-->
-		</switch>
-		
-		<lag_filter name="fadec/control-1/throttle-fdm">
-			<input>fadec/control-1/throttle-output</input>
-			<c1>0.75</c1>
-			<output>fcs/throttle-pos-norm[0]</output>
-		</lag_filter>
 		
 		<switch name="fadec/control-1/detent">
 			<default value="0"/> <!-- IDLE -->
@@ -651,19 +687,6 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/control-2/throttle-output">
-			<default value="fadec/control-2/lever-norm"/> <!-- CHANGE THE -->
-			<!--test value="fadec/reverse-2/throttle-rev-cmd">
-				/controls/engines/engine[1]/reverse-lever gt 0
-			</test-->
-		</switch>
-		
-		<lag_filter name="fadec/control-2/throttle-fdm">
-			<input>fadec/control-2/throttle-output</input>
-			<c1>0.75</c1>
-			<output>fcs/throttle-pos-norm[1]</output>
-		</lag_filter>
-		
 		<switch name="fadec/control-2/detent">
 			<default value="0"/> <!-- IDLE -->
 			<test value="6"> <!-- TOGA -->
@@ -875,6 +898,106 @@
 				fadec/limit/active-mode-int eq 2
 			</test>
 		</switch>
+		
+		<!-- A/THR Logic -->
+		<switch name="fadec/athr/max-clamp">
+			<default value="fadec/limit/climb-norm"/>
+			<test value="fadec/limit/mct-norm">
+				fadec/eng-out eq 1
+			</test>
+			<clipto>
+				<min>fadec/limit/idle-norm</min> <!-- Never force it below the idle limit -->
+				<max>1</max>
+			</clipto>
+		</switch>
+		
+		<fcs_function name="fadec/athr/max">
+			<function>
+				<max>
+					<property>fadec/control-1/lever-norm</property>
+					<property>fadec/control-2/lever-norm</property>
+				</max>
+			</function>
+			<clipto>
+				<min>fadec/limit/idle-norm</min> <!-- Never force it below the idle limit -->
+				<max>fadec/athr/max-clamp</max>
+			</clipto>
+		</fcs_function>
+		
+		<switch name="fadec/athr/active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/it-autoflight/output/athr eq 1
+				fadec/eng-out eq 1
+				fadec/max-detent le 4
+				fadec/max-detent ge 1
+			</test>
+			<test logic="AND" value="1">
+				/it-autoflight/output/athr eq 1
+				fadec/max-detent eq 2
+			</test>
+			<test logic="AND" value="1">
+				/it-autoflight/output/athr eq 1
+				fadec/max-detent eq 1
+			</test>
+		</switch>
+		
+		<!-- Throttle Finals -->
+		<pure_gain name="fadec/control-1/throttle-clamped">
+			<input>fadec/control-1/lever-norm</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>fadec/limit/idle-norm</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
+		
+		<switch name="fadec/control-1/throttle-output">
+			<default value="fadec/control-1/lever-norm"/>
+			<!--test value="fadec/reverse-1/throttle-rev-cmd">
+				/controls/engines/engine[0]/reverse-lever gt 0
+			</test-->
+			<test value="fadec/athr/cmd">
+				fadec/athr/active eq 1
+			</test>
+			<test value="fadec/control-1/throttle-clamped"> <!-- Last -->
+				/gear/gear[0]/wow eq 0
+			</test>
+		</switch>
+		
+		<lag_filter name="fadec/control-1/throttle-fdm">
+			<input>fadec/control-1/throttle-output</input>
+			<c1>0.75</c1>
+			<output>fcs/throttle-pos-norm[0]</output>
+		</lag_filter>
+		
+		<pure_gain name="fadec/control-2/throttle-clamped">
+			<input>fadec/control-2/lever-norm</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>fadec/limit/idle-norm</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
+		
+		<switch name="fadec/control-2/throttle-output">
+			<default value="fadec/control-2/lever-norm"/>
+			<!--test value="fadec/reverse-2/throttle-rev-cmd">
+				/controls/engines/engine[1]/reverse-lever gt 0
+			</test-->
+			<test value="fadec/athr/cmd">
+				fadec/athr/active eq 1
+			</test>
+			<test value="fadec/control-2/throttle-clamped"> <!-- Last -->
+				/gear/gear[0]/wow eq 0
+			</test>
+		</switch>
+		
+		<lag_filter name="fadec/control-2/throttle-fdm">
+			<input>fadec/control-2/throttle-output</input>
+			<c1>0.75</c1>
+			<output>fcs/throttle-pos-norm[1]</output>
+		</lag_filter>
 	
 	</channel>
 	

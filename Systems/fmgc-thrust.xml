@@ -41,7 +41,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -104,7 +104,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -137,7 +137,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -153,13 +153,13 @@
 		</enable>
 		<input>/it-autoflight/internal/current-speed-input</input>
 		<reference>/it-autoflight/internal/athr-kts</reference>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
-			<u_min>/controls/engines/idle-limit</u_min>
-			<u_max>/controls/engines/throttle-pid-max</u_max>
+			<u_min>/fdm/jsbsim/fadec/limit/idle-norm</u_min>
+			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
 	
@@ -170,7 +170,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -192,13 +192,13 @@
 			<property>/it-autoflight/internal/athr-mach</property>
 			<scale>1000</scale>
 		</reference>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
-			<u_min>/controls/engines/idle-limit</u_min>
-			<u_max>/controls/engines/throttle-pid-max</u_max>
+			<u_min>/fdm/jsbsim/fadec/limit/idle-norm</u_min>
+			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
 	
@@ -211,7 +211,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -222,7 +222,7 @@
 			</condition>
 		</enable>
 		<input>0</input>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
 	
 	<filter>
@@ -234,7 +234,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -245,7 +245,23 @@
 			</condition>
 		</enable>
 		<input>1</input>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
+	</filter>
+	
+	<filter>
+		<name>System Command: Throttle Inactive Sync</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<not-equals>
+					<property>/fdm/jsbsim/fadec/athr/active</property>
+					<value>1</value>
+				</not-equals>
+			</condition>
+		</enable>
+		<input>/fdm/jsbsim/fadec/athr/max</input> <!-- Highest throttle -->
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
 
 </PropertyList>
