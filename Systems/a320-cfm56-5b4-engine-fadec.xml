@@ -942,6 +942,15 @@
 			</test>
 		</switch>
 		
+		<pure_gain name="fadec/athr/output">
+			<input>fadec/athr/cmd</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>fadec/limit/idle-norm</min>
+				<max>fadec/athr/max</max>
+			</clipto>
+		</pure_gain>
+		
 		<!-- Throttle Finals -->
 		<pure_gain name="fadec/control-1/throttle-clamped">
 			<input>fadec/control-1/lever-norm</input>
@@ -957,7 +966,7 @@
 			<!--test value="fadec/reverse-1/throttle-rev-cmd">
 				/controls/engines/engine[0]/reverse-lever gt 0
 			</test-->
-			<test value="fadec/athr/cmd">
+			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
 			</test>
 			<test value="fadec/control-1/throttle-clamped"> <!-- Last -->
@@ -985,7 +994,7 @@
 			<!--test value="fadec/reverse-2/throttle-rev-cmd">
 				/controls/engines/engine[1]/reverse-lever gt 0
 			</test-->
-			<test value="fadec/athr/cmd">
+			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
 			</test>
 			<test value="fadec/control-2/throttle-clamped"> <!-- Last -->
