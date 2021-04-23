@@ -20,7 +20,7 @@
 	<!-- Nasal code -->
 	<nasal>
 		<load><![CDATA[
-			var livery_update = aircraft.canvas_livery_update.init("Models/Liveries/A320/CFM");
+			var livery_update = aircraft.canvas_livery_update.init("Models/Liveries/A320/CFM", _module_id);
 			var elements = ["Fuselage", "Wings", "Hstabs", "ElevatorL", "ElevatorR", "FlapL1", "FlapL2", "FlapR1", "FlapR2", "SpoilerL1", "SpoilerL2", "SpoilerL3", "SpoilerL4", "SpoilerL5", "SpoilerR1", "SpoilerR2", "SpoilerR3", "SpoilerR4", "SpoilerR5", "DoorL1", "DoorL4", "DoorR1", "DoorR4", "Cargo1", "Cargo2", "Cargo3", "MLGGearDoorR", "MLGGearDoorL", "MLGWingDoorR1", "MLGWingDoorL1", "MLGWingDoorR2", "MLGWingDoorL2", "NLGForewardDoorL", "NLGForewardDoorR", "NLGAftDoorL", "NLGAftDoorR", "GPUServiceDoor", "AvionicsVentDoor", "OutflowValveDoor1", "OutflowValveDoor2", "ApuFlap", "Rudder", "Sharklet", "WingtipFence", "RatDoorL", "RatDoorR"];
 			livery_update.createTarget("fuselage", elements, "/sim/model/livery/texture-fuselage", resolution=8192);
 
