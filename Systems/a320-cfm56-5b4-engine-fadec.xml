@@ -202,24 +202,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/flex">
-			<function>
-				<quotient>
-					<integer>
-						<sum>
-							<product>
-								<property>fadec/limit/flex-ref</property>
-								<value>10</value>
-							</product>
-							<value>0.5</value> <!-- Make it round correctly -->
-						</sum>
-					</integer>
-					<value>10</value>
-				</quotient>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fadec/limit/mct-ref"> <!-- Ref TOGA 104.0, Vs 99.7, 25C Corner, Limit 102.6 -->
+		<fcs_function name="fadec/limit/mct-ref"> <!-- Ref TOGA, Vs 99.7, 25C Corner, Limit 102.6 -->
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -356,6 +339,49 @@
 			<function>
 				<table>
 					<independentVar lookup="row">fadec/limit/idle</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/mrev-ref"> <!-- Ref MCT, Vs 87 -->
+			<function>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">propulsion/tat-c</independentVar>
+					<tableData>
+						      -65   -35   -5     25    55
+						    0  62.4  66.2  69.9  73.5  72.2
+						10000  70.6  74.2  77.6  80.2  79.7
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/mrev">
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>fadec/limit/mrev-ref</property>
+								<value>10</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>10</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/mrev-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/limit/mrev</independentVar>
 					<tableData>
 						 18.9  0
 						104.0  1
@@ -934,6 +960,9 @@
 		
 		<switch name="fadec/limit/active-n1">
 			<default value="0"/>
+			<test value="fadec/limit/mrev">
+				fadec/limit/active-mode-int eq 4
+			</test>
 			<test value="fadec/limit/toga">
 				fadec/limit/active-mode-int eq 0
 			</test>

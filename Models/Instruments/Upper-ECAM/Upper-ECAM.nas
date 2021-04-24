@@ -254,7 +254,7 @@ var canvas_upperECAM = {
 					obj["N1Lim-XX2"].show();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					obj["N1Lim"].show();
 					obj["N1Lim-decpnt"].show();
 					obj["N1Lim-decimal"].show();
@@ -295,7 +295,7 @@ var canvas_upperECAM = {
 					obj["EPRLim-XX2"].show();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					obj["EPRLim"].show();
 					obj["EPRLim-decpnt"].show();
 					obj["EPRLim-decimal"].show();
