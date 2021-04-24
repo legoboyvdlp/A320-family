@@ -422,23 +422,6 @@
 			<gain>3.14</gain>
 		</pure_gain>
 		
-		<switch name="fadec/reverse-1/throttle-rev">
-			<default value="0"/>
-			<test value="0.84">
-				/controls/engines/engine[0]/reverse-lever eq 1
-			</test>
-			<test value="0.56">
-				/controls/engines/engine[0]/reverse-lever eq 0.75
-			</test>
-			<test value="0.28">
-				/controls/engines/engine[0]/reverse-lever eq 0.5
-			</test>
-			<clipto>
-				<min>0.08</min>
-				<max>1.0</max>
-			</clipto>
-		</switch>
-		
 		<fcs_function name="fadec/reverse-1/throttle-rev">
 			<function>
 				<sum>
@@ -491,23 +474,6 @@
 			<input>fadec/reverse-2/position-norm</input>
 			<gain>3.14</gain>
 		</pure_gain>
-		
-		<switch name="fadec/reverse-2/throttle-rev">
-			<default value="0"/>
-			<test value="0.84">
-				/controls/engines/engine[1]/reverse-lever eq 1
-			</test>
-			<test value="0.56">
-				/controls/engines/engine[1]/reverse-lever eq 0.75
-			</test>
-			<test value="0.28">
-				/controls/engines/engine[1]/reverse-lever eq 0.5
-			</test>
-			<clipto>
-				<min>0.08</min>
-				<max>1.0</max>
-			</clipto>
-		</switch>
 		
 		<fcs_function name="fadec/reverse-2/throttle-rev">
 			<function>
