@@ -191,7 +191,7 @@
 			<function>
 				<min> <!-- FLEX can not increase thrust past TOGA -->
 					<property>fadec/limit/toga-ref</property>
-					<table> <!-- TODO: Figure out how to integrate FCOM table with this one -->
+					<table>
 						<independentVar lookup="row">/position/altitude-ft</independentVar>
 						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
 						<tableData>
@@ -222,12 +222,18 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mct-ref">
+		<fcs_function name="fadec/limit/mct-ref"> <!-- Ref TOGA 104.0, Vs 99.7, 25C Corner, Limit 102.6 -->
 			<function>
-				<product>
-					<property>fadec/limit/toga-ref</property>
-					<value>0.96</value> <!-- About 24370lbs -->
-				</product>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">propulsion/tat-c</independentVar>
+					<tableData>
+						      -65   -35   -5     25    55
+						    0  73.2  78.0  82.7  87.1  85.5
+						10000  83.5  88.0  92.3  95.5  94.9
+						43000  84.9  85.3  87.2  92.0  90.3
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
@@ -270,8 +276,8 @@
 		<fcs_function name="fadec/limit/climb-ref">
 			<function>
 				<product> <!-- TEMPORARY REPLACE WITH TABLE LATER -->
-					<property>fadec/limit/toga-ref</property>
-					<value>0.91</value>
+					<property>fadec/limit/mct-ref</property>
+					<value>0.945</value>
 				</product>
 			</function>
 		</fcs_function>
