@@ -2727,7 +2727,7 @@
 			<test logic="AND" value="1">
 				/controls/engines/engine[0]/cutoff-switch eq 0
 				/controls/engines/engine[0]/fire-btn eq 0
-				/engines/engine[0]/n2-actual lt 59.4
+				/engines/engine[0]/n2-actual lt 59.399
 				/ECAM/warnings/logic/eng/eng-1-fail-cond eq 1
 			</test>
 		</switch>
@@ -2737,7 +2737,7 @@
 			<test logic="AND" value="1">
 				/controls/engines/engine[1]/cutoff-switch eq 0
 				/controls/engines/engine[1]/fire-btn eq 0
-				/engines/engine[1]/n2-actual lt 59.4
+				/engines/engine[1]/n2-actual lt 59.399
 				/ECAM/warnings/logic/eng/eng-2-fail-cond eq 1
 			</test>
 		</switch>
