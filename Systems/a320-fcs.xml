@@ -639,40 +639,6 @@
 	
 	</channel>
 	
-	<channel name="FADEC"> <!-- Redo it later -->
-		
-		<lag_filter name="fcs/reverse-lever[0]">
-			<input>/controls/engines/engine[0]/reverse-cmd</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-lever[1]">
-			<input>/controls/engines/engine[1]/reverse-cmd</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-thr-lever[0]">
-			<input>/controls/engines/engine[0]/reverse-lever</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-thr-lever[1]">
-			<input>/controls/engines/engine[1]/reverse-lever</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/engine-cutoff[0]">
-			<input>/controls/engines/engine[0]/cutoff-switch</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/engine-cutoff[1]">
-			<input>/controls/engines/engine[1]/cutoff-switch</input>
-			<c1>20</c1>
-		</lag_filter>
-	
-	</channel>
-	
 	<channel name="SFCC"> <!-- 40 for IAE, 35 for CFM/PW is simulated here properly, do NOT change it into seperate unless you like buggy behavior! -->
 		
 		<switch name="/controls/flight/flaps-input">

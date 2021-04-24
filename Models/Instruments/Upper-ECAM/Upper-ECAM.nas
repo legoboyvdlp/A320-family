@@ -996,13 +996,13 @@ input = {
 	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
 	
 	# N1 parameters
-	N1_1: "/ECAM/Upper/N1[0]",
-	N1_2: "/ECAM/Upper/N1[1]",
+	N1_1: "/instrumentation/upper-ecam/n1[0]",
+	N1_2: "/instrumentation/upper-ecam/n1[1]",
 	N1_actual_1: "/engines/engine[0]/n1-actual",
 	N1_actual_2: "/engines/engine[1]/n1-actual",
-	N1_lim: "/ECAM/Upper/N1ylim",
-	N1thr_1: "/ECAM/Upper/N1thr[0]",
-	N1thr_2: "/ECAM/Upper/N1thr[1]",
+	N1_lim: "/instrumentation/upper-ecam/n1-limit",
+	N1thr_1: "/instrumentation/upper-ecam/n1-thr[0]",
+	N1thr_2: "/instrumentation/upper-ecam/n1-thr[1]",
 	
 	# N2 parameters
 	N2_actual_1: "/engines/engine[0]/n2-actual",

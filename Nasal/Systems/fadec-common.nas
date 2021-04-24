@@ -27,7 +27,6 @@ var FADEC = {
 	},
 	lvrClb: props.globals.getNode("/fdm/jsbsim/fadec/lvrclb"),
 	lvrClbStatus: 0,
-	togaLk: props.globals.getNode("/fdm/jsbsim/fadec/toga-lk"),
 	Lock: {
 		thrLockAlert: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-alert"),
 		thrLockCmd: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked"),
@@ -36,7 +35,9 @@ var FADEC = {
 		thrLockTime: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-time"),
 	},
 	manThrAboveMct: [0, 0],
+	maxDetent: props.globals.getNode("/fdm/jsbsim/fadec/max-detent"),
 	n1Mode: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/n1-mode"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/n1-mode")],
+	togaLk: props.globals.getNode("/fdm/jsbsim/fadec/toga-lk"),
 	init: func() {
 		me.engOut.setBoolValue(0);
 		me.Limit.activeMode.setBoolValue("TOGA");

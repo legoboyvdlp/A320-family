@@ -17,121 +17,114 @@ var eng_common_init = func {
 	manStart[1].setValue(0);
 }
 
-# Engine thrust commands
+var ENGINE = {
+	reverseLever: [props.globals.getNode("/controls/engines/engine[0]/reverse-lever"), props.globals.getNode("/controls/engines/engine[1]/reverse-lever")],
+	reverseLeverTemp: [0, 0],
+	throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
+	init: func() {
+		me.reverseLever[0].setBoolValue(0);
+		me.reverseLever[1].setBoolValue(0);
+	},
+};
+
+# Engine Sim Control Stuff
 var doIdleThrust = func {
 	# Idle does not respect selected engines, because it is used to respond
 	# to "Retard" and both engines must be idle for spoilers to deploy
-	pts.Controls.Engines.Engine.throttle[0].setValue(0);
-	pts.Controls.Engines.Engine.throttle[1].setValue(0);
+	ENGINE.throttle[0].setValue(0);
+	ENGINE.throttle[1].setValue(0);
 }
 
 var doClThrust = func {
 	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-		pts.Controls.Engines.Engine.throttle[0].setValue(0.63);
+		ENGINE.throttle[0].setValue(0.63);
 	}
 	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-		pts.Controls.Engines.Engine.throttle[1].setValue(0.63);
+		ENGINE.throttle[1].setValue(0.63);
 	}
 }
 
 var doMctThrust = func {
 	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-		pts.Controls.Engines.Engine.throttle[0].setValue(0.8);
+		ENGINE.throttle[0].setValue(0.8);
 	}
 	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-		pts.Controls.Engines.Engine.throttle[1].setValue(0.8);
+		ENGINE.throttle[1].setValue(0.8);
 	}
 }
 
 var doTogaThrust = func {
 	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-		pts.Controls.Engines.Engine.throttle[0].setValue(1);
+		ENGINE.throttle[0].setValue(1);
 	}
 	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-		pts.Controls.Engines.Engine.throttle[1].setValue(1);
+		ENGINE.throttle[1].setValue(1);
 	}
 }
 
-# Reverse Thrust System - TODO: Totally f*cked! Redo the whole d*mn thing!
-var toggleFastRevThrust = func {
-	#if (systems.FADEC.detentText[0].getValue() == "IDLE" and systems.FADEC.detentText[1].getValue() == "IDLE" and pts.Controls.Engines.Engine.reverseCmd[0].getValue() == 0 and pts.Controls.Engines.Engine.reverseCmd[1].getValue() == 0 and pts.Gear.wow[1].getValue() == 1 and pts.Gear.wow[2].getValue() == 1) {
-	#	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-	#		interpolate("/engines/engine[0]/reverser-pos-norm", 1, 1.4);
-	#		pts.Controls.Engines.Engine.reverseCmd[0].setValue(1);
-	#		pts.Controls.Engines.Engine.reverseLever[0].setValue(0.65);
-	#		pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[0].setValue(3.14);
-	#	}
-	#	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-	#		interpolate("/engines/engine[1]/reverser-pos-norm", 1, 1.4);
-	#		pts.Controls.Engines.Engine.reverseCmd[1].setValue(1);
-	#		pts.Controls.Engines.Engine.reverseLever[1].setValue(0.65);
-	#		pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[1].setValue(3.14);
-	#	}
-	#} else if (pts.Controls.Engines.Engine.reverseCmd[0].getValue() == 1 or pts.Controls.Engines.Engine.reverseCmd[1].getValue() == 1) {
-	#	interpolate("/engines/engine[0]/reverser-pos-norm", 0, 1.0);
-	#	interpolate("/engines/engine[1]/reverser-pos-norm", 0, 1.0);
-	#	pts.Controls.Engines.Engine.reverseLever[0].setValue(0);
-	#	pts.Controls.Engines.Engine.reverseLever[1].setValue(0);
-	#	pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[0].setValue(0);
-	#	pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[1].setValue(0);
-	#	pts.Controls.Engines.Engine.reverseCmd[0].setValue(0);
-	#	pts.Controls.Engines.Engine.reverseCmd[1].setValue(0);
-	#}
+# Intentionally not using + or -, floating point error would be BAD
+# We just based it off Engine 1
+var doRevThrust = func() {
+	ENGINE.reverseLeverTemp[0] = ENGINE.reverseLever[0].getValue();
+	if ((pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) and systems.FADEC.maxDetent.getValue() == 0) {
+		if (ENGINE.reverseLeverTemp[0] < 0.25) {
+			ENGINE.reverseLever[0].setValue(0.25);
+			ENGINE.reverseLever[1].setValue(0.25);
+		} else if (ENGINE.reverseLeverTemp[0] < 0.5) {
+			ENGINE.reverseLever[0].setValue(0.5);
+			ENGINE.reverseLever[1].setValue(0.5);
+		} else if (ENGINE.reverseLeverTemp[0] < 0.75) {
+			ENGINE.reverseLever[0].setValue(0.75);
+			ENGINE.reverseLever[1].setValue(0.75);
+		} else if (ENGINE.reverseLeverTemp[0] < 1.0) {
+			ENGINE.reverseLever[0].setValue(1.0);
+			ENGINE.reverseLever[1].setValue(1.0);
+		}
+		ENGINE.throttle[0].setValue(0);
+		ENGINE.throttle[1].setValue(0);
+	} else {
+		ENGINE.reverseLever[0].setValue(0);
+		ENGINE.reverseLever[1].setValue(0);
+	}
 }
 
-var doRevThrust = func {
-	#if (pts.Gear.wow[1].getValue() != 1 and pts.Gear.wow[2].getValue() != 1) {
-	#	# Can't select reverse if not on the ground
-	#	return;
-	#}
-	#if (pts.Sim.Input.Selected.engine[0].getBoolValue() and pts.Controls.Engines.Engine.reverseCmd[0].getValue() == 1) {
-	#	var pos = pts.Controls.Engines.Engine.reverseLever[0].getValue();
-	#	if (pos < 0.649) {
-	#		pts.Controls.Engines.Engine.reverseLever[0].setValue(pos + 0.15);
-	#	}
-	#}
-	#if (pts.Sim.Input.Selected.engine[1].getBoolValue() and pts.Controls.Engines.Engine.reverseCmd[1].getValue() == 1) {
-	#	var pos = pts.Controls.Engines.Engine.reverseLever[1].getValue();
-	#	if (pos < 0.649) {
-	#		pts.Controls.Engines.Engine.reverseLever[1].setValue(pos + 0.15);
-	#	}
-	#}
-	#
-	#if (pts.Sim.Input.Selected.engine[0].getBoolValue() and systems.FADEC.detentText[0].getValue() == "IDLE" and pts.Controls.Engines.Engine.reverseCmd[0].getValue() == 0) {
-	#	interpolate("/engines/engine[0]/reverser-pos-norm", 1, 1.4);
-	#	pts.Controls.Engines.Engine.reverseLever[0].setValue(0.05);
-	#	pts.Controls.Engines.Engine.reverseCmd[0].setValue(1);
-	#	pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[0].setValue(3.14);
-	#}
-	#if (pts.Sim.Input.Selected.engine[1].getBoolValue() and systems.FADEC.detentText[1].getValue() == "IDLE" and pts.Controls.Engines.Engine.reverseCmd[1].getValue() == 0) {
-	#	interpolate("/engines/engine[1]/reverser-pos-norm", 1, 1.4);
-	#	pts.Controls.Engines.Engine.reverseLever[1].setValue(0.05);
-	#	pts.Controls.Engines.Engine.reverseCmd[1].setValue(1);
-	#	pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[1].setValue(3.14);
-	#}
+var unRevThrust = func() {
+	ENGINE.reverseLeverTemp[0] = ENGINE.reverseLever[0].getValue();
+	if ((pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) and systems.FADEC.maxDetent.getValue() == 0) {
+		if (ENGINE.reverseLeverTemp[0] > 0.75) {
+			ENGINE.reverseLever[0].setValue(0.75);
+			ENGINE.reverseLever[1].setValue(0.75);
+		} else if (ENGINE.reverseLeverTemp[0] > 0.5) {
+			ENGINE.reverseLever[0].setValue(0.5);
+			ENGINE.reverseLever[1].setValue(0.5);
+		} else if (ENGINE.reverseLeverTemp[0] > 0.25) {
+			ENGINE.reverseLever[0].setValue(0.25);
+			ENGINE.reverseLever[1].setValue(0.25);
+		} else if (ENGINE.reverseLeverTemp[0] > 0) {
+			ENGINE.reverseLever[0].setValue(0);
+			ENGINE.reverseLever[1].setValue(0);
+		}
+		ENGINE.throttle[0].setValue(0);
+		ENGINE.throttle[1].setValue(0);
+	} else {
+		ENGINE.reverseLever[0].setValue(0);
+		ENGINE.reverseLever[1].setValue(0);
+	}
 }
 
-var unRevThrust = func {
-	#if (pts.Sim.Input.Selected.engine[0].getBoolValue() and pts.Controls.Engines.Engine.reverseCmd[0].getValue() == 1) {
-	#	var pos = pts.Controls.Engines.Engine.reverseLever[0].getValue();
-	#	if (pos > 0.051) {
-	#		pts.Controls.Engines.Engine.reverseLever[0].setValue(pos - 0.15);
-	#	} else {
-	#		interpolate("/engines/engine[0]/reverser-pos-norm", 0, 1.0);
-	#		pts.Controls.Engines.Engine.reverseLever[0].setValue(0);
-	#		pts.Controls.Engines.Engine.reverseCmd[0].setValue(0);
-	#		pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[0].setValue(0);
-	#	}
-	#}
-	#if (pts.Sim.Input.Selected.engine[1].getBoolValue() and pts.Controls.Engines.Engine.reverseCmd[1].getValue() == 1) {
-	#	var pos = pts.Controls.Engines.Engine.reverseLever[1].getValue();
-	#	if (pos > 0.051) {
-	#		pts.Controls.Engines.Engine.reverseLever[1].setValue(pos - 0.15);
-	#	} else {
-	#		interpolate("/engines/engine[1]/reverser-pos-norm", 0, 1.0);
-	#		pts.Controls.Engines.Engine.reverseLever[1].setValue(0);
-	#		pts.Controls.Engines.Engine.reverseCmd[1].setValue(0);
-	#		pts.Fdm.JSBsim.Propulsion.Engine.reverseCmdAngle[1].setValue(0);
-	#	}
-	#}
+var toggleFastRevThrust = func() {
+	if ((pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) and systems.FADEC.maxDetent.getValue() == 0) {
+		if (ENGINE.reverseLever[0].getValue() != 0) { # NOT a bool, this way it always closes even if partially open
+			ENGINE.reverseLever[0].setValue(0);
+			ENGINE.reverseLever[1].setValue(0);
+		} else {
+			ENGINE.reverseLever[0].setValue(1);
+			ENGINE.reverseLever[1].setValue(1);
+		}
+		ENGINE.throttle[0].setValue(0);
+		ENGINE.throttle[1].setValue(0);
+	} else {
+		ENGINE.reverseLever[0].setValue(0);
+		ENGINE.reverseLever[1].setValue(0);
+	}
 }

@@ -91,6 +91,7 @@ var systemsInit = func() {
 	systems.FUEL.init();
 	systems.ADIRS.init();
 	systems.eng_init();
+	systems.ENGINE.init();
 	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();

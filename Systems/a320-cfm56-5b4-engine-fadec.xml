@@ -392,6 +392,150 @@
 	
 	</channel>
 	
+	<channel name="Reversers">
+		
+		<!-- Engine 1 -->
+		<switch name="fadec/reverse-1/position-cmd">
+			<default value="0"/>
+			<test value="1">
+				/controls/engines/engine[0]/reverse-lever ge 0.25
+			</test>
+			<output>/controls/engines/engine[0]/reverse-cmd</output>
+		</switch>
+		
+		<switch name="fadec/reverse-1/position-rate">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/green-psi ge 1500
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+		</switch>
+		
+		<actuator name="fadec/reverse-1/position-norm">
+			<input>fadec/reverse-1/position-cmd</input>
+			<rate_limit>fadec/reverse-1/position-rate</rate_limit>
+			<output>/engines/engine[0]/reverser-pos-norm</output>
+		</actuator>
+		
+		<pure_gain name="propulsion/engine[0]/reverser-angle-rad">
+			<input>fadec/reverse-1/position-norm</input>
+			<gain>3.14</gain>
+		</pure_gain>
+		
+		<switch name="fadec/reverse-1/throttle-rev">
+			<default value="0"/>
+			<test value="0.84">
+				/controls/engines/engine[0]/reverse-lever eq 1
+			</test>
+			<test value="0.56">
+				/controls/engines/engine[0]/reverse-lever eq 0.75
+			</test>
+			<test value="0.28">
+				/controls/engines/engine[0]/reverse-lever eq 0.5
+			</test>
+			<clipto>
+				<min>0.08</min>
+				<max>1.0</max>
+			</clipto>
+		</switch>
+		
+		<fcs_function name="fadec/reverse-1/throttle-rev">
+			<function>
+				<sum>
+					<value>0.08</value>
+					<product>
+						<difference>
+							<property>/controls/engines/engine[0]/reverse-lever</property>
+							<value>0.25</value>
+						</difference>
+						<quotient>
+							<difference>
+								<property>fadec/limit/mrev-norm</property>
+								<value>0.08</value>
+							</difference>
+							<value>0.75</value> <!-- 1.0 - 0.25 -->
+						</quotient>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>0.08</min>
+				<max>fadec/limit/mrev-norm</max>
+			</clipto>
+		</fcs_function>
+		
+		<!-- Engine 2 -->
+		<switch name="fadec/reverse-2/position-cmd">
+			<default value="0"/>
+			<test value="1">
+				/controls/engines/engine[1]/reverse-lever ge 0.25
+			</test>
+			<output>/controls/engines/engine[1]/reverse-cmd</output>
+		</switch>
+		
+		<switch name="fadec/reverse-2/position-rate">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/yellow-psi ge 1500
+				/systems/acconfig/autoconfig-running eq 1
+			</test>
+		</switch>
+		
+		<actuator name="fadec/reverse-2/position-norm">
+			<input>fadec/reverse-2/position-cmd</input>
+			<rate_limit>fadec/reverse-2/position-rate</rate_limit>
+			<output>/engines/engine[1]/reverser-pos-norm</output>
+		</actuator>
+		
+		<pure_gain name="propulsion/engine[1]/reverser-angle-rad">
+			<input>fadec/reverse-2/position-norm</input>
+			<gain>3.14</gain>
+		</pure_gain>
+		
+		<switch name="fadec/reverse-2/throttle-rev">
+			<default value="0"/>
+			<test value="0.84">
+				/controls/engines/engine[1]/reverse-lever eq 1
+			</test>
+			<test value="0.56">
+				/controls/engines/engine[1]/reverse-lever eq 0.75
+			</test>
+			<test value="0.28">
+				/controls/engines/engine[1]/reverse-lever eq 0.5
+			</test>
+			<clipto>
+				<min>0.08</min>
+				<max>1.0</max>
+			</clipto>
+		</switch>
+		
+		<fcs_function name="fadec/reverse-2/throttle-rev">
+			<function>
+				<sum>
+					<value>0.08</value>
+					<product>
+						<difference>
+							<property>/controls/engines/engine[1]/reverse-lever</property>
+							<value>0.25</value>
+						</difference>
+						<quotient>
+							<difference>
+								<property>fadec/limit/mrev-norm</property>
+								<value>0.08</value>
+							</difference>
+							<value>0.75</value> <!-- 1.0 - 0.25 -->
+						</quotient>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>0.08</min>
+				<max>fadec/limit/mrev-norm</max>
+			</clipto>
+		</fcs_function>
+	
+	</channel>
+	
 	<channel name="Engine Control"> <!-- Very complicated, please don't touch if you don't understand it -->
 		
 		<!-- Engine 1 -->
@@ -402,9 +546,9 @@
 		
 		<switch name="fadec/control-1/throttle-pos">
 			<default value="fadec/control-1/throttle-lag"/>
-			<!--test value="0">
+			<test value="0">
 				fadec/reverse-1/position-norm ne 0
-			</test-->
+			</test>
 		</switch>
 		
 		<fcs_function name="fadec/control-1/idle-climb-n1">
@@ -649,9 +793,9 @@
 		
 		<switch name="fadec/control-2/throttle-pos">
 			<default value="fadec/control-2/throttle-lag"/>
-			<!--test value="0">
+			<test value="0">
 				fadec/reverse-2/position-norm ne 0
-			</test-->
+			</test>
 		</switch>
 		
 		<fcs_function name="fadec/control-2/idle-climb-n1">
@@ -1039,9 +1183,9 @@
 		
 		<switch name="fadec/control-1/throttle-output">
 			<default value="fadec/control-1/lever-norm"/>
-			<!--test value="fadec/reverse-1/throttle-rev-cmd">
-				/controls/engines/engine[0]/reverse-lever gt 0
-			</test-->
+			<test value="fadec/reverse-1/throttle-rev">
+				fadec/reverse-1/position-norm ne 0
+			</test>
 			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
 			</test>
@@ -1067,9 +1211,9 @@
 		
 		<switch name="fadec/control-2/throttle-output">
 			<default value="fadec/control-2/lever-norm"/>
-			<!--test value="fadec/reverse-2/throttle-rev-cmd">
-				/controls/engines/engine[1]/reverse-lever gt 0
-			</test-->
+			<test value="fadec/reverse-2/throttle-rev">
+				fadec/reverse-2/position-norm ne 0
+			</test>
 			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
 			</test>
@@ -1127,6 +1271,80 @@
 			<c1>3</c1>
 			<output>/engines/engine[1]/ff-actual</output>
 		</lag_filter>
+	
+	</channel>
+	
+	<channel name="Upper ECAM Needles" execrate="4">
+		
+		<fcs_function name="/instrumentation/upper-ecam/n1[0]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/n1-actual</independentVar>
+					<tableData>
+						 20 -131
+						 50  -64
+						100   48
+						110   65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/n1[1]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[1]/n1-actual</independentVar>
+					<tableData>
+						 20 -131
+						 50  -64
+						100   48
+						110   65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/n1-thr[0]">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/control-1/lever-n1</independentVar>
+					<tableData>
+						 20 -131
+						 50  -64
+						100   48
+						110   65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/n1-thr[1]">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
+					<tableData>
+						 20 -131
+						 50  -64
+						100   48
+						110   65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/n1-limit">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/limit/toga</independentVar>
+					<tableData>
+						 20 -131
+						 50  -64
+						100   48
+						110   65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 	
 	</channel>
 

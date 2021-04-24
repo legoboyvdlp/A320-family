@@ -6810,7 +6810,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[0]/throttle</property>
-				<step type="double">0.01</step>
+				<step>0.01</step>
 				<max>1</max>
 			</binding>
 		</action>
@@ -6821,7 +6821,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[0]/throttle</property>
-				<step type="double">-0.01</step>
+				<step>-0.01</step>
 				<min>0</min>
 			</binding>
 		</action>
@@ -6840,20 +6840,11 @@
 		<name>Engine 1 throttle lever rev</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fcs/reverse-lever[0]</property>
-		<factor>-3.5</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 1 throttle lever rev 2</name>
-		<type>rotate</type>
-		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fcs/reverse-thr-lever[0]</property>
+		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
 		<interpolation>
-			<entry><ind>0.00</ind><dep>  0</dep></entry>
-			<entry><ind>0.50</ind><dep>-20</dep></entry>
+			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
+			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
+			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -6870,7 +6861,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[1]/throttle</property>
-				<step type="double">0.01</step>
+				<step>0.01</step>
 				<max>1</max>
 			</binding>
 		</action>
@@ -6881,7 +6872,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[1]/throttle</property>
-				<step type="double">-0.01</step>
+				<step>-0.01</step>
 				<min>0</min>
 			</binding>
 		</action>
@@ -6900,20 +6891,11 @@
 		<name>Engine 2 throttle lever rev</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fcs/reverse-lever[1]</property>
-		<factor>-3.5</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 2 throttle lever rev 2</name>
-		<type>rotate</type>
-		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fcs/reverse-thr-lever[1]</property>
+		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
 		<interpolation>
-			<entry><ind>0.00</ind><dep> 0</dep></entry>
-			<entry><ind>0.50</ind><dep>-20</dep></entry>
+			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
+			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
+			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -8168,8 +8150,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.050</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8199,8 +8181,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8230,8 +8212,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8261,8 +8243,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.1</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8292,8 +8274,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8323,8 +8305,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8354,8 +8336,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8531,8 +8513,8 @@
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
 		<font>led.txf</font>
-		<character-size type="double">0.007</character-size>
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size>
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height>
 		<max-width>0.040</max-width>
 		<font-resolution>
@@ -8562,8 +8544,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8595,8 +8577,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8626,8 +8608,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>

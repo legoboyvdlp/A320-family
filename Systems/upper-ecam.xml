@@ -217,7 +217,7 @@
 		<output>/ECAM/Upper/EGT[1]</output>
 	</filter>
 	
-	<filter>
+	<!--filter>
 		<name>N1 1</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -225,23 +225,6 @@
 			<condition>
 				<equals>
 					<property>/options/eng</property>
-					<value>CFM</value>
-				</equals>
-			</condition>
-			<expression>
-				<table>
-					<property>/engines/engine[0]/n1-actual</property>
-					<entry><ind> 20.0</ind><dep>-131</dep></entry>
-					<entry><ind> 50.0</ind><dep> -64</dep></entry>
-					<entry><ind>100.0</ind><dep>  48</dep></entry>
-					<entry><ind>110.0</ind><dep>  65</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/options/eng</property>
 					<value>IAE</value>
 				</equals>
 			</condition>
@@ -255,48 +238,7 @@
 				</table>
 			</expression>
 		</input>
-		<output>/ECAM/Upper/N1[0]</output>
-	</filter>
-	
-	<filter>
-		<name>N1 THR 1</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/options/eng</property>
-					<value>CFM</value>
-				</equals>
-			</condition>
-			<expression>
-				<table>
-					<property>/fdm/jsbsim/fadec/control-1/lever-n1</property>
-					<entry><ind> 20.0</ind><dep>-131</dep></entry>
-					<entry><ind> 50.0</ind><dep> -64</dep></entry>
-					<entry><ind>100.0</ind><dep>  48</dep></entry>
-					<entry><ind>110.0</ind><dep>  65</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/options/eng</property>
-					<value>IAE</value>
-				</equals>
-			</condition>
-			<expression>
-				<table>
-					<property>/engines/engine[0]/n1-actual-cmd</property>
-					<entry><ind> 20.0</ind><dep>-112.5</dep></entry>
-					<entry><ind> 40.0</ind><dep> -67.5</dep></entry>
-					<entry><ind>100.0</ind><dep>  67.5</dep></entry>
-					<entry><ind>110.0</ind><dep>  90.0</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/ECAM/Upper/N1thr[0]</output>
+		<output>/instrumentation/upper-ecam/n1[0]</output>
 	</filter>
 	
 	<filter>
@@ -307,23 +249,6 @@
 			<condition>
 				<equals>
 					<property>/options/eng</property>
-					<value>CFM</value>
-				</equals>
-			</condition>
-			<expression>
-				<table>
-					<property>/engines/engine[1]/n1-actual</property>
-					<entry><ind> 20.0</ind><dep>-131</dep></entry>
-					<entry><ind> 50.0</ind><dep> -64</dep></entry>
-					<entry><ind>100.0</ind><dep>  48</dep></entry>
-					<entry><ind>110.0</ind><dep>  65</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/options/eng</property>
 					<value>IAE</value>
 				</equals>
 			</condition>
@@ -337,68 +262,8 @@
 				</table>
 			</expression>
 		</input>
-		<output>/ECAM/Upper/N1[1]</output>
-	</filter>
-	
-	<filter>
-		<name>N1 THR 2</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/options/eng</property>
-					<value>CFM</value>
-				</equals>
-			</condition>
-			<expression>
-				<table>
-					<property>/fdm/jsbsim/fadec/control-2/lever-n1</property>
-					<entry><ind> 20.0</ind><dep>-131</dep></entry>
-					<entry><ind> 50.0</ind><dep> -64</dep></entry>
-					<entry><ind>100.0</ind><dep>  48</dep></entry>
-					<entry><ind>110.0</ind><dep>  65</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/options/eng</property>
-					<value>IAE</value>
-				</equals>
-			</condition>
-			<expression>
-				<table>
-					<property>/engines/engine[1]/n1-actual-cmd</property>
-					<entry><ind> 20.0</ind><dep>-112.5</dep></entry>
-					<entry><ind> 40.0</ind><dep> -67.5</dep></entry>
-					<entry><ind>100.0</ind><dep>  67.5</dep></entry>
-					<entry><ind>110.0</ind><dep>  90.0</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/ECAM/Upper/N1thr[1]</output>
-	</filter>
-	
-	<filter>
-		<name>N1 LIMIT</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<table>
-					<property>/fdm/jsbsim/fadec/limit/toga</property>
-					<entry><ind> 20.0</ind><dep>-131</dep></entry>
-					<entry><ind> 50.0</ind><dep> -64</dep></entry>
-					<entry><ind>100.0</ind><dep>  48</dep></entry>
-					<entry><ind>110.0</ind><dep>  65</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<input>0</input>
-		<output>/ECAM/Upper/N1ylim</output>
-	</filter>
+		<output>/instrumentation/upper-ecam/n1[1]</output>
+	</filter-->
 	
 	<filter>
 		<name>Flap Indicator</name>
