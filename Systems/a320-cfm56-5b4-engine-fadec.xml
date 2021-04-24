@@ -13,9 +13,6 @@
 	<property value="0">fadec/athr/cmd</property>
 	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
 	
-	<!-- TODO -->
-	<property value="35">fadec/limit/idle</property>
-	
 	<channel name="Thrust Limits">
 		
 		<fcs_function name="fadec/limit/rated-thrust-n1"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
@@ -308,6 +305,50 @@
 						104.0  1
 					</tableData>
 				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/idle-ref">
+			<function>
+				<ifthen>
+					<eq>
+						<property>position/wow</property>
+						<value>0</value>
+					</eq>
+					<table>
+						<independentVar lookup="row">velocities/mach</independentVar>
+						<independentVar lookup="column">/controls/flight/flaps-input</independentVar>
+						<independentVar lookup="table">/position/altitude-ft</independentVar>
+						<tableData breakPoint="0">
+							      0     1
+							0.21  24.9  31.2
+							0.70  33.1  37.9
+						</tableData>
+						<tableData breakPoint="43000">
+							      0     1
+							0.55  42.8  49.2
+							0.90  48.8  51.1
+						</tableData>
+					</table>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/idle">
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>fadec/limit/idle-ref</property>
+								<value>10</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>10</value>
+				</quotient>
 			</function>
 		</fcs_function>
 		
