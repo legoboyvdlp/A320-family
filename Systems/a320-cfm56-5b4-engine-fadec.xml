@@ -656,7 +656,7 @@
 						</difference>
 						<quotient>
 							<difference>
-								<value>24</value>
+								<value>23</value>
 								<value>2</value>
 							</difference>
 							<difference>
@@ -669,14 +669,14 @@
 			</function>
 			<clipto>
 				<min>2</min>
-				<max>24</max>
+				<max>23</max>
 			</clipto>
 		</fcs_function>
 		
 		<fcs_function name="fadec/control-1/lever/climb-mct">
 			<function>
 				<sum>
-					<value>28</value>
+					<value>27</value>
 					<product>
 						<difference>
 							<property>fadec/control-1/throttle-pos</property>
@@ -685,7 +685,7 @@
 						<quotient>
 							<difference>
 								<value>33</value>
-								<value>28</value>
+								<value>27</value>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/mct-b</property>
@@ -696,7 +696,7 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>28</min>
+				<min>27</min>
 				<max>33</max>
 			</clipto>
 		</fcs_function>
@@ -743,7 +743,7 @@
 			<test value="fadec/control-1/lever/climb-mct"> <!-- MAN THR -->
 				fadec/control-1/throttle-pos gt /systems/acconfig/options/fadec/climb-t
 			</test>
-			<test value="26"> <!-- CL -->
+			<test value="25"> <!-- CL -->
 				fadec/control-1/throttle-pos ge /systems/acconfig/options/fadec/climb-b
 			</test>
 			<test value="fadec/control-1/lever/idle-climb"> <!-- MAN -->
@@ -903,7 +903,7 @@
 						</difference>
 						<quotient>
 							<difference>
-								<value>24</value>
+								<value>23</value>
 								<value>2</value>
 							</difference>
 							<difference>
@@ -916,14 +916,14 @@
 			</function>
 			<clipto>
 				<min>2</min>
-				<max>24</max>
+				<max>23</max>
 			</clipto>
 		</fcs_function>
 		
 		<fcs_function name="fadec/control-2/lever/climb-mct">
 			<function>
 				<sum>
-					<value>28</value>
+					<value>27</value>
 					<product>
 						<difference>
 							<property>fadec/control-2/throttle-pos</property>
@@ -932,7 +932,7 @@
 						<quotient>
 							<difference>
 								<value>33</value>
-								<value>28</value>
+								<value>27</value>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/mct-b</property>
@@ -943,7 +943,7 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>28</min>
+				<min>27</min>
 				<max>33</max>
 			</clipto>
 		</fcs_function>
@@ -990,7 +990,7 @@
 			<test value="fadec/control-2/lever/climb-mct"> <!-- MAN THR -->
 				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/climb-t
 			</test>
-			<test value="26"> <!-- CL -->
+			<test value="25"> <!-- CL -->
 				fadec/control-2/throttle-pos ge /systems/acconfig/options/fadec/climb-b
 			</test>
 			<test value="fadec/control-2/lever/idle-climb"> <!-- MAN -->
