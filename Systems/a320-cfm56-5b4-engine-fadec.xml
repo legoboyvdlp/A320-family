@@ -1138,6 +1138,34 @@
 		</pure_gain>
 		
 		<!-- Throttle Finals -->
+		<fcs_function name="fadec/thr-locked-n1">
+			<function>
+				<ifthen>
+					<eq>
+						<property>fadec/thr-locked</property>
+						<value>1</value>
+					</eq>
+					<property>fadec/thr-locked-n1</property>
+					<max>
+						<property>/engines/engine[0]/n1-actual</property>
+						<property>/engines/engine[1]/n1-actual</property>
+					</max>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/thr-locked-norm">
+			<function>
+				<table>
+					<independentVar lookup="row">fadec/thr-locked-n1</independentVar>
+					<tableData>
+						 18.9  0
+						104.0  1
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<pure_gain name="fadec/control-1/throttle-clamped">
 			<input>fadec/control-1/lever-norm</input>
 			<gain>1.0</gain>
@@ -1152,7 +1180,7 @@
 			<test value="fadec/reverse-1/throttle-rev">
 				fadec/reverse-1/position-norm ne 0
 			</test>
-			<test value="fadec/control-1/throttle-output">
+			<test value="fadec/thr-locked-norm">
 				fadec/thr-locked eq 1
 			</test>
 			<test value="fadec/athr/output">
@@ -1183,7 +1211,7 @@
 			<test value="fadec/reverse-2/throttle-rev">
 				fadec/reverse-2/position-norm ne 0
 			</test>
-			<test value="fadec/control-2/throttle-output">
+			<test value="fadec/thr-locked-norm">
 				fadec/thr-locked eq 1
 			</test>
 			<test value="fadec/athr/output">
