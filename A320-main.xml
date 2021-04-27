@@ -2247,9 +2247,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>0</value>
+					<command>nasal</command>
+					<script>libraries.setView(1);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2285,9 +2284,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>8</value>
+					<command>nasal</command>
+					<script>libraries.setView(2);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2324,9 +2322,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>9</value>
+					<command>nasal</command>
+					<script>libraries.setView(3);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2363,9 +2360,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>10</value>
+					<command>nasal</command>
+					<script>libraries.setView(4);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2402,9 +2398,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>11</value>
+					<command>nasal</command>
+					<script>libraries.setView(5);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2443,9 +2438,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>12</value>
+					<command>nasal</command>
+					<script>libraries.setView(6);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -4663,7 +4657,7 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/view-controller.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
