@@ -27,8 +27,6 @@ var roll_mode = props.globals.getNode("/modes/pfd/fma/roll-mode", 1);
 var roll_mode_armed = props.globals.getNode("/modes/pfd/fma/roll-mode-armed", 1);
 var roll_mode_box = props.globals.getNode("/modes/pfd/fma/roll-mode-box", 1);
 var roll_mode_armed_box = props.globals.getNode("/modes/pfd/fma/roll-mode-armed-box", 1);
-var thr1 = props.globals.getNode("/controls/engines/engine[0]/throttle-pos", 1);
-var thr2 = props.globals.getNode("/controls/engines/engine[1]/throttle-pos", 1);
 var wow0 = props.globals.getNode("/gear/gear[0]/wow");
 var wow1 = props.globals.getNode("/gear/gear[1]/wow");
 var wow2 = props.globals.getNode("/gear/gear[2]/wow");
@@ -330,8 +328,6 @@ var canvas_PFD_base = {
 		thrust_limit_act = thrust_limit.getValue();
 		alpha_floor_act = alpha_floor.getValue();
 		toga_lk_act = toga_lk.getValue();
-		thr1_act = thr1.getValue();
-		thr2_act = thr2.getValue();
 		
 		# Attitude Indicator
 		pitch_cur = pitch.getValue();

@@ -893,11 +893,6 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<!-- Remove these throttles... -->
-				<throttle-pos type="double">0</throttle-pos>
-				<throttle-output type="double">0</throttle-output>
-				<throttle-fdm type="double">0</throttle-fdm>
-				<throttle-rev type="double">0</throttle-rev>
 				<reverse-cmd type="bool">0</reverse-cmd>
 				<reverse-lever type="double">0</reverse-lever>
 				<igniter-a type="bool">0</igniter-a>
@@ -913,11 +908,6 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<!-- Remove these throttles... -->
-				<throttle-pos type="double">0</throttle-pos>
-				<throttle-output type="double">0</throttle-output>
-				<throttle-fdm type="double">0</throttle-fdm>
-				<throttle-rev type="double">0</throttle-rev>
 				<reverse-cmd type="bool">0</reverse-cmd>
 				<reverse-lever type="double">0</reverse-lever>
 				<igniter-a type="bool">0</igniter-a>
@@ -927,8 +917,6 @@
 			<engine n="2">
 				<cutoff type="bool">true</cutoff>
 				<starter type="bool">0</starter>
-				<throttle-output type="double">0</throttle-output>
-				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
 		</engines>
 		<fctl>

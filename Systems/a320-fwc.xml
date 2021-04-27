@@ -2578,8 +2578,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual ge 59.4
-				/controls/engines/engine[0]/throttle-pos ge 0.60
-				/controls/engines/engine[0]/throttle-pos lt 0.78
+				fadec/throttle-lever[0] ge 0.60
+				fadec/throttle-lever[0] lt 0.78
 			</test>
 		</switch>
 		
@@ -2593,8 +2593,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual ge 59.4
-				/controls/engines/engine[0]/throttle-pos ge 0.60
-				/controls/engines/engine[0]/throttle-pos lt 0.83
+				fadec/throttle-lever[0] ge 0.60
+				fadec/throttle-lever[0] lt 0.83
 			</test>
 		</switch>
 		
@@ -2608,8 +2608,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2-actual ge 59.4
-				/controls/engines/engine[1]/throttle-pos ge 0.60
-				/controls/engines/engine[1]/throttle-pos lt 0.78
+				fadec/throttle-lever[1] ge 0.60
+				fadec/throttle-lever[1] lt 0.78
 			</test>
 		</switch>
 		
@@ -2623,8 +2623,8 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2-actual ge 59.4
-				/controls/engines/engine[1]/throttle-pos ge 0.60
-				/controls/engines/engine[1]/throttle-pos lt 0.83
+				fadec/throttle-lever[1] ge 0.60
+				fadec/throttle-lever[1] lt 0.83
 			</test>
 		</switch>
 		

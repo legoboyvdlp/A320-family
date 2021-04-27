@@ -29,8 +29,6 @@ var newthr = nil;
 var state1 = nil;
 var state2 = nil;
 var thr = nil;
-var thr1 = nil;
-var thr2 = nil;
 var trk = nil;
 var vert = nil;
 var vertText = nil;
@@ -112,8 +110,6 @@ var init = func() {
 var loopFMA = maketimer(0.05, func {
 	state1 = systems.FADEC.detentText[0].getValue();
 	state2 = systems.FADEC.detentText[1].getValue();
-	thr1 = pts.Controls.Engines.Engine.throttlePos[0].getValue();
-	thr2 = pts.Controls.Engines.Engine.throttlePos[1].getValue();
 	newthr = Modes.PFD.FMA.throttle.getValue();
 	engout = systems.FADEC.engOut.getValue();
 	
