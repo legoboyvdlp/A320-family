@@ -512,7 +512,7 @@ var apOff = func(type, side) {
 var athrOff = func(type) {
 	if (athrInput.getValue() == 1) {
 		if (type == "hard") {
-			fadec.lockThr();
+			systems.lockThr();
 		}
 		athrInput.setValue(0);
 		ecam.doAthrWarn(type);

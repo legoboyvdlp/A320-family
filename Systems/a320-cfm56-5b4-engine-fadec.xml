@@ -1152,6 +1152,9 @@
 			<test value="fadec/reverse-1/throttle-rev">
 				fadec/reverse-1/position-norm ne 0
 			</test>
+			<test value="fadec/control-1/throttle-output">
+				fadec/thr-locked eq 1
+			</test>
 			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
 			</test>
@@ -1179,6 +1182,9 @@
 			<default value="fadec/control-2/lever-norm"/>
 			<test value="fadec/reverse-2/throttle-rev">
 				fadec/reverse-2/position-norm ne 0
+			</test>
+			<test value="fadec/control-2/throttle-output">
+				fadec/thr-locked eq 1
 			</test>
 			<test value="fadec/athr/output">
 				fadec/athr/active eq 1

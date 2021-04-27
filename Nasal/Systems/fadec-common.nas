@@ -30,7 +30,6 @@ var FADEC = {
 	Lock: {
 		thrLockAlert: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-alert"),
 		thrLockCmd: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked"),
-		thrLockCmdN1: [props.globals.getNode("/fdm/jsbsim/fadec/thr-lock-cmd[0]"), props.globals.getNode("/fdm/jsbsim/fadec/thr-lock-cmd[1]")],
 		thrLockFlash: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-flash"),
 		thrLockTime: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-time"),
 	},
@@ -187,3 +186,96 @@ setlistener("/fdm/jsbsim/fadec/control-2/detent", func() {
 setlistener("/fdm/jsbsim/fadec/limit/active-mode-int", func() {
 	FADEC.updateTxt();
 }, 0, 0);
+
+var lockThr = func() {
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
+	if ((state1 == "CL" and state2 == "CL" and !systems.FADEC.engOut.getValue()) or (state1 == "MCT" and state2 == "MCT" and systems.FADEC.engOut.getValue())) {
+		FADEC.Lock.thrLockTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		FADEC.Lock.thrLockCmd.setValue(1);
+		lockTimer.start();
+	}
+}
+
+var checkLockThr = func() {
+	if (FADEC.Lock.thrLockTime.getValue() + 5 > pts.Sim.Time.elapsedSec.getValue()) { return; }
+	
+	if (fmgc.Output.athr.getBoolValue()) {
+		lockTimer.stop();
+		FADEC.Lock.thrLockCmd.setValue(0);
+		FADEC.Lock.thrLockAlert.setValue(0);
+		FADEC.Lock.thrLockTime.setValue(0);
+		FADEC.Lock.thrLockFlash.setValue(0);
+		return;
+	}
+	
+	if (!FADEC.Lock.thrLockCmd.getValue()) {
+		lockTimer.stop();
+		FADEC.Lock.thrLockCmd.setValue(0);
+		FADEC.Lock.thrLockAlert.setValue(0);
+		FADEC.Lock.thrLockTime.setValue(0);
+		FADEC.Lock.thrLockFlash.setValue(0);
+		return;
+	}
+	
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
+	
+	if ((state1 != "CL" and state2 != "CL" and !systems.FADEC.engOut.getValue()) or (state1 != "MCT" and state2 != "MCT" and systems.FADEC.engOut.getValue())) {
+		lockTimer.stop();
+		FADEC.Lock.thrLockCmd.setValue(0);
+		FADEC.Lock.thrLockAlert.setValue(0);
+		FADEC.Lock.thrLockTime.setValue(0);
+		FADEC.Lock.thrLockFlash.setValue(0);
+	} elsif ((state1 == "CL" and state2 == "CL" and !systems.FADEC.engOut.getValue()) or (state1 == "MCT" and state2 == "MCT" and systems.FADEC.engOut.getValue())) {
+		FADEC.Lock.thrLockAlert.setValue(1);
+		FADEC.Lock.thrLockTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		FADEC.Lock.thrLockFlash.setValue(1);
+		lockTimer.stop();
+		lockTimer2.start();
+	}
+}
+
+var checkLockThr2 = func() {
+	if (fmgc.Output.athr.getBoolValue()) {
+		lockTimer2.stop();
+		FADEC.Lock.thrLockCmd.setValue(0);
+		FADEC.Lock.thrLockAlert.setValue(0);
+		FADEC.Lock.thrLockTime.setValue(0);
+		FADEC.Lock.thrLockFlash.setValue(0);
+		return;
+	}
+	
+	if (!FADEC.Lock.thrLockCmd.getValue()) {
+		lockTimer2.stop();
+		FADEC.Lock.thrLockCmd.setValue(0);
+		FADEC.Lock.thrLockAlert.setValue(0);
+		FADEC.Lock.thrLockTime.setValue(0);
+		FADEC.Lock.thrLockFlash.setValue(0);
+		return;
+	}
+	
+	if (FADEC.Lock.thrLockTime.getValue() + 5 < pts.Sim.Time.elapsedSec.getValue()) {
+		FADEC.Lock.thrLockFlash.setValue(0);
+		settimer(func() {
+			FADEC.Lock.thrLockFlash.setValue(1);
+			FADEC.Lock.thrLockTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+			ecam.athr_lock.noRepeat = 0;
+			ecam.athr_lock.noRepeat2 = 0;
+		}, 0.2);
+	}
+	
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
+	
+	if ((state1 != "CL" and state2 != "CL" and !systems.FADEC.engOut.getValue()) or (state1 != "MCT" and state2 != "MCT" and systems.FADEC.engOut.getValue())) {
+		lockTimer2.stop();
+		FADEC.Lock.thrLockCmd.setValue(0);
+		FADEC.Lock.thrLockAlert.setValue(0);
+		FADEC.Lock.thrLockFlash.setValue(0);
+		FADEC.Lock.thrLockTime.setValue(0);
+	}
+}
+
+var lockTimer = maketimer(0.1, checkLockThr);
+var lockTimer2 = maketimer(0.1, checkLockThr2);
