@@ -9,8 +9,10 @@
 	<property value="0">fbw/pitch/g-pi</property>
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
-	<property value="0">fbw/spoiler-output</property>
 	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
+	<property value="1">fbw/sidestick/active[0]</property>
+	<property value="1">fbw/sidestick/active[1]</property>
+	<property value="0">fbw/spoiler-output</property>
 	
 	<!-- Default gains for tuning -->
 	<property value="0">fbw/roll/p-gain</property>
@@ -237,6 +239,63 @@
 					</tableData>
 				</table>
 			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/sidestick/roll-input">
+			<function>
+				<sum>
+					<product>
+						<property>/controls/flight/aileron[0]</property>
+						<property>fbw/sidestick/active[0]</property>
+					</product>
+					<product>
+						<property>/controls/flight/aileron[1]</property>
+						<property>fbw/sidestick/active[1]</property>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="fbw/sidestick/pitch-input">
+			<function>
+				<sum>
+					<product>
+						<property>/controls/flight/elevator[0]</property>
+						<property>fbw/sidestick/active[0]</property>
+					</product>
+					<product>
+						<property>/controls/flight/elevator[1]</property>
+						<property>fbw/sidestick/active[1]</property>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="fbw/sidestick/yaw-input">
+			<function>
+				<sum>
+					<product>
+						<property>/controls/flight/rudder[0]</property>
+						<property>fbw/sidestick/active[0]</property>
+					</product>
+					<product>
+						<property>/controls/flight/rudder[1]</property>
+						<property>fbw/sidestick/active[1]</property>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
 		</fcs_function>
 	
 	</channel>
@@ -472,7 +531,7 @@
 	<channel name="FBW: Roll">
 		
 		<switch name="fbw/roll/a-i-f">
-			<default value="/controls/flight/aileron"/>
+			<default value="fbw/sidestick/roll-input"/>
 			<test value="0">
 				fbw/fmgc/enabled eq 1
 			</test>
@@ -496,7 +555,7 @@
 		<fcs_function name="fbw/roll/aileron-nul">
 			<function>
 				<table>
-					<independentVar lookup="row">/controls/flight/aileron</independentVar>
+					<independentVar lookup="row">fbw/sidestick/roll-input</independentVar>
 					<tableData>
 						-1.00 -1
 						-0.04  0
@@ -862,7 +921,7 @@
 		</switch>
 		
 		<lag_filter name="fbw/aileron-sidestick">
-			<input>/controls/flight/aileron</input>
+			<input>fbw/sidestick/roll-input</input>
 			<c1>20</c1>
 		</lag_filter>
 	
@@ -879,7 +938,7 @@
 		</switch>
 		
 		<switch name="fbw/pitch/e-i-f">
-			<default value="/controls/flight/elevator"/>
+			<default value="fbw/sidestick/pitch-input"/>
 			<test value="0">
 				fbw/fmgc/enabled eq 1
 			</test>
@@ -907,7 +966,7 @@
 		<fcs_function name="fbw/pitch/elevator-nul">
 			<function>
 				<table>
-					<independentVar lookup="row">/controls/flight/elevator</independentVar>
+					<independentVar lookup="row">fbw/sidestick/pitch-input</independentVar>
 					<tableData>
 						-1.00 -1
 						-0.04  0
@@ -1304,7 +1363,7 @@
 		</switch>
 		
 		<lag_filter name="fbw/elevator-sidestick">
-			<input>/controls/flight/elevator</input>
+			<input>fbw/sidestick/pitch-input</input>
 			<c1>20</c1>
 		</lag_filter>
 		
@@ -1527,7 +1586,7 @@
 		<fcs_function name="fbw/yaw/rudder-nul">
 			<function>
 				<table>
-					<independentVar lookup="row">/controls/flight/rudder</independentVar>
+					<independentVar lookup="row">fbw/sidestick/yaw-input</independentVar>
 					<independentVar lookup="column">fbw/fmgc/enabled</independentVar>
 					<tableData>
 						       0  1
@@ -1647,7 +1706,7 @@
 		</switch>
 		
 		<lag_filter name="fbw/rudder-pedal">
-			<input>/controls/flight/rudder</input>
+			<input>fbw/sidestick/yaw-input</input>
 			<c1>20</c1>
 		</lag_filter>
 	

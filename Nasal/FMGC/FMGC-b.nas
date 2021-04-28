@@ -6,8 +6,11 @@
 # Sim
 var Controls = {
 	aileron: props.globals.getNode("/controls/flight/aileron", 1),
+	aileron2: props.globals.getNode("/controls/flight/aileron[1]", 1),
 	elevator: props.globals.getNode("/controls/flight/elevator", 1),
+	elevator2: props.globals.getNode("/controls/flight/elevator[1]", 1),
 	rudder: props.globals.getNode("/controls/flight/rudder", 1),
+	rudder2: props.globals.getNode("/controls/flight/rudder[1]", 1),
 };
 
 var FPLN = {
@@ -348,7 +351,7 @@ var ITAF = {
 		
 		# Misc
 		if (Output.ap1Temp == 1 or Output.ap2Temp == 1) { # Trip AP off
-			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2) {
+			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
 				fcu.apOff("hard", 0);
 			}
 		}

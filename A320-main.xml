@@ -936,9 +936,12 @@
 			<test-btn-2 type="bool">0</test-btn-2>
 		</fire>
 		<flight>
+			<aileron n="1" type="double">0</aileron>
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
 			<aileron-input type="double">0</aileron-input>
+			<elevator n="1" type="double">0</elevator>
 			<elevator-input type="double">0</elevator-input>
+			<rudder n="1" type="double">0</rudder>
 			<speedbrake-arm type="bool">0</speedbrake-arm>
 			<slats type="double">0</slats>
 		</flight>
@@ -4654,7 +4657,6 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/controls-override.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/view-controller.nas</file>

@@ -942,14 +942,14 @@
 	<channel name="Tiller">
 		
 		<switch name="/controls/gear/steering-switched">
-			<default value="/controls/flight/rudder"/>
+			<default value="fbw/sidestick/yaw-input"/>
 			<test value="0">
 				/gear/gear[0]/wow ne 1
 			</test>
 			<test value="/controls/gear/steering">
 				/systems/acconfig/options/seperate-tiller-axis eq 1
 			</test>
-			<test value="/controls/flight/aileron">
+			<test value="fbw/sidestick/roll-input">
 				/controls/flight/aileron-drives-tiller eq 1
 			</test>
 		</switch>
@@ -1003,8 +1003,8 @@
 		</scheduled_gain>
 		
 		<switch name="hydraulics/tiller/rudder-cmd-input">
-			<default value="/controls/flight/rudder"/>
-			<test value="/controls/flight/aileron">
+			<default value="fbw/sidestick/yaw-input"/>
+			<test value="fbw/sidestick/roll-input">
 				/controls/flight/aileron-drives-tiller eq 1
 			</test>
 		</switch>

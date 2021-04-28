@@ -91,6 +91,9 @@ var FBW = {
 		overspeedRoll: props.globals.getNode("/it-fbw/protections/overspeed-roll-back"),
 		overspeed: props.globals.getNode("/it-fbw/protections/overspeed"),
 	},
+	Sidestick: {
+		active: [props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[0]"), props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[1]")],
+	},
 	Switches: {
 		elac1Sw: props.globals.getNode("/controls/fctl/switches/elac1"),
 		elac2Sw: props.globals.getNode("/controls/fctl/switches/elac2"),
@@ -124,6 +127,8 @@ var FBW = {
 		me.Computers.sec3.setBoolValue(0);
 		me.Computers.fac1.setBoolValue(0);
 		me.Computers.fac2.setBoolValue(0);
+		me.Sidestick.active[0].setBoolValue(1); # Change to reset stick priority?
+		me.Sidestick.active[1].setBoolValue(1); # Change to reset stick priority?
 		me.degradeLaw.setValue(0);
 		me.activeLaw.setValue(0);
 		me.override.setValue(0);
