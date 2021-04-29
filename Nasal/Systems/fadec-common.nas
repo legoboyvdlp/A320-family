@@ -15,6 +15,7 @@ var FADEC = {
 	detentText: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent-text"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent-text")],
 	detentTextTemp: [0, 0],
 	engOut: props.globals.getNode("/fdm/jsbsim/fadec/eng-out"),
+	engOutTemp: 0,
 	Limit: {
 		activeEpr: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-epr"),
 		activeMode: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode"),
@@ -27,6 +28,7 @@ var FADEC = {
 	},
 	lvrClb: props.globals.getNode("/fdm/jsbsim/fadec/lvrclb"),
 	lvrClbStatus: 0,
+	lvrClbType: "LVR CLB",
 	Lock: {
 		thrLockAlert: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-alert"),
 		thrLockCmd: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked"),
@@ -125,33 +127,38 @@ var FADEC = {
 		}
 	},
 	thrustFlash: func() {
-		me.detentTextTemp[0] = systems.FADEC.detentText[0].getValue();
-		me.detentTextTemp[1] = systems.FADEC.detentText[1].getValue();
+		me.detentTextTemp[0] = me.detentText[0].getValue();
+		me.detentTextTemp[1] = me.detentText[1].getValue();
+		pts.Engines.Engine.stateTemp[0] = pts.Engines.Engine.state[0].getValue();
+		pts.Engines.Engine.stateTemp[1] = pts.Engines.Engine.state[1].getValue();
 		
-		if (!pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue() and (pts.Engines.Engine.state[0].getValue() != 3 or pts.Engines.Engine.state[1].getValue() != 3)) {
-			systems.FADEC.engOut.setValue(1)
+		if (!pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue() and (pts.Engines.Engine.stateTemp[0] != 3 or pts.Engines.Engine.stateTemp[1] != 3)) {
+			me.engOut.setValue(1)
 		} else {
-			systems.FADEC.engOut.setValue(0)
+			me.engOut.setValue(0)
 		}
 		
-		if (me.detentTextTemp[0] == "CL" and me.detentTextTemp[1] == "CL" and me.engOut.getValue() != 1) {
+		me.engOutTemp = me.engOut.getValue();
+		
+		if (me.detentTextTemp[0] == "CL" and me.detentTextTemp[1] == "CL" and !me.engOutTemp) {
 			me.lvrClb.setValue(0);
-		} else if (me.detentTextTemp[0] == "MCT" and me.detentTextTemp[1] == "MCT" and !me.Limit.flexActive.getBoolValue() and me.engOut.getValue()) {
+		} else if (((me.detentTextTemp[0] == "MCT" and pts.Engines.Engine.stateTemp[0] == 3) or (me.detentTextTemp[1] == "MCT" and pts.Engines.Engine.stateTemp[1] == 3)) and !me.Limit.flexActive.getBoolValue() and me.engOut.getValue()) {
 			me.lvrClb.setValue(0);
 		} else {
 			me.lvrClbStatus = me.lvrClb.getValue();
 			if (me.lvrClbStatus == 0) {
 				if (!pts.Gear.wow[0].getValue()) {
-					if (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN") {
-						me.lvrClb.setValue(1);
-					} else {
-						if (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= me.clbReduc.getValue() and !pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue()) {
-							me.lvrClb.setValue(1);
-						} else if ((me.detentTextTemp[0] == "CL" and me.detentTextTemp[1] != "CL") or (me.detentTextTemp[0] != "CL" and me.detentTextTemp[1] == "CL") and me.engOut.getValue() != 1) {
-							me.lvrClb.setValue(1);
+					if (me.detentTextTemp[0] == "MAN" or me.detentTextTemp[1] == "MAN" or (pts.Instrumentation.Altimeter.indicatedFt.getValue() >= me.clbReduc.getValue() and !pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue())) {
+						if ((me.detentTextTemp[0] == "CL" and me.detentTextTemp[1] != "CL") or (me.detentTextTemp[0] != "CL" and me.detentTextTemp[1] == "CL") and !me.engOutTemp) { # Updated here to prevent weird
+							me.lvrClbType = "LVR ASYM";
 						} else {
-							me.lvrClb.setValue(0);
+							if (me.engOutTemp) {
+								me.lvrClbType = "LVR MCT";
+							} else {
+								me.lvrClbType = "LVR CLB";
+							}
 						}
+						me.lvrClb.setValue(1);
 					}
 				}
 			} else if (me.lvrClbStatus == 1) {

@@ -713,17 +713,8 @@ var canvas_PFD_base = {
 			me["FMA_flxmode"].hide();
 		}
 		
-		if ((state1_act == "CL" and state2_act != "CL") or (state1_act != "CL" and state2_act == "CL") and eng_out.getValue() != 1) {
-			me["FMA_lvrclb"].setText("LVR ASYM");
-		} else {
-			if (eng_out.getValue() == 1) {
-				me["FMA_lvrclb"].setText("LVR MCT");
-			} else {
-				me["FMA_lvrclb"].setText("LVR CLB");
-			}
-		}
-		
 		if (athr.getValue() == 1 and lvr_clb.getValue() == 1) {
+			me["FMA_lvrclb"].setText(systems.FADEC.lvrClbType);
 			me["FMA_lvrclb"].show();
 		} else {
 			me["FMA_lvrclb"].hide();

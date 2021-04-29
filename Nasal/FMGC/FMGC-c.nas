@@ -597,7 +597,7 @@ setlistener("/modes/pfd/fma/throttle-mode", func {
 	!systems.FADEC.engOut.getValue()) {
 		Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	} else if (athr == 1 and state1 != "TOGA" and state2 != "TOGA" and state1 != "IDLE" and state2 != "IDLE" and systems.FADEC.engOut.getValue()) {
-		if (systems.FADEC.detentOut[0].getValue() <= 4 and systems.FADEC.detentOut[1].getValue() <= 4) {
+		if (systems.FADEC.detent[0].getValue() <= 4 and systems.FADEC.detent[1].getValue() <= 4) {
 			Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		}
 	}

@@ -97,7 +97,7 @@
 		<engine file="cfm56-5b4_1">
 			<location unit="M">
 				<x>-5.34904</x>
-				<y>-5.755</y>
+				<y>-2.8775</y>
 				<z>-1.04768</z>
 			</location>
 			<orient unit="DEG">
@@ -109,7 +109,7 @@
 			<thruster file="direct">
 				<location unit="M">
 					<x>-5.34904</x>
-					<y>-5.755</y>
+					<y>-2.8775</y>
 					<z>-1.04768</z>
 				</location>
 				<orient unit="DEG">
@@ -123,7 +123,7 @@
 		<engine file="cfm56-5b4_2">
 			<location unit="M">
 				<x>-5.34904</x>
-				<y>5.755</y>
+				<y>2.8775</y>
 				<z>-1.04768</z>
 			</location>
 			<orient unit="DEG">
@@ -135,7 +135,7 @@
 			<thruster file="direct">
 				<location unit="M">
 					<x>-5.34904</x>
-					<y>5.755</y>
+					<y>2.8775</y>
 					<z>-1.04768</z>
 				</location>
 				<orient unit="DEG">
