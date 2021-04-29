@@ -34,6 +34,7 @@ var vsModeInput = props.globals.getNode("/it-autoflight/input/vs", 1);
 var locArm = props.globals.getNode("/it-autoflight/output/loc-armed", 1);
 var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
+var SidestickPriorityPressedLast = 0;
 
 var FCU = {
 	elecSupply: "",
@@ -146,7 +147,8 @@ var FCUController = {
 			}
 		}
 	},
-	APDisc: func() {
+	APDisc: func(side = 0, press = 0) {
+		# side: 0 = none, 1 = capt, 2 = fo
 		# physical button sound - so put it outside here as you get a sound even if it doesn't work!
 		setprop("/sim/sounde/apdiscbtn", 1);
 		settimer(func {
@@ -156,7 +158,7 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (ap1.getBoolValue() or ap2.getBoolValue()) {
 				apOff("soft", 0);
-			} else {
+			} else if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1 or getprop("/it-autoflight/output/ap-warning") != 0) {
 				if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
 					setprop("/it-autoflight/sound/apoffsound", 0);
 					setprop("/it-autoflight/sound/apoffsound2", 0);
@@ -164,6 +166,20 @@ var FCUController = {
 				if (getprop("/it-autoflight/output/ap-warning") != 0) {
 					setprop("/it-autoflight/output/ap-warning", 0);
 					ecam.lights[0].setValue(0);
+				}
+			} else if (side != 0) {
+				if (press == 1) {
+					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (2 - side) ~ "]", 0);
+					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (side - 1) ~ "]", 1);
+					SidestickPriorityPressedLast = side;
+				} else {
+					# Only release, if this side has pressed the button last
+					# to avoide the first pressed side getting activated again
+					# when released.
+					if (SidestickPriorityPressedLast == side) {
+						setprop("/fdm/jsbsim/fbw/sidestick/active[0]", 1);
+						setprop("/fdm/jsbsim/fbw/sidestick/active[1]", 1);
+					}
 				}
 			}
 		}
