@@ -159,13 +159,15 @@ var FCUController = {
 			if (ap1.getBoolValue() or ap2.getBoolValue()) {
 				apOff("soft", 0);
 			} else if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1 or getprop("/it-autoflight/output/ap-warning") != 0) {
-				if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
-					setprop("/it-autoflight/sound/apoffsound", 0);
-					setprop("/it-autoflight/sound/apoffsound2", 0);
-				}
-				if (getprop("/it-autoflight/output/ap-warning") != 0) {
-					setprop("/it-autoflight/output/ap-warning", 0);
-					ecam.lights[0].setValue(0);
+				if (press == 1) {
+					if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
+						setprop("/it-autoflight/sound/apoffsound", 0);
+						setprop("/it-autoflight/sound/apoffsound2", 0);
+					}
+					if (getprop("/it-autoflight/output/ap-warning") != 0) {
+						setprop("/it-autoflight/output/ap-warning", 0);
+						ecam.lights[0].setValue(0);
+					}
 				}
 			} else if (side != 0) {
 				if (press == 1) {
