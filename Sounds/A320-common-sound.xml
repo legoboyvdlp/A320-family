@@ -1009,7 +1009,99 @@
 				<factor>40.0</factor>
 			</volume>
 		</apoff>
-		
+
+		<priority-left>
+			<name>priority-left</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/priority-left.wav</path>
+			<condition>
+				<equals>
+					<property>fdm/jsbsim/fbw/sidestick/active[1]</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>40.0</factor>
+			</volume>
+		</priority-left>
+
+		<priority-right>
+			<name>priority-right</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/priority-right.wav</path>
+			<condition>
+				<equals>
+					<property>fdm/jsbsim/fbw/sidestick/active[0]</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>40.0</factor>
+			</volume>
+		</priority-right>
+
+		<dual-input>
+			<name>dual-input</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/dual-input.wav</path>
+			<condition>
+				<and>
+					<and>
+						<equals>
+							<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+							<value>1</value>
+						</equals>
+					</and>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+				</and>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>40.0</factor>
+			</volume>
+		</dual-input>
+	
 		<gear>
 			<name>gear0</name>
 			<mode>in-transit</mode>
