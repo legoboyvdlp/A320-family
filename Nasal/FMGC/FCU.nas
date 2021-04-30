@@ -35,6 +35,7 @@ var locArm = props.globals.getNode("/it-autoflight/output/loc-armed", 1);
 var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 var SidestickPriorityPressedLast = 0;
+var priorityTimer = 0;
 
 var FCU = {
 	elecSupply: "",
@@ -185,11 +186,12 @@ var FCUController = {
 							setprop("/sim/sound/priority-right", 0);
 						}, 1.5);
 					}
+					priorityTimer = pts.Sim.Time.elapsedSec.getValue();
 				} else {
 					# Only release, if this side has pressed the button last
 					# to avoide the first pressed side getting activated again
 					# when released.
-					if (SidestickPriorityPressedLast == side) {
+					if (SidestickPriorityPressedLast == side and priorityTimer + 40 >= pts.Sim.Time.elapsedSec.getValue()) {
 						setprop("/fdm/jsbsim/fbw/sidestick/active[0]", 1);
 						setprop("/fdm/jsbsim/fbw/sidestick/active[1]", 1);
 					}
