@@ -174,6 +174,17 @@ var FCUController = {
 					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (2 - side) ~ "]", 0);
 					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (side - 1) ~ "]", 1);
 					SidestickPriorityPressedLast = side;
+					if (side == 1) {
+						setprop("/sim/sound/priority-left", 1);
+						settimer(func {
+							setprop("/sim/sound/priority-left", 0);
+						}, 1.5);
+					} else {
+						setprop("/sim/sound/priority-right", 1);
+						settimer(func {
+							setprop("/sim/sound/priority-right", 0);
+						}, 1.5);
+					}
 				} else {
 					# Only release, if this side has pressed the button last
 					# to avoide the first pressed side getting activated again

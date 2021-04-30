@@ -1016,8 +1016,8 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/priority-left.wav</path>
 			<condition>
 				<equals>
-					<property>fdm/jsbsim/fbw/sidestick/active[1]</property>
-					<value>0</value>
+					<property>/sim/sound/priority-left</property>
+					<value>1</value>
 				</equals>
 			</condition>
 			<volume>
@@ -1032,8 +1032,8 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/priority-right.wav</path>
 			<condition>
 				<equals>
-					<property>fdm/jsbsim/fbw/sidestick/active[0]</property>
-					<value>0</value>
+					<property>/sim/sound/priority-right</property>
+					<value>1</value>
 				</equals>
 			</condition>
 			<volume>
