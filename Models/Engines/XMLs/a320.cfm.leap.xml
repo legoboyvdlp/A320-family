@@ -381,138 +381,26 @@
 	</animation>
 	
 	<animation>
-		<name>Reverser Door LH 1</name>
-		<type>rotate</type>
-		<object-name>ReverserLDoor1</object-name>
-		<object-name>ReverserLDoor1.Inner</object-name>
-		<factor>-70</factor>
+		<type>translate</type>
+		<object-name>ReverserLDoorLEAP</object-name>
 		<property>engines/engine[0]/reverser-pos-norm</property>
+		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
-			<x1-m>-4.7738</x1-m>
-			<y1-m>-6.25156</y1-m>
-			<z1-m>-1.65547</z1-m>
-			<x2-m>-4.77475</x2-m>
-			<y2-m>-6.29771</y2-m>
-			<z2-m>-1.71849</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door LH 2</name>
-		<type>rotate</type>
-		<object-name>ReverserLDoor2</object-name>
-		<object-name>ReverserLDoor2.Inner</object-name>
-		<factor>-70</factor>
-		<property>engines/engine[0]/reverser-pos-norm</property>
-		<axis>
-			<x1-m>-4.77785</x1-m>
-			<y1-m>-6.29253</y1-m>
-			<z1-m>-2.82287</z1-m>
-			<x2-m>-4.77731</x2-m>
-			<y2-m>-6.2496</y2-m>
-			<z2-m>-2.88363</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door LH 3</name>
-		<type>rotate</type>
-		<object-name>ReverserLDoor3</object-name>
-		<object-name>ReverserLDoor3.Inner</object-name>
-		<factor>70</factor>
-		<property>engines/engine[0]/reverser-pos-norm</property>
-		<axis>
-			<x1-m>-4.7738</x1-m>
-			<y1-m>-5.01022</y1-m>
-			<z1-m>-1.6555</z1-m>
-			<x2-m>-4.77475</x2-m>
-			<y2-m>-4.96408</y2-m>
-			<z2-m>-1.71852</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door LH 4</name>
-		<type>rotate</type>
-		<object-name>ReverserLDoor4</object-name>
-		<object-name>ReverserLDoor4.Inner</object-name>
-		<factor>70</factor>
-		<property>engines/engine[0]/reverser-pos-norm</property>
-		<axis>
-			<x1-m>-4.778</x1-m>
-			<y1-m>-4.96919</y1-m>
-			<z1-m>-2.82264</z1-m>
-			<x2-m>-4.77746</x2-m>
-			<y2-m>-5.01209</y2-m>
-			<z2-m>-2.8834</z2-m>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
 		</axis>
 	</animation>
 
 	<animation>
-		<name>Reverser Door RH 1</name>
-		<type>rotate</type>
-		<object-name>ReverserRDoor1</object-name>
-		<object-name>ReverserRDoor1.Inner</object-name>
-		<factor>-70</factor>
+		<type>translate</type>
+		<object-name>ReverserLDoorLEAPR</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
+		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
-			<x1-m>-4.7738</x1-m>
-			<y1-m> 5.01008</y1-m>
-			<z1-m>-1.65547</z1-m>
-			<x2-m>-4.77475</x2-m>
-			<y2-m> 4.96393</y2-m>
-			<z2-m>-1.71849</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door RH 2</name>
-		<type>rotate</type>
-		<object-name>ReverserRDoor2</object-name>
-		<object-name>ReverserRDoor2.Inner</object-name>
-		<factor>-70</factor>
-		<property>engines/engine[1]/reverser-pos-norm</property>
-		<axis>
-			<x1-m>-4.77785</x1-m>
-			<y1-m> 4.96912</y1-m>
-			<z1-m>-2.82287</z1-m>
-			<x2-m>-4.77731</x2-m>
-			<y2-m> 5.01204</y2-m>
-			<z2-m>-2.88363</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door RH 3</name>
-		<type>rotate</type>
-		<object-name>ReverserRDoor3</object-name>
-		<object-name>ReverserRDoor3.Inner</object-name>
-		<factor>70</factor>
-		<property>engines/engine[1]/reverser-pos-norm</property>
-		<axis>
-			<x1-m>-4.7738</x1-m>
-			<y1-m> 6.25142</y1-m>
-			<z1-m>-1.6555</z1-m>
-			<x2-m>-4.77475</x2-m>
-			<y2-m> 6.29756</y2-m>
-			<z2-m>-1.71852</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>Reverser Door RH 4</name>
-		<type>rotate</type>
-		<object-name>ReverserRDoor4</object-name>
-		<object-name>ReverserRDoor4.Inner</object-name>
-		<factor>70</factor>
-		<property>engines/engine[1]/reverser-pos-norm</property>
-		<axis>
-			<x1-m>-4.778</x1-m>
-			<y1-m> 6.29245</y1-m>
-			<z1-m>-2.82264</z1-m>
-			<x2-m>-4.77746</x2-m>
-			<y2-m> 6.24955</y2-m>
-			<z2-m>-2.8834</z2-m>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
 		</axis>
 	</animation>
 	
@@ -522,9 +410,7 @@
 		<object-name>EngineLEAPL</object-name>
 		<object-name>EngineLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP</object-name>
-		<object-name>ReverserRDoorLEAP</object-name>
 		<object-name>ReverserLDoorLEAPR</object-name>
-		<object-name>ReverserRDoorLEAPR</object-name>
 	</effect>
 	
 	<effect>
