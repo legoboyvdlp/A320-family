@@ -267,7 +267,7 @@
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLCFM56L</object-name>
+		<object-name>FanLEAPL</object-name>
 		<factor>50</factor> <!-- TCDS sourced - don't tune! -->
 		<property>engines/engine[3]/n1</property>
 		<axis>
@@ -276,16 +276,16 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.66773</x-m>
-			<y-m>-5.63082</y-m>
-			<z-m>-2.26943</z-m>
+			<x-m>-6.73265</x-m>
+			<y-m>-5.63098</y-m>
+			<z-m>-2.33038</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLCFM56R</object-name>
+		<object-name>FanLEAPR</object-name>
 		<factor>50</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
@@ -294,16 +294,16 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.66773</x-m>
-			<y-m> 5.62871</y-m>
-			<z-m>-2.26943</z-m>
+			<x-m>-6.73265</x-m>
+			<y-m> 5.63098</y-m>
+			<z-m>-2.33038</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
-		<object-name>FanSpinningCFM56L</object-name>
+		<object-name>FanSpinningLEAPL</object-name>
 		<factor>5</factor>
 		<property>engines/engine[3]/n1</property>
 		<axis>
@@ -312,16 +312,16 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.66773</x-m>
-			<y-m>-5.63082</y-m>
-			<z-m>-2.26943</z-m>
+			<x-m>-6.73265</x-m>
+			<y-m>-5.63098</y-m>
+			<z-m>-2.33038</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
-		<object-name>FanSpinningCFM56R</object-name>
+		<object-name>FanSpinningLEAPR</object-name>
 		<factor>5</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
@@ -330,15 +330,15 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.66773</x-m>
-			<y-m> 5.62871</y-m>
-			<z-m>-2.26943</z-m>
+			<x-m>-6.73265</x-m>
+			<y-m> 5.63098</y-m>
+			<z-m>-2.33038</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningCFM56L</object-name>
+		<object-name>FanSpinningLEAPL</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[3]/n1</property>
@@ -349,7 +349,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningCFM56R</object-name>
+		<object-name>FanSpinningLEAPR</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[4]/n1</property>
@@ -360,7 +360,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLCFM56L</object-name>
+		<object-name>FanLEAPL</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[3]/n1</property>
@@ -371,7 +371,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLCFM56R</object-name>
+		<object-name>FanLEAPR</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[4]/n1</property>
@@ -519,27 +519,27 @@
 	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-CFM</inherits-from>
-		<object-name>EngineCFM56L</object-name>
-		<object-name>EngineCFM56R</object-name>
-		<object-name>ReverserLDoor1</object-name>
-		<object-name>ReverserLDoor2</object-name>
-		<object-name>ReverserLDoor3</object-name>
-		<object-name>ReverserLDoor4</object-name>
-		<object-name>ReverserRDoor1</object-name>
-		<object-name>ReverserRDoor2</object-name>
-		<object-name>ReverserRDoor3</object-name>
-		<object-name>ReverserRDoor4</object-name>
+		<object-name>EngineLEAPL</object-name>
+		<object-name>EngineLEAPR</object-name>
+		<object-name>ReverserLDoorLEAP</object-name>
+		<object-name>ReverserRDoorLEAP</object-name>
+		<object-name>ReverserLDoorLEAPR</object-name>
+		<object-name>ReverserRDoorLEAPR</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-CFM</inherits-from>
-		<object-name>PylonCFM56L</object-name>
-		<object-name>PylonCFM56R</object-name>
+		<object-name>PylonLEAPL</object-name>
+		<object-name>PylonLEAPR</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-CFM</inherits-from>
-		<object-name>IntakeCFM56L</object-name>
-		<object-name>IntakeCFM56R</object-name>
+		<object-name>IntakeLEAPL</object-name>
+		<object-name>IntakeLEAPR</object-name>
+		<object-name>Exhaust3LEAPL</object-name>
+		<object-name>Exhaust2LEAPL</object-name>
+		<object-name>Exhaust3LEAPR</object-name>
+		<object-name>Exhaust2LEAPR</object-name>
 	</effect>
 </PropertyList>
