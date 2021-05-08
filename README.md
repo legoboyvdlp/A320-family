@@ -79,7 +79,7 @@ For the FO Sidestick, use `side=2`
 If you only want these bindings for the A320 family,
 add the following to the script:
 ```
-if (string.match(getprop("/sim/aero"), "A3[12][0189]-*"))
+if (string.match(getprop("/sim/aero"), "A3[12][0189]*"))
 {
 	<command-above>
 }
