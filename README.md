@@ -76,6 +76,42 @@ For the FO Sidestick, use `side=2`
   </button>
 ```
 
+### ENG Mode Selector
+```
+	<button n="6">
+		<desc type="string">ENG Mode Crank</desc>
+		<repeatable type="string">false</repeatable>
+		<binding>
+			<command>property-assign</command>
+			<property>controls/engines/engine-start-switch</property>
+			<value>0</value>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/engines/engine-start-switch</property>
+				<value>1</value>
+			</binding>
+		</mod-up>
+	</button>
+	<button n="7">
+		<desc type="string">ENG Mode Start</desc>
+		<repeatable type="string">false</repeatable>
+		<binding>
+			<command>property-assign</command>
+			<property>controls/engines/engine-start-switch</property>
+			<value>2</value>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/engines/engine-start-switch</property>
+				<value>1</value>
+			</binding>
+		</mod-up>
+	</button>
+```
+
 If you only want these bindings for the A320 family,
 add the following to the script:
 ```
