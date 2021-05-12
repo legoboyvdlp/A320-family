@@ -913,6 +913,7 @@ var canvas_upperECAM = {
 			me["Test_text"].show();
 		}
 	},
+	du3OffTimer: 0,
 	powerTransient: func() {
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
 			if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
@@ -932,8 +933,11 @@ var canvas_upperECAM = {
 					du3_test_time.setValue(-100);
 				}
 			}
-		} else {
+			me.du3OffTimer = 0;
+			du3_offtime.setValue(0);
+		} elsif (me.du3OffTimer == 0) {
 			du3_test.setValue(0);
+			me.du3OffTimer = 1;
 			du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		}
 	},

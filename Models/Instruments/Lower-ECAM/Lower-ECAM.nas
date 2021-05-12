@@ -203,6 +203,7 @@ var canvas_lowerECAM_base = {
 	getKeys: func() {
 		return [];
 	},
+	du4OffTimer: 0,
 	updateDu4: func() {
 		var elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		
@@ -224,9 +225,12 @@ var canvas_lowerECAM_base = {
 					du4_test_time.setValue(-100);
 				}
 			}
-		} else {
+			me.du4OffTimer = 0;
+			du4_offtime.setValue(0);
+		} elsif (me.du4OffTimer == 0) {
 			du4_test.setValue(0);
-			du4_offtime.setValue(elapsedtime);
+			me.du4OffTimer = 1;
+			du4_offtime.setValue(elapsedtime_act);
 		}
 	},
 	update: func() {

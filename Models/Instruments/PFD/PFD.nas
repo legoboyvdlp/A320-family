@@ -220,6 +220,7 @@ var canvas_PFD_base = {
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
 		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
 	},
+	du1OffTimer: 0,
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
@@ -240,11 +241,15 @@ var canvas_PFD_base = {
 					du1_test_time.setValue(-100);
 				}
 			}
-		} else {
+			me.du1OffTimer = 0;
+			du1_offtime.setValue(0);
+		} elsif (me.du1OffTimer == 0) {
 			du1_test.setValue(0);
+			me.du1OffTimer = 1;
 			du1_offtime.setValue(elapsedtime_act);
 		}
 	},
+	du6OffTimer: 0,
 	updateDu6: func() {
 		var elapsedtime_act = elapsedtime.getValue();
 		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
@@ -265,8 +270,11 @@ var canvas_PFD_base = {
 					du6_test_time.setValue(-100);
 				}
 			}
-		} else {
+			me.du6OffTimer = 0;
+			du6_offtime.setValue(0);
+		} elsif (me.du6OffTimer == 0) {
 			du6_test.setValue(0);
+			me.du6OffTimer = 1;
 			du6_offtime.setValue(elapsedtime_act);
 		}
 	},

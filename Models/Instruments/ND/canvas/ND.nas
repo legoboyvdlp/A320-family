@@ -87,6 +87,7 @@ var canvas_nd_base = {
 	getKeys: func() {
 		return [];
 	},
+	du2OffTimer: 0,
 	updateDu2: func() {
 		var elapsedtime = getprop("sim/time/elapsed-sec");
 		if (getprop("systems/electrical/bus/ac-ess-shed") >= 110) {
@@ -107,11 +108,15 @@ var canvas_nd_base = {
 					du2_test_time.setValue(-100);
 				}
 			}
-		} else {
+			me.du2OffTimer = 0;
+			du2_offtime.setValue(0);
+		} elsif (me.du2OffTimer == 0) {
 			du2_test.setValue(0);
-			du2_offtime.setValue(elapsedtime);
+			me.du2OffTimer = 1;
+			du2_offtime.setValue(elapsedtime_act);
 		}
 	},
+	du5OffTimer: 0,
 	updateDu5: func() {
 		var elapsedtime = getprop("sim/time/elapsed-sec");
 		if (getprop("systems/electrical/bus/ac-2") >= 110) {
@@ -132,11 +137,13 @@ var canvas_nd_base = {
 					du5_test_time.setValue(-100);
 				}
 			}
-		} else {
+			me.du5OffTimer = 0;
+			du5_offtime.setValue(0);
+		} elsif (me.du5OffTimer == 0) {
 			du5_test.setValue(0);
-			du5_offtime.setValue(elapsedtime);
+			me.du5OffTimer = 1;
+			du5_offtime.setValue(elapsedtime_act);
 		}
-		
 	},
 	update: func() {
 		var elapsedtime = getprop("sim/time/elapsed-sec");
